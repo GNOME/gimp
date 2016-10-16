@@ -16,15 +16,15 @@ msgstr ""
 "Project-Id-Version: gimp-master-po-hu-23139.merged\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-10-09 10:57+0000\n"
-"PO-Revision-Date: 2016-10-09 13:54+0200\n"
+"POT-Creation-Date: 2016-10-12 21:53+0000\n"
+"PO-Revision-Date: 2016-10-16 17:41+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.10\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../desktop/gimp.appdata.xml.in.h:1 ../desktop/gimp.desktop.in.in.h:1
@@ -423,7 +423,7 @@ msgid "Images"
 msgstr "Képek"
 
 #: ../app/actions/actions.c:191 ../app/dialogs/dialogs.c:365
-#: ../app/dialogs/resize-dialog.c:291 ../app/widgets/gimppickablepopup.c:230
+#: ../app/dialogs/resize-dialog.c:128 ../app/widgets/gimppickablepopup.c:230
 msgid "Layers"
 msgstr "Rétegek"
 
@@ -455,7 +455,7 @@ msgid "Plug-Ins"
 msgstr "Bővítmények"
 
 #. Quick Mask Color
-#: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:404
+#: ../app/actions/actions.c:209 ../app/core/gimpchannel.c:405
 #: ../app/dialogs/preferences-dialog.c:1423
 msgid "Quick Mask"
 msgstr "Gyorsmaszk"
@@ -1084,7 +1084,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1998
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
-#: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:89
+#: ../app/dialogs/palette-import-dialog.c:781 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
 msgstr "Névtelen"
 
@@ -4222,91 +4222,91 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "_Szürkeárnyalatos…"
 
-#: ../app/actions/image-commands.c:555
+#: ../app/actions/image-commands.c:556
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "A színprofil mentése sikertelen: %s"
 
-#: ../app/actions/image-commands.c:594
+#: ../app/actions/image-commands.c:595
 msgid "Save Color Profile"
 msgstr "Színprofil mentése"
 
-#: ../app/actions/image-commands.c:636
+#: ../app/actions/image-commands.c:637
 msgid "Set Image Canvas Size"
 msgstr "Rajzvászon méretének beállítása"
 
-#: ../app/actions/image-commands.c:661 ../app/actions/image-commands.c:685
-#: ../app/actions/image-commands.c:1302
+#: ../app/actions/image-commands.c:662 ../app/actions/image-commands.c:686
+#: ../app/actions/image-commands.c:1306
 msgid "Resizing"
 msgstr "Méret módosítása"
 
-#: ../app/actions/image-commands.c:718
+#: ../app/actions/image-commands.c:719
 msgid "Set Image Print Resolution"
 msgstr "Kép nyomtatási felbontásának módosítása"
 
-#: ../app/actions/image-commands.c:784 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:785 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Tükrözés"
 
-#: ../app/actions/image-commands.c:808 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:809 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
 msgid "Rotating"
 msgstr "Elforgatás"
 
-#: ../app/actions/image-commands.c:835 ../app/actions/layers-commands.c:746
+#: ../app/actions/image-commands.c:836 ../app/actions/layers-commands.c:749
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nem lehet kivágni, mert a kijelölt terület üres."
 
-#: ../app/actions/image-commands.c:871
+#: ../app/actions/image-commands.c:874
 msgid "Cannot crop because the image has no content."
 msgstr "Nem lehet levágni, mert a képnek nincs tartalma."
 
-#: ../app/actions/image-commands.c:877
+#: ../app/actions/image-commands.c:880
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr "Nem lehet levágni, mert a kép már a tartalmára van vágva."
 
-#: ../app/actions/image-commands.c:1012
+#: ../app/actions/image-commands.c:1015
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Átalakítás RGB-re (%s)"
 
-#: ../app/actions/image-commands.c:1050
+#: ../app/actions/image-commands.c:1053
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Átalakítás szürkeárnyalatos módba (%s)"
 
-#: ../app/actions/image-commands.c:1112
+#: ../app/actions/image-commands.c:1115
 msgid "Converting to indexed colors"
 msgstr "Átalakítás indexelt színekre"
 
-#: ../app/actions/image-commands.c:1169
+#: ../app/actions/image-commands.c:1172
 #, c-format
 msgid "Converting image to %s"
 msgstr "Kép átalakítása erre: %s"
 
-#: ../app/actions/image-commands.c:1200
+#: ../app/actions/image-commands.c:1203
 msgid "Assign color profile"
 msgstr "Színprofil hozzárendelése"
 
-#: ../app/actions/image-commands.c:1246
+#: ../app/actions/image-commands.c:1249
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Átalakítás erre: „%s”"
 
-#: ../app/actions/image-commands.c:1344
+#: ../app/actions/image-commands.c:1348
 msgid "Change Print Size"
 msgstr "Nyomtatási méret módosítása"
 
-#: ../app/actions/image-commands.c:1386
+#: ../app/actions/image-commands.c:1390
 msgid "Scale Image"
 msgstr "Kép átméretezése"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1395 ../app/actions/layers-commands.c:1278
+#: ../app/actions/image-commands.c:1399 ../app/actions/layers-commands.c:1283
 #: ../app/dialogs/preferences-dialog.c:1345
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -4879,49 +4879,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Új réte_ggé"
 
-#: ../app/actions/layers-commands.c:231
+#: ../app/actions/layers-commands.c:232
 msgid "Layer Attributes"
 msgstr "Réteg tulajdonságai"
 
-#: ../app/actions/layers-commands.c:234
+#: ../app/actions/layers-commands.c:235
 msgid "Edit Layer Attributes"
 msgstr "Réteg tulajdonságainak szerkesztése"
 
-#: ../app/actions/layers-commands.c:289 ../app/actions/layers-commands.c:353
+#: ../app/actions/layers-commands.c:290 ../app/actions/layers-commands.c:354
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:855
 msgid "New Layer"
 msgstr "Új réteg"
 
-#: ../app/actions/layers-commands.c:292
+#: ../app/actions/layers-commands.c:293
 msgid "Create a New Layer"
 msgstr "Új réteg létrehozása"
 
-#: ../app/actions/layers-commands.c:393 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:394 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Látható"
 
-#: ../app/actions/layers-commands.c:657
+#: ../app/actions/layers-commands.c:658
 msgid "Set Layer Boundary Size"
 msgstr "Réteg-határvonal méretének beállítása"
 
-#: ../app/actions/layers-commands.c:714
+#: ../app/actions/layers-commands.c:717
 msgid "Scale Layer"
 msgstr "Réteg átméretezése"
 
-#: ../app/actions/layers-commands.c:756
+#: ../app/actions/layers-commands.c:759
 msgid "Crop Layer to Selection"
 msgstr "Réteg levágása a kijelöléshez"
 
-#: ../app/actions/layers-commands.c:785
+#: ../app/actions/layers-commands.c:789
 msgid "Crop Layer to Content"
 msgstr "Réteg levágása a tartalomhoz"
 
-#: ../app/actions/layers-commands.c:797
+#: ../app/actions/layers-commands.c:802
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nem lehet levágni, mert az aktív rétegnek nincs tartalma."
 
-#: ../app/actions/layers-commands.c:804
+#: ../app/actions/layers-commands.c:809
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr "Nem lehet levágni, mert az aktív réteg már a tartalmára van vágva."
 
@@ -5842,15 +5842,43 @@ msgstr ""
 "Valóban vissza kívánja állítani az összes eszközbeállítást az "
 "alapértelmezett értékekre?"
 
-#: ../app/actions/tool-preset-editor-actions.c:43
+#: ../app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
 msgstr "Eszköz előbeállítás szerkesztő menü"
 
-#: ../app/actions/tool-preset-editor-actions.c:51
+#: ../app/actions/tool-preset-editor-actions.c:48
+msgctxt "tool-preset-editor-action"
+msgid "_Save Tool Options to Preset"
+msgstr "Eszközbeállítások mentése ki_lépéskor"
+
+#: ../app/actions/tool-preset-editor-actions.c:49
+msgctxt "tool-preset-editor-action"
+msgid "Save the active tool options to this tool preset"
+msgstr "Az aktív eszköz beállításainak mentése ebbe az eszköz előbeállításba"
+
+#: ../app/actions/tool-preset-editor-actions.c:55
+msgctxt "tool-preset-editor-action"
+msgid "_Restore Tool Preset"
+msgstr "Eszköz előbeállítás _visszaállítása"
+
+#: ../app/actions/tool-preset-editor-actions.c:56
+msgctxt "tool-preset-editor-action"
+msgid "Restore this tool preset"
+msgstr "Ezen eszköz előbeállítás visszaállítása"
+
+#: ../app/actions/tool-preset-editor-actions.c:65
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
 msgstr "Aktív eszköz előbeállítás szerkesztése"
+
+#: ../app/actions/tool-preset-editor-commands.c:64
+#: ../app/actions/tool-presets-commands.c:67
+#, c-format
+msgid "Can't save '%s' tool options to an existing '%s' tool preset."
+msgstr ""
+"A(z) „%s” eszköz beállításai nem menthetőek a létező „%s” eszköz "
+"előbeállításba."
 
 #: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
@@ -5899,40 +5927,50 @@ msgstr "Eszköz előbeállítás-fájl helyének megjelenítése a fájlkezelőb
 
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
+msgid "_Save Tool Options to Preset"
+msgstr "Eszközbeállítások _mentése előbeállításba"
+
+#: ../app/actions/tool-presets-actions.c:75
+msgctxt "tool-presets-action"
+msgid "Save the active tool options to this tool preset"
+msgstr "Az aktív eszköz beállításainak mentése ebbe az eszköz előbeállításba"
+
+#: ../app/actions/tool-presets-actions.c:81
+msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
 msgstr "Eszköz előbeállítás _visszaállítása"
 
-#: ../app/actions/tool-presets-actions.c:75
+#: ../app/actions/tool-presets-actions.c:82
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
 msgstr "Ezen eszköz előbeállítás visszaállítása"
 
-#: ../app/actions/tool-presets-actions.c:80
+#: ../app/actions/tool-presets-actions.c:87
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
 msgstr "Eszköz előbeállítás _törlése"
 
-#: ../app/actions/tool-presets-actions.c:81
+#: ../app/actions/tool-presets-actions.c:88
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
 msgstr "Ezen eszköz előbeállítás törlése"
 
-#: ../app/actions/tool-presets-actions.c:86
+#: ../app/actions/tool-presets-actions.c:93
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
 msgstr "Eszköz előbeállítások _frissítése"
 
-#: ../app/actions/tool-presets-actions.c:87
+#: ../app/actions/tool-presets-actions.c:94
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
 msgstr "Eszköz előbeállítások frissítése"
 
-#: ../app/actions/tool-presets-actions.c:95
+#: ../app/actions/tool-presets-actions.c:102
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
 msgstr "Eszköz előbeállítás s_zerkesztése…"
 
-#: ../app/actions/tool-presets-actions.c:96
+#: ../app/actions/tool-presets-actions.c:103
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
 msgstr "Ezen eszköz előbeállítás szerkesztése"
@@ -7284,18 +7322,18 @@ msgstr ""
 "Hiba történt a(z) „%s” fájl elemzése közben. Az alapértelmezés szerinti "
 "értékek lépnek életbe. A beállításokról készült egy másolat ide: „%s”."
 
-#: ../app/config/gimpdialogconfig.c:263 ../app/core/gimplayer.c:323
+#: ../app/config/gimpdialogconfig.c:263 ../app/core/gimplayer.c:324
 msgid "Layer"
 msgstr "Réteg"
 
-#: ../app/config/gimpdialogconfig.c:315 ../app/core/gimpchannel.c:287
+#: ../app/config/gimpdialogconfig.c:315 ../app/core/gimpchannel.c:288
 #: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:105
 #: ../app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "Csatorna"
 
-#: ../app/config/gimpdialogconfig.c:330 ../app/vectors/gimpvectors.c:222
+#: ../app/config/gimpdialogconfig.c:330 ../app/vectors/gimpvectors.c:223
 #: ../app/widgets/gimpvectorstreeview.c:254
 msgid "Path"
 msgstr "Útvonal"
@@ -9037,7 +9075,7 @@ msgstr "„%s” törlése sikertelen: %s"
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:358 ../app/core/gimpcontext.c:711
 #: ../app/dialogs/preferences-dialog.c:2725
-#: ../app/tools/gimppaintoptions-gui.c:215
+#: ../app/tools/gimppaintoptions-gui.c:219
 msgid "Dynamics"
 msgstr "Dinamika"
 
@@ -9132,7 +9170,7 @@ msgstr "„%s” mappa létrehozása…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Nem lehet létrehozni „%s” mappát: %s"
 
-#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:334
+#: ../app/core/gimp-utils.c:553 ../app/core/gimpfilloptions.c:329
 msgid "No patterns available for this operation."
 msgstr "Nincs felhasználható minta a művelethez."
 
@@ -9297,7 +9335,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Lekerekített téglalap kijelölése"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:331
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:332
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa csatorna kijelöléssé alakítása"
@@ -9323,148 +9361,148 @@ msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Kijelölés indexelt szín szerint"
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:289
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Csatorna átnevezése"
 
-#: ../app/core/gimpchannel.c:289
+#: ../app/core/gimpchannel.c:290
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Csatorna áthelyezése"
 
-#: ../app/core/gimpchannel.c:290
+#: ../app/core/gimpchannel.c:291
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "Csatorna átméretezése"
 
-#: ../app/core/gimpchannel.c:291
+#: ../app/core/gimpchannel.c:292
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Csatorna méretének módosítása"
 
-#: ../app/core/gimpchannel.c:292
+#: ../app/core/gimpchannel.c:293
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Csatorna tükrözése"
 
-#: ../app/core/gimpchannel.c:293
+#: ../app/core/gimpchannel.c:294
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Csatorna forgatása"
 
-#: ../app/core/gimpchannel.c:294 ../app/core/gimpdrawable-transform.c:989
+#: ../app/core/gimpchannel.c:295 ../app/core/gimpdrawable-transform.c:989
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Csatorna átalakítása"
 
-#: ../app/core/gimpchannel.c:295 ../app/core/gimpchannel.c:330
+#: ../app/core/gimpchannel.c:296 ../app/core/gimpchannel.c:331
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Csatorna kitöltése"
 
-#: ../app/core/gimpchannel.c:296
+#: ../app/core/gimpchannel.c:297
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Csatorna körberajzolása"
 
-#: ../app/core/gimpchannel.c:297 ../app/core/gimpselection.c:652
+#: ../app/core/gimpchannel.c:298 ../app/core/gimpselection.c:655
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Csatorna kijelöléssé alakítása"
 
-#: ../app/core/gimpchannel.c:298
+#: ../app/core/gimpchannel.c:299
 msgctxt "undo-type"
 msgid "Reorder Channel"
 msgstr "Csatorna átrendezése"
 
-#: ../app/core/gimpchannel.c:299
+#: ../app/core/gimpchannel.c:300
 msgctxt "undo-type"
 msgid "Raise Channel"
 msgstr "Csatorna feljebb helyezése"
 
-#: ../app/core/gimpchannel.c:300
+#: ../app/core/gimpchannel.c:301
 msgctxt "undo-type"
 msgid "Raise Channel to Top"
 msgstr "Csatorna legfelülre helyezése"
 
-#: ../app/core/gimpchannel.c:301
+#: ../app/core/gimpchannel.c:302
 msgctxt "undo-type"
 msgid "Lower Channel"
 msgstr "Csatorna lejjebb helyezése"
 
-#: ../app/core/gimpchannel.c:302
+#: ../app/core/gimpchannel.c:303
 msgctxt "undo-type"
 msgid "Lower Channel to Bottom"
 msgstr "Csatorna legalulra helyezése"
 
-#: ../app/core/gimpchannel.c:303
+#: ../app/core/gimpchannel.c:304
 msgid "Channel cannot be raised higher."
 msgstr "A csatorna tovább nem emelhető."
 
-#: ../app/core/gimpchannel.c:304
+#: ../app/core/gimpchannel.c:305
 msgid "Channel cannot be lowered more."
 msgstr "A csatorna tovább nem süllyeszthető."
 
-#: ../app/core/gimpchannel.c:327
+#: ../app/core/gimpchannel.c:328
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Csatorna lágy szélűvé tétele"
 
-#: ../app/core/gimpchannel.c:328
+#: ../app/core/gimpchannel.c:329
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Csatorna élesítése"
 
-#: ../app/core/gimpchannel.c:329
+#: ../app/core/gimpchannel.c:330
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Csatorna ürítése"
 
-#: ../app/core/gimpchannel.c:331
+#: ../app/core/gimpchannel.c:332
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Csatorna megfordítása"
 
-#: ../app/core/gimpchannel.c:332
+#: ../app/core/gimpchannel.c:333
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Csatorna keretezése"
 
-#: ../app/core/gimpchannel.c:333
+#: ../app/core/gimpchannel.c:334
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Csatorna növelése"
 
-#: ../app/core/gimpchannel.c:334
+#: ../app/core/gimpchannel.c:335
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Csatorna szűkítése"
 
-#: ../app/core/gimpchannel.c:335
+#: ../app/core/gimpchannel.c:336
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Csatorna elárasztása"
 
-#: ../app/core/gimpchannel.c:836
+#: ../app/core/gimpchannel.c:840
 msgid "Cannot fill empty channel."
 msgstr "Üres csatorna nem tölthető ki."
 
-#: ../app/core/gimpchannel.c:872
+#: ../app/core/gimpchannel.c:876
 msgid "Cannot stroke empty channel."
 msgstr "Üres csatorna körvonala nem rajzolható meg."
 
-#: ../app/core/gimpchannel.c:1783
+#: ../app/core/gimpchannel.c:1787
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Csatornaszín beállítása"
 
-#: ../app/core/gimpchannel.c:1837
+#: ../app/core/gimpchannel.c:1841
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Csatorna átlátszatlanság beállítása"
 
-#: ../app/core/gimpchannel.c:1934 ../app/core/gimpselection.c:167
+#: ../app/core/gimpchannel.c:1938 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Kijelölési maszk"
 
@@ -9495,7 +9533,7 @@ msgstr "Rajzolási mód"
 
 #: ../app/core/gimpcontext.c:704 ../app/core/gimpcontext.c:705
 #: ../app/tools/gimpmybrushoptions-gui.c:54
-#: ../app/tools/gimppaintoptions-gui.c:155
+#: ../app/tools/gimppaintoptions-gui.c:159
 msgid "Brush"
 msgstr "Ecset"
 
@@ -9513,7 +9551,7 @@ msgid "Pattern"
 msgstr "Minta"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:364
+#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:368
 msgid "Gradient"
 msgstr "Színátmenet"
 
@@ -9554,11 +9592,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:557 ../app/core/gimpdatafactory.c:560
-#: ../app/core/gimpitem.c:502 ../app/core/gimpitem.c:505
+#: ../app/core/gimpitem.c:503 ../app/core/gimpitem.c:506
 msgid "copy"
 msgstr "másolás"
 
-#: ../app/core/gimpdatafactory.c:569 ../app/core/gimpitem.c:513
+#: ../app/core/gimpdatafactory.c:569 ../app/core/gimpitem.c:514
 #, c-format
 msgid "%s copy"
 msgstr "%s másolata"
@@ -9616,7 +9654,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:520
+#: ../app/core/gimpdrawable.c:522
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Méretezés"
@@ -9648,11 +9686,11 @@ msgstr "Lebegő kijelölés"
 msgid "Computing alpha of unknown pixels"
 msgstr "Az ismeretlen képpontok alfájának számítása"
 
-#: ../app/core/gimpdrawable-fill.c:158 ../app/vectors/gimpvectors.c:644
+#: ../app/core/gimpdrawable-fill.c:205 ../app/vectors/gimpvectors.c:646
 msgid "Not enough points to fill"
 msgstr "Nincs elég pont a kitöltéshez"
 
-#: ../app/core/gimpdrawable-fill.c:227
+#: ../app/core/gimpdrawable-fill.c:274
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Körvonal megrajzolása"
@@ -9669,7 +9707,7 @@ msgid "Offset Drawable"
 msgstr "Rajzfelület eltolása"
 
 #: ../app/core/gimpdrawable-stroke.c:111
-#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:666
+#: ../app/paint/gimppaintcore-stroke.c:333 ../app/vectors/gimpvectors.c:668
 msgid "Not enough points to stroke"
 msgstr "Nincs elég pont a körberajzoláshoz"
 
@@ -9683,7 +9721,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Forgatás"
 
-#: ../app/core/gimpdrawable-transform.c:987 ../app/core/gimplayer.c:330
+#: ../app/core/gimpdrawable-transform.c:987 ../app/core/gimplayer.c:331
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Réteg átalakítása"
@@ -9696,42 +9734,42 @@ msgstr "Átalakítás"
 msgid "Output type"
 msgstr "Kimenet típusa"
 
-#: ../app/core/gimpfilloptions.c:108
+#: ../app/core/gimpfilloptions.c:103
 msgid "Style"
 msgstr "Stílus"
 
-#: ../app/core/gimpfilloptions.c:116 ../app/pdb/gimppdbcontext.c:99
+#: ../app/core/gimpfilloptions.c:111 ../app/pdb/gimppdbcontext.c:99
 #: ../app/tools/gimpbucketfilloptions.c:132
 #: ../app/tools/gimpselectionoptions.c:80 ../app/tools/gimptextoptions.c:150
 msgid "Antialiasing"
 msgstr "Élsimítás"
 
-#: ../app/core/gimpfilloptions.c:308
+#: ../app/core/gimpfilloptions.c:303
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Kitöltés az előtérszínnel"
 
-#: ../app/core/gimpfilloptions.c:313
+#: ../app/core/gimpfilloptions.c:308
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Kitöltés a háttérszínnel"
 
-#: ../app/core/gimpfilloptions.c:318
+#: ../app/core/gimpfilloptions.c:313
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Kitöltés fehérrel"
 
-#: ../app/core/gimpfilloptions.c:324
+#: ../app/core/gimpfilloptions.c:319
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Kitöltés átlátszósággal"
 
-#: ../app/core/gimpfilloptions.c:340 ../app/core/gimpfilloptions.c:408
+#: ../app/core/gimpfilloptions.c:335 ../app/core/gimpfilloptions.c:403
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Kitöltés mintával"
 
-#: ../app/core/gimpfilloptions.c:405
+#: ../app/core/gimpfilloptions.c:400
 msgctxt "undo-type"
 msgid "Fill with Solid Color"
 msgstr "Kitöltés homogén színnel"
@@ -9834,41 +9872,41 @@ msgstr "Az első rácsvonal függőleges eltolása; lehet negatív szám is."
 msgid "Offset unit"
 msgstr "Eltolás mértékegysége"
 
-#: ../app/core/gimpgrouplayer.c:226
+#: ../app/core/gimpgrouplayer.c:227
 msgid "Layer Group"
 msgstr "Rétegcsoport"
 
-#: ../app/core/gimpgrouplayer.c:227
+#: ../app/core/gimpgrouplayer.c:228
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Rétegcsoport átnevezése"
 
-#: ../app/core/gimpgrouplayer.c:228
+#: ../app/core/gimpgrouplayer.c:229
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Rétegcsoport áthelyezése"
 
-#: ../app/core/gimpgrouplayer.c:229
+#: ../app/core/gimpgrouplayer.c:230
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Rétegcsoport átméretezése"
 
-#: ../app/core/gimpgrouplayer.c:230
+#: ../app/core/gimpgrouplayer.c:231
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Rétegcsoport méretének módosítása"
 
-#: ../app/core/gimpgrouplayer.c:231
+#: ../app/core/gimpgrouplayer.c:232
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Rétegcsoport tükrözése"
 
-#: ../app/core/gimpgrouplayer.c:232
+#: ../app/core/gimpgrouplayer.c:233
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Rétegcsoport forgatása"
 
-#: ../app/core/gimpgrouplayer.c:233
+#: ../app/core/gimpgrouplayer.c:234
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Rétegcsoport átalakítása"
@@ -10107,12 +10145,12 @@ msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Kép konvertálása szürkeárnyalatos módba"
 
-#: ../app/core/gimpimage-crop.c:71
+#: ../app/core/gimpimage-crop.c:72
 msgctxt "undo-type"
 msgid "Crop Image"
 msgstr "Kép vágása"
 
-#: ../app/core/gimpimage-crop.c:74 ../app/core/gimpimage-resize.c:89
+#: ../app/core/gimpimage-crop.c:75 ../app/core/gimpimage-resize.c:90
 msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Képméret módosítása"
@@ -10293,17 +10331,17 @@ msgstr[1] "%d réteg"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nem lehet megnyitni a(z) „%s” bélyegképet: %s"
 
-#: ../app/core/gimpitem.c:1911
+#: ../app/core/gimpitem.c:1915
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Élősködő hozzáadása"
 
-#: ../app/core/gimpitem.c:1921
+#: ../app/core/gimpitem.c:1925
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Élősködő hozzáadása az elemhez"
 
-#: ../app/core/gimpitem.c:1972 ../app/core/gimpitem.c:1979
+#: ../app/core/gimpitem.c:1976 ../app/core/gimpitem.c:1983
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Élősködő eltávolítása az elemből"
@@ -10321,7 +10359,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Lebegő kijelölés rögzítése"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:845
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:846
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -10334,76 +10372,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Lebegő kijelölést réteggé"
 
-#: ../app/core/gimplayer.c:324
+#: ../app/core/gimplayer.c:325
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Réteg átnevezése"
 
-#: ../app/core/gimplayer.c:325
+#: ../app/core/gimplayer.c:326
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Réteg áthelyezése"
 
-#: ../app/core/gimplayer.c:326
+#: ../app/core/gimplayer.c:327
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Réteg átméretezése"
 
-#: ../app/core/gimplayer.c:327
+#: ../app/core/gimplayer.c:328
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Réteg méretének módosítása"
 
-#: ../app/core/gimplayer.c:328
+#: ../app/core/gimplayer.c:329
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Réteg tükrözése"
 
-#: ../app/core/gimplayer.c:329
+#: ../app/core/gimplayer.c:330
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Réteg forgatása"
 
-#: ../app/core/gimplayer.c:332
+#: ../app/core/gimplayer.c:333
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Réteg átrendezése"
 
-#: ../app/core/gimplayer.c:333
+#: ../app/core/gimplayer.c:334
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Réteg feljebb helyezése"
 
-#: ../app/core/gimplayer.c:334
+#: ../app/core/gimplayer.c:335
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Réteg legfelülre helyezése"
 
-#: ../app/core/gimplayer.c:335
+#: ../app/core/gimplayer.c:336
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Réteg lejjebb helyezése"
 
-#: ../app/core/gimplayer.c:336
+#: ../app/core/gimplayer.c:337
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Réteg legalulra helyezése"
 
-#: ../app/core/gimplayer.c:337
+#: ../app/core/gimplayer.c:338
 msgid "Layer cannot be raised higher."
 msgstr "A réteget nem lehet feljebb helyezni."
 
-#: ../app/core/gimplayer.c:338
+#: ../app/core/gimplayer.c:339
 msgid "Layer cannot be lowered more."
 msgstr "A réteget nem lehet még lejjebb helyezni."
 
-#: ../app/core/gimplayer.c:566 ../app/core/gimplayer.c:1440
+#: ../app/core/gimplayer.c:567 ../app/core/gimplayer.c:1449
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "%s maszk"
 
-#: ../app/core/gimplayer.c:605
+#: ../app/core/gimplayer.c:606
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -10412,61 +10450,61 @@ msgstr ""
 "Lebegő kijelölés\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1343
+#: ../app/core/gimplayer.c:1352
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nem lehet rétegmaszkot hozzáadni, mert már van egy rétegmaszk."
 
-#: ../app/core/gimplayer.c:1354
+#: ../app/core/gimplayer.c:1363
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Nem lehet a megadott rétegtől eltérő dimenziójú rétegmaszkot hozzáadni."
 
-#: ../app/core/gimplayer.c:1360
+#: ../app/core/gimplayer.c:1369
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Rétegmaszk hozzáadása"
 
-#: ../app/core/gimplayer.c:1491
+#: ../app/core/gimplayer.c:1500
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alfa átvitele a maszkra"
 
-#: ../app/core/gimplayer.c:1642
+#: ../app/core/gimplayer.c:1651
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Rétegmaszk alkalmazása"
 
-#: ../app/core/gimplayer.c:1643
+#: ../app/core/gimplayer.c:1652
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Rétegmaszk törlése"
 
-#: ../app/core/gimplayer.c:1748
+#: ../app/core/gimplayer.c:1757
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Rétegmaszk bekapcsolása"
 
-#: ../app/core/gimplayer.c:1749
+#: ../app/core/gimplayer.c:1758
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Rétegmaszk kikapcsolása"
 
-#: ../app/core/gimplayer.c:1828
+#: ../app/core/gimplayer.c:1837
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Rétegmaszk megjelenítése"
 
-#: ../app/core/gimplayer.c:1904
+#: ../app/core/gimplayer.c:1913
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alfa csatorna hozzáadása"
 
-#: ../app/core/gimplayer.c:1936
+#: ../app/core/gimplayer.c:1945
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alfa csatorna eltávolítása"
 
-#: ../app/core/gimplayer.c:1956
+#: ../app/core/gimplayer.c:1966
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Réteg kép-méretűvé alakítása"
@@ -10610,88 +10648,88 @@ msgstr ""
 "A(z) „%s” eljárás nem indítható. Lehetséges, hogy a megfelelő bővítmény "
 "hibába ütközött."
 
-#: ../app/core/gimpselection.c:168
+#: ../app/core/gimpselection.c:169
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Kijelölés áthelyezése"
 
-#: ../app/core/gimpselection.c:169
+#: ../app/core/gimpselection.c:170
 msgctxt "undo-type"
 msgid "Fill Selection"
 msgstr "Kijelölés kitöltése"
 
-#: ../app/core/gimpselection.c:170
+#: ../app/core/gimpselection.c:171
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Kijelölés körberajzolása"
 
-#: ../app/core/gimpselection.c:187
+#: ../app/core/gimpselection.c:188
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Kijelölés lágy szélűvé tétele"
 
-#: ../app/core/gimpselection.c:188
+#: ../app/core/gimpselection.c:189
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Kijelölés élesítése"
 
-#: ../app/core/gimpselection.c:189
+#: ../app/core/gimpselection.c:190
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Kijelölés megszüntetése"
 
-#: ../app/core/gimpselection.c:190
+#: ../app/core/gimpselection.c:191
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Összes kijelölése"
 
-#: ../app/core/gimpselection.c:191
+#: ../app/core/gimpselection.c:192
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Kijelölés megfordítása"
 
-#: ../app/core/gimpselection.c:192
+#: ../app/core/gimpselection.c:193
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Kijelölés keretezése"
 
-#: ../app/core/gimpselection.c:193
+#: ../app/core/gimpselection.c:194
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Kijelölés növelése"
 
-#: ../app/core/gimpselection.c:194
+#: ../app/core/gimpselection.c:195
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Kijelölés szűkítése"
 
-#: ../app/core/gimpselection.c:195
+#: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
 msgid "Remove Holes"
 msgstr "Lyukak eltávolítása"
 
-#: ../app/core/gimpselection.c:301
+#: ../app/core/gimpselection.c:304
 msgid "There is no selection to fill."
 msgstr "Nincs kitölthető kijelölés."
 
-#: ../app/core/gimpselection.c:337
+#: ../app/core/gimpselection.c:340
 msgid "There is no selection to stroke."
 msgstr "Nincs körberajzolható kijelölés."
 
-#: ../app/core/gimpselection.c:748
+#: ../app/core/gimpselection.c:751
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nem lehet kivágni vagy másolni, mert a kijelölt terület üres."
 
-#: ../app/core/gimpselection.c:866
+#: ../app/core/gimpselection.c:869
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nem lehet lebegő kijelölést alkalmazni, mert a kijelölt terület üres."
 
-#: ../app/core/gimpselection.c:873
+#: ../app/core/gimpselection.c:876
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Lebegő kijelölés"
 
-#: ../app/core/gimpselection.c:891
+#: ../app/core/gimpselection.c:894
 msgid "Floated Layer"
 msgstr "Lebegő réteg"
 
@@ -11764,7 +11802,7 @@ msgstr "Csatorna eltolása"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:127 ../app/dialogs/offset-dialog.c:161
-#: ../app/dialogs/resize-dialog.c:202 ../app/tools/gimpalignoptions.c:100
+#: ../app/dialogs/resize-dialog.c:210 ../app/tools/gimpalignoptions.c:100
 #: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpblendoptions.c:79
 #: ../app/widgets/gimpgrideditor.c:206
 msgid "Offset"
@@ -11775,11 +11813,11 @@ msgstr "Eltolás"
 msgid "_Offset"
 msgstr "_Eltolás"
 
-#: ../app/dialogs/offset-dialog.c:190 ../app/dialogs/resize-dialog.c:231
+#: ../app/dialogs/offset-dialog.c:190 ../app/dialogs/resize-dialog.c:239
 msgid "_X:"
 msgstr "_X:"
 
-#: ../app/dialogs/offset-dialog.c:192 ../app/dialogs/resize-dialog.c:232
+#: ../app/dialogs/offset-dialog.c:192 ../app/dialogs/resize-dialog.c:240
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -11804,79 +11842,83 @@ msgstr "Kitöltés a _háttérszínnel"
 msgid "Make _transparent"
 msgstr "Á_tlátszóvá tétel"
 
-#: ../app/dialogs/palette-import-dialog.c:154
+#: ../app/dialogs/palette-import-dialog.c:156
 msgid "Import a New Palette"
 msgstr "Új paletta importálása"
 
-#: ../app/dialogs/palette-import-dialog.c:164
+#: ../app/dialogs/palette-import-dialog.c:166
 msgid "_Import"
 msgstr "_Importálás"
 
 #. The "Source" frame
-#: ../app/dialogs/palette-import-dialog.c:203
+#: ../app/dialogs/palette-import-dialog.c:205
 msgid "Select Source"
 msgstr "Forrás kiválasztása"
 
-#: ../app/dialogs/palette-import-dialog.c:214
+#: ../app/dialogs/palette-import-dialog.c:216
 #: ../app/dialogs/preferences-dialog.c:1369
 msgid "_Gradient"
 msgstr "Szí_nátmenet"
 
-#: ../app/dialogs/palette-import-dialog.c:225
+#: ../app/dialogs/palette-import-dialog.c:227
 msgid "I_mage"
 msgstr "_Kép"
 
-#: ../app/dialogs/palette-import-dialog.c:239
+#: ../app/dialogs/palette-import-dialog.c:241
 msgid "Sample _Merged"
 msgstr "Mintake_verés"
 
-#: ../app/dialogs/palette-import-dialog.c:251
+#: ../app/dialogs/palette-import-dialog.c:253
 msgid "_Selected Pixels only"
 msgstr "Csak a ki_jelölt képpontok"
 
-#: ../app/dialogs/palette-import-dialog.c:263
+#: ../app/dialogs/palette-import-dialog.c:265
 msgid "Palette _file"
 msgstr "Paletta_fájl"
 
 #. Palette file name entry
-#: ../app/dialogs/palette-import-dialog.c:292
+#: ../app/dialogs/palette-import-dialog.c:294
 msgid "Select Palette File"
 msgstr "Palettafájl kiválasztása"
 
 #. The "Import" frame
-#: ../app/dialogs/palette-import-dialog.c:303
+#: ../app/dialogs/palette-import-dialog.c:305
 msgid "Import Options"
 msgstr "Importálási beállítások"
 
-#: ../app/dialogs/palette-import-dialog.c:317
+#: ../app/dialogs/palette-import-dialog.c:319
 msgid "New import"
 msgstr "Új importálás"
 
-#: ../app/dialogs/palette-import-dialog.c:319
+#: ../app/dialogs/palette-import-dialog.c:321
 msgid "Palette _name:"
 msgstr "P_aletta neve:"
 
-#: ../app/dialogs/palette-import-dialog.c:325
+#: ../app/dialogs/palette-import-dialog.c:327
 msgid "N_umber of colors:"
 msgstr "Színek s_záma:"
 
-#: ../app/dialogs/palette-import-dialog.c:338
+#: ../app/dialogs/palette-import-dialog.c:340
 msgid "C_olumns:"
 msgstr "_Oszlopok:"
 
-#: ../app/dialogs/palette-import-dialog.c:350
+#: ../app/dialogs/palette-import-dialog.c:352
 msgid "I_nterval:"
 msgstr "In_tervallum:"
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:361
+#: ../app/dialogs/palette-import-dialog.c:363
 #: ../app/tools/gimpforegroundselecttool.c:1229
 msgid "Preview"
 msgstr "Előnézet"
 
-#: ../app/dialogs/palette-import-dialog.c:382
+#: ../app/dialogs/palette-import-dialog.c:384
 msgid "The selected source contains no colors."
 msgstr "A kijelölt forrásban nincsenek színek."
+
+#: ../app/dialogs/palette-import-dialog.c:469
+msgid "There is no palette to import."
+msgstr "Nincs importálható paletta."
 
 #: ../app/dialogs/preferences-dialog.c:269
 msgid "Reset All Preferences"
@@ -13230,19 +13272,27 @@ msgstr "Ezen kép elmentése"
 msgid "Save as"
 msgstr "Mentés másként"
 
-#: ../app/dialogs/resize-dialog.c:121
+#: ../app/dialogs/resize-dialog.c:127
 msgid "Canvas Size"
 msgstr "Rajzvászon mérete"
 
-#: ../app/dialogs/resize-dialog.c:132 ../app/dialogs/scale-dialog.c:109
+#: ../app/dialogs/resize-dialog.c:139 ../app/dialogs/scale-dialog.c:109
 msgid "Layer Size"
 msgstr "Réteg mérete"
 
-#: ../app/dialogs/resize-dialog.c:303
+#: ../app/dialogs/resize-dialog.c:140
+msgid "Fill With"
+msgstr "Kitöltés ezzel"
+
+#: ../app/dialogs/resize-dialog.c:311
 msgid "Resize _layers:"
 msgstr "Rétegek mér_etének módosítása:"
 
-#: ../app/dialogs/resize-dialog.c:318
+#: ../app/dialogs/resize-dialog.c:347 ../app/widgets/gimptemplateeditor.c:431
+msgid "_Fill with:"
+msgstr "Kitöltés _ezzel:"
+
+#: ../app/dialogs/resize-dialog.c:356
 msgid "Resize _text layers"
 msgstr "_Szövegrétegek átméretezése"
 
@@ -14016,7 +14066,7 @@ msgid "Turn colors into shades of gray"
 msgstr "Színek átalakítása a szürke árnyalataivá"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
-#: ../app/tools/gimppaintoptions-gui.c:113 ../app/widgets/gimpdeviceinfo.c:132
+#: ../app/tools/gimppaintoptions-gui.c:117 ../app/widgets/gimpdeviceinfo.c:132
 #: ../app/widgets/gimplayertreeview.c:270
 msgid "Mode"
 msgstr "Mód"
@@ -14349,7 +14399,7 @@ msgid "Reverse direction of fading"
 msgstr "Halványítás irányának megfordítása"
 
 #: ../app/paint/gimppaintoptions.c:326 ../app/tools/gimpblendoptions.c:92
-#: ../app/tools/gimpblendoptions.c:245 ../app/tools/gimppaintoptions-gui.c:347
+#: ../app/tools/gimpblendoptions.c:245 ../app/tools/gimppaintoptions-gui.c:351
 msgid "Repeat"
 msgstr "Ismétlés"
 
@@ -14974,260 +15024,260 @@ msgstr "Lencse alkalmazása"
 msgid "Autocrop image"
 msgstr "Kép automatikus vágása"
 
-#: ../app/pdb/plug-in-compat-cmds.c:659
+#: ../app/pdb/plug-in-compat-cmds.c:660
 msgid "Autocrop layer"
 msgstr "Réteg automatikus vágása"
 
-#: ../app/pdb/plug-in-compat-cmds.c:705
+#: ../app/pdb/plug-in-compat-cmds.c:707
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "Kontraszt kiterjesztése (HSV)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:859
+#: ../app/pdb/plug-in-compat-cmds.c:861
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Kontraszt kiterjesztése"
 
-#: ../app/pdb/plug-in-compat-cmds.c:938
+#: ../app/pdb/plug-in-compat-cmds.c:940
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Csatornakeverő"
 
-#: ../app/pdb/plug-in-compat-cmds.c:982
+#: ../app/pdb/plug-in-compat-cmds.c:984
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Színből alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1028
+#: ../app/pdb/plug-in-compat-cmds.c:1030
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "A „matrix” tömb csak %d tagot tartalmaz, 25-nek kell lennie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1036
+#: ../app/pdb/plug-in-compat-cmds.c:1038
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "A „channels” tömb csak %d tagot tartalmaz, 5-nek kell lennie"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1108
+#: ../app/pdb/plug-in-compat-cmds.c:1110
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Konvolúciós mátrix"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1170
+#: ../app/pdb/plug-in-compat-cmds.c:1172
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Kubizmus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1215
+#: ../app/pdb/plug-in-compat-cmds.c:1217
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Váltottsorosság megszüntetése"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1294
+#: ../app/pdb/plug-in-compat-cmds.c:1296
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "Diffrakciós minták"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1449
+#: ../app/pdb/plug-in-compat-cmds.c:1451
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Szél"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1493
+#: ../app/pdb/plug-in-compat-cmds.c:1495
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Gravírozás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1566
+#: ../app/pdb/plug-in-compat-cmds.c:1568
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Színfelcserélés"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1614
+#: ../app/pdb/plug-in-compat-cmds.c:1616
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Lencsecsillogás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1798
+#: ../app/pdb/plug-in-compat-cmds.c:1800
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Katedrálüveg"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1851
+#: ../app/pdb/plug-in-compat-cmds.c:1853
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Zaj (HSV)"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2130 ../app/pdb/plug-in-compat-cmds.c:2185
+#: ../app/pdb/plug-in-compat-cmds.c:2132 ../app/pdb/plug-in-compat-cmds.c:2187
 msgid "Set color profile"
 msgstr "Színprofil beállítása"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2240
+#: ../app/pdb/plug-in-compat-cmds.c:2242
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Illúzió"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2277
+#: ../app/pdb/plug-in-compat-cmds.c:2279
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2353
+#: ../app/pdb/plug-in-compat-cmds.c:2355
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Lencse-torzítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2393
+#: ../app/pdb/plug-in-compat-cmds.c:2395
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Varrat nélküli csempe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2460
+#: ../app/pdb/plug-in-compat-cmds.c:2462
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "Labirintus"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2543 ../app/pdb/plug-in-compat-cmds.c:2627
+#: ../app/pdb/plug-in-compat-cmds.c:2545 ../app/pdb/plug-in-compat-cmds.c:2629
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Elmosás elmozdítással"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2728
+#: ../app/pdb/plug-in-compat-cmds.c:2730
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mozaik"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2790
+#: ../app/pdb/plug-in-compat-cmds.c:2792
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Szupernóva"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2880
+#: ../app/pdb/plug-in-compat-cmds.c:2882
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Papírcsempe"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2921 ../app/pdb/plug-in-compat-cmds.c:2964
+#: ../app/pdb/plug-in-compat-cmds.c:2923 ../app/pdb/plug-in-compat-cmds.c:2966
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixelesítés"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3015
+#: ../app/pdb/plug-in-compat-cmds.c:3017
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plazma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3069
+#: ../app/pdb/plug-in-compat-cmds.c:3071
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Polárkoordináták"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3109
+#: ../app/pdb/plug-in-compat-cmds.c:3111
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Vörös szem eltávolítása"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3162
+#: ../app/pdb/plug-in-compat-cmds.c:3164
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Véletlenszerű zaj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3215
+#: ../app/pdb/plug-in-compat-cmds.c:3217
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Véletlenszerű kiválasztás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3268
+#: ../app/pdb/plug-in-compat-cmds.c:3270
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Véletlenszerű elmosás csúsztatással"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3343
+#: ../app/pdb/plug-in-compat-cmds.c:3345
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB zaj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3466
+#: ../app/pdb/plug-in-compat-cmds.c:3468
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Zajosítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3510
+#: ../app/pdb/plug-in-compat-cmds.c:3512
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "Szelektív Gauss-elmosás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3554
+#: ../app/pdb/plug-in-compat-cmds.c:3556
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Félig-lapítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3597
+#: ../app/pdb/plug-in-compat-cmds.c:3599
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Eltolás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3700
+#: ../app/pdb/plug-in-compat-cmds.c:3702
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Szinusz"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3748
+#: ../app/pdb/plug-in-compat-cmds.c:3750
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3809
+#: ../app/pdb/plug-in-compat-cmds.c:3811
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Egyenletes zaj"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3853
+#: ../app/pdb/plug-in-compat-cmds.c:3855
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Szórás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3894
+#: ../app/pdb/plug-in-compat-cmds.c:3896
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Alfa-küszöb"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3940
+#: ../app/pdb/plug-in-compat-cmds.c:3942
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Videó"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3977
+#: ../app/pdb/plug-in-compat-cmds.c:3979
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Érték invertálása"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4081
+#: ../app/pdb/plug-in-compat-cmds.c:4083
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Érték terjesztése"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4128
+#: ../app/pdb/plug-in-compat-cmds.c:4130
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Tágítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4175
+#: ../app/pdb/plug-in-compat-cmds.c:4177
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Zsugorítás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4238
+#: ../app/pdb/plug-in-compat-cmds.c:4240
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Hullámok"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4286
+#: ../app/pdb/plug-in-compat-cmds.c:4288
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Csavarás és összehúzás"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4338
+#: ../app/pdb/plug-in-compat-cmds.c:4340
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Szél"
@@ -15470,11 +15520,11 @@ msgstr "Szöveginformáció eldobása"
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Mivel betűkészlet nem található, ezért a szövegfunkció nem elérhető."
 
-#: ../app/text/gimptextlayer.c:694
+#: ../app/text/gimptextlayer.c:696
 msgid "Empty Text Layer"
 msgstr "Üres szövegréteg"
 
-#: ../app/text/gimptextlayer.c:747
+#: ../app/text/gimptextlayer.c:749
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -15672,7 +15722,7 @@ msgstr "Max. mélység"
 msgid "Threshold"
 msgstr "Küszöb"
 
-#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:369
+#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:373
 msgid "Edit this gradient"
 msgstr "Színátmenet szerkesztése"
 
@@ -16153,34 +16203,44 @@ msgstr "elmosás: %s"
 msgid "Convolve Type  (%s)"
 msgstr "Mázolás típusa  (%s)"
 
-#: ../app/tools/gimpcropoptions.c:77
+#: ../app/tools/gimpcropoptions.c:78
 #: ../app/tools/gimprectangleselectoptions.c:78
 #: ../app/tools/gimptextoptions.c:130
 msgid "Highlight"
 msgstr "Kiemelés"
 
-#: ../app/tools/gimpcropoptions.c:78
+#: ../app/tools/gimpcropoptions.c:79
 #: ../app/tools/gimprectangleselectoptions.c:79
 msgid "Dim everything outside selection"
 msgstr "A kijelölésen kívüli részek elsötétítése"
 
-#: ../app/tools/gimpcropoptions.c:84
+#: ../app/tools/gimpcropoptions.c:85
 msgid "Current layer only"
 msgstr "Csak a jelenlegi réteget"
 
-#: ../app/tools/gimpcropoptions.c:85
+#: ../app/tools/gimpcropoptions.c:86
 msgid "Crop only currently selected layer"
 msgstr "Csak a jelenlegi réteg vágása"
 
-#: ../app/tools/gimpcropoptions.c:91
+#: ../app/tools/gimpcropoptions.c:92
 msgid "Allow growing"
 msgstr "Növelés engedélyezése"
 
-#: ../app/tools/gimpcropoptions.c:92
+#: ../app/tools/gimpcropoptions.c:93
 msgid "Allow resizing canvas by dragging cropping frame beyond image boundary"
 msgstr ""
 "Engedélyezi a rajzvászon növelését, ha a vágás határát a képen kívülre "
 "helyezi"
+
+#: ../app/tools/gimpcropoptions.c:100 ../app/tools/gimpcropoptions.c:192
+msgid "Fill with"
+msgstr "Kitöltés ezzel"
+
+#: ../app/tools/gimpcropoptions.c:101
+msgid "How to fill new areas created by 'Allow growing'"
+msgstr ""
+"Hogyan kerüljenek kitöltésre a „Növekedés engedélyezése” funkcióval "
+"létrejött új területek"
 
 #: ../app/tools/gimpcroptool.c:117
 msgid "Crop"
@@ -16833,59 +16893,59 @@ msgstr ""
 "A kijelölés leendő körvonalának megjelenítése a vezérlőpont áthelyezése "
 "közben"
 
-#: ../app/tools/gimpiscissorstool.c:273
+#: ../app/tools/gimpiscissorstool.c:292
 msgid "Scissors"
 msgstr "Olló"
 
-#: ../app/tools/gimpiscissorstool.c:274
+#: ../app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr ""
 "„Olló” kijelölőeszköz: alakzatok kijelölése a szélek intelligens "
 "illesztésével"
 
-#: ../app/tools/gimpiscissorstool.c:275
+#: ../app/tools/gimpiscissorstool.c:294
 msgid "Intelligent _Scissors"
 msgstr "_Intelligens olló"
 
-#: ../app/tools/gimpiscissorstool.c:935
+#: ../app/tools/gimpiscissorstool.c:906
 msgid "Click to remove this point"
 msgstr "Kattintson a pont eltávolításához"
 
-#: ../app/tools/gimpiscissorstool.c:941 ../app/tools/gimpmeasuretool.c:608
+#: ../app/tools/gimpiscissorstool.c:912 ../app/tools/gimpmeasuretool.c:608
 msgid "Click-Drag to move this point"
 msgstr "A pont áthelyezése: kattintás+húzás"
 
-#: ../app/tools/gimpiscissorstool.c:943 ../app/tools/gimpiscissorstool.c:1012
+#: ../app/tools/gimpiscissorstool.c:914 ../app/tools/gimpiscissorstool.c:983
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: automatikus illesztés kikapcsolása"
 
-#: ../app/tools/gimpiscissorstool.c:944
+#: ../app/tools/gimpiscissorstool.c:915
 #, c-format
 msgid "%s: remove this point"
 msgstr "%s: a pont eltávolítása"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:935
 msgid "Click to close the curve"
 msgstr "A görbe lezárása: kattintással"
 
-#: ../app/tools/gimpiscissorstool.c:970
+#: ../app/tools/gimpiscissorstool.c:941
 msgid "Click to add a point on this segment"
 msgstr "Pont felvétele a szakaszra: kattintással"
 
-#: ../app/tools/gimpiscissorstool.c:983
+#: ../app/tools/gimpiscissorstool.c:954
 msgid "Click or press Enter to convert to a selection"
 msgstr "Kijelöléssé alakítás: kattintás vagy Enter"
 
-#: ../app/tools/gimpiscissorstool.c:993
+#: ../app/tools/gimpiscissorstool.c:964
 msgid "Press Enter to convert to a selection"
 msgstr "Kijelöléssé alakítás: Enter"
 
-#: ../app/tools/gimpiscissorstool.c:1009
+#: ../app/tools/gimpiscissorstool.c:980
 msgid "Click or Click-Drag to add a point"
 msgstr "Pont felvétele: kattintás vagy kattintás+húzás"
 
-#: ../app/tools/gimpiscissorstool.c:1132 ../app/tools/gimpiscissorstool.c:1144
+#: ../app/tools/gimpiscissorstool.c:1103 ../app/tools/gimpiscissorstool.c:1115
 msgid "Modify Scissors Curve"
 msgstr "Olló görbe módosítása"
 
@@ -17215,51 +17275,51 @@ msgstr "„Ecset” eszköz: finom vonások festése ecsettel"
 msgid "_Paintbrush"
 msgstr "_Ecset"
 
-#: ../app/tools/gimppaintoptions-gui.c:158
+#: ../app/tools/gimppaintoptions-gui.c:162
 msgid "Edit this brush"
 msgstr "Ecset szerkesztése"
 
-#: ../app/tools/gimppaintoptions-gui.c:166
+#: ../app/tools/gimppaintoptions-gui.c:170
 msgid "Reset size to brush's native size"
 msgstr "Méret visszaállítása az ecset eredeti méretére"
 
-#: ../app/tools/gimppaintoptions-gui.c:174
-msgid "Reset aspect ratio to brush's native"
+#: ../app/tools/gimppaintoptions-gui.c:178
+msgid "Reset aspect ratio to brush's native aspect ratio"
 msgstr "Méretarány visszaállítása az ecset eredeti méretarányára"
 
-#: ../app/tools/gimppaintoptions-gui.c:182
-msgid "Reset angle to zero"
-msgstr "Dőlésszög visszaállítása nullára"
+#: ../app/tools/gimppaintoptions-gui.c:186
+msgid "Reset angle to brush's native angle"
+msgstr "Szög visszaállítása az ecset eredeti szögére"
 
-#: ../app/tools/gimppaintoptions-gui.c:190
+#: ../app/tools/gimppaintoptions-gui.c:194
 msgid "Reset spacing to brush's native spacing"
 msgstr "Térköz visszaállítása az ecset eredeti térközére"
 
-#: ../app/tools/gimppaintoptions-gui.c:198
-msgid "Reset hardness to default"
-msgstr "Keménység visszaállítása az alapértelmezettre"
+#: ../app/tools/gimppaintoptions-gui.c:202
+msgid "Reset hardness to brush's native hardness"
+msgstr "Keménység visszaállítása az ecset eredeti keménységére"
 
-#: ../app/tools/gimppaintoptions-gui.c:206
+#: ../app/tools/gimppaintoptions-gui.c:210
 msgid "Reset force to default"
 msgstr "Erő visszaállítása az alapértelmezettre"
 
-#: ../app/tools/gimppaintoptions-gui.c:219
+#: ../app/tools/gimppaintoptions-gui.c:223
 msgid "Edit this dynamics"
 msgstr "Ecsetdinamika szerkesztése"
 
-#: ../app/tools/gimppaintoptions-gui.c:252
+#: ../app/tools/gimppaintoptions-gui.c:256
 msgid "Lock brush size to zoom"
 msgstr "Ecsetméret zárolása a nagyításhoz"
 
-#: ../app/tools/gimppaintoptions-gui.c:316
+#: ../app/tools/gimppaintoptions-gui.c:320
 msgid "Fade Options"
 msgstr "Halványulás beállításai"
 
-#: ../app/tools/gimppaintoptions-gui.c:359
+#: ../app/tools/gimppaintoptions-gui.c:363
 msgid "Color Options"
 msgstr "Színbeállítások"
 
-#: ../app/tools/gimppaintoptions-gui.c:579
+#: ../app/tools/gimppaintoptions-gui.c:615
 msgid "Link to brush default"
 msgstr "Összekapcsolás az ecset alapértelmezésével"
 
@@ -18432,102 +18492,102 @@ msgctxt "warp-behavior"
 msgid "Smooth warping"
 msgstr "Sima görbítés"
 
-#: ../app/vectors/gimpvectors.c:223
+#: ../app/vectors/gimpvectors.c:224
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Útvonal átnevezése"
 
-#: ../app/vectors/gimpvectors.c:224
+#: ../app/vectors/gimpvectors.c:225
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Útvonal áthelyezése"
 
-#: ../app/vectors/gimpvectors.c:225
+#: ../app/vectors/gimpvectors.c:226
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Útvonal átméretezése"
 
-#: ../app/vectors/gimpvectors.c:226
+#: ../app/vectors/gimpvectors.c:227
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Útvonal méretének módosítása"
 
-#: ../app/vectors/gimpvectors.c:227
+#: ../app/vectors/gimpvectors.c:228
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Útvonal tükrözése"
 
-#: ../app/vectors/gimpvectors.c:228
+#: ../app/vectors/gimpvectors.c:229
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Útvonal forgatása"
 
-#: ../app/vectors/gimpvectors.c:229
+#: ../app/vectors/gimpvectors.c:230
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Útvonal átalakítása"
 
-#: ../app/vectors/gimpvectors.c:230
+#: ../app/vectors/gimpvectors.c:231
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "Útvonal kitöltése"
 
-#: ../app/vectors/gimpvectors.c:231
+#: ../app/vectors/gimpvectors.c:232
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Útvonal körberajzolása"
 
-#: ../app/vectors/gimpvectors.c:232
+#: ../app/vectors/gimpvectors.c:233
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Útvonal kijelöléssé alakítása"
 
-#: ../app/vectors/gimpvectors.c:233
+#: ../app/vectors/gimpvectors.c:234
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Útvonal átrendezése"
 
-#: ../app/vectors/gimpvectors.c:234
+#: ../app/vectors/gimpvectors.c:235
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Útvonal feljebb helyezése"
 
-#: ../app/vectors/gimpvectors.c:235
+#: ../app/vectors/gimpvectors.c:236
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Útvonal legfelülre helyezése"
 
-#: ../app/vectors/gimpvectors.c:236
+#: ../app/vectors/gimpvectors.c:237
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Útvonal lejjebb helyezése"
 
-#: ../app/vectors/gimpvectors.c:237
+#: ../app/vectors/gimpvectors.c:238
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Útvonal legalulra helyezése"
 
-#: ../app/vectors/gimpvectors.c:238
+#: ../app/vectors/gimpvectors.c:239
 msgid "Path cannot be raised higher."
 msgstr "Az útvonalat nem lehet feljebb helyezni."
 
-#: ../app/vectors/gimpvectors.c:239
+#: ../app/vectors/gimpvectors.c:240
 msgid "Path cannot be lowered more."
 msgstr "Az útvonalat nem lehet még lejjebb helyezni."
 
-#: ../app/vectors/gimpvectors.c:454
+#: ../app/vectors/gimpvectors.c:455
 msgid "Move Path"
 msgstr "Útvonal áthelyezése"
 
-#: ../app/vectors/gimpvectors.c:553
+#: ../app/vectors/gimpvectors.c:555
 msgid "Flip Path"
 msgstr "Útvonal tükrözése"
 
-#: ../app/vectors/gimpvectors.c:584
+#: ../app/vectors/gimpvectors.c:586
 msgid "Rotate Path"
 msgstr "Útvonal forgatása"
 
-#: ../app/vectors/gimpvectors.c:613
+#: ../app/vectors/gimpvectors.c:615
 msgid "Transform Path"
 msgstr "Útvonal átalakítása"
 
@@ -19078,15 +19138,7 @@ msgstr "Egérgörgő"
 msgid "Mouse Wheel Events"
 msgstr "Egérgörgő-események"
 
-#: ../app/widgets/gimpdataeditor.c:215
-msgid "Save"
-msgstr "Mentés"
-
-#: ../app/widgets/gimpdataeditor.c:223
-msgid "Revert"
-msgstr "Visszaállítás"
-
-#: ../app/widgets/gimpdataeditor.c:435
+#: ../app/widgets/gimpdataeditor.c:413
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (csak olvasható)"
@@ -19979,10 +20031,6 @@ msgstr "Válasszon egy színprofilt"
 msgid "Color _profile:"
 msgstr "Szín_profil:"
 
-#: ../app/widgets/gimptemplateeditor.c:431
-msgid "_Fill with:"
-msgstr "Kitöltés _ezzel:"
-
 #: ../app/widgets/gimptemplateeditor.c:441
 msgid "Comme_nt:"
 msgstr "Meg_jegyzés:"
@@ -20196,7 +20244,7 @@ msgstr "Eszköz előbeállítás visszaállítása…"
 msgid "Delete Tool Preset..."
 msgstr "Eszköz előbeállítás törlése…"
 
-#: ../app/widgets/gimptoolpreseteditor.c:291
+#: ../app/widgets/gimptoolpreseteditor.c:299
 #, c-format
 msgid "%s Preset"
 msgstr "%s előbeállítás"
@@ -20520,6 +20568,18 @@ msgstr "kerek"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "lágy"
+
+#~ msgid "Reset angle to zero"
+#~ msgstr "Dőlésszög visszaállítása nullára"
+
+#~ msgid "Reset hardness to default"
+#~ msgstr "Keménység visszaállítása az alapértelmezettre"
+
+#~ msgid "Save"
+#~ msgstr "Mentés"
+
+#~ msgid "Revert"
+#~ msgstr "Visszaállítás"
 
 #~ msgid "Expanded as necessary"
 #~ msgstr "Szükség szerint bővítve"
