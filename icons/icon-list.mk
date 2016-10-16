@@ -1031,16 +1031,18 @@ icons96_images = \
 	96/gimp-wilber.png		\
 	96/gimp-wilber-outline.png
 
-icons128_images = \
-	128/gimp-wilber.png		\
+icons128_images = 					\
+	128/folder.png					\
+	128/gimp-wilber.png				\
 	128/gimp-wilber-outline.png
 
 icons192_images = \
 	192/gimp-wilber.png		\
 	192/gimp-wilber-outline.png
 
-icons256_images = \
-	256/gimp-wilber.png		\
+icons256_images = 					\
+	256/folder.png					\
+	256/gimp-wilber.png				\
 	256/gimp-wilber-outline.png
 
 if ENABLE_VECTOR_ICONS
