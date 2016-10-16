@@ -120,16 +120,19 @@ void
 palettes_actions_update (GimpActionGroup *group,
                          gpointer         user_data)
 {
-  GimpContext *context = action_data_get_context (user_data);
-  GimpPalette *palette = NULL;
-  GimpData    *data    = NULL;
-  GFile       *file    = NULL;
+  GimpContext *context   = action_data_get_context (user_data);
+  GimpPalette *palette   = NULL;
+  GimpData    *data      = NULL;
+  GFile       *file      = NULL;
+  gint         sel_count = 0;
 
   if (context)
     {
       palette = gimp_context_get_palette (context);
 
-      if (action_data_sel_count (user_data) > 1)
+      sel_count = action_data_sel_count (user_data);
+
+      if (sel_count > 1)
         {
           palette = NULL;
         }
@@ -147,7 +150,7 @@ palettes_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("palettes-edit",                 palette);
   SET_SENSITIVE ("palettes-duplicate",            palette && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("palettes-merge",                FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
+  SET_SENSITIVE ("palettes-merge",                sel_count > 1);
   SET_SENSITIVE ("palettes-copy-location",        file);
   SET_SENSITIVE ("palettes-show-in-file-manager", file);
   SET_SENSITIVE ("palettes-delete",               palette && gimp_data_is_deletable (data));
