@@ -872,9 +872,20 @@ gimp_config_deserialize_file_value (GValue     *value,
     }
   else
     {
-      GFile *file = g_file_parse_name (scanner->value.v_string);
+      gchar *path = gimp_config_path_expand (scanner->value.v_string, TRUE,
+                                             NULL);
 
-      g_value_take_object (value, file);
+      if (path)
+        {
+          GFile *file = g_file_new_for_path (path);
+
+          g_value_take_object (value, file);
+          g_free (path);
+        }
+      else
+        {
+          g_value_set_object (value, NULL);
+        }
     }
 
   return G_TOKEN_RIGHT_PAREN;

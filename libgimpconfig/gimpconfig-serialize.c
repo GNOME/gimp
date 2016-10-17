@@ -34,6 +34,7 @@
 #include "gimpconfigwriter.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-params.h"
+#include "gimpconfig-path.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-utils.h"
 
@@ -491,14 +492,28 @@ gimp_config_serialize_value (const GValue *value,
 
       if (file)
         {
-          gchar *parse_name = g_file_get_parse_name (file);
+          gchar *path     = g_file_get_path (file);
+          gchar *unexpand = NULL;
 
-          if (escaped)
-            gimp_config_string_append_escaped (str, parse_name);
+          if (path)
+            {
+              unexpand = gimp_config_path_unexpand (path, TRUE, NULL);
+              g_free (path);
+            }
+
+          if (unexpand)
+            {
+              if (escaped)
+                gimp_config_string_append_escaped (str, unexpand);
+              else
+                g_string_append (str, unexpand);
+
+              g_free (unexpand);
+            }
           else
-            g_string_append (str, parse_name);
-
-          g_free (parse_name);
+            {
+              g_string_append (str, "NULL");
+            }
         }
       else
         {
