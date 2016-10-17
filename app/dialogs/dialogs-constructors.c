@@ -544,6 +544,19 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_dynamics_grid_view_new (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                GimpUIManager     *ui_manager,
+                                gint               view_size)
+{
+  return gimp_dynamics_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                         context->gimp->dynamics_factory,
+                                         context,
+                                         view_size, 1,
+                                         gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
 dialogs_mypaint_brush_grid_view_new (GimpDialogFactory *factory,
                                      GimpContext       *context,
                                      GimpUIManager     *ui_manager,
@@ -628,6 +641,19 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
                                context,
                                view_size, 1,
                                gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
+dialogs_tool_preset_grid_view_new (GimpDialogFactory *factory,
+                                   GimpContext       *context,
+                                   GimpUIManager     *ui_manager,
+                                   gint               view_size)
+{
+  return gimp_tool_preset_factory_view_new (GIMP_VIEW_TYPE_GRID,
+                                            context->gimp->tool_preset_factory,
+                                            context,
+                                            view_size, 1,
+                                            gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *

@@ -327,6 +327,9 @@ static const GimpDialogFactoryEntry entries[] =
   LISTGRID (brush, brush,
             N_("Brushes"), NULL, GIMP_STOCK_BRUSH,
             GIMP_HELP_BRUSH_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
+  LISTGRID (dynamics, dynamics,
+            N_("Paint Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
+            GIMP_HELP_DYNAMICS_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
   LISTGRID (mypaint-brush, mypaint_brush,
             N_("MyPaint Brushes"), NULL, GIMP_STOCK_MYPAINT_BRUSH,
             GIMP_HELP_MYPAINT_BRUSH_DIALOG, GIMP_VIEW_SIZE_LARGE),
@@ -345,20 +348,15 @@ static const GimpDialogFactoryEntry entries[] =
   LISTGRID (buffer, buffer,
             N_("Buffers"), NULL, GIMP_STOCK_BUFFER,
             GIMP_HELP_BUFFER_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
+  LISTGRID (tool-preset, tool_preset,
+            N_("Tool Presets"), NULL, GIMP_STOCK_TOOL_PRESET,
+            GIMP_HELP_TOOL_PRESET_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
   LISTGRID (document, document,
             N_("History"), N_("Document History"), "document-open-recent",
             GIMP_HELP_DOCUMENT_DIALOG, GIMP_VIEW_SIZE_LARGE),
   LISTGRID (template, template,
             N_("Templates"), N_("Image Templates"), GIMP_STOCK_TEMPLATE,
             GIMP_HELP_TEMPLATE_DIALOG, GIMP_VIEW_SIZE_SMALL),
-
-  /* Some things do not have grids, so just list */
-  LIST (dynamics, dynamics,
-        N_("Paint Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
-        GIMP_HELP_DYNAMICS_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
-  LIST (tool-preset, tool_preset,
-        N_("Tool Presets"), NULL, GIMP_STOCK_TOOL_PRESET,
-        GIMP_HELP_TOOL_PRESET_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
 
   /*  image related  */
   DOCKABLE ("gimp-layer-list",

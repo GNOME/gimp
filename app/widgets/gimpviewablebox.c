@@ -144,6 +144,7 @@ dynamics_box_new (GimpContainer *container,
                   GimpContext   *context,
                   const gchar   *label,
                   gint           spacing,
+                  GimpViewType   view_type,
                   GimpViewSize   view_size,
                   const gchar   *editor_id,
                   const gchar   *editor_tooltip)
@@ -152,8 +153,8 @@ dynamics_box_new (GimpContainer *container,
     container = gimp_data_factory_get_container (context->gimp->dynamics_factory);
 
   return gimp_viewable_box_new (container, context, label, spacing,
-                                GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_SMALL, view_size,
-                                "gimp-dynamics-list",
+                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
+                                "gimp-dynamics-list|gimp-dynamics-grid",
                                 GIMP_STOCK_DYNAMICS,
                                 _("Open the dynamics selection dialog"),
                                 editor_id, editor_tooltip);
@@ -170,7 +171,7 @@ gimp_dynamics_box_new (GimpContainer *container,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return dynamics_box_new (container, context, label, spacing,
-                           GIMP_VIEW_SIZE_SMALL,
+                           GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_SMALL,
                            NULL, NULL);
 }
 
@@ -197,7 +198,8 @@ gimp_prop_dynamics_box_new (GimpContainer *container,
                 NULL);
 
   return view_props_connect (dynamics_box_new (container, context, label,
-                                               spacing, view_size,
+                                               spacing,
+                                               view_type, view_size,
                                                editor_id, editor_tooltip),
                              context,
                              view_type_prop, view_size_prop);
