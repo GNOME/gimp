@@ -22,6 +22,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -47,24 +48,28 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_color_frame_finalize      (GObject        *object);
-static void       gimp_color_frame_get_property  (GObject        *object,
-                                                  guint           property_id,
-                                                  GValue         *value,
-                                                  GParamSpec     *pspec);
-static void       gimp_color_frame_set_property  (GObject        *object,
-                                                  guint           property_id,
-                                                  const GValue   *value,
-                                                  GParamSpec     *pspec);
+static void       gimp_color_frame_dispose           (GObject        *object);
+static void       gimp_color_frame_finalize          (GObject        *object);
+static void       gimp_color_frame_get_property      (GObject        *object,
+                                                      guint           property_id,
+                                                      GValue         *value,
+                                                      GParamSpec     *pspec);
+static void       gimp_color_frame_set_property      (GObject        *object,
+                                                      guint           property_id,
+                                                      const GValue   *value,
+                                                      GParamSpec     *pspec);
 
-static void       gimp_color_frame_style_set     (GtkWidget      *widget,
-                                                  GtkStyle       *prev_style);
-static gboolean   gimp_color_frame_expose        (GtkWidget      *widget,
-                                                  GdkEventExpose *eevent);
+static void       gimp_color_frame_style_set         (GtkWidget      *widget,
+                                                      GtkStyle       *prev_style);
+static gboolean   gimp_color_frame_expose            (GtkWidget      *widget,
+                                                      GdkEventExpose *eevent);
 
-static void       gimp_color_frame_menu_callback (GtkWidget      *widget,
-                                                  GimpColorFrame *frame);
-static void       gimp_color_frame_update        (GimpColorFrame *frame);
+static void       gimp_color_frame_menu_callback     (GtkWidget      *widget,
+                                                      GimpColorFrame *frame);
+static void       gimp_color_frame_update            (GimpColorFrame *frame);
+
+static void       gimp_color_frame_create_transform  (GimpColorFrame *frame);
+static void       gimp_color_frame_destroy_transform (GimpColorFrame *frame);
 
 
 G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME)
@@ -78,6 +83,7 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose      = gimp_color_frame_dispose;
   object_class->finalize     = gimp_color_frame_finalize;
   object_class->get_property = gimp_color_frame_get_property;
   object_class->set_property = gimp_color_frame_set_property;
@@ -171,6 +177,16 @@ gimp_color_frame_init (GimpColorFrame *frame)
                         FALSE, FALSE, 0);
       gtk_widget_show (frame->value_labels[i]);
     }
+}
+
+static void
+gimp_color_frame_dispose (GObject *object)
+{
+  GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
+
+  gimp_color_frame_set_color_config (frame, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -472,6 +488,41 @@ gimp_color_frame_set_invalid (GimpColorFrame *frame)
   gimp_color_frame_update (frame);
 }
 
+void
+gimp_color_frame_set_color_config (GimpColorFrame  *frame,
+                                   GimpColorConfig *config)
+{
+  g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
+  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+
+  if (config != frame->config)
+    {
+      if (frame->config)
+        {
+          g_signal_handlers_disconnect_by_func (frame->config,
+                                                gimp_color_frame_destroy_transform,
+                                                frame);
+          g_object_unref (frame->config);
+
+          gimp_color_frame_destroy_transform (frame);
+        }
+
+      frame->config = config;
+
+      if (frame->config)
+        {
+          g_object_ref (frame->config);
+
+          g_signal_connect_swapped (frame->config, "notify",
+                                    G_CALLBACK (gimp_color_frame_destroy_transform),
+                                    frame);
+        }
+
+      gimp_color_area_set_color_config (GIMP_COLOR_AREA (frame->color_area),
+                                        config);
+    }
+}
+
 
 /*  private functions  */
 
@@ -676,7 +727,35 @@ gimp_color_frame_update (GimpColorFrame *frame)
         {
           GimpCMYK cmyk;
 
-          gimp_rgb_to_cmyk (&frame->color, 1.0, &cmyk);
+          if (! frame->transform)
+            gimp_color_frame_create_transform (frame);
+
+          if (frame->transform)
+            {
+              gdouble rgb_values[3];
+              gdouble cmyk_values[4];
+
+              rgb_values[0] = frame->color.r;
+              rgb_values[1] = frame->color.g;
+              rgb_values[2] = frame->color.b;
+
+              gimp_color_transform_process_pixels (frame->transform,
+                                                   babl_format ("R'G'B' double"),
+                                                   rgb_values,
+                                                   babl_format ("CMYK double"),
+                                                   cmyk_values,
+                                                   1);
+
+              cmyk.c = cmyk_values[0] / 100.0;
+              cmyk.m = cmyk_values[1] / 100.0;
+              cmyk.y = cmyk_values[2] / 100.0;
+              cmyk.k = cmyk_values[3] / 100.0;
+            }
+          else
+            {
+              gimp_rgb_to_cmyk (&frame->color, 1.0, &cmyk);
+            }
+
           cmyk.a = frame->color.a;
 
           values = g_new0 (gchar *, 6);
@@ -709,4 +788,45 @@ gimp_color_frame_update (GimpColorFrame *frame)
     }
 
   g_strfreev (values);
+}
+
+static void
+gimp_color_frame_create_transform (GimpColorFrame *frame)
+{
+  if (frame->config)
+    {
+      GimpColorProfile *cmyk_profile;
+
+      cmyk_profile = gimp_color_config_get_cmyk_color_profile (frame->config,
+                                                               NULL);
+
+      if (cmyk_profile)
+        {
+          static GimpColorProfile *rgb_profile = NULL;
+
+          if (G_UNLIKELY (! rgb_profile))
+            rgb_profile = gimp_color_profile_new_rgb_srgb ();
+
+          frame->transform =
+            gimp_color_transform_new (rgb_profile,
+                                      babl_format ("R'G'B' double"),
+                                      cmyk_profile,
+                                      babl_format ("CMYK double"),
+                                      GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                      GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE |
+                                      GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION);
+        }
+    }
+}
+
+static void
+gimp_color_frame_destroy_transform (GimpColorFrame *frame)
+{
+  if (frame->transform)
+    {
+      g_object_unref (frame->transform);
+      frame->transform = NULL;
+    }
+
+  gimp_color_frame_update (frame);
 }
