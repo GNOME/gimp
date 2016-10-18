@@ -693,8 +693,19 @@ gimp_scanner_parse_color (GScanner *scanner,
 
             for (i = 0; i < n_channels; i++)
               {
+                gboolean negate = FALSE;
+
+                if (g_scanner_peek_next_token (scanner) == '-')
+                  {
+                    negate = TRUE;
+                    g_scanner_get_next_token (scanner);
+                  }
+
                 if (! gimp_scanner_parse_float (scanner, &col[i]))
                   goto finish;
+
+                if (negate)
+                  col[i] = - col[i];
               }
 
             if (is_hsv)
