@@ -909,9 +909,11 @@ gimp_container_tree_view_edit_focus_out (GtkWidget *widget,
                                          GdkEvent  *event,
                                          gpointer   user_data)
 {
-  /* When focusing out of a tree view, I want its content to be updated
-   * as though it had been activated. */
+  /*  When focusing out of a tree view, we want its content to be
+   *  updated as though it had been activated.
+   */
   g_signal_emit_by_name (widget, "activate", 0);
+
   return TRUE;
 }
 
