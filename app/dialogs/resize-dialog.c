@@ -363,6 +363,10 @@ resize_dialog_new (GimpViewable       *viewable,
                         G_CALLBACK (gimp_toggle_button_update),
                         &private->resize_text_layers);
 
+      gimp_help_set_help_data (button,
+                               _("Resizing text layers will make them uneditable"),
+                               NULL);
+
       g_object_unref (size_group);
     }
 
