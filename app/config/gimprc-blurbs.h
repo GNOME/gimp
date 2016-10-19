@@ -450,7 +450,7 @@ _("Sets the default maximum number of colors for the 'Convert to Indexed' dialog
 #define IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES_BLURB \
 _("Sets the default 'Remove duplicate colors' state for the 'Convert to Indexed' dialog.")
 
-#define IMAGE_CONVERT_INDEXED_DITHER_TYPE_BLURB                         \
+#define IMAGE_CONVERT_INDEXED_DITHER_TYPE_BLURB \
 _("Sets the default dithering type for the 'Convert to Indexed' dialog.")
 
 #define IMAGE_CONVERT_INDEXED_DITHER_ALPHA_BLURB \
@@ -459,11 +459,23 @@ _("Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog.")
 #define IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS_BLURB \
 _("Sets the default 'Dither text layers' state for the 'Convert to Indexed' dialog.")
 
-#define LAYER_NEW_NAME_BLURB                                    \
+#define IMAGE_RESIZE_FILL_TYPE_BLURB \
+_("Sets the default fill type for the 'Canvas Size' dialog.")
+
+#define IMAGE_RESIZE_LAYER_SET_BLURB \
+_("Sets the default set of layers to resize for the 'Canvas Size' dialog.")
+
+#define IMAGE_RESIZE_RESIZE_TEXT_LAYERS_BLURB \
+_("Sets the default 'Resize text layers' state for the 'Canvas Size' dialog.")
+
+#define LAYER_NEW_NAME_BLURB \
 _("Sets the default layer name for the 'New Layer' dialog.")
 
 #define LAYER_NEW_FILL_TYPE_BLURB \
 _("Sets the default fill type for the 'New Layer' dialog.")
+
+#define LAYER_RESIZE_FILL_TYPE_BLURB \
+_("Sets the default fill type for the 'Layer Boundary Size' dialog.")
 
 #define LAYER_ADD_MASK_TYPE_BLURB \
 _("Sets the default mask for the 'Add Layer Mask' dialog.")
@@ -606,5 +618,6 @@ _("When enabled, uses OpenCL for some operations.")
 
 #define ACTION_HISTORY_SIZE_BLURB \
 "The maximum number of actions saved in history."
+
 
 #endif  /* __GIMP_RC_BLURBS_H__ */

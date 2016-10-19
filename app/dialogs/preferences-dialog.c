@@ -1888,6 +1888,21 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Enable dithering of text layers"),
                           GTK_BOX (vbox2));
 
+  /*  Canvas Size Dialog  */
+  vbox2 = prefs_frame_new (_("Canvas Size Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "image-resize-fill-type", 0, 0,
+                            _("Fill with:"),
+                            GTK_TABLE (table), 0, size_group);
+  prefs_enum_combo_box_add (object, "image-resize-layer-set", 0, 0,
+                            _("Resize layers:"),
+                            GTK_TABLE (table), 1, size_group);
+
+  prefs_check_button_add (object, "image-resize-resize-text-layers",
+                          _("Resize text layers"),
+                          GTK_BOX (vbox2));
 
   /*  New Layer Dialog  */
   vbox2 = prefs_frame_new (_("New Layer Dialog"),
@@ -1901,6 +1916,15 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_enum_combo_box_add (object, "layer-new-fill-type", 0, 0,
                             _("Fill type:"),
                             GTK_TABLE (table), 1, size_group);
+
+  /*  Layer Boundary Size Dialog  */
+  vbox2 = prefs_frame_new (_("Layer Boundary Size Dialog"),
+                           GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "layer-resize-fill-type", 0, 0,
+                            _("Fill with:"),
+                            GTK_TABLE (table), 0, size_group);
 
   /*  Add Layer Mask Dialog  */
   vbox2 = prefs_frame_new (_("Add Layer Mask Dialog"),

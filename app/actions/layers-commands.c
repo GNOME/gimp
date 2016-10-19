@@ -151,12 +151,12 @@ static void   layers_scale_callback           (GtkWidget             *dialog,
 static void   layers_resize_callback          (GtkWidget             *dialog,
                                                GimpViewable          *viewable,
                                                GimpContext           *context,
-                                               GimpFillType           fill_type,
                                                gint                   width,
                                                gint                   height,
                                                GimpUnit               unit,
                                                gint                   offset_x,
                                                gint                   offset_y,
+                                               GimpFillType           fill_type,
                                                GimpItemSet            unused,
                                                gboolean               unused2,
                                                gpointer               data);
@@ -645,7 +645,8 @@ layers_resize_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
-      GimpDisplay *display = NULL;
+      GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GimpDisplay      *display = NULL;
 
       if (GIMP_IS_IMAGE_WINDOW (data))
         display = action_data_get_display (data);
@@ -661,6 +662,9 @@ layers_resize_cmd_callback (GtkAction *action,
                                   gimp_standard_help_func,
                                   GIMP_HELP_LAYER_RESIZE,
                                   layer_resize_unit,
+                                  config->layer_resize_fill_type,
+                                  GIMP_ITEM_SET_NONE,
+                                  FALSE,
                                   layers_resize_callback,
                                   NULL);
 
@@ -1305,21 +1309,28 @@ static void
 layers_resize_callback (GtkWidget    *dialog,
                         GimpViewable *viewable,
                         GimpContext  *context,
-                        GimpFillType  fill_type,
                         gint          width,
                         gint          height,
                         GimpUnit      unit,
                         gint          offset_x,
                         gint          offset_y,
+                        GimpFillType  fill_type,
                         GimpItemSet   unused,
                         gboolean      unused2,
                         gpointer      user_data)
 {
+
   layer_resize_unit = unit;
 
   if (width > 0 && height > 0)
     {
-      GimpItem *item = GIMP_ITEM (viewable);
+      GimpItem         *item   = GIMP_ITEM (viewable);
+      GimpImage        *image  = gimp_item_get_image (item);
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+      g_object_set (config,
+                    "layer-resize-fill-type", fill_type,
+                    NULL);
 
       gtk_widget_destroy (dialog);
 
