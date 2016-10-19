@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-16 19:37+0200\n"
-"PO-Revision-Date: 2016-10-16 19:38+0200\n"
+"POT-Creation-Date: 2016-10-19 18:32+0200\n"
+"PO-Revision-Date: 2016-10-19 18:33+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -313,7 +313,7 @@ msgstr "Używa %s w wersji %s (skompilowano z wersją %s)"
 msgid "%s version %s"
 msgstr "%s w wersji %s"
 
-#: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:415
+#: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:413
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Edytor pędzli"
@@ -324,17 +324,17 @@ msgstr "Edytor pędzli"
 msgid "Brushes"
 msgstr "Pędzle"
 
-#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:346
+#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:349
 msgid "Buffers"
 msgstr "Bufory"
 
-#: ../app/actions/actions.c:119 ../app/dialogs/dialogs.c:369
+#: ../app/actions/actions.c:119 ../app/dialogs/dialogs.c:367
 #: ../app/widgets/gimppickablepopup.c:249
 msgid "Channels"
 msgstr "Kanały"
 
 #: ../app/actions/actions.c:122 ../app/dialogs/convert-indexed-dialog.c:177
-#: ../app/dialogs/dialogs.c:377
+#: ../app/dialogs/dialogs.c:375
 msgid "Colormap"
 msgstr "Paleta kolorów"
 
@@ -363,7 +363,7 @@ msgid "Dockable"
 msgstr "Element dokowalny"
 
 #. Document History
-#: ../app/actions/actions.c:143 ../app/dialogs/dialogs.c:349
+#: ../app/actions/actions.c:143 ../app/dialogs/dialogs.c:355
 #: ../app/dialogs/preferences-dialog.c:1089
 msgid "Document History"
 msgstr "Historia dokumentów"
@@ -372,11 +372,11 @@ msgstr "Historia dokumentów"
 msgid "Drawable"
 msgstr "Obszar rysowania"
 
-#: ../app/actions/actions.c:149 ../app/dialogs/dialogs.c:357
+#: ../app/actions/actions.c:149 ../app/dialogs/dialogs.c:331
 msgid "Paint Dynamics"
 msgstr "Dynamika pędzla"
 
-#: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:419
+#: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:417
 #: ../app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Edytor dynamiki pędzla"
@@ -397,28 +397,28 @@ msgstr "Plik"
 msgid "Filters"
 msgstr "Filtry"
 
-#: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:343
+#: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:346
 #: ../app/dialogs/preferences-dialog.c:2741
 msgid "Fonts"
 msgstr "Czcionki"
 
-#: ../app/actions/actions.c:170 ../app/dialogs/dialogs.c:423
+#: ../app/actions/actions.c:170 ../app/dialogs/dialogs.c:421
 #: ../app/widgets/gimpgradienteditor.c:271
 msgid "Gradient Editor"
 msgstr "Edytor gradientów"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:173 ../app/core/gimp-data-factories.c:378
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2737
+#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2737
 msgid "Gradients"
 msgstr "Gradienty"
 
 #: ../app/actions/actions.c:176 ../app/core/gimp-data-factories.c:389
-#: ../app/dialogs/dialogs.c:360 ../app/dialogs/preferences-dialog.c:2745
+#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:2745
 msgid "Tool Presets"
 msgstr "Ustawienia narzędzia"
 
-#: ../app/actions/actions.c:179 ../app/dialogs/dialogs.c:431
+#: ../app/actions/actions.c:179 ../app/dialogs/dialogs.c:429
 #: ../app/widgets/gimptoolpreseteditor.c:94
 msgid "Tool Preset Editor"
 msgstr "Edytor ustawień narzędzia"
@@ -436,31 +436,31 @@ msgstr "Obraz"
 msgid "Images"
 msgstr "Obrazy"
 
-#: ../app/actions/actions.c:191 ../app/dialogs/dialogs.c:365
+#: ../app/actions/actions.c:191 ../app/dialogs/dialogs.c:363
 #: ../app/dialogs/resize-dialog.c:128 ../app/widgets/gimppickablepopup.c:230
 msgid "Layers"
 msgstr "Warstwy"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:194 ../app/core/gimp-data-factories.c:363
-#: ../app/dialogs/dialogs.c:331 ../app/dialogs/preferences-dialog.c:2749
+#: ../app/dialogs/dialogs.c:334 ../app/dialogs/preferences-dialog.c:2749
 msgid "MyPaint Brushes"
 msgstr "Pędzle programu MyPaint"
 
-#: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:427
+#: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:425
 #: ../app/widgets/gimppaletteeditor.c:149
 msgid "Palette Editor"
 msgstr "Edytor palety"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:200 ../app/core/gimp-data-factories.c:373
-#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2733
+#: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:2733
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:203 ../app/core/gimp-data-factories.c:368
-#: ../app/dialogs/dialogs.c:334 ../app/dialogs/preferences-dialog.c:2729
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2729
 msgid "Patterns"
 msgstr "Desenie"
 
@@ -474,7 +474,7 @@ msgstr "Wtyczki"
 msgid "Quick Mask"
 msgstr "Szybka maska"
 
-#: ../app/actions/actions.c:212 ../app/dialogs/dialogs.c:397
+#: ../app/actions/actions.c:212 ../app/dialogs/dialogs.c:395
 msgid "Sample Points"
 msgstr "Punkty wzorcowe"
 
@@ -484,7 +484,7 @@ msgstr "Zaznaczenie"
 
 #. initialize the template list
 #: ../app/actions/actions.c:218 ../app/core/gimp.c:868
-#: ../app/dialogs/dialogs.c:352
+#: ../app/dialogs/dialogs.c:358
 msgid "Templates"
 msgstr "Szablony"
 
@@ -505,7 +505,7 @@ msgstr "Opcje narzędzia"
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: ../app/actions/actions.c:233 ../app/dialogs/dialogs.c:373
+#: ../app/actions/actions.c:233 ../app/dialogs/dialogs.c:371
 #: ../app/tools/gimpvectortool.c:169
 msgid "Paths"
 msgstr "Ścieżki"
@@ -5158,13 +5158,17 @@ msgctxt "palettes-action"
 msgid "Edit this palette"
 msgstr "Modyfikuje tę paletę"
 
-#: ../app/actions/palettes-commands.c:75
-msgid "Merge Palette"
+#: ../app/actions/palettes-commands.c:83
+msgid "Merge Palettes"
 msgstr "Połączenie palet"
 
-#: ../app/actions/palettes-commands.c:79
+#: ../app/actions/palettes-commands.c:87
 msgid "Enter a name for the merged palette"
 msgstr "Nazwa połączonej palety"
+
+#: ../app/actions/palettes-commands.c:123
+msgid "There must be at least two palettes selected to merge."
+msgstr "Do połączenia wymagane jest zaznaczenie co najmniej dwóch palet."
 
 #: ../app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -11344,51 +11348,51 @@ msgstr "Błędy"
 msgid "Pointer"
 msgstr "Kursor"
 
-#: ../app/dialogs/dialogs.c:349
+#: ../app/dialogs/dialogs.c:355
 msgid "History"
 msgstr "Historia"
 
-#: ../app/dialogs/dialogs.c:352
+#: ../app/dialogs/dialogs.c:358
 msgid "Image Templates"
 msgstr "Szablony obrazów"
 
-#: ../app/dialogs/dialogs.c:381
+#: ../app/dialogs/dialogs.c:379
 msgid "Histogram"
 msgstr "Histogram"
 
-#: ../app/dialogs/dialogs.c:385
+#: ../app/dialogs/dialogs.c:383
 msgid "Selection"
 msgstr "Zaznaczenie"
 
-#: ../app/dialogs/dialogs.c:385
+#: ../app/dialogs/dialogs.c:383
 msgid "Selection Editor"
 msgstr "Edytor zaznaczenia"
 
-#: ../app/dialogs/dialogs.c:389
+#: ../app/dialogs/dialogs.c:387
 msgid "Symmetry Painting"
 msgstr "Malowanie symetryczne"
 
-#: ../app/dialogs/dialogs.c:393
+#: ../app/dialogs/dialogs.c:391
 msgid "Undo"
 msgstr "Cofnięcie"
 
-#: ../app/dialogs/dialogs.c:393
+#: ../app/dialogs/dialogs.c:391
 msgid "Undo History"
 msgstr "Historia działań"
 
-#: ../app/dialogs/dialogs.c:403
+#: ../app/dialogs/dialogs.c:401
 msgid "Navigation"
 msgstr "Nawigacja"
 
-#: ../app/dialogs/dialogs.c:403
+#: ../app/dialogs/dialogs.c:401
 msgid "Display Navigation"
 msgstr "Nawigacja obrazem"
 
-#: ../app/dialogs/dialogs.c:409
+#: ../app/dialogs/dialogs.c:407
 msgid "FG/BG"
 msgstr "Kolory"
 
-#: ../app/dialogs/dialogs.c:409
+#: ../app/dialogs/dialogs.c:407
 msgid "FG/BG Color"
 msgstr "Kolor pierwszoplanowy/tła"
 
@@ -12737,7 +12741,7 @@ msgid "Monitor Resolution"
 msgstr "Rozdzielczość monitora"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2192 ../app/display/gimpcursorview.c:207
+#: ../app/dialogs/preferences-dialog.c:2192 ../app/display/gimpcursorview.c:210
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Piksele"
@@ -13265,6 +13269,12 @@ msgstr "Wypeł_nienie:"
 msgid "Resize _text layers"
 msgstr "Zmień wymiary warstw _tekstowych"
 
+#: ../app/dialogs/resize-dialog.c:367
+msgid "Resizing text layers will make them uneditable"
+msgstr ""
+"Zmiana wymiarów warstw tekstowych spowoduje, że nie będzie można ich "
+"modyfikować"
+
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
 msgstr "Kalibracja rozdzielczości monitora"
@@ -13448,51 +13458,51 @@ msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Odstęp między liniami"
 
-#: ../app/display/gimpcursorview.c:217 ../app/display/gimpcursorview.c:223
-#: ../app/display/gimpcursorview.c:242 ../app/display/gimpcursorview.c:248
-#: ../app/display/gimpcursorview.c:267 ../app/display/gimpcursorview.c:273
-#: ../app/display/gimpcursorview.c:289 ../app/display/gimpcursorview.c:296
-#: ../app/display/gimpcursorview.c:681 ../app/display/gimpcursorview.c:683
-#: ../app/display/gimpcursorview.c:685 ../app/display/gimpcursorview.c:687
-#: ../app/display/gimpcursorview.c:800 ../app/display/gimpcursorview.c:801
-#: ../app/display/gimpcursorview.c:802 ../app/display/gimpcursorview.c:803
-#: ../app/widgets/gimpcolorframe.c:702
+#: ../app/display/gimpcursorview.c:220 ../app/display/gimpcursorview.c:226
+#: ../app/display/gimpcursorview.c:245 ../app/display/gimpcursorview.c:251
+#: ../app/display/gimpcursorview.c:270 ../app/display/gimpcursorview.c:276
+#: ../app/display/gimpcursorview.c:292 ../app/display/gimpcursorview.c:299
+#: ../app/display/gimpcursorview.c:693 ../app/display/gimpcursorview.c:695
+#: ../app/display/gimpcursorview.c:697 ../app/display/gimpcursorview.c:699
+#: ../app/display/gimpcursorview.c:812 ../app/display/gimpcursorview.c:813
+#: ../app/display/gimpcursorview.c:814 ../app/display/gimpcursorview.c:815
+#: ../app/widgets/gimpcolorframe.c:781
 msgid "n/a"
 msgstr "Nie dotyczy"
 
-#: ../app/display/gimpcursorview.c:220 ../app/display/gimpcursorview.c:245
-#: ../app/display/gimpcursorview.c:270
+#: ../app/display/gimpcursorview.c:223 ../app/display/gimpcursorview.c:248
+#: ../app/display/gimpcursorview.c:273
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:226 ../app/display/gimpcursorview.c:251
-#: ../app/display/gimpcursorview.c:276
+#: ../app/display/gimpcursorview.c:229 ../app/display/gimpcursorview.c:254
+#: ../app/display/gimpcursorview.c:279
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 msgid "Y"
 msgstr "Y"
 
 #. Units
-#: ../app/display/gimpcursorview.c:232
+#: ../app/display/gimpcursorview.c:235
 msgid "Units"
 msgstr "Jednostki"
 
 #. Selection Bounding Box
-#: ../app/display/gimpcursorview.c:257
+#: ../app/display/gimpcursorview.c:260
 msgid "Selection Bounding Box"
 msgstr "Pole ograniczające zaznaczenie"
 
 #. Width
-#: ../app/display/gimpcursorview.c:293
+#: ../app/display/gimpcursorview.c:296
 msgid "W"
 msgstr "Sz"
 
 #. Height
-#: ../app/display/gimpcursorview.c:300
+#: ../app/display/gimpcursorview.c:303
 msgid "H"
 msgstr "W"
 
-#: ../app/display/gimpcursorview.c:329
+#: ../app/display/gimpcursorview.c:332
 msgid "_Sample Merged"
 msgstr "Próbkowanie w_szystkich warstw"
 
@@ -14362,7 +14372,7 @@ msgstr "Długość zanikania"
 msgid "Distance over which strokes fade out"
 msgstr "Dystans, po którym krzywe zanikają"
 
-#: ../app/paint/gimppaintoptions.c:320 ../app/widgets/gimpviewablebox.c:379
+#: ../app/paint/gimppaintoptions.c:320 ../app/widgets/gimpviewablebox.c:381
 msgid "Reverse"
 msgstr "Odwrócenie"
 
@@ -18714,57 +18724,57 @@ msgstr ""
 "Heksadecymalny zapis koloru jest używany w językach HTML i CSS. To pole "
 "przyjmuje także nazwy kolorów języka CSS."
 
-#: ../app/widgets/gimpcolorframe.c:576 ../app/widgets/gimpcolorframe.c:645
+#: ../app/widgets/gimpcolorframe.c:627 ../app/widgets/gimpcolorframe.c:696
 msgid "Value:"
 msgstr "Wartość:"
 
-#: ../app/widgets/gimpcolorframe.c:579 ../app/widgets/gimpcolorframe.c:588
-#: ../app/widgets/gimpcolorframe.c:618 ../app/widgets/gimpcolorframe.c:648
-#: ../app/widgets/gimpcolorframe.c:673
+#: ../app/widgets/gimpcolorframe.c:630 ../app/widgets/gimpcolorframe.c:639
+#: ../app/widgets/gimpcolorframe.c:669 ../app/widgets/gimpcolorframe.c:699
+#: ../app/widgets/gimpcolorframe.c:724
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: ../app/widgets/gimpcolorframe.c:583 ../app/widgets/gimpcolorframe.c:613
+#: ../app/widgets/gimpcolorframe.c:634 ../app/widgets/gimpcolorframe.c:664
 msgid "Red:"
 msgstr "Czerwony:"
 
-#: ../app/widgets/gimpcolorframe.c:584 ../app/widgets/gimpcolorframe.c:614
+#: ../app/widgets/gimpcolorframe.c:635 ../app/widgets/gimpcolorframe.c:665
 msgid "Green:"
 msgstr "Zielony:"
 
-#: ../app/widgets/gimpcolorframe.c:585 ../app/widgets/gimpcolorframe.c:615
+#: ../app/widgets/gimpcolorframe.c:636 ../app/widgets/gimpcolorframe.c:666
 msgid "Blue:"
 msgstr "Niebieski:"
 
-#: ../app/widgets/gimpcolorframe.c:592
+#: ../app/widgets/gimpcolorframe.c:643
 msgid "Index:"
 msgstr "Indeks:"
 
-#: ../app/widgets/gimpcolorframe.c:630
+#: ../app/widgets/gimpcolorframe.c:681
 msgid "Hex:"
 msgstr "Heks:"
 
-#: ../app/widgets/gimpcolorframe.c:643
+#: ../app/widgets/gimpcolorframe.c:694
 msgid "Hue:"
 msgstr "Barwa:"
 
-#: ../app/widgets/gimpcolorframe.c:644
+#: ../app/widgets/gimpcolorframe.c:695
 msgid "Sat.:"
 msgstr "Nasycenie:"
 
-#: ../app/widgets/gimpcolorframe.c:667
+#: ../app/widgets/gimpcolorframe.c:718
 msgid "Cyan:"
 msgstr "Niebieskozielony:"
 
-#: ../app/widgets/gimpcolorframe.c:668
+#: ../app/widgets/gimpcolorframe.c:719
 msgid "Magenta:"
 msgstr "Purpurowy:"
 
-#: ../app/widgets/gimpcolorframe.c:669
+#: ../app/widgets/gimpcolorframe.c:720
 msgid "Yellow:"
 msgstr "Żółty:"
 
-#: ../app/widgets/gimpcolorframe.c:670
+#: ../app/widgets/gimpcolorframe.c:721
 msgid "Black:"
 msgstr "Czarny:"
 
@@ -20250,27 +20260,27 @@ msgstr "Blokuje położenie ścieżki"
 msgid "Open the brush selection dialog"
 msgstr "Otwiera okno wyboru pędzla"
 
-#: ../app/widgets/gimpviewablebox.c:158
+#: ../app/widgets/gimpviewablebox.c:159
 msgid "Open the dynamics selection dialog"
 msgstr "Otwiera okno wyboru dynamiki"
 
-#: ../app/widgets/gimpviewablebox.c:224
+#: ../app/widgets/gimpviewablebox.c:226
 msgid "Open the MyPaint brush selection dialog"
 msgstr "Otwiera okno wyboru pędzla programu MyPaint"
 
-#: ../app/widgets/gimpviewablebox.c:287
+#: ../app/widgets/gimpviewablebox.c:289
 msgid "Open the pattern selection dialog"
 msgstr "Otwiera okno wyboru desenia"
 
-#: ../app/widgets/gimpviewablebox.c:356
+#: ../app/widgets/gimpviewablebox.c:358
 msgid "Open the gradient selection dialog"
 msgstr "Otwiera okno wyboru gradientu"
 
-#: ../app/widgets/gimpviewablebox.c:474
+#: ../app/widgets/gimpviewablebox.c:476
 msgid "Open the palette selection dialog"
 msgstr "Otwarcie okna wyboru palety"
 
-#: ../app/widgets/gimpviewablebox.c:540
+#: ../app/widgets/gimpviewablebox.c:542
 msgid "Open the font selection dialog"
 msgstr "Otwiera okno wyboru czcionki"
 
