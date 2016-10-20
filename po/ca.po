@@ -4334,7 +4334,7 @@ msgstr "Escala la imatge"
 #: ../app/pdb/layer-cmds.c:447 ../app/pdb/transform-tools-cmds.c:346
 #: ../app/tools/gimpscaletool.c:119
 msgid "Scaling"
-msgstr "S'està escalant"
+msgstr "Escalat"
 
 # Quim: és el menú que surt com a opció en el diàleg 'imatges obertes'
 #: ../app/actions/images-actions.c:43
@@ -5957,16 +5957,14 @@ msgstr ""
 "fitxers"
 
 #: ../app/actions/tool-presets-actions.c:74
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Save Tool Options to Preset"
-msgstr "Desa els valors predefinits de l'eina..."
+msgstr "_Desa les opcions de l'eina als valors predefinits"
 
 #: ../app/actions/tool-presets-actions.c:75
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Save the active tool options to this tool preset"
-msgstr "Edita el valor predefinit de l'eina activa"
+msgstr "_Desa les opcions de l'eina activa als valors predefinits d'aquesta eina"
 
 #: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
@@ -6366,16 +6364,14 @@ msgid "_Color Management"
 msgstr "_Gestió del color"
 
 #: ../app/actions/view-actions.c:79
-#, fuzzy
 msgctxt "view-action"
 msgid "Display _Rendering Intent"
-msgstr "Representació del color de la pantalla:"
+msgstr "P_ropòsit de la conversió de pantalla:"
 
 #: ../app/actions/view-actions.c:82
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-Proofing Re_ndering Intent"
-msgstr "P_seudoprova de renderitzat:"
+msgstr "Propòsit de la conversió de prova en pantalla:"
 
 #: ../app/actions/view-actions.c:85
 msgctxt "view-action"
@@ -6483,16 +6479,14 @@ msgid "Reset color management to what's configured in preferences"
 msgstr "Reinicia la gestió del color als valors definits en les preferències"
 
 #: ../app/actions/view-actions.c:150
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-_Proofing Profile..."
-msgstr "(sense comprovació)"
+msgstr "Perfil de prova en pantalla..."
 
 #: ../app/actions/view-actions.c:151
-#, fuzzy
 msgctxt "view-action"
 msgid "Set the soft-proofing profile"
-msgstr "No configurat: perfil restringit"
+msgstr "Estableix el perfil de prova en pantalla"
 
 #: ../app/actions/view-actions.c:156
 msgctxt "view-action"
@@ -6543,10 +6537,9 @@ msgid "_Proof Colors"
 msgstr "Prova"
 
 #: ../app/actions/view-actions.c:186
-#, fuzzy
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
-msgstr "Usar el mode d'adreçament direct per a registres soft"
+msgstr  "Utilitza aquesta visualització per a la prova en pantalla"
 
 #: ../app/actions/view-actions.c:192 ../app/actions/view-actions.c:199
 msgctxt "view-action"
@@ -6932,22 +6925,19 @@ msgid "_Perceptual"
 msgstr "_Perceptiu"
 
 #: ../app/actions/view-actions.c:524
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "_Prova del renderitzat de pantalla:"
+msgstr "El propòsit de la conversió de pantalla és perceptiu"
 
 #: ../app/actions/view-actions.c:529 ../app/actions/view-actions.c:556
-#, fuzzy
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "Colorimètric Relatiu"
 
 #: ../app/actions/view-actions.c:530
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
-msgstr "_Prova del renderitzat de pantalla:"
+msgstr "El propòsit de la conversió de pantalla és colorimètric relatiu"
 
 #: ../app/actions/view-actions.c:535 ../app/actions/view-actions.c:562
 #, fuzzy
@@ -6962,16 +6952,14 @@ msgid "Display rendering intent is saturation"
 msgstr "_Prova del renderitzat de pantalla:"
 
 #: ../app/actions/view-actions.c:541 ../app/actions/view-actions.c:568
-#, fuzzy
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
-msgstr "Colorimètric Absolut"
+msgstr "Colorimètric _absolut"
 
 #: ../app/actions/view-actions.c:542
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
-msgstr "_Prova del renderitzat de pantalla:"
+msgstr "El propòsit de la conversió de pantalla és colorimètric albsolut"
 
 #: ../app/actions/view-actions.c:551
 #, fuzzy
@@ -6980,22 +6968,20 @@ msgid "Soft-proofing rendering intent is perceptual"
 msgstr "P_seudoprova de renderitzat:"
 
 #: ../app/actions/view-actions.c:557
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "P_seudoprova de renderitzat:"
+msgstr "El propòsit de la conversió de prova en pantalla és colorimètric relatiu"
 
 #: ../app/actions/view-actions.c:563
 #, fuzzy
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "P_seudoprova de renderitzat:"
+msgstr "Perfil de prova en pantalla"
 
 #: ../app/actions/view-actions.c:569
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "P_seudoprova de renderitzat:"
+msgstr "El propòsit de la conversió de prova en pantalla és colorimètric absolut"
 
 #: ../app/actions/view-actions.c:577
 msgctxt "view-padding-color"
@@ -10011,12 +9997,11 @@ msgid "ICC profile validation failed: "
 msgstr "La validació del perfil ICC ha fallat: "
 
 #: ../app/core/gimpimage-color-profile.c:332
-#, fuzzy
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "La validació del perfil ICC ha fallat: el perfil de color no és per a "
-"l'espai de color RGB"
+"l'espai de color d'escala de grisos"
 
 #: ../app/core/gimpimage-color-profile.c:342
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
@@ -10826,7 +10811,7 @@ msgstr "Simetria horitzontal"
 
 #: ../app/core/gimpsymmetry-mirror.c:131
 msgid "Reflect the initial stroke across a horizontal axis"
-msgstr ""
+msgstr "Reflecteix el traç actual a través d'un eix horitzontal"
 
 #: ../app/core/gimpsymmetry-mirror.c:138
 msgid "Vertical Symmetry"
@@ -10834,16 +10819,15 @@ msgstr "Simetria vertical"
 
 #: ../app/core/gimpsymmetry-mirror.c:139
 msgid "Reflect the initial stroke across a vertical axis"
-msgstr ""
+msgstr "Reflecteix el traç actual a través d'un eix vertical"
 
 #: ../app/core/gimpsymmetry-mirror.c:146
 msgid "Central Symmetry"
 msgstr "Simetria central"
 
 #: ../app/core/gimpsymmetry-mirror.c:147
-#, fuzzy
 msgid "Invert the initial stroke through a point"
-msgstr "Converteix la imatge a punt flotant de 16 bits"
+msgstr "Inverteix el traç actual a través d'un punt"
 
 #: ../app/core/gimpsymmetry-mirror.c:155
 msgid "Disable brush reflection"
@@ -11181,7 +11165,7 @@ msgstr " _Detalls del perfil"
 #: ../app/dialogs/color-profile-dialog.c:290
 #: ../app/dialogs/color-profile-import-dialog.c:160
 msgid "_Rendering Intent:"
-msgstr "Intent de _renderització:"
+msgstr  "P_ropòsit de la conversió:"
 
 #: ../app/dialogs/color-profile-dialog.c:306
 #: ../app/dialogs/color-profile-import-dialog.c:176
@@ -11189,7 +11173,6 @@ msgid "_Black Point Compensation"
 msgstr "Compensació del punt ne_gre"
 
 #: ../app/dialogs/color-profile-dialog.c:380
-#, fuzzy
 msgid "Select Destination Profile"
 msgstr "Selecciona un perfil destinació"
 
@@ -11255,9 +11238,8 @@ msgid "_Maximum number of colors:"
 msgstr "Nombre _màxim de colors:"
 
 #: ../app/dialogs/convert-indexed-dialog.c:222
-#, fuzzy
 msgid "_Remove unused and duplicate colors from colormap"
-msgstr "Sup_rimeix els colors no utilitzats de la paleta"
+msgstr "Sup_rimeix els colors no utilitzats i duplicats del mapa de colors"
 
 #. dithering
 #: ../app/dialogs/convert-indexed-dialog.c:239
@@ -11914,15 +11896,12 @@ msgid "The selected source contains no colors."
 msgstr "L'origen seleccionat no té colors."
 
 #: ../app/dialogs/palette-import-dialog.c:469
-#, fuzzy
 msgid "There is no palette to import."
-msgstr ""
-"@@image: 'images/dialogs/palette-import-dialog.png'; "
-"md5=339f7fcce57ccce9171e02e49a4e5dff"
+msgstr "No hi ha cap paleta a importar."
 
 #: ../app/dialogs/preferences-dialog.c:269
 msgid "Reset All Preferences"
-msgstr "Esborra totes les preferències"
+msgstr "Restableix totes les preferències"
 
 #: ../app/dialogs/preferences-dialog.c:287
 msgid "Do you really want to reset all preferences to default values?"
@@ -12129,14 +12108,12 @@ msgid "_Try to use the system monitor profile"
 msgstr "_Prova d'utilitzar el perfil de monitor del sistema"
 
 #: ../app/dialogs/preferences-dialog.c:1162
-#, fuzzy
 msgid "_Rendering intent:"
-msgstr "Mètode de &representació:"
+msgstr "P_ropòsit de la conversió:"
 
 #: ../app/dialogs/preferences-dialog.c:1167
-#, fuzzy
 msgid "Use _black point compensation"
-msgstr "Habilita la compensació del punt negre"
+msgstr "_Habilita la compensació del punt negre"
 
 #: ../app/dialogs/preferences-dialog.c:1175
 #: ../app/dialogs/preferences-dialog.c:1210 ../app/paint/gimpinkoptions.c:93
@@ -12156,34 +12133,29 @@ msgstr "Optimitza els noms dels elements de la pantalla"
 
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1181
-#, fuzzy
 msgid "Soft-Proofing"
-msgstr "(sense comprovació)"
+msgstr "Prova en pantalla"
 
 #: ../app/dialogs/preferences-dialog.c:1191
-#, fuzzy
 msgid "Select Soft-Proofing Color Profile"
-msgstr "Seleccioneu el perfil de color del monitor"
+msgstr "Seleccioneu el perfil de color de la prova en pantalla"
 
 #: ../app/dialogs/preferences-dialog.c:1192
-#, fuzzy
+
 msgid "_Soft-proofing profile:"
-msgstr "(sense comprovació)"
+msgstr "Perfil de prova en pan_talla:"
 
 #: ../app/dialogs/preferences-dialog.c:1197
-#, fuzzy
 msgid "Re_ndering intent:"
-msgstr "Re_nderització del punter:"
+msgstr "Propòsit de la co_nversió:"
 
 #: ../app/dialogs/preferences-dialog.c:1202
-#, fuzzy
 msgid "Use black _point compensation"
-msgstr "Habilita la compensació del punt negre"
+msgstr "H_abilita la compensació del punt negre"
 
 #: ../app/dialogs/preferences-dialog.c:1212
-#, fuzzy
 msgid "O_ptimize soft-proofing for:"
-msgstr "O_Oli Suau"
+msgstr "O_ptimitza la prova en pantalla per:"
 
 #: ../app/dialogs/preferences-dialog.c:1221
 msgid "Mark out of gamut colors"
@@ -12485,9 +12457,8 @@ msgid "Convert to Color Profile Dialog"
 msgstr "_Converteix en perfil de color..."
 
 #: ../app/dialogs/preferences-dialog.c:1834
-#, fuzzy
 msgid "Rendering intent:"
-msgstr "Mètode de &representació"
+msgstr "Propòsit de la conversió:"
 
 #: ../app/dialogs/preferences-dialog.c:1838
 msgid "Black point compensation"
@@ -12882,11 +12853,11 @@ msgstr "Activa la imatge amb _focus"
 #. Window Positions
 #: ../app/dialogs/preferences-dialog.c:2316
 msgid "Window Positions"
-msgstr "Posicions de la finestra"
+msgstr "Posició de la finestra"
 
 #: ../app/dialogs/preferences-dialog.c:2319
 msgid "_Save window positions on exit"
-msgstr "De_sa les posicions de les finestres en sortir"
+msgstr "De_sa les posicions de la finestra en sortir"
 
 #: ../app/dialogs/preferences-dialog.c:2322
 msgid "Open windows on the same _monitor they were open before"
