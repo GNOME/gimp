@@ -471,6 +471,12 @@ _("Sets the default 'Resize text layers' state for the 'Canvas Size' dialog.")
 #define LAYER_NEW_NAME_BLURB \
 _("Sets the default layer name for the 'New Layer' dialog.")
 
+#define LAYER_NEW_MODE_BLURB \
+_("Sets the default mode for the 'New Layer' dialog.")
+
+#define LAYER_NEW_OPACITY_BLURB \
+_("Sets the default opacity for the 'New Layer' dialog.")
+
 #define LAYER_NEW_FILL_TYPE_BLURB \
 _("Sets the default fill type for the 'New Layer' dialog.")
 

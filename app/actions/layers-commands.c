@@ -117,9 +117,13 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                GimpLayer             *layer,
                                                GimpContext           *context,
                                                const gchar           *layer_name,
+                                               GimpLayerModeEffects   layer_mode,
+                                               gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
                                                gint                   layer_width,
                                                gint                   layer_height,
+                                               gint                   layer_offset_x,
+                                               gint                   layer_offset_y,
                                                gboolean               rename_text_layer,
                                                gpointer               user_data);
 static void   layers_edit_attributes_callback (GtkWidget             *dialog,
@@ -127,9 +131,13 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                GimpLayer             *layer,
                                                GimpContext           *context,
                                                const gchar           *layer_name,
+                                               GimpLayerModeEffects   layer_mode,
+                                               gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
                                                gint                   layer_width,
                                                gint                   layer_height,
+                                               gint                   layer_offset_x,
+                                               gint                   layer_offset_y,
                                                gboolean               rename_text_layer,
                                                gpointer               user_data);
 static void   layers_add_mask_callback        (GtkWidget             *dialog,
@@ -235,6 +243,8 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
                                          _("Edit Layer Attributes"),
                                          GIMP_HELP_LAYER_EDIT,
                                          gimp_object_get_name (layer),
+                                         gimp_layer_get_mode (layer),
+                                         gimp_layer_get_opacity (layer),
                                          0 /* unused */,
                                          layers_edit_attributes_callback,
                                          NULL);
@@ -293,6 +303,8 @@ layers_new_cmd_callback (GtkAction *action,
                                          _("Create a New Layer"),
                                          GIMP_HELP_LAYER_NEW,
                                          config->layer_new_name,
+                                         config->layer_new_mode,
+                                         config->layer_new_opacity,
                                          config->layer_new_fill_type,
                                          layers_new_callback,
                                          NULL);
@@ -1125,31 +1137,39 @@ layers_lock_alpha_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-layers_new_callback (GtkWidget    *dialog,
-                     GimpImage    *image,
-                     GimpLayer    *layer,
-                     GimpContext  *context,
-                     const gchar  *layer_name,
-                     GimpFillType  layer_fill_type,
-                     gint          layer_width,
-                     gint          layer_height,
-                     gboolean      rename_text_layer, /* unused */
-                     gpointer      user_data)
+layers_new_callback (GtkWidget            *dialog,
+                     GimpImage            *image,
+                     GimpLayer            *layer,
+                     GimpContext          *context,
+                     const gchar          *layer_name,
+                     GimpLayerModeEffects  layer_mode,
+                     gdouble               layer_opacity,
+                     GimpFillType          layer_fill_type,
+                     gint                  layer_width,
+                     gint                  layer_height,
+                     gint                  layer_offset_x,
+                     gint                  layer_offset_y,
+                     gboolean              rename_text_layer, /* unused */
+                     gpointer              user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   g_object_set (config,
                 "layer-new-name",      layer_name,
+                "layer-new-mode",      layer_mode,
+                "layer-new-opacity",   layer_opacity,
                 "layer-new-fill-type", layer_fill_type,
                 NULL);
 
   layer = gimp_layer_new (image, layer_width, layer_height,
                           gimp_image_get_layer_format (image, TRUE),
                           config->layer_new_name,
-                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                          config->layer_new_opacity,
+                          config->layer_new_mode);
 
   if (layer)
     {
+      gimp_item_set_offset (GIMP_ITEM (layer), layer_offset_x, layer_offset_y);
       gimp_drawable_fill (GIMP_DRAWABLE (layer), context,
                           config->layer_new_fill_type);
       gimp_image_add_layer (image, layer,
@@ -1165,34 +1185,64 @@ layers_new_callback (GtkWidget    *dialog,
 }
 
 static void
-layers_edit_attributes_callback (GtkWidget    *dialog,
-                                 GimpImage    *image,
-                                 GimpLayer    *layer,
-                                 GimpContext  *context,
-                                 const gchar  *layer_name,
-                                 GimpFillType  layer_fill_type, /* unused */
-                                 gint          layer_width,     /* unused */
-                                 gint          layer_height,    /* unused */
-                                 gboolean      rename_text_layer,
-                                 gpointer      user_data)
+layers_edit_attributes_callback (GtkWidget            *dialog,
+                                 GimpImage            *image,
+                                 GimpLayer            *layer,
+                                 GimpContext          *context,
+                                 const gchar          *layer_name,
+                                 GimpLayerModeEffects  layer_mode,
+                                 gdouble               layer_opacity,
+                                 GimpFillType          unused1,
+                                 gint                  unused2,
+                                 gint                  unused3,
+                                 gint                  layer_offset_x,
+                                 gint                  layer_offset_y,
+                                 gboolean              rename_text_layer,
+                                 gpointer              user_data)
 {
-  if (strcmp (layer_name, gimp_object_get_name (layer)))
+  GimpItem *item = GIMP_ITEM (layer);
+
+  if (strcmp (layer_name, gimp_object_get_name (layer)) ||
+      layer_mode     != gimp_layer_get_mode (layer)     ||
+      layer_opacity  != gimp_layer_get_opacity (layer)  ||
+      layer_offset_x != gimp_item_get_offset_x (item)   ||
+      layer_offset_y != gimp_item_get_offset_y (item))
     {
-      GError *error = NULL;
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                   _("Layer Attributes"));
 
-      if (gimp_item_rename (GIMP_ITEM (layer), layer_name, &error))
+      if (strcmp (layer_name, gimp_object_get_name (layer)))
         {
-          gimp_image_flush (image);
-        }
-      else
-        {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
-                                error->message);
-          g_clear_error (&error);
+          GError *error = NULL;
 
-          return;
+          if (! gimp_item_rename (GIMP_ITEM (layer), layer_name, &error))
+            {
+              gimp_message_literal (image->gimp,
+                                    G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                                    error->message);
+              g_clear_error (&error);
+            }
         }
+
+      if (layer_mode != gimp_layer_get_mode (layer))
+        gimp_layer_set_mode (layer, layer_mode, TRUE);
+
+      if (layer_opacity != gimp_layer_get_opacity (layer))
+        gimp_layer_set_opacity (layer, layer_opacity, TRUE);
+
+      if (layer_offset_x != gimp_item_get_offset_x (item) ||
+          layer_offset_y != gimp_item_get_offset_y (item))
+        {
+          gimp_item_translate (item,
+                               layer_offset_x - gimp_item_get_offset_x (item),
+                               layer_offset_y - gimp_item_get_offset_y (item),
+                               TRUE);
+        }
+
+      gimp_image_undo_group_end (image);
+
+      gimp_image_flush (image);
     }
 
   if (gimp_item_is_text_layer (GIMP_ITEM (layer)))

@@ -19,16 +19,20 @@
 #define __LAYER_OPTIONS_DIALOG_H__
 
 
-typedef void (* GimpLayerOptionsCallback) (GtkWidget    *dialog,
-                                           GimpImage    *image,
-                                           GimpLayer    *layer,
-                                           GimpContext  *context,
-                                           const gchar  *layer_name,
-                                           GimpFillType  layer_fill_type,
-                                           gint          layer_width,
-                                           gint          layer_height,
-                                           gboolean      rename_text_layer,
-                                           gpointer      user_data);
+typedef void (* GimpLayerOptionsCallback) (GtkWidget            *dialog,
+                                           GimpImage            *image,
+                                           GimpLayer            *layer,
+                                           GimpContext          *context,
+                                           const gchar          *layer_name,
+                                           GimpLayerModeEffects  layer_mode,
+                                           gdouble               layer_opacity,
+                                           GimpFillType          layer_fill_type,
+                                           gint                  layer_width,
+                                           gint                  layer_height,
+                                           gint                  layer_offset_x,
+                                           gint                  layer_offset_y,
+                                           gboolean              rename_text_layer,
+                                           gpointer              user_data);
 
 
 GtkWidget * layer_options_dialog_new (GimpImage                *image,
@@ -41,6 +45,8 @@ GtkWidget * layer_options_dialog_new (GimpImage                *image,
                                       const gchar              *desc,
                                       const gchar              *help_id,
                                       const gchar              *layer_name,
+                                      GimpLayerModeEffects      layer_mode,
+                                      gdouble                   layer_opacity,
                                       GimpFillType              layer_fill_type,
                                       GimpLayerOptionsCallback  callback,
                                       gpointer                  user_data);

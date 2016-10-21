@@ -67,6 +67,8 @@ enum
   PROP_IMAGE_RESIZE_RESIZE_TEXT_LAYERS,
 
   PROP_LAYER_NEW_NAME,
+  PROP_LAYER_NEW_MODE,
+  PROP_LAYER_NEW_OPACITY,
   PROP_LAYER_NEW_FILL_TYPE,
 
   PROP_LAYER_RESIZE_FILL_TYPE,
@@ -290,6 +292,22 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            "Default new layer name",
                            LAYER_NEW_NAME_BLURB,
                            _("Layer"),
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_MODE,
+                         "layer-new-mode",
+                         "Default new layer mode",
+                         LAYER_NEW_MODE_BLURB,
+                         GIMP_TYPE_LAYER_MODE_EFFECTS,
+                         GIMP_NORMAL_MODE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LAYER_NEW_OPACITY,
+                           "layer-new-opacity",
+                           "Default new layer opacity",
+                           LAYER_NEW_OPACITY_BLURB,
+                           GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE,
+                           GIMP_OPACITY_OPAQUE,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_FILL_TYPE,
@@ -619,6 +637,12 @@ gimp_dialog_config_set_property (GObject      *object,
         g_free (config->layer_new_name);
       config->layer_new_name = g_value_dup_string (value);
       break;
+    case PROP_LAYER_NEW_MODE:
+      config->layer_new_mode = g_value_get_enum (value);
+      break;
+    case PROP_LAYER_NEW_OPACITY:
+      config->layer_new_opacity = g_value_get_double (value);
+      break;
     case PROP_LAYER_NEW_FILL_TYPE:
       config->layer_new_fill_type = g_value_get_enum (value);
       break;
@@ -792,6 +816,12 @@ gimp_dialog_config_get_property (GObject    *object,
 
     case PROP_LAYER_NEW_NAME:
       g_value_set_string (value, config->layer_new_name);
+      break;
+    case PROP_LAYER_NEW_MODE:
+      g_value_set_enum (value, config->layer_new_mode);
+      break;
+    case PROP_LAYER_NEW_OPACITY:
+      g_value_set_double (value, config->layer_new_opacity);
       break;
     case PROP_LAYER_NEW_FILL_TYPE:
       g_value_set_enum (value, config->layer_new_fill_type);

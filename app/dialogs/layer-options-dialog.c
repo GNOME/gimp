@@ -35,7 +35,9 @@
 #include "text/gimptextlayer.h"
 
 #include "widgets/gimpcontainertreeview.h"
+#include "widgets/gimpspinscale.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-constructors.h"
 
 #include "layer-options-dialog.h"
 
@@ -49,12 +51,15 @@ struct _LayerOptionsDialog
   GimpImage                *image;
   GimpLayer                *layer;
   GimpContext              *context;
+  GimpLayerModeEffects      mode;
+  gdouble                   opacity;
   GimpFillType              fill_type;
   GimpLayerOptionsCallback  callback;
   gpointer                  user_data;
 
   GtkWidget                *name_entry;
   GtkWidget                *size_se;
+  GtkWidget                *offset_se;
   GtkWidget                *rename_toggle;
 };
 
@@ -82,6 +87,8 @@ layer_options_dialog_new (GimpImage                *image,
                           const gchar              *desc,
                           const gchar              *help_id,
                           const gchar              *layer_name,
+                          GimpLayerModeEffects      layer_mode,
+                          gdouble                   layer_opacity,
                           GimpFillType              layer_fill_type,
                           GimpLayerOptionsCallback  callback,
                           gpointer                  user_data)
@@ -91,11 +98,14 @@ layer_options_dialog_new (GimpImage                *image,
   GimpViewable       *viewable;
   GtkWidget          *vbox;
   GtkWidget          *table;
+  GtkWidget          *combo;
+  GtkWidget          *scale;
   GtkWidget          *label;
   GtkAdjustment      *adjustment;
   GtkWidget          *spinbutton;
-  GtkWidget          *frame;
-  GtkWidget          *button;
+  gdouble             xres;
+  gdouble             yres;
+  gint                row = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
@@ -107,6 +117,8 @@ layer_options_dialog_new (GimpImage                *image,
   private->image     = image;
   private->layer     = layer;
   private->context   = context;
+  private->mode      = layer_mode;
+  private->opacity   = layer_opacity * 100.0;
   private->fill_type = layer_fill_type;
   private->callback  = callback;
   private->user_data = user_data;
@@ -145,38 +157,58 @@ layer_options_dialog_new (GimpImage                *image,
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new (layer ? 1 : 3, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 6);
+  table = gtk_table_new (layer ? 5 : 8, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
+  if (! layer)
+    gtk_table_set_row_spacing (GTK_TABLE (table), 5, 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  The name label and entry  */
   private->name_entry = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Layer _name:"), 0.0, 0.5,
                              private->name_entry, 1, FALSE);
 
   gtk_entry_set_activates_default (GTK_ENTRY (private->name_entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (private->name_entry), layer_name);
 
+  combo = gimp_paint_mode_menu_new (FALSE, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("_Mode:"), 0.0, 0.5,
+                             combo, 1, FALSE);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              private->mode,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &private->mode);
+
+  adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (private->opacity, 0.0, 100.0,
+                                                   1.0, 10.0, 0.0));
+  scale = gimp_spin_scale_new (adjustment, NULL, 1);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("_Opacity:"), 0.0, 0.5,
+                             scale, 1, FALSE);
+
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &private->opacity);
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
   if (! layer)
     {
-      gdouble xres;
-      gdouble yres;
-
-      gimp_image_get_resolution (image, &xres, &yres);
-
       /*  The size labels  */
       label = gtk_label_new (_("Width:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Height:"));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, row + 1, row + 2,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
       gtk_widget_show (label);
 
@@ -199,7 +231,7 @@ layer_options_dialog_new (GimpImage                *image,
                                  1, 2, 0, 1);
       gtk_widget_show (spinbutton);
 
-      gtk_table_attach (GTK_TABLE (table), private->size_se, 1, 2, 1, 3,
+      gtk_table_attach (GTK_TABLE (table), private->size_se, 1, 2, row, row + 2,
                         GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (private->size_se);
 
@@ -228,20 +260,94 @@ layer_options_dialog_new (GimpImage                *image,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 1,
                                   gimp_image_get_height (image));
 
-      /*  The radio frame  */
-      frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,
-                                                    GIMP_FILL_FOREGROUND,
-                                                    GIMP_FILL_TRANSPARENT,
-                                                    gtk_label_new (_("Layer Fill Type")),
-                                                    G_CALLBACK (gimp_radio_button_update),
-                                                    &private->fill_type,
-                                                    &button);
-      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button),
-                                       private->fill_type);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
+      row += 2;
+    }
+
+  /*  The offset labels  */
+  label = gtk_label_new (_("Offset X:"));
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Offset Y:"));
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, row + 1, row + 2,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  /*  The offset sizeentry  */
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (0, 1, 1, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
+
+  private->offset_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+                                            TRUE, TRUE, FALSE, 10,
+                                            GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacing (GTK_TABLE (private->offset_se), 1, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (private->offset_se), 0, 2);
+
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (private->offset_se),
+                             GTK_SPIN_BUTTON (spinbutton), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (private->offset_se), spinbutton,
+                             1, 2, 0, 1);
+  gtk_widget_show (spinbutton);
+
+  gtk_table_attach (GTK_TABLE (table), private->offset_se, 1, 2, row, row + 2,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (private->offset_se);
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
+                            GIMP_UNIT_PIXEL);
+
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 0,
+                                  xres, FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 1,
+                                  yres, FALSE);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset_se), 0,
+                                         -GIMP_MAX_IMAGE_SIZE,
+                                         GIMP_MAX_IMAGE_SIZE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->offset_se), 1,
+                                         -GIMP_MAX_IMAGE_SIZE,
+                                         GIMP_MAX_IMAGE_SIZE);
+
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->offset_se), 0,
+                            0, gimp_image_get_width  (image));
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->offset_se), 1,
+                            0, gimp_image_get_height (image));
+
+  if (layer)
+    {
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0,
+                                  gimp_item_get_offset_x (GIMP_ITEM (layer)));
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1,
+                                  gimp_item_get_offset_y (GIMP_ITEM (layer)));
     }
   else
+    {
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, 0);
+      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, 0);
+    }
+
+  row += 2;
+
+  if (! layer)
+    {
+      /*  The fill type  */
+      combo = gimp_enum_combo_box_new (GIMP_TYPE_FILL_TYPE);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                 _("_Fill with:"), 0.0, 0.5,
+                                 combo, 1, FALSE);
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  private->fill_type,
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &private->fill_type);
+    }
+
+  if (layer)
     {
       GimpContainer *filters;
       GtkWidget     *frame;
@@ -293,6 +399,8 @@ layer_options_dialog_response (GtkWidget          *dialog,
       const gchar *name;
       gint         width             = 0;
       gint         height            = 0;
+      gint         offset_x;
+      gint         offset_y;
       gboolean     rename_text_layer = FALSE;
 
       name = gtk_entry_get_text (GTK_ENTRY (private->name_entry));
@@ -307,7 +415,14 @@ layer_options_dialog_response (GtkWidget          *dialog,
                                               1));
         }
 
-      if (private->layer &&
+      offset_x =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
+                                          0));
+      offset_y =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
+                                          1));
+
+          if (private->layer &&
           gimp_item_is_text_layer (GIMP_ITEM (private->layer)))
         {
           rename_text_layer =
@@ -319,9 +434,13 @@ layer_options_dialog_response (GtkWidget          *dialog,
                          private->layer,
                          private->context,
                          name,
+                         private->mode,
+                         private->opacity / 100.0,
                          private->fill_type,
                          width,
                          height,
+                         offset_x,
+                         offset_y,
                          rename_text_layer,
                          private->user_data);
     }
