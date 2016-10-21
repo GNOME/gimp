@@ -8,7 +8,6 @@ desktop/gimp.desktop.in.in
 
 app/about.h
 app/app.c
-app/language.c
 app/main.c
 app/sanity.c
 app/version.c
