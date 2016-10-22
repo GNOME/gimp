@@ -14,7 +14,7 @@
    height="24"
    width="24.000042"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92pre1 r"
    sodipodi:docname="gimp-hchain-broken.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -25,16 +25,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="501"
-     inkscape:window-height="405"
+     inkscape:window-width="1366"
+     inkscape:window-height="741"
      id="namedview1510"
      showgrid="false"
      inkscape:zoom="9.8333161"
-     inkscape:cx="-990.19288"
-     inkscape:cy="718.01381"
+     inkscape:cx="11.338769"
+     inkscape:cy="7.5792153"
      inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg7384" />
   <metadata
      id="metadata90">
@@ -133,53 +133,81 @@
        x1="-628"
        id="linearGradient9938"
        xlink:href="#linearGradient19282-4" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient9932-5"
+       x1="-628"
+       y1="-64.000198"
+       x2="-626"
+       y2="-64.000198"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient9938-8"
+       x1="-628"
+       y1="-74.000198"
+       x2="-626"
+       y2="-74.000198"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient19282-4"
+       id="linearGradient9926-9"
+       x1="4"
+       y1="12"
+       x2="19"
+       y2="12"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
-     transform="translate(-544.38171,74.468233)"
      style="display:inline"
-     id="stock">
+     id="gimp-hchain-broken-24"
+     transform="matrix(0,-1,1.0008752,0,-1029.2622,23.999983)"
+     inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-hchain-broken.png"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96">
+    <rect
+       transform="rotate(-90)"
+       y="-1.7382812e-05"
+       x="-1052.3412"
+       height="24"
+       width="23.979013"
+       id="rect4380-0"
+       style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:0.99956268;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     <g
-       transform="matrix(0,-1,1,0,-483.98047,-50.46825)"
-       id="gimp-hchain-broken">
+       inkscape:label="stock-hchain"
+       id="g6797-7"
+       style="display:inline"
+       transform="matrix(0,-1.4986881,1.4999997,0,-928.99981,1143.7615)">
       <rect
-         style="opacity:0;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-         id="rect4380"
-         width="24"
-         height="24"
-         x="-1052.3622"
-         y="-1.7382812e-05"
-         transform="matrix(0,-1,1,0,0,0)" />
-      <g
-         transform="matrix(0,-1.4999997,1.4999997,0,-928.99981,1143.8625)"
-         style="display:inline"
-         id="g6797">
-        <rect
-           style="fill:url(#linearGradient9932);fill-opacity:1;stroke:none"
-           id="rect6775-6"
-           width="2"
-           height="6.0000029"
-           x="-628"
-           y="-67.000198"
-           transform="matrix(0,-1,-1,0,0,0)"
-           rx="1"
-           ry="1" />
-        <rect
-           style="fill:url(#linearGradient9938);fill-opacity:1;stroke:none"
-           id="rect6777-6"
-           width="2"
-           height="5.9999986"
-           x="-628"
-           y="-77.000198"
-           transform="matrix(0,-1,-1,0,0,0)"
-           rx="0.9375"
-           ry="0.9375" />
-        <path
-           style="fill:url(#linearGradient9926);fill-opacity:1;stroke:none;stroke-width:1.49999964"
-           d="M 7,3 C 5.3380003,3 4,4.3380003 4,6 l 0,5 3,0 0,-3.5 C 7,6.6690002 7.6690002,6 8.5,6 l 6,0 C 15.331,6 16,6.6690002 16,7.5 l 0,3.5 3,0 0,-5 C 19,4.3380003 17.662,3 16,3 Z m -3,10 0,5 c 0,1.662 1.3380003,3 3,3 l 9,0 c 1.662,0 3,-1.338 3,-3 l 0,-5 -3,0 0,3.5 c 0,0.831 -0.669,1.5 -1.5,1.5 l -6,0 C 7.6690002,18 7,17.331 7,16.5 L 7,13 Z"
-           transform="matrix(0,0.6666668,-0.6666668,0,77.000215,619.33333)"
-           id="rect6791-3"
-           inkscape:connector-curvature="0" />
-      </g>
+         ry="0"
+         rx="1"
+         transform="matrix(0,-1,-1,0,0,0)"
+         y="-67.000198"
+         x="-628"
+         height="6.0000029"
+         width="2"
+         id="rect6775-6-6"
+         style="fill:url(#linearGradient9932-5);fill-opacity:1;stroke:none" />
+      <rect
+         ry="0"
+         rx="0.9375"
+         transform="matrix(0,-1,-1,0,0,0)"
+         y="-77.000198"
+         x="-628"
+         height="5.9999986"
+         width="2"
+         id="rect6777-6-3"
+         style="fill:url(#linearGradient9938-8);fill-opacity:1;stroke:none" />
+      <path
+         id="rect6791-3-3"
+         transform="matrix(0,0.6666668,-0.6666668,0,77.000215,619.33333)"
+         d="m 7.0000055,3.0000253 c -1.6619997,0 -3,1.3380001 -3,2.9999998 v 3.9999999 h 3 V 7.0000251 c 0,-0.8309998 0.4683279,-1 1.2993277,-1 H 14.645982 C 15.476982,6.0000251 16,6.6690002 16,7.5 l 5e-6,2.500025 h 3 L 19,6 c -2e-6,-1.6619997 -1.337995,-2.9999747 -2.999995,-2.9999747 z m -3,10.9999997 v 4 c 0,1.662 1.3380003,3 3,3 H 16.000005 C 17.662005,21.000025 19,19.662 19,18 l 5e-6,-3.999975 h -3 L 16,16.5 c -2e-6,0.831 -0.669,1.500025 -1.5,1.500025 h -6 c -0.8309998,0 -1.4999945,-0.169 -1.4999945,-1 v -3 z"
+         style="fill:url(#linearGradient9926-9);fill-opacity:1;stroke:none;stroke-width:1.49999964"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ssccssssccssscssssccsssscc" />
     </g>
   </g>
 </svg>
