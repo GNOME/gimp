@@ -4162,12 +4162,12 @@ msgstr "Converteix la imatge a punt flotant de 64 bits"
 #: ../app/actions/image-actions.c:248
 msgctxt "image-convert-action"
 msgid "Perceptual gamma (sRGB)"
-msgstr "Gama perceptual (sRGB)"
+msgstr "Gama perceptiva (sRGB)"
 
 #: ../app/actions/image-actions.c:250
 msgctxt "image-convert-action"
 msgid "Convert the image to preceptual (sRGB) gamma"
-msgstr "Converteix la imatge a gamma perceptual (sRGB)"
+msgstr "Converteix la imatge a gamma perceptiva (sRGB)"
 
 #: ../app/actions/image-actions.c:254
 msgctxt "image-convert-action"
@@ -6323,7 +6323,7 @@ msgstr "Edita els atributs del camí"
 
 #: ../app/actions/vectors-commands.c:192
 msgid "New Path"
-msgstr "Nou camí"
+msgstr "Camí nou"
 
 #: ../app/actions/vectors-commands.c:195
 msgid "New Path Options"
@@ -6519,22 +6519,19 @@ msgid "A pixel on the screen represents an image pixel"
 msgstr "Un píxel de la pantalla representa un píxel en la imatge"
 
 #: ../app/actions/view-actions.c:178
-#, fuzzy
 msgctxt "view-action"
 msgid "_Color-Manage this View"
-msgstr "Visualitza i gestiona imatges"
+msgstr "_Gestiona el color d'aquesta vista"
 
 #: ../app/actions/view-actions.c:179
-#, fuzzy
 msgctxt "view-action"
 msgid "Use color management for this view"
-msgstr "El color de ressaltat a utilitzar per seleccionar peces en la vista."
+msgstr "Usa la gestió del color per aquesta vista"
 
 #: ../app/actions/view-actions.c:185
-#, fuzzy
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr "Prova"
+msgstr "Prova de colors"
 
 #: ../app/actions/view-actions.c:186
 msgctxt "view-action"
@@ -6547,16 +6544,14 @@ msgid "_Black Point Compensation"
 msgstr "Co_mpensació de punt negre"
 
 #: ../app/actions/view-actions.c:193
-#, fuzzy
 msgctxt "view-action"
 msgid "Use black point compensation for image display"
-msgstr "Utilitza co_mpensació de punt negre per a la visualització"
+msgstr "Utilitza compensació de punt negre per a la visualització d'imatges"
 
 #: ../app/actions/view-actions.c:200
-#, fuzzy
 msgctxt "view-action"
 msgid "Use black point compensation for soft-proofing"
-msgstr "Utilitza la compensació de _punt negre per a les proves en monitor"
+msgstr "Utilitza la compensació de punt negre per a la prova en pantalla"
 
 #: ../app/actions/view-actions.c:206
 #, fuzzy
@@ -6940,7 +6935,6 @@ msgid "Display rendering intent is relative colorimetric"
 msgstr "El propòsit de la conversió de pantalla és colorimètric relatiu"
 
 #: ../app/actions/view-actions.c:535 ../app/actions/view-actions.c:562
-#, fuzzy
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Saturació"
@@ -6959,13 +6953,13 @@ msgstr "Colorimètric _absolut"
 #: ../app/actions/view-actions.c:542
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
-msgstr "El propòsit de la conversió de pantalla és colorimètric albsolut"
+msgstr "El propòsit de la conversió de pantalla és colorimètric absolut"
 
 #: ../app/actions/view-actions.c:551
-#, fuzzy
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "P_seudoprova de renderitzat:"
+msgstr "El propòsit de la conversió de prova en pantalla és perceptiu"
+
 
 #: ../app/actions/view-actions.c:557
 msgctxt "view-action"
@@ -7951,22 +7945,21 @@ msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:490
-#, fuzzy
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr "Defineix la mida de les previsualitzacions del diàleg Obre."
+msgstr "Defineix el nom del camí per defecte pel diàleg «Camí nou»."
 
 #: ../app/config/gimprc-blurbs.h:493
 msgid "Sets the default folder path for the 'Export Path' dialog."
-msgstr ""
+msgstr "Defineix el nom del camí per defecte pel diàleg «Exporta el camí»."
 
 #: ../app/config/gimprc-blurbs.h:496
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
-msgstr ""
+msgstr "Defineix l'estat per defecte d'«Exporta el camí actiu» pel diàleg «Exporta el camí»."
 
 #: ../app/config/gimprc-blurbs.h:499
 msgid "Sets the default folder path for the 'Import Path' dialog."
-msgstr ""
+msgstr "Defineix el nom del camí per defecte pel diàleg «Importa el camí»."
 
 #: ../app/config/gimprc-blurbs.h:502
 msgid ""
@@ -8752,10 +8745,9 @@ msgid "Change indexed palette"
 msgstr "Canvia la paleta indexada"
 
 #: ../app/core/core-enums.c:950
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change color managed state"
-msgstr "El dispositiu no té gestió de color."
+msgstr "Canvia l'estat gestió de color"
 
 #: ../app/core/core-enums.c:956
 msgctxt "undo-type"
@@ -8913,10 +8905,9 @@ msgid "Keep embedded profile"
 msgstr "Conserva el perfil "
 
 #: ../app/core/core-enums.c:1137
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
-msgstr "Seleccioneu el perfil de color RGB"
+msgstr "Converteix al perfil de color RGB preferit"
 
 #: ../app/core/core-enums.c:1174
 msgctxt "dynamics-output-type"
@@ -8981,7 +8972,7 @@ msgstr "Utilitza la selecció com a entrada"
 #: ../app/core/core-enums.c:1213
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
-msgstr "Utiliza la capa sencera com a entrada"
+msgstr "Utilitza la capa sencera com a entrada"
 
 #: ../app/core/core-enums.c:1242
 msgctxt "channel-border-style"
@@ -9064,10 +9055,9 @@ msgid "Updating tag cache"
 msgstr "S'està actualitzant la memòria cau de les etiquetes"
 
 #: ../app/core/gimp-edit.c:89
-#, fuzzy
 msgctxt "undo-type"
 msgid "Cut Layer"
-msgstr "Talla la selecció a una capa nova"
+msgstr "Talla la capa"
 
 #: ../app/core/gimp-edit.c:421 ../app/core/gimpimage-new.c:326
 msgid "Pasted Layer"
@@ -9757,7 +9747,7 @@ msgstr "Omple amb un color sòlid"
 #: ../app/core/gimpgradient-load.c:72
 #, c-format
 msgid "Not a GIMP gradient file."
-msgstr "No és un fitxer de degradats del GIMP"
+msgstr "No és un fitxer de degradats del GIMP."
 
 #: ../app/core/gimpgradient-load.c:95
 #, c-format
@@ -10698,7 +10688,7 @@ msgstr "Suprimeix els forats"
 
 #: ../app/core/gimpselection.c:304
 msgid "There is no selection to fill."
-msgstr "No hi ha res seleccionat per emplenar"
+msgstr "No hi ha res seleccionat per emplenar."
 
 #: ../app/core/gimpselection.c:340
 msgid "There is no selection to stroke."
@@ -11301,7 +11291,7 @@ msgstr "Gamma"
 
 #: ../app/dialogs/convert-precision-dialog.c:268
 msgid "Perceptual gamma (sRGB)"
-msgstr "Gamma perceptual (sRGB)"
+msgstr "Gamma perceptiva (sRGB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:269
 msgid "Linear light"
@@ -12080,18 +12070,15 @@ msgid "Color Management"
 msgstr "Gestió de color"
 
 #: ../app/dialogs/preferences-dialog.c:1111
-#, fuzzy
 msgid "Reset Color Management"
-msgstr "Reinicia color"
+msgstr "Reinicia la gestió del color"
 
 #: ../app/dialogs/preferences-dialog.c:1134
-#, fuzzy
 msgid "Image display _mode:"
-msgstr "Mode d'imatge"
+msgstr "M_ode de visualització de la imatge:"
 
 #. Color Managed Display
 #: ../app/dialogs/preferences-dialog.c:1138
-#, fuzzy
 msgid "Color Managed Display"
 msgstr "Pantalla amb gestió del color"
 
@@ -12127,9 +12114,8 @@ msgid "Precision / Color Fidelity"
 msgstr "Fidelitat"
 
 #: ../app/dialogs/preferences-dialog.c:1177
-#, fuzzy
 msgid "_Optimize image display for:"
-msgstr "Optimitza els noms dels elements de la pantalla"
+msgstr "_Optimitza la visualització d'imatge per:"
 
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1181
@@ -12196,7 +12182,6 @@ msgstr "Perfil _CMYK:"
 
 #. Policies
 #: ../app/dialogs/preferences-dialog.c:1265
-#, fuzzy
 msgid "Policies"
 msgstr "Polítiques"
 
@@ -12337,9 +12322,8 @@ msgstr "Mi_da de les previsualitzacions de les capes i els canals:"
 
 # Quim: no hi cap "previsualització"
 #: ../app/dialogs/preferences-dialog.c:1486
-#, fuzzy
 msgid "_Undo preview size:"
-msgstr "Desfés la mida de la pila:"
+msgstr "_Desfés la mida de la previsualització:"
 
 # Quim: no hi cap "previsualització"
 #: ../app/dialogs/preferences-dialog.c:1489
@@ -12435,26 +12419,22 @@ msgstr ""
 "tasques cap al fitxer seleccionat."
 
 #: ../app/dialogs/preferences-dialog.c:1812
-#, fuzzy
 msgid "Reset Dialog Defaults"
-msgstr "&Reinicia els valors per defecte"
+msgstr "Reinicia els valors per defecte dels diàlegs"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:1820
-#, fuzzy
 msgid "Color Profile Import Dialog"
-msgstr "Voleu importar el perfil de color amb nom?"
+msgstr "Diàleg d'importació del perfil de color"
 
 #: ../app/dialogs/preferences-dialog.c:1825
-#, fuzzy
 msgid "Color profile policy:"
-msgstr "Escolliu un perfil de color ICC"
+msgstr "Política del perfil de color:"
 
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:1829
-#, fuzzy
 msgid "Convert to Color Profile Dialog"
-msgstr "_Converteix en perfil de color..."
+msgstr "_Converteix a diàleg de perfil de color"
 
 #: ../app/dialogs/preferences-dialog.c:1834
 msgid "Rendering intent:"
@@ -12523,14 +12503,12 @@ msgstr "Tipus d'emplenament:"
 
 #. Add Layer Mask Dialog
 #: ../app/dialogs/preferences-dialog.c:1906
-#, fuzzy
 msgid "Add Layer Mask Dialog"
-msgstr "Afegeix una màscara a la capa"
+msgstr "Diàleg afegeix una màscara de capa"
 
 #: ../app/dialogs/preferences-dialog.c:1911
-#, fuzzy
 msgid "Layer mask type:"
-msgstr "Tipus de màscara"
+msgstr "Tipus de màscara de la capa:"
 
 #: ../app/dialogs/preferences-dialog.c:1915
 msgid "Invert mask"
@@ -12546,41 +12524,34 @@ msgid "Merged layer size:"
 msgstr "Mida de la capa fusionada:"
 
 #: ../app/dialogs/preferences-dialog.c:1930
-#, fuzzy
 msgid "Merge within active group only"
-msgstr "Combina només amb el _grup actiu"
+msgstr "Combina només amb el grup actiu"
 
 #: ../app/dialogs/preferences-dialog.c:1933
-#, fuzzy
 msgid "Discard invisible layers"
-msgstr "_Omet les capes invisibles"
+msgstr "Omet les capes invisibles"
 
 #. New Channel Dialog
 #: ../app/dialogs/preferences-dialog.c:1937
-#, fuzzy
 msgid "New Channel Dialog"
-msgstr "Canal _nou..."
+msgstr "Diàleg canal nou"
 
 #: ../app/dialogs/preferences-dialog.c:1942
-#, fuzzy
 msgid "Channel name:"
 msgstr "Nom del canal:"
 
 #: ../app/dialogs/preferences-dialog.c:1946
-#, fuzzy
 msgid "Color and opacity:"
-msgstr "Edita el nom del canal, el color i l'opacitat"
+msgstr "Color i l'opacitat"
 
 #: ../app/dialogs/preferences-dialog.c:1947
-#, fuzzy
 msgid "Default New Channel Color and Opacity"
-msgstr "Edita el nom del canal, el color i l'opacitat"
+msgstr "Nou color i opacitat per defecte"
 
 #. New Path Dialog
 #: ../app/dialogs/preferences-dialog.c:1952
-#, fuzzy
 msgid "New Path Dialog"
-msgstr "Camí _nou..."
+msgstr "Diàleg camí nou"
 
 #: ../app/dialogs/preferences-dialog.c:1957
 #: ../app/dialogs/vectors-options-dialog.c:151
@@ -12589,50 +12560,41 @@ msgstr "Nom del camí:"
 
 #. Export Path Dialog
 #: ../app/dialogs/preferences-dialog.c:1961
-#, fuzzy
 msgid "Export Paths Dialog"
-msgstr "Exporta el diàleg"
+msgstr "Diàleg d'exportació de camins"
 
 #: ../app/dialogs/preferences-dialog.c:1966
-#, fuzzy
 msgid "Export folder:"
-msgstr "Carpeta d'exportació"
+msgstr "Carpeta d'exportació:"
 
 #: ../app/dialogs/preferences-dialog.c:1967
-#, fuzzy
 msgid "Select Default Folder for Exporting Paths"
-msgstr "Seleccioneu una carpeta de torrent per defecte"
+msgstr "Seleccioneu la carpeta defecte per a exportar camins"
 
 #: ../app/dialogs/preferences-dialog.c:1971
-#, fuzzy
 msgid "Export the active path only"
-msgstr "Exporta el camí actiu"
+msgstr "Exporta només el camí actiu"
 
 #. Import Path Dialog
 #: ../app/dialogs/preferences-dialog.c:1975
-#, fuzzy
 msgid "Import Paths Dialog"
-msgstr "Im_porta camins"
+msgstr "Diàleg importa camins"
 
 #: ../app/dialogs/preferences-dialog.c:1980
-#, fuzzy
 msgid "Import folder:"
-msgstr "importa una carpeta"
+msgstr "Carpeta a importar:"
 
 #: ../app/dialogs/preferences-dialog.c:1981
-#, fuzzy
 msgid "Select Default Folder for Importing Paths"
-msgstr "Seleccioneu una carpeta temporal per defecte"
+msgstr "Seleccioneu la carpeta per defecte pels camins importats"
 
 #: ../app/dialogs/preferences-dialog.c:1985
-#, fuzzy
 msgid "Merge imported paths"
 msgstr "Fusiona els camins importats"
 
 #: ../app/dialogs/preferences-dialog.c:1988
-#, fuzzy
 msgid "Scale imported paths"
-msgstr "E_scala els camins importats fins ajustar a la imatge"
+msgstr "Escala els camins importats"
 
 # Quim: titol del diàleg  menú selecciona / difumina la vora...
 #. Feather Selection Dialog
@@ -12649,25 +12611,21 @@ msgstr "Radi de suavitzat:"
 
 #. Grow Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2001
-#, fuzzy
 msgid "Grow Selection Dialog"
-msgstr "Augmenta la selecció..."
+msgstr "Diàleg per augmentar la selecció"
 
 #: ../app/dialogs/preferences-dialog.c:2006
-#, fuzzy
 msgid "Grow radius:"
-msgstr "Amb aquest radi"
+msgstr "Radi d'augment:"
 
 #. Shrink Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2010
-#, fuzzy
 msgid "Shrink Selection Dialog"
-msgstr "Encongeix la selecció..."
+msgstr "Diàleg per encongir la selecció"
 
 #: ../app/dialogs/preferences-dialog.c:2015
-#, fuzzy
 msgid "Shrink radius:"
-msgstr "radi"
+msgstr "Radi d'encongiment:"
 
 #: ../app/dialogs/preferences-dialog.c:2019
 #: ../app/dialogs/preferences-dialog.c:2036
@@ -12677,9 +12635,8 @@ msgstr "Retalla la imatge suprimint-ne les vores fora de la regió seleccionada"
 
 #. Border Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2023
-#, fuzzy
 msgid "Border Selection Dialog"
-msgstr "Selecció de vores..."
+msgstr "Diàleg de selecció de vores"
 
 #: ../app/dialogs/preferences-dialog.c:2028
 #, fuzzy
@@ -13018,9 +12975,8 @@ msgid "Extended Input Devices"
 msgstr "Dispositius d'entrada expandits"
 
 #: ../app/dialogs/preferences-dialog.c:2613
-#, fuzzy
 msgid "S_hare tool and tool options between input devices"
-msgstr "Desa les opcions de l'eina quan el GIMP surti."
+msgstr "C_omparteix l'eina i les seves opcions entre dispositius d'entrada"
 
 #: ../app/dialogs/preferences-dialog.c:2617
 msgid "Configure E_xtended Input Devices..."
@@ -13294,14 +13250,12 @@ msgid "Exported to %s"
 msgstr "Exporta a %s"
 
 #: ../app/dialogs/quit-dialog.c:575
-#, fuzzy
 msgid "Save this image"
 msgstr "Desa aquesta imatge"
 
 #: ../app/dialogs/quit-dialog.c:577
-#, fuzzy
 msgid "Save as"
-msgstr "_Anomena i desa"
+msgstr "Anomena i desa"
 
 #: ../app/dialogs/resize-dialog.c:127
 msgid "Canvas Size"
@@ -13312,9 +13266,8 @@ msgid "Layer Size"
 msgstr "Mida de la capa"
 
 #: ../app/dialogs/resize-dialog.c:140
-#, fuzzy
 msgid "Fill With"
-msgstr "Omple _a:"
+msgstr "Omple amb"
 
 #: ../app/dialogs/resize-dialog.c:311
 msgid "Resize _layers:"
@@ -13774,9 +13727,8 @@ msgid "(none)"
 msgstr "(cap)"
 
 #: ../app/display/gimpdisplayshell-title.c:473
-#, fuzzy
 msgid "not color managed"
-msgstr "Color gestionat"
+msgstr "sense gestió de color"
 
 #: ../app/display/gimpstatusbar.c:431
 #, c-format
@@ -15706,12 +15658,10 @@ msgid "Distribute targets evenly in the vertical"
 msgstr "Distribueix els destins regularment a la vertical"
 
 #: ../app/tools/gimpalignoptions.c:380
-#, fuzzy
 msgid "Offset X:"
 msgstr "Desplaçament de X:"
 
 #: ../app/tools/gimpalignoptions.c:393
-#, fuzzy
 msgid "Offset Y:"
 msgstr "Desplaçament de Y:"
 
@@ -15768,7 +15718,6 @@ msgid "Threshold"
 msgstr "Llindar blanc i negre"
 
 #: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:373
-#, fuzzy
 msgid "Edit this gradient"
 msgstr "Edita el degradat actual"
 
@@ -16285,13 +16234,12 @@ msgstr ""
 "damunt de la imatge"
 
 #: ../app/tools/gimpcropoptions.c:100 ../app/tools/gimpcropoptions.c:192
-#, fuzzy
 msgid "Fill with"
-msgstr "Omple _a:"
+msgstr "Omple amb"
 
 #: ../app/tools/gimpcropoptions.c:101
 msgid "How to fill new areas created by 'Allow growing'"
-msgstr ""
+msgstr "Com omplir les àrea noves creades per «Permet créixer»"
 
 #: ../app/tools/gimpcroptool.c:117
 msgid "Crop"
@@ -16485,29 +16433,26 @@ msgid "_Split view"
 msgstr "Mostra divi_sió"
 
 #: ../app/tools/gimpfiltertool.c:633
-#, fuzzy
 msgid "Click to switch the original and filtered sides"
-msgstr "Feu clic  a aquesta guia com a primer element"
+msgstr "Feu clic per commutar entre el costat original i el filtrat"
 
 #: ../app/tools/gimpfiltertool.c:637
-#, fuzzy
 msgid "Click to switch between vertical and horizontal"
-msgstr "Feu clic per afegir una guia vertical i una horitzontal"
+msgstr "Feu clic per commutar entre vertical i horitzontal"
 
 #: ../app/tools/gimpfiltertool.c:641
-#, fuzzy
 msgid "Click to move the split guide"
-msgstr "Cliqueu i arrossegueu per a moure la línia guia."
+msgstr "Feu clic per a moure la línia de divisió."
 
 #: ../app/tools/gimpfiltertool.c:643
-#, fuzzy, c-format
+#, c-format
 msgid "%s: switch original and filtered"
-msgstr "Servidors filtrats: %s"
+msgstr "%s: commuta entre original i filtrat"
 
 #: ../app/tools/gimpfiltertool.c:644
-#, fuzzy, c-format
+#, c-format
 msgid "%s: switch horizontal and vertical"
-msgstr "Horitzontal i vertical"
+msgstr "%s: commuta entre horitzontal i vertical"
 
 #: ../app/tools/gimpfiltertool-settings.c:81
 msgid "Pre_sets:"
@@ -17334,7 +17279,6 @@ msgid "_Paintbrush"
 msgstr "_Pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:162
-#, fuzzy
 msgid "Edit this brush"
 msgstr "Edita aquest pinzell"
 
@@ -17343,30 +17287,27 @@ msgid "Reset size to brush's native size"
 msgstr "Recupera la mida original del pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:178
-#, fuzzy
 msgid "Reset aspect ratio to brush's native aspect ratio"
 msgstr "Recupera la relació d'aspecte original del pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:186
-#, fuzzy
 msgid "Reset angle to brush's native angle"
-msgstr "Angle del pinzell: %2.2f"
+msgstr "Recupera l'angle original del pinzell"
+
 
 #: ../app/tools/gimppaintoptions-gui.c:194
 msgid "Reset spacing to brush's native spacing"
 msgstr "Restaura l'espaiat a l'espaiat natiu del pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:202
-#, fuzzy
 msgid "Reset hardness to brush's native hardness"
-msgstr "Recupera la mida original del pinzell"
+msgstr "Recupera la duresa original del pinzell"
 
 #: ../app/tools/gimppaintoptions-gui.c:210
 msgid "Reset force to default"
 msgstr "Recupera la força per defecte"
 
 #: ../app/tools/gimppaintoptions-gui.c:223
-#, fuzzy
 msgid "Edit this dynamics"
 msgstr "Edita la dinàmica actual"
 
@@ -18126,7 +18067,7 @@ msgstr "S'està transformant"
 #: ../app/tools/gimptransformtool.c:292
 #, c-format
 msgid "The selection does not intersect with the layer."
-msgstr "La selecció no intersecta amb la capa."
+msgstr "La selecció no Interseca amb la capa."
 
 #: ../app/tools/gimptransformtool.c:796 ../app/tools/gimptransformtool.c:809
 msgid "Transform Step"
@@ -18669,7 +18610,7 @@ msgstr "Ha fallat l'escriptura al fitxer SVG «%s»: %s"
 
 #: ../app/vectors/gimpvectors-import.c:331
 msgid "Import Paths"
-msgstr "Importa un camí"
+msgstr "Importa camins"
 
 #: ../app/vectors/gimpvectors-import.c:342
 msgid "Imported Path"
@@ -19586,11 +19527,8 @@ msgid "Could not start the GIMP help browser plug-in."
 msgstr "No s'ha pogut iniciar el connector del navegador de l'ajuda del GIMP."
 
 #: ../app/widgets/gimphelp.c:361
-#, fuzzy
 msgid "You may instead use the web browser for reading the help pages."
-msgstr ""
-"El connector per al navegador de l'ajuda del GIMP sembla ser que no està "
-"instal·lat. En el seu lloc podeu utilitzar un navegador web per llegir les "
+msgstr "En el seu lloc podeu utilitzar un navegador web per llegir les "
 "pàgines d'ajuda."
 
 #: ../app/widgets/gimphelp.c:387
@@ -20588,7 +20526,7 @@ msgid ""
 "XMP data could not be migrated."
 msgstr ""
 "S'han trobat metadades 'gimp-metadata' malmeses.\n"
-"Les dades XMP no s'han pogut migrar: %s"
+"Les dades XMP no s'han pogut migrar."
 
 #: ../app/xcf/xcf-load.c:359
 #, c-format
