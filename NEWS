@@ -13,7 +13,7 @@ Overview of Changes from GIMP 2.8.18 to GIMP 2.8.20
 
 Core:
 
- -
+ - Avoid D-Bus error message when built without D-Bus support
 
 
 GUI:
