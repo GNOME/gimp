@@ -2380,7 +2380,7 @@ msgstr "Retalla i anomena"
 #: ../app/actions/edit-commands.c:422 ../app/actions/edit-commands.c:442
 #: ../app/actions/edit-commands.c:462
 msgid "Enter a name for this buffer"
-msgstr "Introduïu un nom a l'objecte del porta-retalls"
+msgstr "Introduïu un nom per l'objecte del porta-retalls"
 
 #: ../app/actions/edit-commands.c:439
 msgid "Copy Named"
@@ -6536,7 +6536,7 @@ msgstr "Prova de colors"
 #: ../app/actions/view-actions.c:186
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
-msgstr  "Utilitza aquesta visualització per a la prova en pantalla"
+msgstr "Utilitza aquesta visualització per a la prova en pantalla"
 
 #: ../app/actions/view-actions.c:192 ../app/actions/view-actions.c:199
 msgctxt "view-action"
@@ -6554,10 +6554,9 @@ msgid "Use black point compensation for soft-proofing"
 msgstr "Utilitza la compensació de punt negre per a la prova en pantalla"
 
 #: ../app/actions/view-actions.c:206
-#, fuzzy
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
-msgstr "Marca els colors de la gamma"
+msgstr "_Marca els colors de la gamma"
 
 #: ../app/actions/view-actions.c:207
 msgctxt "view-action"
@@ -6959,7 +6958,6 @@ msgstr "El propòsit de la conversió de pantalla és colorimètric absolut"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
 msgstr "El propòsit de la conversió de prova en pantalla és perceptiu"
-
 
 #: ../app/actions/view-actions.c:557
 msgctxt "view-action"
@@ -12434,7 +12432,7 @@ msgstr "Política del perfil de color:"
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:1829
 msgid "Convert to Color Profile Dialog"
-msgstr "_Converteix a diàleg de perfil de color"
+msgstr "Converteix a diàleg de perfil de color"
 
 #: ../app/dialogs/preferences-dialog.c:1834
 msgid "Rendering intent:"
@@ -15986,9 +15984,7 @@ msgstr "Selecciona el tram a modificar"
 
 #: ../app/tools/gimpcolorbalancetool.c:200 ../app/tools/gimplevelstool.c:267
 msgid "Adjust Color Levels"
-msgstr ""
-"Ajusta els colors definint uns nivells d'entrada i de sortida per a cada "
-"canal"
+msgstr "Ajusta els nivells dels colors"
 
 #: ../app/tools/gimpcolorbalancetool.c:216
 #: ../app/tools/gimphuesaturationtool.c:209
