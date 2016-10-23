@@ -124,6 +124,11 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                gint                   layer_height,
                                                gint                   layer_offset_x,
                                                gint                   layer_offset_y,
+                                               gboolean               layer_visible,
+                                               gboolean               layer_linked,
+                                               gboolean               layer_lock_pixels,
+                                               gboolean               layer_lock_position,
+                                               gboolean               layer_lock_alpha,
                                                gboolean               rename_text_layer,
                                                gpointer               user_data);
 static void   layers_edit_attributes_callback (GtkWidget             *dialog,
@@ -138,6 +143,11 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                gint                   layer_height,
                                                gint                   layer_offset_x,
                                                gint                   layer_offset_y,
+                                               gboolean               layer_visible,
+                                               gboolean               layer_linked,
+                                               gboolean               layer_lock_pixels,
+                                               gboolean               layer_lock_position,
+                                               gboolean               layer_lock_alpha,
                                                gboolean               rename_text_layer,
                                                gpointer               user_data);
 static void   layers_add_mask_callback        (GtkWidget             *dialog,
@@ -1149,6 +1159,11 @@ layers_new_callback (GtkWidget            *dialog,
                      gint                  layer_height,
                      gint                  layer_offset_x,
                      gint                  layer_offset_y,
+                     gboolean              layer_visible,
+                     gboolean              layer_linked,
+                     gboolean              layer_lock_pixels,
+                     gboolean              layer_lock_position,
+                     gboolean              layer_lock_alpha,
                      gboolean              rename_text_layer, /* unused */
                      gpointer              user_data)
 {
@@ -1172,6 +1187,14 @@ layers_new_callback (GtkWidget            *dialog,
       gimp_item_set_offset (GIMP_ITEM (layer), layer_offset_x, layer_offset_y);
       gimp_drawable_fill (GIMP_DRAWABLE (layer), context,
                           config->layer_new_fill_type);
+      gimp_item_set_visible (GIMP_ITEM (layer), layer_visible, FALSE);
+      gimp_item_set_linked (GIMP_ITEM (layer), layer_linked, FALSE);
+      gimp_item_set_lock_content (GIMP_ITEM (layer), layer_lock_pixels,
+                                  FALSE);
+      gimp_item_set_lock_position (GIMP_ITEM (layer), layer_lock_position,
+                                   FALSE);
+      gimp_layer_set_lock_alpha (layer, layer_lock_alpha, FALSE);
+
       gimp_image_add_layer (image, layer,
                             GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
       gimp_image_flush (image);
@@ -1197,16 +1220,26 @@ layers_edit_attributes_callback (GtkWidget            *dialog,
                                  gint                  unused3,
                                  gint                  layer_offset_x,
                                  gint                  layer_offset_y,
+                                 gboolean              layer_visible,
+                                 gboolean              layer_linked,
+                                 gboolean              layer_lock_pixels,
+                                 gboolean              layer_lock_position,
+                                 gboolean              layer_lock_alpha,
                                  gboolean              rename_text_layer,
                                  gpointer              user_data)
 {
   GimpItem *item = GIMP_ITEM (layer);
 
-  if (strcmp (layer_name, gimp_object_get_name (layer)) ||
-      layer_mode     != gimp_layer_get_mode (layer)     ||
-      layer_opacity  != gimp_layer_get_opacity (layer)  ||
-      layer_offset_x != gimp_item_get_offset_x (item)   ||
-      layer_offset_y != gimp_item_get_offset_y (item))
+  if (strcmp (layer_name, gimp_object_get_name (layer))         ||
+      layer_mode          != gimp_layer_get_mode (layer)        ||
+      layer_opacity       != gimp_layer_get_opacity (layer)     ||
+      layer_offset_x      != gimp_item_get_offset_x (item)      ||
+      layer_offset_y      != gimp_item_get_offset_y (item)      ||
+      layer_visible       != gimp_item_get_visible (item)       ||
+      layer_linked        != gimp_item_get_linked (item)        ||
+      layer_lock_pixels   != gimp_item_get_lock_content (item)  ||
+      layer_lock_position != gimp_item_get_lock_position (item) ||
+      layer_lock_alpha    != gimp_layer_get_lock_alpha (layer))
     {
       gimp_image_undo_group_start (image,
                                    GIMP_UNDO_GROUP_ITEM_PROPERTIES,
@@ -1239,6 +1272,21 @@ layers_edit_attributes_callback (GtkWidget            *dialog,
                                layer_offset_y - gimp_item_get_offset_y (item),
                                TRUE);
         }
+
+      if (layer_visible != gimp_item_get_visible (item))
+        gimp_item_set_visible (item, layer_visible, TRUE);
+
+      if (layer_linked != gimp_item_get_linked (item))
+        gimp_item_set_linked (item, layer_linked, TRUE);
+
+      if (layer_lock_pixels != gimp_item_get_lock_content (item))
+        gimp_item_set_lock_content (item, layer_lock_pixels, TRUE);
+
+      if (layer_lock_position != gimp_item_get_lock_position (item))
+        gimp_item_set_lock_position (item, layer_lock_position, TRUE);
+
+      if (layer_lock_alpha != gimp_layer_get_lock_alpha (layer))
+        gimp_layer_set_lock_alpha (layer, layer_lock_alpha, TRUE);
 
       gimp_image_undo_group_end (image);
 

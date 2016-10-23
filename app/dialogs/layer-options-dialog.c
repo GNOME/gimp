@@ -54,24 +54,32 @@ struct _LayerOptionsDialog
   GimpLayerModeEffects      mode;
   gdouble                   opacity;
   GimpFillType              fill_type;
+  gboolean                  visible;
+  gboolean                  linked;
+  gboolean                  lock_pixels;
+  gboolean                  lock_position;
+  gboolean                  lock_alpha;
+  gboolean                  rename_text_layers;
   GimpLayerOptionsCallback  callback;
   gpointer                  user_data;
 
   GtkWidget                *name_entry;
   GtkWidget                *size_se;
   GtkWidget                *offset_se;
-  GtkWidget                *rename_toggle;
 };
 
 
 /*  local function prototypes  */
 
+static void   layer_options_dialog_free          (LayerOptionsDialog *private);
 static void   layer_options_dialog_response      (GtkWidget          *dialog,
                                                   gint                response_id,
                                                   LayerOptionsDialog *private);
 static void   layer_options_dialog_toggle_rename (GtkWidget          *widget,
                                                   LayerOptionsDialog *private);
-static void   layer_options_dialog_free          (LayerOptionsDialog *private);
+static GtkWidget * check_button_with_icon_new    (const gchar        *label,
+                                                  const gchar        *icon_name,
+                                                  GtkBox             *vbox);
 
 
 /*  public functions  */
@@ -96,13 +104,18 @@ layer_options_dialog_new (GimpImage                *image,
   LayerOptionsDialog *private;
   GtkWidget          *dialog;
   GimpViewable       *viewable;
-  GtkWidget          *vbox;
+  GtkWidget          *main_hbox;
+  GtkWidget          *left_vbox;
+  GtkWidget          *right_vbox;
   GtkWidget          *table;
   GtkWidget          *combo;
   GtkWidget          *scale;
   GtkWidget          *label;
   GtkAdjustment      *adjustment;
   GtkWidget          *spinbutton;
+  GtkWidget          *frame;
+  GtkWidget          *vbox;
+  GtkWidget          *button;
   gdouble             xres;
   gdouble             yres;
   gint                row = 0;
@@ -114,19 +127,38 @@ layer_options_dialog_new (GimpImage                *image,
 
   private = g_slice_new0 (LayerOptionsDialog);
 
-  private->image     = image;
-  private->layer     = layer;
-  private->context   = context;
-  private->mode      = layer_mode;
-  private->opacity   = layer_opacity * 100.0;
-  private->fill_type = layer_fill_type;
-  private->callback  = callback;
-  private->user_data = user_data;
+  private->image              = image;
+  private->layer              = layer;
+  private->context            = context;
+  private->mode               = layer_mode;
+  private->opacity            = layer_opacity * 100.0;
+  private->fill_type          = layer_fill_type;
+  private->visible            = TRUE;
+  private->linked             = FALSE;
+  private->lock_pixels        = FALSE;
+  private->lock_position      = FALSE;
+  private->lock_alpha         = FALSE;
+  private->rename_text_layers = FALSE;
+  private->callback           = callback;
+  private->user_data          = user_data;
 
   if (layer)
-    viewable = GIMP_VIEWABLE (layer);
+    {
+      viewable = GIMP_VIEWABLE (layer);
+
+      private->visible       = gimp_item_get_visible (GIMP_ITEM (layer));
+      private->linked        = gimp_item_get_linked (GIMP_ITEM (layer));
+      private->lock_pixels   = gimp_item_get_lock_content (GIMP_ITEM (layer));
+      private->lock_position = gimp_item_get_lock_position (GIMP_ITEM (layer));
+      private->lock_alpha    = gimp_layer_get_lock_alpha (layer);
+
+      if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
+        private->rename_text_layers = GIMP_TEXT_LAYER (layer)->auto_rename;
+    }
   else
-    viewable = GIMP_VIEWABLE (image);
+    {
+      viewable = GIMP_VIEWABLE (image);
+    }
 
   dialog = gimp_viewable_dialog_new (viewable, context,
                                      title, role, icon_name, desc,
@@ -150,12 +182,15 @@ layer_options_dialog_new (GimpImage                *image,
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) layer_options_dialog_free, private);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_set_spacing (GTK_BOX (vbox), 12);
+  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+                      main_hbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_hbox);
+
+  left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_box_pack_start (GTK_BOX (main_hbox), left_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (left_vbox);
 
   table = gtk_table_new (layer ? 5 : 8, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -163,7 +198,7 @@ layer_options_dialog_new (GimpImage                *image,
   gtk_table_set_row_spacing (GTK_TABLE (table), 3, 4);
   if (! layer)
     gtk_table_set_row_spacing (GTK_TABLE (table), 5, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (left_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /*  The name label and entry  */
@@ -350,29 +385,10 @@ layer_options_dialog_new (GimpImage                *image,
   if (layer)
     {
       GimpContainer *filters;
-      GtkWidget     *frame;
       GtkWidget     *view;
 
-      /*  For text layers add a toggle to control "auto-rename"  */
-      if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
-        {
-          private->rename_toggle =
-            gtk_check_button_new_with_mnemonic (_("Set name from _text"));
-
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->rename_toggle),
-                                        GIMP_TEXT_LAYER (layer)->auto_rename);
-
-          gtk_table_attach (GTK_TABLE (table), private->rename_toggle, 1, 2, 1, 2,
-                            GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-          gtk_widget_show (private->rename_toggle);
-
-          g_signal_connect (private->rename_toggle, "toggled",
-                            G_CALLBACK (layer_options_dialog_toggle_rename),
-                            private);
-        }
-
       frame = gimp_frame_new ("Active Filters");
-      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (left_vbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
       filters = gimp_drawable_get_filters (GIMP_DRAWABLE (layer));
@@ -383,11 +399,102 @@ layer_options_dialog_new (GimpImage                *image,
       gtk_widget_show (view);
     }
 
+  right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (right_vbox);
+
+  frame = gimp_frame_new ("Switches");
+  gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  button = check_button_with_icon_new (_("_Visible"),
+                                       GIMP_STOCK_VISIBLE,
+                                       GTK_BOX (vbox));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                private->visible);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &private->visible);
+
+  button = check_button_with_icon_new (_("_Linked"),
+                                       GIMP_STOCK_LINKED,
+                                       GTK_BOX (vbox));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                private->linked);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &private->linked);
+
+  button = check_button_with_icon_new (_("Lock _pixels"),
+                                       GIMP_STOCK_TOOL_PAINTBRUSH,
+                                       GTK_BOX (vbox));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                private->lock_pixels);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &private->lock_pixels);
+
+  button = check_button_with_icon_new (_("Lock position and _size"),
+                                       GIMP_STOCK_TOOL_MOVE,
+                                       GTK_BOX (vbox));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                private->lock_position);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &private->lock_position);
+
+  if (private->size_se)
+    g_object_bind_property (G_OBJECT (button),           "active",
+                            G_OBJECT (private->size_se), "sensitive",
+                            G_BINDING_SYNC_CREATE |
+                            G_BINDING_INVERT_BOOLEAN);
+
+  g_object_bind_property (G_OBJECT (button),             "active",
+                          G_OBJECT (private->offset_se), "sensitive",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
+
+  button = check_button_with_icon_new (_("Lock _alpha"),
+                                       GIMP_STOCK_TRANSPARENCY,
+                                       GTK_BOX (vbox));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                private->lock_alpha);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &private->lock_alpha);
+
+  /*  For text layers add a toggle to control "auto-rename"  */
+  if (layer && gimp_item_is_text_layer (GIMP_ITEM (layer)))
+    {
+      button = check_button_with_icon_new (_("Set name from _text"),
+                                           GIMP_STOCK_TOOL_TEXT,
+                                           GTK_BOX (vbox));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                    private->rename_text_layers);
+      g_signal_connect (button, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &private->rename_text_layers);
+
+      g_signal_connect (button, "toggled",
+                        G_CALLBACK (layer_options_dialog_toggle_rename),
+                        private);
+    }
+
   return dialog;
 }
 
 
 /*  private functions  */
+
+static void
+layer_options_dialog_free (LayerOptionsDialog *private)
+{
+  g_slice_free (LayerOptionsDialog, private);
+}
 
 static void
 layer_options_dialog_response (GtkWidget          *dialog,
@@ -397,11 +504,10 @@ layer_options_dialog_response (GtkWidget          *dialog,
   if (response_id == GTK_RESPONSE_OK)
     {
       const gchar *name;
-      gint         width             = 0;
-      gint         height            = 0;
+      gint         width  = 0;
+      gint         height = 0;
       gint         offset_x;
       gint         offset_y;
-      gboolean     rename_text_layer = FALSE;
 
       name = gtk_entry_get_text (GTK_ENTRY (private->name_entry));
 
@@ -422,13 +528,6 @@ layer_options_dialog_response (GtkWidget          *dialog,
         RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se),
                                           1));
 
-          if (private->layer &&
-          gimp_item_is_text_layer (GIMP_ITEM (private->layer)))
-        {
-          rename_text_layer =
-            gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (private->rename_toggle));
-        }
-
       private->callback (dialog,
                          private->image,
                          private->layer,
@@ -441,7 +540,12 @@ layer_options_dialog_response (GtkWidget          *dialog,
                          height,
                          offset_x,
                          offset_y,
-                         rename_text_layer,
+                         private->visible,
+                         private->linked,
+                         private->lock_pixels,
+                         private->lock_position,
+                         private->lock_alpha,
+                         private->rename_text_layers,
                          private->user_data);
     }
   else
@@ -471,8 +575,26 @@ layer_options_dialog_toggle_rename (GtkWidget          *widget,
     }
 }
 
-static void
-layer_options_dialog_free (LayerOptionsDialog *private)
+static GtkWidget *
+check_button_with_icon_new (const gchar *label,
+                            const gchar *icon_name,
+                            GtkBox      *vbox)
 {
-  g_slice_free (LayerOptionsDialog, private);
+  GtkWidget *hbox;
+  GtkWidget *button;
+  GtkWidget *image;
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (vbox, hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  button = gtk_check_button_new_with_mnemonic (label);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  return button;
 }

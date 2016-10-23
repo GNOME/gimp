@@ -31,6 +31,11 @@ typedef void (* GimpLayerOptionsCallback) (GtkWidget            *dialog,
                                            gint                  layer_height,
                                            gint                  layer_offset_x,
                                            gint                  layer_offset_y,
+                                           gboolean              layer_visible,
+                                           gboolean              layer_linked,
+                                           gboolean              layer_lock_pixels,
+                                           gboolean              layer_lock_position,
+                                           gboolean              layer_lock_alpha,
                                            gboolean              rename_text_layer,
                                            gpointer              user_data);
 
