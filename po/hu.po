@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gimp-master-po-hu-23139.merged\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-10-22 17:34+0000\n"
-"PO-Revision-Date: 2016-10-23 09:00+0200\n"
+"POT-Creation-Date: 2016-10-23 21:02+0000\n"
+"PO-Revision-Date: 2016-10-24 22:43+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -825,8 +825,8 @@ msgid "New Channel"
 msgstr "Új csatorna"
 
 #: ../app/actions/channels-commands.c:141
-msgid "New Channel Options"
-msgstr "Új csatorna beállításai"
+msgid "Create a New Channel"
+msgstr "Új csatorna létrehozása"
 
 #: ../app/actions/channels-commands.c:145
 msgid "New Channel Color"
@@ -4257,7 +4257,7 @@ msgstr "Tükrözés"
 msgid "Rotating"
 msgstr "Elforgatás"
 
-#: ../app/actions/image-commands.c:843 ../app/actions/layers-commands.c:765
+#: ../app/actions/image-commands.c:843 ../app/actions/layers-commands.c:775
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nem lehet kivágni, mert a kijelölt terület üres."
 
@@ -4306,7 +4306,7 @@ msgid "Scale Image"
 msgstr "Kép átméretezése"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1413 ../app/actions/layers-commands.c:1337
+#: ../app/actions/image-commands.c:1413 ../app/actions/layers-commands.c:1385
 #: ../app/dialogs/preferences-dialog.c:1345
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -4879,49 +4879,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Új réte_ggé"
 
-#: ../app/actions/layers-commands.c:240 ../app/actions/layers-commands.c:1213
+#: ../app/actions/layers-commands.c:250 ../app/actions/layers-commands.c:1246
 msgid "Layer Attributes"
 msgstr "Réteg tulajdonságai"
 
-#: ../app/actions/layers-commands.c:243
+#: ../app/actions/layers-commands.c:253
 msgid "Edit Layer Attributes"
 msgstr "Réteg tulajdonságainak szerkesztése"
 
-#: ../app/actions/layers-commands.c:300 ../app/actions/layers-commands.c:366
+#: ../app/actions/layers-commands.c:310 ../app/actions/layers-commands.c:376
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:855
 msgid "New Layer"
 msgstr "Új réteg"
 
-#: ../app/actions/layers-commands.c:303
+#: ../app/actions/layers-commands.c:313
 msgid "Create a New Layer"
 msgstr "Új réteg létrehozása"
 
-#: ../app/actions/layers-commands.c:406 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:416 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Látható"
 
-#: ../app/actions/layers-commands.c:671
+#: ../app/actions/layers-commands.c:681
 msgid "Set Layer Boundary Size"
 msgstr "Réteg-határvonal méretének beállítása"
 
-#: ../app/actions/layers-commands.c:733
+#: ../app/actions/layers-commands.c:743
 msgid "Scale Layer"
 msgstr "Réteg átméretezése"
 
-#: ../app/actions/layers-commands.c:775
+#: ../app/actions/layers-commands.c:785
 msgid "Crop Layer to Selection"
 msgstr "Réteg levágása a kijelöléshez"
 
-#: ../app/actions/layers-commands.c:805
+#: ../app/actions/layers-commands.c:815
 msgid "Crop Layer to Content"
 msgstr "Réteg levágása a tartalomhoz"
 
-#: ../app/actions/layers-commands.c:818
+#: ../app/actions/layers-commands.c:828
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nem lehet levágni, mert az aktív rétegnek nincs tartalma."
 
-#: ../app/actions/layers-commands.c:825
+#: ../app/actions/layers-commands.c:835
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr "Nem lehet levágni, mert az aktív réteg már a tartalmára van vágva."
 
@@ -6298,8 +6298,8 @@ msgid "New Path"
 msgstr "Új útvonal"
 
 #: ../app/actions/vectors-commands.c:195
-msgid "New Path Options"
-msgstr "Új útvonal beállításai"
+msgid "Create a New Path"
+msgstr "Új útvonal létrehozása"
 
 #: ../app/actions/vectors-commands.c:432
 msgid "Fill Path"
@@ -11460,12 +11460,12 @@ msgstr "%s halványítása"
 msgid "_Fade"
 msgstr "H_alványítás"
 
-#: ../app/dialogs/fade-dialog.c:156 ../app/dialogs/layer-options-dialog.c:180
+#: ../app/dialogs/fade-dialog.c:156 ../app/dialogs/layer-options-dialog.c:215
 #: ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Mód:"
 
-#: ../app/dialogs/fade-dialog.c:162 ../app/dialogs/layer-options-dialog.c:191
+#: ../app/dialogs/fade-dialog.c:162 ../app/dialogs/layer-options-dialog.c:226
 msgid "_Opacity:"
 msgstr "Át_látszatlanság:"
 
@@ -11719,38 +11719,58 @@ msgstr "Maszk in_vertálása"
 msgid "Please select a channel first"
 msgstr "Először jelöljön ki egy csatornát"
 
-#: ../app/dialogs/layer-options-dialog.c:172
+#: ../app/dialogs/layer-options-dialog.c:207
 msgid "Layer _name:"
 msgstr "Réteg _neve:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:203
+#: ../app/dialogs/layer-options-dialog.c:238
 #: ../app/tools/gimpmeasuretool.c:1139
 msgid "Width:"
 msgstr "Szélesség:"
 
-#: ../app/dialogs/layer-options-dialog.c:209
+#: ../app/dialogs/layer-options-dialog.c:244
 #: ../app/tools/gimpmeasuretool.c:1167
 msgid "Height:"
 msgstr "Magasság:"
 
 #. The offset labels
-#: ../app/dialogs/layer-options-dialog.c:267
+#: ../app/dialogs/layer-options-dialog.c:302
 #: ../app/tools/gimpalignoptions.c:380
 msgid "Offset X:"
 msgstr "X eltolás:"
 
-#: ../app/dialogs/layer-options-dialog.c:273
+#: ../app/dialogs/layer-options-dialog.c:308
 #: ../app/tools/gimpalignoptions.c:393
 msgid "Offset Y:"
 msgstr "Y eltolás:"
 
-#: ../app/dialogs/layer-options-dialog.c:342 ../app/dialogs/resize-dialog.c:363
+#: ../app/dialogs/layer-options-dialog.c:377 ../app/dialogs/resize-dialog.c:363
 #: ../app/widgets/gimptemplateeditor.c:431
 msgid "_Fill with:"
 msgstr "Kitöltés _ezzel:"
 
-#: ../app/dialogs/layer-options-dialog.c:360
+#: ../app/dialogs/layer-options-dialog.c:414
+msgid "_Visible"
+msgstr "_Látható"
+
+#: ../app/dialogs/layer-options-dialog.c:423
+msgid "_Linked"
+msgstr "Lá_ncolt"
+
+#: ../app/dialogs/layer-options-dialog.c:432
+msgid "Lock _pixels"
+msgstr "Kép_pontok zárolása"
+
+#: ../app/dialogs/layer-options-dialog.c:441
+msgid "Lock position and _size"
+msgstr "Pozíció és _méret zárolása"
+
+#: ../app/dialogs/layer-options-dialog.c:461
+msgid "Lock _alpha"
+msgstr "_Alfa csatorna zárolása"
+
+#: ../app/dialogs/layer-options-dialog.c:473
 msgid "Set name from _text"
 msgstr "Név beállítása a _szövegből"
 
@@ -16440,13 +16460,13 @@ msgstr "fakítás: %s"
 msgid "Type  (%s)"
 msgstr "Típus  (%s)"
 
-#: ../app/tools/gimpeditselectiontool.c:419
-#: ../app/tools/gimpeditselectiontool.c:605
+#: ../app/tools/gimpeditselectiontool.c:439
+#: ../app/tools/gimpeditselectiontool.c:607
 msgid "Move: "
 msgstr "Áthelyezés: "
 
-#: ../app/tools/gimpeditselectiontool.c:849
-#: ../app/tools/gimpeditselectiontool.c:1108
+#: ../app/tools/gimpeditselectiontool.c:860
+#: ../app/tools/gimpeditselectiontool.c:1119
 msgid "Move Floating Selection"
 msgstr "Lebegő kijelölés áthelyezése"
 
@@ -20635,6 +20655,12 @@ msgstr "kerek"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "lágy"
+
+#~ msgid "New Channel Options"
+#~ msgstr "Új csatorna beállításai"
+
+#~ msgid "New Path Options"
+#~ msgstr "Új útvonal beállításai"
 
 #~ msgid "Layer Fill Type"
 #~ msgstr "Réteg kitöltésének típusa"
