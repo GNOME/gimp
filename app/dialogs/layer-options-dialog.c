@@ -403,7 +403,7 @@ layer_options_dialog_new (GimpImage                *image,
   gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
-  frame = gimp_frame_new ("Switches");
+  frame = gimp_frame_new (_("Switches"));
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
