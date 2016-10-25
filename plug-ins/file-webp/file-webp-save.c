@@ -437,9 +437,10 @@ save_animation (const gchar    *filename,
           WebPConfig        config;
           WebPPicture       picture;
           WebPMemoryWriter  mw = { 0 };
+          gint32            drawable = allLayers[nLayers - 1 - loop];
 
           /* Obtain the drawable type */
-          has_alpha = gimp_drawable_has_alpha (allLayers[loop]);
+          has_alpha = gimp_drawable_has_alpha (drawable);
 
           if (has_alpha)
             format = babl_format ("R'G'B'A u8");
@@ -449,10 +450,10 @@ save_animation (const gchar    *filename,
           bpp = babl_format_get_bytes_per_pixel (format);
 
           /* fix layers to avoid offset errors */
-          gimp_layer_resize_to_image_size (allLayers[loop]);
+          gimp_layer_resize_to_image_size (drawable);
 
           /* Retrieve the buffer for the layer */
-          geglbuffer = gimp_drawable_get_buffer (allLayers[loop]);
+          geglbuffer = gimp_drawable_get_buffer (drawable);
           extent = *gegl_buffer_get_extent (geglbuffer);
           w = extent.width;
           h = extent.height;
