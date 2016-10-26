@@ -77,12 +77,22 @@
 static void   vectors_new_callback             (GtkWidget            *dialog,
                                                 GimpImage            *image,
                                                 GimpVectors          *vectors,
+                                                GimpContext          *context,
                                                 const gchar          *vectors_name,
+                                                gboolean              vectors_visible,
+                                                gboolean              vectors_linked,
+                                                gboolean              vectors_lock_content,
+                                                gboolean              vectors_lock_position,
                                                 gpointer              user_data);
 static void   vectors_edit_attributes_callback (GtkWidget            *dialog,
                                                 GimpImage            *image,
                                                 GimpVectors          *vectors,
+                                                GimpContext          *context,
                                                 const gchar          *vectors_name,
+                                                gboolean              vectors_visible,
+                                                gboolean              vectors_linked,
+                                                gboolean              vectors_lock_content,
+                                                gboolean              vectors_lock_position,
                                                 gpointer              user_data);
 static void   vectors_fill_callback            (GtkWidget            *dialog,
                                                 GimpItem             *item,
@@ -150,6 +160,8 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
+      GimpItem *item = GIMP_ITEM (vectors);
+
       dialog = vectors_options_dialog_new (image, vectors,
                                            action_data_get_context (data),
                                            widget,
@@ -159,6 +171,10 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
                                            _("Edit Path Attributes"),
                                            GIMP_HELP_PATH_EDIT,
                                            gimp_object_get_name (vectors),
+                                           gimp_item_get_visible (item),
+                                           gimp_item_get_linked (item),
+                                           gimp_item_get_lock_content (item),
+                                           gimp_item_get_lock_position (item),
                                            vectors_edit_attributes_callback,
                                            NULL);
 
@@ -195,6 +211,10 @@ vectors_new_cmd_callback (GtkAction *action,
                                            _("Create a New Path"),
                                            GIMP_HELP_PATH_NEW,
                                            config->vectors_new_name,
+                                           FALSE,
+                                           FALSE,
+                                           FALSE,
+                                           FALSE,
                                            vectors_new_callback,
                                            NULL);
 
@@ -816,7 +836,12 @@ static void
 vectors_new_callback (GtkWidget   *dialog,
                       GimpImage   *image,
                       GimpVectors *vectors,
+                      GimpContext *context,
                       const gchar *vectors_name,
+                      gboolean     vectors_visible,
+                      gboolean     vectors_linked,
+                      gboolean     vectors_lock_content,
+                      gboolean     vectors_lock_position,
                       gpointer     user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
@@ -826,6 +851,11 @@ vectors_new_callback (GtkWidget   *dialog,
                 NULL);
 
   vectors = gimp_vectors_new (image, config->vectors_new_name);
+  gimp_item_set_visible (GIMP_ITEM (vectors), vectors_visible, FALSE);
+  gimp_item_set_linked (GIMP_ITEM (vectors), vectors_linked, FALSE);
+  gimp_item_set_lock_content (GIMP_ITEM (vectors), vectors_lock_content, FALSE);
+  gimp_item_set_lock_position (GIMP_ITEM (vectors), vectors_lock_position, FALSE);
+
   gimp_image_add_vectors (image, vectors,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
@@ -837,12 +867,43 @@ static void
 vectors_edit_attributes_callback (GtkWidget   *dialog,
                                   GimpImage   *image,
                                   GimpVectors *vectors,
+                                  GimpContext *context,
                                   const gchar *vectors_name,
+                                  gboolean     vectors_visible,
+                                  gboolean     vectors_linked,
+                                  gboolean     vectors_lock_content,
+                                  gboolean     vectors_lock_position,
                                   gpointer     user_data)
 {
-  if (strcmp (vectors_name, gimp_object_get_name (vectors)))
+  GimpItem *item = GIMP_ITEM (vectors);
+
+  if (strcmp (vectors_name, gimp_object_get_name (vectors))      ||
+      vectors_visible       != gimp_item_get_visible (item)      ||
+      vectors_linked        != gimp_item_get_linked (item)       ||
+      vectors_lock_content  != gimp_item_get_lock_content (item) ||
+      vectors_lock_position != gimp_item_get_lock_position (item))
     {
-      gimp_item_rename (GIMP_ITEM (vectors), vectors_name, NULL);
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                   _("Path Attributes"));
+
+      if (strcmp (vectors_name, gimp_object_get_name (vectors)))
+        gimp_item_rename (GIMP_ITEM (vectors), vectors_name, NULL);
+
+      if (vectors_visible != gimp_item_get_visible (item))
+        gimp_item_set_visible (item, vectors_visible, TRUE);
+
+      if (vectors_linked != gimp_item_get_linked (item))
+        gimp_item_set_linked (item, vectors_linked, TRUE);
+
+      if (vectors_lock_content != gimp_item_get_lock_content (item))
+        gimp_item_set_lock_content (item, vectors_lock_content, TRUE);
+
+      if (vectors_lock_position != gimp_item_get_lock_position (item))
+        gimp_item_set_lock_position (item, vectors_lock_position, TRUE);
+
+      gimp_image_undo_group_end (image);
+
       gimp_image_flush (image);
     }
 

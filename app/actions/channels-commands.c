@@ -62,6 +62,10 @@ static void   channels_new_callback             (GtkWidget     *dialog,
                                                  const gchar   *channel_name,
                                                  const GimpRGB *channel_color,
                                                  gboolean       save_selection,
+                                                 gboolean       channel_visible,
+                                                 gboolean       channel_linked,
+                                                 gboolean       channel_lock_content,
+                                                 gboolean       channel_lock_position,
                                                  gpointer       user_data);
 static void   channels_edit_attributes_callback (GtkWidget     *dialog,
                                                  GimpImage     *image,
@@ -70,6 +74,10 @@ static void   channels_edit_attributes_callback (GtkWidget     *dialog,
                                                  const gchar   *channel_name,
                                                  const GimpRGB *channel_color,
                                                  gboolean       save_selection,
+                                                 gboolean       channel_visible,
+                                                 gboolean       channel_linked,
+                                                 gboolean       channel_lock_content,
+                                                 gboolean       channel_lock_position,
                                                  gpointer       user_data);
 
 
@@ -92,6 +100,8 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
+      GimpItem *item = GIMP_ITEM (channel);
+
       dialog = channel_options_dialog_new (image, channel,
                                            action_data_get_context (data),
                                            widget,
@@ -100,11 +110,15 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
                                            "gtk-edit",
                                            _("Edit Channel Attributes"),
                                            GIMP_HELP_CHANNEL_EDIT,
+                                           _("Edit Channel Color"),
+                                           _("_Fill opacity:"),
+                                           FALSE,
                                            gimp_object_get_name (channel),
                                            &channel->color,
-                                           _("Edit Channel Color"),
-                                           _("_Fill opacity"),
-                                           FALSE,
+                                           gimp_item_get_visible (item),
+                                           gimp_item_get_linked (item),
+                                           gimp_item_get_lock_content (item),
+                                           gimp_item_get_lock_position (item),
                                            channels_edit_attributes_callback,
                                            NULL);
 
@@ -140,11 +154,15 @@ channels_new_cmd_callback (GtkAction *action,
                                            GIMP_STOCK_CHANNEL,
                                            _("Create a New Channel"),
                                            GIMP_HELP_CHANNEL_NEW,
+                                           _("New Channel Color"),
+                                           _("_Fill opacity:"),
+                                           TRUE,
                                            config->channel_new_name,
                                            &config->channel_new_color,
-                                           _("New Channel Color"),
-                                           _("_Fill opacity"),
                                            TRUE,
+                                           FALSE,
+                                           FALSE,
+                                           FALSE,
                                            channels_new_callback,
                                            NULL);
 
@@ -355,6 +373,10 @@ channels_new_callback (GtkWidget     *dialog,
                        const gchar   *channel_name,
                        const GimpRGB *channel_color,
                        gboolean       save_selection,
+                       gboolean       channel_visible,
+                       gboolean       channel_linked,
+                       gboolean       channel_lock_content,
+                       gboolean       channel_lock_position,
                        gpointer       user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
@@ -387,6 +409,11 @@ channels_new_callback (GtkWidget     *dialog,
                           GIMP_FILL_TRANSPARENT);
     }
 
+  gimp_item_set_visible (GIMP_ITEM (channel), channel_visible, FALSE);
+  gimp_item_set_linked (GIMP_ITEM (channel), channel_linked, FALSE);
+  gimp_item_set_lock_content (GIMP_ITEM (channel), channel_lock_content, FALSE);
+  gimp_item_set_lock_position (GIMP_ITEM (channel), channel_lock_position, FALSE);
+
   gimp_image_add_channel (image, channel,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
@@ -402,32 +429,44 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
                                    const gchar   *channel_name,
                                    const GimpRGB *channel_color,
                                    gboolean       save_selection,
+                                   gboolean       channel_visible,
+                                   gboolean       channel_linked,
+                                   gboolean       channel_lock_content,
+                                   gboolean       channel_lock_position,
                                    gpointer       user_data)
 {
-  gboolean name_changed  = FALSE;
-  gboolean color_changed = FALSE;
+  GimpItem *item = GIMP_ITEM (channel);
 
-  if (strcmp (channel_name, gimp_object_get_name (channel)))
-    name_changed = TRUE;
-
-  if (gimp_rgba_distance (channel_color, &channel->color) > 0.0001)
-    color_changed = TRUE;
-
-  if (name_changed || color_changed)
+  if (strcmp (channel_name, gimp_object_get_name (channel))        ||
+      gimp_rgba_distance (channel_color, &channel->color) > 0.0001 ||
+      channel_visible       != gimp_item_get_visible (item)        ||
+      channel_linked        != gimp_item_get_linked (item)         ||
+      channel_lock_content  != gimp_item_get_lock_content (item)   ||
+      channel_lock_position != gimp_item_get_lock_position (item))
     {
-      if (name_changed && color_changed)
-        gimp_image_undo_group_start (image,
-                                     GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                                     _("Channel Attributes"));
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                   _("Channel Attributes"));
 
-      if (name_changed)
+      if (strcmp (channel_name, gimp_object_get_name (channel)))
         gimp_item_rename (GIMP_ITEM (channel), channel_name, NULL);
 
-      if (color_changed)
+      if (gimp_rgba_distance (channel_color, &channel->color) > 0.0001)
         gimp_channel_set_color (channel, channel_color, TRUE);
 
-      if (name_changed && color_changed)
-        gimp_image_undo_group_end (image);
+      if (channel_visible != gimp_item_get_visible (item))
+        gimp_item_set_visible (item, channel_visible, TRUE);
+
+      if (channel_linked != gimp_item_get_linked (item))
+        gimp_item_set_linked (item, channel_linked, TRUE);
+
+      if (channel_lock_content != gimp_item_get_lock_content (item))
+        gimp_item_set_lock_content (item, channel_lock_content, TRUE);
+
+      if (channel_lock_position != gimp_item_get_lock_position (item))
+        gimp_item_set_lock_position (item, channel_lock_position, TRUE);
+
+      gimp_image_undo_group_end (image);
 
       gimp_image_flush (image);
     }

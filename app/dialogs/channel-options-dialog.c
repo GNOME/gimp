@@ -34,6 +34,7 @@
 #include "widgets/gimpviewabledialog.h"
 
 #include "channel-options-dialog.h"
+#include "item-options-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -42,28 +43,31 @@ typedef struct _ChannelOptionsDialog ChannelOptionsDialog;
 
 struct _ChannelOptionsDialog
 {
-  GimpImage                  *image;
-  GimpContext                *context;
-  GimpChannel                *channel;
   GimpChannelOptionsCallback  callback;
   gpointer                    user_data;
 
-  GtkWidget                  *name_entry;
   GtkWidget                  *color_panel;
-  GtkWidget                  *save_sel_checkbutton;
+  GtkWidget                  *save_sel_toggle;
 };
 
 
 /*  local function prototypes  */
 
-static void channel_options_dialog_response (GtkWidget            *dialog,
-                                             gint                  response_id,
-                                             ChannelOptionsDialog *private);
-static void channel_options_opacity_update  (GtkAdjustment        *adjustment,
+static void channel_options_dialog_free     (ChannelOptionsDialog *private);
+static void channel_options_dialog_callback (GtkWidget            *dialog,
+                                             GimpImage            *image,
+                                             GimpItem             *item,
+                                             GimpContext          *context,
+                                             const gchar          *item_name,
+                                             gboolean              item_visible,
+                                             gboolean              item_linked,
+                                             gboolean              item_lock_content,
+                                             gboolean              item_lock_position,
+                                             gpointer              user_data);
+static void channel_options_opacity_changed (GtkAdjustment        *adjustment,
                                              GimpColorButton      *color_button);
 static void channel_options_color_changed   (GimpColorButton      *color_button,
                                              GtkAdjustment        *adjustment);
-static void channel_options_dialog_free     (ChannelOptionsDialog *private);
 
 
 /*  public functions  */
@@ -78,19 +82,20 @@ channel_options_dialog_new (GimpImage                  *image,
                             const gchar                *icon_name,
                             const gchar                *desc,
                             const gchar                *help_id,
-                            const gchar                *channel_name,
-                            const GimpRGB              *channel_color,
                             const gchar                *color_label,
                             const gchar                *opacity_label,
                             gboolean                    show_from_sel,
+                            const gchar                *channel_name,
+                            const GimpRGB              *channel_color,
+                            gboolean                    channel_visible,
+                            gboolean                    channel_linked,
+                            gboolean                    channel_lock_content,
+                            gboolean                    channel_lock_position,
                             GimpChannelOptionsCallback  callback,
                             gpointer                    user_data)
 {
   ChannelOptionsDialog *private;
   GtkWidget            *dialog;
-  GimpViewable         *viewable;
-  GtkWidget            *hbox;
-  GtkWidget            *vbox;
   GtkAdjustment        *opacity_adj;
   GtkWidget            *scale;
 
@@ -110,108 +115,60 @@ channel_options_dialog_new (GimpImage                  *image,
 
   private = g_slice_new0 (ChannelOptionsDialog);
 
-  private->image     = image;
-  private->channel   = channel;
-  private->context   = context;
   private->callback  = callback;
   private->user_data = user_data;
 
-  if (channel)
-    viewable = GIMP_VIEWABLE (channel);
-  else
-    viewable = GIMP_VIEWABLE (image);
-
-  dialog = gimp_viewable_dialog_new (viewable, context,
-                                     title, role, icon_name, desc,
-                                     parent,
-                                     gimp_standard_help_func, help_id,
-
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                                     NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+  dialog = item_options_dialog_new (image, GIMP_ITEM (channel), context,
+                                    parent, title, role,
+                                    icon_name, desc, help_id,
+                                    channel_name ? _("Channel _name:") : NULL,
+                                    GIMP_STOCK_TOOL_PAINTBRUSH,
+                                    _("Lock _pixels"),
+                                    _("Lock position and _size"),
+                                    channel_name,
+                                    channel_visible,
+                                    channel_linked,
+                                    channel_lock_content,
+                                    channel_lock_position,
+                                    channel_options_dialog_callback,
+                                    private);
 
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) channel_options_dialog_free, private);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (channel_options_dialog_response),
-                    private);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  if (channel_name)
-    {
-      GtkWidget *vbox2;
-      GtkWidget *label;
-
-      vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
-      gtk_widget_show (vbox2);
-
-      label = gtk_label_new_with_mnemonic (_("Channel _name:"));
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      private->name_entry = gtk_entry_new ();
-      gtk_entry_set_text (GTK_ENTRY (private->name_entry), channel_name);
-      gtk_entry_set_activates_default (GTK_ENTRY (private->name_entry), TRUE);
-      gtk_box_pack_start (GTK_BOX (vbox2), private->name_entry,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (private->name_entry);
-
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), private->name_entry);
-    }
-
   opacity_adj = (GtkAdjustment *)
                 gtk_adjustment_new (channel_color->a * 100.0,
                                     0.0, 100.0, 1.0, 10.0, 0);
-  scale = gimp_spin_scale_new (opacity_adj, opacity_label, 1);
+  scale = gimp_spin_scale_new (opacity_adj, NULL, 1);
   gtk_widget_set_size_request (scale, 200, -1);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
+  item_options_dialog_add_widget (dialog,
+                                  opacity_label, scale);
 
   private->color_panel = gimp_color_panel_new (color_label,
                                                channel_color,
                                                GIMP_COLOR_AREA_LARGE_CHECKS,
-                                               48, 48);
+                                               24, 24);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (private->color_panel),
                                 context);
 
   g_signal_connect (opacity_adj, "value-changed",
-                    G_CALLBACK (channel_options_opacity_update),
+                    G_CALLBACK (channel_options_opacity_changed),
                     private->color_panel);
-
-  gtk_box_pack_start (GTK_BOX (hbox), private->color_panel,
-                      FALSE, FALSE, 0);
-  gtk_widget_show (private->color_panel);
 
   g_signal_connect (private->color_panel, "color-changed",
                     G_CALLBACK (channel_options_color_changed),
                     opacity_adj);
 
+  item_options_dialog_add_widget (dialog,
+                                  NULL, private->color_panel);
+
   if (show_from_sel)
     {
-      private->save_sel_checkbutton =
+      private->save_sel_toggle =
         gtk_check_button_new_with_mnemonic (_("Initialize from _selection"));
 
-      gtk_box_pack_start (GTK_BOX (vbox), private->save_sel_checkbutton,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (private->save_sel_checkbutton);
+      item_options_dialog_add_widget (dialog,
+                                      NULL, private->save_sel_toggle);
     }
 
   return dialog;
@@ -221,46 +178,53 @@ channel_options_dialog_new (GimpImage                  *image,
 /*  private functions  */
 
 static void
-channel_options_dialog_response (GtkWidget            *dialog,
-                                 gint                  response_id,
-                                 ChannelOptionsDialog *private)
+channel_options_dialog_free (ChannelOptionsDialog *private)
 {
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      const gchar *name           = NULL;
-      GimpRGB      color;
-      gboolean     save_selection = FALSE;
-
-      if (private->name_entry)
-        name = gtk_entry_get_text (GTK_ENTRY (private->name_entry));
-
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (private->color_panel),
-                                   &color);
-
-      if (private->save_sel_checkbutton)
-        save_selection =
-          gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (private->save_sel_checkbutton));
-
-      private->callback (dialog,
-                         private->image,
-                         private->channel,
-                         private->context,
-                         name,
-                         &color,
-                         save_selection,
-                         private->user_data);
-    }
-  else
-    {
-      gtk_widget_destroy (dialog);
-    }
+  g_slice_free (ChannelOptionsDialog, private);
 }
 
 static void
-channel_options_opacity_update (GtkAdjustment   *adjustment,
-                                GimpColorButton *color_button)
+channel_options_dialog_callback (GtkWidget   *dialog,
+                                 GimpImage   *image,
+                                 GimpItem    *item,
+                                 GimpContext *context,
+                                 const gchar *item_name,
+                                 gboolean     item_visible,
+                                 gboolean     item_linked,
+                                 gboolean     item_lock_content,
+                                 gboolean     item_lock_position,
+                                 gpointer     user_data)
 {
-  GimpRGB  color;
+  ChannelOptionsDialog *private = user_data;
+  GimpRGB               color;
+  gboolean              save_selection = FALSE;
+
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (private->color_panel),
+                               &color);
+
+  if (private->save_sel_toggle)
+    save_selection =
+      gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (private->save_sel_toggle));
+
+  private->callback (dialog,
+                     image,
+                     GIMP_CHANNEL (item),
+                     context,
+                     item_name,
+                     &color,
+                     save_selection,
+                     item_visible,
+                     item_linked,
+                     item_lock_content,
+                     item_lock_position,
+                     private->user_data);
+}
+
+static void
+channel_options_opacity_changed (GtkAdjustment   *adjustment,
+                                 GimpColorButton *color_button)
+{
+  GimpRGB color;
 
   gimp_color_button_get_color (color_button, &color);
   gimp_rgb_set_alpha (&color, gtk_adjustment_get_value (adjustment) / 100.0);
@@ -271,14 +235,8 @@ static void
 channel_options_color_changed (GimpColorButton *button,
                                GtkAdjustment   *adjustment)
 {
-  GimpRGB        color;
+  GimpRGB color;
 
   gimp_color_button_get_color (button, &color);
   gtk_adjustment_set_value (adjustment, color.a * 100.0);
-}
-
-static void
-channel_options_dialog_free (ChannelOptionsDialog *options)
-{
-  g_slice_free (ChannelOptionsDialog, options);
 }

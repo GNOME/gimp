@@ -243,6 +243,8 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
+      GimpItem *item = GIMP_ITEM (layer);
+
       dialog = layer_options_dialog_new (gimp_item_get_image (GIMP_ITEM (layer)),
                                          layer,
                                          action_data_get_context (data),
@@ -256,6 +258,11 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
                                          gimp_layer_get_mode (layer),
                                          gimp_layer_get_opacity (layer),
                                          0 /* unused */,
+                                         gimp_item_get_visible (item),
+                                         gimp_item_get_linked (item),
+                                         gimp_item_get_lock_content (item),
+                                         gimp_item_get_lock_position (item),
+                                         gimp_layer_get_lock_alpha (layer),
                                          layers_edit_attributes_callback,
                                          NULL);
 
@@ -316,6 +323,11 @@ layers_new_cmd_callback (GtkAction *action,
                                          config->layer_new_mode,
                                          config->layer_new_opacity,
                                          config->layer_new_fill_type,
+                                         TRUE,
+                                         FALSE,
+                                         FALSE,
+                                         FALSE,
+                                         FALSE,
                                          layers_new_callback,
                                          NULL);
 

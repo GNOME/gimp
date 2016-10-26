@@ -22,7 +22,12 @@
 typedef void (* GimpVectorsOptionsCallback) (GtkWidget   *dialog,
                                              GimpImage   *image,
                                              GimpVectors *vectors,
+                                             GimpContext *context,
                                              const gchar *vectors_name,
+                                             gboolean     vectors_visible,
+                                             gboolean     vectors_linked,
+                                             gboolean     vectors_lock_content,
+                                             gboolean     vectors_lock_position,
                                              gpointer     user_data);
 
 
@@ -36,6 +41,10 @@ GtkWidget * vectors_options_dialog_new (GimpImage                  *image,
                                         const gchar                *desc,
                                         const gchar                *help_id,
                                         const gchar                *vectors_name,
+                                        gboolean                    vectors_visible,
+                                        gboolean                    vectors_linked,
+                                        gboolean                    vectors_lock_content,
+                                        gboolean                    vectors_lock_position,
                                         GimpVectorsOptionsCallback  callback,
                                         gpointer                    user_data);
 

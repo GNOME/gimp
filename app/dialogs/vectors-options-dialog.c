@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -31,8 +29,7 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "widgets/gimpviewabledialog.h"
-
+#include "item-options-dialog.h"
 #include "vectors-options-dialog.h"
 
 #include "gimp-intl.h"
@@ -42,21 +39,24 @@ typedef struct _VectorsOptionsDialog VectorsOptionsDialog;
 
 struct _VectorsOptionsDialog
 {
-  GimpImage                  *image;
-  GimpVectors                *vectors;
   GimpVectorsOptionsCallback  callback;
   gpointer                    user_data;
-
-  GtkWidget                  *name_entry;
 };
 
 
 /*  local function prototypes  */
 
-static void  vectors_options_dialog_response (GtkWidget            *dialog,
-                                              gint                  response_id,
-                                              VectorsOptionsDialog *private);
 static void  vectors_options_dialog_free     (VectorsOptionsDialog *private);
+static void  vectors_options_dialog_callback (GtkWidget            *dialog,
+                                              GimpImage            *image,
+                                              GimpItem             *item,
+                                              GimpContext          *context,
+                                              const gchar          *item_name,
+                                              gboolean              item_visible,
+                                              gboolean              item_linked,
+                                              gboolean              item_lock_content,
+                                              gboolean              item_lock_position,
+                                              gpointer              user_data);
 
 
 /*  public functions  */
@@ -72,15 +72,15 @@ vectors_options_dialog_new (GimpImage                  *image,
                             const gchar                *desc,
                             const gchar                *help_id,
                             const gchar                *vectors_name,
+                            gboolean                    vectors_visible,
+                            gboolean                    vectors_linked,
+                            gboolean                    vectors_lock_content,
+                            gboolean                    vectors_lock_position,
                             GimpVectorsOptionsCallback  callback,
                             gpointer                    user_data)
 {
   VectorsOptionsDialog *private;
   GtkWidget            *dialog;
-  GimpViewable         *viewable;
-  GtkWidget            *hbox;
-  GtkWidget            *vbox;
-  GtkWidget            *table;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
@@ -95,90 +95,58 @@ vectors_options_dialog_new (GimpImage                  *image,
 
   private = g_slice_new0 (VectorsOptionsDialog);
 
-  private->image     = image;
-  private->vectors   = vectors;
   private->callback  = callback;
   private->user_data = user_data;
 
-  if (vectors)
-    viewable = GIMP_VIEWABLE (vectors);
-  else
-    viewable = GIMP_VIEWABLE (image);
-
-  dialog = gimp_viewable_dialog_new (viewable, context,
-                                     title, role, icon_name, desc,
-                                     parent,
-                                     gimp_standard_help_func,
-                                     help_id,
-
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                                     NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+  dialog = item_options_dialog_new (image, GIMP_ITEM (vectors), context,
+                                    parent, title, role,
+                                    icon_name, desc, help_id,
+                                    _("Path _name:"),
+                                    GIMP_STOCK_TOOL_PATH,
+                                    _("Lock path _strokes"),
+                                    _("Lock path _position"),
+                                    vectors_name,
+                                    vectors_visible,
+                                    vectors_linked,
+                                    vectors_lock_content,
+                                    vectors_lock_position,
+                                    vectors_options_dialog_callback,
+                                    private);
 
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) vectors_options_dialog_free, private);
 
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (vectors_options_dialog_response),
-                    private);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  private->name_entry = gtk_entry_new ();
-  gtk_widget_set_size_request (private->name_entry, 150, -1);
-  gtk_entry_set_activates_default (GTK_ENTRY (private->name_entry), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Path name:"), 0.0, 0.5,
-                             private->name_entry, 1, FALSE);
-
-  gtk_entry_set_text (GTK_ENTRY (private->name_entry), vectors_name);
-
   return dialog;
-}
-
-static void
-vectors_options_dialog_response (GtkWidget            *dialog,
-                                 gint                  response_id,
-                                 VectorsOptionsDialog *private)
-{
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      const gchar *name = gtk_entry_get_text (GTK_ENTRY (private->name_entry));
-
-      private->callback (dialog,
-                         private->image,
-                         private->vectors,
-                         name,
-                         private->user_data);
-    }
-  else
-    {
-      gtk_widget_destroy (dialog);
-    }
 }
 
 static void
 vectors_options_dialog_free (VectorsOptionsDialog *private)
 {
   g_slice_free (VectorsOptionsDialog, private);
+}
+
+static void
+vectors_options_dialog_callback (GtkWidget   *dialog,
+                                 GimpImage   *image,
+                                 GimpItem    *item,
+                                 GimpContext *context,
+                                 const gchar *item_name,
+                                 gboolean     item_visible,
+                                 gboolean     item_linked,
+                                 gboolean     item_lock_content,
+                                 gboolean     item_lock_position,
+                                 gpointer     user_data)
+{
+  VectorsOptionsDialog *private = user_data;
+
+  private->callback (dialog,
+                     image,
+                     GIMP_VECTORS (item),
+                     context,
+                     item_name,
+                     item_visible,
+                     item_linked,
+                     item_lock_content,
+                     item_lock_position,
+                     private->user_data);
 }

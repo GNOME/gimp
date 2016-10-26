@@ -26,6 +26,10 @@ typedef void (* GimpChannelOptionsCallback) (GtkWidget     *dialog,
                                              const gchar   *channel_name,
                                              const GimpRGB *channel_color,
                                              gboolean       save_selection,
+                                             gboolean       channel_visible,
+                                             gboolean       channel_linked,
+                                             gboolean       channel_lock_content,
+                                             gboolean       channel_lock_position,
                                              gpointer       user_data);
 
 
@@ -38,11 +42,15 @@ GtkWidget * channel_options_dialog_new (GimpImage                  *image,
                                         const gchar                *icon_name,
                                         const gchar                *desc,
                                         const gchar                *help_id,
-                                        const gchar                *channel_name,
-                                        const GimpRGB              *channel_color,
                                         const gchar                *color_label,
                                         const gchar                *opacity_label,
                                         gboolean                    show_from_sel,
+                                        const gchar                *channel_name,
+                                        const GimpRGB              *channel_color,
+                                        gboolean                    channel_visible,
+                                        gboolean                    channel_linked,
+                                        gboolean                    channel_lock_content,
+                                        gboolean                    channel_lock_position,
                                         GimpChannelOptionsCallback  callback,
                                         gpointer                    user_data);
 

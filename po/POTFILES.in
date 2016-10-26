@@ -212,6 +212,7 @@ app/dialogs/image-new-dialog.c
 app/dialogs/image-properties-dialog.c
 app/dialogs/image-scale-dialog.c
 app/dialogs/input-devices-dialog.c
+app/dialogs/item-options-dialog.c
 app/dialogs/keyboard-shortcuts-dialog.c
 app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c
