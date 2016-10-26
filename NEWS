@@ -14,6 +14,7 @@ Overview of Changes from GIMP 2.8.18 to GIMP 2.8.20
 Core:
 
  - Avoid D-Bus error message when built without D-Bus support
+ - fix OS X min required conditional in gimpimagewindow.c
 
 
 GUI:
@@ -24,6 +25,10 @@ GUI:
  - Tablet stylus misbehaves when crossing the edge of a dock in
    multi-window-mode
 
+
+Libgimp:
+
+ - call gimp_file_entry_set_filename() with filename encoding
 
 Windows Installer:
 
@@ -36,18 +41,36 @@ Windows Installer:
 macOS DMG:
 
  - Ship the Tango icon theme with the DMG for a complete set of icons
-
+ - fix the way mime data is copied into the bundle
+ - no longer copy Pango modules into the bundle
 
 Plug-ins:
 
  - Prevent the Python console from closing by the Escape key
  - Help browser does not launch on OS X
  - Filter 'Edge Detect/Difference of Gaussians' returns empty image
+ - only use -xobjective-c for compile commands
+ - mkgen.pl: fix calls to write_file() routine to write to current
+   directory
 
 
-Translations:
+Updated Translations:
 
- -
+ - Czech
+ - Danish
+ - Finnish
+ - French
+ - German
+ - Greek
+ - Hungarian
+ - Icelandic
+ - Italian
+ - Polish
+ - Portuguese
+ - Slovenian
+ - Scottish Gaelic
+ - Spanish
+ - Swedish
 
 
 General:
