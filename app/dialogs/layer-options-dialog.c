@@ -417,7 +417,7 @@ layer_options_dialog_callback (GtkWidget   *dialog,
   gint                offset_x;
   gint                offset_y;
 
-  if (item)
+  if (private->size_se)
     {
       width =
         RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se),
