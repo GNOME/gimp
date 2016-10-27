@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-23 18:50+0200\n"
-"PO-Revision-Date: 2016-10-23 18:55+0200\n"
+"POT-Creation-Date: 2016-10-27 02:18+0200\n"
+"PO-Revision-Date: 2016-10-27 02:19+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -815,38 +815,39 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Przecina ten kanał z bieżącym zaznaczeniem"
 
-#: ../app/actions/channels-commands.c:98 ../app/actions/channels-commands.c:421
+#: ../app/actions/channels-commands.c:108
+#: ../app/actions/channels-commands.c:449
 msgid "Channel Attributes"
 msgstr "Atrybuty kanału"
 
-#: ../app/actions/channels-commands.c:101
+#: ../app/actions/channels-commands.c:111
 msgid "Edit Channel Attributes"
 msgstr "Modyfikacja atrybutów kanału"
 
-#: ../app/actions/channels-commands.c:105
+#: ../app/actions/channels-commands.c:113
 msgid "Edit Channel Color"
 msgstr "Modyfikacja koloru kanału"
 
-#: ../app/actions/channels-commands.c:106
-#: ../app/actions/channels-commands.c:146
-msgid "_Fill opacity"
-msgstr "_Krycie wypełnienia"
+#: ../app/actions/channels-commands.c:114
+#: ../app/actions/channels-commands.c:158
+msgid "_Fill opacity:"
+msgstr "_Krycie wypełnienia:"
 
-#: ../app/actions/channels-commands.c:138
-#: ../app/actions/channels-commands.c:186
+#: ../app/actions/channels-commands.c:152
+#: ../app/actions/channels-commands.c:204
 #: ../app/widgets/gimpchanneltreeview.c:328
 msgid "New Channel"
 msgstr "Nowy kanał"
 
-#: ../app/actions/channels-commands.c:141
-msgid "New Channel Options"
-msgstr "Opcje nowego kanału"
+#: ../app/actions/channels-commands.c:155
+msgid "Create a New Channel"
+msgstr "Utworzenie nowego kanału"
 
-#: ../app/actions/channels-commands.c:145
+#: ../app/actions/channels-commands.c:157
 msgid "New Channel Color"
 msgstr "Kolor nowego kanału"
 
-#: ../app/actions/channels-commands.c:271 ../app/core/gimpimage-new.c:275
+#: ../app/actions/channels-commands.c:289 ../app/core/gimpimage-new.c:275
 #: ../app/display/gimpdisplayshell-dnd.c:672
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:794
@@ -4252,7 +4253,7 @@ msgstr "Odbijanie"
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:843 ../app/actions/layers-commands.c:765
+#: ../app/actions/image-commands.c:843 ../app/actions/layers-commands.c:787
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
@@ -4302,7 +4303,7 @@ msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1413 ../app/actions/layers-commands.c:1337
+#: ../app/actions/image-commands.c:1413 ../app/actions/layers-commands.c:1397
 #: ../app/dialogs/preferences-dialog.c:1345
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -4869,49 +4870,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Do _nowej warstwy"
 
-#: ../app/actions/layers-commands.c:240 ../app/actions/layers-commands.c:1213
+#: ../app/actions/layers-commands.c:252 ../app/actions/layers-commands.c:1258
 msgid "Layer Attributes"
 msgstr "Atrybuty warstwy"
 
-#: ../app/actions/layers-commands.c:243
+#: ../app/actions/layers-commands.c:255
 msgid "Edit Layer Attributes"
 msgstr "Modyfikacja atrybutów warstwy"
 
-#: ../app/actions/layers-commands.c:300 ../app/actions/layers-commands.c:366
+#: ../app/actions/layers-commands.c:317 ../app/actions/layers-commands.c:388
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:855
 msgid "New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:303
+#: ../app/actions/layers-commands.c:320
 msgid "Create a New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:406 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:428 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../app/actions/layers-commands.c:671
+#: ../app/actions/layers-commands.c:693
 msgid "Set Layer Boundary Size"
 msgstr "Ustawienie wymiarów granic warstwy"
 
-#: ../app/actions/layers-commands.c:733
+#: ../app/actions/layers-commands.c:755
 msgid "Scale Layer"
 msgstr "Skaluj warstwę"
 
-#: ../app/actions/layers-commands.c:775
+#: ../app/actions/layers-commands.c:797
 msgid "Crop Layer to Selection"
 msgstr "Kadruj warstwę według zaznaczenia"
 
-#: ../app/actions/layers-commands.c:805
+#: ../app/actions/layers-commands.c:827
 msgid "Crop Layer to Content"
 msgstr "Kadruj warstwę do zawartości"
 
-#: ../app/actions/layers-commands.c:818
+#: ../app/actions/layers-commands.c:840
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nie można wykadrować, ponieważ aktywna warstwa nie ma zawartości."
 
-#: ../app/actions/layers-commands.c:825
+#: ../app/actions/layers-commands.c:847
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ aktywna warstwa jest już wykadrowana do "
@@ -5303,21 +5304,21 @@ msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
 msgstr "Zamask_uj niezaznaczone obszary"
 
-#: ../app/actions/quick-mask-commands.c:116
+#: ../app/actions/quick-mask-commands.c:121
 msgid "Quick Mask Attributes"
 msgstr "Atrybuty szybkiej maski"
 
-#: ../app/actions/quick-mask-commands.c:119
+#: ../app/actions/quick-mask-commands.c:124
 msgid "Edit Quick Mask Attributes"
 msgstr "Modyfikacja atrybutów szybkiej maski"
 
-#: ../app/actions/quick-mask-commands.c:123
+#: ../app/actions/quick-mask-commands.c:126
 msgid "Edit Quick Mask Color"
 msgstr "Modyfikacja koloru szybkiej maski"
 
-#: ../app/actions/quick-mask-commands.c:124
-msgid "_Mask opacity"
-msgstr "Krycie _maski"
+#: ../app/actions/quick-mask-commands.c:127
+msgid "_Mask opacity:"
+msgstr "Krycie _maski:"
 
 #: ../app/actions/sample-points-actions.c:40
 msgctxt "sample-points-action"
@@ -5548,7 +5549,7 @@ msgstr ""
 "znajdowały się także poza obrazem."
 
 #: ../app/actions/select-commands.c:413 ../app/actions/select-commands.c:460
-#: ../app/actions/vectors-commands.c:416 ../app/actions/vectors-commands.c:465
+#: ../app/actions/vectors-commands.c:436 ../app/actions/vectors-commands.c:485
 msgid "There is no active layer or channel to fill."
 msgstr "Brak aktywnej warstwy lub kanału, który można wypełnić."
 
@@ -5557,7 +5558,7 @@ msgid "Fill Selection Outline"
 msgstr "Wypełnienie krawędzi zaznaczenia"
 
 #: ../app/actions/select-commands.c:497 ../app/actions/select-commands.c:546
-#: ../app/actions/vectors-commands.c:502 ../app/actions/vectors-commands.c:552
+#: ../app/actions/vectors-commands.c:522 ../app/actions/vectors-commands.c:572
 msgid "There is no active layer or channel to stroke to."
 msgstr "Brak aktywnej warstwy lub kanału, na którym można rysować."
 
@@ -6269,27 +6270,27 @@ msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Zaawansowane opcje"
 
-#: ../app/actions/vectors-commands.c:156
+#: ../app/actions/vectors-commands.c:168 ../app/actions/vectors-commands.c:888
 msgid "Path Attributes"
 msgstr "Atrybuty ścieżki"
 
-#: ../app/actions/vectors-commands.c:159
+#: ../app/actions/vectors-commands.c:171
 msgid "Edit Path Attributes"
 msgstr "Modyfikacja atrybutów ścieżki"
 
-#: ../app/actions/vectors-commands.c:192
+#: ../app/actions/vectors-commands.c:208
 msgid "New Path"
 msgstr "Nowa ścieżka"
 
-#: ../app/actions/vectors-commands.c:195
-msgid "New Path Options"
-msgstr "Opcje nowej ścieżki"
+#: ../app/actions/vectors-commands.c:211
+msgid "Create a New Path"
+msgstr "Utwórz nową ścieżkę"
 
-#: ../app/actions/vectors-commands.c:432
+#: ../app/actions/vectors-commands.c:452
 msgid "Fill Path"
 msgstr "Wypełnij ścieżkę"
 
-#: ../app/actions/vectors-commands.c:517 ../app/tools/gimpvectoroptions.c:202
+#: ../app/actions/vectors-commands.c:537 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:1990
 msgid "Stroke Path"
 msgstr "Rysuj wzdłuż ścieżki"
@@ -11120,11 +11121,21 @@ msgstr ""
 msgid "Search Actions"
 msgstr "Wyszukiwanie czynności"
 
-#: ../app/dialogs/channel-options-dialog.c:165
+#: ../app/dialogs/channel-options-dialog.c:124
 msgid "Channel _name:"
 msgstr "_Nazwa kanału:"
 
-#: ../app/dialogs/channel-options-dialog.c:210
+#: ../app/dialogs/channel-options-dialog.c:126
+#: ../app/dialogs/layer-options-dialog.c:144
+msgid "Lock _pixels"
+msgstr "_Blokuje piksele"
+
+#: ../app/dialogs/channel-options-dialog.c:127
+#: ../app/dialogs/layer-options-dialog.c:145
+msgid "Lock position and _size"
+msgstr "Blokuje położenie i _rozmiar"
+
+#: ../app/dialogs/channel-options-dialog.c:168
 msgid "Initialize from _selection"
 msgstr "Inicjowanie z _zaznaczenia"
 
@@ -11437,12 +11448,12 @@ msgstr "Zanikanie %s"
 msgid "_Fade"
 msgstr "_Zanikanie"
 
-#: ../app/dialogs/fade-dialog.c:156 ../app/dialogs/layer-options-dialog.c:180
+#: ../app/dialogs/fade-dialog.c:156 ../app/dialogs/layer-options-dialog.c:158
 #: ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Tryb:"
 
-#: ../app/dialogs/fade-dialog.c:162 ../app/dialogs/layer-options-dialog.c:191
+#: ../app/dialogs/fade-dialog.c:162 ../app/dialogs/layer-options-dialog.c:167
 msgid "_Opacity:"
 msgstr "K_rycie:"
 
@@ -11657,6 +11668,19 @@ msgstr "Na pewno to zrobić?"
 msgid "Configure Input Devices"
 msgstr "Konfiguracja urządzeń wejściowych"
 
+#. The switches frame & vbox
+#: ../app/dialogs/item-options-dialog.c:186
+msgid "Switches"
+msgstr "Przełączniki"
+
+#: ../app/dialogs/item-options-dialog.c:195
+msgid "_Visible"
+msgstr "_Widoczne"
+
+#: ../app/dialogs/item-options-dialog.c:204
+msgid "_Linked"
+msgstr "_Dowiązane"
+
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
 msgstr "Konfiguracja skrótów klawiszowych"
@@ -11693,38 +11717,42 @@ msgstr "_Odwrócenie maski"
 msgid "Please select a channel first"
 msgstr "Proszę najpierw zaznaczyć kanał"
 
-#: ../app/dialogs/layer-options-dialog.c:172
+#: ../app/dialogs/layer-options-dialog.c:142
 msgid "Layer _name:"
 msgstr "_Nazwa warstwy:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:203
+#: ../app/dialogs/layer-options-dialog.c:180
 #: ../app/tools/gimpmeasuretool.c:1139
 msgid "Width:"
 msgstr "Szerokość:"
 
-#: ../app/dialogs/layer-options-dialog.c:209
+#: ../app/dialogs/layer-options-dialog.c:186
 #: ../app/tools/gimpmeasuretool.c:1167
 msgid "Height:"
 msgstr "Wysokość:"
 
 #. The offset labels
-#: ../app/dialogs/layer-options-dialog.c:267
+#: ../app/dialogs/layer-options-dialog.c:244
 #: ../app/tools/gimpalignoptions.c:380
 msgid "Offset X:"
 msgstr "Przesunięcie na osi X:"
 
-#: ../app/dialogs/layer-options-dialog.c:273
+#: ../app/dialogs/layer-options-dialog.c:250
 #: ../app/tools/gimpalignoptions.c:393
 msgid "Offset Y:"
 msgstr "Przesunięcie na osi Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:342 ../app/dialogs/resize-dialog.c:363
+#: ../app/dialogs/layer-options-dialog.c:324 ../app/dialogs/resize-dialog.c:363
 #: ../app/widgets/gimptemplateeditor.c:431
 msgid "_Fill with:"
 msgstr "Wypeł_nienie:"
 
-#: ../app/dialogs/layer-options-dialog.c:360
+#: ../app/dialogs/layer-options-dialog.c:366
+msgid "Lock _alpha"
+msgstr "Blokuje _alfę"
+
+#: ../app/dialogs/layer-options-dialog.c:378
 msgid "Set name from _text"
 msgstr "Ustawienie nazwy na podstawie _tekstu"
 
@@ -12619,7 +12647,6 @@ msgid "New Path Dialog"
 msgstr "Okno nowej ścieżki"
 
 #: ../app/dialogs/preferences-dialog.c:1981
-#: ../app/dialogs/vectors-options-dialog.c:151
 msgid "Path name:"
 msgstr "Nazwa ścieżki:"
 
@@ -13481,6 +13508,18 @@ msgstr "_Połączenie zaimportowanych ścieżek"
 #: ../app/dialogs/vectors-import-dialog.c:118
 msgid "_Scale imported paths to fit image"
 msgstr "Prze_skalowanie ścieżek do wymiarów obrazu"
+
+#: ../app/dialogs/vectors-options-dialog.c:104
+msgid "Path _name:"
+msgstr "_Nazwa ścieżki:"
+
+#: ../app/dialogs/vectors-options-dialog.c:106
+msgid "Lock path _strokes"
+msgstr "Blokuje rysowanie wzdłuż ś_cieżki"
+
+#: ../app/dialogs/vectors-options-dialog.c:107
+msgid "Lock path _position"
+msgstr "Blokuje p_ołożenie ścieżki"
 
 #: ../app/display/display-enums.c:60
 msgctxt "guides-type"
