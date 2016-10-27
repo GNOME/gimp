@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-22 02:50+0300\n"
-"PO-Revision-Date: 2016-10-22 03:35+0300\n"
+"POT-Creation-Date: 2016-10-27 00:10+0300\n"
+"PO-Revision-Date: 2016-10-27 02:58+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -787,39 +787,40 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Пересечь этот канал с выделением"
 
-#: ../app/actions/channels-commands.c:98 ../app/actions/channels-commands.c:421
+#: ../app/actions/channels-commands.c:108
+#: ../app/actions/channels-commands.c:449
 msgid "Channel Attributes"
 msgstr "Атрибуты канала"
 
-#: ../app/actions/channels-commands.c:101
+#: ../app/actions/channels-commands.c:111
 msgid "Edit Channel Attributes"
 msgstr "Изменить атрибуты канала"
 
-#: ../app/actions/channels-commands.c:105
+#: ../app/actions/channels-commands.c:113
 msgid "Edit Channel Color"
 msgstr "Правка цвета канала"
 
-#: ../app/actions/channels-commands.c:106
-#: ../app/actions/channels-commands.c:146
-#, fuzzy
-msgid "_Fill opacity"
+#: ../app/actions/channels-commands.c:114
+#: ../app/actions/channels-commands.c:158
+msgid "_Fill opacity:"
 msgstr "_Непрозрачность заливки:"
 
-#: ../app/actions/channels-commands.c:138
-#: ../app/actions/channels-commands.c:186
+#: ../app/actions/channels-commands.c:152
+#: ../app/actions/channels-commands.c:204
 #: ../app/widgets/gimpchanneltreeview.c:328
 msgid "New Channel"
 msgstr "Создать канал"
 
-#: ../app/actions/channels-commands.c:141
-msgid "New Channel Options"
-msgstr "Параметры нового канала"
+#: ../app/actions/channels-commands.c:155
+#, fuzzy
+msgid "Create a New Channel"
+msgstr "Создать новый канал"
 
-#: ../app/actions/channels-commands.c:145
+#: ../app/actions/channels-commands.c:157
 msgid "New Channel Color"
 msgstr "Цвет нового канала"
 
-#: ../app/actions/channels-commands.c:271 ../app/core/gimpimage-new.c:275
+#: ../app/actions/channels-commands.c:289 ../app/core/gimpimage-new.c:275
 #: ../app/display/gimpdisplayshell-dnd.c:672
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:794
@@ -885,16 +886,14 @@ msgid "Add all pixels with this color to the current selection"
 msgstr "Добавить все точки растра этого цвета в активное выделение"
 
 #: ../app/actions/colormap-actions.c:85
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Subtract from Selection"
 msgstr "Вы_честь из выделения"
 
 #: ../app/actions/colormap-actions.c:86
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Subtract all pixels with this color from the current selection"
-msgstr "Вычесть этот канал из выделения"
+msgstr "Вычесть все пиксели с этим цветом из текущего выделения"
 
 #: ../app/actions/colormap-actions.c:91
 #, fuzzy
@@ -4235,7 +4234,7 @@ msgstr "Производится отражение..."
 msgid "Rotating"
 msgstr "Производится вращение..."
 
-#: ../app/actions/image-commands.c:843 ../app/actions/layers-commands.c:765
+#: ../app/actions/image-commands.c:843 ../app/actions/layers-commands.c:787
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
@@ -4292,7 +4291,7 @@ msgid "Scale Image"
 msgstr "Изменить размер изображения"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1413 ../app/actions/layers-commands.c:1337
+#: ../app/actions/image-commands.c:1413 ../app/actions/layers-commands.c:1397
 #: ../app/dialogs/preferences-dialog.c:1345
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -4861,52 +4860,52 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "В _новый слой"
 
-#: ../app/actions/layers-commands.c:240 ../app/actions/layers-commands.c:1213
+#: ../app/actions/layers-commands.c:252 ../app/actions/layers-commands.c:1258
 msgid "Layer Attributes"
 msgstr "Атрибуты слоя"
 
-#: ../app/actions/layers-commands.c:243
+#: ../app/actions/layers-commands.c:255
 msgid "Edit Layer Attributes"
 msgstr "Правка атрибутов слоя"
 
-#: ../app/actions/layers-commands.c:300 ../app/actions/layers-commands.c:366
+#: ../app/actions/layers-commands.c:317 ../app/actions/layers-commands.c:388
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:855
 msgid "New Layer"
 msgstr "Новый слой"
 
-#: ../app/actions/layers-commands.c:303
+#: ../app/actions/layers-commands.c:320
 msgid "Create a New Layer"
 msgstr "Создать новый слой"
 
-#: ../app/actions/layers-commands.c:406 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:428 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Видимое"
 
-#: ../app/actions/layers-commands.c:671
+#: ../app/actions/layers-commands.c:693
 msgid "Set Layer Boundary Size"
 msgstr "Изменить границы слоя"
 
-#: ../app/actions/layers-commands.c:733
+#: ../app/actions/layers-commands.c:755
 msgid "Scale Layer"
 msgstr "Изменить размер слоя"
 
-#: ../app/actions/layers-commands.c:775
+#: ../app/actions/layers-commands.c:797
 msgid "Crop Layer to Selection"
 msgstr "Обрезать по выделению"
 
-#: ../app/actions/layers-commands.c:805
+#: ../app/actions/layers-commands.c:827
 msgid "Crop Layer to Content"
 msgstr "Обрезать до содержимого"
 
-#: ../app/actions/layers-commands.c:818
+#: ../app/actions/layers-commands.c:840
 #, fuzzy
 msgid "Cannot crop because the active layer has no content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
 "что выделенная область пуста."
 
-#: ../app/actions/layers-commands.c:825
+#: ../app/actions/layers-commands.c:847
 #, fuzzy
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
@@ -5299,20 +5298,21 @@ msgctxt "quick-mask-action"
 msgid "Mask _Unselected Areas"
 msgstr "Маскировать _невыделенные области"
 
-#: ../app/actions/quick-mask-commands.c:116
+#: ../app/actions/quick-mask-commands.c:121
 msgid "Quick Mask Attributes"
 msgstr "Атрибуты быстрой маски"
 
-#: ../app/actions/quick-mask-commands.c:119
+#: ../app/actions/quick-mask-commands.c:124
 msgid "Edit Quick Mask Attributes"
 msgstr "Правка атрибутов быстрой маски"
 
-#: ../app/actions/quick-mask-commands.c:123
+#: ../app/actions/quick-mask-commands.c:126
 msgid "Edit Quick Mask Color"
 msgstr "Правка цвета быстрой маски"
 
-#: ../app/actions/quick-mask-commands.c:124
-msgid "_Mask opacity"
+#: ../app/actions/quick-mask-commands.c:127
+#, fuzzy
+msgid "_Mask opacity:"
 msgstr "Непрозрачность _маски:"
 
 #: ../app/actions/sample-points-actions.c:40
@@ -5545,7 +5545,7 @@ msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 
 #: ../app/actions/select-commands.c:413 ../app/actions/select-commands.c:460
-#: ../app/actions/vectors-commands.c:416 ../app/actions/vectors-commands.c:465
+#: ../app/actions/vectors-commands.c:436 ../app/actions/vectors-commands.c:485
 #, fuzzy
 msgid "There is no active layer or channel to fill."
 msgstr "Нет активного слоя или канала для вырезания."
@@ -5555,7 +5555,7 @@ msgid "Fill Selection Outline"
 msgstr "Залить выделение"
 
 #: ../app/actions/select-commands.c:497 ../app/actions/select-commands.c:546
-#: ../app/actions/vectors-commands.c:502 ../app/actions/vectors-commands.c:552
+#: ../app/actions/vectors-commands.c:522 ../app/actions/vectors-commands.c:572
 msgid "There is no active layer or channel to stroke to."
 msgstr "Нет активного слоя или канала для обводки"
 
@@ -6278,28 +6278,29 @@ msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Расширенные параметры"
 
-#: ../app/actions/vectors-commands.c:156
+#: ../app/actions/vectors-commands.c:168 ../app/actions/vectors-commands.c:888
 msgid "Path Attributes"
 msgstr "Атрибуты контура"
 
-#: ../app/actions/vectors-commands.c:159
+#: ../app/actions/vectors-commands.c:171
 msgid "Edit Path Attributes"
 msgstr "Правка атрибутов контура"
 
-#: ../app/actions/vectors-commands.c:192
+#: ../app/actions/vectors-commands.c:208
 msgid "New Path"
 msgstr "Новый контур"
 
-#: ../app/actions/vectors-commands.c:195
-msgid "New Path Options"
-msgstr "Параметры нового контура"
+#: ../app/actions/vectors-commands.c:211
+#, fuzzy
+msgid "Create a New Path"
+msgstr "Создать контур..."
 
-#: ../app/actions/vectors-commands.c:432
+#: ../app/actions/vectors-commands.c:452
 #, fuzzy
 msgid "Fill Path"
 msgstr "Отразить контур"
 
-#: ../app/actions/vectors-commands.c:517 ../app/tools/gimpvectoroptions.c:202
+#: ../app/actions/vectors-commands.c:537 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:1990
 msgid "Stroke Path"
 msgstr "Обводка по контуру"
@@ -6493,7 +6494,6 @@ msgid "A pixel on the screen represents an image pixel"
 msgstr "Точка на экране равна точке изображения"
 
 #: ../app/actions/view-actions.c:178
-#, fuzzy
 msgctxt "view-action"
 msgid "_Color-Manage this View"
 msgstr "_Управлять цветом этого окна"
@@ -7719,7 +7719,7 @@ msgstr "Скрыть все диалоги и панели, оставить т�
 
 #: ../app/config/gimprc-blurbs.h:371
 msgid "Enable the N-Point Deformation tool."
-msgstr "Включить инструмент Деформация по N-точкам."
+msgstr "Включить инструмент Деформация по N-точкам"
 
 #: ../app/config/gimprc-blurbs.h:374
 msgid "Enable the Handle Transform tool."
@@ -7731,11 +7731,11 @@ msgstr "Использовать симметрию при рисовании."
 
 #: ../app/config/gimprc-blurbs.h:380
 msgid "Enable the MyPaint Brush tool."
-msgstr "Включить инструмент Кисть MyPaint."
+msgstr "Включить инструмент Кисть MyPaint"
 
 #: ../app/config/gimprc-blurbs.h:383
 msgid "Enable the Seamless Clone tool."
-msgstr ""
+msgstr "Включить инструмент Бесшовное клонирование"
 
 #: ../app/config/gimprc-blurbs.h:386
 msgid "What to do when the space bar is pressed in the image window."
@@ -9514,9 +9514,8 @@ msgid "MyPaint Brush"
 msgstr "Кисть MyPaint"
 
 #: ../app/core/gimpcontext.c:725 ../app/core/gimpcontext.c:726
-#, fuzzy
 msgid "Pattern"
-msgstr "Текстурой"
+msgstr ""
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
 #: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:368
@@ -9642,18 +9641,16 @@ msgid "Equalize"
 msgstr "Выравнивание"
 
 #: ../app/core/gimpdrawable-floating-selection.c:171
-#, fuzzy
 msgid "Floating Selection"
-msgstr "Выделение в плавающий слой"
+msgstr "Плавающее выделение"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
 msgstr "Вычисление значения в альфа-канале для неизвестных пикселов"
 
 #: ../app/core/gimpdrawable-fill.c:205 ../app/vectors/gimpvectors.c:646
-#, fuzzy
 msgid "Not enough points to fill"
-msgstr "Недостаточно точек для обводки"
+msgstr "Недостаточно точек для заливки"
 
 #: ../app/core/gimpdrawable-fill.c:274
 msgctxt "undo-type"
@@ -10008,7 +10005,7 @@ msgstr "Преобразование по цветовому профилю"
 #: ../app/core/gimpimage-colormap.c:65
 #, c-format
 msgid "Colormap of Image #%d (%s)"
-msgstr ""
+msgstr "Цветовая карта изображения #%d (%s)"
 
 #: ../app/core/gimpimage-colormap.c:196
 msgctxt "undo-type"
@@ -10937,7 +10934,6 @@ msgstr "Разрешение:"
 
 #. serialized name
 #: ../app/core/gimptemplate.c:179
-#, fuzzy
 msgid "Image type"
 msgstr "Тип изображения"
 
@@ -10947,7 +10943,7 @@ msgstr "Точность"
 
 #: ../app/core/gimptemplate.c:193
 msgid "Color managed"
-msgstr ""
+msgstr "Использовать управление цветом"
 
 #: ../app/core/gimptemplate.c:194
 msgid ""
@@ -11102,11 +11098,21 @@ msgstr ""
 msgid "Search Actions"
 msgstr "Найти действие"
 
-#: ../app/dialogs/channel-options-dialog.c:165
+#: ../app/dialogs/channel-options-dialog.c:124
 msgid "Channel _name:"
 msgstr "_Имя канала:"
 
-#: ../app/dialogs/channel-options-dialog.c:210
+#: ../app/dialogs/channel-options-dialog.c:126
+#: ../app/dialogs/layer-options-dialog.c:144
+msgid "Lock _pixels"
+msgstr "Заблокировать _пиксели"
+
+#: ../app/dialogs/channel-options-dialog.c:127
+#: ../app/dialogs/layer-options-dialog.c:145
+msgid "Lock position and _size"
+msgstr "Заблокировать позицию и _размер"
+
+#: ../app/dialogs/channel-options-dialog.c:168
 msgid "Initialize from _selection"
 msgstr "Создать из _выделения"
 
@@ -11259,7 +11265,6 @@ msgid "_Maximum number of colors:"
 msgstr "_Максимальное число цветов:"
 
 #: ../app/dialogs/convert-indexed-dialog.c:222
-#, fuzzy
 msgid "_Remove unused and duplicate colors from colormap"
 msgstr "_Удалить неиспользуемые цвета из цветовой карты"
 
@@ -11272,11 +11277,11 @@ msgstr "Подмешивание шума"
 
 #: ../app/dialogs/convert-indexed-dialog.c:251
 msgid "Color _dithering:"
-msgstr ""
+msgstr "Подмешивание _шума:"
 
 #: ../app/dialogs/convert-indexed-dialog.c:266
 msgid "Enable dithering of _transparency"
-msgstr "Применить подмешивание шума к _альфа-каналу"
+msgstr "Применить к _альфа-каналу"
 
 #: ../app/dialogs/convert-indexed-dialog.c:278
 #: ../app/dialogs/preferences-dialog.c:1888
@@ -11422,12 +11427,12 @@ msgstr "Ослабить %s"
 msgid "_Fade"
 msgstr "_Ослабить"
 
-#: ../app/dialogs/fade-dialog.c:156 ../app/dialogs/layer-options-dialog.c:180
+#: ../app/dialogs/fade-dialog.c:156 ../app/dialogs/layer-options-dialog.c:158
 #: ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Режим:"
 
-#: ../app/dialogs/fade-dialog.c:162 ../app/dialogs/layer-options-dialog.c:191
+#: ../app/dialogs/fade-dialog.c:162 ../app/dialogs/layer-options-dialog.c:167
 msgid "_Opacity:"
 msgstr "Н_епрозрачность:"
 
@@ -11639,6 +11644,19 @@ msgstr "Вы действительно хотите это сделать?"
 msgid "Configure Input Devices"
 msgstr "Настроить устройства ввода"
 
+#. The switches frame & vbox
+#: ../app/dialogs/item-options-dialog.c:186
+msgid "Switches"
+msgstr "Переключатели"
+
+#: ../app/dialogs/item-options-dialog.c:195
+msgid "_Visible"
+msgstr "_Видимый"
+
+#: ../app/dialogs/item-options-dialog.c:204
+msgid "_Linked"
+msgstr "С_вязанный"
+
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:49
 msgid "Configure Keyboard Shortcuts"
 msgstr "Настройка комбинаций клавиш"
@@ -11675,38 +11693,42 @@ msgstr "Ин_вертировать маску"
 msgid "Please select a channel first"
 msgstr "Сначала выберите канал"
 
-#: ../app/dialogs/layer-options-dialog.c:172
+#: ../app/dialogs/layer-options-dialog.c:142
 msgid "Layer _name:"
 msgstr "_Имя слоя:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:203
+#: ../app/dialogs/layer-options-dialog.c:180
 #: ../app/tools/gimpmeasuretool.c:1139
 msgid "Width:"
 msgstr "Ширина:"
 
-#: ../app/dialogs/layer-options-dialog.c:209
+#: ../app/dialogs/layer-options-dialog.c:186
 #: ../app/tools/gimpmeasuretool.c:1167
 msgid "Height:"
 msgstr "Высота:"
 
 #. The offset labels
-#: ../app/dialogs/layer-options-dialog.c:267
+#: ../app/dialogs/layer-options-dialog.c:244
 #: ../app/tools/gimpalignoptions.c:380
 msgid "Offset X:"
 msgstr "Смещение по X:"
 
-#: ../app/dialogs/layer-options-dialog.c:273
+#: ../app/dialogs/layer-options-dialog.c:250
 #: ../app/tools/gimpalignoptions.c:393
 msgid "Offset Y:"
 msgstr "Смещение по Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:342 ../app/dialogs/resize-dialog.c:363
+#: ../app/dialogs/layer-options-dialog.c:324 ../app/dialogs/resize-dialog.c:363
 #: ../app/widgets/gimptemplateeditor.c:431
 msgid "_Fill with:"
 msgstr "_Заполнение:"
 
-#: ../app/dialogs/layer-options-dialog.c:360
+#: ../app/dialogs/layer-options-dialog.c:366
+msgid "Lock _alpha"
+msgstr "Заблокировать _альфа-канал"
+
+#: ../app/dialogs/layer-options-dialog.c:378
 msgid "Set name from _text"
 msgstr "Взять имя из _текста"
 
@@ -12111,9 +12133,8 @@ msgid "Color Management"
 msgstr "Управление цветом"
 
 #: ../app/dialogs/preferences-dialog.c:1111
-#, fuzzy
 msgid "Reset Color Management"
-msgstr "Управление цветом"
+msgstr "Обнулить настройки управления цветом"
 
 #: ../app/dialogs/preferences-dialog.c:1134
 msgid "Image display _mode:"
@@ -12459,7 +12480,6 @@ msgstr "Параметры по умолчанию"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:1820
-#, fuzzy
 msgid "Color Profile Import Dialog"
 msgstr "Диалог «Импортировать цветовой профиль»"
 
@@ -12469,70 +12489,58 @@ msgstr "Политика обработки профиля:"
 
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:1829
-#, fuzzy
 msgid "Convert to Color Profile Dialog"
-msgstr "Сконвертировать по цветовому профилю"
+msgstr "Диалог «Сконвертировать по цветовому профилю»"
 
 #: ../app/dialogs/preferences-dialog.c:1834
-#, fuzzy
 msgid "Rendering intent:"
-msgstr "Тип _цветопередачи:"
+msgstr "Тип цветопередачи:"
 
 #: ../app/dialogs/preferences-dialog.c:1838
-#, fuzzy
 msgid "Black point compensation"
-msgstr "Компенсация _чёрной точки"
+msgstr "Компенсация чёрной точки"
 
 #. Convert Precision Dialog
 #: ../app/dialogs/preferences-dialog.c:1842
-#, fuzzy
 msgid "Precision Conversion Dialog"
-msgstr "Смена точности"
+msgstr "Диалог «Смена точности»"
 
 #: ../app/dialogs/preferences-dialog.c:1849
-#, fuzzy
 msgid "Dither layers:"
-msgstr "Новые слои извне"
+msgstr "Подмешивание шума в растровые слои:"
 
 #: ../app/dialogs/preferences-dialog.c:1854
-#, fuzzy
 msgid "Dither text layers:"
-msgstr "Изменить размер _текстового слоя"
+msgstr "Подмешивание шума в текстовые слои:"
 
 #: ../app/dialogs/preferences-dialog.c:1859
-#, fuzzy
 msgid "Dither channels/masks:"
-msgstr "Удаление канала"
+msgstr "Подмешивание шума в каналы/маски:"
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:1863
-#, fuzzy
 msgid "Indexed Conversion Dialog"
-msgstr "Преобразование изображения в индексированное"
+msgstr "Диалог «Преобразование изображения в индексированное»"
 
 #: ../app/dialogs/preferences-dialog.c:1868
-#, fuzzy
 msgid "Colormap:"
-msgstr "Цветовая карта"
+msgstr "Цветовая карта:"
 
 #: ../app/dialogs/preferences-dialog.c:1871
 msgid "Maximum number of colors:"
 msgstr "Максимальное число цветов:"
 
 #: ../app/dialogs/preferences-dialog.c:1875
-#, fuzzy
 msgid "Remove unused and duplicate colors from colormap"
-msgstr "_Удалить неиспользуемые цвета из цветовой карты"
+msgstr "Удалить неиспользуемые цвета из цветовой карты"
 
 #: ../app/dialogs/preferences-dialog.c:1881
-#, fuzzy
 msgid "Color dithering:"
-msgstr "Пипетка"
+msgstr "Подмешивание шума:"
 
 #: ../app/dialogs/preferences-dialog.c:1885
-#, fuzzy
 msgid "Enable dithering of transparency"
-msgstr "Применить подмешивание шума к _альфа-каналу"
+msgstr "Применить к альфа-каналу"
 
 #. Canvas Size Dialog
 #: ../app/dialogs/preferences-dialog.c:1892
@@ -12632,20 +12640,17 @@ msgid "New Path Dialog"
 msgstr "Диалог «Создать контур»"
 
 #: ../app/dialogs/preferences-dialog.c:1981
-#: ../app/dialogs/vectors-options-dialog.c:151
 msgid "Path name:"
-msgstr "Имя контура:"
+msgstr "_Имя контура:"
 
 #. Export Path Dialog
 #: ../app/dialogs/preferences-dialog.c:1985
-#, fuzzy
 msgid "Export Paths Dialog"
-msgstr "Диалог «Создать контур»"
+msgstr "Диалог «Экспортировать контуры»"
 
 #: ../app/dialogs/preferences-dialog.c:1990
-#, fuzzy
 msgid "Export folder:"
-msgstr "Временный каталог:"
+msgstr "Папка для экспорта файлов:"
 
 #: ../app/dialogs/preferences-dialog.c:1991
 #, fuzzy
@@ -12653,20 +12658,17 @@ msgid "Select Default Folder for Exporting Paths"
 msgstr "Выберите каталог для временных файлов"
 
 #: ../app/dialogs/preferences-dialog.c:1995
-#, fuzzy
 msgid "Export the active path only"
-msgstr "Экспортировать текущий контур"
+msgstr "Экспортировать только текущий контур"
 
 #. Import Path Dialog
 #: ../app/dialogs/preferences-dialog.c:1999
-#, fuzzy
 msgid "Import Paths Dialog"
-msgstr "Импортировать контуры"
+msgstr "Диалог «Импортировать контуры»"
 
 #: ../app/dialogs/preferences-dialog.c:2004
-#, fuzzy
 msgid "Import folder:"
-msgstr "Временный каталог:"
+msgstr "Папка с файлами для импорта:"
 
 #: ../app/dialogs/preferences-dialog.c:2005
 #, fuzzy
@@ -12678,9 +12680,8 @@ msgid "Merge imported paths"
 msgstr "Объединить импортированные контуры"
 
 #: ../app/dialogs/preferences-dialog.c:2012
-#, fuzzy
 msgid "Scale imported paths"
-msgstr "Объединить _импортированные контуры"
+msgstr "Масштабировать импортированные контуры"
 
 #. Feather Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2016
@@ -13510,6 +13511,18 @@ msgstr "Объединить _импортированные контуры"
 #: ../app/dialogs/vectors-import-dialog.c:118
 msgid "_Scale imported paths to fit image"
 msgstr "_Масштабировать контуры до размера изображения"
+
+#: ../app/dialogs/vectors-options-dialog.c:104
+msgid "Path _name:"
+msgstr "_Имя контура:"
+
+#: ../app/dialogs/vectors-options-dialog.c:106
+msgid "Lock path _strokes"
+msgstr "Запретить изменения _контура"
+
+#: ../app/dialogs/vectors-options-dialog.c:107
+msgid "Lock path _position"
+msgstr "Заблокировать _положение контура"
 
 #: ../app/display/display-enums.c:60
 msgctxt "guides-type"
@@ -16196,9 +16209,8 @@ msgid "Use accumulated color value from all composited visible layers"
 msgstr "Использовать все видимые слои при выделении области"
 
 #: ../app/tools/gimpcolorpickeroptions.c:77
-#, fuzzy
 msgid "Pick Mode"
-msgstr "Режим пипетки (%s)"
+msgstr "Режим пипетки"
 
 #: ../app/tools/gimpcolorpickeroptions.c:78
 msgid "Choose what color picker will do"
@@ -16471,13 +16483,13 @@ msgstr "%s для осветления"
 msgid "Type  (%s)"
 msgstr "Тип  (%s)"
 
-#: ../app/tools/gimpeditselectiontool.c:419
-#: ../app/tools/gimpeditselectiontool.c:605
+#: ../app/tools/gimpeditselectiontool.c:439
+#: ../app/tools/gimpeditselectiontool.c:607
 msgid "Move: "
 msgstr "Перемещение: "
 
-#: ../app/tools/gimpeditselectiontool.c:849
-#: ../app/tools/gimpeditselectiontool.c:1108
+#: ../app/tools/gimpeditselectiontool.c:860
+#: ../app/tools/gimpeditselectiontool.c:1119
 msgid "Move Floating Selection"
 msgstr "Переместить плавающее выделение"
 
@@ -18958,7 +18970,7 @@ msgstr "Выберите действие для события контролл
 
 #: ../app/widgets/gimpcontrollerinfo.c:112
 msgid "Enabled"
-msgstr ""
+msgstr "Включено"
 
 #: ../app/widgets/gimpcontrollerinfo.c:119
 #, fuzzy
@@ -20656,6 +20668,12 @@ msgstr "круглые"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "растушеванные"
+
+#~ msgid "New Channel Options"
+#~ msgstr "Параметры нового канала"
+
+#~ msgid "New Path Options"
+#~ msgstr "Параметры нового контура"
 
 #~ msgid "Layer Fill Type"
 #~ msgstr "Тип заливки слоя"
