@@ -42,7 +42,9 @@
 #define RESPONSE_RESET 1
 
 
-typedef struct
+typedef struct _FillDialog FillDialog;
+
+struct _FillDialog
 {
   GimpItem         *item;
   GimpDrawable     *drawable;
@@ -50,15 +52,15 @@ typedef struct
   GimpFillOptions  *options;
   GimpFillCallback  callback;
   gpointer          user_data;
-} FillDialog;
+};
 
 
 /*  local function prototypes  */
 
+static void  fill_dialog_free     (FillDialog *private);
 static void  fill_dialog_response (GtkWidget  *dialog,
                                    gint        response_id,
                                    FillDialog *private);
-static void  fill_dialog_free     (FillDialog *private);
 
 
 /*  public function  */
@@ -147,6 +149,14 @@ fill_dialog_new (GimpItem         *item,
 /*  private functions  */
 
 static void
+fill_dialog_free (FillDialog *private)
+{
+  g_object_unref (private->options);
+
+  g_slice_free (FillDialog, private);
+}
+
+static void
 fill_dialog_response (GtkWidget  *dialog,
                       gint        response_id,
                       FillDialog *private)
@@ -170,12 +180,4 @@ fill_dialog_response (GtkWidget  *dialog,
       gtk_widget_destroy (dialog);
       break;
     }
-}
-
-static void
-fill_dialog_free (FillDialog *private)
-{
-  g_object_unref (private->options);
-
-  g_slice_free (FillDialog, private);
 }

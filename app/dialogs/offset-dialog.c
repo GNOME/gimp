@@ -45,7 +45,9 @@
 #define FILL_MASK    (GIMP_OFFSET_BACKGROUND | GIMP_OFFSET_TRANSPARENT)
 
 
-typedef struct
+typedef struct _OffsetDialog OffsetDialog;
+
+struct _OffsetDialog
 {
   GimpDrawable       *drawable;
   GimpContext        *context;
@@ -54,11 +56,12 @@ typedef struct
   gpointer            user_data;
 
   GtkWidget          *off_se;
-} OffsetDialog;
+};
 
 
 /*  local function prototypes  */
 
+static void  offset_dialog_free             (OffsetDialog *private);
 static void  offset_dialog_response         (GtkWidget    *dialog,
                                              gint          response_id,
                                              OffsetDialog *private);
@@ -68,7 +71,6 @@ static void  offset_dialog_half_x_callback  (GtkWidget    *widget,
                                              OffsetDialog *private);
 static void  offset_dialog_half_y_callback  (GtkWidget    *widget,
                                              OffsetDialog *private);
-static void  offset_dialog_free             (OffsetDialog *private);
 
 
 /*  public functions  */
@@ -272,6 +274,12 @@ offset_dialog_new (GimpDrawable       *drawable,
 /*  private functions  */
 
 static void
+offset_dialog_free (OffsetDialog *private)
+{
+  g_slice_free (OffsetDialog, private);
+}
+
+static void
 offset_dialog_response (GtkWidget    *dialog,
                         gint          response_id,
                         OffsetDialog *private)
@@ -332,10 +340,4 @@ offset_dialog_half_y_callback (GtkWidget    *widget,
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->off_se),
                               1, gimp_item_get_height (item) / 2);
-}
-
-static void
-offset_dialog_free (OffsetDialog *private)
-{
-  g_slice_free (OffsetDialog, private);
 }

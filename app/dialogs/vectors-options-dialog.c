@@ -119,6 +119,9 @@ vectors_options_dialog_new (GimpImage                  *image,
   return dialog;
 }
 
+
+/*  private functions  */
+
 static void
 vectors_options_dialog_free (VectorsOptionsDialog *private)
 {

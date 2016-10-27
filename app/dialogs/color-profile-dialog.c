@@ -68,13 +68,13 @@ typedef struct
 } ProfileDialog;
 
 
+static void        color_profile_dialog_free     (ProfileDialog *private);
 static GtkWidget * color_profile_combo_box_new   (ProfileDialog *private);
 static void        color_profile_dialog_response (GtkWidget     *dialog,
                                                   gint           response_id,
                                                   ProfileDialog *private);
 static void        color_profile_dest_changed    (GtkWidget     *combo,
                                                   ProfileDialog *private);
-static void        color_profile_dialog_free     (ProfileDialog *private);
 
 
 /*  public functions  */
@@ -319,6 +319,12 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
 /*  private functions  */
 
+static void
+color_profile_dialog_free (ProfileDialog *private)
+{
+  g_slice_free (ProfileDialog, private);
+}
+
 static GtkWidget *
 color_profile_combo_box_new (ProfileDialog *private)
 {
@@ -481,10 +487,4 @@ color_profile_dest_changed (GtkWidget     *combo,
                                            dest_profile);
       g_object_unref (dest_profile);
     }
-}
-
-static void
-color_profile_dialog_free (ProfileDialog *private)
-{
-  g_slice_free (ProfileDialog, private);
 }

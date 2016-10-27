@@ -56,7 +56,9 @@ typedef enum
 } ImportType;
 
 
-typedef struct
+typedef struct _ImportDialog ImportDialog;
+
+struct _ImportDialog
 {
   GtkWidget     *dialog;
 
@@ -84,7 +86,7 @@ typedef struct
 
   GtkWidget     *preview;
   GtkWidget     *no_colors_label;
-} ImportDialog;
+};
 
 
 static void   palette_import_free                 (ImportDialog   *private);

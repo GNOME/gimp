@@ -39,8 +39,12 @@
 #include "gimp-intl.h"
 
 
+/*  local function prototypes  */
+
 static void  template_options_dialog_free (TemplateOptionsDialog *dialog);
 
+
+/*  public function  */
 
 TemplateOptionsDialog *
 template_options_dialog_new (GimpTemplate *template,
@@ -118,6 +122,9 @@ template_options_dialog_new (GimpTemplate *template,
 
   return options;
 }
+
+
+/*  private functions  */
 
 static void
 template_options_dialog_free (TemplateOptionsDialog *dialog)

@@ -43,7 +43,9 @@
 #define SB_WIDTH       8
 
 
-typedef struct
+typedef struct _ResizeDialog ResizeDialog;
+
+struct _ResizeDialog
 {
   GimpViewable       *viewable;
   GimpContext        *context;
@@ -66,14 +68,16 @@ typedef struct
   GtkWidget          *layer_set_combo;
   GtkWidget          *fill_type_combo;
   GtkWidget          *text_layers_button;
-} ResizeDialog;
+};
 
 
+/*  local function prototypes  */
+
+static void   resize_dialog_free     (ResizeDialog *private);
 static void   resize_dialog_response (GtkWidget    *dialog,
                                       gint          response_id,
                                       ResizeDialog *private);
 static void   resize_dialog_reset    (ResizeDialog *private);
-static void   resize_dialog_free     (ResizeDialog *private);
 
 static void   size_notify            (GimpSizeBox  *box,
                                       GParamSpec   *pspec,
@@ -87,6 +91,8 @@ static void   offsets_changed        (GtkWidget    *area,
 static void   offset_center_clicked  (GtkWidget    *widget,
                                       ResizeDialog *private);
 
+
+/*  public function  */
 
 GtkWidget *
 resize_dialog_new (GimpViewable       *viewable,
@@ -182,13 +188,13 @@ resize_dialog_new (GimpViewable       *viewable,
 
                                      NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) resize_dialog_free, private);
@@ -390,6 +396,15 @@ resize_dialog_new (GimpViewable       *viewable,
   return dialog;
 }
 
+
+/*  private functions  */
+
+static void
+resize_dialog_free (ResizeDialog *private)
+{
+  g_slice_free (ResizeDialog, private);
+}
+
 static void
 resize_dialog_response (GtkWidget    *dialog,
                         gint          response_id,
@@ -456,12 +471,6 @@ resize_dialog_reset (ResizeDialog *private)
   if (private->text_layers_button)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->text_layers_button),
                                   private->old_resize_text_layers);
-}
-
-static void
-resize_dialog_free (ResizeDialog *private)
-{
-  g_slice_free (ResizeDialog, private);
 }
 
 static void

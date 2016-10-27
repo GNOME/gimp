@@ -42,7 +42,9 @@
 #include "gimp-intl.h"
 
 
-typedef struct
+typedef struct _IndexedDialog IndexedDialog;
+
+struct _IndexedDialog
 {
   GimpImage                  *image;
   GimpConvertPaletteType      palette_type;
@@ -58,9 +60,10 @@ typedef struct
   GtkWidget                  *dialog;
   GimpContext                *context;
   GimpContainer              *container;
-} IndexedDialog;
+};
 
 
+static void        convert_dialog_free            (IndexedDialog *private);
 static void        convert_dialog_response        (GtkWidget     *widget,
                                                    gint           response_id,
                                                    IndexedDialog *private);
@@ -70,7 +73,6 @@ static gboolean    convert_dialog_palette_filter  (GimpObject    *object,
 static void        convert_dialog_palette_changed (GimpContext   *context,
                                                    GimpPalette   *palette,
                                                    IndexedDialog *private);
-static void        convert_dialog_free            (IndexedDialog *private);
 
 
 /*  public functions  */
@@ -296,6 +298,18 @@ convert_indexed_dialog_new (GimpImage                  *image,
 /*  private functions  */
 
 static void
+convert_dialog_free (IndexedDialog *private)
+{
+  if (private->container)
+    g_object_unref (private->container);
+
+  if (private->context)
+    g_object_unref (private->context);
+
+  g_slice_free (IndexedDialog, private);
+}
+
+static void
 convert_dialog_response (GtkWidget     *dialog,
                          gint           response_id,
                          IndexedDialog *private)
@@ -405,16 +419,4 @@ convert_dialog_palette_changed (GimpContext   *context,
     {
       private->custom_palette = palette;
     }
-}
-
-static void
-convert_dialog_free (IndexedDialog *private)
-{
-  if (private->container)
-    g_object_unref (private->container);
-
-  if (private->context)
-    g_object_unref (private->context);
-
-  g_slice_free (IndexedDialog, private);
 }

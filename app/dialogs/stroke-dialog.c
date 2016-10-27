@@ -47,7 +47,9 @@
 #define RESPONSE_RESET 1
 
 
-typedef struct
+typedef struct _StrokeDialog StrokeDialog;
+
+struct _StrokeDialog
 {
   GimpItem           *item;
   GimpDrawable       *drawable;
@@ -57,15 +59,15 @@ typedef struct
   gpointer            user_data;
 
   GtkWidget          *tool_combo;
-} StrokeDialog;
+};
 
 
-/*  local functions  */
+/*  local function prototypes  */
 
+static void  stroke_dialog_free     (StrokeDialog *private);
 static void  stroke_dialog_response (GtkWidget    *dialog,
                                      gint          response_id,
                                      StrokeDialog *private);
-static void  stroke_dialog_free     (StrokeDialog *private);
 
 
 /*  public function  */
@@ -259,6 +261,14 @@ stroke_dialog_new (GimpItem           *item,
 /*  private functions  */
 
 static void
+stroke_dialog_free (StrokeDialog *private)
+{
+  g_object_unref (private->options);
+
+  g_slice_free (StrokeDialog, private);
+}
+
+static void
 stroke_dialog_response (GtkWidget    *dialog,
                         gint          response_id,
                         StrokeDialog *private)
@@ -290,12 +300,4 @@ stroke_dialog_response (GtkWidget    *dialog,
       gtk_widget_destroy (dialog);
       break;
     }
-}
-
-static void
-stroke_dialog_free (StrokeDialog *private)
-{
-  g_object_unref (private->options);
-
-  g_slice_free (StrokeDialog, private);
 }

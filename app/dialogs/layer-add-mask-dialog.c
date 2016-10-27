@@ -57,14 +57,14 @@ struct _LayerAddMaskDialog
 
 /*  local function prototypes  */
 
+static void       layer_add_mask_dialog_free             (LayerAddMaskDialog *private);
+static void       layer_add_mask_dialog_response         (GtkWidget          *dialog,
+                                                          gint                response_id,
+                                                          LayerAddMaskDialog *private);
 static gboolean   layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
                                                           GimpViewable       *viewable,
                                                           gpointer            insert_data,
                                                           LayerAddMaskDialog *dialog);
-static void       layer_add_mask_dialog_response         (GtkWidget          *dialog,
-                                                          gint                response_id,
-                                                          LayerAddMaskDialog *private);
-static void       layer_add_mask_dialog_free             (LayerAddMaskDialog *private);
 
 
 /*  public functions  */
@@ -112,11 +112,12 @@ layer_add_mask_dialog_new (GimpLayer           *layer,
 
                                      NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) layer_add_mask_dialog_free, private);
@@ -179,15 +180,10 @@ layer_add_mask_dialog_new (GimpLayer           *layer,
 
 /*  private functions  */
 
-static gboolean
-layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
-                                        GimpViewable       *viewable,
-                                        gpointer            insert_data,
-                                        LayerAddMaskDialog *private)
+static void
+layer_add_mask_dialog_free (LayerAddMaskDialog *private)
 {
-  private->channel = GIMP_CHANNEL (viewable);
-
-  return TRUE;
+  g_slice_free (LayerAddMaskDialog, private);
 }
 
 static void
@@ -221,8 +217,13 @@ layer_add_mask_dialog_response (GtkWidget          *dialog,
     }
 }
 
-static void
-layer_add_mask_dialog_free (LayerAddMaskDialog *private)
+static gboolean
+layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
+                                        GimpViewable       *viewable,
+                                        gpointer            insert_data,
+                                        LayerAddMaskDialog *private)
 {
-  g_slice_free (LayerAddMaskDialog, private);
+  private->channel = GIMP_CHANNEL (viewable);
+
+  return TRUE;
 }

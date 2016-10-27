@@ -52,10 +52,10 @@ struct _ImageMergeLayersDialog
 
 /*  local function prototypes  */
 
+static void  image_merge_layers_dialog_free     (ImageMergeLayersDialog *private);
 static void  image_merge_layers_dialog_response (GtkWidget              *dialog,
                                                  gint                    response_id,
                                                  ImageMergeLayersDialog *private);
-static void  image_merge_layers_dialog_free     (ImageMergeLayersDialog *private);
 
 
 /*  public functions  */
@@ -102,15 +102,15 @@ image_merge_layers_dialog_new (GimpImage               *image,
 
                                      NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-
-  g_object_weak_ref (G_OBJECT (dialog),
-                     (GWeakNotify) image_merge_layers_dialog_free, private);
-
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) image_merge_layers_dialog_free, private);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (image_merge_layers_dialog_response),
@@ -161,6 +161,15 @@ image_merge_layers_dialog_new (GimpImage               *image,
   return dialog;
 }
 
+
+/*  private functions  */
+
+static void
+image_merge_layers_dialog_free (ImageMergeLayersDialog *private)
+{
+  g_slice_free (ImageMergeLayersDialog, private);
+}
+
 static void
 image_merge_layers_dialog_response (GtkWidget              *dialog,
                                     gint                    response_id,
@@ -179,10 +188,4 @@ image_merge_layers_dialog_response (GtkWidget              *dialog,
     {
       gtk_widget_destroy (dialog);
     }
-}
-
-static void
-image_merge_layers_dialog_free (ImageMergeLayersDialog *private)
-{
-  g_slice_free (ImageMergeLayersDialog, private);
 }

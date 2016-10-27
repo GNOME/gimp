@@ -39,7 +39,9 @@
 #include "gimp-intl.h"
 
 
-typedef struct
+typedef struct _ConvertDialog ConvertDialog;
+
+struct _ConvertDialog
 {
   GimpImage                    *image;
   GimpComponentType             component_type;
@@ -50,13 +52,15 @@ typedef struct
   GeglDitherMethod              channel_dither_method;
   GimpConvertPrecisionCallback  callback;
   gpointer                      user_data;
-} ConvertDialog;
+};
 
 
+/*  local function prototypes  */
+
+static void   convert_precision_dialog_free     (ConvertDialog    *private);
 static void   convert_precision_dialog_response (GtkWidget        *widget,
                                                  gint              response_id,
                                                  ConvertDialog    *private);
-static void   convert_precision_dialog_free     (ConvertDialog    *private);
 
 
 /*  public functions  */
@@ -279,6 +283,12 @@ convert_precision_dialog_new (GimpImage                    *image,
 /*  private functions  */
 
 static void
+convert_precision_dialog_free (ConvertDialog *private)
+{
+  g_slice_free (ConvertDialog, private);
+}
+
+static void
 convert_precision_dialog_response (GtkWidget     *dialog,
                                    gint           response_id,
                                    ConvertDialog *private)
@@ -300,10 +310,4 @@ convert_precision_dialog_response (GtkWidget     *dialog,
     {
       gtk_widget_destroy (dialog);
     }
-}
-
-static void
-convert_precision_dialog_free (ConvertDialog *private)
-{
-  g_slice_free (ConvertDialog, private);
 }

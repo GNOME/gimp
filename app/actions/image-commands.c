@@ -1393,6 +1393,8 @@ image_scale_callback (GtkWidget              *dialog,
 
   if (width > 0 && height > 0)
     {
+      gtk_widget_destroy (dialog);
+
       if (width           == gimp_image_get_width  (image) &&
           height          == gimp_image_get_height (image) &&
           xresolution     == xres                          &&

@@ -40,8 +40,9 @@
 
 #define RESPONSE_RESET 1
 
+typedef struct _ScaleDialog ScaleDialog;
 
-typedef struct
+struct _ScaleDialog
 {
   GimpViewable          *viewable;
   GimpUnit               unit;
@@ -50,15 +51,19 @@ typedef struct
   GtkWidget             *combo;
   GimpScaleCallback      callback;
   gpointer               user_data;
-} ScaleDialog;
+};
 
 
+/*  local function prototypes  */
+
+static void   scale_dialog_free     (ScaleDialog *private);
 static void   scale_dialog_response (GtkWidget   *dialog,
                                      gint         response_id,
                                      ScaleDialog *private);
 static void   scale_dialog_reset    (ScaleDialog *private);
-static void   scale_dialog_free     (ScaleDialog *private);
 
+
+/*  public function  */
 
 GtkWidget *
 scale_dialog_new (GimpViewable          *viewable,
@@ -113,6 +118,16 @@ scale_dialog_new (GimpViewable          *viewable,
       g_return_val_if_reached (NULL);
     }
 
+  private = g_slice_new0 (ScaleDialog);
+
+  private->viewable      = viewable;
+  private->interpolation = interpolation;
+  private->unit          = unit;
+  private->callback      = callback;
+  private->user_data     = user_data;
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
   dialog = gimp_viewable_dialog_new (viewable, context,
                                      title, role, GIMP_STOCK_SCALE, title,
                                      parent,
@@ -132,18 +147,12 @@ scale_dialog_new (GimpViewable          *viewable,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  private = g_slice_new0 (ScaleDialog);
-
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) scale_dialog_free, private);
 
-  private->viewable      = viewable;
-  private->interpolation = interpolation;
-  private->unit          = unit;
-  private->callback      = callback;
-  private->user_data     = user_data;
-
-  gimp_image_get_resolution (image, &xres, &yres);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (scale_dialog_response),
+                    private);
 
   private->box = g_object_new (GIMP_TYPE_SIZE_BOX,
                                "width",           width,
@@ -155,10 +164,6 @@ scale_dialog_new (GimpViewable          *viewable,
                                "keep-aspect",     TRUE,
                                "edit-resolution", GIMP_IS_IMAGE (viewable),
                                NULL);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (scale_dialog_response),
-                    private);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -215,6 +220,15 @@ scale_dialog_new (GimpViewable          *viewable,
     }
 
   return dialog;
+}
+
+
+/*  private functions  */
+
+static void
+scale_dialog_free (ScaleDialog *private)
+{
+  g_slice_free (ScaleDialog, private);
 }
 
 static void
@@ -309,10 +323,4 @@ scale_dialog_reset (ScaleDialog *private)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),
                                  private->interpolation);
-}
-
-static void
-scale_dialog_free (ScaleDialog *private)
-{
-  g_slice_free (ScaleDialog, private);
 }
