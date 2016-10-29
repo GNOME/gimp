@@ -46,6 +46,7 @@ struct _GimpItemPropUndo
   guint         linked        : 1;
   guint         lock_content  : 1;
   guint         lock_position : 1;
+  GimpColorTag  color_tag;
   gchar        *parasite_name;
   GimpParasite *parasite;
 };

@@ -438,6 +438,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_ITEM_DISPLACE,            /*< desc="Move item"                   >*/
   GIMP_UNDO_ITEM_VISIBILITY,          /*< desc="Item visibility"             >*/
   GIMP_UNDO_ITEM_LINKED,              /*< desc="Link/Unlink item"            >*/
+  GIMP_UNDO_ITEM_COLOR_TAG,           /*< desc="Item color tag"              >*/
   GIMP_UNDO_ITEM_LOCK_CONTENT,        /*< desc="Lock/Unlock content"         >*/
   GIMP_UNDO_ITEM_LOCK_POSITION,       /*< desc="Lock/Unlock position"        >*/
   GIMP_UNDO_LAYER_ADD,                /*< desc="New layer"                   >*/

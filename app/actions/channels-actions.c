@@ -34,6 +34,7 @@
 #include "actions.h"
 #include "channels-actions.h"
 #include "channels-commands.h"
+#include "items-actions.h"
 
 #include "gimp-intl.h"
 
@@ -43,6 +44,10 @@ static const GimpActionEntry channels_actions[] =
   { "channels-popup", GIMP_STOCK_CHANNELS,
     NC_("channels-action", "Channels Menu"), NULL, NULL, NULL,
     GIMP_HELP_CHANNEL_DIALOG },
+
+  { "channels-color-tag-menu", GIMP_STOCK_CLOSE /* abused */,
+    NC_("channels-action", "Color Tag"), NULL, NULL, NULL,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
 
   { "channels-edit-attributes", "gtk-edit",
     NC_("channels-action", "_Edit Channel Attributes..."), NULL,
@@ -102,6 +107,90 @@ static const GimpActionEntry channels_actions[] =
     GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM }
 };
 
+static const GimpToggleActionEntry channels_toggle_actions[] =
+{
+  { "channels-visible", GIMP_STOCK_VISIBLE,
+    NC_("channels-action", "_Visible"), NULL, NULL,
+    G_CALLBACK (channels_visible_cmd_callback),
+    FALSE,
+    GIMP_HELP_CHANNEL_VISIBLE },
+
+  { "channels-linked", GIMP_STOCK_LINKED,
+    NC_("channels-action", "_Linked"), NULL, NULL,
+    G_CALLBACK (channels_linked_cmd_callback),
+    FALSE,
+    GIMP_HELP_CHANNEL_LINKED },
+
+  { "channels-lock-content", NULL /* GIMP_STOCK_LOCK */,
+    NC_("channels-action", "L_ock pixels"), NULL, NULL,
+    G_CALLBACK (channels_lock_content_cmd_callback),
+    FALSE,
+    GIMP_HELP_CHANNEL_LOCK_PIXELS },
+
+  { "channels-lock-position", GIMP_STOCK_TOOL_MOVE,
+    NC_("channels-action", "L_ock position"), NULL, NULL,
+    G_CALLBACK (channels_lock_position_cmd_callback),
+    FALSE,
+    GIMP_HELP_CHANNEL_LOCK_POSITION }
+};
+
+static const GimpEnumActionEntry channels_color_tag_actions[] =
+{
+  { "channels-color-tag-none", GIMP_STOCK_CLOSE /* abused */,
+    NC_("channels-action", "None"), NULL,
+    NC_("channels-action", "Clear color tag"),
+    GIMP_COLOR_TAG_NONE, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
+
+  { "channels-color-tag-blue", NULL,
+    NC_("channels-action", "Blue"), NULL,
+    NC_("channels-action", "Set color tag to blue"),
+    GIMP_COLOR_TAG_BLUE, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
+
+  { "channels-color-tag-green", NULL,
+    NC_("channels-action", "Green"), NULL,
+    NC_("channels-action", "Set color tag to green"),
+    GIMP_COLOR_TAG_GREEN, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
+
+  { "channels-color-tag-yellow", NULL,
+    NC_("channels-action", "Yellow"), NULL,
+    NC_("channels-action", "Set color tag to yellow"),
+    GIMP_COLOR_TAG_YELLOW, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
+
+  { "channels-color-tag-orange", NULL,
+    NC_("channels-action", "Orange"), NULL,
+    NC_("channels-action", "Set color tag to orange"),
+    GIMP_COLOR_TAG_ORANGE, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
+
+  { "channels-color-tag-brown", NULL,
+    NC_("channels-action", "Brown"), NULL,
+    NC_("channels-action", "Set color tag to brown"),
+    GIMP_COLOR_TAG_BROWN, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
+
+  { "channels-color-tag-red", NULL,
+    NC_("channels-action", "Red"), NULL,
+    NC_("channels-action", "Set color tag to red"),
+    GIMP_COLOR_TAG_RED, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
+
+  { "channels-color-tag-violet", NULL,
+    NC_("channels-action", "Violet"), NULL,
+    NC_("channels-action", "Set color tag to violet"),
+    GIMP_COLOR_TAG_VIOLET, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG },
+
+  { "channels-color-tag-gray", NULL,
+    NC_("channels-action", "Gray"), NULL,
+    NC_("channels-action", "Set color tag to gray"),
+    GIMP_COLOR_TAG_GRAY, FALSE,
+    GIMP_HELP_CHANNEL_COLOR_TAG }
+};
+
 static const GimpEnumActionEntry channels_to_selection_actions[] =
 {
   { "channels-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
@@ -137,10 +226,21 @@ channels_actions_setup (GimpActionGroup *group)
                                  channels_actions,
                                  G_N_ELEMENTS (channels_actions));
 
+  gimp_action_group_add_toggle_actions (group, "channels-action",
+                                        channels_toggle_actions,
+                                        G_N_ELEMENTS (channels_toggle_actions));
+
+  gimp_action_group_add_enum_actions (group, "channels-action",
+                                      channels_color_tag_actions,
+                                      G_N_ELEMENTS (channels_color_tag_actions),
+                                      G_CALLBACK (channels_color_tag_cmd_callback));
+
   gimp_action_group_add_enum_actions (group, "channels-action",
                                       channels_to_selection_actions,
                                       G_N_ELEMENTS (channels_to_selection_actions),
                                       G_CALLBACK (channels_to_selection_cmd_callback));
+
+  items_actions_setup (group, "channels");
 }
 
 void
@@ -206,4 +306,6 @@ channels_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("channels-selection-intersect", !fs && (channel || component));
 
 #undef SET_SENSITIVE
+
+  items_actions_update (group, "channels", GIMP_ITEM (channel));
 }

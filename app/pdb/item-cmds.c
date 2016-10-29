@@ -716,6 +716,59 @@ item_set_lock_position_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+item_get_color_tag_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpItem *item;
+  gint32 color_tag = 0;
+
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      color_tag = gimp_item_get_color_tag (GIMP_ITEM (item));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), color_tag);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+item_set_color_tag_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpItem *item;
+  gint32 color_tag;
+
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  color_tag = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_item_set_color_tag (GIMP_ITEM (item), color_tag, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 item_get_tattoo_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
@@ -1556,6 +1609,66 @@ register_item_procs (GimpPDB *pdb)
                                                      "The new item 'lock position' state",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-get-color-tag
+   */
+  procedure = gimp_procedure_new (item_get_color_tag_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-get-color-tag");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-get-color-tag",
+                                     "Get the color tag of the specified item.",
+                                     "This procedure returns the specified item's color tag.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2016",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("color-tag",
+                                                      "color tag",
+                                                      "The item's color tag",
+                                                      GIMP_TYPE_COLOR_TAG,
+                                                      GIMP_COLOR_TAG_NONE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-set-color-tag
+   */
+  procedure = gimp_procedure_new (item_set_color_tag_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-set-color-tag");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-set-color-tag",
+                                     "Set the color tag of the specified item.",
+                                     "This procedure sets the specified item's color tag.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2016",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("color-tag",
+                                                  "color tag",
+                                                  "The new item color tag",
+                                                  GIMP_TYPE_COLOR_TAG,
+                                                  GIMP_COLOR_TAG_NONE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

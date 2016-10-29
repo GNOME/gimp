@@ -101,6 +101,24 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_CLONE_IMAGE => '0',
 		       GIMP_CLONE_PATTERN => '1' }
 	},
+    GimpColorTag =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_COLOR_TAG_NONE GIMP_COLOR_TAG_BLUE
+			  GIMP_COLOR_TAG_GREEN GIMP_COLOR_TAG_YELLOW
+			  GIMP_COLOR_TAG_ORANGE GIMP_COLOR_TAG_BROWN
+			  GIMP_COLOR_TAG_RED GIMP_COLOR_TAG_VIOLET
+			  GIMP_COLOR_TAG_GRAY) ],
+	  mapping => { GIMP_COLOR_TAG_NONE => '0',
+		       GIMP_COLOR_TAG_BLUE => '1',
+		       GIMP_COLOR_TAG_GREEN => '2',
+		       GIMP_COLOR_TAG_YELLOW => '3',
+		       GIMP_COLOR_TAG_ORANGE => '4',
+		       GIMP_COLOR_TAG_BROWN => '5',
+		       GIMP_COLOR_TAG_RED => '6',
+		       GIMP_COLOR_TAG_VIOLET => '7',
+		       GIMP_COLOR_TAG_GRAY => '8' }
+	},
     GimpComponentType =>
 	{ contig => 0,
 	  header => 'libgimpbase/gimpbaseenums.h',

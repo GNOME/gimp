@@ -124,7 +124,11 @@ gimp_item_prop_undo_constructed (GObject *object)
       break;
 
     case GIMP_UNDO_ITEM_LINKED:
-      item_prop_undo->linked  = gimp_item_get_linked (item);
+      item_prop_undo->linked = gimp_item_get_linked (item);
+      break;
+
+    case GIMP_UNDO_ITEM_COLOR_TAG:
+      item_prop_undo->color_tag = gimp_item_get_color_tag (item);
       break;
 
     case GIMP_UNDO_ITEM_LOCK_CONTENT:
@@ -282,6 +286,16 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
         linked = gimp_item_get_linked (item);
         gimp_item_set_linked (item, item_prop_undo->linked, FALSE);
         item_prop_undo->linked = linked;
+      }
+      break;
+
+    case GIMP_UNDO_ITEM_COLOR_TAG:
+      {
+        GimpColorTag color_tag;
+
+        color_tag = gimp_item_get_color_tag (item);
+        gimp_item_set_color_tag (item, item_prop_undo->color_tag, FALSE);
+        item_prop_undo->color_tag = color_tag;
       }
       break;
 

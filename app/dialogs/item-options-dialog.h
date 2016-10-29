@@ -19,16 +19,17 @@
 #define __ITEM_OPTIONS_DIALOG_H__
 
 
-typedef void (* GimpItemOptionsCallback) (GtkWidget   *dialog,
-                                          GimpImage   *image,
-                                          GimpItem    *item,
-                                          GimpContext *context,
-                                          const gchar *item_name,
-                                          gboolean     item_visible,
-                                          gboolean     item_linked,
-                                          gboolean     item_lock_content,
-                                          gboolean     item_lock_position,
-                                          gpointer     user_data);
+typedef void (* GimpItemOptionsCallback) (GtkWidget    *dialog,
+                                          GimpImage    *image,
+                                          GimpItem     *item,
+                                          GimpContext  *context,
+                                          const gchar  *item_name,
+                                          gboolean      item_visible,
+                                          gboolean      item_linked,
+                                          GimpColorTag  item_color_tag,
+                                          gboolean      item_lock_content,
+                                          gboolean      item_lock_position,
+                                          gpointer      user_data);
 
 
 GtkWidget * item_options_dialog_new (GimpImage               *image,
@@ -47,6 +48,7 @@ GtkWidget * item_options_dialog_new (GimpImage               *image,
                                      const gchar             *item_name,
                                      gboolean                 item_visible,
                                      gboolean                 item_linked,
+                                     GimpColorTag             item_color_tag,
                                      gboolean                 item_lock_content,
                                      gboolean                 item_lock_position,
                                      GimpItemOptionsCallback  callback,

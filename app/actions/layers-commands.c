@@ -75,6 +75,7 @@
 #include "dialogs/scale-dialog.h"
 
 #include "actions.h"
+#include "items-commands.h"
 #include "layers-commands.h"
 
 #include "gimp-intl.h"
@@ -126,6 +127,7 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                gint                   layer_offset_y,
                                                gboolean               layer_visible,
                                                gboolean               layer_linked,
+                                               GimpColorTag           layer_color_tag,
                                                gboolean               layer_lock_pixels,
                                                gboolean               layer_lock_position,
                                                gboolean               layer_lock_alpha,
@@ -145,6 +147,7 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                gint                   layer_offset_y,
                                                gboolean               layer_visible,
                                                gboolean               layer_linked,
+                                               GimpColorTag           layer_color_tag,
                                                gboolean               layer_lock_pixels,
                                                gboolean               layer_lock_position,
                                                gboolean               layer_lock_alpha,
@@ -260,6 +263,7 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
                                          0 /* unused */,
                                          gimp_item_get_visible (item),
                                          gimp_item_get_linked (item),
+                                         gimp_item_get_color_tag (item),
                                          gimp_item_get_lock_content (item),
                                          gimp_item_get_lock_position (item),
                                          gimp_layer_get_lock_alpha (layer),
@@ -325,6 +329,7 @@ layers_new_cmd_callback (GtkAction *action,
                                          config->layer_new_fill_type,
                                          TRUE,
                                          FALSE,
+                                         GIMP_COLOR_TAG_NONE,
                                          FALSE,
                                          FALSE,
                                          FALSE,
@@ -1129,6 +1134,50 @@ layers_mode_cmd_callback (GtkAction *action,
 }
 
 void
+layers_visible_cmd_callback (GtkAction *action,
+                             gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_visible_cmd_callback (action, image, GIMP_ITEM (layer));
+}
+
+void
+layers_linked_cmd_callback (GtkAction *action,
+                            gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_linked_cmd_callback (action, image, GIMP_ITEM (layer));
+}
+
+void
+layers_lock_content_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_lock_content_cmd_callback (action, image, GIMP_ITEM (layer));
+}
+
+void
+layers_lock_position_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_lock_position_cmd_callback (action, image, GIMP_ITEM (layer));
+}
+
+void
 layers_lock_alpha_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
@@ -1155,6 +1204,19 @@ layers_lock_alpha_cmd_callback (GtkAction *action,
     }
 }
 
+void
+layers_color_tag_cmd_callback (GtkAction *action,
+                               gint       value,
+                               gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_color_tag_cmd_callback (action, image, GIMP_ITEM (layer),
+                                (GimpColorTag) value);
+}
+
 
 /*  private functions  */
 
@@ -1173,6 +1235,7 @@ layers_new_callback (GtkWidget            *dialog,
                      gint                  layer_offset_y,
                      gboolean              layer_visible,
                      gboolean              layer_linked,
+                     GimpColorTag          layer_color_tag,
                      gboolean              layer_lock_pixels,
                      gboolean              layer_lock_position,
                      gboolean              layer_lock_alpha,
@@ -1201,6 +1264,7 @@ layers_new_callback (GtkWidget            *dialog,
                           config->layer_new_fill_type);
       gimp_item_set_visible (GIMP_ITEM (layer), layer_visible, FALSE);
       gimp_item_set_linked (GIMP_ITEM (layer), layer_linked, FALSE);
+      gimp_item_set_color_tag (GIMP_ITEM (layer), layer_color_tag, FALSE);
       gimp_item_set_lock_content (GIMP_ITEM (layer), layer_lock_pixels,
                                   FALSE);
       gimp_item_set_lock_position (GIMP_ITEM (layer), layer_lock_position,
@@ -1234,6 +1298,7 @@ layers_edit_attributes_callback (GtkWidget            *dialog,
                                  gint                  layer_offset_y,
                                  gboolean              layer_visible,
                                  gboolean              layer_linked,
+                                 GimpColorTag          layer_color_tag,
                                  gboolean              layer_lock_pixels,
                                  gboolean              layer_lock_position,
                                  gboolean              layer_lock_alpha,
@@ -1249,6 +1314,7 @@ layers_edit_attributes_callback (GtkWidget            *dialog,
       layer_offset_y      != gimp_item_get_offset_y (item)      ||
       layer_visible       != gimp_item_get_visible (item)       ||
       layer_linked        != gimp_item_get_linked (item)        ||
+      layer_color_tag     != gimp_item_get_color_tag (item)     ||
       layer_lock_pixels   != gimp_item_get_lock_content (item)  ||
       layer_lock_position != gimp_item_get_lock_position (item) ||
       layer_lock_alpha    != gimp_layer_get_lock_alpha (layer))
@@ -1290,6 +1356,9 @@ layers_edit_attributes_callback (GtkWidget            *dialog,
 
       if (layer_linked != gimp_item_get_linked (item))
         gimp_item_set_linked (item, layer_linked, TRUE);
+
+      if (layer_color_tag != gimp_item_get_color_tag (item))
+        gimp_item_set_color_tag (item, layer_color_tag, TRUE);
 
       if (layer_lock_pixels != gimp_item_get_lock_content (item))
         gimp_item_set_lock_content (item, layer_lock_pixels, TRUE);
@@ -1429,7 +1498,6 @@ layers_resize_callback (GtkWidget    *dialog,
                         gboolean      unused2,
                         gpointer      user_data)
 {
-
   layer_resize_unit = unit;
 
   if (width > 0 && height > 0)

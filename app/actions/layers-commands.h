@@ -107,7 +107,19 @@ void   layers_mode_cmd_callback               (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
 
+void   layers_visible_cmd_callback            (GtkAction   *action,
+                                               gpointer     data);
+void   layers_linked_cmd_callback             (GtkAction   *action,
+                                               gpointer     data);
+void   layers_lock_content_cmd_callback       (GtkAction   *action,
+                                               gpointer     data);
+void   layers_lock_position_cmd_callback      (GtkAction   *action,
+                                               gpointer     data);
 void   layers_lock_alpha_cmd_callback         (GtkAction   *action,
+                                               gpointer     data);
+
+void   layers_color_tag_cmd_callback          (GtkAction   *action,
+                                               gint         value,
                                                gpointer     data);
 
 

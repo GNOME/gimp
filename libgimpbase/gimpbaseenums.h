@@ -193,6 +193,24 @@ typedef enum
 } GimpCloneType;
 
 
+#define GIMP_TYPE_COLOR_TAG (gimp_color_tag_get_type ())
+
+GType gimp_color_tag_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_COLOR_TAG_NONE,   /*< desc="None"   >*/
+  GIMP_COLOR_TAG_BLUE,   /*< desc="Blue"   >*/
+  GIMP_COLOR_TAG_GREEN,  /*< desc="Green"  >*/
+  GIMP_COLOR_TAG_YELLOW, /*< desc="Yellow" >*/
+  GIMP_COLOR_TAG_ORANGE, /*< desc="Orange" >*/
+  GIMP_COLOR_TAG_BROWN,  /*< desc="Brown"  >*/
+  GIMP_COLOR_TAG_RED,    /*< desc="Red"    >*/
+  GIMP_COLOR_TAG_VIOLET, /*< desc="Violet" >*/
+  GIMP_COLOR_TAG_GRAY    /*< desc="Gray"   >*/
+} GimpColorTag;
+
+
 #define GIMP_TYPE_COMPONENT_TYPE (gimp_component_type_get_type ())
 
 GType gimp_component_type_get_type (void) G_GNUC_CONST;

@@ -30,6 +30,7 @@
 #include "core/gimpitem.h"
 
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "item-options-dialog.h"
 
@@ -45,6 +46,7 @@ struct _ItemOptionsDialog
   GimpContext             *context;
   gboolean                 visible;
   gboolean                 linked;
+  GimpColorTag             color_tag;
   gboolean                 lock_content;
   gboolean                 lock_position;
   GimpItemOptionsCallback  callback;
@@ -90,6 +92,7 @@ item_options_dialog_new (GimpImage               *image,
                          const gchar             *item_name,
                          gboolean                 item_visible,
                          gboolean                 item_linked,
+                         GimpColorTag             item_color_tag,
                          gboolean                 item_lock_content,
                          gboolean                 item_lock_position,
                          GimpItemOptionsCallback  callback,
@@ -120,6 +123,7 @@ item_options_dialog_new (GimpImage               *image,
   private->context       = context;
   private->visible       = item_visible;
   private->linked        = item_linked;
+  private->color_tag     = item_color_tag;
   private->lock_content  = item_lock_content;
   private->lock_position = item_lock_position;
   private->callback      = callback;
@@ -173,12 +177,76 @@ item_options_dialog_new (GimpImage               *image,
   /*  The name label and entry  */
   if (name_label)
     {
+      GtkWidget *hbox;
+      GtkWidget *radio;
+      GtkWidget *radio_box;
+      GList     *children;
+      GList     *list;
+
       private->name_entry = gtk_entry_new ();
       gtk_entry_set_activates_default (GTK_ENTRY (private->name_entry), TRUE);
       gtk_entry_set_text (GTK_ENTRY (private->name_entry), item_name);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, private->table_row++,
                                  name_label, 0.0, 0.5,
                                  private->name_entry, 1, FALSE);
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, private->table_row++,
+                                 _("Color tag:"), 0.0, 0.5,
+                                 hbox, 1, TRUE);
+
+      radio_box = gimp_enum_radio_box_new (GIMP_TYPE_COLOR_TAG,
+                                           G_CALLBACK (gimp_radio_button_update),
+                                           &private->color_tag,
+                                           &radio);
+      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (radio),
+                                       private->color_tag);
+
+      children = gtk_container_get_children (GTK_CONTAINER (radio_box));
+
+      for (list = children;
+           list;
+           list = g_list_next (list))
+        {
+          GimpColorTag  color_tag;
+          GimpRGB       color;
+          GtkWidget    *image;
+
+          radio = list->data;
+
+          g_object_ref (radio);
+          gtk_container_remove (GTK_CONTAINER (radio_box), radio);
+          g_object_set (radio, "draw-indicator", FALSE, NULL);
+          gtk_box_pack_start (GTK_BOX (hbox), radio, FALSE, FALSE, 0);
+          g_object_unref (radio);
+
+          gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (radio)));
+
+          color_tag = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (radio),
+                                                          "gimp-item-data"));
+
+          if (gimp_get_color_tag_color (color_tag, &color))
+            {
+              GtkSettings *settings = gtk_widget_get_settings (dialog);
+              gint         w, h;
+
+              image = gimp_color_area_new (&color, GIMP_COLOR_AREA_FLAT, 0);
+              gtk_icon_size_lookup_for_settings (settings,
+                                                 GTK_ICON_SIZE_MENU, &w, &h);
+              gtk_widget_set_size_request (image, w, h);
+            }
+          else
+            {
+              image = gtk_image_new_from_icon_name (GIMP_STOCK_CLOSE,
+                                                    GTK_ICON_SIZE_MENU);
+            }
+
+          gtk_container_add (GTK_CONTAINER (radio), image);
+          gtk_widget_show (image);
+        }
+
+      g_list_free (children);
+      gtk_widget_destroy (radio_box);
     }
 
   /*  The switches frame & vbox  */
@@ -382,6 +450,7 @@ item_options_dialog_response (GtkWidget         *dialog,
                          name,
                          private->visible,
                          private->linked,
+                         private->color_tag,
                          private->lock_content,
                          private->lock_position,
                          private->user_data);

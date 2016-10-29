@@ -49,6 +49,7 @@
 
 #include "actions.h"
 #include "channels-commands.h"
+#include "items-commands.h"
 
 #include "gimp-intl.h"
 
@@ -64,6 +65,7 @@ static void   channels_new_callback             (GtkWidget     *dialog,
                                                  gboolean       save_selection,
                                                  gboolean       channel_visible,
                                                  gboolean       channel_linked,
+                                                 GimpColorTag   channel_color_tag,
                                                  gboolean       channel_lock_content,
                                                  gboolean       channel_lock_position,
                                                  gpointer       user_data);
@@ -76,6 +78,7 @@ static void   channels_edit_attributes_callback (GtkWidget     *dialog,
                                                  gboolean       save_selection,
                                                  gboolean       channel_visible,
                                                  gboolean       channel_linked,
+                                                 GimpColorTag   channel_color_tag,
                                                  gboolean       channel_lock_content,
                                                  gboolean       channel_lock_position,
                                                  gpointer       user_data);
@@ -117,6 +120,7 @@ channels_edit_attributes_cmd_callback (GtkAction *action,
                                            &channel->color,
                                            gimp_item_get_visible (item),
                                            gimp_item_get_linked (item),
+                                           gimp_item_get_color_tag (item),
                                            gimp_item_get_lock_content (item),
                                            gimp_item_get_lock_position (item),
                                            channels_edit_attributes_callback,
@@ -161,6 +165,7 @@ channels_new_cmd_callback (GtkAction *action,
                                            &config->channel_new_color,
                                            TRUE,
                                            FALSE,
+                                           GIMP_COLOR_TAG_NONE,
                                            FALSE,
                                            FALSE,
                                            channels_new_callback,
@@ -362,6 +367,63 @@ channels_to_selection_cmd_callback (GtkAction *action,
   gimp_image_flush (image);
 }
 
+void
+channels_visible_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpImage   *image;
+  GimpChannel *channel;
+  return_if_no_channel (image, channel, data);
+
+  items_visible_cmd_callback (action, image, GIMP_ITEM (channel));
+}
+
+void
+channels_linked_cmd_callback (GtkAction *action,
+                              gpointer   data)
+{
+  GimpImage   *image;
+  GimpChannel *channel;
+  return_if_no_channel (image, channel, data);
+
+  items_linked_cmd_callback (action, image, GIMP_ITEM (channel));
+}
+
+void
+channels_lock_content_cmd_callback (GtkAction *action,
+                                    gpointer   data)
+{
+  GimpImage   *image;
+  GimpChannel *channel;
+  return_if_no_channel (image, channel, data);
+
+  items_lock_content_cmd_callback (action, image, GIMP_ITEM (channel));
+}
+
+void
+channels_lock_position_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpImage   *image;
+  GimpChannel *channel;
+  return_if_no_channel (image, channel, data);
+
+  items_lock_position_cmd_callback (action, image, GIMP_ITEM (channel));
+}
+
+void
+channels_color_tag_cmd_callback (GtkAction *action,
+                                 gint       value,
+                                 gpointer   data)
+{
+  GimpImage   *image;
+  GimpChannel *channel;
+  return_if_no_channel (image, channel, data);
+
+  items_color_tag_cmd_callback (action, image, GIMP_ITEM (channel),
+                                (GimpColorTag) value);
+}
+
 
 /*  private functions  */
 
@@ -375,6 +437,7 @@ channels_new_callback (GtkWidget     *dialog,
                        gboolean       save_selection,
                        gboolean       channel_visible,
                        gboolean       channel_linked,
+                       GimpColorTag   channel_color_tag,
                        gboolean       channel_lock_content,
                        gboolean       channel_lock_position,
                        gpointer       user_data)
@@ -411,6 +474,7 @@ channels_new_callback (GtkWidget     *dialog,
 
   gimp_item_set_visible (GIMP_ITEM (channel), channel_visible, FALSE);
   gimp_item_set_linked (GIMP_ITEM (channel), channel_linked, FALSE);
+  gimp_item_set_color_tag (GIMP_ITEM (channel), channel_color_tag, FALSE);
   gimp_item_set_lock_content (GIMP_ITEM (channel), channel_lock_content, FALSE);
   gimp_item_set_lock_position (GIMP_ITEM (channel), channel_lock_position, FALSE);
 
@@ -431,6 +495,7 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
                                    gboolean       save_selection,
                                    gboolean       channel_visible,
                                    gboolean       channel_linked,
+                                   GimpColorTag   channel_color_tag,
                                    gboolean       channel_lock_content,
                                    gboolean       channel_lock_position,
                                    gpointer       user_data)
@@ -441,6 +506,7 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
       gimp_rgba_distance (channel_color, &channel->color) > 0.0001 ||
       channel_visible       != gimp_item_get_visible (item)        ||
       channel_linked        != gimp_item_get_linked (item)         ||
+      channel_color_tag     != gimp_item_get_color_tag (item)      ||
       channel_lock_content  != gimp_item_get_lock_content (item)   ||
       channel_lock_position != gimp_item_get_lock_position (item))
     {
@@ -459,6 +525,9 @@ channels_edit_attributes_callback (GtkWidget     *dialog,
 
       if (channel_linked != gimp_item_get_linked (item))
         gimp_item_set_linked (item, channel_linked, TRUE);
+
+      if (channel_color_tag != gimp_item_get_color_tag (item))
+        gimp_item_set_color_tag (item, channel_color_tag, TRUE);
 
       if (channel_lock_content != gimp_item_get_lock_content (item))
         gimp_item_set_lock_content (item, channel_lock_content, TRUE);

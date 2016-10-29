@@ -116,6 +116,10 @@ libappactions_a_SOURCES = \
 	images-actions.h		\
 	images-commands.c		\
 	images-commands.h		\
+	items-commands.c		\
+	items-commands.h		\
+	items-actions.c			\
+	items-actions.h			\
 	layers-actions.c		\
 	layers-actions.h		\
 	layers-commands.c		\

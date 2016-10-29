@@ -43,5 +43,18 @@ void   channels_to_selection_cmd_callback    (GtkAction   *action,
                                               gint         value,
                                               gpointer     data);
 
+void   channels_visible_cmd_callback         (GtkAction   *action,
+                                              gpointer     data);
+void   channels_linked_cmd_callback          (GtkAction   *action,
+                                              gpointer     data);
+void   channels_lock_content_cmd_callback    (GtkAction   *action,
+                                              gpointer     data);
+void   channels_lock_position_cmd_callback   (GtkAction   *action,
+                                              gpointer     data);
+
+void   channels_color_tag_cmd_callback       (GtkAction   *action,
+                                              gint         value,
+                                              gpointer     data);
+
 
 #endif /* __CHANNELS_COMMANDS_H__ */

@@ -5,6 +5,17 @@
   <popup action="vectors-popup">
     <menuitem action="vectors-path-tool" />
     <menuitem action="vectors-edit-attributes" />
+    <menu action="vectors-color-tag-menu" name="Color Tags">
+     <menuitem action="vectors-color-tag-none" />
+     <menuitem action="vectors-color-tag-blue" />
+     <menuitem action="vectors-color-tag-green" />
+     <menuitem action="vectors-color-tag-yellow" />
+     <menuitem action="vectors-color-tag-orange" />
+     <menuitem action="vectors-color-tag-brown" />
+     <menuitem action="vectors-color-tag-red" />
+     <menuitem action="vectors-color-tag-violet" />
+     <menuitem action="vectors-color-tag-gray" />
+    </menu>
     <separator />
     <menuitem action="vectors-new" />
     <menuitem action="vectors-raise" />
