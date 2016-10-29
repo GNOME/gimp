@@ -53,7 +53,8 @@ enum
   PROP_0,
   PROP_ICON_NAME,
   PROP_STOCK_ID,
-  PROP_STOCK_SIZE
+  PROP_STOCK_SIZE,
+  PROP_OVERRIDE_BACKGROUND
 };
 
 
@@ -61,7 +62,8 @@ typedef struct _GimpCellRendererTogglePrivate GimpCellRendererTogglePrivate;
 
 struct _GimpCellRendererTogglePrivate
 {
-  gchar *icon_name;
+  gchar    *icon_name;
+  gboolean  override_background;
 };
 
 #define GET_PRIVATE(obj) \
@@ -159,6 +161,13 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_OVERRIDE_BACKGROUND,
+                                   g_param_spec_boolean ("override-background",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
   g_type_class_add_private (object_class, sizeof (GimpCellRendererTogglePrivate));
 }
 
@@ -217,6 +226,10 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
       g_value_set_int (value, toggle->stock_size);
       break;
 
+    case PROP_OVERRIDE_BACKGROUND:
+      g_value_set_boolean (value, priv->override_background);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
       break;
@@ -248,6 +261,10 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
 
     case PROP_STOCK_SIZE:
       toggle->stock_size = g_value_get_int (value);
+      break;
+
+    case PROP_OVERRIDE_BACKGROUND:
+      priv->override_background = g_value_get_boolean (value);
       break;
 
     default:
@@ -357,6 +374,33 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
                                                       cell_area, expose_area,
                                                       flags);
       return;
+    }
+
+  if (flags & GTK_CELL_RENDERER_SELECTED &&
+      priv->override_background)
+    {
+      gboolean background_set;
+
+      g_object_get (cell,
+                    "cell-background-set", &background_set,
+                    NULL);
+
+      if (background_set)
+        {
+          cairo_t  *cr = gdk_cairo_create (window);
+          GdkColor *color;
+
+          g_object_get (cell,
+                        "cell-background-gdk", &color,
+                        NULL);
+
+          gdk_cairo_rectangle (cr, background_area);
+          gdk_cairo_set_source_color (cr, color);
+          cairo_fill (cr);
+
+          gdk_color_free (color);
+          cairo_destroy (cr);
+        }
     }
 
   gimp_cell_renderer_toggle_get_size (cell, widget, cell_area,
