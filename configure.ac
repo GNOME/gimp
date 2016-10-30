@@ -1618,23 +1618,10 @@ AM_CONDITIONAL(HAVE_WEBKIT, test "x$have_webkit" = xyes)
 # Check for librsvg
 ###################
 
-AC_ARG_WITH(librsvg,[  --without-librsvg       build without librsvg support])
+PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,,
+                  [add_deps_error([rsvg >= rsvg_required_version])])
 
-have_librsvg=no
-if test "x$with_librsvg" != xno; then
-  have_librsvg=yes
-  PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
-    FILE_SVG='file-svg$(EXEEXT)',
-    have_librsvg="no (librsvg not found)")
-else
-   have_librsvg="no (librsvg support disabled)"
-fi
-
-if test "x$have_librsvg" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/svg+xml"
-fi
-
-AC_SUBST(FILE_SVG)
+MIME_TYPES="$MIME_TYPES;image/svg+xml"
 
 
 ####################################
