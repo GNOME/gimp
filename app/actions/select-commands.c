@@ -21,7 +21,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -32,7 +31,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpselection.h"
-#include "core/gimpstrokeoptions.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
@@ -43,10 +41,9 @@
 #include "display/gimpdisplayshell.h"
 
 #include "dialogs/dialogs.h"
-#include "dialogs/fill-dialog.h"
-#include "dialogs/stroke-dialog.h"
 
 #include "actions.h"
+#include "items-commands.h"
 #include "select-commands.h"
 
 #include "gimp-intl.h"
@@ -54,34 +51,22 @@
 
 /*  local function prototypes  */
 
-static void   select_feather_callback (GtkWidget         *widget,
-                                       gdouble            size,
-                                       GimpUnit           unit,
-                                       gpointer           data);
-static void   select_border_callback  (GtkWidget         *widget,
-                                       gdouble            size,
-                                       GimpUnit           unit,
-                                       gpointer           data);
-static void   select_grow_callback    (GtkWidget         *widget,
-                                       gdouble            size,
-                                       GimpUnit           unit,
-                                       gpointer           data);
-static void   select_shrink_callback  (GtkWidget         *widget,
-                                       gdouble            size,
-                                       GimpUnit           unit,
-                                       gpointer           data);
-static void   select_fill_callback    (GtkWidget         *dialog,
-                                       GimpItem          *item,
-                                       GimpDrawable      *drawable,
-                                       GimpContext       *context,
-                                       GimpFillOptions   *options,
-                                       gpointer           data);
-static void   select_stroke_callback  (GtkWidget         *dialog,
-                                       GimpItem          *item,
-                                       GimpDrawable      *drawable,
-                                       GimpContext       *context,
-                                       GimpStrokeOptions *options,
-                                       gpointer           data);
+static void   select_feather_callback (GtkWidget *widget,
+                                       gdouble    size,
+                                       GimpUnit   unit,
+                                       gpointer   data);
+static void   select_border_callback  (GtkWidget *widget,
+                                       gdouble    size,
+                                       GimpUnit   unit,
+                                       gpointer   data);
+static void   select_grow_callback    (GtkWidget *widget,
+                                       gdouble    size,
+                                       GimpUnit   unit,
+                                       gpointer   data);
+static void   select_shrink_callback  (GtkWidget *widget,
+                                       gdouble    size,
+                                       GimpUnit   unit,
+                                       gpointer   data);
 
 
 /*  public functions  */
@@ -397,171 +382,58 @@ void
 select_fill_cmd_callback (GtkAction *action,
                           gpointer   data)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GtkWidget    *widget;
-  GtkWidget    *dialog;
+  GimpImage *image;
   return_if_no_image (image, data);
-  return_if_no_widget (widget, data);
 
-  drawable = gimp_image_get_active_drawable (image);
-
-  if (! drawable)
-    {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("There is no active layer or channel to fill."));
-      return;
-    }
-
-#define FILL_DIALOG_KEY "gimp-selection-fill-dialog"
-
-  dialog = dialogs_get_dialog (G_OBJECT (drawable), FILL_DIALOG_KEY);
-
-  if (! dialog)
-    {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-      dialog = fill_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
-                                drawable,
-                                action_data_get_context (data),
-                                _("Fill Selection Outline"),
-                                GIMP_STOCK_TOOL_BUCKET_FILL,
-                                GIMP_HELP_SELECTION_FILL,
-                                widget,
-                                config->fill_options,
-                                select_fill_callback,
-                                NULL);
-
-      dialogs_attach_dialog (G_OBJECT (drawable), FILL_DIALOG_KEY, dialog);
-    }
-
-  gtk_window_present (GTK_WINDOW (dialog));
+  items_fill_cmd_callback (action,
+                           image, GIMP_ITEM (gimp_image_get_mask (image)),
+                           "gimp-selection-fill-dialog",
+                           _("Fill Selection Outline"),
+                           GIMP_STOCK_TOOL_BUCKET_FILL,
+                           GIMP_HELP_SELECTION_FILL,
+                           data);
 }
 
 void
 select_fill_last_vals_cmd_callback (GtkAction *action,
                                     gpointer   data)
 {
-  GimpImage        *image;
-  GimpDrawable     *drawable;
-  GtkWidget        *widget;
-  GimpDialogConfig *config;
-  GError           *error = NULL;
+  GimpImage *image;
   return_if_no_image (image, data);
-  return_if_no_widget (widget, data);
 
-  drawable = gimp_image_get_active_drawable (image);
-
-  if (! drawable)
-    {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("There is no active layer or channel to fill."));
-      return;
-    }
-
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-  if (! gimp_item_fill (GIMP_ITEM (gimp_image_get_mask (image)),
-                        drawable, config->fill_options, TRUE, NULL, &error))
-    {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            error->message);
-      g_clear_error (&error);
-    }
-  else
-    {
-      gimp_image_flush (image);
-    }
+  items_fill_last_vals_cmd_callback (action,
+                                     image,
+                                     GIMP_ITEM (gimp_image_get_mask (image)),
+                                     data);
 }
 
 void
 select_stroke_cmd_callback (GtkAction *action,
                             gpointer   data)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GtkWidget    *widget;
-  GtkWidget    *dialog;
+  GimpImage *image;
   return_if_no_image (image, data);
-  return_if_no_widget (widget, data);
 
-  drawable = gimp_image_get_active_drawable (image);
-
-  if (! drawable)
-    {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("There is no active layer or channel to stroke to."));
-      return;
-    }
-
-#define STROKE_DIALOG_KEY "gimp-selection-stroke-dialog"
-
-  dialog = dialogs_get_dialog (G_OBJECT (drawable), STROKE_DIALOG_KEY);
-
-  if (! dialog)
-    {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-      dialog = stroke_dialog_new (GIMP_ITEM (gimp_image_get_mask (image)),
-                                  drawable,
-                                  action_data_get_context (data),
-                                  _("Stroke Selection"),
-                                  GIMP_STOCK_SELECTION_STROKE,
-                                  GIMP_HELP_SELECTION_STROKE,
-                                  widget,
-                                  config->stroke_options,
-                                  select_stroke_callback,
-                                  NULL);
-
-      dialogs_attach_dialog (G_OBJECT (drawable), STROKE_DIALOG_KEY, dialog);
-    }
-
-  gtk_window_present (GTK_WINDOW (dialog));
+  items_stroke_cmd_callback (action,
+                             image, GIMP_ITEM (gimp_image_get_mask (image)),
+                             "gimp-selection-stroke-dialog",
+                             _("Stroke Selection"),
+                             GIMP_STOCK_SELECTION_STROKE,
+                             GIMP_HELP_SELECTION_STROKE,
+                             data);
 }
 
 void
 select_stroke_last_vals_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
-  GimpImage        *image;
-  GimpDrawable     *drawable;
-  GimpContext      *context;
-  GtkWidget        *widget;
-  GimpDialogConfig *config;
-  GError           *error = NULL;
+  GimpImage *image;
   return_if_no_image (image, data);
-  return_if_no_context (context, data);
-  return_if_no_widget (widget, data);
 
-  drawable = gimp_image_get_active_drawable (image);
-
-  if (! drawable)
-    {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("There is no active layer or channel to stroke to."));
-      return;
-    }
-
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-  if (! gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                          drawable, context, config->stroke_options, NULL,
-                          TRUE, NULL, &error))
-    {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            error->message);
-      g_clear_error (&error);
-    }
-  else
-    {
-      gimp_image_flush (image);
-    }
+  items_stroke_last_vals_cmd_callback (action,
+                                       image,
+                                       GIMP_ITEM (gimp_image_get_mask (image)),
+                                       data);
 }
 
 
@@ -742,67 +614,4 @@ select_shrink_callback (GtkWidget *widget,
                        config->selection_shrink_edge_lock,
 		       TRUE);
   gimp_image_flush (image);
-}
-
-static void
-select_fill_callback (GtkWidget       *dialog,
-                      GimpItem        *item,
-                      GimpDrawable    *drawable,
-                      GimpContext     *context,
-                      GimpFillOptions *options,
-                      gpointer         data)
-{
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (item);
-  GError           *error  = NULL;
-
-  gimp_config_sync (G_OBJECT (options),
-                    G_OBJECT (config->fill_options), 0);
-
-  if (! gimp_item_fill (item, drawable, options, TRUE, NULL, &error))
-    {
-      gimp_message_literal (context->gimp,
-                            G_OBJECT (dialog),
-                            GIMP_MESSAGE_WARNING,
-                            error ? error->message : "NULL");
-
-      g_clear_error (&error);
-      return;
-    }
-
-  gimp_image_flush (image);
-
-  gtk_widget_destroy (dialog);
-}
-
-static void
-select_stroke_callback (GtkWidget         *dialog,
-                        GimpItem          *item,
-                        GimpDrawable      *drawable,
-                        GimpContext       *context,
-                        GimpStrokeOptions *options,
-                        gpointer           data)
-{
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (item);
-  GError           *error  = NULL;
-
-  gimp_config_sync (G_OBJECT (options),
-                    G_OBJECT (config->stroke_options), 0);
-
-  if (! gimp_item_stroke (item, drawable, context, options, NULL,
-                          TRUE, NULL, &error))
-    {
-      gimp_message_literal (context->gimp,
-                            G_OBJECT (dialog),
-                            GIMP_MESSAGE_WARNING,
-                            error ? error->message : "NULL");
-
-      g_clear_error (&error);
-      return;
-    }
-
-  gimp_image_flush (image);
-
-  gtk_widget_destroy (dialog);
 }

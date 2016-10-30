@@ -20,16 +20,43 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "actions-types.h"
 
+#include "config/gimpdialogconfig.h"
+
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpitem.h"
 #include "core/gimpitemundo.h"
 
+#include "dialogs/dialogs.h"
+#include "dialogs/fill-dialog.h"
+#include "dialogs/stroke-dialog.h"
+
+#include "actions.h"
 #include "items-commands.h"
 
 #include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static void   items_fill_callback   (GtkWidget         *dialog,
+                                     GimpItem          *item,
+                                     GimpDrawable      *drawable,
+                                     GimpContext       *context,
+                                     GimpFillOptions   *options,
+                                     gpointer           user_data);
+static void   items_stroke_callback (GtkWidget         *dialog,
+                                     GimpItem          *item,
+                                     GimpDrawable      *drawable,
+                                     GimpContext       *context,
+                                     GimpStrokeOptions *options,
+                                     gpointer           user_data);
 
 
 /*  public functions  */
@@ -155,4 +182,242 @@ items_color_tag_cmd_callback (GtkAction    *action,
       gimp_item_set_color_tag (item, color_tag, push_undo);
       gimp_image_flush (image);
     }
+}
+
+void
+items_fill_cmd_callback (GtkAction   *action,
+                         GimpImage   *image,
+                         GimpItem    *item,
+                         const gchar *dialog_key,
+                         const gchar *dialog_title,
+                         const gchar *dialog_icon_name,
+                         const gchar *dialog_help_id,
+                         gpointer     data)
+{
+  GimpDrawable *drawable;
+  GtkWidget    *dialog;
+  GtkWidget    *widget;
+  return_if_no_widget (widget, data);
+
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (! drawable)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to fill."));
+      return;
+    }
+
+  dialog = dialogs_get_dialog (G_OBJECT (item), dialog_key);
+
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+      dialog = fill_dialog_new (item,
+                                drawable,
+                                action_data_get_context (data),
+                                dialog_title,
+                                dialog_icon_name,
+                                dialog_help_id,
+                                widget,
+                                config->fill_options,
+                                items_fill_callback,
+                                NULL);
+
+      dialogs_attach_dialog (G_OBJECT (item), dialog_key, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+void
+items_fill_last_vals_cmd_callback (GtkAction   *action,
+                                   GimpImage   *image,
+                                   GimpItem    *item,
+                                   gpointer     data)
+{
+  GimpDrawable     *drawable;
+  GimpDialogConfig *config;
+  GtkWidget        *widget;
+  GError           *error = NULL;
+  return_if_no_widget (widget, data);
+
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (! drawable)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to fill."));
+      return;
+    }
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+  if (! gimp_item_fill (item, drawable,
+                        config->fill_options, TRUE, NULL, &error))
+    {
+      gimp_message_literal (image->gimp, G_OBJECT (widget),
+                            GIMP_MESSAGE_WARNING, error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gimp_image_flush (image);
+    }
+}
+
+void
+items_stroke_cmd_callback (GtkAction   *action,
+                           GimpImage   *image,
+                           GimpItem    *item,
+                           const gchar *dialog_key,
+                           const gchar *dialog_title,
+                           const gchar *dialog_icon_name,
+                           const gchar *dialog_help_id,
+                           gpointer     data)
+{
+  GimpDrawable *drawable;
+  GtkWidget    *dialog;
+  GtkWidget    *widget;
+  return_if_no_widget (widget, data);
+
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (! drawable)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to stroke to."));
+      return;
+    }
+
+  dialog = dialogs_get_dialog (G_OBJECT (item), dialog_key);
+
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+      dialog = stroke_dialog_new (item,
+                                  drawable,
+                                  action_data_get_context (data),
+                                  dialog_title,
+                                  dialog_icon_name,
+                                  dialog_help_id,
+                                  widget,
+                                  config->stroke_options,
+                                  items_stroke_callback,
+                                  NULL);
+
+      dialogs_attach_dialog (G_OBJECT (item), dialog_key, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+void
+items_stroke_last_vals_cmd_callback (GtkAction   *action,
+                                     GimpImage   *image,
+                                     GimpItem    *item,
+                                     gpointer     data)
+{
+  GimpDrawable     *drawable;
+  GimpDialogConfig *config;
+  GtkWidget        *widget;
+  GError           *error = NULL;
+  return_if_no_widget (widget, data);
+
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (! drawable)
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            _("There is no active layer or channel to stroke to."));
+      return;
+    }
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+  if (! gimp_item_stroke (item, drawable,
+                          action_data_get_context (data),
+                          config->stroke_options, NULL,
+                          TRUE, NULL, &error))
+    {
+      gimp_message_literal (image->gimp, G_OBJECT (widget),
+                            GIMP_MESSAGE_WARNING, error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gimp_image_flush (image);
+    }
+}
+
+
+/*  private functions  */
+
+static void
+items_fill_callback (GtkWidget       *dialog,
+                     GimpItem        *item,
+                     GimpDrawable    *drawable,
+                     GimpContext     *context,
+                     GimpFillOptions *options,
+                     gpointer         user_data)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
+  GimpImage        *image  = gimp_item_get_image (item);
+  GError           *error  = NULL;
+
+  gimp_config_sync (G_OBJECT (options),
+                    G_OBJECT (config->fill_options), 0);
+
+  if (! gimp_item_fill (item, drawable, options, TRUE, NULL, &error))
+    {
+      gimp_message_literal (context->gimp,
+                            G_OBJECT (dialog),
+                            GIMP_MESSAGE_WARNING,
+                            error ? error->message : "NULL");
+
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+items_stroke_callback (GtkWidget         *dialog,
+                       GimpItem          *item,
+                       GimpDrawable      *drawable,
+                       GimpContext       *context,
+                       GimpStrokeOptions *options,
+                       gpointer           data)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
+  GimpImage        *image  = gimp_item_get_image (item);
+  GError           *error  = NULL;
+
+  gimp_config_sync (G_OBJECT (options),
+                    G_OBJECT (config->stroke_options), 0);
+
+  if (! gimp_item_stroke (item, drawable, context, options, NULL,
+                          TRUE, NULL, &error))
+    {
+      gimp_message_literal (context->gimp,
+                            G_OBJECT (dialog),
+                            GIMP_MESSAGE_WARNING,
+                            error ? error->message : "NULL");
+
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
 }
