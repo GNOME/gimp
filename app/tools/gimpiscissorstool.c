@@ -525,7 +525,6 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
-
 static void
 iscissors_convert (GimpIscissorsTool *iscissors,
                    GimpDisplay       *display)
@@ -1254,6 +1253,27 @@ gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
   GimpTool             *tool    = GIMP_TOOL (iscissors);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (display);
+
+  if (! iscissors->curve->closed)
+    {
+      ISegment *first = g_queue_peek_head (iscissors->curve->segments);
+      ISegment *last  = g_queue_peek_tail (iscissors->curve->segments);
+
+      if (first && last)
+        {
+          ISegment *segment;
+
+          segment = icurve_append_segment (iscissors->curve,
+                                           last->x2,
+                                           last->y2,
+                                           first->x1,
+                                           first->y1);
+          icurve_close (iscissors->curve);
+          calculate_segment (iscissors, segment);
+
+          iscissors_convert (iscissors, display);
+        }
+    }
 
   if (iscissors->curve->closed && iscissors->mask)
     {
