@@ -25,6 +25,9 @@
 
 #include "dialogs-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
@@ -231,6 +234,8 @@ item_options_dialog_new (GimpImage               *image,
               gint         w, h;
 
               image = gimp_color_area_new (&color, GIMP_COLOR_AREA_FLAT, 0);
+              gimp_color_area_set_color_config (GIMP_COLOR_AREA (image),
+                                                context->gimp->config->color_management);
               gtk_icon_size_lookup_for_settings (settings,
                                                  GTK_ICON_SIZE_MENU, &w, &h);
               gtk_widget_set_size_request (image, w, h);

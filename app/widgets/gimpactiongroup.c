@@ -29,6 +29,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
@@ -866,6 +867,38 @@ gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
     }
 
   return gtk_action_get_tooltip (action);
+}
+
+void
+gimp_action_group_set_action_context (GimpActionGroup *group,
+                                      const gchar     *action_name,
+                                      GimpContext     *context)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set context of action "
+                 "which doesn't exist: %s",
+                 G_STRFUNC, action_name);
+      return;
+    }
+
+  if (! GIMP_IS_ACTION (action))
+    {
+      g_warning ("%s: Unable to set \"context\" of action "
+                 "which is not a GimpAction: %s",
+                 G_STRFUNC, action_name);
+      return;
+    }
+
+  g_object_set (action, "context", context, NULL);
 }
 
 void

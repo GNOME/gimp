@@ -24,6 +24,7 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpitem.h"
 
 #include "widgets/gimpactiongroup.h"
@@ -55,6 +56,9 @@ items_actions_setup (GimpActionGroup *group,
       else
         {
           GimpRGB color;
+
+          gimp_action_group_set_action_context (group, action,
+                                                gimp_get_user_context (group->gimp));
 
           gimp_get_color_tag_color (value->value, &color);
           gimp_action_group_set_action_color (group, action, &color, FALSE);

@@ -232,17 +232,9 @@ edit_actions_setup (GimpActionGroup *group)
                                         "edit-paste-as-new-image-short");
   gtk_action_set_accel_path (action, "<Actions>/edit/edit-paste-as-new-image");
 
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "edit-fill-fg");
-  g_object_set (action, "context", context, NULL);
-
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "edit-fill-bg");
-  g_object_set (action, "context", context, NULL);
-
-  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                        "edit-fill-pattern");
-  g_object_set (action, "context", context, NULL);
+  gimp_action_group_set_action_context (group, "edit-fill-fg", context);
+  gimp_action_group_set_action_context (group, "edit-fill-bg", context);
+  gimp_action_group_set_action_context (group, "edit-fill-pattern", context);
 
   g_signal_connect_object (context, "foreground-changed",
                            G_CALLBACK (edit_actions_foreground_changed),
