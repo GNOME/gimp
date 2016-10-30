@@ -29,6 +29,8 @@
     <menuitem action="vectors-selection-subtract" />
     <menuitem action="vectors-selection-intersect" />
     <menuitem action="vectors-selection-to-vectors" />
+    <separator />
+    <menuitem action="vectors-fill" />
     <menuitem action="vectors-stroke" />
     <separator />
     <menuitem action="vectors-copy" />
