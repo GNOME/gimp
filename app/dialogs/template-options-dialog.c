@@ -39,14 +39,30 @@
 #include "gimp-intl.h"
 
 
+typedef struct _TemplateOptionsDialog TemplateOptionsDialog;
+
+struct _TemplateOptionsDialog
+{
+  GimpTemplate                *template;
+  GimpContext                 *context;
+  GimpTemplateOptionsCallback  callback;
+  gpointer                     user_data;
+
+  GtkWidget                   *editor;
+};
+
+
 /*  local function prototypes  */
 
-static void  template_options_dialog_free (TemplateOptionsDialog *dialog);
+static void   template_options_dialog_free     (TemplateOptionsDialog *private);
+static void   template_options_dialog_response (GtkWidget             *dialog,
+                                                gint                   response_id,
+                                                TemplateOptionsDialog *private);
 
 
 /*  public function  */
 
-TemplateOptionsDialog *
+GtkWidget *
 template_options_dialog_new (GimpTemplate *template,
                              GimpContext  *context,
                              GtkWidget    *parent,
@@ -54,9 +70,12 @@ template_options_dialog_new (GimpTemplate *template,
                              const gchar  *role,
                              const gchar  *icon_name,
                              const gchar  *desc,
-                             const gchar  *help_id)
+                             const gchar  *help_id,
+                             GimpTemplateOptionsCallback  callback,
+                             gpointer                     user_data)
 {
-  TemplateOptionsDialog *options;
+  TemplateOptionsDialog *private;
+  GtkWidget             *dialog;
   GimpViewable          *viewable = NULL;
   GtkWidget             *vbox;
 
@@ -68,11 +87,14 @@ template_options_dialog_new (GimpTemplate *template,
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (desc != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
 
-  options = g_slice_new0 (TemplateOptionsDialog);
+  private = g_slice_new0 (TemplateOptionsDialog);
 
-  options->gimp     = context->gimp;
-  options->template = template;
+  private->template  = template;
+  private->context   = context;
+  private->callback  = callback;
+  private->user_data = user_data;
 
   if (template)
     {
@@ -82,52 +104,77 @@ template_options_dialog_new (GimpTemplate *template,
   else
     {
       template =
-        gimp_config_duplicate (GIMP_CONFIG (options->gimp->config->default_image));
+        gimp_config_duplicate (GIMP_CONFIG (context->gimp->config->default_image));
       viewable = GIMP_VIEWABLE (template);
 
       gimp_object_set_static_name (GIMP_OBJECT (template), _("Unnamed"));
     }
 
-  options->dialog =
-    gimp_viewable_dialog_new (viewable, context,
-                              title, role, icon_name, desc,
-                              parent,
-                              gimp_standard_help_func, help_id,
+  dialog = gimp_viewable_dialog_new (viewable, context,
+                                     title, role, icon_name, desc,
+                                     parent,
+                                     gimp_standard_help_func, help_id,
 
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                              NULL);
+                                     NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (options->dialog), FALSE);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_object_weak_ref (G_OBJECT (options->dialog),
-                     (GWeakNotify) template_options_dialog_free, options);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) template_options_dialog_free, private);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (template_options_dialog_response),
+                    private);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (options->dialog))),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  options->editor = gimp_template_editor_new (template, options->gimp, TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox), options->editor, FALSE, FALSE, 0);
-  gtk_widget_show (options->editor);
+  private->editor = gimp_template_editor_new (template, context->gimp, TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), private->editor, FALSE, FALSE, 0);
+  gtk_widget_show (private->editor);
 
   g_object_unref (template);
 
-  return options;
+  return dialog;
 }
 
 
 /*  private functions  */
 
 static void
-template_options_dialog_free (TemplateOptionsDialog *dialog)
+template_options_dialog_free (TemplateOptionsDialog *private)
 {
-  g_slice_free (TemplateOptionsDialog, dialog);
+  g_slice_free (TemplateOptionsDialog, private);
+}
+
+static void
+template_options_dialog_response (GtkWidget             *dialog,
+                                  gint                   response_id,
+                                  TemplateOptionsDialog *private)
+{
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GimpTemplateEditor *editor = GIMP_TEMPLATE_EDITOR (private->editor);
+
+      private->callback (dialog,
+                         private->template,
+                         gimp_template_editor_get_template (editor),
+                         private->context,
+                         private->user_data);
+    }
+  else
+    {
+      gtk_widget_destroy (dialog);
+    }
 }
