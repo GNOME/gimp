@@ -51,6 +51,7 @@ app/actions/help-actions.c
 app/actions/image-actions.c
 app/actions/image-commands.c
 app/actions/images-actions.c
+app/actions/items-commands.c
 app/actions/layers-actions.c
 app/actions/layers-commands.c
 app/actions/mypaint-brushes-actions.c
