@@ -672,10 +672,10 @@ gimp_color_frame_update (GimpColorFrame *frame)
         {
           values = g_new0 (gchar *, 6);
 
-          values[0] = g_strdup_printf ("%d %%", ROUND (frame->color.r * 100.0));
-          values[1] = g_strdup_printf ("%d %%", ROUND (frame->color.g * 100.0));
-          values[2] = g_strdup_printf ("%d %%", ROUND (frame->color.b * 100.0));
-          values[3] = g_strdup_printf ("%d %%", ROUND (frame->color.a * 100.0));
+          values[0] = g_strdup_printf ("%.01f %%", frame->color.r * 100.0);
+          values[1] = g_strdup_printf ("%.01f %%", frame->color.g * 100.0);
+          values[2] = g_strdup_printf ("%.01f %%", frame->color.b * 100.0);
+          values[3] = g_strdup_printf ("%.01f %%", frame->color.a * 100.0);
         }
 
       names[4] = _("Hex:");
@@ -707,10 +707,10 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
           values = g_new0 (gchar *, 5);
 
-          values[0] = g_strdup_printf ("%d \302\260", ROUND (hsv.h * 360.0));
-          values[1] = g_strdup_printf ("%d %%",       ROUND (hsv.s * 100.0));
-          values[2] = g_strdup_printf ("%d %%",       ROUND (hsv.v * 100.0));
-          values[3] = g_strdup_printf ("%d %%",       ROUND (hsv.a * 100.0));
+          values[0] = g_strdup_printf ("%.01f \302\260", hsv.h * 360.0);
+          values[1] = g_strdup_printf ("%.01f %%",       hsv.s * 100.0);
+          values[2] = g_strdup_printf ("%.01f %%",       hsv.v * 100.0);
+          values[3] = g_strdup_printf ("%.01f %%",       hsv.a * 100.0);
         }
       break;
 
@@ -760,11 +760,11 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
           values = g_new0 (gchar *, 6);
 
-          values[0] = g_strdup_printf ("%d %%", ROUND (cmyk.c * 100.0));
-          values[1] = g_strdup_printf ("%d %%", ROUND (cmyk.m * 100.0));
-          values[2] = g_strdup_printf ("%d %%", ROUND (cmyk.y * 100.0));
-          values[3] = g_strdup_printf ("%d %%", ROUND (cmyk.k * 100.0));
-          values[4] = g_strdup_printf ("%d %%", ROUND (cmyk.a * 100.0));
+          values[0] = g_strdup_printf ("%.01f %%", cmyk.c * 100.0);
+          values[1] = g_strdup_printf ("%.01f %%", cmyk.m * 100.0);
+          values[2] = g_strdup_printf ("%.01f %%", cmyk.y * 100.0);
+          values[3] = g_strdup_printf ("%.01f %%", cmyk.k * 100.0);
+          values[4] = g_strdup_printf ("%.01f %%", cmyk.a * 100.0);
         }
       break;
     }
