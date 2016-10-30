@@ -76,7 +76,6 @@ struct _GimpItemTreeViewPriv
   GtkWidget       *lock_content_toggle;
   GtkWidget       *lock_position_toggle;
 
-  GtkWidget       *edit_button;
   GtkWidget       *new_button;
   GtkWidget       *raise_button;
   GtkWidget       *lower_button;
@@ -267,7 +266,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->new_item                = NULL;
 
   klass->action_group            = NULL;
-  klass->edit_action             = NULL;
   klass->new_action              = NULL;
   klass->new_default_action      = NULL;
   klass->raise_action            = NULL;
@@ -422,13 +420,6 @@ gimp_item_tree_view_constructed (GObject *object)
                                   GTK_DEST_DEFAULT_HIGHLIGHT,
                                   item_view_class->item_type,
                                   GDK_ACTION_MOVE | GDK_ACTION_COPY);
-
-  item_view->priv->edit_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
-                                   item_view_class->edit_action, NULL);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
-                                  GTK_BUTTON (item_view->priv->edit_button),
-                                  item_view_class->item_type);
 
   item_view->priv->new_button =
     gimp_editor_add_action_button (editor, item_view_class->action_group,
@@ -779,14 +770,6 @@ gimp_item_tree_view_get_new_button (GimpItemTreeView *view)
   g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), NULL);
 
   return view->priv->new_button;
-}
-
-GtkWidget *
-gimp_item_tree_view_get_edit_button (GimpItemTreeView *view)
-{
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), NULL);
-
-  return view->priv->edit_button;
 }
 
 gint

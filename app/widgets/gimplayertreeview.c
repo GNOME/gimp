@@ -210,7 +210,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 
   item_view_class->action_group          = "layers";
   item_view_class->activate_action       = "layers-text-tool";
-  item_view_class->edit_action           = "layers-edit-attributes";
   item_view_class->new_action            = "layers-new";
   item_view_class->new_default_action    = "layers-new-last-values";
   item_view_class->raise_action          = "layers-raise";
@@ -374,13 +373,10 @@ gimp_layer_tree_view_constructed (GObject *object)
   gimp_dnd_pixbuf_dest_add    (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
 
-  /*  hide basically useless edit button  */
-  gtk_widget_hide (gimp_item_tree_view_get_edit_button (GIMP_ITEM_TREE_VIEW (layer_view)));
-
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-new-group", NULL);
   gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
-                         button, 2);
+                         button, 1);
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-anchor", NULL);
@@ -388,7 +384,7 @@ gimp_layer_tree_view_constructed (GObject *object)
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
-                         button, 6);
+                         button, 5);
 
   button = gimp_editor_add_action_button (GIMP_EDITOR (layer_view), "layers",
                                           "layers-mask-add-button",
@@ -565,7 +561,6 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
                                   GimpViewable      *item,
                                   gpointer           insert_data)
 {
-  GimpItemTreeView  *item_view  = GIMP_ITEM_TREE_VIEW (view);
   GimpLayerTreeView *layer_view = GIMP_LAYER_TREE_VIEW (view);
   gboolean           success;
 
@@ -579,11 +574,6 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
                                                (GtkTreeIter *) insert_data);
           gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (item));
           gimp_layer_tree_view_update_menu (layer_view, GIMP_LAYER (item));
-        }
-
-      if (! success || gimp_layer_is_floating_sel (GIMP_LAYER (item)))
-        {
-          gtk_widget_set_sensitive (gimp_item_tree_view_get_edit_button (item_view), FALSE);
         }
     }
 
