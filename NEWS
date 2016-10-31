@@ -31,17 +31,18 @@ GUI:
     toggling visibility, link status, various locks, color tags.
   - Add a Save As button to the “Quit GIMP” dialog
   - Allow to choose fill color when resizing layers and images
-  - Quick Mask Attributes dialog uses the new spinbox widget for the 
-    mask opacity slider
-  - Enable grid views of dynamics and tool presets many new icons
+  - Quick Mask and Channel Attributes dialogs use the new spinscale
+    widget for the  mask opacity slider
+  - Enable grid views of dynamics and tool presets
+  - Many new icons
 
 Configurability:
 
   - Remember settings of many dialogs across sessions
   - New Interface / Dialog Defaults page in the Preferences dialog to 
     control defaults values of various dialogs
-  - Settings on individual pages of the Preferences dialog can be 
-    reset now
+  - Settings on some individual pages of the Preferences dialog can be
+    reset separately now
   - Vertical scrollbar added to keep the height of the Preferences 
     dialog fitting small displays
   - Allow mouse to optionally configure tablet devices
@@ -106,6 +107,7 @@ Translations:
     Icelandic, Italian, Occitan, Polish, Portuguese, Russian, 
     Scottish Gaelic, Serbian, Slovenian, Spanish, Swedish.
   - New: Finnish.
+
 
 Overview of Changes from GIMP 2.9.2 to GIMP 2.9.4
 =================================================
