@@ -2071,6 +2071,7 @@ AM_CONDITIONAL(HAVE_XMLLINT, test "x$XMLLINT" != "xno")
 AC_PATH_PROG(XSLTPROC, xsltproc, no)
 AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 
+
 ########################
 # Check for vector icons
 ########################
@@ -2079,21 +2080,17 @@ AC_ARG_ENABLE(vector-icons, [  --enable-vector-icons   generate vector icons], ,
               enable_vector_icons=no)
 
 if test "x$enable_vector_icons" = "xyes"; then
-  if test "x$have_librsvg" != "xyes"; then
-    enable_vector_icons="no (librsvg missing)"
+  # Check if librsvg was built with --disable-pixbuf-loader.
+  gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
+  # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
+  # error: cannot check for file existence when cross compiling
+  # So let's test files the shell way.
+  if (test "x$platform_win32" = "xyes" &&
+      test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
+     test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
+    enable_vector_icons="yes"
   else
-    # Check if librsvg was built with --disable-pixbuf-loader.
-    gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
-    # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
-    # error: cannot check for file existence when cross compiling
-    # So let's test files the shell way.
-    if (test "x$platform_win32" = "xyes" &&
-        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
-       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
-      enable_vector_icons="yes"
-    else
-      enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
-    fi
+    enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
   fi
 fi
 
@@ -2583,7 +2580,6 @@ Optional Plug-Ins:
   Print:               $enable_print
   Python 2:            $enable_python
   Script-Fu:           $have_script_fu
-  SVG:                 $have_librsvg
   TWAIN (Win32):       $os_win32
   Webpage:             $have_webkit
   WMF:                 $have_libwmf
