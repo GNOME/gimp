@@ -24,6 +24,9 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+/* we use our own deprecated API here */
+#define GIMP_DISABLE_DEPRECATION_WARNINGS
+
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gimpuitypes.h"

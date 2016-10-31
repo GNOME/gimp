@@ -450,7 +450,7 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  if ((sunhdr.l_ras_type < 0) || (sunhdr.l_ras_type > 5))
+  if (sunhdr.l_ras_type > 5)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    "%s",
@@ -459,7 +459,7 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  if ((sunhdr.l_ras_maplength < 0) || (sunhdr.l_ras_maplength > (256 * 3)))
+  if (sunhdr.l_ras_maplength > (256 * 3))
     {
       g_message ("Map lengths greater than 256 entries are unsupported by GIMP.");
       gimp_quit ();
