@@ -10,6 +10,102 @@ Generally, all bug fixes that are applied on the stable GIMP 2.8
 branch are also applied here, but they are usually not mentioned
 in NEWS.
 
+Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
+=================================================
+
+Core:
+
+  - New clipboard implementation allows copying/pasting layers and 
+    layer groups
+  - Color tags simplify managing large projects with a lot of layers 
+    and layer groups
+  - The Mouse Pointer dialog and colors applied to images are 
+    color-managed now
+
+GUI:
+
+  - Easily add or remove layer masks by clicking either the layer 
+    preview or a new button in the Layers dialog
+  - Enhance the Layer Attributes dialog to provide the single UI for 
+    setting layer's name, blending mode, opacity, and offset, 
+    toggling visibility, link status, various locks, color tags.
+  - Add a Save As button to the “Quit GIMP” dialog
+  - Allow to choose fill color when resizing layers and images
+  - Quick Mask Attributes dialog uses the new spinbox widget for the 
+    mask opacity slider
+  - Enable grid views of dynamics and tool presets many new icons
+
+Configurability:
+
+  - Remember settings of many dialogs across sessions
+  - New Interface / Dialog Defaults page in the Preferences dialog to 
+    control defaults values of various dialogs
+  - Settings on individual pages of the Preferences dialog can be 
+    reset now
+  - Vertical scrollbar added to keep the height of the Preferences 
+    dialog fitting small displays
+  - Allow mouse to optionally configure tablet devices
+
+Tools:
+
+  - The Move tool now shows relative coordinates when moving guides 
+    and sample points
+  - Performance of the Fuzzy Select and the Bucket Fill tool has been
+    improved
+  - The Warp Transform tool now uses the linear sampler to ensure 
+    crisp lines after an erase
+  - Select by Color and Color Picker tools work correctly in color 
+    spaces other than sRGB now
+  - Uncommitted selection by the Intelligent Scissors tool is not 
+    discarded on tool change anymore.
+
+Painting:
+
+  - Rulers, scrollbars, and the Navigation dialog follow canvas 
+    rotation now
+  - Canvas rotation is snappier in certain cases now
+
+File Formats
+
+  - Add native WebP loader/exporter with support for ICC profiles, 
+    animation, metadata
+  - The TIFF loader will not generate warnings about private tags 
+    anymore
+  - Handle linear gamma PNG files correctly
+  - Load PSD files with layers which contain additional information 
+    with a length that is not divisible by 4
+
+Color Palettes
+
+  - Merge Palettes command is available for multiple selected color 
+    palettes now
+
+PDB:
+
+  - Rename *-paste-as-new to *-paste-as-new-image
+
+Build:
+
+  - Depends on LCMS2.7+ now, because earlier LCMS2 releases caused 
+    problems with certain GIMP blend modes
+  - Depends on libpng 1.6.25+ to avoid warnings about known incorrect 
+    sRGB profiles, also avoid various vulnerabilities
+
+OS-specific changes:
+
+  - Help browser launches on OS X now
+
+Bugs:
+
+  - Overall 60 bugs have been fixed or partially addressed since 
+    GIMP 2.9.4
+
+Translations:
+
+  - Updated: Catalan, Czech, Danish, French, German, Greek, Hungarian, 
+    Icelandic, Italian, Occitan, Polish, Portuguese, Russian, 
+    Scottish Gaelic, Serbian, Slovenian, Spanish, Swedish.
+  - New: Finnish.
 
 Overview of Changes from GIMP 2.9.2 to GIMP 2.9.4
 =================================================
