@@ -340,7 +340,7 @@ gimp_drawable_equalize (gint32   drawable_ID,
 /**
  * gimp_drawable_histogram:
  * @drawable_ID: The drawable.
- * @channel: The channel to modify.
+ * @channel: The channel to query.
  * @start_range: Start of the intensity measurement range.
  * @end_range: End of the intensity measurement range.
  * @mean: Mean intensity value.
@@ -357,16 +357,16 @@ gimp_drawable_equalize (gint32   drawable_ID,
  * intensity histogram of a drawable. A channel to examine is first
  * specified. This can be either value, red, green, or blue, depending
  * on whether the drawable is of type color or grayscale. Second, a
- * range of intensities are specified. The gimp_histogram() function
- * returns statistics based on the pixels in the drawable that fall
- * under this range of values. Mean, standard deviation, median, number
- * of pixels, and percentile are all returned. Additionally, the total
- * count of pixels in the image is returned. Counts of pixels are
+ * range of intensities are specified. The gimp_drawable_histogram()
+ * function returns statistics based on the pixels in the drawable that
+ * fall under this range of values. Mean, standard deviation, median,
+ * number of pixels, and percentile are all returned. Additionally, the
+ * total count of pixels in the image is returned. Counts of pixels are
  * weighted by any associated alpha values and by the current selection
  * mask. That is, pixels that lie outside an active selection mask will
  * not be counted. Similarly, pixels with transparent alpha values will
  * not be counted. The returned mean, std_dev and median are in the
- * range (0..255) for 8-bit images, or if the plug-in is not
+ * range (0..255) for 8-bit images or if the plug-in is not
  * precision-aware, and in the range (0.0..1.0) otherwise.
  *
  * Returns: TRUE on success.
@@ -376,8 +376,8 @@ gimp_drawable_equalize (gint32   drawable_ID,
 gboolean
 gimp_drawable_histogram (gint32                drawable_ID,
                          GimpHistogramChannel  channel,
-                         gint                  start_range,
-                         gint                  end_range,
+                         gdouble               start_range,
+                         gdouble               end_range,
                          gdouble              *mean,
                          gdouble              *std_dev,
                          gdouble              *median,
@@ -393,8 +393,8 @@ gimp_drawable_histogram (gint32                drawable_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_INT32, channel,
-                                    GIMP_PDB_INT32, start_range,
-                                    GIMP_PDB_INT32, end_range,
+                                    GIMP_PDB_FLOAT, start_range,
+                                    GIMP_PDB_FLOAT, end_range,
                                     GIMP_PDB_END);
 
   *mean = 0.0;
@@ -650,9 +650,9 @@ gimp_drawable_posterize (gint32 drawable_ID,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_threshold (gint32 drawable_ID,
-                         gint   low_threshold,
-                         gint   high_threshold)
+gimp_drawable_threshold (gint32  drawable_ID,
+                         gdouble low_threshold,
+                         gdouble high_threshold)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -661,8 +661,8 @@ gimp_drawable_threshold (gint32 drawable_ID,
   return_vals = gimp_run_procedure ("gimp-drawable-threshold",
                                     &nreturn_vals,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, low_threshold,
-                                    GIMP_PDB_INT32, high_threshold,
+                                    GIMP_PDB_FLOAT, low_threshold,
+                                    GIMP_PDB_FLOAT, high_threshold,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

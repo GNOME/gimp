@@ -385,21 +385,23 @@ Returns information on the intensity histogram for the specified drawable.
 BLURB
 
     $help = <<'HELP';
+
 This tool makes it possible to gather information about the intensity
 histogram of a drawable. A channel to examine is first specified. This
 can be either value, red, green, or blue, depending on whether the
 drawable is of type color or grayscale. Second, a range of intensities
-are specified. The gimp_histogram() function returns statistics based
-on the pixels in the drawable that fall under this range of
-values. Mean, standard deviation, median, number of pixels, and
-percentile are all returned.  Additionally, the total count of pixels
-in the image is returned. Counts of pixels are weighted by any
+are specified. The gimp_drawable_histogram() function returns
+statistics based on the pixels in the drawable that fall under this
+range of values. Mean, standard deviation, median, number of pixels,
+and percentile are all returned.  Additionally, the total count of
+pixels in the image is returned. Counts of pixels are weighted by any
 associated alpha values and by the current selection mask. That is,
 pixels that lie outside an active selection mask will not be
 counted. Similarly, pixels with transparent alpha values will not be
-counted. The returned mean, std_dev and median are in the range (0..255)
-for 8-bit images, or if the plug-in is not precision-aware, and in the
-range (0.0..1.0) otherwise.
+counted. The returned mean, std_dev and median are in the range
+(0..255) for 8-bit images or if the plug-in is not precision-aware,
+and in the range (0.0..1.0) otherwise.
+
 HELP
 
     &std_pdb_misc;
@@ -409,10 +411,10 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
-	  desc => 'The channel to modify' },
-	{ name => 'start_range', type => '0 <= int32 < 256',
+	  desc => 'The channel to query' },
+	{ name => 'start_range', type => '0.0 <= float <= 1.0',
 	  desc => 'Start of the intensity measurement range' },
-	{ name => 'end_range', type => '0 <= int32 < 256',
+	{ name => 'end_range', type => '0.0 <= float <= 1.0',
 	  desc => 'End of the intensity measurement range' }
     );
 
@@ -446,19 +448,16 @@ HELP
   if (success)
     {
       GimpHistogram *histogram = gimp_histogram_new (TRUE);
-      gint           start     = start_range;
-      gint           end       = end_range;
       gint           n_bins;
+      gint           start;
+      gint           end;
 
       gimp_drawable_calculate_histogram (drawable, histogram);
 
       n_bins = gimp_histogram_n_bins (histogram);
 
-      if (n_bins != 256)
-        {
-          start = ROUND ((gdouble) start * (n_bins - 1) / 255);
-          end   = ROUND ((gdouble) end   * (n_bins - 1) / 255);
-        }
+      start = ROUND ((gdouble) start * (n_bins - 1));
+      end   = ROUND ((gdouble) end   * (n_bins - 1));
 
       mean       = gimp_histogram_get_mean (histogram, channel,
 		 			    start, end);
@@ -741,9 +740,10 @@ sub drawable_threshold {
     $blurb = 'Threshold the specified drawable.';
 
     $help = <<'HELP';
-This procedures generates a threshold map of the specified drawable. All pixels
-between the values of 'low_threshold' and 'high_threshold' are replaced with
-white, and all other pixels with black.
+This procedures generates a threshold map of the specified
+drawable. All pixels between the values of 'low_threshold' and
+'high_threshold' are replaced with white, and all other pixels with
+black.
 HELP
 
     &std_pdb_misc;
@@ -753,9 +753,9 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'low_threshold', type => '0 <= int32 <= 255',
+	{ name => 'low_threshold', type => '0.0 <= float <= 1.0',
 	  desc => 'The low threshold value' },
-	{ name => 'high_threshold', type => '0 <= int32 <= 255',
+	{ name => 'high_threshold', type => '0.0 <= float <= 1.0',
 	  desc => 'The high threshold value' }
     );
 
@@ -769,8 +769,8 @@ HELP
       GeglNode *node =
         gegl_node_new_child (NULL,
                              "operation", "gimp:threshold",
-                             "low",       low_threshold  / 255.0,
-                             "high",      high_threshold / 255.0,
+                             "low",       low_threshold,
+                             "high",      high_threshold,
                              NULL);
 
       gimp_drawable_apply_operation (drawable, progress,

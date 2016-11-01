@@ -59,8 +59,8 @@ gboolean gimp_drawable_equalize            (gint32                drawable_ID,
                                             gboolean              mask_only);
 gboolean gimp_drawable_histogram           (gint32                drawable_ID,
                                             GimpHistogramChannel  channel,
-                                            gint                  start_range,
-                                            gint                  end_range,
+                                            gdouble               start_range,
+                                            gdouble               end_range,
                                             gdouble              *mean,
                                             gdouble              *std_dev,
                                             gdouble              *median,
@@ -85,8 +85,8 @@ gboolean gimp_drawable_levels_stretch      (gint32                drawable_ID);
 gboolean gimp_drawable_posterize           (gint32                drawable_ID,
                                             gint                  levels);
 gboolean gimp_drawable_threshold           (gint32                drawable_ID,
-                                            gint                  low_threshold,
-                                            gint                  high_threshold);
+                                            gdouble               low_threshold,
+                                            gdouble               high_threshold);
 
 
 G_END_DECLS

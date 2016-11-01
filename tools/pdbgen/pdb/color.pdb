@@ -547,7 +547,7 @@ for 8-bit images, or if the plug-in is not precision-aware, and in the
 range (0.0..1.0) otherwise.
 HELP
 
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-histogram');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -687,8 +687,7 @@ between the values of 'low_threshold' and 'high_threshold' are replaced with
 white, and all other pixels with black.
 HELP
 
-    &std_pdb_misc;
-    $date = '1997';
+    &std_pdb_deprecated ('gimp-drawable-threshold');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',

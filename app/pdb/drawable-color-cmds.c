@@ -376,8 +376,8 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpDrawable *drawable;
   gint32 channel;
-  gint32 start_range;
-  gint32 end_range;
+  gdouble start_range;
+  gdouble end_range;
   gdouble mean = 0.0;
   gdouble std_dev = 0.0;
   gdouble median = 0.0;
@@ -387,8 +387,8 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
-  start_range = g_value_get_int (gimp_value_array_index (args, 2));
-  end_range = g_value_get_int (gimp_value_array_index (args, 3));
+  start_range = g_value_get_double (gimp_value_array_index (args, 2));
+  end_range = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -402,19 +402,16 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
       if (success)
         {
           GimpHistogram *histogram = gimp_histogram_new (TRUE);
-          gint           start     = start_range;
-          gint           end       = end_range;
           gint           n_bins;
+          gint           start;
+          gint           end;
 
           gimp_drawable_calculate_histogram (drawable, histogram);
 
           n_bins = gimp_histogram_n_bins (histogram);
 
-          if (n_bins != 256)
-            {
-              start = ROUND ((gdouble) start * (n_bins - 1) / 255);
-              end   = ROUND ((gdouble) end   * (n_bins - 1) / 255);
-            }
+          start = ROUND ((gdouble) start * (n_bins - 1));
+          end   = ROUND ((gdouble) end   * (n_bins - 1));
 
           mean       = gimp_histogram_get_mean (histogram, channel,
                                                  start, end);
@@ -682,12 +679,12 @@ drawable_threshold_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  gint32 low_threshold;
-  gint32 high_threshold;
+  gdouble low_threshold;
+  gdouble high_threshold;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
-  low_threshold = g_value_get_int (gimp_value_array_index (args, 1));
-  high_threshold = g_value_get_int (gimp_value_array_index (args, 2));
+  low_threshold = g_value_get_double (gimp_value_array_index (args, 1));
+  high_threshold = g_value_get_double (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -698,8 +695,8 @@ drawable_threshold_invoker (GimpProcedure         *procedure,
           GeglNode *node =
             gegl_node_new_child (NULL,
                                  "operation", "gimp:threshold",
-                                 "low",       low_threshold  / 255.0,
-                                 "high",      high_threshold / 255.0,
+                                 "low",       low_threshold,
+                                 "high",      high_threshold,
                                  NULL);
 
           gimp_drawable_apply_operation (drawable, progress,
@@ -1000,7 +997,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-histogram",
                                      "Returns information on the intensity histogram for the specified drawable.",
-                                     "This tool makes it possible to gather information about the intensity histogram of a drawable. A channel to examine is first specified. This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale. Second, a range of intensities are specified. The 'gimp-histogram' function returns statistics based on the pixels in the drawable that fall under this range of values. Mean, standard deviation, median, number of pixels, and percentile are all returned. Additionally, the total count of pixels in the image is returned. Counts of pixels are weighted by any associated alpha values and by the current selection mask. That is, pixels that lie outside an active selection mask will not be counted. Similarly, pixels with transparent alpha values will not be counted. The returned mean, std_dev and median are in the range (0..255) for 8-bit images, or if the plug-in is not precision-aware, and in the range (0.0..1.0) otherwise.",
+                                     "This tool makes it possible to gather information about the intensity histogram of a drawable. A channel to examine is first specified. This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale. Second, a range of intensities are specified. The 'gimp-drawable-histogram' function returns statistics based on the pixels in the drawable that fall under this range of values. Mean, standard deviation, median, number of pixels, and percentile are all returned. Additionally, the total count of pixels in the image is returned. Counts of pixels are weighted by any associated alpha values and by the current selection mask. That is, pixels that lie outside an active selection mask will not be counted. Similarly, pixels with transparent alpha values will not be counted. The returned mean, std_dev and median are in the range (0..255) for 8-bit images or if the plug-in is not precision-aware, and in the range (0.0..1.0) otherwise.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -1014,22 +1011,22 @@ register_drawable_color_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("channel",
                                                   "channel",
-                                                  "The channel to modify",
+                                                  "The channel to query",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("start-range",
-                                                      "start range",
-                                                      "Start of the intensity measurement range",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("start-range",
+                                                    "start range",
+                                                    "Start of the intensity measurement range",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("end-range",
-                                                      "end range",
-                                                      "End of the intensity measurement range",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("end-range",
+                                                    "end range",
+                                                    "End of the intensity measurement range",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("mean",
                                                         "mean",
@@ -1279,17 +1276,17 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("low-threshold",
-                                                      "low threshold",
-                                                      "The low threshold value",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("low-threshold",
+                                                    "low threshold",
+                                                    "The low threshold value",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("high-threshold",
-                                                      "high threshold",
-                                                      "The high threshold value",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("high-threshold",
+                                                    "high threshold",
+                                                    "The high threshold value",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
