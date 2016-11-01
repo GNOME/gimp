@@ -635,6 +635,7 @@ gimp_drawable_posterize (gint32 drawable_ID,
 /**
  * gimp_drawable_threshold:
  * @drawable_ID: The drawable.
+ * @channel: The channel to base the threshold on.
  * @low_threshold: The low threshold value.
  * @high_threshold: The high threshold value.
  *
@@ -642,17 +643,18 @@ gimp_drawable_posterize (gint32 drawable_ID,
  *
  * This procedures generates a threshold map of the specified drawable.
  * All pixels between the values of 'low_threshold' and
- * 'high_threshold' are replaced with white, and all other pixels with
- * black.
+ * 'high_threshold', on the scale of 'channel' are replaced with white,
+ * and all other pixels with black.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_threshold (gint32  drawable_ID,
-                         gdouble low_threshold,
-                         gdouble high_threshold)
+gimp_drawable_threshold (gint32               drawable_ID,
+                         GimpHistogramChannel channel,
+                         gdouble              low_threshold,
+                         gdouble              high_threshold)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -661,6 +663,7 @@ gimp_drawable_threshold (gint32  drawable_ID,
   return_vals = gimp_run_procedure ("gimp-drawable-threshold",
                                     &nreturn_vals,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_INT32, channel,
                                     GIMP_PDB_FLOAT, low_threshold,
                                     GIMP_PDB_FLOAT, high_threshold,
                                     GIMP_PDB_END);

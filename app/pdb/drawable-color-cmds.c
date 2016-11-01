@@ -679,12 +679,14 @@ drawable_threshold_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
+  gint32 channel;
   gdouble low_threshold;
   gdouble high_threshold;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
-  low_threshold = g_value_get_double (gimp_value_array_index (args, 1));
-  high_threshold = g_value_get_double (gimp_value_array_index (args, 2));
+  channel = g_value_get_enum (gimp_value_array_index (args, 1));
+  low_threshold = g_value_get_double (gimp_value_array_index (args, 2));
+  high_threshold = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -695,6 +697,7 @@ drawable_threshold_invoker (GimpProcedure         *procedure,
           GeglNode *node =
             gegl_node_new_child (NULL,
                                  "operation", "gimp:threshold",
+                                 "channel",   channel,
                                  "low",       low_threshold,
                                  "high",      high_threshold,
                                  NULL);
@@ -1264,7 +1267,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-threshold",
                                      "Threshold the specified drawable.",
-                                     "This procedures generates a threshold map of the specified drawable. All pixels between the values of 'low_threshold' and 'high_threshold' are replaced with white, and all other pixels with black.",
+                                     "This procedures generates a threshold map of the specified drawable. All pixels between the values of 'low_threshold' and 'high_threshold', on the scale of 'channel' are replaced with white, and all other pixels with black.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1997",
@@ -1275,6 +1278,13 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                             "The drawable",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("channel",
+                                                  "channel",
+                                                  "The channel to base the threshold on",
+                                                  GIMP_TYPE_HISTOGRAM_CHANNEL,
+                                                  GIMP_HISTOGRAM_VALUE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("low-threshold",
                                                     "low threshold",

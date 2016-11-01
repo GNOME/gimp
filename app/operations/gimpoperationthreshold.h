@@ -40,6 +40,7 @@ struct _GimpOperationThreshold
 {
   GimpOperationPointFilter  parent_instance;
 
+  GimpHistogramChannel      channel;
   gdouble                   low;
   gdouble                   high;
 };

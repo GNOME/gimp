@@ -85,6 +85,7 @@ gboolean gimp_drawable_levels_stretch      (gint32                drawable_ID);
 gboolean gimp_drawable_posterize           (gint32                drawable_ID,
                                             gint                  levels);
 gboolean gimp_drawable_threshold           (gint32                drawable_ID,
+                                            GimpHistogramChannel  channel,
                                             gdouble               low_threshold,
                                             gdouble               high_threshold);
 

@@ -742,8 +742,8 @@ sub drawable_threshold {
     $help = <<'HELP';
 This procedures generates a threshold map of the specified
 drawable. All pixels between the values of 'low_threshold' and
-'high_threshold' are replaced with white, and all other pixels with
-black.
+'high_threshold', on the scale of 'channel' are replaced with white,
+and all other pixels with black.
 HELP
 
     &std_pdb_misc;
@@ -753,6 +753,8 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
+	{ name => 'channel', type => 'enum GimpHistogramChannel',
+	  desc => 'The channel to base the threshold on' },
 	{ name => 'low_threshold', type => '0.0 <= float <= 1.0',
 	  desc => 'The low threshold value' },
 	{ name => 'high_threshold', type => '0.0 <= float <= 1.0',
@@ -769,6 +771,7 @@ HELP
       GeglNode *node =
         gegl_node_new_child (NULL,
                              "operation", "gimp:threshold",
+                             "channel",   channel,
                              "low",       low_threshold,
                              "high",      high_threshold,
                              NULL);
