@@ -673,7 +673,7 @@ msgstr "Lluminositat"
 #: ../libgimpbase/gimpbaseenums.c:438
 msgctxt "desaturate-mode"
 msgid "Average"
-msgstr "Mitja"
+msgstr "Mitjana"
 
 #: ../libgimpbase/gimpbaseenums.c:467
 msgctxt "dodge-burn-type"
