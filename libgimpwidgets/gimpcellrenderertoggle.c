@@ -393,19 +393,17 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
 
       if (background_set)
         {
-          cairo_t  *cr = gdk_cairo_create (window);
-          GdkColor *color;
+          GdkRGBA *color;
 
           g_object_get (cell,
-                        "cell-background-gdk", &color,
+                        "cell-background-rgba", &color,
                         NULL);
 
           gdk_cairo_rectangle (cr, background_area);
-          gdk_cairo_set_source_color (cr, color);
+          gdk_cairo_set_source_rgba (cr, color);
           cairo_fill (cr);
 
-          gdk_color_free (color);
-          cairo_destroy (cr);
+          gdk_rgba_free (color);
         }
     }
 

@@ -332,7 +332,7 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
   view->priv->model_column_color_tag =
     gimp_container_tree_store_columns_add (tree_view->model_columns,
                                            &tree_view->n_model_columns,
-                                           GDK_TYPE_COLOR);
+                                           GDK_TYPE_RGBA);
 
   gimp_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
 
@@ -380,7 +380,7 @@ gimp_item_tree_view_constructed (GObject *object)
                                        item_view->priv->model_column_visible,
                                        "inconsistent",
                                        item_view->priv->model_column_viewable,
-                                       "cell-background-gdk",
+                                       "cell-background-rgba",
                                        item_view->priv->model_column_color_tag,
                                        NULL);
 
@@ -978,7 +978,6 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   GimpItem              *item      = GIMP_ITEM (viewable);
   GtkTreeIter           *iter;
   GimpRGB                color;
-  GdkColor               gdk_color;
   gboolean               has_color;
 
   item_view->priv->inserting_item = TRUE;
@@ -990,8 +989,6 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
 
   has_color = gimp_get_color_tag_color (gimp_item_get_color_tag (item),
                                         &color);
-  if (has_color)
-    gimp_rgb_get_gdk_color (&color, &gdk_color);
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       item_view->priv->model_column_visible,
@@ -1002,7 +999,7 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
                       item_view->priv->model_column_linked,
                       gimp_item_get_linked (item),
                       item_view->priv->model_column_color_tag,
-                      has_color ? &gdk_color : NULL,
+                      has_color ? (GdkRGBA *) &color : NULL,
                       -1);
 
   return iter;
@@ -1405,17 +1402,14 @@ gimp_item_tree_view_color_tag_changed (GimpItem         *item,
   if (iter)
     {
       GimpRGB  color;
-      GdkColor gdk_color;
       gboolean has_color;
 
       has_color = gimp_get_color_tag_color (gimp_item_get_color_tag (item),
                                             &color);
-      if (has_color)
-        gimp_rgb_get_gdk_color (&color, &gdk_color);
 
       gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                           view->priv->model_column_color_tag,
-                          has_color ? &gdk_color : NULL,
+                          has_color ? (GdkRGBA *) &color : NULL,
                           -1);
     }
 }
