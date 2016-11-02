@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcursorview.c
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2005-2016 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,9 @@
 
 #include "display-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
@@ -368,7 +371,8 @@ gimp_cursor_view_set_property (GObject      *object,
     case PROP_SAMPLE_MERGED:
       view->priv->sample_merged = g_value_get_boolean (value);
       break;
-   default:
+
+    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
@@ -387,7 +391,8 @@ gimp_cursor_view_get_property (GObject    *object,
     case PROP_SAMPLE_MERGED:
       g_value_set_boolean (value, view->priv->sample_merged);
       break;
-   default:
+
+    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
@@ -518,9 +523,10 @@ static void
 gimp_cursor_view_set_context (GimpDocked  *docked,
                               GimpContext *context)
 {
-  GimpCursorView *view    = GIMP_CURSOR_VIEW (docked);
-  GimpDisplay    *display = NULL;
-  GimpImage      *image   = NULL;
+  GimpCursorView  *view    = GIMP_CURSOR_VIEW (docked);
+  GimpColorConfig *config  = NULL;
+  GimpDisplay     *display = NULL;
+  GimpImage       *image   = NULL;
 
   if (context == view->priv->context)
     return;
@@ -551,9 +557,15 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
                                 G_CALLBACK (gimp_cursor_view_image_changed),
                                 view);
 
+      config  = context->gimp->config->color_management;
       display = gimp_context_get_display (context);
       image   = gimp_context_get_image (context);
     }
+
+  gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (view->priv->color_frame_1),
+                                     config);
+  gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (view->priv->color_frame_2),
+                                     config);
 
   gimp_cursor_view_diplay_changed (view, display, view->priv->context);
   gimp_cursor_view_image_changed (view, image, view->priv->context);

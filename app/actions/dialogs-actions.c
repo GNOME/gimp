@@ -148,7 +148,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
   { "dialogs-dynamics", GIMP_STOCK_DYNAMICS,
     NC_("dialogs-action", "Paint Dynamics"), NULL,
     NC_("dialogs-action", "Open paint dynamics dialog"),
-    "gimp-dynamics-list",
+    "gimp-dynamics-list|gimp-dynamics-grid",
     GIMP_HELP_DYNAMICS_DIALOG },
 
   { "dialogs-dynamics-editor", GIMP_STOCK_DYNAMICS,
@@ -196,7 +196,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
   { "dialogs-tool-presets", GIMP_STOCK_TOOL_PRESET,
     NC_("dialogs-action", "Tool presets"), NULL,
     NC_("dialogs-action", "Open tool presets dialog"),
-    "gimp-tool-preset-list",
+    "gimp-tool-preset-list|gimp-tool-preset-grid",
     GIMP_HELP_TOOL_PRESET_DIALOG },
 
   { "dialogs-fonts", "gtk-select-font",

@@ -22,7 +22,8 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "imap_table.h"
 

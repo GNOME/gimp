@@ -27,15 +27,30 @@ typedef enum
   COLOR_PROFILE_DIALOG_ASSIGN_PROFILE,
   COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE,
   COLOR_PROFILE_DIALOG_CONVERT_TO_RGB,
-  COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY
+  COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY,
+  COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE
 } ColorProfileDialogType;
 
 
-GtkWidget * color_profile_dialog_new (ColorProfileDialogType  dialog_type,
-                                      GimpImage              *image,
-                                      GimpContext            *context,
-                                      GtkWidget              *parent,
-                                      GimpProgress           *progress);
+typedef void (* GimpColorProfileCallback) (GtkWidget                *dialog,
+                                           GimpImage                *image,
+                                           GimpColorProfile         *new_profile,
+                                           GFile                    *new_file,
+                                           GimpColorRenderingIntent  intent,
+                                           gboolean                  bpc,
+                                           gpointer                  user_data);
+
+
+GtkWidget * color_profile_dialog_new (ColorProfileDialogType    dialog_type,
+                                      GimpImage                *image,
+                                      GimpContext              *context,
+                                      GtkWidget                *parent,
+                                      GimpColorProfile         *current_profile,
+                                      GimpColorProfile         *default_profile,
+                                      GimpColorRenderingIntent  intent,
+                                      gboolean                  bpc,
+                                      GimpColorProfileCallback  callback,
+                                      gpointer                  user_data);
 
 
 #endif  /*  __COLOR_PROFILE_DIALOG_H__  */

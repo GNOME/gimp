@@ -240,16 +240,26 @@ gimp_sample_point_tool_motion (GimpTool         *tool,
                              _("Remove Sample Point") :
                              _("Cancel Sample Point"));
     }
+  else if (sp_tool->sample_point)
+    {
+      gimp_tool_push_status_coords (tool, display,
+                                    gimp_tool_control_get_precision (tool->control),
+                                    _("Move Sample Point: "),
+                                    sp_tool->sample_point_x -
+                                    sp_tool->sample_point_old_x,
+                                    ", ",
+                                    sp_tool->sample_point_y -
+                                    sp_tool->sample_point_old_y,
+                                    NULL);
+    }
   else
     {
       gimp_tool_push_status_coords (tool, display,
                                     gimp_tool_control_get_precision (tool->control),
-                                    sp_tool->sample_point ?
-                                    _("Move Sample Point: ") :
                                     _("Add Sample Point: "),
                                     sp_tool->sample_point_x,
                                     ", ",
-                                    sp_tool->sample_point_x,
+                                    sp_tool->sample_point_y,
                                     NULL);
     }
 }
@@ -289,14 +299,19 @@ gimp_sample_point_tool_start (GimpTool        *parent_tool,
       sp_tool->sample_point = sample_point;
 
       gimp_sample_point_get_position (sample_point,
-                                      &sp_tool->sample_point_x,
-                                      &sp_tool->sample_point_y);
+                                      &sp_tool->sample_point_old_x,
+                                      &sp_tool->sample_point_old_y);
+
+      sp_tool->sample_point_x = sp_tool->sample_point_old_x;
+      sp_tool->sample_point_y = sp_tool->sample_point_old_y;
     }
   else
     {
-      sp_tool->sample_point   = NULL;
-      sp_tool->sample_point_x = GIMP_SAMPLE_POINT_POSITION_UNDEFINED;
-      sp_tool->sample_point_y = GIMP_SAMPLE_POINT_POSITION_UNDEFINED;
+      sp_tool->sample_point       = NULL;
+      sp_tool->sample_point_old_x = 0;
+      sp_tool->sample_point_old_y = 0;
+      sp_tool->sample_point_x     = GIMP_SAMPLE_POINT_POSITION_UNDEFINED;
+      sp_tool->sample_point_y     = GIMP_SAMPLE_POINT_POSITION_UNDEFINED;
     }
 
   gimp_tool_set_cursor (tool, display,
@@ -311,15 +326,28 @@ gimp_sample_point_tool_start (GimpTool        *parent_tool,
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (sp_tool), display);
 
-  gimp_tool_push_status_coords (tool, display,
-                                gimp_tool_control_get_precision (tool->control),
-                                sample_point ?
-                                _("Move Sample Point: ") :
-                                _("Add Sample Point: "),
-                                sp_tool->sample_point_x,
-                                ", ",
-                                sp_tool->sample_point_y,
-                                NULL);
+  if (sp_tool->sample_point)
+    {
+      gimp_tool_push_status_coords (tool, display,
+                                    gimp_tool_control_get_precision (tool->control),
+                                    _("Move Sample Point: "),
+                                    sp_tool->sample_point_x -
+                                    sp_tool->sample_point_old_x,
+                                    ", ",
+                                    sp_tool->sample_point_y -
+                                    sp_tool->sample_point_old_y,
+                                    NULL);
+    }
+  else
+    {
+      gimp_tool_push_status_coords (tool, display,
+                                    gimp_tool_control_get_precision (tool->control),
+                                    _("Add Sample Point: "),
+                                    sp_tool->sample_point_x,
+                                    ", ",
+                                    sp_tool->sample_point_y,
+                                    NULL);
+    }
 }
 
 

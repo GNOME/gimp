@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <locale.h>
+
 #include <glib.h>
 
 #ifdef G_OS_WIN32
@@ -30,7 +31,6 @@
 #endif
 
 #include "language.h"
-#include "gimp-intl.h"
 
 
 void

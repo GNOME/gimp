@@ -132,30 +132,32 @@ static void        cdisplay_colorblind_set_deficiency  (CdisplayColorblind    *c
                                                         ColorblindDeficiency   value);
 
 
-  /* The RGB<->LMS transforms above are computed from the human cone
-   * photo-pigment absorption spectra and the monitor phosphor
-   * emission spectra. These parameters are fairly constant for most
-   * humans and most monitors (at least for modern CRTs). However,
-   * gamma will vary quite a bit, as it is a property of the monitor
-   * (eg. amplifier gain), the video card, and even the
-   * software. Further, users can adjust their gammas (either via
-   * adjusting the monitor amp gains or in software). That said, the
-   * following are the gamma estimates that we have used in the
-   * Vischeck code. Many colorblind users have viewed our simulations
-   * and told us that they "work" (simulated and original images are
-   * indistinguishable).
-   */
+/* The RGB<->LMS transforms above are computed from the human cone
+ * photo-pigment absorption spectra and the monitor phosphor
+ * emission spectra. These parameters are fairly constant for most
+ * humans and most monitors (at least for modern CRTs). However,
+ * gamma will vary quite a bit, as it is a property of the monitor
+ * (eg. amplifier gain), the video card, and even the
+ * software. Further, users can adjust their gammas (either via
+ * adjusting the monitor amp gains or in software). That said, the
+ * following are the gamma estimates that we have used in the
+ * Vischeck code. Many colorblind users have viewed our simulations
+ * and told us that they "work" (simulated and original images are
+ * indistinguishable).
+ */
 
+#if 0
+/* Gamma conversion is now handled by simply asking for a linear buffer */
 static const gfloat gammaRGB = 2.1;
+#endif
 
-
-  /* For most modern Cathode-Ray Tube monitors (CRTs), the following
-   * are good estimates of the RGB->LMS and LMS->RGB transform
-   * matrices.  They are based on spectra measured on a typical CRT
-   * with a PhotoResearch PR650 spectral photometer and the Stockman
-   * human cone fundamentals. NOTE: these estimates will NOT work well
-   * for LCDs!
-   */
+/* For most modern Cathode-Ray Tube monitors (CRTs), the following
+* are good estimates of the RGB->LMS and LMS->RGB transform
+* matrices.  They are based on spectra measured on a typical CRT
+* with a PhotoResearch PR650 spectral photometer and the Stockman
+* human cone fundamentals. NOTE: these estimates will NOT work well
+* for LCDs!
+*/
 static const gfloat rgb2lms[9] =
 {
   0.05059983,

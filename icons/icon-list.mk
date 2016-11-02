@@ -167,12 +167,8 @@ scalable_images = \
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
 	scalable/gimp-path.svg				\
-	scalable/gimp-path-delete.svg			\
-	scalable/gimp-path-down.svg			\
-	scalable/gimp-path-new.svg			\
 	scalable/gimp-paths.svg				\
 	scalable/gimp-path-stroke.svg			\
-	scalable/gimp-path-up.svg			\
 	scalable/gimp-pattern.svg			\
 	scalable/gimp-plugin.svg			\
 	scalable/gimp-portrait.svg			\
@@ -629,11 +625,7 @@ icons16_images = \
 	16/gimp-navigation.png						\
 	16/gimp-paste-as-new.png					\
 	16/gimp-paste-into.png						\
-	16/gimp-path-delete.png						\
-	16/gimp-path-down.png						\
-	16/gimp-path-new.png						\
 	16/gimp-path-stroke.png						\
-	16/gimp-path-up.png							\
 	16/gimp-path.png							\
 	16/gimp-paths.png							\
 	16/gimp-pattern.png							\
@@ -1039,16 +1031,18 @@ icons96_images = \
 	96/gimp-wilber.png		\
 	96/gimp-wilber-outline.png
 
-icons128_images = \
-	128/gimp-wilber.png		\
+icons128_images = 					\
+	128/folder.png					\
+	128/gimp-wilber.png				\
 	128/gimp-wilber-outline.png
 
 icons192_images = \
 	192/gimp-wilber.png		\
 	192/gimp-wilber-outline.png
 
-icons256_images = \
-	256/gimp-wilber.png		\
+icons256_images = 					\
+	256/folder.png					\
+	256/gimp-wilber.png				\
 	256/gimp-wilber-outline.png
 
 if ENABLE_VECTOR_ICONS

@@ -115,7 +115,6 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 
   iv_class->action_group          = "channels";
   iv_class->activate_action       = "channels-edit-attributes";
-  iv_class->edit_action           = "channels-edit-attributes";
   iv_class->new_action            = "channels-new";
   iv_class->new_default_action    = "channels-new-last-values";
   iv_class->raise_action          = "channels-raise";

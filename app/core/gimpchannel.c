@@ -103,10 +103,11 @@ static void       gimp_channel_scale         (GimpItem          *item,
                                               GimpProgress      *progress);
 static void       gimp_channel_resize        (GimpItem          *item,
                                               GimpContext       *context,
+                                              GimpFillType       fill_type,
                                               gint               new_width,
                                               gint               new_height,
-                                              gint               offx,
-                                              gint               offy);
+                                              gint               offset_x,
+                                              gint               offset_y);
 static void       gimp_channel_flip          (GimpItem          *item,
                                               GimpContext       *context,
                                               GimpOrientationType flip_type,
@@ -147,8 +148,6 @@ static void       gimp_channel_to_selection  (GimpItem          *item,
 static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               GimpImage         *dest_image,
                                               const Babl        *new_format,
-                                              GimpImageBaseType  new_base_type,
-                                              GimpPrecision      new_precision,
                                               GimpColorProfile  *dest_profile,
                                               gint               layer_dither_type,
                                               gint               mask_dither_type,
@@ -581,8 +580,10 @@ gimp_channel_convert (GimpItem  *item,
 
   if (! gimp_drawable_is_gray (drawable))
     {
-      gimp_drawable_convert_type (drawable, dest_image, GIMP_GRAY,
+      gimp_drawable_convert_type (drawable, dest_image,
+                                  GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
+                                  gimp_drawable_has_alpha (drawable),
                                   NULL, 0, 0,
                                   FALSE, NULL);
     }
@@ -625,6 +626,7 @@ gimp_channel_convert (GimpItem  *item,
           gimp_item_get_height (item) != height)
         {
           gimp_item_resize (item, gimp_get_user_context (dest_image->gimp),
+                            GIMP_FILL_TRANSPARENT,
                             width, height, 0, 0);
         }
     }
@@ -764,14 +766,16 @@ gimp_channel_scale (GimpItem              *item,
 }
 
 static void
-gimp_channel_resize (GimpItem    *item,
-                     GimpContext *context,
-                     gint         new_width,
-                     gint         new_height,
-                     gint         offset_x,
-                     gint         offset_y)
+gimp_channel_resize (GimpItem     *item,
+                     GimpContext  *context,
+                     GimpFillType  fill_type,
+                     gint          new_width,
+                     gint          new_height,
+                     gint          offset_x,
+                     gint          offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, GIMP_FILL_TRANSPARENT,
+                                          new_width, new_height,
                                           offset_x, offset_y);
 
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
@@ -957,8 +961,6 @@ static void
 gimp_channel_convert_type (GimpDrawable      *drawable,
                            GimpImage         *dest_image,
                            const Babl        *new_format,
-                           GimpImageBaseType  new_base_type,
-                           GimpPrecision      new_precision,
                            GimpColorProfile  *dest_profile,
                            gint               layer_dither_type,
                            gint               mask_dither_type,

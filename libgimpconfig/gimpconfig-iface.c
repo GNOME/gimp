@@ -634,7 +634,7 @@ gimp_config_deserialize_string (GimpConfig      *config,
  * gimp_config_deserialize_return:
  * @scanner:        a #GScanner
  * @expected_token: the expected token
- * @nest_level:     the next level
+ * @nest_level:     the nest level
  *
  * Returns:
  *

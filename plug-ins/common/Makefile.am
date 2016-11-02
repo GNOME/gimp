@@ -102,7 +102,7 @@ libexec_PROGRAMS = \
 	file-psp \
 	file-raw-data \
 	file-sunras \
-	$(FILE_SVG) \
+	file-svg \
 	file-tga \
 	$(FILE_WMF) \
 	file-xbm \
@@ -151,7 +151,6 @@ EXTRA_PROGRAMS = \
 	file-pdf-load \
 	file-pdf-save \
 	file-ps \
-	file-svg \
 	file-wmf \
 	file-xmc \
 	file-xpm \

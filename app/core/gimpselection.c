@@ -61,6 +61,7 @@ static void       gimp_selection_scale         (GimpItem            *item,
                                                 GimpProgress        *progress);
 static void       gimp_selection_resize        (GimpItem            *item,
                                                 GimpContext         *context,
+                                                GimpFillType         fill_type,
                                                 gint                 new_width,
                                                 gint                 new_height,
                                                 gint                 offset_x,
@@ -91,8 +92,6 @@ static gboolean   gimp_selection_stroke        (GimpItem            *item,
 static void       gimp_selection_convert_type  (GimpDrawable        *drawable,
                                                 GimpImage           *dest_image,
                                                 const Babl          *new_format,
-                                                GimpImageBaseType    new_base_type,
-                                                GimpPrecision        new_precision,
                                                 GimpColorProfile    *dest_profile,
                                                 gint                 layer_dither_type,
                                                 gint                 mask_dither_type,
@@ -243,14 +242,16 @@ gimp_selection_scale (GimpItem              *item,
 }
 
 static void
-gimp_selection_resize (GimpItem    *item,
-                       GimpContext *context,
-                       gint         new_width,
-                       gint         new_height,
-                       gint         offset_x,
-                       gint         offset_y)
+gimp_selection_resize (GimpItem     *item,
+                       GimpContext  *context,
+                       GimpFillType  fill_type,
+                       gint          new_width,
+                       gint          new_height,
+                       gint          offset_x,
+                       gint          offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, GIMP_FILL_TRANSPARENT,
+                                          new_width, new_height,
                                           offset_x, offset_y);
 
   gimp_item_set_offset (item, 0, 0);
@@ -355,20 +356,17 @@ static void
 gimp_selection_convert_type (GimpDrawable      *drawable,
                              GimpImage         *dest_image,
                              const Babl        *new_format,
-                             GimpImageBaseType  new_base_type,
-                             GimpPrecision      new_precision,
                              GimpColorProfile  *dest_profile,
                              gint               layer_dither_type,
                              gint               mask_dither_type,
                              gboolean           push_undo,
                              GimpProgress      *progress)
 {
-  new_format = gimp_babl_mask_format (new_precision);
+  new_format =
+    gimp_babl_mask_format (gimp_babl_format_get_precision (new_format));
 
   GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
                                                     new_format,
-                                                    new_base_type,
-                                                    new_precision,
                                                     dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,

@@ -98,10 +98,6 @@ static gboolean   gimp_data_editor_name_focus_out    (GtkWidget      *widget,
 static void       gimp_data_editor_data_name_changed (GimpObject     *object,
                                                       GimpDataEditor *editor);
 
-static void       gimp_data_editor_save_clicked      (GtkWidget      *widget,
-                                                      GimpDataEditor *editor);
-static void       gimp_data_editor_revert_clicked    (GtkWidget      *widget,
-                                                      GimpDataEditor *editor);
 static void       gimp_data_editor_save_dirty        (GimpDataEditor *editor);
 
 
@@ -208,24 +204,6 @@ gimp_data_editor_constructed (GObject *object)
   g_assert (GIMP_IS_CONTEXT (editor->context));
 
   gimp_data_editor_set_edit_active (editor, TRUE);
-
-  editor->save_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor),
-                            "document-save",
-                            _("Save"), NULL,
-                            G_CALLBACK (gimp_data_editor_save_clicked),
-                            NULL,
-                            editor);
-
-  editor->revert_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor),
-                            "document-revert",
-                            _("Revert"), NULL,
-                            G_CALLBACK (gimp_data_editor_revert_clicked),
-                            NULL,
-                            editor);
-  /* Hide because revert buttons are not yet implemented */
-  gtk_widget_hide (editor->revert_button);
 }
 
 static void
@@ -443,6 +421,8 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
 
   if (editor->data)
     {
+      gimp_data_editor_save_dirty (editor);
+
       g_signal_handlers_disconnect_by_func (editor->data,
                                             gimp_data_editor_data_name_changed,
                                             editor);
@@ -609,20 +589,6 @@ gimp_data_editor_data_name_changed (GimpObject     *object,
 {
   gtk_entry_set_text (GTK_ENTRY (editor->name_entry),
                       gimp_object_get_name (object));
-}
-
-static void
-gimp_data_editor_save_clicked (GtkWidget      *widget,
-                               GimpDataEditor *editor)
-{
-  gimp_data_editor_save_dirty (editor);
-}
-
-static void
-gimp_data_editor_revert_clicked (GtkWidget      *widget,
-                                 GimpDataEditor *editor)
-{
-  g_print ("TODO: implement revert\n");
 }
 
 static void

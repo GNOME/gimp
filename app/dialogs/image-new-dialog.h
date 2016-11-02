@@ -21,7 +21,7 @@
 
 GtkWidget * image_new_dialog_new (GimpContext  *context);
 
-void        image_new_dialog_set (GtkWidget    *widget,
+void        image_new_dialog_set (GtkWidget    *dialog,
                                   GimpImage    *image,
                                   GimpTemplate *template);
 

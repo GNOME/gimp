@@ -5,6 +5,17 @@
   <popup action="layers-popup">
     <menuitem action="layers-text-tool" />
     <menuitem action="layers-edit-attributes" />
+    <menu action="layers-color-tag-menu" name="Color Tags">
+     <menuitem action="layers-color-tag-none" />
+     <menuitem action="layers-color-tag-blue" />
+     <menuitem action="layers-color-tag-green" />
+     <menuitem action="layers-color-tag-yellow" />
+     <menuitem action="layers-color-tag-orange" />
+     <menuitem action="layers-color-tag-brown" />
+     <menuitem action="layers-color-tag-red" />
+     <menuitem action="layers-color-tag-violet" />
+     <menuitem action="layers-color-tag-gray" />
+    </menu>
     <separator />
     <menuitem action="layers-new" />
     <menuitem action="layers-new-from-visible" />

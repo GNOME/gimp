@@ -54,9 +54,6 @@ void    gimp_free_select_tool_register   (GimpToolRegisterCallback  callback,
 
 GType   gimp_free_select_tool_get_type   (void) G_GNUC_CONST;
 
-void    gimp_free_select_tool_select     (GimpFreeSelectTool       *free_sel,
-                                          GimpDisplay              *display);
-
 void    gimp_free_select_tool_get_points (GimpFreeSelectTool       *free_sel,
                                           const GimpVector2       **points,
                                           gint                     *n_points);

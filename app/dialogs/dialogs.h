@@ -43,6 +43,8 @@ void        dialogs_attach_dialog     (GObject         *attach_object,
                                        GtkWidget       *dialog);
 void        dialogs_detach_dialog     (GObject         *attach_object,
                                        GtkWidget       *dialog);
+void        dialogs_destroy_dialog    (GObject         *attach_object,
+                                       const gchar     *attach_key);
 
 
 #endif /* __DIALOGS_H__ */

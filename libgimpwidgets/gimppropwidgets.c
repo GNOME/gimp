@@ -2374,26 +2374,29 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
                                      GParamSpec *param_spec)
 {
   gchar *value;
-  gchar *filename;
+  GFile *file = NULL;
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
-  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
-  g_free (value);
-
-  if (filename)
+  if (value)
     {
-      gchar *basename = g_path_get_basename (filename);
+      file = gimp_file_new_for_config_path (value, NULL);
+      g_free (value);
+    }
+
+  if (file)
+    {
+      gchar *basename = g_file_get_basename (file);
 
       if (basename && basename[0] == '.')
         gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (button), TRUE);
 
       g_free (basename);
 
-      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (button), filename);
-      g_free (filename);
+      gtk_file_chooser_set_file (GTK_FILE_CHOOSER (button), file, NULL);
+      g_object_unref (file);
     }
 
   set_param_spec (G_OBJECT (button), button, param_spec);
@@ -2414,29 +2417,34 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
                                         GObject        *config)
 {
   GParamSpec *param_spec;
+  GFile      *file;
+  gchar      *path = NULL;
   gchar      *value;
-  gchar      *utf8;
 
   param_spec = get_param_spec (G_OBJECT (button));
   if (! param_spec)
     return;
 
-  value = gtk_file_chooser_get_filename (button);
-  utf8 = value ? gimp_config_path_unexpand (value, TRUE, NULL) : NULL;
-  g_free (value);
+  file = gtk_file_chooser_get_file (button);
+
+  if (file)
+    {
+      path = gimp_file_get_config_path (file, NULL);
+      g_object_unref (file);
+    }
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
-  if (! (value && utf8 && strcmp (value, utf8) == 0))
+  if (! (path && value && strcmp (path, value) == 0))
     {
       g_signal_handlers_block_by_func (config,
                                        gimp_prop_file_chooser_button_notify,
                                        button);
 
       g_object_set (config,
-                    param_spec->name, utf8,
+                    param_spec->name, path,
                     NULL);
 
       g_signal_handlers_unblock_by_func (config,
@@ -2444,8 +2452,8 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
                                          button);
     }
 
+  g_free (path);
   g_free (value);
-  g_free (utf8);
 }
 
 static void
@@ -2454,29 +2462,35 @@ gimp_prop_file_chooser_button_notify (GObject        *config,
                                       GtkFileChooser *button)
 {
   gchar *value;
-  gchar *filename;
+  GFile *file = NULL;
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
-  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
-  g_free (value);
+  if (value)
+    {
+      file = gimp_file_new_for_config_path (value, NULL);
+      g_free (value);
+    }
 
   g_signal_handlers_block_by_func (button,
                                    gimp_prop_file_chooser_button_callback,
                                    config);
 
-  if (filename)
-    gtk_file_chooser_set_filename (button, filename);
+  if (file)
+    {
+      gtk_file_chooser_set_file (button, file, NULL);
+      g_object_unref (file);
+    }
   else
-    gtk_file_chooser_unselect_all (button);
+    {
+      gtk_file_chooser_unselect_all (button);
+    }
 
   g_signal_handlers_unblock_by_func (button,
                                      gimp_prop_file_chooser_button_callback,
                                      config);
-
-  g_free (filename);
 }
 
 

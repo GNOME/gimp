@@ -140,7 +140,6 @@ gimp_config_deserialize_properties (GimpConfig *config,
   guint          scope_id;
   guint          old_scope_id;
   GTokenType     token;
-  GTokenType     next;
 
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
 
@@ -172,7 +171,10 @@ gimp_config_deserialize_properties (GimpConfig *config,
 
   while (TRUE)
     {
-      next = g_scanner_peek_next_token (scanner);
+      GTokenType next = g_scanner_peek_next_token (scanner);
+
+      if (next == G_TOKEN_EOF)
+        break;
 
       if (G_UNLIKELY (next != token &&
                       ! (token == G_TOKEN_SYMBOL &&
@@ -870,9 +872,20 @@ gimp_config_deserialize_file_value (GValue     *value,
     }
   else
     {
-      GFile *file = g_file_parse_name (scanner->value.v_string);
+      gchar *path = gimp_config_path_expand (scanner->value.v_string, TRUE,
+                                             NULL);
 
-      g_value_take_object (value, file);
+      if (path)
+        {
+          GFile *file = g_file_new_for_path (path);
+
+          g_value_take_object (value, file);
+          g_free (path);
+        }
+      else
+        {
+          g_value_set_object (value, NULL);
+        }
     }
 
   return G_TOKEN_RIGHT_PAREN;

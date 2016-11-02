@@ -587,9 +587,6 @@ file_open_dialog_show (Gimp        *gimp,
                                            NULL /*ui_manager*/,
                                            "gimp-file-open-dialog", -1, FALSE);
 
-  if (file)
-    g_object_ref (file);
-
   if (dialog)
     {
       if (! file && image)

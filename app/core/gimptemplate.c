@@ -239,6 +239,12 @@ gimp_template_finalize (GObject *object)
 {
   GimpTemplatePrivate *private = GET_PRIVATE (object);
 
+  if (private->color_profile)
+    {
+      g_object_unref (private->color_profile);
+      private->color_profile = NULL;
+    }
+
   if (private->comment)
     {
       g_free (private->comment);

@@ -571,17 +571,6 @@ edit_paste (GimpDisplay   *display,
       gint              x, y;
       gint              width, height;
 
-      if (GIMP_IS_IMAGE (paste) &&
-          paste_type != GIMP_PASTE_TYPE_NEW_LAYER)
-        {
-          gimp_message_literal (display->gimp, G_OBJECT (display),
-                                GIMP_MESSAGE_INFO,
-                                _("Pasted as new layer because "
-                                  "there was a layer the clipboard."));
-
-          paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
-        }
-
       if (drawable)
         {
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))

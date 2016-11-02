@@ -12,16 +12,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-07-27 06:59+0000\n"
-"PO-Revision-Date: 2016-08-02 12:25+0200\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-10-22 17:37+0000\n"
+"PO-Revision-Date: 2016-10-23 08:52+0200\n"
 "Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.9\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
@@ -169,28 +169,28 @@ msgstr "A(z) %s bővítmény számára szükséges egy alfa-csatorna"
 msgid "Add Alpha Channel"
 msgstr "Alfa-csatorna hozzáadása"
 
-#: ../libgimp/gimpexport.c:430
+#: ../libgimp/gimpexport.c:434
 msgid "Confirm Save"
 msgstr "Mentés megerősítése"
 
-#: ../libgimp/gimpexport.c:436
+#: ../libgimp/gimpexport.c:440
 msgid "Confirm"
 msgstr "Megerősítés"
 
-#: ../libgimp/gimpexport.c:512
+#: ../libgimp/gimpexport.c:516
 msgid "Export File"
 msgstr "Fájl exportálása"
 
-#: ../libgimp/gimpexport.c:516
+#: ../libgimp/gimpexport.c:520
 msgid "_Ignore"
 msgstr "_Kihagyás"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
+#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1017
 msgid "_Export"
 msgstr "_Exportálás"
 
 #. the headline
-#: ../libgimp/gimpexport.c:548
+#: ../libgimp/gimpexport.c:552
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -200,12 +200,12 @@ msgstr ""
 "mentésre kerülne:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:622
+#: ../libgimp/gimpexport.c:626
 msgid "The export conversion won't modify your original image."
 msgstr ""
 "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
-#: ../libgimp/gimpexport.c:729
+#: ../libgimp/gimpexport.c:733
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -214,7 +214,7 @@ msgstr ""
 "Rétegmaszkot készül menteni %s formátumba.\n"
 "Ez nem fogja menteni a látható rétegeket."
 
-#: ../libgimp/gimpexport.c:735
+#: ../libgimp/gimpexport.c:739
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -223,7 +223,7 @@ msgstr ""
 "Csatornát (elmentett kijelölést) készül menteni %s formátumba.\n"
 "Ez nem fogja menteni a látható rétegeket."
 
-#: ../libgimp/gimpexport.c:1004
+#: ../libgimp/gimpexport.c:1008
 msgid "Export Image as "
 msgstr "Kép exportálása másként"
 
@@ -313,7 +313,7 @@ msgstr "típus alapján"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:395
-#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:140
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:141
 msgid "No matches"
 msgstr "Nincs találat"
 
@@ -383,15 +383,15 @@ msgstr "Visszatérési értékek"
 msgid "Additional Information"
 msgstr "További információ"
 
-#: ../libgimp/gimpprocview.c:239
+#: ../libgimp/gimpprocview.c:240
 msgid "Author:"
 msgstr "Szerző:"
 
-#: ../libgimp/gimpprocview.c:251
+#: ../libgimp/gimpprocview.c:253
 msgid "Date:"
 msgstr "Dátum:"
 
-#: ../libgimp/gimpprocview.c:263
+#: ../libgimp/gimpprocview.c:266
 msgid "Copyright:"
 msgstr "Copyright:"
 
@@ -913,6 +913,26 @@ msgstr "Kerekítés"
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Ferde vágás"
+
+#: ../libgimpbase/gimpbaseenums.c:1023
+msgctxt "merge-type"
+msgid "Expanded as neccessary"
+msgstr "Szükség szerint bővítve"
+
+#: ../libgimpbase/gimpbaseenums.c:1024
+msgctxt "merge-type"
+msgid "Clipped to image"
+msgstr "A képre illesztve"
+
+#: ../libgimpbase/gimpbaseenums.c:1025
+msgctxt "merge-type"
+msgid "Clipped to bottom layer"
+msgstr "A legalsó rétegre illesztve"
+
+#: ../libgimpbase/gimpbaseenums.c:1026
+msgctxt "merge-type"
+msgid "Flatten"
+msgstr "Lapítás"
 
 #: ../libgimpbase/gimpbaseenums.c:1118
 msgctxt "orientation-type"
@@ -1501,20 +1521,20 @@ msgstr "A színskálán kívüli színek megjelölése"
 msgid "Out of gamut warning color"
 msgstr "A színskálán kívül esés figyelmeztető színe"
 
-#: ../libgimpconfig/gimpcolorconfig.c:656
-#: ../libgimpconfig/gimpcolorconfig.c:818
+#: ../libgimpconfig/gimpcolorconfig.c:659
+#: ../libgimpconfig/gimpcolorconfig.c:843
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "A(z) „%s” színprofil nem RGB színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig.c:694
-#: ../libgimpconfig/gimpcolorconfig.c:859
+#: ../libgimpconfig/gimpcolorconfig.c:701
+#: ../libgimpconfig/gimpcolorconfig.c:893
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "A(z) „%s” színprofil nem szürkeárnyalatos színtérhez való."
 
-#: ../libgimpconfig/gimpcolorconfig.c:732
-#: ../libgimpconfig/gimpcolorconfig.c:900
+#: ../libgimpconfig/gimpcolorconfig.c:743
+#: ../libgimpconfig/gimpcolorconfig.c:943
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "A(z) „%s” színprofil nem CMYK színtérhez való."
@@ -1525,36 +1545,40 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s kifejezés értéke nem egy érvényes UTF-8 szöveg"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:464
+#: ../libgimpconfig/gimpconfig-deserialize.c:466
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "csak „yes” vagy „no” érték szerepelhetne %s logikai kifejezésben, de „%s” "
 "szerepel"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:538
+#: ../libgimpconfig/gimpconfig-deserialize.c:540
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "érvénytelen érték („%s”) %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:553
+#: ../libgimpconfig/gimpconfig-deserialize.c:555
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "érvénytelen érték („%ld”) %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:622
+#: ../libgimpconfig/gimpconfig-deserialize.c:624
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "„%s” kifejezés elemzése közben: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:658
-#: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
-#: ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:703
+#: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:745
+#: ../libgimpconfig/gimpscanner.c:827
+#: ../libgimpwidgets/gimpcolorprofilestore.c:712
 msgid "fatal parse error"
 msgstr "végzetes feldolgozási hiba"
 
-#: ../libgimpconfig/gimpconfig-path.c:439
+#: ../libgimpconfig/gimpconfig-path.c:483
+msgid "File has no path representation"
+msgstr "A fájlnak nincs útvonal ábrázolása"
+
+#: ../libgimpconfig/gimpconfig-path.c:566
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s} nem bővíthető"
@@ -1588,7 +1612,7 @@ msgstr ""
 "csak „yes” vagy „no” érték szerepelhetne logikai kifejezésben, de „%s” "
 "szerepel"
 
-#: ../libgimpconfig/gimpscanner.c:843
+#: ../libgimpconfig/gimpscanner.c:854
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Hiba a(z) „%s” fájl feldolgozásakor a(z) %d. sorban: %s"
@@ -1641,23 +1665,23 @@ msgstr "A bélyegkép nem tartalmaz „Thumb::URI” címkét"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nem sikerült létrehozni bélyegképet ehhez: %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:113
+#: ../libgimpwidgets/gimpbrowser.c:114
 msgid "_Search:"
 msgstr "_Keresés:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:136
+#: ../libgimpwidgets/gimpcolorbutton.c:137
 msgid "_Foreground Color"
 msgstr "_Előtérszín"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:140
+#: ../libgimpwidgets/gimpcolorbutton.c:141
 msgid "_Background Color"
 msgstr "_Háttérszín"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:144
+#: ../libgimpwidgets/gimpcolorbutton.c:145
 msgid "Blac_k"
 msgstr "Fe_kete"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:148
+#: ../libgimpwidgets/gimpcolorbutton.c:149
 msgid "_White"
 msgstr "_Fehér"
 
@@ -1670,7 +1694,7 @@ msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC színprofil (*.icc, *.icm)"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
-#: ../libgimpwidgets/gimppatheditor.c:249
+#: ../libgimpwidgets/gimppatheditor.c:266
 msgid "Folder"
 msgstr "Mappa"
 
@@ -1723,24 +1747,32 @@ msgstr "H_TML-jelölés:"
 msgid "Show file location in the file manager"
 msgstr "A fájl helyének megjelenítése a fájlkezelőben"
 
-#: ../libgimpwidgets/gimpfileentry.c:229
+#: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your folders"
 msgstr "Fájlválasztó megnyitása a mappák böngészéséhez"
 
-#: ../libgimpwidgets/gimpfileentry.c:230
+#: ../libgimpwidgets/gimpfileentry.c:231
 msgid "Open a file selector to browse your files"
 msgstr "Fájlválasztó megnyitása a fájlok böngészéséhez"
 
-#: ../libgimpwidgets/gimpfileentry.c:397
+#: ../libgimpwidgets/gimpfileentry.c:243
+msgid "Indicates whether or not the folder exists"
+msgstr "Azt jelöli, hogy a mappa létezik-e"
+
+#: ../libgimpwidgets/gimpfileentry.c:244
+msgid "Indicates whether or not the file exists"
+msgstr "Azt jelöli, hogy a fájl létezik-e"
+
+#: ../libgimpwidgets/gimpfileentry.c:404
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Nem lehet megjeleníteni a fájlt a fájlkezelőben: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:424
+#: ../libgimpwidgets/gimpfileentry.c:431
 msgid "Select Folder"
 msgstr "Mappa kiválasztása"
 
-#: ../libgimpwidgets/gimpfileentry.c:426
+#: ../libgimpwidgets/gimpfileentry.c:433
 msgid "Select File"
 msgstr "Fájl kiválasztása"
 
@@ -1761,99 +1793,63 @@ msgid "_Duplicate"
 msgstr "_Kettőzés"
 
 #: ../libgimpwidgets/gimpicons.c:64
-msgid "_Edit"
-msgstr "S_zerkesztés"
-
-#: ../libgimpwidgets/gimpicons.c:65
 msgid "Linked"
 msgstr "Kapcsolva"
 
-#: ../libgimpwidgets/gimpicons.c:66
+#: ../libgimpwidgets/gimpicons.c:65
 msgid "Paste as New"
 msgstr "Beillesztés újként"
 
-#: ../libgimpwidgets/gimpicons.c:67
+#: ../libgimpwidgets/gimpicons.c:66
 msgid "Paste Into"
 msgstr "Helyben beillesztés"
 
-#: ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpicons.c:67
 msgid "_Reset"
 msgstr "_Visszaállítás"
 
-#: ../libgimpwidgets/gimpicons.c:69
+#: ../libgimpwidgets/gimpicons.c:68
 msgid "Visible"
 msgstr "Látható"
 
-#: ../libgimpwidgets/gimpicons.c:70
-msgid "Ne_xt"
-msgstr "Kö_vetkező"
-
-#: ../libgimpwidgets/gimpicons.c:71
-msgid "Pre_vious"
-msgstr "_Előző"
-
-#: ../libgimpwidgets/gimpicons.c:72
-msgid "_Open"
-msgstr "Me_gnyitás"
-
-#: ../libgimpwidgets/gimpicons.c:73
-msgid "_Save"
-msgstr "M_entés"
-
-#: ../libgimpwidgets/gimpicons.c:74
-msgid "Save as"
-msgstr "Mentés másként"
-
-#: ../libgimpwidgets/gimpicons.c:75
-msgid "_Cancel"
-msgstr "Mé_gse"
-
-#: ../libgimpwidgets/gimpicons.c:76
-msgid "_Quit"
-msgstr "_Kilépés"
-
-#: ../libgimpwidgets/gimpicons.c:127 ../libgimpwidgets/gimpicons.c:131
+#: ../libgimpwidgets/gimpicons.c:114 ../libgimpwidgets/gimpicons.c:118
 msgid "_Stroke"
 msgstr "_Körberajzolás"
 
-#: ../libgimpwidgets/gimpicons.c:150
+#: ../libgimpwidgets/gimpicons.c:132
 msgid "L_etter Spacing"
 msgstr "B_etűköz"
 
-#: ../libgimpwidgets/gimpicons.c:151
+#: ../libgimpwidgets/gimpicons.c:133
 msgid "L_ine Spacing"
 msgstr "S_orköz"
 
-#: ../libgimpwidgets/gimpicons.c:152
-msgid "I_ndent"
-msgstr "_Behúzás"
-
-#: ../libgimpwidgets/gimpicons.c:176
+#: ../libgimpwidgets/gimpicons.c:150
 msgid "Re_size"
 msgstr "Át_méretezés"
 
-#: ../libgimpwidgets/gimpicons.c:177 ../libgimpwidgets/gimpicons.c:312
+#: ../libgimpwidgets/gimpicons.c:151 ../libgimpwidgets/gimpicons.c:286
 msgid "_Scale"
 msgstr "Átmére_tezés"
 
-#: ../libgimpwidgets/gimpicons.c:284
+#: ../libgimpwidgets/gimpicons.c:258
 msgid "Cr_op"
 msgstr "Vá_gás"
 
-#: ../libgimpwidgets/gimpicons.c:292
+#: ../libgimpwidgets/gimpicons.c:266
 msgid "_Select"
 msgstr "_Kijelölés"
 
-#: ../libgimpwidgets/gimpicons.c:295 ../libgimpwidgets/gimpicons.c:307
-#: ../libgimpwidgets/gimpicons.c:318
+#: ../libgimpwidgets/gimpicons.c:269 ../libgimpwidgets/gimpicons.c:281
+#: ../libgimpwidgets/gimpicons.c:292
 msgid "_Transform"
 msgstr "Á_talakítás"
 
-#: ../libgimpwidgets/gimpicons.c:311
+#: ../libgimpwidgets/gimpicons.c:285
 msgid "_Rotate"
 msgstr "_Forgatás"
 
-#: ../libgimpwidgets/gimpicons.c:314
+#: ../libgimpwidgets/gimpicons.c:288
 msgid "_Shear"
 msgstr "_Nyírás"
 
@@ -1905,7 +1901,23 @@ msgid_plural "All %d pages selected"
 msgstr[0] "%d lap van kijelölve"
 msgstr[1] "Mind a(z) %d lap ki van jelölve"
 
-#: ../libgimpwidgets/gimppatheditor.c:240
+#: ../libgimpwidgets/gimppatheditor.c:180
+msgid "Add a new folder"
+msgstr "Új mappa hozzáadása"
+
+#: ../libgimpwidgets/gimppatheditor.c:197
+msgid "Move the selected folder up"
+msgstr "Kiválasztott mappa mozgatása felfelé"
+
+#: ../libgimpwidgets/gimppatheditor.c:214
+msgid "Move the selected folder down"
+msgstr "Kiválasztott mappa mozgatása lefelé"
+
+#: ../libgimpwidgets/gimppatheditor.c:231
+msgid "Remove the selected folder from the list"
+msgstr "Kiválasztott mappa eltávolítása a listából"
+
+#: ../libgimpwidgets/gimppatheditor.c:257
 msgid "Writable"
 msgstr "Írható"
 
@@ -1930,7 +1942,7 @@ msgstr "Négyzetek mérete"
 msgid "Check Style"
 msgstr "Négyzetek stílusa"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2110
+#: ../libgimpwidgets/gimppropwidgets.c:2111
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2613,17 +2625,44 @@ msgstr "Színes próbanyomat"
 msgid "Choose an ICC Color Profile"
 msgstr "Válasszon egy ICC színprofilt"
 
-#: ../modules/display-filter-proof.c:314
+#: ../modules/display-filter-proof.c:316
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:320
+#: ../modules/display-filter-proof.c:322
 msgid "_Intent:"
 msgstr "_Cél:"
 
-#: ../modules/display-filter-proof.c:325
+#: ../modules/display-filter-proof.c:327
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
+
+#~ msgid "_Edit"
+#~ msgstr "S_zerkesztés"
+
+#~ msgid "Ne_xt"
+#~ msgstr "Kö_vetkező"
+
+#~ msgid "Pre_vious"
+#~ msgstr "_Előző"
+
+#~ msgid "_Open"
+#~ msgstr "Me_gnyitás"
+
+#~ msgid "_Save"
+#~ msgstr "M_entés"
+
+#~ msgid "Save as"
+#~ msgstr "Mentés másként"
+
+#~ msgid "_Cancel"
+#~ msgstr "Mé_gse"
+
+#~ msgid "_Quit"
+#~ msgstr "_Kilépés"
+
+#~ msgid "I_ndent"
+#~ msgstr "_Behúzás"
 
 #~ msgid "Mode of operation for color management."
 #~ msgstr "Működési mód a színkezelés számára."

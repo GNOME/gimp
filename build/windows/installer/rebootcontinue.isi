@@ -1,0 +1,131 @@
+#if 0
+[Code]
+#endif
+
+function Quote(const S: String): String;
+begin
+	Result := '"' + S + '"';
+end;
+
+
+function AddParam(const S, P, V: String): String;
+begin
+	if V <> '""' then
+		Result := S + ' /' + P + '=' + V;
+end;
+
+
+function AddSimpleParam(const S, P: String): String;
+begin
+	Result := S + ' /' + P;
+end;
+
+
+procedure CreateRunOnceEntry;
+var	RunOnceData, SetupRestartData: String;
+	i: Integer;
+begin
+	DebugMsg('CreateRunOnceEntry','Preparing for restart');
+
+	//RunOnce command-line is limited to 256 characters, so keep it to the bare minimum required to start setup
+	RunOnceData := Quote(ExpandConstant('{srcexe}')) + ' /resumeinstall=1';
+	RunOnceData := AddParam(RunOnceData, 'LANG', ExpandConstant('{language}'));
+
+	SetupRestartData := Quote(ExpandConstant('{srcexe}')) + ' /resumeinstall=2';
+	SetupRestartData := AddParam(SetupRestartData, 'LANG', ExpandConstant('{language}'));
+	SetupRestartData := AddParam(SetupRestartData, 'DIR', Quote(WizardDirValue));
+	//SetupRestartData := AddParam(SetupRestartData, 'GROUP', Quote(WizardGroupValue));
+	//if WizardNoIcons then
+	//	SetupRestartData := AddSimpleParam(SetupRestartData, 'NOICONS');
+	SetupRestartData := AddParam(SetupRestartData, 'TYPE', Quote(WizardSetupType(False)));
+	SetupRestartData := AddParam(SetupRestartData, 'COMPONENTS', Quote(WizardSelectedComponents(False)));
+	SetupRestartData := AddParam(SetupRestartData, 'TASKS', Quote(WizardSelectedTasks(False)));
+	SetupRestartData := AddParam(SetupRestartData, 'ASSOC', Quote(Associations_GetSelected()));
+
+	if Force32bitInstall then
+		SetupRestartData := AddSimpleParam(SetupRestartData, '32');
+
+	if ExpandConstant('{param:log|*}') <> '*' then
+	begin
+		SetupRestartData := AddParam(SetupRestartData, 'LOG', Quote(ExpandConstant('{param:log|*}')));
+	end else
+	begin
+		for i := 0 to ParamCount() do
+			if LowerCase(ParamStr(i)) = '/log' then
+			begin
+				RunOnceData := AddSimpleParam(RunOnceData,'LOG'); //multiple logs are created in %TEMP% when no filename is given
+				SetupRestartData := AddSimpleParam(SetupRestartData,'LOG');
+				break;
+			end;
+	end;
+
+	DebugMsg('CreateRunOnceEntry','RunOnce: ' + RunOnceData);
+	RegWriteStringValue(HKLM, 'Software\Microsoft\Windows\CurrentVersion\RunOnce', RunOnceName, RunOnceData);
+
+	DebugMsg('CreateRunOnceEntry','RunOnce: ' + SetupRestartData);
+	RegWriteStringValue(HKLM, 'Software\' + RunOnceName, '', SetupRestartData);
+end;
+
+
+procedure RestartMyself();
+var CmdLine: String;
+	ResultCode: Integer;
+begin
+	DebugMsg('RestartMyself','Continuing install after reboot (reexecuting setup)');
+
+	if RegValueExists(HKLM, 'Software\' + RunOnceName, '') then
+	begin
+		if RegQueryStringValue(HKLM, 'Software\' + RunOnceName, '', CmdLine) then
+		begin
+			RegDeleteKeyIncludingSubkeys(HKLM, 'Software\' + RunOnceName); //clean up
+			if not Exec('>',CmdLine,'',SW_SHOW,ewNoWait,ResultCode) then //bonus: don't block shell from loading, since RunOnce installer exits immediately
+				MsgBox(FmtMessage(CustomMessage('ErrorRestartingSetup'),[IntToStr(ResultCode)]), mbError, mb_Ok);
+		
+			DebugMsg('RestartMyself','Result of running ' + CmdLine + ': ' + IntToStr(ResultCode));
+
+		end else
+		begin
+			MsgBox(FmtMessage(CustomMessage('ErrorRestartingSetup'),['-2']), mbError, mb_Ok);
+			DebugMsg('RestartMyself','Error reading HKLM\'+RunOnceName);
+		end;
+	end else
+	begin
+		MsgBox(FmtMessage(CustomMessage('ErrorRestartingSetup'),['-1']), mbError, mb_Ok);
+		DebugMsg('RestartMyself','HKLM\'+RunOnceName + ' not found in Registy');
+	end;
+end;
+
+
+function RestartSetupAfterReboot(): Boolean;
+begin
+
+	if ExpandConstant('{param:resumeinstall|0}') = '1' then //called from RunOnce
+	begin
+		Result := False; //setup will just re-execute itself in this run
+
+		RestartMyself();
+
+		DebugMsg('RestartSetupAfterReboot','Phase 1 complete, exiting');
+		exit;
+
+	end else
+	if ExpandConstant('{param:resumeinstall|0}') = '2' then //setup re-executed itself
+	begin
+
+		Result := True;
+		InstallMode := imRebootContinue;
+		DebugMsg('RestartSetupAfterReboot','Continuing install after reboot');
+
+	end else
+	begin
+		Result := True; //normal install
+	end;
+
+	if InstallMode <> imRebootContinue then
+		if RegValueExists(HKLM, 'Software\Microsoft\Windows\CurrentVersion\RunOnce', RunOnceName) then
+		begin
+			DebugMsg('RestartSetupAfterReboot','System must be restarted first');
+			MsgBox(CustomMessage('RebootRequiredFirst'), mbError, mb_Ok);
+			Result := False;
+		end;
+end;

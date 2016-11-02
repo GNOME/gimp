@@ -41,6 +41,7 @@ EXTRA_DIST = \
 	$(icons192_images)	\
 	$(icons256_images)	\
 	$(scalable_images)	\
+	$(vector24_images)	\
 	symbolic-scalable.svg
 
 noinst_DATA = \

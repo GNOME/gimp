@@ -517,7 +517,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
 
       if (! child_menu_widget)
         {
-          g_warning ("%s: UI manager '%s' has now widget at path '%s'",
+          g_warning ("%s: UI manager '%s' has no widget at path '%s'",
                      G_STRFUNC, dialog_ui_manager->name, dialog_ui_path);
           return FALSE;
         }
@@ -558,6 +558,8 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
 
         gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
                                        image);
+        gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
+                                                   TRUE);
         gtk_widget_show (image);
       }
 

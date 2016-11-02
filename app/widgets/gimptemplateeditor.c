@@ -753,6 +753,7 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
       ! strcmp (param_spec->name, "precision"))
     {
       GtkListStore *profile_store;
+      GFile        *profile;
       gchar        *filename;
 
       filename = gimp_personal_rc_file ("profilerc");
@@ -769,8 +770,14 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                                GTK_TREE_MODEL (profile_store));
       g_object_unref (profile_store);
 
-      /* FIXME use template's profile */
+      g_object_get (template,
+                    "color-profile", &profile,
+                    NULL);
+
       gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (private->profile_combo),
-                                                    NULL, NULL);
+                                                    profile, NULL);
+
+      if (profile)
+        g_object_unref (profile);
     }
 }

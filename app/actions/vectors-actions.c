@@ -30,8 +30,10 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "actions.h"
+#include "items-actions.h"
 #include "vectors-actions.h"
 #include "vectors-commands.h"
 
@@ -43,6 +45,10 @@ static const GimpActionEntry vectors_actions[] =
   { "vectors-popup", GIMP_STOCK_PATHS,
     NC_("vectors-action", "Paths Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATH_DIALOG },
+
+  { "vectors-color-tag-menu", GIMP_STOCK_CLOSE /* abused */,
+    NC_("vectors-action", "Color Tag"), NULL, NULL, NULL,
+    GIMP_HELP_PATH_COLOR_TAG },
 
   { "vectors-path-tool", GIMP_STOCK_TOOL_PATH,
     NC_("vectors-action", "Path _Tool"), NULL, NULL,
@@ -180,6 +186,63 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
     GIMP_HELP_PATH_LOCK_POSITION }
 };
 
+static const GimpEnumActionEntry vectors_color_tag_actions[] =
+{
+  { "vectors-color-tag-none", GIMP_STOCK_CLOSE /* abused */,
+    NC_("vectors-action", "None"), NULL,
+    NC_("vectors-action", "Clear color tag"),
+    GIMP_COLOR_TAG_NONE, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG },
+
+  { "vectors-color-tag-blue", NULL,
+    NC_("vectors-action", "Blue"), NULL,
+    NC_("vectors-action", "Set color tag to blue"),
+    GIMP_COLOR_TAG_BLUE, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG },
+
+  { "vectors-color-tag-green", NULL,
+    NC_("vectors-action", "Green"), NULL,
+    NC_("vectors-action", "Set color tag to green"),
+    GIMP_COLOR_TAG_GREEN, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG },
+
+  { "vectors-color-tag-yellow", NULL,
+    NC_("vectors-action", "Yellow"), NULL,
+    NC_("vectors-action", "Set color tag to yellow"),
+    GIMP_COLOR_TAG_YELLOW, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG },
+
+  { "vectors-color-tag-orange", NULL,
+    NC_("vectors-action", "Orange"), NULL,
+    NC_("vectors-action", "Set color tag to orange"),
+    GIMP_COLOR_TAG_ORANGE, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG },
+
+  { "vectors-color-tag-brown", NULL,
+    NC_("vectors-action", "Brown"), NULL,
+    NC_("vectors-action", "Set color tag to brown"),
+    GIMP_COLOR_TAG_BROWN, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG },
+
+  { "vectors-color-tag-red", NULL,
+    NC_("vectors-action", "Red"), NULL,
+    NC_("vectors-action", "Set color tag to red"),
+    GIMP_COLOR_TAG_RED, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG },
+
+  { "vectors-color-tag-violet", NULL,
+    NC_("vectors-action", "Violet"), NULL,
+    NC_("vectors-action", "Set color tag to violet"),
+    GIMP_COLOR_TAG_VIOLET, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG },
+
+  { "vectors-color-tag-gray", NULL,
+    NC_("vectors-action", "Gray"), NULL,
+    NC_("vectors-action", "Set color tag to gray"),
+    GIMP_COLOR_TAG_GRAY, FALSE,
+    GIMP_HELP_PATH_COLOR_TAG }
+};
+
 static const GimpEnumActionEntry vectors_to_selection_actions[] =
 {
   { "vectors-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
@@ -247,6 +310,11 @@ vectors_actions_setup (GimpActionGroup *group)
                                         G_N_ELEMENTS (vectors_toggle_actions));
 
   gimp_action_group_add_enum_actions (group, "vectors-action",
+                                      vectors_color_tag_actions,
+                                      G_N_ELEMENTS (vectors_color_tag_actions),
+                                      G_CALLBACK (vectors_color_tag_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group, "vectors-action",
                                       vectors_to_selection_actions,
                                       G_N_ELEMENTS (vectors_to_selection_actions),
                                       G_CALLBACK (vectors_to_selection_cmd_callback));
@@ -255,27 +323,23 @@ vectors_actions_setup (GimpActionGroup *group)
                                       vectors_selection_to_vectors_actions,
                                       G_N_ELEMENTS (vectors_selection_to_vectors_actions),
                                       G_CALLBACK (vectors_selection_to_vectors_cmd_callback));
+
+  items_actions_setup (group, "vectors");
 }
 
 void
 vectors_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
-  GimpImage    *image        = action_data_get_image (data);
-  GimpVectors  *vectors      = NULL;
-  GimpDrawable *drawable     = NULL;
-  gint          n_vectors    = 0;
-  gboolean      mask_empty   = TRUE;
-  gboolean      visible      = FALSE;
-  gboolean      linked       = FALSE;
-  gboolean      locked       = FALSE;
-  gboolean      can_lock     = FALSE;
-  gboolean      locked_pos   = FALSE;
-  gboolean      can_lock_pos = FALSE;
-  gboolean      dr_writable  = FALSE;
-  gboolean      dr_children  = FALSE;
-  GList        *next         = NULL;
-  GList        *prev         = NULL;
+  GimpImage    *image         = action_data_get_image (data);
+  GimpVectors  *vectors       = NULL;
+  GimpDrawable *drawable      = NULL;
+  gint          n_vectors     = 0;
+  gboolean      mask_empty    = TRUE;
+  gboolean      dr_writable   = FALSE;
+  gboolean      dr_children   = FALSE;
+  GList        *next          = NULL;
+  GList        *prev          = NULL;
 
   if (image)
     {
@@ -286,17 +350,10 @@ vectors_actions_update (GimpActionGroup *group,
 
       if (vectors)
         {
-          GimpItem *item = GIMP_ITEM (vectors);
-          GList    *vectors_list;
-          GList    *list;
+          GList *vectors_list;
+          GList *list;
 
-          visible      = gimp_item_get_visible (item);
-          linked       = gimp_item_get_linked (item);
-          locked       = gimp_item_get_lock_content (item);
-          can_lock     = gimp_item_can_lock_content (item);
-          locked_pos   = gimp_item_get_lock_position (item);
-          can_lock_pos = gimp_item_can_lock_position (item);
-          vectors_list = gimp_item_get_container_iter (item);
+          vectors_list = gimp_item_get_container_iter (GIMP_ITEM (vectors));
 
           list = g_list_find (vectors_list, vectors);
 
@@ -311,11 +368,9 @@ vectors_actions_update (GimpActionGroup *group,
 
       if (drawable)
         {
-          GimpItem *item = GIMP_ITEM (drawable);
+          dr_writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable));
 
-          dr_writable = ! gimp_item_is_content_locked (item);
-
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             dr_children = TRUE;
         }
     }
@@ -344,16 +399,6 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-export", vectors);
   SET_SENSITIVE ("vectors-import", image);
 
-  SET_SENSITIVE ("vectors-visible",       vectors);
-  SET_SENSITIVE ("vectors-linked",        vectors);
-  SET_SENSITIVE ("vectors-lock-content",  can_lock);
-  SET_SENSITIVE ("vectors-lock-position", can_lock_pos);
-
-  SET_ACTIVE ("vectors-visible",       visible);
-  SET_ACTIVE ("vectors-linked",        linked);
-  SET_ACTIVE ("vectors-lock-content",  locked);
-  SET_ACTIVE ("vectors-lock-position", locked_pos);
-
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", image && !mask_empty);
@@ -378,4 +423,6 @@ vectors_actions_update (GimpActionGroup *group,
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
+
+  items_actions_update (group, "vectors", GIMP_ITEM (vectors));
 }

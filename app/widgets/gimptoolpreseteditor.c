@@ -195,6 +195,14 @@ gimp_tool_preset_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (data_editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  button = gimp_editor_add_action_button (GIMP_EDITOR (editor),
+                                          "tool-preset-editor",
+                                          "tool-preset-editor-save", NULL);
+
+  button = gimp_editor_add_action_button (GIMP_EDITOR (editor),
+                                          "tool-preset-editor",
+                                          "tool-preset-editor-restore", NULL);
+
   if (data_editor->data)
     gimp_tool_preset_editor_sync_data (editor);
 }

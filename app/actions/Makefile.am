@@ -116,6 +116,10 @@ libappactions_a_SOURCES = \
 	images-actions.h		\
 	images-commands.c		\
 	images-commands.h		\
+	items-commands.c		\
+	items-commands.h		\
+	items-actions.c			\
+	items-actions.h			\
 	layers-actions.c		\
 	layers-actions.h		\
 	layers-commands.c		\
@@ -172,6 +176,8 @@ libappactions_a_SOURCES = \
 	tool-presets-commands.h		\
 	tool-preset-editor-actions.c	\
 	tool-preset-editor-actions.h	\
+	tool-preset-editor-commands.c	\
+	tool-preset-editor-commands.h	\
 	tools-actions.c			\
 	tools-actions.h			\
 	tools-commands.c		\

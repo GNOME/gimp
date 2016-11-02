@@ -276,7 +276,7 @@ msgstr "Girat"
 
 #: ../libgimp/gimpmetadata.c:844
 msgid "This image contains Exif orientation metadata."
-msgstr "Aquesta imatge conté metadades d'orientació EXIF"
+msgstr "Aquesta imatge conté metadades d'orientació EXIF."
 
 #: ../libgimp/gimpmetadata.c:862
 msgid "Would you like to rotate the image?"
@@ -873,7 +873,7 @@ msgstr "Cap"
 #: ../libgimpbase/gimpbaseenums.c:893
 msgctxt "interpolation-type"
 msgid "Linear"
-msgstr "Bilineal"
+msgstr "Lineal"
 
 #: ../libgimpbase/gimpbaseenums.c:894
 msgctxt "interpolation-type"

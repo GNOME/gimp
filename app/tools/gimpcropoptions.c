@@ -20,12 +20,12 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimprectangleoptions.h"
@@ -38,7 +38,8 @@
 enum
 {
   PROP_LAYER_ONLY = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
-  PROP_ALLOW_GROWING
+  PROP_ALLOW_GROWING,
+  PROP_FILL_TYPE
 };
 
 
@@ -94,6 +95,14 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_TYPE,
+                         "fill-type",
+                         _("Fill with"),
+                         _("How to fill new areas created by 'Allow growing'"),
+                         GIMP_TYPE_FILL_TYPE,
+                         GIMP_FILL_TRANSPARENT,
+                         GIMP_PARAM_STATIC_STRINGS);
+
   gimp_rectangle_options_install_properties (object_class);
 }
 
@@ -125,6 +134,10 @@ gimp_crop_options_set_property (GObject      *object,
       options->allow_growing = g_value_get_boolean (value);
       break;
 
+    case PROP_FILL_TYPE:
+      options->fill_type = g_value_get_enum (value);
+      break;
+
     default:
       gimp_rectangle_options_set_property (object, property_id, value, pspec);
       break;
@@ -149,6 +162,10 @@ gimp_crop_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->allow_growing);
       break;
 
+    case PROP_FILL_TYPE:
+      g_value_set_enum (value, options->fill_type);
+      break;
+
     default:
       gimp_rectangle_options_get_property (object, property_id, value, pspec);
       break;
@@ -162,16 +179,23 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *vbox_rectangle;
   GtkWidget *button;
+  GtkWidget *combo;
+  GtkWidget *frame;
 
   /*  layer toggle  */
   button = gimp_prop_check_button_new (config, "layer-only", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /*  allow growing toggle  */
-  button = gimp_prop_check_button_new (config, "allow-growing", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  /*  fill type combo  */
+  combo = gimp_prop_enum_combo_box_new (config, "fill-type", 0, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fill with"));
+
+  /*  allow growing toggle/frame  */
+  frame = gimp_prop_expanding_frame_new (config, "allow-growing", NULL,
+                                         combo, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   /*  rectangle options  */
   vbox_rectangle = gimp_rectangle_options_gui (tool_options);

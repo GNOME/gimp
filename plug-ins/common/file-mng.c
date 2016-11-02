@@ -824,9 +824,9 @@ mng_save_image (const gchar  *filename,
       const Babl     *layer_format;
       volatile gint   layer_bpp;
 
-      guint8          layer_mng_colortype;
-      guint8          layer_mng_compression_type;
-      guint8          layer_mng_interlace_type;
+      guint8          __attribute__((unused))layer_mng_colortype;
+      guint8          __attribute__((unused))layer_mng_compression_type;
+      guint8          __attribute__((unused))layer_mng_interlace_type;
       gboolean        layer_has_unique_palette;
 
       gchar           frame_mode;

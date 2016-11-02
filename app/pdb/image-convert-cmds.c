@@ -173,9 +173,9 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
 
       if (success)
         success = gimp_image_convert_indexed (image,
-                                              num_cols, dither_type,
-                                              alpha_dither, FALSE, remove_unused,
-                                              palette_type, pal,
+                                              palette_type, num_cols, remove_unused,
+                                              dither_type, alpha_dither, FALSE,
+                                              pal,
                                               NULL, error);
     }
 

@@ -77,5 +77,9 @@ void   vectors_lock_content_cmd_callback         (GtkAction   *action,
 void   vectors_lock_position_cmd_callback        (GtkAction   *action,
                                                   gpointer     data);
 
+void   vectors_color_tag_cmd_callback            (GtkAction   *action,
+                                                  gint         value,
+                                                  gpointer     data);
+
 
 #endif /* __VECTORS_COMMANDS_H__ */

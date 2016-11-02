@@ -351,6 +351,50 @@ gimp_clone_type_get_type (void)
 }
 
 GType
+gimp_color_tag_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_COLOR_TAG_NONE, "GIMP_COLOR_TAG_NONE", "none" },
+    { GIMP_COLOR_TAG_BLUE, "GIMP_COLOR_TAG_BLUE", "blue" },
+    { GIMP_COLOR_TAG_GREEN, "GIMP_COLOR_TAG_GREEN", "green" },
+    { GIMP_COLOR_TAG_YELLOW, "GIMP_COLOR_TAG_YELLOW", "yellow" },
+    { GIMP_COLOR_TAG_ORANGE, "GIMP_COLOR_TAG_ORANGE", "orange" },
+    { GIMP_COLOR_TAG_BROWN, "GIMP_COLOR_TAG_BROWN", "brown" },
+    { GIMP_COLOR_TAG_RED, "GIMP_COLOR_TAG_RED", "red" },
+    { GIMP_COLOR_TAG_VIOLET, "GIMP_COLOR_TAG_VIOLET", "violet" },
+    { GIMP_COLOR_TAG_GRAY, "GIMP_COLOR_TAG_GRAY", "gray" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_COLOR_TAG_NONE, NC_("color-tag", "None"), NULL },
+    { GIMP_COLOR_TAG_BLUE, NC_("color-tag", "Blue"), NULL },
+    { GIMP_COLOR_TAG_GREEN, NC_("color-tag", "Green"), NULL },
+    { GIMP_COLOR_TAG_YELLOW, NC_("color-tag", "Yellow"), NULL },
+    { GIMP_COLOR_TAG_ORANGE, NC_("color-tag", "Orange"), NULL },
+    { GIMP_COLOR_TAG_BROWN, NC_("color-tag", "Brown"), NULL },
+    { GIMP_COLOR_TAG_RED, NC_("color-tag", "Red"), NULL },
+    { GIMP_COLOR_TAG_VIOLET, NC_("color-tag", "Violet"), NULL },
+    { GIMP_COLOR_TAG_GRAY, NC_("color-tag", "Gray"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpColorTag", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "color-tag");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_component_type_get_type (void)
 {
   static const GEnumValue values[] =
@@ -1020,10 +1064,10 @@ gimp_merge_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_EXPAND_AS_NECESSARY, "GIMP_EXPAND_AS_NECESSARY", NULL },
-    { GIMP_CLIP_TO_IMAGE, "GIMP_CLIP_TO_IMAGE", NULL },
-    { GIMP_CLIP_TO_BOTTOM_LAYER, "GIMP_CLIP_TO_BOTTOM_LAYER", NULL },
-    { GIMP_FLATTEN_IMAGE, "GIMP_FLATTEN_IMAGE", NULL },
+    { GIMP_EXPAND_AS_NECESSARY, NC_("merge-type", "Expanded as neccessary"), NULL },
+    { GIMP_CLIP_TO_IMAGE, NC_("merge-type", "Clipped to image"), NULL },
+    { GIMP_CLIP_TO_BOTTOM_LAYER, NC_("merge-type", "Clipped to bottom layer"), NULL },
+    { GIMP_FLATTEN_IMAGE, NC_("merge-type", "Flatten"), NULL },
     { 0, NULL, NULL }
   };
 

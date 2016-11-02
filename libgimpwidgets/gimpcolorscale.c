@@ -87,6 +87,8 @@ static gboolean gimp_color_scale_button_press      (GtkWidget        *widget,
                                                     GdkEventButton   *event);
 static gboolean gimp_color_scale_button_release    (GtkWidget        *widget,
                                                     GdkEventButton   *event);
+static gboolean gimp_color_scale_scroll            (GtkWidget        *widget,
+                                                    GdkEventScroll   *event);
 static gboolean gimp_color_scale_expose            (GtkWidget        *widget,
                                                     GdkEventExpose   *event);
 
@@ -118,6 +120,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   widget_class->state_changed        = gimp_color_scale_state_changed;
   widget_class->button_press_event   = gimp_color_scale_button_press;
   widget_class->button_release_event = gimp_color_scale_button_release;
+  widget_class->scroll_event         = gimp_color_scale_scroll;
   widget_class->expose_event         = gimp_color_scale_expose;
 
   /**
@@ -352,6 +355,42 @@ gimp_color_scale_button_release (GtkWidget      *widget,
     }
 
   return GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
+}
+
+static gboolean
+gimp_color_scale_scroll (GtkWidget      *widget,
+                         GdkEventScroll *event)
+{
+  if (gtk_orientable_get_orientation (GTK_ORIENTABLE (widget)) ==
+      GTK_ORIENTATION_HORIZONTAL)
+    {
+      GdkEventScroll *my_event;
+      gboolean        retval;
+
+      my_event = (GdkEventScroll *) gdk_event_copy ((GdkEvent *) event);
+
+      switch (my_event->direction)
+        {
+        case GDK_SCROLL_UP:
+          my_event->direction = GDK_SCROLL_RIGHT;
+          break;
+
+        case GDK_SCROLL_DOWN:
+          my_event->direction = GDK_SCROLL_LEFT;
+          break;
+
+        default:
+          break;
+        }
+
+      retval = GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, my_event);
+
+      gdk_event_free ((GdkEvent *) my_event);
+
+      return retval;
+    }
+
+  return GTK_WIDGET_CLASS (parent_class)->scroll_event (widget, event);
 }
 
 static gboolean

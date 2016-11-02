@@ -981,6 +981,63 @@ gimp_paint_options_set_default_brush_size (GimpPaintOptions *paint_options,
 }
 
 void
+gimp_paint_options_set_default_brush_angle (GimpPaintOptions *paint_options,
+                                            GimpBrush        *brush)
+{
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+
+  if (! brush)
+    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    {
+      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (brush);
+
+      g_object_set (paint_options,
+                    "brush-angle", (gdouble) gimp_brush_generated_get_angle (generated_brush),
+                    NULL);
+    }
+  else
+    {
+      g_object_set (paint_options,
+                    "brush-angle", DEFAULT_BRUSH_ANGLE,
+                    NULL);
+    }
+}
+
+void
+gimp_paint_options_set_default_brush_aspect_ratio (GimpPaintOptions *paint_options,
+                                                   GimpBrush        *brush)
+{
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+
+  if (! brush)
+    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+  if (GIMP_IS_BRUSH_GENERATED (brush))
+    {
+      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (brush);
+      gdouble             ratio;
+
+      ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
+
+      ratio = (ratio - 1.0) * 20.0 / 19.0;
+
+      g_object_set (paint_options,
+                    "brush-aspect-ratio", ratio,
+                    NULL);
+    }
+  else
+    {
+      g_object_set (paint_options,
+                    "brush-aspect-ratio", DEFAULT_BRUSH_ASPECT_RATIO,
+                    NULL);
+    }
+}
+
+void
 gimp_paint_options_set_default_brush_spacing (GimpPaintOptions *paint_options,
                                               GimpBrush        *brush)
 {
@@ -1037,8 +1094,8 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
   gdouble  brush_force;
 
   gboolean brush_link_size;
-  gboolean brush_link_aspect_ratio;
   gboolean brush_link_angle;
+  gboolean brush_link_aspect_ratio;
   gboolean brush_link_spacing;
   gboolean brush_link_hardness;
 
@@ -1046,33 +1103,33 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
 
   g_object_get (src,
-                "brush-size", &brush_size,
-                "brush-zoom", &brush_zoom,
-                "brush-angle", &brush_angle,
-                "brush-aspect-ratio", &brush_aspect_ratio,
-                "brush-spacing", &brush_spacing,
-                "brush-hardness", &brush_hardness,
-                "brush-force", &brush_force,
-                "brush-link-size", &brush_link_size,
-                "brush-link-angle", &brush_link_angle,
+                "brush-size",              &brush_size,
+                "brush-zoom",              &brush_zoom,
+                "brush-angle",             &brush_angle,
+                "brush-aspect-ratio",      &brush_aspect_ratio,
+                "brush-spacing",           &brush_spacing,
+                "brush-hardness",          &brush_hardness,
+                "brush-force",             &brush_force,
+                "brush-link-size",         &brush_link_size,
+                "brush-link-angle",        &brush_link_angle,
                 "brush-link-aspect-ratio", &brush_link_aspect_ratio,
-                "brush-link-spacing", &brush_link_spacing,
-                "brush-link-hardness", &brush_link_hardness,
+                "brush-link-spacing",      &brush_link_spacing,
+                "brush-link-hardness",     &brush_link_hardness,
                 NULL);
 
   g_object_set (dest,
-                "brush-size", brush_size,
-                "brush-zoom", brush_zoom,
-                "brush-angle", brush_angle,
-                "brush-aspect-ratio", brush_aspect_ratio,
-                "brush-spacing", brush_spacing,
-                "brush-hardness", brush_hardness,
-                "brush-force", brush_force,
-                "brush-link-size", brush_link_size,
-                "brush-link-angle", brush_link_angle,
+                "brush-size",              brush_size,
+                "brush-zoom",              brush_zoom,
+                "brush-angle",             brush_angle,
+                "brush-aspect-ratio",      brush_aspect_ratio,
+                "brush-spacing",           brush_spacing,
+                "brush-hardness",          brush_hardness,
+                "brush-force",             brush_force,
+                "brush-link-size",         brush_link_size,
+                "brush-link-angle",        brush_link_angle,
                 "brush-link-aspect-ratio", brush_link_aspect_ratio,
-                "brush-link-spacing", brush_link_spacing,
-                "brush-link-hardness", brush_link_hardness,
+                "brush-link-spacing",      brush_link_spacing,
+                "brush-link-hardness",     brush_link_hardness,
                 NULL);
 }
 
@@ -1080,29 +1137,29 @@ void
 gimp_paint_options_copy_dynamics_props (GimpPaintOptions *src,
                                         GimpPaintOptions *dest)
 {
-  gboolean        dynamics_expanded;
-  gboolean        fade_reverse;
-  gdouble         fade_length;
-  GimpUnit        fade_unit;
-  GimpRepeatMode  fade_repeat;
+  gboolean       dynamics_expanded;
+  gboolean       fade_reverse;
+  gdouble        fade_length;
+  GimpUnit       fade_unit;
+  GimpRepeatMode fade_repeat;
 
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
 
   g_object_get (src,
                 "dynamics-expanded", &dynamics_expanded,
-                "fade-reverse", &fade_reverse,
-                "fade-length", &fade_length,
-                "fade-unit", &fade_unit,
-                "fade-repeat", &fade_repeat,
+                "fade-reverse",      &fade_reverse,
+                "fade-length",       &fade_length,
+                "fade-unit",         &fade_unit,
+                "fade-repeat",       &fade_repeat,
                 NULL);
 
   g_object_set (dest,
                 "dynamics-expanded", dynamics_expanded,
-                "fade-reverse", fade_reverse,
-                "fade-length", fade_length,
-                "fade-unit", fade_unit,
-                "fade-repeat", fade_repeat,
+                "fade-reverse",      fade_reverse,
+                "fade-length",       fade_length,
+                "fade-unit",         fade_unit,
+                "fade-repeat",       fade_repeat,
                 NULL);
 }
 
@@ -1110,7 +1167,7 @@ void
 gimp_paint_options_copy_gradient_props (GimpPaintOptions *src,
                                         GimpPaintOptions *dest)
 {
-  gboolean  gradient_reverse;
+  gboolean gradient_reverse;
 
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));

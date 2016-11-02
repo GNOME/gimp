@@ -1159,6 +1159,45 @@ gimp_get_message_icon_name (GimpMessageSeverity severity)
   g_return_val_if_reached (GIMP_STOCK_WARNING);
 }
 
+gboolean
+gimp_get_color_tag_color (GimpColorTag  color_tag,
+                          GimpRGB      *color)
+{
+  static const struct
+  {
+    guchar r;
+    guchar g;
+    guchar b;
+  }
+  colors[] =
+  {
+    {   0,   0,   0  }, /* none   */
+    {  84, 182, 231  }, /* blue   */
+    { 154, 202,  66  }, /* green  */
+    { 250, 228,  57  }, /* yellow */
+    { 255, 168,  63  }, /* orange */
+    { 179, 101,  65  }, /* brown  */
+    { 245,  44,  52  }, /* red    */
+    { 196, 107, 217  }, /* violet */
+    { 121, 122, 116  }  /* gray   */
+  };
+
+  g_return_val_if_fail (color != NULL, FALSE);
+
+  if (color_tag > GIMP_COLOR_TAG_NONE)
+    {
+      gimp_rgba_set_uchar (color,
+                           colors[color_tag].r,
+                           colors[color_tag].g,
+                           colors[color_tag].b,
+                           255);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 void
 gimp_pango_layout_set_scale (PangoLayout *layout,
                              gdouble      scale)
@@ -1470,14 +1509,14 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 
       if (base_type == GIMP_GRAY)
         {
-          file = g_file_new_for_path (config->gray_profile);
+          file = gimp_file_new_for_config_path (config->gray_profile, NULL);
 
           label = g_strdup_printf (_("Preferred grayscale (%s)"),
                                    gimp_color_profile_get_label (profile));
         }
       else
         {
-          file = g_file_new_for_path (config->rgb_profile);
+          file = gimp_file_new_for_config_path (config->rgb_profile, NULL);
 
           label = g_strdup_printf (_("Preferred RGB (%s)"),
                                    gimp_color_profile_get_label (profile));

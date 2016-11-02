@@ -82,8 +82,6 @@ G_DEFINE_TYPE (GimpMotionBuffer, gimp_motion_buffer, GIMP_TYPE_OBJECT)
 
 static guint motion_buffer_signals[LAST_SIGNAL] = { 0 };
 
-static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
-
 
 static void
 gimp_motion_buffer_class_init (GimpMotionBufferClass *klass)

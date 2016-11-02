@@ -146,6 +146,12 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_color_management_reset_cmd_callback),
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
+  { "view-softproof-profile", NULL,
+    NC_("view-action", "Soft-_Proofing Profile..."), NULL,
+    NC_("view-action", "Set the soft-proofing profile"),
+    G_CALLBACK (view_softproof_profile_cmd_callback),
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
   { "view-shrink-wrap", "zoom-fit-best",
     NC_("view-action", "Shrink _Wrap"), "<primary>J",
     NC_("view-action", "Reduce the image window to the size of the image display"),
@@ -967,6 +973,7 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-display-intent-absolute-colorimetric",   cm);
   SET_SENSITIVE ("view-display-black-point-compensation",       cm);
   SET_ACTIVE    ("view-display-black-point-compensation",       d_bpc);
+  SET_SENSITIVE ("view-softproof-profile",                      sp);
   SET_SENSITIVE ("view-softproof-intent-perceptual",            sp);
   SET_SENSITIVE ("view-softproof-intent-relative-colorimetric", sp);
   SET_SENSITIVE ("view-softproof-intent-saturation",            sp);

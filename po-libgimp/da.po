@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-15 06:11+0000\n"
+"POT-Creation-Date: 2016-03-16 07:09+0000\n"
 "PO-Revision-Date: 2016-02-26 00:00+0200\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -31,22 +31,22 @@ msgstr ""
 "X-Source-Language: C\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1102
+#: ../libgimp/gimp.c:1136
 msgid "success"
 msgstr "gennemført"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1106
+#: ../libgimp/gimp.c:1140
 msgid "execution error"
 msgstr "kørselsfejl"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1110
+#: ../libgimp/gimp.c:1144
 msgid "calling error"
 msgstr "fejl i kald"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1114
+#: ../libgimp/gimp.c:1148
 msgid "cancelled"
 msgstr "afbrudt"
 
@@ -72,9 +72,7 @@ msgstr "Forén synlige lag"
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr ""
-"Pluginet %s kan ikke håndtere lagforskydning, størrelse eller "
-"opacitet"
+msgstr "Pluginet %s kan ikke håndtere lagforskydning, størrelse eller opacitet"
 
 #: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
@@ -122,7 +120,7 @@ msgstr "Pluginet %s kan kun håndtere gråtonebilleder"
 #: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
 #: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
-msgstr "Konvertér til gråtoner"
+msgstr "Konvertér til gråtone"
 
 #: ../libgimp/gimpexport.c:324
 #, c-format
@@ -141,8 +139,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"Pluginet %s kan kun håndtere bitmap-indekserede (tofarvede) billeder"
+msgstr "Pluginet %s kan kun håndtere bitmap-indekserede (tofarvede) billeder"
 
 #: ../libgimp/gimpexport.c:335
 msgid ""
@@ -165,8 +162,7 @@ msgstr "Pluginet %s kan kun håndtere RGB- eller indekserede billeder"
 #: ../libgimp/gimpexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr ""
-"Pluginet %s kan kun håndtere gråtone- eller indekserede billeder"
+msgstr "Pluginet %s kan kun håndtere gråtone- eller indekserede billeder"
 
 #: ../libgimp/gimpexport.c:374
 #, c-format
@@ -574,14 +570,12 @@ msgctxt "desaturate-mode"
 msgid "Average"
 msgstr "Gennemsnit"
 
-# scootergrisen: se om skal være noget andet
 # http://meetthegimp.org/wp-content/uploads/meetthegimp069.mp4
 #: ../libgimpbase/gimpbaseenums.c:333
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Lysne"
 
-# scootergrisen: se om skal være noget andet
 # http://meetthegimp.org/wp-content/uploads/meetthegimp069.mp4
 #: ../libgimpbase/gimpbaseenums.c:334
 msgctxt "dodge-burn-type"
@@ -744,7 +738,6 @@ msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Kubisk"
 
-# scootergrisen: Lanczos3 med lille l? Kig også i andre strenge
 #: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
@@ -810,14 +803,11 @@ msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Mellemtoner"
 
-# Kunne vi ikke finde et bedre udtryk
-# scootergrisen: måske noget med højlys
 #: ../libgimpbase/gimpbaseenums.c:738
 msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr "Highlights"
+msgstr "Højlys"
 
-# scootergrisen: måske "Normal (fremad)" er bedre end "Almindelig (fremad)"
 #: ../libgimpbase/gimpbaseenums.c:767
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
@@ -888,11 +878,10 @@ msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Let"
 
-# scootergrisen: se om medium er bedre
 #: ../libgimpbase/gimpbaseenums.c:1139
 msgctxt "text-hint-style"
 msgid "Medium"
-msgstr "Mellem/medium"
+msgstr "Medium"
 
 #: ../libgimpbase/gimpbaseenums.c:1140
 msgctxt "text-hint-style"
@@ -1014,7 +1003,6 @@ msgid "Print simulation"
 msgstr "Udskriftssimulering"
 
 # Opfattelse?
-# scootergrisen: måske "Som det opfattes" eller "Sanselig"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
@@ -1124,7 +1112,6 @@ msgstr "ugyldig UTF-8-streng"
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:431
 #, c-format
-#| msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "forventede \"yes\" eller \"no\" for boolesk symbol, fik \"%s\""
 
@@ -1315,8 +1302,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Klik på pipetten og klik derefter et vilkårligt på skærmen "
-"for at vælge den pågældende farve."
+"Klik på pipetten og klik derefter et vilkårligt på skærmen for at vælge den "
+"pågældende farve."
 
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:290
@@ -1387,7 +1374,6 @@ msgstr "_Bogstavmellemrum"
 msgid "L_ine Spacing"
 msgstr "_Linjemellemrum"
 
-# scootergrisen: tilpas/ændr størrelse
 #: ../libgimpwidgets/gimpstock.c:204
 msgid "_Resize"
 msgstr "_Tilpas"
@@ -1468,13 +1454,11 @@ msgctxt "aspect-type"
 msgid "Square"
 msgstr "Kvadratisk"
 
-# scootergrisen: portræt?
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Stående"
 
-# scootergrisen: landskab?
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"

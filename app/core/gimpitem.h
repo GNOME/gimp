@@ -44,6 +44,7 @@ struct _GimpItemClass
   /*  signals  */
   void            (* removed)               (GimpItem            *item);
   void            (* linked_changed)        (GimpItem            *item);
+  void            (* color_tag_changed)     (GimpItem            *item);
   void            (* lock_content_changed)  (GimpItem            *item);
   void            (* lock_position_changed) (GimpItem            *item);
 
@@ -80,6 +81,7 @@ struct _GimpItemClass
                                           GimpProgress           *progress);
   void            (* resize)             (GimpItem               *item,
                                           GimpContext            *context,
+                                          GimpFillType            fill_type,
                                           gint                    new_width,
                                           gint                    new_height,
                                           gint                    offset_x,
@@ -232,6 +234,7 @@ void            gimp_item_scale_by_origin    (GimpItem           *item,
                                               gboolean            local_origin);
 void            gimp_item_resize             (GimpItem           *item,
                                               GimpContext        *context,
+                                              GimpFillType        fill_type,
                                               gint                new_width,
                                               gint                new_height,
                                               gint                offset_x,
@@ -327,6 +330,11 @@ void            gimp_item_set_linked         (GimpItem           *item,
                                               gboolean            linked,
                                               gboolean            push_undo);
 gboolean        gimp_item_get_linked         (GimpItem           *item);
+
+void            gimp_item_set_color_tag      (GimpItem           *item,
+                                              GimpColorTag        color_tag,
+                                              gboolean            push_undo);
+GimpColorTag    gimp_item_get_color_tag      (GimpItem           *item);
 
 void            gimp_item_set_lock_content   (GimpItem           *item,
                                               gboolean            lock_content,

@@ -133,8 +133,10 @@ gimp_image_convert_type (GimpImage          *image,
         gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
                                     nth_layer, n_layers);
 
-      gimp_drawable_convert_type (drawable, image, new_type,
+      gimp_drawable_convert_type (drawable, image,
+                                  new_type,
                                   gimp_drawable_get_precision (drawable),
+                                  gimp_drawable_has_alpha (drawable),
                                   dest_profile, 0, 0,
                                   TRUE, sub_progress);
     }

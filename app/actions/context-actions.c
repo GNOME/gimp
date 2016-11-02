@@ -1243,6 +1243,7 @@ void
 context_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
+#if 0
   GimpContext *context   = action_data_get_context (data);
   gboolean     generated = FALSE;
   gdouble      radius    = 0.0;
@@ -1272,7 +1273,6 @@ context_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, "context-" action, (condition) != 0)
 
-#if 0
   SET_SENSITIVE ("brush-radius-minimum",       generated && radius > 1.0);
   SET_SENSITIVE ("brush-radius-decrease",      generated && radius > 1.0);
   SET_SENSITIVE ("brush-radius-decrease-skip", generated && radius > 1.0);
@@ -1288,7 +1288,7 @@ context_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("brush-angle-maximum",       generated);
   SET_SENSITIVE ("brush-angle-increase",      generated);
   SET_SENSITIVE ("brush-angle-increase-skip", generated);
-#endif
-
 #undef SET_SENSITIVE
+
+#endif
 }

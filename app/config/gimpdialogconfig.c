@@ -48,16 +48,49 @@ enum
 
   PROP_COLOR_PROFILE_POLICY,
 
+  PROP_IMAGE_CONVERT_PROFILE_INTENT,
+  PROP_IMAGE_CONVERT_PROFILE_BPC,
+
+  PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD,
+  PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD,
+  PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD,
+
+  PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE,
+  PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS,
+  PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES,
+  PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE,
+  PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA,
+  PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS,
+
+  PROP_IMAGE_RESIZE_FILL_TYPE,
+  PROP_IMAGE_RESIZE_LAYER_SET,
+  PROP_IMAGE_RESIZE_RESIZE_TEXT_LAYERS,
+
   PROP_LAYER_NEW_NAME,
+  PROP_LAYER_NEW_MODE,
+  PROP_LAYER_NEW_OPACITY,
   PROP_LAYER_NEW_FILL_TYPE,
+
+  PROP_LAYER_RESIZE_FILL_TYPE,
 
   PROP_LAYER_ADD_MASK_TYPE,
   PROP_LAYER_ADD_MASK_INVERT,
+
+  PROP_LAYER_MERGE_TYPE,
+  PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY,
+  PROP_LAYER_MERGE_DISCARD_INVISIBLE,
 
   PROP_CHANNEL_NEW_NAME,
   PROP_CHANNEL_NEW_COLOR,
 
   PROP_VECTORS_NEW_NAME,
+
+  PROP_VECTORS_EXPORT_PATH,
+  PROP_VECTORS_EXPORT_ACTIVE_ONLY,
+
+  PROP_VECTORS_IMPORT_PATH,
+  PROP_VECTORS_IMPORT_MERGE,
+  PROP_VECTORS_IMPORT_SCALE,
 
   PROP_SELECTION_FEATHER_RADIUS,
 
@@ -138,6 +171,122 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          GIMP_COLOR_PROFILE_POLICY_ASK,
                          GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_CONVERT_PROFILE_INTENT,
+                         "image-convert-profile-intent",
+                         "Default rendering intent fo color profile conversion",
+                         IMAGE_CONVERT_PROFILE_INTENT_BLURB,
+                         GIMP_TYPE_COLOR_RENDERING_INTENT,
+                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMAGE_CONVERT_PROFILE_BPC,
+                            "image-convert-profile-black-point-compensation",
+                            "Default 'Black point compensation' for "
+                            "color profile conversion",
+                            IMAGE_CONVERT_PROFILE_BPC_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD,
+                         "image-convert-precision-layer-dither-method",
+                         "Default layer dither type for precision conversion",
+                         IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD_BLURB,
+                         GEGL_TYPE_DITHER_METHOD,
+                         GEGL_DITHER_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD,
+                         "image-convert-precision-text-layer-dither-method",
+                         "Default text layer dither type for precision conversion",
+                         IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD_BLURB,
+                         GEGL_TYPE_DITHER_METHOD,
+                         GEGL_DITHER_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD,
+                         "image-convert-precision-channel-dither-method",
+                         "Default channel dither type for precision conversion",
+                         IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD_BLURB,
+                         GEGL_TYPE_DITHER_METHOD,
+                         GEGL_DITHER_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE,
+                         "image-convert-indexed-palette-type",
+                         "Default palette type for indexed conversion",
+                         IMAGE_CONVERT_INDEXED_PALETTE_TYPE_BLURB,
+                         GIMP_TYPE_CONVERT_PALETTE_TYPE,
+                         GIMP_MAKE_PALETTE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_INT (object_class,
+                        PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS,
+                        "image-convert-indexed-max-colors",
+                        "Default maximum number of colors for indexed conversion",
+                        IMAGE_CONVERT_INDEXED_MAX_COLORS_BLURB,
+                        2, 256, 256,
+                        GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES,
+                            "image-convert-indexed-remove-duplicates",
+                            "Default remove duplicates for indexed conversion",
+                            IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class,
+                         PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE,
+                         "image-convert-indexed-dither-type",
+                         "Default dither type for indexed conversion",
+                         IMAGE_CONVERT_INDEXED_DITHER_TYPE_BLURB,
+                         GIMP_TYPE_CONVERT_DITHER_TYPE,
+                         GIMP_NO_DITHER,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA,
+                            "image-convert-indexed-dither-alpha",
+                            "Default dither alpha for indexed conversion",
+                            IMAGE_CONVERT_INDEXED_DITHER_ALPHA_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+                            PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS,
+                            "image-convert-indexed-dither-text-layers",
+                            "Default dither text layers for indexed conversion",
+                            IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_RESIZE_FILL_TYPE,
+                         "image-resize-fill-type",
+                         "Default image resize fill type",
+                         IMAGE_RESIZE_FILL_TYPE_BLURB,
+                         GIMP_TYPE_FILL_TYPE,
+                         GIMP_FILL_TRANSPARENT,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_IMAGE_RESIZE_LAYER_SET,
+                         "image-resize-layer-set",
+                         "Default image resize layer set",
+                         IMAGE_RESIZE_LAYER_SET_BLURB,
+                         GIMP_TYPE_ITEM_SET,
+                         GIMP_ITEM_SET_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMAGE_RESIZE_RESIZE_TEXT_LAYERS,
+                            "image-resize-resize-text-layers",
+                            "Default image resize text layers",
+                            IMAGE_RESIZE_RESIZE_TEXT_LAYERS_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_STRING (object_class, PROP_LAYER_NEW_NAME,
                            "layer-new-name",
                            "Default new layer name",
@@ -145,10 +294,34 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            _("Layer"),
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_MODE,
+                         "layer-new-mode",
+                         "Default new layer mode",
+                         LAYER_NEW_MODE_BLURB,
+                         GIMP_TYPE_LAYER_MODE_EFFECTS,
+                         GIMP_NORMAL_MODE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LAYER_NEW_OPACITY,
+                           "layer-new-opacity",
+                           "Default new layer opacity",
+                           LAYER_NEW_OPACITY_BLURB,
+                           GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE,
+                           GIMP_OPACITY_OPAQUE,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_NEW_FILL_TYPE,
                          "layer-new-fill-type",
                          "Default new layer fill type",
                          LAYER_NEW_FILL_TYPE_BLURB,
+                         GIMP_TYPE_FILL_TYPE,
+                         GIMP_FILL_TRANSPARENT,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_RESIZE_FILL_TYPE,
+                         "layer-resize-fill-type",
+                         "Default layer resize fill type",
+                         LAYER_RESIZE_FILL_TYPE_BLURB,
                          GIMP_TYPE_FILL_TYPE,
                          GIMP_FILL_TRANSPARENT,
                          GIMP_PARAM_STATIC_STRINGS);
@@ -165,6 +338,28 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                             "layer-add-mask-invert",
                             "Default layer mask invert",
                             LAYER_ADD_MASK_INVERT_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_LAYER_MERGE_TYPE,
+                         "layer-merge-type",
+                         "Default layer merge type",
+                         LAYER_MERGE_TYPE_BLURB,
+                         GIMP_TYPE_MERGE_TYPE,
+                         GIMP_EXPAND_AS_NECESSARY,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY,
+                            "layer-merge-active-group-only",
+                            "Default layer merge active group only",
+                            LAYER_MERGE_ACTIVE_GROUP_ONLY_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LAYER_MERGE_DISCARD_INVISIBLE,
+                            "layer-merge-discard-invisible",
+                            "Default layer merge discard invisible",
+                            LAYER_MERGE_DISCARD_INVISIBLE_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -189,6 +384,43 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                            VECTORS_NEW_NAME_BLURB,
                            _("Path"),
                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_VECTORS_EXPORT_PATH,
+                         "path-export-path",
+                         "Default path export folder path",
+                         VECTORS_EXPORT_PATH_BLURB,
+                         GIMP_CONFIG_PATH_FILE,
+                         NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_EXPORT_ACTIVE_ONLY,
+                            "path-export-active-only",
+                            "Default export only the active path",
+                            VECTORS_EXPORT_ACTIVE_ONLY_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_PATH (object_class, PROP_VECTORS_IMPORT_PATH,
+                         "path-import-path",
+                         "Default path import folder path",
+                         VECTORS_IMPORT_PATH_BLURB,
+                         GIMP_CONFIG_PATH_FILE,
+                         NULL,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_MERGE,
+                            "path-import-merge",
+                            "Default merge imported vectors",
+                            VECTORS_IMPORT_MERGE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_IMPORT_SCALE,
+                            "path-import-scale",
+                            "Default scale imported vectors",
+                            VECTORS_IMPORT_SCALE_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SELECTION_FEATHER_RADIUS,
                            "selection-feather-radius",
@@ -351,13 +583,72 @@ gimp_dialog_config_set_property (GObject      *object,
       config->color_profile_policy = g_value_get_enum (value);
       break;
 
+    case PROP_IMAGE_CONVERT_PROFILE_INTENT:
+      config->image_convert_profile_intent = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_PROFILE_BPC:
+      config->image_convert_profile_bpc = g_value_get_boolean (value);
+      break;
+
+    case PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD:
+      config->image_convert_precision_layer_dither_method =
+        g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD:
+      config->image_convert_precision_text_layer_dither_method =
+        g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD:
+      config->image_convert_precision_channel_dither_method =
+        g_value_get_enum (value);
+      break;
+
+    case PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE:
+      config->image_convert_indexed_palette_type = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS:
+      config->image_convert_indexed_max_colors = g_value_get_int (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES:
+      config->image_convert_indexed_remove_duplicates = g_value_get_boolean (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE:
+      config->image_convert_indexed_dither_type = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA:
+      config->image_convert_indexed_dither_alpha = g_value_get_boolean (value);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS:
+      config->image_convert_indexed_dither_text_layers = g_value_get_boolean (value);
+      break;
+
+    case PROP_IMAGE_RESIZE_FILL_TYPE:
+      config->image_resize_fill_type = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_RESIZE_LAYER_SET:
+      config->image_resize_layer_set = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_RESIZE_RESIZE_TEXT_LAYERS:
+      config->image_resize_resize_text_layers = g_value_get_boolean (value);
+      break;
+
     case PROP_LAYER_NEW_NAME:
       if (config->layer_new_name)
         g_free (config->layer_new_name);
       config->layer_new_name = g_value_dup_string (value);
       break;
+    case PROP_LAYER_NEW_MODE:
+      config->layer_new_mode = g_value_get_enum (value);
+      break;
+    case PROP_LAYER_NEW_OPACITY:
+      config->layer_new_opacity = g_value_get_double (value);
+      break;
     case PROP_LAYER_NEW_FILL_TYPE:
       config->layer_new_fill_type = g_value_get_enum (value);
+      break;
+
+    case PROP_LAYER_RESIZE_FILL_TYPE:
+      config->layer_resize_fill_type = g_value_get_enum (value);
       break;
 
     case PROP_LAYER_ADD_MASK_TYPE:
@@ -365,6 +656,16 @@ gimp_dialog_config_set_property (GObject      *object,
       break;
     case PROP_LAYER_ADD_MASK_INVERT:
       config->layer_add_mask_invert = g_value_get_boolean (value);
+      break;
+
+    case PROP_LAYER_MERGE_TYPE:
+      config->layer_merge_type = g_value_get_enum (value);
+      break;
+    case PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY:
+      config->layer_merge_active_group_only = g_value_get_boolean (value);
+      break;
+    case PROP_LAYER_MERGE_DISCARD_INVISIBLE:
+      config->layer_merge_discard_invisible = g_value_get_boolean (value);
       break;
 
     case PROP_CHANNEL_NEW_NAME:
@@ -380,6 +681,27 @@ gimp_dialog_config_set_property (GObject      *object,
       if (config->vectors_new_name)
         g_free (config->vectors_new_name);
       config->vectors_new_name = g_value_dup_string (value);
+      break;
+
+    case PROP_VECTORS_EXPORT_PATH:
+      if (config->vectors_export_path)
+        g_free (config->vectors_export_path);
+      config->vectors_export_path = g_value_dup_string (value);
+      break;
+    case PROP_VECTORS_EXPORT_ACTIVE_ONLY:
+      config->vectors_export_active_only = g_value_get_boolean (value);
+      break;
+
+    case PROP_VECTORS_IMPORT_PATH:
+      if (config->vectors_import_path)
+        g_free (config->vectors_import_path);
+      config->vectors_import_path = g_value_dup_string (value);
+      break;
+    case PROP_VECTORS_IMPORT_MERGE:
+      config->vectors_import_merge = g_value_get_boolean (value);
+      break;
+    case PROP_VECTORS_IMPORT_SCALE:
+      config->vectors_import_scale = g_value_get_boolean (value);
       break;
 
     case PROP_SELECTION_FEATHER_RADIUS:
@@ -443,11 +765,70 @@ gimp_dialog_config_get_property (GObject    *object,
       g_value_set_enum (value, config->color_profile_policy);
       break;
 
+    case PROP_IMAGE_CONVERT_PROFILE_INTENT:
+      g_value_set_enum (value, config->image_convert_profile_intent);
+      break;
+    case PROP_IMAGE_CONVERT_PROFILE_BPC:
+      g_value_set_boolean (value, config->image_convert_profile_bpc);
+      break;
+
+    case PROP_IMAGE_CONVERT_PRECISION_LAYER_DITHER_METHOD:
+      g_value_set_enum (value,
+                        config->image_convert_precision_layer_dither_method);
+      break;
+    case PROP_IMAGE_CONVERT_PRECISION_TEXT_LAYER_DITHER_METHOD:
+      g_value_set_enum (value,
+                        config->image_convert_precision_text_layer_dither_method);
+      break;
+    case PROP_IMAGE_CONVERT_PRECISION_CHANNEL_DITHER_METHOD:
+      g_value_set_enum (value,
+                        config->image_convert_precision_channel_dither_method);
+      break;
+
+    case PROP_IMAGE_CONVERT_INDEXED_PALETTE_TYPE:
+      g_value_set_enum (value, config->image_convert_indexed_palette_type);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_MAX_COLORS:
+      g_value_set_int (value, config->image_convert_indexed_max_colors);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_REMOVE_DUPLICATES:
+      g_value_set_boolean (value, config->image_convert_indexed_remove_duplicates);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_TYPE:
+      g_value_set_enum (value, config->image_convert_indexed_dither_type);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_ALPHA:
+      g_value_set_boolean (value, config->image_convert_indexed_dither_alpha);
+      break;
+    case PROP_IMAGE_CONVERT_INDEXED_DITHER_TEXT_LAYERS:
+      g_value_set_boolean (value, config->image_convert_indexed_dither_text_layers);
+      break;
+
+    case PROP_IMAGE_RESIZE_FILL_TYPE:
+      g_value_set_enum (value, config->image_resize_fill_type);
+      break;
+    case PROP_IMAGE_RESIZE_LAYER_SET:
+      g_value_set_enum (value, config->image_resize_layer_set);
+      break;
+    case PROP_IMAGE_RESIZE_RESIZE_TEXT_LAYERS:
+      g_value_set_boolean (value, config->image_resize_resize_text_layers);
+      break;
+
     case PROP_LAYER_NEW_NAME:
       g_value_set_string (value, config->layer_new_name);
       break;
+    case PROP_LAYER_NEW_MODE:
+      g_value_set_enum (value, config->layer_new_mode);
+      break;
+    case PROP_LAYER_NEW_OPACITY:
+      g_value_set_double (value, config->layer_new_opacity);
+      break;
     case PROP_LAYER_NEW_FILL_TYPE:
       g_value_set_enum (value, config->layer_new_fill_type);
+      break;
+
+    case PROP_LAYER_RESIZE_FILL_TYPE:
+      g_value_set_enum (value, config->layer_resize_fill_type);
       break;
 
     case PROP_LAYER_ADD_MASK_TYPE:
@@ -455,6 +836,16 @@ gimp_dialog_config_get_property (GObject    *object,
       break;
     case PROP_LAYER_ADD_MASK_INVERT:
       g_value_set_boolean (value, config->layer_add_mask_invert);
+      break;
+
+    case PROP_LAYER_MERGE_TYPE:
+      g_value_set_enum (value, config->layer_merge_type);
+      break;
+    case PROP_LAYER_MERGE_ACTIVE_GROUP_ONLY:
+      g_value_set_boolean (value, config->layer_merge_active_group_only);
+      break;
+    case PROP_LAYER_MERGE_DISCARD_INVISIBLE:
+      g_value_set_boolean (value, config->layer_merge_discard_invisible);
       break;
 
     case PROP_CHANNEL_NEW_NAME:
@@ -466,6 +857,23 @@ gimp_dialog_config_get_property (GObject    *object,
 
     case PROP_VECTORS_NEW_NAME:
       g_value_set_string (value, config->vectors_new_name);
+      break;
+
+    case PROP_VECTORS_EXPORT_PATH:
+      g_value_set_string (value, config->vectors_export_path);
+      break;
+    case PROP_VECTORS_EXPORT_ACTIVE_ONLY:
+      g_value_set_boolean (value, config->vectors_export_active_only);
+      break;
+
+    case PROP_VECTORS_IMPORT_PATH:
+      g_value_set_string (value, config->vectors_import_path);
+      break;
+    case PROP_VECTORS_IMPORT_MERGE:
+      g_value_set_boolean (value, config->vectors_import_merge);
+      break;
+    case PROP_VECTORS_IMPORT_SCALE:
+      g_value_set_boolean (value, config->vectors_import_scale);
       break;
 
     case PROP_SELECTION_FEATHER_RADIUS:

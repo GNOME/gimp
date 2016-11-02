@@ -639,14 +639,7 @@ gimp_color_profile_store_load_profile (GimpColorProfileStore *store,
         }
       else
         {
-          gchar *expand = gimp_config_path_expand (path, TRUE, NULL);
-
-          if (expand)
-            {
-              file = g_file_new_for_path (expand);
-
-              g_free (expand);
-            }
+          file = gimp_file_new_for_config_path (path, NULL);
         }
 
       if (file)
@@ -779,21 +772,14 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
     {
       if (files[i] && labels[i])
         {
-          gchar *path = g_file_get_path (files[i]);
+          gchar *path = gimp_file_get_config_path (files[i], NULL);
 
           if (path)
             {
-              gchar *unexpand = gimp_config_path_unexpand (path, TRUE, NULL);
-
-              if (unexpand)
-                {
-                  gimp_config_writer_open (writer, "color-profile");
-                  gimp_config_writer_string (writer, labels[i]);
-                  gimp_config_writer_string (writer, unexpand);
-                  gimp_config_writer_close (writer);
-
-                  g_free (unexpand);
-                }
+              gimp_config_writer_open (writer, "color-profile");
+              gimp_config_writer_string (writer, labels[i]);
+              gimp_config_writer_string (writer, path);
+              gimp_config_writer_close (writer);
 
               g_free (path);
             }

@@ -70,6 +70,8 @@ EXPORTS
 	gimp_config_writer_printf
 	gimp_config_writer_revert
 	gimp_config_writer_string
+	gimp_file_get_config_path
+	gimp_file_new_for_config_path
 	gimp_param_config_path_get_type
 	gimp_param_spec_config_path
 	gimp_param_spec_config_path_type

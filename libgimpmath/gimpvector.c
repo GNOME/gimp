@@ -48,13 +48,17 @@
 /*************************/
 
 static const GimpVector2 gimp_vector2_zero =   { 0.0, 0.0 };
+#if 0
 static const GimpVector2 gimp_vector2_unit_x = { 1.0, 0.0 };
 static const GimpVector2 gimp_vector2_unit_y = { 0.0, 1.0 };
+#endif
 
 static const GimpVector3 gimp_vector3_zero =   { 0.0, 0.0, 0.0 };
+#if 0
 static const GimpVector3 gimp_vector3_unit_x = { 1.0, 0.0, 0.0 };
 static const GimpVector3 gimp_vector3_unit_y = { 0.0, 1.0, 0.0 };
 static const GimpVector3 gimp_vector3_unit_z = { 0.0, 0.0, 1.0 };
+#endif
 
 /**************************************/
 /* Two   dimensional vector functions */

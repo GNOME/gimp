@@ -109,6 +109,7 @@ static void            gimp_group_layer_scale        (GimpItem        *item,
                                                       GimpProgress    *progress);
 static void            gimp_group_layer_resize       (GimpItem        *item,
                                                       GimpContext     *context,
+                                                      GimpFillType     fill_type,
                                                       gint             new_width,
                                                       gint             new_height,
                                                       gint             offset_x,
@@ -139,8 +140,6 @@ static gint64      gimp_group_layer_estimate_memsize (GimpDrawable      *drawabl
 static void            gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                                       GimpImage         *dest_image,
                                                       const Babl        *new_format,
-                                                      GimpImageBaseType  new_base_type,
-                                                      GimpPrecision      new_precision,
                                                       GimpColorProfile  *dest_profile,
                                                       gint               layer_dither_type,
                                                       gint               mask_dither_type,
@@ -633,12 +632,13 @@ gimp_group_layer_scale (GimpItem              *item,
 }
 
 static void
-gimp_group_layer_resize (GimpItem    *item,
-                         GimpContext *context,
-                         gint         new_width,
-                         gint         new_height,
-                         gint         offset_x,
-                         gint         offset_y)
+gimp_group_layer_resize (GimpItem     *item,
+                         GimpContext  *context,
+                         GimpFillType  fill_type,
+                         gint          new_width,
+                         gint          new_height,
+                         gint          offset_x,
+                         gint          offset_y)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
   GimpGroupLayerPrivate *private = GET_PRIVATE (item);
@@ -679,7 +679,7 @@ gimp_group_layer_resize (GimpItem    *item,
           gint child_offset_x = gimp_item_get_offset_x (child) - child_x;
           gint child_offset_y = gimp_item_get_offset_y (child) - child_y;
 
-          gimp_item_resize (child, context,
+          gimp_item_resize (child, context, fill_type,
                             child_width, child_height,
                             child_offset_x, child_offset_y);
         }
@@ -698,7 +698,7 @@ gimp_group_layer_resize (GimpItem    *item,
   mask = gimp_layer_get_mask (GIMP_LAYER (group));
 
   if (mask)
-    gimp_item_resize (GIMP_ITEM (mask), context,
+    gimp_item_resize (GIMP_ITEM (mask), context, GIMP_FILL_TRANSPARENT,
                       new_width, new_height, offset_x, offset_y);
 
   gimp_group_layer_resume_resize (group, TRUE);
@@ -878,9 +878,7 @@ get_projection_format (GimpProjectable   *projectable,
 static void
 gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                GimpImage         *dest_image,
-                               const Babl        *new_format /* unused */,
-                               GimpImageBaseType  new_base_type,
-                               GimpPrecision      new_precision,
+                               const Babl        *new_format,
                                GimpColorProfile  *dest_profile,
                                gint               layer_dither_type,
                                gint               mask_dither_type,
@@ -903,9 +901,10 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
    *  values so the projection will create its tiles with the right
    *  depth
    */
-  private->convert_format = get_projection_format (GIMP_PROJECTABLE (drawable),
-                                                   new_base_type,
-                                                   new_precision);
+  private->convert_format =
+    get_projection_format (GIMP_PROJECTABLE (drawable),
+                           gimp_babl_format_get_base_type (new_format),
+                           gimp_babl_format_get_precision (new_format));
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
   gimp_pickable_flush (GIMP_PICKABLE (private->projection));
 
@@ -923,11 +922,15 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
   mask = gimp_layer_get_mask (GIMP_LAYER (group));
 
   if (mask &&
-      new_precision != gimp_drawable_get_precision (GIMP_DRAWABLE (mask)))
+      gimp_babl_format_get_precision (new_format) !=
+      gimp_drawable_get_precision (GIMP_DRAWABLE (mask)))
     {
       gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
-                                  GIMP_GRAY, new_precision,
-                                  NULL, layer_dither_type, mask_dither_type,
+                                  GIMP_GRAY,
+                                  gimp_babl_format_get_precision (new_format),
+                                  gimp_drawable_has_alpha (GIMP_DRAWABLE (mask)),
+                                  NULL,
+                                  layer_dither_type, mask_dither_type,
                                   push_undo, progress);
     }
 }

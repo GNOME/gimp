@@ -43,6 +43,8 @@ libappwidgets_a_sources = \
 	gimpbufferview.h		\
 	gimpcairo-wilber.c		\
 	gimpcairo-wilber.h		\
+	gimpcellrendererbutton.c	\
+	gimpcellrendererbutton.h	\
 	gimpcellrendererdashes.c	\
 	gimpcellrendererdashes.h	\
 	gimpcellrendererviewable.c	\

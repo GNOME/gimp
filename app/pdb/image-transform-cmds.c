@@ -196,7 +196,7 @@ image_crop_invoker (GimpProcedure         *procedure,
           offy       > (gimp_image_get_height (image) - new_height))
         success = FALSE;
       else
-        gimp_image_crop (image, context,
+        gimp_image_crop (image, context, GIMP_FILL_TRANSPARENT,
                          offx, offy, new_width, new_height,
                          TRUE);
     }

@@ -799,6 +799,72 @@ gimp_item_set_lock_position (gint32   item_ID,
 }
 
 /**
+ * gimp_item_get_color_tag:
+ * @item_ID: The item.
+ *
+ * Get the color tag of the specified item.
+ *
+ * This procedure returns the specified item's color tag.
+ *
+ * Returns: The item's color tag.
+ *
+ * Since: 2.10
+ **/
+GimpColorTag
+gimp_item_get_color_tag (gint32 item_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpColorTag color_tag = 0;
+
+  return_vals = gimp_run_procedure ("gimp-item-get-color-tag",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    color_tag = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return color_tag;
+}
+
+/**
+ * gimp_item_set_color_tag:
+ * @item_ID: The item.
+ * @color_tag: The new item color tag.
+ *
+ * Set the color tag of the specified item.
+ *
+ * This procedure sets the specified item's color tag.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_item_set_color_tag (gint32       item_ID,
+                         GimpColorTag color_tag)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-item-set-color-tag",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_INT32, color_tag,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_item_get_tattoo:
  * @item_ID: The item.
  *

@@ -53,7 +53,7 @@ gimp_image_resize (GimpImage    *image,
                    gint          offset_y,
                    GimpProgress *progress)
 {
-  gimp_image_resize_with_layers (image, context,
+  gimp_image_resize_with_layers (image, context, GIMP_FILL_TRANSPARENT,
                                  new_width, new_height, offset_x, offset_y,
                                  GIMP_ITEM_SET_NONE, TRUE,
                                  progress);
@@ -62,6 +62,7 @@ gimp_image_resize (GimpImage    *image,
 void
 gimp_image_resize_with_layers (GimpImage    *image,
                                GimpContext  *context,
+                               GimpFillType  fill_type,
                                gint          new_width,
                                gint          new_height,
                                gint          offset_x,
@@ -119,7 +120,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, context,
+      gimp_item_resize (item, context, GIMP_FILL_TRANSPARENT,
                         new_width, new_height, offset_x, offset_y);
 
       if (progress)
@@ -133,7 +134,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, context,
+      gimp_item_resize (item, context, GIMP_FILL_TRANSPARENT,
                         new_width, new_height, offset_x, offset_y);
 
       if (progress)
@@ -141,7 +142,8 @@ gimp_image_resize_with_layers (GimpImage    *image,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (image)), context,
+  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (image)),
+                    context, GIMP_FILL_TRANSPARENT,
                     new_width, new_height, offset_x, offset_y);
 
   if (progress)
@@ -176,7 +178,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
 
       gimp_item_get_offset (item, &old_offset_x, &old_offset_y);
 
-      gimp_item_resize (item, context,
+      gimp_item_resize (item, context, fill_type,
                         new_width, new_height,
                         old_offset_x, old_offset_y);
 

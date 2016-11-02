@@ -19,11 +19,24 @@
 #define __CONVERT_PRECISION_DIALOG_H__
 
 
-GtkWidget * convert_precision_dialog_new (GimpImage         *image,
-                                          GimpContext       *context,
-                                          GtkWidget         *parent,
-                                          GimpComponentType  component_type,
-                                          GimpProgress      *progress);
+typedef void (* GimpConvertPrecisionCallback) (GtkWidget        *dialog,
+                                               GimpImage        *image,
+                                               GimpPrecision     precision,
+                                               GeglDitherMethod  layer_dither_method,
+                                               GeglDitherMethod  text_layer_dither_method,
+                                               GeglDitherMethod  channel_dither_method,
+                                               gpointer          user_data);
+
+
+GtkWidget * convert_precision_dialog_new (GimpImage                    *image,
+                                          GimpContext                  *context,
+                                          GtkWidget                    *parent,
+                                          GimpComponentType             component_type,
+                                          GeglDitherMethod              layer_dither_method,
+                                          GeglDitherMethod              text_layer_dither_method,
+                                          GeglDitherMethod              channel_dither_method,
+                                          GimpConvertPrecisionCallback  callback,
+                                          gpointer                      user_data);
 
 
 #endif  /*  __CONVERT_PRECISION_DIALOG_H__  */

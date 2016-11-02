@@ -45,6 +45,7 @@ struct _GimpGuiConfig
   gint                 filter_tool_max_recent;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;
+  gboolean             devices_share_tool;
   gboolean             save_session_info;
   gboolean             restore_session;
   gboolean             restore_monitor;

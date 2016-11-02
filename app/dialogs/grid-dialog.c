@@ -50,36 +50,46 @@
 #define GRID_RESPONSE_RESET 1
 
 
+typedef struct _GridDialog GridDialog;
+
+struct _GridDialog
+{
+  GimpImage *image;
+  GimpGrid  *grid;
+  GimpGrid  *grid_backup;
+};
+
+
 /*  local functions  */
 
-static void  grid_dialog_response (GtkWidget *widget,
-                                   gint       response_id,
-                                   GtkWidget *dialog);
+static void   grid_dialog_free     (GridDialog *private);
+static void   grid_dialog_response (GtkWidget  *dialog,
+                                    gint        response_id,
+                                    GridDialog *private);
 
 
 /*  public function  */
-
 
 GtkWidget *
 grid_dialog_new (GimpImage   *image,
                  GimpContext *context,
                  GtkWidget   *parent)
 {
-  GimpGrid  *grid;
-  GimpGrid  *grid_backup;
-  GtkWidget *dialog;
-  GtkWidget *editor;
-  gdouble    xres;
-  gdouble    yres;
+  GridDialog *private;
+  GtkWidget  *dialog;
+  GtkWidget  *editor;
+  gdouble     xres;
+  gdouble     yres;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  private = g_slice_new0 (GridDialog);
 
-  grid = gimp_image_get_grid (GIMP_IMAGE (image));
-  grid_backup = gimp_config_duplicate (GIMP_CONFIG (grid));
+  private->image       = image;
+  private->grid        = gimp_image_get_grid (image);
+  private->grid_backup = gimp_config_duplicate (GIMP_CONFIG (private->grid));
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                                      _("Configure Grid"), "gimp-grid-configure",
@@ -94,30 +104,29 @@ grid_dialog_new (GimpImage   *image,
 
                                      NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GRID_RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) grid_dialog_free, private);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (grid_dialog_response),
                     dialog);
 
-  editor = gimp_grid_editor_new (grid, context, xres, yres);
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  editor = gimp_grid_editor_new (private->grid, context, xres, yres);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       editor, TRUE, TRUE, 0);
 
   gtk_widget_show (editor);
-
-  g_object_set_data (G_OBJECT (dialog), "image", image);
-  g_object_set_data (G_OBJECT (dialog), "grid", grid);
-
-  g_object_set_data_full (G_OBJECT (dialog), "grid-backup", grid_backup,
-                          (GDestroyNotify) g_object_unref);
 
   return dialog;
 }
@@ -126,37 +135,38 @@ grid_dialog_new (GimpImage   *image,
 /*  local functions  */
 
 static void
-grid_dialog_response (GtkWidget  *widget,
-                      gint        response_id,
-                      GtkWidget  *dialog)
+grid_dialog_free (GridDialog *private)
 {
-  GimpImage *image;
-  GimpImage *grid;
-  GimpGrid  *grid_backup;
+  g_object_unref (private->grid_backup);
 
-  image       = g_object_get_data (G_OBJECT (dialog), "image");
-  grid        = g_object_get_data (G_OBJECT (dialog), "grid");
-  grid_backup = g_object_get_data (G_OBJECT (dialog), "grid-backup");
+  g_slice_free (GridDialog, private);
+}
 
+static void
+grid_dialog_response (GtkWidget  *dialog,
+                      gint        response_id,
+                      GridDialog *private)
+{
   switch (response_id)
     {
     case GRID_RESPONSE_RESET:
-      gimp_config_sync (G_OBJECT (image->gimp->config->default_grid),
-                        G_OBJECT (grid), 0);
+      gimp_config_sync (G_OBJECT (private->image->gimp->config->default_grid),
+                        G_OBJECT (private->grid), 0);
       break;
 
     case GTK_RESPONSE_OK:
-      if (! gimp_config_is_equal_to (GIMP_CONFIG (grid_backup),
-                                     GIMP_CONFIG (grid)))
+      if (! gimp_config_is_equal_to (GIMP_CONFIG (private->grid_backup),
+                                     GIMP_CONFIG (private->grid)))
         {
-          gimp_image_undo_push_image_grid (image, _("Grid"), grid_backup);
+          gimp_image_undo_push_image_grid (private->image, _("Grid"),
+                                           private->grid_backup);
         }
 
       gtk_widget_destroy (dialog);
       break;
 
     default:
-      gimp_image_set_grid (GIMP_IMAGE (image), grid_backup, FALSE);
+      gimp_image_set_grid (private->image, private->grid_backup, FALSE);
       gtk_widget_destroy (dialog);
     }
 }

@@ -8,7 +8,6 @@ desktop/gimp.desktop.in.in
 
 app/about.h
 app/app.c
-app/language.c
 app/main.c
 app/sanity.c
 app/version.c
@@ -52,6 +51,7 @@ app/actions/help-actions.c
 app/actions/image-actions.c
 app/actions/image-commands.c
 app/actions/images-actions.c
+app/actions/items-commands.c
 app/actions/layers-actions.c
 app/actions/layers-commands.c
 app/actions/mypaint-brushes-actions.c
@@ -76,7 +76,9 @@ app/actions/text-tool-commands.c
 app/actions/tool-options-actions.c
 app/actions/tool-options-commands.c
 app/actions/tool-preset-editor-actions.c
+app/actions/tool-preset-editor-commands.c
 app/actions/tool-presets-actions.c
+app/actions/tool-presets-commands.c
 app/actions/tools-actions.c
 app/actions/vectors-actions.c
 app/actions/vectors-commands.c
@@ -211,6 +213,7 @@ app/dialogs/image-new-dialog.c
 app/dialogs/image-properties-dialog.c
 app/dialogs/image-scale-dialog.c
 app/dialogs/input-devices-dialog.c
+app/dialogs/item-options-dialog.c
 app/dialogs/keyboard-shortcuts-dialog.c
 app/dialogs/layer-add-mask-dialog.c
 app/dialogs/layer-options-dialog.c

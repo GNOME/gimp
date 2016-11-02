@@ -88,8 +88,6 @@ static gboolean   gimp_text_layer_rename         (GimpItem          *item,
 static void       gimp_text_layer_convert_type   (GimpDrawable      *drawable,
                                                   GimpImage         *dest_image,
                                                   const Babl        *new_format,
-                                                  GimpImageBaseType  new_base_type,
-                                                  GimpPrecision      new_precision,
                                                   GimpColorProfile  *dest_profile,
                                                   gint               layer_dither_type,
                                                   gint               mask_dither_type,
@@ -320,8 +318,6 @@ static void
 gimp_text_layer_convert_type (GimpDrawable      *drawable,
                               GimpImage         *dest_image,
                               const Babl        *new_format,
-                              GimpImageBaseType  new_base_type,
-                              GimpPrecision      new_precision,
                               GimpColorProfile  *dest_profile,
                               gint               layer_dither_type,
                               gint               mask_dither_type,
@@ -335,8 +331,6 @@ gimp_text_layer_convert_type (GimpDrawable      *drawable,
     {
       GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
                                                         new_format,
-                                                        new_base_type,
-                                                        new_precision,
                                                         dest_profile,
                                                         layer_dither_type,
                                                         mask_dither_type,
@@ -674,7 +668,9 @@ gimp_text_layer_render (GimpTextLayer *layer)
           if (! unused_eek)
             unused_eek = gimp_context_new (image->gimp, "eek", NULL);
 
-          gimp_item_resize (GIMP_ITEM (mask), unused_eek, width, height, 0, 0);
+          gimp_item_resize (GIMP_ITEM (mask),
+                            unused_eek, GIMP_FILL_TRANSPARENT,
+                            width, height, 0, 0);
         }
     }
 

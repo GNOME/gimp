@@ -76,7 +76,6 @@ struct _GimpItemTreeViewPriv
   GtkWidget       *lock_content_toggle;
   GtkWidget       *lock_position_toggle;
 
-  GtkWidget       *edit_button;
   GtkWidget       *new_button;
   GtkWidget       *raise_button;
   GtkWidget       *lower_button;
@@ -86,11 +85,13 @@ struct _GimpItemTreeViewPriv
   gint             model_column_visible;
   gint             model_column_viewable;
   gint             model_column_linked;
+  gint             model_column_color_tag;
   GtkCellRenderer *eye_cell;
   GtkCellRenderer *chain_cell;
 
   GimpTreeHandler *visible_changed_handler;
   GimpTreeHandler *linked_changed_handler;
+  GimpTreeHandler *color_tag_changed_handler;
   GimpTreeHandler *lock_content_changed_handler;
   GimpTreeHandler *lock_position_changed_handler;
 
@@ -168,6 +169,8 @@ static void   gimp_item_tree_view_name_edited       (GtkCellRendererText *cell,
 static void   gimp_item_tree_view_visible_changed      (GimpItem          *item,
                                                         GimpItemTreeView  *view);
 static void   gimp_item_tree_view_linked_changed       (GimpItem          *item,
+                                                        GimpItemTreeView  *view);
+static void   gimp_item_tree_view_color_tag_changed    (GimpItem          *item,
                                                         GimpItemTreeView  *view);
 static void   gimp_item_tree_view_lock_content_changed (GimpItem          *item,
                                                         GimpItemTreeView  *view);
@@ -263,7 +266,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->new_item                = NULL;
 
   klass->action_group            = NULL;
-  klass->edit_action             = NULL;
   klass->new_action              = NULL;
   klass->new_default_action      = NULL;
   klass->raise_action            = NULL;
@@ -328,6 +330,11 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
                                            &tree_view->n_model_columns,
                                            G_TYPE_BOOLEAN);
 
+  view->priv->model_column_color_tag =
+    gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                           &tree_view->n_model_columns,
+                                           GDK_TYPE_COLOR);
+
   gimp_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
 
   view->priv->image  = NULL;
@@ -364,8 +371,9 @@ gimp_item_tree_view_constructed (GObject *object)
 
   item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
   g_object_set (item_view->priv->eye_cell,
-                "xpad", 0,
-                "ypad", 0,
+                "xpad",                0,
+                "ypad",                0,
+                "override-background", TRUE,
                 NULL);
   gtk_tree_view_column_pack_start (column, item_view->priv->eye_cell, FALSE);
   gtk_tree_view_column_set_attributes (column, item_view->priv->eye_cell,
@@ -373,6 +381,8 @@ gimp_item_tree_view_constructed (GObject *object)
                                        item_view->priv->model_column_visible,
                                        "inconsistent",
                                        item_view->priv->model_column_viewable,
+                                       "cell-background-gdk",
+                                       item_view->priv->model_column_color_tag,
                                        NULL);
 
   gimp_container_tree_view_add_toggle_cell (tree_view,
@@ -410,13 +420,6 @@ gimp_item_tree_view_constructed (GObject *object)
                                   GTK_DEST_DEFAULT_HIGHLIGHT,
                                   item_view_class->item_type,
                                   GDK_ACTION_MOVE | GDK_ACTION_COPY);
-
-  item_view->priv->edit_button =
-    gimp_editor_add_action_button (editor, item_view_class->action_group,
-                                   item_view_class->edit_action, NULL);
-  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (item_view),
-                                  GTK_BUTTON (item_view->priv->edit_button),
-                                  item_view_class->item_type);
 
   item_view->priv->new_button =
     gimp_editor_add_action_button (editor, item_view_class->action_group,
@@ -769,14 +772,6 @@ gimp_item_tree_view_get_new_button (GimpItemTreeView *view)
   return view->priv->new_button;
 }
 
-GtkWidget *
-gimp_item_tree_view_get_edit_button (GimpItemTreeView *view)
-{
-  g_return_val_if_fail (GIMP_IS_ITEM_TREE_VIEW (view), NULL);
-
-  return view->priv->edit_button;
-}
-
 gint
 gimp_item_tree_view_get_drop_index (GimpItemTreeView         *view,
                                     GimpViewable             *dest_viewable,
@@ -898,6 +893,9 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
       gimp_tree_handler_disconnect (item_view->priv->linked_changed_handler);
       item_view->priv->linked_changed_handler = NULL;
 
+      gimp_tree_handler_disconnect (item_view->priv->color_tag_changed_handler);
+      item_view->priv->color_tag_changed_handler = NULL;
+
       gimp_tree_handler_disconnect (item_view->priv->lock_content_changed_handler);
       item_view->priv->lock_content_changed_handler = NULL;
 
@@ -917,6 +915,11 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
       item_view->priv->linked_changed_handler =
         gimp_tree_handler_connect (container, "linked-changed",
                                    G_CALLBACK (gimp_item_tree_view_linked_changed),
+                                   view);
+
+      item_view->priv->color_tag_changed_handler =
+        gimp_tree_handler_connect (container, "color-tag-changed",
+                                   G_CALLBACK (gimp_item_tree_view_color_tag_changed),
                                    view);
 
       item_view->priv->lock_content_changed_handler =
@@ -976,6 +979,9 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (view);
   GimpItem              *item      = GIMP_ITEM (viewable);
   GtkTreeIter           *iter;
+  GimpRGB                color;
+  GdkColor               gdk_color;
+  gboolean               has_color;
 
   item_view->priv->inserting_item = TRUE;
 
@@ -983,6 +989,11 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
                                          parent_insert_data, index);
 
   item_view->priv->inserting_item = FALSE;
+
+  has_color = gimp_get_color_tag_color (gimp_item_get_color_tag (item),
+                                        &color);
+  if (has_color)
+    gimp_rgb_get_gdk_color (&color, &gdk_color);
 
   gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
                       item_view->priv->model_column_visible,
@@ -992,6 +1003,8 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
                       ! gimp_item_is_visible (item),
                       item_view->priv->model_column_linked,
                       gimp_item_get_linked (item),
+                      item_view->priv->model_column_color_tag,
+                      has_color ? &gdk_color : NULL,
                       -1);
 
   return iter;
@@ -1375,6 +1388,38 @@ gimp_item_tree_view_chain_clicked (GtkCellRendererToggle *toggle,
 {
   gimp_item_tree_view_toggle_clicked (toggle, path_str, state, view,
                                       GIMP_UNDO_ITEM_LINKED);
+}
+
+
+/*  "Color Tag" callbacks  */
+
+static void
+gimp_item_tree_view_color_tag_changed (GimpItem         *item,
+                                       GimpItemTreeView *view)
+{
+  GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (view);
+  GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
+  GtkTreeIter           *iter;
+
+  iter = gimp_container_view_lookup (container_view,
+                                     (GimpViewable *) item);
+
+  if (iter)
+    {
+      GimpRGB  color;
+      GdkColor gdk_color;
+      gboolean has_color;
+
+      has_color = gimp_get_color_tag_color (gimp_item_get_color_tag (item),
+                                            &color);
+      if (has_color)
+        gimp_rgb_get_gdk_color (&color, &gdk_color);
+
+      gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
+                          view->priv->model_column_color_tag,
+                          has_color ? &gdk_color : NULL,
+                          -1);
+    }
 }
 
 

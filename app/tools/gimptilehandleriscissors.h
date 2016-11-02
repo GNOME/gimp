@@ -42,7 +42,7 @@ struct _GimpTileHandlerIscissors
 {
   GimpTileHandlerValidate  parent_instance;
 
-  GimpImage               *image;
+  GimpPickable            *pickable;
 };
 
 struct _GimpTileHandlerIscissorsClass
@@ -53,7 +53,7 @@ struct _GimpTileHandlerIscissorsClass
 
 GType             gimp_tile_handler_iscissors_get_type (void) G_GNUC_CONST;
 
-GeglTileHandler * gimp_tile_handler_iscissors_new      (GimpImage *image);
+GeglTileHandler * gimp_tile_handler_iscissors_new      (GimpPickable *pickable);
 
 
 #endif /* __GIMP_TILE_HANDLER_ISCISSORS_H__ */

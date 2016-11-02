@@ -75,6 +75,7 @@
 #include "dialogs/scale-dialog.h"
 
 #include "actions.h"
+#include "items-commands.h"
 #include "layers-commands.h"
 
 #include "gimp-intl.h"
@@ -112,38 +113,76 @@ static const GimpLayerModeEffects layer_modes[] =
 
 /*  local function prototypes  */
 
-static void   layers_new_layer_response    (GtkWidget             *widget,
-                                            gint                   response_id,
-                                            LayerOptionsDialog    *dialog);
-static void   layers_edit_layer_response   (GtkWidget             *widget,
-                                            gint                   response_id,
-                                            LayerOptionsDialog    *dialog);
-static void   layers_add_mask_response     (GtkWidget             *widget,
-                                            gint                   response_id,
-                                            LayerAddMaskDialog    *dialog);
+static void   layers_new_callback             (GtkWidget             *dialog,
+                                               GimpImage             *image,
+                                               GimpLayer             *layer,
+                                               GimpContext           *context,
+                                               const gchar           *layer_name,
+                                               GimpLayerModeEffects   layer_mode,
+                                               gdouble                layer_opacity,
+                                               GimpFillType           layer_fill_type,
+                                               gint                   layer_width,
+                                               gint                   layer_height,
+                                               gint                   layer_offset_x,
+                                               gint                   layer_offset_y,
+                                               gboolean               layer_visible,
+                                               gboolean               layer_linked,
+                                               GimpColorTag           layer_color_tag,
+                                               gboolean               layer_lock_pixels,
+                                               gboolean               layer_lock_position,
+                                               gboolean               layer_lock_alpha,
+                                               gboolean               rename_text_layer,
+                                               gpointer               user_data);
+static void   layers_edit_attributes_callback (GtkWidget             *dialog,
+                                               GimpImage             *image,
+                                               GimpLayer             *layer,
+                                               GimpContext           *context,
+                                               const gchar           *layer_name,
+                                               GimpLayerModeEffects   layer_mode,
+                                               gdouble                layer_opacity,
+                                               GimpFillType           layer_fill_type,
+                                               gint                   layer_width,
+                                               gint                   layer_height,
+                                               gint                   layer_offset_x,
+                                               gint                   layer_offset_y,
+                                               gboolean               layer_visible,
+                                               gboolean               layer_linked,
+                                               GimpColorTag           layer_color_tag,
+                                               gboolean               layer_lock_pixels,
+                                               gboolean               layer_lock_position,
+                                               gboolean               layer_lock_alpha,
+                                               gboolean               rename_text_layer,
+                                               gpointer               user_data);
+static void   layers_add_mask_callback        (GtkWidget             *dialog,
+                                               GimpLayer             *layer,
+                                               GimpAddMaskType        add_mask_type,
+                                               GimpChannel           *channel,
+                                               gboolean               invert,
+                                               gpointer               user_data);
+static void   layers_scale_callback           (GtkWidget             *dialog,
+                                               GimpViewable          *viewable,
+                                               gint                   width,
+                                               gint                   height,
+                                               GimpUnit               unit,
+                                               GimpInterpolationType  interpolation,
+                                               gdouble                xresolution,
+                                               gdouble                yresolution,
+                                               GimpUnit               resolution_unit,
+                                               gpointer               user_data);
+static void   layers_resize_callback          (GtkWidget             *dialog,
+                                               GimpViewable          *viewable,
+                                               GimpContext           *context,
+                                               gint                   width,
+                                               gint                   height,
+                                               GimpUnit               unit,
+                                               gint                   offset_x,
+                                               gint                   offset_y,
+                                               GimpFillType           fill_type,
+                                               GimpItemSet            unused,
+                                               gboolean               unused2,
+                                               gpointer               data);
 
-static void   layers_scale_layer_callback  (GtkWidget             *dialog,
-                                            GimpViewable          *viewable,
-                                            gint                   width,
-                                            gint                   height,
-                                            GimpUnit               unit,
-                                            GimpInterpolationType  interpolation,
-                                            gdouble                xresolution,
-                                            gdouble                yresolution,
-                                            GimpUnit               resolution_unit,
-                                            gpointer               data);
-static void   layers_resize_layer_callback (GtkWidget             *dialog,
-                                            GimpViewable          *viewable,
-                                            gint                   width,
-                                            gint                   height,
-                                            GimpUnit               unit,
-                                            gint                   offset_x,
-                                            gint                   offset_y,
-                                            GimpItemSet            unused,
-                                            gboolean               unused2,
-                                            gpointer               data);
-
-static gint   layers_mode_index            (GimpLayerModeEffects   layer_mode);
+static gint   layers_mode_index               (GimpLayerModeEffects   layer_mode);
 
 
 /*  private variables  */
@@ -194,48 +233,59 @@ void
 layers_edit_attributes_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  LayerOptionsDialog *dialog;
-  GimpImage          *image;
-  GimpLayer          *layer;
-  GtkWidget          *widget;
-  GimpDialogConfig   *config;
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  GtkWidget *dialog;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+#define EDIT_DIALOG_KEY "gimp-layer-edit-attributes-dialog"
 
-  dialog = layer_options_dialog_new (gimp_item_get_image (GIMP_ITEM (layer)),
-                                     layer,
-                                     action_data_get_context (data),
-                                     widget,
-                                     gimp_object_get_name (layer),
-                                     config->layer_new_fill_type,
-                                     _("Layer Attributes"),
-                                     "gimp-layer-edit",
-                                     "gtk-edit",
-                                     _("Edit Layer Attributes"),
-                                     GIMP_HELP_LAYER_EDIT);
+  dialog = dialogs_get_dialog (G_OBJECT (layer), EDIT_DIALOG_KEY);
 
-  g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (layers_edit_layer_response),
-                    dialog);
+  if (! dialog)
+    {
+      GimpItem *item = GIMP_ITEM (layer);
 
-  gtk_widget_show (dialog->dialog);
+      dialog = layer_options_dialog_new (gimp_item_get_image (GIMP_ITEM (layer)),
+                                         layer,
+                                         action_data_get_context (data),
+                                         widget,
+                                         _("Layer Attributes"),
+                                         "gimp-layer-edit",
+                                         "gtk-edit",
+                                         _("Edit Layer Attributes"),
+                                         GIMP_HELP_LAYER_EDIT,
+                                         gimp_object_get_name (layer),
+                                         gimp_layer_get_mode (layer),
+                                         gimp_layer_get_opacity (layer),
+                                         0 /* unused */,
+                                         gimp_item_get_visible (item),
+                                         gimp_item_get_linked (item),
+                                         gimp_item_get_color_tag (item),
+                                         gimp_item_get_lock_content (item),
+                                         gimp_item_get_lock_position (item),
+                                         gimp_layer_get_lock_alpha (layer),
+                                         layers_edit_attributes_callback,
+                                         NULL);
+
+      dialogs_attach_dialog (G_OBJECT (layer), EDIT_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
 layers_new_cmd_callback (GtkAction *action,
                          gpointer   data)
 {
-  LayerOptionsDialog *dialog;
-  GimpImage          *image;
-  GtkWidget          *widget;
-  GimpLayer          *floating_sel;
-  GimpDialogConfig   *config;
+  GimpImage *image;
+  GtkWidget *widget;
+  GimpLayer *floating_sel;
+  GtkWidget *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
-
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   /*  If there is a floating selection, the new command transforms
    *  the current fs into a new layer
@@ -257,22 +307,39 @@ layers_new_cmd_callback (GtkAction *action,
       return;
     }
 
-  dialog = layer_options_dialog_new (image, NULL,
-                                     action_data_get_context (data),
-                                     widget,
-                                     config->layer_new_name,
-                                     config->layer_new_fill_type,
-                                     _("New Layer"),
-                                     "gimp-layer-new",
-                                     GIMP_STOCK_LAYER,
-                                     _("Create a New Layer"),
-                                     GIMP_HELP_LAYER_NEW);
+#define NEW_DIALOG_KEY "gimp-layer-new-dialog"
 
-  g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (layers_new_layer_response),
-                    dialog);
+  dialog = dialogs_get_dialog (G_OBJECT (image), NEW_DIALOG_KEY);
 
-  gtk_widget_show (dialog->dialog);
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+      dialog = layer_options_dialog_new (image, NULL,
+                                         action_data_get_context (data),
+                                         widget,
+                                         _("New Layer"),
+                                         "gimp-layer-new",
+                                         GIMP_STOCK_LAYER,
+                                         _("Create a New Layer"),
+                                         GIMP_HELP_LAYER_NEW,
+                                         config->layer_new_name,
+                                         config->layer_new_mode,
+                                         config->layer_new_opacity,
+                                         config->layer_new_fill_type,
+                                         TRUE,
+                                         FALSE,
+                                         GIMP_COLOR_TAG_NONE,
+                                         FALSE,
+                                         FALSE,
+                                         FALSE,
+                                         layers_new_callback,
+                                         NULL);
+
+      dialogs_attach_dialog (G_OBJECT (image), NEW_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -368,9 +435,7 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                            GIMP_NORMAL_MODE,
                                            profile);
 
-  gimp_image_add_layer (image, layer,
-                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
+  gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 }
 
@@ -384,9 +449,7 @@ layers_new_group_cmd_callback (GtkAction *action,
 
   layer = gimp_group_layer_new (image);
 
-  gimp_image_add_layer (image, layer,
-                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
+  gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
   gimp_image_flush (image);
 }
 
@@ -486,7 +549,6 @@ layers_duplicate_cmd_callback (GtkAction *action,
   gimp_image_add_layer (image, new_layer,
                         gimp_layer_get_parent (layer), -1,
                         TRUE);
-
   gimp_image_flush (image);
 }
 
@@ -574,7 +636,6 @@ layers_text_to_vectors_cmd_callback (GtkAction *action,
 
       gimp_image_add_vectors (image, vectors,
                               GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
       gimp_image_flush (image);
     }
 }
@@ -602,7 +663,6 @@ layers_text_along_vectors_cmd_callback (GtkAction *action,
 
       gimp_image_add_vectors (image, new_vectors,
                               GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
       gimp_image_flush (image);
     }
 }
@@ -624,7 +684,8 @@ layers_resize_cmd_callback (GtkAction *action,
 
   if (! dialog)
     {
-      GimpDisplay *display = NULL;
+      GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
+      GimpDisplay      *display = NULL;
 
       if (GIMP_IS_IMAGE_WINDOW (data))
         display = action_data_get_display (data);
@@ -640,8 +701,11 @@ layers_resize_cmd_callback (GtkAction *action,
                                   gimp_standard_help_func,
                                   GIMP_HELP_LAYER_RESIZE,
                                   layer_resize_unit,
-                                  layers_resize_layer_callback,
-                                  action_data_get_context (data));
+                                  config->layer_resize_fill_type,
+                                  GIMP_ITEM_SET_NONE,
+                                  FALSE,
+                                  layers_resize_callback,
+                                  NULL);
 
       dialogs_attach_dialog (G_OBJECT (layer), RESIZE_DIALOG_KEY, dialog);
     }
@@ -657,7 +721,9 @@ layers_resize_to_image_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_layer_resize_to_image (layer, action_data_get_context (data));
+  gimp_layer_resize_to_image (layer,
+                              action_data_get_context (data),
+                              GIMP_FILL_TRANSPARENT);
   gimp_image_flush (image);
 }
 
@@ -665,34 +731,44 @@ void
 layers_scale_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
-  GimpDisplay *display = NULL;
-  GimpImage   *image;
-  GimpLayer   *layer;
-  GtkWidget   *widget;
-  GtkWidget   *dialog;
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  GtkWidget *dialog;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  if (GIMP_IS_IMAGE_WINDOW (data))
-    display = action_data_get_display (data);
+#define SCALE_DIALOG_KEY "gimp-scale-dialog"
 
-  if (layer_scale_unit != GIMP_UNIT_PERCENT && display)
-    layer_scale_unit = gimp_display_get_shell (display)->unit;
+  dialog = dialogs_get_dialog (G_OBJECT (layer), SCALE_DIALOG_KEY);
 
-  if (layer_scale_interp == -1)
-    layer_scale_interp = image->gimp->config->interpolation_type;
+  if (! dialog)
+    {
+      GimpDisplay *display = NULL;
 
-  dialog = scale_dialog_new (GIMP_VIEWABLE (layer),
-                             action_data_get_context (data),
-                             _("Scale Layer"), "gimp-layer-scale",
-                             widget,
-                             gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
-                             layer_scale_unit,
-                             layer_scale_interp,
-                             layers_scale_layer_callback,
-                             display);
+      if (GIMP_IS_IMAGE_WINDOW (data))
+        display = action_data_get_display (data);
 
-  gtk_widget_show (dialog);
+      if (layer_scale_unit != GIMP_UNIT_PERCENT && display)
+        layer_scale_unit = gimp_display_get_shell (display)->unit;
+
+      if (layer_scale_interp == -1)
+        layer_scale_interp = image->gimp->config->interpolation_type;
+
+      dialog = scale_dialog_new (GIMP_VIEWABLE (layer),
+                                 action_data_get_context (data),
+                                 _("Scale Layer"), "gimp-layer-scale",
+                                 widget,
+                                 gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
+                                 layer_scale_unit,
+                                 layer_scale_interp,
+                                 layers_scale_callback,
+                                 display);
+
+      dialogs_attach_dialog (G_OBJECT (layer), SCALE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -713,7 +789,8 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("Cannot crop because the current selection is empty."));
+                            _("Cannot crop because the current selection "
+                              "is empty."));
       return;
     }
 
@@ -724,11 +801,11 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Crop Layer to Selection"));
 
-  gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
+  gimp_item_resize (GIMP_ITEM (layer),
+                    action_data_get_context (data), GIMP_FILL_TRANSPARENT,
                     width, height, off_x, off_y);
 
   gimp_image_undo_group_end (image);
-
   gimp_image_flush (image);
 }
 
@@ -739,7 +816,8 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
   GimpImage *image;
   GimpLayer *layer;
   GtkWidget *widget;
-  gint       x1, y1, x2, y2;
+  gint       x, y;
+  gint       width, height;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
@@ -747,14 +825,15 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
                                      0, 0,
                                      gimp_item_get_width  (GIMP_ITEM (layer)),
                                      gimp_item_get_height (GIMP_ITEM (layer)),
-                                     &x1, &y1, &x2, &y2))
+                                     &x, &y, &width, &height))
     {
     case GIMP_AUTO_SHRINK_SHRINK:
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                    _("Crop Layer to Content"));
 
-      gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
-                        x2 - x1, y2 - y1, -x1, -y1);
+      gimp_item_resize (GIMP_ITEM (layer),
+                        action_data_get_context (data), GIMP_FILL_TRANSPARENT,
+                        width, height, -x, -y);
 
       gimp_image_undo_group_end (image);
       gimp_image_flush (image);
@@ -763,13 +842,15 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
     case GIMP_AUTO_SHRINK_EMPTY:
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_INFO,
-                            _("Cannot crop because the active layer has no content."));
+                            _("Cannot crop because the active layer "
+                              "has no content."));
       break;
 
     case GIMP_AUTO_SHRINK_UNSHRINKABLE:
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_INFO,
-                            _("Cannot crop because the active layer is already cropped to its content."));
+                            _("Cannot crop because the active layer "
+                              "is already cropped to its content."));
       break;
     }
 }
@@ -778,29 +859,35 @@ void
 layers_mask_add_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
-  LayerAddMaskDialog *dialog;
-  GimpImage          *image;
-  GimpLayer          *layer;
-  GtkWidget          *widget;
-  GimpDialogConfig   *config;
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  GtkWidget *dialog;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
   if (gimp_layer_get_mask (layer))
     return;
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+#define ADD_MASK_DIALOG_KEY "gimp-add-mask-dialog"
 
-  dialog = layer_add_mask_dialog_new (layer, action_data_get_context (data),
-                                      widget,
-                                      config->layer_add_mask_type,
-                                      config->layer_add_mask_invert);
+  dialog = dialogs_get_dialog (G_OBJECT (layer), ADD_MASK_DIALOG_KEY);
 
-  g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (layers_add_mask_response),
-                    dialog);
+  if (! dialog)
+    {
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  gtk_widget_show (dialog->dialog);
+      dialog = layer_add_mask_dialog_new (layer, action_data_get_context (data),
+                                          widget,
+                                          config->layer_add_mask_type,
+                                          config->layer_add_mask_invert,
+                                          layers_add_mask_callback,
+                                          NULL);
+
+      dialogs_attach_dialog (G_OBJECT (layer), ADD_MASK_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -847,7 +934,6 @@ layers_mask_add_last_vals_cmd_callback (GtkAction *action,
     gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
   gimp_layer_add_mask (layer, mask, TRUE, NULL);
-
   gimp_image_flush (image);
 }
 
@@ -1048,6 +1134,50 @@ layers_mode_cmd_callback (GtkAction *action,
 }
 
 void
+layers_visible_cmd_callback (GtkAction *action,
+                             gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_visible_cmd_callback (action, image, GIMP_ITEM (layer));
+}
+
+void
+layers_linked_cmd_callback (GtkAction *action,
+                            gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_linked_cmd_callback (action, image, GIMP_ITEM (layer));
+}
+
+void
+layers_lock_content_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_lock_content_cmd_callback (action, image, GIMP_ITEM (layer));
+}
+
+void
+layers_lock_position_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_lock_position_cmd_callback (action, image, GIMP_ITEM (layer));
+}
+
+void
 layers_lock_alpha_cmd_callback (GtkAction *action,
                                 gpointer   data)
 {
@@ -1074,170 +1204,239 @@ layers_lock_alpha_cmd_callback (GtkAction *action,
     }
 }
 
+void
+layers_color_tag_cmd_callback (GtkAction *action,
+                               gint       value,
+                               gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  return_if_no_layer (image, layer, data);
+
+  items_color_tag_cmd_callback (action, image, GIMP_ITEM (layer),
+                                (GimpColorTag) value);
+}
+
 
 /*  private functions  */
 
 static void
-layers_new_layer_response (GtkWidget          *widget,
-                           gint                response_id,
-                           LayerOptionsDialog *dialog)
+layers_new_callback (GtkWidget            *dialog,
+                     GimpImage            *image,
+                     GimpLayer            *layer,
+                     GimpContext          *context,
+                     const gchar          *layer_name,
+                     GimpLayerModeEffects  layer_mode,
+                     gdouble               layer_opacity,
+                     GimpFillType          layer_fill_type,
+                     gint                  layer_width,
+                     gint                  layer_height,
+                     gint                  layer_offset_x,
+                     gint                  layer_offset_y,
+                     gboolean              layer_visible,
+                     gboolean              layer_linked,
+                     GimpColorTag          layer_color_tag,
+                     gboolean              layer_lock_pixels,
+                     gboolean              layer_lock_position,
+                     gboolean              layer_lock_alpha,
+                     gboolean              rename_text_layer, /* unused */
+                     gpointer              user_data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+  g_object_set (config,
+                "layer-new-name",      layer_name,
+                "layer-new-mode",      layer_mode,
+                "layer-new-opacity",   layer_opacity,
+                "layer-new-fill-type", layer_fill_type,
+                NULL);
+
+  layer = gimp_layer_new (image, layer_width, layer_height,
+                          gimp_image_get_layer_format (image, TRUE),
+                          config->layer_new_name,
+                          config->layer_new_opacity,
+                          config->layer_new_mode);
+
+  if (layer)
     {
-      GimpDialogConfig *config;
-      GimpLayer        *layer;
+      gimp_item_set_offset (GIMP_ITEM (layer), layer_offset_x, layer_offset_y);
+      gimp_drawable_fill (GIMP_DRAWABLE (layer), context,
+                          config->layer_new_fill_type);
+      gimp_item_set_visible (GIMP_ITEM (layer), layer_visible, FALSE);
+      gimp_item_set_linked (GIMP_ITEM (layer), layer_linked, FALSE);
+      gimp_item_set_color_tag (GIMP_ITEM (layer), layer_color_tag, FALSE);
+      gimp_item_set_lock_content (GIMP_ITEM (layer), layer_lock_pixels,
+                                  FALSE);
+      gimp_item_set_lock_position (GIMP_ITEM (layer), layer_lock_position,
+                                   FALSE);
+      gimp_layer_set_lock_alpha (layer, layer_lock_alpha, FALSE);
 
-      config = GIMP_DIALOG_CONFIG (dialog->image->gimp->config);
-
-      g_object_set (config,
-                    "layer-new-fill-type", dialog->fill_type,
-                    "layer-new-name",
-                    gtk_entry_get_text (GTK_ENTRY (dialog->name_entry)),
-                    NULL);
-
-      dialog->xsize =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->size_se),
-                                          0));
-      dialog->ysize =
-        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->size_se),
-                                          1));
-
-      layer = gimp_layer_new (dialog->image,
-                              dialog->xsize,
-                              dialog->ysize,
-                              gimp_image_get_layer_format (dialog->image, TRUE),
-                              config->layer_new_name,
-                              GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-
-      if (layer)
-        {
-          gimp_drawable_fill (GIMP_DRAWABLE (layer),
-                              dialog->context,
-                              config->layer_new_fill_type);
-
-          gimp_image_add_layer (dialog->image, layer,
-                                GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-
-          gimp_image_flush (dialog->image);
-        }
-      else
-        {
-          g_warning ("%s: could not allocate new layer", G_STRFUNC);
-        }
+      gimp_image_add_layer (image, layer,
+                            GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+      gimp_image_flush (image);
+    }
+  else
+    {
+      g_warning ("%s: could not allocate new layer", G_STRFUNC);
     }
 
-  gtk_widget_destroy (dialog->dialog);
+  gtk_widget_destroy (dialog);
 }
 
 static void
-layers_edit_layer_response (GtkWidget          *widget,
-                            gint                response_id,
-                            LayerOptionsDialog *dialog)
+layers_edit_attributes_callback (GtkWidget            *dialog,
+                                 GimpImage            *image,
+                                 GimpLayer            *layer,
+                                 GimpContext          *context,
+                                 const gchar          *layer_name,
+                                 GimpLayerModeEffects  layer_mode,
+                                 gdouble               layer_opacity,
+                                 GimpFillType          unused1,
+                                 gint                  unused2,
+                                 gint                  unused3,
+                                 gint                  layer_offset_x,
+                                 gint                  layer_offset_y,
+                                 gboolean              layer_visible,
+                                 gboolean              layer_linked,
+                                 GimpColorTag          layer_color_tag,
+                                 gboolean              layer_lock_pixels,
+                                 gboolean              layer_lock_position,
+                                 gboolean              layer_lock_alpha,
+                                 gboolean              rename_text_layer,
+                                 gpointer              user_data)
 {
-  if (response_id == GTK_RESPONSE_OK)
+  GimpItem *item = GIMP_ITEM (layer);
+
+  if (strcmp (layer_name, gimp_object_get_name (layer))         ||
+      layer_mode          != gimp_layer_get_mode (layer)        ||
+      layer_opacity       != gimp_layer_get_opacity (layer)     ||
+      layer_offset_x      != gimp_item_get_offset_x (item)      ||
+      layer_offset_y      != gimp_item_get_offset_y (item)      ||
+      layer_visible       != gimp_item_get_visible (item)       ||
+      layer_linked        != gimp_item_get_linked (item)        ||
+      layer_color_tag     != gimp_item_get_color_tag (item)     ||
+      layer_lock_pixels   != gimp_item_get_lock_content (item)  ||
+      layer_lock_position != gimp_item_get_lock_position (item) ||
+      layer_lock_alpha    != gimp_layer_get_lock_alpha (layer))
     {
-      GimpLayer   *layer = dialog->layer;
-      const gchar *new_name;
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                   _("Layer Attributes"));
 
-      new_name = gtk_entry_get_text (GTK_ENTRY (dialog->name_entry));
-
-      if (strcmp (new_name, gimp_object_get_name (layer)))
+      if (strcmp (layer_name, gimp_object_get_name (layer)))
         {
           GError *error = NULL;
 
-          if (gimp_item_rename (GIMP_ITEM (layer), new_name, &error))
+          if (! gimp_item_rename (GIMP_ITEM (layer), layer_name, &error))
             {
-              gimp_image_flush (dialog->image);
-            }
-          else
-            {
-              gimp_message_literal (dialog->image->gimp,
-                                    G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+              gimp_message_literal (image->gimp,
+                                    G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
                                     error->message);
               g_clear_error (&error);
-
-              return;
             }
         }
 
-      if (dialog->rename_toggle &&
-          gimp_item_is_text_layer (GIMP_ITEM (layer)))
+      if (layer_mode != gimp_layer_get_mode (layer))
+        gimp_layer_set_mode (layer, layer_mode, TRUE);
+
+      if (layer_opacity != gimp_layer_get_opacity (layer))
+        gimp_layer_set_opacity (layer, layer_opacity, TRUE);
+
+      if (layer_offset_x != gimp_item_get_offset_x (item) ||
+          layer_offset_y != gimp_item_get_offset_y (item))
         {
-          g_object_set (layer,
-                        "auto-rename",
-                        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->rename_toggle)),
-                        NULL);
-        }
-    }
-
-  gtk_widget_destroy (dialog->dialog);
-}
-
-static void
-layers_add_mask_response (GtkWidget          *widget,
-                          gint                response_id,
-                          LayerAddMaskDialog *dialog)
-{
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      GimpLayer        *layer = dialog->layer;
-      GimpImage        *image = gimp_item_get_image (GIMP_ITEM (layer));
-      GimpLayerMask    *mask;
-      GimpDialogConfig *config;
-      GError           *error = NULL;
-
-      config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-      if (dialog->add_mask_type == GIMP_ADD_MASK_CHANNEL &&
-          ! dialog->channel)
-        {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                                _("Please select a channel first"));
-          return;
+          gimp_item_translate (item,
+                               layer_offset_x - gimp_item_get_offset_x (item),
+                               layer_offset_y - gimp_item_get_offset_y (item),
+                               TRUE);
         }
 
-      g_object_set (config,
-                    "layer-add-mask-type",   dialog->add_mask_type,
-                    "layer-add-mask-invert", dialog->invert,
-                    NULL);
+      if (layer_visible != gimp_item_get_visible (item))
+        gimp_item_set_visible (item, layer_visible, TRUE);
 
-      mask = gimp_layer_create_mask (layer,
-                                     config->layer_add_mask_type,
-                                     dialog->channel);
+      if (layer_linked != gimp_item_get_linked (item))
+        gimp_item_set_linked (item, layer_linked, TRUE);
 
-      if (config->layer_add_mask_invert)
-        gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+      if (layer_color_tag != gimp_item_get_color_tag (item))
+        gimp_item_set_color_tag (item, layer_color_tag, TRUE);
 
-      if (! gimp_layer_add_mask (layer, mask, TRUE, &error))
-        {
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                                error->message);
-          g_object_unref (mask);
-          g_clear_error (&error);
-          return;
-        }
+      if (layer_lock_pixels != gimp_item_get_lock_content (item))
+        gimp_item_set_lock_content (item, layer_lock_pixels, TRUE);
+
+      if (layer_lock_position != gimp_item_get_lock_position (item))
+        gimp_item_set_lock_position (item, layer_lock_position, TRUE);
+
+      if (layer_lock_alpha != gimp_layer_get_lock_alpha (layer))
+        gimp_layer_set_lock_alpha (layer, layer_lock_alpha, TRUE);
+
+      gimp_image_undo_group_end (image);
 
       gimp_image_flush (image);
     }
 
-  gtk_widget_destroy (dialog->dialog);
+  if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
+    {
+      g_object_set (layer,
+                    "auto-rename", rename_text_layer,
+                    NULL);
+    }
+
+  gtk_widget_destroy (dialog);
 }
 
 static void
-layers_scale_layer_callback (GtkWidget             *dialog,
-                             GimpViewable          *viewable,
-                             gint                   width,
-                             gint                   height,
-                             GimpUnit               unit,
-                             GimpInterpolationType  interpolation,
-                             gdouble                xresolution,    /* unused */
-                             gdouble                yresolution,    /* unused */
-                             GimpUnit               resolution_unit,/* unused */
-                             gpointer               data)
+layers_add_mask_callback (GtkWidget       *dialog,
+                          GimpLayer       *layer,
+                          GimpAddMaskType  add_mask_type,
+                          GimpChannel     *channel,
+                          gboolean         invert,
+                          gpointer         user_data)
 {
-  GimpDisplay *display = GIMP_DISPLAY (data);
+  GimpImage        *image  = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  GimpLayerMask    *mask;
+  GError           *error = NULL;
+
+  g_object_set (config,
+                "layer-add-mask-type",   add_mask_type,
+                "layer-add-mask-invert", invert,
+                NULL);
+
+  mask = gimp_layer_create_mask (layer,
+                                 config->layer_add_mask_type,
+                                 channel);
+
+  if (config->layer_add_mask_invert)
+    gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+
+  if (! gimp_layer_add_mask (layer, mask, TRUE, &error))
+    {
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (dialog), GIMP_MESSAGE_WARNING,
+                            error->message);
+      g_object_unref (mask);
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
+layers_scale_callback (GtkWidget             *dialog,
+                       GimpViewable          *viewable,
+                       gint                   width,
+                       gint                   height,
+                       GimpUnit               unit,
+                       GimpInterpolationType  interpolation,
+                       gdouble                xresolution,    /* unused */
+                       gdouble                yresolution,    /* unused */
+                       GimpUnit               resolution_unit,/* unused */
+                       gpointer               user_data)
+{
+  GimpDisplay *display = GIMP_DISPLAY (user_data);
 
   layer_scale_unit   = unit;
   layer_scale_interp = interpolation;
@@ -1286,24 +1485,30 @@ layers_scale_layer_callback (GtkWidget             *dialog,
 }
 
 static void
-layers_resize_layer_callback (GtkWidget    *dialog,
-                              GimpViewable *viewable,
-                              gint          width,
-                              gint          height,
-                              GimpUnit      unit,
-                              gint          offset_x,
-                              gint          offset_y,
-                              GimpItemSet   unused,
-                              gboolean      unused2,
-                              gpointer      data)
+layers_resize_callback (GtkWidget    *dialog,
+                        GimpViewable *viewable,
+                        GimpContext  *context,
+                        gint          width,
+                        gint          height,
+                        GimpUnit      unit,
+                        gint          offset_x,
+                        gint          offset_y,
+                        GimpFillType  fill_type,
+                        GimpItemSet   unused,
+                        gboolean      unused2,
+                        gpointer      user_data)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
-
   layer_resize_unit = unit;
 
   if (width > 0 && height > 0)
     {
-      GimpItem *item = GIMP_ITEM (viewable);
+      GimpItem         *item   = GIMP_ITEM (viewable);
+      GimpImage        *image  = gimp_item_get_image (item);
+      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+      g_object_set (config,
+                    "layer-resize-fill-type", fill_type,
+                    NULL);
 
       gtk_widget_destroy (dialog);
 
@@ -1311,9 +1516,8 @@ layers_resize_layer_callback (GtkWidget    *dialog,
           height == gimp_item_get_height (item))
         return;
 
-      gimp_item_resize (item, context,
+      gimp_item_resize (item, context, fill_type,
                         width, height, offset_x, offset_y);
-
       gimp_image_flush (gimp_item_get_image (item));
     }
   else

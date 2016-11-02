@@ -99,7 +99,6 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 
   iv_class->action_group            = "vectors";
   iv_class->activate_action         = "vectors-path-tool";
-  iv_class->edit_action             = "vectors-edit-attributes";
   iv_class->new_action              = "vectors-new";
   iv_class->new_default_action      = "vectors-new-last-values";
   iv_class->raise_action            = "vectors-raise";
@@ -144,9 +143,6 @@ gimp_vectors_tree_view_constructed (GObject *object)
                                               GDK_MODIFIER_INTENT_EXTEND_SELECTION);
   modify_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
                                               GDK_MODIFIER_INTENT_MODIFY_SELECTION);
-
-  /*  hide basically useless edit button  */
-  gtk_widget_hide (gimp_item_tree_view_get_edit_button (GIMP_ITEM_TREE_VIEW (view)));
 
   view->toselection_button =
     gimp_editor_add_action_button (editor, "vectors",

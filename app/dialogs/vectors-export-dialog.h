@@ -19,20 +19,20 @@
 #define __VECTORS_EXPORT_DIALOG_H__
 
 
-typedef struct _VectorsExportDialog VectorsExportDialog;
-
-struct _VectorsExportDialog
-{
-  GtkWidget *dialog;
-
-  GimpImage *image;
-  gboolean   active_only;
-};
+typedef void (* GimpVectorsExportCallback) (GtkWidget *dialog,
+                                            GimpImage *image,
+                                            GFile     *file,
+                                            GFile     *export_folder,
+                                            gboolean   active_only,
+                                            gpointer   user_data);
 
 
-VectorsExportDialog * vectors_export_dialog_new (GimpImage *image,
-                                                 GtkWidget *parent,
-                                                 gboolean   active_only);
+GtkWidget * vectors_export_dialog_new (GimpImage                 *image,
+                                       GtkWidget                 *parent,
+                                       GFile                     *export_folder,
+                                       gboolean                   active_only,
+                                       GimpVectorsExportCallback  callback,
+                                       gpointer                   user_data);
 
 
 #endif /* __VECTORS_EXPORT_DIALOG_H__ */

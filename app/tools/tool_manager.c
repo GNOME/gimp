@@ -115,7 +115,7 @@ tool_manager_init (Gimp *gimp)
 
   tool_manager->shared_paint_options = g_object_new (GIMP_TYPE_PAINT_OPTIONS,
                                                      "gimp", gimp,
-                                                     "name", "tmp",
+                                                     "name", "tool-manager-shared-paint-options",
                                                      NULL);
 
   g_signal_connect (user_context, "tool-changed",
@@ -756,23 +756,23 @@ tool_manager_preset_changed (GimpContext     *user_context,
 
   if (GIMP_IS_PAINT_OPTIONS (preset->tool_options))
     {
-      GimpCoreConfig  *config = user_context->gimp->config;
-      GimpToolOptions *src    = preset->tool_options;
-      GimpToolOptions *dest   = tool_manager->active_tool->tool_info->tool_options;
+      GimpToolOptions *src  = preset->tool_options;
+      GimpToolOptions *dest = tool_manager->active_tool->tool_info->tool_options;
 
-      /* if connect_options() did overwrite the brush options and the
-       * preset contains a brush, use the brush options from the
-       * preset
+      /*  copy various data objects' additional tool options again
+       *  manually, they might have been overwritten by e.g. the "link
+       *  brush stuff to brush defaults" logic in
+       *  gimptooloptions-gui.c
        */
-      if (config->global_brush && preset->use_brush)
+      if (preset->use_brush)
         gimp_paint_options_copy_brush_props (GIMP_PAINT_OPTIONS (src),
                                              GIMP_PAINT_OPTIONS (dest));
 
-      if (config->global_dynamics && preset->use_dynamics)
+      if (preset->use_dynamics)
         gimp_paint_options_copy_dynamics_props (GIMP_PAINT_OPTIONS (src),
                                                 GIMP_PAINT_OPTIONS (dest));
 
-      if (config->global_gradient && preset->use_gradient)
+      if (preset->use_gradient)
         gimp_paint_options_copy_gradient_props (GIMP_PAINT_OPTIONS (src),
                                                 GIMP_PAINT_OPTIONS (dest));
     }

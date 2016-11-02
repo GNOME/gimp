@@ -20,19 +20,61 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimptoolinfo.h"
+#include "core/gimptoolpreset.h"
 
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
 
 #include "tool-presets-commands.h"
 
+#include "gimp-intl.h"
+
 
 /*  public functions  */
+
+void
+tool_presets_save_cmd_callback (GtkAction *action,
+                                gpointer   data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context;
+  GimpToolPreset      *preset;
+  GimpToolInfo        *tool_info;
+
+  context = gimp_container_view_get_context (editor->view);
+
+  preset    = gimp_context_get_tool_preset (context);
+  tool_info = gimp_context_get_tool (gimp_get_user_context (context->gimp));
+
+  if (tool_info && preset)
+    {
+      GimpToolInfo *preset_tool;
+
+      preset_tool =  gimp_context_get_tool (GIMP_CONTEXT (preset->tool_options));
+
+      if (tool_info != preset_tool)
+        {
+          gimp_message (context->gimp,
+                        G_OBJECT (editor), GIMP_MESSAGE_WARNING,
+                        _("Can't save '%s' tool options to an "
+                          "existing '%s' tool preset."),
+                        tool_info->blurb,
+                        preset_tool->blurb);
+          return;
+        }
+
+      gimp_config_sync (G_OBJECT (tool_info->tool_options),
+                        G_OBJECT (preset->tool_options), 0);
+    }
+}
 
 void
 tool_presets_restore_cmd_callback (GtkAction *action,
@@ -47,5 +89,5 @@ tool_presets_restore_cmd_callback (GtkAction *action,
   preset = gimp_context_get_tool_preset (context);
 
   if (preset)
-    gimp_context_tool_preset_changed (context);
+    gimp_context_tool_preset_changed (gimp_get_user_context (context->gimp));
 }
