@@ -24,6 +24,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "operations-types.h"
@@ -36,6 +37,7 @@
 enum
 {
   PROP_0,
+  PROP_CHANNEL,
   PROP_LOW,
   PROP_HIGH
 };
@@ -82,6 +84,14 @@ gimp_operation_threshold_class_init (GimpOperationThresholdClass *klass)
                                  "description", "GIMP Threshold operation",
                                  NULL);
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CHANNEL,
+                         "channel",
+                         _("Channel"),
+                         NULL,
+                         GIMP_TYPE_HISTOGRAM_CHANNEL,
+                         GIMP_HISTOGRAM_VALUE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LOW,
                            "low",
                            _("Low threshold"),
@@ -112,6 +122,10 @@ gimp_operation_threshold_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_CHANNEL:
+      g_value_set_enum (value, self->channel);
+      break;
+
     case PROP_LOW:
       g_value_set_double (value, self->low);
       break;
@@ -136,6 +150,10 @@ gimp_operation_threshold_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_CHANNEL:
+      self->channel = g_value_get_enum (value);
+      break;
+
     case PROP_LOW:
       self->low = g_value_get_double (value);
       break;
@@ -164,10 +182,40 @@ gimp_operation_threshold_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      gfloat value;
+      gfloat value = 0.0;
 
-      value = MAX (src[RED], src[GREEN]);
-      value = MAX (value, src[BLUE]);
+      switch (threshold->channel)
+        {
+        case GIMP_HISTOGRAM_VALUE:
+          value = MAX (src[RED], src[GREEN]);
+          value = MAX (value, src[BLUE]);
+          break;
+
+        case GIMP_HISTOGRAM_RED:
+          value = src[RED];
+          break;
+
+        case GIMP_HISTOGRAM_GREEN:
+          value = src[GREEN];
+          break;
+
+        case GIMP_HISTOGRAM_BLUE:
+          value = src[BLUE];
+          break;
+
+        case GIMP_HISTOGRAM_ALPHA:
+          value = src[ALPHA];
+          break;
+
+        case GIMP_HISTOGRAM_RGB:
+          value = MIN (src[RED], src[GREEN]);
+          value = MIN (value, src[BLUE]);
+          break;
+
+        case GIMP_HISTOGRAM_LUMINANCE:
+          value = GIMP_RGB_LUMINANCE (src[RED], src[GREEN], src[BLUE]);
+          break;
+        }
 
       value = (value >= threshold->low && value <= threshold->high) ? 1.0 : 0.0;
 

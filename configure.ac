@@ -69,7 +69,7 @@ m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.10.3])
 m4_define([libmypaint_required_version], [1.3.0])
 m4_define([lcms_required_version], [2.7])
-m4_define([libpng_required_version], [1.2.37])
+m4_define([libpng_required_version], [1.6.25])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
@@ -728,14 +728,6 @@ if test "x$GDK_PIXBUF_CSOURCE" = xno; then
   add_deps_error([gdk-pixbuf-csource],
                  [Could not find gdk-pixbuf-csource in your PATH.])
 fi
-
-AC_MSG_CHECKING([if GdkPixbuf is version 2.31.0 or newer])
-if $PKG_CONFIG --atleast-version=2.31.0 gdk-pixbuf-2.0; then
-  have_gdk_pixbuf_2_31=yes
-else
-  have_gdk_pixbuf_2_31=no
-fi
-AC_MSG_RESULT($have_gdk_pixbuf_2_31)
 
 PKG_CHECK_MODULES(CAIRO, cairo >= cairo_required_version,,
                   [add_deps_error([cairo >= cairo_required_version])])
@@ -2238,10 +2230,6 @@ fi
 
 if test "x$have_gtk_2_26" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
-fi
-
-if test "x$have_gdk_pixbuf_2_31" != "xyes"; then
-  CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED"
 fi
 
 if test "x$have_pango_1_32" != "xyes"; then
