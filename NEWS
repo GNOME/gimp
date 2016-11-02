@@ -29,11 +29,14 @@ GUI:
   - Enhance the Layer Attributes dialog to provide the single UI for 
     setting layer's name, blending mode, opacity, and offset, 
     toggling visibility, link status, various locks, color tags.
-  - Add a Save As button to the “Quit GIMP” dialog
+  - Add a Save As button to the “Quit GIMP” dialog and raise images
+    on click for easy checks.
   - Allow to choose fill color when resizing layers and images
   - Quick Mask and Channel Attributes dialogs use the new spinscale
     widget for the  mask opacity slider
   - Enable grid views of dynamics and tool presets
+  - Standard (Freedesktop) and GTK+ icons can now be set by the icon
+    theme for a fully consistent style.
   - Many new icons
 
 Configurability:
