@@ -45,11 +45,11 @@ struct _AnimationAnimaticClass
 
 GType            animation_animatic_get_type (void);
 
-void             animation_animatic_set_duration (AnimationAnimatic *animatic,
-                                                  gint               panel_num,
-                                                  gint               duration);
-gint             animation_animatic_get_duration (AnimationAnimatic *animatic,
-                                                  gint               panel_num);
+void             animation_animatic_set_panel_duration (AnimationAnimatic *animatic,
+                                                        gint               panel_num,
+                                                        gint               duration);
+gint             animation_animatic_get_panel_duration (AnimationAnimatic *animatic,
+                                                        gint               panel_num);
 
 void             animation_animatic_set_comment  (AnimationAnimatic *animatic,
                                                   gint               panel_num,

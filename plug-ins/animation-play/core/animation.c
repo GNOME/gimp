@@ -74,9 +74,6 @@ struct _AnimationPrivate
 
   /* State of the currently loaded animation. */
   gint         position;
-  /* We want to allow animator to set any number as first frame,
-   * for frame export capability. */
-  guint        start_pos;
   /* Playback can be a subset of frames. */
   guint        playback_start;
   guint        playback_stop;
@@ -106,11 +103,9 @@ static void       animation_get_property           (GObject      *object,
                                                     GParamSpec   *pspec);
 
 /* Base implementation of virtual methods. */
-static gint       animation_real_get_start_position (Animation *animation);
 static gboolean   animation_real_same               (Animation *animation,
                                                      gint       prev_pos,
                                                      gint       next_pos);
-gchar           * animation_real_serialize          (Animation *animation);
 
 /* Timer callback for playback. */
 static gboolean   animation_advance_frame_callback  (Animation *animation);
@@ -164,8 +159,7 @@ animation_class_init (AnimationClass *klass)
   /**
    * Animation::loaded:
    * @animation: the animation loading.
-   * @start_pos: the first frame.
-   * @length: number of frames.
+   * @duration: number of frames.
    * @playback_start: the playback start frame.
    * @playback_stop: the playback last frame.
    * @width: display width in pixels.
@@ -183,8 +177,7 @@ animation_class_init (AnimationClass *klass)
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
-                  6,
-                  G_TYPE_INT,
+                  5,
                   G_TYPE_INT,
                   G_TYPE_INT,
                   G_TYPE_INT,
@@ -266,8 +259,7 @@ animation_class_init (AnimationClass *klass)
    * @animation: the animation.
    * @playback_start: the playback start frame.
    * @playback_stop: the playback last frame.
-   * @first_frame: the first frame.
-   * @length: the full length.
+   * @playback_duration: the playback duration (in frames).
    *
    * The ::playback-range signal is emitted when the playback range is
    * updated.
@@ -280,8 +272,7 @@ animation_class_init (AnimationClass *klass)
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
-                  4,
-                  G_TYPE_INT,
+                  3,
                   G_TYPE_INT,
                   G_TYPE_INT,
                   G_TYPE_INT);
@@ -325,9 +316,7 @@ animation_class_init (AnimationClass *klass)
   object_class->set_property = animation_set_property;
   object_class->get_property = animation_get_property;
 
-  klass->get_start_position  = animation_real_get_start_position;
   klass->same                = animation_real_same;
-  klass->serialize           = animation_real_serialize;
 
   /**
    * Animation:image:
@@ -394,7 +383,7 @@ animation_load (Animation *animation)
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
   GeglBuffer       *buffer;
   gint              width, height;
-  gint              length;
+  gint              duration;
 
   priv->loaded = FALSE;
   g_signal_emit (animation, animation_signals[LOADING_START], 0);
@@ -409,19 +398,18 @@ animation_load (Animation *animation)
   g_free (priv->xml);
   priv->xml = NULL;
 
-  priv->start_pos = ANIMATION_GET_CLASS (animation)->get_start_position (animation);
-  priv->position  = priv->start_pos;
-  length    = ANIMATION_GET_CLASS (animation)->get_length (animation);
+  duration = ANIMATION_GET_CLASS (animation)->get_duration (animation);
+  priv->position = 0;
 
   /* Default playback is the full range of frames. */
-  priv->playback_start = priv->position;
-  priv->playback_stop  = priv->position + length - 1;
+  priv->playback_start = 0;
+  priv->playback_stop  = duration - 1;
 
   priv->loaded = TRUE;
 
   animation_get_size (animation, &width, &height);
   g_signal_emit (animation, animation_signals[LOADED], 0,
-                 1, length,
+                 duration,
                  priv->playback_start,
                  priv->playback_stop,
                  width,
@@ -514,12 +502,6 @@ animation_save_to_parasite (Animation *animation)
 }
 
 gint
-animation_get_start_position (Animation *animation)
-{
-  return ANIMATION_GET_CLASS (animation)->get_start_position (animation);
-}
-
-gint
 animation_get_position (Animation *animation)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
@@ -528,9 +510,9 @@ animation_get_position (Animation *animation)
 }
 
 gint
-animation_get_length (Animation *animation)
+animation_get_duration (Animation *animation)
 {
-  return ANIMATION_GET_CLASS (animation)->get_length (animation);
+  return ANIMATION_GET_CLASS (animation)->get_duration (animation);
 }
 
 void
@@ -725,14 +707,14 @@ animation_set_playback_start (Animation *animation,
                               gint       frame_number)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
-  gint              length;
+  gint              duration;
 
-  length = animation_get_length (animation);
+  duration = animation_get_duration (animation);
 
-  if (frame_number < priv->start_pos ||
-      frame_number >= priv->start_pos + length)
+  if (frame_number < 0 ||
+      frame_number >= duration)
     {
-      priv->playback_start = priv->start_pos;
+      priv->playback_start = 0;
     }
   else
     {
@@ -740,12 +722,12 @@ animation_set_playback_start (Animation *animation,
     }
   if (priv->playback_stop < priv->playback_start)
     {
-      priv->playback_stop = priv->start_pos + length - 1;
+      priv->playback_stop = duration - 1;
     }
 
   g_signal_emit (animation, animation_signals[PLAYBACK_RANGE], 0,
                  priv->playback_start, priv->playback_stop,
-                 priv->start_pos, length);
+                 duration);
 
   if (priv->position < priv->playback_start ||
       priv->position > priv->playback_stop)
@@ -767,14 +749,14 @@ animation_set_playback_stop (Animation *animation,
                              gint       frame_number)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
-  gint              length;
+  gint              duration;
 
-  length = animation_get_length (animation);
+  duration = animation_get_duration (animation);
 
-  if (frame_number < priv->start_pos ||
-      frame_number >= priv->start_pos + length)
+  if (frame_number < 0 ||
+      frame_number >= duration)
     {
-      priv->playback_stop = priv->start_pos + length - 1;
+      priv->playback_stop = duration - 1;
     }
   else
     {
@@ -782,11 +764,11 @@ animation_set_playback_stop (Animation *animation,
     }
   if (priv->playback_stop < priv->playback_start)
     {
-      priv->playback_start = priv->start_pos;
+      priv->playback_start = 0;
     }
   g_signal_emit (animation, animation_signals[PLAYBACK_RANGE], 0,
                  priv->playback_start, priv->playback_stop,
-                 priv->start_pos, length);
+                 duration);
 
   if (priv->position < priv->playback_start ||
       priv->position > priv->playback_stop)
@@ -877,13 +859,6 @@ animation_get_property (GObject    *object,
     }
 }
 
-static
-gint animation_real_get_start_position (Animation *animation)
-{
-  /* By default, the first frame is numbered 1. */
-  return 1;
-}
-
 static gboolean
 animation_real_same (Animation *animation,
                      gint       previous_pos,
@@ -891,12 +866,6 @@ animation_real_same (Animation *animation,
 {
   /* By default all frames are supposed different. */
   return (previous_pos == next_pos);
-}
-
-gchar *
-animation_real_serialize (Animation   *animation)
-{
-  return NULL;
 }
 
 static gboolean

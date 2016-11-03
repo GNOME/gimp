@@ -99,7 +99,7 @@ static void         animation_cel_animation_finalize     (GObject           *obj
 
 /* Virtual methods */
 
-static gint         animation_cel_animation_get_length   (Animation         *animation);
+static gint         animation_cel_animation_get_duration (Animation         *animation);
 
 static void         animation_cel_animation_load         (Animation         *animation);
 static void         animation_cel_animation_load_xml     (Animation         *animation,
@@ -153,12 +153,12 @@ animation_cel_animation_class_init (AnimationCelAnimationClass *klass)
 
   object_class->finalize = animation_cel_animation_finalize;
 
-  anim_class->get_length = animation_cel_animation_get_length;
-  anim_class->load       = animation_cel_animation_load;
-  anim_class->load_xml   = animation_cel_animation_load_xml;
-  anim_class->get_frame  = animation_cel_animation_get_frame;
-  anim_class->serialize  = animation_cel_animation_serialize;
-  anim_class->same       = animation_cel_animation_same;
+  anim_class->get_duration = animation_cel_animation_get_duration;
+  anim_class->load         = animation_cel_animation_load;
+  anim_class->load_xml     = animation_cel_animation_load_xml;
+  anim_class->get_frame    = animation_cel_animation_get_frame;
+  anim_class->serialize    = animation_cel_animation_serialize;
+  anim_class->same         = animation_cel_animation_same;
 
   g_type_class_add_private (klass, sizeof (AnimationCelAnimationPrivate));
 }
@@ -220,11 +220,11 @@ animation_cel_animation_set_layers (AnimationCelAnimation *animation,
           frame_layer->data = 0;
         }
       animation_cel_animation_cache (animation, position);
-      if (animation_get_position (ANIMATION (animation)) - 1 == position)
+      if (animation_get_position (ANIMATION (animation)) == position)
         {
           GeglBuffer *buffer;
 
-          buffer = animation_get_frame (ANIMATION (animation), position + 1);
+          buffer = animation_get_frame (ANIMATION (animation), position);
           g_signal_emit_by_name (animation, "render",
                                  position, buffer, TRUE);
           if (buffer)
@@ -392,7 +392,7 @@ animation_cel_animation_set_track_title (AnimationCelAnimation *animation,
 /**** Virtual methods ****/
 
 static gint
-animation_cel_animation_get_length (Animation *animation)
+animation_cel_animation_get_duration (Animation *animation)
 {
   return ANIMATION_CEL_ANIMATION (animation)->priv->duration;
 }
@@ -496,7 +496,7 @@ animation_cel_animation_load_xml (Animation   *animation,
   else
     {
       AnimationCelAnimation *cel_animation;
-      gint                   duration = animation_get_length (animation);
+      gint                   duration = animation_get_duration (animation);
       gint                   i;
 
       cel_animation = ANIMATION_CEL_ANIMATION (animation);
@@ -526,7 +526,7 @@ animation_cel_animation_get_frame (Animation *animation,
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
 
   cache = g_list_nth_data (cel_animation->priv->cache,
-                           pos - 1);
+                           pos);
   if (cache)
     {
       frame = g_object_ref (cache->buffer);
@@ -606,10 +606,8 @@ animation_cel_animation_serialize (Animation *animation)
         {
           gchar *comment = iter->data;
 
-          /* Comments are for a given panel, not for a frame position. */
           xml2 = g_markup_printf_escaped ("<comment frame-position=\"%d\">%s</comment>",
-                                          i,
-                                          comment);
+                                          i, comment);
           tmp = xml;
           xml = g_strconcat (xml, xml2, NULL);
           g_free (tmp);
@@ -634,16 +632,14 @@ animation_cel_animation_same (Animation *animation,
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
 
-  g_return_val_if_fail (pos1 > 0                              &&
-                        pos1 <= cel_animation->priv->duration &&
-                        pos2 > 0                              &&
-                        pos2 <= cel_animation->priv->duration,
+  g_return_val_if_fail (pos1 >= 0                            &&
+                        pos1 < cel_animation->priv->duration &&
+                        pos2 >= 0                            &&
+                        pos2 < cel_animation->priv->duration,
                         FALSE);
 
-  cache1 = g_list_nth_data (cel_animation->priv->cache,
-                            pos1 - 1);
-  cache2 = g_list_nth_data (cel_animation->priv->cache,
-                            pos2 - 1);
+  cache1 = g_list_nth_data (cel_animation->priv->cache, pos1);
+  cache2 = g_list_nth_data (cel_animation->priv->cache, pos2);
 
   return animation_cel_animation_cache_cmp (cache1, cache2);
 }
@@ -877,9 +873,9 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
 
 static void
 animation_cel_animation_end_element (GMarkupParseContext *context,
-                                const gchar         *element_name,
-                                gpointer             user_data,
-                                GError             **error)
+                                     const gchar         *element_name,
+                                     gpointer             user_data,
+                                     GError             **error)
 {
   ParseStatus *status = (ParseStatus *) user_data;
 
@@ -909,10 +905,10 @@ animation_cel_animation_end_element (GMarkupParseContext *context,
 
 static void
 animation_cel_animation_text (GMarkupParseContext  *context,
-                         const gchar          *text,
-                         gsize                 text_len,
-                         gpointer              user_data,
-                         GError              **error)
+                              const gchar          *text,
+                              gsize                 text_len,
+                              gpointer              user_data,
+                              GError              **error)
 {
   ParseStatus *status = (ParseStatus *) user_data;
   AnimationCelAnimation *cel_animation = ANIMATION_CEL_ANIMATION (status->animation);
@@ -1076,8 +1072,7 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
       layer = gimp_image_get_layer_by_tattoo (image_id,
                                               cache->composition[i]);
       source = gimp_drawable_get_buffer (layer);
-      gimp_drawable_offsets (layer,
-                             &layer_offx, &layer_offy);
+      gimp_drawable_offsets (layer, &layer_offx, &layer_offy);
       intermediate = normal_blend (preview_width, preview_height,
                                    backdrop, 1.0, 0, 0,
                                    source, proxy_ratio,

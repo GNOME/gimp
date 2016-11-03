@@ -199,7 +199,6 @@ static void        show_loading_progress     (Animation        *animation,
                                               gdouble           load_rate,
                                               AnimationDialog  *dialog);
 static void        animation_update_progress (Animation        *animation,
-                                              gint              first_frame,
                                               gint              num_frames,
                                               gint              playback_start,
                                               gint              playback_stop,
@@ -207,7 +206,6 @@ static void        animation_update_progress (Animation        *animation,
 static void        block_ui                  (Animation        *animation,
                                               AnimationDialog  *dialog);
 static void        unblock_ui                (Animation        *animation,
-                                              gint              first_frame,
                                               gint              num_frames,
                                               gint              playback_start,
                                               gint              playback_stop,
@@ -217,7 +215,6 @@ static void        unblock_ui                (Animation        *animation,
 static void        playback_range_changed    (Animation        *animation,
                                               gint              playback_start,
                                               gint              playback_stop,
-                                              gint              start_pos,
                                               gint              length,
                                               AnimationDialog  *dialog);
 static void        proxy_changed             (Animation        *animation,
@@ -1379,7 +1376,7 @@ update_ui_sensitivity (AnimationDialog *dialog)
 
   /* We can access the progress bar if there are several frames. */
   gtk_widget_set_sensitive (GTK_WIDGET (priv->progress_bar),
-                            animation_get_length (priv->animation) > 1);
+                            animation_get_duration (priv->animation) > 1);
 
   /* Settings are always changeable. */
   gtk_action_group_set_sensitive (priv->settings_actions, TRUE);
@@ -1387,9 +1384,9 @@ update_ui_sensitivity (AnimationDialog *dialog)
 
   /* View are always meaningfull with at least 1 frame. */
   gtk_action_group_set_sensitive (priv->view_actions,
-                                  animation_get_length (priv->animation) >= 1);
+                                  animation_get_duration (priv->animation) >= 1);
   gtk_widget_set_sensitive (GTK_WIDGET (priv->view_bar),
-                            animation_get_length (priv->animation) >= 1);
+                            animation_get_duration (priv->animation) >= 1);
 }
 
 /**** UI CALLBACKS ****/
@@ -1736,7 +1733,7 @@ adjustment_pressed (GtkWidget       *widget,
       GtkAdjustment *adj = gtk_spin_button_get_adjustment (spin);
 
       gtk_adjustment_set_value (adj,
-                                (gdouble) animation_get_position (priv->animation));
+                                (gdouble) animation_get_position (priv->animation) + 1.0);
 
       /* We don't want the middle click to have another usage (in
        * particular, there is likely no need to copy-paste in these spin
@@ -1757,7 +1754,7 @@ startframe_changed (GtkAdjustment   *adjustment,
   if (! priv->animation)
     return;
 
-  animation_set_playback_start (priv->animation, (gint) value);
+  animation_set_playback_start (priv->animation, (gint) value - 1);
 
   update_ui_sensitivity (dialog);
 }
@@ -1772,7 +1769,7 @@ endframe_changed (GtkAdjustment   *adjustment,
   if (! priv->animation)
     return;
 
-  animation_set_playback_stop (priv->animation, (gint) value);
+  animation_set_playback_stop (priv->animation, (gint) value - 1);
 
   update_ui_sensitivity (dialog);
 }
@@ -1949,30 +1946,29 @@ show_loading_progress (Animation       *animation,
 }
 
 static void
-animation_update_progress (Animation      *animation,
-                           gint            first_frame,
-                           gint            num_frames,
-                           gint            playback_start,
-                           gint            playback_stop,
+animation_update_progress (Animation       *animation,
+                           gint             num_frames,
+                           gint             playback_start,
+                           gint             playback_stop,
                            AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   gint frame_spin_size;
-  gint last_frame = num_frames + first_frame - 1;
+  gint last_frame = num_frames;
 
-  frame_spin_size = (gint) (log10 (last_frame - (last_frame % 10))) + 1;
+  frame_spin_size = (gint) (log10 (last_frame + 1 - (last_frame % 10))) + 1;
   gtk_entry_set_width_chars (GTK_ENTRY (priv->startframe_spin), frame_spin_size);
   gtk_entry_set_width_chars (GTK_ENTRY (priv->endframe_spin), frame_spin_size);
 
   gtk_adjustment_configure (gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->startframe_spin)),
-                            playback_start,
-                            first_frame,
-                            last_frame,
+                            (gdouble) playback_start + 1.0,
+                            1.0,
+                            (gdouble) last_frame,
                             1.0, 5.0, 0.0);
   gtk_adjustment_configure (gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->endframe_spin)),
-                            playback_stop,
-                            playback_start,
-                            last_frame,
+                            (gdouble) playback_stop + 1.0,
+                            (gdouble) playback_start + 1.0,
+                            (gdouble) last_frame,
                             1.0, 5.0, 0.0);
 
   update_ui_sensitivity (dialog);
@@ -1998,7 +1994,6 @@ block_ui (Animation       *animation,
 
 static void
 unblock_ui (Animation      *animation,
-            gint            first_frame,
             gint            num_frames,
             gint            playback_start,
             gint            playback_stop,
@@ -2007,7 +2002,6 @@ unblock_ui (Animation      *animation,
             AnimationDialog *dialog)
 {
   animation_update_progress (animation,
-                             first_frame,
                              num_frames,
                              playback_start,
                              playback_stop,
@@ -2019,7 +2013,6 @@ static void
 playback_range_changed (Animation       *animation,
                         gint             playback_start,
                         gint             playback_stop,
-                        gint             start_pos,
                         gint             length,
                         AnimationDialog *dialog)
 {
@@ -2028,7 +2021,6 @@ playback_range_changed (Animation       *animation,
   GtkAdjustment *stopframe_adjust;
 
   animation_update_progress (animation,
-                             start_pos,
                              length,
                              playback_start,
                              playback_stop,
@@ -2043,8 +2035,8 @@ playback_range_changed (Animation       *animation,
   g_signal_handlers_block_by_func (stopframe_adjust,
                                    G_CALLBACK (endframe_changed),
                                    dialog);
-  gtk_adjustment_set_value (startframe_adjust, playback_start);
-  gtk_adjustment_set_value (stopframe_adjust, playback_stop);
+  gtk_adjustment_set_value (startframe_adjust, playback_start + 1.0);
+  gtk_adjustment_set_value (stopframe_adjust, playback_stop + 1.0);
   g_signal_handlers_unblock_by_func (startframe_adjust,
                                      G_CALLBACK (endframe_changed),
                                      dialog);
@@ -2186,7 +2178,7 @@ repaint_da (GtkWidget       *darea,
                       (gint) ((da_width - priv->zoom * preview_width) / 2),
                       (gint) ((da_height - priv->zoom * preview_height) / 2),
                       da_width, da_height,
-                      (animation_get_length (priv->animation) == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
+                      (animation_get_duration (priv->animation) == 1) ? GDK_RGB_DITHER_MAX : DITHERTYPE,
                       da_data, da_width * 3);
 
   return TRUE;
@@ -2445,7 +2437,7 @@ render_frame (AnimationDialog *dialog,
       drawing_width = priv->shape_drawing_area_width;
       drawing_height = priv->shape_drawing_area_height;
 
-      if (animation_get_length (priv->animation) < 1)
+      if (animation_get_duration (priv->animation) < 1)
         total_alpha_preview (preview_data, drawing_width, drawing_height);
     }
   else
@@ -2460,7 +2452,7 @@ render_frame (AnimationDialog *dialog,
     }
 
   /* When there is no frame to show, we simply display the alpha background and return. */
-  if (buffer && animation_get_length (priv->animation) > 0)
+  if (buffer && animation_get_duration (priv->animation) > 0)
     {
       /* Update the rawframe. */
       if (rawframe_size < drawing_width * drawing_height * 4)
@@ -2535,7 +2527,7 @@ render_frame (AnimationDialog *dialog,
                       (gint) (((gint)drawing_width - priv->zoom * preview_width) / 2),
                       (gint) (((gint)drawing_height - priv->zoom * preview_height) / 2),
                       (gint)drawing_width, (gint)drawing_height,
-                      (animation_get_length (priv->animation) == 1 ?
+                      (animation_get_duration (priv->animation) == 1 ?
                        GDK_RGB_DITHER_MAX : DITHERTYPE),
                       preview_data, drawing_width * 3);
 }
@@ -2588,16 +2580,17 @@ progress_button (GtkWidget       *widget,
   if (event->type == GDK_BUTTON_PRESS)
     {
       GtkAllocation  allocation;
-      guint          goto_frame;
+      gdouble        duration;
+      gint           frame;
 
       gtk_widget_get_allocation (widget, &allocation);
+      duration = (gdouble) animation_get_duration (priv->animation);
 
-      goto_frame = animation_get_start_position (priv->animation) +
-        (gint) (event->x /
-                ((gdouble) allocation.width /
-                 (gdouble) animation_get_length (priv->animation)));
+      frame = (gint) (event->x /
+                      ((gdouble) allocation.width /
+                       ((gdouble) duration - 0.99)));
 
-      animation_jump (priv->animation, goto_frame);
+      animation_jump (priv->animation, frame);
     }
 
   return FALSE;
@@ -2610,16 +2603,17 @@ progress_entered (GtkWidget        *widget,
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   GtkAllocation           allocation;
-  guint                   goto_frame;
+  gdouble                 duration;
+  gint                    frame;
 
   gtk_widget_get_allocation (widget, &allocation);
+  duration = (gdouble) animation_get_duration (priv->animation);
 
-  goto_frame = animation_get_start_position (priv->animation) +
-               (gint) (event->x /
-                       ((gdouble) allocation.width /
-                        (gdouble) animation_get_length (priv->animation)));
+  frame = (gint) (event->x /
+                  ((gdouble) allocation.width /
+                   ((gdouble) duration - 0.99)));
 
-  show_goto_progress (dialog, goto_frame);
+  show_goto_progress (dialog, frame);
 
   return FALSE;
 }
@@ -2631,16 +2625,17 @@ progress_motion (GtkWidget       *widget,
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   GtkAllocation  allocation;
-  guint          goto_frame;
+  gdouble        duration;
+  gint           frame;
 
   gtk_widget_get_allocation (widget, &allocation);
+  duration = (gdouble) animation_get_duration (priv->animation);
 
-  goto_frame = animation_get_start_position (priv->animation) +
-               (gint) (event->x /
-                       ((gdouble) allocation.width /
-                        (gdouble) animation_get_length (priv->animation)));
+  frame = (gint) (event->x /
+                  ((gdouble) allocation.width /
+                   ((gdouble) duration - 0.99)));
 
-  show_goto_progress (dialog, goto_frame);
+  show_goto_progress (dialog, frame);
 
   return FALSE;
 }
@@ -2657,25 +2652,20 @@ progress_left (GtkWidget        *widget,
 
 static void
 show_goto_progress (AnimationDialog *dialog,
-                    gint             goto_frame)
+                    gint             frame)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   gchar                  *text;
 
   /* update the dialog's progress bar */
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress),
-                                 ((gfloat) (goto_frame - animation_get_start_position (priv->animation)) /
-                                  (gfloat) (animation_get_length (priv->animation) - 0.999)));
+                                 ((gfloat) frame /
+                                  (gfloat) (animation_get_duration (priv->animation) - 0.999)));
 
-  if (animation_get_start_position (priv->animation) == 1)
-    text = g_strdup_printf (_("Go to frame %d of %d"),
-                            goto_frame,
-                            animation_get_length (priv->animation));
-  else
-    text = g_strdup_printf (_("Go to frame %d [%d-%d]"),
-                            goto_frame,
-                            animation_get_start_position (priv->animation),
-                            animation_get_start_position (priv->animation) + animation_get_length (priv->animation) - 1);
+  text = g_strdup_printf (_("Go to frame %d of %d"),
+                          frame + 1,
+                          animation_get_duration (priv->animation));
+
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), text);
   g_free (text);
 }
@@ -2688,22 +2678,13 @@ show_playing_progress (AnimationDialog *dialog)
 
   /* update the dialog's progress bar */
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress),
-                                 ((gfloat) (animation_get_position (priv->animation) - animation_get_start_position (priv->animation)) /
-                                  (gfloat) (animation_get_length (priv->animation) - 0.999)));
+                                 ((gfloat) animation_get_position (priv->animation) /
+                                  (gfloat) (animation_get_duration (priv->animation) - 0.999)));
 
-  if (animation_get_start_position (priv->animation) == 1)
-    {
-      text = g_strdup_printf (_("Frame %d of %d"),
-                              animation_get_position (priv->animation),
-                              animation_get_length (priv->animation));
-    }
-  else
-    {
-      text = g_strdup_printf (_("Frame %d [%d-%d]"),
-                              animation_get_position (priv->animation),
-                              animation_get_start_position (priv->animation),
-                              animation_get_start_position (priv->animation) + animation_get_length (priv->animation) - 1);
-    }
+  text = g_strdup_printf (_("Frame %d of %d"),
+                          animation_get_position (priv->animation) + 1,
+                          animation_get_duration (priv->animation));
+
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), text);
   g_free (text);
 }

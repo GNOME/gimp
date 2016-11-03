@@ -40,9 +40,6 @@ struct _AnimationClass
 {
   GObjectClass  parent_class;
 
-  /* Defaults to position 1. */
-  gint         (*get_start_position) (Animation *animation);
-
   /* Defaults to returning FALSE for any different position. */
   gboolean     (*same)               (Animation *animation,
                                       gint       prev_pos,
@@ -52,7 +49,7 @@ struct _AnimationClass
   void         (*load)          (Animation   *animation);
   void         (*load_xml)      (Animation   *animation,
                                  const gchar *xml);
-  gint         (*get_length)    (Animation   *animation);
+  gint         (*get_duration)  (Animation   *animation);
 
 
   GeglBuffer * (*get_frame)     (Animation   *animation,
@@ -73,9 +70,8 @@ void          animation_load               (Animation   *animation);
 
 void          animation_save_to_parasite   (Animation   *animation);
 
-gint          animation_get_start_position (Animation   *animation);
 gint          animation_get_position       (Animation   *animation);
-gint          animation_get_length         (Animation   *animation);
+gint          animation_get_duration       (Animation   *animation);
 
 void          animation_set_proxy          (Animation   *animation,
                                             gdouble      ratio);

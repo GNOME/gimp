@@ -72,7 +72,6 @@ static void animation_xsheet_reset_layout (AnimationXSheet *xsheet);
 
 /* Callbacks on animation. */
 static void on_animation_loaded           (Animation       *animation,
-                                           gint             first_frame,
                                            gint             num_frames,
                                            gint             playback_start,
                                            gint             playback_stop,
@@ -185,7 +184,7 @@ animation_xsheet_constructed (GObject *object)
 
   /* We don't know the size yet. */
   xsheet->priv->track_layout = gtk_table_new (1, 1, FALSE);
-  
+
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (xsheet),
                                          xsheet->priv->track_layout);
   gtk_table_set_row_spacings (GTK_TABLE (xsheet->priv->track_layout), 0);
@@ -297,7 +296,7 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
    */
 
   n_tracks = animation_cel_animation_get_levels (xsheet->priv->animation);
-  n_frames = animation_get_length (ANIMATION (xsheet->priv->animation));
+  n_frames = animation_get_duration (ANIMATION (xsheet->priv->animation));
 
   /* The cels structure is a matrix of every cel widget. */
   for (j = 0; j < n_tracks; j++)
@@ -479,7 +478,6 @@ on_layer_selection (AnimationLayerView *view,
 
 static void
 on_animation_loaded (Animation       *animation,
-                     gint             first_frame,
                      gint             num_frames,
                      gint             playback_start,
                      gint             playback_stop,
@@ -500,7 +498,7 @@ on_animation_rendered (Animation       *animation,
   GtkWidget *button;
 
   button = g_list_nth_data (xsheet->priv->position_buttons,
-                            frame_number - 1);
+                            frame_number);
   if (xsheet->priv->active_pos_button)
     {
       GtkToggleButton *active_button;

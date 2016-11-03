@@ -63,7 +63,6 @@ static void animation_storyboard_finalize              (GObject             *obj
 
 /* Callbacks on animation */
 static void animation_storyboard_load                  (Animation           *animation,
-                                                        G_GNUC_UNUSED gint   first_frame,
                                                         G_GNUC_UNUSED gint   num_frames,
                                                         G_GNUC_UNUSED gint   playback_start,
                                                         G_GNUC_UNUSED gint   playback_stop,
@@ -229,7 +228,6 @@ animation_storyboard_finalize (GObject *object)
  */
 static void
 animation_storyboard_load (Animation           *animation,
-                           gint                 first_frame,
                            gint                 num_frames,
                            gint                 playback_start,
                            gint                 playback_stop,
@@ -285,15 +283,15 @@ animation_storyboard_load (Animation           *animation,
       GtkWidget *duration;
       GtkWidget *disposal;
       gchar     *image_name;
-      gint       panel_num = n_images - i;
+      gint       panel_num = n_images - i - 1;
 
       panel_button = gtk_button_new ();
       gtk_button_set_relief (GTK_BUTTON (panel_button),
                              GTK_RELIEF_NONE);
       gtk_table_attach (GTK_TABLE (view),
                         panel_button, 0, 1,
-                        5 * panel_num - 5,
                         5 * panel_num,
+                        5 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
                         GTK_EXPAND | GTK_FILL,
                         1, 1);
@@ -310,8 +308,8 @@ animation_storyboard_load (Animation           *animation,
       event_box = gtk_event_box_new ();
       gtk_table_attach (GTK_TABLE (view),
                         event_box, 1, 5,
-                        5 * panel_num - 5,
                         5 * panel_num,
+                        5 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
                         GTK_EXPAND | GTK_FILL,
                         1, 1);
@@ -335,8 +333,8 @@ animation_storyboard_load (Animation           *animation,
                          GINT_TO_POINTER (panel_num));
       gtk_table_attach (GTK_TABLE (view),
                         comment, 6, 11,
-                        5 * panel_num - 5,
                         5 * panel_num,
+                        5 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
                         GTK_EXPAND | GTK_FILL,
                         0, 1);
@@ -377,16 +375,16 @@ animation_storyboard_load (Animation           *animation,
       gtk_spin_button_set_increments (GTK_SPIN_BUTTON (duration), 1.0, 10.0);
       gtk_spin_button_set_snap_to_ticks (GTK_SPIN_BUTTON (duration), TRUE);
       gtk_spin_button_set_value (GTK_SPIN_BUTTON (duration),
-                                 animation_animatic_get_duration (animatic,
-                                                                  panel_num));
+                                 animation_animatic_get_panel_duration (animatic,
+                                                                        panel_num));
       gtk_entry_set_width_chars (GTK_ENTRY (duration), 2);
       /* Allowing non-numeric text to type "ms" or "s". */
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (duration), FALSE);
 
       gtk_table_attach (GTK_TABLE (view),
                         duration, 5, 6,
-                        5 * panel_num - 5,
-                        5 * panel_num - 4,
+                        5 * panel_num,
+                        5 * panel_num + 1,
                         0, /* Do not expand nor fill, nor shrink. */
                         0, /* Do not expand nor fill, nor shrink. */
                         0, 1);
@@ -407,8 +405,8 @@ animation_storyboard_load (Animation           *animation,
       gtk_widget_show (image);
       gtk_table_attach (GTK_TABLE (view),
                         disposal, 5, 6,
-                        5 * panel_num - 3,
-                        5 * panel_num - 2,
+                        5 * panel_num + 2,
+                        5 * panel_num + 3,
                         GTK_EXPAND, GTK_EXPAND,
                         0, 1);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (disposal),
@@ -440,10 +438,10 @@ animation_storyboard_rendered (Animation           *animation,
 
   panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
                                         frame_number);
-  if (view->priv->current_panel > 0)
+  if (view->priv->current_panel >= 0)
     {
       button = g_list_nth_data (view->priv->panel_buttons,
-                                view->priv->current_panel - 1);
+                                view->priv->current_panel);
       gtk_container_foreach (GTK_CONTAINER (button),
                              (GtkCallback) gtk_widget_destroy,
                              NULL);
@@ -451,7 +449,7 @@ animation_storyboard_rendered (Animation           *animation,
 
   view->priv->current_panel = panel;
   button = g_list_nth_data (view->priv->panel_buttons,
-                            view->priv->current_panel - 1);
+                            view->priv->current_panel);
   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
   gtk_container_add (GTK_CONTAINER (button), arrow);
   gtk_widget_show (arrow);
@@ -467,9 +465,9 @@ animation_storyboard_duration_spin_changed (GtkSpinButton     *spinbutton,
   panel_num = g_object_get_data (G_OBJECT (spinbutton), "panel-num");
   duration = gtk_spin_button_get_value_as_int (spinbutton);
 
-  animation_animatic_set_duration (animation,
-                                   GPOINTER_TO_INT (panel_num),
-                                   duration);
+  animation_animatic_set_panel_duration (animation,
+                                         GPOINTER_TO_INT (panel_num),
+                                         duration);
 }
 
 static gboolean
@@ -488,7 +486,7 @@ animation_storyboard_comment_keypress (GtkWidget           *entry,
       GtkWidget *comment;
 
       comment = g_list_nth_data (view->priv->comments,
-                                 GPOINTER_TO_INT (panel_num));
+                                 GPOINTER_TO_INT (panel_num) + 1);
       if (comment)
         {
           /* Grab the next comment widget. */

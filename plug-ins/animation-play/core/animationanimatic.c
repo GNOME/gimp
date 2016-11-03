@@ -52,7 +52,7 @@ typedef struct
 
 enum
 {
-  IMAGE_DURATION,
+  PANEL_DURATION,
   LAST_SIGNAL
 };
 
@@ -83,18 +83,18 @@ static void         animation_animatic_finalize   (GObject           *object);
 
 /* Virtual methods */
 
-static gint         animation_animatic_get_length  (Animation         *animation);
+static gint         animation_animatic_get_duration (Animation         *animation);
 
-static void         animation_animatic_load        (Animation         *animation);
-static void         animation_animatic_load_xml    (Animation         *animation,
-                                                    const gchar       *xml);
-static GeglBuffer * animation_animatic_get_frame   (Animation         *animation,
-                                                    gint               pos);
-static gchar      * animation_animatic_serialize   (Animation         *animation);
+static void         animation_animatic_load         (Animation         *animation);
+static void         animation_animatic_load_xml     (Animation         *animation,
+                                                     const gchar       *xml);
+static GeglBuffer * animation_animatic_get_frame    (Animation         *animation,
+                                                     gint               pos);
+static gchar      * animation_animatic_serialize    (Animation         *animation);
 
-static gboolean     animation_animatic_same        (Animation         *animation,
-                                                    gint               pos1,
-                                                    gint               pos2);
+static gboolean     animation_animatic_same         (Animation         *animation,
+                                                     gint               pos1,
+                                                     gint               pos2);
 
 /* XML parsing */
 
@@ -146,17 +146,17 @@ animation_animatic_class_init (AnimationAnimaticClass *klass)
   AnimationClass *anim_class   = ANIMATION_CLASS (klass);
 
   /**
-   * AnimationAnimatic::image-duration:
+   * AnimationAnimatic::panel-duration:
    * @animatic: the #AnimationAnimatic.
-   * @layer_id: the #GimpLayer id.
-   * @duration: the new duration for @layer_id (in number of panels).
+   * @panel: the panel number (first panel is 0).
+   * @duration: the new duration for @panel (in number of frames).
    *
-   * The ::image-duration will be emitted when the duration of a layer
+   * The ::panel-duration will be emitted when the duration of a layer
    * changes. It can be %0 meaning that this layer should not be shown
    * in the reel.
    */
-  signals[IMAGE_DURATION] =
-    g_signal_new ("image-duration",
+  signals[PANEL_DURATION] =
+    g_signal_new ("panel-duration",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   0,
@@ -169,12 +169,12 @@ animation_animatic_class_init (AnimationAnimaticClass *klass)
 
   object_class->finalize = animation_animatic_finalize;
 
-  anim_class->get_length = animation_animatic_get_length;
-  anim_class->load       = animation_animatic_load;
-  anim_class->load_xml   = animation_animatic_load_xml;
-  anim_class->get_frame  = animation_animatic_get_frame;
-  anim_class->serialize  = animation_animatic_serialize;
-  anim_class->same       = animation_animatic_same;
+  anim_class->get_duration = animation_animatic_get_duration;
+  anim_class->load         = animation_animatic_load;
+  anim_class->load_xml     = animation_animatic_load_xml;
+  anim_class->get_frame    = animation_animatic_get_frame;
+  anim_class->serialize    = animation_animatic_serialize;
+  anim_class->same         = animation_animatic_same;
 
   g_type_class_add_private (klass, sizeof (AnimationAnimaticPrivate));
 }
@@ -223,46 +223,45 @@ animation_animatic_finalize (GObject *object)
 /**** Public Functions ****/
 
 void
-animation_animatic_set_duration (AnimationAnimatic *animatic,
-                                 gint               panel_num,
-                                 gint               duration)
+animation_animatic_set_panel_duration (AnimationAnimatic *animatic,
+                                       gint               panel_num,
+                                       gint               panel_duration)
 {
   AnimationAnimaticPrivate *priv           = GET_PRIVATE (animatic);
   Animation                *animation      = ANIMATION (animatic);
-  gint                      prev_length    = animation_get_length (animation);
+  gint                      prev_length    = animation_get_duration (animation);
   gint                      playback_start = animation_get_playback_start (animation);
   gint                      playback_stop  = animation_get_playback_stop (animation);
   gint                      position       = animation_get_position (animation);
   gint                      layer_id;
   gint                      length;
 
-  g_return_if_fail (duration >= 0  &&
-                    panel_num > 0 &&
-                    panel_num <= priv->n_panels);
+  g_return_if_fail (panel_duration >= 0  &&
+                    panel_num >= 0 &&
+                    panel_num < priv->n_panels);
 
   layer_id = animation_animatic_get_layer (animatic, position);
 
-  priv->durations[panel_num - 1] = duration;
-  length = animation_get_length (animation);
+  priv->durations[panel_num] = panel_duration;
+  length = animation_get_duration (animation);
 
-  if (playback_start > length)
+  if (playback_start >= length)
     {
-      playback_start = animation_get_start_position (animation);
+      playback_start = 0;
     }
-  if (playback_stop > length ||
-      playback_stop == prev_length)
+  if (playback_stop >= length ||
+      playback_stop == prev_length - 1)
     {
-      playback_stop = length;
+      playback_stop = length - 1;
     }
-  g_signal_emit (animatic, signals[IMAGE_DURATION], 0,
-                 panel_num, duration);
+  g_signal_emit (animatic, signals[PANEL_DURATION], 0,
+                 panel_num, panel_duration);
   g_signal_emit_by_name (animatic, "playback-range",
                          playback_start, playback_stop,
-                         animation_get_start_position (animation),
-                         animation_get_length (animation));
-  if (position > length)
+                         animation_get_duration (animation));
+  if (position >= length)
     {
-      animation_jump (animation, length);
+      animation_jump (animation, length - 1);
     }
   else if (layer_id != animation_animatic_get_layer (animatic, position))
     {
@@ -277,16 +276,16 @@ animation_animatic_set_duration (AnimationAnimatic *animatic,
 }
 
 gint
-animation_animatic_get_duration (AnimationAnimatic *animatic,
-                                 gint               panel_num)
+animation_animatic_get_panel_duration (AnimationAnimatic *animatic,
+                                       gint               panel_num)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animatic);
 
-  g_return_val_if_fail (panel_num > 0 &&
-                        panel_num <= priv->n_panels,
+  g_return_val_if_fail (panel_num >= 0 &&
+                        panel_num < priv->n_panels,
                         0);
 
-  return priv->durations[panel_num - 1];
+  return priv->durations[panel_num];
 }
 
 void
@@ -296,13 +295,13 @@ animation_animatic_set_comment (AnimationAnimatic *animatic,
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animatic);
 
-  g_return_if_fail (panel_num > 0 &&
-                    panel_num <= priv->n_panels);
+  g_return_if_fail (panel_num >= 0 &&
+                    panel_num < priv->n_panels);
 
-  if (priv->comments[panel_num - 1])
-    g_free (priv->comments[panel_num - 1]);
+  if (priv->comments[panel_num])
+    g_free (priv->comments[panel_num]);
 
-  priv->comments[panel_num - 1] = g_strdup (comment);
+  priv->comments[panel_num] = g_strdup (comment);
 }
 
 const gchar *
@@ -311,10 +310,10 @@ animation_animatic_get_comment (AnimationAnimatic *animatic,
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animatic);
 
-  g_return_val_if_fail (panel_num > 0 &&
-                        panel_num <= priv->n_panels,
+  g_return_val_if_fail (panel_num >= 0 &&
+                        panel_num < priv->n_panels,
                         0);
-  return priv->comments[panel_num - 1];
+  return priv->comments[panel_num];
 }
 
 void
@@ -322,14 +321,14 @@ animation_animatic_set_combine (AnimationAnimatic *animatic,
                                 gint               panel_num,
                                 gboolean           combine)
 {
-  AnimationAnimaticPrivate *priv      = GET_PRIVATE (animatic);
+  AnimationAnimaticPrivate *priv = GET_PRIVATE (animatic);
 
-  g_return_if_fail (panel_num > 0 &&
-                    panel_num <= priv->n_panels);
+  g_return_if_fail (panel_num >= 0 &&
+                    panel_num < priv->n_panels);
 
-  if (priv->combine[panel_num - 1] != combine)
+  if (priv->combine[panel_num] != combine)
     {
-      priv->combine[panel_num - 1] = combine;
+      priv->combine[panel_num] = combine;
       animation_animatic_cache (animatic, panel_num, TRUE);
     }
 }
@@ -340,10 +339,10 @@ animation_animatic_get_combine (AnimationAnimatic *animatic,
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animatic);
 
-  g_return_val_if_fail (panel_num > 0 &&
-                        panel_num <= priv->n_panels,
-                        0);
-  return priv->combine[panel_num - 1];
+  g_return_val_if_fail (panel_num >= 0 &&
+                        panel_num < priv->n_panels,
+                        FALSE);
+  return priv->combine[panel_num];
 }
 
 gint
@@ -354,19 +353,19 @@ animation_animatic_get_panel (AnimationAnimatic *animation,
   gint                      count = 0;
   gint                      i     = -1;
 
-  if (pos >= 1       &&
-      pos <= animation_animatic_get_length (ANIMATION (animation)))
+  if (pos >= 0       &&
+      pos < animation_animatic_get_duration (ANIMATION (animation)))
     {
       for (i = 0; i < priv->n_panels; i++)
         {
           count += priv->durations[i];
-          if (count >= pos)
+          if (count > pos)
             break;
         }
     }
 
   if (i != -1 && i < priv->n_panels)
-    return i + 1;
+    return i;
 
   return -1;
 }
@@ -376,12 +375,12 @@ void animation_animatic_jump_panel (AnimationAnimatic *animation,
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   /* Get the first frame position for a given panel. */
-  gint                      pos = 1;
+  gint                      pos  = 0;
   gint                      i;
 
-  g_return_if_fail (panel <= priv->n_panels);
+  g_return_if_fail (panel < priv->n_panels);
 
-  for (i = 0; i < panel - 1; i++)
+  for (i = 0; i < panel; i++)
     {
       pos += priv->durations[i];
     }
@@ -392,7 +391,7 @@ void animation_animatic_jump_panel (AnimationAnimatic *animation,
 /**** Virtual methods ****/
 
 static gint
-animation_animatic_get_length (Animation *animation)
+animation_animatic_get_duration (Animation *animation)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   gint                      count = 0;
@@ -470,7 +469,7 @@ animation_animatic_load (Animation *animation)
       priv->comments[i]  = layer_name;
 
       /* Panel image. */
-      animation_animatic_cache (ANIMATION_ANIMATIC (animation), i + 1, FALSE);
+      animation_animatic_cache (ANIMATION_ANIMATIC (animation), i, FALSE);
     }
   g_free (layers);
 }
@@ -531,7 +530,7 @@ animation_animatic_get_frame (Animation *animation,
   priv = GET_PRIVATE (animation);
   panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
                                         pos);
-  return g_object_ref (priv->cache[panel - 1]);
+  return g_object_ref (priv->cache[panel]);
 }
 
 static gchar *
@@ -581,7 +580,7 @@ animation_animatic_serialize (Animation *animation)
 
           /* Comments are for a given panel, not for a frame position. */
           comment = g_markup_printf_escaped ("<comment panel=\"%d\">%s</comment>",
-                                             i + 1,
+                                             i,
                                              priv->comments[i]);
           tmp = text;
           text = g_strconcat (text, comment, NULL);
@@ -609,12 +608,12 @@ animation_animatic_same (Animation *animation,
   for (i = 0; i < priv->n_panels; i++)
     {
       count += priv->durations[i];
-      if (count >= pos1 && count >= pos2)
+      if (count > pos1 && count > pos2)
         {
           identical = TRUE;
           break;
         }
-      else if (count >= pos1 || count >= pos2)
+      else if (count > pos1 || count > pos2)
         {
           identical = FALSE;
           break;
@@ -691,6 +690,7 @@ animation_animatic_start_element (GMarkupParseContext *context,
           return;
         }
       status->state = SEQUENCE_STATE;
+      status->panel = -1;
       break;
     case SEQUENCE_STATE:
       if (g_strcmp0 (element_name, "panel") != 0)
@@ -709,7 +709,7 @@ animation_animatic_start_element (GMarkupParseContext *context,
               gint duration = g_ascii_strtoll (*values, NULL, 10);
 
               if (duration > 0)
-                priv->durations[status->panel - 1] = duration;
+                priv->durations[status->panel] = duration;
             }
           else if (strcmp (*names, "blend-mode") == 0 && **values &&
                    strcmp (*values, "normal") == 0)
@@ -721,9 +721,9 @@ animation_animatic_start_element (GMarkupParseContext *context,
           names++;
           values++;
         }
-      if (priv->combine[status->panel - 1] != combine)
+      if (priv->combine[status->panel] != combine)
         {
-          priv->combine[status->panel - 1] = combine;
+          priv->combine[status->panel] = combine;
           animation_animatic_cache (ANIMATION_ANIMATIC (status->animation),
                                     status->panel, FALSE);
         }
@@ -877,7 +877,7 @@ animation_animatic_cache (AnimationAnimatic *animatic,
 
   image_id = animation_get_image_id (animation);
   layer = gimp_image_get_layer_by_tattoo (image_id,
-                                          priv->tattoos[panel - 1]);
+                                          priv->tattoos[panel]);
   if (! layer)
     {
       g_warning ("Caching failed: a layer must have been deleted.");
@@ -885,9 +885,9 @@ animation_animatic_cache (AnimationAnimatic *animatic,
     }
 
   /* Destroy existing cache. */
-  if (priv->cache[panel - 1])
+  if (priv->cache[panel])
     {
-      g_object_unref (priv->cache[panel - 1]);
+      g_object_unref (priv->cache[panel]);
     }
 
   proxy_ratio = animation_get_proxy (animation);
@@ -896,22 +896,22 @@ animation_animatic_cache (AnimationAnimatic *animatic,
   gimp_drawable_offsets (layer,
                          &layer_offx, &layer_offy);
 
-  if (panel > 1 && priv->combine[panel - 1])
+  if (panel > 0 && priv->combine[panel])
     {
-      backdrop_buffer = priv->cache[panel - 2];
+      backdrop_buffer = priv->cache[panel - 1];
     }
 
-  priv->cache[panel - 1] = normal_blend (preview_width, preview_height,
-                                         backdrop_buffer, 1.0, 0, 0,
-                                         buffer, proxy_ratio,
-                                         layer_offx, layer_offy);
+  priv->cache[panel] = normal_blend (preview_width, preview_height,
+                                     backdrop_buffer, 1.0, 0, 0,
+                                     buffer, proxy_ratio,
+                                     layer_offx, layer_offy);
   g_object_unref (buffer);
 
   /* If next panel is in "combine" mode, it must also be re-cached.
    * And so on, recursively. */
-  if (recursion              &&
-      panel < priv->n_panels &&
-      priv->combine[panel])
+  if (recursion                  &&
+      panel < priv->n_panels - 1 &&
+      priv->combine[panel + 1])
     {
       animation_animatic_cache (animatic, panel + 1, TRUE);
     }
@@ -939,8 +939,8 @@ animation_animatic_get_layer (AnimationAnimatic *animation,
   gint                      i     = -1;
 
   if (priv->n_panels > 0 &&
-      pos >= 1           &&
-      pos <= animation_animatic_get_length (ANIMATION (animation)))
+      pos >= 0           &&
+      pos < animation_animatic_get_duration (ANIMATION (animation)))
     {
       for (i = priv->n_panels - 1; i >= 0; i--)
         {
