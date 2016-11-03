@@ -589,7 +589,7 @@ filters_actions_setup (GimpActionGroup *group)
 
   for (i = 0; i < n_entries; i++)
     {
-      entries[i].name        = g_strdup_printf ("filter-recent-%02d", i + 1);
+      entries[i].name        = g_strdup_printf ("filters-recent-%02d", i + 1);
       entries[i].icon_name   = NULL;
       entries[i].label       = "";
       entries[i].accelerator = "";
@@ -761,7 +761,7 @@ filters_actions_update (GimpActionGroup *group,
 
     for (i = 0; i < gimp_filter_history_length (group->gimp); i++)
       {
-        gchar    *name = g_strdup_printf ("filter-recent-%02d", i + 1);
+        gchar    *name = g_strdup_printf ("filters-recent-%02d", i + 1);
         gboolean  sensitive;
 
         proc = gimp_filter_history_nth (group->gimp, i);
@@ -872,7 +872,7 @@ filters_actions_history_changed (Gimp            *gimp,
       gchar       *name;
       gboolean     sensitive = FALSE;
 
-      name = g_strdup_printf ("filter-recent-%02d", i + 1);
+      name = g_strdup_printf ("filters-recent-%02d", i + 1);
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
 
@@ -910,7 +910,7 @@ filters_actions_history_changed (Gimp            *gimp,
   for (; i < gimp_filter_history_size (gimp); i++)
     {
       GtkAction *action;
-      gchar     *name = g_strdup_printf ("filter-recent-%02d", i + 1);
+      gchar     *name = g_strdup_printf ("filters-recent-%02d", i + 1);
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
