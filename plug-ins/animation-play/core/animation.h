@@ -40,22 +40,35 @@ struct _AnimationClass
 {
   GObjectClass  parent_class;
 
+  /* Signals */
+  void         (*loading)            (Animation *animation,
+                                      gdouble    ratio);
+  void         (*loaded)             (Animation *animation);
+
+  void         (*cache_invalidated)  (Animation *animation,
+                                      gint       position);
+  void         (*duration_changed)   (Animation *animation,
+                                      gint       duration);
+  void         (*framerate_changed)  (Animation *animation,
+                                      gdouble    fps);
+  void         (*proxy)              (Animation *animation,
+                                      gdouble    ratio);
+
   /* Defaults to returning FALSE for any different position. */
   gboolean     (*same)               (Animation *animation,
                                       gint       prev_pos,
                                       gint       next_pos);
 
   /* These virtual methods must be implemented by any subclass. */
-  void         (*load)          (Animation   *animation);
-  void         (*load_xml)      (Animation   *animation,
-                                 const gchar *xml);
-  gint         (*get_duration)  (Animation   *animation);
+  void         (*load)               (Animation   *animation);
+  void         (*load_xml)           (Animation   *animation,
+                                      const gchar *xml);
+  gint         (*get_duration)       (Animation   *animation);
 
+  GeglBuffer * (*get_frame)          (Animation   *animation,
+                                      gint         pos);
 
-  GeglBuffer * (*get_frame)     (Animation   *animation,
-                                 gint         pos);
-
-  gchar      * (*serialize)     (Animation   *animation);
+  gchar      * (*serialize)          (Animation   *animation);
 };
 
 GType         animation_get_type (void);
@@ -70,7 +83,6 @@ void          animation_load               (Animation   *animation);
 
 void          animation_save_to_parasite   (Animation   *animation);
 
-gint          animation_get_position       (Animation   *animation);
 gint          animation_get_duration       (Animation   *animation);
 
 void          animation_set_proxy          (Animation   *animation,
@@ -82,22 +94,6 @@ void          animation_get_size           (Animation   *animation,
 
 GeglBuffer  * animation_get_frame          (Animation   *animation,
                                             gint         frame_number);
-
-
-gboolean      animation_is_playing         (Animation   *animation);
-void          animation_play               (Animation   *animation);
-void          animation_stop               (Animation   *animation);
-void          animation_next               (Animation   *animation);
-void          animation_prev               (Animation   *animation);
-void          animation_jump               (Animation   *animation,
-                                            gint         index);
-
-void          animation_set_playback_start (Animation   *animation,
-                                            gint         frame_number);
-gint          animation_get_playback_start (Animation   *animation);
-void          animation_set_playback_stop  (Animation   *animation,
-                                            gint         frame_number);
-gint          animation_get_playback_stop  (Animation   *animation);
 
 void          animation_set_framerate      (Animation   *animation,
                                             gdouble      fps);

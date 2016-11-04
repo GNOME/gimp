@@ -46,7 +46,8 @@ struct _AnimationStoryboardClass
 
 GType       animation_storyboard_get_type (void) G_GNUC_CONST;
 
-GtkWidget * animation_storyboard_new      (AnimationAnimatic *animation);
+GtkWidget * animation_storyboard_new      (AnimationAnimatic *animation,
+                                           AnimationPlayback *playback);
 
 #endif  /*  __ANIMATION_STORYBOARD_H__  */
 

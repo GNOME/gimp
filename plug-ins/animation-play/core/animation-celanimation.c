@@ -220,16 +220,6 @@ animation_cel_animation_set_layers (AnimationCelAnimation *animation,
           frame_layer->data = 0;
         }
       animation_cel_animation_cache (animation, position);
-      if (animation_get_position (ANIMATION (animation)) == position)
-        {
-          GeglBuffer *buffer;
-
-          buffer = animation_get_frame (ANIMATION (animation), position);
-          g_signal_emit_by_name (animation, "render",
-                                 position, buffer, TRUE);
-          if (buffer)
-            g_object_unref (buffer);
-        }
     }
 }
 
@@ -1088,8 +1078,9 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
 
   /* This item exists and has a NULL data. */
   g_list_nth (animation->priv->cache, pos)->data = cache;
-}
 
+  g_signal_emit_by_name (animation, "cache-invalidated", pos, 1);
+}
 
 static gboolean
 animation_cel_animation_cache_cmp (Cache *cache1,

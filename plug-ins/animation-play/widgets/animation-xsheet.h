@@ -47,6 +47,7 @@ struct _AnimationXSheetClass
 GType       animation_xsheet_get_type (void) G_GNUC_CONST;
 
 GtkWidget * animation_xsheet_new      (AnimationCelAnimation *animation,
+                                       AnimationPlayback     *playback,
                                        GtkWidget             *layer_view);
 
 #endif  /*  __ANIMATION_XSHEET_H__  */

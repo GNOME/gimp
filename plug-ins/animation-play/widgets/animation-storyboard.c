@@ -28,6 +28,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "core/animationanimatic.h"
+#include "core/animation-playback.h"
 
 #include "animation-storyboard.h"
 
@@ -41,6 +42,7 @@ enum
 struct _AnimationStoryboardPrivate
 {
   AnimationAnimatic  *animation;
+  AnimationPlayback  *playback;
 
   gint                current_panel;
 
@@ -63,20 +65,15 @@ static void animation_storyboard_finalize              (GObject             *obj
 
 /* Callbacks on animation */
 static void animation_storyboard_load                  (Animation           *animation,
-                                                        G_GNUC_UNUSED gint   num_frames,
-                                                        G_GNUC_UNUSED gint   playback_start,
-                                                        G_GNUC_UNUSED gint   playback_stop,
-                                                        G_GNUC_UNUSED gint   preview_width,
-                                                        G_GNUC_UNUSED gint   preview_height,
                                                         AnimationStoryboard *view);
-static void animation_storyboard_rendered              (Animation           *animation,
+static void animation_storyboard_rendered              (AnimationPlayback   *playback,
                                                         gint                 frame_number,
                                                         GeglBuffer          *buffer,
                                                         gboolean             must_draw_null,
                                                         AnimationStoryboard *view);
 
 static void animation_storyboard_duration_spin_changed (GtkSpinButton       *spinbutton,
-                                                        AnimationAnimatic   *animation);
+                                                        AnimationStoryboard *storyboard);
 
 static gboolean animation_storyboard_comment_keypress  (GtkWidget           *entry,
                                                         GdkEventKey         *event,
@@ -86,7 +83,7 @@ static void animation_storyboard_comment_changed       (GtkTextBuffer       *tex
 static void animation_storyboard_disposal_toggled      (GtkToggleButton     *button,
                                                         AnimationAnimatic   *animatic);
 static void animation_storyboard_button_clicked        (GtkWidget           *widget,
-                                                        AnimationAnimatic   *animatic);
+                                                        AnimationStoryboard *storyboard);
 
 G_DEFINE_TYPE (AnimationStoryboard, animation_storyboard, GTK_TYPE_TABLE)
 
@@ -136,13 +133,17 @@ animation_storyboard_init (AnimationStoryboard *view)
  * Creates a new layer view tied to @animation, ready to be displayed.
  */
 GtkWidget *
-animation_storyboard_new (AnimationAnimatic *animation)
+animation_storyboard_new (AnimationAnimatic *animation,
+                          AnimationPlayback *playback)
 {
-  GtkWidget *layer_view;
+  GtkWidget           *layer_view;
+  AnimationStoryboard *storyboard;
 
   layer_view = g_object_new (ANIMATION_TYPE_STORYBOARD,
                              "animation", animation,
                              NULL);
+  storyboard = ANIMATION_STORYBOARD (layer_view);
+  storyboard->priv->playback = playback;
   return layer_view;
 }
 
@@ -228,11 +229,6 @@ animation_storyboard_finalize (GObject *object)
  */
 static void
 animation_storyboard_load (Animation           *animation,
-                           gint                 num_frames,
-                           gint                 playback_start,
-                           gint                 playback_stop,
-                           gint                 preview_width,
-                           gint                 preview_height,
                            AnimationStoryboard *view)
 {
   AnimationAnimatic *animatic = ANIMATION_ANIMATIC (animation);
@@ -299,7 +295,7 @@ animation_storyboard_load (Animation           *animation,
                          GINT_TO_POINTER (panel_num));
       g_signal_connect (panel_button, "clicked",
                         G_CALLBACK (animation_storyboard_button_clicked),
-                        animation);
+                        view);
 
       view->priv->panel_buttons = g_list_prepend (view->priv->panel_buttons,
                                                   panel_button);
@@ -392,7 +388,7 @@ animation_storyboard_load (Animation           *animation,
                          GINT_TO_POINTER (panel_num));
       g_signal_connect (duration, "value-changed",
                         (GCallback) animation_storyboard_duration_spin_changed,
-                        animation);
+                        view);
       gtk_widget_show (duration);
 
       disposal = gtk_toggle_button_new ();
@@ -419,14 +415,14 @@ animation_storyboard_load (Animation           *animation,
                                                     disposal);
       gtk_widget_show (disposal);
     }
-  g_signal_connect (animation, "render",
+  g_signal_connect (view->priv->playback, "render",
                     (GCallback) animation_storyboard_rendered,
                     view);
   gimp_image_delete (image_id);
 }
 
 static void
-animation_storyboard_rendered (Animation           *animation,
+animation_storyboard_rendered (AnimationPlayback   *playback,
                                gint                 frame_number,
                                GeglBuffer          *buffer,
                                gboolean             must_draw_null,
@@ -436,7 +432,7 @@ animation_storyboard_rendered (Animation           *animation,
   GtkWidget *arrow;
   gint       panel;
 
-  panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
+  panel = animation_animatic_get_panel (view->priv->animation,
                                         frame_number);
   if (view->priv->current_panel >= 0)
     {
@@ -456,18 +452,33 @@ animation_storyboard_rendered (Animation           *animation,
 }
 
 static void
-animation_storyboard_duration_spin_changed (GtkSpinButton     *spinbutton,
-                                            AnimationAnimatic *animation)
+animation_storyboard_duration_spin_changed (GtkSpinButton       *spinbutton,
+                                            AnimationStoryboard *storyboard)
 {
   gpointer panel_num;
   gint     duration;
+  gint     panel_position;
+  gint     position;
 
   panel_num = g_object_get_data (G_OBJECT (spinbutton), "panel-num");
   duration = gtk_spin_button_get_value_as_int (spinbutton);
 
-  animation_animatic_set_panel_duration (animation,
+  position = animation_playback_get_position (storyboard->priv->playback);
+  panel_position = animation_animatic_get_position (storyboard->priv->animation,
+                                                    GPOINTER_TO_INT (panel_num));
+  if (position >= panel_position)
+    {
+      gint cur_duration;
+
+      cur_duration = animation_animatic_get_panel_duration (storyboard->priv->animation,
+                                                            GPOINTER_TO_INT (panel_num));
+      position += duration - cur_duration;
+    }
+
+  animation_animatic_set_panel_duration (storyboard->priv->animation,
                                          GPOINTER_TO_INT (panel_num),
                                          duration);
+  animation_playback_jump (storyboard->priv->playback, position);
 }
 
 static gboolean
@@ -535,11 +546,14 @@ animation_storyboard_disposal_toggled (GtkToggleButton   *button,
 }
 
 static void
-animation_storyboard_button_clicked (GtkWidget         *widget,
-                                     AnimationAnimatic *animatic)
+animation_storyboard_button_clicked (GtkWidget           *widget,
+                                     AnimationStoryboard *storyboard)
 {
   gpointer panel_num;
+  gint     position;
 
   panel_num = g_object_get_data (G_OBJECT (widget), "panel-num");
-  animation_animatic_jump_panel (animatic, GPOINTER_TO_INT (panel_num));
+  position = animation_animatic_get_position (storyboard->priv->animation,
+                                              GPOINTER_TO_INT (panel_num));
+  animation_playback_jump (storyboard->priv->playback, position);
 }

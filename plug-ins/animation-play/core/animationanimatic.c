@@ -79,7 +79,7 @@ struct _AnimationAnimaticPrivate
                                      ANIMATION_TYPE_ANIMATIC, \
                                      AnimationAnimaticPrivate)
 
-static void         animation_animatic_finalize   (GObject           *object);
+static void         animation_animatic_finalize     (GObject           *object);
 
 /* Virtual methods */
 
@@ -99,11 +99,11 @@ static gboolean     animation_animatic_same         (Animation         *animatio
 /* XML parsing */
 
 static void      animation_animatic_start_element (GMarkupParseContext *context,
-                                                    const gchar         *element_name,
-                                                    const gchar        **attribute_names,
-                                                    const gchar        **attribute_values,
-                                                    gpointer             user_data,
-                                                    GError             **error);
+                                                   const gchar         *element_name,
+                                                   const gchar        **attribute_names,
+                                                   const gchar        **attribute_values,
+                                                   gpointer             user_data,
+                                                   GError             **error);
 static void      animation_animatic_end_element   (GMarkupParseContext *context,
                                                    const gchar         *element_name,
                                                    gpointer             user_data,
@@ -120,8 +120,6 @@ static void      animation_animatic_text          (GMarkupParseContext  *context
 static void         animation_animatic_cache      (AnimationAnimatic *animation,
                                                    gint               panel,
                                                    gboolean           recursion);
-static gint         animation_animatic_get_layer  (AnimationAnimatic *animation,
-                                                   gint               pos);
 
 /* Tag handling (from layer names) */
 
@@ -229,50 +227,19 @@ animation_animatic_set_panel_duration (AnimationAnimatic *animatic,
 {
   AnimationAnimaticPrivate *priv           = GET_PRIVATE (animatic);
   Animation                *animation      = ANIMATION (animatic);
-  gint                      prev_length    = animation_get_duration (animation);
-  gint                      playback_start = animation_get_playback_start (animation);
-  gint                      playback_stop  = animation_get_playback_stop (animation);
-  gint                      position       = animation_get_position (animation);
-  gint                      layer_id;
-  gint                      length;
+  gint                      duration;
 
   g_return_if_fail (panel_duration >= 0  &&
                     panel_num >= 0 &&
                     panel_num < priv->n_panels);
 
-  layer_id = animation_animatic_get_layer (animatic, position);
-
   priv->durations[panel_num] = panel_duration;
-  length = animation_get_duration (animation);
+  duration = animation_get_duration (animation);
 
-  if (playback_start >= length)
-    {
-      playback_start = 0;
-    }
-  if (playback_stop >= length ||
-      playback_stop == prev_length - 1)
-    {
-      playback_stop = length - 1;
-    }
   g_signal_emit (animatic, signals[PANEL_DURATION], 0,
                  panel_num, panel_duration);
-  g_signal_emit_by_name (animatic, "playback-range",
-                         playback_start, playback_stop,
-                         animation_get_duration (animation));
-  if (position >= length)
-    {
-      animation_jump (animation, length - 1);
-    }
-  else if (layer_id != animation_animatic_get_layer (animatic, position))
-    {
-      GeglBuffer *buffer;
-
-      buffer = animation_get_frame (animation, position);
-      g_signal_emit_by_name (animation, "render",
-                             position, buffer, TRUE);
-      if (buffer)
-        g_object_unref (buffer);
-    }
+  g_signal_emit_by_name (animation, "duration-changed",
+                         duration);
 }
 
 gint
@@ -313,6 +280,7 @@ animation_animatic_get_comment (AnimationAnimatic *animatic,
   g_return_val_if_fail (panel_num >= 0 &&
                         panel_num < priv->n_panels,
                         0);
+
   return priv->comments[panel_num];
 }
 
@@ -342,6 +310,7 @@ animation_animatic_get_combine (AnimationAnimatic *animatic,
   g_return_val_if_fail (panel_num >= 0 &&
                         panel_num < priv->n_panels,
                         FALSE);
+
   return priv->combine[panel_num];
 }
 
@@ -370,22 +339,23 @@ animation_animatic_get_panel (AnimationAnimatic *animation,
   return -1;
 }
 
-void animation_animatic_jump_panel (AnimationAnimatic *animation,
-                                    gint               panel)
+gint
+animation_animatic_get_position (AnimationAnimatic *animation,
+                                 gint               panel)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
-  /* Get the first frame position for a given panel. */
   gint                      pos  = 0;
   gint                      i;
 
-  g_return_if_fail (panel < priv->n_panels);
+  g_return_val_if_fail (panel < priv->n_panels,
+                        priv->n_panels - 1);
 
   for (i = 0; i < panel; i++)
     {
       pos += priv->durations[i];
     }
 
-  animation_jump (ANIMATION (animation), pos);
+  return pos;
 }
 
 /**** Virtual methods ****/
@@ -868,7 +838,7 @@ animation_animatic_cache (AnimationAnimatic *animatic,
   GeglBuffer               *backdrop_buffer = NULL;
   gint                      layer_offx;
   gint                      layer_offy;
-  gint                      position;
+  /*gint                      position;*/
   gint                      preview_width;
   gint                      preview_height;
   gint32                    image_id;
@@ -907,6 +877,11 @@ animation_animatic_cache (AnimationAnimatic *animatic,
                                      layer_offx, layer_offy);
   g_object_unref (buffer);
 
+  g_signal_emit_by_name (animation, "cache-invalidated",
+                         animation_animatic_get_position (animatic,
+                                                          panel),
+                         1);
+
   /* If next panel is in "combine" mode, it must also be re-cached.
    * And so on, recursively. */
   if (recursion                  &&
@@ -915,42 +890,6 @@ animation_animatic_cache (AnimationAnimatic *animatic,
     {
       animation_animatic_cache (animatic, panel + 1, TRUE);
     }
-
-  /* Finally re-render if we are currently showing this panel. */
-  position = animation_get_position (animation);
-  if (animation_animatic_get_panel (animatic, position) == panel)
-    {
-      buffer = animation_get_frame (animation, position);
-      g_signal_emit_by_name (animation, "render",
-                             position, buffer, TRUE);
-      if (buffer)
-        {
-          g_object_unref (buffer);
-        }
-    }
-}
-
-static gint
-animation_animatic_get_layer (AnimationAnimatic *animation,
-                              gint               pos)
-{
-  AnimationAnimaticPrivate *priv  = GET_PRIVATE (animation);
-  gint                      count = 0;
-  gint                      i     = -1;
-
-  if (priv->n_panels > 0 &&
-      pos >= 0           &&
-      pos < animation_animatic_get_duration (ANIMATION (animation)))
-    {
-      for (i = priv->n_panels - 1; i >= 0; i--)
-        {
-          count += priv->durations[i];
-          if (count >= pos)
-            break;
-        }
-    }
-
-  return i;
 }
 
 /**** TAG UTILS ****/

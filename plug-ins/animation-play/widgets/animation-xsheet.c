@@ -25,6 +25,8 @@
 
 #include <libgimp/gimp.h>
 
+#include "core/animation.h"
+#include "core/animation-playback.h"
 #include "core/animation-celanimation.h"
 #include "animation-layer-view.h"
 
@@ -42,6 +44,8 @@ enum
 struct _AnimationXSheetPrivate
 {
   AnimationCelAnimation *animation;
+  AnimationPlayback     *playback;
+
   GtkWidget             *layer_view;
 
   GtkWidget             *track_layout;
@@ -72,17 +76,13 @@ static void animation_xsheet_reset_layout (AnimationXSheet *xsheet);
 
 /* Callbacks on animation. */
 static void on_animation_loaded           (Animation       *animation,
-                                           gint             num_frames,
-                                           gint             playback_start,
-                                           gint             playback_stop,
-                                           gint             preview_width,
-                                           gint             preview_height,
                                            AnimationXSheet *xsheet);
-static void on_animation_rendered         (Animation       *animation,
-                                           gint             frame_number,
-                                           GeglBuffer      *buffer,
-                                           gboolean         must_draw_null,
-                                           AnimationXSheet *xsheet);
+/* Callbacks on callback. */
+static void on_animation_rendered         (AnimationPlayback *animation,
+                                           gint               frame_number,
+                                           GeglBuffer        *buffer,
+                                           gboolean           must_draw_null,
+                                           AnimationXSheet   *xsheet);
 
 /* Callbacks on layer view. */
 static void on_layer_selection            (AnimationLayerView *view,
@@ -160,6 +160,7 @@ animation_xsheet_init (AnimationXSheet *xsheet)
 
 GtkWidget *
 animation_xsheet_new (AnimationCelAnimation *animation,
+                      AnimationPlayback     *playback,
                       GtkWidget             *layer_view)
 {
   GtkWidget *xsheet;
@@ -168,6 +169,10 @@ animation_xsheet_new (AnimationCelAnimation *animation,
                          "animation", animation,
                          "layer-view", layer_view,
                          NULL);
+  ANIMATION_XSHEET (xsheet)->priv->playback = playback;
+  g_signal_connect (ANIMATION_XSHEET (xsheet)->priv->playback,
+                    "render",
+                    G_CALLBACK (on_animation_rendered), xsheet);
 
   return xsheet;
 }
@@ -199,8 +204,6 @@ animation_xsheet_constructed (GObject *object)
   /* Reload everything when we reload the animation. */
   g_signal_connect_after (xsheet->priv->animation, "loaded",
                           G_CALLBACK (on_animation_loaded), xsheet);
-  g_signal_connect (xsheet->priv->animation, "render",
-                    G_CALLBACK (on_animation_rendered), xsheet);
 }
 
 static void
@@ -254,6 +257,9 @@ animation_xsheet_finalize (GObject *object)
 {
   AnimationXSheet *xsheet = ANIMATION_XSHEET (object);
 
+  g_signal_handlers_disconnect_by_func (ANIMATION_XSHEET (xsheet)->priv->playback,
+                                        G_CALLBACK (on_animation_rendered),
+                                        xsheet);
   if (xsheet->priv->animation)
     g_object_unref (xsheet->priv->animation);
   if (xsheet->priv->layer_view)
@@ -478,22 +484,17 @@ on_layer_selection (AnimationLayerView *view,
 
 static void
 on_animation_loaded (Animation       *animation,
-                     gint             num_frames,
-                     gint             playback_start,
-                     gint             playback_stop,
-                     gint             preview_width,
-                     gint             preview_height,
                      AnimationXSheet *xsheet)
 {
   animation_xsheet_reset_layout (xsheet);
 }
 
 static void
-on_animation_rendered (Animation       *animation,
-                       gint             frame_number,
-                       GeglBuffer      *buffer,
-                       gboolean         must_draw_null,
-                       AnimationXSheet *xsheet)
+on_animation_rendered (AnimationPlayback *playback,
+                       gint               frame_number,
+                       GeglBuffer        *buffer,
+                       gboolean           must_draw_null,
+                       AnimationXSheet   *xsheet)
 {
   GtkWidget *button;
 
@@ -522,8 +523,8 @@ animation_xsheet_frame_clicked (GtkWidget       *button,
 
   position = g_object_get_data (G_OBJECT (button), "frame-position");
 
-  animation_jump (ANIMATION (xsheet->priv->animation),
-                  GPOINTER_TO_INT (position) + 1);
+  animation_playback_jump (xsheet->priv->playback,
+                           GPOINTER_TO_INT (position));
   if (xsheet->priv->active_pos_button)
     {
       GtkToggleButton *active_button;

@@ -46,25 +46,26 @@ struct _AnimationAnimaticClass
 GType            animation_animatic_get_type (void);
 
 void             animation_animatic_set_panel_duration (AnimationAnimatic *animatic,
-                                                        gint               panel_num,
+                                                        gint               panel,
                                                         gint               duration);
 gint             animation_animatic_get_panel_duration (AnimationAnimatic *animatic,
-                                                        gint               panel_num);
+                                                        gint               panel);
 
-void             animation_animatic_set_comment  (AnimationAnimatic *animatic,
-                                                  gint               panel_num,
-                                                  const gchar       *comment);
-const gchar    * animation_animatic_get_comment  (AnimationAnimatic *animatic,
-                                                  gint               panel_num);
+void             animation_animatic_set_comment        (AnimationAnimatic *animatic,
+                                                        gint               panel,
+                                                        const gchar       *comment);
+const gchar    * animation_animatic_get_comment        (AnimationAnimatic *animatic,
+                                                        gint               panel);
 
-void             animation_animatic_set_combine  (AnimationAnimatic *animatic,
-                                                  gint               panel_num,
-                                                  gboolean           combine);
-const gboolean   animation_animatic_get_combine  (AnimationAnimatic *animatic,
-                                                  gint               panel_num);
+void             animation_animatic_set_combine        (AnimationAnimatic *animatic,
+                                                        gint               panel,
+                                                        gboolean           combine);
+const gboolean   animation_animatic_get_combine        (AnimationAnimatic *animatic,
+                                                        gint               panel);
 
-gint             animation_animatic_get_panel    (AnimationAnimatic *animation,
-                                                  gint               pos);
-void             animation_animatic_jump_panel   (AnimationAnimatic *animation,
-                                                  gint               panel);
+gint             animation_animatic_get_panel          (AnimationAnimatic *animation,
+                                                        gint               pos);
+gint             animation_animatic_get_position       (AnimationAnimatic *animation,
+                                                        gint               panel);
+
 #endif  /*  __ANIMATION_ANIMATIC_H__  */
