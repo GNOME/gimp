@@ -1145,7 +1145,7 @@ file_gif_spin_button_int_init (GtkBuilder  *builder,
   gtk_adjustment_set_value (adjustment, initial_value);
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &gsvals.default_delay);
+                    value_pointer);
 
   return spin_button;
 }
