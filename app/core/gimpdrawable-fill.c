@@ -214,7 +214,6 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                                  gboolean         push_undo)
 {
   GimpContext *context;
-  GimpImage   *image;
   GeglBuffer  *buffer;
   GeglBuffer  *mask_buffer;
   gint         x, y, w, h;
@@ -230,23 +229,9 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                     gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
 
   context = GIMP_CONTEXT (options);
-  image   = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  /*  must call gimp_channel_is_empty() instead of relying on
-   *  gimp_item_mask_intersect() because the selection pretends to
-   *  be empty while it is being stroked, to prevent masking itself.
-   */
-  if (gimp_channel_is_empty (gimp_image_get_mask (image)))
-    {
-      x = 0;
-      y = 0;
-      w = gimp_item_get_width  (GIMP_ITEM (drawable));
-      h = gimp_item_get_height (GIMP_ITEM (drawable));
-    }
-  else if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
-    {
-      return;
-    }
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
+    return;
 
   /* fill a 1-bpp GeglBuffer with black, this will describe the shape
    * of the stroke.
