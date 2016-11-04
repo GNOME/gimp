@@ -368,6 +368,53 @@ save_layer (const gchar    *filename,
   return status;
 }
 
+static gint
+parse_ms_tag (const gchar *str)
+{
+  gint sum    = 0;
+  gint offset = 0;
+  gint length;
+
+  length = strlen (str);
+
+ find_another_bra:
+
+  while ((offset < length) && (str[offset] != '('))
+    offset++;
+
+  if (offset >= length)
+    return(-1);
+
+  if (! g_ascii_isdigit (str[++offset]))
+    goto find_another_bra;
+
+  do
+    {
+      sum *= 10;
+      sum += str[offset] - '0';
+      offset++;
+    }
+  while ((offset < length) && (g_ascii_isdigit (str[offset])));
+
+  if (length - offset <= 2)
+    return(-3);
+
+  if ((g_ascii_toupper (str[offset])     != 'M') ||
+      (g_ascii_toupper (str[offset + 1]) != 'S'))
+    return -4;
+
+  return sum;
+}
+
+static gint
+get_layer_delay(gint32 layer)
+{
+  gchar *layer_name = gimp_item_get_name (layer);
+  gint  delay_ms = parse_ms_tag (layer_name);
+  g_free (layer_name);
+  return delay_ms;
+}
+
 gboolean
 save_animation (const gchar    *filename,
                 gint32          nLayers,
@@ -399,7 +446,9 @@ save_animation (const gchar    *filename,
 
   do
     {
-      gint loop;
+      gint     loop;
+      gint     default_delay = params->delay;
+      gboolean force_delay = params->force_delay;
 
       /* Begin displaying export progress */
       gimp_progress_init_printf (_("Saving '%s'"),
@@ -438,6 +487,7 @@ save_animation (const gchar    *filename,
           WebPPicture       picture;
           WebPMemoryWriter  mw = { 0 };
           gint32            drawable = allLayers[nLayers - 1 - loop];
+          gint              delay = get_layer_delay (drawable);
 
           /* Obtain the drawable type */
           has_alpha = gimp_drawable_has_alpha (drawable);
@@ -537,7 +587,7 @@ save_animation (const gchar    *filename,
           g_object_unref (geglbuffer);
 
           gimp_progress_update ((loop + 1.0) / nLayers);
-          frame_timestamp += 100;    /* TODO: should extract the real time stamp from layer */
+          frame_timestamp += (delay <= 0 || force_delay) ? default_delay : delay;
         }
 
       if (status == FALSE)
