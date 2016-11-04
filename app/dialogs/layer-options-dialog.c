@@ -339,7 +339,7 @@ layer_options_dialog_new (GimpImage                *image,
       GimpContainer *filters;
       GtkWidget     *view;
 
-      frame = gimp_frame_new (_("Active Filters"));
+      frame = gimp_frame_new ("Active Filters");
       gtk_box_pack_start (GTK_BOX (left_vbox), frame, TRUE, TRUE, 0);
       gtk_widget_show (frame);
 
