@@ -864,7 +864,7 @@ icons24_images = \
 	24/gimp-hchain.png			\
 	24/gimp-hfill.png			\
 	24/gimp-image.png			\
-	24/gimp-imagemetadata.png		\
+	24/gimp-image-metadata.png		\
 	24/gimp-images.png			\
 	24/gimp-info.png			\
 	24/gimp-layer-mask.png			\
