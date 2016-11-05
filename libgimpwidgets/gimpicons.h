@@ -182,6 +182,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_FLIP_VERTICAL            "gimp-flip-vertical"
 
 #define GIMP_STOCK_IMAGE                    "gimp-image"
+#define GIMP_STOCK_IMAGE_METADATA           "gimp-image-metadata"
 #define GIMP_STOCK_LAYER                    "gimp-layer"
 #define GIMP_STOCK_TEXT_LAYER               "gimp-text-layer"
 #define GIMP_STOCK_FLOATING_SELECTION       "gimp-floating-selection"

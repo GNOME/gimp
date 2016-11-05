@@ -184,6 +184,8 @@ query (void)
                           image_attribs_args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_IMAGE_PROC, "<Image>/Image");
+  gimp_plugin_icon_register (PLUG_IN_IMAGE_PROC, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) GIMP_STOCK_IMAGE_METADATA); 
 
   gimp_install_procedure (PLUG_IN_LAYER_PROC,
                           N_("View attributes (Exif, IPTC, XMP, ...)"),
@@ -200,6 +202,8 @@ query (void)
                           layer_attribs_args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_LAYER_PROC, "<Layers>");
+  gimp_plugin_icon_register (PLUG_IN_LAYER_PROC, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) GIMP_STOCK_IMAGE_METADATA); 
 
   gimp_install_procedure (PLUG_IN_CHANNEL_PROC,
                           N_("View attributes (Exif, IPTC, XMP, ...)"),
@@ -216,6 +220,9 @@ query (void)
                           channel_attribs_args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_CHANNEL_PROC, "<Channels>");
+  
+  gimp_plugin_icon_register (PLUG_IN_CHANNEL_PROC, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) GIMP_STOCK_IMAGE_METADATA); 
 }
 
 static void
