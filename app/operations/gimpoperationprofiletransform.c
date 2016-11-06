@@ -37,8 +37,8 @@ enum
   PROP_0,
   PROP_SRC_PROFILE,
   PROP_DEST_PROFILE,
-  PROP_INTENT,
-  PROP_BPC
+  PROP_RENDERING_INTENT,
+  PROP_BLACK_POINT_COMPENSATION
 };
 
 
@@ -106,8 +106,8 @@ gimp_operation_profile_transform_class_init (GimpOperationProfileTransformClass 
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_INTENT,
-                                   g_param_spec_enum ("intent",
+  g_object_class_install_property (object_class, PROP_RENDERING_INTENT,
+                                   g_param_spec_enum ("rendering-intent",
                                                       "Rendering Intent",
                                                       "Rendering Intent",
                                                       GIMP_TYPE_COLOR_RENDERING_INTENT,
@@ -115,8 +115,8 @@ gimp_operation_profile_transform_class_init (GimpOperationProfileTransformClass 
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_BPC,
-                                   g_param_spec_boolean ("blc",
+  g_object_class_install_property (object_class, PROP_BLACK_POINT_COMPENSATION,
+                                   g_param_spec_boolean ("black-point-compensation",
                                                          "Black Point Compensation",
                                                          "Black Point Compensation",
                                                          TRUE,
@@ -173,12 +173,12 @@ gimp_operation_profile_transform_get_property (GObject    *object,
       g_value_set_object (value, self->dest_profile);
       break;
 
-    case PROP_INTENT:
-      g_value_set_enum (value, self->intent);
+    case PROP_RENDERING_INTENT:
+      g_value_set_enum (value, self->rendering_intent);
       break;
 
-    case PROP_BPC:
-      g_value_set_boolean (value, self->bpc);
+    case PROP_BLACK_POINT_COMPENSATION:
+      g_value_set_boolean (value, self->black_point_compensation);
       break;
 
     default:
@@ -209,12 +209,12 @@ gimp_operation_profile_transform_set_property (GObject      *object,
       self->dest_profile = g_value_dup_object (value);
       break;
 
-    case PROP_INTENT:
-      self->intent = g_value_get_enum (value);
+    case PROP_RENDERING_INTENT:
+      self->rendering_intent = g_value_get_enum (value);
       break;
 
-    case PROP_BPC:
-      self->bpc = g_value_get_boolean (value);
+    case PROP_BLACK_POINT_COMPENSATION:
+      self->black_point_compensation = g_value_get_boolean (value);
       break;
 
    default:
@@ -247,14 +247,17 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
     {
       GimpColorTransformFlags flags = 0;
 
-      if (self->bpc)
+      if (self->black_point_compensation)
         flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
       flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
 
-      self->transform = gimp_color_transform_new (self->src_profile,  format,
-                                                  self->dest_profile, format,
-                                                  self->intent, flags);
+      self->transform = gimp_color_transform_new (self->src_profile,
+                                                  self->src_format,
+                                                  self->dest_profile,
+                                                  self->dest_format,
+                                                  self->rendering_intent,
+                                                  flags);
     }
 
   gegl_operation_set_format (operation, "input",  self->src_format);

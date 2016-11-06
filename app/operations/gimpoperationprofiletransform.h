@@ -47,8 +47,8 @@ struct _GimpOperationProfileTransform
   GimpColorProfile         *dest_profile;
   const Babl               *dest_format;
 
-  GimpColorRenderingIntent  intent;
-  gboolean                  bpc;
+  GimpColorRenderingIntent  rendering_intent;
+  gboolean                  black_point_compensation;
 
   GimpColorTransform       *transform;
 };
