@@ -1064,7 +1064,7 @@ gimp_merge_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_EXPAND_AS_NECESSARY, NC_("merge-type", "Expanded as neccessary"), NULL },
+    { GIMP_EXPAND_AS_NECESSARY, NC_("merge-type", "Expanded as necessary"), NULL },
     { GIMP_CLIP_TO_IMAGE, NC_("merge-type", "Clipped to image"), NULL },
     { GIMP_CLIP_TO_BOTTOM_LAYER, NC_("merge-type", "Clipped to bottom layer"), NULL },
     { GIMP_FLATTEN_IMAGE, NC_("merge-type", "Flatten"), NULL },

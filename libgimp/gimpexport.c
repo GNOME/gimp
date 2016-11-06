@@ -350,7 +350,7 @@ static ExportAction export_action_convert_rgb_or_indexed =
 {
   export_convert_rgb,
   export_convert_indexed,
-  N_("%s plug-in  can only handle RGB or indexed images"),
+  N_("%s plug-in can only handle RGB or indexed images"),
   { N_("Convert to RGB"), N_("Convert to Indexed using default settings\n"
                              "(Do it manually to tune the result)")},
   0
