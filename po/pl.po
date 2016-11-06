@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-31 01:27+0100\n"
-"PO-Revision-Date: 2016-10-31 01:28+0100\n"
+"POT-Creation-Date: 2016-11-06 21:34+0100\n"
+"PO-Revision-Date: 2016-11-06 21:35+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2730,8 +2730,8 @@ msgstr "Wyeksportuj…"
 
 #: ../app/actions/file-actions.c:160
 msgctxt "file-action"
-msgid "Export the image again"
-msgstr "Eksportuje obraz ponownie"
+msgid "Export the image"
+msgstr "Eksportuje obraz"
 
 #: ../app/actions/file-actions.c:165
 msgctxt "file-action"
@@ -7641,6 +7641,7 @@ msgstr "Warstwa"
 #: ../app/config/gimpdialogconfig.c:370 ../app/core/gimpchannel.c:288
 #: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:105
+#: ../app/operations/gimpoperationthreshold.c:89
 #: ../app/widgets/gimpchanneltreeview.c:332
 msgid "Channel"
 msgstr "Kanał"
@@ -10013,7 +10014,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Wypełnienie kubełkiem"
 
-#: ../app/core/gimpdrawable-equalize.c:53
+#: ../app/core/gimpdrawable-equalize.c:63
 msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Zrównanie"
@@ -10030,7 +10031,7 @@ msgstr "Obliczanie alfy nieznanych pikseli"
 msgid "Not enough points to fill"
 msgstr "Niewystarczająca liczba punktów do wypełnienia"
 
-#: ../app/core/gimpdrawable-fill.c:274
+#: ../app/core/gimpdrawable-fill.c:259
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Rysowanie pociągnięcia"
@@ -12087,6 +12088,11 @@ msgstr "Przesunięcie na osi Y:"
 #: ../app/widgets/gimptemplateeditor.c:431
 msgid "_Fill with:"
 msgstr "Wypeł_nienie:"
+
+#: ../app/dialogs/layer-options-dialog.c:342
+#: ../app/widgets/gimpcolordisplayeditor.c:277
+msgid "Active Filters"
+msgstr "Aktywne filtry"
 
 #: ../app/dialogs/layer-options-dialog.c:369
 msgid "Lock _alpha"
@@ -14512,11 +14518,11 @@ msgstr "Poziomy redukcji kolorów"
 msgid "Replace partial transparency with a color"
 msgstr "Zastąpienie częściowej przezroczystości kolorem"
 
-#: ../app/operations/gimpoperationthreshold.c:87
+#: ../app/operations/gimpoperationthreshold.c:97
 msgid "Low threshold"
 msgstr "Niskie progowanie"
 
-#: ../app/operations/gimpoperationthreshold.c:94
+#: ../app/operations/gimpoperationthreshold.c:104
 msgid "High threshold"
 msgstr "Wysokie progowanie"
 
@@ -14924,12 +14930,12 @@ msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Jasność-kontrast"
 
-#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:593
+#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:590
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Poziomy"
 
-#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:663
+#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:660
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Redukcja kolorów"
@@ -14974,12 +14980,12 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Zaznaczenie pierwszego planu"
 
-#: ../app/pdb/drawable-color-cmds.c:500
+#: ../app/pdb/drawable-color-cmds.c:497
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Barwa i nasycenie"
 
-#: ../app/pdb/drawable-color-cmds.c:533
+#: ../app/pdb/drawable-color-cmds.c:530
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Odwrócenie"
@@ -16147,7 +16153,7 @@ msgstr "Maksymalna głębia"
 
 #: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:112
-#: ../app/tools/gimpthresholdtool.c:90
+#: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Progowanie"
 
@@ -16737,6 +16743,7 @@ msgid "Adjust Color Curves"
 msgstr "Modyfikacja krzywych kolorów"
 
 #: ../app/tools/gimpcurvestool.c:456 ../app/tools/gimplevelstool.c:363
+#: ../app/tools/gimpthresholdtool.c:222
 msgid "Cha_nnel:"
 msgstr "Ka_nał:"
 
@@ -18296,33 +18303,33 @@ msgstr ""
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
-#: ../app/tools/gimpthresholdtool.c:91
+#: ../app/tools/gimpthresholdtool.c:94
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
 msgstr ""
 "Progowanie: zmniejsza do dwóch liczbę kolorów w obrazie przy użyciu "
 "progowania"
 
-#: ../app/tools/gimpthresholdtool.c:92
+#: ../app/tools/gimpthresholdtool.c:95
 msgid "_Threshold..."
 msgstr "P_rogowanie…"
 
-#: ../app/tools/gimpthresholdtool.c:111
+#: ../app/tools/gimpthresholdtool.c:114
 msgid "Import Threshold Settings"
 msgstr "Importowanie ustawień progowania"
 
-#: ../app/tools/gimpthresholdtool.c:112
+#: ../app/tools/gimpthresholdtool.c:115
 msgid "Export Threshold Settings"
 msgstr "Eksportowanie ustawień progowania"
 
-#: ../app/tools/gimpthresholdtool.c:177
+#: ../app/tools/gimpthresholdtool.c:184
 msgid "Apply Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpthresholdtool.c:243
+#: ../app/tools/gimpthresholdtool.c:280
 msgid "_Auto"
 msgstr "_Automatycznie"
 
-#: ../app/tools/gimpthresholdtool.c:245
+#: ../app/tools/gimpthresholdtool.c:282
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automatyczne dopasowanie optymalnego progu binaryzacji"
 
@@ -19128,10 +19135,6 @@ msgstr "Przesuwa zaznaczony filtr w górę"
 #: ../app/widgets/gimpcolordisplayeditor.c:230
 msgid "Move the selected filter down"
 msgstr "Przesuwa zaznaczony filtr w dół"
-
-#: ../app/widgets/gimpcolordisplayeditor.c:277
-msgid "Active Filters"
-msgstr "Aktywne filtry"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:328
 msgid "Reset the selected filter to default values"
