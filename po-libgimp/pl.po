@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-31 01:17+0100\n"
-"PO-Revision-Date: 2016-10-31 01:18+0100\n"
+"POT-Creation-Date: 2016-11-06 18:55+0100\n"
+"PO-Revision-Date: 2016-11-06 18:57+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -146,7 +146,7 @@ msgstr "Wtyczka %s obsługuje tylko obrazy RGB lub w odcieniach szarości"
 
 #: ../libgimp/gimpexport.c:353
 #, c-format
-msgid "%s plug-in  can only handle RGB or indexed images"
+msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Wtyczka %s obsługuje tylko obrazy RGB lub indeksowane"
 
 #: ../libgimp/gimpexport.c:363
@@ -957,7 +957,7 @@ msgstr "Ścięty skośnie"
 
 #: ../libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
-msgid "Expanded as neccessary"
+msgid "Expanded as necessary"
 msgstr "Rozszerzona w razie potrzeby"
 
 #: ../libgimpbase/gimpbaseenums.c:1068
@@ -2563,19 +2563,19 @@ msgstr "Deuteranopia (nierozróżnianie zielonego)"
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (nierozróżnianie niebieskiego)"
 
-#: ../modules/display-filter-color-blind.c:193
+#: ../modules/display-filter-color-blind.c:195
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filtr symulujący ślepotę barw (algorytm Brettela-Vienota-Mollona)"
 
-#: ../modules/display-filter-color-blind.c:252
+#: ../modules/display-filter-color-blind.c:254
 msgid "Deficiency"
 msgstr "Ślepota barw"
 
-#: ../modules/display-filter-color-blind.c:258
+#: ../modules/display-filter-color-blind.c:260
 msgid "Color Deficient Vision"
 msgstr "Ślepota barw"
 
-#: ../modules/display-filter-color-blind.c:419
+#: ../modules/display-filter-color-blind.c:421
 msgid "Color _deficiency type:"
 msgstr "Typ ślepoty _barw:"
 
