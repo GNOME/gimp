@@ -139,7 +139,15 @@ file_open_image (Gimp                *gimp,
                                                           file, error);
 
   if (! file_proc)
-    return NULL;
+    {
+      /*  don't bail out on remote files, they might need to be
+       *  downloaded for magic matching
+       */
+      if (g_file_is_native (file))
+        return NULL;
+
+      g_clear_error (error);
+    }
 
   if (! g_file_is_native (file) &&
       ! file_remote_mount_file (gimp, file, progress, &my_error))
@@ -152,7 +160,7 @@ file_open_image (Gimp                *gimp,
       return NULL;
     }
 
-  if (! file_proc->handles_uri)
+  if (! file_proc || ! file_proc->handles_uri)
     {
       path = g_file_get_path (file);
 
@@ -167,6 +175,22 @@ file_open_image (Gimp                *gimp,
                 g_propagate_error (error, my_error);
               else
                 *status = GIMP_PDB_CANCEL;
+
+              return NULL;
+            }
+
+          /*  if we don't have a file proc yet, try again on the local
+           *  file
+           */
+          if (! file_proc)
+            file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
+                                                                  GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                                  local_file, error);
+
+          if (! file_proc)
+            {
+              g_file_delete (local_file, NULL, NULL);
+              g_object_unref (local_file);
 
               return NULL;
             }
