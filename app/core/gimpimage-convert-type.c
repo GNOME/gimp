@@ -137,7 +137,8 @@ gimp_image_convert_type (GimpImage          *image,
                                   new_type,
                                   gimp_drawable_get_precision (drawable),
                                   gimp_drawable_has_alpha (drawable),
-                                  dest_profile, 0, 0,
+                                  dest_profile,
+                                  GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   TRUE, sub_progress);
     }
 

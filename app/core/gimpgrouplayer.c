@@ -141,8 +141,8 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
                                                       GimpImage         *dest_image,
                                                       const Babl        *new_format,
                                                       GimpColorProfile  *dest_profile,
-                                                      gint               layer_dither_type,
-                                                      gint               mask_dither_type,
+                                                      GeglDitherMethod   layer_dither_type,
+                                                      GeglDitherMethod   mask_dither_type,
                                                       gboolean           push_undo,
                                                       GimpProgress      *progress);
 
@@ -876,14 +876,14 @@ get_projection_format (GimpProjectable   *projectable,
 }
 
 static void
-gimp_group_layer_convert_type (GimpDrawable      *drawable,
-                               GimpImage         *dest_image,
-                               const Babl        *new_format,
-                               GimpColorProfile  *dest_profile,
-                               gint               layer_dither_type,
-                               gint               mask_dither_type,
-                               gboolean           push_undo,
-                               GimpProgress      *progress)
+gimp_group_layer_convert_type (GimpDrawable     *drawable,
+                               GimpImage        *dest_image,
+                               const Babl       *new_format,
+                               GimpColorProfile *dest_profile,
+                               GeglDitherMethod  layer_dither_type,
+                               GeglDitherMethod  mask_dither_type,
+                               gboolean          push_undo,
+                               GimpProgress     *progress)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
   GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);

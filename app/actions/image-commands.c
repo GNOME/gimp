@@ -415,7 +415,10 @@ image_convert_gamma_cmd_callback (GtkAction *action,
   precision = gimp_babl_precision (gimp_image_get_component_type (image),
                                    value);
 
-  gimp_image_convert_precision (image, precision, 0, 0, 0,
+  gimp_image_convert_precision (image, precision,
+                                GEGL_DITHER_NONE,
+                                GEGL_DITHER_NONE,
+                                GEGL_DITHER_NONE,
                                 GIMP_PROGRESS (display));
   gimp_image_flush (image);
 }

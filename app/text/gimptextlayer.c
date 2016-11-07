@@ -89,8 +89,8 @@ static void       gimp_text_layer_convert_type   (GimpDrawable      *drawable,
                                                   GimpImage         *dest_image,
                                                   const Babl        *new_format,
                                                   GimpColorProfile  *dest_profile,
-                                                  gint               layer_dither_type,
-                                                  gint               mask_dither_type,
+                                                  GeglDitherMethod   layer_dither_type,
+                                                  GeglDitherMethod   mask_dither_type,
                                                   gboolean           push_undo,
                                                   GimpProgress      *progress);
 static void       gimp_text_layer_set_buffer     (GimpDrawable      *drawable,
@@ -319,15 +319,17 @@ gimp_text_layer_convert_type (GimpDrawable      *drawable,
                               GimpImage         *dest_image,
                               const Babl        *new_format,
                               GimpColorProfile  *dest_profile,
-                              gint               layer_dither_type,
-                              gint               mask_dither_type,
+                              GeglDitherMethod   layer_dither_type,
+                              GeglDitherMethod   mask_dither_type,
                               gboolean           push_undo,
                               GimpProgress      *progress)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
   GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
 
-  if (! layer->text || layer->modified || layer_dither_type != 0)
+  if (! layer->text   ||
+      layer->modified ||
+      layer_dither_type != GEGL_DITHER_NONE)
     {
       GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
                                                         new_format,

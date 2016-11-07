@@ -147,8 +147,8 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               GimpImage         *dest_image,
                                               const Babl        *new_format,
                                               GimpColorProfile  *dest_profile,
-                                              gint               layer_dither_type,
-                                              gint               mask_dither_type,
+                                              GeglDitherMethod   layer_dither_type,
+                                              GeglDitherMethod   mask_dither_type,
                                               gboolean           push_undo,
                                               GimpProgress      *progress);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
@@ -570,7 +570,8 @@ gimp_channel_convert (GimpItem  *item,
                                   GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
                                   gimp_drawable_has_alpha (drawable),
-                                  NULL, 0, 0,
+                                  NULL,
+                                  GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   FALSE, NULL);
     }
 
@@ -944,14 +945,14 @@ gimp_channel_to_selection (GimpItem       *item,
 }
 
 static void
-gimp_channel_convert_type (GimpDrawable      *drawable,
-                           GimpImage         *dest_image,
-                           const Babl        *new_format,
-                           GimpColorProfile  *dest_profile,
-                           gint               layer_dither_type,
-                           gint               mask_dither_type,
-                           gboolean           push_undo,
-                           GimpProgress      *progress)
+gimp_channel_convert_type (GimpDrawable     *drawable,
+                           GimpImage        *dest_image,
+                           const Babl       *new_format,
+                           GimpColorProfile *dest_profile,
+                           GeglDitherMethod  layer_dither_type,
+                           GeglDitherMethod  mask_dither_type,
+                           gboolean          push_undo,
+                           GimpProgress     *progress)
 {
   GeglBuffer *dest_buffer;
 
@@ -961,7 +962,7 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
                      new_format);
 
-  if (mask_dither_type == 0)
+  if (mask_dither_type == GEGL_DITHER_NONE)
     {
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                         GEGL_ABYSS_NONE,

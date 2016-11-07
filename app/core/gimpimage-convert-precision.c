@@ -45,12 +45,12 @@
 
 
 void
-gimp_image_convert_precision (GimpImage     *image,
-                              GimpPrecision  precision,
-                              gint           layer_dither_type,
-                              gint           text_layer_dither_type,
-                              gint           mask_dither_type,
-                              GimpProgress  *progress)
+gimp_image_convert_precision (GimpImage        *image,
+                              GimpPrecision     precision,
+                              GeglDitherMethod  layer_dither_type,
+                              GeglDitherMethod  text_layer_dither_type,
+                              GeglDitherMethod  mask_dither_type,
+                              GimpProgress     *progress)
 {
   GimpColorProfile *old_profile;
   GimpColorProfile *new_profile = NULL;
