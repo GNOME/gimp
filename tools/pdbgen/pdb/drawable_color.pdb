@@ -456,8 +456,8 @@ HELP
 
       n_bins = gimp_histogram_n_bins (histogram);
 
-      start = ROUND ((gdouble) start * (n_bins - 1));
-      end   = ROUND ((gdouble) end   * (n_bins - 1));
+      start = ROUND (start_range * (n_bins - 1));
+      end   = ROUND (end_range   * (n_bins - 1));
 
       mean       = gimp_histogram_get_mean (histogram, channel,
 		 			    start, end);
