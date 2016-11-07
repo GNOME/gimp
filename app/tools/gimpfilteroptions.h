@@ -41,6 +41,7 @@ struct _GimpFilterOptions
   GimpAlignmentType   preview_alignment;
   gdouble             preview_position;
   GimpFilterRegion    region;
+  gboolean            color_managed;
   gboolean            gamma_hack;
 
   GFile              *settings;
