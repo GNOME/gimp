@@ -257,21 +257,17 @@ run (const gchar      *name,
             }
         }
 
-      if (status != GIMP_PDB_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
         {
-          g_free (params.preset);
-          g_free (layers);
-          return;
-        }
-
-      if (! save_image (param[3].data.d_string,
-                        n_layers, layers,
-                        image_ID,
-                        drawable_ID,
-                        &params,
-                        &error))
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          if (! save_image (param[3].data.d_string,
+                            n_layers, layers,
+                            image_ID,
+                            drawable_ID,
+                            &params,
+                            &error))
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
         }
 
       g_free (params.preset);
