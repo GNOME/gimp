@@ -1356,16 +1356,20 @@ load_gui_defaults (JpegSaveGui *pg)
   gtk_adjustment_set_value (restart_markers, jsvals.restart);
   g_signal_handler_unblock (pg->use_restart_markers, pg->handler_id_restart);
 
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->quality),
-                            jsvals.quality);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->smoothing),
                             jsvals.smoothing);
 
-  if (gimp_drawable_is_rgb (drawable_ID_global))
+  /* Don't override quality and subsampling setting if we alredy set it from original */
+  if (!jsvals.use_orig_quality)
     {
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (pg->subsmp),
-                                     jsvals.subsmp);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->quality),
+                                jsvals.quality);
+
+      if (gimp_drawable_is_rgb (drawable_ID_global))
+        {
+          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (pg->subsmp),
+                                         jsvals.subsmp);
+        }
     }
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (pg->dct),
