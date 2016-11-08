@@ -127,7 +127,7 @@ save_dialog (WebPSaveParams *params,
   /* Create the descriptive label at the top */
   text = g_strdup_printf ("<b>%s</b>", _("WebP Options"));
   label = gtk_label_new (NULL);
-  gtk_label_set_markup(GTK_LABEL(label), text);
+  gtk_label_set_markup (GTK_LABEL(label), text);
   g_free (text);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -227,7 +227,6 @@ save_dialog (WebPSaveParams *params,
     {
       GtkWidget     *animation_box;
       GtkWidget     *animation_box2;
-      GtkWidget     *animation_label;
       GtkWidget     *loop_anim_checkbox;
       GtkWidget     *animation_expander;
       GtkWidget     *animation_frame;

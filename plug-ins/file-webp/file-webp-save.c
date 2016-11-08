@@ -407,11 +407,15 @@ parse_ms_tag (const gchar *str)
 }
 
 static gint
-get_layer_delay(gint32 layer)
+get_layer_delay (gint32 layer)
 {
-  gchar *layer_name = gimp_item_get_name (layer);
-  gint  delay_ms = parse_ms_tag (layer_name);
+  gchar *layer_name;
+  gint   delay_ms;
+
+  layer_name = gimp_item_get_name (layer);
+  delay_ms   = parse_ms_tag (layer_name);
   g_free (layer_name);
+
   return delay_ms;
 }
 

@@ -86,8 +86,8 @@ query (void)
     { GIMP_PDB_INT32,    "exif",          "Toggle saving exif data (0/1)" },
     { GIMP_PDB_INT32,    "iptc",          "Toggle saving iptc data (0/1)" },
     { GIMP_PDB_INT32,    "xmp",           "Toggle saving xmp data (0/1)" },
-    { GIMP_PDB_INT32,    "delay",         "Delay to use when timestamp are not available or forced" },
-    { GIMP_PDB_INT32,    "force-delay",   "Toggle to for delay" }
+    { GIMP_PDB_INT32,    "delay",         "Delay to use when timestamps are not available or forced" },
+    { GIMP_PDB_INT32,    "force-delay",   "Force delay on all frames" }
   };
 
   gimp_install_procedure (LOAD_PROC,
@@ -188,9 +188,21 @@ run (const gchar      *name,
         {
         case GIMP_RUN_WITH_LAST_VALS:
         case GIMP_RUN_INTERACTIVE:
-          /*  Possibly retrieve data  */
+          /* Default settings. */
+          params.lossless      = FALSE;
+          params.animation     = FALSE;
+          params.loop          = TRUE;
+          params.quality       = 90.0f;
+          params.alpha_quality = 100.0f;
+          params.exif          = TRUE;
+          params.iptc          = TRUE;
+          params.xmp           = TRUE;
+          params.delay         = 200;
+          params.force_delay   = FALSE;
+          /*  Possibly override with session data  */
           gimp_get_data (SAVE_PROC, &params);
-          params.preset = g_strdup ("default");  /* can't serialize strings, so restore default */
+          /* can't serialize strings, so restore default */
+          params.preset = g_strdup ("default");
 
           export = gimp_export_image (&image_ID, &drawable_ID, "WebP",
                                       GIMP_EXPORT_CAN_HANDLE_RGB     |
@@ -203,7 +215,6 @@ run (const gchar      *name,
             {
               values[0].data.d_status = GIMP_PDB_CANCEL;
               status = GIMP_PDB_CANCEL;
-              break;
             }
 
           break;
@@ -248,7 +259,7 @@ run (const gchar      *name,
 
       if (status != GIMP_PDB_SUCCESS)
         {
-          g_free(params.preset);
+          g_free (params.preset);
           g_free (layers);
           return;
         }
