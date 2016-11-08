@@ -133,7 +133,7 @@ MAIN ()
     { GIMP_PDB_STRING,   "raw-uri",         "The name of the URI to export the image in" }, \
     { GIMP_PDB_INT32,    "interlace",       "Try to export as interlaced" }, \
     { GIMP_PDB_INT32,    "loop",            "(animated gif) loop infinitely" }, \
-    { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between framese in milliseconds" }, \
+    { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between frames in milliseconds" }, \
     { GIMP_PDB_INT32,    "default-dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
 
 static void
