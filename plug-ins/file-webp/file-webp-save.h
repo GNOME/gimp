@@ -25,17 +25,17 @@
 
 typedef struct
 {
-  gchar    *preset;
-  gboolean  lossless;
-  gboolean  animation;
-  gboolean  loop;
-  gfloat    quality;
-  gfloat    alpha_quality;
-  gboolean  exif;
-  gboolean  iptc;
-  gboolean  xmp;
-  gint      delay;
-  gboolean  force_delay;
+  WebPPreset preset;
+  gboolean   lossless;
+  gboolean   animation;
+  gboolean   loop;
+  gfloat     quality;
+  gfloat     alpha_quality;
+  gboolean   exif;
+  gboolean   iptc;
+  gboolean   xmp;
+  gint       delay;
+  gboolean   force_delay;
 } WebPSaveParams;
 
 

@@ -24,60 +24,17 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <webp/encode.h>
+
 #include "file-webp.h"
 #include "file-webp-dialog.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 
-static GtkListStore * save_dialog_presets        (void);
-static void           save_dialog_preset_changed (GtkWidget  *widget,
-                                                  gchar     **data);
 static void           save_dialog_toggle_scale   (GtkWidget  *widget,
                                                   gpointer   data);
 
-
-static struct
-{
-  const gchar *id;
-  const gchar *label;
-} presets[] =
-{
-  { "default", "Default" },
-  { "picture", "Picture" },
-  { "photo",   "Photo"   },
-  { "drawing", "Drawing" },
-  { "icon",    "Icon"    },
-  { "text",    "Text"    },
-  { 0 }
-};
-
-static GtkListStore *
-save_dialog_presets (void)
-{
-  GtkListStore *list_store;
-  gint          i;
-
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-
-  for (i = 0; presets[i].id; ++i)
-    gtk_list_store_insert_with_values (list_store,
-                                       NULL,
-                                       -1,
-                                       0, presets[i].id,
-                                       1, presets[i].label,
-                                       -1);
-
-  return list_store;
-}
-
-static void
-save_dialog_preset_changed (GtkWidget  *widget,
-                            gchar     **data)
-{
-  g_free (*data);
-  *data = gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (widget));
-}
 
 static void
 save_dialog_toggle_scale (GtkWidget *widget,
@@ -92,25 +49,24 @@ save_dialog (WebPSaveParams *params,
              gint32          image_ID,
              gint32          n_layers)
 {
-  GtkWidget     *dialog;
-  GtkWidget     *vbox;
-  GtkWidget     *label;
-  GtkWidget     *table;
-  GtkWidget     *expander;
-  GtkWidget     *frame;
-  GtkWidget     *vbox2;
-  GtkWidget     *save_exif;
-  GtkWidget     *save_xmp;
-  GtkWidget     *preset_label;
-  GtkListStore  *preset_list;
-  GtkWidget     *preset_combo;
-  GtkWidget     *lossless_checkbox;
-  GtkWidget     *animation_checkbox;
-  GtkObject     *quality_scale;
-  GtkObject     *alpha_quality_scale;
-  gboolean       animation_supported = FALSE;
-  gboolean       run;
-  gchar         *text;
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GtkWidget *table;
+  GtkWidget *expander;
+  GtkWidget *frame;
+  GtkWidget *vbox2;
+  GtkWidget *save_exif;
+  GtkWidget *save_xmp;
+  GtkWidget *preset_label;
+  GtkWidget *preset_combo;
+  GtkWidget *lossless_checkbox;
+  GtkWidget *animation_checkbox;
+  GtkObject *quality_scale;
+  GtkObject *alpha_quality_scale;
+  gboolean   animation_supported = FALSE;
+  gboolean   run;
+  gchar     *text;
 
   animation_supported = n_layers > 1;
 
@@ -187,20 +143,22 @@ save_dialog (WebPSaveParams *params,
   gtk_widget_show (preset_label);
 
   /* Create the combobox containing the presets */
-  preset_list = save_dialog_presets ();
-  preset_combo = gimp_string_combo_box_new (GTK_TREE_MODEL (preset_list), 0, 1);
-  g_object_unref (preset_list);
-
-  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (preset_combo),
-                                    params->preset);
+  preset_combo = gimp_int_combo_box_new ("Default", WEBP_PRESET_DEFAULT,
+                                         "Picture", WEBP_PRESET_PICTURE,
+                                         "Photo",   WEBP_PRESET_PHOTO,
+                                         "Drawing", WEBP_PRESET_DRAWING,
+                                         "Icon",    WEBP_PRESET_ICON,
+                                         "Text",    WEBP_PRESET_TEXT,
+                                         NULL);
   gtk_table_attach (GTK_TABLE (table), preset_combo,
                     1, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (preset_combo);
 
-  g_signal_connect (preset_combo, "changed",
-                    G_CALLBACK (save_dialog_preset_changed),
-                    &params->preset);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (preset_combo),
+                              params->preset,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &params->preset);
 
   /* Create the lossless checkbox */
   lossless_checkbox = gtk_check_button_new_with_label (_("Lossless"));
