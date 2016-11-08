@@ -158,13 +158,20 @@ load_image (const gchar *filename,
       WebPAnimInfo           anim_info;
       WebPAnimDecoderOptions dec_options;
       gint                   frame_num = 1;
-
+      WebPDemuxer           *demux     = NULL;
+      WebPIterator           iter      = { 0, };
 
       if (! WebPAnimDecoderOptionsInit (&dec_options))
         {
         error:
           if (dec)
             WebPAnimDecoderDelete (dec);
+
+          if (demux)
+            {
+              WebPDemuxReleaseIterator (&iter);
+              WebPDemuxDelete (demux);
+            }
 
           return -1;
         }
@@ -187,6 +194,10 @@ load_image (const gchar *filename,
           goto error;
         }
 
+      demux = WebPDemux (&wp_data);
+      if (! demux || ! WebPDemuxGetFrame (demux, 1, &iter))
+        goto error;
+
       /* Attempt to decode the data as a WebP animation image */
       while (WebPAnimDecoderHasMoreFrames (dec))
         {
@@ -202,14 +213,17 @@ load_image (const gchar *filename,
               goto error;
             }
 
-          name = g_strdup_printf (_("Frame %d"), frame_num);
+          name = g_strdup_printf (_("Frame %d (%dms)"), frame_num, iter.duration);
           create_layer (image_ID, outdata, 0, name, width, height);
           g_free (name);
 
           frame_num++;
+          WebPDemuxNextFrame (&iter);
         }
 
       WebPAnimDecoderDelete (dec);
+      WebPDemuxReleaseIterator (&iter);
+      WebPDemuxDelete (demux);
     }
 
   /* Free the original compressed data */
