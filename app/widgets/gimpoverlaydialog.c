@@ -228,7 +228,7 @@ gimp_overlay_dialog_constructed (GObject *object)
   gimp_help_set_help_data (dialog->detach_button,
                            _("Detach dialog from canvas"), NULL);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_LEFT,
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_DETACH,
                                         GTK_ICON_SIZE_MENU);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
   gtk_container_add (GTK_CONTAINER (button), image);
