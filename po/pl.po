@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-06 21:34+0100\n"
-"PO-Revision-Date: 2016-11-06 21:35+0100\n"
+"POT-Creation-Date: 2016-11-08 10:21+0100\n"
+"PO-Revision-Date: 2016-11-08 10:22+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -4336,92 +4336,92 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Odcienie _szarości…"
 
-#: ../app/actions/image-commands.c:556
+#: ../app/actions/image-commands.c:559
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Zapisanie profilu kolorów się nie powiodło: %s"
 
-#: ../app/actions/image-commands.c:595
+#: ../app/actions/image-commands.c:598
 msgid "Save Color Profile"
 msgstr "Zapis profilu kolorów"
 
-#: ../app/actions/image-commands.c:639
+#: ../app/actions/image-commands.c:642
 msgid "Set Image Canvas Size"
 msgstr "Ustawienie wymiarów płótna obrazu"
 
-#: ../app/actions/image-commands.c:669 ../app/actions/image-commands.c:693
-#: ../app/actions/image-commands.c:1320
+#: ../app/actions/image-commands.c:672 ../app/actions/image-commands.c:696
+#: ../app/actions/image-commands.c:1323
 msgid "Resizing"
 msgstr "Zmienianie wymiarów"
 
-#: ../app/actions/image-commands.c:726
+#: ../app/actions/image-commands.c:729
 msgid "Set Image Print Resolution"
 msgstr "Ustaw rozdzielczość drukowania"
 
-#: ../app/actions/image-commands.c:792 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:795 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Odbijanie"
 
-#: ../app/actions/image-commands.c:816 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:819 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:843 ../app/actions/layers-commands.c:792
+#: ../app/actions/image-commands.c:846 ../app/actions/layers-commands.c:792
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
-#: ../app/actions/image-commands.c:881
+#: ../app/actions/image-commands.c:884
 msgid "Cannot crop because the image has no content."
 msgstr "Nie można wykadrować, ponieważ obraz nie ma zawartości."
 
-#: ../app/actions/image-commands.c:887
+#: ../app/actions/image-commands.c:890
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ obraz jest już wykadrowany do zawartości."
 
-#: ../app/actions/image-commands.c:1022
+#: ../app/actions/image-commands.c:1025
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Konwertowanie do RGB (%s)"
 
-#: ../app/actions/image-commands.c:1060
+#: ../app/actions/image-commands.c:1063
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Konwertowanie do odcieni szarości (%s)"
 
-#: ../app/actions/image-commands.c:1122
+#: ../app/actions/image-commands.c:1125
 msgid "Converting to indexed colors"
 msgstr "Konwertowanie na kolory indeksowane"
 
-#: ../app/actions/image-commands.c:1179
+#: ../app/actions/image-commands.c:1182
 #, c-format
 msgid "Converting image to %s"
 msgstr "Konwertowanie obrazu do %s"
 
-#: ../app/actions/image-commands.c:1210
+#: ../app/actions/image-commands.c:1213
 msgid "Assign color profile"
 msgstr "Przydziel profil kolorów"
 
-#: ../app/actions/image-commands.c:1256
+#: ../app/actions/image-commands.c:1259
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Konwertowanie do „%s”"
 
-#: ../app/actions/image-commands.c:1362
+#: ../app/actions/image-commands.c:1365
 msgid "Change Print Size"
 msgstr "Zmień rozmiar wydruku"
 
-#: ../app/actions/image-commands.c:1406
+#: ../app/actions/image-commands.c:1409
 msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1415 ../app/actions/layers-commands.c:1466
+#: ../app/actions/image-commands.c:1418 ../app/actions/layers-commands.c:1466
 #: ../app/dialogs/preferences-dialog.c:1345
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -9825,25 +9825,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Zalanie kanału"
 
-#: ../app/core/gimpchannel.c:840
+#: ../app/core/gimpchannel.c:841
 msgid "Cannot fill empty channel."
 msgstr "Nie można wypełniać na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:876
+#: ../app/core/gimpchannel.c:877
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1787
+#: ../app/core/gimpchannel.c:1788
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1841
+#: ../app/core/gimpchannel.c:1842
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1938 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1939 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -14199,21 +14199,21 @@ msgstr "To nie jest zwykły plik"
 msgid "Permission denied"
 msgstr "Brak uprawnień"
 
-#: ../app/file/file-open.c:236
+#: ../app/file/file-open.c:260
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Wtyczka %s zwróciła kod powodzenia, lecz nie zwróciła obrazu"
 
-#: ../app/file/file-open.c:247
+#: ../app/file/file-open.c:271
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Wtyczka %s nie może otworzyć obrazu"
 
-#: ../app/file/file-open.c:643
+#: ../app/file/file-open.c:667
 msgid "Image doesn't contain any layers"
 msgstr "Obraz nie zawiera żadnych warstw"
 
-#: ../app/file/file-open.c:702
+#: ../app/file/file-open.c:726
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otwarcie pliku „%s” się nie powiodło: %s"
@@ -15955,19 +15955,19 @@ msgstr "Obrót warstwy tekstowej"
 msgid "Transform Text Layer"
 msgstr "Przekształcenie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:565
+#: ../app/text/gimptextlayer.c:567
 msgid "Discard Text Information"
 msgstr "Odrzucanie informacji o tekście"
 
-#: ../app/text/gimptextlayer.c:633
+#: ../app/text/gimptextlayer.c:635
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkcje tekstowe nie są dostępne z powodu braku czcionek."
 
-#: ../app/text/gimptextlayer.c:696
+#: ../app/text/gimptextlayer.c:698
 msgid "Empty Text Layer"
 msgstr "Pusta warstwa tekstowa"
 
-#: ../app/text/gimptextlayer.c:749
+#: ../app/text/gimptextlayer.c:751
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -16858,32 +16858,49 @@ msgstr "%s wybierze kolor tła"
 msgid "Anti erase  (%s)"
 msgstr "Cofanie wycierania  (%s)"
 
-#: ../app/tools/gimpfilteroptions.c:73
+#: ../app/tools/gimpfilteroptions.c:74
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: ../app/tools/gimpfilteroptions.c:80
+#: ../app/tools/gimpfilteroptions.c:81
 msgid "_Split view"
 msgstr "Po_dzielony widok"
 
-#: ../app/tools/gimpfiltertool.c:633
+#: ../app/tools/gimpfilteroptions.c:112
+msgid "Color _managed"
+msgstr "_Zarządzanie kolorami"
+
+#. The Color Options expander
+#: ../app/tools/gimpfiltertool.c:427
+msgid "Advanced Color Options"
+msgstr "Zaawansowane opcje kolorów"
+
+#: ../app/tools/gimpfiltertool.c:442
+msgid "Apply filter in color managed space (slow)"
+msgstr "Zastosowanie filtru w przestrzeni z zarządzaniem kolorami (wolne)"
+
+#: ../app/tools/gimpfiltertool.c:443
+msgid "Apply filter to the layer's raw pixels"
+msgstr "Zastosowanie filtru do surowych pikseli warstwy"
+
+#: ../app/tools/gimpfiltertool.c:658
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:637
+#: ../app/tools/gimpfiltertool.c:662
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:641
+#: ../app/tools/gimpfiltertool.c:666
 msgid "Click to move the split guide"
 msgstr "Kliknięcie przesunie prowadnicę podziału"
 
-#: ../app/tools/gimpfiltertool.c:643
+#: ../app/tools/gimpfiltertool.c:668
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:644
+#: ../app/tools/gimpfiltertool.c:669
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"

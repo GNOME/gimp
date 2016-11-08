@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-06 21:38+0100\n"
-"PO-Revision-Date: 2016-11-06 21:39+0100\n"
+"POT-Creation-Date: 2016-11-08 10:21+0100\n"
+"PO-Revision-Date: 2016-11-08 10:22+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -258,7 +258,7 @@ msgstr "Powiększenie"
 #: ../plug-ins/common/animation-play.c:890
 #, c-format
 msgid "%d fps"
-msgstr "%d klatki na sekundę"
+msgstr "%d kl./s"
 
 #: ../plug-ins/common/animation-play.c:901
 msgid "Default framerate"
@@ -2771,9 +2771,12 @@ msgstr "Powtarzanie"
 msgid "Default frame delay:"
 msgstr "Domyślna przerwa między klatkami:"
 
-#: ../plug-ins/common/file-mng.c:1546 ../plug-ins/ui/plug-in-file-gif.ui.h:7
+#. label for 'ms' adjustment
+#: ../plug-ins/common/file-mng.c:1546
+#: ../plug-ins/file-webp/file-webp-dialog.c:308
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
-msgstr "milisekund"
+msgstr "ms"
 
 #: ../plug-ins/common/file-mng.c:1559
 msgid ""
@@ -4002,7 +4005,7 @@ msgstr "Komentarz jest ograniczony do %d znaków."
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1463
 #: ../plug-ins/file-webp/file-webp-save.c:203
-#: ../plug-ins/file-webp/file-webp-save.c:405
+#: ../plug-ins/file-webp/file-webp-save.c:458
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
@@ -6294,8 +6297,9 @@ msgstr ""
 "zapisuje informacji o przestrzeni kolorów do pliku."
 
 #. Advanced Options
+#. Advanced options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
-#: ../plug-ins/file-webp/file-webp-dialog.c:258
+#: ../plug-ins/file-webp/file-webp-dialog.c:332
 msgid "_Advanced Options"
 msgstr "Ustawienia za_awansowane"
 
@@ -6660,7 +6664,7 @@ msgstr "_Przyrostowy"
 
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
-#: ../plug-ins/file-webp/file-webp-dialog.c:279
+#: ../plug-ins/file-webp/file-webp-dialog.c:353
 msgid "Save _Exif data"
 msgstr "Zapisanie danych _Exif"
 
@@ -6670,7 +6674,7 @@ msgstr "Zapisanie _miniatury"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
-#: ../plug-ins/file-webp/file-webp-dialog.c:289
+#: ../plug-ins/file-webp/file-webp-dialog.c:363
 msgid "Save _XMP data"
 msgstr "Zapisanie danych _XMP"
 
@@ -7032,55 +7036,69 @@ msgstr "Faks CCITT Group _3"
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
-#: ../plug-ins/file-webp/file-webp.c:97 ../plug-ins/file-webp/file-webp.c:118
+#: ../plug-ins/file-webp/file-webp.c:99 ../plug-ins/file-webp/file-webp.c:120
 msgid "WebP image"
 msgstr "Obraz WebP"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:120
+#: ../plug-ins/file-webp/file-webp-dialog.c:118
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the descriptive label at the top
-#: ../plug-ins/file-webp/file-webp-dialog.c:130
-msgid "Use the options below to customize the image."
-msgstr "Poniższe opcje umożliwiają dostosowanie obrazu."
+#: ../plug-ins/file-webp/file-webp-dialog.c:128
+msgid "WebP Options"
+msgstr "Opcje WebP"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:146
+msgid "Image quality:"
+msgstr "Jakość obrazu:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:154
+msgid "Image quality"
+msgstr "Jakość obrazu"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:165
+msgid "Alpha quality:"
+msgstr "Jakość alfy:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:173
+msgid "Alpha channel quality"
+msgstr "Jakość kanału alfa"
 
 #. Create the label for the selecting a preset
-#: ../plug-ins/file-webp/file-webp-dialog.c:142
+#: ../plug-ins/file-webp/file-webp-dialog.c:182
 msgid "Preset:"
 msgstr "Ustawienia:"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:166
+#: ../plug-ins/file-webp/file-webp-dialog.c:206
 msgid "Lossless"
 msgstr "Bezstratne"
 
-#. Create the animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:186
-msgid "Use animation"
-msgstr "Animacja"
+#. Create the top-level animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:241
+msgid "As animation"
+msgstr "Jako animacja"
 
-#. Create the loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:199
-msgid "Loop infinitely"
-msgstr "Zapętlenie w nieskończoność"
+#: ../plug-ins/file-webp/file-webp-dialog.c:253
+msgid "Animated WebP Options"
+msgstr "Opcje animacji WebP"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:215
-msgid "Image quality:"
-msgstr "Jakość obrazu:"
+#. loop animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:275
+msgid "Loop forever"
+msgstr "Powtarzanie w nieskończoność"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:223
-msgid "Image quality"
-msgstr "Jakość obrazu"
+#. label for 'delay' adjustment
+#: ../plug-ins/file-webp/file-webp-dialog.c:291
+msgid "Delay between frames where unspecified:"
+msgstr "Opóźnienie między klatkami, jeśli nie podano:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:234
-msgid "Alpha quality:"
-msgstr "Jakość alfy:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:242
-msgid "Alpha channel quality"
-msgstr "Jakość kanału alfa"
+#. Create the force-delay checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:313
+msgid "Use delay entered above for all frames"
+msgstr "Użycie opóźnienia podanego powyżej dla wszystkich klatek"
 
 #: ../plug-ins/file-webp/file-webp-load.c:106
 #, c-format
@@ -7151,7 +7169,7 @@ msgid "unknown error"
 msgstr "nieznany błąd"
 
 #: ../plug-ins/file-webp/file-webp-save.c:211
-#: ../plug-ins/file-webp/file-webp-save.c:413
+#: ../plug-ins/file-webp/file-webp-save.c:466
 #, c-format
 msgid "Unable to open '%s' for writing"
 msgstr "Nie można otworzyć pliku „%s” do zapisania"
@@ -11091,7 +11109,7 @@ msgstr "Opóźnienie"
 #. this is the unit label of a spinbutton
 #: ../plug-ins/screenshot/screenshot.c:596
 msgid "seconds"
-msgstr "sekund"
+msgstr "s"
 
 #: ../plug-ins/screenshot/screenshot-win32.c:217
 msgid "No data captured"
