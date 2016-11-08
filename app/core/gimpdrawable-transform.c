@@ -116,6 +116,9 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
       ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
     clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
+  if (gimp_matrix3_will_explode (&m, u1, v1, u2, v2))
+    clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
+
   /*  Find the bounding coordinates of target */
   gimp_transform_resize_boundary (&m, clip_result,
                                   u1, v1, u2, v2,
@@ -133,6 +136,7 @@ gimp_drawable_transform_buffer_affine (GimpDrawable           *drawable,
   gimp_gegl_apply_transform (orig_buffer, progress, NULL,
                              new_buffer,
                              interpolation_type,
+                             clip_result,
                              &gegl_matrix);
 
   *new_offset_x = x1;
