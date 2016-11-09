@@ -284,6 +284,8 @@ gimp_gegl_apply_color_reduction (GeglBuffer   *src_buffer,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
+  bits = CLAMP (bits, 1, 16);
+
   node = gegl_node_new_child (NULL,
                               "operation",     "gegl:color-reduction",
                               "red-bits",      bits,
