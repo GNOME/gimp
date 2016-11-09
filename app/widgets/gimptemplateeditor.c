@@ -161,6 +161,7 @@ gimp_template_editor_constructed (GObject *object)
   GtkTextBuffer             *text_buffer;
   GList                     *focus_chain = NULL;
   gchar                     *text;
+  gint                       row;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -303,7 +304,7 @@ gimp_template_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (private->expander), frame);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (6, 2, FALSE);
+  table = gtk_table_new (9, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
@@ -395,23 +396,33 @@ gimp_template_editor_constructed (GObject *object)
                                  focus_chain);
   g_list_free (focus_chain);
 
+  row = 2;
+
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "image-type",
                                         GIMP_RGB, GIMP_GRAY);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Color _space:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
-                                        "precision", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+                                        "component-type", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Precision:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
+  toggle = gimp_prop_boolean_combo_box_new (G_OBJECT (template),
+                                            "linear",
+                                            _("Linear light"),
+                                            _("Perceptual gamma (sRGB)"));
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("_Gamma:"), 0.0, 0.5,
+                             toggle, 1, FALSE);
+
   toggle = gimp_prop_check_button_new (G_OBJECT (template),
                                        "color-managed",
-                                       _("Color manage this image"));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+                                       _("Color _manage this image"));
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              NULL, 0.0, 0.5,
                              toggle, 1, FALSE);
 
@@ -420,14 +431,14 @@ gimp_template_editor_constructed (GObject *object)
                                      "color-profile",
                                      NULL,
                                      _("Choose A Color Profile"));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
-                             _("Color _profile:"), 0.0, 0.5,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Co_lor profile:"), 0.0, 0.5,
                              private->profile_combo, 1, FALSE);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
                                         0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 6,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Fill with:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
@@ -437,9 +448,9 @@ gimp_template_editor_constructed (GObject *object)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 7,
-                             _("Comme_nt:"), 0.0, 0.0,
-                             scrolled_window, 1, FALSE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                     _("Comme_nt:"), 0.0, 0.0,
+                                     scrolled_window, 1, FALSE);
 
   text_buffer = gimp_prop_text_buffer_new (G_OBJECT (template),
                                            "comment", MAX_COMMENT_LENGTH);
@@ -450,6 +461,8 @@ gimp_template_editor_constructed (GObject *object)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), text_view);
 
   g_signal_connect_object (template, "notify",
                            G_CALLBACK (gimp_template_editor_template_notify),
