@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-29 09:41+0200\n"
-"PO-Revision-Date: 2016-04-29 09:41+0200\n"
+"POT-Creation-Date: 2016-11-09 19:08+0100\n"
+"PO-Revision-Date: 2016-11-09 19:09+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -602,8 +602,8 @@ msgstr "_Verticale"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:442
-#: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:445
+#: ../plug-ins/common/file-cel.c:448 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
@@ -617,8 +617,7 @@ msgstr "_Verticale"
 #: ../plug-ins/file-jpeg/jpeg-load.c:824
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
 #: ../plug-ins/file-psd/psd-load.c:1655 ../plug-ins/file-sgi/sgi.c:409
-#: ../plug-ins/gfig/gfig-dialog.c:1321
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -652,7 +651,7 @@ msgstr "Sfocatura selettiva Gaussiana"
 
 #: ../plug-ins/common/blur-gauss-selective.c:211
 #: ../plug-ins/common/blur-gauss.c:448 ../plug-ins/common/cartoon.c:232
-#: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
+#: ../plug-ins/common/edge-dog.c:277 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
 #: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1691
@@ -1015,8 +1014,8 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:349
-#: ../plug-ins/common/file-cel.c:580 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:352
+#: ../plug-ins/common/file-cel.c:583 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:357
 #: ../plug-ins/common/file-gih.c:642 ../plug-ins/common/file-jp2-load.c:196
 #: ../plug-ins/common/file-jp2-load.c:205 ../plug-ins/common/file-mng.c:1156
@@ -1054,7 +1053,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:407
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
 #: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
@@ -1963,8 +1962,7 @@ msgstr "Maschera valore"
 msgid "Stretch brightness values to cover the full range"
 msgstr "Amplia i valori di luminosità per coprire tutto il campo possibile"
 
-#: ../plug-ins/common/contrast-normalize.c:91
-#: ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:370
 msgid "_Normalize"
 msgstr "_Normalizza"
 
@@ -2079,9 +2077,9 @@ msgstr "_Alfa"
 msgid "E_xtend"
 msgstr "_Estendi"
 
-#: ../plug-ins/common/convolution-matrix.c:74
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:700
-#: ../plug-ins/common/fractal-trace.c:737 ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/convolution-matrix.c:74 ../plug-ins/common/displace.c:477
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/fractal-trace.c:737
+#: ../plug-ins/common/ripple.c:585
 msgid "_Wrap"
 msgstr "_Avvolto"
 
@@ -2210,7 +2208,7 @@ msgstr "Piega l'immagine usando due curve di controllo"
 msgid "_Curve Bend..."
 msgstr "Piega _curva..."
 
-#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:178
+#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:179
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Può operare solamente sui livelli (ma è stato chiamato su un canale o una "
@@ -2810,23 +2808,28 @@ msgstr "Rilevamento contorni con controllo dello spessore"
 msgid "_Difference of Gaussians..."
 msgstr "_Differenze di gaussiane..."
 
-#: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
+#: ../plug-ins/common/edge-dog.c:193 ../plug-ins/common/iwarp.c:974
+#: ../plug-ins/common/whirl-pinch.c:193
+msgid "Region affected by plug-in is empty"
+msgstr "La regione soggetta al plug-in è vuota"
+
+#: ../plug-ins/common/edge-dog.c:253 ../plug-ins/common/edge-dog.c:310
 msgid "DoG Edge Detect"
 msgstr "Rilevamento contorni ddg"
 
-#: ../plug-ins/common/edge-dog.c:332
+#: ../plug-ins/common/edge-dog.c:340
 msgid "Smoothing Parameters"
 msgstr "Parametri di arrotondamento"
 
-#: ../plug-ins/common/edge-dog.c:346
+#: ../plug-ins/common/edge-dog.c:354
 msgid "_Radius 1:"
 msgstr "_Raggio 1:"
 
-#: ../plug-ins/common/edge-dog.c:350
+#: ../plug-ins/common/edge-dog.c:358
 msgid "R_adius 2:"
 msgstr "R_aggio 2:"
 
-#: ../plug-ins/common/edge-dog.c:373 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:381 ../plug-ins/gimpressionist/paper.c:166
 msgid "_Invert"
 msgstr "_Inverti"
 
@@ -3017,8 +3020,8 @@ msgstr "Immagine KISS CEL"
 msgid "Load KISS Palette"
 msgstr "Carica tavolozza KISS"
 
-#: ../plug-ins/common/file-cel.c:309 ../plug-ins/common/file-cel.c:364
-#: ../plug-ins/common/file-cel.c:384
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-cel.c:367
+#: ../plug-ins/common/file-cel.c:387
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "EOF o errore durante la lettura dell'intestazione dell'immagine"
@@ -3027,7 +3030,7 @@ msgstr "EOF o errore durante la lettura dell'intestazione dell'immagine"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:354 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:357 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:375 ../plug-ins/common/file-gif-load.c:362
 #: ../plug-ins/common/file-gih.c:647 ../plug-ins/common/file-jp2-load.c:189
 #: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
@@ -3046,17 +3049,17 @@ msgstr "EOF o errore durante la lettura dell'intestazione dell'immagine"
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
 
-#: ../plug-ins/common/file-cel.c:392
+#: ../plug-ins/common/file-cel.c:395
 #, c-format
 msgid "is not a CEL image file"
 msgstr "non è un file immagine CEL"
 
-#: ../plug-ins/common/file-cel.c:406
+#: ../plug-ins/common/file-cel.c:409
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "valore bpp fuori norma nell'immagine: %hhu"
 
-#: ../plug-ins/common/file-cel.c:420
+#: ../plug-ins/common/file-cel.c:423
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
@@ -3065,52 +3068,52 @@ msgstr ""
 "dimensioni immagine fuori norma: larghezza: %d, spostamento orizzontale: %d, "
 "altezza: %d, spostamento verticale: %d"
 
-#: ../plug-ins/common/file-cel.c:433
+#: ../plug-ins/common/file-cel.c:436
 #, c-format
 msgid "Can't create a new image"
 msgstr "Impossibile creare una nuova immagine"
 
-#: ../plug-ins/common/file-cel.c:471 ../plug-ins/common/file-cel.c:506
-#: ../plug-ins/common/file-cel.c:531
+#: ../plug-ins/common/file-cel.c:474 ../plug-ins/common/file-cel.c:509
+#: ../plug-ins/common/file-cel.c:534
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "EOF o errore durante la lettura dei dati immagine"
 
-#: ../plug-ins/common/file-cel.c:548
+#: ../plug-ins/common/file-cel.c:551
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Profondità di colore (in bit) non supportata (%d)!"
 
-#: ../plug-ins/common/file-cel.c:630 ../plug-ins/common/file-cel.c:642
+#: ../plug-ins/common/file-cel.c:633 ../plug-ins/common/file-cel.c:645
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr ""
 "\"%s\": EOF o errore durante la lettura della instestazione della tavolozza"
 
-#: ../plug-ins/common/file-cel.c:651
+#: ../plug-ins/common/file-cel.c:654
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "\"%s\": non è un file tavolozza KCF"
 
-#: ../plug-ins/common/file-cel.c:660
+#: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "\"%s\": valore bpp fuori norma nella tavolozza: %hhu"
 
-#: ../plug-ins/common/file-cel.c:669
+#: ../plug-ins/common/file-cel.c:672
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "\"%s\": numero di colori fuori norma: %u"
 
-#: ../plug-ins/common/file-cel.c:684 ../plug-ins/common/file-cel.c:701
-#: ../plug-ins/common/file-cel.c:721
+#: ../plug-ins/common/file-cel.c:687 ../plug-ins/common/file-cel.c:704
+#: ../plug-ins/common/file-cel.c:724
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "\"%s\": EOF o errore durante la lettura dei dati della tavolozza"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:670
+#: ../plug-ins/common/file-cel.c:781 ../plug-ins/common/file-gbr.c:670
 #: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
@@ -4299,8 +4302,7 @@ msgid "_Millimeter"
 msgstr "_Millimetri"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3302
-#: ../plug-ins/map-object/map-object-ui.c:989
+#: ../plug-ins/common/file-ps.c:3302 ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Rotazione"
 
@@ -4667,8 +4669,7 @@ msgstr "%s-%d-di-%d-pagine"
 msgid "TIFF Channel"
 msgstr "Canale TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:1038
-#: ../plug-ins/file-psd/psd-load.c:333
+#: ../plug-ins/common/file-tiff-load.c:1038 ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -5694,10 +5695,6 @@ msgstr "Warping fotogramma %d"
 #: ../plug-ins/common/iwarp.c:815
 msgid "Ping pong"
 msgstr "Ping pong"
-
-#: ../plug-ins/common/iwarp.c:974 ../plug-ins/common/whirl-pinch.c:193
-msgid "Region affected by plug-in is empty"
-msgstr "La regione soggetta al plug-in è vuota"
 
 #: ../plug-ins/common/iwarp.c:1030
 msgid "A_nimate"
@@ -8453,66 +8450,66 @@ msgstr "_Lunghezza d'onda:"
 msgid "Waving"
 msgstr "Ondeggiatura"
 
-#: ../plug-ins/common/web-browser.c:135
+#: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
 msgstr "Il sistema operativo ha esaurito le risorse di memoria."
 
-#: ../plug-ins/common/web-browser.c:138
+#: ../plug-ins/common/web-browser.c:144
 msgid "The specified file was not found."
 msgstr "Il file specificato non è stato trovato."
 
-#: ../plug-ins/common/web-browser.c:141
+#: ../plug-ins/common/web-browser.c:147
 msgid "The specified path was not found."
 msgstr "Il percorso specificato non è stato trovato."
 
-#: ../plug-ins/common/web-browser.c:144
+#: ../plug-ins/common/web-browser.c:150
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 "Il file .exe non è valido (.exe win32 non Microsoft o errore nell'immagine ."
 "exe)."
 
-#: ../plug-ins/common/web-browser.c:147
+#: ../plug-ins/common/web-browser.c:153
 msgid "The operating system denied access to the specified file."
 msgstr "Il sistema operativo ha rifiutato l'accesso al file specificato."
 
-#: ../plug-ins/common/web-browser.c:150
+#: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
 msgstr "L'associazione del nome del file è incompleta o non valida."
 
-#: ../plug-ins/common/web-browser.c:153
+#: ../plug-ins/common/web-browser.c:159
 msgid "DDE transaction busy"
 msgstr "Transazione DDE occupata"
 
-#: ../plug-ins/common/web-browser.c:156
+#: ../plug-ins/common/web-browser.c:162
 msgid "The DDE transaction failed."
 msgstr "Transazione DDE fallita."
 
-#: ../plug-ins/common/web-browser.c:159
+#: ../plug-ins/common/web-browser.c:165
 msgid "The DDE transaction timed out."
 msgstr "La transazione DDE è scaduta."
 
-#: ../plug-ins/common/web-browser.c:162
+#: ../plug-ins/common/web-browser.c:168
 msgid "The specified DLL was not found."
 msgstr "La DLL specificata non è stata trovata."
 
-#: ../plug-ins/common/web-browser.c:165
+#: ../plug-ins/common/web-browser.c:171
 msgid "There is no application associated with the given file name extension."
 msgstr "Non ci sono applicazioni associate alla data estensione di file."
 
-#: ../plug-ins/common/web-browser.c:168
+#: ../plug-ins/common/web-browser.c:174
 msgid "There was not enough memory to complete the operation."
 msgstr "Non c'è abbastanza memoria per completare l'operazione."
 
-#: ../plug-ins/common/web-browser.c:171
+#: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
 msgstr "Si è verificata una violazione di condivisione."
 
-#: ../plug-ins/common/web-browser.c:174
+#: ../plug-ins/common/web-browser.c:180
 msgid "Unknown Microsoft Windows error."
 msgstr "Errore Microsoft Windows sconosciuto."
 
-#: ../plug-ins/common/web-browser.c:177
+#: ../plug-ins/common/web-browser.c:183
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Fallito il caricamento di \"%s\": %s"
@@ -8782,19 +8779,24 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
 
-#: ../plug-ins/file-compressor/file-compressor.c:166
+#: ../plug-ins/file-compressor/file-compressor.c:167
 msgid "gzip archive"
 msgstr "archivio gzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:185
+#: ../plug-ins/file-compressor/file-compressor.c:186
 msgid "bzip archive"
 msgstr "archivio bzip"
 
-#: ../plug-ins/file-compressor/file-compressor.c:392
+#: ../plug-ins/file-compressor/file-compressor.c:393
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Nessuna estensione plausibile, salvataggio come XCF compresso."
 
-#: ../plug-ins/file-compressor/file-compressor.c:448
+#: ../plug-ins/file-compressor/file-compressor.c:416
+#, c-format
+msgid "Compressing '%s'"
+msgstr "Compressione di \"%s\""
+
+#: ../plug-ins/file-compressor/file-compressor.c:453
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
 "Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del "
@@ -10192,8 +10194,7 @@ msgstr "Mostra i punti di controllo"
 msgid "Max undo:"
 msgstr "Numero max di ripristini:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1320
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Trasparente"
 
@@ -11346,8 +11347,7 @@ msgstr "Seme casuale:"
 msgid "_Second Flares"
 msgstr "Riverberi _secondari"
 
-#: ../plug-ins/help-browser/dialog.c:184
-#: ../plug-ins/help-browser/dialog.c:1133
+#: ../plug-ins/help-browser/dialog.c:184 ../plug-ins/help-browser/dialog.c:1133
 msgid "GIMP Help Browser"
 msgstr "Navigatore della guida di Gimp"
 
@@ -11440,7 +11440,9 @@ msgstr "Il manuale utente di GIMP non è disponibile."
 msgid ""
 "Please install the additional help package or use the online user manual at: "
 "http://docs.gimp.org/"
-msgstr "Installare il pacchetto aggiuntivo di aiuto o usare il manuale utente in linea che si trova su http://docs.gimp.org/"
+msgstr ""
+"Installare il pacchetto aggiuntivo di aiuto o usare il manuale utente in "
+"linea che si trova su http://docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
@@ -11667,8 +11669,7 @@ msgstr "Centra _x:"
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
 #: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:249
-#: ../plug-ins/imagemap/imap_grid.c:255
-#: ../plug-ins/imagemap/imap_polygon.c:505
+#: ../plug-ins/imagemap/imap_grid.c:255 ../plug-ins/imagemap/imap_polygon.c:505
 #: ../plug-ins/imagemap/imap_polygon.c:513
 #: ../plug-ins/imagemap/imap_rectangle.c:392
 #: ../plug-ins/imagemap/imap_rectangle.c:399
