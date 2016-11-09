@@ -55,6 +55,8 @@ enum
   PROP_RESOLUTION_UNIT,
   PROP_BASE_TYPE,
   PROP_PRECISION,
+  PROP_COMPONENT_TYPE,
+  PROP_LINEAR,
   PROP_COLOR_MANAGED,
   PROP_COLOR_PROFILE,
   PROP_FILL_TYPE,
@@ -188,6 +190,23 @@ gimp_template_class_init (GimpTemplateClass *klass)
                          GIMP_TYPE_PRECISION, GIMP_PRECISION_U8_GAMMA,
                          GIMP_PARAM_STATIC_STRINGS);
 
+  g_object_class_install_property (object_class, PROP_COMPONENT_TYPE,
+                                   g_param_spec_enum ("component-type",
+                                                      _("Precision"),
+                                                      NULL,
+                                                      GIMP_TYPE_COMPONENT_TYPE,
+                                                      GIMP_COMPONENT_TYPE_U8,
+                                                      G_PARAM_READWRITE |
+                                                      GIMP_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (object_class, PROP_LINEAR,
+                                   g_param_spec_boolean ("linear",
+                                                         _("Gamma"),
+                                                         NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_STATIC_STRINGS));
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_MANAGED,
                             "color-managed",
                             _("Color managed"),
@@ -293,6 +312,20 @@ gimp_template_set_property (GObject      *object,
       break;
     case PROP_PRECISION:
       private->precision = g_value_get_enum (value);
+      g_object_notify (object, "component-type");
+      g_object_notify (object, "linear");
+      break;
+    case PROP_COMPONENT_TYPE:
+      private->precision =
+        gimp_babl_precision (g_value_get_enum (value),
+                             gimp_babl_linear (private->precision));
+      g_object_notify (object, "precision");
+      break;
+    case PROP_LINEAR:
+      private->precision =
+        gimp_babl_precision (gimp_babl_component_type (private->precision),
+                             g_value_get_boolean (value));
+      g_object_notify (object, "precision");
       break;
     case PROP_COLOR_MANAGED:
       private->color_managed = g_value_get_boolean (value);
@@ -354,6 +387,12 @@ gimp_template_get_property (GObject    *object,
       break;
     case PROP_PRECISION:
       g_value_set_enum (value, private->precision);
+      break;
+    case PROP_COMPONENT_TYPE:
+      g_value_set_enum (value, gimp_babl_component_type (private->precision));
+      break;
+    case PROP_LINEAR:
+      g_value_set_boolean (value, gimp_babl_linear (private->precision));
       break;
     case PROP_COLOR_MANAGED:
       g_value_set_boolean (value, private->color_managed);
