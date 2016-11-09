@@ -1040,7 +1040,10 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             gboolean           push_undo,
                             GimpProgress      *progress)
 {
+  const Babl *old_format;
   const Babl *new_format;
+  gint        old_bits;
+  gint        new_bits;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
@@ -1054,10 +1057,26 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
+  old_format = gimp_drawable_get_format (drawable);
   new_format = gimp_image_get_format (dest_image,
                                       new_base_type,
                                       new_precision,
                                       new_has_alpha);
+
+  old_bits = (babl_format_get_bytes_per_pixel (old_format) * 8 /
+              babl_format_get_n_components (old_format));
+  new_bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
+              babl_format_get_n_components (new_format));
+
+  if (old_bits <= new_bits || new_bits > 16)
+    {
+      /*  don't dither if we are converting to a higher bit depth,
+       *  or to more than 16 bits (gegl:color-reduction only does
+       *  16 bits).
+       */
+      layer_dither_type = GEGL_DITHER_NONE;
+      mask_dither_type  = GEGL_DITHER_NONE;
+    }
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
                                                     new_format,
