@@ -628,6 +628,31 @@ gimp_babl_component_type (GimpPrecision precision)
   g_return_val_if_reached (-1);
 }
 
+gboolean
+gimp_babl_linear (GimpPrecision precision)
+{
+  switch (precision)
+    {
+    case GIMP_PRECISION_U8_LINEAR:
+    case GIMP_PRECISION_U16_LINEAR:
+    case GIMP_PRECISION_U32_LINEAR:
+    case GIMP_PRECISION_HALF_LINEAR:
+    case GIMP_PRECISION_FLOAT_LINEAR:
+    case GIMP_PRECISION_DOUBLE_LINEAR:
+      return TRUE;
+
+    case GIMP_PRECISION_U8_GAMMA:
+    case GIMP_PRECISION_U16_GAMMA:
+    case GIMP_PRECISION_U32_GAMMA:
+    case GIMP_PRECISION_HALF_GAMMA:
+    case GIMP_PRECISION_FLOAT_GAMMA:
+    case GIMP_PRECISION_DOUBLE_GAMMA:
+      return FALSE;
+    }
+
+  g_return_val_if_reached (FALSE);
+}
+
 GimpPrecision
 gimp_babl_precision (GimpComponentType component,
                      gboolean          linear)

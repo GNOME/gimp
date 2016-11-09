@@ -33,6 +33,7 @@ GimpPrecision       gimp_babl_format_get_precision      (const Babl *format);
 gboolean            gimp_babl_format_get_linear         (const Babl *format);
 
 GimpComponentType   gimp_babl_component_type   (GimpPrecision      precision);
+gboolean            gimp_babl_linear           (GimpPrecision      precision);
 GimpPrecision       gimp_babl_precision        (GimpComponentType  component,
                                                 gboolean           linear);
 
