@@ -1165,6 +1165,10 @@ image_convert_precision_callback (GtkWidget        *dialog,
   GimpDialogConfig *config   = GIMP_DIALOG_CONFIG (image->gimp->config);
   GimpProgress     *progress = user_data;
   const gchar      *enum_desc;
+  const Babl       *old_format;
+  const Babl       *new_format;
+  gint              old_bits;
+  gint              new_bits;
 
   g_object_set (config,
                 "image-convert-precision-layer-dither-method",
@@ -1174,6 +1178,33 @@ image_convert_precision_callback (GtkWidget        *dialog,
                 "image-convert-precision-channel-dither-method",
                 channel_dither_method,
                 NULL);
+
+  /*  we do the same dither method checks here *and* in the dialog,
+   *  because the dialog leaves the passed dither methods untouched if
+   *  dithering is disabled and passes the original values to the
+   *  callback, in order not to change the values saved in
+   *  GimpDialogConfig.
+   */
+
+  /* random formats with the right precision */
+  old_format = gimp_image_get_layer_format (image, FALSE);
+  new_format = gimp_babl_format (GIMP_RGB, precision, FALSE);
+
+  old_bits = (babl_format_get_bytes_per_pixel (old_format) * 8 /
+              babl_format_get_n_components (old_format));
+  new_bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
+              babl_format_get_n_components (new_format));
+
+  if (new_bits >= old_bits || new_bits > 16)
+    {
+      /*  don't dither if we are converting to a higher bit depth,
+       *  or to more than 16 bits (gegl:color-reduction only does
+       *  16 bits).
+       */
+      layer_dither_method      = GEGL_DITHER_NONE;
+      text_layer_dither_method = GEGL_DITHER_NONE;
+      channel_dither_method    = GEGL_DITHER_NONE;
+    }
 
   gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
                        NULL, NULL, &enum_desc, NULL);

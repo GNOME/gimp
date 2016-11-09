@@ -46,7 +46,6 @@ struct _ConvertDialog
   GimpImage                    *image;
   GimpComponentType             component_type;
   gboolean                      linear;
-  gint                          bits;
   GeglDitherMethod              layer_dither_method;
   GeglDitherMethod              text_layer_dither_method;
   GeglDitherMethod              channel_dither_method;
@@ -89,8 +88,11 @@ convert_precision_dialog_new (GimpImage                    *image,
   GtkSizeGroup  *size_group;
   const gchar   *enum_desc;
   gchar         *blurb;
-  const Babl    *format;
-  gint           bits;
+  const Babl    *old_format;
+  const Babl    *new_format;
+  gint           old_bits;
+  gint           new_bits;
+  gboolean       dither;
   gboolean       linear;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -98,22 +100,29 @@ convert_precision_dialog_new (GimpImage                    *image,
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
-  /* a random format with precision */
-  format = gimp_babl_format (GIMP_RGB,
-                             gimp_babl_precision (component_type, FALSE),
-                             FALSE);
-  bits   = (babl_format_get_bytes_per_pixel (format) * 8 /
-            babl_format_get_n_components (format));
+  /* random formats with the right precision */
+  old_format = gimp_image_get_layer_format (image, FALSE);
+  new_format = gimp_babl_format (GIMP_RGB,
+                                 gimp_babl_precision (component_type, FALSE),
+                                 FALSE);
 
-  linear = gimp_babl_format_get_linear (gimp_image_get_layer_format (image,
-                                                                     FALSE));
+  old_bits = (babl_format_get_bytes_per_pixel (old_format) * 8 /
+              babl_format_get_n_components (old_format));
+  new_bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
+              babl_format_get_n_components (new_format));
+
+  /*  don't dither if we are converting to a higher bit depth, or to
+   *  more than 16 bits (gegl:color-reduction only does 16 bits).
+   */
+  dither = (new_bits < old_bits && new_bits <= 16);
+
+  linear = gimp_babl_format_get_linear (old_format);
 
   private = g_slice_new0 (ConvertDialog);
 
   private->image                    = image;
   private->component_type           = component_type;
   private->linear                   = linear;
-  private->bits                     = bits;
   private->layer_dither_method      = layer_dither_method;
   private->text_layer_dither_method = text_layer_dither_method;
   private->channel_dither_method    = channel_dither_method;
@@ -177,8 +186,7 @@ convert_precision_dialog_new (GimpImage                    *image,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  /* gegl:color-reduction only does 16 bits */
-  gtk_widget_set_sensitive (vbox, bits <= 16);
+  gtk_widget_set_sensitive (vbox, dither);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -199,10 +207,14 @@ convert_precision_dialog_new (GimpImage                    *image,
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              private->layer_dither_method,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->layer_dither_method);
+  if (dither)
+    gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                private->layer_dither_method,
+                                G_CALLBACK (gimp_int_combo_box_get_active),
+                                &private->layer_dither_method);
+  else
+    gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                   GEGL_DITHER_NONE);
 
   /*  text layers  */
 
@@ -221,10 +233,14 @@ convert_precision_dialog_new (GimpImage                    *image,
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              private->text_layer_dither_method,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->text_layer_dither_method);
+  if (dither)
+    gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                private->text_layer_dither_method,
+                                G_CALLBACK (gimp_int_combo_box_get_active),
+                                &private->text_layer_dither_method);
+  else
+    gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                   GEGL_DITHER_NONE);
 
   gimp_help_set_help_data (combo,
                            _("Dithering text layers will make them uneditable"),
@@ -247,10 +263,14 @@ convert_precision_dialog_new (GimpImage                    *image,
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              private->channel_dither_method,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->channel_dither_method);
+  if (dither)
+    gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                private->channel_dither_method,
+                                G_CALLBACK (gimp_int_combo_box_get_active),
+                                &private->channel_dither_method);
+  else
+    gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                   GEGL_DITHER_NONE);
 
   g_object_unref (size_group);
 
