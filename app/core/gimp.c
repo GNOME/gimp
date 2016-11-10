@@ -29,6 +29,8 @@
 
 #include "config/gimprc.h"
 
+#include "gegl/gimp-gegl.h"
+
 #include "pdb/gimppdb.h"
 #include "pdb/gimp-pdb-compat.h"
 #include "pdb/internal-procs.h"
@@ -584,9 +586,13 @@ gimp_real_initialize (Gimp               *gimp,
 
   status_callback (_("Initialization"), NULL, 0.0);
 
+  /*  initialize GEGL and babl  */
+  status_callback (NULL, "GEGL", 0.1);
+  gimp_gegl_init (gimp);
+
   gimp_fonts_set_config (gimp);
 
-  /* Set the last values used to default values. */
+  /*  set the last values used to default values  */
   gimp->image_new_last_template =
     gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
 
