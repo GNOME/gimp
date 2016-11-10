@@ -1195,11 +1195,11 @@ image_convert_precision_callback (GtkWidget        *dialog,
   new_bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
               babl_format_get_n_components (new_format));
 
-  if (new_bits >= old_bits || new_bits > 16)
+  if (new_bits >= old_bits ||
+      new_bits >  CONVERT_PRECISION_DIALOG_MAX_DITHER_BITS)
     {
       /*  don't dither if we are converting to a higher bit depth,
-       *  or to more than 16 bits (gegl:color-reduction only does
-       *  16 bits).
+       *  or to more than MAX_DITHER_BITS.
        */
       layer_dither_method      = GEGL_DITHER_NONE;
       text_layer_dither_method = GEGL_DITHER_NONE;

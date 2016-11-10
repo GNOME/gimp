@@ -111,10 +111,11 @@ convert_precision_dialog_new (GimpImage                    *image,
   new_bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
               babl_format_get_n_components (new_format));
 
-  /*  don't dither if we are converting to a higher bit depth, or to
-   *  more than 16 bits (gegl:color-reduction only does 16 bits).
+  /*  don't dither if we are converting to a higher bit depth,
+   *  or to more than MAX_DITHER_BITS.
    */
-  dither = (new_bits < old_bits && new_bits <= 16);
+  dither = (new_bits <  old_bits &&
+            new_bits <= CONVERT_PRECISION_DIALOG_MAX_DITHER_BITS);
 
   linear = gimp_babl_format_get_linear (old_format);
 
