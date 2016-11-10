@@ -80,22 +80,24 @@ struct _GimpTemplateEditorPrivate
                                      GimpTemplateEditorPrivate)
 
 
-static void    gimp_template_editor_constructed  (GObject            *object);
-static void    gimp_template_editor_finalize     (GObject            *object);
-static void    gimp_template_editor_set_property (GObject            *object,
-                                                  guint               property_id,
-                                                  const GValue       *value,
-                                                  GParamSpec         *pspec);
-static void    gimp_template_editor_get_property (GObject            *object,
-                                                  guint               property_id,
-                                                  GValue             *value,
-                                                  GParamSpec         *pspec);
+static void    gimp_template_editor_constructed    (GObject            *object);
+static void    gimp_template_editor_finalize       (GObject            *object);
+static void    gimp_template_editor_set_property   (GObject            *object,
+                                                    guint               property_id,
+                                                    const GValue       *value,
+                                                    GParamSpec         *pspec);
+static void    gimp_template_editor_get_property   (GObject            *object,
+                                                    guint               property_id,
+                                                    GValue             *value,
+                                                    GParamSpec         *pspec);
 
-static void gimp_template_editor_aspect_callback (GtkWidget          *widget,
-                                                  GimpTemplateEditor *editor);
-static void gimp_template_editor_template_notify (GimpTemplate       *template,
-                                                  GParamSpec         *param_spec,
-                                                  GimpTemplateEditor *editor);
+static void gimp_template_editor_precision_changed (GtkWidget          *widget,
+                                                    GimpTemplateEditor *editor);
+static void gimp_template_editor_aspect_callback   (GtkWidget          *widget,
+                                                    GimpTemplateEditor *editor);
+static void gimp_template_editor_template_notify   (GimpTemplate       *template,
+                                                    GParamSpec         *param_spec,
+                                                    GimpTemplateEditor *editor);
 
 
 G_DEFINE_TYPE (GimpTemplateEditor, gimp_template_editor, GTK_TYPE_BOX)
@@ -411,13 +413,17 @@ gimp_template_editor_constructed (GObject *object)
                              _("_Precision:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
-  toggle = gimp_prop_boolean_combo_box_new (G_OBJECT (template),
-                                            "linear",
-                                            _("Linear light"),
-                                            _("Perceptual gamma (sRGB)"));
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_template_editor_precision_changed),
+                    editor);
+
+  combo = gimp_prop_boolean_combo_box_new (G_OBJECT (template),
+                                           "linear",
+                                           _("Linear light"),
+                                           _("Perceptual gamma (sRGB)"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Gamma:"), 0.0, 0.5,
-                             toggle, 1, FALSE);
+                             combo, 1, FALSE);
 
   toggle = gimp_prop_check_button_new (G_OBJECT (template),
                                        "color-managed",
@@ -628,6 +634,45 @@ gimp_template_editor_get_resolution_chain (GimpTemplateEditor *editor)
 
 
 /*  private functions  */
+
+static void
+gimp_template_editor_precision_changed (GtkWidget          *widget,
+                                        GimpTemplateEditor *editor)
+{
+  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  GimpComponentType          component_type;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &component_type);
+
+  /* when changing this logic, also change the same switch()
+   * in convert-precision-dialog.c
+   */
+  switch (component_type)
+    {
+    case GIMP_COMPONENT_TYPE_U8:
+      /* default to gamma when converting to 8 bit */
+      g_object_set (private->template,
+                    "linear", FALSE,
+                    NULL);
+      break;
+
+    case GIMP_COMPONENT_TYPE_U16:
+    case GIMP_COMPONENT_TYPE_U32:
+    case GIMP_COMPONENT_TYPE_HALF:
+    default:
+      /* leave 'linear' alone */
+      break;
+
+    case GIMP_COMPONENT_TYPE_FLOAT:
+    case GIMP_COMPONENT_TYPE_DOUBLE:
+      /* default to linear when converting to float or double */
+      g_object_set (private->template,
+                    "linear", TRUE,
+                    NULL);
+      break;
+    }
+}
 
 static void
 gimp_template_editor_set_pixels (GimpTemplateEditor *editor,

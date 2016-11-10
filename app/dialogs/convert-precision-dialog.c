@@ -117,7 +117,29 @@ convert_precision_dialog_new (GimpImage                    *image,
   dither = (new_bits <  old_bits &&
             new_bits <= CONVERT_PRECISION_DIALOG_MAX_DITHER_BITS);
 
-  linear = gimp_babl_format_get_linear (old_format);
+  /* when changing this logic, also change the same switch()
+   * in gimptemplateeditor.h
+   */
+  switch (component_type)
+    {
+    case GIMP_COMPONENT_TYPE_U8:
+      /* default to gamma when converting 8 bit */
+      linear = FALSE;
+      break;
+
+    case GIMP_COMPONENT_TYPE_U16:
+    case GIMP_COMPONENT_TYPE_U32:
+    case GIMP_COMPONENT_TYPE_HALF:
+    default:
+      linear = gimp_babl_format_get_linear (old_format);
+      break;
+
+    case GIMP_COMPONENT_TYPE_FLOAT:
+    case GIMP_COMPONENT_TYPE_DOUBLE:
+      /* default to linear when converting to float or double */
+      linear = TRUE;
+      break;
+    }
 
   private = g_slice_new0 (ConvertDialog);
 
