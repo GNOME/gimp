@@ -117,7 +117,7 @@ grid_dialog_new (GimpImage   *image,
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (grid_dialog_response),
-                    dialog);
+                    private);
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -160,6 +160,7 @@ grid_dialog_response (GtkWidget  *dialog,
         {
           gimp_image_undo_push_image_grid (private->image, _("Grid"),
                                            private->grid_backup);
+          gimp_image_flush (private->image);
         }
 
       gtk_widget_destroy (dialog);
