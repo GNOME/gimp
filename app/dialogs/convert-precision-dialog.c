@@ -127,16 +127,18 @@ convert_precision_dialog_new (GimpImage                    *image,
       linear = FALSE;
       break;
 
+      /* leave gamma alone by default when converting to 16/32 bit float */
     case GIMP_COMPONENT_TYPE_U16:
     case GIMP_COMPONENT_TYPE_U32:
-    case GIMP_COMPONENT_TYPE_HALF:
     default:
       linear = gimp_babl_format_get_linear (old_format);
       break;
 
     case GIMP_COMPONENT_TYPE_FLOAT:
+    case GIMP_COMPONENT_TYPE_HALF:
     case GIMP_COMPONENT_TYPE_DOUBLE:
-      /* default to linear when converting to float or double */
+      /* default to linear when converting to half, single or double precision
+       * floating point */
       linear = TRUE;
       break;
     }

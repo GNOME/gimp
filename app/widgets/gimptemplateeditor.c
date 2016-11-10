@@ -659,12 +659,12 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
 
     case GIMP_COMPONENT_TYPE_U16:
     case GIMP_COMPONENT_TYPE_U32:
-    case GIMP_COMPONENT_TYPE_HALF:
     default:
       /* leave 'linear' alone */
       break;
 
     case GIMP_COMPONENT_TYPE_FLOAT:
+    case GIMP_COMPONENT_TYPE_HALF:
     case GIMP_COMPONENT_TYPE_DOUBLE:
       /* default to linear when converting to float or double */
       g_object_set (private->template,
