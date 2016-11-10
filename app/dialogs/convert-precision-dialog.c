@@ -81,11 +81,7 @@ convert_precision_dialog_new (GimpImage                    *image,
   GtkWidget     *button;
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *label;
   GtkWidget     *frame;
-  GtkWidget     *combo;
-  GtkSizeGroup  *size_group;
   const gchar   *enum_desc;
   gchar         *blurb;
   const Babl    *old_format;
@@ -200,115 +196,13 @@ convert_precision_dialog_new (GimpImage                    *image,
   gtk_widget_show (main_vbox);
 
 
-  /*  dithering  */
-
-  frame = gimp_frame_new (_("Dithering"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  gtk_widget_set_sensitive (vbox, dither);
-
-  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-  /*  layers  */
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Layers:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_size_group_add_widget (size_group, label);
-  gtk_widget_show (label);
-
-  combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
-
-  if (dither)
-    gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                private->layer_dither_method,
-                                G_CALLBACK (gimp_int_combo_box_get_active),
-                                &private->layer_dither_method);
-  else
-    gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                   GEGL_DITHER_NONE);
-
-  /*  text layers  */
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Text Layers:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_size_group_add_widget (size_group, label);
-  gtk_widget_show (label);
-
-  combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
-
-  if (dither)
-    gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                private->text_layer_dither_method,
-                                G_CALLBACK (gimp_int_combo_box_get_active),
-                                &private->text_layer_dither_method);
-  else
-    gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                   GEGL_DITHER_NONE);
-
-  gimp_help_set_help_data (combo,
-                           _("Dithering text layers will make them uneditable"),
-                           NULL);
-
-  /*  channels  */
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Channels and Masks:"));
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_size_group_add_widget (size_group, label);
-  gtk_widget_show (label);
-
-  combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-  gtk_widget_show (combo);
-
-  if (dither)
-    gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                private->channel_dither_method,
-                                G_CALLBACK (gimp_int_combo_box_get_active),
-                                &private->channel_dither_method);
-  else
-    gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                   GEGL_DITHER_NONE);
-
-  g_object_unref (size_group);
-
   /*  gamma  */
 
   frame = gimp_frame_new (_("Gamma"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  hbox = gimp_int_radio_group_new (FALSE, NULL,
+  vbox = gimp_int_radio_group_new (FALSE, NULL,
                                    G_CALLBACK (gimp_radio_button_update),
                                    &private->linear,
                                    linear,
@@ -317,8 +211,102 @@ convert_precision_dialog_new (GimpImage                    *image,
                                    _("Linear light"),            TRUE,  NULL,
 
                                    NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+
+  /*  dithering  */
+
+  if (dither)
+    {
+      GtkWidget    *hbox;
+      GtkWidget    *label;
+      GtkWidget    *combo;
+      GtkSizeGroup *size_group;
+
+      frame = gimp_frame_new (_("Dithering"));
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+
+      size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+      /*  layers  */
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new_with_mnemonic (_("_Layers:"));
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_size_group_add_widget (size_group, label);
+      gtk_widget_show (label);
+
+      combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show (combo);
+
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  private->layer_dither_method,
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &private->layer_dither_method);
+
+      /*  text layers  */
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new_with_mnemonic (_("_Text Layers:"));
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_size_group_add_widget (size_group, label);
+      gtk_widget_show (label);
+
+      combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show (combo);
+
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  private->text_layer_dither_method,
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &private->text_layer_dither_method);
+
+      gimp_help_set_help_data (combo,
+                               _("Dithering text layers will make them "
+                                 "uneditable"),
+                               NULL);
+
+      /*  channels  */
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new_with_mnemonic (_("_Channels and Masks:"));
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_size_group_add_widget (size_group, label);
+      gtk_widget_show (label);
+
+      combo = gimp_enum_combo_box_new (GEGL_TYPE_DITHER_METHOD);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+      gtk_widget_show (combo);
+
+      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                                  private->channel_dither_method,
+                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  &private->channel_dither_method);
+
+      g_object_unref (size_group);
+    }
 
   return dialog;
 }
