@@ -651,7 +651,7 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
   switch (component_type)
     {
     case GIMP_COMPONENT_TYPE_U8:
-      /* default to gamma when converting to 8 bit */
+      /* default to gamma for 8 bit */
       g_object_set (private->template,
                     "linear", FALSE,
                     NULL);
@@ -660,13 +660,13 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
     case GIMP_COMPONENT_TYPE_U16:
     case GIMP_COMPONENT_TYPE_U32:
     default:
-      /* leave 'linear' alone */
+      /* leave gamma alone by default for 16/32 bit int */
       break;
 
-    case GIMP_COMPONENT_TYPE_FLOAT:
     case GIMP_COMPONENT_TYPE_HALF:
+    case GIMP_COMPONENT_TYPE_FLOAT:
     case GIMP_COMPONENT_TYPE_DOUBLE:
-      /* default to linear when converting to float or double */
+      /* default to linear for floating point */
       g_object_set (private->template,
                     "linear", TRUE,
                     NULL);
