@@ -45,6 +45,8 @@
 
 #include "config/gimprc.h"
 
+#include "gegl/gimp-gegl.h"
+
 #include "core/gimp.h"
 #include "core/gimp-batch.h"
 #include "core/gimp-user-install.h"
@@ -251,6 +253,9 @@ app_run (const gchar         *full_prog_name,
 
   if (! update_status_func)
     update_status_func = app_init_update_noop;
+
+  /*  initialize lowlevel stuff  */
+  gimp_gegl_init (gimp);
 
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories

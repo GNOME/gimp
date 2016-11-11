@@ -30,7 +30,6 @@
 #include "config/gimprc.h"
 
 #include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimp-pdb-compat.h"
@@ -586,10 +585,6 @@ gimp_real_initialize (Gimp               *gimp,
     g_print ("INIT: %s\n", G_STRFUNC);
 
   status_callback (_("Initialization"), NULL, 0.0);
-
-  /*  initialize GEGL and babl  */
-  status_callback (NULL, "GEGL", 0.1);
-  gimp_gegl_init (gimp);
 
   gimp_fonts_set_config (gimp);
 
