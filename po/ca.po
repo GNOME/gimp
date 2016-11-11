@@ -8193,53 +8193,57 @@ msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
+"Defineix l'estat «Compensació de punt negre» per defecte pel diàleg «Converteix a perfil de color»."
 
 #: ../app/config/gimprc-blurbs.h:436
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"Defineix el mètode per defecte de tramat de la capa pel diàleg «Conversió de precisió»."
 
 #: ../app/config/gimprc-blurbs.h:439
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
+"Defineix el mètode per defecte de tramat de la capa de text pel diàleg «Conversió de precisió»."
 
 #: ../app/config/gimprc-blurbs.h:442
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"Defineix el mètode per defecte de tramat del canal pel diàleg «Conversió de precisió»."
 
 #: ../app/config/gimprc-blurbs.h:445
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
-msgstr ""
+msgstr "Defineix el tipus de paleta per defecte pel diàleg «Converteix a indexat»."
 
 #: ../app/config/gimprc-blurbs.h:448
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
-msgstr ""
+msgstr "Defineix el nombre màxim de colors per defecte pel diàleg «Converteix a indexat»."
 
 #: ../app/config/gimprc-blurbs.h:451
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
-msgstr ""
+msgstr "Defineix l'estat per defecte de «Suprimeix colors duplicat» pel diàleg «Converteix a indexat»."
 
 #: ../app/config/gimprc-blurbs.h:454
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
-msgstr ""
+msgstr "Defineix el tipus de tramat per defecte pel diàleg «Converteix a indexat»."
 
 #: ../app/config/gimprc-blurbs.h:457
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
-msgstr ""
+msgstr "Defineix l'estat per defecte del «tramat alfa» pel diàleg «Converteix a indexat»."
 
 #: ../app/config/gimprc-blurbs.h:460
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
-msgstr ""
+msgstr "Defineix l'estat del per defecte del «tramat de capes de text» pel diàleg «Converteix a indexat»."
 
 #: ../app/config/gimprc-blurbs.h:463
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
@@ -8250,12 +8254,10 @@ msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr "Defineix el conjunt de capes per defecte per canviar la mida pel diàleg «Mida del llenç»."
 
 #: ../app/config/gimprc-blurbs.h:469
-#, fuzzy
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
-"Defineix l'estat per defecte d'«Exporta el camí actiu» pel diàleg «Exporta "
-"el camí»."
+"Defineix l'estat per defecte de «Canvia la mida de les capes de text» pel diàleg «Mida del llenç»."
 
 #: ../app/config/gimprc-blurbs.h:472
 msgid "Sets the default layer name for the 'New Layer' dialog."
@@ -8274,9 +8276,8 @@ msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "Defineix el tipus d'emplenament per defecte pel diàleg «Capa nova»."
 
 #: ../app/config/gimprc-blurbs.h:484
-#, fuzzy
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
-msgstr "Defineix el nom del camí per defecte pel diàleg «Exporta el camí»."
+msgstr "Defineix el tipus d'emplenament per defecte pel diàleg «Mida del marc de la capa»."
 
 #: ../app/config/gimprc-blurbs.h:487
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
@@ -8330,45 +8331,45 @@ msgstr "Defineix el nom del camí per defecte pel diàleg «Importa el camí»."
 #: ../app/config/gimprc-blurbs.h:520
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
-msgstr ""
+msgstr "Defineix l'estat per defecte per «Fusiona els camins importats» diàleg «Importa el camí»."
 
 #: ../app/config/gimprc-blurbs.h:523
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
-msgstr ""
+msgstr "Defineix l'estat per defecte per «Escala els camins importats fins ajustar a la mida» pel diàleg «Importa el camí»."
 
 #: ../app/config/gimprc-blurbs.h:526
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
-msgstr ""
+msgstr "Defineix el radi de suavitzat per defecte pel diàleg «Suavitza les vores de la selecció»."
 
 #: ../app/config/gimprc-blurbs.h:529
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
-msgstr ""
+msgstr "Defineix el radi d'augment per defecte pel diàleg «Augmenta la selecció»."
 
 #: ../app/config/gimprc-blurbs.h:532
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
-msgstr ""
+msgstr "Defineix el radi d'encongiment per defecte pel diàleg «Encongeix la selecció»."
 
 #: ../app/config/gimprc-blurbs.h:535
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
-msgstr ""
+msgstr "Defineix el paràmetre per defecte per «Les àrees seleccionades continuen fora de la imatge» pel diàleg «Encongeix la selecció»."
 
 #: ../app/config/gimprc-blurbs.h:539
 msgid "Sets the default border radius for the 'Border Selection' dialog."
-msgstr ""
+msgstr "Defineix el radi de contorn per defecte pel diàleg «Selecciona la vora»."
 
 #: ../app/config/gimprc-blurbs.h:542
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
-msgstr ""
+msgstr "Defineix el paràmetre per defecte per «Les àrees seleccionades continuen fora de la imatge» pel diàleg «Selecciona la vora»."
 
 #: ../app/config/gimprc-blurbs.h:546
 msgid "Sets the default border style for the 'Border Selection' dialog."
-msgstr ""
+msgstr "Defineix l'estil de vora per defecte pel diàleg «Selecciona la vora»."
 
 #: ../app/config/gimprc-blurbs.h:555
 msgid "Sets the size of the thumbnail shown in the Open dialog."
@@ -11508,14 +11509,12 @@ msgid "Convert Image to Grayscale"
 msgstr "Converteix la imatge a escala de grisos"
 
 #: ../app/dialogs/color-profile-dialog.c:200
-#, fuzzy
 msgid "Soft-Proof Profile"
-msgstr "soft proof"
+msgstr "Perfil prova en pantalla"
 
 #: ../app/dialogs/color-profile-dialog.c:203
-#, fuzzy
 msgid "Select Soft-Proof Profile"
-msgstr "soft proof"
+msgstr "Seleccioneu el perfil prova en pantalla"
 
 #: ../app/dialogs/color-profile-dialog.c:209
 msgid "_Select"
@@ -12529,9 +12528,8 @@ msgstr "Velocitat"
 
 #: ../app/dialogs/preferences-dialog.c:1176
 #: ../app/dialogs/preferences-dialog.c:1211
-#, fuzzy
 msgid "Precision / Color Fidelity"
-msgstr "Fidelitat"
+msgstr "Precisió/Fidelitat del color"
 
 #: ../app/dialogs/preferences-dialog.c:1177
 msgid "_Optimize image display for:"
@@ -12825,17 +12823,10 @@ msgstr "Mostra la _imatge activa"
 msgid "Tools Configuration"
 msgstr "Configuració de les eines"
 
-# Quim: no és 'menú dels diàlegs' pel mateix criteri que 'brushes menu'
 #: ../app/dialogs/preferences-dialog.c:1802
 #: ../app/dialogs/preferences-dialog.c:1803
-#, fuzzy
 msgid "Dialog Defaults"
-msgstr ""
-"Introduïu el nom de fitxer que voleu per exportar les dades, i seleccioneu "
-"un interval de dates del qual voleu prendre l'historial. Modifiqueu si és "
-"necessari els paràmetres per omissió de l'altre diàleg. Feu clic a "
-"<guibutton>Exporta</guibutton> i &ktimetracker; exportarà l'historial de "
-"tasques cap al fitxer seleccionat."
+msgstr "Valors per defecte del diàleg"
 
 #: ../app/dialogs/preferences-dialog.c:1812
 msgid "Reset Dialog Defaults"
@@ -12853,7 +12844,7 @@ msgstr "Política del perfil de color:"
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:1829
 msgid "Convert to Color Profile Dialog"
-msgstr "Converteix a diàleg de perfil de color"
+msgstr "Diàleg converteix a perfil de color"
 
 #: ../app/dialogs/preferences-dialog.c:1834
 msgid "Rendering intent:"
@@ -12866,7 +12857,7 @@ msgstr "Compensació de punt negre"
 #. Convert Precision Dialog
 #: ../app/dialogs/preferences-dialog.c:1842
 msgid "Precision Conversion Dialog"
-msgstr "Obre el diàleg de conversió de precisió"
+msgstr "Diàleg de conversió de precisió"
 
 #: ../app/dialogs/preferences-dialog.c:1849
 msgid "Dither layers:"
@@ -12882,9 +12873,8 @@ msgstr "Tramat de canals i màscares:"
 
 #. Convert Indexed Dialog
 #: ../app/dialogs/preferences-dialog.c:1863
-#, fuzzy
 msgid "Indexed Conversion Dialog"
-msgstr "Conversió a colors indexats"
+msgstr "Diàleg Conversió a colors indexats"
 
 #: ../app/dialogs/preferences-dialog.c:1868
 msgid "Colormap:"
@@ -12895,9 +12885,8 @@ msgid "Maximum number of colors:"
 msgstr "Nombre màxim de colors:"
 
 #: ../app/dialogs/preferences-dialog.c:1875
-#, fuzzy
 msgid "Remove unused and duplicate colors from colormap"
-msgstr "Sup_rimeix els colors no utilitzats de la paleta"
+msgstr "Suprimeix els colors no utilitzats i duplicats del mapa de colors"
 
 #: ../app/dialogs/preferences-dialog.c:1881
 msgid "Color dithering:"
@@ -12940,9 +12929,8 @@ msgstr "Tipus d'emplenament:"
 
 #. Layer Boundary Size Dialog
 #: ../app/dialogs/preferences-dialog.c:1921
-#, fuzzy
 msgid "Layer Boundary Size Dialog"
-msgstr "Defineix mida del marc de la capa"
+msgstr "Diàleg Defineix mida del marc de la capa"
 
 #. Add Layer Mask Dialog
 #: ../app/dialogs/preferences-dialog.c:1930
@@ -13038,16 +13026,14 @@ msgstr "Fusiona els camins importats"
 msgid "Scale imported paths"
 msgstr "Escala els camins importats"
 
-# Quim: titol del diàleg  menú selecciona / difumina la vora...
+# Quim: títol del diàleg  menú selecciona / difumina la vora...
 #. Feather Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2016
-#, fuzzy
 msgid "Feather Selection Dialog"
-msgstr "Selecció suau..."
+msgstr "Diàleg Selecció suau"
 
 # Quim: opció en el diàleg selecció, per fer que les puntes de la selecció rectangular siguin arrodonides
 #: ../app/dialogs/preferences-dialog.c:2021
-#, fuzzy
 msgid "Feather radius:"
 msgstr "Radi de suavitzat:"
 
@@ -13071,9 +13057,8 @@ msgstr "Radi d'encongiment:"
 
 #: ../app/dialogs/preferences-dialog.c:2043
 #: ../app/dialogs/preferences-dialog.c:2060
-#, fuzzy
 msgid "Selected areas continue outside the image"
-msgstr "Retalla la imatge suprimint-ne les vores fora de la regió seleccionada"
+msgstr "Les àrees seleccionades continuen fora de la imatge"
 
 #. Border Selection Dialog
 #: ../app/dialogs/preferences-dialog.c:2047
@@ -13090,15 +13075,13 @@ msgstr "Estil de la vora"
 
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2064
-#, fuzzy
 msgid "Fill Selection Outline & Fill Path Dialogs"
-msgstr "Omple el contorn de la selecció"
+msgstr "Diàlegs Omple el contorn de la selecció i Emplena camí"
 
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2073
-#, fuzzy
 msgid "Stroke Selection & Stroke Path Dialogs"
-msgstr "Premeu per a aplicar un traç a la selecció"
+msgstr "Diàlegs Pinta la selecció i Pinta el camí"
 
 #: ../app/dialogs/preferences-dialog.c:2089
 #: ../app/dialogs/preferences-dialog.c:2090
@@ -13873,9 +13856,8 @@ msgid "Path _name:"
 msgstr "_Nom del camí:"
 
 #: ../app/dialogs/vectors-options-dialog.c:108
-#, fuzzy
 msgid "Lock path _strokes"
-msgstr "Bloqueja els punts del camí"
+msgstr "_Bloqueja els punts del camí"
 
 #: ../app/dialogs/vectors-options-dialog.c:109
 msgid "Lock path _position"

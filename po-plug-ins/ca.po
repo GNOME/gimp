@@ -6671,7 +6671,7 @@ msgstr "Fotocòpia"
 #: ../plug-ins/common/photocopy.c:892 ../plug-ins/common/sharpen.c:509
 #: ../plug-ins/common/softglow.c:699
 msgid "_Sharpness:"
-msgstr "De_finició:"
+msgstr "_Nitidesa:"
 
 #: ../plug-ins/common/photocopy.c:906
 msgid "Percent _black:"
