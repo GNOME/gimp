@@ -254,29 +254,49 @@ gimp_babl_init (void)
 }
 
 void
-gimp_babl_init_fishes (void)
+gimp_babl_init_fishes (GimpInitStatusFunc status_callback)
 {
   /* create a bunch of fishes - to decrease the initial lazy
    * intialization cost for some interactions
    */
-  babl_fish (babl_format ("Y' u8"),          babl_format ("RaGaBaA float"));
-  babl_fish (babl_format ("Y u8"),           babl_format ("RaGaBaA float"));
-  babl_fish (babl_format ("R'G'B'A u8"),     babl_format ("RaGaBaA float"));
-  babl_fish (babl_format ("R'G'B'A float"),  babl_format ("R'G'B'A u8"));
-  babl_fish (babl_format ("R'G'B'A float"),  babl_format ("R'G'B' u8"));
-  babl_fish (babl_format ("R'G'B'A u8"),     babl_format ("RGBA float"));
-  babl_fish (babl_format ("RGBA float"),     babl_format ("R'G'B'A u8"));
-  babl_fish (babl_format ("RGBA float"),     babl_format ("R'G'B'A u8"));
-  babl_fish (babl_format ("RGBA float"),     babl_format ("R'G'B'A float"));
-  babl_fish (babl_format ("Y' u8"),          babl_format ("R'G'B' u8"));
-  babl_fish (babl_format ("Y u8"),           babl_format ("Y float"));
-  babl_fish (babl_format ("R'G'B' u8"),      babl_format ("cairo-RGB24"));
-  babl_fish (babl_format ("R'G'B' u8"),      babl_format ("R'G'B'A float"));
-  babl_fish (babl_format ("R'G'B' u8"),      babl_format ("R'G'B'A u8"));
-  babl_fish (babl_format ("R'G'B'A u8"),     babl_format ("R'G'B'A float"));
-  babl_fish (babl_format ("R'G'B'A u8"),     babl_format ("cairo-ARGB32"));
-  babl_fish (babl_format ("R'G'B'A double"), babl_format ("RGBA float"));
-  babl_fish (babl_format ("R'G'B'A float"),  babl_format ("RGBA double"));
+  static const struct
+  {
+    const gchar *from_format;
+    const gchar *to_format;
+  }
+  fishes[] =
+  {
+    { "Y' u8",          "RaGaBaA float" },
+    { "Y u8",           "RaGaBaA float" },
+    { "R'G'B'A u8",     "RaGaBaA float" },
+    { "R'G'B'A float",  "R'G'B'A u8"    },
+    { "R'G'B'A float",  "R'G'B' u8"     },
+    { "R'G'B'A u8",     "RGBA float"    },
+    { "RGBA float",     "R'G'B'A u8"    },
+    { "RGBA float",     "R'G'B'A u8"    },
+    { "RGBA float",     "R'G'B'A float" },
+    { "Y' u8",          "R'G'B' u8"     },
+    { "Y u8",           "Y float"       },
+    { "R'G'B' u8",      "cairo-RGB24"   },
+    { "R'G'B' u8",      "R'G'B'A float" },
+    { "R'G'B' u8",      "R'G'B'A u8"    },
+    { "R'G'B'A u8",     "R'G'B'A float" },
+    { "R'G'B'A u8",     "cairo-ARGB32"  },
+    { "R'G'B'A double", "RGBA float"    },
+    { "R'G'B'A float",  "RGBA double"   }
+  };
+
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (fishes); i++)
+    {
+      status_callback (NULL, NULL,
+                       (gdouble) (i + 1) /
+                       (gdouble) G_N_ELEMENTS (fishes) / 2.0);
+
+      babl_fish (babl_format (fishes[i].from_format),
+                 babl_format (fishes[i].to_format));
+    }
 }
 
 static const struct

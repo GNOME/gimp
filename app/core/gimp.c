@@ -602,10 +602,6 @@ gimp_real_initialize (Gimp               *gimp,
 
   gimp_plug_in_manager_initialize (gimp->plug_in_manager, status_callback);
 
-  /*  initialize babl fishes  */
-  status_callback (NULL, "Babl Fishes", 0.9);
-  gimp_babl_init_fishes ();
-
   status_callback (NULL, "", 1.0);
 }
 
@@ -618,6 +614,10 @@ gimp_real_restore (Gimp               *gimp,
 
   gimp_plug_in_manager_restore (gimp->plug_in_manager,
                                 gimp_get_user_context (gimp), status_callback);
+
+  /*  initialize babl fishes  */
+  status_callback (_("Initialization"), "Babl Fishes", 0.0);
+  gimp_babl_init_fishes (status_callback);
 
   gimp->restored = TRUE;
 }

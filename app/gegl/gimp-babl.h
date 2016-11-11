@@ -22,8 +22,8 @@
 #define __GIMP_BABL_H__
 
 
-void                gimp_babl_init                      (void);
-void                gimp_babl_init_fishes               (void);
+void                gimp_babl_init             (void);
+void                gimp_babl_init_fishes      (GimpInitStatusFunc status_callback);
 
 const gchar       * gimp_babl_format_get_description    (const Babl *format);
 GimpColorProfile  * gimp_babl_format_get_color_profile  (const Babl *format);
