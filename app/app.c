@@ -238,6 +238,9 @@ app_run (const gchar         *full_prog_name,
   /*  change the locale if a language if specified  */
   language_init (gimp->config->language);
 
+  /*  initialize lowlevel stuff  */
+  gimp_gegl_init (gimp);
+
   /*  Connect our restore_after callback before gui_init() connects
    *  theirs, so ours runs first and can grab the initial monitor
    *  before the GUI's restore_after callback resets it.
@@ -253,9 +256,6 @@ app_run (const gchar         *full_prog_name,
 
   if (! update_status_func)
     update_status_func = app_init_update_noop;
-
-  /*  initialize lowlevel stuff  */
-  gimp_gegl_init (gimp);
 
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories
