@@ -50,8 +50,9 @@ struct _AnimationPlaybackPrivate
   /* State of the currently loaded playback. */
   gint         position;
   /* Playback can be a subset of frames. */
-  guint        start;
-  guint        stop;
+  gint         start;
+  gint         stop;
+  gboolean     stop_at_end;
 
   guint        timer;
   gint64       start_time;
@@ -74,6 +75,9 @@ static void       animation_playback_get_property           (GObject           *
                                                              GValue            *value,
                                                              GParamSpec        *pspec);
 
+static void       on_duration_changed                       (Animation         *animation,
+                                                             gint               duration,
+                                                             AnimationPlayback *playback);
 static void       on_cache_invalidated                      (Animation         *animation,
                                                              gint               position,
                                                              gint               length,
@@ -409,6 +413,7 @@ animation_playback_set_start (AnimationPlayback *playback,
   if (playback->priv->stop < playback->priv->start)
     {
       playback->priv->stop = duration - 1;
+      playback->priv->stop_at_end = TRUE;
     }
 
   g_signal_emit (playback, animation_playback_signals[RANGE], 0,
@@ -442,15 +447,20 @@ animation_playback_set_stop (AnimationPlayback *playback,
       index >= duration)
     {
       playback->priv->stop = duration - 1;
+      playback->priv->stop_at_end = TRUE;
     }
   else
     {
       playback->priv->stop = index;
+
+      if (index == duration - 1)
+        playback->priv->stop_at_end = TRUE;
     }
   if (playback->priv->stop < playback->priv->start)
     {
       playback->priv->start = 0;
     }
+
   g_signal_emit (playback, animation_playback_signals[RANGE], 0,
                  playback->priv->start, playback->priv->stop);
 
@@ -510,10 +520,13 @@ animation_playback_set_property (GObject      *object,
           playback->priv->position = 0;
           playback->priv->start = 0;
           playback->priv->stop  = animation_get_duration (animation) - 1;
+          playback->priv->stop_at_end = TRUE;
 
           g_signal_emit_by_name (animation, "loaded");
           g_signal_connect (animation, "cache-invalidated",
                             G_CALLBACK (on_cache_invalidated), playback);
+          g_signal_connect (animation, "duration-changed",
+                            G_CALLBACK (on_duration_changed), playback);
 
           /* Once loaded, let's ask render. */
           buffer = animation_get_frame (animation, playback->priv->position);
@@ -549,6 +562,35 @@ animation_playback_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+on_duration_changed (Animation         *animation,
+                     gint               duration,
+                     AnimationPlayback *playback)
+{
+  if (! playback->priv->animation)
+    return;
+
+  if (playback->priv->stop >= duration ||
+      playback->priv->stop_at_end)
+    {
+      playback->priv->stop = duration - 1;
+      playback->priv->stop_at_end = TRUE;
+    }
+  if (playback->priv->start >= duration ||
+      playback->priv->start > playback->priv->stop)
+    {
+      playback->priv->start = 0;
+    }
+
+  if (playback->priv->position < playback->priv->start ||
+      playback->priv->position > playback->priv->stop)
+    {
+      playback->priv->position = playback->priv->start;
+    }
+  g_signal_emit (playback, animation_playback_signals[RANGE], 0,
+                 playback->priv->start, playback->priv->stop);
 }
 
 static void

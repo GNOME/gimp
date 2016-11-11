@@ -338,6 +338,8 @@ animation_cel_animation_set_duration (AnimationCelAnimation *animation,
     }
 
   animation->priv->duration = duration;
+  g_signal_emit_by_name (animation, "duration-changed",
+                         duration);
 }
 
 gint

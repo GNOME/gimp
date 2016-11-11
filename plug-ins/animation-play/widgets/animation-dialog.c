@@ -202,9 +202,6 @@ static void        show_loading_progress     (Animation        *animation,
                                               AnimationDialog  *dialog);
 static void        unblock_ui                (Animation        *animation,
                                               AnimationDialog  *dialog);
-static void        duration_changed          (AnimationPlayback *playback,
-                                              gint               duration,
-                                              AnimationDialog   *dialog);
 static void        playback_range_changed    (AnimationPlayback *playback,
                                               gint              playback_start,
                                               gint              playback_stop,
@@ -1095,9 +1092,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
       g_signal_handlers_disconnect_by_func (priv->animation,
                                             G_CALLBACK (framerate_changed),
                                             dialog);
-      g_signal_handlers_disconnect_by_func (priv->animation,
-                                            G_CALLBACK (duration_changed),
-                                            dialog);
       g_signal_handlers_disconnect_by_func (priv->playback,
                                             G_CALLBACK (playback_range_changed),
                                             dialog);
@@ -1296,9 +1290,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                     dialog);
   g_signal_connect (priv->animation, "framerate-changed",
                     G_CALLBACK (framerate_changed),
-                    dialog);
-  g_signal_connect (priv->animation, "duration-changed",
-                    G_CALLBACK (duration_changed),
                     dialog);
   g_signal_connect (priv->playback, "range",
                     G_CALLBACK (playback_range_changed),
@@ -1951,14 +1942,6 @@ unblock_ui (Animation      *animation,
 {
   update_progress (dialog);
   animation_dialog_refresh (dialog);
-}
-
-static void
-duration_changed (AnimationPlayback *playback,
-                  gint               duration,
-                  AnimationDialog   *dialog)
-{
-  update_progress (dialog);
 }
 
 static void
