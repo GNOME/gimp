@@ -283,7 +283,14 @@ gimp_babl_init_fishes (GimpInitStatusFunc status_callback)
     { "R'G'B'A u8",     "R'G'B'A float" },
     { "R'G'B'A u8",     "cairo-ARGB32"  },
     { "R'G'B'A double", "RGBA float"    },
-    { "R'G'B'A float",  "RGBA double"   }
+    { "R'G'B'A float",  "RGBA double"   },
+    { "R'G'B' u8",      "RGB float"     },
+    { "RGB float",      "R'G'B'A float" },
+    { "R'G'B' u8",      "RGBA float"    },
+    { "RaGaBaA float",  "R'G'B'A float" },
+    { "RaGaBaA float",  "RGBA float"    },
+    { "RGBA float",     "RaGaBaA float" },
+    { "R'G'B' u8",      "RaGaBaA float" }
   };
 
   gint i;
