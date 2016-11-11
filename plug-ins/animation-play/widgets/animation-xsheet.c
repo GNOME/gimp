@@ -58,36 +58,41 @@ struct _AnimationXSheetPrivate
   GQueue                *selected_frames;
 
   GList                 *comment_fields;
+
+  guint                  layout_reset_src;
 };
 
-static void animation_xsheet_constructed  (GObject      *object);
-static void animation_xsheet_set_property (GObject      *object,
-                                           guint         property_id,
-                                           const GValue *value,
-                                           GParamSpec   *pspec);
-static void animation_xsheet_get_property (GObject      *object,
-                                           guint         property_id,
-                                           GValue       *value,
-                                           GParamSpec   *pspec);
-static void animation_xsheet_finalize     (GObject      *object);
+static void    animation_xsheet_constructed  (GObject      *object);
+static void    animation_xsheet_set_property (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void    animation_xsheet_get_property (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
+static void    animation_xsheet_finalize     (GObject      *object);
 
 /* Construction methods */
-static void animation_xsheet_reset_layout (AnimationXSheet *xsheet);
+static gboolean animation_xsheet_reset_layout (AnimationXSheet *xsheet);
 
 /* Callbacks on animation. */
-static void on_animation_loaded           (Animation       *animation,
-                                           AnimationXSheet *xsheet);
-/* Callbacks on callback. */
-static void on_animation_rendered         (AnimationPlayback *animation,
-                                           gint               frame_number,
-                                           GeglBuffer        *buffer,
-                                           gboolean           must_draw_null,
-                                           AnimationXSheet   *xsheet);
+static void     on_animation_loaded           (Animation       *animation,
+                                               AnimationXSheet *xsheet);
+static void     on_animation_duration_changed (Animation         *animation,
+                                               gint               duration,
+                                               AnimationXSheet   *xsheet);
+/* Callbacks on playback. */
+static void     on_animation_rendered         (AnimationPlayback *animation,
+                                              gint               frame_number,
+                                              GeglBuffer        *buffer,
+                                              gboolean           must_draw_null,
+                                              AnimationXSheet   *xsheet);
 
 /* Callbacks on layer view. */
-static void on_layer_selection            (AnimationLayerView *view,
-                                           GList              *layers,
-                                           AnimationXSheet    *xsheet);
+static void     on_layer_selection            (AnimationLayerView *view,
+                                              GList              *layers,
+                                              AnimationXSheet    *xsheet);
 
 /* UI Signals */
 static gboolean animation_xsheet_frame_clicked       (GtkWidget       *button,
@@ -171,8 +176,8 @@ animation_xsheet_new (AnimationCelAnimation *animation,
                          NULL);
   ANIMATION_XSHEET (xsheet)->priv->playback = playback;
   g_signal_connect (ANIMATION_XSHEET (xsheet)->priv->playback,
-                    "render",
-                    G_CALLBACK (on_animation_rendered), xsheet);
+                    "render", G_CALLBACK (on_animation_rendered),
+                    xsheet);
 
   return xsheet;
 }
@@ -204,6 +209,11 @@ animation_xsheet_constructed (GObject *object)
   /* Reload everything when we reload the animation. */
   g_signal_connect_after (xsheet->priv->animation, "loaded",
                           G_CALLBACK (on_animation_loaded), xsheet);
+
+  g_signal_connect_after (xsheet->priv->animation,
+                          "duration-changed",
+                          G_CALLBACK (on_animation_duration_changed),
+                          xsheet);
 }
 
 static void
@@ -272,7 +282,7 @@ animation_xsheet_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
+static gboolean
 animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 {
   GtkWidget *frame;
@@ -288,8 +298,12 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
                          (GtkCallback) gtk_widget_destroy,
                          NULL);
   g_list_free_full (xsheet->priv->cels, (GDestroyNotify) g_list_free);
-  g_list_free (xsheet->priv->comment_fields);
   xsheet->priv->cels = NULL;
+  g_list_free (xsheet->priv->comment_fields);
+  xsheet->priv->comment_fields = NULL;
+  g_list_free (xsheet->priv->position_buttons);
+  xsheet->priv->position_buttons = NULL;
+  xsheet->priv->active_pos_button = NULL;
   xsheet->priv->selected_track = -1;
   g_queue_clear (xsheet->priv->selected_frames);
 
@@ -446,6 +460,11 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 
   gtk_table_set_row_spacings (GTK_TABLE (xsheet->priv->track_layout), 0);
   gtk_table_set_col_spacings (GTK_TABLE (xsheet->priv->track_layout), 0);
+
+  /* Return a boolean in order to be used as a source function.
+   * FALSE means the source should be removed once processed. */
+  xsheet->priv->layout_reset_src = 0;
+  return FALSE;
 }
 
 static void
@@ -487,6 +506,26 @@ on_animation_loaded (Animation       *animation,
                      AnimationXSheet *xsheet)
 {
   animation_xsheet_reset_layout (xsheet);
+}
+
+static void
+on_animation_duration_changed (Animation       *animation,
+                               gint             duration,
+                               AnimationXSheet *xsheet)
+{
+  if (! xsheet->priv->layout_reset_src)
+    {
+      gint src;
+
+      /* Directly running animation_xsheet_reset_layout() repeats
+       * indefinitely with a loop timer. There seems to be some kind of
+       * race condition in the spin button code when the action takes
+       * too long. Run this as idle instead.
+       */
+      src = g_idle_add ((GSourceFunc) animation_xsheet_reset_layout,
+                        xsheet);
+      xsheet->priv->layout_reset_src = src;
+    }
 }
 
 static void

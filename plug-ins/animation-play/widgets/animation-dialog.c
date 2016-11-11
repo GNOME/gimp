@@ -71,6 +71,8 @@ struct _AnimationDialogPrivate
 
   GtkWidget         *animation_type_combo;
   GtkWidget         *fpscombo;
+  GtkWidget         *duration_box;
+  GtkWidget         *duration_spin;
   GtkWidget         *zoomcombo;
   GtkWidget         *proxycombo;
 
@@ -145,6 +147,9 @@ static void        help_callback             (GtkAction        *action,
                                               AnimationDialog  *dialog);
 
 static void        animation_type_changed    (GtkWidget        *combo,
+                                              AnimationDialog  *dialog);
+
+static void        on_duration_spin_changed  (GtkAdjustment    *adjustment,
                                               AnimationDialog  *dialog);
 
 static void        fpscombo_activated        (GtkEntry         *combo,
@@ -476,6 +481,32 @@ animation_dialog_constructed (GObject *object)
   gtk_widget_show (priv->proxycombo);
   gtk_container_add (GTK_CONTAINER (widget),
                      priv->proxycombo);
+
+  /* Settings: duration */
+  priv->duration_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_box_pack_end (GTK_BOX (priv->settings_bar), priv->duration_box, FALSE, FALSE, 0);
+
+  widget = gtk_label_new (_("frames"));
+  gtk_box_pack_end (GTK_BOX (priv->duration_box), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  adjust = GTK_ADJUSTMENT (gtk_adjustment_new (240.0, 1.0, G_MAXDOUBLE, 1.0, 10.0, 0.0));
+  priv->duration_spin = gtk_spin_button_new (adjust, 0.0, 0.0);
+  gtk_entry_set_width_chars (GTK_ENTRY (priv->duration_spin), 5);
+  gimp_help_set_help_data (priv->duration_spin, _("Duration in frames"), NULL);
+  gtk_box_pack_end (GTK_BOX (priv->duration_box), priv->duration_spin, FALSE, FALSE, 0);
+
+  widget = gtk_label_new (_("Duration:"));
+  gtk_box_pack_end (GTK_BOX (priv->duration_box), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  g_signal_connect (adjust,
+                    "value-changed",
+                    G_CALLBACK (on_duration_spin_changed),
+                    dialog);
+
+  gtk_widget_show (priv->duration_spin);
+  gtk_widget_show (priv->duration_box);
 
   /* Settings: fps */
   priv->fpscombo = gtk_combo_box_text_new_with_entry ();
@@ -1242,6 +1273,9 @@ animation_dialog_set_animation (AnimationDialog *dialog,
 
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 0);
+
+      /* The duration box. */
+      gtk_widget_hide (priv->duration_box);
     }
   else
     {
@@ -1256,6 +1290,9 @@ animation_dialog_set_animation (AnimationDialog *dialog,
 
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 1);
+
+      /* The duration box. */
+      gtk_widget_show (priv->duration_box);
     }
 
   /* The bottom panel. */
@@ -1437,6 +1474,21 @@ animation_type_changed (GtkWidget       *combo,
   animation_dialog_set_animation (ANIMATION_DIALOG (dialog),
                                   animation);
   animation_load (animation);
+}
+
+static void
+on_duration_spin_changed (GtkAdjustment   *adjustment,
+                          AnimationDialog *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  AnimationCelAnimation  *animation;
+  gdouble                 value = gtk_adjustment_get_value (adjustment);
+
+  g_return_if_fail (priv->animation &&
+                    ANIMATION_IS_CEL_ANIMATION (priv->animation));
+
+  animation = ANIMATION_CEL_ANIMATION (priv->animation);
+  animation_cel_animation_set_duration (animation, (gint) value);
 }
 
 
@@ -1953,6 +2005,7 @@ playback_range_changed (AnimationPlayback *playback,
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   GtkAdjustment *startframe_adjust;
   GtkAdjustment *stopframe_adjust;
+  GtkAdjustment *duration_adjust;
 
   update_progress (dialog);
 
@@ -1974,6 +2027,15 @@ playback_range_changed (AnimationPlayback *playback,
                                      G_CALLBACK (endframe_changed),
                                      dialog);
 
+  /* The duration adjust for cel animation. */
+  duration_adjust  = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (priv->duration_spin));
+  g_signal_handlers_block_by_func (duration_adjust,
+                                   G_CALLBACK (on_duration_spin_changed),
+                                   dialog);
+  gtk_adjustment_set_value (duration_adjust, animation_get_duration (priv->animation));
+  g_signal_handlers_unblock_by_func (duration_adjust,
+                                     G_CALLBACK (on_duration_spin_changed),
+                                     dialog);
   show_playing_progress (dialog);
 }
 
