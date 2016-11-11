@@ -204,6 +204,9 @@ animation_storyboard_finalize (GObject *object)
 {
   AnimationStoryboard *view = ANIMATION_STORYBOARD (object);
 
+  g_signal_handlers_disconnect_by_func (view->priv->playback,
+                    (GCallback) animation_storyboard_rendered,
+                    view);
   g_object_unref (view->priv->animation);
   if (view->priv->panel_buttons)
     {

@@ -1473,7 +1473,6 @@ animation_type_changed (GtkWidget       *combo,
   g_free ((gchar *) xml);
   animation_dialog_set_animation (ANIMATION_DIALOG (dialog),
                                   animation);
-  animation_load (animation);
 }
 
 static void
