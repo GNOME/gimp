@@ -251,29 +251,32 @@ gimp_babl_init (void)
                    babl_type ("double"),
                    babl_component ("A"),
                    NULL);
+}
 
-  /* create a bunch of fishes - to decrease the initial lazy intialization cost
-     for some interactions
+void
+gimp_babl_init_fishes (void)
+{
+  /* create a bunch of fishes - to decrease the initial lazy
+   * intialization cost for some interactions
    */
-  babl_fish (babl_format("Y' u8"), babl_format("RaGaBaA float"));
-  babl_fish (babl_format("Y u8"), babl_format("RaGaBaA float"));
-  babl_fish (babl_format("R'G'B'A u8"), babl_format("RaGaBaA float"));
-  babl_fish (babl_format("R'G'B'A float"), babl_format("R'G'B'A u8"));
-  babl_fish (babl_format("R'G'B'A float"), babl_format("R'G'B' u8"));
-  babl_fish (babl_format("R'G'B'A u8"), babl_format("RGBA float"));
-  babl_fish (babl_format("RGBA float"), babl_format("R'G'B'A u8"));
-  babl_fish (babl_format("RGBA float"), babl_format("R'G'B'A u8"));
-  babl_fish (babl_format("RGBA float"), babl_format("R'G'B'A float"));
-  babl_fish (babl_format("Y' u8"), babl_format("R'G'B' u8"));
-  babl_fish (babl_format("Y u8"), babl_format("Y float"));
-  babl_fish (babl_format("R'G'B' u8"), babl_format("cairo-RGB24"));
-  babl_fish (babl_format("R'G'B' u8"), babl_format("R'G'B'A float"));
-  babl_fish (babl_format("R'G'B' u8"), babl_format("R'G'B'A u8"));
-  babl_fish (babl_format("R'G'B'A u8"), babl_format("R'G'B'A float"));
-  babl_fish (babl_format("R'G'B'A u8"), babl_format("cairo-ARGB32"));
-  babl_fish (babl_format("R'G'B'A double"), babl_format("RGBA float"));
-  babl_fish (babl_format("R'G'B'A float"), babl_format("RGBA double"));
-
+  babl_fish (babl_format ("Y' u8"),          babl_format ("RaGaBaA float"));
+  babl_fish (babl_format ("Y u8"),           babl_format ("RaGaBaA float"));
+  babl_fish (babl_format ("R'G'B'A u8"),     babl_format ("RaGaBaA float"));
+  babl_fish (babl_format ("R'G'B'A float"),  babl_format ("R'G'B'A u8"));
+  babl_fish (babl_format ("R'G'B'A float"),  babl_format ("R'G'B' u8"));
+  babl_fish (babl_format ("R'G'B'A u8"),     babl_format ("RGBA float"));
+  babl_fish (babl_format ("RGBA float"),     babl_format ("R'G'B'A u8"));
+  babl_fish (babl_format ("RGBA float"),     babl_format ("R'G'B'A u8"));
+  babl_fish (babl_format ("RGBA float"),     babl_format ("R'G'B'A float"));
+  babl_fish (babl_format ("Y' u8"),          babl_format ("R'G'B' u8"));
+  babl_fish (babl_format ("Y u8"),           babl_format ("Y float"));
+  babl_fish (babl_format ("R'G'B' u8"),      babl_format ("cairo-RGB24"));
+  babl_fish (babl_format ("R'G'B' u8"),      babl_format ("R'G'B'A float"));
+  babl_fish (babl_format ("R'G'B' u8"),      babl_format ("R'G'B'A u8"));
+  babl_fish (babl_format ("R'G'B'A u8"),     babl_format ("R'G'B'A float"));
+  babl_fish (babl_format ("R'G'B'A u8"),     babl_format ("cairo-ARGB32"));
+  babl_fish (babl_format ("R'G'B'A double"), babl_format ("RGBA float"));
+  babl_fish (babl_format ("R'G'B'A float"),  babl_format ("RGBA double"));
 }
 
 static const struct

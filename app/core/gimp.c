@@ -29,6 +29,7 @@
 
 #include "config/gimprc.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl.h"
 
 #include "pdb/gimppdb.h"
@@ -605,6 +606,10 @@ gimp_real_initialize (Gimp               *gimp,
   gimp_pdb_compat_procs_register (gimp->pdb, gimp->pdb_compat_mode);
 
   gimp_plug_in_manager_initialize (gimp->plug_in_manager, status_callback);
+
+  /*  initialize babl fishes  */
+  status_callback (NULL, "Babl Fishes", 0.9);
+  gimp_babl_init_fishes ();
 
   status_callback (NULL, "", 1.0);
 }
