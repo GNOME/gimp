@@ -47,8 +47,7 @@ gimp_unique_open (const gchar **filenames,
                   gboolean      as_new)
 {
 #ifdef G_OS_WIN32
-//  return gimp_unique_win32_open (filenames, as_new);
-  return gimp_unique_dbus_open (filenames, as_new);
+  return gimp_unique_win32_open (filenames, as_new);
 #else
   return gimp_unique_dbus_open (filenames, as_new);
 #endif
