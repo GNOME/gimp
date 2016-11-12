@@ -82,9 +82,12 @@ struct Namespaces{
 };
 
 struct Namespaces namespaces_table[] = {
-  {"gimp",    "http://www.gimp.org/ns/2.10/"  },
-  {"dwc",     "http://rs.tdwg.org/dwc/terms/" },
-  {"lr",      "http://ns.adobe.com/lr/1.0/"   }
+  {"gimp",     "http://www.gimp.org/ns/2.10/"                        },
+  {"dwc",      "http://rs.tdwg.org/dwc/terms/"                       },
+  {"lr",       "http://ns.adobe.com/lr/1.0/"                         },
+  {"gpano",    "http://ns.google.com/photos/1.0/panorama/"           },
+  {"panorama", "http://ns.adobe.com/photoshop/1.0/panorama-profile/" }
+
 };
 
 static gpointer                  gimp_attributes_parent_class = NULL;

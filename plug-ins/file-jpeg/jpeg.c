@@ -287,7 +287,7 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
-      GimpAttributes        *attributes;
+      GimpMetadata          *metadata;
       GimpMetadataSaveFlags  metadata_flags;
       gint32                 orig_image_ID;
       GimpExportReturn       export = GIMP_EXPORT_CANCEL;
@@ -337,7 +337,7 @@ run (const gchar      *name,
           break;
         }
 
-      attributes = gimp_image_metadata_save_prepare (orig_image_ID,
+      metadata = gimp_image_metadata_save_prepare (orig_image_ID,
                                                    "image/jpeg",
                                                    &metadata_flags);
 
@@ -541,12 +541,11 @@ run (const gchar      *name,
 
           /* write metadata */
 
-          if (attributes)
+          if (metadata)
             {
               GFile *file;
-              GimpAttribute  *attribute;
 
-              gimp_attributes_new_attribute (attributes, "Exif.Image.BitsPerSample", "8", TYPE_SHORT);
+              gimp_metadata_set_bits_per_sample (metadata, 8);
 
               if (jsvals.save_exif)
                 metadata_flags |= GIMP_METADATA_SAVE_EXIF;
@@ -571,12 +570,13 @@ run (const gchar      *name,
               file = g_file_new_for_path (param[3].data.d_string);
               gimp_image_metadata_save_finish (orig_image_ID,
                                                "image/jpeg",
-                                               attributes, metadata_flags,
+                                               metadata, metadata_flags,
                                                file, NULL);
               g_object_unref (file);
-              g_object_unref (attributes);
             }
         }
+      if (metadata)
+        g_object_unref (metadata);
     }
   else
     {

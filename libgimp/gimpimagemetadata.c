@@ -190,7 +190,6 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)
     {
       GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
-      GimpAttribute *attribute = NULL;
 
       if (! profile)
         {
@@ -321,8 +320,8 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
                                  GError                **error)
 {
   GExiv2Metadata *new_metadata;
-  GimpAttributes *attributes;
-  gboolean        success = FALSE;
+  GimpAttributes *attributes = NULL;
+  gboolean            success = FALSE;
   gchar               buffer[32];
   GDateTime          *datetime;
   const GimpParasite *comment_parasite;
@@ -334,7 +333,6 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
   g_return_val_if_fail (image_ID > 0, FALSE);
   g_return_val_if_fail (mime_type != NULL, FALSE);
-  g_return_val_if_fail (attributes != NULL, FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -393,7 +391,7 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
       gimp_attributes_new_attribute (attributes,
                                      "Exif.Image.Software",
-                                     buffer,
+                                     PACKAGE_STRING,
                                      TYPE_ASCII);
 
       gimp_attributes_set_pixel_size (attributes,
