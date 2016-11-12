@@ -1,4 +1,3 @@
-# translation of de.po to Deutsch
 # This is the German catalog for the standard GIMP Plugins.
 # Copyright (C) 1999-2005, 2007 Free Software Foundation, Inc.
 # Felix Natter <fnatter@gmx.net>,
@@ -22,16 +21,16 @@ msgstr ""
 "Project-Id-Version: gimp plugins master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-09-15 08:25+0000\n"
-"PO-Revision-Date: 2016-09-19 09:22+0200\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"POT-Creation-Date: 2016-11-09 09:01+0000\n"
+"PO-Revision-Date: 2016-11-12 10:12+0100\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/common/align-layers.c:158
@@ -348,7 +347,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1047 ../plug-ins/common/file-pnm.c:671
+#: ../plug-ins/common/file-png.c:1050 ../plug-ins/common/file-pnm.c:671
 #: ../plug-ins/common/file-raw-data.c:984 ../plug-ins/common/file-sunras.c:1049
 #: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-xbm.c:904
 #: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:257
@@ -356,7 +355,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-exr/file-exr.c:258 ../plug-ins/file-faxg3/faxg3.c:525
 #: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1772 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
@@ -889,17 +888,17 @@ msgstr "CML-Explorer-Parameter speichern"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:734
-#: ../plug-ins/common/file-pdf-save.c:432 ../plug-ins/common/file-png.c:1538
+#: ../plug-ins/common/file-pdf-save.c:432 ../plug-ins/common/file-png.c:1544
 #: ../plug-ins/common/file-raw-data.c:799 ../plug-ins/common/file-raw-data.c:827
 #: ../plug-ins/common/file-sunras.c:610 ../plug-ins/common/file-tga.c:1204
 #: ../plug-ins/common/file-xmc.c:1474 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1079
 #: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1523
-#: ../plug-ins/file-tiff/file-tiff-save.c:521 ../plug-ins/flame/flame.c:442
+#: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
-#: ../plug-ins/lighting/lighting-ui.c:1222
+#: ../plug-ins/lighting/lighting-ui.c:1232
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Datei »%s« konnte nicht zum Schreiben geöffnet werden: %s"
@@ -918,9 +917,9 @@ msgstr "CML-Explorer-Parameter laden"
 #: ../plug-ins/common/file-cel.c:578 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-jp2-load.c:234
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:895
+#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:898
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3369
-#: ../plug-ins/common/file-psp.c:1714 ../plug-ins/common/file-raw-data.c:271
+#: ../plug-ins/common/file-psp.c:1717 ../plug-ins/common/file-raw-data.c:271
 #: ../plug-ins/common/file-raw-data.c:908 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:709
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
@@ -928,14 +927,14 @@ msgstr "CML-Explorer-Parameter laden"
 #: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
-#: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:649
-#: ../plug-ins/file-ico/ico-load.c:727 ../plug-ins/file-jpeg/jpeg-load.c:97
+#: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:670
+#: ../plug-ins/file-ico/ico-load.c:748 ../plug-ins/file-jpeg/jpeg-load.c:97
 #: ../plug-ins/file-jpeg/jpeg-load.c:515 ../plug-ins/file-psd/psd-load.c:138
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:924
 #: ../plug-ins/gfig/gfig.c:426 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238 ../plug-ins/lighting/lighting-ui.c:1366
+#: ../plug-ins/help/gimphelplocale.c:238 ../plug-ins/lighting/lighting-ui.c:1376
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Datei »%s« konnte nicht zum Lesen geöffnet werden: %s"
@@ -1964,7 +1963,7 @@ msgid "E_levation:"
 msgstr "_Höhenwinkel:"
 
 #: ../plug-ins/common/emboss.c:527 ../plug-ins/common/fractal-trace.c:813
-#: ../plug-ins/map-object/map-object-ui.c:527
+#: ../plug-ins/map-object/map-object-ui.c:554
 msgid "_Depth:"
 msgstr "_Tiefe:"
 
@@ -2037,7 +2036,7 @@ msgstr "EOF oder Fehler beim Lesen der Bildkopfzeile"
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:668
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
-#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:887
+#: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:890
 #: ../plug-ins/common/file-pnm.c:564 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:901 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
@@ -2046,7 +2045,7 @@ msgstr "EOF oder Fehler beim Lesen der Bildkopfzeile"
 #: ../plug-ins/file-bmp/bmp-load.c:218
 #: ../plug-ins/file-darktable/file-darktable.c:302
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
-#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:642
+#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:663
 #: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-sgi/sgi.c:325 ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
@@ -2126,14 +2125,14 @@ msgstr "»%s«: EOF oder Fehler beim Lesen der Bilddaten"
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1294
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:533
 #: ../plug-ins/common/file-pcx.c:660 ../plug-ins/common/file-pix.c:536
-#: ../plug-ins/common/file-png.c:1531 ../plug-ins/common/file-pnm.c:1208
+#: ../plug-ins/common/file-png.c:1537 ../plug-ins/common/file-pnm.c:1208
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1073
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
-#: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:314
+#: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Wird als »%s« exportiert"
@@ -2701,7 +2700,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2191
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2197
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Die Transparenz konnte nicht ohne Verluste gespeichert werden, sie wird "
@@ -2736,7 +2735,7 @@ msgid "Save creation time"
 msgstr "Erstellungszeit speichern"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2242
+#: ../plug-ins/common/file-mng.c:1413 ../plug-ins/common/file-png.c:2248
 msgid "PNG"
 msgstr "PNG"
 
@@ -2804,7 +2803,10 @@ msgstr "Schleife"
 msgid "Default frame delay:"
 msgstr "Standard-Einzelbildanzeigedauer"
 
-#: ../plug-ins/common/file-mng.c:1546 ../plug-ins/ui/plug-in-file-gif.ui.h:7
+#. label for 'ms' adjustment
+#: ../plug-ins/common/file-mng.c:1546
+#: ../plug-ins/file-webp/file-webp-dialog.c:308
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
 msgstr "Millisekunden"
 
@@ -2861,7 +2863,7 @@ msgstr "Nicht unterstützte oder ungültige Bildhöhe: %d"
 
 #: ../plug-ins/common/file-pcx.c:414
 msgid "Invalid number of bytes per line in PCX header"
-msgstr "Ungültige Anzahl »Bytes pro Zeile« im PCX-Dateikopf"
+msgstr "Ungültige Anzahl Byte pro Zeile im PCX-Dateikopf"
 
 #: ../plug-ins/common/file-pcx.c:421
 msgid "Resolution out of bounds in XCX header, using 72x72"
@@ -3063,17 +3065,17 @@ msgstr ""
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Fehler beim Lesen von »%s«. Ist die Datei eventuell beschädigt?"
 
-#: ../plug-ins/common/file-png.c:1025
+#: ../plug-ins/common/file-png.c:1028
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Unbekanntes Farbmodell in PNG-Datei »%s«."
 
-#: ../plug-ins/common/file-png.c:1038 ../plug-ins/file-exr/file-exr.c:251
+#: ../plug-ins/common/file-png.c:1041 ../plug-ins/file-exr/file-exr.c:251
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Neues Bild konnte nicht für »%s« angelegt werden: %s"
 
-#: ../plug-ins/common/file-png.c:1092
+#: ../plug-ins/common/file-png.c:1095
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3081,19 +3083,19 @@ msgstr ""
 "Die PNG-Datei gibt einen Versatz an der dazu führt, dass sich die Ebene "
 "außerhalb des Bildes befindet."
 
-#: ../plug-ins/common/file-png.c:1369
+#: ../plug-ins/common/file-png.c:1372
 msgid "Apply PNG Offset"
 msgstr "PNG-Versatz anwenden"
 
-#: ../plug-ins/common/file-png.c:1373
+#: ../plug-ins/common/file-png.c:1376
 msgid "Ignore PNG offset"
 msgstr "PNG-Versatz ignorieren"
 
-#: ../plug-ins/common/file-png.c:1374
+#: ../plug-ins/common/file-png.c:1377
 msgid "Apply PNG offset to layer"
 msgstr "PNG-Versatz auf die Ebene anwenden"
 
-#: ../plug-ins/common/file-png.c:1399
+#: ../plug-ins/common/file-png.c:1402
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want to "
@@ -3102,25 +3104,25 @@ msgstr ""
 "Das zu importierende PNG-Bild gibt einen Versatz von %d, %d an. Wollen Sie "
 "diesen Versatz auf die Ebene anwenden?"
 
-#: ../plug-ins/common/file-png.c:1507
+#: ../plug-ins/common/file-png.c:1510
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr ""
 "Fehler beim Erstellen der PNG-Schreibstruktur während des Exportierens von "
 "»%s«."
 
-#: ../plug-ins/common/file-png.c:1517
+#: ../plug-ins/common/file-png.c:1520
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 "Fehler beim Exportieren von »%s«. Das Bild konnte nicht exportiert werden."
 
-#: ../plug-ins/common/file-png.c:2259 ../plug-ins/file-tiff/file-tiff-save.c:841
+#: ../plug-ins/common/file-png.c:2265 ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Fehler beim Laden der Oberflächen-Datei »%s«: %s"
 
-#: ../plug-ins/common/file-png.c:2260 ../plug-ins/file-tiff/file-tiff-save.c:842
+#: ../plug-ins/common/file-png.c:2266 ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
@@ -3358,7 +3360,7 @@ msgid "_Millimeter"
 msgstr "__Millimeter"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3774 ../plug-ins/map-object/map-object-ui.c:989
+#: ../plug-ins/common/file-ps.c:3774 ../plug-ins/map-object/map-object-ui.c:1019
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -4036,7 +4038,7 @@ msgstr "Der Standardkommentar ist auf %d Zeichen beschränkt."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1463 ../plug-ins/file-webp/file-webp-save.c:203
-#: ../plug-ins/file-webp/file-webp-save.c:405
+#: ../plug-ins/file-webp/file-webp-save.c:458
 #, c-format
 msgid "Saving '%s'"
 msgstr "»%s« wird gespeichert"
@@ -5597,7 +5599,7 @@ msgstr "Beulen"
 
 #. row labels
 #: ../plug-ins/common/sphere-designer.c:2714
-#: ../plug-ins/lighting/lighting-ui.c:407
+#: ../plug-ins/lighting/lighting-ui.c:417
 msgid "Type:"
 msgstr "Typ:"
 
@@ -5638,7 +5640,7 @@ msgid "Transformations"
 msgstr "Transformationen"
 
 #: ../plug-ins/common/sphere-designer.c:2808
-#: ../plug-ins/map-object/map-object-ui.c:1097
+#: ../plug-ins/map-object/map-object-ui.c:1131
 msgid "Scale X:"
 msgstr "X-Skalierung:"
 
@@ -5928,7 +5930,7 @@ msgstr "Unscharf maskieren"
 
 #: ../plug-ins/common/unsharp-mask.c:901
 #: ../plug-ins/imagemap/imap_preferences.c:455
-#: ../plug-ins/map-object/map-object-ui.c:539
+#: ../plug-ins/map-object/map-object-ui.c:566
 msgid "_Threshold:"
 msgstr "_Schwellwert:"
 
@@ -6340,8 +6342,9 @@ msgstr ""
 "Farbrauminformationen in die Datei schreibt."
 
 #. Advanced Options
+#. Advanced options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
-#: ../plug-ins/file-webp/file-webp-dialog.c:258
+#: ../plug-ins/file-webp/file-webp-dialog.c:332
 msgid "_Advanced Options"
 msgstr "_Erweiterte Optionen"
 
@@ -6362,7 +6365,7 @@ msgid "Windows BMP image"
 msgstr "Windows-BMP-Bild"
 
 #: ../plug-ins/file-darktable/file-darktable.c:371
-#: ../plug-ins/file-ico/ico-load.c:720 ../plug-ins/file-jpeg/jpeg-load.c:501
+#: ../plug-ins/file-ico/ico-load.c:741 ../plug-ins/file-jpeg/jpeg-load.c:501
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -6616,8 +6619,18 @@ msgstr "32 bpp, 8-Bit Alpha, keine Palette"
 msgid "Compressed (PNG)"
 msgstr "Komprimiert (PNG)"
 
+#: ../plug-ins/file-ico/ico-load.c:221
+#, c-format
+msgid "Could not read '%lu' bytes"
+msgstr "»%lu« Byte konnten nicht gelesen werden"
+
+#: ../plug-ins/file-ico/ico-load.c:248
+#, c-format
+msgid "Icon #%d has zero width or height"
+msgstr "Symbol #%d hat die Höhe oder Breite Null"
+
 #. read successfully. add to image
-#: ../plug-ins/file-ico/ico-load.c:613
+#: ../plug-ins/file-ico/ico-load.c:634
 #, c-format
 msgid "Icon #%i"
 msgstr "Symbol Nr. %i"
@@ -6696,7 +6709,7 @@ msgstr "_Progressiv"
 
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
-#: ../plug-ins/file-webp/file-webp-dialog.c:279
+#: ../plug-ins/file-webp/file-webp-dialog.c:353
 msgid "Save _Exif data"
 msgstr "_Exif-Daten speichern"
 
@@ -6706,7 +6719,7 @@ msgstr "Vo_rschau speichern"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
-#: ../plug-ins/file-webp/file-webp-dialog.c:289
+#: ../plug-ins/file-webp/file-webp-dialog.c:363
 msgid "Save _XMP data"
 msgstr "_XMP-Daten speichern"
 
@@ -6823,7 +6836,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Farbtiefe wird nicht unterstützt: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:387 ../plug-ins/file-psd/psd-load.c:397
-#: ../plug-ins/file-psd/psd-load.c:608 ../plug-ins/file-psd/psd-load.c:826
+#: ../plug-ins/file-psd/psd-load.c:608 ../plug-ins/file-psd/psd-load.c:831
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Die Datei ist beschädigt."
@@ -6863,21 +6876,21 @@ msgstr "Nicht unterstützte oder ungültige Breite der Maskenebene: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nicht unterstützte oder ungültige Größe der Maskenebene: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1341 ../plug-ins/file-psd/psd-load.c:1742
+#: ../plug-ins/file-psd/psd-load.c:1346 ../plug-ins/file-psd/psd-load.c:1747
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nicht unterstützte Komprimierung: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1837
+#: ../plug-ins/file-psd/psd-load.c:1842
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2025
+#: ../plug-ins/file-psd/psd-load.c:2030
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nicht unterstützte oder ungültige Kanalgröße"
 
-#: ../plug-ins/file-psd/psd-load.c:2094
+#: ../plug-ins/file-psd/psd-load.c:2099
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Daten konnten nicht entpackt werden"
@@ -6999,13 +7012,13 @@ msgstr "%s-%d-von-%d-Seiten"
 msgid "TIFF Channel"
 msgstr "TIFF-Kanäle"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:482
+#: ../plug-ins/file-tiff/file-tiff-save.c:605
 #, c-format
 msgid "TIFF export cannot handle indexed images with an alpha channel."
 msgstr ""
 "TIFF-Export kann nicht mit indizierten Bildern mit Alphakanälen umgehen."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:495
+#: ../plug-ins/file-tiff/file-tiff-save.c:618
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7013,11 +7026,11 @@ msgstr ""
 "Nur monochrome Bilder können mit »CCITT Group 4« oder »CCITT Group 3« "
 "komprimiert werden."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:509
+#: ../plug-ins/file-tiff/file-tiff-save.c:632
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Indizierte Bilder können nicht mit »JPEG« komprimiert werden."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:608
+#: ../plug-ins/file-tiff/file-tiff-save.c:731
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7025,97 +7038,111 @@ msgstr ""
 "Das TIFF-Dateiformat unterstützt Kommentare nur in 7-Bit-ASCII-Kodierung.\n"
 "Es wurde deshalb kein Kommentar gespeichert."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:706
+#: ../plug-ins/file-tiff/file-tiff-save.c:823
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Scanline-Schreibvorgang in Zeile %d ist fehlgeschlagen"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:831
+#: ../plug-ins/file-tiff/file-tiff-save.c:948
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:857
+#: ../plug-ins/file-tiff/file-tiff-save.c:974
 msgid "Compression"
 msgstr "Kompression"
 
 # Kompression:
-#: ../plug-ins/file-tiff/file-tiff-save.c:861
+#: ../plug-ins/file-tiff/file-tiff-save.c:978
 msgid "_None"
 msgstr "Kei_ne"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:862
+#: ../plug-ins/file-tiff/file-tiff-save.c:979
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:863
+#: ../plug-ins/file-tiff/file-tiff-save.c:980
 msgid "_Pack Bits"
 msgstr "_PackBits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:864
+#: ../plug-ins/file-tiff/file-tiff-save.c:981
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:865
+#: ../plug-ins/file-tiff/file-tiff-save.c:982
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:866
+#: ../plug-ins/file-tiff/file-tiff-save.c:983
 msgid "CCITT Group _3 fax"
 msgstr "CCITT-Gruppe-_3-Fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:867
+#: ../plug-ins/file-tiff/file-tiff-save.c:984
 msgid "CCITT Group _4 fax"
 msgstr "CCITT-Gruppe-_4-Fax"
 
-#: ../plug-ins/file-webp/file-webp.c:97 ../plug-ins/file-webp/file-webp.c:118
+#: ../plug-ins/file-webp/file-webp.c:99 ../plug-ins/file-webp/file-webp.c:120
 msgid "WebP image"
 msgstr "WebP-Bild"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:120
+#: ../plug-ins/file-webp/file-webp-dialog.c:118
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the descriptive label at the top
-#: ../plug-ins/file-webp/file-webp-dialog.c:130
-msgid "Use the options below to customize the image."
-msgstr "Verwenden Sie die Einstellungen unten, um das Bild anzupassen."
+#: ../plug-ins/file-webp/file-webp-dialog.c:128
+msgid "WebP Options"
+msgstr "WebP-Optionen"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:146
+msgid "Image quality:"
+msgstr "Bildqualität:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:154
+msgid "Image quality"
+msgstr "Bildqualität"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:165
+msgid "Alpha quality:"
+msgstr "Alpha-Qualität:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:173
+msgid "Alpha channel quality"
+msgstr "Qualität des Alphakanals"
 
 #. Create the label for the selecting a preset
-#: ../plug-ins/file-webp/file-webp-dialog.c:142
+#: ../plug-ins/file-webp/file-webp-dialog.c:182
 msgid "Preset:"
 msgstr "Voreinstellung:"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:166
+#: ../plug-ins/file-webp/file-webp-dialog.c:206
 msgid "Lossless"
 msgstr "Verlustlos"
 
-#. Create the animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:186
-msgid "Use animation"
-msgstr "Animation verwenden"
+#. Create the top-level animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:241
+msgid "As animation"
+msgstr "Als Animation"
 
-#. Create the loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:199
-msgid "Loop infinitely"
-msgstr "Endlosschleife"
+#: ../plug-ins/file-webp/file-webp-dialog.c:253
+msgid "Animated WebP Options"
+msgstr "Optionen für animiertes WebP"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:215
-msgid "Image quality:"
-msgstr "Bildqualität:"
+#. loop animation checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:275
+msgid "Loop forever"
+msgstr "Schleife endlos wiederholen"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:223
-msgid "Image quality"
-msgstr "Bildqualität"
+#. label for 'delay' adjustment
+#: ../plug-ins/file-webp/file-webp-dialog.c:291
+msgid "Delay between frames where unspecified:"
+msgstr "Pause zwischen Einzelbildern (wenn nicht spezifiziert):"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:234
-msgid "Alpha quality:"
-msgstr "Alpha-Qualität:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:242
-msgid "Alpha channel quality"
-msgstr "Qualität des Alphakanals"
+#. Create the force-delay checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:313
+msgid "Use delay entered above for all frames"
+msgstr "Obige Pause für alle Einzelbilder verwenden"
 
 #: ../plug-ins/file-webp/file-webp-load.c:106
 #, c-format
@@ -7189,7 +7216,7 @@ msgid "unknown error"
 msgstr "Unbekannter Fehler"
 
 #: ../plug-ins/file-webp/file-webp-save.c:211
-#: ../plug-ins/file-webp/file-webp-save.c:413
+#: ../plug-ins/file-webp/file-webp-save.c:466
 #, c-format
 msgid "Unable to open '%s' for writing"
 msgstr "»%s« konnte nicht zum Schreiben geöffnet werden"
@@ -7249,15 +7276,15 @@ msgstr "Genauso"
 msgid "Random"
 msgstr "Zufällig"
 
-#: ../plug-ins/flame/flame.c:747 ../plug-ins/lighting/lighting-ui.c:845
+#: ../plug-ins/flame/flame.c:747 ../plug-ins/lighting/lighting-ui.c:855
 msgid "Linear"
 msgstr "Linear"
 
-#: ../plug-ins/flame/flame.c:748 ../plug-ins/lighting/lighting-ui.c:847
+#: ../plug-ins/flame/flame.c:748 ../plug-ins/lighting/lighting-ui.c:857
 msgid "Sinusoidal"
 msgstr "Sinusförmig"
 
-#: ../plug-ins/flame/flame.c:749 ../plug-ins/lighting/lighting-ui.c:848
+#: ../plug-ins/flame/flame.c:749 ../plug-ins/lighting/lighting-ui.c:858
 msgid "Spherical"
 msgstr "Sphärisch"
 
@@ -7346,7 +7373,7 @@ msgstr "Augenfish"
 msgid "Bubble"
 msgstr "Blase"
 
-#: ../plug-ins/flame/flame.c:772 ../plug-ins/map-object/map-object-ui.c:431
+#: ../plug-ins/flame/flame.c:772 ../plug-ins/map-object/map-object-ui.c:457
 msgid "Cylinder"
 msgstr "Zylinder"
 
@@ -7418,13 +7445,13 @@ msgstr "_Vergrößerung:"
 
 #: ../plug-ins/flame/flame.c:1250
 #: ../plug-ins/gradient-flare/gradient-flare.c:2724
-#: ../plug-ins/lighting/lighting-ui.c:479
+#: ../plug-ins/lighting/lighting-ui.c:489
 msgid "_X:"
 msgstr "_X:"
 
 #: ../plug-ins/flame/flame.c:1264
 #: ../plug-ins/gradient-flare/gradient-flare.c:2728
-#: ../plug-ins/lighting/lighting-ui.c:494
+#: ../plug-ins/lighting/lighting-ui.c:504
 msgid "_Y:"
 msgstr "_Y:"
 
@@ -7476,22 +7503,22 @@ msgid "Fractal Parameters"
 msgstr "Fraktalparameter"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:735
-#: ../plug-ins/map-object/map-object-ui.c:1053
+#: ../plug-ins/map-object/map-object-ui.c:1086
 msgid "Left:"
 msgstr "Links:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:744
-#: ../plug-ins/map-object/map-object-ui.c:1053
+#: ../plug-ins/map-object/map-object-ui.c:1086
 msgid "Right:"
 msgstr "Rechts:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:753
-#: ../plug-ins/map-object/map-object-ui.c:1052
+#: ../plug-ins/map-object/map-object-ui.c:1085
 msgid "Top:"
 msgstr "Oben:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
-#: ../plug-ins/map-object/map-object-ui.c:1052
+#: ../plug-ins/map-object/map-object-ui.c:1085
 msgid "Bottom:"
 msgstr "Unten:"
 
@@ -8651,7 +8678,7 @@ msgstr "Den Ordner der Voreinstellungen neu einlesen"
 #: ../plug-ins/gimpressionist/preview.c:174
 #: ../plug-ins/gimpressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:512
-#: ../plug-ins/lighting/lighting-ui.c:1082
+#: ../plug-ins/lighting/lighting-ui.c:1092
 msgid "_Update"
 msgstr "Akt_ualisieren"
 
@@ -9457,22 +9484,22 @@ msgstr "_IFS-Fraktal …"
 
 #. X
 #: ../plug-ins/ifs-compose/ifs-compose.c:512
-#: ../plug-ins/lighting/lighting-ui.c:529
-#: ../plug-ins/map-object/map-object-ui.c:629
-#: ../plug-ins/map-object/map-object-ui.c:683
-#: ../plug-ins/map-object/map-object-ui.c:951
-#: ../plug-ins/map-object/map-object-ui.c:1000
+#: ../plug-ins/lighting/lighting-ui.c:539
+#: ../plug-ins/map-object/map-object-ui.c:656
+#: ../plug-ins/map-object/map-object-ui.c:710
+#: ../plug-ins/map-object/map-object-ui.c:979
+#: ../plug-ins/map-object/map-object-ui.c:1031
 msgid "X:"
 msgstr "X:"
 
 #. Y
 #: ../plug-ins/ifs-compose/ifs-compose.c:526
-#: ../plug-ins/lighting/lighting-ui.c:543
-#: ../plug-ins/map-object/map-object-ui.c:643
-#: ../plug-ins/map-object/map-object-ui.c:696
-#: ../plug-ins/map-object/map-object-ui.c:964
-#: ../plug-ins/map-object/map-object-ui.c:1011
-#: ../plug-ins/map-object/map-object-ui.c:1109
+#: ../plug-ins/lighting/lighting-ui.c:553
+#: ../plug-ins/map-object/map-object-ui.c:670
+#: ../plug-ins/map-object/map-object-ui.c:723
+#: ../plug-ins/map-object/map-object-ui.c:993
+#: ../plug-ins/map-object/map-object-ui.c:1043
+#: ../plug-ins/map-object/map-object-ui.c:1144
 msgid "Y:"
 msgstr "Y:"
 
@@ -10374,7 +10401,7 @@ msgid "View Source"
 msgstr "Quelle zeigen"
 
 #: ../plug-ins/lighting/lighting-apply.c:105
-#: ../plug-ins/lighting/lighting-ui.c:1023
+#: ../plug-ins/lighting/lighting-ui.c:1033
 msgid "Lighting Effects"
 msgstr "Lichteffekte"
 
@@ -10387,302 +10414,302 @@ msgid "_Lighting Effects..."
 msgstr "_Lichteffekte …"
 
 #. General options
-#: ../plug-ins/lighting/lighting-ui.c:297
-#: ../plug-ins/map-object/map-object-ui.c:412
+#: ../plug-ins/lighting/lighting-ui.c:306
+#: ../plug-ins/map-object/map-object-ui.c:438
 msgid "General Options"
 msgstr "Allgemeine Einstellungen"
 
-#: ../plug-ins/lighting/lighting-ui.c:305
+#: ../plug-ins/lighting/lighting-ui.c:314
 msgid "T_ransparent background"
 msgstr "T_ransparenter Hintergrund"
 
-#: ../plug-ins/lighting/lighting-ui.c:315
+#: ../plug-ins/lighting/lighting-ui.c:324
 msgid "Make destination image transparent where bump height is zero"
 msgstr "Das Bild wird transparent, wenn die Bump-Mapping-Höhe 0 ist"
 
-#: ../plug-ins/lighting/lighting-ui.c:318
+#: ../plug-ins/lighting/lighting-ui.c:327
 msgid "Cre_ate new image"
 msgstr "Neues Bild _erzeugen"
 
-#: ../plug-ins/lighting/lighting-ui.c:328
-#: ../plug-ins/map-object/map-object-ui.c:481
+#: ../plug-ins/lighting/lighting-ui.c:337
+#: ../plug-ins/map-object/map-object-ui.c:507
 msgid "Create a new image when applying filter"
 msgstr "Beim Anwenden des Filters ein neues Bild erstellen"
 
-#: ../plug-ins/lighting/lighting-ui.c:330
+#: ../plug-ins/lighting/lighting-ui.c:339
 msgid "High _quality preview"
 msgstr "Vorschau in hoher _Qualität"
 
-#: ../plug-ins/lighting/lighting-ui.c:340
+#: ../plug-ins/lighting/lighting-ui.c:349
 msgid "Enable/disable high quality preview"
 msgstr "Vorschau in hoher Qualität an-/ausschalten"
 
-#: ../plug-ins/lighting/lighting-ui.c:347
+#: ../plug-ins/lighting/lighting-ui.c:357
 msgid "Distance:"
 msgstr "Abstand:"
 
-#: ../plug-ins/lighting/lighting-ui.c:380
-#: ../plug-ins/map-object/map-object-ui.c:573
+#: ../plug-ins/lighting/lighting-ui.c:390
+#: ../plug-ins/map-object/map-object-ui.c:600
 msgid "Light Settings"
 msgstr "Lichteigenschaften"
 
-#: ../plug-ins/lighting/lighting-ui.c:393
+#: ../plug-ins/lighting/lighting-ui.c:403
 msgid "Light 1"
 msgstr "Licht 1"
 
-#: ../plug-ins/lighting/lighting-ui.c:394
+#: ../plug-ins/lighting/lighting-ui.c:404
 msgid "Light 2"
 msgstr "Licht 2"
 
-#: ../plug-ins/lighting/lighting-ui.c:395
+#: ../plug-ins/lighting/lighting-ui.c:405
 msgid "Light 3"
 msgstr "Licht 3"
 
-#: ../plug-ins/lighting/lighting-ui.c:396
+#: ../plug-ins/lighting/lighting-ui.c:406
 msgid "Light 4"
 msgstr "Licht 4"
 
-#: ../plug-ins/lighting/lighting-ui.c:397
+#: ../plug-ins/lighting/lighting-ui.c:407
 msgid "Light 5"
 msgstr "Licht 5"
 
-#: ../plug-ins/lighting/lighting-ui.c:398
+#: ../plug-ins/lighting/lighting-ui.c:408
 msgid "Light 6"
 msgstr "Licht 6"
 
-#: ../plug-ins/lighting/lighting-ui.c:412
+#: ../plug-ins/lighting/lighting-ui.c:422
 msgid "Color:"
 msgstr "Farbe:"
 
-#: ../plug-ins/lighting/lighting-ui.c:418
+#: ../plug-ins/lighting/lighting-ui.c:428
 msgctxt "light-source"
 msgid "None"
 msgstr "Keine"
 
-#: ../plug-ins/lighting/lighting-ui.c:419
+#: ../plug-ins/lighting/lighting-ui.c:429
 msgid "Directional"
 msgstr "Gerichtet"
 
-#: ../plug-ins/lighting/lighting-ui.c:420
+#: ../plug-ins/lighting/lighting-ui.c:430
 msgid "Point"
 msgstr "Punkt"
 
-#: ../plug-ins/lighting/lighting-ui.c:434
-#: ../plug-ins/map-object/map-object-ui.c:596
+#: ../plug-ins/lighting/lighting-ui.c:444
+#: ../plug-ins/map-object/map-object-ui.c:623
 msgid "Type of light source to apply"
 msgstr "Anzuwendender Lichtquellentyp"
 
-#: ../plug-ins/lighting/lighting-ui.c:436
-#: ../plug-ins/map-object/map-object-ui.c:598
+#: ../plug-ins/lighting/lighting-ui.c:446
+#: ../plug-ins/map-object/map-object-ui.c:625
 msgid "Select lightsource color"
 msgstr "Lichtquellenfarbe auswählen"
 
-#: ../plug-ins/lighting/lighting-ui.c:450
-#: ../plug-ins/map-object/map-object-ui.c:611
+#: ../plug-ins/lighting/lighting-ui.c:460
+#: ../plug-ins/map-object/map-object-ui.c:638
 msgid "Set light source color"
 msgstr "Farbe der Lichtquelle setzen"
 
-#: ../plug-ins/lighting/lighting-ui.c:458
+#: ../plug-ins/lighting/lighting-ui.c:468
 msgid "_Intensity:"
 msgstr "_Intensität:"
 
-#: ../plug-ins/lighting/lighting-ui.c:466
+#: ../plug-ins/lighting/lighting-ui.c:476
 msgid "Light intensity"
 msgstr "Lichtintensität"
 
-#: ../plug-ins/lighting/lighting-ui.c:469
-#: ../plug-ins/map-object/map-object-ui.c:613
-#: ../plug-ins/map-object/map-object-ui.c:940
+#: ../plug-ins/lighting/lighting-ui.c:479
+#: ../plug-ins/map-object/map-object-ui.c:640
+#: ../plug-ins/map-object/map-object-ui.c:967
 #: ../plug-ins/print/print-page-layout.c:376
 msgid "Position"
 msgstr "Position"
 
-#: ../plug-ins/lighting/lighting-ui.c:487
-#: ../plug-ins/map-object/map-object-ui.c:637
+#: ../plug-ins/lighting/lighting-ui.c:497
+#: ../plug-ins/map-object/map-object-ui.c:664
 msgid "Light source X position in XYZ space"
 msgstr "X-Koordinate der Lichtquelle im XYZ-Raum"
 
-#: ../plug-ins/lighting/lighting-ui.c:502
-#: ../plug-ins/map-object/map-object-ui.c:651
+#: ../plug-ins/lighting/lighting-ui.c:512
+#: ../plug-ins/map-object/map-object-ui.c:678
 msgid "Light source Y position in XYZ space"
 msgstr "Y-Koordinate der Lichtquelle im XYZ-Raum"
 
-#: ../plug-ins/lighting/lighting-ui.c:509
+#: ../plug-ins/lighting/lighting-ui.c:519
 msgid "_Z:"
 msgstr "_Z:"
 
-#: ../plug-ins/lighting/lighting-ui.c:517
-#: ../plug-ins/map-object/map-object-ui.c:665
+#: ../plug-ins/lighting/lighting-ui.c:527
+#: ../plug-ins/map-object/map-object-ui.c:692
 msgid "Light source Z position in XYZ space"
 msgstr "Z-Koordinate der Lichtquelle im XYZ-Raum"
 
-#: ../plug-ins/lighting/lighting-ui.c:520
+#: ../plug-ins/lighting/lighting-ui.c:530
 msgid "Direction"
 msgstr "Richtung"
 
-#: ../plug-ins/lighting/lighting-ui.c:537
-#: ../plug-ins/map-object/map-object-ui.c:691
+#: ../plug-ins/lighting/lighting-ui.c:547
+#: ../plug-ins/map-object/map-object-ui.c:718
 msgid "Light source X direction in XYZ space"
 msgstr "X-Komponente des Richtungsvektors der Lichtquelle im XYZ-Raum"
 
-#: ../plug-ins/lighting/lighting-ui.c:551
-#: ../plug-ins/map-object/map-object-ui.c:704
+#: ../plug-ins/lighting/lighting-ui.c:561
+#: ../plug-ins/map-object/map-object-ui.c:731
 msgid "Light source Y direction in XYZ space"
 msgstr "Y-Komponente des Richtungsvektors der Lichtquelle im XYZ-Raum"
 
-#: ../plug-ins/lighting/lighting-ui.c:557
-#: ../plug-ins/map-object/map-object-ui.c:657
-#: ../plug-ins/map-object/map-object-ui.c:709
-#: ../plug-ins/map-object/map-object-ui.c:977
-#: ../plug-ins/map-object/map-object-ui.c:1022
-#: ../plug-ins/map-object/map-object-ui.c:1121
+#: ../plug-ins/lighting/lighting-ui.c:567
+#: ../plug-ins/map-object/map-object-ui.c:684
+#: ../plug-ins/map-object/map-object-ui.c:736
+#: ../plug-ins/map-object/map-object-ui.c:1007
+#: ../plug-ins/map-object/map-object-ui.c:1055
+#: ../plug-ins/map-object/map-object-ui.c:1157
 msgid "Z:"
 msgstr "Z:"
 
-#: ../plug-ins/lighting/lighting-ui.c:565
-#: ../plug-ins/map-object/map-object-ui.c:717
+#: ../plug-ins/lighting/lighting-ui.c:575
+#: ../plug-ins/map-object/map-object-ui.c:744
 msgid "Light source Z direction in XYZ space"
 msgstr "Z-Komponente des Richtungsvektors der Lichtquelle im XYZ-Raum"
 
-#: ../plug-ins/lighting/lighting-ui.c:568
+#: ../plug-ins/lighting/lighting-ui.c:578
 msgid "I_solate"
 msgstr "I_solieren"
 
-#: ../plug-ins/lighting/lighting-ui.c:577
+#: ../plug-ins/lighting/lighting-ui.c:587
 msgid "Lighting preset:"
 msgstr "Beleuchtungsvorlagen:"
 
-#: ../plug-ins/lighting/lighting-ui.c:623
+#: ../plug-ins/lighting/lighting-ui.c:633
 msgid "Material Properties"
 msgstr "Materialeinstellungen"
 
-#: ../plug-ins/lighting/lighting-ui.c:641
+#: ../plug-ins/lighting/lighting-ui.c:651
 msgid "_Glowing:"
 msgstr "_Glühen:"
 
-#: ../plug-ins/lighting/lighting-ui.c:660
-#: ../plug-ins/map-object/map-object-ui.c:778
+#: ../plug-ins/lighting/lighting-ui.c:670
+#: ../plug-ins/map-object/map-object-ui.c:805
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Anteil der ursprünglichen Farbe, wenn kein direktes Licht einfällt"
 
-#: ../plug-ins/lighting/lighting-ui.c:674
+#: ../plug-ins/lighting/lighting-ui.c:684
 msgid "_Bright:"
 msgstr "_Hell:"
 
-#: ../plug-ins/lighting/lighting-ui.c:693
-#: ../plug-ins/map-object/map-object-ui.c:807
+#: ../plug-ins/lighting/lighting-ui.c:703
+#: ../plug-ins/map-object/map-object-ui.c:834
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
 "Intensität der ursprünglichen Farbe, wenn das Objekt von einer Lichtquelle "
 "angeleuchtet wird"
 
-#: ../plug-ins/lighting/lighting-ui.c:707
+#: ../plug-ins/lighting/lighting-ui.c:717
 msgid "_Shiny:"
 msgstr "_Glanz:"
 
-#: ../plug-ins/lighting/lighting-ui.c:726
-#: ../plug-ins/map-object/map-object-ui.c:879
+#: ../plug-ins/lighting/lighting-ui.c:736
+#: ../plug-ins/map-object/map-object-ui.c:906
 msgid "Controls how intense the highlights will be"
 msgstr "Dieser Wert legt fest, wie intensiv die Glanzpunkte sind"
 
-#: ../plug-ins/lighting/lighting-ui.c:739
+#: ../plug-ins/lighting/lighting-ui.c:749
 msgid "_Polished:"
 msgstr "_Poliert:"
 
-#: ../plug-ins/lighting/lighting-ui.c:758
-#: ../plug-ins/map-object/map-object-ui.c:908
+#: ../plug-ins/lighting/lighting-ui.c:768
+#: ../plug-ins/map-object/map-object-ui.c:935
 msgid "Higher values makes the highlights more focused"
 msgstr "Je höher dieser Wert ist, umso fokusierter werden die Glanzlichter"
 
 #. Metallic
-#: ../plug-ins/lighting/lighting-ui.c:768
+#: ../plug-ins/lighting/lighting-ui.c:778
 msgid "_Metallic"
 msgstr "_Metallisch"
 
-#: ../plug-ins/lighting/lighting-ui.c:805
+#: ../plug-ins/lighting/lighting-ui.c:815
 msgid "E_nable bump mapping"
 msgstr "Bump-Mapping _aktivieren"
 
-#: ../plug-ins/lighting/lighting-ui.c:819
+#: ../plug-ins/lighting/lighting-ui.c:829
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "Bump-Mapping (Tiefeneindruck) an-/ausschalten"
 
-#: ../plug-ins/lighting/lighting-ui.c:842
+#: ../plug-ins/lighting/lighting-ui.c:852
 msgid "Bumpm_ap image:"
 msgstr "Bump-M_ap-Bild:"
 
-#: ../plug-ins/lighting/lighting-ui.c:846
+#: ../plug-ins/lighting/lighting-ui.c:856
 msgid "Logarithmic"
 msgstr "Logarithmisch"
 
-#: ../plug-ins/lighting/lighting-ui.c:858
+#: ../plug-ins/lighting/lighting-ui.c:868
 msgid "Cu_rve:"
 msgstr "Ku_rve:"
 
-#: ../plug-ins/lighting/lighting-ui.c:863
+#: ../plug-ins/lighting/lighting-ui.c:873
 msgid "Ma_ximum height:"
 msgstr "Ma_ximale Höhe:"
 
-#: ../plug-ins/lighting/lighting-ui.c:873
+#: ../plug-ins/lighting/lighting-ui.c:883
 msgid "Maximum height for bumps"
 msgstr "Maximale Höhe der Bumps:"
 
-#: ../plug-ins/lighting/lighting-ui.c:897
+#: ../plug-ins/lighting/lighting-ui.c:907
 msgid "E_nable environment mapping"
 msgstr "Environment-Mapping _aktivieren"
 
-#: ../plug-ins/lighting/lighting-ui.c:911
+#: ../plug-ins/lighting/lighting-ui.c:921
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Environment-Mapping (Reflexionen) an-/ausschalten"
 
-#: ../plug-ins/lighting/lighting-ui.c:929
+#: ../plug-ins/lighting/lighting-ui.c:939
 msgid "En_vironment image:"
 msgstr "_Environment-Bild:"
 
-#: ../plug-ins/lighting/lighting-ui.c:932
+#: ../plug-ins/lighting/lighting-ui.c:942
 msgid "Environment image to use"
 msgstr "Zu verwendendes Environment-Bild"
 
-#: ../plug-ins/lighting/lighting-ui.c:954
+#: ../plug-ins/lighting/lighting-ui.c:964
 msgid "Op_tions"
 msgstr "_Einstellungen"
 
-#: ../plug-ins/lighting/lighting-ui.c:958
-#: ../plug-ins/map-object/map-object-ui.c:1245
+#: ../plug-ins/lighting/lighting-ui.c:968
+#: ../plug-ins/map-object/map-object-ui.c:1283
 msgid "_Light"
 msgstr "_Licht"
 
-#: ../plug-ins/lighting/lighting-ui.c:962
-#: ../plug-ins/map-object/map-object-ui.c:1249
+#: ../plug-ins/lighting/lighting-ui.c:972
+#: ../plug-ins/map-object/map-object-ui.c:1287
 msgid "_Material"
 msgstr "_Material"
 
-#: ../plug-ins/lighting/lighting-ui.c:966
+#: ../plug-ins/lighting/lighting-ui.c:976
 msgid "_Bump Map"
 msgstr "_Bump-Map"
 
-#: ../plug-ins/lighting/lighting-ui.c:970
+#: ../plug-ins/lighting/lighting-ui.c:980
 msgid "_Environment Map"
 msgstr "_Environment-Map"
 
-#: ../plug-ins/lighting/lighting-ui.c:1089
-#: ../plug-ins/map-object/map-object-ui.c:1357
+#: ../plug-ins/lighting/lighting-ui.c:1099
+#: ../plug-ins/map-object/map-object-ui.c:1395
 msgid "Recompute preview image"
 msgstr "Die Vorschau neu berechnen"
 
-#: ../plug-ins/lighting/lighting-ui.c:1091
+#: ../plug-ins/lighting/lighting-ui.c:1101
 msgid "I_nteractive"
 msgstr "I_nteraktiv"
 
-#: ../plug-ins/lighting/lighting-ui.c:1105
+#: ../plug-ins/lighting/lighting-ui.c:1115
 msgid "Enable/disable real time preview of changes"
 msgstr "Echtzeitvorschau an-/ausschalten"
 
-#: ../plug-ins/lighting/lighting-ui.c:1148
+#: ../plug-ins/lighting/lighting-ui.c:1158
 msgid "Save Lighting Preset"
 msgstr "Beleuchtungsvorlage speichern"
 
-#: ../plug-ins/lighting/lighting-ui.c:1292
+#: ../plug-ins/lighting/lighting-ui.c:1302
 msgid "Load Lighting Preset"
 msgstr "Beleuchtungsvorlage laden"
 
@@ -10715,240 +10742,240 @@ msgid "Map _Object..."
 msgstr "Auf _Objekt abbilden …"
 
 #: ../plug-ins/map-object/map-object-ui.c:207
-#: ../plug-ins/map-object/map-object-ui.c:1260
+#: ../plug-ins/map-object/map-object-ui.c:1298
 msgid "_Box"
 msgstr "_Quader"
 
 #: ../plug-ins/map-object/map-object-ui.c:224
-#: ../plug-ins/map-object/map-object-ui.c:1267
+#: ../plug-ins/map-object/map-object-ui.c:1305
 msgid "C_ylinder"
 msgstr "Z_ylinder"
 
-#: ../plug-ins/map-object/map-object-ui.c:424
+#: ../plug-ins/map-object/map-object-ui.c:450
 msgid "Map to:"
 msgstr "Abbilden auf:"
 
-#: ../plug-ins/map-object/map-object-ui.c:428
+#: ../plug-ins/map-object/map-object-ui.c:454
 msgid "Plane"
 msgstr "Ebene"
 
-#: ../plug-ins/map-object/map-object-ui.c:429
+#: ../plug-ins/map-object/map-object-ui.c:455
 msgid "Sphere"
 msgstr "Kugel"
 
-#: ../plug-ins/map-object/map-object-ui.c:430
+#: ../plug-ins/map-object/map-object-ui.c:456
 msgid "Box"
 msgstr "Quader"
 
-#: ../plug-ins/map-object/map-object-ui.c:441
+#: ../plug-ins/map-object/map-object-ui.c:467
 msgid "Type of object to map to"
 msgstr "Art des Objektes, auf das abgebildet wird"
 
-#: ../plug-ins/map-object/map-object-ui.c:443
+#: ../plug-ins/map-object/map-object-ui.c:469
 msgid "Transparent background"
 msgstr "Transparenter Hintergrund"
 
-#: ../plug-ins/map-object/map-object-ui.c:454
+#: ../plug-ins/map-object/map-object-ui.c:480
 msgid "Make image transparent outside object"
 msgstr "Bild außerhalb des Objektes transparent machen"
 
-#: ../plug-ins/map-object/map-object-ui.c:456
+#: ../plug-ins/map-object/map-object-ui.c:482
 msgid "Tile source image"
 msgstr "Quellbild wiederholen"
 
-#: ../plug-ins/map-object/map-object-ui.c:467
+#: ../plug-ins/map-object/map-object-ui.c:493
 msgid "Tile source image: useful for infinite planes"
 msgstr "Quellbild wiederholen: Sinnvoll bei unendlichen Flächen"
 
-#: ../plug-ins/map-object/map-object-ui.c:470
+#: ../plug-ins/map-object/map-object-ui.c:496
 msgid "Create new image"
 msgstr "Neues Bild erzeugen"
 
-#: ../plug-ins/map-object/map-object-ui.c:483
+#: ../plug-ins/map-object/map-object-ui.c:509
 msgid "Create new layer"
 msgstr "Neue Ebene erzeugen"
 
-#: ../plug-ins/map-object/map-object-ui.c:494
+#: ../plug-ins/map-object/map-object-ui.c:520
 msgid "Create a new layer when applying filter"
 msgstr "Beim Anwenden des Filters ein neues Bild erstellen"
 
-#: ../plug-ins/map-object/map-object-ui.c:502
+#: ../plug-ins/map-object/map-object-ui.c:528
 msgid "Enable _antialiasing"
 msgstr "_Kantenglättung verwenden"
 
-#: ../plug-ins/map-object/map-object-ui.c:513
+#: ../plug-ins/map-object/map-object-ui.c:539
 msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr "Kantenglättung aktivieren/deaktivieren"
 
-#: ../plug-ins/map-object/map-object-ui.c:530
+#: ../plug-ins/map-object/map-object-ui.c:557
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr ""
 "Qualität der Kantenglättung. Je höher, desto besser, aber auch langsamer"
 
-#: ../plug-ins/map-object/map-object-ui.c:547
+#: ../plug-ins/map-object/map-object-ui.c:574
 msgid "Stop when pixel differences are smaller than this value"
 msgstr ""
 "Sobald der Unterschied zwischen Pixeln kleiner als dieser Wert ist, beenden"
 
-#: ../plug-ins/map-object/map-object-ui.c:582
+#: ../plug-ins/map-object/map-object-ui.c:609
 msgid "Point light"
 msgstr "Punktlichtquelle"
 
-#: ../plug-ins/map-object/map-object-ui.c:583
+#: ../plug-ins/map-object/map-object-ui.c:610
 msgid "Directional light"
 msgstr "Direktionales Licht"
 
-#: ../plug-ins/map-object/map-object-ui.c:584
+#: ../plug-ins/map-object/map-object-ui.c:611
 msgid "No light"
 msgstr "Keine Lichtquelle"
 
-#: ../plug-ins/map-object/map-object-ui.c:589
+#: ../plug-ins/map-object/map-object-ui.c:616
 msgid "Lightsource type:"
 msgstr "Lichtquellentyp:"
 
-#: ../plug-ins/map-object/map-object-ui.c:603
+#: ../plug-ins/map-object/map-object-ui.c:630
 msgid "Lightsource color:"
 msgstr "Lichtquellenfarbe:"
 
-#: ../plug-ins/map-object/map-object-ui.c:668
+#: ../plug-ins/map-object/map-object-ui.c:695
 msgid "Direction Vector"
 msgstr "Richtungsvektor"
 
-#: ../plug-ins/map-object/map-object-ui.c:744
+#: ../plug-ins/map-object/map-object-ui.c:771
 msgid "Intensity Levels"
 msgstr "Intensitätsstufen"
 
-#: ../plug-ins/map-object/map-object-ui.c:763
+#: ../plug-ins/map-object/map-object-ui.c:790
 msgid "Ambient:"
 msgstr "Umgebung:"
 
-#: ../plug-ins/map-object/map-object-ui.c:792
-#: ../plug-ins/map-object/map-object-ui.c:835
+#: ../plug-ins/map-object/map-object-ui.c:819
+#: ../plug-ins/map-object/map-object-ui.c:862
 msgid "Diffuse:"
 msgstr "Diffuse:"
 
-#: ../plug-ins/map-object/map-object-ui.c:816
+#: ../plug-ins/map-object/map-object-ui.c:843
 msgid "Reflectivity"
 msgstr "Reflexivität"
 
-#: ../plug-ins/map-object/map-object-ui.c:850
+#: ../plug-ins/map-object/map-object-ui.c:877
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr ""
 "Je höher der Wert, umso mehr Licht reflektiert das Objekt (es erscheint "
 "heller)"
 
-#: ../plug-ins/map-object/map-object-ui.c:864
+#: ../plug-ins/map-object/map-object-ui.c:891
 msgid "Specular:"
 msgstr "Spiegel:"
 
-#: ../plug-ins/map-object/map-object-ui.c:893
+#: ../plug-ins/map-object/map-object-ui.c:920
 msgid "Highlight:"
 msgstr "Glanzlicht:"
 
-#: ../plug-ins/map-object/map-object-ui.c:954
+#: ../plug-ins/map-object/map-object-ui.c:982
 msgid "Object X position in XYZ space"
 msgstr "X-Koordinate des Objektes im XYZ-Raum"
 
-#: ../plug-ins/map-object/map-object-ui.c:967
+#: ../plug-ins/map-object/map-object-ui.c:996
 msgid "Object Y position in XYZ space"
 msgstr "Y-Koordinate des Objektes im XYZ-Raum"
 
-#: ../plug-ins/map-object/map-object-ui.c:980
+#: ../plug-ins/map-object/map-object-ui.c:1010
 msgid "Object Z position in XYZ space"
 msgstr "Z-Koordinate des Objektes im XYZ-Raum"
 
-#: ../plug-ins/map-object/map-object-ui.c:1003
+#: ../plug-ins/map-object/map-object-ui.c:1034
 msgid "Rotation angle about X axis"
 msgstr "Rotationswinkel um die X-Achse"
 
-#: ../plug-ins/map-object/map-object-ui.c:1014
+#: ../plug-ins/map-object/map-object-ui.c:1046
 msgid "Rotation angle about Y axis"
 msgstr "Rotationswinkel um die Y-Achse"
 
-#: ../plug-ins/map-object/map-object-ui.c:1025
+#: ../plug-ins/map-object/map-object-ui.c:1058
 msgid "Rotation angle about Z axis"
 msgstr "Rotationswinkel um die Z-Achse"
 
-#: ../plug-ins/map-object/map-object-ui.c:1051
+#: ../plug-ins/map-object/map-object-ui.c:1084
 msgid "Front:"
 msgstr "Vorderseite:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1051
+#: ../plug-ins/map-object/map-object-ui.c:1084
 msgid "Back:"
 msgstr "Rückseite:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1059
+#: ../plug-ins/map-object/map-object-ui.c:1092
 msgid "Map Images to Box Faces"
 msgstr "Bilder auf Quaderseiten abbilden"
 
-#: ../plug-ins/map-object/map-object-ui.c:1100
+#: ../plug-ins/map-object/map-object-ui.c:1134
 msgid "X scale (size)"
 msgstr "X-Skalierung (Größe)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1112
+#: ../plug-ins/map-object/map-object-ui.c:1147
 msgid "Y scale (size)"
 msgstr "Y-Skalierung (Größe)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1124
+#: ../plug-ins/map-object/map-object-ui.c:1160
 msgid "Z scale (size)"
 msgstr "Z-Skalierung (Größe)"
 
-#: ../plug-ins/map-object/map-object-ui.c:1147
+#: ../plug-ins/map-object/map-object-ui.c:1183
 #: ../plug-ins/print/print-page-layout.c:441
 msgid "_Top:"
 msgstr "_Oben:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1147
+#: ../plug-ins/map-object/map-object-ui.c:1183
 #: ../plug-ins/print/print-page-layout.c:462
 msgid "_Bottom:"
 msgstr "_Unten:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1152
+#: ../plug-ins/map-object/map-object-ui.c:1188
 msgid "Images for the Cap Faces"
 msgstr "Bilder für die Grundflächen"
 
-#: ../plug-ins/map-object/map-object-ui.c:1181
+#: ../plug-ins/map-object/map-object-ui.c:1217
 #: ../plug-ins/print/print-page-layout.c:247
 msgid "Size"
 msgstr "Größe"
 
-#: ../plug-ins/map-object/map-object-ui.c:1192
+#: ../plug-ins/map-object/map-object-ui.c:1229
 msgid "R_adius:"
 msgstr "R_adius:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1196
+#: ../plug-ins/map-object/map-object-ui.c:1233
 msgid "Cylinder radius"
 msgstr "Zylinderradius"
 
-#: ../plug-ins/map-object/map-object-ui.c:1206
+#: ../plug-ins/map-object/map-object-ui.c:1244
 msgid "L_ength:"
 msgstr "Lä_nge:"
 
-#: ../plug-ins/map-object/map-object-ui.c:1210
+#: ../plug-ins/map-object/map-object-ui.c:1248
 msgid "Cylinder length"
 msgstr "Zylinderlänge"
 
-#: ../plug-ins/map-object/map-object-ui.c:1241
+#: ../plug-ins/map-object/map-object-ui.c:1279
 msgid "O_ptions"
 msgstr "_Einstellungen"
 
-#: ../plug-ins/map-object/map-object-ui.c:1253
+#: ../plug-ins/map-object/map-object-ui.c:1291
 msgid "O_rientation"
 msgstr "Aus_richtung"
 
-#: ../plug-ins/map-object/map-object-ui.c:1291
+#: ../plug-ins/map-object/map-object-ui.c:1329
 msgid "Map to Object"
 msgstr "Auf Objekt abbilden"
 
-#: ../plug-ins/map-object/map-object-ui.c:1348
+#: ../plug-ins/map-object/map-object-ui.c:1386
 msgid "_Preview!"
 msgstr "_Vorschau"
 
-#: ../plug-ins/map-object/map-object-ui.c:1375
+#: ../plug-ins/map-object/map-object-ui.c:1413
 msgid "Show _wireframe"
 msgstr "_Drahtgitter anzeigen"
 
-#: ../plug-ins/map-object/map-object-ui.c:1384
+#: ../plug-ins/map-object/map-object-ui.c:1422
 msgid "Update preview _live"
 msgstr "Vorschau _stets aktualisieren"
 
@@ -11392,6 +11419,12 @@ msgid ""
 "Raphson iteration to improve it.  It may be that it would be better to detect "
 "the cases where we didn't find any corners."
 msgstr ""
+"Größe des Fehlers, ab der die Reparametrisierung nicht mehr sinnvoll ist. "
+"Dies geschieht beispielsweise dann, wenn versucht wird, die äußere Umrandung "
+"einer »0« in einen einzelnen Spline einzupassen. Die anfängliche Einpassung "
+"reicht nicht aus, damit die Newton-Raphson-Iteration eine Verbesserung "
+"bewirkt. Es könnte besser sein, die Fälle zu bestimmen, in denen keine Ecken "
+"gefunden werden."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:330
 msgid "Subdivide Search:"
@@ -11453,6 +11486,15 @@ msgstr "_Scanner/Kamera …"
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Daten werden vom Scanner/von Kamera übertragen"
+
+#~ msgid "Use the options below to customize the image."
+#~ msgstr "Verwenden Sie die Einstellungen unten, um das Bild anzupassen."
+
+#~ msgid "Use animation"
+#~ msgstr "Animation verwenden"
+
+#~ msgid "Loop infinitely"
+#~ msgstr "Endlosschleife"
 
 #~ msgid "NEF image"
 #~ msgstr "NEF-Bild"
