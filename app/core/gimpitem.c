@@ -2275,7 +2275,11 @@ gimp_item_mask_bounds (GimpItem *item,
   image     = gimp_item_get_image (item);
   selection = gimp_image_get_mask (image);
 
-  if (GIMP_ITEM (selection) != item &&
+  /* check for is_empty() before intersecting so we ignore the
+   * selection if it is suspended (like when stroking)
+   */
+  if (GIMP_ITEM (selection) != item       &&
+      ! gimp_channel_is_empty (selection) &&
       gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &width, &height))
     {
       gint off_x, off_y;
@@ -2345,7 +2349,11 @@ gimp_item_mask_intersect (GimpItem *item,
   image     = gimp_item_get_image (item);
   selection = gimp_image_get_mask (image);
 
-  if (GIMP_ITEM (selection) != item &&
+  /* check for is_empty() before intersecting so we ignore the
+   * selection if it is suspended (like when stroking)
+   */
+  if (GIMP_ITEM (selection) != item       &&
+      ! gimp_channel_is_empty (selection) &&
       gimp_item_bounds (GIMP_ITEM (selection),
                         &tmp_x, &tmp_y, &tmp_width, &tmp_height))
     {

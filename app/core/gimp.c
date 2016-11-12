@@ -29,6 +29,8 @@
 
 #include "config/gimprc.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "pdb/gimppdb.h"
 #include "pdb/gimp-pdb-compat.h"
 #include "pdb/internal-procs.h"
@@ -588,7 +590,7 @@ gimp_real_initialize (Gimp               *gimp,
 
   gimp_fonts_set_config (gimp);
 
-  /* Set the last values used to default values. */
+  /*  set the last values used to default values  */
   gimp->image_new_last_template =
     gimp_config_duplicate (GIMP_CONFIG (gimp->config->default_image));
 
@@ -614,6 +616,10 @@ gimp_real_restore (Gimp               *gimp,
 
   gimp_plug_in_manager_restore (gimp->plug_in_manager,
                                 gimp_get_user_context (gimp), status_callback);
+
+  /*  initialize babl fishes  */
+  status_callback (_("Initialization"), "Babl Fishes", 0.0);
+  gimp_babl_init_fishes (status_callback);
 
   gimp->restored = TRUE;
 }

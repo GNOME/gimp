@@ -34,6 +34,8 @@ typedef struct
   gboolean  exif;
   gboolean  iptc;
   gboolean  xmp;
+  gint      delay;
+  gboolean  force_delay;
 } WebPSaveParams;
 
 

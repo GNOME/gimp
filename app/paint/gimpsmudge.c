@@ -197,13 +197,6 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
       GeglBuffer *accum_buffer;
 
       coords = gimp_symmetry_get_coords (sym, i);
-      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                       paint_options, coords,
-                                                       &paint_buffer_x,
-                                                       &paint_buffer_y,
-                                                       NULL, NULL);
-      if (! paint_buffer)
-        return FALSE;
 
       gimp_smudge_accumulator_size (paint_options, coords, &accum_size);
 
@@ -218,7 +211,15 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
       /*  adjust the x and y coordinates to the upper left corner of the
        *  accumulator
        */
-      gimp_smudge_accumulator_coords (paint_core, coords, i, &x, &y);
+      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+                                                       paint_options, coords,
+                                                       &paint_buffer_x,
+                                                       &paint_buffer_y,
+                                                       NULL, NULL);
+      if (! paint_buffer)
+        continue;
+
+      gimp_smudge_accumulator_coords (paint_core, coords, 0, &x, &y);
 
       /*  If clipped, prefill the smudge buffer with the color at the
        *  brush position.
@@ -257,6 +258,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                         paint_buffer_y - y,
                                         0, 0));
     }
+  smudge->accum_buffers = g_list_reverse (smudge->accum_buffers);
 
   return TRUE;
 }

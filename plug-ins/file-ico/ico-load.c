@@ -124,15 +124,17 @@ static guint32
 ico_read_init (FILE *fp)
 {
   IcoFileHeader header;
+
   /* read and check file header */
-  if (!ico_read_int16 (fp, &header.reserved, 1)
-      || !ico_read_int16 (fp, &header.resource_type, 1)
-      || !ico_read_int16 (fp, &header.icon_count, 1)
-      || header.reserved != 0
-      || header.resource_type != 1)
+  if (! ico_read_int16 (fp, &header.reserved, 1)      ||
+      ! ico_read_int16 (fp, &header.resource_type, 1) ||
+      ! ico_read_int16 (fp, &header.icon_count, 1)    ||
+      header.reserved != 0 ||
+      header.resource_type != 1)
     {
       return 0;
     }
+
   return header.icon_count;
 }
 
@@ -148,22 +150,25 @@ ico_read_size (FILE        *fp,
   gint32      color_type;
   guint32     magic;
 
-  if ( fseek (fp, info->offset, SEEK_SET) < 0 )
+  if (fseek (fp, info->offset, SEEK_SET) < 0)
     return FALSE;
 
   ico_read_int32 (fp, &magic, 1);
+
   if (magic == ICO_PNG_MAGIC)
     {
       png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL,
                                         NULL);
-      if (! png_ptr )
+      if (! png_ptr)
         return FALSE;
+
       info_ptr = png_create_info_struct (png_ptr);
-      if (! info_ptr )
+      if (! info_ptr)
         {
           png_destroy_read_struct (&png_ptr, NULL, NULL);
           return FALSE;
         }
+
       if (setjmp (png_jmpbuf (png_ptr)))
         {
           png_destroy_read_struct (&png_ptr, NULL, NULL);
@@ -182,8 +187,8 @@ ico_read_size (FILE        *fp,
     }
   else if (magic == 40)
     {
-      if (ico_read_int32 (fp, &info->width, 1)
-          && ico_read_int32 (fp, &info->height, 1))
+      if (ico_read_int32 (fp, &info->width, 1) &&
+          ico_read_int32 (fp, &info->height, 1))
         {
           info->height /= 2;
           D(("ico_read_size: ICO: %ix%i\n", info->width, info->height));
@@ -200,8 +205,9 @@ ico_read_size (FILE        *fp,
 }
 
 static IcoLoadInfo*
-ico_read_info (FILE *fp,
-               gint  icon_count)
+ico_read_info (FILE    *fp,
+               gint     icon_count,
+               GError **error)
 {
   gint            i;
   IcoFileEntry   *entries;
@@ -209,8 +215,11 @@ ico_read_info (FILE *fp,
 
   /* read icon entries */
   entries = g_new (IcoFileEntry, icon_count);
-  if ( fread (entries, sizeof(IcoFileEntry), icon_count, fp) <= 0 )
+  if (fread (entries, sizeof (IcoFileEntry), icon_count, fp) <= 0)
     {
+      g_set_error (error, G_FILE_ERROR, 0,
+                   _("Could not read '%lu' bytes"),
+                   sizeof (IcoFileEntry));
       g_free (entries);
       return NULL;
     }
@@ -218,23 +227,33 @@ ico_read_info (FILE *fp,
   info = g_new (IcoLoadInfo, icon_count);
   for (i = 0; i < icon_count; i++)
     {
-      info[i].width = entries[i].width;
+      info[i].width  = entries[i].width;
       info[i].height = entries[i].height;
-      info[i].bpp = GUINT16_FROM_LE (entries[i].bpp);
-      info[i].size = GUINT32_FROM_LE (entries[i].size);
+      info[i].bpp    = GUINT16_FROM_LE (entries[i].bpp);
+      info[i].size   = GUINT32_FROM_LE (entries[i].size);
       info[i].offset = GUINT32_FROM_LE (entries[i].offset);
 
       if (info[i].width == 0 || info[i].height == 0)
         {
-          ico_read_size (fp, info+i);
+          ico_read_size (fp, info + i);
         }
 
       D(("ico_read_info: %ix%i (%i bits, size: %i, offset: %i)\n",
          info[i].width, info[i].height, info[i].bpp,
          info[i].size, info[i].offset));
+
+      if (info[i].width == 0 || info[i].height == 0)
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       _("Icon #%d has zero width or height"), i);
+          g_free (info);
+          g_free (entries);
+          return NULL;
+        }
     }
 
   g_free (entries);
+
   return info;
 }
 
@@ -256,10 +275,10 @@ ico_read_png (FILE    *fp,
   gint          i;
 
   png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-  if (! png_ptr )
+  if (! png_ptr)
     return FALSE;
   info = png_create_info_struct (png_ptr);
-  if (! info )
+  if (! info)
     {
       png_destroy_read_struct (&png_ptr, NULL, NULL);
       return FALSE;
@@ -287,14 +306,14 @@ ico_read_png (FILE    *fp,
     {
     case PNG_COLOR_TYPE_GRAY:
       png_set_expand_gray_1_2_4_to_8 (png_ptr);
-      if ( bit_depth == 16 )
+      if (bit_depth == 16)
         png_set_strip_16 (png_ptr);
       png_set_gray_to_rgb (png_ptr);
       png_set_add_alpha (png_ptr, 0xff, PNG_FILLER_AFTER);
       break;
     case PNG_COLOR_TYPE_GRAY_ALPHA:
       png_set_expand_gray_1_2_4_to_8 (png_ptr);
-      if ( bit_depth == 16 )
+      if (bit_depth == 16)
         png_set_strip_16 (png_ptr);
       png_set_gray_to_rgb (png_ptr);
       break;
@@ -427,16 +446,18 @@ ico_read_icon (FILE    *fp,
      data.planes, data.image_size, data.bpp,
      data.used_clrs, data.important_clrs));
 
-  if (data.planes != 1
-      || data.compression != 0)
+  if (data.planes      != 1 ||
+      data.compression != 0)
     {
       D(("skipping image: invalid header\n"));
       return FALSE;
     }
 
-  if (data.bpp != 1 && data.bpp != 4
-      && data.bpp != 8 && data.bpp != 24
-      && data.bpp != 32)
+  if (data.bpp != 1  &&
+      data.bpp != 4  &&
+      data.bpp != 8  &&
+      data.bpp != 24 &&
+      data.bpp != 32)
     {
       D(("skipping image: invalid depth: %i\n", data.bpp));
       return FALSE;
@@ -590,8 +611,8 @@ ico_load_layer (FILE        *fp,
   GeglBuffer *buffer;
   gchar       name[ICO_MAXBUF];
 
-  if ( fseek (fp, info->offset, SEEK_SET) < 0
-       || !ico_read_int32 (fp, &first_bytes, 1) )
+  if (fseek (fp, info->offset, SEEK_SET) < 0 ||
+      ! ico_read_int32 (fp, &first_bytes, 1))
     return -1;
 
   if (first_bytes == ICO_PNG_MAGIC)
@@ -643,7 +664,7 @@ ico_load_image (const gchar  *filename,
                              gimp_filename_to_utf8 (filename));
 
   fp = g_fopen (filename, "rb");
-  if (! fp )
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
@@ -658,8 +679,8 @@ ico_load_image (const gchar  *filename,
       return -1;
     }
 
-  info = ico_read_info (fp, icon_count);
-  if (!info)
+  info = ico_read_info (fp, icon_count, error);
+  if (! info)
     {
       fclose (fp);
       return -1;
@@ -670,12 +691,12 @@ ico_load_image (const gchar  *filename,
   max_height = 0;
   for (i = 0; i < icon_count; i++)
     {
-      if ( info[i].width > max_width )
+      if (info[i].width > max_width)
         max_width = info[i].width;
-      if ( info[i].height > max_height )
+      if (info[i].height > max_height)
         max_height = info[i].height;
     }
-  if ( max_width <= 0 || max_height <= 0 )
+  if (max_width <= 0 || max_height <= 0)
     {
       g_free (info);
       fclose (fp);
@@ -721,7 +742,7 @@ ico_load_thumbnail_image (const gchar  *filename,
                              gimp_filename_to_utf8 (filename));
 
   fp = g_fopen (filename, "rb");
-  if (! fp )
+  if (! fp)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
@@ -730,7 +751,7 @@ ico_load_thumbnail_image (const gchar  *filename,
     }
 
   icon_count = ico_read_init (fp);
-  if (! icon_count )
+  if (! icon_count)
     {
       fclose (fp);
       return -1;
@@ -739,8 +760,8 @@ ico_load_thumbnail_image (const gchar  *filename,
   D(("*** %s: Microsoft icon file, containing %i icon(s)\n",
      filename, icon_count));
 
-  info = ico_read_info (fp, icon_count);
-  if (! info )
+  info = ico_read_info (fp, icon_count, error);
+  if (! info)
     {
       fclose (fp);
       return -1;
@@ -758,9 +779,9 @@ ico_load_thumbnail_image (const gchar  *filename,
 
           match = i;
         }
-      else if ( w == info[i].width
-                && h == info[i].height
-                && info[i].bpp > bpp )
+      else if (w == info[i].width  &&
+               h == info[i].height &&
+               info[i].bpp > bpp)
         {
           /* better quality */
           bpp = info[i].bpp;

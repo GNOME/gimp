@@ -405,7 +405,7 @@ gimp_edit_paste (GimpImage     *image,
                                           gimp_drawable_get_precision (drawable),
                                           TRUE,
                                           NULL,
-                                          0, 0,
+                                          GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                           FALSE, NULL);
             }
           break;

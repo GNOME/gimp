@@ -119,9 +119,8 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                                    GimpScanConvert   *scan_convert,
                                    gboolean           push_undo)
 {
-  GimpImage *image;
-  gdouble    width;
-  GimpUnit   unit;
+  gdouble  width;
+  GimpUnit unit;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -131,25 +130,17 @@ gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
                     GIMP_FILL_STYLE_PATTERN ||
                     gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  /*  must call gimp_channel_is_empty() instead of relying on
-   *  gimp_item_mask_intersect() because the selection pretends to
-   *  be empty while it is being stroked, to prevent masking itself.
-   */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (image)) &&
-      ! gimp_item_mask_intersect (GIMP_ITEM (drawable), NULL, NULL, NULL, NULL))
-    {
-      return;
-    }
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), NULL, NULL, NULL, NULL))
+    return;
 
   width = gimp_stroke_options_get_width (options);
   unit  = gimp_stroke_options_get_unit (options);
 
   if (unit != GIMP_UNIT_PIXEL)
     {
-      gdouble xres;
-      gdouble yres;
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      gdouble    xres;
+      gdouble    yres;
 
       gimp_image_get_resolution (image, &xres, &yres);
 

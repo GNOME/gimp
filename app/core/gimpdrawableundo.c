@@ -112,7 +112,7 @@ gimp_drawable_undo_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_DRAWABLE (GIMP_ITEM_UNDO (object)->item));
-  g_assert (drawable_undo->buffer != NULL);
+  g_assert (GEGL_IS_BUFFER (drawable_undo->buffer));
 }
 
 static void

@@ -53,8 +53,8 @@ static void            gimp_layer_mask_convert_type       (GimpDrawable      *dr
                                                            GimpImage         *dest_image,
                                                            const Babl        *new_format,
                                                            GimpColorProfile  *dest_profile,
-                                                           gint               layer_dither_type,
-                                                           gint               mask_dither_type,
+                                                           GeglDitherMethod   layer_dither_type,
+                                                           GeglDitherMethod   mask_dither_type,
                                                            gboolean           push_undo,
                                                            GimpProgress      *progress);
 
@@ -165,8 +165,8 @@ gimp_layer_mask_convert_type (GimpDrawable      *drawable,
                               GimpImage         *dest_image,
                               const Babl        *new_format,
                               GimpColorProfile  *dest_profile,
-                              gint               layer_dither_type,
-                              gint               mask_dither_type,
+                              GeglDitherMethod   layer_dither_type,
+                              GeglDitherMethod   mask_dither_type,
                               gboolean           push_undo,
                               GimpProgress      *progress)
 {

@@ -129,60 +129,60 @@ static PSD_Image_Data PSDImageData;
  */
 
 static void        psd_lmode_layer      (gint32               idLayer,
-					 gchar               *psdMode);
+                                         gchar               *psdMode);
 
 static void        reshuffle_cmap_write (guchar              *mapGimp);
 
 static void        save_header          (FILE                *fd,
-					 gint32               image_id);
+                                         gint32               image_id);
 
 static void        save_color_mode_data (FILE                *fd,
-					 gint32               image_id);
+                                         gint32               image_id);
 
 static void        save_resources       (FILE                *fd,
-					 gint32               image_id);
+                                         gint32               image_id);
 
 static void        save_layer_and_mask  (FILE                *fd,
-					 gint32               image_id);
+                                         gint32               image_id);
 
 static void        save_data            (FILE                *fd,
-					 gint32               image_id);
+                                         gint32               image_id);
 
 static void        xfwrite              (FILE                *fd,
-					 gconstpointer        buf,
-					 glong                len,
-					 const gchar         *why);
+                                         gconstpointer        buf,
+                                         glong                len,
+                                         const gchar         *why);
 
 static void        write_pascalstring   (FILE               *fd,
-					 const gchar        *val,
-					 gint                padding,
-					 const gchar        *why);
+                                         const gchar        *val,
+                                         gint                padding,
+                                         const gchar        *why);
 
 static void        write_string         (FILE               *fd,
-					 const gchar        *val,
-					 const gchar        *why);
+                                         const gchar        *val,
+                                         const gchar        *why);
 
 static void        write_gchar          (FILE               *fd,
-					 guchar              val,
-					 const gchar        *why);
+                                         guchar              val,
+                                         const gchar        *why);
 
 static void        write_gint16         (FILE               *fd,
-					 gint16              val,
-					 const gchar        *why);
+                                         gint16              val,
+                                         const gchar        *why);
 
 static void        write_gint32         (FILE               *fd,
-					 gint32              val,
-					 const gchar        *why);
+                                         gint32              val,
+                                         const gchar        *why);
 
 static void        write_datablock_luni (FILE               *fd,
-					 const gchar        *val,
-					 const gchar        *why);
+                                         const gchar        *val,
+                                         const gchar        *why);
 
 
 static void        write_pixel_data     (FILE               *fd,
-					 gint32              drawableID,
-					 glong              *ChanLenPosition,
-					 gint32              rowlenOffset);
+                                         gint32              drawableID,
+                                         glong              *ChanLenPosition,
+                                         gint32              rowlenOffset);
 
 static gint32      create_merged_image  (gint32              imageID);
 
@@ -1210,11 +1210,11 @@ write_pixel_data (FILE   *fd,
       for (y = 0; y < height; y += tile_height)
         {
           int tlen;
-	  gegl_buffer_get (buffer,
+          gegl_buffer_get (buffer,
                            GEGL_RECTANGLE (0, y,
                                            width,
                                            MIN (height - y, tile_height)),
-			   1.0, format, data,
+                           1.0, format, data,
                            GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
           tlen = get_compress_channel_data (&data[chan],
                                              width,
@@ -1281,11 +1281,11 @@ write_pixel_data (FILE   *fd,
           for (y = 0; y < height; y += tile_height)
             {
               int tlen;
-	      gegl_buffer_get (mbuffer,
+              gegl_buffer_get (mbuffer,
                                GEGL_RECTANGLE (0, y,
                                                width,
                                                MIN (height - y, tile_height)),
-			       1.0, mformat, data,
+                               1.0, mformat, data,
                                GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
               tlen = get_compress_channel_data (&data[0],
                                                 width,
@@ -1390,41 +1390,41 @@ create_merged_image (gint32 image_id)
       gint                  width              = gegl_buffer_get_width (buffer);
       gint                  height             = gegl_buffer_get_height (buffer);
       GeglBufferIterator   *iter               = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (0, 0, width, height),
-									   0, format,
+                                                                           0, format,
                                                                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
       while (gegl_buffer_iterator_next (iter))
-	{
-	  guchar *data = iter->data[0];
-	  gint y;
+        {
+          guchar *data = iter->data[0];
+          gint y;
 
-	  for (y = 0; y < iter->roi->height; y++)
-	    {
-	      guchar *d = data;
-	      gint x;
+          for (y = 0; y < iter->roi->height; y++)
+            {
+              guchar *d = data;
+              gint x;
 
-	      for (x = 0; x < iter->roi->width; x++)
-		{
-		  gint32 alpha = d[bpp - 1];
+              for (x = 0; x < iter->roi->width; x++)
+                {
+                  gint32 alpha = d[bpp - 1];
 
-		  if (alpha < 255)
-		    {
-		      gint i;
+                  if (alpha < 255)
+                    {
+                      gint i;
 
-		      transparency_found = TRUE;
+                      transparency_found = TRUE;
 
-		      /* blend against white, photoshop does this. */
-		      for (i = 0; i < bpp - 1; i++)
-			d[i] = ((guint32) d[i] * alpha) / 255 + 255 - alpha;
-		    }
+                      /* blend against white, photoshop does this. */
+                      for (i = 0; i < bpp - 1; i++)
+                        d[i] = ((guint32) d[i] * alpha) / 255 + 255 - alpha;
+                    }
 
-		}
+                }
 
               d += bpp;
-	    }
+            }
 
-	  data += n_components;
-	}
+          data += n_components;
+        }
 
       g_object_unref (buffer);
 

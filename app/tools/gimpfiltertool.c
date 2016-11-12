@@ -332,6 +332,10 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       GtkWidget           *vbox;
       GtkWidget           *hbox;
       GtkWidget           *toggle;
+      GtkWidget           *expander;
+      GtkWidget           *frame;
+      GtkWidget           *vbox2;
+      GtkWidget           *combo;
       gchar               *operation_name;
 
       /*  disabled for at least GIMP 2.8  */
@@ -400,12 +404,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
           gtk_widget_show (settings_ui);
         }
 
-      /*  The gamma hack toggle  */
-      toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
-                                           "gamma-hack", NULL);
-      gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
-
       /*  The preview and split view toggles  */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
       gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -424,6 +422,33 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       g_object_bind_property (G_OBJECT (tool_info->tool_options), "preview",
                               toggle,                             "sensitive",
                               G_BINDING_SYNC_CREATE);
+
+      /*  The Color Options expander  */
+      expander = gtk_expander_new (_("Advanced Color Options"));
+      gtk_box_pack_end (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
+      gtk_widget_show (expander);
+
+      frame = gimp_frame_new (NULL);
+      gtk_container_add (GTK_CONTAINER (expander), frame);
+      gtk_widget_show (frame);
+
+      vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+      gtk_container_add (GTK_CONTAINER (frame), vbox2);
+      gtk_widget_show (vbox2);
+
+      /*  The color managed combo  */
+      combo = gimp_prop_boolean_combo_box_new
+        (G_OBJECT (tool_info->tool_options), "color-managed",
+         _("Apply filter in color managed space (slow)"),
+         _("Apply filter to the layer's raw pixels"));
+      gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
+      gtk_widget_show (combo);
+
+      /*  The gamma hack toggle  */
+      toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
+                                           "gamma-hack", NULL);
+      gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+      gtk_widget_show (toggle);
 
       /*  The area combo  */
       gegl_node_get (filter_tool->operation,
@@ -779,6 +804,12 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
     {
       gimp_drawable_filter_set_region (filter_tool->filter,
                                        filter_options->region);
+    }
+  else if (! strcmp (pspec->name, "color-managed") &&
+           filter_tool->filter)
+    {
+      gimp_drawable_filter_set_color_managed (filter_tool->filter,
+                                              filter_options->color_managed);
     }
   else if (! strcmp (pspec->name, "gamma-hack") &&
            filter_tool->filter)

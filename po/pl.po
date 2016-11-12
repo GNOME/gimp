@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-31 01:27+0100\n"
-"PO-Revision-Date: 2016-10-31 01:28+0100\n"
+"POT-Creation-Date: 2016-11-08 10:21+0100\n"
+"PO-Revision-Date: 2016-11-08 10:22+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2730,8 +2730,8 @@ msgstr "Wyeksportuj…"
 
 #: ../app/actions/file-actions.c:160
 msgctxt "file-action"
-msgid "Export the image again"
-msgstr "Eksportuje obraz ponownie"
+msgid "Export the image"
+msgstr "Eksportuje obraz"
 
 #: ../app/actions/file-actions.c:165
 msgctxt "file-action"
@@ -4336,92 +4336,92 @@ msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Odcienie _szarości…"
 
-#: ../app/actions/image-commands.c:556
+#: ../app/actions/image-commands.c:559
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Zapisanie profilu kolorów się nie powiodło: %s"
 
-#: ../app/actions/image-commands.c:595
+#: ../app/actions/image-commands.c:598
 msgid "Save Color Profile"
 msgstr "Zapis profilu kolorów"
 
-#: ../app/actions/image-commands.c:639
+#: ../app/actions/image-commands.c:642
 msgid "Set Image Canvas Size"
 msgstr "Ustawienie wymiarów płótna obrazu"
 
-#: ../app/actions/image-commands.c:669 ../app/actions/image-commands.c:693
-#: ../app/actions/image-commands.c:1320
+#: ../app/actions/image-commands.c:672 ../app/actions/image-commands.c:696
+#: ../app/actions/image-commands.c:1323
 msgid "Resizing"
 msgstr "Zmienianie wymiarów"
 
-#: ../app/actions/image-commands.c:726
+#: ../app/actions/image-commands.c:729
 msgid "Set Image Print Resolution"
 msgstr "Ustaw rozdzielczość drukowania"
 
-#: ../app/actions/image-commands.c:792 ../app/pdb/drawable-transform-cmds.c:166
+#: ../app/actions/image-commands.c:795 ../app/pdb/drawable-transform-cmds.c:166
 #: ../app/pdb/drawable-transform-cmds.c:256
 #: ../app/pdb/item-transform-cmds.c:170
 msgid "Flipping"
 msgstr "Odbijanie"
 
-#: ../app/actions/image-commands.c:816 ../app/pdb/drawable-transform-cmds.c:617
+#: ../app/actions/image-commands.c:819 ../app/pdb/drawable-transform-cmds.c:617
 #: ../app/pdb/drawable-transform-cmds.c:711
 #: ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443
 #: ../app/pdb/transform-tools-cmds.c:255 ../app/tools/gimprotatetool.c:126
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:843 ../app/actions/layers-commands.c:792
+#: ../app/actions/image-commands.c:846 ../app/actions/layers-commands.c:792
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
-#: ../app/actions/image-commands.c:881
+#: ../app/actions/image-commands.c:884
 msgid "Cannot crop because the image has no content."
 msgstr "Nie można wykadrować, ponieważ obraz nie ma zawartości."
 
-#: ../app/actions/image-commands.c:887
+#: ../app/actions/image-commands.c:890
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ obraz jest już wykadrowany do zawartości."
 
-#: ../app/actions/image-commands.c:1022
+#: ../app/actions/image-commands.c:1025
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Konwertowanie do RGB (%s)"
 
-#: ../app/actions/image-commands.c:1060
+#: ../app/actions/image-commands.c:1063
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Konwertowanie do odcieni szarości (%s)"
 
-#: ../app/actions/image-commands.c:1122
+#: ../app/actions/image-commands.c:1125
 msgid "Converting to indexed colors"
 msgstr "Konwertowanie na kolory indeksowane"
 
-#: ../app/actions/image-commands.c:1179
+#: ../app/actions/image-commands.c:1182
 #, c-format
 msgid "Converting image to %s"
 msgstr "Konwertowanie obrazu do %s"
 
-#: ../app/actions/image-commands.c:1210
+#: ../app/actions/image-commands.c:1213
 msgid "Assign color profile"
 msgstr "Przydziel profil kolorów"
 
-#: ../app/actions/image-commands.c:1256
+#: ../app/actions/image-commands.c:1259
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Konwertowanie do „%s”"
 
-#: ../app/actions/image-commands.c:1362
+#: ../app/actions/image-commands.c:1365
 msgid "Change Print Size"
 msgstr "Zmień rozmiar wydruku"
 
-#: ../app/actions/image-commands.c:1406
+#: ../app/actions/image-commands.c:1409
 msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1415 ../app/actions/layers-commands.c:1466
+#: ../app/actions/image-commands.c:1418 ../app/actions/layers-commands.c:1466
 #: ../app/dialogs/preferences-dialog.c:1345
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -7641,6 +7641,7 @@ msgstr "Warstwa"
 #: ../app/config/gimpdialogconfig.c:370 ../app/core/gimpchannel.c:288
 #: ../app/operations/gimpcurvesconfig.c:104
 #: ../app/operations/gimplevelsconfig.c:105
+#: ../app/operations/gimpoperationthreshold.c:89
 #: ../app/widgets/gimpchanneltreeview.c:332
 msgid "Channel"
 msgstr "Kanał"
@@ -9824,25 +9825,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Zalanie kanału"
 
-#: ../app/core/gimpchannel.c:840
+#: ../app/core/gimpchannel.c:841
 msgid "Cannot fill empty channel."
 msgstr "Nie można wypełniać na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:876
+#: ../app/core/gimpchannel.c:877
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1787
+#: ../app/core/gimpchannel.c:1788
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1841
+#: ../app/core/gimpchannel.c:1842
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1938 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1939 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -10013,7 +10014,7 @@ msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Wypełnienie kubełkiem"
 
-#: ../app/core/gimpdrawable-equalize.c:53
+#: ../app/core/gimpdrawable-equalize.c:63
 msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Zrównanie"
@@ -10030,7 +10031,7 @@ msgstr "Obliczanie alfy nieznanych pikseli"
 msgid "Not enough points to fill"
 msgstr "Niewystarczająca liczba punktów do wypełnienia"
 
-#: ../app/core/gimpdrawable-fill.c:274
+#: ../app/core/gimpdrawable-fill.c:259
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "Rysowanie pociągnięcia"
@@ -12087,6 +12088,11 @@ msgstr "Przesunięcie na osi Y:"
 #: ../app/widgets/gimptemplateeditor.c:431
 msgid "_Fill with:"
 msgstr "Wypeł_nienie:"
+
+#: ../app/dialogs/layer-options-dialog.c:342
+#: ../app/widgets/gimpcolordisplayeditor.c:277
+msgid "Active Filters"
+msgstr "Aktywne filtry"
 
 #: ../app/dialogs/layer-options-dialog.c:369
 msgid "Lock _alpha"
@@ -14193,21 +14199,21 @@ msgstr "To nie jest zwykły plik"
 msgid "Permission denied"
 msgstr "Brak uprawnień"
 
-#: ../app/file/file-open.c:236
+#: ../app/file/file-open.c:260
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Wtyczka %s zwróciła kod powodzenia, lecz nie zwróciła obrazu"
 
-#: ../app/file/file-open.c:247
+#: ../app/file/file-open.c:271
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Wtyczka %s nie może otworzyć obrazu"
 
-#: ../app/file/file-open.c:643
+#: ../app/file/file-open.c:667
 msgid "Image doesn't contain any layers"
 msgstr "Obraz nie zawiera żadnych warstw"
 
-#: ../app/file/file-open.c:702
+#: ../app/file/file-open.c:726
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otwarcie pliku „%s” się nie powiodło: %s"
@@ -14512,11 +14518,11 @@ msgstr "Poziomy redukcji kolorów"
 msgid "Replace partial transparency with a color"
 msgstr "Zastąpienie częściowej przezroczystości kolorem"
 
-#: ../app/operations/gimpoperationthreshold.c:87
+#: ../app/operations/gimpoperationthreshold.c:97
 msgid "Low threshold"
 msgstr "Niskie progowanie"
 
-#: ../app/operations/gimpoperationthreshold.c:94
+#: ../app/operations/gimpoperationthreshold.c:104
 msgid "High threshold"
 msgstr "Wysokie progowanie"
 
@@ -14924,12 +14930,12 @@ msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Jasność-kontrast"
 
-#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:593
+#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:590
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Poziomy"
 
-#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:663
+#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:660
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Redukcja kolorów"
@@ -14974,12 +14980,12 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Zaznaczenie pierwszego planu"
 
-#: ../app/pdb/drawable-color-cmds.c:500
+#: ../app/pdb/drawable-color-cmds.c:497
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Barwa i nasycenie"
 
-#: ../app/pdb/drawable-color-cmds.c:533
+#: ../app/pdb/drawable-color-cmds.c:530
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Odwrócenie"
@@ -15949,19 +15955,19 @@ msgstr "Obrót warstwy tekstowej"
 msgid "Transform Text Layer"
 msgstr "Przekształcenie warstwy tekstowej"
 
-#: ../app/text/gimptextlayer.c:565
+#: ../app/text/gimptextlayer.c:567
 msgid "Discard Text Information"
 msgstr "Odrzucanie informacji o tekście"
 
-#: ../app/text/gimptextlayer.c:633
+#: ../app/text/gimptextlayer.c:635
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkcje tekstowe nie są dostępne z powodu braku czcionek."
 
-#: ../app/text/gimptextlayer.c:696
+#: ../app/text/gimptextlayer.c:698
 msgid "Empty Text Layer"
 msgstr "Pusta warstwa tekstowa"
 
-#: ../app/text/gimptextlayer.c:749
+#: ../app/text/gimptextlayer.c:751
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -16147,7 +16153,7 @@ msgstr "Maksymalna głębia"
 
 #: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:112
-#: ../app/tools/gimpthresholdtool.c:90
+#: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Progowanie"
 
@@ -16737,6 +16743,7 @@ msgid "Adjust Color Curves"
 msgstr "Modyfikacja krzywych kolorów"
 
 #: ../app/tools/gimpcurvestool.c:456 ../app/tools/gimplevelstool.c:363
+#: ../app/tools/gimpthresholdtool.c:222
 msgid "Cha_nnel:"
 msgstr "Ka_nał:"
 
@@ -16851,32 +16858,49 @@ msgstr "%s wybierze kolor tła"
 msgid "Anti erase  (%s)"
 msgstr "Cofanie wycierania  (%s)"
 
-#: ../app/tools/gimpfilteroptions.c:73
+#: ../app/tools/gimpfilteroptions.c:74
 msgid "_Preview"
 msgstr "_Podgląd"
 
-#: ../app/tools/gimpfilteroptions.c:80
+#: ../app/tools/gimpfilteroptions.c:81
 msgid "_Split view"
 msgstr "Po_dzielony widok"
 
-#: ../app/tools/gimpfiltertool.c:633
+#: ../app/tools/gimpfilteroptions.c:112
+msgid "Color _managed"
+msgstr "_Zarządzanie kolorami"
+
+#. The Color Options expander
+#: ../app/tools/gimpfiltertool.c:427
+msgid "Advanced Color Options"
+msgstr "Zaawansowane opcje kolorów"
+
+#: ../app/tools/gimpfiltertool.c:442
+msgid "Apply filter in color managed space (slow)"
+msgstr "Zastosowanie filtru w przestrzeni z zarządzaniem kolorami (wolne)"
+
+#: ../app/tools/gimpfiltertool.c:443
+msgid "Apply filter to the layer's raw pixels"
+msgstr "Zastosowanie filtru do surowych pikseli warstwy"
+
+#: ../app/tools/gimpfiltertool.c:658
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:637
+#: ../app/tools/gimpfiltertool.c:662
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:641
+#: ../app/tools/gimpfiltertool.c:666
 msgid "Click to move the split guide"
 msgstr "Kliknięcie przesunie prowadnicę podziału"
 
-#: ../app/tools/gimpfiltertool.c:643
+#: ../app/tools/gimpfiltertool.c:668
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:644
+#: ../app/tools/gimpfiltertool.c:669
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
@@ -18296,33 +18320,33 @@ msgstr ""
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
-#: ../app/tools/gimpthresholdtool.c:91
+#: ../app/tools/gimpthresholdtool.c:94
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
 msgstr ""
 "Progowanie: zmniejsza do dwóch liczbę kolorów w obrazie przy użyciu "
 "progowania"
 
-#: ../app/tools/gimpthresholdtool.c:92
+#: ../app/tools/gimpthresholdtool.c:95
 msgid "_Threshold..."
 msgstr "P_rogowanie…"
 
-#: ../app/tools/gimpthresholdtool.c:111
+#: ../app/tools/gimpthresholdtool.c:114
 msgid "Import Threshold Settings"
 msgstr "Importowanie ustawień progowania"
 
-#: ../app/tools/gimpthresholdtool.c:112
+#: ../app/tools/gimpthresholdtool.c:115
 msgid "Export Threshold Settings"
 msgstr "Eksportowanie ustawień progowania"
 
-#: ../app/tools/gimpthresholdtool.c:177
+#: ../app/tools/gimpthresholdtool.c:184
 msgid "Apply Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpthresholdtool.c:243
+#: ../app/tools/gimpthresholdtool.c:280
 msgid "_Auto"
 msgstr "_Automatycznie"
 
-#: ../app/tools/gimpthresholdtool.c:245
+#: ../app/tools/gimpthresholdtool.c:282
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automatyczne dopasowanie optymalnego progu binaryzacji"
 
@@ -19128,10 +19152,6 @@ msgstr "Przesuwa zaznaczony filtr w górę"
 #: ../app/widgets/gimpcolordisplayeditor.c:230
 msgid "Move the selected filter down"
 msgstr "Przesuwa zaznaczony filtr w dół"
-
-#: ../app/widgets/gimpcolordisplayeditor.c:277
-msgid "Active Filters"
-msgstr "Aktywne filtry"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:328
 msgid "Reset the selected filter to default values"

@@ -1070,6 +1070,22 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
 
   switch (kevent->keyval)
     {
+    case GDK_KEY_BackSpace:
+      if (! iscissors->curve->closed &&
+          g_queue_peek_tail (iscissors->curve->segments))
+        {
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+          gimp_iscissors_tool_push_undo (iscissors);
+          icurve_delete_segment (iscissors->curve,
+                                 g_queue_peek_tail (iscissors->curve->segments));
+          gimp_iscissors_tool_free_redo (iscissors);
+
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+          return TRUE;
+        }
+      return FALSE;
+
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
@@ -2090,11 +2106,10 @@ icurve_delete_segment (ICurve   *curve,
     {
       next_segment->x1 = segment->x1;
       next_segment->y1 = segment->y1;
-
-      g_queue_remove (curve->segments, segment);
-
-      isegment_free (segment);
     }
+
+  g_queue_remove (curve->segments, segment);
+  isegment_free (segment);
 }
 
 static void

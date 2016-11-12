@@ -586,14 +586,15 @@ user_update_controllerrc (const GMatchInfo *matched_value,
 }
 
 #define GIMPRC_UPDATE_PATTERN \
-  "\\(theme [^)]*\\)"
+  "\\(theme [^)]*\\)"    "|" \
+  "\\(.*-path [^)]*\\)"
 
 static gboolean
 user_update_gimprc (const GMatchInfo *matched_value,
                     GString          *new_value,
                     gpointer          data)
 {
-  /* Do not migrate themes from GIMP < 2.10. */
+  /* Do not migrate paths and themes from GIMP < 2.10. */
   return FALSE;
 }
 

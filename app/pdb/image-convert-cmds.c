@@ -244,7 +244,11 @@ image_convert_precision_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_image_is_not_base_type (image, GIMP_INDEXED, error) &&
           gimp_pdb_image_is_not_precision (image, precision, error))
         {
-          gimp_image_convert_precision (image, precision, 0, 0, 0, NULL);
+          gimp_image_convert_precision (image, precision,
+                                        GEGL_DITHER_NONE,
+                                        GEGL_DITHER_NONE,
+                                        GEGL_DITHER_NONE,
+                                        progress);
         }
       else
         {

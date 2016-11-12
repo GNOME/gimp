@@ -65,8 +65,8 @@ struct _GimpDrawableClass
                                            GimpImage            *dest_image,
                                            const Babl           *new_format,
                                            GimpColorProfile     *dest_profile,
-                                           gint                  layer_dither_type,
-                                           gint                  mask_dither_type,
+                                           GeglDitherMethod      layer_dither_type,
+                                           GeglDitherMethod      mask_dither_type,
                                            gboolean              push_undo,
                                            GimpProgress         *progress);
   void          (* apply_buffer)          (GimpDrawable         *drawable,
@@ -144,8 +144,8 @@ void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   GimpPrecision       new_precision,
                                                   gboolean            new_has_alpha,
                                                   GimpColorProfile   *dest_profile,
-                                                  gint                layer_dither_type,
-                                                  gint                mask_dither_type,
+                                                  GeglDitherMethod    layer_dither_type,
+                                                  GeglDitherMethod    mask_dither_type,
                                                   gboolean            push_undo,
                                                   GimpProgress       *progress);
 

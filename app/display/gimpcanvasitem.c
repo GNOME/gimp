@@ -52,8 +52,6 @@ enum
 };
 
 
-typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
-
 struct _GimpCanvasItemPrivate
 {
   GimpDisplayShell *shell;
@@ -65,11 +63,6 @@ struct _GimpCanvasItemPrivate
   gint              change_count;
   cairo_region_t   *change_region;
 };
-
-#define GET_PRIVATE(item) \
-        G_TYPE_INSTANCE_GET_PRIVATE (item, \
-                                     GIMP_TYPE_CANVAS_ITEM, \
-                                     GimpCanvasItemPrivate)
 
 
 /*  local function prototypes  */
@@ -167,7 +160,12 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
 static void
 gimp_canvas_item_init (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+  GimpCanvasItemPrivate *private;
+
+  item->private = G_TYPE_INSTANCE_GET_PRIVATE (item,
+                                               GIMP_TYPE_CANVAS_ITEM,
+                                               GimpCanvasItemPrivate);
+  private = item->private;
 
   private->shell            = NULL;
   private->visible          = TRUE;
@@ -182,11 +180,11 @@ gimp_canvas_item_init (GimpCanvasItem *item)
 static void
 gimp_canvas_item_constructed (GObject *object)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (object);
+  GimpCanvasItem *item = GIMP_CANVAS_ITEM (object);
 
-  g_assert (GIMP_IS_DISPLAY_SHELL (private->shell));
+  g_assert (GIMP_IS_DISPLAY_SHELL (item->private->shell));
 
-  private->change_count = 0; /* undo hack from init() */
+  item->private->change_count = 0; /* undo hack from init() */
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 }
@@ -197,7 +195,8 @@ gimp_canvas_item_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (object);
+  GimpCanvasItem        *item    = GIMP_CANVAS_ITEM (object);
+  GimpCanvasItemPrivate *private = item->private;
 
   switch (property_id)
     {
@@ -226,7 +225,8 @@ gimp_canvas_item_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (object);
+  GimpCanvasItem        *item    = GIMP_CANVAS_ITEM (object);
+  GimpCanvasItemPrivate *private = item->private;
 
   switch (property_id)
     {
@@ -290,15 +290,13 @@ static void
 gimp_canvas_item_real_stroke (GimpCanvasItem *item,
                               cairo_t        *cr)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
-
-  cairo_set_line_cap (cr, private->line_cap);
+  cairo_set_line_cap (cr, item->private->line_cap);
 
   gimp_canvas_set_tool_bg_style (gimp_canvas_item_get_canvas (item), cr);
   cairo_stroke_preserve (cr);
 
   gimp_canvas_set_tool_fg_style (gimp_canvas_item_get_canvas (item), cr,
-                                 private->highlight);
+                                 item->private->highlight);
   cairo_stroke (cr);
 }
 
@@ -306,14 +304,12 @@ static void
 gimp_canvas_item_real_fill (GimpCanvasItem *item,
                             cairo_t        *cr)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
-
   gimp_canvas_set_tool_bg_style (gimp_canvas_item_get_canvas (item), cr);
   cairo_set_line_width (cr, 2.0);
   cairo_stroke_preserve (cr);
 
   gimp_canvas_set_tool_fg_style (gimp_canvas_item_get_canvas (item), cr,
-                                 private->highlight);
+                                 item->private->highlight);
   cairo_fill (cr);
 }
 
@@ -331,51 +327,35 @@ gimp_canvas_item_real_hit (GimpCanvasItem *item,
 GimpDisplayShell *
 gimp_canvas_item_get_shell (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
 
-  private = GET_PRIVATE (item);
-
-  return private->shell;
+  return item->private->shell;
 }
 
 GimpImage *
 gimp_canvas_item_get_image (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
 
-  private = GET_PRIVATE (item);
-
-  return gimp_display_get_image (private->shell->display);
+  return gimp_display_get_image (item->private->shell->display);
 }
 
 GtkWidget *
 gimp_canvas_item_get_canvas (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
 
-  private = GET_PRIVATE (item);
-
-  return private->shell->canvas;
+  return item->private->shell->canvas;
 }
 
 void
 gimp_canvas_item_draw (GimpCanvasItem *item,
                        cairo_t        *cr)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
   g_return_if_fail (cr != NULL);
 
-  private = GET_PRIVATE (item);
-
-  if (private->visible)
+  if (item->private->visible)
     {
       cairo_save (cr);
       GIMP_CANVAS_ITEM_GET_CLASS (item)->draw (item, cr);
@@ -386,13 +366,9 @@ gimp_canvas_item_draw (GimpCanvasItem *item,
 cairo_region_t *
 gimp_canvas_item_get_extents (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
 
-  private = GET_PRIVATE (item);
-
-  if (private->visible)
+  if (item->private->visible)
     return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item);
 
   return NULL;
@@ -412,13 +388,9 @@ void
 gimp_canvas_item_set_visible (GimpCanvasItem *item,
                               gboolean        visible)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
-
-  if (private->visible != visible)
+  if (item->private->visible != visible)
     {
       gimp_canvas_item_begin_change (item);
       g_object_set (G_OBJECT (item),
@@ -431,26 +403,18 @@ gimp_canvas_item_set_visible (GimpCanvasItem *item,
 gboolean
 gimp_canvas_item_get_visible (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
 
-  private = GET_PRIVATE (item);
-
-  return private->visible;
+  return item->private->visible;
 }
 
 void
 gimp_canvas_item_set_line_cap (GimpCanvasItem   *item,
                                cairo_line_cap_t  line_cap)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
-
-  if (private->line_cap != line_cap)
+  if (item->private->line_cap != line_cap)
     {
       gimp_canvas_item_begin_change (item);
       g_object_set (G_OBJECT (item),
@@ -464,13 +428,9 @@ void
 gimp_canvas_item_set_highlight (GimpCanvasItem *item,
                                 gboolean        highlight)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
-
-  if (private->highlight != highlight)
+  if (item->private->highlight != highlight)
     {
       g_object_set (G_OBJECT (item),
                     "highlight", highlight,
@@ -481,13 +441,9 @@ gimp_canvas_item_set_highlight (GimpCanvasItem *item,
 gboolean
 gimp_canvas_item_get_highlight (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
 
-  private = GET_PRIVATE (item);
-
-  return private->highlight;
+  return item->private->highlight;
 }
 
 void
@@ -497,7 +453,7 @@ gimp_canvas_item_begin_change (GimpCanvasItem *item)
 
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
+  private = item->private;
 
   private->change_count++;
 
@@ -515,7 +471,7 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
 
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
+  private = item->private;
 
   g_return_if_fail (private->change_count > 0);
 
@@ -557,53 +513,37 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
 void
 gimp_canvas_item_suspend_stroking (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
-
-  private->suspend_stroking++;
+  item->private->suspend_stroking++;
 }
 
 void
 gimp_canvas_item_resume_stroking (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
+  g_return_if_fail (item->private->suspend_stroking > 0);
 
-  g_return_if_fail (private->suspend_stroking > 0);
-
-  private->suspend_stroking--;
+  item->private->suspend_stroking--;
 }
 
 void
 gimp_canvas_item_suspend_filling (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
-
-  private->suspend_filling++;
+  item->private->suspend_filling++;
 }
 
 void
 gimp_canvas_item_resume_filling (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
+  g_return_if_fail (item->private->suspend_filling > 0);
 
-  g_return_if_fail (private->suspend_filling > 0);
-
-  private->suspend_filling--;
+  item->private->suspend_filling--;
 }
 
 void
@@ -615,7 +555,7 @@ gimp_canvas_item_transform (GimpCanvasItem *item,
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
   g_return_if_fail (cr != NULL);
 
-  private = GET_PRIVATE (item);
+  private = item->private;
 
   cairo_translate (cr, -private->shell->offset_x, -private->shell->offset_y);
   cairo_scale (cr, private->shell->scale_x, private->shell->scale_y);
@@ -628,13 +568,9 @@ gimp_canvas_item_transform_xy (GimpCanvasItem *item,
                                gint           *tx,
                                gint           *ty)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
-
-  gimp_display_shell_zoom_xy (private->shell, x, y, tx, ty);
+  gimp_display_shell_zoom_xy (item->private->shell, x, y, tx, ty);
 }
 
 void
@@ -644,13 +580,9 @@ gimp_canvas_item_transform_xy_f (GimpCanvasItem *item,
                                  gdouble        *tx,
                                  gdouble        *ty)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
-
-  gimp_display_shell_zoom_xy_f (private->shell, x, y, tx, ty);
+  gimp_display_shell_zoom_xy_f (item->private->shell, x, y, tx, ty);
 }
 
 
@@ -667,9 +599,7 @@ _gimp_canvas_item_update (GimpCanvasItem *item,
 gboolean
 _gimp_canvas_item_needs_update (GimpCanvasItem *item)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
-
-  return (private->change_count == 0 &&
+  return (item->private->change_count == 0 &&
           g_signal_has_handler_pending (item, item_signals[UPDATE], 0, FALSE));
 }
 
@@ -677,12 +607,10 @@ void
 _gimp_canvas_item_stroke (GimpCanvasItem *item,
                           cairo_t        *cr)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
-
-  if (private->suspend_filling > 0)
+  if (item->private->suspend_filling > 0)
     g_warning ("_gimp_canvas_item_stroke() on an item that is in a filling group");
 
-  if (private->suspend_stroking == 0)
+  if (item->private->suspend_stroking == 0)
     {
       GIMP_CANVAS_ITEM_GET_CLASS (item)->stroke (item, cr);
     }
@@ -693,15 +621,13 @@ _gimp_canvas_item_stroke (GimpCanvasItem *item,
 }
 
 void
-_gimp_canvas_item_fill (GimpCanvasItem   *item,
-                        cairo_t          *cr)
+_gimp_canvas_item_fill (GimpCanvasItem *item,
+                        cairo_t        *cr)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
-
-  if (private->suspend_stroking > 0)
+  if (item->private->suspend_stroking > 0)
     g_warning ("_gimp_canvas_item_fill() on an item that is in a stroking group");
 
-  if (private->suspend_filling == 0)
+  if (item->private->suspend_filling == 0)
     {
       GIMP_CANVAS_ITEM_GET_CLASS (item)->fill (item, cr);
     }

@@ -48,7 +48,7 @@ filters_menu_setup (GimpUIManager *manager,
       gchar *action_name;
       gchar *action_path;
 
-      action_name = g_strdup_printf ("filter-recent-%02d", i + 1);
+      action_name = g_strdup_printf ("filters-recent-%02d", i + 1);
       action_path = g_strdup_printf ("%s/Filters/Recently Used/Filters",
                                      ui_path);
 
