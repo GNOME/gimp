@@ -41,12 +41,12 @@ void           gimp_image_metadata_load_finish  (gint32                 image_ID
                                                  GimpMetadataLoadFlags  flags,
                                                  gboolean               interactive);
 
-GimpAttributes * gimp_image_metadata_save_prepare (gint32                 image_ID,
+GimpMetadata * gimp_image_metadata_save_prepare (gint32                 image_ID,
                                                  const gchar           *mime_type,
                                                  GimpMetadataSaveFlags *suggested_flags);
 gboolean       gimp_image_metadata_save_finish  (gint32                 image_ID,
                                                  const gchar           *mime_type,
-                                                 GimpAttributes        *attributes,
+                                                 GimpMetadata          *metadata,
                                                  GimpMetadataSaveFlags  flags,
                                                  GFile                 *file,
                                                  GError               **error);

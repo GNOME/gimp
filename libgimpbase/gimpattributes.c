@@ -87,10 +87,9 @@ struct Namespaces namespaces_table[] = {
   {"lr",      "http://ns.adobe.com/lr/1.0/"   }
 };
 
-
-static   gpointer                  gimp_attributes_parent_class = NULL;
-static   GimpAttribute            *current_attribute            = NULL;
-static   gboolean                  iter_initialized           = FALSE;
+static gpointer                  gimp_attributes_parent_class = NULL;
+static GimpAttribute            *current_attribute            = NULL;
+static gboolean                  iter_initialized             = FALSE;
 
 
 static GimpAttributes*         gimp_attributes_construct                   (GType                object_type);

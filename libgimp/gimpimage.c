@@ -99,6 +99,36 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
 
   return image_data;
 }
+/**
+ * gimp_image_get_metadata:
+ * @image_ID: The image.
+ *
+ * Returns the image's metadata.
+ *
+ * Returns exif/iptc/xmp metadata from the image.
+ *
+ * Returns: The exif/ptc/xmp metadata, or %NULL if there is none.
+ *
+ * Since: 2.10
+ **/
+GimpMetadata *
+gimp_image_get_metadata (gint32 image_ID)
+{
+  GimpMetadata            *metadata          = NULL;
+  GimpAttributes          *attributes        = NULL;
+  gchar                   *attributes_string = NULL;
+
+  metadata = gimp_metadata_new ();
+  attributes_string = _gimp_image_get_attributes (image_ID);
+  if (attributes_string)
+    {
+      attributes = gimp_attributes_deserialize (attributes_string);
+      g_free (attributes_string);
+      gimp_attributes_to_metadata (attributes, metadata, "image/any");
+    }
+
+  return metadata;
+}
 
 /**
  * gimp_image_get_attributes:
@@ -126,6 +156,39 @@ gimp_image_get_attributes (gint32 image_ID)
     }
 
   return attributes;
+}
+
+/**
+ * gimp_image_set_metadata:
+ * @image_ID: The image.
+ * @metadata: The exif/ptc/xmp metadata.
+ *
+ * Set the image's metadata.
+ *
+ * Sets exif/iptc/xmp metadata on the image, or deletes it if
+ * @metadata is %NULL.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_image_set_metadata (gint32        image_ID,
+                         GimpMetadata *metadata)
+{
+  GimpAttributes *attributes = NULL;
+  gchar    *attributes_string = NULL;
+  gboolean  success;
+
+  attributes = gimp_attributes_from_metadata (attributes, metadata);
+  if (attributes)
+    attributes_string = gimp_attributes_serialize (attributes);
+
+  success = _gimp_image_set_attributes (image_ID, attributes_string);
+  if (attributes_string)
+    g_free (attributes_string);
+
+  return success;
 }
 
 /**

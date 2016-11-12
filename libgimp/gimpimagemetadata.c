@@ -247,12 +247,13 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
  *
  * Since: 2.10
  */
-GimpAttributes *
+GimpMetadata *
 gimp_image_metadata_save_prepare (gint32                 image_ID,
                                   const gchar           *mime_type,
                                   GimpMetadataSaveFlags *suggested_flags)
 {
   GimpAttributes *attributes = NULL;
+  GimpMetadata   *metadata   = NULL;
 
   g_return_val_if_fail (image_ID > 0, NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
@@ -261,6 +262,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
   *suggested_flags = GIMP_METADATA_SAVE_ALL;
 
   attributes = gimp_image_get_attributes (image_ID);
+  metadata = gimp_metadata_new ();
 
   if (attributes)
     {
@@ -286,9 +288,11 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       if (FALSE /* FIXME if (original image had a thumbnail) */)
         *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+        
+        gimp_attributes_to_metadata (attributes, metadata, mime_type);
     }
 
-  return attributes;
+  return metadata;
 }
 
 /**
@@ -311,12 +315,13 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 gboolean
 gimp_image_metadata_save_finish (gint32                  image_ID,
                                  const gchar            *mime_type,
-                                 GimpAttributes         *attributes,
+                                 GimpMetadata           *metadata,
                                  GimpMetadataSaveFlags   flags,
                                  GFile                  *file,
                                  GError                **error)
 {
   GExiv2Metadata *new_metadata;
+  GimpAttributes *attributes;
   gboolean        success = FALSE;
   gchar               buffer[32];
   GDateTime          *datetime;
@@ -332,6 +337,8 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
   g_return_val_if_fail (attributes != NULL, FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  attributes = gimp_attributes_from_metadata (attributes, metadata);
 
   if (! (flags & (GIMP_METADATA_SAVE_EXIF |
                   GIMP_METADATA_SAVE_XMP  |
