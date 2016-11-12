@@ -22,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2016-11-07 14:42+0000\n"
-"PO-Revision-Date: 2016-11-08 23:07+0100\n"
+"PO-Revision-Date: 2016-11-12 13:28+0100\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -4269,7 +4269,7 @@ msgstr "Das Bild in 32-Bit Fließkommazahl umwandeln (linearer Farbraum)"
 #: ../app/actions/image-actions.c:239
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
-msgstr "16-Bit Fließkommazahl"
+msgstr "64-Bit Fließkommazahl"
 
 #: ../app/actions/image-actions.c:241
 msgctxt "image-convert-action"
