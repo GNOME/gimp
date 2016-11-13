@@ -292,7 +292,7 @@ animation_storyboard_load (Animation           *animation,
                         5 * panel_num,
                         5 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
-                        GTK_EXPAND | GTK_FILL,
+                        GTK_FILL,
                         1, 1);
       g_object_set_data (G_OBJECT (panel_button), "panel-num",
                          GINT_TO_POINTER (panel_num));
@@ -310,7 +310,7 @@ animation_storyboard_load (Animation           *animation,
                         5 * panel_num,
                         5 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
-                        GTK_EXPAND | GTK_FILL,
+                        GTK_SHRINK,
                         1, 1);
       gtk_widget_show (event_box);
 
@@ -335,7 +335,7 @@ animation_storyboard_load (Animation           *animation,
                         5 * panel_num,
                         5 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
-                        GTK_EXPAND | GTK_FILL,
+                        GTK_FILL,
                         0, 1);
       view->priv->comments = g_list_prepend (view->priv->comments,
                                              comment);
@@ -382,8 +382,8 @@ animation_storyboard_load (Animation           *animation,
 
       gtk_table_attach (GTK_TABLE (view),
                         duration, 5, 6,
-                        5 * panel_num,
                         5 * panel_num + 1,
+                        5 * panel_num + 2,
                         0, /* Do not expand nor fill, nor shrink. */
                         0, /* Do not expand nor fill, nor shrink. */
                         0, 1);
