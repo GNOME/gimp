@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: libgimp master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-10-29 15:05+0000\n"
-"PO-Revision-Date: 2016-11-01 15:15+0100\n"
+"POT-Creation-Date: 2016-11-09 09:01+0000\n"
+"PO-Revision-Date: 2016-11-12 14:45+0100\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Project-Style: gnome\n"
 
 #. procedure executed successfully
@@ -157,7 +157,7 @@ msgstr "Das Plugin »%s« kennt nur RGB- und Graustufen-Bilder"
 
 #: ../libgimp/gimpexport.c:353
 #, c-format
-msgid "%s plug-in  can only handle RGB or indexed images"
+msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "Das Plugin »%s« kennt nur RGB-Bilder und Bilder mit indizierter Palette"
 
@@ -611,8 +611,6 @@ msgid "Pattern"
 msgstr "Muster"
 
 #: ../libgimpbase/gimpbaseenums.c:372
-#, fuzzy
-#| msgid "None"
 msgctxt "color-tag"
 msgid "None"
 msgstr "Keine"
@@ -650,7 +648,7 @@ msgstr "Rot"
 #: ../libgimpbase/gimpbaseenums.c:379
 msgctxt "color-tag"
 msgid "Violet"
-msgstr ""
+msgstr "Violett"
 
 #: ../libgimpbase/gimpbaseenums.c:380
 msgctxt "color-tag"
@@ -969,26 +967,23 @@ msgstr "Schräg"
 
 #: ../libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
-msgid "Expanded as neccessary"
-msgstr ""
+msgid "Expanded as necessary"
+msgstr "Nach Bedarf erweitert"
 
 #: ../libgimpbase/gimpbaseenums.c:1068
 msgctxt "merge-type"
 msgid "Clipped to image"
-msgstr ""
+msgstr "Auf Bild beschnitten"
 
 #: ../libgimpbase/gimpbaseenums.c:1069
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "Auf unterste Ebene beschnitten"
 
 #: ../libgimpbase/gimpbaseenums.c:1070
-#, fuzzy
-#| msgctxt "clone-type"
-#| msgid "Pattern"
 msgctxt "merge-type"
 msgid "Flatten"
-msgstr "Muster"
+msgstr "Zusammenfügen"
 
 #: ../libgimpbase/gimpbaseenums.c:1162
 msgctxt "orientation-type"
@@ -1579,9 +1574,8 @@ msgid "Mark out of gamut colors"
 msgstr "Farben außerhalb des Gamut markieren"
 
 #: ../libgimpconfig/gimpcolorconfig.c:301
-#, fuzzy
 msgid "Out of gamut warning color"
-msgstr "Keine Gamut-Warnfarbe mehr vorhanden"
+msgstr "Warnfarbe für außerhalb des Gamut"
 
 #: ../libgimpconfig/gimpcolorconfig.c:659
 #: ../libgimpconfig/gimpcolorconfig.c:843
@@ -1637,7 +1631,7 @@ msgstr "Schwerwiegender Syntaxanalysefehler"
 
 #: ../libgimpconfig/gimpconfig-path.c:483
 msgid "File has no path representation"
-msgstr ""
+msgstr "Datei hat keinen Pfad"
 
 #: ../libgimpconfig/gimpconfig-path.c:566
 #, c-format
@@ -1816,11 +1810,11 @@ msgstr "Einen Dateiauswahldialog zum Durchsuchen der Dateien öffnen"
 
 #: ../libgimpwidgets/gimpfileentry.c:243
 msgid "Indicates whether or not the folder exists"
-msgstr ""
+msgstr "Gibt an, ob der Ordner existiert oder nicht"
 
 #: ../libgimpwidgets/gimpfileentry.c:244
 msgid "Indicates whether or not the file exists"
-msgstr ""
+msgstr "Gibt an, ob die Datei existiert oder nicht"
 
 #: ../libgimpwidgets/gimpfileentry.c:404
 #, c-format
@@ -2581,19 +2575,19 @@ msgstr "Deuteranopia (Grünschwäche)"
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (Blauschwäche)"
 
-#: ../modules/display-filter-color-blind.c:193
+#: ../modules/display-filter-color-blind.c:195
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Simulation von Farbenblindheit (Algorithmus von Brettel-Vienot-Mollon)"
 
-#: ../modules/display-filter-color-blind.c:252
+#: ../modules/display-filter-color-blind.c:254
 msgid "Deficiency"
 msgstr "Schwäche"
 
-#: ../modules/display-filter-color-blind.c:258
+#: ../modules/display-filter-color-blind.c:260
 msgid "Color Deficient Vision"
 msgstr "Farbenblindheit"
 
-#: ../modules/display-filter-color-blind.c:419
+#: ../modules/display-filter-color-blind.c:421
 msgid "Color _deficiency type:"
 msgstr "Art der _Sehschwäche:"
 
