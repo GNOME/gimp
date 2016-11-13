@@ -449,7 +449,38 @@ gboolean
 animation_cel_animation_level_delete (AnimationCelAnimation *animation,
                                       gint                   level)
 {
-  /* XXX no implementation yet. */
+  gint   tracks_n = g_list_length (animation->priv->tracks);
+  GList *item;
+  GList *iter;
+  Track *track;
+  gint   i;
+
+  g_return_val_if_fail (level >= 0 && level < tracks_n, FALSE);
+
+  /* Do not remove when there is only a single level. */
+  if (tracks_n > 1)
+    {
+      item = g_list_nth (animation->priv->tracks, level);
+      track = item->data;
+      animation_cel_animation_clean_track (track);
+      animation->priv->tracks = g_list_delete_link (animation->priv->tracks, item);
+
+      iter  = track->frames;
+      for (i = 0; iter; iter = iter->next, i++)
+        {
+          g_signal_emit_by_name (animation, "loading",
+                                 (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
+
+          if (GPOINTER_TO_INT (iter->data))
+            {
+              /* Only cache if the track had contents for this frame. */
+              animation_cel_animation_cache (animation, i);
+            }
+        }
+      g_signal_emit_by_name (animation, "loaded");
+
+      return TRUE;
+    }
   return FALSE;
 }
 

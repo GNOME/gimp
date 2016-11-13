@@ -114,6 +114,8 @@ static gboolean animation_xsheet_comment_keypress    (GtkWidget       *entry,
 
 static void     on_track_add_clicked                 (GtkToolButton   *button,
                                                       AnimationXSheet *xsheet);
+static void     on_track_delete_clicked              (GtkToolButton   *button,
+                                                      AnimationXSheet *xsheet);
 static void     on_track_left_clicked                (GtkToolButton   *toolbutton,
                                                       AnimationXSheet *xsheet);
 static void     on_track_right_clicked               (GtkToolButton   *toolbutton,
@@ -520,6 +522,27 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
                         xsheet);
       gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
                           GTK_TOOL_ITEM (item), 0);
+      gtk_widget_show (image);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      item = gtk_separator_tool_item_new ();
+      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                        FALSE);
+      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), -1);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      image = gtk_image_new_from_icon_name ("edit-delete",
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
+      item = gtk_tool_button_new (image, NULL);
+      g_object_set_data (G_OBJECT (item), "track-num",
+                         GINT_TO_POINTER (j));
+      g_signal_connect (item, "clicked",
+                        G_CALLBACK (on_track_delete_clicked),
+                        xsheet);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), -1);
       gtk_widget_show (image);
       gtk_widget_show (GTK_WIDGET (item));
 
@@ -1087,6 +1110,20 @@ on_track_add_clicked (GtkToolButton   *button,
   track_num = g_object_get_data (G_OBJECT (button), "track-num");
   if (animation_cel_animation_level_add (xsheet->priv->animation,
                                          GPOINTER_TO_INT (track_num) + 1))
+    {
+      animation_xsheet_reset_layout (xsheet);
+    }
+}
+
+static void
+on_track_delete_clicked (GtkToolButton   *button,
+                         AnimationXSheet *xsheet)
+{
+  gpointer     track_num;
+
+  track_num = g_object_get_data (G_OBJECT (button), "track-num");
+  if (animation_cel_animation_level_delete (xsheet->priv->animation,
+                                            GPOINTER_TO_INT (track_num)))
     {
       animation_xsheet_reset_layout (xsheet);
     }
