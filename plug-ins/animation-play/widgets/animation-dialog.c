@@ -2705,15 +2705,19 @@ show_goto_progress (AnimationDialog *dialog,
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   gchar                  *text;
+  gdouble                 framerate;
+
+  framerate = animation_get_framerate (priv->animation);
 
   /* update the dialog's progress bar */
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress),
                                  ((gfloat) frame /
                                   (gfloat) (animation_get_duration (priv->animation) - 0.999)));
 
-  text = g_strdup_printf (_("Go to frame %d of %d"),
+  text = g_strdup_printf (_("Go to frame %d of %d (%.2f seconds)"),
                           frame + 1,
-                          animation_get_duration (priv->animation));
+                          animation_get_duration (priv->animation),
+                          frame / framerate);
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), text);
   g_free (text);
@@ -2723,16 +2727,22 @@ static void
 show_playing_progress (AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  gchar *text;
+  gchar                  *text;
+  gdouble                 framerate;
+  gint                    position;
+
+  framerate = animation_get_framerate (priv->animation);
+  position = animation_playback_get_position (priv->playback),
 
   /* update the dialog's progress bar */
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress),
                                  ((gfloat) animation_playback_get_position (priv->playback) /
                                   (gfloat) (animation_get_duration (priv->animation) - 0.999)));
 
-  text = g_strdup_printf (_("Frame %d of %d"),
-                          animation_playback_get_position (priv->playback) + 1,
-                          animation_get_duration (priv->animation));
+  text = g_strdup_printf (_("Frame %d of %d (%.2f seconds)"),
+                          position + 1,
+                          animation_get_duration (priv->animation),
+                          position / framerate);
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), text);
   g_free (text);
