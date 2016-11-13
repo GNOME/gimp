@@ -34,14 +34,14 @@ typedef struct _AnimationStoryboardPrivate AnimationStoryboardPrivate;
 
 struct _AnimationStoryboard
 {
-  GtkTable          parent_instance;
+  GtkScrolledWindow           parent_instance;
 
   AnimationStoryboardPrivate *priv;
 };
 
 struct _AnimationStoryboardClass
 {
-  GtkTableClass     parent_class;
+  GtkScrolledWindowClass      parent_class;
 };
 
 GType       animation_storyboard_get_type (void) G_GNUC_CONST;

@@ -1161,7 +1161,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                 Animation       *animation)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GtkWidget              *scrolled_win;
   GtkWidget              *frame;
   gchar                  *text;
   gdouble                 fps;
@@ -1300,23 +1299,17 @@ animation_dialog_set_animation (AnimationDialog *dialog,
     gtk_notebook_remove_page (GTK_NOTEBOOK (priv->right_notebook), 0);
   priv->layer_list = NULL;
 
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_notebook_prepend_page (GTK_NOTEBOOK (priv->right_notebook),
-                             scrolled_win, NULL);
-  gtk_widget_show (scrolled_win);
-
   if (ANIMATION_IS_ANIMATIC (animation))
     {
       GtkWidget *storyboard;
 
-      gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (priv->right_notebook),
-                                       scrolled_win, _("Storyboard"));
-
       /* The Storyboard view. */
       storyboard = animation_storyboard_new (ANIMATION_ANIMATIC (animation),
                                              priv->playback);
-      gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
-                                             storyboard);
+      gtk_notebook_prepend_page (GTK_NOTEBOOK (priv->right_notebook),
+                                 storyboard, NULL);
+      gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (priv->right_notebook),
+                                       storyboard, _("Storyboard"));
       gtk_widget_show (storyboard);
 
       /* The animation type box. */
@@ -1324,6 +1317,13 @@ animation_dialog_set_animation (AnimationDialog *dialog,
     }
   else
     {
+      GtkWidget *scrolled_win;
+
+      scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+      gtk_notebook_prepend_page (GTK_NOTEBOOK (priv->right_notebook),
+                                 scrolled_win, NULL);
+      gtk_widget_show (scrolled_win);
+
       gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (priv->right_notebook),
                                        scrolled_win, _("Layers"));
 

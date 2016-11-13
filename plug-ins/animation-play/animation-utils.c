@@ -233,3 +233,45 @@ normal_blend (gint        width,
 
   return buffer;
 }
+
+void
+show_scrolled_child (GtkScrolledWindow *window,
+                     GtkWidget         *child)
+{
+  GtkWidget     *contents = gtk_bin_get_child (GTK_BIN (window));
+  GtkAdjustment *hadj;
+  GtkAdjustment *vadj;
+  GtkAllocation  window_allocation;
+  GtkAllocation  child_allocation;
+  gint           x;
+  gint           y;
+  gint           x_xsheet;
+  gint           y_xsheet;
+
+  hadj = gtk_scrolled_window_get_vadjustment (window);
+  vadj = gtk_scrolled_window_get_vadjustment (window);
+
+  /* Handling both contents with native scroll abilities, and
+     contents added with a viewport. */
+  if (GTK_IS_VIEWPORT (contents))
+    contents = gtk_bin_get_child (GTK_BIN (contents));
+
+  gtk_widget_translate_coordinates (child, GTK_WIDGET (window),
+                                    0, 0, &x_xsheet, &y_xsheet);
+  gtk_widget_translate_coordinates (child, contents,
+                                    0, 0, &x, &y);
+
+  gtk_widget_get_allocation (child, &child_allocation);
+  gtk_widget_get_allocation (GTK_WIDGET (window),
+                             &window_allocation);
+
+  /* Scroll only if the widget is not already visible. */
+  if (x_xsheet < 0 || x_xsheet + child_allocation.width > window_allocation.width)
+    {
+      gtk_adjustment_set_value (hadj, x);
+    }
+  if (y_xsheet < 0 || y_xsheet + child_allocation.height > window_allocation.height)
+    {
+      gtk_adjustment_set_value (vadj, y);
+    }
+}

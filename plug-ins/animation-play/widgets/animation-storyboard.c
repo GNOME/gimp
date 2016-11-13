@@ -27,6 +27,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "animation-utils.h"
+
 #include "core/animation-animatic.h"
 #include "core/animation-playback.h"
 
@@ -85,7 +87,7 @@ static void animation_storyboard_disposal_toggled      (GtkToggleButton     *but
 static void animation_storyboard_button_clicked        (GtkWidget           *widget,
                                                         AnimationStoryboard *storyboard);
 
-G_DEFINE_TYPE (AnimationStoryboard, animation_storyboard, GTK_TYPE_TABLE)
+G_DEFINE_TYPE (AnimationStoryboard, animation_storyboard, GTK_TYPE_SCROLLED_WINDOW)
 
 #define parent_class animation_storyboard_parent_class
 
@@ -120,8 +122,6 @@ animation_storyboard_init (AnimationStoryboard *view)
   view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
                                             ANIMATION_TYPE_STORYBOARD,
                                             AnimationStoryboardPrivate);
-
-  gtk_table_set_homogeneous (GTK_TABLE (view), TRUE);
 }
 
 /**** Public Functions ****/
@@ -144,6 +144,7 @@ animation_storyboard_new (AnimationAnimatic *animation,
                              NULL);
   storyboard = ANIMATION_STORYBOARD (layer_view);
   storyboard->priv->playback = playback;
+
   return layer_view;
 }
 
@@ -153,10 +154,19 @@ static void
 animation_storyboard_constructed (GObject *object)
 {
   AnimationStoryboard *view = ANIMATION_STORYBOARD (object);
+  GtkWidget           *layout;
 
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (view),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+
+  layout = gtk_table_new (1, 1, FALSE);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (view),
+                                         layout);
   g_signal_connect (view->priv->animation, "loaded",
                     (GCallback) animation_storyboard_load,
                     view);
+  gtk_widget_show (layout);
 }
 
 static void
@@ -235,6 +245,7 @@ animation_storyboard_load (Animation           *animation,
                            AnimationStoryboard *view)
 {
   AnimationAnimatic *animatic = ANIMATION_ANIMATIC (animation);
+  GtkWidget         *layout;
   gint              *layers;
   gint32             image_id;
   gint               n_images;
@@ -244,8 +255,12 @@ animation_storyboard_load (Animation           *animation,
   image_id = gimp_image_duplicate (image_id);
   gimp_image_undo_disable (image_id);
 
+  /* The actual layout is the grand-child. */
+  layout = gtk_bin_get_child (GTK_BIN (view));
+  layout = gtk_bin_get_child (GTK_BIN (layout));
+
   /* Cleaning previous loads. */
-  gtk_container_foreach (GTK_CONTAINER (view),
+  gtk_container_foreach (GTK_CONTAINER (layout),
                          (GtkCallback) gtk_widget_destroy,
                          NULL);
   if (view->priv->panel_buttons)
@@ -268,7 +283,7 @@ animation_storyboard_load (Animation           *animation,
   layers = gimp_image_get_layers (image_id,
                                   &n_images);
 
-  gtk_table_resize (GTK_TABLE (view),
+  gtk_table_resize (GTK_TABLE (layout),
                     5 * n_images,
                     9);
 
@@ -288,7 +303,7 @@ animation_storyboard_load (Animation           *animation,
                                 0.5, 0.5);
       gtk_button_set_relief (GTK_BUTTON (panel_button),
                              GTK_RELIEF_NONE);
-      gtk_table_attach (GTK_TABLE (view),
+      gtk_table_attach (GTK_TABLE (layout),
                         panel_button, 0, 4,
                         5 * panel_num,
                         5 * (panel_num + 1),
@@ -321,7 +336,7 @@ animation_storyboard_load (Animation           *animation,
       comment = gtk_text_view_new ();
       g_object_set_data (G_OBJECT (comment), "panel-num",
                          GINT_TO_POINTER (panel_num));
-      gtk_table_attach (GTK_TABLE (view),
+      gtk_table_attach (GTK_TABLE (layout),
                         comment, 5, 9,
                         5 * panel_num,
                         5 * (panel_num + 1),
@@ -371,7 +386,7 @@ animation_storyboard_load (Animation           *animation,
       /* Allowing non-numeric text to type "ms" or "s". */
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (duration), FALSE);
 
-      gtk_table_attach (GTK_TABLE (view),
+      gtk_table_attach (GTK_TABLE (layout),
                         duration, 4, 5,
                         5 * panel_num + 1,
                         5 * panel_num + 2,
@@ -393,7 +408,7 @@ animation_storyboard_load (Animation           *animation,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (disposal), image);
       gtk_widget_show (image);
-      gtk_table_attach (GTK_TABLE (view),
+      gtk_table_attach (GTK_TABLE (layout),
                         disposal, 4, 5,
                         5 * panel_num + 2,
                         5 * panel_num + 3,
@@ -440,6 +455,7 @@ animation_storyboard_rendered (AnimationPlayback   *playback,
                             view->priv->current_panel);
   gtk_button_set_relief (GTK_BUTTON (button),
                          GTK_RELIEF_NORMAL);
+  show_scrolled_child (GTK_SCROLLED_WINDOW (view), button);
 }
 
 static void
