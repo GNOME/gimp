@@ -67,6 +67,14 @@ void          animation_cel_animation_set_duration    (AnimationCelAnimation *an
                                                        gint                   duration);
 
 gint          animation_cel_animation_get_levels      (AnimationCelAnimation *animation);
+gint          animation_cel_animation_level_up        (AnimationCelAnimation *animation,
+                                                       gint                   level);
+gint          animation_cel_animation_level_down      (AnimationCelAnimation *animation,
+                                                       gint                   level);
+gboolean      animation_cel_animation_level_delete    (AnimationCelAnimation *animation,
+                                                       gint                   level);
+gboolean      animation_cel_animation_level_add       (AnimationCelAnimation *animation,
+                                                       gint                   level);
 
 void          animation_cel_animation_set_track_title (AnimationCelAnimation *animation,
                                                        gint                   level,

@@ -351,6 +351,125 @@ animation_cel_animation_get_levels (AnimationCelAnimation *animation)
   return g_list_length (animation->priv->tracks);
 }
 
+gint
+animation_cel_animation_level_up (AnimationCelAnimation *animation,
+                                  gint                   level)
+{
+  gint tracks_n = g_list_length (animation->priv->tracks);
+
+  g_return_val_if_fail (level >= 0 && level < tracks_n, level);
+
+  if (level < tracks_n - 1)
+    {
+      GList *item = g_list_nth (animation->priv->tracks, level);
+      GList *prev = item->prev;
+      GList *next = item->next;
+      Track *track;
+      GList *iter;
+      gint   i;
+
+      if (prev)
+        prev->next = next;
+      else
+        animation->priv->tracks = next;
+      next->prev = prev;
+      item->prev = next;
+      item->next = next->next;
+      next->next = item;
+
+      level++;
+
+      track = item->data;
+      iter  = track->frames;
+      for (i = 0; iter; iter = iter->next, i++)
+        {
+          g_signal_emit_by_name (animation, "loading",
+                                 (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
+
+          if (GPOINTER_TO_INT (iter->data))
+            {
+              /* Only cache if the track had contents for this frame. */
+              animation_cel_animation_cache (animation, i);
+            }
+        }
+      g_signal_emit_by_name (animation, "loaded");
+    }
+
+  return level;
+}
+
+gint
+animation_cel_animation_level_down (AnimationCelAnimation *animation,
+                                    gint                   level)
+{
+  gint tracks_n = g_list_length (animation->priv->tracks);
+
+  g_return_val_if_fail (level >= 0 && level < tracks_n, level);
+
+  if (level > 0)
+    {
+      GList *item = g_list_nth (animation->priv->tracks, level);
+      GList *prev = item->prev;
+      GList *next = item->next;
+      Track *track;
+      GList *iter;
+      gint   i;
+
+      if (! prev->prev)
+        animation->priv->tracks = item;
+      if (next)
+        next->prev = prev;
+      prev->next = next;
+      item->next = prev;
+      item->prev = prev->prev;
+      prev->prev = item;
+
+      level--;
+
+      track = item->data;
+      iter  = track->frames;
+      for (i = 0; iter; iter = iter->next, i++)
+        {
+          g_signal_emit_by_name (animation, "loading",
+                                 (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
+
+          if (GPOINTER_TO_INT (iter->data))
+            {
+              /* Only cache if the track had contents for this frame. */
+              animation_cel_animation_cache (animation, i);
+            }
+        }
+      g_signal_emit_by_name (animation, "loaded");
+    }
+
+  return level;
+}
+
+gboolean
+animation_cel_animation_level_delete (AnimationCelAnimation *animation,
+                                      gint                   level)
+{
+  /* XXX no implementation yet. */
+  return FALSE;
+}
+
+gboolean
+animation_cel_animation_level_add (AnimationCelAnimation *animation,
+                                   gint                   level)
+{
+  Track *track;
+  gint   tracks_n = g_list_length (animation->priv->tracks);
+
+  g_return_val_if_fail (level >= 0 && level <= tracks_n, FALSE);
+
+  track = g_new0 (Track, 1);
+  track->title = g_strdup (_("Name me"));
+  animation->priv->tracks = g_list_insert (animation->priv->tracks,
+                                           track, level);
+
+  return TRUE;
+}
+
 const gchar *
 animation_cel_animation_get_track_title (AnimationCelAnimation *animation,
                                          gint                   level)
