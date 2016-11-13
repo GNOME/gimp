@@ -65,6 +65,8 @@ struct _AnimationDialogPrivate
   AnimationPlayback *playback;
   gdouble            zoom;
 
+  gint               revert_position;
+
   /* GUI */
   GtkWidget         *play_bar;
   GtkWidget         *progress_bar;
@@ -263,10 +265,7 @@ static gboolean    progress_button           (GtkWidget        *widget,
                                               GdkEventButton   *event,
                                               AnimationDialog  *dialog);
 static gboolean    progress_entered          (GtkWidget        *widget,
-                                              GdkEventCrossing *event,
-                                              AnimationDialog  *dialog);
-static gboolean    progress_motion           (GtkWidget        *widget,
-                                              GdkEventMotion   *event,
+                                              GdkEvent         *event,
                                               AnimationDialog  *dialog);
 static gboolean    progress_left             (GtkWidget        *widget,
                                               GdkEventCrossing *event,
@@ -332,6 +331,7 @@ animation_dialog_init (AnimationDialog *dialog)
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
 
   priv->playback = animation_playback_new ();
+  priv->revert_position = -1;
 }
 
 /**** Public Functions ****/
@@ -768,11 +768,11 @@ animation_dialog_constructed (GObject *object)
   g_signal_connect (priv->progress, "enter-notify-event",
                     G_CALLBACK (progress_entered),
                     dialog);
+  g_signal_connect (priv->progress, "motion-notify-event",
+                    G_CALLBACK (progress_entered),
+                    dialog);
   g_signal_connect (priv->progress, "leave-notify-event",
                     G_CALLBACK (progress_left),
-                    dialog);
-  g_signal_connect (priv->progress, "motion-notify-event",
-                    G_CALLBACK (progress_motion),
                     dialog);
   g_signal_connect (priv->progress, "button-press-event",
                     G_CALLBACK (progress_button),
@@ -1226,9 +1226,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                    G_CALLBACK (progress_left),
                                    dialog);
   g_signal_handlers_block_by_func (priv->progress,
-                                   G_CALLBACK (progress_motion),
-                                   dialog);
-  g_signal_handlers_block_by_func (priv->progress,
                                    G_CALLBACK (progress_button),
                                    dialog);
 
@@ -1286,9 +1283,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      dialog);
   g_signal_handlers_unblock_by_func (priv->progress,
                                      G_CALLBACK (progress_left),
-                                     dialog);
-  g_signal_handlers_unblock_by_func (priv->progress,
-                                     G_CALLBACK (progress_motion),
                                      dialog);
   g_signal_handlers_unblock_by_func (priv->progress,
                                      G_CALLBACK (progress_button),
@@ -2645,6 +2639,8 @@ progress_button (GtkWidget       *widget,
                        ((gdouble) duration - 0.99)));
 
       animation_playback_jump (priv->playback, frame);
+      /* Clicking set this position as the new fixed one. */
+      priv->revert_position = frame;
     }
 
   return FALSE;
@@ -2652,43 +2648,35 @@ progress_button (GtkWidget       *widget,
 
 static gboolean
 progress_entered (GtkWidget        *widget,
-                  GdkEventCrossing *event,
+                  GdkEvent         *event,
                   AnimationDialog  *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   GtkAllocation           allocation;
   gdouble                 duration;
   gint                    frame;
+  gint                    x;
 
+  switch (event->type)
+    {
+    case GDK_MOTION_NOTIFY:
+      x = ((GdkEventMotion*) event)->x;
+      break;
+    case GDK_ENTER_NOTIFY:
+      x = ((GdkEventCrossing*) event)->x;
+      priv->revert_position = animation_playback_get_position (priv->playback);
+      break;
+    default:
+      /* Should not happen. */
+      return FALSE;
+    }
   gtk_widget_get_allocation (widget, &allocation);
   duration = (gdouble) animation_get_duration (priv->animation);
 
-  frame = (gint) (event->x /
-                  ((gdouble) allocation.width /
-                   ((gdouble) duration - 0.99)));
+  frame = (gint) (x / ((gdouble) allocation.width /
+                       ((gdouble) duration - 0.99)));
 
-  show_goto_progress (dialog, frame);
-
-  return FALSE;
-}
-
-static gboolean
-progress_motion (GtkWidget       *widget,
-                 GdkEventMotion  *event,
-                 AnimationDialog *dialog)
-{
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GtkAllocation  allocation;
-  gdouble        duration;
-  gint           frame;
-
-  gtk_widget_get_allocation (widget, &allocation);
-  duration = (gdouble) animation_get_duration (priv->animation);
-
-  frame = (gint) (event->x /
-                  ((gdouble) allocation.width /
-                   ((gdouble) duration - 0.99)));
-
+  animation_playback_jump (priv->playback, frame);
   show_goto_progress (dialog, frame);
 
   return FALSE;
@@ -2699,6 +2687,13 @@ progress_left (GtkWidget        *widget,
                GdkEventCrossing *event,
                AnimationDialog  *dialog)
 {
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+
+  if (priv->revert_position >= 0)
+    animation_playback_jump (priv->playback,
+                             priv->revert_position);
+  priv->revert_position = -1;
+
   show_playing_progress (dialog);
 
   return FALSE;
