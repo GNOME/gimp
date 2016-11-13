@@ -78,16 +78,18 @@ static void    animation_xsheet_get_property (GObject      *object,
 static void    animation_xsheet_finalize     (GObject      *object);
 
 /* Construction methods */
-static void     animation_xsheet_reset_layout  (AnimationXSheet *xsheet);
-static gboolean animation_xsheet_update_layout (AnimationXSheet *xsheet);
+static void     animation_xsheet_reset_layout  (AnimationXSheet   *xsheet);
+static gboolean animation_xsheet_update_layout (AnimationXSheet   *xsheet);
 
 /* Callbacks on animation. */
-static void     on_animation_loaded            (Animation       *animation,
-                                                AnimationXSheet *xsheet);
+static void     on_animation_loaded            (Animation         *animation,
+                                                AnimationXSheet   *xsheet);
 static void     on_animation_duration_changed  (Animation         *animation,
                                                 gint               duration,
                                                 AnimationXSheet   *xsheet);
 /* Callbacks on playback. */
+static void     on_animation_stopped           (AnimationPlayback *playback,
+                                                AnimationXSheet   *xsheet);
 static void     on_animation_rendered          (AnimationPlayback *animation,
                                                 gint               frame_number,
                                                 GeglBuffer        *buffer,
@@ -127,6 +129,8 @@ static void     on_track_right_clicked               (GtkToolButton   *toolbutto
 static void     animation_xsheet_rename_cel          (AnimationXSheet *xsheet,
                                                       GtkWidget       *cel,
                                                       gboolean         recursively);
+static void     animation_xsheet_jump                (AnimationXSheet *xsheet,
+                                                      gint             position);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -188,6 +192,9 @@ animation_xsheet_new (AnimationCelAnimation *animation,
   ANIMATION_XSHEET (xsheet)->priv->playback = playback;
   g_signal_connect (ANIMATION_XSHEET (xsheet)->priv->playback,
                     "render", G_CALLBACK (on_animation_rendered),
+                    xsheet);
+  g_signal_connect (ANIMATION_XSHEET (xsheet)->priv->playback,
+                    "stop", G_CALLBACK (on_animation_stopped),
                     xsheet);
 
   return xsheet;
@@ -279,6 +286,9 @@ animation_xsheet_finalize (GObject *object)
 
   g_signal_handlers_disconnect_by_func (ANIMATION_XSHEET (xsheet)->priv->playback,
                                         G_CALLBACK (on_animation_rendered),
+                                        xsheet);
+  g_signal_handlers_disconnect_by_func (ANIMATION_XSHEET (xsheet)->priv->playback,
+                                        G_CALLBACK (on_animation_stopped),
                                         xsheet);
   if (xsheet->priv->animation)
     g_object_unref (xsheet->priv->animation);
@@ -842,28 +852,21 @@ on_animation_duration_changed (Animation       *animation,
 }
 
 static void
+on_animation_stopped (AnimationPlayback   *playback,
+                      AnimationXSheet     *xsheet)
+{
+  animation_xsheet_jump (xsheet,
+                         animation_playback_get_position (playback));
+}
+
+static void
 on_animation_rendered (AnimationPlayback *playback,
                        gint               frame_number,
                        GeglBuffer        *buffer,
                        gboolean           must_draw_null,
                        AnimationXSheet   *xsheet)
 {
-  GtkWidget *button;
-
-  button = g_list_nth_data (xsheet->priv->position_buttons,
-                            frame_number);
-  if (xsheet->priv->active_pos_button)
-    {
-      GtkToggleButton *active_button;
-
-      active_button = GTK_TOGGLE_BUTTON (xsheet->priv->active_pos_button);
-      gtk_toggle_button_set_active (active_button, FALSE);
-    }
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                TRUE);
-  xsheet->priv->active_pos_button = button;
-
-  show_scrolled_child (GTK_SCROLLED_WINDOW (xsheet), button);
+  animation_xsheet_jump (xsheet, frame_number);
 }
 
 static gboolean
@@ -1245,5 +1248,30 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
               animation_xsheet_rename_cel (xsheet, next_cel, TRUE);
             }
         }
+    }
+}
+
+static void
+animation_xsheet_jump (AnimationXSheet *xsheet,
+                       gint             position)
+{
+  if (! animation_playback_is_playing (xsheet->priv->playback))
+    {
+      GtkWidget *button;
+
+      button = g_list_nth_data (xsheet->priv->position_buttons,
+                                position);
+      if (xsheet->priv->active_pos_button)
+        {
+          GtkToggleButton *active_button;
+
+          active_button = GTK_TOGGLE_BUTTON (xsheet->priv->active_pos_button);
+          gtk_toggle_button_set_active (active_button, FALSE);
+        }
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                    TRUE);
+      xsheet->priv->active_pos_button = button;
+
+      show_scrolled_child (GTK_SCROLLED_WINDOW (xsheet), button);
     }
 }

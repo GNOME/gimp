@@ -68,6 +68,8 @@ static void animation_storyboard_finalize              (GObject             *obj
 /* Callbacks on animation */
 static void animation_storyboard_load                  (Animation           *animation,
                                                         AnimationStoryboard *view);
+static void animation_storyboard_stopped               (AnimationPlayback   *playback,
+                                                        AnimationStoryboard *view);
 static void animation_storyboard_rendered              (AnimationPlayback   *playback,
                                                         gint                 frame_number,
                                                         GeglBuffer          *buffer,
@@ -86,6 +88,10 @@ static void animation_storyboard_disposal_toggled      (GtkToggleButton     *but
                                                         AnimationAnimatic   *animatic);
 static void animation_storyboard_button_clicked        (GtkWidget           *widget,
                                                         AnimationStoryboard *storyboard);
+
+/* Utils */
+static void animation_storyboard_jump                  (AnimationStoryboard *view,
+                                                        gint                 panel);
 
 G_DEFINE_TYPE (AnimationStoryboard, animation_storyboard, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -427,7 +433,23 @@ animation_storyboard_load (Animation           *animation,
   g_signal_connect (view->priv->playback, "render",
                     (GCallback) animation_storyboard_rendered,
                     view);
+  g_signal_connect (view->priv->playback, "stop",
+                    (GCallback) animation_storyboard_stopped,
+                    view);
   gimp_image_delete (image_id);
+}
+
+static void
+animation_storyboard_stopped (AnimationPlayback   *playback,
+                              AnimationStoryboard *view)
+{
+  gint position;
+  gint panel;
+
+  position = animation_playback_get_position (playback);
+  panel = animation_animatic_get_panel (view->priv->animation,
+                                        position);
+  animation_storyboard_jump (view, panel);
 }
 
 static void
@@ -437,25 +459,11 @@ animation_storyboard_rendered (AnimationPlayback   *playback,
                                gboolean             must_draw_null,
                                AnimationStoryboard *view)
 {
-  GtkWidget *button;
-  gint       panel;
+  gint panel;
 
   panel = animation_animatic_get_panel (view->priv->animation,
                                         frame_number);
-  if (view->priv->current_panel >= 0)
-    {
-      button = g_list_nth_data (view->priv->panel_buttons,
-                                view->priv->current_panel);
-      gtk_button_set_relief (GTK_BUTTON (button),
-                             GTK_RELIEF_NONE);
-    }
-
-  view->priv->current_panel = panel;
-  button = g_list_nth_data (view->priv->panel_buttons,
-                            view->priv->current_panel);
-  gtk_button_set_relief (GTK_BUTTON (button),
-                         GTK_RELIEF_NORMAL);
-  show_scrolled_child (GTK_SCROLLED_WINDOW (view), button);
+  animation_storyboard_jump (view, panel);
 }
 
 static void
@@ -563,4 +571,30 @@ animation_storyboard_button_clicked (GtkWidget           *widget,
   position = animation_animatic_get_position (storyboard->priv->animation,
                                               GPOINTER_TO_INT (panel_num));
   animation_playback_jump (storyboard->priv->playback, position);
+}
+
+static void
+animation_storyboard_jump (AnimationStoryboard *view,
+                           gint                 panel)
+{
+  /* Don't jump while playing. This is too disturbing. */
+  if (! animation_playback_is_playing (view->priv->playback))
+    {
+      GtkWidget *button;
+
+      if (view->priv->current_panel >= 0)
+        {
+          button = g_list_nth_data (view->priv->panel_buttons,
+                                    view->priv->current_panel);
+          gtk_button_set_relief (GTK_BUTTON (button),
+                                 GTK_RELIEF_NONE);
+        }
+
+      view->priv->current_panel = panel;
+      button = g_list_nth_data (view->priv->panel_buttons,
+                                view->priv->current_panel);
+      gtk_button_set_relief (GTK_BUTTON (button),
+                             GTK_RELIEF_NORMAL);
+      show_scrolled_child (GTK_SCROLLED_WINDOW (view), button);
+    }
 }
