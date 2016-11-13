@@ -308,11 +308,14 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   GtkWidget *frame;
   GtkWidget *label;
   GtkWidget *comment_field;
+  gdouble    framerate;
   GList     *iter;
   gint       n_tracks;
   gint       n_frames;
   gint       i;
   gint       j;
+
+  framerate = animation_get_framerate (ANIMATION (xsheet->priv->animation));
 
   gtk_container_foreach (GTK_CONTAINER (xsheet->priv->track_layout),
                          (GtkCallback) gtk_widget_destroy,
@@ -356,6 +359,7 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
       const gchar   *comment;
       gchar         *num_str;
 
+      /* Position button. */
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
       gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
@@ -379,6 +383,25 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 
       gtk_widget_show (label);
       gtk_widget_show (frame);
+
+      /* Separator line every second (with round framerate only). */
+      if (framerate == (gdouble) (gint) framerate &&
+          i != 0                                  &&
+          i % ((gint) framerate) == 0)
+        {
+          GtkWidget *align;
+          GtkWidget *separator;
+
+          align = gtk_alignment_new (0.5, 0.0, 1.0, 0.2);
+          gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                            align, 0, n_tracks * 9 + 6, i + 2, i + 3,
+                            GTK_FILL, GTK_FILL, 0, 0);
+          gtk_widget_show (align);
+
+          separator = gtk_hseparator_new ();
+          gtk_container_add (GTK_CONTAINER (align), separator);
+          gtk_widget_show (separator);
+        }
 
       for (j = 0; j < n_tracks; j++)
         {
