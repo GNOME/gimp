@@ -96,6 +96,38 @@ map_hue (GimpHueSaturationConfig *config,
 }
 
 static inline gdouble
+map_hue_overlap (GimpHueSaturationConfig *config,
+                 GimpHueRange             primary_range,
+                 GimpHueRange             secondary_range,
+                 gdouble                  value,
+                 gdouble                  primary_intensity,
+                 gdouble                  secondary_intensity)
+{
+  /*  When calculating an overlap between two ranges, interpolate the
+   *  hue adjustment from config->hue[primary_range] and
+   *  config->hue[secondary_range] BEFORE mapping it to the input
+   *  value.  This fixes odd edge cases where only one of the ranges
+   *  crosses the red/magenta wraparound (bug #527085), or if
+   *  adjustments to different channels yield more than 180 degree
+   *  difference from each other. (Why anyone would do that is beyond
+   *  me, but still.)
+   *
+   *  See bugs #527085 and #644032 for examples of such cases.
+   */
+  gdouble v = config->hue[primary_range]   * primary_intensity +
+              config->hue[secondary_range] * secondary_intensity;
+
+  value += (config->hue[GIMP_ALL_HUES] + v) / 2.0;
+
+  if (value < 0)
+    return value + 1.0;
+  else if (value > 1.0)
+    return value - 1.0;
+  else
+    return value;
+}
+
+static inline gdouble
 map_saturation (GimpHueSaturationConfig *config,
                 GimpHueRange             range,
                 gdouble                  value)
@@ -213,28 +245,8 @@ gimp_operation_hue_saturation_process (GeglOperation       *operation,
 
       if (use_secondary_hue)
         {
-          gdouble mapped_primary_hue;
-          gdouble mapped_secondary_hue;
-          gdouble diff;
-
-          mapped_primary_hue   = map_hue (config, hue,           hsl.h);
-          mapped_secondary_hue = map_hue (config, secondary_hue, hsl.h);
-
-          /* Find nearest hue on the circle between primary and
-           * secondary hue
-           */
-          diff = mapped_primary_hue - mapped_secondary_hue;
-          if (diff < -0.5)
-            {
-              mapped_secondary_hue -= 1.0;
-            }
-          else if (diff >= 0.5)
-            {
-              mapped_secondary_hue += 1.0;
-            }
-
-          hsl.h = (mapped_primary_hue   * primary_intensity +
-                   mapped_secondary_hue * secondary_intensity);
+          hsl.h = map_hue_overlap (config, hue, secondary_hue, hsl.h,
+                                   primary_intensity, secondary_intensity);
 
           hsl.s = (map_saturation (config, hue,           hsl.s) * primary_intensity +
                    map_saturation (config, secondary_hue, hsl.s) * secondary_intensity);
