@@ -195,7 +195,7 @@ is_script (const gchar *filename)
   static gchar **exts = NULL;
 
   const gchar   *ext = strrchr (filename, '.');
-  gchar         *pathext;
+  const gchar   *pathext;
   gint           i;
 
   if (exts == NULL)
