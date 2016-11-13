@@ -29,7 +29,7 @@
 #include "animation-utils.h"
 
 #include "core/animation.h"
-#include "core/animationanimatic.h"
+#include "core/animation-animatic.h"
 #include "core/animation-celanimation.h"
 #include "core/animation-playback.h"
 

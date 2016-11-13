@@ -24,7 +24,7 @@
 #include <libgimp/stdplugins-intl.h>
 
 #include "animation-utils.h"
-#include "animationanimatic.h"
+#include "animation-animatic.h"
 
 typedef enum
 {

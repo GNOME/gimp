@@ -45,8 +45,8 @@ LDADD = \
 animation_play_SOURCES = \
 	core/animation.h				\
 	core/animation.c				\
-	core/animationanimatic.h		\
-	core/animationanimatic.c		\
+	core/animation-animatic.h		\
+	core/animation-animatic.c		\
 	core/animation-celanimation.h	\
 	core/animation-celanimation.c	\
 	core/animation-playback.h		\

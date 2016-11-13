@@ -27,7 +27,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "core/animationanimatic.h"
+#include "core/animation-animatic.h"
 #include "core/animation-playback.h"
 
 #include "animation-storyboard.h"

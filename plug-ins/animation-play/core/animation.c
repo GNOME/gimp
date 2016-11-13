@@ -28,7 +28,7 @@
 #include "animation-utils.h"
 
 #include "animation.h"
-#include "animationanimatic.h"
+#include "animation-animatic.h"
 #include "animation-celanimation.h"
 
 /* Settings we cache assuming they may be the user's
