@@ -58,7 +58,6 @@
 
 #define PLUG_IN_IMAGE_PROC     "plug-in-image-attributes-viewer"
 #define PLUG_IN_LAYER_PROC     "plug-in-layer-attributes-viewer"
-#define PLUG_IN_CHANNEL_PROC   "plug-in-channel-attributes-viewer"
 #define PLUG_IN_HELP           "plug-in-attributes-viewer"
 #define PLUG_IN_BINARY         "attributes"
 
@@ -160,13 +159,6 @@ query (void)
     { GIMP_PDB_LAYER, "layer",    "Input layer"                      }
   };
 
-  static const GimpParamDef channel_attribs_args[] =
-  {
-    { GIMP_PDB_INT32,   "run-mode",   "Run mode { RUN-INTERACTIVE (0) }" },
-    { GIMP_PDB_IMAGE,   "image",      "Input image"                      },
-    { GIMP_PDB_CHANNEL, "channel",    "Input channel"                    }
-  };
-
   gimp_install_procedure (PLUG_IN_IMAGE_PROC,
                           N_("View attributes (Exif, IPTC, XMP, ...)"),
                           "View attributes information attached to the "
@@ -205,24 +197,6 @@ query (void)
   gimp_plugin_icon_register (PLUG_IN_LAYER_PROC, GIMP_ICON_TYPE_ICON_NAME,
                              (const guint8 *) GIMP_STOCK_IMAGE_METADATA); 
 
-  gimp_install_procedure (PLUG_IN_CHANNEL_PROC,
-                          N_("View attributes (Exif, IPTC, XMP, ...)"),
-                          "View attributes information attached to the "
-                          "current channel.  This can include Exif, IPTC, "
-                          "XMP and/or other information.",
-                          "Hartmut Kuhse",
-                          "Hartmut Kuhse",
-                          "2014",
-                          N_("Channel Attributes"),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (channel_attribs_args), 0,
-                          channel_attribs_args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_CHANNEL_PROC, "<Channels>");
-  
-  gimp_plugin_icon_register (PLUG_IN_CHANNEL_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_STOCK_IMAGE_METADATA); 
 }
 
 static void
@@ -262,15 +236,6 @@ run (const gchar      *name,
 
       attributes = gimp_item_get_attributes (item_ID);
       source = ATT_LAYER;
-
-      status = GIMP_PDB_SUCCESS;
-    }
-  else if (! strcmp (name, PLUG_IN_CHANNEL_PROC))
-    {
-      item_ID = param[2].data.d_channel;
-
-      attributes = gimp_item_get_attributes (item_ID);
-      source = ATT_CHANNEL;
 
       status = GIMP_PDB_SUCCESS;
     }
@@ -357,13 +322,6 @@ attributes_dialog (gint32           item_id,
       item_name = gimp_item_get_name (item_id);
       header  = g_strdup_printf ("Layer");
       role  = g_strdup_printf ("gimp-layer-attributes-dialog");
-      pixbuf = gimp_drawable_get_thumbnail (item_id, THUMB_SIZE, THUMB_SIZE,
-                                            GIMP_PIXBUF_SMALL_CHECKS);
-      break;
-    case ATT_CHANNEL:
-      item_name = gimp_item_get_name (item_id);
-      header  = g_strdup_printf ("Channel");
-      role  = g_strdup_printf ("gimp-channel-attributes-dialog");
       pixbuf = gimp_drawable_get_thumbnail (item_id, THUMB_SIZE, THUMB_SIZE,
                                             GIMP_PIXBUF_SMALL_CHECKS);
       break;
