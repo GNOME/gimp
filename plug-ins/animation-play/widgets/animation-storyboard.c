@@ -205,8 +205,8 @@ animation_storyboard_finalize (GObject *object)
   AnimationStoryboard *view = ANIMATION_STORYBOARD (object);
 
   g_signal_handlers_disconnect_by_func (view->priv->playback,
-                    (GCallback) animation_storyboard_rendered,
-                    view);
+                                        (GCallback) animation_storyboard_rendered,
+                                        view);
   g_object_unref (view->priv->animation);
   if (view->priv->panel_buttons)
     {
@@ -270,13 +270,12 @@ animation_storyboard_load (Animation           *animation,
 
   gtk_table_resize (GTK_TABLE (view),
                     5 * n_images,
-                    11);
+                    9);
 
   for (i = 0; i < n_images; i++)
     {
       GdkPixbuf *thumbnail;
       GtkWidget *panel_button;
-      GtkWidget *event_box;
       GtkWidget *image;
       GtkWidget *comment;
       GtkWidget *duration;
@@ -285,10 +284,12 @@ animation_storyboard_load (Animation           *animation,
       gint       panel_num = n_images - i - 1;
 
       panel_button = gtk_button_new ();
+      gtk_button_set_alignment (GTK_BUTTON (panel_button),
+                                0.5, 0.5);
       gtk_button_set_relief (GTK_BUTTON (panel_button),
                              GTK_RELIEF_NONE);
       gtk_table_attach (GTK_TABLE (view),
-                        panel_button, 0, 1,
+                        panel_button, 0, 4,
                         5 * panel_num,
                         5 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
@@ -304,16 +305,6 @@ animation_storyboard_load (Animation           *animation,
                                                   panel_button);
       gtk_widget_show (panel_button);
 
-      event_box = gtk_event_box_new ();
-      gtk_table_attach (GTK_TABLE (view),
-                        event_box, 1, 5,
-                        5 * panel_num,
-                        5 * (panel_num + 1),
-                        GTK_EXPAND | GTK_FILL,
-                        GTK_SHRINK,
-                        1, 1);
-      gtk_widget_show (event_box);
-
       gimp_layer_resize_to_image_size (layers[i]);
       thumbnail = gimp_drawable_get_thumbnail (layers[i], 250, 250,
                                                GIMP_PIXBUF_SMALL_CHECKS);
@@ -324,14 +315,14 @@ animation_storyboard_load (Animation           *animation,
        * and the image grows (the thumbnail right now stays as fixed size). */
       gtk_misc_set_alignment (GTK_MISC (image), 1.0, 0.0);
 
-      gtk_container_add (GTK_CONTAINER (event_box), image);
+      gtk_container_add (GTK_CONTAINER (panel_button), image);
       gtk_widget_show (image);
 
       comment = gtk_text_view_new ();
       g_object_set_data (G_OBJECT (comment), "panel-num",
                          GINT_TO_POINTER (panel_num));
       gtk_table_attach (GTK_TABLE (view),
-                        comment, 6, 11,
+                        comment, 5, 9,
                         5 * panel_num,
                         5 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
@@ -381,7 +372,7 @@ animation_storyboard_load (Animation           *animation,
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (duration), FALSE);
 
       gtk_table_attach (GTK_TABLE (view),
-                        duration, 5, 6,
+                        duration, 4, 5,
                         5 * panel_num + 1,
                         5 * panel_num + 2,
                         0, /* Do not expand nor fill, nor shrink. */
@@ -403,7 +394,7 @@ animation_storyboard_load (Animation           *animation,
       gtk_container_add (GTK_CONTAINER (disposal), image);
       gtk_widget_show (image);
       gtk_table_attach (GTK_TABLE (view),
-                        disposal, 5, 6,
+                        disposal, 4, 5,
                         5 * panel_num + 2,
                         5 * panel_num + 3,
                         GTK_EXPAND, GTK_EXPAND,
@@ -432,7 +423,6 @@ animation_storyboard_rendered (AnimationPlayback   *playback,
                                AnimationStoryboard *view)
 {
   GtkWidget *button;
-  GtkWidget *arrow;
   gint       panel;
 
   panel = animation_animatic_get_panel (view->priv->animation,
@@ -441,17 +431,15 @@ animation_storyboard_rendered (AnimationPlayback   *playback,
     {
       button = g_list_nth_data (view->priv->panel_buttons,
                                 view->priv->current_panel);
-      gtk_container_foreach (GTK_CONTAINER (button),
-                             (GtkCallback) gtk_widget_destroy,
-                             NULL);
+      gtk_button_set_relief (GTK_BUTTON (button),
+                             GTK_RELIEF_NONE);
     }
 
   view->priv->current_panel = panel;
   button = g_list_nth_data (view->priv->panel_buttons,
                             view->priv->current_panel);
-  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_NONE);
-  gtk_container_add (GTK_CONTAINER (button), arrow);
-  gtk_widget_show (arrow);
+  gtk_button_set_relief (GTK_BUTTON (button),
+                         GTK_RELIEF_NORMAL);
 }
 
 static void
