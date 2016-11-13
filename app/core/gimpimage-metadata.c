@@ -33,66 +33,39 @@
 /* public functions */
 
 
-//void
-//gimp_image_set_metadata (GimpImage    *image,
-//                         GimpMetadata *metadata,
-//                         gboolean      push_undo)
-//{
-//  GimpImagePrivate *private;
-//
-//  g_return_if_fail (GIMP_IS_IMAGE (image));
-//
-//  private = GIMP_IMAGE_GET_PRIVATE (image);
-//
-//  if (metadata != private->metadata)
-//    {
-//      if (push_undo)
-//        gimp_image_undo_push_image_metadata (image, NULL);
-//
-//      if (private->metadata)
-//        g_object_unref (private->metadata);
-//
-//      private->metadata = metadata;
-//
-//      if (private->metadata)
-//        {
-//          gdouble xres, yres;
-//
-//          g_object_ref (private->metadata);
-//
-//          gimp_metadata_set_pixel_size (metadata,
-//                                        gimp_image_get_width  (image),
-//                                        gimp_image_get_height (image));
-//
-//          switch (gimp_image_get_component_type (image))
-//            {
-//            case GIMP_COMPONENT_TYPE_U8:
-//              gimp_metadata_set_bits_per_sample (metadata, 8);
-//              break;
-//
-//            case GIMP_COMPONENT_TYPE_U16:
-//            case GIMP_COMPONENT_TYPE_HALF:
-//              gimp_metadata_set_bits_per_sample (metadata, 16);
-//              break;
-//
-//            case GIMP_COMPONENT_TYPE_U32:
-//            case GIMP_COMPONENT_TYPE_FLOAT:
-//              gimp_metadata_set_bits_per_sample (metadata, 32);
-//              break;
-//
-//            case GIMP_COMPONENT_TYPE_DOUBLE:
-//              gimp_metadata_set_bits_per_sample (metadata, 64);
-//              break;
-//            }
-//
-//          gimp_image_get_resolution (image, &xres, &yres);
-//          gimp_metadata_set_resolution (metadata, xres, yres,
-//                                        gimp_image_get_unit (image));
-//        }
-//
-//      g_object_notify (G_OBJECT (image), "metadata");
-//    }
-//}
+GimpMetadata *
+gimp_image_get_metadata (GimpImage *image)
+{
+  GimpAttributes *attributes = NULL;
+  GimpMetadata   *metadata   = NULL;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  
+  attributes = gimp_image_get_attributes (image);
+  if (attributes)
+  {
+    metadata = gimp_metadata_new ();
+    gimp_attributes_to_metadata (attributes, 
+                                 metadata, 
+                                 "image/any");
+  }
+  return metadata;
+}
+
+void
+gimp_image_set_metadata (GimpImage    *image,
+                         GimpMetadata *metadata,
+                         gboolean      push_undo)
+{
+  GimpAttributes *attributes = NULL;
+
+  attributes = gimp_attributes_from_metadata (NULL, metadata);
+  
+  gimp_image_set_attributes (image, 
+                             attributes, 
+                             push_undo);
+  g_object_unref (attributes);
+}
 
 void
 gimp_image_set_attributes (GimpImage      *image,

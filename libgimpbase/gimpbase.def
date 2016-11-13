@@ -117,12 +117,14 @@ EXPORTS
 	gimp_memsize_to_string
 	gimp_merge_type_get_type
 	gimp_message_handler_type_get_type
+	gimp_metadata_deserialize 
 	gimp_metadata_get_colorspace
 	gimp_metadata_get_resolution
 	gimp_metadata_is_tag_supported
 	gimp_metadata_load_from_file
 	gimp_metadata_new
 	gimp_metadata_save_to_file
+	gimp_metadata_serialize 
 	gimp_metadata_set_bits_per_sample
 	gimp_metadata_set_colorspace
 	gimp_metadata_set_from_exif

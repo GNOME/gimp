@@ -493,7 +493,7 @@ run (const gchar      *name,
            strcmp (name, SAVE2_PROC) == 0 ||
            strcmp (name, SAVE_DEFAULTS_PROC) == 0)
     {
-      GimpAttributes        *attributes;
+      GimpMetadata          *metadata;
       GimpMetadataSaveFlags  metadata_flags;
       gint32                 orig_image_ID;
       gint                   bits_depth;
@@ -529,7 +529,7 @@ run (const gchar      *name,
           break;
         }
 
-      attributes = gimp_image_metadata_save_prepare (orig_image_ID,
+      metadata = gimp_image_metadata_save_prepare (orig_image_ID,
                                                      "image/png",
                                                      &metadata_flags);
 
@@ -615,17 +615,11 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string,
                           image_ID, drawable_ID, orig_image_ID, &bits_depth, &error))
             {
-              if (attributes)
+              if (metadata)
                 {
                   GFile *file;
-                  gchar *val = g_strdup_printf ("%u", (gushort) bits_depth);
 
-                  gimp_attributes_add_attribute (attributes,
-                                                 gimp_attribute_new_string ("Exif.Image.BitsPerSample",
-                                                                             val, TYPE_SHORT)
-                                                );
-
-                  g_free (val);
+                  gimp_metadata_set_bits_per_sample (metadata, 8);
 
                   if (pngvals.save_exif)
                     metadata_flags |= GIMP_METADATA_SAVE_EXIF;
@@ -648,11 +642,12 @@ run (const gchar      *name,
                     metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
+
                   gimp_image_metadata_save_finish (orig_image_ID,
                                                    "image/png",
-                                                   attributes, metadata_flags,
+                                                   metadata, metadata_flags,
                                                    file, NULL);
-                  g_object_unref (attributes);
+                  g_object_unref (metadata);
                   g_object_unref (file);
                 }
 

@@ -262,7 +262,7 @@ run (const gchar      *name,
   else if (strcmp (name, SAVE_PROC) == 0)
     {
       gint32                 drawable_id;
-      GimpAttributes        *attributes;
+      GimpMetadata          *metadata;
       GimpMetadataSaveFlags  metadata_flags;
       GimpExportReturn       export = GIMP_EXPORT_IGNORE;
 
@@ -297,26 +297,26 @@ run (const gchar      *name,
           break;
         }
 
-      attributes = gimp_image_metadata_save_prepare (image_ID,
+      metadata = gimp_image_metadata_save_prepare (image_ID,
                                                    "image/x-psd",
                                                    &metadata_flags);
 
       if (save_image (param[3].data.d_string, image_ID, &error))
         {
-          if (attributes)
+          if (metadata)
             {
               GFile *file;
 
-              gimp_attributes_new_attribute (attributes, "Exif.Image.BitsPerSample", "8", TYPE_SHORT);
+              gimp_metadata_set_bits_per_sample (metadata, 8);
 
               file = g_file_new_for_path (param[3].data.d_string);
               gimp_image_metadata_save_finish (image_ID,
                                                "image/x-psd",
-                                               attributes, metadata_flags,
+                                               metadata, metadata_flags,
                                                file, NULL);
               g_object_unref (file);
 
-              g_object_unref (attributes);
+              g_object_unref (metadata);
             }
 
           values[0].data.d_status = GIMP_PDB_SUCCESS;

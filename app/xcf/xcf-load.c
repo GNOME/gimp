@@ -246,37 +246,53 @@ xcf_load_image (Gimp     *gimp,
         }
     }
 
-  /* check for an attributes parasite */
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
-                                       "gimp-image-attributes");
-  if (parasite)
-    {
-      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
-      GimpAttributes   *attributes;
-      const gchar      *attributes_string;
-
-      attributes_string = (gchar *) gimp_parasite_data (parasite);
-      attributes = gimp_attributes_deserialize (attributes_string);
-
-      if (attributes)
-        {
-          gimp_image_set_attributes (image, attributes, FALSE);
-          g_object_unref (attributes);
-        }
-
-      gimp_parasite_list_remove (private->parasites,
-                                 gimp_parasite_name (parasite));
-    }
-
   /* check for a metadata parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
                                        "gimp-image-metadata");
   if (parasite)
     {
       GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+      GimpMetadata     *metadata;
+      const gchar      *meta_string;
+
+      meta_string = (gchar *) gimp_parasite_data (parasite);
+      metadata = gimp_metadata_deserialize (meta_string);
+
+      if (metadata)
+        {
+          has_metadata = TRUE;
+
+          gimp_image_set_metadata (image, metadata, FALSE);
+          g_object_unref (metadata);
+        }
 
       gimp_parasite_list_remove (private->parasites,
                                  gimp_parasite_name (parasite));
+    }
+  else
+    {
+
+      /* check for an attributes parasite */
+      parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                           "gimp-image-attributes");
+      if (parasite)
+        {
+          GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+          GimpAttributes   *attributes;
+          const gchar      *attributes_string;
+
+          attributes_string = (gchar *) gimp_parasite_data (parasite);
+          attributes = gimp_attributes_deserialize (attributes_string);
+
+          if (attributes)
+            {
+              gimp_image_set_attributes (image, attributes, FALSE);
+              g_object_unref (attributes);
+            }
+
+          gimp_parasite_list_remove (private->parasites,
+                                     gimp_parasite_name (parasite));
+        }
     }
 
   /* migrate the old "exif-data" parasite */

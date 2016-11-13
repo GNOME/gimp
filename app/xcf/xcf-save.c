@@ -341,7 +341,6 @@ xcf_save_image_props (XcfInfo    *info,
   GimpImagePrivate *private             = GIMP_IMAGE_GET_PRIVATE (image);
   GimpParasite     *grid_parasite       = NULL;
   GimpParasite     *meta_parasite       = NULL;
-  GimpParasite     *attributes_parasite = NULL;
   GimpParasite     *compat_parasite     = NULL;
   GimpUnit          unit                = gimp_image_get_unit (image);
   gdouble           xres;
@@ -395,8 +394,10 @@ xcf_save_image_props (XcfInfo    *info,
       gimp_parasite_list_add (private->parasites, grid_parasite);
     }
 
+#if 0
   if (gimp_image_get_attributes (image))
     {
+      GimpParasite   *attributes_parasite = NULL;
       GimpAttributes *attributes = gimp_image_get_attributes (image);
       gchar          *attributes_string;
 
@@ -410,6 +411,25 @@ xcf_save_image_props (XcfInfo    *info,
                                                    attributes_string);
           gimp_parasite_list_add (private->parasites, attributes_parasite);
           g_free (attributes_string);
+        }
+    }
+#endif
+
+  if (gimp_image_get_metadata (image))
+    {
+      GimpMetadata *metadata = gimp_image_get_metadata (image);
+      gchar        *meta_string;
+
+      meta_string = gimp_metadata_serialize (metadata);
+
+      if (meta_string)
+        {
+          meta_parasite = gimp_parasite_new ("gimp-image-metadata",
+                                             GIMP_PARASITE_PERSISTENT,
+                                             strlen (meta_string) + 1,
+                                             meta_string);
+          gimp_parasite_list_add (private->parasites, meta_parasite);
+          g_free (meta_string);
         }
     }
 
@@ -604,6 +624,7 @@ xcf_save_channel_props (XcfInfo      *info,
   guchar            col[3];
   GimpParasite     *attributes_parasite = NULL;
 
+#if 0
   if (gimp_item_get_attributes (GIMP_ITEM (channel)))
     {
       GimpAttributes *attributes = gimp_item_get_attributes (GIMP_ITEM (channel));
@@ -621,6 +642,7 @@ xcf_save_channel_props (XcfInfo      *info,
           g_free (attributes_string);
         }
     }
+#endif
 
   if (channel == gimp_image_get_active_channel (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_CHANNEL, error));

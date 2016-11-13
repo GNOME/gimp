@@ -329,7 +329,7 @@ run (const gchar      *name,
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
 
-      GimpAttributes        *attributes;
+      GimpMetadata          *metadata;
       GimpMetadataSaveFlags  metadata_flags;
       GimpParasite          *parasite;
       gint32                 image      = param[1].data.d_int32;
@@ -359,9 +359,9 @@ run (const gchar      *name,
           break;
         }
 
-      attributes = gimp_image_metadata_save_prepare (orig_image,
-                                                     "image/tiff",
-                                                     &metadata_flags);
+      metadata = gimp_image_metadata_save_prepare (orig_image,
+                                                   "image/tiff",
+                                                   &metadata_flags);
 
       tsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
       tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
@@ -465,18 +465,18 @@ run (const gchar      *name,
                           image, drawable, orig_image, image_comment,
                           &saved_bpp, &error))
             {
-              if (attributes)
+              if (metadata)
                 {
 
                   /* See bug 758909: clear TIFFTAG_MIN/MAXSAMPLEVALUE because
                    * exiv2 saves them with wrong type and the original values
                    * could be invalid, see also bug 761823
                    */
-                  gimp_attributes_remove_attribute (attributes, "Exif.Image.0x0118");
-                  gimp_attributes_remove_attribute (attributes, "Exif.Image.0x0119");
-                  gimp_attributes_remove_attribute (attributes, "Exif.Image.PageNumber");
+                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.0x0118");
+                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.0x0119");
+                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.PageNumber");
 
-                  gimp_attributes_set_bits_per_sample (attributes, saved_bpp);
+                  gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
 
                   if (tsvals.save_exif)
                     metadata_flags |= GIMP_METADATA_SAVE_EXIF;
@@ -498,7 +498,7 @@ run (const gchar      *name,
 
                   gimp_image_metadata_save_finish (image,
                                                    "image/tiff",
-                                                   attributes, metadata_flags,
+                                                   metadata, metadata_flags,
                                                    file, NULL);
                 }
 
@@ -516,8 +516,8 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image);
 
-      if (attributes)
-        g_object_unref (attributes);
+      if (metadata)
+        g_object_unref (metadata);
     }
   else
     {

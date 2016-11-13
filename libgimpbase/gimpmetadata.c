@@ -178,6 +178,290 @@ typedef struct
   GimpMetadata *metadata;
 } GimpMetadataParseData;
 
+static const gchar*
+gimp_metadata_attribute_name_to_value (const gchar **attribute_names,
+                                       const gchar **attribute_values,
+                                       const gchar  *name)
+{
+  while (*attribute_names)
+    {
+      if (! strcmp (*attribute_names, name))
+        {
+          return *attribute_values;
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  return NULL;
+}
+
+static void
+gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
+                                         const gchar         *element_name,
+                                         const gchar        **attribute_names,
+                                         const gchar        **attribute_values,
+                                         gpointer             user_data,
+                                         GError             **error)
+{
+  GimpMetadataParseData *parse_data = user_data;
+
+  if (! strcmp (element_name, "tag"))
+    {
+      const gchar *name;
+      const gchar *encoding;
+
+      name = gimp_metadata_attribute_name_to_value (attribute_names,
+                                                    attribute_values,
+                                                    "name");
+      encoding = gimp_metadata_attribute_name_to_value (attribute_names,
+                                                        attribute_values,
+                                                        "encoding");
+
+      if (! name)
+        {
+          g_set_error (error, gimp_metadata_error_quark (), 1001,
+                       "Element 'tag' does not contain required attribute 'name'.");
+          return;
+        }
+
+      strncpy (parse_data->name, name, sizeof (parse_data->name));
+      parse_data->name[sizeof (parse_data->name) - 1] = 0;
+
+      parse_data->base64 = (encoding && ! strcmp (encoding, "base64"));
+    }
+}
+
+static void
+gimp_metadata_deserialize_end_element (GMarkupParseContext *context,
+                                       const gchar         *element_name,
+                                       gpointer             user_data,
+                                       GError             **error)
+{
+}
+
+static void
+gimp_metadata_deserialize_text (GMarkupParseContext  *context,
+                                const gchar          *text,
+                                gsize                 text_len,
+                                gpointer              user_data,
+                                GError              **error)
+{
+  GimpMetadataParseData *parse_data = user_data;
+  const gchar           *current_element;
+
+  current_element = g_markup_parse_context_get_element (context);
+
+  if (! g_strcmp0 (current_element, "tag"))
+    {
+      gchar *value = g_strndup (text, text_len);
+
+      if (parse_data->base64)
+        {
+          guchar *decoded;
+          gsize   len;
+
+          decoded = g_base64_decode (value, &len);
+
+          if (decoded[len - 1] == '\0')
+            gexiv2_metadata_set_tag_string (parse_data->metadata,
+                                            parse_data->name,
+                                            (const gchar *) decoded);
+
+          g_free (decoded);
+        }
+      else
+        {
+          gexiv2_metadata_set_tag_string (parse_data->metadata,
+                                          parse_data->name,
+                                          value);
+        }
+
+      g_free (value);
+    }
+}
+
+static  void
+gimp_metadata_deserialize_error (GMarkupParseContext *context,
+                                 GError              *error,
+                                 gpointer             user_data)
+{
+  g_printerr ("Metadata parse error: %s\n", error->message);
+}
+
+/**
+ * gimp_metadata_deserialize:
+ * @metadata_xml: A string of serialized metadata XML.
+ *
+ * Deserializes a string of XML that has been created by
+ * gimp_metadata_serialize().
+ *
+ * Return value: The new #GimpMetadata.
+ *
+ * Since: 2.10
+ */
+GimpMetadata *
+gimp_metadata_deserialize (const gchar *metadata_xml)
+{
+  GimpMetadata          *metadata;
+  GMarkupParser          markup_parser;
+  GimpMetadataParseData  parse_data;
+  GMarkupParseContext   *context;
+
+  g_return_val_if_fail (metadata_xml != NULL, NULL);
+
+  metadata = gimp_metadata_new ();
+
+  parse_data.metadata = metadata;
+
+  markup_parser.start_element = gimp_metadata_deserialize_start_element;
+  markup_parser.end_element   = gimp_metadata_deserialize_end_element;
+  markup_parser.text          = gimp_metadata_deserialize_text;
+  markup_parser.passthrough   = NULL;
+  markup_parser.error         = gimp_metadata_deserialize_error;
+
+  context = g_markup_parse_context_new (&markup_parser, 0, &parse_data, NULL);
+
+  g_markup_parse_context_parse (context,
+                                metadata_xml, strlen (metadata_xml),
+                                NULL);
+
+  g_markup_parse_context_unref (context);
+
+  return metadata;
+}
+
+static gchar *
+gimp_metadata_escape (const gchar *name,
+                      const gchar *value,
+                      gboolean    *base64)
+{
+  if (! g_utf8_validate (value, -1, NULL))
+    {
+      gchar *encoded;
+
+      encoded = g_base64_encode ((const guchar *) value, strlen (value) + 1);
+
+      g_printerr ("Invalid UTF-8 in metadata value %s, encoding as base64: %s\n",
+                  name, encoded);
+
+      *base64 = TRUE;
+
+      return encoded;
+    }
+
+  *base64 = FALSE;
+
+  return g_markup_escape_text (value, -1);
+}
+
+static void
+gimp_metadata_append_tag (GString     *string,
+                          const gchar *name,
+                          gchar       *value,
+                          gboolean     base64)
+{
+  if (value)
+    {
+      if (base64)
+        {
+          g_string_append_printf (string, "  <tag name=\"%s\" encoding=\"base64\">%s</tag>\n",
+                                  name, value);
+        }
+      else
+        {
+          g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
+                                  name, value);
+        }
+
+      g_free (value);
+    }
+}
+
+/**
+ * gimp_metadata_serialize:
+ * @metadata: A #GimpMetadata instance.
+ *
+ * Serializes @metadata into an XML string that can later be deserialized
+ * using gimp_metadata_deserialize().
+ *
+ * Return value: The serialized XML string.
+ *
+ * Since: 2.10
+ */
+gchar *
+gimp_metadata_serialize (GimpMetadata *metadata)
+{
+  GString  *string;
+  gchar   **exif_data = NULL;
+  gchar   **iptc_data = NULL;
+  gchar   **xmp_data  = NULL;
+  gchar    *value;
+  gchar    *escaped;
+  gboolean  base64;
+  gint      i;
+
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), NULL);
+
+  string = g_string_new (NULL);
+
+  g_string_append (string, "<?xml version='1.0' encoding='UTF-8'?>\n");
+  g_string_append (string, "<metadata>\n");
+
+  exif_data = gexiv2_metadata_get_exif_tags (metadata);
+
+  if (exif_data)
+    {
+      for (i = 0; exif_data[i] != NULL; i++)
+        {
+          value = gexiv2_metadata_get_tag_string (metadata, exif_data[i]);
+          escaped = gimp_metadata_escape (exif_data[i], value, &base64);
+          g_free (value);
+
+          gimp_metadata_append_tag (string, exif_data[i], escaped, base64);
+        }
+
+      g_strfreev (exif_data);
+    }
+
+  xmp_data = gexiv2_metadata_get_xmp_tags (metadata);
+
+  if (xmp_data)
+    {
+      for (i = 0; xmp_data[i] != NULL; i++)
+        {
+          value = gexiv2_metadata_get_tag_string (metadata, xmp_data[i]);
+          escaped = gimp_metadata_escape (xmp_data[i], value, &base64);
+          g_free (value);
+
+          gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
+        }
+
+      g_strfreev (xmp_data);
+    }
+
+  iptc_data = gexiv2_metadata_get_iptc_tags (metadata);
+
+  if (iptc_data)
+    {
+      for (i = 0; iptc_data[i] != NULL; i++)
+        {
+          value = gexiv2_metadata_get_tag_string (metadata, iptc_data[i]);
+          escaped = gimp_metadata_escape (iptc_data[i], value, &base64);
+          g_free (value);
+
+          gimp_metadata_append_tag (string, iptc_data[i], escaped, base64);
+        }
+
+      g_strfreev (iptc_data);
+    }
+
+  g_string_append (string, "</metadata>\n");
+
+  return g_string_free (string, FALSE);
+}
+
 /**
  * gimp_metadata_load_from_file:
  * @file:  The #GFile to load the metadata from
