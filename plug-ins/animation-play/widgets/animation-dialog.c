@@ -51,7 +51,8 @@ typedef struct
 enum
 {
   PROP_0,
-  PROP_IMAGE
+  PROP_IMAGE,
+  PROP_ANIMATION
 };
 
 typedef struct _AnimationDialogPrivate AnimationDialogPrivate;
@@ -67,20 +68,14 @@ struct _AnimationDialogPrivate
   /* GUI */
   GtkWidget         *play_bar;
   GtkWidget         *progress_bar;
-  GtkWidget         *settings_bar;
-
-  GtkWidget         *animation_type_combo;
-  GtkWidget         *fpscombo;
-  GtkWidget         *duration_box;
-  GtkWidget         *duration_spin;
-  GtkWidget         *zoomcombo;
-  GtkWidget         *proxycombo;
 
   GtkWidget         *progress;
   GtkWidget         *startframe_spin;
   GtkWidget         *endframe_spin;
 
-  GtkWidget         *view_bar;
+  /* Bar above the preview. */
+  GtkWidget         *upper_bar;
+  GtkWidget         *zoomcombo;
   GtkWidget         *refresh;
 
   GtkWidget         *drawing_area;
@@ -94,8 +89,17 @@ struct _AnimationDialogPrivate
   guint              shape_drawing_area_width;
   guint              shape_drawing_area_height;
 
-  /* The hpaned (left is preview, right is layer list. */
-  GtkWidget         *hpaned;
+  /* Notebook on the right (layer list, storyboard, settings). */
+  GtkWidget         *right_notebook;
+
+  /* Notebook: settings. */
+  GtkWidget         *settings;
+  GtkWidget         *animation_type_combo;
+  GtkWidget         *fpscombo;
+  GtkWidget         *duration_spin;
+  GtkWidget         *proxycombo;
+
+  /* Notebook: layer list. */
   GtkWidget         *layer_list;
 
   /* The vpaned (bottom is timeline, above is preview). */
@@ -273,6 +277,14 @@ static void        show_goto_progress        (AnimationDialog  *dialog,
 static void        show_playing_progress     (AnimationDialog  *dialog);
 
 /* Utils */
+static void        inactive_on_loading       (Animation       *animation,
+                                              gdouble          load_rate,
+                                              GtkWidget       *widget);
+static void        active_on_loaded          (Animation       *animation,
+                                              GtkWidget       *widget);
+static void        hide_on_animatic          (AnimationDialog  *dialog,
+                                              GParamSpec       *param_spec,
+                                              GtkWidget        *widget);
 static void        update_progress           (AnimationDialog  *dialog);
 static void        block_ui                  (AnimationDialog  *dialog);
 static gboolean    is_detached               (AnimationDialog  *dialog);
@@ -305,6 +317,11 @@ animation_dialog_class_init (AnimationDialogClass *klass)
                                                      G_MININT, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_ANIMATION,
+                                   g_param_spec_object ("animation",
+                                                        NULL, NULL,
+                                                        ANIMATION_TYPE_ANIMATION,
+                                                        G_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (AnimationDialogPrivate));
 }
@@ -380,8 +397,8 @@ animation_dialog_constructed (GObject *object)
   AnimationDialog        *dialog = ANIMATION_DIALOG (object);
   AnimationDialogPrivate *priv   = GET_PRIVATE (dialog);
   GtkAdjustment          *adjust;
+  GtkWidget              *hpaned;
   GtkWidget              *main_vbox;
-  GtkWidget              *upper_bar;
   GtkWidget              *abox;
   GtkWidget              *vbox;
   GtkWidget              *hbox;
@@ -414,51 +431,65 @@ animation_dialog_constructed (GObject *object)
   priv->ui_manager = ui_manager_new (dialog);
 
   /* Window paned. */
-  priv->hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_container_add (GTK_CONTAINER (dialog), priv->hpaned);
-  gtk_widget_show (priv->hpaned);
+  hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_container_add (GTK_CONTAINER (dialog), hpaned);
+  gtk_widget_show (hpaned);
 
   priv->vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
-  gtk_paned_pack1 (GTK_PANED (priv->hpaned), priv->vpaned, TRUE, TRUE);
+  gtk_paned_pack1 (GTK_PANED (hpaned), priv->vpaned, TRUE, TRUE);
   gtk_widget_show (priv->vpaned);
 
-  /* Playback vertical box. */
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_paned_pack1 (GTK_PANED (priv->vpaned), main_vbox, TRUE, TRUE);
-  gtk_widget_show (main_vbox);
+  priv->right_notebook = gtk_notebook_new ();
+  gtk_paned_pack2 (GTK_PANED (hpaned), priv->right_notebook,
+                   TRUE, TRUE);
+  gtk_widget_show (priv->right_notebook);
 
-  /* Upper Bar */
-  upper_bar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), upper_bar, FALSE, FALSE, 0);
-  gtk_widget_show (upper_bar);
-
-  /* The upper bar is itself paned. */
-  hbox = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_box_pack_start (GTK_BOX (upper_bar), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  /*****************/
-  /* Settings box. */
-  /*****************/
-
-  priv->settings_bar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_paned_add1 (GTK_PANED (hbox), priv->settings_bar);
-  gtk_widget_show (priv->settings_bar);
-
-  /* Settings: expander to display the proxy settings. */
-  widget = gtk_expander_new_with_mnemonic (_("_Proxy"));
-  gtk_expander_set_expanded (GTK_EXPANDER (widget), FALSE);
-
-  gimp_help_set_help_data (widget,
-                           _("Degrade image quality for lower memory footprint"),
-                           NULL);
-
-  gtk_box_pack_end (GTK_BOX (priv->settings_bar), widget,
-                    FALSE, FALSE, 0);
+  /******************\
+  |**** Settings ****|
+  \******************/
+  priv->settings = gtk_table_new (10, 5, FALSE);
+  gtk_notebook_prepend_page (GTK_NOTEBOOK (priv->right_notebook),
+                             priv->settings, NULL);
+  gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (priv->right_notebook),
+                                   priv->settings, _("Settings"));
+  /* Settings: animation type */
+  widget = gtk_label_new (_("Animation type: "));
+  gtk_table_attach (GTK_TABLE (priv->settings), widget,
+                    0, 3, 0, 1, GTK_EXPAND, GTK_SHRINK, 1, 1);
   gtk_widget_show (widget);
 
+  priv->animation_type_combo = gtk_combo_box_text_new ();
+
+  text = _("Animatic");
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->animation_type_combo),
+                                  text);
+  text = _("Cel Animation");
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->animation_type_combo),
+                                  text);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 0);
+
+  g_signal_connect (priv->animation_type_combo, "changed",
+                    G_CALLBACK (animation_type_changed),
+                    dialog);
+
+  gimp_help_set_help_data (priv->animation_type_combo, _("Animation Type"), NULL);
+
+  gtk_table_attach (GTK_TABLE (priv->settings), priv->animation_type_combo,
+                    3, 5, 0, 1, GTK_SHRINK, GTK_SHRINK, 1, 1);
+  gtk_widget_show (priv->animation_type_combo);
+
   /* Settings: proxy. */
+  widget = gtk_label_new (_("Proxy: "));
+  gtk_table_attach (GTK_TABLE (priv->settings), widget,
+                    0, 3, 1, 2, GTK_EXPAND, GTK_SHRINK, 1, 1);
+  gtk_widget_show (widget);
+
   priv->proxycombo = gtk_combo_box_text_new_with_entry ();
+  gimp_help_set_help_data (priv->proxycombo,
+                           _("Degrade image quality for lower memory footprint"),
+                           NULL);
+  gtk_entry_set_width_chars (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
+                             8);
 
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->proxycombo),
                                   "25 %");
@@ -482,37 +513,18 @@ animation_dialog_constructed (GObject *object)
   gimp_help_set_help_data (priv->proxycombo, _("Proxy resolution quality"), NULL);
 
   gtk_widget_show (priv->proxycombo);
-  gtk_container_add (GTK_CONTAINER (widget),
-                     priv->proxycombo);
-
-  /* Settings: duration */
-  priv->duration_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_box_pack_end (GTK_BOX (priv->settings_bar), priv->duration_box, FALSE, FALSE, 0);
-
-  widget = gtk_label_new (_("frames"));
-  gtk_box_pack_end (GTK_BOX (priv->duration_box), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
-
-  adjust = GTK_ADJUSTMENT (gtk_adjustment_new (240.0, 1.0, G_MAXDOUBLE, 1.0, 10.0, 0.0));
-  priv->duration_spin = gtk_spin_button_new (adjust, 0.0, 0.0);
-  gtk_entry_set_width_chars (GTK_ENTRY (priv->duration_spin), 5);
-  gimp_help_set_help_data (priv->duration_spin, _("Duration in frames"), NULL);
-  gtk_box_pack_end (GTK_BOX (priv->duration_box), priv->duration_spin, FALSE, FALSE, 0);
-
-  widget = gtk_label_new (_("Duration:"));
-  gtk_box_pack_end (GTK_BOX (priv->duration_box), widget, FALSE, FALSE, 0);
-  gtk_widget_show (widget);
-
-  g_signal_connect (adjust,
-                    "value-changed",
-                    G_CALLBACK (on_duration_spin_changed),
-                    dialog);
-
-  gtk_widget_show (priv->duration_spin);
-  gtk_widget_show (priv->duration_box);
+  gtk_table_attach (GTK_TABLE (priv->settings), priv->proxycombo,
+                    3, 5, 1, 2, GTK_SHRINK, GTK_SHRINK, 1, 1);
 
   /* Settings: fps */
+  widget = gtk_label_new (_("Framerate: "));
+  gtk_table_attach (GTK_TABLE (priv->settings), widget,
+                    0, 3, 2, 3, GTK_EXPAND, GTK_SHRINK, 1, 1);
+  gtk_widget_show (widget);
+
   priv->fpscombo = gtk_combo_box_text_new_with_entry ();
+  gtk_entry_set_width_chars (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))),
+                             8);
 
   for (index = 0; index < 5; index++)
     {
@@ -534,39 +546,63 @@ animation_dialog_constructed (GObject *object)
 
   gimp_help_set_help_data (priv->fpscombo, _("Frame Rate"), NULL);
 
-  gtk_box_pack_end (GTK_BOX (priv->settings_bar), priv->fpscombo, FALSE, FALSE, 0);
+  gtk_table_attach (GTK_TABLE (priv->settings), priv->fpscombo,
+                    3, 5, 2, 3, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (priv->fpscombo);
 
-  /* Settings: animation type */
-  priv->animation_type_combo = gtk_combo_box_text_new ();
+  /* Settings: duration */
+  widget = gtk_label_new (_("Duration:"));
+  g_signal_connect (dialog, "notify::animation",
+                    G_CALLBACK (hide_on_animatic),
+                    widget);
+  gtk_table_attach (GTK_TABLE (priv->settings), widget,
+                    0, 3, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+  gtk_widget_show (widget);
 
-  text = _("Animatic");
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->animation_type_combo),
-                                  text);
-  text = _("Cel Animation");
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->animation_type_combo),
-                                  text);
-  gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 0);
+  adjust = GTK_ADJUSTMENT (gtk_adjustment_new (240.0, 1.0, G_MAXDOUBLE, 1.0, 10.0, 0.0));
+  priv->duration_spin = gtk_spin_button_new (adjust, 0.0, 0.0);
+  g_signal_connect (dialog, "notify::animation",
+                    G_CALLBACK (hide_on_animatic),
+                    priv->duration_spin);
+  gtk_entry_set_width_chars (GTK_ENTRY (priv->duration_spin), 5);
+  gimp_help_set_help_data (priv->duration_spin, _("Duration in frames"), NULL);
+  gtk_table_attach (GTK_TABLE (priv->settings), priv->duration_spin,
+                    3, 4, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
 
-  g_signal_connect (priv->animation_type_combo, "changed",
-                    G_CALLBACK (animation_type_changed),
+  g_signal_connect (adjust,
+                    "value-changed",
+                    G_CALLBACK (on_duration_spin_changed),
                     dialog);
 
-  gimp_help_set_help_data (priv->animation_type_combo, _("Animation Type"), NULL);
+  gtk_widget_show (priv->duration_spin);
 
-  gtk_box_pack_end (GTK_BOX (priv->settings_bar),
-                    priv->animation_type_combo, FALSE, FALSE, 0);
-  gtk_widget_show (priv->animation_type_combo);
+  widget = gtk_label_new (_("frames"));
+  g_signal_connect (dialog, "notify::animation",
+                    G_CALLBACK (hide_on_animatic),
+                    widget);
+  gtk_table_attach (GTK_TABLE (priv->settings), widget,
+                    4, 5, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+  gtk_widget_show (widget);
+
+  gtk_widget_show (priv->settings);
+  /**** End of Settings ****/
+
+  /* Playback vertical box. */
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_paned_pack1 (GTK_PANED (priv->vpaned), main_vbox, TRUE, TRUE);
+  gtk_widget_show (main_vbox);
 
   /*************/
-  /* View box. */
+  /* Upper bar */
   /*************/
-  priv->view_bar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_paned_pack2 (GTK_PANED (hbox), priv->view_bar, FALSE, TRUE);
-  gtk_widget_show (priv->view_bar);
+  priv->upper_bar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), priv->upper_bar, FALSE, FALSE, 0);
+  gtk_widget_show (priv->upper_bar);
 
-  /* View: zoom. */
+  /* Zoom. */
   priv->zoomcombo = gtk_combo_box_text_new_with_entry ();
+  gtk_entry_set_width_chars (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->zoomcombo))),
+                             5);
   for (index = 0; index < 5; index++)
     {
       text = g_strdup_printf  (_("%.1f %%"), get_zoom (dialog, index) * 100.0);
@@ -587,38 +623,27 @@ animation_dialog_constructed (GObject *object)
 
   gimp_help_set_help_data (priv->zoomcombo, _("Zoom"), NULL);
 
-  gtk_box_pack_end (GTK_BOX (priv->view_bar), priv->zoomcombo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (priv->upper_bar), priv->zoomcombo, FALSE, FALSE, 0);
   gtk_widget_show (priv->zoomcombo);
 
-  /* View: detach. */
+  /* Refresh. */
+  priv->refresh = GTK_WIDGET (gtk_tool_button_new (NULL, N_("Reload the image")));
+
+  gtk_activatable_set_related_action (GTK_ACTIVATABLE (priv->refresh),
+                                      gtk_action_group_get_action (priv->settings_actions, "refresh"));
+
+  gtk_box_pack_end (GTK_BOX (priv->upper_bar), priv->refresh, FALSE, FALSE, 0);
+  gtk_widget_show (priv->refresh);
+
+  /* Detach. */
   widget = GTK_WIDGET (gtk_toggle_tool_button_new ());
   gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (widget), GIMP_ICON_DETACH);
 
   gtk_activatable_set_related_action (GTK_ACTIVATABLE (widget),
                                       gtk_action_group_get_action (priv->view_actions, "detach"));
 
-  gtk_box_pack_end (GTK_BOX (priv->view_bar), widget, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (priv->upper_bar), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
-
-  /***********/
-  /* Various */
-  /***********/
-
-  /* Various: separator for some spacing in the UI. */
-  widget = GTK_WIDGET (gtk_separator_tool_item_new ());
-  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (widget), FALSE);
-  gtk_tool_item_set_expand (GTK_TOOL_ITEM (widget), TRUE);
-  gtk_box_pack_start (GTK_BOX (upper_bar), widget, TRUE, FALSE, 0);
-  gtk_widget_show (widget);
-
-  /* Various: refresh. */
-  priv->refresh = GTK_WIDGET (gtk_tool_button_new (NULL, N_("Reload the image")));
-
-  gtk_activatable_set_related_action (GTK_ACTIVATABLE (priv->refresh),
-                                      gtk_action_group_get_action (priv->settings_actions, "refresh"));
-
-  gtk_box_pack_start (GTK_BOX (upper_bar), priv->refresh, FALSE, FALSE, 0);
-  gtk_widget_show (priv->refresh);
 
   /***********/
   /* Drawing */
@@ -853,6 +878,22 @@ animation_dialog_set_property (GObject      *object,
     case PROP_IMAGE:
       priv->image_id = g_value_get_int (value);
       break;
+    case PROP_ANIMATION:
+      g_clear_object (&priv->animation);
+      priv->animation = g_value_get_object (value);
+      g_signal_connect (priv->animation, "loading",
+                        (GCallback) inactive_on_loading,
+                        priv->settings);
+      g_signal_connect (priv->animation, "loaded",
+                        (GCallback) active_on_loaded,
+                        priv->settings);
+      g_signal_connect (priv->animation, "loading",
+                        (GCallback) inactive_on_loading,
+                        priv->upper_bar);
+      g_signal_connect (priv->animation, "loaded",
+                        (GCallback) active_on_loaded,
+                        priv->upper_bar);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -873,6 +914,9 @@ animation_dialog_get_property (GObject      *object,
     {
     case PROP_IMAGE:
       g_value_set_int (value, priv->image_id);
+      break;
+    case PROP_ANIMATION:
+      g_value_set_object (value, priv->animation);
       break;
 
     default:
@@ -1189,8 +1233,9 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                    G_CALLBACK (progress_button),
                                    dialog);
 
-  g_clear_object (&priv->animation);
-  priv->animation = animation;
+  g_object_set (dialog,
+                "animation", animation,
+                NULL);
 
   /* Settings: proxy image. */
   g_signal_handlers_unblock_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
@@ -1251,27 +1296,21 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      dialog);
 
   /* The right panel. */
-  frame = gtk_paned_get_child2 (GTK_PANED (priv->hpaned));
-  if (frame)
-    {
-      gtk_widget_destroy (frame);
-      priv->layer_list = NULL;
-    }
-
-  frame = gtk_frame_new (NULL);
-  gtk_paned_pack2 (GTK_PANED (priv->hpaned), frame,
-                   TRUE, TRUE);
-  gtk_widget_show (frame);
+  if (gtk_notebook_get_n_pages (GTK_NOTEBOOK (priv->right_notebook)) > 1)
+    gtk_notebook_remove_page (GTK_NOTEBOOK (priv->right_notebook), 0);
+  priv->layer_list = NULL;
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
+  gtk_notebook_prepend_page (GTK_NOTEBOOK (priv->right_notebook),
+                             scrolled_win, NULL);
   gtk_widget_show (scrolled_win);
 
   if (ANIMATION_IS_ANIMATIC (animation))
     {
       GtkWidget *storyboard;
 
-      gtk_frame_set_label (GTK_FRAME (frame), _("Storyboard"));
+      gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (priv->right_notebook),
+                                       scrolled_win, _("Storyboard"));
 
       /* The Storyboard view. */
       storyboard = animation_storyboard_new (ANIMATION_ANIMATIC (animation),
@@ -1282,13 +1321,11 @@ animation_dialog_set_animation (AnimationDialog *dialog,
 
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 0);
-
-      /* The duration box. */
-      gtk_widget_hide (priv->duration_box);
     }
   else
     {
-      gtk_frame_set_label (GTK_FRAME (frame), _("Layers"));
+      gtk_notebook_set_tab_label_text (GTK_NOTEBOOK (priv->right_notebook),
+                                       scrolled_win, _("Layers"));
 
       /* The layer list view. */
       priv->layer_list = animation_layer_view_new (priv->image_id);
@@ -1299,9 +1336,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
 
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 1);
-
-      /* The duration box. */
-      gtk_widget_show (priv->duration_box);
     }
 
   /* The bottom panel. */
@@ -1417,13 +1451,10 @@ update_ui_sensitivity (AnimationDialog *dialog)
 
   /* Settings are always changeable. */
   gtk_action_group_set_sensitive (priv->settings_actions, TRUE);
-  gtk_widget_set_sensitive (GTK_WIDGET (priv->settings_bar), TRUE);
 
   /* View are always meaningfull with at least 1 frame. */
   gtk_action_group_set_sensitive (priv->view_actions,
                                   animation_get_duration (priv->animation) >= 1);
-  gtk_widget_set_sensitive (GTK_WIDGET (priv->view_bar),
-                            animation_get_duration (priv->animation) >= 1);
 }
 
 /**** UI CALLBACKS ****/
@@ -2713,6 +2744,34 @@ show_playing_progress (AnimationDialog *dialog)
 }
 
 static void
+inactive_on_loading (Animation *animation,
+                     gdouble    load_rate,
+                     GtkWidget *widget)
+{
+  gtk_widget_set_sensitive (widget, FALSE);
+}
+
+static void
+active_on_loaded (Animation *animation,
+                  GtkWidget *widget)
+{
+  gtk_widget_set_sensitive (widget, TRUE);
+}
+
+static void
+hide_on_animatic (AnimationDialog *dialog,
+                  GParamSpec      *param_spec,
+                  GtkWidget       *widget)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+
+  if (! priv->animation || ANIMATION_IS_ANIMATIC (priv->animation))
+    gtk_widget_hide (widget);
+  else
+    gtk_widget_show (widget);
+}
+
+static void
 update_progress (AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
@@ -2754,9 +2813,7 @@ block_ui (AnimationDialog *dialog)
   gtk_widget_set_sensitive (priv->play_bar, FALSE);
   gtk_widget_set_sensitive (priv->progress_bar, FALSE);
   gtk_action_group_set_sensitive (priv->settings_actions, FALSE);
-  gtk_widget_set_sensitive (GTK_WIDGET (priv->settings_bar), FALSE);
   gtk_action_group_set_sensitive (priv->view_actions, FALSE);
-  gtk_widget_set_sensitive (GTK_WIDGET (priv->view_bar), FALSE);
 }
 
 static gboolean
