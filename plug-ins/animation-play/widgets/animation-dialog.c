@@ -228,6 +228,9 @@ static gboolean    repaint_da                (GtkWidget        *darea,
 static gboolean    da_button_press           (GtkWidget        *widget,
                                               GdkEventButton   *event,
                                               AnimationDialog  *dialog);
+static gboolean    da_scrolled               (GtkWidget        *widget,
+                                              GdkEventScroll   *event,
+                                              AnimationDialog  *dialog);
 static void        da_size_callback          (GtkWidget        *widget,
                                               GtkAllocation    *allocation,
                                               AnimationDialog  *dialog);
@@ -655,6 +658,9 @@ animation_dialog_constructed (GObject *object)
   g_signal_connect (priv->drawing_area, "button-press-event",
                     G_CALLBACK (da_button_press),
                     dialog);
+  g_signal_connect (priv->drawing_area, "scroll-event",
+                    G_CALLBACK (da_scrolled),
+                    dialog);
 
   /*****************/
   /* Play toolbar. */
@@ -802,6 +808,9 @@ animation_dialog_constructed (GObject *object)
 
   g_signal_connect (priv->shape_drawing_area, "size-allocate",
                     G_CALLBACK(da_size_callback),
+                    dialog);
+  g_signal_connect (priv->shape_drawing_area, "scroll-event",
+                    G_CALLBACK (da_scrolled),
                     dialog);
   g_signal_connect (priv->shape_window, "button-press-event",
                     G_CALLBACK (shape_pressed),
@@ -2194,6 +2203,29 @@ da_button_press (GtkWidget       *widget,
       return TRUE;
     }
 
+  return FALSE;
+}
+
+static gboolean
+da_scrolled (GtkWidget       *widget,
+             GdkEventScroll  *event,
+             AnimationDialog *dialog)
+{
+  if (event->state & GDK_CONTROL_MASK)
+    {
+      switch (event->direction)
+        {
+        case GDK_SCROLL_DOWN:
+          zoom_out_callback (NULL, dialog);
+          break;
+        case GDK_SCROLL_UP:
+          zoom_in_callback (NULL, dialog);
+          break;
+        default:
+          break;
+        }
+      return TRUE;
+    }
   return FALSE;
 }
 
