@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 10:21+0100\n"
-"PO-Revision-Date: 2016-11-08 10:22+0100\n"
+"POT-Creation-Date: 2016-11-13 14:19+0100\n"
+"PO-Revision-Date: 2016-11-13 14:20+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -483,7 +483,7 @@ msgid "Select"
 msgstr "Zaznaczenie"
 
 #. initialize the template list
-#: ../app/actions/actions.c:218 ../app/core/gimp.c:868
+#: ../app/actions/actions.c:218 ../app/core/gimp.c:874
 #: ../app/dialogs/dialogs.c:358
 msgid "Templates"
 msgstr "Szablony"
@@ -4350,7 +4350,7 @@ msgid "Set Image Canvas Size"
 msgstr "Ustawienie wymiarów płótna obrazu"
 
 #: ../app/actions/image-commands.c:672 ../app/actions/image-commands.c:696
-#: ../app/actions/image-commands.c:1323
+#: ../app/actions/image-commands.c:1354
 msgid "Resizing"
 msgstr "Zmienianie wymiarów"
 
@@ -4398,30 +4398,30 @@ msgstr "Konwertowanie do odcieni szarości (%s)"
 msgid "Converting to indexed colors"
 msgstr "Konwertowanie na kolory indeksowane"
 
-#: ../app/actions/image-commands.c:1182
+#: ../app/actions/image-commands.c:1213
 #, c-format
 msgid "Converting image to %s"
 msgstr "Konwertowanie obrazu do %s"
 
-#: ../app/actions/image-commands.c:1213
+#: ../app/actions/image-commands.c:1244
 msgid "Assign color profile"
 msgstr "Przydziel profil kolorów"
 
-#: ../app/actions/image-commands.c:1259
+#: ../app/actions/image-commands.c:1290
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Konwertowanie do „%s”"
 
-#: ../app/actions/image-commands.c:1365
+#: ../app/actions/image-commands.c:1396
 msgid "Change Print Size"
 msgstr "Zmień rozmiar wydruku"
 
-#: ../app/actions/image-commands.c:1409
+#: ../app/actions/image-commands.c:1440
 msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1418 ../app/actions/layers-commands.c:1466
+#: ../app/actions/image-commands.c:1449 ../app/actions/layers-commands.c:1466
 #: ../app/dialogs/preferences-dialog.c:1345
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -9049,7 +9049,7 @@ msgid "Text"
 msgstr "Tekst"
 
 #: ../app/core/core-enums.c:938 ../app/core/core-enums.c:987
-#: ../app/core/gimpdrawable-transform.c:668
+#: ../app/core/gimpdrawable-transform.c:672
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -9359,30 +9359,31 @@ msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Zmiękczony"
 
-#: ../app/core/gimp.c:585
+#. initialize babl fishes
+#: ../app/core/gimp.c:587 ../app/core/gimp.c:619
 msgid "Initialization"
 msgstr "Inicjacja"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:597
+#: ../app/core/gimp.c:599
 msgid "Internal Procedures"
 msgstr "Wewnętrzne procedury"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:854
+#: ../app/core/gimp.c:860
 msgid "Looking for data files"
 msgstr "Wyszukiwanie plików z danymi"
 
-#: ../app/core/gimp.c:854
+#: ../app/core/gimp.c:860
 msgid "Parasites"
 msgstr "Dane pasożytnicze"
 
-#: ../app/core/gimp.c:863
+#: ../app/core/gimp.c:869
 msgid "Fonts (this may take a while)"
 msgstr "Czcionki (może to zająć kilka minut)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:872 ../app/dialogs/preferences-dialog.c:2785
+#: ../app/core/gimp.c:878 ../app/dialogs/preferences-dialog.c:2785
 msgid "Modules"
 msgstr "Moduły"
 
@@ -9732,7 +9733,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Obrót kanału"
 
-#: ../app/core/gimpchannel.c:295 ../app/core/gimpdrawable-transform.c:989
+#: ../app/core/gimpchannel.c:295 ../app/core/gimpdrawable-transform.c:993
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Przekształcenie kanału"
@@ -10052,22 +10053,22 @@ msgstr "Przesunięcie obszaru rysowania"
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
 
-#: ../app/core/gimpdrawable-transform.c:757
+#: ../app/core/gimpdrawable-transform.c:761
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/core/gimpdrawable-transform.c:842
+#: ../app/core/gimpdrawable-transform.c:846
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:987 ../app/core/gimplayer.c:331
+#: ../app/core/gimpdrawable-transform.c:991 ../app/core/gimplayer.c:331
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
 
-#: ../app/core/gimpdrawable-transform.c:1000
+#: ../app/core/gimpdrawable-transform.c:1004
 msgid "Transformation"
 msgstr "Przekształcenie"
 
@@ -10661,7 +10662,7 @@ msgstr "(Podgląd może być nieaktualny)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:853 ../app/widgets/gimpimagepropview.c:430
-#: ../app/widgets/gimpsizebox.c:432 ../app/widgets/gimptemplateeditor.c:626
+#: ../app/widgets/gimpsizebox.c:432 ../app/widgets/gimptemplateeditor.c:684
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -11094,7 +11095,7 @@ msgstr "Metoda"
 msgid "Line width"
 msgstr "Szerokość linii"
 
-#: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:148
+#: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:150
 #: ../app/tools/gimptextoptions.c:137
 msgid "Unit"
 msgstr "Jednostka"
@@ -11255,52 +11256,59 @@ msgstr "Maksymalna liczba krzywych na osi Y"
 msgid "Error writing '%s': %s\n"
 msgstr "Błąd podczas zapisywania „%s”: %s\n"
 
-#: ../app/core/gimptemplate.c:132 ../app/widgets/gimpgrideditor.c:195
+#: ../app/core/gimptemplate.c:134 ../app/widgets/gimpgrideditor.c:195
 #: ../app/widgets/gimpgrideditor.c:227
 msgid "Width"
 msgstr "Szerokość"
 
-#: ../app/core/gimptemplate.c:140 ../app/widgets/gimpgrideditor.c:197
+#: ../app/core/gimptemplate.c:142 ../app/widgets/gimpgrideditor.c:197
 #: ../app/widgets/gimpgrideditor.c:229
 msgid "Height"
 msgstr "Wysokość"
 
-#: ../app/core/gimptemplate.c:149
+#: ../app/core/gimptemplate.c:151
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 "Jednostka używana do wyświetlania współrzędnych na obrazie, jeśli nie jest "
 "ustawiony tryb „punkt do punktu”."
 
-#: ../app/core/gimptemplate.c:156 ../app/core/gimptemplate.c:164
+#: ../app/core/gimptemplate.c:158 ../app/core/gimptemplate.c:166
 msgid "Resolution X"
 msgstr "Rozdzielczość na osi X"
 
-#: ../app/core/gimptemplate.c:157
+#: ../app/core/gimptemplate.c:159
 msgid "The horizontal image resolution."
 msgstr "Pozioma rozdzielczość obrazu."
 
-#: ../app/core/gimptemplate.c:165
+#: ../app/core/gimptemplate.c:167
 msgid "The vertical image resolution."
 msgstr "Pionowa rozdzielczość obrazu."
 
-#: ../app/core/gimptemplate.c:172
+#: ../app/core/gimptemplate.c:174
 msgid "Resolution unit"
 msgstr "Jednostka rozdzielczości"
 
 #. serialized name
-#: ../app/core/gimptemplate.c:179
+#: ../app/core/gimptemplate.c:181
 msgid "Image type"
 msgstr "Typ obrazu"
 
-#: ../app/core/gimptemplate.c:186
+#: ../app/core/gimptemplate.c:188 ../app/core/gimptemplate.c:195
 msgid "Precision"
 msgstr "Dokładność"
 
-#: ../app/core/gimptemplate.c:193
+#. gamma
+#: ../app/core/gimptemplate.c:204 ../app/dialogs/convert-precision-dialog.c:201
+#: ../app/operations/gimplevelsconfig.c:112
+#: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:488
+msgid "Gamma"
+msgstr "Gamma"
+
+#: ../app/core/gimptemplate.c:212
 msgid "Color managed"
 msgstr "Zarządzanie kolorami"
 
-#: ../app/core/gimptemplate.c:194
+#: ../app/core/gimptemplate.c:213
 msgid ""
 "Whether the image is color managed. Disabling color management is equivalent "
 "to choosing a built-in sRGB profile. Better leave color management enabled."
@@ -11309,19 +11317,19 @@ msgstr ""
 "przydzieleniu wbudowanego profilu kolorów sRGB. Zalecane jest włączenie "
 "zarządzania kolorami."
 
-#: ../app/core/gimptemplate.c:203
+#: ../app/core/gimptemplate.c:222
 msgid "Color profile"
 msgstr "Profil kolorów"
 
-#: ../app/core/gimptemplate.c:210 ../app/tools/gimpbucketfilloptions.c:94
+#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:94
 msgid "Fill type"
 msgstr "Typ wypełnienia"
 
-#: ../app/core/gimptemplate.c:217 ../app/dialogs/image-properties-dialog.c:94
+#: ../app/core/gimptemplate.c:236 ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
 msgstr "Komentarz"
 
-#: ../app/core/gimptemplate.c:224
+#: ../app/core/gimptemplate.c:243
 msgid "Filename"
 msgstr "Nazwa pliku"
 
@@ -11613,7 +11621,7 @@ msgid "Convert Image to Indexed Colors"
 msgstr "Konwersja obrazu do trybu indeksowanego"
 
 #: ../app/dialogs/convert-indexed-dialog.c:143
-#: ../app/dialogs/convert-precision-dialog.c:144
+#: ../app/dialogs/convert-precision-dialog.c:173
 msgid "C_onvert"
 msgstr "K_onwertuj"
 
@@ -11627,7 +11635,7 @@ msgstr "_Usunięcie nieużywanych i podwójnych kolorów z palety kolorów"
 
 #. dithering
 #: ../app/dialogs/convert-indexed-dialog.c:241
-#: ../app/dialogs/convert-precision-dialog.c:172
+#: ../app/dialogs/convert-precision-dialog.c:227
 #: ../app/tools/gimpblendoptions.c:119
 msgid "Dithering"
 msgstr "Dithering"
@@ -11646,7 +11654,7 @@ msgid "Enable dithering of text layers"
 msgstr "Dithering warstw tekstowych"
 
 #: ../app/dialogs/convert-indexed-dialog.c:291
-#: ../app/dialogs/convert-precision-dialog.c:230
+#: ../app/dialogs/convert-precision-dialog.c:282
 msgid "Dithering text layers will make them uneditable"
 msgstr ""
 "Dithering warstw tekstowych spowoduje, że nie będzie można ich modyfikować"
@@ -11656,41 +11664,36 @@ msgstr ""
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Nie można konwertować na paletę z więcej niż 256 kolorami."
 
-#: ../app/dialogs/convert-precision-dialog.c:126
+#: ../app/dialogs/convert-precision-dialog.c:155
 #, c-format
 msgid "Convert Image to %s"
 msgstr "Konwertuj obraz do %s"
 
-#: ../app/dialogs/convert-precision-dialog.c:129
+#: ../app/dialogs/convert-precision-dialog.c:158
 msgid "Precision Conversion"
 msgstr "Konwersja dokładności"
 
-#: ../app/dialogs/convert-precision-dialog.c:191
-msgid "_Layers:"
-msgstr "_Warstwy:"
-
-#: ../app/dialogs/convert-precision-dialog.c:213
-msgid "_Text Layers:"
-msgstr "W_arstwy tekstowe:"
-
-#: ../app/dialogs/convert-precision-dialog.c:239
-msgid "_Channels and Masks:"
-msgstr "_Kanały i maski:"
-
-#. gamma
-#: ../app/dialogs/convert-precision-dialog.c:259
-#: ../app/operations/gimplevelsconfig.c:112
-#: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:488
-msgid "Gamma"
-msgstr "Gamma"
-
-#: ../app/dialogs/convert-precision-dialog.c:272
+#: ../app/dialogs/convert-precision-dialog.c:210
+#: ../app/widgets/gimptemplateeditor.c:423
 msgid "Perceptual gamma (sRGB)"
 msgstr "Gamma percepcyjna (sRGB)"
 
-#: ../app/dialogs/convert-precision-dialog.c:273
+#: ../app/dialogs/convert-precision-dialog.c:211
+#: ../app/widgets/gimptemplateeditor.c:422
 msgid "Linear light"
 msgstr "Liniowe światło"
+
+#: ../app/dialogs/convert-precision-dialog.c:243
+msgid "_Layers:"
+msgstr "_Warstwy:"
+
+#: ../app/dialogs/convert-precision-dialog.c:265
+msgid "_Text Layers:"
+msgstr "W_arstwy tekstowe:"
+
+#: ../app/dialogs/convert-precision-dialog.c:292
+msgid "_Channels and Masks:"
+msgstr "_Kanały i maski:"
 
 #: ../app/dialogs/data-delete-dialog.c:82
 msgid "Delete Object"
@@ -12085,7 +12088,7 @@ msgid "Offset Y:"
 msgstr "Przesunięcie na osi Y:"
 
 #: ../app/dialogs/layer-options-dialog.c:327 ../app/dialogs/resize-dialog.c:369
-#: ../app/widgets/gimptemplateeditor.c:431
+#: ../app/widgets/gimptemplateeditor.c:448
 msgid "_Fill with:"
 msgstr "Wypeł_nienie:"
 
@@ -13597,23 +13600,23 @@ msgstr "Rozmiar wydruku"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:175 ../app/widgets/gimpsizebox.c:193
-#: ../app/widgets/gimptemplateeditor.c:195
+#: ../app/widgets/gimptemplateeditor.c:198
 msgid "_Width:"
 msgstr "_Szerokość:"
 
 #: ../app/dialogs/print-size-dialog.c:182 ../app/widgets/gimpsizebox.c:197
-#: ../app/widgets/gimptemplateeditor.c:202
+#: ../app/widgets/gimptemplateeditor.c:205
 msgid "H_eight:"
 msgstr "_Wysokość:"
 
 #. the resolution labels
 #: ../app/dialogs/print-size-dialog.c:236 ../app/widgets/gimpsizebox.c:260
-#: ../app/widgets/gimptemplateeditor.c:324
+#: ../app/widgets/gimptemplateeditor.c:327
 msgid "_X resolution:"
 msgstr "Rozdzielczość _X:"
 
 #: ../app/dialogs/print-size-dialog.c:243 ../app/widgets/gimpsizebox.c:263
-#: ../app/widgets/gimptemplateeditor.c:331
+#: ../app/widgets/gimptemplateeditor.c:334
 msgid "_Y resolution:"
 msgstr "Rozdzielczość _Y:"
 
@@ -13729,7 +13732,7 @@ msgid "_Vertical:"
 msgstr "Pio_nowo:"
 
 #. Image size frame
-#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:173
+#: ../app/dialogs/scale-dialog.c:103 ../app/widgets/gimptemplateeditor.c:176
 msgid "Image Size"
 msgstr "Wymiary obrazu"
 
@@ -14260,80 +14263,80 @@ msgstr "„%s:” nie jest prawidłowym schematem URI"
 msgid "Invalid character sequence in URI"
 msgstr "Nieprawidłowa sekwencja znaków w adresie URI"
 
-#: ../app/gegl/gimp-babl.c:263 ../app/gegl/gimp-babl.c:264
-#: ../app/gegl/gimp-babl.c:265 ../app/gegl/gimp-babl.c:266
-#: ../app/gegl/gimp-babl.c:267 ../app/gegl/gimp-babl.c:268
-#: ../app/gegl/gimp-babl.c:269 ../app/gegl/gimp-babl.c:270
-#: ../app/gegl/gimp-babl.c:271 ../app/gegl/gimp-babl.c:272
-#: ../app/gegl/gimp-babl.c:273 ../app/gegl/gimp-babl.c:274
+#: ../app/gegl/gimp-babl.c:316 ../app/gegl/gimp-babl.c:317
+#: ../app/gegl/gimp-babl.c:318 ../app/gegl/gimp-babl.c:319
+#: ../app/gegl/gimp-babl.c:320 ../app/gegl/gimp-babl.c:321
+#: ../app/gegl/gimp-babl.c:322 ../app/gegl/gimp-babl.c:323
+#: ../app/gegl/gimp-babl.c:324 ../app/gegl/gimp-babl.c:325
+#: ../app/gegl/gimp-babl.c:326 ../app/gegl/gimp-babl.c:327
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/gegl/gimp-babl.c:276 ../app/gegl/gimp-babl.c:277
-#: ../app/gegl/gimp-babl.c:278 ../app/gegl/gimp-babl.c:279
-#: ../app/gegl/gimp-babl.c:280 ../app/gegl/gimp-babl.c:281
-#: ../app/gegl/gimp-babl.c:282 ../app/gegl/gimp-babl.c:283
-#: ../app/gegl/gimp-babl.c:284 ../app/gegl/gimp-babl.c:285
-#: ../app/gegl/gimp-babl.c:286 ../app/gegl/gimp-babl.c:287
+#: ../app/gegl/gimp-babl.c:329 ../app/gegl/gimp-babl.c:330
+#: ../app/gegl/gimp-babl.c:331 ../app/gegl/gimp-babl.c:332
+#: ../app/gegl/gimp-babl.c:333 ../app/gegl/gimp-babl.c:334
+#: ../app/gegl/gimp-babl.c:335 ../app/gegl/gimp-babl.c:336
+#: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338
+#: ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340
 msgid "RGB-alpha"
 msgstr "RGB (alfa)"
 
-#: ../app/gegl/gimp-babl.c:289 ../app/gegl/gimp-babl.c:290
-#: ../app/gegl/gimp-babl.c:291 ../app/gegl/gimp-babl.c:292
-#: ../app/gegl/gimp-babl.c:293 ../app/gegl/gimp-babl.c:294
-#: ../app/gegl/gimp-babl.c:295 ../app/gegl/gimp-babl.c:296
-#: ../app/gegl/gimp-babl.c:297 ../app/gegl/gimp-babl.c:298
-#: ../app/gegl/gimp-babl.c:299 ../app/gegl/gimp-babl.c:300
+#: ../app/gegl/gimp-babl.c:342 ../app/gegl/gimp-babl.c:343
+#: ../app/gegl/gimp-babl.c:344 ../app/gegl/gimp-babl.c:345
+#: ../app/gegl/gimp-babl.c:346 ../app/gegl/gimp-babl.c:347
+#: ../app/gegl/gimp-babl.c:348 ../app/gegl/gimp-babl.c:349
+#: ../app/gegl/gimp-babl.c:350 ../app/gegl/gimp-babl.c:351
+#: ../app/gegl/gimp-babl.c:352 ../app/gegl/gimp-babl.c:353
 msgid "Grayscale"
 msgstr "Odcienie szarości"
 
-#: ../app/gegl/gimp-babl.c:302 ../app/gegl/gimp-babl.c:303
-#: ../app/gegl/gimp-babl.c:304 ../app/gegl/gimp-babl.c:305
-#: ../app/gegl/gimp-babl.c:306 ../app/gegl/gimp-babl.c:307
-#: ../app/gegl/gimp-babl.c:308 ../app/gegl/gimp-babl.c:309
-#: ../app/gegl/gimp-babl.c:310 ../app/gegl/gimp-babl.c:311
-#: ../app/gegl/gimp-babl.c:312 ../app/gegl/gimp-babl.c:313
+#: ../app/gegl/gimp-babl.c:355 ../app/gegl/gimp-babl.c:356
+#: ../app/gegl/gimp-babl.c:357 ../app/gegl/gimp-babl.c:358
+#: ../app/gegl/gimp-babl.c:359 ../app/gegl/gimp-babl.c:360
+#: ../app/gegl/gimp-babl.c:361 ../app/gegl/gimp-babl.c:362
+#: ../app/gegl/gimp-babl.c:363 ../app/gegl/gimp-babl.c:364
+#: ../app/gegl/gimp-babl.c:365 ../app/gegl/gimp-babl.c:366
 msgid "Grayscale-alpha"
 msgstr "Odcienie szarości (alfa)"
 
-#: ../app/gegl/gimp-babl.c:315 ../app/gegl/gimp-babl.c:316
-#: ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318
-#: ../app/gegl/gimp-babl.c:319 ../app/gegl/gimp-babl.c:320
-#: ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
-#: ../app/gegl/gimp-babl.c:323 ../app/gegl/gimp-babl.c:324
-#: ../app/gegl/gimp-babl.c:325 ../app/gegl/gimp-babl.c:326
+#: ../app/gegl/gimp-babl.c:368 ../app/gegl/gimp-babl.c:369
+#: ../app/gegl/gimp-babl.c:370 ../app/gegl/gimp-babl.c:371
+#: ../app/gegl/gimp-babl.c:372 ../app/gegl/gimp-babl.c:373
+#: ../app/gegl/gimp-babl.c:374 ../app/gegl/gimp-babl.c:375
+#: ../app/gegl/gimp-babl.c:376 ../app/gegl/gimp-babl.c:377
+#: ../app/gegl/gimp-babl.c:378 ../app/gegl/gimp-babl.c:379
 msgid "Red component"
 msgstr "Czerwona składowa"
 
-#: ../app/gegl/gimp-babl.c:328 ../app/gegl/gimp-babl.c:329
-#: ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331
-#: ../app/gegl/gimp-babl.c:332 ../app/gegl/gimp-babl.c:333
-#: ../app/gegl/gimp-babl.c:334 ../app/gegl/gimp-babl.c:335
-#: ../app/gegl/gimp-babl.c:336 ../app/gegl/gimp-babl.c:337
-#: ../app/gegl/gimp-babl.c:338 ../app/gegl/gimp-babl.c:339
+#: ../app/gegl/gimp-babl.c:381 ../app/gegl/gimp-babl.c:382
+#: ../app/gegl/gimp-babl.c:383 ../app/gegl/gimp-babl.c:384
+#: ../app/gegl/gimp-babl.c:385 ../app/gegl/gimp-babl.c:386
+#: ../app/gegl/gimp-babl.c:387 ../app/gegl/gimp-babl.c:388
+#: ../app/gegl/gimp-babl.c:389 ../app/gegl/gimp-babl.c:390
+#: ../app/gegl/gimp-babl.c:391 ../app/gegl/gimp-babl.c:392
 msgid "Green component"
 msgstr "Zielona składowa"
 
-#: ../app/gegl/gimp-babl.c:341 ../app/gegl/gimp-babl.c:342
-#: ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344
-#: ../app/gegl/gimp-babl.c:345 ../app/gegl/gimp-babl.c:346
-#: ../app/gegl/gimp-babl.c:347 ../app/gegl/gimp-babl.c:348
-#: ../app/gegl/gimp-babl.c:349 ../app/gegl/gimp-babl.c:350
-#: ../app/gegl/gimp-babl.c:351 ../app/gegl/gimp-babl.c:352
+#: ../app/gegl/gimp-babl.c:394 ../app/gegl/gimp-babl.c:395
+#: ../app/gegl/gimp-babl.c:396 ../app/gegl/gimp-babl.c:397
+#: ../app/gegl/gimp-babl.c:398 ../app/gegl/gimp-babl.c:399
+#: ../app/gegl/gimp-babl.c:400 ../app/gegl/gimp-babl.c:401
+#: ../app/gegl/gimp-babl.c:402 ../app/gegl/gimp-babl.c:403
+#: ../app/gegl/gimp-babl.c:404 ../app/gegl/gimp-babl.c:405
 msgid "Blue component"
 msgstr "Niebieska składowa"
 
-#: ../app/gegl/gimp-babl.c:354 ../app/gegl/gimp-babl.c:355
-#: ../app/gegl/gimp-babl.c:356 ../app/gegl/gimp-babl.c:357
-#: ../app/gegl/gimp-babl.c:358 ../app/gegl/gimp-babl.c:359
+#: ../app/gegl/gimp-babl.c:407 ../app/gegl/gimp-babl.c:408
+#: ../app/gegl/gimp-babl.c:409 ../app/gegl/gimp-babl.c:410
+#: ../app/gegl/gimp-babl.c:411 ../app/gegl/gimp-babl.c:412
 msgid "Alpha component"
 msgstr "Składowa alfy"
 
-#: ../app/gegl/gimp-babl.c:387
+#: ../app/gegl/gimp-babl.c:440
 msgid "Indexed-alpha"
 msgstr "Indeksowany (alfa)"
 
-#: ../app/gegl/gimp-babl.c:389
+#: ../app/gegl/gimp-babl.c:442
 msgid "Indexed"
 msgstr "Indeksowany"
 
@@ -17388,7 +17391,7 @@ msgstr "Naciśnięcie klawisza Enter konwertuje do zaznaczenia"
 msgid "Click or Click-Drag to add a point"
 msgstr "Kliknięcie lub kliknięcie i przeciągnięcie doda punkt"
 
-#: ../app/tools/gimpiscissorstool.c:1102 ../app/tools/gimpiscissorstool.c:1114
+#: ../app/tools/gimpiscissorstool.c:1118 ../app/tools/gimpiscissorstool.c:1130
 msgid "Modify Scissors Curve"
 msgstr "Modyfikacja krzywej nożyc"
 
@@ -20103,7 +20106,7 @@ msgid "Number of paths:"
 msgstr "Liczba ścieżek:"
 
 #: ../app/widgets/gimpimagepropview.c:454
-#: ../app/widgets/gimptemplateeditor.c:346
+#: ../app/widgets/gimptemplateeditor.c:349
 #, c-format
 msgid "pixels/%s"
 msgstr "pikseli/%s"
@@ -20438,53 +20441,57 @@ msgstr "wprowadzanie etykiet"
 msgid ","
 msgstr ","
 
-#: ../app/widgets/gimptemplateeditor.c:216
+#: ../app/widgets/gimptemplateeditor.c:219
 #, c-format
 msgid "%p"
 msgstr "%p"
 
-#: ../app/widgets/gimptemplateeditor.c:291
+#: ../app/widgets/gimptemplateeditor.c:294
 msgid "_Advanced Options"
 msgstr "Z_aawansowane opcje"
 
-#: ../app/widgets/gimptemplateeditor.c:402
+#: ../app/widgets/gimptemplateeditor.c:407
 msgid "Color _space:"
 msgstr "Prze_strzeń kolorów:"
 
-#: ../app/widgets/gimptemplateeditor.c:408
+#: ../app/widgets/gimptemplateeditor.c:413
 msgid "_Precision:"
 msgstr "_Dokładność:"
 
-#: ../app/widgets/gimptemplateeditor.c:413
-msgid "Color manage this image"
-msgstr "Zarządzanie kolorami tego obrazu"
+#: ../app/widgets/gimptemplateeditor.c:425
+msgid "_Gamma:"
+msgstr "_Gamma:"
 
-#: ../app/widgets/gimptemplateeditor.c:422
+#: ../app/widgets/gimptemplateeditor.c:430
+msgid "Color _manage this image"
+msgstr "_Zarządzanie kolorami tego obrazu"
+
+#: ../app/widgets/gimptemplateeditor.c:439
 msgid "Choose A Color Profile"
 msgstr "Wybór profilu kolorów"
 
-#: ../app/widgets/gimptemplateeditor.c:424
-msgid "Color _profile:"
+#: ../app/widgets/gimptemplateeditor.c:441
+msgid "Co_lor profile:"
 msgstr "_Profil kolorów:"
 
-#: ../app/widgets/gimptemplateeditor.c:441
+#: ../app/widgets/gimptemplateeditor.c:458
 msgid "Comme_nt:"
 msgstr "Ko_mentarz:"
 
-#: ../app/widgets/gimptemplateeditor.c:558
+#: ../app/widgets/gimptemplateeditor.c:577
 msgid "_Name:"
 msgstr "_Nazwa:"
 
-#: ../app/widgets/gimptemplateeditor.c:564
+#: ../app/widgets/gimptemplateeditor.c:583
 msgid "_Icon:"
 msgstr "_Ikona:"
 
-#: ../app/widgets/gimptemplateeditor.c:744
+#: ../app/widgets/gimptemplateeditor.c:802
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d×%d ppi, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:746
+#: ../app/widgets/gimptemplateeditor.c:804
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d ppi, %s"
