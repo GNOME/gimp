@@ -1019,6 +1019,15 @@ xcf_load_layer_props (XcfInfo    *info,
           }
           break;
 
+        case PROP_COLOR_TAG:
+          {
+            GimpColorTag color_tag;
+
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &color_tag, 1);
+            gimp_item_set_color_tag (GIMP_ITEM (*layer), color_tag, FALSE);
+          }
+          break;
+
         case PROP_LOCK_CONTENT:
           {
             gboolean lock_content;
@@ -1292,6 +1301,15 @@ xcf_load_channel_props (XcfInfo      *info,
             info->cp += xcf_read_int32 (info->input, (guint32 *) &visible, 1);
             gimp_item_set_visible (GIMP_ITEM (*channel),
                                    visible ? TRUE : FALSE, FALSE);
+          }
+          break;
+
+        case PROP_COLOR_TAG:
+          {
+            GimpColorTag color_tag;
+
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &color_tag, 1);
+            gimp_item_set_color_tag (GIMP_ITEM (*channel), color_tag, FALSE);
           }
           break;
 
