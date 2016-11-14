@@ -135,7 +135,10 @@ save_dialog (WebPSaveParams *params,
                     &params->alpha_quality);
 
   /* Create the label for the selecting a preset */
-  preset_label = gtk_label_new (_("Preset:"));
+  preset_label = gtk_label_new (_("Source type:"));
+  gimp_help_set_help_data (preset_label,
+                           _("WebP encoder \"preset\""),
+                           NULL);
   gtk_label_set_xalign (GTK_LABEL (preset_label), 0.0);
   gtk_table_attach (GTK_TABLE (table), preset_label,
                     0, 1, 2, 3,
