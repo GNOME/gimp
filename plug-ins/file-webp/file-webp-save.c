@@ -351,7 +351,7 @@ parse_ms_tag (const gchar *str)
     offset++;
 
   if (offset >= length)
-    return(-1);
+    return -1;
 
   if (! g_ascii_isdigit (str[++offset]))
     goto find_another_bra;
@@ -365,7 +365,7 @@ parse_ms_tag (const gchar *str)
   while ((offset < length) && (g_ascii_isdigit (str[offset])));
 
   if (length - offset <= 2)
-    return(-3);
+    return -3;
 
   if ((g_ascii_toupper (str[offset])     != 'M') ||
       (g_ascii_toupper (str[offset + 1]) != 'S'))
@@ -636,7 +636,7 @@ save_image (const gchar    *filename,
   if (nLayers == 0)
     return FALSE;
 
-  g_printerr("Saving WebP file %s\n", filename);
+  g_printerr ("Saving WebP file %s\n", filename);
 
   if (nLayers == 1)
     {
