@@ -663,7 +663,7 @@ animation_xsheet_update_layout (AnimationXSheet *xsheet)
               frame = gtk_frame_new (NULL);
               gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
               gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                                frame, j + 1, j + 2, i + 1, i + 2,
+                                frame, j * 9 + 1, j * 9 + 10, i + 2, i + 3,
                                 GTK_FILL, GTK_FILL, 0, 0);
 
               cel = gtk_toggle_button_new ();
@@ -701,7 +701,7 @@ animation_xsheet_update_layout (AnimationXSheet *xsheet)
           frame = gtk_frame_new (NULL);
           gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
           gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                            frame, 0, 1, i + 1, i + 2,
+                            frame, 0, 1, i + 2, i + 3,
                             GTK_FILL, GTK_FILL, 0, 0);
 
           num_str = g_strdup_printf ("%d", i + 1);
@@ -741,7 +741,7 @@ animation_xsheet_update_layout (AnimationXSheet *xsheet)
           frame = gtk_frame_new (NULL);
           gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
           gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                            frame, n_tracks + 1, n_tracks + 6, i + 1, i + 2,
+                            frame, n_tracks * 9 + 1, n_tracks * 9 + 6, i + 2, i + 3,
                             GTK_FILL, GTK_FILL, 0, 0);
           comment_field = gtk_text_view_new ();
           xsheet->priv->comment_fields = g_list_append (xsheet->priv->comment_fields,
