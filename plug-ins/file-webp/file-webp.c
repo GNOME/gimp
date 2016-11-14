@@ -36,14 +36,13 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static void       query              (void);
-static void       run                (const gchar      *name,
-                                      gint              nparams,
-                                      const GimpParam  *param,
-                                      gint             *nreturn_vals,
-                                      GimpParam       **return_vals);
+static void   query (void);
+static void   run   (const gchar      *name,
+                     gint              nparams,
+                     const GimpParam  *param,
+                     gint             *nreturn_vals,
+                     GimpParam       **return_vals);
 
-static WebPPreset get_preset_from_id (gint              id);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -75,9 +74,6 @@ set_default_params (WebPSaveParams* params)
 static void
 query (void)
 {
-  gchar *preset_param_desc;
-  gint   i;
-
   static const GimpParamDef load_arguments[] =
   {
     { GIMP_PDB_INT32,  "run-mode",     "Interactive, non-interactive" },
@@ -90,14 +86,14 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
-  static GimpParamDef save_arguments[] =
+  static const GimpParamDef save_arguments[] =
   {
     { GIMP_PDB_INT32,    "run-mode",      "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",         "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image to" },
     { GIMP_PDB_STRING,   "raw-filename",  "The name entered" },
-    { GIMP_PDB_INT32,    "preset",        NULL },
+    { GIMP_PDB_INT32,    "preset",        "preset (Default=0, Picture=1, Photo=2, Drawing=3, Icon=4, Text=5)" },
     { GIMP_PDB_INT32,    "lossless",      "Use lossless encoding (0/1)" },
     { GIMP_PDB_FLOAT,    "quality",       "Quality of the image (0 <= quality <= 100)" },
     { GIMP_PDB_FLOAT,    "alpha-quality", "Quality of the image's alpha channel (0 <= alpha-quality <= 100)" },
@@ -131,31 +127,6 @@ query (void)
                                     "",
                                     "8,string,WEBP");
 
-  /*
-   * "preset" values in the PDB save proc are internal IDs, not
-   * necessarily corresponding to the constants from libwebp (though at
-   * time of writing, they are the same).
-   * Generate the "preset" parameter description from webp_presets, so
-   * that we don't have to edit multiple places if new presets are added
-   * in the future.
-   */
-  preset_param_desc = g_strdup_printf ("WebP encoder preset (%s=0",
-                                       webp_presets[0].label);
-  for (i = 1; i < G_N_ELEMENTS (webp_presets); ++i)
-    {
-      gchar *preset_param;
-      gchar *tmp;
-
-      preset_param = g_strdup_printf (", %s=%d%s", webp_presets[i].label, i,
-                                      i == G_N_ELEMENTS (webp_presets) - 1 ?  ")" : "");
-
-      tmp = preset_param_desc;
-      preset_param_desc = g_strconcat (preset_param_desc, preset_param,
-                                       NULL);
-      g_free (preset_param);
-      g_free (tmp);
-    }
-  save_arguments[5].description = preset_param_desc;
   gimp_install_procedure (SAVE_PROC,
                           "Saves files in the WebP image format",
                           "Saves files in the WebP image format",
@@ -172,7 +143,6 @@ query (void)
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/webp");
   gimp_register_save_handler (SAVE_PROC, "webp", "");
-  g_free (preset_param_desc);
 }
 
 static void
@@ -327,12 +297,4 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-}
-
-static WebPPreset
-get_preset_from_id (gint id)
-{
-  if (id >= 0 && id < G_N_ELEMENTS (webp_presets))
-    return webp_presets[id].preset;
-  return webp_presets[0].preset;
 }

@@ -298,7 +298,7 @@ save_layer (const gchar    *filename,
                                                                  &icc_data_size);
                   chunk.bytes = icc_data;
                   chunk.size = icc_data_size;
-                  WebPMuxSetChunk (mux, "ICCP", &chunk, 1);
+                  WebPMuxSetChunk(mux, "ICCP", &chunk, 1);
                   g_object_unref (profile);
                 }
 
@@ -350,7 +350,7 @@ parse_ms_tag (const gchar *str)
     offset++;
 
   if (offset >= length)
-    return -1;
+    return(-1);
 
   if (! g_ascii_isdigit (str[++offset]))
     goto find_another_bra;
@@ -364,7 +364,7 @@ parse_ms_tag (const gchar *str)
   while ((offset < length) && (g_ascii_isdigit (str[offset])));
 
   if (length - offset <= 2)
-    return -3;
+    return(-3);
 
   if ((g_ascii_toupper (str[offset])     != 'M') ||
       (g_ascii_toupper (str[offset + 1]) != 'S'))
@@ -635,7 +635,7 @@ save_image (const gchar    *filename,
   if (nLayers == 0)
     return FALSE;
 
-  g_printerr ("Saving WebP file %s\n", filename);
+  g_printerr("Saving WebP file %s\n", filename);
 
   if (nLayers == 1)
     {
