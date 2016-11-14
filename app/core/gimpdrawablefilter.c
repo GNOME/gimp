@@ -506,13 +506,13 @@ gimp_drawable_filter_get_preview_rect (GimpDrawableFilter *filter,
           break;
 
         case GIMP_ALIGN_TOP:
-         rect->height *= position;
-         break;
+          rect->height *= position;
+          break;
 
         case GIMP_ALIGN_BOTTOM:
           rect->height *= (1.0 - position);
-         rect->y = height - rect->height;
-         break;
+          rect->y = height - rect->height;
+          break;
 
         default:
           g_return_if_reached ();
