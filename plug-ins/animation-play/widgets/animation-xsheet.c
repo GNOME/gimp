@@ -62,6 +62,11 @@ struct _AnimationXSheetPrivate
 
   GList                 *comment_fields;
   GList                 *second_separators;
+  GtkWidget             *comments_title;
+
+  GList                 *track_buttons;
+  GList                 *add_buttons;
+  GList                 *titles;
 };
 
 static void    animation_xsheet_constructed  (GObject      *object);
@@ -76,9 +81,15 @@ static void    animation_xsheet_get_property (GObject      *object,
 static void    animation_xsheet_finalize     (GObject      *object);
 
 /* Construction methods */
+static void     animation_xsheet_add_track     (AnimationXSheet   *xsheet,
+                                                gint               level);
+static void     animation_xsheet_remove_track  (AnimationXSheet   *xsheet,
+                                                gint               level);
 static void     animation_xsheet_add_frames    (AnimationXSheet   *xsheet,
                                                 gint               position,
                                                 gint               n_frames);
+static void     animation_xsheet_move_tracks   (AnimationXSheet   *xsheet,
+                                                gint               level);
 static void     animation_xsheet_remove_frames (AnimationXSheet   *xsheet,
                                                 gint               position,
                                                 gint               n_frames);
@@ -134,6 +145,10 @@ static void     animation_xsheet_rename_cel          (AnimationXSheet *xsheet,
                                                       gboolean         recursively);
 static void     animation_xsheet_jump                (AnimationXSheet *xsheet,
                                                       gint             position);
+static void     animation_xsheet_attach_cel          (AnimationXSheet *xsheet,
+                                                      GtkWidget       *cel,
+                                                      gint             track,
+                                                      gint             pos);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -306,6 +321,219 @@ animation_xsheet_finalize (GObject *object)
 }
 
 static void
+animation_xsheet_add_track (AnimationXSheet *xsheet,
+                            gint             level)
+{
+  GList *track;
+  gint   duration;
+  gint   i;
+
+  duration = animation_get_duration (ANIMATION (xsheet->priv->animation));
+
+  /* Create a new track. */
+  xsheet->priv->cels = g_list_insert (xsheet->priv->cels, NULL, level);
+  track = g_list_nth (xsheet->priv->cels, level);
+  /* Create new cels. */
+  for (i = 0; i < duration; i++)
+    {
+      GtkWidget *cel;
+
+      cel = gtk_toggle_button_new ();
+      track->data = g_list_append (track->data, cel);
+      animation_xsheet_attach_cel (xsheet, cel, level, i);
+      animation_xsheet_rename_cel (xsheet, cel, FALSE);
+
+      g_signal_connect (cel, "button-release-event",
+                        G_CALLBACK (animation_xsheet_cel_clicked),
+                        xsheet);
+      gtk_button_set_relief (GTK_BUTTON (cel), GTK_RELIEF_NONE);
+      gtk_button_set_focus_on_click (GTK_BUTTON (cel), FALSE);
+      gtk_widget_show (cel);
+    }
+  /* Create a new title and top buttons. */
+    {
+      GtkWidget      *frame;
+      GtkWidget      *label;
+      const gchar    *title;
+      GtkEntryBuffer *entry_buffer;
+      GtkWidget      *toolbar;
+      GtkWidget      *image;
+      GtkToolItem    *item;
+
+      title = animation_cel_animation_get_track_title (xsheet->priv->animation, level);
+
+      frame = gtk_frame_new (NULL);
+      xsheet->priv->titles = g_list_insert (xsheet->priv->titles, frame, level);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        frame, level * 9 + 1, level * 9 + 10, 1, 2,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      label = gtk_entry_new ();
+      gtk_entry_set_text (GTK_ENTRY (label), title);
+      entry_buffer = gtk_entry_get_buffer (GTK_ENTRY (label));
+      g_object_set_data (G_OBJECT (entry_buffer), "track-num",
+                         GINT_TO_POINTER (level));
+      g_signal_connect (entry_buffer,
+                        "notify::text",
+                        G_CALLBACK (animation_xsheet_track_title_updated),
+                        xsheet);
+      gtk_container_add (GTK_CONTAINER (frame), label);
+      gtk_widget_show (label);
+      gtk_widget_show (frame);
+
+      /* Adding a add-track [+] button. */
+      toolbar = gtk_toolbar_new ();
+      xsheet->priv->add_buttons = g_list_insert (xsheet->priv->add_buttons,
+                                                 toolbar, level);
+      gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
+                                 GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
+                             GTK_TOOLBAR_ICONS);
+      gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
+
+      item = gtk_separator_tool_item_new ();
+      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                        FALSE);
+      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), 0);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      image = gtk_image_new_from_icon_name ("list-add",
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
+      item = gtk_tool_button_new (image, NULL);
+      g_object_set_data (G_OBJECT (item), "track-num",
+                         GINT_TO_POINTER (level));
+      g_signal_connect (item, "clicked",
+                        G_CALLBACK (on_track_add_clicked),
+                        xsheet);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), -1);
+      gtk_widget_show (image);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      item = gtk_separator_tool_item_new ();
+      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                        FALSE);
+      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), -1);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        toolbar, level * 9 + 9, level * 9 + 11, 0, 1,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (toolbar);
+
+      /* Adding toolbar over each track. */
+      toolbar = gtk_toolbar_new ();
+      xsheet->priv->track_buttons = g_list_insert (xsheet->priv->track_buttons,
+                                                   toolbar, level);
+      gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
+                                 GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
+                             GTK_TOOLBAR_ICONS);
+      gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
+
+      image = gtk_image_new_from_icon_name ("gimp-menu-left",
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
+      item = gtk_tool_button_new (image, NULL);
+      g_object_set_data (G_OBJECT (item), "track-num",
+                         GINT_TO_POINTER (level));
+      g_signal_connect (item, "clicked",
+                        G_CALLBACK (on_track_left_clicked),
+                        xsheet);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), 0);
+      gtk_widget_show (image);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      item = gtk_separator_tool_item_new ();
+      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                        FALSE);
+      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), -1);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      image = gtk_image_new_from_icon_name ("edit-delete",
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
+      item = gtk_tool_button_new (image, NULL);
+      g_object_set_data (G_OBJECT (item), "track-num",
+                         GINT_TO_POINTER (level));
+      g_signal_connect (item, "clicked",
+                        G_CALLBACK (on_track_delete_clicked),
+                        xsheet);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), -1);
+      gtk_widget_show (image);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      item = gtk_separator_tool_item_new ();
+      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                        FALSE);
+      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), -1);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      image = gtk_image_new_from_icon_name ("gimp-menu-right",
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
+      item = gtk_tool_button_new (image, NULL);
+      g_object_set_data (G_OBJECT (item), "track-num",
+                         GINT_TO_POINTER (level));
+      g_signal_connect (item, "clicked",
+                        G_CALLBACK (on_track_right_clicked),
+                        xsheet);
+      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                          GTK_TOOL_ITEM (item), -1);
+      gtk_widget_show (image);
+      gtk_widget_show (GTK_WIDGET (item));
+
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        toolbar, level * 9 + 2, level * 9 + 9, 0, 1,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (toolbar);
+    }
+
+  animation_xsheet_move_tracks (xsheet, level);
+}
+
+static void
+animation_xsheet_remove_track (AnimationXSheet *xsheet,
+                               gint             level)
+{
+  GList *track;
+  GList *item;
+  GList *iter;
+
+  /* Remove all data first. */
+  track = g_list_nth (xsheet->priv->cels, level);
+  for (iter = track->data; iter; iter = iter->next)
+    {
+      gtk_widget_destroy (gtk_widget_get_parent (iter->data));
+    }
+  g_list_free (track->data);
+  xsheet->priv->cels = g_list_delete_link (xsheet->priv->cels,
+                                           track);
+
+  item = g_list_nth (xsheet->priv->add_buttons, level);
+  gtk_widget_destroy (item->data);
+  xsheet->priv->add_buttons = g_list_delete_link (xsheet->priv->add_buttons,
+                                                  item);
+  item = g_list_nth (xsheet->priv->track_buttons, level);
+  gtk_widget_destroy (item->data);
+  xsheet->priv->track_buttons = g_list_delete_link (xsheet->priv->track_buttons,
+                                                    item);
+  item = g_list_nth (xsheet->priv->titles, level);
+  gtk_widget_destroy (item->data);
+  xsheet->priv->titles = g_list_delete_link (xsheet->priv->titles,
+                                             item);
+
+  animation_xsheet_move_tracks (xsheet, level);
+}
+
+static void
 animation_xsheet_add_frames (AnimationXSheet *xsheet,
                              gint             position,
                              gint             n_frames)
@@ -332,27 +560,17 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
         {
           GtkWidget *cel;
 
-          frame = gtk_frame_new (NULL);
-          gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-          gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                            frame, j * 9 + 1, j * 9 + 10, i + 2, i + 3,
-                            GTK_FILL, GTK_FILL, 0, 0);
-
           cel = gtk_toggle_button_new ();
           iter->data = g_list_append (iter->data, cel);
-          g_object_set_data (G_OBJECT (cel), "track-num",
-                             GINT_TO_POINTER (j));
-          g_object_set_data (G_OBJECT (cel), "frame-position",
-                             GINT_TO_POINTER (i));
+          animation_xsheet_attach_cel (xsheet, cel, j, i);
           animation_xsheet_rename_cel (xsheet, cel, FALSE);
+
           g_signal_connect (cel, "button-release-event",
                             G_CALLBACK (animation_xsheet_cel_clicked),
                             xsheet);
           gtk_button_set_relief (GTK_BUTTON (cel), GTK_RELIEF_NONE);
           gtk_button_set_focus_on_click (GTK_BUTTON (cel), FALSE);
-          gtk_container_add (GTK_CONTAINER (frame), cel);
           gtk_widget_show (cel);
-          gtk_widget_show (frame);
         }
     }
 
@@ -570,8 +788,16 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   xsheet->priv->second_separators = NULL;
   g_list_free (xsheet->priv->position_buttons);
   xsheet->priv->position_buttons = NULL;
+  g_list_free (xsheet->priv->track_buttons);
+  xsheet->priv->track_buttons = NULL;
+  g_list_free (xsheet->priv->add_buttons);
+  xsheet->priv->add_buttons = NULL;
+  g_list_free (xsheet->priv->titles);
+  xsheet->priv->titles = NULL;
+
   xsheet->priv->active_pos_button = NULL;
   xsheet->priv->selected_track = -1;
+  xsheet->priv->comments_title = NULL;
   g_queue_clear (xsheet->priv->selected_frames);
 
   /*
@@ -610,6 +836,7 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
       title = animation_cel_animation_get_track_title (xsheet->priv->animation, j);
 
       frame = gtk_frame_new (NULL);
+      xsheet->priv->titles = g_list_prepend (xsheet->priv->titles, frame);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
       gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
                         frame, j * 9 + 1, j * 9 + 10, 1, 2,
@@ -629,6 +856,8 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 
       /* Adding a add-track [+] button. */
       toolbar = gtk_toolbar_new ();
+      xsheet->priv->add_buttons = g_list_prepend (xsheet->priv->add_buttons,
+                                                  toolbar);
       gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
                                  GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
@@ -671,6 +900,8 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 
       /* Adding toolbar over each track. */
       toolbar = gtk_toolbar_new ();
+      xsheet->priv->track_buttons = g_list_prepend (xsheet->priv->track_buttons,
+                                                  toolbar);
       gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
                                  GTK_ICON_SIZE_SMALL_TOOLBAR);
       gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
@@ -737,6 +968,10 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (toolbar);
     }
+  xsheet->priv->track_buttons = g_list_reverse (xsheet->priv->track_buttons);
+  xsheet->priv->add_buttons = g_list_reverse (xsheet->priv->add_buttons);
+  xsheet->priv->titles = g_list_reverse (xsheet->priv->titles);
+
   frame = gtk_frame_new (NULL);
   label = gtk_label_new (_("Comments"));
   gtk_container_add (GTK_CONTAINER (frame), label);
@@ -745,11 +980,141 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
                     frame, n_tracks * 9 + 1, n_tracks * 9 + 6, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
-
+  xsheet->priv->comments_title = frame;
   gtk_widget_show (frame);
 
   gtk_table_set_row_spacings (GTK_TABLE (xsheet->priv->track_layout), 0);
   gtk_table_set_col_spacings (GTK_TABLE (xsheet->priv->track_layout), 0);
+}
+
+/*
+ * animation_xsheet_move_tracks:
+ * @level: the left-est level from which to refresh the layout.
+ *
+ * Refresh the layout's widgets from @level and over. This should
+ * be used after adding or removing tracks.
+ */
+static void
+animation_xsheet_move_tracks (AnimationXSheet *xsheet,
+                              gint             level)
+{
+  GList *track;
+  GList *iter;
+  gint   n_tracks;
+  gint   i;
+  gint   j;
+
+  /* Now move next tracks one level up. */
+  track = g_list_nth (xsheet->priv->cels, level);
+  for (j = level, iter = track; iter; iter = iter->next, j++)
+    {
+      GList *iter2;
+
+      for (i = 0, iter2 = iter->data; iter2; iter2 = iter2->next, i++)
+        {
+          animation_xsheet_attach_cel (xsheet, iter2->data, j, i);
+        }
+    }
+
+  /* Titles */
+  track = g_list_nth (xsheet->priv->titles, level);
+  for (j = level, iter = track; iter; iter = iter->next, j++)
+    {
+      GtkWidget      *frame;
+      GtkWidget      *entry;
+      GtkEntryBuffer *buffer;
+
+      frame = g_object_ref (iter->data);
+      entry = gtk_bin_get_child (GTK_BIN (frame));
+      buffer = gtk_entry_get_buffer (GTK_ENTRY (entry));
+      g_object_set_data (G_OBJECT (buffer), "track-num",
+                         GINT_TO_POINTER (j));
+
+      gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
+                            frame);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        frame, j * 9 + 1, j * 9 + 10, 1, 2,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      g_object_unref (frame);
+    }
+
+  /* Comments */
+  n_tracks = animation_cel_animation_get_levels (xsheet->priv->animation);
+  for (i = 0, iter = xsheet->priv->comment_fields; iter; iter = iter->next, i++)
+    {
+      GtkWidget *comment = iter->data;
+      GtkWidget *frame;
+
+      frame = g_object_ref (gtk_widget_get_parent (comment));
+      gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
+                            frame);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        frame, n_tracks * 9 + 1, n_tracks * 9 + 6, i + 2, i + 3,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      g_object_unref (frame);
+    }
+
+  /* Comments title */
+  g_object_ref (xsheet->priv->comments_title);
+  gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
+                        xsheet->priv->comments_title);
+  gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                    xsheet->priv->comments_title,
+                    n_tracks * 9 + 1, n_tracks * 9 + 6, 1, 2,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  g_object_unref (xsheet->priv->comments_title);
+
+  /* Track buttons */
+  iter = g_list_nth (xsheet->priv->track_buttons, level);
+  for (j = level; iter; iter = iter->next, j++)
+    {
+      GtkWidget *toolbar;
+      GList     *buttons;
+      GList     *iter2;
+
+      toolbar = iter->data;
+      buttons = gtk_container_get_children (GTK_CONTAINER (toolbar));
+      for (iter2 = buttons; iter2; iter2 = iter2->next)
+        {
+          g_object_set_data (G_OBJECT (iter2->data), "track-num",
+                             GINT_TO_POINTER (j));
+        }
+      g_list_free (buttons);
+
+      g_object_ref (toolbar);
+      gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
+                            toolbar);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        toolbar, j * 9 + 2, j * 9 + 9, 0, 1,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      g_object_unref (toolbar);
+    }
+
+  /* Add buttons */
+  iter = g_list_nth (xsheet->priv->add_buttons, level);
+  for (j = level; iter; iter = iter->next, j++)
+    {
+      GtkWidget *toolbar;
+      GList     *buttons;
+      GList     *iter2;
+
+      toolbar = iter->data;
+      buttons = gtk_container_get_children (GTK_CONTAINER (toolbar));
+      for (iter2 = buttons; iter2; iter2 = iter2->next)
+        {
+          g_object_set_data (G_OBJECT (iter2->data), "track-num",
+                             GINT_TO_POINTER (j));
+        }
+      g_list_free (buttons);
+
+      g_object_ref (toolbar);
+      gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
+                            toolbar);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        toolbar, j * 9 + 9, j * 9 + 11, 0, 1,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      g_object_unref (toolbar);
+    }
 }
 
 static void
@@ -1071,28 +1436,39 @@ static void
 on_track_add_clicked (GtkToolButton   *button,
                       AnimationXSheet *xsheet)
 {
-  gpointer     track_num;
+  gpointer track_num;
 
   track_num = g_object_get_data (G_OBJECT (button), "track-num");
+  g_signal_handlers_disconnect_by_func (xsheet->priv->animation,
+                                        G_CALLBACK (on_animation_loaded),
+                                        xsheet);
   if (animation_cel_animation_level_add (xsheet->priv->animation,
                                          GPOINTER_TO_INT (track_num) + 1))
     {
-      animation_xsheet_reset_layout (xsheet);
+      animation_xsheet_add_track (xsheet, GPOINTER_TO_INT (track_num) + 1);
     }
+  g_signal_connect_after (xsheet->priv->animation, "loaded",
+                          G_CALLBACK (on_animation_loaded), xsheet);
 }
 
 static void
 on_track_delete_clicked (GtkToolButton   *button,
                          AnimationXSheet *xsheet)
 {
-  gpointer     track_num;
+  gpointer track_num;
 
   track_num = g_object_get_data (G_OBJECT (button), "track-num");
+  g_signal_handlers_disconnect_by_func (xsheet->priv->animation,
+                                        G_CALLBACK (on_animation_loaded),
+                                        xsheet);
   if (animation_cel_animation_level_delete (xsheet->priv->animation,
                                             GPOINTER_TO_INT (track_num)))
     {
-      animation_xsheet_reset_layout (xsheet);
+      animation_xsheet_remove_track (xsheet,
+                                     GPOINTER_TO_INT (track_num));
     }
+  g_signal_connect_after (xsheet->priv->animation, "loaded",
+                          G_CALLBACK (on_animation_loaded), xsheet);
 }
 
 static void
@@ -1237,4 +1613,42 @@ animation_xsheet_jump (AnimationXSheet *xsheet,
 
       show_scrolled_child (GTK_SCROLLED_WINDOW (xsheet), button);
     }
+}
+
+static void
+animation_xsheet_attach_cel (AnimationXSheet *xsheet,
+                             GtkWidget       *cel,
+                             gint             track,
+                             gint             pos)
+{
+  GtkWidget *frame;
+  gboolean   attached = FALSE;
+
+  g_object_set_data (G_OBJECT (cel), "frame-position",
+                     GINT_TO_POINTER (pos));
+  g_object_set_data (G_OBJECT (cel), "track-num",
+                     GINT_TO_POINTER (track));
+
+  frame = gtk_widget_get_parent (cel);
+  if (frame)
+    {
+      /* Already attached. Detach first. */
+      g_object_ref (frame);
+      gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
+                            frame);
+      attached = TRUE;
+    }
+  else
+    {
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+      gtk_container_add (GTK_CONTAINER (frame), cel);
+    }
+  gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                    frame, track * 9 + 1, track * 9 + 10,
+                    pos + 2, pos + 3,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (frame);
+  if (attached)
+    g_object_unref (frame);
 }
