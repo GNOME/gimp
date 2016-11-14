@@ -34,6 +34,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include <webp/encode.h>
 #include <webp/mux.h>
 
 #include "file-webp-save.h"
@@ -41,6 +42,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+WebPPreset    webp_preset_by_name   (gchar             *name);
 int           webp_anim_file_writer (FILE              *outfile,
                                      const uint8_t     *data,
                                      size_t             data_size);
@@ -66,6 +68,35 @@ gboolean      save_animation        (const gchar       *filename,
                                      WebPSaveParams    *params,
                                      GError           **error);
 
+
+WebPPreset
+webp_preset_by_name (gchar *name)
+{
+  if (! strcmp (name, "picture"))
+    {
+      return WEBP_PRESET_PICTURE;
+    }
+  else if (! strcmp (name, "photo"))
+    {
+      return WEBP_PRESET_PHOTO;
+    }
+  else if (! strcmp (name, "drawing"))
+    {
+      return WEBP_PRESET_DRAWING;
+    }
+  else if (! strcmp (name, "icon"))
+    {
+      return WEBP_PRESET_ICON;
+    }
+  else if (! strcmp (name, "text"))
+    {
+      return WEBP_PRESET_TEXT;
+    }
+  else
+    {
+      return WEBP_PRESET_DEFAULT;
+    }
+}
 
 int
 webp_anim_file_writer (FILE          *outfile,
@@ -200,7 +231,9 @@ save_layer (const gchar    *filename,
 
       /* Initialize the WebP configuration with a preset and fill in the
        * remaining values */
-      WebPConfigPreset (&config, params->preset, params->quality);
+      WebPConfigPreset (&config,
+                        webp_preset_by_name (params->preset),
+                        params->quality);
 
       config.lossless      = params->lossless;
       config.method        = 6;  /* better quality */
@@ -499,9 +532,13 @@ save_animation (const gchar    *filename,
               break;
             }
 
-          WebPConfigPreset (&config, params->preset, params->quality);
+          WebPConfigInit (&config);
+          WebPConfigPreset (&config,
+                            webp_preset_by_name (params->preset),
+                            params->quality);
 
           config.lossless      = params->lossless;
+          config.quality       = params->quality;
           config.method        = 6;  /* better quality */
           config.alpha_quality = params->alpha_quality;
           config.exact         = 1;

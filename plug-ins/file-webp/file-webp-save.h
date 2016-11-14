@@ -22,24 +22,22 @@
 #ifndef __WEBP_SAVE_H__
 #define __WEBP_SAVE_H__
 
-#include <webp/encode.h>
 
 typedef struct
 {
-  enum WebPPreset preset;
-  gboolean        lossless;
-  gboolean        animation;
-  gboolean        loop;
-  gfloat          quality;
-  gfloat          alpha_quality;
-  gboolean        exif;
-  gboolean        iptc;
-  gboolean        xmp;
-  gint            delay;
-  gboolean        force_delay;
+  gchar    *preset;
+  gboolean  lossless;
+  gboolean  animation;
+  gboolean  loop;
+  gfloat    quality;
+  gfloat    alpha_quality;
+  gboolean  exif;
+  gboolean  iptc;
+  gboolean  xmp;
+  gint      delay;
+  gboolean  force_delay;
 } WebPSaveParams;
 
-WebPPreset  get_preset_from_id (gint id);
 
 gboolean   save_image (const gchar    *filename,
                        gint32          nLayers,

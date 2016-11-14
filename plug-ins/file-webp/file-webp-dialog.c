@@ -29,57 +29,55 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static GtkWidget*     new_combo_from_presets (enum WebPPreset *preset);
-static void           preset_update (GimpIntComboBox* combo_box,
-                                     gpointer data);
+
+static GtkListStore * save_dialog_presets        (void);
+static void           save_dialog_preset_changed (GtkWidget  *widget,
+                                                  gchar     **data);
 static void           save_dialog_toggle_scale   (GtkWidget  *widget,
                                                   gpointer   data);
 
-static const struct
+
+static struct
 {
-  const enum WebPPreset preset;
+  const gchar *id;
   const gchar *label;
 } presets[] =
 {
-  { WEBP_PRESET_DEFAULT, "Default" },
-  { WEBP_PRESET_PICTURE, "Picture" },
-  { WEBP_PRESET_PHOTO,   "Photo"   },
-  { WEBP_PRESET_DRAWING, "Drawing" },
-  { WEBP_PRESET_ICON,    "Icon"    },
-  { WEBP_PRESET_TEXT,    "Text"    },
+  { "default", "Default" },
+  { "picture", "Picture" },
+  { "photo",   "Photo"   },
+  { "drawing", "Drawing" },
+  { "icon",    "Icon"    },
+  { "text",    "Text"    },
+  { 0 }
 };
 
-
-WebPPreset
-get_preset_from_id (gint id)
+static GtkListStore *
+save_dialog_presets (void)
 {
-  if (id >= 0 && id < sizeof (presets) / sizeof (presets[0]))
-    return presets[id].preset;
-  return presets[0].preset;
+  GtkListStore *list_store;
+  gint          i;
+
+  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+
+  for (i = 0; presets[i].id; ++i)
+    gtk_list_store_insert_with_values (list_store,
+                                       NULL,
+                                       -1,
+                                       0, presets[i].id,
+                                       1, presets[i].label,
+                                       -1);
+
+  return list_store;
 }
 
 static void
-preset_update (GimpIntComboBox* combo_box, gpointer data) {
-  if (! gimp_int_combo_box_get_active (combo_box, (gint*) data))
-    * (enum WebPPreset*) data = WEBP_PRESET_DEFAULT;
-}
-
-static GtkWidget*
-new_combo_from_presets (enum WebPPreset *preset)
+save_dialog_preset_changed (GtkWidget  *widget,
+                            gchar     **data)
 {
-  gint i;
-  GtkWidget* combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
-  for (i = 0; i < sizeof (presets) / sizeof( presets[0] ); ++i)
-    gimp_int_combo_box_append (GIMP_INT_COMBO_BOX(combo),
-                               GIMP_INT_STORE_VALUE, (gint) presets[i].preset,
-                               GIMP_INT_STORE_LABEL, presets[i].label,
-                               -1);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), *preset,
-                              G_CALLBACK (preset_update), preset);
-  gtk_widget_show (combo);
-  return combo;
+  g_free (*data);
+  *data = gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (widget));
 }
-
 
 static void
 save_dialog_toggle_scale (GtkWidget *widget,
@@ -104,6 +102,7 @@ save_dialog (WebPSaveParams *params,
   GtkWidget     *save_exif;
   GtkWidget     *save_xmp;
   GtkWidget     *preset_label;
+  GtkListStore  *preset_list;
   GtkWidget     *preset_combo;
   GtkWidget     *lossless_checkbox;
   GtkWidget     *animation_checkbox;
@@ -188,10 +187,20 @@ save_dialog (WebPSaveParams *params,
   gtk_widget_show (preset_label);
 
   /* Create the combobox containing the presets */
-  preset_combo = new_combo_from_presets (&params->preset);
+  preset_list = save_dialog_presets ();
+  preset_combo = gimp_string_combo_box_new (GTK_TREE_MODEL (preset_list), 0, 1);
+  g_object_unref (preset_list);
+
+  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (preset_combo),
+                                    params->preset);
   gtk_table_attach (GTK_TABLE (table), preset_combo,
                     1, 3, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (preset_combo);
+
+  g_signal_connect (preset_combo, "changed",
+                    G_CALLBACK (save_dialog_preset_changed),
+                    &params->preset);
 
   /* Create the lossless checkbox */
   lossless_checkbox = gtk_check_button_new_with_label (_("Lossless"));

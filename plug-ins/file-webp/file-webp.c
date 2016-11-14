@@ -56,22 +56,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
 MAIN()
 
 static void
-set_default_params (WebPSaveParams* params)
-{
-  params->preset        = WEBP_PRESET_DEFAULT;
-  params->lossless      = FALSE;
-  params->animation     = FALSE;
-  params->loop          = TRUE;
-  params->quality       = 90.0f;
-  params->alpha_quality = 100.0f;
-  params->exif          = TRUE;
-  params->iptc          = TRUE;
-  params->xmp           = TRUE;
-  params->delay         = 200;
-  params->force_delay   = FALSE;
-}
-
-static void
 query (void)
 {
   static const GimpParamDef load_arguments[] =
@@ -93,7 +77,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image to" },
     { GIMP_PDB_STRING,   "raw-filename",  "The name entered" },
-    { GIMP_PDB_INT32,    "preset",        "preset (Default=0, Picture=1, Photo=2, Drawing=3, Icon=4, Text=5)" },
+    { GIMP_PDB_STRING,   "preset",        "Name of preset to use" },
     { GIMP_PDB_INT32,    "lossless",      "Use lossless encoding (0/1)" },
     { GIMP_PDB_FLOAT,    "quality",       "Quality of the image (0 <= quality <= 100)" },
     { GIMP_PDB_FLOAT,    "alpha-quality", "Quality of the image's alpha channel (0 <= alpha-quality <= 100)" },
@@ -204,10 +188,21 @@ run (const gchar      *name,
         {
         case GIMP_RUN_WITH_LAST_VALS:
         case GIMP_RUN_INTERACTIVE:
-          /* Default settings */
-          set_default_params (&params);
+          /* Default settings. */
+          params.lossless      = FALSE;
+          params.animation     = FALSE;
+          params.loop          = TRUE;
+          params.quality       = 90.0f;
+          params.alpha_quality = 100.0f;
+          params.exif          = TRUE;
+          params.iptc          = TRUE;
+          params.xmp           = TRUE;
+          params.delay         = 200;
+          params.force_delay   = FALSE;
           /*  Possibly override with session data  */
           gimp_get_data (SAVE_PROC, &params);
+          /* can't serialize strings, so restore default */
+          params.preset = g_strdup ("default");
 
           export = gimp_export_image (&image_ID, &drawable_ID, "WebP",
                                       GIMP_EXPORT_CAN_HANDLE_RGB     |
@@ -231,7 +226,7 @@ run (const gchar      *name,
             }
           else
             {
-              params.preset        = get_preset_from_id (param[5].data.d_int32);
+              params.preset        = g_strdup (param[5].data.d_string);
               params.lossless      = param[6].data.d_int32;
               params.quality       = param[7].data.d_float;
               params.alpha_quality = param[8].data.d_float;
@@ -275,6 +270,8 @@ run (const gchar      *name,
             }
         }
 
+      g_free (params.preset);
+      params.preset = NULL;
 
       g_free (layers);
 
@@ -284,6 +281,7 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           /* save parameters for later */
+          /* we can't serialize strings this way. params.preset isn't saved. */
           gimp_set_data (SAVE_PROC, &params, sizeof (params));
         }
     }
