@@ -26,7 +26,7 @@
 
 typedef struct
 {
-  enum WebPPreset preset;
+  WebPPreset      preset;
   gboolean        lossless;
   gboolean        animation;
   gboolean        loop;
@@ -39,7 +39,23 @@ typedef struct
   gboolean        force_delay;
 } WebPSaveParams;
 
-WebPPreset  get_preset_from_id (gint id);
+static const struct
+{
+  const WebPPreset  preset;
+  const gchar      *label;
+} webp_presets[] =
+{
+  /* The preset order is used as ID parameter in the PDB save procedure.
+   * So it is important to keep it stable in order not to break any
+   * script. Any new preset should be added to the end.
+   */
+  { WEBP_PRESET_DEFAULT, "Default" },
+  { WEBP_PRESET_PICTURE, "Picture" },
+  { WEBP_PRESET_PHOTO,   "Photo"   },
+  { WEBP_PRESET_DRAWING, "Drawing" },
+  { WEBP_PRESET_ICON,    "Icon"    },
+  { WEBP_PRESET_TEXT,    "Text"    },
+};
 
 gboolean   save_image (const gchar    *filename,
                        gint32          nLayers,

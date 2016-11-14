@@ -29,50 +29,30 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static GtkWidget*     new_combo_from_presets (enum WebPPreset *preset);
-static void           preset_update (GimpIntComboBox* combo_box,
-                                     gpointer data);
-static void           save_dialog_toggle_scale   (GtkWidget  *widget,
-                                                  gpointer   data);
+static void        preset_update            (GimpIntComboBox *combo_box,
+                                             gpointer         data);
+static GtkWidget * new_combo_from_presets   (WebPPreset      *preset);
+static void        save_dialog_toggle_scale (GtkWidget       *widget,
+                                             gpointer         data);
 
-static const struct
-{
-  const enum WebPPreset preset;
-  const gchar *label;
-} presets[] =
-{
-  { WEBP_PRESET_DEFAULT, "Default" },
-  { WEBP_PRESET_PICTURE, "Picture" },
-  { WEBP_PRESET_PHOTO,   "Photo"   },
-  { WEBP_PRESET_DRAWING, "Drawing" },
-  { WEBP_PRESET_ICON,    "Icon"    },
-  { WEBP_PRESET_TEXT,    "Text"    },
-};
-
-
-WebPPreset
-get_preset_from_id (gint id)
-{
-  if (id >= 0 && id < sizeof (presets) / sizeof (presets[0]))
-    return presets[id].preset;
-  return presets[0].preset;
-}
 
 static void
-preset_update (GimpIntComboBox* combo_box, gpointer data) {
+preset_update (GimpIntComboBox *combo_box,
+               gpointer         data)
+{
   if (! gimp_int_combo_box_get_active (combo_box, (gint*) data))
-    * (enum WebPPreset*) data = WEBP_PRESET_DEFAULT;
+    * (WebPPreset*) data = WEBP_PRESET_DEFAULT;
 }
 
-static GtkWidget*
-new_combo_from_presets (enum WebPPreset *preset)
+static GtkWidget *
+new_combo_from_presets (WebPPreset *preset)
 {
   gint i;
   GtkWidget* combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
-  for (i = 0; i < sizeof (presets) / sizeof( presets[0] ); ++i)
-    gimp_int_combo_box_append (GIMP_INT_COMBO_BOX(combo),
-                               GIMP_INT_STORE_VALUE, (gint) presets[i].preset,
-                               GIMP_INT_STORE_LABEL, presets[i].label,
+  for (i = 0; i < G_N_ELEMENTS (webp_presets); ++i)
+    gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (combo),
+                               GIMP_INT_STORE_VALUE, (gint) webp_presets[i].preset,
+                               GIMP_INT_STORE_LABEL, webp_presets[i].label,
                                -1);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), *preset,
                               G_CALLBACK (preset_update), preset);
