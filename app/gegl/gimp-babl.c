@@ -299,7 +299,7 @@ gimp_babl_init_fishes (GimpInitStatusFunc status_callback)
     {
       status_callback (NULL, NULL,
                        (gdouble) (i + 1) /
-                       (gdouble) G_N_ELEMENTS (fishes) / 2.0);
+                       (gdouble) G_N_ELEMENTS (fishes) * 0.8);
 
       babl_fish (babl_format (fishes[i].from_format),
                  babl_format (fishes[i].to_format));
