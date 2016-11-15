@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-08 10:21+0100\n"
-"PO-Revision-Date: 2016-11-08 10:22+0100\n"
+"POT-Creation-Date: 2016-11-15 21:39+0100\n"
+"PO-Revision-Date: 2016-11-15 21:40+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -883,7 +883,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1079
 #: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1523
-#: ../plug-ins/file-tiff/file-tiff-save.c:521 ../plug-ins/flame/flame.c:442
+#: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -2108,7 +2108,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1073
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
-#: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:314
+#: ../plug-ins/file-sgi/sgi.c:577 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Eksportowanie „%s”"
@@ -2299,7 +2299,6 @@ msgid "Opening '%s' (frame %d)"
 msgstr "Otwieranie „%s” (klatka %d)"
 
 #: ../plug-ins/common/file-gif-load.c:1034
-#: ../plug-ins/file-webp/file-webp-load.c:205
 #, c-format
 msgid "Frame %d"
 msgstr "Klatka %d"
@@ -2773,7 +2772,7 @@ msgstr "Domyślna przerwa między klatkami:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1546
-#: ../plug-ins/file-webp/file-webp-dialog.c:308
+#: ../plug-ins/file-webp/file-webp-dialog.c:248
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
 msgstr "ms"
@@ -3086,13 +3085,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
 #: ../plug-ins/common/file-png.c:2265
-#: ../plug-ins/file-tiff/file-tiff-save.c:841
+#: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
 #: ../plug-ins/common/file-png.c:2266
-#: ../plug-ins/file-tiff/file-tiff-save.c:842
+#: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Nieznany błąd"
 
@@ -4004,8 +4003,8 @@ msgstr "Komentarz jest ograniczony do %d znaków."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1463
-#: ../plug-ins/file-webp/file-webp-save.c:203
-#: ../plug-ins/file-webp/file-webp-save.c:458
+#: ../plug-ins/file-webp/file-webp-save.c:173
+#: ../plug-ins/file-webp/file-webp-save.c:426
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
@@ -6299,7 +6298,8 @@ msgstr ""
 #. Advanced Options
 #. Advanced options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
-#: ../plug-ins/file-webp/file-webp-dialog.c:332
+#: ../plug-ins/file-webp/file-webp-dialog.c:178
+#: ../plug-ins/file-webp/file-webp-dialog.c:265
 msgid "_Advanced Options"
 msgstr "Ustawienia za_awansowane"
 
@@ -6664,7 +6664,7 @@ msgstr "_Przyrostowy"
 
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
-#: ../plug-ins/file-webp/file-webp-dialog.c:353
+#: ../plug-ins/file-webp/file-webp-dialog.c:282
 msgid "Save _Exif data"
 msgstr "Zapisanie danych _Exif"
 
@@ -6674,7 +6674,7 @@ msgstr "Zapisanie _miniatury"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
-#: ../plug-ins/file-webp/file-webp-dialog.c:363
+#: ../plug-ins/file-webp/file-webp-dialog.c:292
 msgid "Save _XMP data"
 msgstr "Zapisanie danych _XMP"
 
@@ -6969,12 +6969,12 @@ msgstr "%s-%d-z-%d-stron"
 msgid "TIFF Channel"
 msgstr "Kanały TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:482
+#: ../plug-ins/file-tiff/file-tiff-save.c:605
 #, c-format
 msgid "TIFF export cannot handle indexed images with an alpha channel."
 msgstr "TIFF nie eksportuje indeksowanych obrazów z kanałem alfa."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:495
+#: ../plug-ins/file-tiff/file-tiff-save.c:618
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -6982,11 +6982,11 @@ msgstr ""
 "Tylko monochromatyczne obrazy mogą być kompresowane za pomocą „CCITT Group "
 "4” lub „CCITT Group 3”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:509
+#: ../plug-ins/file-tiff/file-tiff-save.c:632
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Indeksowane obrazy nie mogą być kompresowane za pomocą „JPEG”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:608
+#: ../plug-ins/file-tiff/file-tiff-save.c:731
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -6995,44 +6995,44 @@ msgstr ""
 "zapisane w 7-bitowym kodowaniu ASCII.\n"
 "Komentarz nie został zapisany."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:706
+#: ../plug-ins/file-tiff/file-tiff-save.c:823
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Zapisanie scanline w rzędzie %d się nie powiodło"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:831
+#: ../plug-ins/file-tiff/file-tiff-save.c:948
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:857
+#: ../plug-ins/file-tiff/file-tiff-save.c:974
 msgid "Compression"
 msgstr "Kompresja"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:861
+#: ../plug-ins/file-tiff/file-tiff-save.c:978
 msgid "_None"
 msgstr "_Brak"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:862
+#: ../plug-ins/file-tiff/file-tiff-save.c:979
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:863
+#: ../plug-ins/file-tiff/file-tiff-save.c:980
 msgid "_Pack Bits"
 msgstr "_Kompresowanie bitów"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:864
+#: ../plug-ins/file-tiff/file-tiff-save.c:981
 msgid "_Deflate"
 msgstr "_Deflacja"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:865
+#: ../plug-ins/file-tiff/file-tiff-save.c:982
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:866
+#: ../plug-ins/file-tiff/file-tiff-save.c:983
 msgid "CCITT Group _3 fax"
 msgstr "Faks CCITT Group _3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:867
+#: ../plug-ins/file-tiff/file-tiff-save.c:984
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
@@ -7041,62 +7041,56 @@ msgid "WebP image"
 msgstr "Obraz WebP"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:118
+#: ../plug-ins/file-webp/file-webp-dialog.c:71
 msgid "WebP"
 msgstr "WebP"
 
-#. Create the descriptive label at the top
-#: ../plug-ins/file-webp/file-webp-dialog.c:128
-msgid "WebP Options"
-msgstr "Opcje WebP"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:146
-msgid "Image quality:"
-msgstr "Jakość obrazu:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:154
-msgid "Image quality"
-msgstr "Jakość obrazu"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:165
-msgid "Alpha quality:"
-msgstr "Jakość alfy:"
-
-#: ../plug-ins/file-webp/file-webp-dialog.c:173
-msgid "Alpha channel quality"
-msgstr "Jakość kanału alfa"
-
-#. Create the label for the selecting a preset
-#: ../plug-ins/file-webp/file-webp-dialog.c:182
-msgid "Preset:"
-msgstr "Ustawienia:"
-
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:206
+#: ../plug-ins/file-webp/file-webp-dialog.c:88
 msgid "Lossless"
 msgstr "Bezstratne"
 
-#. Create the top-level animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:241
-msgid "As animation"
-msgstr "Jako animacja"
+#: ../plug-ins/file-webp/file-webp-dialog.c:104
+msgid "Image quality:"
+msgstr "Jakość obrazu:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:253
-msgid "Animated WebP Options"
-msgstr "Opcje animacji WebP"
+#: ../plug-ins/file-webp/file-webp-dialog.c:112
+msgid "Image quality"
+msgstr "Jakość obrazu"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:123
+msgid "Alpha quality:"
+msgstr "Jakość alfy:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:131
+msgid "Alpha channel quality"
+msgstr "Jakość kanału alfa"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:156
+msgid "Source type:"
+msgstr "Typ źródła:"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:159
+msgid "WebP encoder \"preset\""
+msgstr "Ustawienia kodera WebP"
+
+#. Create the top-level animation checkbox expander
+#: ../plug-ins/file-webp/file-webp-dialog.c:185
+msgid "As A_nimation"
+msgstr "Jako a_nimacja"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:275
+#: ../plug-ins/file-webp/file-webp-dialog.c:214
 msgid "Loop forever"
 msgstr "Powtarzanie w nieskończoność"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:291
+#: ../plug-ins/file-webp/file-webp-dialog.c:230
 msgid "Delay between frames where unspecified:"
 msgstr "Opóźnienie między klatkami, jeśli nie podano:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:313
+#: ../plug-ins/file-webp/file-webp-dialog.c:253
 msgid "Use delay entered above for all frames"
 msgstr "Użycie opóźnienia podanego powyżej dla wszystkich klatek"
 
@@ -7105,76 +7099,81 @@ msgstr "Użycie opóźnienia podanego powyżej dla wszystkich klatek"
 msgid "Invalid WebP file '%s'"
 msgstr "Nieprawidłowy plik WebP „%s”."
 
-#: ../plug-ins/file-webp/file-webp-load.c:177
+#: ../plug-ins/file-webp/file-webp-load.c:184
 #, c-format
 msgid "Failed to decode animated WebP file '%s'"
 msgstr "Dekodowanie animowanego pliku WebP „%s” się nie powiodło"
 
-#: ../plug-ins/file-webp/file-webp-load.c:185
+#: ../plug-ins/file-webp/file-webp-load.c:192
 #, c-format
 msgid "Failed to decode animated WebP information from '%s'"
 msgstr "Dekodowanie informacji animowanego pliku WebP z „%s” się nie powiodło"
 
-#: ../plug-ins/file-webp/file-webp-load.c:200
+#: ../plug-ins/file-webp/file-webp-load.c:211
 #, c-format
 msgid "Failed to decode animated WebP frame from '%s'"
 msgstr "Dekodowanie klatki animowanego pliku WebP z „%s” się nie powiodło"
 
-#: ../plug-ins/file-webp/file-webp-save.c:142
+#: ../plug-ins/file-webp/file-webp-load.c:216
+#, c-format
+msgid "Frame %d (%dms)"
+msgstr "Klatka %d (%d ms)"
+
+#: ../plug-ins/file-webp/file-webp-save.c:112
 msgid "out of memory"
 msgstr "brak pamięci"
 
-#: ../plug-ins/file-webp/file-webp-save.c:144
+#: ../plug-ins/file-webp/file-webp-save.c:114
 msgid "not enough memory to flush bits"
 msgstr "za mało pamięci, aby wyczyścić bity"
 
-#: ../plug-ins/file-webp/file-webp-save.c:146
+#: ../plug-ins/file-webp/file-webp-save.c:116
 msgid "NULL parameter"
 msgstr "Parametr NULL"
 
-#: ../plug-ins/file-webp/file-webp-save.c:148
+#: ../plug-ins/file-webp/file-webp-save.c:118
 msgid "invalid configuration"
 msgstr "nieprawidłowa konfiguracja"
 
-#: ../plug-ins/file-webp/file-webp-save.c:150
+#: ../plug-ins/file-webp/file-webp-save.c:120
 msgid "bad image dimensions"
 msgstr "błędne wymiary obrazu"
 
-#: ../plug-ins/file-webp/file-webp-save.c:152
+#: ../plug-ins/file-webp/file-webp-save.c:122
 msgid "partition is bigger than 512K"
 msgstr "partycja jest większa niż 512 K"
 
-#: ../plug-ins/file-webp/file-webp-save.c:154
+#: ../plug-ins/file-webp/file-webp-save.c:124
 msgid "partition is bigger than 16M"
 msgstr "partycja jest większa niż 16 M"
 
-#: ../plug-ins/file-webp/file-webp-save.c:156
+#: ../plug-ins/file-webp/file-webp-save.c:126
 msgid "unable to flush bytes"
 msgstr "nie można wyczyścić bajtów"
 
-#: ../plug-ins/file-webp/file-webp-save.c:158
+#: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
 msgstr "plik jest większy niż 4 GiB"
 
-#: ../plug-ins/file-webp/file-webp-save.c:160
+#: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "user aborted encoding"
 msgstr "użytkownik przerwał kodowanie"
 
-#: ../plug-ins/file-webp/file-webp-save.c:162
+#: ../plug-ins/file-webp/file-webp-save.c:132
 msgid "list terminator"
 msgstr "znak zakończenia listy"
 
-#: ../plug-ins/file-webp/file-webp-save.c:164
+#: ../plug-ins/file-webp/file-webp-save.c:134
 msgid "unknown error"
 msgstr "nieznany błąd"
 
-#: ../plug-ins/file-webp/file-webp-save.c:211
-#: ../plug-ins/file-webp/file-webp-save.c:466
+#: ../plug-ins/file-webp/file-webp-save.c:181
+#: ../plug-ins/file-webp/file-webp-save.c:434
 #, c-format
 msgid "Unable to open '%s' for writing"
 msgstr "Nie można otworzyć pliku „%s” do zapisania"
 
-#: ../plug-ins/file-webp/file-webp-save.c:279
+#: ../plug-ins/file-webp/file-webp-save.c:247
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Błąd WebP: „%s”"
