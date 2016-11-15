@@ -142,8 +142,6 @@ static void        connect_accelerators      (GtkUIManager     *ui_manager,
 static void        animation_dialog_set_animation (AnimationDialog *dialog,
                                                    Animation       *animation);
 /* Finalization. */
-static void        animation_dialog_refresh  (AnimationDialog  *dialog);
-
 static void        update_ui_sensitivity     (AnimationDialog  *dialog);
 
 /* UI callbacks */
@@ -1386,47 +1384,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   animation_playback_set_animation (priv->playback, animation);
 }
 
-static void
-animation_dialog_refresh (AnimationDialog *dialog)
-{
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GdkScreen *screen;
-  guint      screen_width, screen_height;
-  gint       window_width, window_height;
-  gint       preview_width, preview_height;
-
-  /* Update GUI size. */
-  screen = gtk_widget_get_screen (GTK_WIDGET (dialog));
-  screen_height = gdk_screen_get_height (screen);
-  screen_width = gdk_screen_get_width (screen);
-  gtk_window_get_size (GTK_WINDOW (dialog), &window_width, &window_height);
-  animation_get_size (priv->animation, &preview_width, &preview_height);
-
-  /* if the *window* size is bigger than the screen size,
-   * diminish the drawing area by as much, then compute the corresponding scale. */
-  if (window_width + 50 > screen_width || window_height + 50 > screen_height)
-  {
-      gint expected_drawing_area_width = MAX (1, preview_width - window_width + screen_width);
-      gint expected_drawing_area_height = MAX (1, preview_height - window_height + screen_height);
-
-      gdouble expected_scale = MIN ((gdouble) expected_drawing_area_width / (gdouble) preview_width,
-                                    (gdouble) expected_drawing_area_height / (gdouble) preview_height);
-      update_scale (dialog, expected_scale);
-
-      /* There is unfortunately no good way to know the size of the decorations, taskbars, etc.
-       * So we take a wild guess by making the window slightly smaller to fit into most case. */
-      gtk_window_set_default_size (GTK_WINDOW (dialog),
-                                   MIN (expected_drawing_area_width + 20, screen_width - 60),
-                                   MIN (expected_drawing_area_height + 90, screen_height - 60));
-
-      gtk_window_reshow_with_initial_size (GTK_WINDOW (dialog));
-  }
-  if (priv->layer_list)
-    {
-      animation_layer_view_refresh (ANIMATION_LAYER_VIEW (priv->layer_list));
-    }
-}
-
 /* Update the tool sensitivity for playing, depending on the number of frames. */
 static void
 update_ui_sensitivity (AnimationDialog *dialog)
@@ -1926,7 +1883,10 @@ refresh_callback (GtkAction       *action,
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
 
-  animation_dialog_refresh (dialog);
+  if (priv->layer_list)
+    {
+      animation_layer_view_refresh (ANIMATION_LAYER_VIEW (priv->layer_list));
+    }
   animation_load (priv->animation);
 }
 
@@ -2026,7 +1986,6 @@ unblock_ui (Animation      *animation,
             AnimationDialog *dialog)
 {
   update_progress (dialog);
-  animation_dialog_refresh (dialog);
 }
 
 static void
