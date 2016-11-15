@@ -763,7 +763,7 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COLOR_TAG:
       {
-        gint32 color_tag;
+        guint32 color_tag;
 
         color_tag = va_arg (args, gint32);
         size = 4;
