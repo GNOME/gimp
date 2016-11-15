@@ -51,22 +51,19 @@ save_dialog (WebPSaveParams *params,
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
-  GtkWidget *label;
   GtkWidget *table;
   GtkWidget *expander;
   GtkWidget *frame;
   GtkWidget *vbox2;
-  GtkWidget *save_exif;
-  GtkWidget *save_xmp;
-  GtkWidget *preset_label;
-  GtkWidget *preset_combo;
-  GtkWidget *lossless_checkbox;
-  GtkWidget *animation_checkbox;
+  GtkWidget *label;
+  GtkWidget *toggle;
+  GtkWidget *combo;
   GtkObject *quality_scale;
   GtkObject *alpha_quality_scale;
   gboolean   animation_supported = FALSE;
   gboolean   run;
   gchar     *text;
+  gint       row = 0;
 
   animation_supported = n_layers > 1;
 
@@ -74,31 +71,36 @@ save_dialog (WebPSaveParams *params,
   dialog = gimp_export_dialog_new (_("WebP"), PLUG_IN_BINARY, SAVE_PROC);
 
   /* Create the vbox */
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  /* Create the descriptive label at the top */
-  text = g_strdup_printf ("<b>%s</b>", _("WebP Options"));
-  label = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL(label), text);
-  g_free (text);
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   /* Create the table */
-  table = gtk_table_new (4, 5, FALSE);
+  table = gtk_table_new (4, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+  /* Create the lossless checkbox */
+  toggle = gtk_check_button_new_with_label (_("Lossless"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                params->lossless);
+  gtk_table_attach (GTK_TABLE (table), toggle,
+                    0, 3, row, row + 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (toggle);
+  row++;
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &params->lossless);
+
   /* Create the slider for image quality */
   quality_scale = gimp_scale_entry_new (GTK_TABLE (table),
-                                        0, 0,
+                                        0, row++,
                                         _("Image quality:"),
                                         125,
                                         0,
@@ -117,7 +119,7 @@ save_dialog (WebPSaveParams *params,
 
   /* Create the slider for alpha channel quality */
   alpha_quality_scale = gimp_scale_entry_new (GTK_TABLE (table),
-                                              0, 1,
+                                              0, row++,
                                               _("Alpha quality:"),
                                               125,
                                               0,
@@ -134,131 +136,108 @@ save_dialog (WebPSaveParams *params,
                     G_CALLBACK (gimp_float_adjustment_update),
                     &params->alpha_quality);
 
-  /* Create the label for the selecting a preset */
-  preset_label = gtk_label_new (_("Source type:"));
-  gimp_help_set_help_data (preset_label,
-                           _("WebP encoder \"preset\""),
-                           NULL);
-  gtk_label_set_xalign (GTK_LABEL (preset_label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), preset_label,
-                    0, 1, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (preset_label);
+  /* Enable and disable the sliders when the lossless option is selected */
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (save_dialog_toggle_scale),
+                    quality_scale);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (save_dialog_toggle_scale),
+                    alpha_quality_scale);
 
   /* Create the combobox containing the presets */
-  preset_combo = gimp_int_combo_box_new ("Default", WEBP_PRESET_DEFAULT,
-                                         "Picture", WEBP_PRESET_PICTURE,
-                                         "Photo",   WEBP_PRESET_PHOTO,
-                                         "Drawing", WEBP_PRESET_DRAWING,
-                                         "Icon",    WEBP_PRESET_ICON,
-                                         "Text",    WEBP_PRESET_TEXT,
-                                         NULL);
-  gtk_table_attach (GTK_TABLE (table), preset_combo,
-                    1, 3, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (preset_combo);
+  combo = gimp_int_combo_box_new ("Default", WEBP_PRESET_DEFAULT,
+                                  "Picture", WEBP_PRESET_PICTURE,
+                                  "Photo",   WEBP_PRESET_PHOTO,
+                                  "Drawing", WEBP_PRESET_DRAWING,
+                                  "Icon",    WEBP_PRESET_ICON,
+                                  "Text",    WEBP_PRESET_TEXT,
+                                  NULL);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                     _("Source type:"), 0.0, 0.5,
+                                     combo, 2, FALSE);
+  gimp_help_set_help_data (label,
+                           _("WebP encoder \"preset\""),
+                           NULL);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (preset_combo),
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               params->preset,
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &params->preset);
 
-  /* Create the lossless checkbox */
-  lossless_checkbox = gtk_check_button_new_with_label (_("Lossless"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lossless_checkbox),
-                                params->lossless);
-  gtk_table_attach (GTK_TABLE (table), lossless_checkbox,
-                    0, 4, 3, 4,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (lossless_checkbox);
-
-  g_signal_connect (lossless_checkbox, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &params->lossless);
-
-  /* Enable and disable the sliders when the lossless option is selected */
-  g_signal_connect (lossless_checkbox, "toggled",
-                    G_CALLBACK (save_dialog_toggle_scale),
-                    quality_scale);
-  g_signal_connect (lossless_checkbox, "toggled",
-                    G_CALLBACK (save_dialog_toggle_scale),
-                    alpha_quality_scale);
-
   if (animation_supported)
     {
       GtkWidget     *animation_box;
-      GtkWidget     *animation_box2;
-      GtkWidget     *loop_anim_checkbox;
-      GtkWidget     *animation_expander;
-      GtkWidget     *animation_frame;
       GtkAdjustment *adj;
       GtkWidget     *delay;
-      GtkWidget     *delay_label;
-      GtkWidget     *delay_label2;
-      GtkWidget     *delay_hbox;
-      GtkWidget     *delay_checkbox;
+      GtkWidget     *hbox;
 
-      /* Create the top-level animation checkbox */
-      animation_checkbox = gtk_check_button_new_with_label (_("As animation"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (animation_checkbox),
+      vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+      gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+      gtk_widget_show (vbox2);
+
+      text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
+      expander = gtk_expander_new_with_mnemonic (text);
+      gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
+      g_free (text);
+
+
+      /* Create the top-level animation checkbox expander */
+      text = g_strdup_printf ("<b>%s</b>", _("As A_nimation"));
+      toggle = gtk_check_button_new_with_mnemonic (text);
+      g_free (text);
+
+      gtk_label_set_use_markup (GTK_LABEL (gtk_bin_get_child (GTK_BIN (toggle))),
+                                TRUE);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     params->animation);
-      gtk_table_attach (GTK_TABLE (table), animation_checkbox,
-                        0, 4, 4, 5,
-                        GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_set_sensitive (animation_checkbox, TRUE);
-      g_signal_connect (animation_checkbox, "toggled",
+      gtk_box_pack_start (GTK_BOX (vbox2), toggle, TRUE, TRUE, 0);
+      gtk_widget_show (toggle);
+
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &params->animation);
-      gtk_widget_show (animation_checkbox);
 
-      text = g_strdup_printf ("<b>%s</b>", _("Animated WebP Options"));
-      animation_expander = gtk_expander_new_with_mnemonic (text);
-      gtk_expander_set_use_markup (GTK_EXPANDER (animation_expander), TRUE);
-      g_free (text);
-      gtk_box_pack_start (GTK_BOX (vbox), animation_expander, TRUE, TRUE, 0);
-      gtk_widget_show (animation_expander);
+      frame = gimp_frame_new ("<expander>");
+      gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
+      gtk_widget_show (frame);
+
+      g_object_bind_property (toggle, "active",
+                              frame,  "visible",
+                              G_BINDING_SYNC_CREATE);
 
       /* animation options box */
-      animation_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-      gtk_container_set_border_width (GTK_CONTAINER (animation_box), 6);
-      gtk_container_add (GTK_CONTAINER (animation_expander), animation_box);
+      animation_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_container_add (GTK_CONTAINER (frame), animation_box);
       gtk_widget_show (animation_box);
 
-      animation_frame = gimp_frame_new ("<expander>");
-      gtk_box_pack_start (GTK_BOX (animation_box), animation_frame, FALSE, FALSE, 0);
-      gtk_widget_show (animation_frame);
-
-      animation_box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-      gtk_container_add (GTK_CONTAINER (animation_frame), animation_box2);
-      gtk_widget_show (animation_box2);
-
       /* loop animation checkbox */
-      loop_anim_checkbox = gtk_check_button_new_with_label (_("Loop forever"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (loop_anim_checkbox),
-                                    params->loop);
-      gtk_box_pack_start (GTK_BOX (animation_box2), loop_anim_checkbox, FALSE, FALSE, 0);
-      gtk_widget_show (loop_anim_checkbox);
+      toggle = gtk_check_button_new_with_label (_("Loop forever"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->loop);
+      gtk_box_pack_start (GTK_BOX (animation_box), toggle,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (toggle);
 
-      g_signal_connect (loop_anim_checkbox, "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &params->loop);
 
       /* create a hbox for delay */
-      delay_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-      gtk_box_pack_start (GTK_BOX (animation_box2), delay_hbox, FALSE, FALSE, 0);
-      gtk_widget_show (delay_hbox);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+      gtk_box_pack_start (GTK_BOX (animation_box), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
       /* label for 'delay' adjustment */
-      delay_label = gtk_label_new (_("Delay between frames where unspecified:"));
-      gtk_label_set_xalign (GTK_LABEL (delay_label), 0.0);
-      gtk_box_pack_start (GTK_BOX (delay_hbox), delay_label, FALSE, FALSE, 0);
-      gtk_widget_show (delay_label);
+      label = gtk_label_new (_("Delay between frames where unspecified:"));
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
 
       /* default delay */
-      adj = (GtkAdjustment *) gtk_adjustment_new (params->delay, 1, 10000, 1, 10, 0);
+      adj = (GtkAdjustment *) gtk_adjustment_new (params->delay,
+                                                  1, 10000, 1, 10, 0);
       delay = gtk_spin_button_new (adj, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (delay), TRUE);
-      gtk_box_pack_start (GTK_BOX (delay_hbox), delay, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), delay, FALSE, FALSE, 0);
       gtk_widget_show (delay);
 
       g_signal_connect (adj, "value-changed",
@@ -266,27 +245,20 @@ save_dialog (WebPSaveParams *params,
                         &params->delay);
 
       /* label for 'ms' adjustment */
-      delay_label2 = gtk_label_new (_("milliseconds"));
-      gtk_box_pack_start (GTK_BOX (delay_hbox), delay_label2, FALSE, FALSE, 0);
-      gtk_widget_show (delay_label2);
+      label = gtk_label_new (_("milliseconds"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
 
       /* Create the force-delay checkbox */
-      delay_checkbox = gtk_check_button_new_with_label (_("Use delay entered above for all frames"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (delay_checkbox),
+      toggle = gtk_check_button_new_with_label (_("Use delay entered above for all frames"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     params->force_delay);
-      gtk_box_pack_start (GTK_BOX (animation_box2), delay_checkbox, FALSE, FALSE, 0);
-      gtk_widget_show (delay_checkbox);
+      gtk_box_pack_start (GTK_BOX (animation_box), toggle, FALSE, FALSE, 0);
+      gtk_widget_show (toggle);
 
-      g_signal_connect (delay_checkbox, "toggled",
+      g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &params->force_delay);
-
-
-
-      /* bind the animation checkbox to the parameters */
-      g_object_bind_property (animation_checkbox, "active",
-                              animation_expander,  "sensitive",
-                              G_BINDING_SYNC_CREATE);
   }
 
   /* Advanced options */
@@ -298,12 +270,8 @@ save_dialog (WebPSaveParams *params,
   gtk_box_pack_start (GTK_BOX (vbox), expander, TRUE, TRUE, 0);
   gtk_widget_show (expander);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_add (GTK_CONTAINER (expander), vbox);
-  gtk_widget_show (vbox);
-
   frame = gimp_frame_new ("<expander>");
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (expander), frame);
   gtk_widget_show (frame);
 
   vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -311,22 +279,22 @@ save_dialog (WebPSaveParams *params,
   gtk_widget_show (vbox2);
 
   /* Save EXIF data */
-  save_exif = gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (save_exif), params->exif);
-  gtk_box_pack_start (GTK_BOX (vbox2), save_exif, FALSE, FALSE, 0);
-  gtk_widget_show (save_exif);
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->exif);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
 
-  g_signal_connect (save_exif, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &params->exif);
 
   /* XMP metadata */
-  save_xmp = gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (save_xmp), params->xmp);
-  gtk_box_pack_start (GTK_BOX (vbox2), save_xmp, FALSE, FALSE, 0);
-  gtk_widget_show (save_xmp);
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->xmp);
+  gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
 
-  g_signal_connect (save_xmp, "toggled",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &params->xmp);
 
