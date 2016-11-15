@@ -209,8 +209,6 @@ static gboolean    popup_menu                (GtkWidget        *widget,
 static void        show_loading_progress     (Animation        *animation,
                                               gdouble           load_rate,
                                               AnimationDialog  *dialog);
-static void        unblock_ui                (Animation        *animation,
-                                              AnimationDialog  *dialog);
 static void        playback_range_changed    (AnimationPlayback *playback,
                                               gint              playback_start,
                                               gint              playback_stop,
@@ -1181,7 +1179,7 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                             (GCallback) show_loading_progress,
                                             dialog);
       g_signal_handlers_disconnect_by_func (priv->animation,
-                                            (GCallback) unblock_ui,
+                                            (GCallback) update_progress,
                                             dialog);
       g_signal_handlers_disconnect_by_func (priv->animation,
                                             G_CALLBACK (render_callback),
@@ -1370,9 +1368,9 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   g_signal_connect (priv->animation, "loading",
                     (GCallback) show_loading_progress,
                     dialog);
-  g_signal_connect (priv->animation, "loaded",
-                    (GCallback) unblock_ui,
-                    dialog);
+  g_signal_connect_swapped (priv->animation, "loaded",
+                            (GCallback) update_progress,
+                            dialog);
   g_signal_connect (priv->playback, "render",
                     G_CALLBACK (render_callback),
                     dialog);
@@ -1979,13 +1977,6 @@ show_loading_progress (Animation       *animation,
   /* Forcing the UI to update even with intensive computation. */
   while (gtk_events_pending ())
     gtk_main_iteration ();
-}
-
-static void
-unblock_ui (Animation      *animation,
-            AnimationDialog *dialog)
-{
-  update_progress (dialog);
 }
 
 static void
