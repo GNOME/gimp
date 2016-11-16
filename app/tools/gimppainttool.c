@@ -453,40 +453,41 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
 
-  if (key != gimp_get_constrain_behavior_mask ())
-    return;
-
   if (paint_tool->pick_colors && ! paint_tool->draw_line)
     {
-      if (press)
+      if ((state & gimp_get_all_modifiers_mask ()) ==
+          gimp_get_constrain_behavior_mask ())
         {
-          GimpToolInfo *info = gimp_get_tool_info (display->gimp,
-                                                   "gimp-color-picker-tool");
-
-          if (GIMP_IS_TOOL_INFO (info))
+          if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
             {
-              if (gimp_draw_tool_is_active (draw_tool))
-                gimp_draw_tool_stop (draw_tool);
+              GimpToolInfo *info = gimp_get_tool_info (display->gimp,
+                                                       "gimp-color-picker-tool");
 
-              gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                                      GIMP_COLOR_OPTIONS (info->tool_options));
-
-              switch (GIMP_COLOR_TOOL (tool)->pick_mode)
+              if (GIMP_IS_TOOL_INFO (info))
                 {
-                case GIMP_COLOR_PICK_MODE_FOREGROUND:
-                  gimp_tool_push_status (tool, display,
-                                         _("Click in any image to pick the "
-                                           "foreground color"));
-                  break;
+                  if (gimp_draw_tool_is_active (draw_tool))
+                    gimp_draw_tool_stop (draw_tool);
 
-                case GIMP_COLOR_PICK_MODE_BACKGROUND:
-                  gimp_tool_push_status (tool, display,
-                                         _("Click in any image to pick the "
-                                           "background color"));
-                  break;
+                  gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
+                                          GIMP_COLOR_OPTIONS (info->tool_options));
 
-                default:
-                  break;
+                  switch (GIMP_COLOR_TOOL (tool)->pick_mode)
+                    {
+                    case GIMP_COLOR_PICK_MODE_FOREGROUND:
+                      gimp_tool_push_status (tool, display,
+                                             _("Click in any image to pick the "
+                                               "foreground color"));
+                      break;
+
+                    case GIMP_COLOR_PICK_MODE_BACKGROUND:
+                      gimp_tool_push_status (tool, display,
+                                             _("Click in any image to pick the "
+                                               "background color"));
+                      break;
+
+                    default:
+                      break;
+                    }
                 }
             }
         }
