@@ -888,6 +888,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                 y,
                                                 constrain);
               }
+            else if (shell->scaling)
+              {
+                gimp_display_shell_scale_drag (shell,
+                                               shell->scroll_last_x - x,
+                                               shell->scroll_last_y - y);
+              }
             else
               {
                 gimp_display_shell_scroll (shell,
@@ -1502,12 +1508,16 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
   shell->scrolling         = TRUE;
   shell->scroll_last_x     = x;
   shell->scroll_last_y     = y;
-  shell->rotating          = (state & GDK_SHIFT_MASK) ? TRUE : FALSE;
+  shell->rotating          = (state & gimp_get_extend_selection_mask ()) ? TRUE : FALSE;
   shell->rotate_drag_angle = shell->rotate_angle;
+  shell->scaling           = (state & gimp_get_toggle_behavior_mask ()) ? TRUE : FALSE;
 
   if (shell->rotating)
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GDK_EXCHANGE);
+  if (shell->scaling)
+    gimp_display_shell_set_override_cursor (shell,
+                                            (GimpCursorType) GIMP_CURSOR_ZOOM);
   else
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GDK_FLEUR);
@@ -1526,6 +1536,7 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   shell->scroll_last_y     = 0;
   shell->rotating          = FALSE;
   shell->rotate_drag_angle = 0.0;
+  shell->scaling           = FALSE;
 
   gimp_display_shell_pointer_ungrab (shell, event);
 }

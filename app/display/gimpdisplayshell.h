@@ -197,6 +197,7 @@ struct _GimpDisplayShell
   gint               scroll_last_y;
   gboolean           rotating;
   gdouble            rotate_drag_angle;
+  gboolean           scaling;
   gpointer           scroll_info;
 
   GeglBuffer        *mask;

@@ -628,6 +628,33 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   gimp_display_shell_resume (shell);
 }
 
+void
+gimp_display_shell_scale_drag (GimpDisplayShell *shell,
+                               gdouble           delta_x,
+                               gdouble           delta_y)
+{
+  gdouble scale;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  scale = gimp_zoom_model_get_factor (shell->zoom);
+
+  if (delta_y > 0)
+    {
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_TO,
+                                scale * 1.1,
+                                GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS);
+    }
+  else if (delta_y < 0)
+    {
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_TO,
+                                scale * 0.9,
+                                GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS);
+    }
+}
+
 /**
  * gimp_display_shell_scale_shrink_wrap:
  * @shell: the #GimpDisplayShell

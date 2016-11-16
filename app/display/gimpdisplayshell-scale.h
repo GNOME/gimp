@@ -60,6 +60,10 @@ void     gimp_display_shell_scale_by_values          (GimpDisplayShell *shell,
                                                       gint              offset_y,
                                                       gboolean          resize_window);
 
+void     gimp_display_shell_scale_drag               (GimpDisplayShell *shell,
+                                                      gdouble           delta_x,
+                                                      gdouble           delta_y);
+
 void     gimp_display_shell_scale_shrink_wrap        (GimpDisplayShell *shell,
                                                       gboolean          grow_only);
 void     gimp_display_shell_scale_resize             (GimpDisplayShell *shell,
