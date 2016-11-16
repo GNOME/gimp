@@ -31,7 +31,7 @@ typedef struct _AnimationCelAnimationPrivate AnimationCelAnimationPrivate;
 typedef struct
 {
   gchar *title;
-  /* The list of layers (identified by their tattoos). */
+  /* The list of list of layers (identified by their tattoos). */
   GList *frames;
 }
 Track;
@@ -188,7 +188,7 @@ void
 animation_cel_animation_set_layers (AnimationCelAnimation *animation,
                                     gint                   level,
                                     gint                   position,
-                                    GList                 *layers)
+                                    const GList           *new_layers)
 {
   Track *track;
 
@@ -196,9 +196,9 @@ animation_cel_animation_set_layers (AnimationCelAnimation *animation,
 
   if (track)
     {
-      GList *frame_layer = g_list_nth (track->frames, position);
+      GList *layers = g_list_nth (track->frames, position);
 
-      if (! frame_layer)
+      if (! layers)
         {
           gint frames_length = g_list_length (track->frames);
           gint i;
@@ -206,24 +206,26 @@ animation_cel_animation_set_layers (AnimationCelAnimation *animation,
           track->frames = g_list_reverse (track->frames);
           for (i = frames_length; i < position + 1; i++)
             {
-              track->frames = g_list_prepend (track->frames, 0);
-              frame_layer = track->frames;
+              track->frames = g_list_prepend (track->frames, NULL);
+              layers = track->frames;
             }
           track->frames = g_list_reverse (track->frames);
         }
-      if (layers)
+      /* Clean out previous layer list. */
+      g_list_free (layers->data);
+      if (new_layers)
         {
-          frame_layer->data = layers->data;
+          layers->data = g_list_copy ((GList *) new_layers);
         }
       else
         {
-          frame_layer->data = 0;
+          layers->data = NULL;
         }
       animation_cel_animation_cache (animation, position);
     }
 }
 
-GList *
+const GList *
 animation_cel_animation_get_layers (AnimationCelAnimation *animation,
                                     gint                   level,
                                     gint                   position)
@@ -235,12 +237,7 @@ animation_cel_animation_get_layers (AnimationCelAnimation *animation,
 
   if (track)
     {
-      gpointer layer = g_list_nth_data (track->frames, position);
-
-      if (layer)
-        {
-          layers = g_list_prepend (layers, layer);
-        }
+      layers = g_list_nth_data (track->frames, position);
     }
 
   return layers;
@@ -333,7 +330,7 @@ animation_cel_animation_set_duration (AnimationCelAnimation *animation,
               iter2->prev->next = NULL;
               iter2->prev = NULL;
             }
-          g_list_free (iter2);
+          g_list_free_full (iter2, (GDestroyNotify) g_list_free);
         }
     }
 
@@ -386,7 +383,7 @@ animation_cel_animation_level_up (AnimationCelAnimation *animation,
           g_signal_emit_by_name (animation, "loading",
                                  (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
 
-          if (GPOINTER_TO_INT (iter->data))
+          if (iter->data)
             {
               /* Only cache if the track had contents for this frame. */
               animation_cel_animation_cache (animation, i);
@@ -433,7 +430,7 @@ animation_cel_animation_level_down (AnimationCelAnimation *animation,
           g_signal_emit_by_name (animation, "loading",
                                  (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
 
-          if (GPOINTER_TO_INT (iter->data))
+          if (iter->data)
             {
               /* Only cache if the track had contents for this frame. */
               animation_cel_animation_cache (animation, i);
@@ -465,13 +462,13 @@ animation_cel_animation_level_delete (AnimationCelAnimation *animation,
       animation_cel_animation_clean_track (track);
       animation->priv->tracks = g_list_delete_link (animation->priv->tracks, item);
 
-      iter  = track->frames;
+      iter = track->frames;
       for (i = 0; iter; iter = iter->next, i++)
         {
           g_signal_emit_by_name (animation, "loading",
                                  (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
 
-          if (GPOINTER_TO_INT (iter->data))
+          if (iter->data)
             {
               /* Only cache if the track had contents for this frame. */
               animation_cel_animation_cache (animation, i);
@@ -580,8 +577,12 @@ animation_cel_animation_load (Animation *animation)
           tattoo = gimp_item_get_tattoo (layer);
           for (i = 0; i < priv->duration; i++)
             {
+              GList *layers = NULL;
+
+              layers = g_list_prepend (track->frames,
+                                       GINT_TO_POINTER (tattoo));
               track->frames = g_list_prepend (track->frames,
-                                              GINT_TO_POINTER (tattoo));
+                                              layers);
             }
         }
     }
@@ -721,21 +722,60 @@ animation_cel_animation_serialize (Animation *animation)
       duration = 0;
       for (iter2 = track->frames; iter2; iter2 = iter2->next)
         {
-          if (GPOINTER_TO_INT (iter2->data))
+          GList *layers = iter2->data;
+
+          if (layers)
             {
+              gboolean next_identical = FALSE;
+
               duration++;
-              if (! iter2->next || iter2->next->data != iter2->data)
+
+              if (iter2->next && iter2->next->data &&
+                  g_list_length (layers) == g_list_length (iter2->next->data))
                 {
+                  GList *layer1 = layers;
+                  GList *layer2 = iter2->next->data;
+
+                  next_identical = TRUE;
+                  for (; layer1; layer1 = layer1->next, layer2 = layer2->next)
+                    {
+                      if (layer1->data != layer2->data)
+                        {
+                          next_identical = FALSE;
+                          break;
+                        }
+                    }
+                }
+              if (! next_identical)
+                {
+                  /* Open tag. */
                   xml2 = g_markup_printf_escaped ("<frame position=\"%d\""
-                                                  " duration=\"%d\">"
-                                                  "<layer id=\"%d\"/>"
-                                                  "</frame>",
-                                                  pos - duration, duration,
-                                                  GPOINTER_TO_INT (iter2->data));
+                                                  " duration=\"%d\">",
+                                                  pos - duration, duration);
                   tmp = xml;
                   xml = g_strconcat (xml, xml2, NULL);
                   g_free (tmp);
                   g_free (xml2);
+
+                  for (; layers; layers = layers->next)
+                    {
+                      gint tattoo = GPOINTER_TO_INT (layers->data);
+
+                      xml2 = g_markup_printf_escaped ("<layer id=\"%d\"/>",
+                                                      tattoo);
+                      tmp = xml;
+                      xml = g_strconcat (xml, xml2, NULL);
+                      g_free (tmp);
+                      g_free (xml2);
+                    }
+
+                  /* End tag. */
+                  xml2 = g_markup_printf_escaped ("</frame>");
+                  tmp = xml;
+                  xml = g_strconcat (xml, xml2, NULL);
+                  g_free (tmp);
+                  g_free (xml2);
+
                   duration = 0;
                 }
             }
@@ -966,7 +1006,11 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
                 {
                   if (i >= status->frame_position)
                     {
-                      iter->data = GINT_TO_POINTER (tattoo);
+                      GList *layers = iter->data;
+
+                      layers = g_list_append (layers,
+                                              GINT_TO_POINTER (tattoo));
+                      iter->data = layers;
                     }
                   iter = iter->next;
                 }
@@ -1133,11 +1177,11 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
   for (iter = animation->priv->tracks; iter; iter = iter->next)
     {
       Track *track = iter->data;
+      GList *layers;
 
-      if (GPOINTER_TO_INT (g_list_nth_data (track->frames, pos)))
-        {
-          n_sources++;
-        }
+      layers = g_list_nth_data (track->frames, pos);
+
+      n_sources += g_list_length (layers);
     }
   if (n_sources == 0)
     {
@@ -1162,12 +1206,20 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
   for (iter = animation->priv->tracks; iter; iter = iter->next)
     {
       Track *track = iter->data;
-      gint   tattoo;
+      GList *layers;
+      GList *layer;
 
-      tattoo = GPOINTER_TO_INT (g_list_nth_data (track->frames, pos));
-      if (tattoo)
+      layers = g_list_nth_data (track->frames, pos);
+
+      for (layer = layers; layer; layer = layer->next)
         {
-          composition[i++] = tattoo;
+          gint tattoo;
+
+          tattoo = GPOINTER_TO_INT (layer->data);
+          if (tattoo)
+            {
+              composition[i++] = tattoo;
+            }
         }
     }
 
@@ -1290,6 +1342,6 @@ static void
 animation_cel_animation_clean_track (Track *track)
 {
   g_free (track->title);
-  g_list_free (track->frames);
+  g_list_free_full (track->frames, (GDestroyNotify) g_list_free);
   g_free (track);
 }

@@ -1206,7 +1206,7 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
     }
   else
     {
-      GList *layers;
+      const GList *layers;
 
       /* When several frames are selected, show layers of the first selected. */
       position = g_queue_peek_tail (xsheet->priv->selected_frames);
@@ -1368,11 +1368,11 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
                              GtkWidget       *cel,
                              gboolean         recursively)
 {
-  gchar    *prev_label = NULL;
-  GList    *layers;
-  GList    *prev_layers;
-  gpointer  track_num;
-  gpointer  position;
+  const GList *layers;
+  const GList *prev_layers;
+  gpointer     track_num;
+  gpointer     position;
+  gchar       *prev_label = NULL;
 
   if (recursively)
     {

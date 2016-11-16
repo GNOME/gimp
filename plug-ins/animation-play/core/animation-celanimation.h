@@ -52,8 +52,8 @@ GType         animation_cel_animation_get_type (void);
 void          animation_cel_animation_set_layers      (AnimationCelAnimation *animation,
                                                        gint                   level,
                                                        gint                   position,
-                                                       GList                 *layers);
-GList       * animation_cel_animation_get_layers      (AnimationCelAnimation *animation,
+                                                       const GList           *layers);
+const GList * animation_cel_animation_get_layers      (AnimationCelAnimation *animation,
                                                        gint                   level,
                                                        gint                   position);
 

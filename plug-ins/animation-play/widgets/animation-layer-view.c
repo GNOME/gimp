@@ -91,8 +91,8 @@ static guint   animation_layer_view_signals[LAST_SIGNAL] = { 0 };
 static void
 animation_layer_view_class_init (AnimationLayerViewClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   /**
    * AnimationLayerView::layer-selection:
@@ -213,7 +213,7 @@ animation_layer_view_select (AnimationLayerView *view,
     {
       GtkTreePath *path;
       gint         tattoo = GPOINTER_TO_INT (layer->data);
-      
+
       path = animation_layer_view_get_row (view, tattoo, NULL);
       g_warn_if_fail (path != NULL);
       if (path)
@@ -236,8 +236,7 @@ animation_layer_view_constructed (GObject *object)
   GtkTreeSelection *selection;
 
   selection = gtk_tree_view_get_selection (view);
-  /*gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);*/
-  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
   g_signal_connect (selection, "changed",
                     G_CALLBACK (on_selection_changed),
