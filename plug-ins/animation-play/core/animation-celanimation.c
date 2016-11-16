@@ -642,6 +642,7 @@ animation_cel_animation_load_xml (Animation   *animation,
   /* If XML parsing failed, just reset the animation. */
   if (error)
     {
+      animation_cel_animation_cleanup (ANIMATION_CEL_ANIMATION (animation));
       animation_cel_animation_load (animation);
     }
   else
