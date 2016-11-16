@@ -303,9 +303,9 @@ animation_load (Animation *animation)
   priv->xml = NULL;
 
   priv->loaded = TRUE;
-
-  /* XXX */
-  /*g_signal_emit (animation, animation_signals[LOADED], 0);*/
+  g_signal_emit (animation, animation_signals[LOADED], 0);
+  g_signal_emit (animation, animation_signals[CACHE_INVALIDATED], 0,
+                 0, animation_get_duration (animation));
 }
 
 void

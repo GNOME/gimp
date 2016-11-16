@@ -553,37 +553,43 @@ animation_cel_animation_load (Animation *animation)
 
   priv = ANIMATION_CEL_ANIMATION (animation)->priv;
 
-  /* Cleaning. */
-  animation_cel_animation_cleanup (ANIMATION_CEL_ANIMATION (animation));
-
-  /* Purely arbitrary value. User will anyway change it to suit one's needs. */
-  priv->duration = 240;
-
-  /* There are at least 2 tracks.
-   * Second one is freely-named. */
-  track = g_new0 (Track, 1);
-  track->title = g_strdup (_("Name me"));
-  priv->tracks = g_list_prepend (priv->tracks, track);
-  /* The first track is called "Background". */
-  track = g_new0 (Track, 1);
-  track->title = g_strdup (_("Background"));
-  priv->tracks = g_list_prepend (priv->tracks, track);
-
-  /* If there is a layer named "Background", set it to all frames
-   * on background track. */
-  image_id = animation_get_image_id (animation);
-  layer    = gimp_image_get_layer_by_name (image_id, _("Background"));
-  if (layer > 0)
+  /* First load with default values. */
+  if (! priv->tracks)
     {
-      gint tattoo;
+      /* Purely arbitrary value. User will anyway change it to suit one's needs. */
+      priv->duration = 240;
 
-      tattoo = gimp_item_get_tattoo (layer);
-      for (i = 0; i < priv->duration; i++)
+      /* There are at least 2 tracks.
+       * Second one is freely-named. */
+      track = g_new0 (Track, 1);
+      track->title = g_strdup (_("Name me"));
+      priv->tracks = g_list_prepend (priv->tracks, track);
+      /* The first track is called "Background". */
+      track = g_new0 (Track, 1);
+      track->title = g_strdup (_("Background"));
+      priv->tracks = g_list_prepend (priv->tracks, track);
+
+      /* If there is a layer named "Background", set it to all frames
+       * on background track. */
+      image_id = animation_get_image_id (animation);
+      layer    = gimp_image_get_layer_by_name (image_id, _("Background"));
+      if (layer > 0)
         {
-          track->frames = g_list_prepend (track->frames,
-                                          GINT_TO_POINTER (tattoo));
+          gint tattoo;
+
+          tattoo = gimp_item_get_tattoo (layer);
+          for (i = 0; i < priv->duration; i++)
+            {
+              track->frames = g_list_prepend (track->frames,
+                                              GINT_TO_POINTER (tattoo));
+            }
         }
     }
+
+  /* Invalidate all cache. */
+  g_list_free_full (priv->cache,
+                    (GDestroyNotify) animation_cel_animation_clean_cache);
+  priv->cache = NULL;
 
   /* Finally cache. */
   for (i = 0; i < priv->duration; i++)
