@@ -1226,8 +1226,8 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
         source = gimp_drawable_get_buffer (layer);
       if (layer <= 0 || ! source)
         {
-          g_warning ("A layer used for frame %d has been removed. Ignoring.",
-                     pos);
+          g_printerr ("Warning: a layer used for frame %d has been deleted.\n",
+                      pos);
           continue;
         }
       gimp_drawable_offsets (layer, &layer_offx, &layer_offy);

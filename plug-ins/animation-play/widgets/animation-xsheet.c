@@ -1539,9 +1539,9 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
                                               GPOINTER_TO_INT (layers->data));
       if (layer <= 0)
         {
-          g_warning ("Removing invalid layer from cell: level %d, frame %d.",
-                     GPOINTER_TO_INT (track_num),
-                     GPOINTER_TO_INT (position));
+          g_printerr ("Warning: removing invalid layer from cell: level %d, frame %d.\n",
+                      GPOINTER_TO_INT (track_num),
+                      GPOINTER_TO_INT (position));
           /* Update the layer list on this cell. */
           animation_cel_animation_set_layers (xsheet->priv->animation,
                                               GPOINTER_TO_INT (track_num),

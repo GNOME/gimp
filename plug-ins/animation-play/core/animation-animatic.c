@@ -838,7 +838,6 @@ animation_animatic_cache (AnimationAnimatic *animatic,
   GeglBuffer               *backdrop_buffer = NULL;
   gint                      layer_offx;
   gint                      layer_offy;
-  /*gint                      position;*/
   gint                      preview_width;
   gint                      preview_height;
   gint32                    image_id;
@@ -850,7 +849,9 @@ animation_animatic_cache (AnimationAnimatic *animatic,
                                           priv->tattoos[panel]);
   if (! layer)
     {
-      g_warning ("Caching failed: a layer must have been deleted.");
+      g_printerr ("Warning: caching of panel %d failed; "
+                  "the associated layer must have been deleted.\n",
+                  panel);
       return;
     }
 
