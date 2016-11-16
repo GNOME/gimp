@@ -2625,7 +2625,7 @@ show_playing_progress (AnimationDialog *dialog)
                                  ((gfloat) animation_playback_get_position (priv->playback) /
                                   (gfloat) (animation_get_duration (priv->animation) - 0.999)));
 
-  text = g_strdup_printf (_("Frame %d of %d (%.2f seconds)"),
+  text = g_strdup_printf (_("Frame: %d/%d - Time: %.2f s"),
                           position + 1,
                           animation_get_duration (priv->animation),
                           position / framerate);
