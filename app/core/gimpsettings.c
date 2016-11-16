@@ -57,10 +57,13 @@ G_DEFINE_TYPE (GimpSettings, gimp_settings, GIMP_TYPE_VIEWABLE)
 static void
 gimp_settings_class_init (GimpSettingsClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property = gimp_settings_set_property;
-  object_class->get_property = gimp_settings_get_property;
+  object_class->set_property    = gimp_settings_set_property;
+  object_class->get_property    = gimp_settings_get_property;
+
+  viewable_class->name_editable = TRUE;
 
   GIMP_CONFIG_PROP_UINT (object_class, PROP_TIME,
                          "time",

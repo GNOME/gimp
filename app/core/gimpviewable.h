@@ -52,6 +52,7 @@ struct _GimpViewableClass
 
   const gchar     *default_icon_name;
   const gchar     *name_changed_signal;
+  gboolean         name_editable;
 
   /*  signals  */
   void            (* invalidate_preview) (GimpViewable  *viewable);
@@ -91,6 +92,8 @@ struct _GimpViewableClass
                                           gint           height);
   gchar         * (* get_description)    (GimpViewable  *viewable,
                                           gchar        **tooltip);
+
+  gboolean        (* is_name_editable)   (GimpViewable  *viewable);
 
   GimpContainer * (* get_children)       (GimpViewable  *viewable);
 
@@ -163,6 +166,8 @@ GdkPixbuf     * gimp_viewable_get_dummy_pixbuf   (GimpViewable  *viewable,
 gchar         * gimp_viewable_get_description    (GimpViewable  *viewable,
                                                   gchar        **tooltip);
 
+gboolean        gimp_viewable_is_name_editable   (GimpViewable  *viewable);
+
 const gchar   * gimp_viewable_get_icon_name      (GimpViewable  *viewable);
 void            gimp_viewable_set_icon_name      (GimpViewable  *viewable,
                                                   const gchar   *icon_name);
@@ -176,6 +181,7 @@ void            gimp_viewable_set_parent         (GimpViewable  *viewable,
                                                   GimpViewable  *parent);
 
 GimpContainer * gimp_viewable_get_children       (GimpViewable  *viewable);
+
 gboolean        gimp_viewable_get_expanded       (GimpViewable  *viewable);
 void            gimp_viewable_set_expanded       (GimpViewable  *viewable,
                                                   gboolean       expanded);

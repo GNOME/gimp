@@ -95,6 +95,7 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   gimp_object_class->get_memsize    = gimp_buffer_get_memsize;
 
   viewable_class->default_icon_name = "edit-paste";
+  viewable_class->name_editable     = TRUE;
   viewable_class->get_size          = gimp_buffer_get_size;
   viewable_class->get_preview_size  = gimp_buffer_get_preview_size;
   viewable_class->get_popup_size    = gimp_buffer_get_popup_size;

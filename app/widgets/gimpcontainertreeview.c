@@ -882,23 +882,40 @@ static void
 gimp_container_tree_view_real_edit_name (GimpContainerTreeView *tree_view)
 {
   GtkTreeIter selected_iter;
+  gboolean    success = FALSE;
 
   if (g_list_find (tree_view->priv->editable_cells,
                    tree_view->priv->name_cell) &&
       gimp_container_tree_view_get_selected_single (tree_view,
                                                     &selected_iter))
     {
-      GtkTreePath *path;
+      GimpViewRenderer *renderer;
 
-      path = gtk_tree_model_get_path (tree_view->model, &selected_iter);
+      gtk_tree_model_get (tree_view->model, &selected_iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
 
-      gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
-                                        tree_view->main_column,
-                                        tree_view->priv->name_cell,
-                                        TRUE);
+      if (gimp_viewable_is_name_editable (renderer->viewable))
+        {
+          GtkTreePath *path;
 
-      gtk_tree_path_free (path);
+          path = gtk_tree_model_get_path (tree_view->model, &selected_iter);
+
+          gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
+                                            tree_view->main_column,
+                                            tree_view->priv->name_cell,
+                                            TRUE);
+
+          gtk_tree_path_free (path);
+
+          success = TRUE;
+        }
+
+      g_object_unref (renderer);
     }
+
+  if (! success)
+    gtk_widget_error_bell (GTK_WIDGET (tree_view));
 }
 
 
@@ -1236,8 +1253,17 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                 {
                   if (edit_cell)
                     {
-                      gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
-                                                        column, edit_cell, TRUE);
+                      if (gimp_viewable_is_name_editable (renderer->viewable))
+                        {
+                          gtk_tree_view_set_cursor_on_cell (tree_view->view,
+                                                            path,
+                                                            column, edit_cell,
+                                                            TRUE);
+                        }
+                      else
+                        {
+                          gtk_widget_error_bell (widget);
+                        }
                     }
                   else if (! toggled_cell &&
                            ! (bevent->state & gimp_get_all_modifiers_mask ()))

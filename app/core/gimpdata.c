@@ -98,6 +98,8 @@ static void      gimp_data_name_changed      (GimpObject          *object);
 static gint64    gimp_data_get_memsize       (GimpObject          *object,
                                               gint64              *gui_size);
 
+static gboolean  gimp_data_is_name_editable  (GimpViewable        *viewable);
+
 static void      gimp_data_real_dirty        (GimpData            *data);
 
 static gboolean  gimp_data_add_tag           (GimpTagged          *tagged,
@@ -154,8 +156,9 @@ gimp_data_get_type (void)
 static void
 gimp_data_class_init (GimpDataClass *klass)
 {
-  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -168,18 +171,21 @@ gimp_data_class_init (GimpDataClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed       = gimp_data_constructed;
-  object_class->finalize          = gimp_data_finalize;
-  object_class->set_property      = gimp_data_set_property;
-  object_class->get_property      = gimp_data_get_property;
+  object_class->constructed        = gimp_data_constructed;
+  object_class->finalize           = gimp_data_finalize;
+  object_class->set_property       = gimp_data_set_property;
+  object_class->get_property       = gimp_data_get_property;
 
-  gimp_object_class->name_changed = gimp_data_name_changed;
-  gimp_object_class->get_memsize  = gimp_data_get_memsize;
+  gimp_object_class->name_changed  = gimp_data_name_changed;
+  gimp_object_class->get_memsize   = gimp_data_get_memsize;
 
-  klass->dirty                    = gimp_data_real_dirty;
-  klass->save                     = NULL;
-  klass->get_extension            = NULL;
-  klass->duplicate                = NULL;
+  viewable_class->name_editable    = TRUE;
+  viewable_class->is_name_editable = gimp_data_is_name_editable;
+
+  klass->dirty                     = gimp_data_real_dirty;
+  klass->save                      = NULL;
+  klass->get_extension             = NULL;
+  klass->duplicate                 = NULL;
 
   g_object_class_install_property (object_class, PROP_FILE,
                                    g_param_spec_object ("file", NULL, NULL,
@@ -362,6 +368,12 @@ gimp_data_get_memsize (GimpObject *object,
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
+}
+
+static gboolean
+gimp_data_is_name_editable (GimpViewable *viewable)
+{
+  return gimp_data_is_writable (GIMP_DATA (viewable));
 }
 
 static void

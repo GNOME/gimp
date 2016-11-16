@@ -158,6 +158,7 @@ static void       gimp_item_real_resize             (GimpItem       *item,
                                                      gint            offset_y);
 
 
+
 G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_FILTER)
 
 #define parent_class gimp_item_parent_class
@@ -224,6 +225,7 @@ gimp_item_class_init (GimpItemClass *klass)
 
   gimp_object_class->get_memsize   = gimp_item_get_memsize;
 
+  viewable_class->name_editable    = TRUE;
   viewable_class->get_preview_size = gimp_item_get_preview_size;
   viewable_class->get_popup_size   = gimp_item_get_popup_size;
 

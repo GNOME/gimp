@@ -128,6 +128,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
   object_class->notify       = gimp_template_notify;
 
   viewable_class->default_icon_name = "gimp-template";
+  viewable_class->name_editable     = TRUE;
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_WIDTH,
                         "width",
