@@ -141,7 +141,7 @@ gimp_color_dialog_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /* Color history box. */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_pack_end (GTK_BOX (GIMP_COLOR_SELECTION (dialog->selection)->right_vbox),
                     hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
