@@ -1528,7 +1528,7 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
   else if (layers)
     {
       const gchar *track_title;
-      gchar       *layer_title;
+      gchar       *layer_title = NULL;
       gint32       image_id;
       gint32       layer;
 
@@ -1537,7 +1537,23 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
       image_id = animation_get_image_id (ANIMATION (xsheet->priv->animation));
       layer = gimp_image_get_layer_by_tattoo (image_id,
                                               GPOINTER_TO_INT (layers->data));
-      layer_title = gimp_item_get_name (layer);
+      if (layer <= 0)
+        {
+          g_warning ("Removing invalid layer from cell: level %d, frame %d.",
+                     GPOINTER_TO_INT (track_num),
+                     GPOINTER_TO_INT (position));
+          /* Update the layer list on this cell. */
+          animation_cel_animation_set_layers (xsheet->priv->animation,
+                                              GPOINTER_TO_INT (track_num),
+                                              GPOINTER_TO_INT (position),
+                                              NULL);
+          animation_xsheet_rename_cel (xsheet, cel, recursively);
+          return;
+        }
+      else
+        {
+          layer_title = gimp_item_get_name (layer);
+        }
       if (g_strcmp0 (layer_title, track_title) == 0)
         {
           /* If the track and the layer have exactly the same name. */

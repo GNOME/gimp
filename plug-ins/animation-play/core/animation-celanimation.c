@@ -1222,7 +1222,14 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
 
       layer = gimp_image_get_layer_by_tattoo (image_id,
                                               cache->composition[i]);
-      source = gimp_drawable_get_buffer (layer);
+      if (layer > 0)
+        source = gimp_drawable_get_buffer (layer);
+      if (layer <= 0 || ! source)
+        {
+          g_warning ("A layer used for frame %d has been removed. Ignoring.",
+                     pos);
+          continue;
+        }
       gimp_drawable_offsets (layer, &layer_offx, &layer_offy);
       intermediate = normal_blend (preview_width, preview_height,
                                    backdrop, 1.0, 0, 0,
