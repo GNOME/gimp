@@ -474,7 +474,8 @@ gimp_data_get_identifier (GimpTagged *tagged)
 
       if (! identifier)
         {
-          g_warning ("Failed to convert '%s' to utf8.\n", path);
+          g_printerr ("%s: failed to convert '%s' to utf8.\n",
+                      G_STRFUNC, path);
           identifier = g_strdup (path);
         }
 
