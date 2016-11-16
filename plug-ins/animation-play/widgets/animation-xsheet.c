@@ -1372,12 +1372,9 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
   const GList *prev_layers;
   gpointer     track_num;
   gpointer     position;
-  gchar       *prev_label = NULL;
-
-  if (recursively)
-    {
-      prev_label = g_strdup (gtk_button_get_label (GTK_BUTTON (cel)));
-    }
+  gboolean     same_as_prev = FALSE;
+  GtkWidget   *label        = NULL;
+  gchar       *markup       = NULL;
 
   track_num = g_object_get_data (G_OBJECT (cel), "track-num");
   position  = g_object_get_data (G_OBJECT (cel), "frame-position");
@@ -1389,16 +1386,41 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
                                                     GPOINTER_TO_INT (track_num),
                                                     GPOINTER_TO_INT (position) - 1);
 
-  if (layers && prev_layers && layers->data == prev_layers->data)
+  /* Remove the previous label, if any. */
+  if (gtk_bin_get_child (GTK_BIN (cel)))
+    gtk_container_remove (GTK_CONTAINER (cel),
+                          gtk_bin_get_child (GTK_BIN (cel)));
+
+  if (layers && prev_layers &&
+      g_list_length ((GList *) layers) == g_list_length ((GList *) prev_layers))
     {
-      gtk_button_set_label (GTK_BUTTON (cel), "-");
+      GList *iter1 = (GList *) layers;
+      GList *iter2 = (GList *) prev_layers;
+
+      same_as_prev = TRUE;
+      for (; iter1; iter1 = iter1->next, iter2 = iter2->next)
+        {
+          if (iter1->data != iter2->data)
+            {
+              same_as_prev = FALSE;
+              break;
+            }
+        }
+    }
+  if (same_as_prev)
+    {
+      markup = g_strdup_printf ("<b>-</b>");
     }
   else if (layers)
     {
       const gchar *track_title;
+      const gchar *ellipsis;
       gchar       *layer_title = NULL;
       gint32       image_id;
       gint32       layer;
+
+      ellipsis = g_list_length ((GList *) layers) > 1 ?
+        " <u>\xe2\x80\xa6</u>": "";
 
       track_title = animation_cel_animation_get_track_title (xsheet->priv->animation,
                                                              GPOINTER_TO_INT (track_num));
@@ -1425,51 +1447,60 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
       if (g_strcmp0 (layer_title, track_title) == 0)
         {
           /* If the track and the layer have exactly the same name. */
-          gtk_button_set_label (GTK_BUTTON (cel), "*");
+          markup = g_strdup_printf ("<u>*</u>%s", ellipsis);
         }
       else if (g_str_has_prefix (layer_title, track_title))
         {
-          gchar *cel_label;
+          /* The layer is prefixed with the track name. */
+          gchar *suffix = layer_title + strlen (track_title);
 
-          cel_label = g_strdup_printf ("*%s",
-                                       layer_title + strlen (track_title));
-          gtk_button_set_label (GTK_BUTTON (cel), cel_label);
-          g_free (cel_label);
+          while (*suffix)
+            {
+              if (*suffix != ' ' && *suffix != '\t' &&
+                  *suffix != '-' && *suffix != '_')
+                break;
+
+              suffix++;
+            }
+          if (strlen (suffix) == 0)
+            suffix = layer_title + strlen (track_title);
+
+          markup = g_strdup_printf ("<i>%s</i>%s",
+                                    g_markup_escape_text (suffix, -1),
+                                    ellipsis);
         }
       else
         {
-          gtk_button_set_label (GTK_BUTTON (cel), layer_title);
+          /* Completely different names. */
+          markup = g_strdup_printf ("%s%s",
+                                    g_markup_escape_text (layer_title, -1),
+                                    ellipsis);
         }
       g_free (layer_title);
     }
-  else
+
+  if (markup)
     {
-      gtk_button_set_label (GTK_BUTTON (cel), "");
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), markup);
+      gtk_container_add (GTK_CONTAINER (cel), label);
+      gtk_widget_show (label);
+
+      g_free (markup);
     }
 
   if (recursively)
     {
-      const gchar *new_label;
-      gboolean     label_changed;
+      GList     *track_cels;
+      GtkWidget *next_cel;
 
-      new_label = gtk_button_get_label (GTK_BUTTON (cel));
-      label_changed = (g_strcmp0 (prev_label, new_label) != 0);
-      g_free (prev_label);
-
-      if (label_changed)
+      track_cels = g_list_nth_data (xsheet->priv->cels,
+                                    GPOINTER_TO_INT (track_num));
+      next_cel = g_list_nth_data (track_cels,
+                                  GPOINTER_TO_INT (position) + 1);
+      if (next_cel)
         {
-          GList     *track_cels;
-          GtkWidget *next_cel;
-
-          /* Only update the next cel if the label changed. */
-          track_cels = g_list_nth_data (xsheet->priv->cels,
-                                        GPOINTER_TO_INT (track_num));
-          next_cel = g_list_nth_data (track_cels,
-                                      GPOINTER_TO_INT (position) + 1);
-          if (next_cel)
-            {
-              animation_xsheet_rename_cel (xsheet, next_cel, TRUE);
-            }
+          animation_xsheet_rename_cel (xsheet, next_cel, TRUE);
         }
     }
 }
