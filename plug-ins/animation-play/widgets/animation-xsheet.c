@@ -81,6 +81,8 @@ static void    animation_xsheet_get_property (GObject      *object,
 static void    animation_xsheet_finalize     (GObject      *object);
 
 /* Construction methods */
+static void     animation_xsheet_add_headers   (AnimationXSheet   *xsheet,
+                                                gint               level);
 static void     animation_xsheet_add_track     (AnimationXSheet   *xsheet,
                                                 gint               level);
 static void     animation_xsheet_remove_track  (AnimationXSheet   *xsheet,
@@ -321,6 +323,157 @@ animation_xsheet_finalize (GObject *object)
 }
 
 static void
+animation_xsheet_add_headers (AnimationXSheet *xsheet,
+                              gint             level)
+{
+  const gchar    *title;
+  GtkEntryBuffer *entry_buffer;
+  GtkWidget      *frame;
+  GtkWidget      *label;
+  GtkWidget      *toolbar;
+  GtkWidget      *image;
+  GtkToolItem    *item;
+
+  title = animation_cel_animation_get_track_title (xsheet->priv->animation,
+                                                   level);
+
+  /* Adding a title. */
+  frame = gtk_frame_new (NULL);
+  xsheet->priv->titles = g_list_insert (xsheet->priv->titles,
+                                        frame, level);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
+  gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                    frame, level * 9 + 1, level * 9 + 10, 1, 2,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  label = gtk_entry_new ();
+  gtk_entry_set_text (GTK_ENTRY (label), title);
+  entry_buffer = gtk_entry_get_buffer (GTK_ENTRY (label));
+  g_object_set_data (G_OBJECT (entry_buffer), "track-num",
+                     GINT_TO_POINTER (level));
+  g_signal_connect (entry_buffer,
+                    "notify::text",
+                    G_CALLBACK (animation_xsheet_track_title_updated),
+                    xsheet);
+  gtk_container_add (GTK_CONTAINER (frame), label);
+  gtk_widget_show (label);
+  gtk_widget_show (frame);
+
+  /* Adding a add-track [+] button. */
+  toolbar = gtk_toolbar_new ();
+  xsheet->priv->add_buttons = g_list_insert (xsheet->priv->add_buttons,
+                                             toolbar, level);
+  gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
+                             GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
+                         GTK_TOOLBAR_ICONS);
+  gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
+
+  item = gtk_separator_tool_item_new ();
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                    FALSE);
+  gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (item), 0);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  image = gtk_image_new_from_icon_name ("list-add",
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+  item = gtk_tool_button_new (image, NULL);
+  g_object_set_data (G_OBJECT (item), "track-num",
+                     GINT_TO_POINTER (level));
+  g_signal_connect (item, "clicked",
+                    G_CALLBACK (on_track_add_clicked),
+                    xsheet);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (item), -1);
+  gtk_widget_show (image);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  item = gtk_separator_tool_item_new ();
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                    FALSE);
+  gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (item), -1);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                    toolbar, level * 9 + 9, level * 9 + 11, 0, 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (toolbar);
+
+  /* Adding toolbar over each track. */
+  toolbar = gtk_toolbar_new ();
+  xsheet->priv->track_buttons = g_list_insert (xsheet->priv->track_buttons,
+                                               toolbar, level);
+  gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
+                             GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
+                         GTK_TOOLBAR_ICONS);
+  gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
+
+  image = gtk_image_new_from_icon_name ("gimp-menu-left",
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+  item = gtk_tool_button_new (image, NULL);
+  g_object_set_data (G_OBJECT (item), "track-num",
+                     GINT_TO_POINTER (level));
+  g_signal_connect (item, "clicked",
+                    G_CALLBACK (on_track_left_clicked),
+                    xsheet);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (item), 0);
+  gtk_widget_show (image);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  item = gtk_separator_tool_item_new ();
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                    FALSE);
+  gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (item), -1);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  image = gtk_image_new_from_icon_name ("edit-delete",
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+  item = gtk_tool_button_new (image, NULL);
+  g_object_set_data (G_OBJECT (item), "track-num",
+                     GINT_TO_POINTER (level));
+  g_signal_connect (item, "clicked",
+                    G_CALLBACK (on_track_delete_clicked),
+                    xsheet);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (item), -1);
+  gtk_widget_show (image);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  item = gtk_separator_tool_item_new ();
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
+                                    FALSE);
+  gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (item), -1);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  image = gtk_image_new_from_icon_name ("gimp-menu-right",
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+  item = gtk_tool_button_new (image, NULL);
+  g_object_set_data (G_OBJECT (item), "track-num",
+                     GINT_TO_POINTER (level));
+  g_signal_connect (item, "clicked",
+                    G_CALLBACK (on_track_right_clicked),
+                    xsheet);
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
+                      GTK_TOOL_ITEM (item), -1);
+  gtk_widget_show (image);
+  gtk_widget_show (GTK_WIDGET (item));
+
+  gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                    toolbar, level * 9 + 2, level * 9 + 9, 0, 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (toolbar);
+}
+
+static void
 animation_xsheet_add_track (AnimationXSheet *xsheet,
                             gint             level)
 {
@@ -351,152 +504,9 @@ animation_xsheet_add_track (AnimationXSheet *xsheet,
       gtk_widget_show (cel);
     }
   /* Create a new title and top buttons. */
-    {
-      GtkWidget      *frame;
-      GtkWidget      *label;
-      const gchar    *title;
-      GtkEntryBuffer *entry_buffer;
-      GtkWidget      *toolbar;
-      GtkWidget      *image;
-      GtkToolItem    *item;
-
-      title = animation_cel_animation_get_track_title (xsheet->priv->animation, level);
-
-      frame = gtk_frame_new (NULL);
-      xsheet->priv->titles = g_list_insert (xsheet->priv->titles, frame, level);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
-      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        frame, level * 9 + 1, level * 9 + 10, 1, 2,
-                        GTK_FILL, GTK_FILL, 0, 0);
-      label = gtk_entry_new ();
-      gtk_entry_set_text (GTK_ENTRY (label), title);
-      entry_buffer = gtk_entry_get_buffer (GTK_ENTRY (label));
-      g_object_set_data (G_OBJECT (entry_buffer), "track-num",
-                         GINT_TO_POINTER (level));
-      g_signal_connect (entry_buffer,
-                        "notify::text",
-                        G_CALLBACK (animation_xsheet_track_title_updated),
-                        xsheet);
-      gtk_container_add (GTK_CONTAINER (frame), label);
-      gtk_widget_show (label);
-      gtk_widget_show (frame);
-
-      /* Adding a add-track [+] button. */
-      toolbar = gtk_toolbar_new ();
-      xsheet->priv->add_buttons = g_list_insert (xsheet->priv->add_buttons,
-                                                 toolbar, level);
-      gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
-                                 GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
-                             GTK_TOOLBAR_ICONS);
-      gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
-
-      item = gtk_separator_tool_item_new ();
-      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
-                                        FALSE);
-      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), 0);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      image = gtk_image_new_from_icon_name ("list-add",
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
-      item = gtk_tool_button_new (image, NULL);
-      g_object_set_data (G_OBJECT (item), "track-num",
-                         GINT_TO_POINTER (level));
-      g_signal_connect (item, "clicked",
-                        G_CALLBACK (on_track_add_clicked),
-                        xsheet);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (image);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      item = gtk_separator_tool_item_new ();
-      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
-                                        FALSE);
-      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        toolbar, level * 9 + 9, level * 9 + 11, 0, 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (toolbar);
-
-      /* Adding toolbar over each track. */
-      toolbar = gtk_toolbar_new ();
-      xsheet->priv->track_buttons = g_list_insert (xsheet->priv->track_buttons,
-                                                   toolbar, level);
-      gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
-                                 GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
-                             GTK_TOOLBAR_ICONS);
-      gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
-
-      image = gtk_image_new_from_icon_name ("gimp-menu-left",
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
-      item = gtk_tool_button_new (image, NULL);
-      g_object_set_data (G_OBJECT (item), "track-num",
-                         GINT_TO_POINTER (level));
-      g_signal_connect (item, "clicked",
-                        G_CALLBACK (on_track_left_clicked),
-                        xsheet);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), 0);
-      gtk_widget_show (image);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      item = gtk_separator_tool_item_new ();
-      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
-                                        FALSE);
-      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      image = gtk_image_new_from_icon_name ("edit-delete",
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
-      item = gtk_tool_button_new (image, NULL);
-      g_object_set_data (G_OBJECT (item), "track-num",
-                         GINT_TO_POINTER (level));
-      g_signal_connect (item, "clicked",
-                        G_CALLBACK (on_track_delete_clicked),
-                        xsheet);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (image);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      item = gtk_separator_tool_item_new ();
-      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
-                                        FALSE);
-      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      image = gtk_image_new_from_icon_name ("gimp-menu-right",
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
-      item = gtk_tool_button_new (image, NULL);
-      g_object_set_data (G_OBJECT (item), "track-num",
-                         GINT_TO_POINTER (level));
-      g_signal_connect (item, "clicked",
-                        G_CALLBACK (on_track_right_clicked),
-                        xsheet);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (image);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        toolbar, level * 9 + 2, level * 9 + 9, 0, 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (toolbar);
-    }
-
-  animation_xsheet_move_tracks (xsheet, level);
+  animation_xsheet_add_headers (xsheet, level);
+  /* Move higher-level tracks one level up in the layout. */
+  animation_xsheet_move_tracks (xsheet, level + 1);
 }
 
 static void
@@ -827,150 +837,8 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   /* Titles. */
   for (j = 0; j < n_tracks; j++)
     {
-      const gchar    *title;
-      GtkEntryBuffer *entry_buffer;
-      GtkWidget      *toolbar;
-      GtkWidget      *image;
-      GtkToolItem    *item;
-
-      title = animation_cel_animation_get_track_title (xsheet->priv->animation, j);
-
-      frame = gtk_frame_new (NULL);
-      xsheet->priv->titles = g_list_prepend (xsheet->priv->titles, frame);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
-      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        frame, j * 9 + 1, j * 9 + 10, 1, 2,
-                        GTK_FILL, GTK_FILL, 0, 0);
-      label = gtk_entry_new ();
-      gtk_entry_set_text (GTK_ENTRY (label), title);
-      entry_buffer = gtk_entry_get_buffer (GTK_ENTRY (label));
-      g_object_set_data (G_OBJECT (entry_buffer), "track-num",
-                         GINT_TO_POINTER (j));
-      g_signal_connect (entry_buffer,
-                        "notify::text",
-                        G_CALLBACK (animation_xsheet_track_title_updated),
-                        xsheet);
-      gtk_container_add (GTK_CONTAINER (frame), label);
-      gtk_widget_show (label);
-      gtk_widget_show (frame);
-
-      /* Adding a add-track [+] button. */
-      toolbar = gtk_toolbar_new ();
-      xsheet->priv->add_buttons = g_list_prepend (xsheet->priv->add_buttons,
-                                                  toolbar);
-      gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
-                                 GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
-                             GTK_TOOLBAR_ICONS);
-      gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
-
-      item = gtk_separator_tool_item_new ();
-      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
-                                        FALSE);
-      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), 0);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      image = gtk_image_new_from_icon_name ("list-add",
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
-      item = gtk_tool_button_new (image, NULL);
-      g_object_set_data (G_OBJECT (item), "track-num",
-                         GINT_TO_POINTER (j));
-      g_signal_connect (item, "clicked",
-                        G_CALLBACK (on_track_add_clicked),
-                        xsheet);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (image);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      item = gtk_separator_tool_item_new ();
-      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
-                                        FALSE);
-      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        toolbar, j * 9 + 9, j * 9 + 11, 0, 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (toolbar);
-
-      /* Adding toolbar over each track. */
-      toolbar = gtk_toolbar_new ();
-      xsheet->priv->track_buttons = g_list_prepend (xsheet->priv->track_buttons,
-                                                  toolbar);
-      gtk_toolbar_set_icon_size (GTK_TOOLBAR (toolbar),
-                                 GTK_ICON_SIZE_SMALL_TOOLBAR);
-      gtk_toolbar_set_style (GTK_TOOLBAR (toolbar),
-                             GTK_TOOLBAR_ICONS);
-      gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar), FALSE);
-
-      image = gtk_image_new_from_icon_name ("gimp-menu-left",
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
-      item = gtk_tool_button_new (image, NULL);
-      g_object_set_data (G_OBJECT (item), "track-num",
-                         GINT_TO_POINTER (j));
-      g_signal_connect (item, "clicked",
-                        G_CALLBACK (on_track_left_clicked),
-                        xsheet);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), 0);
-      gtk_widget_show (image);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      item = gtk_separator_tool_item_new ();
-      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
-                                        FALSE);
-      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      image = gtk_image_new_from_icon_name ("edit-delete",
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
-      item = gtk_tool_button_new (image, NULL);
-      g_object_set_data (G_OBJECT (item), "track-num",
-                         GINT_TO_POINTER (j));
-      g_signal_connect (item, "clicked",
-                        G_CALLBACK (on_track_delete_clicked),
-                        xsheet);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (image);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      item = gtk_separator_tool_item_new ();
-      gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item),
-                                        FALSE);
-      gtk_tool_item_set_expand (GTK_TOOL_ITEM (item), TRUE);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      image = gtk_image_new_from_icon_name ("gimp-menu-right",
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
-      item = gtk_tool_button_new (image, NULL);
-      g_object_set_data (G_OBJECT (item), "track-num",
-                         GINT_TO_POINTER (j));
-      g_signal_connect (item, "clicked",
-                        G_CALLBACK (on_track_right_clicked),
-                        xsheet);
-      gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
-                          GTK_TOOL_ITEM (item), -1);
-      gtk_widget_show (image);
-      gtk_widget_show (GTK_WIDGET (item));
-
-      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        toolbar, j * 9 + 2, j * 9 + 9, 0, 1,
-                        GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (toolbar);
+      animation_xsheet_add_headers (xsheet, j);
     }
-  xsheet->priv->track_buttons = g_list_reverse (xsheet->priv->track_buttons);
-  xsheet->priv->add_buttons = g_list_reverse (xsheet->priv->add_buttons);
-  xsheet->priv->titles = g_list_reverse (xsheet->priv->titles);
 
   frame = gtk_frame_new (NULL);
   label = gtk_label_new (_("Comments"));
