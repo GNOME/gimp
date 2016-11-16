@@ -1005,6 +1005,17 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       multisel_mode = (gtk_tree_selection_get_mode (tree_view->priv->selection)
                        == GTK_SELECTION_MULTIPLE);
 
+      if (! (bevent->state & (gimp_get_extend_selection_mask () |
+                              gimp_get_modify_selection_mask ())))
+        {
+          /*  don't chain up for multi-selection handling if none of
+           *  the participating modifiers is pressed, we implement
+           *  button_press completely ourselves for a reason and don't
+           *  want the default implementation mess up our state
+           */
+          multisel_mode = FALSE;
+        }
+
       gtk_tree_model_get_iter (tree_view->model, &iter, path);
 
       gtk_tree_model_get (tree_view->model, &iter,
