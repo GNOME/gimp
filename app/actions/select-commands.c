@@ -201,8 +201,15 @@ select_shrink_cmd_callback (GtkAction *action,
     {
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
       GtkWidget        *button;
+      gint              width;
+      gint              height;
+      gint              max_value;
       gdouble           xres;
       gdouble           yres;
+
+      gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                        NULL, NULL, &width, &height);
+      max_value = MIN (width, height) / 2;
 
       gimp_image_get_resolution (image, &xres, &yres);
 
@@ -211,7 +218,8 @@ select_shrink_cmd_callback (GtkAction *action,
                                     gimp_standard_help_func,
                                     GIMP_HELP_SELECTION_SHRINK,
                                     _("Shrink selection by"),
-                                    config->selection_shrink_radius, 1, 32767, 0,
+                                    config->selection_shrink_radius,
+                                    1, max_value, 0,
                                     gimp_display_get_shell (display)->unit,
                                     MIN (xres, yres),
                                     FALSE,
@@ -255,8 +263,15 @@ select_grow_cmd_callback (GtkAction *action,
   if (! dialog)
     {
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      gint              width;
+      gint              height;
+      gint              max_value;
       gdouble           xres;
       gdouble           yres;
+
+      width  = gimp_image_get_width  (image);
+      height = gimp_image_get_height (image);
+      max_value = MAX (width, height);
 
       gimp_image_get_resolution (image, &xres, &yres);
 
@@ -265,7 +280,8 @@ select_grow_cmd_callback (GtkAction *action,
                                     gimp_standard_help_func,
                                     GIMP_HELP_SELECTION_GROW,
                                     _("Grow selection by"),
-                                    config->selection_grow_radius, 1, 32767, 0,
+                                    config->selection_grow_radius,
+                                    1, max_value, 0,
                                     gimp_display_get_shell (display)->unit,
                                     MIN (xres, yres),
                                     FALSE,
@@ -298,8 +314,15 @@ select_border_cmd_callback (GtkAction *action,
       GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
       GtkWidget        *combo;
       GtkWidget        *button;
+      gint              width;
+      gint              height;
+      gint              max_value;
       gdouble           xres;
       gdouble           yres;
+
+      gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                        NULL, NULL, &width, &height);
+      max_value = MIN (width, height) / 2;
 
       gimp_image_get_resolution (image, &xres, &yres);
 
@@ -308,7 +331,8 @@ select_border_cmd_callback (GtkAction *action,
                                     gimp_standard_help_func,
                                     GIMP_HELP_SELECTION_BORDER,
                                     _("Border selection by"),
-                                    config->selection_border_radius, 1, 32767, 0,
+                                    config->selection_border_radius,
+                                    1, max_value, 0,
                                     gimp_display_get_shell (display)->unit,
                                     MIN (xres, yres),
                                     FALSE,
