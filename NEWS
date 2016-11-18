@@ -15,26 +15,26 @@ Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 
 Core:
 
-  - New clipboard implementation allows copying/pasting layers and 
+  - New clipboard implementation allows copying/pasting layers and
     layer groups
-  - Color tags simplify managing large projects with a lot of layers 
+  - Color tags simplify managing large projects with a lot of layers
     and layer groups
-  - The Mouse Pointer dialog and colors applied to images are 
+  - The Mouse Pointer dialog and colors applied to images are
     color-managed now
   - Gamma and precision selectors for newly created images
-  - Never dither when converting to a higher bit depth, or to anything 
+  - Never dither when converting to a higher bit depth, or to anything
     more than 16 bits, don't offer dithering options in these cases
   - Default to linear when converting to 16-bit float
-  - Pre-initialize some babl-based pixel format conversion routines 
+  - Pre-initialize some babl-based pixel format conversion routines
     at the start-up to decrease the initial lazy intialization cost
     for some interactions
 
 GUI:
 
-  - Easily add or remove layer masks by clicking either the layer 
+  - Easily add or remove layer masks by clicking either the layer
     preview or a new button in the Layers dialog
-  - Enhance the Layer Attributes dialog to provide the single UI for 
-    setting layer's name, blending mode, opacity, and offset, 
+  - Enhance the Layer Attributes dialog to provide the single UI for
+    setting layer's name, blending mode, opacity, and offset,
     toggling visibility, link status, various locks, color tags.
   - Add a Save As button to the “Quit GIMP” dialog and raise images
     on click for easy checks.
@@ -43,7 +43,7 @@ GUI:
     widget for the  mask opacity slider
   - Enable grid views of dynamics and tool presets
   - Allow to zoom with middle mouse button + control + drag up/down
-  - For all paint tools, when switching to the color pocker mode, 
+  - For all paint tools, when switching to the color picker mode,
     don't rely on the exact modifier being pressed or released. Instead,
     check if only the right modifier is pressed after *each* modifier
     change, and switch to color picking if it is
@@ -54,46 +54,46 @@ GUI:
 Configurability:
 
   - Remember settings of many dialogs across sessions
-  - New Interface / Dialog Defaults page in the Preferences dialog to 
+  - New Interface / Dialog Defaults page in the Preferences dialog to
     control defaults values of various dialogs
   - Settings on some individual pages of the Preferences dialog can be
     reset separately now
-  - Vertical scrollbar added to keep the height of the Preferences 
+  - Vertical scrollbar added to keep the height of the Preferences
     dialog fitting small displays
   - Allow mouse to optionally configure tablet devices
 
 Tools:
 
-  - The Move tool now shows relative coordinates when moving guides 
+  - The Move tool now shows relative coordinates when moving guides
     and sample points
   - Performance of the Fuzzy Select and the Bucket Fill tool has been
     improved
-  - The Warp Transform tool now uses the linear sampler to ensure 
+  - The Warp Transform tool now uses the linear sampler to ensure
     crisp lines after an erase
-  - Select by Color and Color Picker tools work correctly in color 
+  - Select by Color and Color Picker tools work correctly in color
     spaces other than sRGB now
-  - Uncommitted selection by the Intelligent Scissors tool is not 
+  - Uncommitted selection by the Intelligent Scissors tool is not
     discarded on tool change anymore.
 
 Painting:
 
-  - Rulers, scrollbars, and the Navigation dialog follow canvas 
+  - Rulers, scrollbars, and the Navigation dialog follow canvas
     rotation now
   - Canvas rotation is snappier in certain cases now
 
 File Formats
 
-  - Add native WebP loader/exporter with support for ICC profiles, 
+  - Add native WebP loader/exporter with support for ICC profiles,
     animation, metadata
-  - The TIFF loader will not generate warnings about private tags 
+  - The TIFF loader will not generate warnings about private tags
     anymore
   - Handle linear gamma PNG files correctly
-  - Load PSD files with layers which contain additional information 
+  - Load PSD files with layers which contain additional information
     with a length that is not divisible by 4
 
 Color Palettes
 
-  - Merge Palettes command is available for multiple selected color 
+  - Merge Palettes command is available for multiple selected color
     palettes now
 
 PDB:
@@ -102,9 +102,9 @@ PDB:
 
 Build:
 
-  - Depends on LCMS2.7+ now, because earlier LCMS2 releases caused 
+  - Depends on LCMS2.7+ now, because earlier LCMS2 releases caused
     problems with certain GIMP blend modes
-  - Depends on libpng 1.6.25+ to avoid warnings about known incorrect 
+  - Depends on libpng 1.6.25+ to avoid warnings about known incorrect
     sRGB profiles, also avoid various vulnerabilities
 
 OS-specific changes:
@@ -113,13 +113,13 @@ OS-specific changes:
 
 Bugs:
 
-  - Overall 60 bugs have been fixed or partially addressed since 
+  - Overall 60 bugs have been fixed or partially addressed since
     GIMP 2.9.4
 
 Translations:
 
-  - Updated: Catalan, Czech, Danish, French, German, Greek, Hungarian, 
-    Icelandic, Italian, Occitan, Polish, Portuguese, Russian, 
+  - Updated: Catalan, Czech, Danish, French, German, Greek, Hungarian,
+    Icelandic, Italian, Occitan, Polish, Portuguese, Russian,
     Scottish Gaelic, Serbian, Slovenian, Spanish, Swedish.
   - New: Finnish.
 
