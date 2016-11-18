@@ -24,7 +24,7 @@ Core:
   - Gamma and precision selectors for newly created images
   - Never dither when converting to a higher bit depth, or to anything 
     more than 16 bits, don't offer dithering options in these cases
-  - Вefault to linear when converting to 16-bit float
+  - Default to linear when converting to 16-bit float
   - Pre-initialize some babl-based pixel format conversion routines 
     at the start-up to decrease the initial lazy intialization cost
     for some interactions
@@ -43,6 +43,10 @@ GUI:
     widget for the  mask opacity slider
   - Enable grid views of dynamics and tool presets
   - Allow to zoom with middle mouse button + control + drag up/down
+  - For all paint tools, when switching to the color pocker mode, 
+    don't rely on the exact modifier being pressed or released. Instead,
+    check if only the right modifier is pressed after *each* modifier
+    change, and switch to color picking if it is
   - Standard (Freedesktop) and GTK+ icons can now be set by the icon
     theme for a fully consistent style.
   - Many new icons
