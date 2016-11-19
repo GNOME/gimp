@@ -1278,6 +1278,9 @@
 		autogenargs="--without-emacs --disable-java --disable-native-java --disable-libasprintf --disable-csharp --disable-rpath --enable-nls">
 		<branch repo="ftp.gnu.org" source-subdir="gettext-runtime"
 			module="gettext/gettext-0.19.4.tar.gz" version="0.19.4">
+			<patch
+				file="gettext-fix-English-fallback-for-macOS-Sierra.patch"
+				strip="1" />
 		</branch>
 	</autotools>
 
@@ -1285,6 +1288,9 @@
 		autogenargs="--without-emacs --disable-java --disable-native-java --disable-libasprintf --disable-csharp --with-included-glib --enable-nls --disable-rpath">
 		<branch repo="ftp.gnu.org" source-subdir="gettext-tools"
 			module="gettext/gettext-0.19.4.tar.gz" version="0.19.4">
+			<patch
+				file="gettext-fix-English-fallback-for-macOS-Sierra.patch"
+				strip="1" />
 		</branch>
 	</autotools>
 
