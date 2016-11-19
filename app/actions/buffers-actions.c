@@ -61,7 +61,7 @@ static const GimpActionEntry buffers_actions[] =
     GIMP_HELP_BUFFER_PASTE_AS_NEW_LAYER },
 
   { "buffers-paste-as-new-image", GIMP_STOCK_PASTE_AS_NEW,
-    NC_("buffers-action", "Paste Buffer as _New"), NULL,
+    NC_("buffers-action", "Paste Buffer as _New Image"), NULL,
     NC_("buffers-action", "Paste the selected buffer as a new image"),
     G_CALLBACK (buffers_paste_as_new_image_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_AS_NEW_IMAGE },
