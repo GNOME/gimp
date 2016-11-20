@@ -158,7 +158,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_DYNAMICS_EDITOR_DIALOG },
 
   { "dialogs-mypaint-brushes", GIMP_STOCK_MYPAINT_BRUSH,
-    NC_("dialogs-action", "_MyPaint Brushes"), "<primary><shift>Y",
+    NC_("dialogs-action", "_MyPaint Brushes"), NULL,
     NC_("dialogs-action", "Open the mypaint brushes dialog"),
     "gimp-mypaint-brush-grid|gimp-mapyint-brush-list",
     GIMP_HELP_MYPAINT_BRUSH_DIALOG },
