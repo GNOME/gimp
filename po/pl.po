@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-13 14:19+0100\n"
-"PO-Revision-Date: 2016-11-13 14:20+0100\n"
+"POT-Creation-Date: 2016-11-20 18:08+0100\n"
+"PO-Revision-Date: 2016-11-20 18:09+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -662,8 +662,8 @@ msgstr "Wkleja zaznaczony bufor jako nową warstwę"
 
 #: ../app/actions/buffers-actions.c:64
 msgctxt "buffers-action"
-msgid "Paste Buffer as _New"
-msgstr "Wklej bufor jako _nowy"
+msgid "Paste Buffer as _New Image"
+msgstr "Wklej bufor jako _nowy obraz"
 
 #: ../app/actions/buffers-actions.c:65
 msgctxt "buffers-action"
@@ -5747,56 +5747,56 @@ msgstr "Zmiękcza zaznaczenie"
 msgid "Feather selection by"
 msgstr "Zmiękcza zaznaczenie o"
 
-#: ../app/actions/select-commands.c:209
+#: ../app/actions/select-commands.c:216
 msgid "Shrink Selection"
 msgstr "Zmniejszenie zaznaczenia"
 
-#: ../app/actions/select-commands.c:213
+#: ../app/actions/select-commands.c:220
 msgid "Shrink selection by"
 msgstr "Stopień zmniejszenia zaznaczenia"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:222 ../app/actions/select-commands.c:332
+#: ../app/actions/select-commands.c:230 ../app/actions/select-commands.c:356
 msgid "_Selected areas continue outside the image"
 msgstr "_Zaznaczone obszary znajdują się także poza obrazem"
 
-#: ../app/actions/select-commands.c:225
+#: ../app/actions/select-commands.c:233
 msgid "When shrinking, act as if selected areas continued outside the image."
 msgstr ""
 "Podczas zmniejszania zaznaczone obszary są traktowane tak, jakby znajdowały "
 "się także poza obrazem."
 
-#: ../app/actions/select-commands.c:263
+#: ../app/actions/select-commands.c:278
 msgid "Grow Selection"
 msgstr "Powiększenie zaznaczenia"
 
-#: ../app/actions/select-commands.c:267
+#: ../app/actions/select-commands.c:282
 msgid "Grow selection by"
 msgstr "Stopień powiększenia zaznaczenia"
 
-#: ../app/actions/select-commands.c:306
+#: ../app/actions/select-commands.c:329
 msgid "Border Selection"
 msgstr "Obramowanie zaznaczenia"
 
-#: ../app/actions/select-commands.c:310
+#: ../app/actions/select-commands.c:333
 msgid "Border selection by"
 msgstr "Odległość obramowania od zaznaczenia"
 
-#: ../app/actions/select-commands.c:321
+#: ../app/actions/select-commands.c:345
 msgid "Border style"
 msgstr "Styl obramowania"
 
-#: ../app/actions/select-commands.c:335
+#: ../app/actions/select-commands.c:359
 msgid "When bordering, act as if selected areas continued outside the image."
 msgstr ""
 "Podczas dodawania obramowania zaznaczone obszary są traktowane tak, jakby "
 "znajdowały się także poza obrazem."
 
-#: ../app/actions/select-commands.c:391
+#: ../app/actions/select-commands.c:415
 msgid "Fill Selection Outline"
 msgstr "Wypełnienie krawędzi zaznaczenia"
 
-#: ../app/actions/select-commands.c:420
+#: ../app/actions/select-commands.c:444
 msgid "Stroke Selection"
 msgstr "Rysowanie wzdłuż zaznaczenia"
 
@@ -9911,12 +9911,12 @@ msgstr "Ustawienia narzędzia"
 msgid "Font"
 msgstr "Czcionka"
 
-#: ../app/core/gimpdata.c:537 ../app/core/gimpdata.c:545
+#: ../app/core/gimpdata.c:550 ../app/core/gimpdata.c:558
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/core/gimpdata.c:551
+#: ../app/core/gimpdata.c:564
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Błąd podczas zapisywania „%s”"
@@ -9934,11 +9934,11 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdatafactory.c:557 ../app/core/gimpdatafactory.c:560
-#: ../app/core/gimpitem.c:515 ../app/core/gimpitem.c:518
+#: ../app/core/gimpitem.c:517 ../app/core/gimpitem.c:520
 msgid "copy"
 msgstr "kopia"
 
-#: ../app/core/gimpdatafactory.c:569 ../app/core/gimpitem.c:526
+#: ../app/core/gimpdatafactory.c:569 ../app/core/gimpitem.c:528
 #, c-format
 msgid "%s copy"
 msgstr "%s. kopia"
@@ -10683,17 +10683,17 @@ msgstr[2] "%d warstw"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nie można otworzyć miniatury „%s”: %s"
 
-#: ../app/core/gimpitem.c:1929
+#: ../app/core/gimpitem.c:1931
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:1939
+#: ../app/core/gimpitem.c:1941
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Dołączenie do elementu danych pasożytniczych"
 
-#: ../app/core/gimpitem.c:1990 ../app/core/gimpitem.c:1997
+#: ../app/core/gimpitem.c:1992 ../app/core/gimpitem.c:1999
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Usunięcie z elementu danych pasożytniczych"
@@ -11095,7 +11095,7 @@ msgstr "Metoda"
 msgid "Line width"
 msgstr "Szerokość linii"
 
-#: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:150
+#: ../app/core/gimpstrokeoptions.c:171 ../app/core/gimptemplate.c:151
 #: ../app/tools/gimptextoptions.c:137
 msgid "Unit"
 msgstr "Jednostka"
@@ -11256,59 +11256,59 @@ msgstr "Maksymalna liczba krzywych na osi Y"
 msgid "Error writing '%s': %s\n"
 msgstr "Błąd podczas zapisywania „%s”: %s\n"
 
-#: ../app/core/gimptemplate.c:134 ../app/widgets/gimpgrideditor.c:195
+#: ../app/core/gimptemplate.c:135 ../app/widgets/gimpgrideditor.c:195
 #: ../app/widgets/gimpgrideditor.c:227
 msgid "Width"
 msgstr "Szerokość"
 
-#: ../app/core/gimptemplate.c:142 ../app/widgets/gimpgrideditor.c:197
+#: ../app/core/gimptemplate.c:143 ../app/widgets/gimpgrideditor.c:197
 #: ../app/widgets/gimpgrideditor.c:229
 msgid "Height"
 msgstr "Wysokość"
 
-#: ../app/core/gimptemplate.c:151
+#: ../app/core/gimptemplate.c:152
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 "Jednostka używana do wyświetlania współrzędnych na obrazie, jeśli nie jest "
 "ustawiony tryb „punkt do punktu”."
 
-#: ../app/core/gimptemplate.c:158 ../app/core/gimptemplate.c:166
+#: ../app/core/gimptemplate.c:159 ../app/core/gimptemplate.c:167
 msgid "Resolution X"
 msgstr "Rozdzielczość na osi X"
 
-#: ../app/core/gimptemplate.c:159
+#: ../app/core/gimptemplate.c:160
 msgid "The horizontal image resolution."
 msgstr "Pozioma rozdzielczość obrazu."
 
-#: ../app/core/gimptemplate.c:167
+#: ../app/core/gimptemplate.c:168
 msgid "The vertical image resolution."
 msgstr "Pionowa rozdzielczość obrazu."
 
-#: ../app/core/gimptemplate.c:174
+#: ../app/core/gimptemplate.c:175
 msgid "Resolution unit"
 msgstr "Jednostka rozdzielczości"
 
 #. serialized name
-#: ../app/core/gimptemplate.c:181
+#: ../app/core/gimptemplate.c:182
 msgid "Image type"
 msgstr "Typ obrazu"
 
-#: ../app/core/gimptemplate.c:188 ../app/core/gimptemplate.c:195
+#: ../app/core/gimptemplate.c:189 ../app/core/gimptemplate.c:196
 msgid "Precision"
 msgstr "Dokładność"
 
 #. gamma
-#: ../app/core/gimptemplate.c:204 ../app/dialogs/convert-precision-dialog.c:201
+#: ../app/core/gimptemplate.c:205 ../app/dialogs/convert-precision-dialog.c:201
 #: ../app/operations/gimplevelsconfig.c:112
 #: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:488
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../app/core/gimptemplate.c:212
+#: ../app/core/gimptemplate.c:213
 msgid "Color managed"
 msgstr "Zarządzanie kolorami"
 
-#: ../app/core/gimptemplate.c:213
+#: ../app/core/gimptemplate.c:214
 msgid ""
 "Whether the image is color managed. Disabling color management is equivalent "
 "to choosing a built-in sRGB profile. Better leave color management enabled."
@@ -11317,19 +11317,19 @@ msgstr ""
 "przydzieleniu wbudowanego profilu kolorów sRGB. Zalecane jest włączenie "
 "zarządzania kolorami."
 
-#: ../app/core/gimptemplate.c:222
+#: ../app/core/gimptemplate.c:223
 msgid "Color profile"
 msgstr "Profil kolorów"
 
-#: ../app/core/gimptemplate.c:229 ../app/tools/gimpbucketfilloptions.c:94
+#: ../app/core/gimptemplate.c:230 ../app/tools/gimpbucketfilloptions.c:94
 msgid "Fill type"
 msgstr "Typ wypełnienia"
 
-#: ../app/core/gimptemplate.c:236 ../app/dialogs/image-properties-dialog.c:94
+#: ../app/core/gimptemplate.c:237 ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
 msgstr "Komentarz"
 
-#: ../app/core/gimptemplate.c:243
+#: ../app/core/gimptemplate.c:244
 msgid "Filename"
 msgstr "Nazwa pliku"
 
@@ -15994,7 +15994,7 @@ msgstr ""
 "Niektóre właściwości tekstu mogą być błędne. Jeśli tekst nie będzie "
 "modyfikowany, to nie ma to większego znaczenia."
 
-#: ../app/text/gimptextlayout.c:578
+#: ../app/text/gimptextlayout.c:579
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -16187,7 +16187,7 @@ msgstr "Aktywna warstwa jest niewidoczna."
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:957 ../app/tools/gimppainttool.c:655
+#: ../app/tools/gimpblendtool.c:957 ../app/tools/gimppainttool.c:656
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
@@ -17542,7 +17542,7 @@ msgstr "Kliknięcie i przeciągnięcie przemieści wszystkie punkty"
 
 #: ../app/tools/gimpmeasuretool.c:943 ../app/tools/gimpmeasuretool.c:1094
 #: ../app/tools/gimpmeasuretool.c:1150 ../app/tools/gimpmeasuretool.c:1178
-#: ../app/tools/gimppainttool.c:664
+#: ../app/tools/gimppainttool.c:665
 msgid "pixels"
 msgstr "piksele"
 
@@ -17787,7 +17787,7 @@ msgstr "%s wybiera kolor"
 msgid "Cannot paint on layer groups."
 msgstr "Nie można narysować grup warstw."
 
-#: ../app/tools/gimppainttool.c:710
+#: ../app/tools/gimppainttool.c:711
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s rysuje prostą linię"
