@@ -135,6 +135,17 @@ static void       gui_display_changed           (GimpContext        *context,
                                                  GimpDisplay        *display,
                                                  Gimp               *gimp);
 
+static void       gui_compare_accelerator       (gpointer            data,
+                                                 const gchar        *accel_path,
+                                                 guint               accel_key,
+                                                 GdkModifierType     accel_mods,
+                                                 gboolean            changed);
+static void      gui_check_unique_accelerator   (gpointer            data,
+                                                 const gchar        *accel_path,
+                                                 guint               accel_key,
+                                                 GdkModifierType     accel_mods,
+                                                 gboolean            changed);
+
 
 /*  private variables  */
 
@@ -530,6 +541,10 @@ gui_restore_after_callback (Gimp               *gimp,
                                                     gui_config->tearoff_menus);
   gimp_ui_manager_update (image_ui_manager, gimp);
 
+  /* Check that every accelerator is unique. */
+  gtk_accel_map_foreach_unfiltered (NULL,
+                                    gui_check_unique_accelerator);
+
   gimp_action_history_init (gimp);
 
 #ifdef GDK_WINDOWING_QUARTZ
@@ -860,4 +875,51 @@ gui_display_changed (GimpContext *context,
     }
 
   gimp_ui_manager_update (image_ui_manager, display);
+}
+
+typedef struct
+{
+  const gchar     *path;
+  guint            key;
+  GdkModifierType  mods;
+}
+accelData;
+
+static void
+gui_compare_accelerator (gpointer         data,
+                         const gchar     *accel_path,
+                         guint            accel_key,
+                         GdkModifierType  accel_mods,
+                         gboolean         changed)
+{
+  accelData *accel = data;
+
+  if (accel->key == accel_key && accel->mods == accel_mods &&
+      g_strcmp0 (accel->path, accel_path))
+    {
+      g_warning ("Actions \"%s\" and \"%s\" use the same accelerator.\n"
+                 "Disable the accelerator on \"%s\".",
+                 accel->path, accel_path, accel_path);
+      gtk_accel_map_change_entry (accel_path, 0, 0, FALSE);
+    }
+}
+
+static void
+gui_check_unique_accelerator (gpointer         data,
+                              const gchar     *accel_path,
+                              guint            accel_key,
+                              GdkModifierType  accel_mods,
+                              gboolean         changed)
+{
+  if (gtk_accelerator_valid (accel_key, accel_mods))
+    {
+      accelData accel;
+
+      accel.path = accel_path;
+      accel.key  = accel_key;
+      accel.mods = accel_mods;
+
+      gtk_accel_map_foreach_unfiltered (&accel,
+                                        gui_compare_accelerator);
+    }
 }
