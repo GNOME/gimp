@@ -326,7 +326,7 @@ gimp_text_tool_remove_empty_text_layer (GimpTextTool *text_tool)
     {
       GimpText *text = gimp_text_layer_get_text (text_layer);
 
-      if (text->box_mode == GIMP_TEXT_BOX_DYNAMIC &&
+      if (text && text->box_mode == GIMP_TEXT_BOX_DYNAMIC &&
           (! text->text || text->text[0] == '\0') &&
           (! text->markup || text->markup[0] == '\0'))
         {
