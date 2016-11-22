@@ -40,11 +40,11 @@ typedef struct _KeyboardEvent KeyboardEvent;
 
 struct _KeyboardEvent
 {
-  const guint            keyval;
-  const gchar           *modifier_string;
-  GdkModifierType        modifiers;
-  const gchar           *name;
-  const gchar           *blurb;
+  const guint      keyval;
+  const gchar     *modifier_string;
+  GdkModifierType  modifiers;
+  const gchar     *name;
+  const gchar     *blurb;
 };
 
 
@@ -272,26 +272,21 @@ gimp_controller_keyboard_key_press (GimpControllerKeyboard *keyboard,
    */
   for (i = G_N_ELEMENTS (keyboard_events) - 1; i >= 0; i--)
     {
-      if (keyboard_events[i].keyval == kevent->keyval)
+      if (keyboard_events[i].keyval == kevent->keyval &&
+          (keyboard_events[i].modifiers & kevent->state) ==
+          keyboard_events[i].modifiers)
         {
-          if ((keyboard_events[i].modifiers & kevent->state) ==
-              keyboard_events[i].modifiers)
-            {
-              GimpControllerEvent         controller_event;
-              GimpControllerEventTrigger *trigger;
+          GimpControllerEvent         controller_event;
+          GimpControllerEventTrigger *trigger;
 
-              trigger = (GimpControllerEventTrigger *) &controller_event;
+          trigger = (GimpControllerEventTrigger *) &controller_event;
 
-              trigger->type     = GIMP_CONTROLLER_EVENT_TRIGGER;
-              trigger->source   = GIMP_CONTROLLER (keyboard);
-              trigger->event_id = i;
+          trigger->type     = GIMP_CONTROLLER_EVENT_TRIGGER;
+          trigger->source   = GIMP_CONTROLLER (keyboard);
+          trigger->event_id = i;
 
-              if (gimp_controller_event (GIMP_CONTROLLER (keyboard),
-                                         &controller_event))
-                {
-                  return TRUE;
-                }
-            }
+          return gimp_controller_event (GIMP_CONTROLLER (keyboard),
+                                        &controller_event);
         }
     }
 
