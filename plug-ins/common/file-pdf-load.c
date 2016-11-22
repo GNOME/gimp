@@ -95,11 +95,11 @@ static GdkPixbuf *       get_thumb_pixbuf  (PopplerDocument        *doc,
                                             gint                    preferred_size);
 
 static gint32            layer_from_surface (gint32                  image,
-					     const gchar            *layer_name,
-					     gint                    position,
-					     cairo_surface_t        *surface,
-					     gdouble                 progress_start,
-					     gdouble                 progress_scale);
+                                             const gchar            *layer_name,
+                                             gint                    position,
+                                             cairo_surface_t        *surface,
+                                             gdouble                 progress_start,
+                                             gdouble                 progress_scale);
 
 /**
  ** the following was formerly part of
