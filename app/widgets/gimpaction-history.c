@@ -298,8 +298,8 @@ gimp_action_history_excluded_action (const gchar *action_name)
           g_str_has_suffix (action_name, "-accel")          ||
           g_str_has_prefix (action_name, "context-")        ||
           g_str_has_prefix (action_name, "filters-recent-") ||
-          g_strcmp0 (action_name, "plug-in-repeat") == 0    ||
-          g_strcmp0 (action_name, "plug-in-reshow") == 0    ||
+          g_strcmp0 (action_name, "filters-repeat") == 0    ||
+          g_strcmp0 (action_name, "filters-reshow") == 0    ||
           g_strcmp0 (action_name, "dialogs-action-search") == 0);
 }
 
