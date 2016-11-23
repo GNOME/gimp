@@ -180,7 +180,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gimp_brush_transform_matrix (src_width, src_height,
                                scale, aspect_ratio, angle, &matrix);
 
-  if (gimp_matrix3_is_identity (&matrix))
+  if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
     return gimp_temp_buf_copy (source);
 
   src_width_minus_one  = src_width  - 1;
@@ -479,7 +479,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gimp_brush_transform_matrix (src_width, src_height,
                                scale, aspect_ratio, angle, &matrix);
 
-  if (gimp_matrix3_is_identity (&matrix))
+  if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
     return gimp_temp_buf_copy (source);
 
   src_width_minus_one  = src_width  - 1;
