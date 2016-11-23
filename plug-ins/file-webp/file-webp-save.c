@@ -387,6 +387,85 @@ get_layer_delay (gint32 layer)
   return delay_ms;
 }
 
+static gboolean
+parse_combine (const char* str)
+{
+  gint offset = 0;
+  gint length = strlen (str);
+
+  while ((offset + 9) <= length)
+    {
+      if (strncmp (&str[offset], "(combine)", 9) == 0)
+        return TRUE;
+
+      if (strncmp (&str[offset], "(replace)", 9) == 0)
+        return FALSE;
+
+      offset++;
+    }
+
+  return FALSE;
+}
+
+static gint
+get_layer_needs_combine (gint32 layer)
+{
+  gchar     *layer_name;
+  gboolean   needs_combine;
+
+  layer_name    = gimp_item_get_name (layer);
+  needs_combine = parse_combine (layer_name);
+  g_free (layer_name);
+
+  return needs_combine;
+}
+
+static GeglBuffer*
+combine_buffers (GeglBuffer* layer_buffer, GeglBuffer* prev_frame_buffer)
+{
+  GeglBuffer *buffer;
+  GeglNode   *graph;
+  GeglNode   *source;
+  GeglNode   *backdrop;
+  GeglNode   *over;
+  GeglNode   *target;
+
+  graph  = gegl_node_new ();
+  buffer = gegl_buffer_new (gegl_buffer_get_extent (prev_frame_buffer),
+                            gegl_buffer_get_format (prev_frame_buffer));
+
+  source = gegl_node_new_child (graph,
+                                "operation", "gegl:buffer-source",
+                                "buffer", layer_buffer,
+                                NULL);
+  backdrop = gegl_node_new_child (graph,
+                                  "operation", "gegl:buffer-source",
+                                  "buffer", prev_frame_buffer,
+                                  NULL);
+
+  over =  gegl_node_new_child (graph,
+                               "operation", "gegl:over",
+                                NULL);
+  target = gegl_node_new_child (graph,
+                                "operation", "gegl:write-buffer",
+                                "buffer", buffer,
+                                NULL);
+  gegl_node_link_many (backdrop, over, target, NULL);
+  gegl_node_connect_to (source, "output",
+                        over, "aux");
+  gegl_node_process (target);
+  g_object_unref (graph);
+
+  /* release resources associated to layer_buffer */
+  gegl_buffer_flush (layer_buffer);
+  g_object_unref (layer_buffer);
+
+  gegl_buffer_flush (prev_frame_buffer);
+  g_object_unref (prev_frame_buffer);
+
+  return buffer;
+}
+
 gboolean
 save_animation (const gchar    *filename,
                 gint32          nLayers,
@@ -408,6 +487,7 @@ save_animation (const gchar    *filename,
   WebPData               webp_data;
   int                    frame_timestamp = 0;
   WebPAnimEncoder       *enc = NULL;
+  GeglBuffer            *current_frame = NULL;
 
   if (nLayers < 1)
     return FALSE;
@@ -460,6 +540,7 @@ save_animation (const gchar    *filename,
           WebPMemoryWriter  mw = { 0 };
           gint32            drawable = allLayers[nLayers - 1 - loop];
           gint              delay = get_layer_delay (drawable);
+          gboolean          needs_combine = get_layer_needs_combine (drawable);
 
           /* Obtain the drawable type */
           has_alpha = gimp_drawable_has_alpha (drawable);
@@ -518,8 +599,18 @@ save_animation (const gchar    *filename,
           picture.custom_ptr    = &mw;
           picture.writer        = WebPMemoryWrite;
 
+          if (loop == 0 || !needs_combine)
+            {
+              if (current_frame != NULL) g_object_unref (current_frame);
+              current_frame = geglbuffer;
+            }
+          else
+            {
+              current_frame = combine_buffers (geglbuffer, current_frame);
+            }
+
           /* Read the region into the buffer */
-          gegl_buffer_get (geglbuffer, &extent, 1.0, format, buffer,
+          gegl_buffer_get (current_frame, &extent, 1.0, format, buffer,
                            GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
           /* Use the appropriate function to import the data from the buffer */
@@ -549,10 +640,6 @@ save_animation (const gchar    *filename,
 
           if (status == FALSE)
             break;
-
-          /* Flush the drawable and detach */
-          gegl_buffer_flush (geglbuffer);
-          g_object_unref (geglbuffer);
 
           gimp_progress_update ((loop + 1.0) / nLayers);
           frame_timestamp += (delay <= 0 || force_delay) ? default_delay : delay;
@@ -611,6 +698,12 @@ save_animation (const gchar    *filename,
   /* Free any resources */
   WebPDataClear (&webp_data);
   WebPAnimEncoderDelete (enc);
+
+  if (current_frame != NULL)
+    {
+      gegl_buffer_flush (current_frame);
+      g_object_unref (current_frame);
+    }
 
   if (outfile)
     fclose (outfile);
