@@ -259,13 +259,13 @@ gimp_action_group_get_property (GObject    *object,
 
 static gboolean
 gimp_action_group_check_unique_action (GimpActionGroup *group,
-				       const gchar     *action_name)
+                                       const gchar     *action_name)
 {
   if (G_UNLIKELY (gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                                action_name)))
     {
       g_warning ("Refusing to add non-unique action '%s' to action group '%s'",
-	 	 action_name,
+                 action_name,
                  gtk_action_group_get_name (GTK_ACTION_GROUP (group)));
       return FALSE;
     }
@@ -345,7 +345,7 @@ gimp_action_group_update (GimpActionGroup *group,
 
 void
 gimp_action_group_add_actions (GimpActionGroup       *group,
-			       const gchar           *msg_context,
+                               const gchar           *msg_context,
                                const GimpActionEntry *entries,
                                guint                  n_entries)
 {
