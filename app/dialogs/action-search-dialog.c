@@ -81,10 +81,10 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                                    const gchar     *keyword,
                                    gpointer         data)
 {
-  GList         *menus;
-  GList         *list;
-  GList         *history_actions = NULL;
-  Gimp          *gimp;
+  GList *menus;
+  GList *list;
+  GList *history_actions = NULL;
+  Gimp  *gimp;
 
   g_return_if_fail (GIMP_IS_GIMP (data));
 
@@ -116,6 +116,13 @@ action_search_history_and_actions (GimpSearchPopup *popup,
       for (; managers; managers = g_list_next (managers))
         {
           GimpUIManager *manager = managers->data;
+
+          /* Ignore dockable actions which are similar to the Dialogs-*
+           * actions except they always add a dock (instead of just
+           * showing it when already present).
+           */
+          if (g_strcmp0 (manager->name, "<Dockable>") == 0)
+            continue;
 
           for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
                list;
@@ -162,8 +169,11 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                        */
                       for (list3 = history_actions; list3; list3 = g_list_next (list3))
                         {
-                          if (strcmp (gtk_action_get_name (GTK_ACTION (list3->data)),
-                                      name) == 0)
+                          const gchar *action_name;
+
+                          action_name = gtk_action_get_name (GTK_ACTION (list3->data));
+
+                          if (g_strcmp0 (action_name, name) == 0)
                             {
                               is_redundant = TRUE;
                               break;
@@ -173,6 +183,8 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                       if (! is_redundant)
                         {
                           gimp_search_popup_add_result (popup, action, section);
+                          history_actions = g_list_prepend (history_actions,
+                                                            g_object_ref (action));
                         }
                     }
                 }
