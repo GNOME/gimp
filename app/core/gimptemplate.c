@@ -42,7 +42,7 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_RESOLUTION 72.0
+#define DEFAULT_RESOLUTION 300.0
 
 enum
 {
