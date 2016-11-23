@@ -35,9 +35,13 @@
 
 #include "core/gimp.h"
 
+#include "menus/menus.h"
+
 #include "widgets/gimpaction.h"
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpmenufactory.h"
 #include "widgets/gimpsearchpopup.h"
 #include "widgets/gimpuimanager.h"
 
@@ -77,18 +81,17 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                                    const gchar     *keyword,
                                    gpointer         data)
 {
-  GimpUIManager *manager;
+  GList         *menus;
   GList         *list;
   GList         *history_actions = NULL;
   Gimp          *gimp;
 
   g_return_if_fail (GIMP_IS_GIMP (data));
 
-  gimp = GIMP (data);
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
-
   if (g_strcmp0 (keyword, "") == 0)
     return;
+
+  gimp = GIMP (data);
 
   history_actions = gimp_action_history_search (gimp,
                                                 action_search_match_keyword,
@@ -101,68 +104,83 @@ action_search_history_and_actions (GimpSearchPopup *popup,
     }
 
   /* Now check other actions. */
-  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
-       list;
-       list = g_list_next (list))
+  for (menus = gimp_menu_factory_get_registered_menus (global_menu_factory);
+       menus;
+       menus = g_list_next (menus))
     {
-      GList           *list2;
-      GimpActionGroup *group   = list->data;
-      GList           *actions = NULL;
+      GimpMenuFactoryEntry *entry = menus->data;
+      GList                *managers;
 
-      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
-      actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
+      managers = gimp_ui_managers_from_name (entry->identifier);
 
-      for (list2 = actions; list2; list2 = g_list_next (list2))
+      for (; managers; managers = g_list_next (managers))
         {
-          const gchar *name;
-          GtkAction   *action       = list2->data;
-          gboolean     is_redundant = FALSE;
-          gint         section;
+          GimpUIManager *manager = managers->data;
 
-          name = gtk_action_get_name (action);
-
-          /* The action search dialog don't show any non-historized
-           * action, with the exception of "plug-in-repeat/reshow"
-           * actions.
-           * Logging them is meaningless (they may mean a different
-           * actual action each time), but they are still interesting
-           * as a search result.
-           */
-          if (gimp_action_history_excluded_action (name) &&
-              g_strcmp0 (name, "filters-repeat") != 0    &&
-              g_strcmp0 (name, "filters-reshow") != 0)
-            continue;
-
-          if (! gtk_action_is_sensitive (action) &&
-              ! GIMP_GUI_CONFIG (gimp->config)->search_show_unavailable)
-            continue;
-
-          if (action_search_match_keyword (action, keyword, &section, gimp))
+          for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
+               list;
+               list = g_list_next (list))
             {
-              GList *list3;
+              GList           *list2;
+              GimpActionGroup *group   = list->data;
+              GList           *actions = NULL;
 
-              /* A matching action. Check if we have not already added
-               * it as an history action.
-               */
-              for (list3 = history_actions; list3; list3 = g_list_next (list3))
+              actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
+              actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
+
+              for (list2 = actions; list2; list2 = g_list_next (list2))
                 {
-                  if (strcmp (gtk_action_get_name (GTK_ACTION (list3->data)),
-                              name) == 0)
+                  const gchar *name;
+                  GtkAction   *action       = list2->data;
+                  gboolean     is_redundant = FALSE;
+                  gint         section;
+
+                  name = gtk_action_get_name (action);
+
+                  /* The action search dialog don't show any non-historized
+                   * action, with the exception of "plug-in-repeat/reshow"
+                   * actions.
+                   * Logging them is meaningless (they may mean a different
+                   * actual action each time), but they are still interesting
+                   * as a search result.
+                   */
+                  if (gimp_action_history_excluded_action (name) &&
+                      g_strcmp0 (name, "filters-repeat") != 0    &&
+                      g_strcmp0 (name, "filters-reshow") != 0)
+                      continue;
+
+                  if (! gtk_action_is_sensitive (action) &&
+                      ! GIMP_GUI_CONFIG (gimp->config)->search_show_unavailable)
+                      continue;
+
+                  if (action_search_match_keyword (action, keyword, &section, gimp))
                     {
-                      is_redundant = TRUE;
-                      break;
+                      GList *list3;
+
+                      /* A matching action. Check if we have not already added
+                       * it as an history action.
+                       */
+                      for (list3 = history_actions; list3; list3 = g_list_next (list3))
+                        {
+                          if (strcmp (gtk_action_get_name (GTK_ACTION (list3->data)),
+                                      name) == 0)
+                            {
+                              is_redundant = TRUE;
+                              break;
+                            }
+                        }
+
+                      if (! is_redundant)
+                        {
+                          gimp_search_popup_add_result (popup, action, section);
+                        }
                     }
                 }
 
-              if (! is_redundant)
-                {
-                  gimp_search_popup_add_result (popup, action, section);
-                }
+              g_list_free (actions);
             }
         }
-
-      g_list_free (actions);
-   }
+    }
 
   g_list_free_full (history_actions, (GDestroyNotify) g_object_unref);
 }
