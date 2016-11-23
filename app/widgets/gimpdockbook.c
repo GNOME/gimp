@@ -876,9 +876,9 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
   dockbook = g_object_new (GIMP_TYPE_DOCKBOOK, NULL);
 
   dockbook->p->ui_manager = gimp_menu_factory_manager_new (menu_factory,
-                                                        "<Dockable>",
-                                                        dockbook,
-                                                        FALSE);
+                                                           "<Dockable>",
+                                                           dockbook,
+                                                           FALSE);
 
   gimp_help_connect (GTK_WIDGET (dockbook), gimp_dockbook_help_func,
                      GIMP_HELP_DOCK, dockbook);
