@@ -228,14 +228,20 @@ save_layer (const gchar    *filename,
       /* Use the appropriate function to import the data from the buffer */
       if (! has_alpha)
         {
-          WebPPictureImportRGB (&picture, buffer, w * bpp);
+          status = WebPPictureImportRGB (&picture, buffer, w * bpp);
         }
       else
         {
-          WebPPictureImportRGBA (&picture, buffer, w * bpp);
+          status = WebPPictureImportRGBA (&picture, buffer, w * bpp);
         }
 
       g_free (buffer);
+      if (! status)
+        {
+          g_printerr ("%s: memory error in WebPPictureImportRGB(A)().",
+                      G_STRFUNC);
+          break;
+        }
 
       /* Perform the actual encode */
       if (! WebPEncode (&config, &picture))
@@ -246,6 +252,7 @@ save_layer (const gchar    *filename,
                        picture.error_code,
                        _("WebP error: '%s'"),
                        webp_error_string (picture.error_code));
+          status = FALSE;
           break;
         }
 
@@ -260,7 +267,6 @@ save_layer (const gchar    *filename,
   /* Flush the drawable and detach */
   if (geglbuffer)
     {
-      gegl_buffer_flush (geglbuffer);
       g_object_unref (geglbuffer);
     }
 
@@ -421,7 +427,8 @@ get_layer_needs_combine (gint32 layer)
 }
 
 static GeglBuffer*
-combine_buffers (GeglBuffer* layer_buffer, GeglBuffer* prev_frame_buffer)
+combine_buffers (GeglBuffer *layer_buffer,
+                 GeglBuffer *prev_frame_buffer)
 {
   GeglBuffer *buffer;
   GeglNode   *graph;
@@ -456,13 +463,6 @@ combine_buffers (GeglBuffer* layer_buffer, GeglBuffer* prev_frame_buffer)
   gegl_node_process (target);
   g_object_unref (graph);
 
-  /* release resources associated to layer_buffer */
-  gegl_buffer_flush (layer_buffer);
-  g_object_unref (layer_buffer);
-
-  gegl_buffer_flush (prev_frame_buffer);
-  g_object_unref (prev_frame_buffer);
-
   return buffer;
 }
 
@@ -487,7 +487,7 @@ save_animation (const gchar    *filename,
   WebPData               webp_data;
   int                    frame_timestamp = 0;
   WebPAnimEncoder       *enc = NULL;
-  GeglBuffer            *current_frame = NULL;
+  GeglBuffer            *prev_frame = NULL;
 
   if (nLayers < 1)
     return FALSE;
@@ -534,6 +534,7 @@ save_animation (const gchar    *filename,
       for (loop = 0; loop < nLayers; loop++)
         {
           GeglBuffer       *geglbuffer;
+          GeglBuffer       *current_frame;
           GeglRectangle     extent;
           WebPConfig        config;
           WebPPicture       picture;
@@ -599,15 +600,20 @@ save_animation (const gchar    *filename,
           picture.custom_ptr    = &mw;
           picture.writer        = WebPMemoryWrite;
 
-          if (loop == 0 || !needs_combine)
+          if (loop == 0 || ! needs_combine)
             {
-              if (current_frame != NULL) g_object_unref (current_frame);
+              g_clear_object (&prev_frame);
               current_frame = geglbuffer;
             }
           else
             {
-              current_frame = combine_buffers (geglbuffer, current_frame);
+              current_frame = combine_buffers (geglbuffer, prev_frame);
+
+              /* release resources. */
+              g_object_unref (geglbuffer);
+              g_clear_object (&prev_frame);
             }
+          prev_frame = current_frame;
 
           /* Read the region into the buffer */
           gegl_buffer_get (current_frame, &extent, 1.0, format, buffer,
@@ -616,15 +622,21 @@ save_animation (const gchar    *filename,
           /* Use the appropriate function to import the data from the buffer */
           if (! has_alpha)
             {
-              WebPPictureImportRGB (&picture, buffer, w * bpp);
+              status = WebPPictureImportRGB (&picture, buffer, w * bpp);
             }
           else
             {
-              WebPPictureImportRGBA (&picture, buffer, w * bpp);
+              status = WebPPictureImportRGBA (&picture, buffer, w * bpp);
             }
+          g_free (buffer);
 
+          if (! status)
+            {
+              g_printerr ("%s: memory error in WebPPictureImportRGB(A)().",
+                          G_STRFUNC);
+            }
           /* Perform the actual encode */
-          if (! WebPAnimEncoderAdd (enc, &picture, frame_timestamp, &config))
+          else if (! WebPAnimEncoderAdd (enc, &picture, frame_timestamp, &config))
             {
               g_printerr ("ERROR[%d]: %s\n",
                           picture.error_code,
@@ -634,9 +646,6 @@ save_animation (const gchar    *filename,
 
           WebPMemoryWriterClear (&mw);
           WebPPictureFree (&picture);
-
-          if (buffer)
-            g_free (buffer);
 
           if (status == FALSE)
             break;
@@ -699,10 +708,9 @@ save_animation (const gchar    *filename,
   WebPDataClear (&webp_data);
   WebPAnimEncoderDelete (enc);
 
-  if (current_frame != NULL)
+  if (prev_frame != NULL)
     {
-      gegl_buffer_flush (current_frame);
-      g_object_unref (current_frame);
+      g_object_unref (prev_frame);
     }
 
   if (outfile)
