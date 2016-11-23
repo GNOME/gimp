@@ -31,8 +31,6 @@
 
 #include "dialogs/dialogs.h" /* FIXME, we are in the widget layer */
 
-#include "menus/menus.h"
-
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
@@ -287,14 +285,15 @@ gimp_dock_window_session_managed_iface_init (GimpSessionManagedInterface *iface)
 static void
 gimp_dock_window_constructed (GObject *object)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
-  GimpGuiConfig  *config;
-  GimpContext    *factory_context;
-  GtkAccelGroup  *accel_group;
-  Gimp           *gimp;
-  GtkSettings    *settings;
-  gint            menu_view_width  = -1;
-  gint            menu_view_height = -1;
+  GimpDockWindow  *dock_window = GIMP_DOCK_WINDOW (object);
+  GimpGuiConfig   *config;
+  GimpContext     *factory_context;
+  GimpMenuFactory *menu_factory;
+  GtkAccelGroup   *accel_group;
+  Gimp            *gimp;
+  GtkSettings     *settings;
+  gint             menu_view_width  = -1;
+  gint             menu_view_height = -1;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -316,11 +315,14 @@ gimp_dock_window_constructed (GObject *object)
   /* Setup hints */
   gimp_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
 
+  menu_factory =
+    gimp_dialog_factory_get_menu_factory (dock_window->p->dialog_factory);
+
   /* Make image window related keyboard shortcuts work also when a
    * dock window is the focused window
    */
   dock_window->p->ui_manager =
-    gimp_menu_factory_manager_new (global_menu_factory,
+    gimp_menu_factory_manager_new (menu_factory,
                                    dock_window->p->ui_manager_name,
                                    dock_window,
                                    config->tearoff_menus);
@@ -1138,17 +1140,17 @@ GtkWidget *
 gimp_dock_window_new (const gchar       *role,
                       const gchar       *ui_manager_name,
                       gboolean           allow_dockbook_absence,
-                      GimpDialogFactory *factory,
+                      GimpDialogFactory *dialog_factory,
                       GimpContext       *context)
 {
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   return g_object_new (GIMP_TYPE_DOCK_WINDOW,
                        "role",                   role,
                        "ui-manager-name",        ui_manager_name,
                        "allow-dockbook-absence", allow_dockbook_absence,
-                       "dialog-factory",         factory,
+                       "dialog-factory",         dialog_factory,
                        "context",                context,
                        NULL);
 }

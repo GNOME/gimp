@@ -25,8 +25,6 @@
 
 #include "widgets-types.h"
 
-#include "menus/menus.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
@@ -118,12 +116,14 @@ gimp_dock_columns_class_init (GimpDockColumnsClass *klass)
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
                                    g_param_spec_object ("dialog-factory",
                                                         NULL, NULL,
                                                         GIMP_TYPE_DIALOG_FACTORY,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_UI_MANAGER,
                                    g_param_spec_object ("ui-manager",
                                                         NULL, NULL,
@@ -409,13 +409,15 @@ gimp_dock_columns_prepare_dockbook (GimpDockColumns  *dock_columns,
                                     gint              dock_index,
                                     GtkWidget       **dockbook_p)
 {
-  GtkWidget *dock;
-  GtkWidget *dockbook;
+  GimpMenuFactory *menu_factory;
+  GtkWidget       *dock;
+  GtkWidget       *dockbook;
 
   dock = gimp_menu_dock_new ();
   gimp_dock_columns_add_dock (dock_columns, GIMP_DOCK (dock), dock_index);
 
-  dockbook = gimp_dockbook_new (global_menu_factory);
+  menu_factory = gimp_dialog_factory_get_menu_factory (dock_columns->p->dialog_factory);
+  dockbook = gimp_dockbook_new (menu_factory);
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), -1);
 
   gtk_widget_show (GTK_WIDGET (dock));

@@ -26,8 +26,6 @@
 
 #include "widgets-types.h"
 
-#include "menus/menus.h"
-
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
@@ -242,14 +240,19 @@ GimpDockbook *
 gimp_session_info_book_restore (GimpSessionInfoBook *info,
                                 GimpDock            *dock)
 {
-  GtkWidget *dockbook;
-  GList     *pages;
-  gint       n_dockables = 0;
+  GimpDialogFactory *dialog_factory;
+  GimpMenuFactory   *menu_factory;
+  GtkWidget         *dockbook;
+  GList             *pages;
+  gint               n_dockables = 0;
 
   g_return_val_if_fail (info != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
 
-  dockbook = gimp_dockbook_new (global_menu_factory);
+  dialog_factory = gimp_dock_get_dialog_factory (dock);
+  menu_factory   = gimp_dialog_factory_get_menu_factory (dialog_factory);
+
+  dockbook = gimp_dockbook_new (menu_factory);
 
   gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), -1);
 

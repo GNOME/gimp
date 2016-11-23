@@ -29,8 +29,6 @@
 
 #include "widgets-types.h"
 
-#include "menus/menus.h"
-
 #include "core/gimpcontext.h"
 
 #include "gimpdialogfactory.h"
@@ -845,19 +843,24 @@ gimp_dockable_set_drag_handler (GimpDockable *dockable,
 void
 gimp_dockable_detach (GimpDockable *dockable)
 {
-  GimpDockWindow *src_dock_window = NULL;
-  GimpDock       *src_dock        = NULL;
-  GtkWidget      *dock            = NULL;
-  GimpDockWindow *dock_window     = NULL;
-  GtkWidget      *dockbook        = NULL;
+  GimpDialogFactory *dialog_factory;
+  GimpMenuFactory   *menu_factory;
+  GimpDockWindow    *src_dock_window;
+  GimpDock          *src_dock;
+  GtkWidget         *dock;
+  GimpDockWindow    *dock_window;
+  GtkWidget         *dockbook;
 
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockable->p->dockbook));
 
-  src_dock = gimp_dockbook_get_dock (dockable->p->dockbook);
+  src_dock        = gimp_dockbook_get_dock (dockable->p->dockbook);
   src_dock_window = gimp_dock_window_from_dock (src_dock);
 
-  dock = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
+  dialog_factory = gimp_dock_get_dialog_factory (src_dock);
+  menu_factory   = gimp_dialog_factory_get_menu_factory (dialog_factory);
+
+  dock = gimp_dock_with_window_new (dialog_factory,
                                     gtk_widget_get_screen (GTK_WIDGET (dockable)),
                                     gimp_widget_get_monitor (GTK_WIDGET (dockable)),
                                     FALSE /*toolbox*/);
@@ -866,7 +869,7 @@ gimp_dockable_detach (GimpDockable *dockable)
   if (src_dock_window)
     gimp_dock_window_setup (dock_window, src_dock_window);
 
-  dockbook = gimp_dockbook_new (global_menu_factory);
+  dockbook = gimp_dockbook_new (menu_factory);
 
   gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
 
