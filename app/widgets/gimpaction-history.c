@@ -33,12 +33,9 @@
 
 #include "core/gimp.h"
 
-#include "menus/menus.h"
-
+#include "gimpuimanager.h"
 #include "gimpaction.h"
 #include "gimpaction-history.h"
-#include "gimpmenufactory.h"
-#include "gimpuimanager.h"
 
 
 #define GIMP_ACTION_HISTORY_FILENAME "action-history"
@@ -254,6 +251,7 @@ gimp_action_history_search (Gimp                *gimp,
                             const gchar         *keyword)
 {
   GimpGuiConfig *config;
+  GimpUIManager *manager;
   GList         *actions;
   GList         *result = NULL;
   gint           i;
@@ -262,41 +260,21 @@ gimp_action_history_search (Gimp                *gimp,
   g_return_val_if_fail (match_func != NULL, NULL);
 
   config  = GIMP_GUI_CONFIG (gimp->config);
+  manager = gimp_ui_managers_from_name ("<Image>")->data;
 
   for (actions = history.items, i = 0;
        actions && i < config->action_history_size;
        actions = g_list_next (actions), i++)
     {
       GimpActionHistoryItem *item   = actions->data;
-      GtkAction             *action = NULL;
-      GList                 *menus;
+      GtkAction             *action;
 
-      for (menus = gimp_menu_factory_get_registered_menus (global_menu_factory);
-           menus;
-           menus = g_list_next (menus))
-        {
-          GimpMenuFactoryEntry *entry = menus->data;
-          GList                *managers;
+      action = gimp_ui_manager_find_action (manager, NULL, item->action_name);
+      if (action == NULL)
+        continue;
 
-          managers = gimp_ui_managers_from_name (entry->identifier);
-
-          for (; managers; managers = g_list_next (managers))
-            {
-              GimpUIManager *manager = managers->data;
-
-              action = gimp_ui_manager_find_action (manager, NULL,
-                                                    item->action_name);
-
-              if (action)
-                break;
-            }
-          if (action)
-            break;
-        }
-
-      if (action == NULL ||
-          (! gtk_action_is_sensitive (action) &&
-           ! config->search_show_unavailable))
+      if (! gtk_action_is_sensitive (action) &&
+          ! config->search_show_unavailable)
         continue;
 
       if (match_func (action, keyword, NULL, gimp))
