@@ -284,8 +284,6 @@ gimp_action_history_search (Gimp                *gimp,
             {
               GimpUIManager *manager = managers->data;
 
-              if (g_strcmp0 (manager->name, "<Dockable>") == 0)
-                continue;
               action = gimp_ui_manager_find_action (manager, NULL,
                                                     item->action_name);
 
