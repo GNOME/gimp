@@ -29,6 +29,8 @@ typedef struct
   gboolean   lossless;
   gboolean   animation;
   gboolean   loop;
+  gboolean   minimize_size;
+  gint       kf_distance;
   gfloat     quality;
   gfloat     alpha_quality;
   gboolean   exif;

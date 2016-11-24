@@ -83,6 +83,8 @@ query (void)
     { GIMP_PDB_FLOAT,    "alpha-quality", "Quality of the image's alpha channel (0 <= alpha-quality <= 100)" },
     { GIMP_PDB_INT32,    "animation",     "Use layers for animation (0/1)" },
     { GIMP_PDB_INT32,    "anim-loop",     "Loop animation infinitely (0/1)" },
+    { GIMP_PDB_INT32,    "minimize-size", "Minimize animation size (0/1)" },
+    { GIMP_PDB_INT32,    "kf-distance",   "Maximum distance between key-frames (>=0)" },
     { GIMP_PDB_INT32,    "exif",          "Toggle saving exif data (0/1)" },
     { GIMP_PDB_INT32,    "iptc",          "Toggle saving iptc data (0/1)" },
     { GIMP_PDB_INT32,    "xmp",           "Toggle saving xmp data (0/1)" },
@@ -193,6 +195,8 @@ run (const gchar      *name,
           params.lossless      = FALSE;
           params.animation     = FALSE;
           params.loop          = TRUE;
+          params.minimize_size = TRUE;
+          params.kf_distance   = 50;
           params.quality       = 90.0f;
           params.alpha_quality = 100.0f;
           params.exif          = TRUE;
@@ -220,7 +224,7 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          if (nparams != 16)
+          if (nparams != 18)
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
@@ -237,11 +241,13 @@ run (const gchar      *name,
               params.alpha_quality = param[8].data.d_float;
               params.animation     = param[9].data.d_int32;
               params.loop          = param[10].data.d_int32;
-              params.exif          = param[11].data.d_int32;
-              params.iptc          = param[12].data.d_int32;
-              params.xmp           = param[13].data.d_int32;
-              params.delay         = param[14].data.d_int32;
-              params.force_delay   = param[15].data.d_int32;
+              params.minimize_size = param[11].data.d_int32;
+              params.kf_distance   = param[12].data.d_int32;
+              params.exif          = param[13].data.d_int32;
+              params.iptc          = param[14].data.d_int32;
+              params.xmp           = param[15].data.d_int32;
+              params.delay         = param[16].data.d_int32;
+              params.force_delay   = param[17].data.d_int32;
             }
           break;
 

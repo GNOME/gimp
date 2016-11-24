@@ -33,7 +33,10 @@
 
 
 static void           save_dialog_toggle_scale   (GtkWidget  *widget,
-                                                  gpointer   data);
+                                                  gpointer    data);
+
+static void           save_dialog_toggle_minsize (GtkWidget  *widget,
+                                                  gpointer    data);
 
 
 static void
@@ -42,6 +45,14 @@ save_dialog_toggle_scale (GtkWidget *widget,
 {
   gimp_scale_entry_set_sensitive (GTK_OBJECT (data),
                                   ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
+}
+
+static void
+save_dialog_toggle_minsize (GtkWidget *widget,
+                            gpointer   data)
+{
+  gtk_widget_set_sensitive (GTK_WIDGET (data),
+                            ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
 }
 
 gboolean
@@ -57,6 +68,7 @@ save_dialog (WebPSaveParams *params,
   GtkWidget *vbox2;
   GtkWidget *label;
   GtkWidget *toggle;
+  GtkWidget *toggle_minsize;
   GtkWidget *combo;
   GtkObject *quality_scale;
   GtkObject *alpha_quality_scale;
@@ -170,6 +182,10 @@ save_dialog (WebPSaveParams *params,
       GtkAdjustment *adj;
       GtkWidget     *delay;
       GtkWidget     *hbox;
+      GtkWidget     *label_kf;
+      GtkAdjustment *adj_kf;
+      GtkWidget     *kf_distance;
+      GtkWidget     *hbox_kf;
 
       vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
       gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
@@ -220,6 +236,48 @@ save_dialog (WebPSaveParams *params,
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
                         &params->loop);
+
+      /* create a hbox for 'max key-frame distance */
+      hbox_kf = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+      gtk_box_pack_start (GTK_BOX (animation_box), hbox_kf, FALSE, FALSE, 0);
+      gtk_widget_set_sensitive (hbox_kf, TRUE);
+      gtk_widget_show (hbox_kf);
+
+      /* label for 'max key-frame distance' adjustment */
+      label_kf = gtk_label_new (_("Max distance between key-frames:"));
+      gtk_label_set_xalign (GTK_LABEL (label_kf), 0.2);
+      gtk_box_pack_start (GTK_BOX (hbox_kf), label_kf, FALSE, FALSE, 0);
+      gtk_widget_show (label_kf);
+
+      /* key-frame distance entry */
+      adj_kf = (GtkAdjustment *) gtk_adjustment_new (params->kf_distance,
+                                                     1, 10000, 1, 10, 0);
+      kf_distance = gtk_spin_button_new (adj_kf, 1, 0);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (kf_distance), TRUE);
+      gtk_box_pack_start (GTK_BOX (hbox_kf), kf_distance, FALSE, FALSE, 0);
+      gtk_widget_show (kf_distance);
+
+      g_signal_connect (adj_kf, "value-changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &params->kf_distance);
+
+      /* minimize-size checkbox */
+      toggle_minsize = gtk_check_button_new_with_label (_("Minimize output size (slower)"));
+
+      gtk_box_pack_start (GTK_BOX (animation_box), toggle_minsize,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (toggle_minsize);
+
+      g_signal_connect (toggle_minsize, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &params->minimize_size);
+
+
+      /* Enable and disable the kf-distance box when the 'minimize size' option is selected */
+      g_signal_connect (toggle_minsize, "toggled",
+                        G_CALLBACK (save_dialog_toggle_minsize),
+                        hbox_kf);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle_minsize), params->minimize_size);
 
       /* create a hbox for delay */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);

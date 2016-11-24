@@ -529,7 +529,13 @@ save_animation (const gchar    *filename,
         enc_options.anim_params.loop_count = 1;
 
       enc_options.allow_mixed   = params->lossless ? 0 : 1;
-      enc_options.minimize_size = 1;
+      enc_options.minimize_size = params->minimize_size ? 1 : 0;
+      if (! params->minimize_size)
+        {
+          enc_options.kmax = params->kf_distance;
+          /* explicitly force minimum key-frame distance too, for good measure */
+          enc_options.kmin = params->kf_distance - 1;
+        }
 
       for (loop = 0; loop < nLayers; loop++)
         {
