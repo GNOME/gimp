@@ -1275,7 +1275,7 @@ gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
       ISegment *first = g_queue_peek_head (iscissors->curve->segments);
       ISegment *last  = g_queue_peek_tail (iscissors->curve->segments);
 
-      if (first && last)
+      if (first && last && first != last)
         {
           ISegment *segment;
 
