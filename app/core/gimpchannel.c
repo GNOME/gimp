@@ -838,7 +838,7 @@ gimp_channel_fill (GimpItem         *item,
                                0, 0, 0, 0))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot fill empty channel."));
+                           _("Cannot fill empty channel."));
       return FALSE;
     }
 
@@ -874,7 +874,7 @@ gimp_channel_stroke (GimpItem           *item,
                                0, 0, 0, 0))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot stroke empty channel."));
+                           _("Cannot stroke empty channel."));
       return FALSE;
     }
 

@@ -301,7 +301,7 @@ gimp_selection_fill (GimpItem         *item,
                                0, 0, 0, 0))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("There is no selection to fill."));
+                           _("There is no selection to fill."));
       return FALSE;
     }
 
@@ -337,7 +337,7 @@ gimp_selection_stroke (GimpItem           *item,
                                0, 0, 0, 0))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("There is no selection to stroke."));
+                           _("There is no selection to stroke."));
       return FALSE;
     }
 
@@ -563,7 +563,7 @@ gimp_selection_grow (GimpChannel *channel,
                      gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->grow (channel,
-					   radius_x, radius_y,
+                                           radius_x, radius_y,
                                            push_undo);
 }
 
@@ -575,8 +575,8 @@ gimp_selection_shrink (GimpChannel *channel,
                        gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->shrink (channel,
-					     radius_x, radius_y, edge_lock,
-					     push_undo);
+                                             radius_x, radius_y, edge_lock,
+                                             push_undo);
 }
 
 static void
@@ -748,8 +748,8 @@ gimp_selection_extract (GimpSelection *selection,
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Unable to cut or copy because the "
-			     "selected region is empty."));
+                           _("Unable to cut or copy because the "
+                             "selected region is empty."));
       return NULL;
     }
 
@@ -866,8 +866,8 @@ gimp_selection_float (GimpSelection *selection,
       (x1 == x2 || y1 == y2))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot float selection because the selected "
-			     "region is empty."));
+                           _("Cannot float selection because the selected "
+                             "region is empty."));
       return NULL;
     }
 

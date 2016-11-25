@@ -450,7 +450,7 @@ gimp_palette_load_aco (GimpContext   *context,
       if (! g_input_stream_read_all (input, color_info, sizeof (color_info),
                                      &bytes_read, NULL, &my_error) ||
           bytes_read != sizeof (color_info))
-	{
+        {
           if (palette->colors)
             {
               g_message (_("Reading palette file '%s': "
@@ -467,7 +467,7 @@ gimp_palette_load_aco (GimpContext   *context,
           g_object_unref (palette);
 
           return NULL;
-	}
+        }
 
       color_space = color_info[1] + (color_info[0] << 8);
 
@@ -551,10 +551,10 @@ gimp_palette_load_aco (GimpContext   *context,
                                          sizeof (format2_preamble),
                                          &bytes_read, NULL, error) ||
               bytes_read != sizeof (format2_preamble))
-	    {
-	      g_object_unref (palette);
-	      return NULL;
-	    }
+            {
+              g_object_unref (palette);
+              return NULL;
+            }
 
           number_of_chars = format2_preamble[3] + (format2_preamble[2] << 8);
 

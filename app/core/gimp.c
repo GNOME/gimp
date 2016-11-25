@@ -1242,7 +1242,7 @@ gimp_filter_history_changed (Gimp *gimp)
 
 void
 gimp_image_opened (Gimp  *gimp,
-		   GFile *file)
+                   GFile *file)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (G_IS_FILE (file));

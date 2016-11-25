@@ -1180,7 +1180,7 @@ gimp_data_is_internal (GimpData *data)
  **/
 gint
 gimp_data_compare (GimpData *data1,
-		   GimpData *data2)
+                   GimpData *data2)
 {
   GimpDataPrivate *private1 = GIMP_DATA_GET_PRIVATE (data1);
   GimpDataPrivate *private2 = GIMP_DATA_GET_PRIVATE (data2);

@@ -786,7 +786,7 @@ gimp_image_convert_indexed (GimpImage               *image,
       if (gimp_palette_get_n_colors (custom_palette) == 0)
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			       _("Cannot convert image: palette is empty."));
+                               _("Cannot convert image: palette is empty."));
           return FALSE;
         }
     }
@@ -1261,24 +1261,24 @@ generate_histogram_rgb (CFHistogram   histogram,
 
           while (length--)
             {
-	      gboolean transparent = FALSE;
+              gboolean transparent = FALSE;
 
-	      if (has_alpha)
-	        {
-		  if (dither_alpha)
-		    {
-		      if (data[ALPHA] <
+              if (has_alpha)
+                {
+                  if (dither_alpha)
+                    {
+                      if (data[ALPHA] <
                           DM[col & DM_WIDTHMASK][row & DM_HEIGHTMASK])
-		  	transparent = TRUE;
-		    }
-		  else
-		    {
-		      if (data[ALPHA] <= 127)
-			transparent = TRUE;
-		    }
-		}
+                        transparent = TRUE;
+                    }
+                  else
+                    {
+                      if (data[ALPHA] <= 127)
+                        transparent = TRUE;
+                    }
+                }
 
-	      if (! transparent)
+              if (! transparent)
                 {
                   colfreq = HIST_RGB (histogram,
                                       data[RED],

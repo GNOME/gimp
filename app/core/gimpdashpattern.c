@@ -286,16 +286,16 @@ gimp_dash_pattern_from_double_array (gint           n_dashes,
 
       for (i = 0; i < n_dashes; i++)
         {
-	  if (dashes[i] >= 0.0)
-	    {
+          if (dashes[i] >= 0.0)
+            {
               g_array_append_val (pattern, dashes[i]);
-	    }
-	  else
-	    {
-	      g_array_free (pattern, TRUE);
-	      return NULL;
-	    }
-	}
+            }
+          else
+            {
+              g_array_free (pattern, TRUE);
+              return NULL;
+            }
+        }
 
       return pattern;
     }

@@ -210,15 +210,15 @@ gimp_user_install_run (GimpUserInstall *install)
 
   if (install->migrate)
     user_install_log (install,
-		      _("It seems you have used GIMP %s before.  "
-			"GIMP will now migrate your user settings to '%s'."),
-		      install->migrate, dirname);
+                      _("It seems you have used GIMP %s before.  "
+                        "GIMP will now migrate your user settings to '%s'."),
+                      install->migrate, dirname);
   else
     user_install_log (install,
-		      _("It appears that you are using GIMP for the "
-			"first time.  GIMP will now create a folder "
-			"named '%s' and copy some files to it."),
-			dirname);
+                      _("It appears that you are using GIMP for the "
+                        "first time.  GIMP will now create a folder "
+                        "named '%s' and copy some files to it."),
+                      dirname);
 
   g_free (dirname);
 
@@ -282,7 +282,7 @@ user_install_detect_old (GimpUserInstall *install,
           if (migrate)
             {
 #ifdef GIMP_UNSTABLE
-	      g_printerr ("gimp-user-install: migrating from %s\n", dir);
+              g_printerr ("gimp-user-install: migrating from %s\n", dir);
 #endif
               install->old_major = 2;
               install->old_minor = i;

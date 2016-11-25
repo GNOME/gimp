@@ -172,9 +172,9 @@ floating_sel_to_layer (GimpLayer  *layer,
   if (GIMP_IS_CHANNEL (gimp_layer_get_floating_sel_drawable (layer)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot create a new layer from the floating "
-			     "selection because it belongs to a layer mask "
-			     "or channel."));
+                           _("Cannot create a new layer from the floating "
+                             "selection because it belongs to a layer mask "
+                             "or channel."));
       return FALSE;
     }
 

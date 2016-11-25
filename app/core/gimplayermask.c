@@ -155,7 +155,7 @@ gimp_layer_mask_rename (GimpItem     *item,
   /* reject renaming, layer masks are always named "<layer name> mask"  */
 
   g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-	       _("Cannot rename layer masks."));
+               _("Cannot rename layer masks."));
 
   return FALSE;
 }
