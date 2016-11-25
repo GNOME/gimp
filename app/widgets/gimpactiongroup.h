@@ -175,6 +175,9 @@ void   gimp_action_group_add_procedure_actions(GimpActionGroup             *grou
                                                guint                        n_entries,
                                                GCallback                    callback);
 
+void   gimp_action_group_remove_action        (GimpActionGroup             *group,
+                                               GimpAction                  *action);
+
 void          gimp_action_group_activate_action       (GimpActionGroup *group,
                                                        const gchar     *action_name);
 void          gimp_action_group_set_action_visible    (GimpActionGroup *group,
