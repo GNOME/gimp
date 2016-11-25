@@ -795,6 +795,17 @@ gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
                             G_OBJECT (view), GIMP_MESSAGE_ERROR,
                             _("F1 cannot be remapped."));
     }
+  else if (accel_key  >= GDK_KEY_0 &&
+           accel_key  <= GDK_KEY_9 &&
+           accel_mask == GDK_MOD1_MASK)
+    {
+      gimp_message (view->manager->gimp,
+                    G_OBJECT (view), GIMP_MESSAGE_ERROR,
+                    _("Alt+%d is used to switch to display %d and "
+                      "cannot be remapped."),
+                    accel_key - GDK_KEY_0,
+                    accel_key == GDK_KEY_0 ? 10 : accel_key - GDK_KEY_0);
+    }
   else if (! gtk_accel_map_change_entry (accel_path,
                                          accel_key, accel_mask, FALSE))
     {
