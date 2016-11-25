@@ -431,13 +431,9 @@ windows_actions_update_display_accels (GimpActionGroup *group)
           else
             accel_key = GDK_KEY_0;
 
-          if (! gtk_accel_map_change_entry (accel_path,
-                                            accel_key, GDK_MOD1_MASK,
-                                            TRUE))
-            {
-              g_warning ("%s: failed to set accelerator for %s",
-                         G_STRFUNC, accel_path);
-            }
+          gtk_accel_map_change_entry (accel_path,
+                                      accel_key, GDK_MOD1_MASK,
+                                      TRUE);
         }
     }
 }
