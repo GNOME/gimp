@@ -185,6 +185,9 @@ static void      gimp_image_window_monitor_changed     (GimpWindow          *win
                                                         gint                 monitor);
 
 static GList *   gimp_image_window_get_docks           (GimpDockContainer   *dock_container);
+static GimpDialogFactory *
+                 gimp_image_window_dock_container_get_dialog_factory
+                                                       (GimpDockContainer   *dock_container);
 static GimpUIManager *
                  gimp_image_window_dock_container_get_ui_manager
                                                        (GimpDockContainer   *dock_container);
@@ -347,10 +350,11 @@ gimp_image_window_init (GimpImageWindow *window)
 static void
 gimp_image_window_dock_container_iface_init (GimpDockContainerInterface *iface)
 {
-  iface->get_docks      = gimp_image_window_get_docks;
-  iface->get_ui_manager = gimp_image_window_dock_container_get_ui_manager;
-  iface->add_dock       = gimp_image_window_add_dock;
-  iface->get_dock_side  = gimp_image_window_get_dock_side;
+  iface->get_docks          = gimp_image_window_get_docks;
+  iface->get_dialog_factory = gimp_image_window_dock_container_get_dialog_factory;
+  iface->get_ui_manager     = gimp_image_window_dock_container_get_ui_manager;
+  iface->add_dock           = gimp_image_window_add_dock;
+  iface->get_dock_side      = gimp_image_window_get_dock_side;
 }
 
 static void
@@ -851,14 +855,18 @@ gimp_image_window_get_docks (GimpDockContainer *dock_container)
   return all_docks;
 }
 
+static GimpDialogFactory *
+gimp_image_window_dock_container_get_dialog_factory (GimpDockContainer *dock_container)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (dock_container);
+
+  return private->dialog_factory;
+}
+
 static GimpUIManager *
 gimp_image_window_dock_container_get_ui_manager (GimpDockContainer *dock_container)
 {
-  GimpImageWindow *window;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (dock_container), FALSE);
-
-  window = GIMP_IMAGE_WINDOW (dock_container);
+  GimpImageWindow *window = GIMP_IMAGE_WINDOW (dock_container);
 
   return gimp_image_window_get_ui_manager (window);
 }

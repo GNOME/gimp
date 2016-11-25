@@ -526,7 +526,7 @@ dialogs_init (Gimp            *gimp,
   gimp_dialog_factory_set_singleton (factory);
 
   for (i = 0; i < G_N_ELEMENTS (entries); i++)
-    gimp_dialog_factory_register_entry (gimp_dialog_factory_get_singleton (),
+    gimp_dialog_factory_register_entry (factory,
                                         entries[i].identifier,
                                         gettext (entries[i].name),
                                         gettext (entries[i].blurb),

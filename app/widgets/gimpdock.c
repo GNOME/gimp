@@ -540,7 +540,7 @@ gimp_dock_get_dialog_factory (GimpDock *dock)
       GimpDockWindow *dock_window = gimp_dock_window_from_dock (dock);
 
       if (dock_window)
-        dialog_factory = gimp_dock_window_get_dialog_factory (dock_window);
+        dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (dock_window));
     }
 
   return dialog_factory;

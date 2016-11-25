@@ -38,6 +38,7 @@
 #include "text/gimptextlayout.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockcontainer.h"
 #include "widgets/gimpoverlaybox.h"
 #include "widgets/gimpoverlayframe.h"
 #include "widgets/gimptextbuffer.h"
@@ -1264,6 +1265,8 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
 {
   GimpTool          *tool    = GIMP_TOOL (text_tool);
   GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+  GimpDisplayShell  *shell   = gimp_display_get_shell (tool->display);
+  GimpImageWindow   *image_window;
   GimpDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
   gdouble            xres    = 1.0;
@@ -1275,14 +1278,8 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
       return;
     }
 
-  dialog_factory = gimp_dialog_factory_get_singleton ();
-
-  if (tool->display)
-    {
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-
-      parent = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell)));
-    }
+  image_window   = gimp_display_shell_get_window (shell);
+  dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
 
   if (text_tool->image)
     gimp_image_get_resolution (text_tool->image, &xres, &yres);
@@ -1300,12 +1297,8 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",
                                    text_tool->editor_dialog,
-                                   parent ?
-                                   gtk_widget_get_screen (GTK_WIDGET (parent)) :
-                                   gdk_screen_get_default (), /* FIXME monitor */
-                                   parent ?
-                                   gimp_widget_get_monitor (GTK_WIDGET (parent)) :
-                                   0 /* FIXME monitor */);
+                                   gtk_widget_get_screen (GTK_WIDGET (image_window)),
+                                   gimp_widget_get_monitor (GTK_WIDGET (image_window)));
 
   g_signal_connect (text_tool->editor_dialog, "destroy",
                     G_CALLBACK (gimp_text_tool_editor_destroy),
