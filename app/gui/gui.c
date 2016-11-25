@@ -681,9 +681,6 @@ gui_exit_callback (Gimp     *gimp,
   if (gui_config->save_session_info)
     session_save (gimp, FALSE);
 
-  if (gui_config->save_accels)
-    menus_save (gimp, FALSE);
-
   if (gui_config->save_device_status)
     gimp_devices_save (gimp, FALSE);
 
@@ -695,6 +692,9 @@ gui_exit_callback (Gimp     *gimp,
                                         gimp);
 
   gimp_displays_delete (gimp);
+
+  if (gui_config->save_accels)
+    menus_save (gimp, FALSE);
 
   gimp_tools_save (gimp, gui_config->save_tool_options, FALSE);
   gimp_tools_exit (gimp);
