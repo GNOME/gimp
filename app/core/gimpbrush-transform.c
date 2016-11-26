@@ -52,6 +52,11 @@ static void    gimp_brush_transform_fill_blur_kernel (gfloat            *arr,
 static gint    gimp_brush_transform_blur_kernel_size (gint               height,
                                                       gint               width,
                                                       gdouble            hardness);
+static void    gimp_brush_transform_adjust_hardness_matrix
+                                                     (gdouble      width,
+                                                      gdouble      height,
+                                                      gdouble      kernel_size,
+                                                      GimpMatrix3 *matrix);
 
 
 /*  public functions  */
@@ -118,6 +123,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   gint          src_height_minus_one;
   gint          dest_width;
   gint          dest_height;
+  gint          kernel_size;
   gint          x, y;
   gdouble       blx, brx, tlx, trx;
   gdouble       bly, bry, tly, try;
@@ -188,6 +194,17 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   gimp_brush_transform_bounding_box (brush, &matrix,
                                      &x, &y, &dest_width, &dest_height);
+  if (hardness < 1.0)
+    {
+      kernel_size =
+        gimp_brush_transform_blur_kernel_size (dest_width,
+                                               dest_height,
+                                               hardness);
+
+      gimp_brush_transform_adjust_hardness_matrix (dest_width, dest_height, kernel_size,
+                                                   &matrix);
+    }
+
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
@@ -333,10 +350,6 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
       GimpTempBuf *blur_src;
       GeglBuffer  *src_buffer;
       GeglBuffer  *dest_buffer;
-      gint         kernel_size =
-        gimp_brush_transform_blur_kernel_size (gimp_temp_buf_get_height (result),
-                                               gimp_temp_buf_get_width  (result),
-                                               hardness);
       gint         kernel_len  = kernel_size * kernel_size;
       gfloat       blur_kernel[kernel_len];
 
@@ -417,6 +430,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   gint          src_height_minus_one;
   gint          dest_width;
   gint          dest_height;
+  gint          kernel_size;
   gint          x, y;
   gdouble       blx, brx, tlx, trx;
   gdouble       bly, bry, tly, try;
@@ -482,11 +496,24 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   if (gimp_matrix3_is_identity (&matrix) && hardness == 1.0)
     return gimp_temp_buf_copy (source);
 
+
   src_width_minus_one  = src_width  - 1;
   src_height_minus_one = src_height - 1;
 
   gimp_brush_transform_bounding_box (brush, &matrix,
                                      &x, &y, &dest_width, &dest_height);
+
+    if (hardness < 1.0)
+    {
+      kernel_size =
+        gimp_brush_transform_blur_kernel_size (dest_width,
+                                               dest_height,
+                                               hardness);
+
+      gimp_brush_transform_adjust_hardness_matrix (dest_width, dest_height, kernel_size,
+                                                   &matrix);
+    }
+
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
@@ -637,10 +664,6 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
       GimpTempBuf *blur_src;
       GeglBuffer  *src_buffer;
       GeglBuffer  *dest_buffer;
-      gint         kernel_size =
-        gimp_brush_transform_blur_kernel_size (gimp_temp_buf_get_height (result),
-                                               gimp_temp_buf_get_width  (result),
-                                               hardness);
       gint         kernel_len  = kernel_size * kernel_size;
       gfloat       blur_kernel[kernel_len];
 
@@ -704,6 +727,20 @@ gimp_brush_transform_matrix (gdouble      width,
   gimp_matrix3_translate (matrix, center_x * scale_x, center_y * scale_y);
 }
 
+void
+gimp_brush_transform_adjust_hardness_matrix (gdouble      width,
+                                             gdouble      height,
+                                             gdouble      kernel_size,
+                                             GimpMatrix3 *matrix)
+{
+
+  gdouble       scale_x  = (width - 2 * kernel_size)/width;
+  gdouble       scale_y  = (height - 2 * kernel_size)/height;
+
+
+  gimp_matrix3_scale (matrix, scale_x, scale_y);
+  gimp_matrix3_translate (matrix, kernel_size, kernel_size);
+}
 
 /*  private functions  */
 
