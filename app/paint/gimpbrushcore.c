@@ -29,6 +29,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "core/gimpbrush.h"
+#include "core/gimpbrushgenerated.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpdynamicsoutput.h"
@@ -412,6 +413,12 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
                            _("No paint dynamics available for use with this tool."));
       return FALSE;
     }
+
+  if ((! GIMP_IS_BRUSH_GENERATED(core->main_brush)) &&
+      (core->hardness != gimp_brush_get_blur_hardness(core->main_brush)))
+  {
+    gimp_brush_flush_blur_caches(core->main_brush);
+  }
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {

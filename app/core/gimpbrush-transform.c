@@ -33,7 +33,7 @@
 #include "gimptempbuf.h"
 
 
-#define MAX_BLUR_KERNEL 15
+#define MAX_BLUR_KERNEL 50
 
 
 /*  local function prototypes  */

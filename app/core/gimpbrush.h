@@ -141,5 +141,7 @@ void                   gimp_brush_set_spacing        (GimpBrush        *brush,
 GimpVector2            gimp_brush_get_x_axis         (GimpBrush        *brush);
 GimpVector2            gimp_brush_get_y_axis         (GimpBrush        *brush);
 
+void                   gimp_brush_flush_blur_caches  (GimpBrush        *brush);
+gdouble                gimp_brush_get_blur_hardness  (GimpBrush        *brush);
 
 #endif /* __GIMP_BRUSH_H__ */

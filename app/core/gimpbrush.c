@@ -172,6 +172,8 @@ gimp_brush_init (GimpBrush *brush)
   brush->priv->x_axis.y =  0.0;
   brush->priv->y_axis.x =  0.0;
   brush->priv->y_axis.y = 15.0;
+
+  brush->priv->blur_hardness = 1.0;
 }
 
 static void
@@ -189,6 +191,17 @@ gimp_brush_finalize (GObject *object)
     {
       gimp_temp_buf_unref (brush->priv->pixmap);
       brush->priv->pixmap = NULL;
+    }
+  if (brush->priv->blured_mask)
+    {
+      gimp_temp_buf_unref (brush->priv->blured_mask);
+      brush->priv->blured_mask = NULL;
+    }
+
+  if (brush->priv->blured_pixmap)
+    {
+      gimp_temp_buf_unref (brush->priv->blured_pixmap);
+      brush->priv->blured_pixmap = NULL;
     }
 
   if (brush->priv->mask_cache)
@@ -415,6 +428,18 @@ gimp_brush_dirty (GimpData *data)
   if (brush->priv->boundary_cache)
     gimp_brush_cache_clear (brush->priv->boundary_cache);
 
+   if (brush->priv->blured_mask)
+    {
+      gimp_temp_buf_unref (brush->priv->blured_mask);
+      brush->priv->blured_mask = NULL;
+    }
+
+  if (brush->priv->blured_pixmap)
+    {
+      gimp_temp_buf_unref (brush->priv->blured_pixmap);
+      brush->priv->blured_pixmap = NULL;
+    }
+
   GIMP_DATA_CLASS (parent_class)->dirty (data);
 }
 
@@ -448,6 +473,18 @@ gimp_brush_real_end_use (GimpBrush *brush)
 
   g_object_unref (brush->priv->boundary_cache);
   brush->priv->boundary_cache = NULL;
+
+  if (brush->priv->blured_mask)
+    {
+      gimp_temp_buf_unref (brush->priv->blured_mask);
+      brush->priv->blured_mask = NULL;
+    }
+
+  if (brush->priv->blured_pixmap)
+    {
+      gimp_temp_buf_unref (brush->priv->blured_pixmap);
+      brush->priv->blured_pixmap = NULL;
+    }
 }
 
 static GimpBrush *
@@ -623,6 +660,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
   const GimpTempBuf *mask;
   gint               width;
   gint               height;
+  gdouble            effective_hardness = hardness;
 
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (scale > 0.0, NULL);
@@ -646,11 +684,28 @@ gimp_brush_transform_mask (GimpBrush *brush,
         }
       else
         {
+          /* This code makes sure that brushes using blur for hardness
+           * (all of them but generated) are blurred once and no more.
+           * It also makes hardnes dynamics not work for these brushes.
+           * This is intentional. Confoliving for each stamp is too expensive.*/
+          if (! brush->priv->blured_mask && ! GIMP_IS_BRUSH_GENERATED(brush)){
+             brush->priv->blured_mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
+                                                               1.0,
+                                                               1.0,
+                                                               0.0,
+                                                               hardness);
+             brush->priv->blur_hardness = hardness;
+          }
+
+          if (brush->priv->blured_mask) {
+            effective_hardness = 1.0; /*Hardness has already been applied*/
+          }
+
           mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
                                                                scale,
                                                                aspect_ratio,
                                                                angle,
-                                                               hardness);
+                                                               effective_hardness);
         }
 
       if (op)
@@ -684,7 +739,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
       gimp_brush_cache_add (brush->priv->mask_cache,
                             (gpointer) mask,
                             op, width, height,
-                            scale, aspect_ratio, angle, hardness);
+                            scale, aspect_ratio, angle, effective_hardness);
     }
 
   return mask;
@@ -701,6 +756,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
   const GimpTempBuf *pixmap;
   gint               width;
   gint               height;
+  gdouble            effective_hardness = hardness;
 
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
   g_return_val_if_fail (brush->priv->pixmap != NULL, NULL);
@@ -725,11 +781,25 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
         }
       else
         {
+         if (! brush->priv->blured_pixmap && ! GIMP_IS_BRUSH_GENERATED(brush))
+          {
+             brush->priv->blured_pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
+                                                                      1.0,
+                                                                      1.0,
+                                                                      0.0,
+                                                                      hardness);
+             brush->priv->blur_hardness = hardness;
+           }
+
+          if (brush->priv->blured_pixmap) {
+            effective_hardness = 1.0; /*Hardness has already been applied*/
+          }
+
           pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
                                                                    scale,
                                                                    aspect_ratio,
                                                                    angle,
-                                                                   hardness);
+                                                                   effective_hardness);
         }
 
       if (op)
@@ -762,7 +832,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
       gimp_brush_cache_add (brush->priv->pixmap_cache,
                             (gpointer) pixmap,
                             op, width, height,
-                            scale, aspect_ratio, angle, hardness);
+                            scale, aspect_ratio, angle, effective_hardness);
     }
 
   return pixmap;
@@ -824,6 +894,10 @@ gimp_brush_get_mask (GimpBrush *brush)
   g_return_val_if_fail (brush != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
 
+  if (brush->priv->blured_mask)
+    {
+      return brush->priv->blured_mask;
+    }
   return brush->priv->mask;
 }
 
@@ -833,14 +907,45 @@ gimp_brush_get_pixmap (GimpBrush *brush)
   g_return_val_if_fail (brush != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
 
+  if(brush->priv->blured_pixmap)
+    {
+      return brush->priv->blured_pixmap;
+    }
   return brush->priv->pixmap;
+}
+
+void
+gimp_brush_flush_blur_caches (GimpBrush *brush)
+{
+  if (brush->priv->blured_mask)
+    {
+      gimp_temp_buf_unref (brush->priv->blured_mask);
+      brush->priv->blured_mask = NULL;
+    }
+
+  if (brush->priv->blured_pixmap)
+    {
+      gimp_temp_buf_unref (brush->priv->blured_pixmap);
+      brush->priv->blured_pixmap = NULL;
+    }
+}
+
+gdouble
+gimp_brush_get_blur_hardness (GimpBrush *brush)
+{
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
+
+  return brush->priv->blur_hardness;
 }
 
 gint
 gimp_brush_get_width (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
-
+  if (brush->priv->blured_mask)
+    {
+      return gimp_temp_buf_get_width (brush->priv->blured_mask);
+    }
   return gimp_temp_buf_get_width (brush->priv->mask);
 }
 
@@ -849,6 +954,10 @@ gimp_brush_get_height (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
 
+  if (brush->priv->blured_mask)
+  {
+    return gimp_temp_buf_get_height (brush->priv->blured_mask);
+  }
   return gimp_temp_buf_get_height (brush->priv->mask);
 }
 
