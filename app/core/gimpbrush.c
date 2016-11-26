@@ -34,6 +34,7 @@
 #include "gimpbrush-transform.h"
 #include "gimpbrushcache.h"
 #include "gimpbrushgenerated.h"
+#include "gimpbrushpipe.h"
 #include "gimpmarshal.h"
 #include "gimptagged.h"
 #include "gimptempbuf.h"
@@ -688,18 +689,24 @@ gimp_brush_transform_mask (GimpBrush *brush,
            * (all of them but generated) are blurred once and no more.
            * It also makes hardnes dynamics not work for these brushes.
            * This is intentional. Confoliving for each stamp is too expensive.*/
-          if (! brush->priv->blured_mask && ! GIMP_IS_BRUSH_GENERATED(brush)){
-             brush->priv->blured_mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
-                                                               1.0,
-                                                               1.0,
-                                                               0.0,
-                                                               hardness);
-             brush->priv->blur_hardness = hardness;
-          }
+          if (! brush->priv->blured_mask &&
+             ! GIMP_IS_BRUSH_GENERATED(brush) &&
+             ! GIMP_IS_BRUSH_PIPE(brush) && /*Cant cache pipes. Sanely anway*/
+              hardness < 1.0 &&
+             ! brush->priv->pixmap) /*If we have a pixmap, dont touch mask*/
+            {
+               brush->priv->blured_mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
+                                                                 1.0,
+                                                                 1.0,
+                                                                 0.0,
+                                                                 hardness);
+               brush->priv->blur_hardness = hardness;
+            }
 
-          if (brush->priv->blured_mask) {
-            effective_hardness = 1.0; /*Hardness has already been applied*/
-          }
+          if (brush->priv->blured_mask || brush->priv->pixmap)
+            {
+              effective_hardness = 1.0; /*Hardness has already been applied*/
+            }
 
           mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
                                                                scale,
@@ -781,9 +788,12 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
         }
       else
         {
-         if (! brush->priv->blured_pixmap && ! GIMP_IS_BRUSH_GENERATED(brush))
+         if (! brush->priv->blured_pixmap &&
+             ! GIMP_IS_BRUSH_GENERATED(brush) &&
+             ! GIMP_IS_BRUSH_PIPE(brush) /*Cant cache pipes. Sanely anway*/
+             && hardness < 1.0)
           {
-             brush->priv->blured_pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
+             brush->priv->blured_pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
                                                                       1.0,
                                                                       1.0,
                                                                       0.0,
@@ -946,6 +956,10 @@ gimp_brush_get_width (GimpBrush *brush)
     {
       return gimp_temp_buf_get_width (brush->priv->blured_mask);
     }
+  if (brush->priv->blured_pixmap)
+    {
+      return gimp_temp_buf_get_width (brush->priv->blured_pixmap);
+    }
   return gimp_temp_buf_get_width (brush->priv->mask);
 }
 
@@ -957,6 +971,11 @@ gimp_brush_get_height (GimpBrush *brush)
   if (brush->priv->blured_mask)
   {
     return gimp_temp_buf_get_height (brush->priv->blured_mask);
+  }
+
+  if (brush->priv->blured_pixmap)
+  {
+    return gimp_temp_buf_get_height (brush->priv->blured_pixmap);
   }
   return gimp_temp_buf_get_height (brush->priv->mask);
 }

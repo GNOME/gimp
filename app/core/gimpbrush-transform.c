@@ -509,9 +509,6 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
         gimp_brush_transform_blur_kernel_size (dest_width,
                                                dest_height,
                                                hardness);
-
-      gimp_brush_transform_adjust_hardness_matrix (dest_width, dest_height, kernel_size,
-                                                   &matrix);
     }
 
   gimp_matrix3_translate (&matrix, -x, -y);
