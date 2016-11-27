@@ -690,20 +690,19 @@ gimp_brush_transform_mask (GimpBrush *brush,
            * It also makes hardnes dynamics not work for these brushes.
            * This is intentional. Confoliving for each stamp is too expensive.*/
           if (! brush->priv->blured_mask &&
-             ! GIMP_IS_BRUSH_GENERATED(brush) &&
-             ! GIMP_IS_BRUSH_PIPE(brush) && /*Cant cache pipes. Sanely anway*/
-              hardness < 1.0 &&
-             ! brush->priv->pixmap) /*If we have a pixmap, dont touch mask*/
+              ! GIMP_IS_BRUSH_GENERATED(brush) &&
+              ! GIMP_IS_BRUSH_PIPE(brush) && /*Cant cache pipes. Sanely anway*/
+              hardness < 1.0)
             {
                brush->priv->blured_mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
                                                                  1.0,
-                                                                 1.0,
+                                                                 0.0,
                                                                  0.0,
                                                                  hardness);
                brush->priv->blur_hardness = hardness;
             }
 
-          if (brush->priv->blured_mask || brush->priv->pixmap)
+          if (brush->priv->blured_mask)
             {
               effective_hardness = 1.0; /*Hardness has already been applied*/
             }
@@ -795,7 +794,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
           {
              brush->priv->blured_pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
                                                                       1.0,
-                                                                      1.0,
+                                                                      0.0,
                                                                       0.0,
                                                                       hardness);
              brush->priv->blur_hardness = hardness;
