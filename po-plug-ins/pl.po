@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 21:39+0100\n"
-"PO-Revision-Date: 2016-11-15 21:40+0100\n"
+"POT-Creation-Date: 2016-11-27 17:59+0100\n"
+"PO-Revision-Date: 2016-11-27 18:00+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -339,7 +339,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-png.c:1050 ../plug-ins/common/file-pnm.c:671
 #: ../plug-ins/common/file-raw-data.c:984 ../plug-ins/common/file-sunras.c:1049
 #: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-xbm.c:904
-#: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:257
+#: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:258
 #: ../plug-ins/common/tile.c:354 ../plug-ins/file-bmp/bmp-load.c:734
 #: ../plug-ins/file-exr/file-exr.c:258 ../plug-ins/file-faxg3/faxg3.c:525
 #: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
@@ -1847,7 +1847,7 @@ msgstr "Usunięcie pasków"
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3495 ../plug-ins/common/file-ps.c:3700
 #: ../plug-ins/common/file-raw-data.c:1464
-#: ../plug-ins/common/smooth-palette.c:436 ../plug-ins/common/tile.c:464
+#: ../plug-ins/common/smooth-palette.c:453 ../plug-ins/common/tile.c:464
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
 #: ../plug-ins/print/print-page-layout.c:282
@@ -2565,7 +2565,7 @@ msgstr "Szerokość każdej komórki. Liczba lub procent."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3508
 #: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1480
-#: ../plug-ins/common/film.c:1005 ../plug-ins/common/smooth-palette.c:441
+#: ../plug-ins/common/film.c:1005 ../plug-ins/common/smooth-palette.c:458
 #: ../plug-ins/common/tile.c:468 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:284
@@ -2772,7 +2772,7 @@ msgstr "Domyślna przerwa między klatkami:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1546
-#: ../plug-ins/file-webp/file-webp-dialog.c:248
+#: ../plug-ins/file-webp/file-webp-dialog.c:306
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:7
 msgid "milliseconds"
 msgstr "ms"
@@ -4004,7 +4004,7 @@ msgstr "Komentarz jest ograniczony do %d znaków."
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1463
 #: ../plug-ins/file-webp/file-webp-save.c:173
-#: ../plug-ins/file-webp/file-webp-save.c:426
+#: ../plug-ins/file-webp/file-webp-save.c:506
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
@@ -5313,11 +5313,11 @@ msgstr "Wygładzona pale_ta…"
 msgid "Deriving smooth palette"
 msgstr "Obliczanie wygładzonej palety"
 
-#: ../plug-ins/common/smooth-palette.c:412
+#: ../plug-ins/common/smooth-palette.c:429
 msgid "Smooth Palette"
 msgstr "Wygładzona paleta"
 
-#: ../plug-ins/common/smooth-palette.c:456
+#: ../plug-ins/common/smooth-palette.c:473
 msgid "_Search depth:"
 msgstr "_Głębokość przeszukiwań:"
 
@@ -6298,8 +6298,8 @@ msgstr ""
 #. Advanced Options
 #. Advanced options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
-#: ../plug-ins/file-webp/file-webp-dialog.c:178
-#: ../plug-ins/file-webp/file-webp-dialog.c:265
+#: ../plug-ins/file-webp/file-webp-dialog.c:194
+#: ../plug-ins/file-webp/file-webp-dialog.c:323
 msgid "_Advanced Options"
 msgstr "Ustawienia za_awansowane"
 
@@ -6664,7 +6664,7 @@ msgstr "_Przyrostowy"
 
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
-#: ../plug-ins/file-webp/file-webp-dialog.c:282
+#: ../plug-ins/file-webp/file-webp-dialog.c:340
 msgid "Save _Exif data"
 msgstr "Zapisanie danych _Exif"
 
@@ -6674,7 +6674,7 @@ msgstr "Zapisanie _miniatury"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
-#: ../plug-ins/file-webp/file-webp-dialog.c:292
+#: ../plug-ins/file-webp/file-webp-dialog.c:350
 msgid "Save _XMP data"
 msgstr "Zapisanie danych _XMP"
 
@@ -7036,61 +7036,71 @@ msgstr "Faks CCITT Group _3"
 msgid "CCITT Group _4 fax"
 msgstr "Faks CCITT Group _4"
 
-#: ../plug-ins/file-webp/file-webp.c:99 ../plug-ins/file-webp/file-webp.c:120
+#: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
 msgid "WebP image"
 msgstr "Obraz WebP"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:71
+#: ../plug-ins/file-webp/file-webp-dialog.c:83
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:88
+#: ../plug-ins/file-webp/file-webp-dialog.c:100
 msgid "Lossless"
 msgstr "Bezstratne"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:104
+#: ../plug-ins/file-webp/file-webp-dialog.c:116
 msgid "Image quality:"
 msgstr "Jakość obrazu:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:112
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
 msgid "Image quality"
 msgstr "Jakość obrazu"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:123
+#: ../plug-ins/file-webp/file-webp-dialog.c:135
 msgid "Alpha quality:"
 msgstr "Jakość alfy:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:131
+#: ../plug-ins/file-webp/file-webp-dialog.c:143
 msgid "Alpha channel quality"
 msgstr "Jakość kanału alfa"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:156
+#: ../plug-ins/file-webp/file-webp-dialog.c:168
 msgid "Source type:"
 msgstr "Typ źródła:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:159
+#: ../plug-ins/file-webp/file-webp-dialog.c:171
 msgid "WebP encoder \"preset\""
 msgstr "Ustawienia kodera WebP"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:185
+#: ../plug-ins/file-webp/file-webp-dialog.c:201
 msgid "As A_nimation"
 msgstr "Jako a_nimacja"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:214
+#: ../plug-ins/file-webp/file-webp-dialog.c:230
 msgid "Loop forever"
 msgstr "Powtarzanie w nieskończoność"
 
+#. label for 'max key-frame distance' adjustment
+#: ../plug-ins/file-webp/file-webp-dialog.c:247
+msgid "Max distance between key-frames:"
+msgstr "Maksymalna odległość między klatkami kluczowymi:"
+
+#. minimize-size checkbox
+#: ../plug-ins/file-webp/file-webp-dialog.c:265
+msgid "Minimize output size (slower)"
+msgstr "Minimalizowanie rozmiaru wyjściowego (wolniejsze)"
+
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:230
+#: ../plug-ins/file-webp/file-webp-dialog.c:288
 msgid "Delay between frames where unspecified:"
 msgstr "Opóźnienie między klatkami, jeśli nie podano:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:253
+#: ../plug-ins/file-webp/file-webp-dialog.c:311
 msgid "Use delay entered above for all frames"
 msgstr "Użycie opóźnienia podanego powyżej dla wszystkich klatek"
 
@@ -7168,12 +7178,12 @@ msgid "unknown error"
 msgstr "nieznany błąd"
 
 #: ../plug-ins/file-webp/file-webp-save.c:181
-#: ../plug-ins/file-webp/file-webp-save.c:434
+#: ../plug-ins/file-webp/file-webp-save.c:514
 #, c-format
 msgid "Unable to open '%s' for writing"
 msgstr "Nie można otworzyć pliku „%s” do zapisania"
 
-#: ../plug-ins/file-webp/file-webp-save.c:247
+#: ../plug-ins/file-webp/file-webp-save.c:253
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Błąd WebP: „%s”"

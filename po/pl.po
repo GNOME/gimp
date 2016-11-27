@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-20 18:08+0100\n"
-"PO-Revision-Date: 2016-11-20 18:09+0100\n"
+"POT-Creation-Date: 2016-11-27 17:59+0100\n"
+"PO-Revision-Date: 2016-11-27 18:00+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -497,7 +497,7 @@ msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
 #: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:307
-#: ../app/gui/gui.c:462
+#: ../app/gui/gui.c:473
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
@@ -1212,7 +1212,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1998
-#: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
+#: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:783 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
@@ -5925,7 +5925,7 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:139
 #: ../app/actions/text-tool-commands.c:209 ../app/config/gimpconfig-file.c:71
-#: ../app/core/gimppalette-import.c:506 ../app/plug-in/gimpenvirontable.c:289
+#: ../app/core/gimppalette-import.c:510 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:233
 #: ../app/tools/gimpfiltertool-settings.c:168
 #: ../app/widgets/gimptextbuffer.c:1647
@@ -7366,104 +7366,104 @@ msgstr "Ekran %s"
 msgid "Move this window to screen %s"
 msgstr "Przenieś to okno na ekran %s"
 
-#: ../app/actions/windows-actions.c:97
+#: ../app/actions/windows-actions.c:98
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Okna"
 
-#: ../app/actions/windows-actions.c:99
+#: ../app/actions/windows-actions.c:100
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Ostatnio zamknięte doki"
 
-#: ../app/actions/windows-actions.c:101
+#: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "_Dokowalne okna dialogowe"
 
-#: ../app/actions/windows-actions.c:104
+#: ../app/actions/windows-actions.c:105
 msgctxt "windows-action"
 msgid "Next Image"
 msgstr "Następny obraz"
 
-#: ../app/actions/windows-actions.c:105
+#: ../app/actions/windows-actions.c:106
 msgctxt "windows-action"
 msgid "Switch to the next image"
 msgstr "Przełącza na następny obraz"
 
-#: ../app/actions/windows-actions.c:110
+#: ../app/actions/windows-actions.c:111
 msgctxt "windows-action"
 msgid "Previous Image"
 msgstr "Poprzedni obraz"
 
-#: ../app/actions/windows-actions.c:111
+#: ../app/actions/windows-actions.c:112
 msgctxt "windows-action"
 msgid "Switch to the previous image"
 msgstr "Przełącza na poprzedni obraz"
 
-#: ../app/actions/windows-actions.c:116
+#: ../app/actions/windows-actions.c:117
 msgctxt "windows-action"
 msgid "_Tabs Position"
 msgstr "Położenie _kart"
 
-#: ../app/actions/windows-actions.c:122
+#: ../app/actions/windows-actions.c:123
 msgctxt "windows-action"
 msgid "Hide Docks"
 msgstr "Ukryj doki"
 
-#: ../app/actions/windows-actions.c:123
+#: ../app/actions/windows-actions.c:124
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
 "Ukrywa doki oraz inne okna dialogowe, zostawiając tylko okna z obrazem."
 
-#: ../app/actions/windows-actions.c:129
+#: ../app/actions/windows-actions.c:130
 msgctxt "windows-action"
 msgid "Single-Window Mode"
 msgstr "Tryb jednego okna"
 
-#: ../app/actions/windows-actions.c:130
+#: ../app/actions/windows-actions.c:131
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
 msgstr "Kiedy jest włączone, program GIMP działa w trybie jednego okna."
 
-#: ../app/actions/windows-actions.c:139
+#: ../app/actions/windows-actions.c:140
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
 msgstr "_Góra"
 
-#: ../app/actions/windows-actions.c:140
+#: ../app/actions/windows-actions.c:141
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
 msgstr "Umieszcza karty na górze"
 
-#: ../app/actions/windows-actions.c:144
+#: ../app/actions/windows-actions.c:145
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
 msgstr "_Dół"
 
-#: ../app/actions/windows-actions.c:145
+#: ../app/actions/windows-actions.c:146
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
 msgstr "Umieszcza karty na dole"
 
-#: ../app/actions/windows-actions.c:149
+#: ../app/actions/windows-actions.c:150
 msgctxt "windows-tabs-position-action"
 msgid "_Left"
 msgstr "_Lewo"
 
-#: ../app/actions/windows-actions.c:150
+#: ../app/actions/windows-actions.c:151
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
 msgstr "Umieszcza karty po lewej stronie"
 
-#: ../app/actions/windows-actions.c:154
+#: ../app/actions/windows-actions.c:155
 msgctxt "windows-tabs-position-action"
 msgid "_Right"
 msgstr "_Prawo"
 
-#: ../app/actions/windows-actions.c:155
+#: ../app/actions/windows-actions.c:156
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
 msgstr "Umieszcza karty po prawej stronie"
@@ -9602,7 +9602,7 @@ msgstr ""
 "Krytyczny błąd podczas przetwarzania pliku z pędzlami: nie można dekodować "
 "wersji formatu abr %d."
 
-#: ../app/core/gimpbrush.c:149 ../app/paint/gimppaintoptions.c:219
+#: ../app/core/gimpbrush.c:150 ../app/paint/gimppaintoptions.c:219
 msgid "Brush Spacing"
 msgstr "Odstępy pędzla"
 
@@ -10885,12 +10885,19 @@ msgstr "Plik z pędzlem programu MyPaint jest za duży, pomijanie."
 msgid "Failed to deserialize MyPaint brush."
 msgstr "Deserializacja pędzla programu MyPaint się nie powiodła."
 
-#: ../app/core/gimppalette-import.c:419
+#. TRANSLATORS: the "%s" is an item title and "%u" is the number of
+#. occurrences for this item.
+#: ../app/core/gimppalette-import.c:210
+#, c-format
+msgid "%s (occurs %u)"
+msgstr "%s (wystąpienia: %u)"
+
+#: ../app/core/gimppalette-import.c:423
 #, c-format
 msgid "Index %d"
 msgstr "Indeks %d"
 
-#: ../app/core/gimppalette-import.c:541
+#: ../app/core/gimppalette-import.c:545
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Nieznany typ pliku palety: %s"
@@ -11710,7 +11717,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 
-#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:166
+#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:177
 #: ../app/gui/gui-message.c:157
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
@@ -14179,7 +14186,7 @@ msgstr "(niezmodyfikowany)"
 
 #: ../app/display/gimpdisplayshell-title.c:341
 #: ../app/display/gimpdisplayshell-title.c:350
-#: ../app/widgets/gimpactiongroup.c:941
+#: ../app/widgets/gimpactiongroup.c:971
 #: ../app/widgets/gimpbuffersourcebox.c:171
 #: ../app/widgets/gimpbuffersourcebox.c:309
 msgid "(none)"
@@ -14542,14 +14549,14 @@ msgstr ""
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:210
+#: ../app/gui/gui.c:221
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:506
+#: ../app/gui/gui.c:517
 msgid "Documents"
 msgstr "Dokumenty"
 
@@ -14574,11 +14581,11 @@ msgstr "Tylko ruch"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/paint/gimpbrushcore.c:405
+#: ../app/paint/gimpbrushcore.c:406
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
 
-#: ../app/paint/gimpbrushcore.c:412
+#: ../app/paint/gimpbrushcore.c:413
 msgid "No paint dynamics available for use with this tool."
 msgstr "Brak dostępnych dynamik rysowania dla tego narzędzia."
 
@@ -15922,7 +15929,7 @@ msgstr ""
 "Pchnąć w tę łódź jeża\n"
 "lub ośm skrzyń fig."
 
-#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1405
+#: ../app/text/gimptext-compat.c:106 ../app/tools/gimptexttool.c:1409
 msgid "Add Text Layer"
 msgstr "Dodanie warstwy tekstowej"
 
@@ -18280,31 +18287,31 @@ msgstr "Pole:"
 msgid "Language:"
 msgstr "Język:"
 
-#: ../app/tools/gimptexttool.c:191
+#: ../app/tools/gimptexttool.c:192
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/tools/gimptexttool.c:192
+#: ../app/tools/gimptexttool.c:193
 msgid "Text Tool: Create or edit text layers"
 msgstr "Tekst: tworzy i modyfikuje warstwy tekstu"
 
-#: ../app/tools/gimptexttool.c:193
+#: ../app/tools/gimptexttool.c:194
 msgid "Te_xt"
 msgstr "_Tekst"
 
-#: ../app/tools/gimptexttool.c:1014
+#: ../app/tools/gimptexttool.c:1018
 msgid "Reshape Text Layer"
 msgstr "Zmiana kształtu warstwy tekstowej"
 
-#: ../app/tools/gimptexttool.c:1516 ../app/tools/gimptexttool.c:1519
+#: ../app/tools/gimptexttool.c:1520 ../app/tools/gimptexttool.c:1523
 msgid "Confirm Text Editing"
 msgstr "Potwierdzenie modyfikacji tekstu"
 
-#: ../app/tools/gimptexttool.c:1523
+#: ../app/tools/gimptexttool.c:1527
 msgid "Create _New Layer"
 msgstr "Utwórz _nową warstwę"
 
-#: ../app/tools/gimptexttool.c:1547
+#: ../app/tools/gimptexttool.c:1551
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -18319,7 +18326,7 @@ msgstr ""
 "Możliwe jest zmodyfikowanie warstwy lub utworzenie nowej warstwy tekstowej "
 "na podstawie atrybutów obecnej."
 
-#: ../app/tools/gimptexttool-editor.c:1293
+#: ../app/tools/gimptexttool-editor.c:1290
 msgid "GIMP Text Editor"
 msgstr "Edytor tekstowy programu GIMP"
 
@@ -19067,7 +19074,7 @@ msgstr "Zaimportowanie ścieżek z „%s” się nie powiodło: %s"
 msgid "_Search:"
 msgstr "Wy_szukiwanie:"
 
-#: ../app/widgets/gimpactiongroup.c:938
+#: ../app/widgets/gimpactiongroup.c:968
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -19085,7 +19092,7 @@ msgstr "Skrót"
 msgid "Name"
 msgstr "Nazwa"
 
-#: ../app/widgets/gimpactionview.c:632 ../app/widgets/gimpactionview.c:861
+#: ../app/widgets/gimpactionview.c:632 ../app/widgets/gimpactionview.c:872
 msgid "Changing shortcut failed."
 msgstr "Zmiana skrótu się nie powiodła."
 
@@ -19114,11 +19121,18 @@ msgstr ""
 msgid "Invalid shortcut."
 msgstr "Nieprawidłowy skrót."
 
-#: ../app/widgets/gimpactionview.c:796 ../app/widgets/gimpactionview.c:889
+#: ../app/widgets/gimpactionview.c:796 ../app/widgets/gimpactionview.c:900
 msgid "F1 cannot be remapped."
 msgstr "Nie można zmieniać klawisza F1."
 
-#: ../app/widgets/gimpactionview.c:897
+#: ../app/widgets/gimpactionview.c:804
+#, c-format
+msgid "Alt+%d is used to switch to display %d and cannot be remapped."
+msgstr ""
+"Alt+%d jest używane do przełączania na %d. ekran, więc nie może zostać "
+"zmienione."
+
+#: ../app/widgets/gimpactionview.c:908
 msgid "Removing shortcut failed."
 msgstr "Usunięcie skrótu się nie powiodło."
 
@@ -19364,7 +19378,7 @@ msgid "Keyboard Events"
 msgstr "Zdarzenia klawiatury"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:231
-#: ../app/widgets/gimpcontrollermouse.c:245
+#: ../app/widgets/gimpcontrollermouse.c:252
 #: ../app/widgets/gimpcontrollerwheel.c:230
 msgid "Ready"
 msgstr "Gotowe"
@@ -19463,66 +19477,66 @@ msgstr ""
 msgid "Configure Input Controller"
 msgstr "Konfiguracja urządzenia sterującego"
 
-#: ../app/widgets/gimpcontrollermouse.c:71
-#: ../app/widgets/gimpcontrollermouse.c:74
-#: ../app/widgets/gimpcontrollermouse.c:77
-#: ../app/widgets/gimpcontrollermouse.c:80
-#: ../app/widgets/gimpcontrollermouse.c:83
-#: ../app/widgets/gimpcontrollermouse.c:86
-#: ../app/widgets/gimpcontrollermouse.c:89
-#: ../app/widgets/gimpcontrollermouse.c:92
+#: ../app/widgets/gimpcontrollermouse.c:70
+#: ../app/widgets/gimpcontrollermouse.c:73
+#: ../app/widgets/gimpcontrollermouse.c:76
+#: ../app/widgets/gimpcontrollermouse.c:79
+#: ../app/widgets/gimpcontrollermouse.c:82
+#: ../app/widgets/gimpcontrollermouse.c:85
+#: ../app/widgets/gimpcontrollermouse.c:88
+#: ../app/widgets/gimpcontrollermouse.c:91
 msgid "Button 8"
 msgstr "8. przycisk"
 
-#: ../app/widgets/gimpcontrollermouse.c:96
-#: ../app/widgets/gimpcontrollermouse.c:99
-#: ../app/widgets/gimpcontrollermouse.c:102
-#: ../app/widgets/gimpcontrollermouse.c:105
-#: ../app/widgets/gimpcontrollermouse.c:108
-#: ../app/widgets/gimpcontrollermouse.c:111
-#: ../app/widgets/gimpcontrollermouse.c:114
-#: ../app/widgets/gimpcontrollermouse.c:117
+#: ../app/widgets/gimpcontrollermouse.c:95
+#: ../app/widgets/gimpcontrollermouse.c:98
+#: ../app/widgets/gimpcontrollermouse.c:101
+#: ../app/widgets/gimpcontrollermouse.c:104
+#: ../app/widgets/gimpcontrollermouse.c:107
+#: ../app/widgets/gimpcontrollermouse.c:110
+#: ../app/widgets/gimpcontrollermouse.c:113
+#: ../app/widgets/gimpcontrollermouse.c:116
 msgid "Button 9"
 msgstr "9. przycisk"
 
-#: ../app/widgets/gimpcontrollermouse.c:121
-#: ../app/widgets/gimpcontrollermouse.c:124
-#: ../app/widgets/gimpcontrollermouse.c:127
-#: ../app/widgets/gimpcontrollermouse.c:130
-#: ../app/widgets/gimpcontrollermouse.c:133
-#: ../app/widgets/gimpcontrollermouse.c:136
-#: ../app/widgets/gimpcontrollermouse.c:139
-#: ../app/widgets/gimpcontrollermouse.c:142
+#: ../app/widgets/gimpcontrollermouse.c:120
+#: ../app/widgets/gimpcontrollermouse.c:123
+#: ../app/widgets/gimpcontrollermouse.c:126
+#: ../app/widgets/gimpcontrollermouse.c:129
+#: ../app/widgets/gimpcontrollermouse.c:132
+#: ../app/widgets/gimpcontrollermouse.c:135
+#: ../app/widgets/gimpcontrollermouse.c:138
+#: ../app/widgets/gimpcontrollermouse.c:141
 msgid "Button 10"
 msgstr "10. przycisk"
 
-#: ../app/widgets/gimpcontrollermouse.c:146
-#: ../app/widgets/gimpcontrollermouse.c:149
-#: ../app/widgets/gimpcontrollermouse.c:152
-#: ../app/widgets/gimpcontrollermouse.c:155
-#: ../app/widgets/gimpcontrollermouse.c:158
-#: ../app/widgets/gimpcontrollermouse.c:161
-#: ../app/widgets/gimpcontrollermouse.c:164
-#: ../app/widgets/gimpcontrollermouse.c:167
+#: ../app/widgets/gimpcontrollermouse.c:145
+#: ../app/widgets/gimpcontrollermouse.c:148
+#: ../app/widgets/gimpcontrollermouse.c:151
+#: ../app/widgets/gimpcontrollermouse.c:154
+#: ../app/widgets/gimpcontrollermouse.c:157
+#: ../app/widgets/gimpcontrollermouse.c:160
+#: ../app/widgets/gimpcontrollermouse.c:163
+#: ../app/widgets/gimpcontrollermouse.c:166
 msgid "Button 11"
 msgstr "11. przycisk"
 
-#: ../app/widgets/gimpcontrollermouse.c:171
-#: ../app/widgets/gimpcontrollermouse.c:174
-#: ../app/widgets/gimpcontrollermouse.c:177
-#: ../app/widgets/gimpcontrollermouse.c:180
-#: ../app/widgets/gimpcontrollermouse.c:183
-#: ../app/widgets/gimpcontrollermouse.c:186
-#: ../app/widgets/gimpcontrollermouse.c:189
-#: ../app/widgets/gimpcontrollermouse.c:192
+#: ../app/widgets/gimpcontrollermouse.c:170
+#: ../app/widgets/gimpcontrollermouse.c:173
+#: ../app/widgets/gimpcontrollermouse.c:176
+#: ../app/widgets/gimpcontrollermouse.c:179
+#: ../app/widgets/gimpcontrollermouse.c:182
+#: ../app/widgets/gimpcontrollermouse.c:185
+#: ../app/widgets/gimpcontrollermouse.c:188
+#: ../app/widgets/gimpcontrollermouse.c:191
 msgid "Button 12"
 msgstr "12. przycisk"
 
-#: ../app/widgets/gimpcontrollermouse.c:204
+#: ../app/widgets/gimpcontrollermouse.c:203
 msgid "Mouse Buttons"
 msgstr "Przyciski myszy"
 
-#: ../app/widgets/gimpcontrollermouse.c:244
+#: ../app/widgets/gimpcontrollermouse.c:251
 msgid "Mouse Button Events"
 msgstr "Zdarzenia przycisków myszy"
 
@@ -19724,11 +19738,11 @@ msgid "Configure this tab"
 msgstr "Konfiguruje tę kartę"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:383
+#: ../app/widgets/gimpdockwindow.c:387
 msgid "Auto"
 msgstr "Autom."
 
-#: ../app/widgets/gimpdockwindow.c:394
+#: ../app/widgets/gimpdockwindow.c:398
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
