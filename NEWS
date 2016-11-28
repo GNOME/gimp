@@ -16,105 +16,120 @@ Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 Core:
 
   - New clipboard implementation allows copying/pasting layers and
-    layer groups
+    layer groups.
   - Color tags simplify managing large projects with a lot of layers
-    and layer groups
+    and layer groups.
   - The Mouse Pointer dialog and colors applied to images are
-    color-managed now
-  - Gamma and precision selectors for newly created images
+    color-managed now.
+  - Gamma and precision selectors for newly created images.
   - Never dither when converting to a higher bit depth, or to anything
     more than 16 bits, don't offer dithering options in these cases
-  - Default to linear when converting to 16-bit float
+  - Default to linear when converting to 16-bit float.
   - Pre-initialize some babl-based pixel format conversion routines
     at the start-up to decrease the initial lazy intialization cost
-    for some interactions
+    for some interactions.
 
 GUI:
 
   - Easily add or remove layer masks by clicking either the layer
-    preview or a new button in the Layers dialog
+    preview or a new button in the Layers dialog.
   - Enhance the Layer Attributes dialog to provide the single UI for
     setting layer's name, blending mode, opacity, and offset,
     toggling visibility, link status, various locks, color tags.
   - Add a Save As button to the “Quit GIMP” dialog and raise images
     on click for easy checks.
-  - Allow to choose fill color when resizing layers and images
+  - Allow to choose fill color when resizing layers and images.
   - Quick Mask and Channel Attributes dialogs use the new spinscale
-    widget for the  mask opacity slider
-  - Enable grid views of dynamics and tool presets
-  - Allow to zoom with middle mouse button + control + drag up/down
+    widget for the  mask opacity slider.
+  - Enable grid views of dynamics and tool presets.
+  - Allow to zoom with middle mouse button + control + drag up/down.
   - For all paint tools, when switching to the color picker mode,
     don't rely on the exact modifier being pressed or released. Instead,
     check if only the right modifier is pressed after *each* modifier
-    change, and switch to color picking if it is
+    change, and switch to color picking if it is.
+  - On startup, GIMP checks for duplicate accelerators in menus, and
+    removes duplicates.
   - Standard (Freedesktop) and GTK+ icons can now be set by the icon
     theme for a fully consistent style.
-  - Many new icons
+  - Many new icons.
 
 Configurability:
 
-  - Remember settings of many dialogs across sessions
+  - Remember settings of many dialogs across sessions.
   - New Interface / Dialog Defaults page in the Preferences dialog to
-    control defaults values of various dialogs
+    control defaults values of various dialogs.
   - Settings on some individual pages of the Preferences dialog can be
-    reset separately now
+    reset separately now.
   - Vertical scrollbar added to keep the height of the Preferences
-    dialog fitting small displays
+    dialog fitting small displays.
   - Allow mouse to optionally configure tablet devices
+  - Allow creating shortcuts containing the Cmd key + mouse wheel events.
+  - Default to 300ppi and 1920x1080px for new documents.
+  - Do not allow Alt+[0-9] shortcuts, they are typically used for
+    display switching.
 
 Tools:
 
   - The Move tool now shows relative coordinates when moving guides
-    and sample points
+    and sample points.
   - Performance of the Fuzzy Select and the Bucket Fill tool has been
-    improved
+    improved.
   - The Warp Transform tool now uses the linear sampler to ensure
-    crisp lines after an erase
+    crisp lines after an erase.
   - Select by Color and Color Picker tools work correctly in color
-    spaces other than sRGB now
+    spaces other than sRGB now.
   - Uncommitted selection by the Intelligent Scissors tool is not
     discarded on tool change anymore.
+  - GIMP now checks, whether the first and the last isegments are
+    distinct before closing the curve.
 
 Painting:
 
   - Rulers, scrollbars, and the Navigation dialog follow canvas
-    rotation now
-  - Canvas rotation is snappier in certain cases now
+    rotation now.
+  - Canvas rotation is snappier in certain cases now.
+  - For bitmap brushes, GIMP now caches hardness and disables dynamic
+    change of hardness to improve painting performance. Botmap brushes
+    also don't get clipped anymore, when hardness is less than 100.
 
 File Formats
 
   - Add native WebP loader/exporter with support for ICC profiles,
-    animation, metadata
+    animation, metadata.
   - The TIFF loader will not generate warnings about private tags
-    anymore
-  - Handle linear gamma PNG files correctly
+    anymore.
+  - Handle linear gamma PNG files correctly.
   - Load PSD files with layers which contain additional information
-    with a length that is not divisible by 4
+    with a length that is not divisible by 4.
+
+Plug-ins
+
+  - Port smooth-palette to GEGL.
 
 Color Palettes
 
   - Merge Palettes command is available for multiple selected color
-    palettes now
+    palettes now.
 
 PDB:
 
-  - Rename *-paste-as-new to *-paste-as-new-image
+  - Rename *-paste-as-new to *-paste-as-new-image.
 
 Build:
 
   - Depends on LCMS2.7+ now, because earlier LCMS2 releases caused
-    problems with certain GIMP blend modes
+    problems with certain GIMP blend modes.
   - Depends on libpng 1.6.25+ to avoid warnings about known incorrect
-    sRGB profiles, also avoid various vulnerabilities
+    sRGB profiles, also avoid various vulnerabilities.
 
 OS-specific changes:
 
-  - Help browser launches on OS X now
+  - Help browser launches on macOS now.
 
 Bugs:
 
-  - Overall 60 bugs have been fixed or partially addressed since
-    GIMP 2.9.4
+  - Overall 79 bugs have been fixed or partially addressed since
+    GIMP 2.9.4.
 
 Translations:
 
