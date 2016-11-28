@@ -9487,27 +9487,27 @@ msgstr "Нет текстур, доступных для этой операци
 #: ../app/core/gimpbrush-load.c:173
 #, c-format
 msgid "Fatal parse error in brush file: Width = 0."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': ширина = 0."
+msgstr "Неисправимая ошибка разбора файла кисти: ширина = 0."
 
 #: ../app/core/gimpbrush-load.c:180
 #, c-format
 msgid "Fatal parse error in brush file: Height = 0."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': высота = 0."
+msgstr "Неисправимая ошибка разбора файла кисти: высота = 0."
 
 #: ../app/core/gimpbrush-load.c:187
 #, c-format
 msgid "Fatal parse error in brush file: Bytes = 0."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': байтов = 0."
+msgstr "Неисправимая ошибка разбора файла кисти : байтов = 0."
 
 #: ../app/core/gimpbrush-load.c:212
 #, c-format
 msgid "Fatal parse error in brush file: Unknown depth %d."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная глубина %d."
+msgstr "Неисправимая ошибка разбора файла кисти: неизвестная глубина %d."
 
 #: ../app/core/gimpbrush-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file: Unknown version %d."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная версия %d."
+msgstr "Неисправимая ошибка разбора файла кисти: неизвестная версия %d."
 
 #: ../app/core/gimpbrush-load.c:245 ../app/core/gimpbrushgenerated-load.c:125
 #: ../app/core/gimpbrushpipe-load.c:75
@@ -9530,7 +9530,7 @@ msgid ""
 "This might be an obsolete GIMP brush file, try loading it as image and save "
 "it again."
 msgstr ""
-"Неисправимая ошибка разбора файла кисти '%s':\n"
+"Неисправимая ошибка разбора файла кисти:\n"
 "Неподдерживаемая глубина цвета кисти %d\n"
 "Кисти GIMP должны быть в режиме RGBA или градации серого.\n"
 "Вероятно, это слишком старая версия кисти GIMP, попробуйте\n"
@@ -9543,7 +9543,7 @@ msgid ""
 "Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Неисправимая ошибка разбора файла кисти '%s':\n"
+"Неисправимая ошибка разбора файла кисти:\n"
 "Неподдерживаемая глубина цвета кисти %d\n"
 "Кисти GIMP должны быть в режиме RGBA или градации серого."
 
@@ -9556,20 +9556,20 @@ msgstr "Невозможно прочитать формат ABR версии %d
 #, c-format
 msgid "Fatal parse error in brush file: Wide brushes are not supported."
 msgstr ""
-"Неисправимая ошибка разбора файла кисти '%s': широкие кисти не "
+"Неисправимая ошибка разбора файла кисти: широкие кисти не "
 "поддерживаются."
 
 #: ../app/core/gimpbrush-load.c:785
 msgid "Fatal parse error in brush file: File appears truncated: "
 msgstr ""
-"Неисправимая ошибка разбора файла кисти '%s': файл, вероятно, оборван: "
+"Неисправимая ошибка разбора файла кисти: файл, вероятно, оборван: "
 
 #: ../app/core/gimpbrush-load.c:931
 #, c-format
 msgid ""
 "Fatal parse error in brush file: Unable to decode abr format version %d."
 msgstr ""
-"Неисправимая ошибка разбора файла кисти '%s': неизвестная версия формата abr "
+"Неисправимая ошибка разбора файла кисти: неизвестная версия формата abr "
 "'%d'."
 
 #: ../app/core/gimpbrush.c:149 ../app/paint/gimppaintoptions.c:219
