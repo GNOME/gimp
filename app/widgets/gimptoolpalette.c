@@ -254,6 +254,13 @@ gimp_tool_palette_hierarchy_changed (GtkWidget *widget,
           else
             gimp_help_set_help_data (GTK_WIDGET (item),
                                      tool_info->help, tool_info->help_id);
+
+          /* Make sure the toolbox buttons won't grab focus, which has
+           * nearly no practical use, and prevents various actions until
+           * you click back in canvas.
+           */
+          gtk_widget_set_can_focus (gtk_bin_get_child (GTK_BIN (item)),
+                                    FALSE);
         }
     }
 }
