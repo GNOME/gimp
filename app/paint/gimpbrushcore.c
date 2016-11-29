@@ -366,6 +366,11 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
                                                  &last_coords,
                                                  &current_coords);
         }
+      if ((! GIMP_IS_BRUSH_GENERATED(core->main_brush)) &&
+          (paint_options->brush_hardness != gimp_brush_get_blur_hardness(core->main_brush)))
+        {
+          gimp_brush_flush_blur_caches(core->main_brush);
+        }
     }
 
   return TRUE;
@@ -413,12 +418,6 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
                            _("No paint dynamics available for use with this tool."));
       return FALSE;
     }
-
-  if ((! GIMP_IS_BRUSH_GENERATED(core->main_brush)) &&
-      (core->hardness != gimp_brush_get_blur_hardness(core->main_brush)))
-  {
-    gimp_brush_flush_blur_caches(core->main_brush);
-  }
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
     {

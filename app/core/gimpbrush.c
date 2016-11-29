@@ -937,6 +937,16 @@ gimp_brush_flush_blur_caches (GimpBrush *brush)
       gimp_temp_buf_unref (brush->priv->blured_pixmap);
       brush->priv->blured_pixmap = NULL;
     }
+
+  if (brush->priv->mask_cache)
+    gimp_brush_cache_clear (brush->priv->mask_cache);
+
+  if (brush->priv->pixmap_cache)
+    gimp_brush_cache_clear (brush->priv->pixmap_cache);
+
+  if (brush->priv->boundary_cache)
+    gimp_brush_cache_clear (brush->priv->boundary_cache);
+
 }
 
 gdouble
