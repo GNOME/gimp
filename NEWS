@@ -65,7 +65,7 @@ Configurability:
   - Allow mouse to optionally configure tablet devices
   - Allow creating shortcuts containing the Cmd key + mouse wheel events.
   - Default to 300ppi and 1920x1080px for new documents.
-  - Do not allow Alt+[0-9] shortcuts, they are typically used for
+  - Do not allow Alt+[0-9] shortcuts, they are typically reserved for
     display switching.
 
 Tools:
@@ -89,7 +89,7 @@ Painting:
     rotation now.
   - Canvas rotation is snappier in certain cases now.
   - For bitmap brushes, GIMP now caches hardness and disables dynamic
-    change of hardness to improve painting performance. Botmap brushes
+    change of hardness to improve painting performance. Bitmap brushes
     also don't get clipped anymore, when hardness is less than 100.
 
 File Formats
