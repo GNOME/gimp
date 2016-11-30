@@ -52,6 +52,9 @@ GUI:
   - Standard (Freedesktop) and GTK+ icons can now be set by the icon
     theme for a fully consistent style.
   - Many new icons.
+  - Toolbox buttons do not grab focus anymore, which used to breake
+    usage of the Tab key and other canvas-related shortcuts after
+    changing tools with a pointing device click.
 
 Configurability:
 
