@@ -82,7 +82,7 @@ msgstr "Editor d'imatges"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../desktop/gimp.desktop.in.in.h:5
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr "GIMP;gràfics;disseny;i·lustració;dibuix;"
+msgstr "GIMP;gràfics;disseny;il·lustració;dibuix;"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -9481,7 +9481,7 @@ msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
-"Sembla ser que abans utilitzàveu la versió %s del GIMP. El GIMP migrarà les "
+"Sembla que abans utilitzàveu la versió %s del GIMP. El GIMP migrarà les "
 "vostres preferències d'usuari a «%s»."
 
 #: ../app/core/gimp-user-install.c:218
@@ -9490,7 +9490,7 @@ msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
 msgstr ""
-"Sembla ser que esteu utilitzant el GIMP per primera vegada. El GIMP crearà "
+"Sembla que esteu utilitzant el GIMP per primera vegada. El GIMP crearà "
 "una carpeta anomenada «%s» on hi copiarà els seus fitxers."
 
 #: ../app/core/gimp-user-install.c:417
@@ -12973,7 +12973,7 @@ msgstr "Nom del canal:"
 
 #: ../app/dialogs/preferences-dialog.c:1970
 msgid "Color and opacity:"
-msgstr "Color i l'opacitat"
+msgstr "Color i l'opacitat:"
 
 #: ../app/dialogs/preferences-dialog.c:1971
 msgid "Default New Channel Color and Opacity"
@@ -13071,7 +13071,7 @@ msgstr "Radi de contorn:"
 
 #: ../app/dialogs/preferences-dialog.c:2056
 msgid "Border style:"
-msgstr "Estil de la vora"
+msgstr "Estil de la vora:"
 
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2064
@@ -16664,7 +16664,7 @@ msgstr "Omple amb"
 
 #: ../app/tools/gimpcropoptions.c:101
 msgid "How to fill new areas created by 'Allow growing'"
-msgstr "Com omplir les àrea noves creades per «Permet créixer»"
+msgstr "Com omplir les àrees noves creades per «Permet créixer»"
 
 #: ../app/tools/gimpcroptool.c:117
 msgid "Crop"
@@ -19955,7 +19955,7 @@ msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
 msgstr ""
-"El connector per al navegador de l'ajuda del GIMP sembla ser que no està "
+"El connector per al navegador de l'ajuda del GIMP sembla que no està "
 "instal·lat. En el seu lloc podeu utilitzar un navegador web per llegir les "
 "pàgines d'ajuda."
 
