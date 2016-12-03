@@ -436,6 +436,7 @@ animation_storyboard_load (Animation           *animation,
   g_signal_connect (view->priv->playback, "stop",
                     (GCallback) animation_storyboard_stopped,
                     view);
+  g_free (layers);
   gimp_image_delete (image_id);
 }
 

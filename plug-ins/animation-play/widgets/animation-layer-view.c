@@ -387,6 +387,7 @@ animation_layer_view_fill (AnimationLayerView *view,
           animation_layer_view_fill (view, store, layers[i], &iter);
         }
     }
+  g_free (layers);
 }
 
 /* animation_layer_view_get_row:
