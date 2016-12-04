@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "animation-utils.h"
 
@@ -41,7 +42,9 @@ enum
 {
   PROP_0,
   PROP_ANIMATION,
-  PROP_LAYER_VIEW
+  PROP_LAYER_VIEW,
+  PROP_SUITE_CYCLE,
+  PROP_SUITE_FPI
 };
 
 struct _AnimationXSheetPrivate
@@ -55,6 +58,13 @@ struct _AnimationXSheetPrivate
 
   GtkWidget             *active_pos_button;
   GList                 *position_buttons;
+
+  GtkWidget             *suite_box;
+  GtkWidget             *suite_button;
+  gint                   suite_position;
+  gint                   suite_level;
+  gint                   suite_cycle;
+  gint                   suite_fpi;
 
   GList                 *cels;
   gint                   selected_track;
@@ -118,11 +128,15 @@ static void     on_layer_selection             (AnimationLayerView *view,
                                                 AnimationXSheet    *xsheet);
 
 /* UI Signals */
+static void     animation_xsheet_suite_do            (GtkWidget       *button,
+                                                      AnimationXSheet *xsheet);
+static void     animation_xsheet_suite_cancelled     (GtkWidget       *button,
+                                                      AnimationXSheet *xsheet);
 static gboolean animation_xsheet_frame_clicked       (GtkWidget       *button,
                                                       GdkEvent        *event,
                                                       AnimationXSheet *xsheet);
 static gboolean animation_xsheet_cel_clicked         (GtkWidget       *button,
-                                                      GdkEvent        *event,
+                                                      GdkEventButton  *event,
                                                       AnimationXSheet *xsheet);
 static void     animation_xsheet_track_title_updated (GtkEntryBuffer  *buffer,
                                                       GParamSpec      *param_spec,
@@ -177,12 +191,37 @@ animation_xsheet_class_init (AnimationXSheetClass *klass)
                                                         ANIMATION_TYPE_CEL_ANIMATION,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  /**
+   * AnimationXSheet:layer-view:
+   *
+   * The associated #AnimationLayerView.
+   */
   g_object_class_install_property (object_class, PROP_LAYER_VIEW,
                                    g_param_spec_object ("layer-view",
                                                         NULL, NULL,
                                                         ANIMATION_TYPE_LAYER_VIEW,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  /**
+   * AnimationXSheet:suite-cycle:
+   *
+   * The configured cycle repeat. 0 means indefinitely.
+   */
+  g_object_class_install_property (object_class, PROP_SUITE_CYCLE,
+                                   g_param_spec_int ("suite-cycle", NULL,
+                                                     NULL,
+                                                     0, 100, 0,
+                                                     GIMP_PARAM_READWRITE));
+  /**
+   * AnimationXSheet:suite-frames-per-image:
+   *
+   * The number of frames each image will be displayed.
+   */
+  g_object_class_install_property (object_class, PROP_SUITE_FPI,
+                                   g_param_spec_int ("suite-frames-per-image", NULL,
+                                                     NULL,
+                                                     0, 10, 0,
+                                                     GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (AnimationXSheetPrivate));
 }
@@ -194,6 +233,8 @@ animation_xsheet_init (AnimationXSheet *xsheet)
                                               ANIMATION_TYPE_XSHEET,
                                               AnimationXSheetPrivate);
   xsheet->priv->selected_frames = g_queue_new ();
+  xsheet->priv->suite_fpi       = 2;
+  xsheet->priv->suite_cycle     = 1;
 }
 
 /************ Public Functions ****************/
@@ -269,6 +310,12 @@ animation_xsheet_set_property (GObject      *object,
     case PROP_LAYER_VIEW:
       xsheet->priv->layer_view = g_value_dup_object (value);
       break;
+    case PROP_SUITE_CYCLE:
+      xsheet->priv->suite_cycle = g_value_get_int (value);
+      break;
+    case PROP_SUITE_FPI:
+      xsheet->priv->suite_fpi = g_value_get_int (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -291,6 +338,12 @@ animation_xsheet_get_property (GObject      *object,
       break;
     case PROP_LAYER_VIEW:
       g_value_set_object (value, xsheet->priv->layer_view);
+      break;
+    case PROP_SUITE_CYCLE:
+      g_value_set_int (value, xsheet->priv->suite_cycle);
+      break;
+    case PROP_SUITE_FPI:
+      g_value_set_int (value, xsheet->priv->suite_fpi);
       break;
 
     default:
@@ -1065,6 +1118,325 @@ on_animation_rendered (AnimationPlayback *playback,
   animation_xsheet_jump (xsheet, frame_number);
 }
 
+static gint
+compare_layer_names (gchar  *title1,
+                     gchar  *title2,
+                     GRegex *regex)
+{
+  GMatchInfo *match1;
+  GMatchInfo *match2;
+  gint        retval = 0;
+
+  if (g_regex_match (regex, title1, 0, &match1) &&
+      g_regex_match (regex, title2, 0, &match2))
+    {
+      gchar  **tokens1;
+      gchar  **tokens2;
+      gchar   *str_num1 = g_match_info_fetch (match1, 1);
+      gchar   *str_num2 = g_match_info_fetch (match2, 1);
+      gint     i = 0;
+
+      tokens1 = g_strsplit_set (str_num1, "-_", -1);
+      tokens2 = g_strsplit_set (str_num2, "-_", -1);
+
+      while (TRUE)
+        {
+          gchar  *token1 = tokens1[i];
+          gchar  *token2 = tokens2[i];
+          gint    num1;
+          gint    num2;
+
+          if (token1 && strlen (token1) &&
+              (! token2 || strlen (token2) == 0))
+            {
+              retval = 1;
+              break;
+            }
+          else if (token2 && strlen (token2) &&
+                   (! token1 || strlen (token1) == 0))
+            {
+              retval = -1;
+              break;
+            }
+          else if ((! token1 || strlen (token1) == 0) &&
+                   (! token2 || strlen (token2) == 0))
+            {
+              retval = 0;
+              break;
+            }
+
+          num1 = (gint) g_ascii_strtoll (token1, NULL, 10);
+          num2 = (gint) g_ascii_strtoll (token2, NULL, 10);
+
+          if (num1 > num2)
+            {
+              retval = 1;
+              break;
+            }
+          else if (num1 < num2)
+            {
+              retval = -1;
+              break;
+            }
+          /* In case of equal numbers, continue. */
+          i++;
+        }
+      g_free (str_num1);
+      g_free (str_num2);
+      g_strfreev (tokens1);
+      g_strfreev (tokens2);
+    }
+
+  return retval;
+}
+
+static gint
+compare_layer_by_name (gint    layer1,
+                       gint    layer2,
+                       GRegex *regex)
+{
+  gchar *title1;
+  gchar *title2;
+  gint   retval;
+
+  title1 = gimp_item_get_name (layer1);
+  title2 = gimp_item_get_name (layer2);
+
+  retval = compare_layer_names (title1, title2, regex);
+
+  g_free (title1);
+  g_free (title2);
+
+  return retval;
+}
+
+static GList *
+animation_xsheet_get_layer_suite (AnimationXSheet *xsheet,
+                                  const gchar     *prefix,
+                                  const gchar     *suffix,
+                                  const gchar     *lower_title)
+{
+  GRegex      *regex;
+  gchar       *esc_prefix;
+  gchar       *esc_suffix;
+  gchar       *regex_string;
+  GList       *compatible_layers = NULL;
+  gint        *layers;
+  gint32       image_id;
+  gint         num_layers;
+  gint         i;
+
+  image_id = animation_get_image_id (ANIMATION (xsheet->priv->animation));
+
+  /* Escape characters used in regular expressions. */
+  esc_prefix = g_regex_escape_string (prefix, -1);
+  esc_suffix = g_regex_escape_string (suffix, -1);
+
+  regex_string = g_strdup_printf ("^%s[ \t_-]*([0-9]*(([-_][0-9]+)*)?)[ \t]*%s[ \t]*$",
+                                  esc_prefix, esc_suffix);
+  regex = g_regex_new (regex_string, 0, 0, NULL);
+  g_free (esc_prefix);
+  g_free (esc_suffix);
+  g_free (regex_string);
+
+  /* Loop through the image layers. */
+  layers = gimp_image_get_layers (image_id,
+                                  &num_layers);
+  for (i = 0; i < num_layers; i++)
+    {
+      gchar *layer_title;
+
+      layer_title = gimp_item_get_name (layers[i]);
+      if (g_regex_match (regex, layer_title, 0, NULL) &&
+          (! lower_title || compare_layer_names (layer_title,
+                                                 (gchar *) lower_title,
+                                                 regex) >= 0))
+        {
+          compatible_layers = g_list_insert_sorted_with_data (compatible_layers,
+                                                              GINT_TO_POINTER (layers[i]),
+                                                              (GCompareDataFunc) compare_layer_by_name,
+                                                              regex);
+        }
+
+      g_free (layer_title);
+    }
+  g_regex_unref (regex);
+  g_free (layers);
+
+  return compatible_layers;
+}
+
+static void
+animation_xsheet_suite_do (GtkWidget       *button,
+                           AnimationXSheet *xsheet)
+{
+  const GList  *selection;
+  GList       **select_compat;
+  GList        *cels;
+  GtkWidget    *cel;
+  GRegex       *regex;
+  gint32        image_id;
+  gint          selected_position;
+  gint          position;
+  gint          level;
+  gint          duration;
+  gint          n_selection;
+  gint          loop;
+  gint          suite_length = 0;
+  gint          i;
+
+  image_id = animation_get_image_id (ANIMATION (xsheet->priv->animation));
+  duration = animation_get_duration (ANIMATION (xsheet->priv->animation));
+
+  selected_position = GPOINTER_TO_INT (g_queue_peek_tail (xsheet->priv->selected_frames));
+  position = xsheet->priv->suite_position;
+  level = xsheet->priv->suite_level;
+
+  selection = animation_cel_animation_get_layers (xsheet->priv->animation,
+                                                  level, position);
+  n_selection = selection ? g_list_length ((GList *) selection) : 1;
+  select_compat = g_new0 (GList *, n_selection);
+
+  if (selection)
+    {
+      /* Using current selection as base. */
+      GMatchInfo *match;
+
+      regex = g_regex_new ("^(.*[^0-9_-])[ \t_-]*([0-9]+([-_][0-9]+)*)[ \t]*([^0-9]*)[ \t]*$",
+                           0, 0, NULL);
+      for (i = 0; selection; selection = selection->next, i++)
+        {
+          GList  *compatible_layers;
+          gint32  layer;
+          gchar  *layer_title;
+          gchar  *title_prefix;
+          gchar  *title_suffix;
+
+          layer = gimp_image_get_layer_by_tattoo (image_id,
+                                                  GPOINTER_TO_INT (selection->data));
+          layer_title = gimp_item_get_name (layer);
+
+          if (g_regex_match (regex, layer_title, 0, &match))
+            {
+              title_prefix = g_match_info_fetch (match, 1);
+              title_suffix = g_match_info_fetch (match, 4);
+            }
+          else
+            {
+              title_prefix = g_strdup (layer_title);
+              title_suffix = g_strdup ("");
+            }
+          compatible_layers = animation_xsheet_get_layer_suite (xsheet, title_prefix,
+                                                                title_suffix, layer_title);
+          select_compat[i] = compatible_layers;
+          g_free (title_prefix);
+          g_free (title_suffix);
+        }
+    }
+  else
+    {
+      const gchar *track_title;
+      GList       *compatible_layers = NULL;
+
+      track_title = animation_cel_animation_get_track_title (xsheet->priv->animation,
+                                                             level);
+      compatible_layers = animation_xsheet_get_layer_suite (xsheet, track_title,
+                                                            "", NULL);
+      select_compat[0] = compatible_layers;
+    }
+
+  for (i = 0; i < n_selection; i++)
+    {
+      GList *layers = select_compat[i];
+
+      suite_length = MAX (suite_length,
+                          g_list_length (layers) * xsheet->priv->suite_fpi);
+    }
+
+  for (loop = 0; xsheet->priv->suite_cycle == 0 || loop < xsheet->priv->suite_cycle; loop++)
+    {
+      /* If no current selection, use the track name. */
+      gboolean end_of_animation = FALSE;
+
+      /* Set the layers to successive positions. */
+      for (i = 0; i < suite_length; i++)
+        {
+          GList *new_layers = NULL;
+          gint   j;
+
+          for (j = 0; j < n_selection; j++)
+            {
+              GList *layers = select_compat[j];
+              GList *layer;
+
+              layer = g_list_nth (layers, i);
+              if (layer)
+                {
+                  gint tattoo;
+
+                  tattoo = gimp_item_get_tattoo (GPOINTER_TO_INT (layer->data));
+                  new_layers = g_list_prepend (new_layers, GINT_TO_POINTER (tattoo));
+                }
+            }
+
+          for (j = 0; j < xsheet->priv->suite_fpi; j++)
+            {
+              gint pos;
+
+              pos = position + (i * xsheet->priv->suite_fpi) + j + suite_length * loop;
+              if (pos >= duration)
+                {
+                  end_of_animation = TRUE;
+                  break;
+                }
+
+              animation_cel_animation_set_layers (xsheet->priv->animation,
+                                                  level, pos,
+                                                  new_layers);
+              /* If currently selected position, refresh the layer view. */
+              if (xsheet->priv->selected_track == level &&
+                  selected_position == pos)
+                {
+                  animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                               new_layers);
+                }
+            }
+
+          g_list_free (new_layers);
+
+          if (end_of_animation)
+            break;
+        }
+
+      if (end_of_animation)
+        break;
+    }
+
+  /* Cleaning. */
+  for (i = 0; i < n_selection; i++)
+    g_list_free (select_compat[i]);
+  g_free (select_compat);
+
+  /* Rename the cels. */
+  cels = g_list_nth_data (xsheet->priv->cels, level);
+  cel = g_list_nth_data (cels, position);
+
+  animation_xsheet_rename_cel (xsheet, cel, TRUE);
+
+  /* Delete the widget. */
+  animation_xsheet_suite_cancelled (NULL, xsheet);
+}
+
+static void
+animation_xsheet_suite_cancelled (GtkWidget       *button,
+                                  AnimationXSheet *xsheet)
+{
+  gtk_widget_destroy (xsheet->priv->suite_box);
+  xsheet->priv->suite_box = NULL;
+  gtk_widget_show (xsheet->priv->suite_button);
+  xsheet->priv->suite_button = NULL;
+}
+
 static gboolean
 animation_xsheet_frame_clicked (GtkWidget       *button,
                                 GdkEvent        *event,
@@ -1093,7 +1465,7 @@ animation_xsheet_frame_clicked (GtkWidget       *button,
 
 static gboolean
 animation_xsheet_cel_clicked (GtkWidget       *button,
-                              GdkEvent        *event,
+                              GdkEventButton  *event,
                               AnimationXSheet *xsheet)
 {
   gpointer track_num;
@@ -1106,116 +1478,229 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
   position  = g_object_get_data (G_OBJECT (button), "frame-position");
 
   toggled = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
-  shift   = ((GdkEventButton *) event)->state & GDK_SHIFT_MASK;
-  ctrl    = ((GdkEventButton *) event)->state & GDK_CONTROL_MASK;
+  shift   = event->state & GDK_SHIFT_MASK;
+  ctrl    = event->state & GDK_CONTROL_MASK;
 
-  if ((! shift && ! ctrl)                                         ||
-      (xsheet->priv->selected_track >= 0 &&
-       xsheet->priv->selected_track != GPOINTER_TO_INT (track_num)))
+  /* Left click */
+  if (event->button == 1)
     {
-      /* Changing track and normal click resets selection. */
-      GList *track_iter;
-      GList *frame_iter;
 
-      for (track_iter = xsheet->priv->cels; track_iter; track_iter = track_iter->next)
+      if ((! shift && ! ctrl)                                         ||
+          (xsheet->priv->selected_track >= 0 &&
+           xsheet->priv->selected_track != GPOINTER_TO_INT (track_num)))
         {
-          for (frame_iter = track_iter->data; frame_iter; frame_iter = frame_iter->next)
+          /* Changing track and normal click resets selection. */
+          GList *track_iter;
+          GList *frame_iter;
+
+          for (track_iter = xsheet->priv->cels; track_iter; track_iter = track_iter->next)
             {
-              gtk_toggle_button_set_active (frame_iter->data, FALSE);
+              for (frame_iter = track_iter->data; frame_iter; frame_iter = frame_iter->next)
+                {
+                  gtk_toggle_button_set_active (frame_iter->data, FALSE);
+                }
+            }
+          g_queue_clear (xsheet->priv->selected_frames);
+          xsheet->priv->selected_track = -1;
+        }
+
+      if (ctrl)
+        {
+          /* Ctrl toggle the clicked selection. */
+          if (toggled)
+            {
+              g_queue_remove (xsheet->priv->selected_frames, position);
+              if (g_queue_is_empty (xsheet->priv->selected_frames))
+                {
+                  xsheet->priv->selected_track = -1;
+                }
+            }
+          else
+            {
+              g_queue_push_head (xsheet->priv->selected_frames, position);
+              xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
+            }
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                        ! toggled);
+        }
+      else if (shift)
+        {
+          /* Shift selects all from the first selection, and unselects
+           * anything else. */
+          GList    *track_iter;
+          GList    *frame_iter;
+          gint      from = GPOINTER_TO_INT (position);
+          gint      to   = from;
+          gint      direction;
+          gint      min;
+          gint      max;
+          gint      i;
+
+          xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
+          for (track_iter = xsheet->priv->cels; track_iter; track_iter = track_iter->next)
+            {
+              for (frame_iter = track_iter->data; frame_iter; frame_iter = frame_iter->next)
+                {
+                  gtk_toggle_button_set_active (frame_iter->data, FALSE);
+                }
+            }
+          if (! g_queue_is_empty (xsheet->priv->selected_frames))
+            {
+              from = GPOINTER_TO_INT (g_queue_pop_tail (xsheet->priv->selected_frames));
+              g_queue_clear (xsheet->priv->selected_frames);
+            }
+          direction = from > to? -1 : 1;
+          for (i = from; i != to + direction; i = i + direction)
+            {
+              g_queue_push_head (xsheet->priv->selected_frames,
+                                 GINT_TO_POINTER (i));
+            }
+          min = MIN (to, from);
+          max = MAX (to, from);
+          track_iter = g_list_nth (xsheet->priv->cels, xsheet->priv->selected_track);
+          frame_iter = track_iter->data;
+          for (i = 0; frame_iter && i <= max; frame_iter = frame_iter->next, i++)
+            {
+              if (i >= min)
+                {
+                  gtk_toggle_button_set_active (frame_iter->data, TRUE);
+                }
             }
         }
-      g_queue_clear (xsheet->priv->selected_frames);
-      xsheet->priv->selected_track = -1;
-    }
-
-  if (ctrl)
-    {
-      /* Ctrl toggle the clicked selection. */
-      if (toggled)
+      else /* ! shift && ! ctrl */
         {
-          g_queue_remove (xsheet->priv->selected_frames, position);
-          if (g_queue_is_empty (xsheet->priv->selected_frames))
-            {
-              xsheet->priv->selected_track = -1;
-            }
+          xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+          g_queue_push_head (xsheet->priv->selected_frames, position);
+        }
+
+      /* Finally update the layer view. */
+      if (g_queue_is_empty (xsheet->priv->selected_frames))
+        {
+          animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                       NULL);
         }
       else
         {
-          g_queue_push_head (xsheet->priv->selected_frames, position);
-          xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
-        }
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                    ! toggled);
-    }
-  else if (shift)
-    {
-      /* Shift selects all from the first selection, and unselects
-       * anything else. */
-      GList    *track_iter;
-      GList    *frame_iter;
-      gint      from = GPOINTER_TO_INT (position);
-      gint      to   = from;
-      gint      direction;
-      gint      min;
-      gint      max;
-      gint      i;
+          const GList *layers;
 
-      xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
-      for (track_iter = xsheet->priv->cels; track_iter; track_iter = track_iter->next)
-        {
-          for (frame_iter = track_iter->data; frame_iter; frame_iter = frame_iter->next)
-            {
-              gtk_toggle_button_set_active (frame_iter->data, FALSE);
-            }
-        }
-      if (! g_queue_is_empty (xsheet->priv->selected_frames))
-        {
-          from = GPOINTER_TO_INT (g_queue_pop_tail (xsheet->priv->selected_frames));
-          g_queue_clear (xsheet->priv->selected_frames);
-        }
-      direction = from > to? -1 : 1;
-      for (i = from; i != to + direction; i = i + direction)
-        {
-          g_queue_push_head (xsheet->priv->selected_frames,
-                             GINT_TO_POINTER (i));
-        }
-      min = MIN (to, from);
-      max = MAX (to, from);
-      track_iter = g_list_nth (xsheet->priv->cels, xsheet->priv->selected_track);
-      frame_iter = track_iter->data;
-      for (i = 0; frame_iter && i <= max; frame_iter = frame_iter->next, i++)
-        {
-          if (i >= min)
-            {
-              gtk_toggle_button_set_active (frame_iter->data, TRUE);
-            }
+          /* When several frames are selected, show layers of the first selected. */
+          position = g_queue_peek_tail (xsheet->priv->selected_frames);
+
+          layers = animation_cel_animation_get_layers (xsheet->priv->animation,
+                                                       GPOINTER_TO_INT (track_num),
+                                                       GPOINTER_TO_INT (position));
+          animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                       layers);
         }
     }
-  else /* ! shift && ! ctrl */
+  /* Middle click */
+  else if (event->button == 2)
     {
-      xsheet->priv->selected_track = GPOINTER_TO_INT (track_num);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-      g_queue_push_head (xsheet->priv->selected_frames, position);
-    }
+      GtkWidget *widget;
+      GtkWidget *image;
+      gint       level = GPOINTER_TO_INT (track_num);
+      gint       pos   = GPOINTER_TO_INT (position);
 
-  /* Finally update the layer view. */
-  if (g_queue_is_empty (xsheet->priv->selected_frames))
-    {
-      animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                   NULL);
-    }
-  else
-    {
-      const GList *layers;
+      if (xsheet->priv->suite_box)
+        {
+          gtk_widget_show (xsheet->priv->suite_button);
+          gtk_widget_destroy (xsheet->priv->suite_box);
+        }
 
-      /* When several frames are selected, show layers of the first selected. */
-      position = g_queue_peek_tail (xsheet->priv->selected_frames);
+      xsheet->priv->suite_box = gtk_table_new (2, 3, FALSE);
+      xsheet->priv->suite_position = pos;
+      xsheet->priv->suite_level = level;
 
-      layers = animation_cel_animation_get_layers (xsheet->priv->animation,
-                                                   GPOINTER_TO_INT (track_num),
-                                                   GPOINTER_TO_INT (position));
-      animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                   layers);
+      g_object_set_data (G_OBJECT (xsheet->priv->suite_box),
+                         "frame-position", position);
+      g_object_set_data (G_OBJECT (xsheet->priv->suite_box),
+                         "track-num", track_num);
+
+      /* Frame per image label */
+      widget = gtk_label_new (_("On:"));
+      gimp_help_set_help_data (widget,
+                               _("Number of frames per image"),
+                               NULL);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->suite_box),
+                        widget, 0, 1, 0, 1,
+                        GTK_EXPAND, GTK_SHRINK, 2, 0);
+      gtk_widget_show (widget);
+
+      /* Frame per image spin */
+      widget = gimp_prop_spin_button_new (G_OBJECT (xsheet),
+                                          "suite-frames-per-image",
+                                          1.0, 2.0, 0.0);
+      gtk_spin_button_set_range (GTK_SPIN_BUTTON (widget),
+                                 1.0, 100.0);
+      gtk_entry_set_width_chars (GTK_ENTRY (widget), 2);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->suite_box),
+                        widget, 1, 2, 0, 1,
+                        GTK_SHRINK, GTK_SHRINK, 2, 0);
+      gtk_widget_show (widget);
+
+      /* Cycle label */
+      widget = gtk_label_new (_("Cycle:"));
+      gimp_help_set_help_data (widget,
+                               _("Number of times the whole cycle repeats"
+                                 " (0 means indefinitely)"),
+                               NULL);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->suite_box),
+                        widget, 0, 1, 1, 2,
+                        GTK_EXPAND, GTK_SHRINK, 2, 0);
+      gtk_widget_show (widget);
+
+      /* Cycle spin */
+      widget = gimp_prop_spin_button_new (G_OBJECT (xsheet),
+                                          "suite-cycle",
+                                          1.0, 5.0, 0.0);
+      gtk_entry_set_width_chars (GTK_ENTRY (widget), 2);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->suite_box),
+                        widget, 1, 2, 1, 2,
+                        GTK_SHRINK, GTK_SHRINK, 2, 0);
+      gtk_widget_show (widget);
+
+      /* Ok button */
+      widget = gtk_button_new ();
+
+      image = gtk_image_new_from_icon_name ("gtk-ok",
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (widget),
+                         image);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->suite_box),
+                        widget, 2, 3, 0, 1,
+                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 0);
+      g_signal_connect (widget, "clicked",
+                        G_CALLBACK (animation_xsheet_suite_do),
+                        xsheet);
+      gtk_widget_show (image);
+      gtk_widget_show (widget);
+
+      /* Cancel button */
+      widget = gtk_button_new ();
+
+      image = gtk_image_new_from_icon_name ("gtk-cancel",
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (widget),
+                         image);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->suite_box),
+                        widget, 2, 3, 1, 2,
+                        GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 0);
+      g_signal_connect (widget, "clicked",
+                        G_CALLBACK (animation_xsheet_suite_cancelled),
+                        xsheet);
+      gtk_widget_show (image);
+      gtk_widget_show (widget);
+
+      /* Finalize */
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        xsheet->priv->suite_box,
+                        level * 9 + 1, level * 9 + 10,
+                        pos + 2, pos + 3,
+                        GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_hide (button);
+      xsheet->priv->suite_button = button;
+      gtk_widget_show (xsheet->priv->suite_box);
     }
 
   /* All handled here. */

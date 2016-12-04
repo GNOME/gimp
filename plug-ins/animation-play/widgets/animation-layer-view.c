@@ -97,7 +97,7 @@ animation_layer_view_class_init (AnimationLayerViewClass *klass)
   /**
    * AnimationLayerView::layer-selection:
    * @layer_view: the widget which received the signal.
-   * @layers: the #GList of layer ids which are currently selected.
+   * @layers: the #GList of layer tattoos which are currently selected.
    *
    * The ::layer-selection signal is emitted each time the selection changes
    * in @layer_view.
