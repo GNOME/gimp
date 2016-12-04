@@ -185,7 +185,7 @@ gimp_channel_tree_view_constructed (GObject *object)
                                   GTK_BUTTON (view->priv->toselection_button),
                                   GIMP_TYPE_CHANNEL);
   gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (view)),
-                         view->priv->toselection_button, 5);
+                         view->priv->toselection_button, 4);
 }
 
 

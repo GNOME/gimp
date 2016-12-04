@@ -400,7 +400,7 @@ gimp_layer_tree_view_constructed (GObject *object)
                                   GTK_BUTTON (button),
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (gimp_editor_get_button_box (GIMP_EDITOR (layer_view)),
-                         button, 7);
+                         button, 6);
 }
 
 static void
