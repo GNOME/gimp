@@ -79,6 +79,33 @@ struct _AnimationXSheetPrivate
   GList                 *titles;
 };
 
+
+/* Data types used to traverse layer trees when creating animation
+ * cycles.
+ */
+typedef struct
+{
+  GTree *suite;
+  gint   count;
+}
+MergeData;
+
+typedef struct
+{
+  /* Stable parameters. */
+  AnimationXSheet *xsheet;
+  gint             level;
+  gint             suite_length;
+
+  /* Updated by the caller. */
+  gint             loop_idx;
+
+  /* Updated by the traversal function. */
+  gint             index;
+  gboolean         end_of_animation;
+}
+CreateData;
+
 static void    animation_xsheet_constructed  (GObject      *object);
 static void    animation_xsheet_set_property (GObject      *object,
                                               guint         property_id,
@@ -165,6 +192,20 @@ static void     animation_xsheet_attach_cel          (AnimationXSheet *xsheet,
                                                       GtkWidget       *cel,
                                                       gint             track,
                                                       gint             pos);
+static void     animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
+                                                      GTree           **suite,
+                                                      gboolean          same_numbering,
+                                                      const gchar      *prefix,
+                                                      const gchar      *suffix,
+                                                      const gint       *lower_key);
+static gboolean create_suite                         (gint             *key,
+                                                      GList            *layers,
+                                                      CreateData       *data);
+static gboolean merge_suites                         (gint             *key,
+                                                      GList            *layers,
+                                                      MergeData        *data);
+static gint     compare_keys                         (gint             *key1,
+                                                      gint             *key2);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -1118,199 +1159,93 @@ on_animation_rendered (AnimationPlayback *playback,
   animation_xsheet_jump (xsheet, frame_number);
 }
 
-static gint
-compare_layer_names (gchar  *title1,
-                     gchar  *title2,
-                     GRegex *regex)
-{
-  GMatchInfo *match1;
-  GMatchInfo *match2;
-  gint        retval = 0;
-
-  if (g_regex_match (regex, title1, 0, &match1) &&
-      g_regex_match (regex, title2, 0, &match2))
-    {
-      gchar  **tokens1;
-      gchar  **tokens2;
-      gchar   *str_num1 = g_match_info_fetch (match1, 1);
-      gchar   *str_num2 = g_match_info_fetch (match2, 1);
-      gint     i = 0;
-
-      tokens1 = g_strsplit_set (str_num1, "-_", -1);
-      tokens2 = g_strsplit_set (str_num2, "-_", -1);
-
-      while (TRUE)
-        {
-          gchar  *token1 = tokens1[i];
-          gchar  *token2 = tokens2[i];
-          gint    num1;
-          gint    num2;
-
-          if (token1 && strlen (token1) &&
-              (! token2 || strlen (token2) == 0))
-            {
-              retval = 1;
-              break;
-            }
-          else if (token2 && strlen (token2) &&
-                   (! token1 || strlen (token1) == 0))
-            {
-              retval = -1;
-              break;
-            }
-          else if ((! token1 || strlen (token1) == 0) &&
-                   (! token2 || strlen (token2) == 0))
-            {
-              retval = 0;
-              break;
-            }
-
-          num1 = (gint) g_ascii_strtoll (token1, NULL, 10);
-          num2 = (gint) g_ascii_strtoll (token2, NULL, 10);
-
-          if (num1 > num2)
-            {
-              retval = 1;
-              break;
-            }
-          else if (num1 < num2)
-            {
-              retval = -1;
-              break;
-            }
-          /* In case of equal numbers, continue. */
-          i++;
-        }
-      g_free (str_num1);
-      g_free (str_num2);
-      g_strfreev (tokens1);
-      g_strfreev (tokens2);
-    }
-
-  return retval;
-}
-
-static gint
-compare_layer_by_name (gint    layer1,
-                       gint    layer2,
-                       GRegex *regex)
-{
-  gchar *title1;
-  gchar *title2;
-  gint   retval;
-
-  title1 = gimp_item_get_name (layer1);
-  title2 = gimp_item_get_name (layer2);
-
-  retval = compare_layer_names (title1, title2, regex);
-
-  g_free (title1);
-  g_free (title2);
-
-  return retval;
-}
-
-static GList *
-animation_xsheet_get_layer_suite (AnimationXSheet *xsheet,
-                                  const gchar     *prefix,
-                                  const gchar     *suffix,
-                                  const gchar     *lower_title)
-{
-  GRegex      *regex;
-  gchar       *esc_prefix;
-  gchar       *esc_suffix;
-  gchar       *regex_string;
-  GList       *compatible_layers = NULL;
-  gint        *layers;
-  gint32       image_id;
-  gint         num_layers;
-  gint         i;
-
-  image_id = animation_get_image_id (ANIMATION (xsheet->priv->animation));
-
-  /* Escape characters used in regular expressions. */
-  esc_prefix = g_regex_escape_string (prefix, -1);
-  esc_suffix = g_regex_escape_string (suffix, -1);
-
-  regex_string = g_strdup_printf ("^%s[ \t_-]*([0-9]*(([-_][0-9]+)*)?)[ \t]*%s[ \t]*$",
-                                  esc_prefix, esc_suffix);
-  regex = g_regex_new (regex_string, 0, 0, NULL);
-  g_free (esc_prefix);
-  g_free (esc_suffix);
-  g_free (regex_string);
-
-  /* Loop through the image layers. */
-  layers = gimp_image_get_layers (image_id,
-                                  &num_layers);
-  for (i = 0; i < num_layers; i++)
-    {
-      gchar *layer_title;
-
-      layer_title = gimp_item_get_name (layers[i]);
-      if (g_regex_match (regex, layer_title, 0, NULL) &&
-          (! lower_title || compare_layer_names (layer_title,
-                                                 (gchar *) lower_title,
-                                                 regex) >= 0))
-        {
-          compatible_layers = g_list_insert_sorted_with_data (compatible_layers,
-                                                              GINT_TO_POINTER (layers[i]),
-                                                              (GCompareDataFunc) compare_layer_by_name,
-                                                              regex);
-        }
-
-      g_free (layer_title);
-    }
-  g_regex_unref (regex);
-  g_free (layers);
-
-  return compatible_layers;
-}
-
 static void
 animation_xsheet_suite_do (GtkWidget       *button,
                            AnimationXSheet *xsheet)
 {
   const GList  *selection;
-  GList       **select_compat;
+  GTree        *suite = NULL;
   GList        *cels;
   GtkWidget    *cel;
   GRegex       *regex;
+  CreateData    data;
   gint32        image_id;
-  gint          selected_position;
   gint          position;
   gint          level;
-  gint          duration;
-  gint          n_selection;
-  gint          loop;
-  gint          suite_length = 0;
   gint          i;
 
   image_id = animation_get_image_id (ANIMATION (xsheet->priv->animation));
-  duration = animation_get_duration (ANIMATION (xsheet->priv->animation));
 
-  selected_position = GPOINTER_TO_INT (g_queue_peek_tail (xsheet->priv->selected_frames));
   position = xsheet->priv->suite_position;
   level = xsheet->priv->suite_level;
 
   selection = animation_cel_animation_get_layers (xsheet->priv->animation,
                                                   level, position);
-  n_selection = selection ? g_list_length ((GList *) selection) : 1;
-  select_compat = g_new0 (GList *, n_selection);
 
   if (selection)
     {
-      /* Using current selection as base. */
-      GMatchInfo *match;
+      gchar    *prev_key = NULL;
+      GList    *iter;
+      gboolean  same_numbering = TRUE;
 
+      /* Using current selection as base. */
       regex = g_regex_new ("^(.*[^0-9_-])[ \t_-]*([0-9]+([-_][0-9]+)*)[ \t]*([^0-9]*)[ \t]*$",
                            0, 0, NULL);
+
+      /* First pass: check if selected layers use same numbering. */
+      for (iter = (GList *) selection; iter; iter = iter->next)
+        {
+          GMatchInfo *match;
+          gchar      *layer_title;
+          gint32      layer;
+
+          layer = gimp_image_get_layer_by_tattoo (image_id,
+                                                  GPOINTER_TO_INT (iter->data));
+          layer_title = gimp_item_get_name (layer);
+
+          if (g_regex_match (regex, layer_title, 0, &match))
+            {
+              gchar **tokens;
+              gchar  *num;
+              gchar  *key;
+
+              num = g_match_info_fetch (match, 2);
+              tokens = g_strsplit_set (num, "-_", -1);
+              key = g_strjoinv ("-", tokens);
+
+              g_strfreev (tokens);
+              g_free (num);
+
+              if (! prev_key)
+                {
+                  prev_key = key;
+                }
+              else if (g_strcmp0 (prev_key, key) != 0)
+                {
+                  g_free (key);
+                  same_numbering = FALSE;
+                  break;
+                }
+              else
+                {
+                  g_free (key);
+                }
+            }
+
+          g_match_info_free (match);
+          g_free (layer_title);
+        }
+      g_free (prev_key);
+
+      /* Second pass: search compatible layers. */
       for (i = 0; selection; selection = selection->next, i++)
         {
-          GList  *compatible_layers;
-          gint32  layer;
-          gchar  *layer_title;
-          gchar  *title_prefix;
-          gchar  *title_suffix;
+          GMatchInfo *match;
+          gchar      *layer_title;
+          gchar      *title_prefix;
+          gchar      *title_suffix;
+          gint       *lower_key = NULL;
+          gint32      layer;
 
           layer = gimp_image_get_layer_by_tattoo (image_id,
                                                   GPOINTER_TO_INT (selection->data));
@@ -1318,104 +1253,69 @@ animation_xsheet_suite_do (GtkWidget       *button,
 
           if (g_regex_match (regex, layer_title, 0, &match))
             {
+              gchar **tokens;
+              gchar  *title_key;
+              gint    k;
+
               title_prefix = g_match_info_fetch (match, 1);
+              title_key    = g_match_info_fetch (match, 2);
               title_suffix = g_match_info_fetch (match, 4);
+
+              tokens = g_strsplit_set (title_key, "-_", -1);
+              lower_key = g_new0 (int, g_strv_length (tokens) + 1);
+
+              for (k = 0; k < g_strv_length (tokens); k++)
+                {
+                  lower_key[k] = (gint) g_ascii_strtoll (tokens[k], NULL, 10);
+                }
+              lower_key[g_strv_length (tokens)] = -1;
+
+              g_free (title_key);
+              g_strfreev (tokens);
             }
           else
             {
               title_prefix = g_strdup (layer_title);
               title_suffix = g_strdup ("");
             }
-          compatible_layers = animation_xsheet_get_layer_suite (xsheet, title_prefix,
-                                                                title_suffix, layer_title);
-          select_compat[i] = compatible_layers;
+          animation_xsheet_extract_layer_suite (xsheet, &suite,
+                                                same_numbering,
+                                                title_prefix, title_suffix,
+                                                lower_key);
           g_free (title_prefix);
           g_free (title_suffix);
+          g_free (lower_key);
+          g_match_info_free (match);
+          g_free (layer_title);
         }
     }
   else
     {
       const gchar *track_title;
-      GList       *compatible_layers = NULL;
 
       track_title = animation_cel_animation_get_track_title (xsheet->priv->animation,
                                                              level);
-      compatible_layers = animation_xsheet_get_layer_suite (xsheet, track_title,
-                                                            "", NULL);
-      select_compat[0] = compatible_layers;
+      animation_xsheet_extract_layer_suite (xsheet, &suite, FALSE,
+                                            track_title, "", NULL);
     }
 
-  for (i = 0; i < n_selection; i++)
+  /*Create the actual suite of frames. */
+  data.xsheet = xsheet;
+  data.level = level;
+  data.suite_length = g_tree_nnodes (suite) * xsheet->priv->suite_fpi;
+
+  data.end_of_animation = FALSE;
+  data.index = 0;
+
+  for (data.loop_idx = 0; xsheet->priv->suite_cycle == 0 || data.loop_idx < xsheet->priv->suite_cycle; data.loop_idx++)
     {
-      GList *layers = select_compat[i];
-
-      suite_length = MAX (suite_length,
-                          g_list_length (layers) * xsheet->priv->suite_fpi);
-    }
-
-  for (loop = 0; xsheet->priv->suite_cycle == 0 || loop < xsheet->priv->suite_cycle; loop++)
-    {
-      /* If no current selection, use the track name. */
-      gboolean end_of_animation = FALSE;
-
-      /* Set the layers to successive positions. */
-      for (i = 0; i < suite_length; i++)
-        {
-          GList *new_layers = NULL;
-          gint   j;
-
-          for (j = 0; j < n_selection; j++)
-            {
-              GList *layers = select_compat[j];
-              GList *layer;
-
-              layer = g_list_nth (layers, i);
-              if (layer)
-                {
-                  gint tattoo;
-
-                  tattoo = gimp_item_get_tattoo (GPOINTER_TO_INT (layer->data));
-                  new_layers = g_list_prepend (new_layers, GINT_TO_POINTER (tattoo));
-                }
-            }
-
-          for (j = 0; j < xsheet->priv->suite_fpi; j++)
-            {
-              gint pos;
-
-              pos = position + (i * xsheet->priv->suite_fpi) + j + suite_length * loop;
-              if (pos >= duration)
-                {
-                  end_of_animation = TRUE;
-                  break;
-                }
-
-              animation_cel_animation_set_layers (xsheet->priv->animation,
-                                                  level, pos,
-                                                  new_layers);
-              /* If currently selected position, refresh the layer view. */
-              if (xsheet->priv->selected_track == level &&
-                  selected_position == pos)
-                {
-                  animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                               new_layers);
-                }
-            }
-
-          g_list_free (new_layers);
-
-          if (end_of_animation)
-            break;
-        }
-
-      if (end_of_animation)
+      g_tree_foreach (suite, (GTraverseFunc) create_suite, &data);
+      if (data.end_of_animation)
         break;
     }
 
   /* Cleaning. */
-  for (i = 0; i < n_selection; i++)
-    g_list_free (select_compat[i]);
-  g_free (select_compat);
+  g_tree_destroy (suite);
 
   /* Rename the cels. */
   cels = g_list_nth_data (xsheet->priv->cels, level);
@@ -2051,4 +1951,223 @@ animation_xsheet_attach_cel (AnimationXSheet *xsheet,
   gtk_widget_show (frame);
   if (attached)
     g_object_unref (frame);
+}
+
+static void
+animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
+                                      GTree           **suite,
+                                      gboolean          same_numbering,
+                                      const gchar      *prefix,
+                                      const gchar      *suffix,
+                                      const gint       *lower_key)
+{
+  GRegex *regex;
+  GTree  *temp_suite;
+  gchar  *esc_prefix;
+  gchar  *esc_suffix;
+  gchar  *regex_string;
+  gint   *layers;
+  gint32  image_id;
+  gint    num_layers;
+  gint    i;
+
+  /* Create the suite if not done yet. */
+  if ((*suite) == NULL)
+    *suite = g_tree_new_full ((GCompareDataFunc) compare_keys,
+                              NULL,
+                              (GDestroyNotify) g_free,
+                              (GDestroyNotify) g_list_free);
+  if (same_numbering)
+    temp_suite = *suite;
+  else
+    /* Sequential numbering. */
+    temp_suite = g_tree_new_full ((GCompareDataFunc) compare_keys,
+                                  NULL,
+                                  (GDestroyNotify) g_free,
+                                  (GDestroyNotify) g_list_free);
+
+  /* Escape characters used in regular expressions. */
+  esc_prefix = g_regex_escape_string (prefix, -1);
+  esc_suffix = g_regex_escape_string (suffix, -1);
+
+  regex_string = g_strdup_printf ("^%s[ \t_-]*([0-9]*(([-_][0-9]+)*)?)[ \t]*%s[ \t]*$",
+                                  esc_prefix, esc_suffix);
+  regex = g_regex_new (regex_string, 0, 0, NULL);
+  g_free (esc_prefix);
+  g_free (esc_suffix);
+  g_free (regex_string);
+
+  /* Loop through the image layers. */
+  image_id = animation_get_image_id (ANIMATION (xsheet->priv->animation));
+  layers = gimp_image_get_layers (image_id, &num_layers);
+  for (i = 0; i < num_layers; i++)
+    {
+      GMatchInfo *match;
+      gchar      *layer_title;
+
+      layer_title = gimp_item_get_name (layers[i]);
+      if (g_regex_match (regex, layer_title, 0, &match))
+        {
+          gchar **tokens;
+          gint   *key;
+          gchar  *num;
+          gint    k;
+
+          /* Get the key. */
+          num    = g_match_info_fetch (match, 1);
+          tokens = g_strsplit_set (num, "-_", -1);
+          key    = g_new0 (int, g_strv_length (tokens) + 1);
+
+          for (k = 0; k < g_strv_length (tokens); k++)
+            {
+              key[k] = (gint) g_ascii_strtoll (tokens[k], NULL, 10);
+            }
+          key[g_strv_length (tokens)] = -1;
+
+          if (! lower_key || compare_keys (key,
+                                           (gint *) lower_key) >= 0)
+            {
+              GList *new_layers;
+              gint   tattoo;
+
+              tattoo = gimp_item_get_tattoo (GPOINTER_TO_INT (layers[i]));
+
+              new_layers = g_tree_lookup (temp_suite, key);
+              new_layers = g_list_prepend (g_list_copy (new_layers),
+                                           GINT_TO_POINTER (tattoo));
+              g_tree_replace (temp_suite, key, new_layers);
+            }
+          else
+            {
+              g_free (key);
+            }
+          g_strfreev (tokens);
+          g_free (num);
+        }
+
+      g_free (layer_title);
+      g_match_info_free (match);
+    }
+
+  if (! same_numbering)
+    {
+      /* We ordered the layers first in a separate list, then later
+       * we merge, keeping the order. */
+      MergeData data;
+
+      data.count = 0;
+      data.suite = *suite;
+
+      g_tree_foreach (temp_suite, (GTraverseFunc) merge_suites,
+                      &data);
+      g_tree_destroy (temp_suite);
+    }
+
+  g_regex_unref (regex);
+  g_free (layers);
+}
+
+static gboolean
+create_suite (gint       *key,
+              GList      *layers,
+              CreateData *data)
+{
+  AnimationXSheet *xsheet = data->xsheet;
+  gint             selected_pos;
+  gint             i;
+
+  selected_pos = GPOINTER_TO_INT (g_queue_peek_tail (xsheet->priv->selected_frames));
+
+  for (i = 0; i < xsheet->priv->suite_fpi; i++)
+    {
+      gint pos;
+
+      pos = xsheet->priv->suite_position              +
+            (data->index * xsheet->priv->suite_fpi) +
+            i + data->suite_length * data->loop_idx;
+      if (pos >= animation_get_duration (ANIMATION (xsheet->priv->animation)))
+        {
+          data->end_of_animation = TRUE;
+          return TRUE;
+        }
+
+      animation_cel_animation_set_layers (xsheet->priv->animation,
+                                          data->level, pos, layers);
+      /* If currently selected position, refresh the layer view. */
+      if (xsheet->priv->selected_track == data->level &&
+          selected_pos == pos)
+        {
+          animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                       layers);
+        }
+    }
+
+  data->index++;
+  return FALSE;
+}
+
+static gboolean
+merge_suites (gint      *key,
+              GList     *layers,
+              MergeData *data)
+{
+  gint  *new_key = g_new0 (int, 2);
+  GList *new_layers;
+
+  new_key[0] = data->count;
+  new_key[1] = -1;
+
+  new_layers = g_tree_lookup (data->suite, new_key);
+  new_layers = g_list_concat (g_list_copy (new_layers),
+                              g_list_copy (layers));
+  g_tree_replace (data->suite, new_key,
+                  new_layers);
+  data->count++;
+
+  /* Continue traversal. */
+  return FALSE;
+}
+
+static gint
+compare_keys (gint *key1,
+              gint *key2)
+{
+  gint retval = 0;
+  gint i = 0;
+
+  while (TRUE)
+    {
+      gint num1 = key1[i];
+      gint num2 = key2[i];
+
+      if (num1 >= 0 && num2 < 0)
+        {
+          retval = 1;
+          break;
+        }
+      else if (num2 >= 0 && num1 < 0)
+        {
+          retval = -1;
+          break;
+        }
+      else if (num2 < 0 && num1 < 0)
+        {
+          retval = 0;
+          break;
+        }
+      else if (num1 > num2)
+        {
+          retval = 1;
+          break;
+        }
+      else if (num1 < num2)
+        {
+          retval = -1;
+          break;
+        }
+      /* In case of equal numbers, continue. */
+      i++;
+    }
+
+  return retval;
 }
