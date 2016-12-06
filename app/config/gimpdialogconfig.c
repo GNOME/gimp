@@ -919,7 +919,9 @@ gimp_dialog_config_fill_options_notify (GObject    *object,
                                         GParamSpec *pspec,
                                         gpointer    data)
 {
-  g_object_notify (G_OBJECT (data), "fill-options");
+  /*  ignore notifications on parent class properties such as fg/bg  */
+  if (pspec->owner_type == G_TYPE_FROM_INSTANCE (object))
+    g_object_notify (G_OBJECT (data), "fill-options");
 }
 
 static void
@@ -927,5 +929,7 @@ gimp_dialog_config_stroke_options_notify (GObject    *object,
                                           GParamSpec *pspec,
                                           gpointer    data)
 {
-  g_object_notify (G_OBJECT (data), "stroke-options");
+  /*  see above  */
+  if (pspec->owner_type == G_TYPE_FROM_INSTANCE (object))
+    g_object_notify (G_OBJECT (data), "stroke-options");
 }
