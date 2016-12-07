@@ -82,4 +82,12 @@ void          animation_cel_animation_set_track_title (AnimationCelAnimation *an
 const gchar * animation_cel_animation_get_track_title (AnimationCelAnimation *animation,
                                                        gint                   level);
 
+gboolean      animation_cel_animation_cel_delete      (AnimationCelAnimation *animation,
+                                                       gint                   level,
+                                                       gint                   position);
+gboolean      animation_cel_animation_cel_add         (AnimationCelAnimation *animation,
+                                                       gint                   level,
+                                                       gint                   position,
+                                                       gboolean               dup_previous);
+
 #endif  /*  __ANIMATION_CEL_ANIMATION_H__  */

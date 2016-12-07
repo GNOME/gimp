@@ -53,6 +53,8 @@ animation_play_SOURCES = \
 	core/animation-playback.c		\
 	widgets/animation-dialog.h		\
 	widgets/animation-dialog.c		\
+	widgets/animation-menus.h		\
+	widgets/animation-menus.c		\
 	widgets/animation-storyboard.h	\
 	widgets/animation-storyboard.c	\
 	widgets/animation-layer-view.h	\

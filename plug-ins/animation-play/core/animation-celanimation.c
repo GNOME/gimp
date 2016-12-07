@@ -531,6 +531,93 @@ animation_cel_animation_set_track_title (AnimationCelAnimation *animation,
     }
 }
 
+gboolean
+animation_cel_animation_cel_delete (AnimationCelAnimation *animation,
+                                    gint                   level,
+                                    gint                   position)
+{
+  Track *track;
+
+  track = g_list_nth_data (animation->priv->tracks, level);
+
+  if (track)
+    {
+      GList *cel = g_list_nth (track->frames, position);
+
+      if (cel)
+        {
+          GList *iter;
+          gint   i;
+
+          g_list_free (cel->data);
+          iter = cel->next;
+          track->frames = g_list_delete_link (track->frames, cel);
+
+          for (i = position; iter; iter = iter->next, i++)
+            {
+              g_signal_emit_by_name (animation, "loading",
+                                     (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
+
+              animation_cel_animation_cache (animation, i);
+            }
+          g_signal_emit_by_name (animation, "loaded");
+
+          return TRUE;
+        }
+    }
+  return FALSE;
+}
+
+gboolean
+animation_cel_animation_cel_add (AnimationCelAnimation *animation,
+                                 gint                   level,
+                                 gint                   position,
+                                 gboolean               dup_previous)
+{
+  Track *track;
+
+  track = g_list_nth_data (animation->priv->tracks, level);
+
+  if (track)
+    {
+      GList *cel;
+      GList *contents = NULL;
+      gint   i = position;
+
+      if (dup_previous && position > 0)
+        {
+          GList *prev_cell;
+
+          i++;
+          prev_cell = g_list_nth (track->frames, position - 1);
+
+          if (prev_cell)
+            contents = g_list_copy (prev_cell->data);
+        }
+      track->frames = g_list_insert (track->frames, contents, position);
+
+      if (g_list_length (track->frames) > animation->priv->duration &&
+          g_list_last (track->frames)->data)
+        animation_cel_animation_set_duration (animation,
+                                              g_list_length (track->frames));
+      cel = g_list_nth (track->frames, i);
+      if (cel)
+        {
+          for (; cel; cel = cel->next, i++)
+            {
+              g_signal_emit_by_name (animation, "loading",
+                                     (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
+
+              animation_cel_animation_cache (animation, i);
+            }
+          g_signal_emit_by_name (animation, "loaded");
+
+          return TRUE;
+        }
+    }
+  return FALSE;
+}
+
 /**** Virtual methods ****/
 
 static gint

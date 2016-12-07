@@ -33,6 +33,7 @@
 #include "core/animation-celanimation.h"
 
 #include "animation-layer-view.h"
+#include "animation-menus.h"
 
 #include "animation-xsheet.h"
 
@@ -1384,7 +1385,6 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
   /* Left click */
   if (event->button == 1)
     {
-
       if ((! shift && ! ctrl)                                         ||
           (xsheet->priv->selected_track >= 0 &&
            xsheet->priv->selected_track != GPOINTER_TO_INT (track_num)))
@@ -1601,6 +1601,12 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
       gtk_widget_hide (button);
       xsheet->priv->suite_button = button;
       gtk_widget_show (xsheet->priv->suite_box);
+    }
+  else if (event->type == GDK_BUTTON_RELEASE && event->button == 3)
+    {
+      animation_menu_cell (xsheet->priv->animation, event,
+                           GPOINTER_TO_INT (position),
+                           GPOINTER_TO_INT (track_num));
     }
 
   /* All handled here. */
