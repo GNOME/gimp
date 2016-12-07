@@ -199,7 +199,13 @@ gimp_handle_bar_expose (GtkWidget      *widget,
 
           cairo_fill_preserve (cr);
 
-          cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+          /* Make all sliders well visible even on similar colored
+           * backgrounds.
+           */
+          if (i == 0)
+            cairo_set_source_rgb (cr, 0.6, 0.6, 0.6);
+          else
+            cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
 
           cairo_stroke (cr);
         }
