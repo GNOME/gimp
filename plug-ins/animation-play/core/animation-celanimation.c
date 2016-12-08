@@ -579,7 +579,7 @@ animation_cel_animation_load (Animation *animation)
             {
               GList *layers = NULL;
 
-              layers = g_list_prepend (track->frames,
+              layers = g_list_prepend (layers,
                                        GINT_TO_POINTER (tattoo));
               track->frames = g_list_prepend (track->frames,
                                               layers);
