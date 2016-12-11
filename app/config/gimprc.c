@@ -62,7 +62,6 @@ static void         gimp_rc_get_property      (GObject      *object,
                                                GParamSpec   *pspec);
 
 static GimpConfig * gimp_rc_duplicate         (GimpConfig   *object);
-static void         gimp_rc_load              (GimpRc       *rc);
 static gboolean     gimp_rc_idle_save         (GimpRc       *rc);
 static void         gimp_rc_notify            (GimpRc       *rc,
                                                GParamSpec   *param,
@@ -251,44 +250,6 @@ gimp_rc_duplicate (GimpConfig *config)
   return dup;
 }
 
-static void
-gimp_rc_load (GimpRc *rc)
-{
-  GError *error = NULL;
-
-  g_return_if_fail (GIMP_IS_RC (rc));
-
-  if (rc->verbose)
-    g_print ("Parsing '%s'\n",
-             gimp_file_get_utf8_name (rc->system_gimprc));
-
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
-                                       rc->system_gimprc, NULL, &error))
-    {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        g_message ("%s", error->message);
-
-      g_clear_error (&error);
-    }
-
-  if (rc->verbose)
-    g_print ("Parsing '%s'\n",
-             gimp_file_get_utf8_name (rc->user_gimprc));
-
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
-                                       rc->user_gimprc, NULL, &error))
-    {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        {
-          g_message ("%s", error->message);
-
-          gimp_config_file_backup_on_error (rc->user_gimprc, "gimprc", NULL);
-        }
-
-      g_clear_error (&error);
-    }
-}
-
 static gboolean
 gimp_rc_idle_save (GimpRc *rc)
 {
@@ -346,9 +307,56 @@ gimp_rc_new (GObject  *gimp,
                      "user-gimprc",   user_gimprc,
                      NULL);
 
-  gimp_rc_load (rc);
+  gimp_rc_load_system (rc);
+  gimp_rc_load_user (rc);
 
   return rc;
+}
+
+void
+gimp_rc_load_system (GimpRc *rc)
+{
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_RC (rc));
+
+  if (rc->verbose)
+    g_print ("Parsing '%s'\n",
+             gimp_file_get_utf8_name (rc->system_gimprc));
+
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
+                                       rc->system_gimprc, NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        g_message ("%s", error->message);
+
+      g_clear_error (&error);
+    }
+}
+
+void
+gimp_rc_load_user (GimpRc *rc)
+{
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_RC (rc));
+
+  if (rc->verbose)
+    g_print ("Parsing '%s'\n",
+             gimp_file_get_utf8_name (rc->user_gimprc));
+
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
+                                       rc->user_gimprc, NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        {
+          g_message ("%s", error->message);
+
+          gimp_config_file_backup_on_error (rc->user_gimprc, "gimprc", NULL);
+        }
+
+      g_clear_error (&error);
+    }
 }
 
 void

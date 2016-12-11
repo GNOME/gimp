@@ -294,6 +294,7 @@ prefs_response (GtkWidget *widget,
             config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
 
             gimp_config_reset (config_copy);
+            gimp_rc_load_system (GIMP_RC (config_copy));
 
             /* don't use the default value if there is no help browser */
             if (! gimp_help_browser_is_installed (gimp))
