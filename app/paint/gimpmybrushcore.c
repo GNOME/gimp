@@ -381,15 +381,19 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
       if (brush_data)
         mypaint_brush_from_string (brush, brush_data);
 
-      mypaint_brush_set_base_value (brush,
-                                    MYPAINT_BRUSH_SETTING_COLOR_H,
-                                    hsv.h);
-      mypaint_brush_set_base_value (brush,
-                                    MYPAINT_BRUSH_SETTING_COLOR_S,
-                                    hsv.s);
-      mypaint_brush_set_base_value (brush,
-                                    MYPAINT_BRUSH_SETTING_COLOR_V,
-                                    hsv.v);
+      if (! mypaint_brush_get_base_value (brush,
+                                          MYPAINT_BRUSH_SETTING_RESTORE_COLOR))
+        {
+          mypaint_brush_set_base_value (brush,
+                                        MYPAINT_BRUSH_SETTING_COLOR_H,
+                                        hsv.h);
+          mypaint_brush_set_base_value (brush,
+                                        MYPAINT_BRUSH_SETTING_COLOR_S,
+                                        hsv.s);
+          mypaint_brush_set_base_value (brush,
+                                        MYPAINT_BRUSH_SETTING_COLOR_V,
+                                        hsv.v);
+        }
 
       mypaint_brush_set_base_value (brush,
                                     MYPAINT_BRUSH_SETTING_RADIUS_LOGARITHMIC,
