@@ -350,6 +350,7 @@ image_actions_update (GimpActionGroup *group,
   GimpImage *image         = action_data_get_image (data);
   gboolean   is_indexed    = FALSE;
   gboolean   is_u8_gamma   = FALSE;
+  gboolean   is_double     = FALSE;
   gboolean   aux           = FALSE;
   gboolean   lp            = FALSE;
   gboolean   sel           = FALSE;
@@ -363,9 +364,11 @@ image_actions_update (GimpActionGroup *group,
       const gchar       *action = NULL;
       GimpImageBaseType  base_type;
       GimpPrecision      precision;
+      GimpComponentType  component_type;
 
-      base_type = gimp_image_get_base_type (image);
-      precision = gimp_image_get_precision (image);
+      base_type      = gimp_image_get_base_type (image);
+      precision      = gimp_image_get_precision (image);
+      component_type = gimp_image_get_component_type (image);
 
       switch (base_type)
         {
@@ -376,7 +379,7 @@ image_actions_update (GimpActionGroup *group,
 
       gimp_action_group_set_action_active (group, action, TRUE);
 
-      switch (gimp_image_get_component_type (image))
+      switch (component_type)
         {
         case GIMP_COMPONENT_TYPE_U8:     action = "image-convert-u8";     break;
         case GIMP_COMPONENT_TYPE_U16:    action = "image-convert-u16";    break;
@@ -402,6 +405,7 @@ image_actions_update (GimpActionGroup *group,
 
       is_indexed  = (base_type == GIMP_INDEXED);
       is_u8_gamma = (precision == GIMP_PRECISION_U8_GAMMA);
+      is_double   = (component_type == GIMP_COMPONENT_TYPE_DOUBLE);
       aux         = (gimp_image_get_active_channel (image) != NULL);
       lp          = ! gimp_image_is_empty (image);
       sel         = ! gimp_channel_is_empty (gimp_image_get_mask (image));
@@ -420,6 +424,8 @@ image_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
+#define SET_VISIBLE(action,condition) \
+        gimp_action_group_set_action_visible (group, action, (condition) != 0)
 
   SET_SENSITIVE ("image-duplicate", image);
 
@@ -448,6 +454,7 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-half",   image && !is_indexed);
   SET_SENSITIVE ("image-convert-float",  image && !is_indexed);
   SET_SENSITIVE ("image-convert-double", image && !is_indexed);
+  SET_VISIBLE   ("image-convert-double", is_double);
 
   SET_SENSITIVE ("image-convert-gamma",  image);
   SET_SENSITIVE ("image-convert-linear", image && !is_indexed);
@@ -481,4 +488,5 @@ image_actions_update (GimpActionGroup *group,
 #undef SET_LABEL
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
+#undef SET_VISIBLE
 }
