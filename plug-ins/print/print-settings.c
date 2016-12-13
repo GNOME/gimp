@@ -81,12 +81,20 @@ print_settings_save (PrintData *data)
   /* image setup */
   if (gimp_image_is_valid (data->image_id))
     {
+      gdouble xres;
+      gdouble yres;
+
+      gimp_image_get_resolution (data->image_id, &xres, &yres);
+
       g_key_file_set_integer (key_file, "image-setup",
                               "unit", data->unit);
-      g_key_file_set_double  (key_file, "image-setup",
-                              "x-resolution", data->xres);
-      g_key_file_set_double  (key_file, "image-setup",
-                              "y-resolution", data->yres);
+      if (xres != data->xres || yres != data->yres)
+        {
+          g_key_file_set_double  (key_file, "image-setup",
+                                  "x-resolution", data->xres);
+          g_key_file_set_double  (key_file, "image-setup",
+                                  "y-resolution", data->yres);
+        }
       g_key_file_set_double  (key_file, "image-setup",
                               "x-offset", data->offset_x);
       g_key_file_set_double  (key_file, "image-setup",
