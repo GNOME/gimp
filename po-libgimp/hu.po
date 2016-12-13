@@ -13,15 +13,15 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-10-29 15:05+0000\n"
-"PO-Revision-Date: 2016-11-05 10:33+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
+"POT-Creation-Date: 2016-12-11 18:44+0000\n"
+"PO-Revision-Date: 2016-12-12 20:52+0100\n"
+"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.8.11\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
@@ -152,7 +152,7 @@ msgstr "A(z) %s bővítmény csak RGB vagy szürkeárnyalatos képeket kezel"
 
 #: ../libgimp/gimpexport.c:353
 #, c-format
-msgid "%s plug-in  can only handle RGB or indexed images"
+msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "A(z) %s bővítmény csak RGB vagy indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:363
@@ -605,25 +605,21 @@ msgid "Pattern"
 msgstr "Minta"
 
 #: ../libgimpbase/gimpbaseenums.c:372
-#| msgid "None"
 msgctxt "color-tag"
 msgid "None"
 msgstr "Nincs"
 
 #: ../libgimpbase/gimpbaseenums.c:373
-#| msgid "Blue"
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Kék"
 
 #: ../libgimpbase/gimpbaseenums.c:374
-#| msgid "Green"
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Zöld"
 
 #: ../libgimpbase/gimpbaseenums.c:375
-#| msgid "Yellow"
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Sárga"
@@ -639,7 +635,6 @@ msgid "Brown"
 msgstr "Barna"
 
 #: ../libgimpbase/gimpbaseenums.c:378
-#| msgid "Red"
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Vörös"
@@ -650,8 +645,6 @@ msgid "Violet"
 msgstr "Ibolya"
 
 #: ../libgimpbase/gimpbaseenums.c:380
-#| msgctxt "channel-type"
-#| msgid "Gray"
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Szürke"
@@ -968,7 +961,7 @@ msgstr "Ferde vágás"
 
 #: ../libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
-msgid "Expanded as neccessary"
+msgid "Expanded as necessary"
 msgstr "Szükség szerint bővítve"
 
 #: ../libgimpbase/gimpbaseenums.c:1068
@@ -2575,20 +2568,20 @@ msgstr "Deuteranopia (a zöld szín érzékelésének hiánya)"
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (a kék szín érzékelésének hiánya)"
 
-#: ../modules/display-filter-color-blind.c:193
+#: ../modules/display-filter-color-blind.c:195
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 "Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
 
-#: ../modules/display-filter-color-blind.c:252
+#: ../modules/display-filter-color-blind.c:254
 msgid "Deficiency"
 msgstr "Probléma"
 
-#: ../modules/display-filter-color-blind.c:258
+#: ../modules/display-filter-color-blind.c:260
 msgid "Color Deficient Vision"
 msgstr "Színérzékelési probléma"
 
-#: ../modules/display-filter-color-blind.c:419
+#: ../modules/display-filter-color-blind.c:421
 msgid "Color _deficiency type:"
 msgstr "Színérzékelési probléma _típusa:"
 
