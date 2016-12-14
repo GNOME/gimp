@@ -380,20 +380,23 @@ gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
   GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (color_tool);
   GimpCurvesConfig *config      = GIMP_CURVES_CONFIG (filter_tool->config);
   GimpDrawable     *drawable;
+  float rgba[4];
+
+  gimp_rgba_get_pixel (color, babl_format ("RGBA float"), rgba);
 
   drawable = GIMP_FILTER_TOOL (tool)->drawable;
 
-  tool->picked_color[GIMP_HISTOGRAM_RED]   = color->r;
-  tool->picked_color[GIMP_HISTOGRAM_GREEN] = color->g;
-  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = color->b;
+  tool->picked_color[GIMP_HISTOGRAM_RED]   = rgba[0];
+  tool->picked_color[GIMP_HISTOGRAM_GREEN] = rgba[1];
+  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = rgba[2];
 
   if (gimp_drawable_has_alpha (drawable))
-    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = color->a;
+    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = rgba[3];
   else
     tool->picked_color[GIMP_HISTOGRAM_ALPHA] = -1;
 
-  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (color->r, color->g),
-                                                  color->b);
+  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (rgba[0], rgba[1]),
+                                                  rgba[2]);
 
   gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
                             tool->picked_color[config->channel]);
