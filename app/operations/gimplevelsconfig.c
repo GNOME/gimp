@@ -516,27 +516,31 @@ static gdouble
 gimp_levels_config_input_from_color (GimpHistogramChannel  channel,
                                      const GimpRGB        *color)
 {
+  float rgba[4];
+  gimp_rgba_get_pixel (color, babl_format ("RGBA float"), rgba);
+
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:
-      return MAX (MAX (color->r, color->g), color->b);
+      return MAX (MAX (rgba[0], rgba[1]), rgba[2]);
 
     case GIMP_HISTOGRAM_RED:
-      return color->r;
+      return rgba[0];
 
     case GIMP_HISTOGRAM_GREEN:
-      return color->g;
+      return rgba[1];
 
     case GIMP_HISTOGRAM_BLUE:
-      return color->b;
+      return rgba[2];
 
     case GIMP_HISTOGRAM_ALPHA:
-      return color->a;
+      return rgba[3];
 
     case GIMP_HISTOGRAM_RGB:
-      return MIN (MIN (color->r, color->g), color->b);
+      return MIN (MIN (rgba[0], rgba[1]), rgba[2]);
 
-    case GIMP_HISTOGRAM_LUMINANCE:
+    case GIMP_HISTOGRAM_LUMINANCE: // XXX: does this macro expect linear or
+                                   //  gamma TRC?
       return GIMP_RGB_LUMINANCE (color->r, color->g, color->b);
     }
 
