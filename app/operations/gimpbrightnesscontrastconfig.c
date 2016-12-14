@@ -185,7 +185,7 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
 
   if (config->brightness >= 0)
     {
-      value = -0.5 * slant + brightness * slant + 0.5;
+      value = -0.18 * slant + brightness * slant + 0.18;
 
       if (value < 0.0)
         {
@@ -195,45 +195,45 @@ gimp_brightness_contrast_config_to_levels_config (GimpBrightnessContrastConfig *
            * calculation of the brightness/contrast LUT in base/lut-funcs.h */
 
           levels->low_input[GIMP_HISTOGRAM_VALUE] =
-            (- brightness * slant + 0.5 * slant - 0.5) / (slant - brightness * slant);
+            (- brightness * slant + 0.18 * slant - 0.18) / (slant - brightness * slant);
         }
 
       levels->low_output[GIMP_HISTOGRAM_VALUE] = value;
 
-      value = 0.5 * slant + 0.5;
+      value = 0.82 * slant + 0.18;
 
       if (value > 1.0)
         {
           value = 1.0;
 
           levels->high_input[GIMP_HISTOGRAM_VALUE] =
-            (- brightness * slant + 0.5 * slant + 0.5) / (slant - brightness * slant);
+            (- brightness * slant + 0.18 * slant + 0.82) / (slant - brightness * slant);
         }
 
       levels->high_output[GIMP_HISTOGRAM_VALUE] = value;
     }
   else
     {
-      value = 0.5 - 0.5 * slant;
+      value = 0.18 - 0.18 * slant;
 
       if (value < 0.0)
         {
           value = 0.0;
 
           levels->low_input[GIMP_HISTOGRAM_VALUE] =
-            (0.5 * slant - 0.5) / (slant + brightness * slant);
+            (0.18 * slant - 0.18) / (slant + brightness * slant);
         }
 
       levels->low_output[GIMP_HISTOGRAM_VALUE] = value;
 
-      value = slant * brightness + slant * 0.5 + 0.5;
+      value = slant * brightness + slant * 0.82 + 0.18;
 
       if (value > 1.0)
         {
           value = 1.0;
 
           levels->high_input[GIMP_HISTOGRAM_VALUE] =
-            (0.5 * slant + 0.5) / (slant + brightness * slant);
+            (0.18 * slant + 0.82) / (slant + brightness * slant);
         }
 
       levels->high_output[GIMP_HISTOGRAM_VALUE] = value;

@@ -38,12 +38,14 @@ static gboolean gimp_operation_levels_process (GeglOperation       *operation,
                                                glong                samples,
                                                const GeglRectangle *roi,
                                                gint                 level);
+static void gimp_operation_levels_prepare (GeglOperation *operation);
 
 
 G_DEFINE_TYPE (GimpOperationLevels, gimp_operation_levels,
                GIMP_TYPE_OPERATION_POINT_FILTER)
 
 #define parent_class gimp_operation_levels_parent_class
+
 
 
 static void
@@ -62,6 +64,7 @@ gimp_operation_levels_class_init (GimpOperationLevelsClass *klass)
                                  "description", "GIMP Levels operation",
                                  NULL);
 
+  operation_class->prepare = gimp_operation_levels_prepare;
   point_class->process = gimp_operation_levels_process;
 
   g_object_class_install_property (object_class,
@@ -72,6 +75,15 @@ gimp_operation_levels_class_init (GimpOperationLevelsClass *klass)
                                                         GIMP_TYPE_LEVELS_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+}
+
+static void
+gimp_operation_levels_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("RGBA float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static void

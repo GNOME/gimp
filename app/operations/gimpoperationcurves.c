@@ -42,6 +42,7 @@ static gboolean gimp_operation_curves_process (GeglOperation       *operation,
                                                const GeglRectangle *roi,
                                                gint                 level);
 
+static void gimp_operation_curves_prepare (GeglOperation *operation);
 
 G_DEFINE_TYPE (GimpOperationCurves, gimp_operation_curves,
                GIMP_TYPE_OPERATION_POINT_FILTER)
@@ -66,6 +67,7 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
                                  NULL);
 
   point_class->process = gimp_operation_curves_process;
+  operation_class->prepare = gimp_operation_curves_prepare;
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
@@ -75,6 +77,15 @@ gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
                                                         GIMP_TYPE_CURVES_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+}
+
+static void
+gimp_operation_curves_prepare (GeglOperation *operation)
+{
+  const Babl *format = babl_format ("RGBA float");
+
+  gegl_operation_set_format (operation, "input",  format);
+  gegl_operation_set_format (operation, "output", format);
 }
 
 static void
