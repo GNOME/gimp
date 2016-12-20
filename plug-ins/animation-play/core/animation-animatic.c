@@ -79,35 +79,39 @@ struct _AnimationAnimaticPrivate
                                      ANIMATION_TYPE_ANIMATIC, \
                                      AnimationAnimaticPrivate)
 
-static void         animation_animatic_finalize     (GObject           *object);
+static void         animation_animatic_finalize       (GObject           *object);
 
 /* Virtual methods */
 
-static gint         animation_animatic_get_duration (Animation         *animation);
+static gint         animation_animatic_get_duration   (Animation         *animation);
 
-static void         animation_animatic_load         (Animation         *animation);
-static void         animation_animatic_load_xml     (Animation         *animation,
-                                                     const gchar       *xml);
-static GeglBuffer * animation_animatic_get_frame    (Animation         *animation,
-                                                     gint               pos);
-static gchar      * animation_animatic_serialize    (Animation         *animation);
+static GeglBuffer * animation_animatic_get_frame      (Animation         *animation,
+                                                       gint               pos);
 
-static gboolean     animation_animatic_same         (Animation         *animation,
-                                                     gint               pos1,
-                                                     gint               pos2);
+static gboolean     animation_animatic_same           (Animation         *animation,
+                                                       gint               pos1,
+                                                       gint               pos2);
+
+static void         animation_animatic_purge_cache    (Animation         *animation);
+
+static void         animation_animatic_reset_defaults (Animation         *animation);
+static gchar      * animation_animatic_serialize      (Animation         *animation);
+static gboolean     animation_animatic_deserialize    (Animation         *animation,
+                                                       const gchar       *xml,
+                                                       GError           **error);
 
 /* XML parsing */
 
-static void      animation_animatic_start_element (GMarkupParseContext *context,
-                                                   const gchar         *element_name,
-                                                   const gchar        **attribute_names,
-                                                   const gchar        **attribute_values,
-                                                   gpointer             user_data,
-                                                   GError             **error);
-static void      animation_animatic_end_element   (GMarkupParseContext *context,
-                                                   const gchar         *element_name,
-                                                   gpointer             user_data,
-                                                   GError             **error);
+static void      animation_animatic_start_element (GMarkupParseContext  *context,
+                                                   const gchar          *element_name,
+                                                   const gchar         **attribute_names,
+                                                   const gchar         **attribute_values,
+                                                   gpointer              user_data,
+                                                   GError              **error);
+static void      animation_animatic_end_element   (GMarkupParseContext  *context,
+                                                   const gchar          *element_name,
+                                                   gpointer              user_data,
+                                                   GError              **error);
 
 static void      animation_animatic_text          (GMarkupParseContext  *context,
                                                    const gchar          *text,
@@ -117,19 +121,19 @@ static void      animation_animatic_text          (GMarkupParseContext  *context
 
 /* Utils */
 
-static void         animation_animatic_cache      (AnimationAnimatic *animation,
-                                                   gint               panel,
-                                                   gboolean           recursion);
+static void      animation_animatic_cache_panel   (AnimationAnimatic    *animation,
+                                                   gint                  panel,
+                                                   gboolean              recursion);
 
 /* Tag handling (from layer names) */
 
-static gint         parse_ms_tag                  (Animation         *animation,
-                                                   const gchar       *str);
-static gboolean     parse_combine_tag             (const gchar       *str);
+static gint      parse_ms_tag                     (Animation            *animation,
+                                                   const gchar          *str);
+static gboolean  parse_combine_tag                (const gchar          *str);
 
-static gboolean     is_ms_tag                     (const gchar       *str,
-                                                   gint              *duration,
-                                                   gint              *taglength);
+static gboolean  is_ms_tag                        (const gchar          *str,
+                                                   gint                 *duration,
+                                                   gint                 *taglength);
 
 G_DEFINE_TYPE (AnimationAnimatic, animation_animatic, ANIMATION_TYPE_ANIMATION)
 
@@ -165,14 +169,18 @@ animation_animatic_class_init (AnimationAnimaticClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
 
-  object_class->finalize = animation_animatic_finalize;
+  object_class->finalize     = animation_animatic_finalize;
 
-  anim_class->get_duration = animation_animatic_get_duration;
-  anim_class->load         = animation_animatic_load;
-  anim_class->load_xml     = animation_animatic_load_xml;
-  anim_class->get_frame    = animation_animatic_get_frame;
-  anim_class->serialize    = animation_animatic_serialize;
-  anim_class->same         = animation_animatic_same;
+  anim_class->get_duration   = animation_animatic_get_duration;
+  anim_class->get_frame      = animation_animatic_get_frame;
+
+  anim_class->same           = animation_animatic_same;
+
+  anim_class->purge_cache    = animation_animatic_purge_cache;
+
+  anim_class->reset_defaults = animation_animatic_reset_defaults;
+  anim_class->serialize      = animation_animatic_serialize;
+  anim_class->deserialize    = animation_animatic_deserialize;
 
   g_type_class_add_private (klass, sizeof (AnimationAnimaticPrivate));
 }
@@ -297,7 +305,7 @@ animation_animatic_set_combine (AnimationAnimatic *animatic,
   if (priv->combine[panel_num] != combine)
     {
       priv->combine[panel_num] = combine;
-      animation_animatic_cache (animatic, panel_num, TRUE);
+      animation_animatic_cache_panel (animatic, panel_num, TRUE);
     }
 }
 
@@ -375,8 +383,64 @@ animation_animatic_get_duration (Animation *animation)
   return count;
 }
 
+static GeglBuffer *
+animation_animatic_get_frame (Animation *animation,
+                              gint       pos)
+{
+  AnimationAnimaticPrivate *priv;
+  gint                      panel;
+
+  priv = GET_PRIVATE (animation);
+  panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
+                                        pos);
+  return g_object_ref (priv->cache[panel]);
+}
+
+static gboolean
+animation_animatic_same (Animation *animation,
+                         gint       pos1,
+                         gint       pos2)
+{
+  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
+  gint                      count = 0;
+  gboolean                  identical = FALSE;
+  gint                      i ;
+
+  for (i = 0; i < priv->n_panels; i++)
+    {
+      count += priv->durations[i];
+      if (count > pos1 && count > pos2)
+        {
+          identical = TRUE;
+          break;
+        }
+      else if (count > pos1 || count > pos2)
+        {
+          identical = FALSE;
+          break;
+        }
+    }
+
+  return identical;
+}
+
 static void
-animation_animatic_load (Animation *animation)
+animation_animatic_purge_cache (Animation *animation)
+{
+  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
+  gint                      i;
+
+  for (i = 0; i < priv->n_panels; i++)
+    {
+      animation_animatic_cache_panel (ANIMATION_ANIMATIC (animation), i, FALSE);
+      g_signal_emit_by_name (animation, "loading",
+                             (gdouble) i / ((gdouble) priv->n_panels - 0.999));
+    }
+  g_signal_emit_by_name (animation, "loaded");
+}
+
+static void
+animation_animatic_reset_defaults (Animation *animation)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   gint32                   *layers;
@@ -384,21 +448,17 @@ animation_animatic_load (Animation *animation)
   gint                      i;
 
   /* Cleaning. */
-  if (priv->cache)
+  g_free (priv->tattoos);
+  g_free (priv->durations);
+  g_free (priv->combine);
+  for (i = 0; i < priv->n_panels; i++)
     {
-      g_free (priv->tattoos);
-      g_free (priv->durations);
-      g_free (priv->combine);
-
-      for (i = 0; i < priv->n_panels; i++)
-        {
-          g_free (priv->comments[i]);
-          if (priv->cache[i])
-            g_object_unref (priv->cache[i]);
-        }
-      g_free (priv->comments);
-      g_free (priv->cache);
+      g_free (priv->comments[i]);
+      if (priv->cache[i])
+        g_object_unref (priv->cache[i]);
     }
+  g_free (priv->comments);
+  g_free (priv->cache);
 
   image_id = animation_get_image_id (animation);
   layers   = gimp_image_get_layers (image_id, &priv->n_panels);
@@ -423,9 +483,6 @@ animation_animatic_load (Animation *animation)
       gint      duration;
       gboolean  combine;
 
-      g_signal_emit_by_name (animation, "loading",
-                             (gdouble) i / ((gdouble) priv->n_panels - 0.999));
-
       layer_name = gimp_item_get_name (layers[priv->n_panels - (i + 1)]);
 
       duration = parse_ms_tag (animation, layer_name);
@@ -437,70 +494,8 @@ animation_animatic_load (Animation *animation)
       priv->combine[i]   = combine;
       /* Layer names are used as default comments. */
       priv->comments[i]  = layer_name;
-
-      /* Panel image. */
-      animation_animatic_cache (ANIMATION_ANIMATIC (animation), i, FALSE);
     }
   g_free (layers);
-}
-
-static void
-animation_animatic_load_xml (Animation   *animation,
-                             const gchar *xml)
-{
-  const GMarkupParser markup_parser =
-    {
-      animation_animatic_start_element,
-      animation_animatic_end_element,
-      animation_animatic_text,
-      NULL,  /*  passthrough  */
-      NULL   /*  error        */
-    };
-  GMarkupParseContext *context;
-  ParseStatus          status = { 0, };
-  GError              *error  = NULL;
-
-  g_return_if_fail (xml != NULL);
-
-  /* Init with a default load. */
-  animation_animatic_load (animation);
-
-  /* Parse XML to update. */
-  status.state = START_STATE;
-  status.animation = animation;
-  status.xml_level = 0;
-
-  context = g_markup_parse_context_new (&markup_parser,
-                                        0, &status, NULL);
-  g_markup_parse_context_parse (context, xml, strlen (xml), &error);
-  if (error)
-    {
-      g_warning ("Error parsing XML: %s", error->message);
-    }
-  else
-    {
-      g_markup_parse_context_end_parse (context, &error);
-      if (error)
-        g_warning ("Error parsing XML: %s", error->message);
-    }
-  g_markup_parse_context_free (context);
-
-  /* If XML parsing failed, just reset the animation. */
-  if (error)
-    animation_animatic_load (animation);
-}
-
-static GeglBuffer *
-animation_animatic_get_frame (Animation *animation,
-                              gint       pos)
-{
-  AnimationAnimaticPrivate *priv;
-  gint                      panel;
-
-  priv = GET_PRIVATE (animation);
-  panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
-                                        pos);
-  return g_object_ref (priv->cache[panel]);
 }
 
 static gchar *
@@ -566,31 +561,39 @@ animation_animatic_serialize (Animation *animation)
 }
 
 static gboolean
-animation_animatic_same (Animation *animation,
-                         gint       pos1,
-                         gint       pos2)
+animation_animatic_deserialize (Animation    *animation,
+                                const gchar  *xml,
+                                GError      **error)
 {
-  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
-  gint                      count = 0;
-  gboolean                  identical = FALSE;
-  gint                      i ;
-
-  for (i = 0; i < priv->n_panels; i++)
+  const GMarkupParser markup_parser =
     {
-      count += priv->durations[i];
-      if (count > pos1 && count > pos2)
-        {
-          identical = TRUE;
-          break;
-        }
-      else if (count > pos1 || count > pos2)
-        {
-          identical = FALSE;
-          break;
-        }
-    }
+      animation_animatic_start_element,
+      animation_animatic_end_element,
+      animation_animatic_text,
+      NULL,  /*  passthrough  */
+      NULL   /*  error        */
+    };
+  GMarkupParseContext *context;
+  ParseStatus          status = { 0, };
 
-  return identical;
+  g_return_val_if_fail (xml != NULL && *error == NULL, FALSE);
+
+  /* Init with a default load. */
+  animation_animatic_reset_defaults (animation);
+
+  /* Parse XML to update. */
+  status.state = START_STATE;
+  status.animation = animation;
+  status.xml_level = 0;
+
+  context = g_markup_parse_context_new (&markup_parser,
+                                        0, &status, NULL);
+  g_markup_parse_context_parse (context, xml, strlen (xml), error);
+  if (*error == NULL)
+    g_markup_parse_context_end_parse (context, error);
+  g_markup_parse_context_free (context);
+
+  return (*error == NULL);
 }
 
 static void
@@ -692,11 +695,7 @@ animation_animatic_start_element (GMarkupParseContext *context,
           values++;
         }
       if (priv->combine[status->panel] != combine)
-        {
-          priv->combine[status->panel] = combine;
-          animation_animatic_cache (ANIMATION_ANIMATIC (status->animation),
-                                    status->panel, FALSE);
-        }
+        priv->combine[status->panel] = combine;
       status->state = PANEL_STATE;
       break;
     case PANEL_STATE:
@@ -828,9 +827,9 @@ animation_animatic_text (GMarkupParseContext  *context,
 /**** Utils ****/
 
 static void
-animation_animatic_cache (AnimationAnimatic *animatic,
-                          gint               panel,
-                          gboolean           recursion)
+animation_animatic_cache_panel (AnimationAnimatic *animatic,
+                                gint               panel,
+                                gboolean           recursion)
 {
   AnimationAnimaticPrivate *priv      = GET_PRIVATE (animatic);
   Animation                *animation = ANIMATION (animatic);
@@ -878,10 +877,12 @@ animation_animatic_cache (AnimationAnimatic *animatic,
                                      layer_offx, layer_offy);
   g_object_unref (buffer);
 
-  g_signal_emit_by_name (animation, "cache-invalidated",
-                         animation_animatic_get_position (animatic,
-                                                          panel),
-                         1);
+  if (animation_animatic_get_panel_duration (animatic, panel) > 0)
+    g_signal_emit_by_name (animation, "cache-invalidated",
+                           animation_animatic_get_position (animatic,
+                                                            panel),
+                           animation_animatic_get_panel_duration (animatic,
+                                                                  panel));
 
   /* If next panel is in "combine" mode, it must also be re-cached.
    * And so on, recursively. */
@@ -889,7 +890,7 @@ animation_animatic_cache (AnimationAnimatic *animatic,
       panel < priv->n_panels - 1 &&
       priv->combine[panel + 1])
     {
-      animation_animatic_cache (animatic, panel + 1, TRUE);
+      animation_animatic_cache_panel (animatic, panel + 1, TRUE);
     }
 }
 

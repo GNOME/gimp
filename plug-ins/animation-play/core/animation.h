@@ -41,34 +41,37 @@ struct _AnimationClass
   GObjectClass  parent_class;
 
   /* Signals */
-  void         (*loading)            (Animation *animation,
-                                      gdouble    ratio);
-  void         (*loaded)             (Animation *animation);
+  void         (*loading)            (Animation    *animation,
+                                      gdouble       ratio);
+  void         (*loaded)             (Animation    *animation);
 
-  void         (*cache_invalidated)  (Animation *animation,
-                                      gint       position);
-  void         (*duration_changed)   (Animation *animation,
-                                      gint       duration);
-  void         (*framerate_changed)  (Animation *animation,
-                                      gdouble    fps);
-  void         (*proxy)              (Animation *animation,
-                                      gdouble    ratio);
+  void         (*cache_invalidated)  (Animation    *animation,
+                                      gint          position);
+  void         (*duration_changed)   (Animation    *animation,
+                                      gint          duration);
+  void         (*framerate_changed)  (Animation    *animation,
+                                      gdouble       fps);
+  void         (*proxy)              (Animation    *animation,
+                                      gdouble       ratio);
 
   /* Defaults to returning FALSE for any different position. */
-  gboolean     (*same)               (Animation *animation,
-                                      gint       prev_pos,
-                                      gint       next_pos);
+  gboolean     (*same)               (Animation    *animation,
+                                      gint          prev_pos,
+                                      gint          next_pos);
 
   /* These virtual methods must be implemented by any subclass. */
-  void         (*load)               (Animation   *animation);
-  void         (*load_xml)           (Animation   *animation,
-                                      const gchar *xml);
-  gint         (*get_duration)       (Animation   *animation);
+  gint         (*get_duration)       (Animation    *animation);
 
-  GeglBuffer * (*get_frame)          (Animation   *animation,
-                                      gint         pos);
+  GeglBuffer * (*get_frame)          (Animation    *animation,
+                                      gint          pos);
 
-  gchar      * (*serialize)          (Animation   *animation);
+  void         (*purge_cache)        (Animation    *animation);
+
+  void         (*reset_defaults)     (Animation    *animation);
+  gchar      * (*serialize)          (Animation    *animation);
+  gboolean     (*deserialize)        (Animation    *animation,
+                                      const gchar  *xml,
+                                      GError      **error);
 };
 
 GType         animation_get_type (void);

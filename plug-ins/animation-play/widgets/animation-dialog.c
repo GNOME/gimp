@@ -139,6 +139,10 @@ static void        connect_accelerators      (GtkUIManager     *ui_manager,
 
 static void        animation_dialog_set_animation (AnimationDialog *dialog,
                                                    Animation       *animation);
+
+static gboolean    on_dialog_expose                (GtkWidget      *widget,
+                                                    GdkEvent       *event,
+                                                    Animation      *animation);
 /* Finalization. */
 static void        update_ui_sensitivity     (AnimationDialog  *dialog);
 
@@ -1361,6 +1365,28 @@ animation_dialog_set_animation (AnimationDialog *dialog,
 
   /* Set the playback */
   animation_playback_set_animation (priv->playback, animation);
+
+  if (gtk_widget_get_realized (GTK_WIDGET (dialog)))
+    animation_load (priv->animation);
+  else
+    /* Wait for the dialog to be realized because cache loading can
+       take time and it is friendlier to have a visible GUI first. */
+    g_signal_connect_after (dialog, "expose-event",
+                              G_CALLBACK (on_dialog_expose),
+                              priv->animation);
+}
+
+static gboolean
+on_dialog_expose (GtkWidget *widget,
+                  GdkEvent  *event,
+                  Animation *animation)
+{
+  g_signal_handlers_disconnect_by_func (widget,
+                                        G_CALLBACK (on_dialog_expose),
+                                        animation);
+  animation_load (animation);
+
+  return FALSE;
 }
 
 /* Update the tool sensitivity for playing, depending on the number of frames. */

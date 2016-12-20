@@ -54,7 +54,8 @@ enum
 enum
 {
   PROP_0,
-  PROP_IMAGE
+  PROP_IMAGE,
+  PROP_XML
 };
 
 typedef struct _AnimationPrivate AnimationPrivate;
@@ -62,7 +63,6 @@ typedef struct _AnimationPrivate AnimationPrivate;
 struct _AnimationPrivate
 {
   gint32    image_id;
-  gchar    *xml;
 
   gdouble   framerate;
 
@@ -227,13 +227,23 @@ animation_class_init (AnimationClass *klass)
   /**
    * Animation:image:
    *
-   * The attached image id.
+   * The associated image id.
    */
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_int ("image", NULL, NULL,
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
+  /**
+   * Animation:xml:
+   *
+   * The animation serialized as a XML string.
+   */
+  g_object_class_install_property (object_class, PROP_XML,
+                                   g_param_spec_string ("xml", NULL,
+                                                        NULL, NULL,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (klass, sizeof (AnimationPrivate));
 }
@@ -262,15 +272,13 @@ animation_new (gint32       image_id,
                gboolean     animatic,
                const gchar *xml)
 {
-  Animation        *animation;
-  AnimationPrivate *priv;
+  Animation *animation;
 
   animation = g_object_new (animatic? ANIMATION_TYPE_ANIMATIC :
                                       ANIMATION_TYPE_CEL_ANIMATION,
                             "image", image_id,
+                            "xml", xml,
                             NULL);
-  priv = ANIMATION_GET_PRIVATE (animation);
-  priv->xml = g_strdup (xml);
 
   return animation;
 }
@@ -283,27 +291,21 @@ animation_get_image_id (Animation *animation)
   return priv->image_id;
 }
 
+/**
+ * animation_load:
+ * @animation: the #Animation.
+ *
+ * Cache the whole animation. This is to be used at the start, or each
+ * time you want to reload the image contents.
+ **/
 void
 animation_load (Animation *animation)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
 
   priv->loaded = FALSE;
-  g_signal_emit (animation, animation_signals[LOADING], 0, 0.0);
-
-  if (priv->xml)
-    ANIMATION_GET_CLASS (animation)->load_xml (animation,
-                                               priv->xml);
-  else
-    ANIMATION_GET_CLASS (animation)->load (animation);
-
-  /* XML is only used for the first load.
-   * Any next loads will use internal data. */
-  g_free (priv->xml);
-  priv->xml = NULL;
-
+  ANIMATION_GET_CLASS (animation)->purge_cache (animation);
   priv->loaded = TRUE;
-  g_signal_emit (animation, animation_signals[LOADED], 0);
   g_signal_emit (animation, animation_signals[CACHE_INVALIDATED], 0,
                  0, animation_get_duration (animation));
 }
@@ -480,12 +482,6 @@ animation_loaded (Animation *animation)
 static void
 animation_finalize (GObject *object)
 {
-  Animation        *animation = ANIMATION (object);
-  AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
-
-  if (priv->xml)
-    g_free (priv->xml);
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -502,6 +498,25 @@ animation_set_property (GObject      *object,
     {
     case PROP_IMAGE:
       priv->image_id = g_value_get_int (value);
+      break;
+    case PROP_XML:
+        {
+          const gchar *xml   = g_value_get_string (value);
+          GError      *error = NULL;
+
+          if (! xml ||
+              ! ANIMATION_GET_CLASS (animation)->deserialize (animation,
+                                                              xml,
+                                                              &error))
+            {
+              if (error)
+                g_warning ("Error parsing XML: %s", error->message);
+
+              /* First time or XML parsing failed: reset to defaults. */
+              ANIMATION_GET_CLASS (animation)->reset_defaults (animation);
+            }
+          g_clear_error (&error);
+        }
       break;
 
     default:
@@ -523,6 +538,14 @@ animation_get_property (GObject    *object,
     {
     case PROP_IMAGE:
       g_value_set_int (value, priv->image_id);
+      break;
+    case PROP_XML:
+        {
+          gchar *xml;
+
+          xml = ANIMATION_GET_CLASS (animation)->serialize (animation);
+          g_value_take_string (value, xml);
+        }
       break;
 
     default:

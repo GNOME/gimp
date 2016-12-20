@@ -95,51 +95,55 @@ typedef struct
                                      ANIMATION_TYPE_CEL_ANIMATION, \
                                      AnimationCelAnimationPrivate)
 
-static void         animation_cel_animation_finalize     (GObject           *object);
+static void         animation_cel_animation_finalize       (GObject           *object);
 
 /* Virtual methods */
 
-static gint         animation_cel_animation_get_duration (Animation         *animation);
+static gint         animation_cel_animation_get_duration   (Animation         *animation);
 
-static void         animation_cel_animation_load         (Animation         *animation);
-static void         animation_cel_animation_load_xml     (Animation         *animation,
-                                                          const gchar       *xml);
-static GeglBuffer * animation_cel_animation_get_frame    (Animation         *animation,
-                                                          gint               pos);
-static gchar      * animation_cel_animation_serialize    (Animation         *animation);
+static GeglBuffer * animation_cel_animation_get_frame      (Animation         *animation,
+                                                            gint               pos);
 
-static gboolean     animation_cel_animation_same         (Animation         *animation,
-                                                          gint               previous_pos,
-                                                          gint               next_pos);
+static gboolean     animation_cel_animation_same           (Animation         *animation,
+                                                            gint               previous_pos,
+                                                            gint               next_pos);
+
+static void         animation_cel_animation_purge_cache    (Animation         *animation);
+
+static void         animation_cel_animation_reset_defaults (Animation         *animation);
+static gchar      * animation_cel_animation_serialize      (Animation         *animation);
+static gboolean     animation_cel_animation_deserialize    (Animation         *animation,
+                                                            const gchar       *xml,
+                                                            GError           **error);
 
 /* XML parsing */
 
-static void      animation_cel_animation_start_element   (GMarkupParseContext *context,
-                                                          const gchar         *element_name,
-                                                          const gchar        **attribute_names,
-                                                          const gchar        **attribute_values,
-                                                          gpointer             user_data,
-                                                          GError             **error);
-static void      animation_cel_animation_end_element     (GMarkupParseContext *context,
-                                                          const gchar         *element_name,
-                                                          gpointer             user_data,
-                                                          GError             **error);
+static void      animation_cel_animation_start_element     (GMarkupParseContext *context,
+                                                            const gchar         *element_name,
+                                                            const gchar        **attribute_names,
+                                                            const gchar        **attribute_values,
+                                                            gpointer             user_data,
+                                                            GError             **error);
+static void      animation_cel_animation_end_element       (GMarkupParseContext *context,
+                                                            const gchar         *element_name,
+                                                            gpointer             user_data,
+                                                            GError             **error);
 
-static void      animation_cel_animation_text            (GMarkupParseContext  *context,
-                                                          const gchar          *text,
-                                                          gsize                 text_len,
-                                                          gpointer              user_data,
-                                                          GError              **error);
+static void      animation_cel_animation_text              (GMarkupParseContext  *context,
+                                                            const gchar          *text,
+                                                            gsize                 text_len,
+                                                            gpointer              user_data,
+                                                            GError              **error);
 
 /* Utils */
 
-static void         animation_cel_animation_cleanup      (AnimationCelAnimation  *animation);
-static void         animation_cel_animation_cache        (AnimationCelAnimation  *animation,
-                                                          gint                    position);
-static gboolean     animation_cel_animation_cache_cmp    (Cache                   *cache1,
-                                                          Cache                   *cache2);
-static void         animation_cel_animation_clean_cache  (Cache                   *cache);
-static void         animation_cel_animation_clean_track  (Track                   *track);
+static void         animation_cel_animation_cache          (AnimationCelAnimation  *animation,
+                                                            gint                    position);
+static void         animation_cel_animation_cleanup        (AnimationCelAnimation  *animation);
+static gboolean     animation_cel_animation_cache_cmp      (Cache                   *cache1,
+                                                            Cache                   *cache2);
+static void         animation_cel_animation_clean_cache    (Cache                   *cache);
+static void         animation_cel_animation_clean_track    (Track                   *track);
 
 G_DEFINE_TYPE (AnimationCelAnimation, animation_cel_animation, ANIMATION_TYPE_ANIMATION)
 
@@ -151,14 +155,17 @@ animation_cel_animation_class_init (AnimationCelAnimationClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   AnimationClass *anim_class   = ANIMATION_CLASS (klass);
 
-  object_class->finalize = animation_cel_animation_finalize;
+  object_class->finalize     = animation_cel_animation_finalize;
 
-  anim_class->get_duration = animation_cel_animation_get_duration;
-  anim_class->load         = animation_cel_animation_load;
-  anim_class->load_xml     = animation_cel_animation_load_xml;
-  anim_class->get_frame    = animation_cel_animation_get_frame;
-  anim_class->serialize    = animation_cel_animation_serialize;
-  anim_class->same         = animation_cel_animation_same;
+  anim_class->get_duration   = animation_cel_animation_get_duration;
+  anim_class->get_frame      = animation_cel_animation_get_frame;
+  anim_class->same           = animation_cel_animation_same;
+
+  anim_class->purge_cache    = animation_cel_animation_purge_cache;
+
+  anim_class->reset_defaults = animation_cel_animation_reset_defaults;
+  anim_class->serialize      = animation_cel_animation_serialize;
+  anim_class->deserialize    = animation_cel_animation_deserialize;
 
   g_type_class_add_private (klass, sizeof (AnimationCelAnimationPrivate));
 }
@@ -222,6 +229,7 @@ animation_cel_animation_set_layers (AnimationCelAnimation *animation,
           layers->data = NULL;
         }
       animation_cel_animation_cache (animation, position);
+      g_signal_emit_by_name (animation, "cache-invalidated", position, 1);
     }
 }
 
@@ -389,6 +397,8 @@ animation_cel_animation_level_up (AnimationCelAnimation *animation,
               animation_cel_animation_cache (animation, i);
             }
         }
+      g_signal_emit_by_name (animation, "cache-invalidated",
+                             0, g_list_length (track->frames));
       g_signal_emit_by_name (animation, "loaded");
     }
 
@@ -436,6 +446,8 @@ animation_cel_animation_level_down (AnimationCelAnimation *animation,
               animation_cel_animation_cache (animation, i);
             }
         }
+      g_signal_emit_by_name (animation, "cache-invalidated",
+                             0, g_list_length (track->frames));
       g_signal_emit_by_name (animation, "loaded");
     }
 
@@ -459,7 +471,6 @@ animation_cel_animation_level_delete (AnimationCelAnimation *animation,
     {
       item = g_list_nth (animation->priv->tracks, level);
       track = item->data;
-      animation_cel_animation_clean_track (track);
       animation->priv->tracks = g_list_delete_link (animation->priv->tracks, item);
 
       iter = track->frames;
@@ -474,7 +485,10 @@ animation_cel_animation_level_delete (AnimationCelAnimation *animation,
               animation_cel_animation_cache (animation, i);
             }
         }
+      g_signal_emit_by_name (animation, "cache-invalidated",
+                             0, g_list_length (track->frames));
       g_signal_emit_by_name (animation, "loaded");
+      animation_cel_animation_clean_track (track);
 
       return TRUE;
     }
@@ -560,6 +574,9 @@ animation_cel_animation_cel_delete (AnimationCelAnimation *animation,
 
               animation_cel_animation_cache (animation, i);
             }
+          if (i > position)
+            g_signal_emit_by_name (animation, "cache-invalidated",
+                                   position, i - position);
           g_signal_emit_by_name (animation, "loaded");
 
           return TRUE;
@@ -610,6 +627,9 @@ animation_cel_animation_cel_add (AnimationCelAnimation *animation,
 
               animation_cel_animation_cache (animation, i);
             }
+          if (i > position)
+            g_signal_emit_by_name (animation, "cache-invalidated",
+                                   position, i - position);
           g_signal_emit_by_name (animation, "loaded");
 
           return TRUE;
@@ -624,135 +644,6 @@ static gint
 animation_cel_animation_get_duration (Animation *animation)
 {
   return ANIMATION_CEL_ANIMATION (animation)->priv->duration;
-}
-
-static void
-animation_cel_animation_load (Animation *animation)
-{
-  AnimationCelAnimationPrivate *priv;
-  Track                        *track;
-  gint32                        image_id;
-  gint32                        layer;
-  gint                          i;
-
-  priv = ANIMATION_CEL_ANIMATION (animation)->priv;
-
-  /* First load with default values. */
-  if (! priv->tracks)
-    {
-      /* Purely arbitrary value. User will anyway change it to suit one's needs. */
-      priv->duration = 240;
-
-      /* There are at least 2 tracks.
-       * Second one is freely-named. */
-      track = g_new0 (Track, 1);
-      track->title = g_strdup (_("Name me"));
-      priv->tracks = g_list_prepend (priv->tracks, track);
-      /* The first track is called "Background". */
-      track = g_new0 (Track, 1);
-      track->title = g_strdup (_("Background"));
-      priv->tracks = g_list_prepend (priv->tracks, track);
-
-      /* If there is a layer named "Background", set it to all frames
-       * on background track. */
-      image_id = animation_get_image_id (animation);
-      layer    = gimp_image_get_layer_by_name (image_id, _("Background"));
-      if (layer > 0)
-        {
-          gint tattoo;
-
-          tattoo = gimp_item_get_tattoo (layer);
-          for (i = 0; i < priv->duration; i++)
-            {
-              GList *layers = NULL;
-
-              layers = g_list_prepend (layers,
-                                       GINT_TO_POINTER (tattoo));
-              track->frames = g_list_prepend (track->frames,
-                                              layers);
-            }
-        }
-    }
-
-  /* Invalidate all cache. */
-  g_list_free_full (priv->cache,
-                    (GDestroyNotify) animation_cel_animation_clean_cache);
-  priv->cache = NULL;
-
-  /* Finally cache. */
-  for (i = 0; i < priv->duration; i++)
-    {
-      g_signal_emit_by_name (animation, "loading",
-                             (gdouble) i / ((gdouble) priv->duration - 0.999));
-
-      /* Panel image. */
-      animation_cel_animation_cache (ANIMATION_CEL_ANIMATION (animation), i);
-    }
-}
-
-static void
-animation_cel_animation_load_xml (Animation   *animation,
-                                  const gchar *xml)
-{
-  const GMarkupParser markup_parser =
-    {
-      animation_cel_animation_start_element,
-      animation_cel_animation_end_element,
-      animation_cel_animation_text,
-      NULL,  /*  passthrough  */
-      NULL   /*  error        */
-    };
-  GMarkupParseContext *context;
-  ParseStatus          status = { 0, };
-  GError              *error  = NULL;
-
-  g_return_if_fail (xml != NULL);
-
-  /* Parse XML to update. */
-  status.state = START_STATE;
-  status.animation = animation;
-
-  context = g_markup_parse_context_new (&markup_parser,
-                                        0, &status, NULL);
-  g_markup_parse_context_parse (context, xml, strlen (xml), &error);
-  if (error)
-    {
-      g_warning ("Error parsing XML: %s", error->message);
-    }
-  else
-    {
-      g_markup_parse_context_end_parse (context, &error);
-      if (error)
-        g_warning ("Error parsing XML: %s", error->message);
-    }
-  g_markup_parse_context_free (context);
-
-  /* If XML parsing failed, just reset the animation. */
-  if (error)
-    {
-      animation_cel_animation_cleanup (ANIMATION_CEL_ANIMATION (animation));
-      animation_cel_animation_load (animation);
-    }
-  else
-    {
-      AnimationCelAnimation *cel_animation;
-      gint                   duration = animation_get_duration (animation);
-      gint                   i;
-
-      cel_animation = ANIMATION_CEL_ANIMATION (animation);
-      /* Reverse track order. */
-      cel_animation->priv->tracks = g_list_reverse (cel_animation->priv->tracks);
-
-      /* cache. */
-      for (i = 0; i < duration; i++)
-        {
-          g_signal_emit_by_name (animation, "loading",
-                                 (gdouble) i / ((gdouble) duration - 0.999));
-
-          /* Panel image. */
-          animation_cel_animation_cache (ANIMATION_CEL_ANIMATION (animation), i);
-        }
-    }
 }
 
 static GeglBuffer *
@@ -772,6 +663,91 @@ animation_cel_animation_get_frame (Animation *animation,
       frame = g_object_ref (cache->buffer);
     }
   return frame;
+}
+
+static gboolean
+animation_cel_animation_same (Animation *animation,
+                              gint       pos1,
+                              gint       pos2)
+{
+  AnimationCelAnimation *cel_animation;
+  Cache                 *cache1;
+  Cache                 *cache2;
+
+  cel_animation = ANIMATION_CEL_ANIMATION (animation);
+
+  g_return_val_if_fail (pos1 >= 0                            &&
+                        pos1 < cel_animation->priv->duration &&
+                        pos2 >= 0                            &&
+                        pos2 < cel_animation->priv->duration,
+                        FALSE);
+
+  cache1 = g_list_nth_data (cel_animation->priv->cache, pos1);
+  cache2 = g_list_nth_data (cel_animation->priv->cache, pos2);
+
+  return animation_cel_animation_cache_cmp (cache1, cache2);
+}
+
+static void
+animation_cel_animation_purge_cache (Animation *animation)
+{
+  gint duration;
+  gint i;
+
+  duration = animation_get_duration (animation);
+  for (i = 0; i < duration; i++)
+    {
+      animation_cel_animation_cache (ANIMATION_CEL_ANIMATION (animation),
+                                     i);
+      g_signal_emit_by_name (animation, "loading",
+                             (gdouble) i / ((gdouble) duration - 0.999));
+    }
+  g_signal_emit_by_name (animation, "loaded");
+}
+
+static void
+animation_cel_animation_reset_defaults (Animation *animation)
+{
+  AnimationCelAnimationPrivate *priv;
+  Track                        *track;
+  gint32                        image_id;
+  gint32                        layer;
+  gint                          i;
+
+  priv = ANIMATION_CEL_ANIMATION (animation)->priv;
+  animation_cel_animation_cleanup (ANIMATION_CEL_ANIMATION (animation));
+
+  /* Purely arbitrary value. User will anyway change it to suit one's needs. */
+  priv->duration = 240;
+
+  /* There are at least 2 tracks. Second one is freely-named. */
+  track = g_new0 (Track, 1);
+  track->title = g_strdup (_("Name me"));
+  priv->tracks = g_list_prepend (priv->tracks, track);
+  /* The first track is called "Background". */
+  track = g_new0 (Track, 1);
+  track->title = g_strdup (_("Background"));
+  priv->tracks = g_list_prepend (priv->tracks, track);
+
+  /* If there is a layer named "Background", set it to all frames
+   * on background track. */
+  image_id = animation_get_image_id (animation);
+  layer    = gimp_image_get_layer_by_name (image_id, _("Background"));
+  if (layer > 0)
+    {
+      gint tattoo;
+
+      tattoo = gimp_item_get_tattoo (layer);
+      for (i = 0; i < priv->duration; i++)
+        {
+          GList *layers = NULL;
+
+          layers = g_list_prepend (layers,
+                                   GINT_TO_POINTER (tattoo));
+          track->frames = g_list_prepend (track->frames,
+                                          layers);
+        }
+    }
 }
 
 static gchar *
@@ -901,26 +877,43 @@ animation_cel_animation_serialize (Animation *animation)
 }
 
 static gboolean
-animation_cel_animation_same (Animation *animation,
-                              gint       pos1,
-                              gint       pos2)
+animation_cel_animation_deserialize (Animation    *animation,
+                                     const gchar  *xml,
+                                     GError      **error)
 {
-  AnimationCelAnimation *cel_animation;
-  Cache                 *cache1;
-  Cache                 *cache2;
+  const GMarkupParser markup_parser =
+    {
+      animation_cel_animation_start_element,
+      animation_cel_animation_end_element,
+      animation_cel_animation_text,
+      NULL,  /*  passthrough  */
+      NULL   /*  error        */
+    };
+  GMarkupParseContext *context;
+  ParseStatus          status = { 0, };
 
-  cel_animation = ANIMATION_CEL_ANIMATION (animation);
+  g_return_val_if_fail (xml != NULL && *error == NULL, FALSE);
 
-  g_return_val_if_fail (pos1 >= 0                            &&
-                        pos1 < cel_animation->priv->duration &&
-                        pos2 >= 0                            &&
-                        pos2 < cel_animation->priv->duration,
-                        FALSE);
+  /* Parse XML to update. */
+  status.state = START_STATE;
+  status.animation = animation;
 
-  cache1 = g_list_nth_data (cel_animation->priv->cache, pos1);
-  cache2 = g_list_nth_data (cel_animation->priv->cache, pos2);
+  context = g_markup_parse_context_new (&markup_parser,
+                                        0, &status, NULL);
+  g_markup_parse_context_parse (context, xml, strlen (xml), error);
+  if (*error == NULL)
+    {
+      AnimationCelAnimation *cel_animation;
 
-  return animation_cel_animation_cache_cmp (cache1, cache2);
+      g_markup_parse_context_end_parse (context, error);
+
+      cel_animation = ANIMATION_CEL_ANIMATION (animation);
+      /* Reverse track order. */
+      cel_animation->priv->tracks = g_list_reverse (cel_animation->priv->tracks);
+    }
+  g_markup_parse_context_free (context);
+
+  return (*error == NULL);
 }
 
 static void
@@ -1217,20 +1210,6 @@ animation_cel_animation_text (GMarkupParseContext  *context,
 /**** Utils ****/
 
 static void
-animation_cel_animation_cleanup (AnimationCelAnimation *animation)
-{
-  g_list_free_full (animation->priv->cache,
-                    (GDestroyNotify) animation_cel_animation_clean_cache);
-  animation->priv->cache    = NULL;
-  g_list_free_full (animation->priv->comments,
-                    (GDestroyNotify) g_free);
-  animation->priv->comments = NULL;
-  g_list_free_full (animation->priv->tracks,
-                    (GDestroyNotify) animation_cel_animation_clean_track);
-  animation->priv->tracks   = NULL;
-}
-
-static void
 animation_cel_animation_cache (AnimationCelAnimation *animation,
                                gint                   pos)
 {
@@ -1386,8 +1365,20 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
 
   /* This item exists and has a NULL data. */
   g_list_nth (animation->priv->cache, pos)->data = cache;
+}
 
-  g_signal_emit_by_name (animation, "cache-invalidated", pos, 1);
+static void
+animation_cel_animation_cleanup (AnimationCelAnimation *animation)
+{
+  g_list_free_full (animation->priv->cache,
+                    (GDestroyNotify) animation_cel_animation_clean_cache);
+  animation->priv->cache    = NULL;
+  g_list_free_full (animation->priv->comments,
+                    (GDestroyNotify) g_free);
+  animation->priv->comments = NULL;
+  g_list_free_full (animation->priv->tracks,
+                    (GDestroyNotify) animation_cel_animation_clean_track);
+  animation->priv->tracks   = NULL;
 }
 
 static gboolean

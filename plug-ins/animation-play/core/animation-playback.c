@@ -514,8 +514,6 @@ animation_playback_set_property (GObject      *object,
           if (! animation)
             break;
 
-          if (! animation_loaded (animation))
-            animation_load (animation);
           /* Default playback is the full range of frames. */
           playback->priv->position = 0;
           playback->priv->start = 0;
