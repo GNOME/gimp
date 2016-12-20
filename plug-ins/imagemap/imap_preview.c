@@ -75,6 +75,25 @@ preview_get_height(GtkWidget *preview)
 }
 
 static void
+render_background(Preview_t *preview_base)
+{
+   GtkWidget      *preview = preview_base->preview;
+   GtkStyle       *style;
+   const GdkColor *bg_color;
+
+   gtk_widget_ensure_style (preview);
+
+   style    = gtk_widget_get_style (preview);
+   bg_color = &style->bg[GTK_STATE_NORMAL];
+
+   gimp_preview_area_fill (GIMP_PREVIEW_AREA (preview),
+                           0, 0, G_MAXINT, G_MAXINT,
+                           bg_color->red   >> 8,
+                           bg_color->green >> 8,
+                           bg_color->blue  >> 8);
+}
+
+static void
 render_gray_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 {
    guchar        *src_row, *dest_buffer, *dest;
@@ -264,6 +283,8 @@ render_rgb_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 static void
 render_preview(Preview_t *preview_base, GimpPixelRgn *srcrgn)
 {
+   render_background (preview_base);
+
    switch (gimp_drawable_type(srcrgn->drawable->drawable_id)) {
    case GIMP_RGB_IMAGE:
    case GIMP_RGBA_IMAGE:
