@@ -918,6 +918,8 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
       x = y = max;
     }
 
+  data->min_xres = x;
+  data->min_yres = y;
   gimp_size_entry_set_refval_boundaries (info->resolution_entry, 0,
                                          x, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval_boundaries (info->resolution_entry, 1,
