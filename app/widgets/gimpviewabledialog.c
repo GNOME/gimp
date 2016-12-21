@@ -247,7 +247,7 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
   if (! viewable)
-    g_warning ("Use of GimpViewableDialog with a NULL viewable is depecrated!");
+    g_warning ("Use of GimpViewableDialog with a NULL viewable is deprecated!");
 
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
                          "viewable",    viewable,
