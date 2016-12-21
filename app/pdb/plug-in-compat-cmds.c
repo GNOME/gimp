@@ -338,7 +338,7 @@ gaussian_blur (GimpDrawable  *drawable,
                                   "operation",    "gegl:gaussian-blur",
                                   "std-dev-x",    horizontal * 0.32,
                                   "std-dev-y",    vertical   * 0.32,
-				  "abyss-policy", 1,
+                                  "abyss-policy", 1,
                                   NULL);
 
       node = wrap_in_gamma_cast (node, drawable);

@@ -363,8 +363,8 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
 
 void
 gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
-				    GtkWidget    *page,
-				    gboolean      scrollable)
+                                    GtkWidget    *page,
+                                    gboolean      scrollable)
 {
   GimpPrefsBoxPrivate *private;
   GtkWidget           *scrolled_win;
@@ -383,8 +383,8 @@ gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_NEVER,
-				  scrollable ?
-				  GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
+                                  scrollable ?
+                                  GTK_POLICY_AUTOMATIC : GTK_POLICY_NEVER);
 }
 
 GtkWidget *

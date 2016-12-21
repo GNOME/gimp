@@ -266,7 +266,7 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
   if (GTK_IS_WINDOW (window))
     {
       gchar *title = g_strdup_printf (_("Close %s"),
-				      gimp_image_get_display_name (image));
+                                      gimp_image_get_display_name (image));
 
       gtk_window_set_title (GTK_WINDOW (window), title);
       g_free (title);

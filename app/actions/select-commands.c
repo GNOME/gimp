@@ -475,8 +475,8 @@ select_feather_callback (GtkWidget *widget,
   gdouble           radius_y;
 
   g_object_set (config,
-		"selection-feather-radius", size,
-		NULL);
+                "selection-feather-radius", size,
+                NULL);
 
   radius_x = config->selection_feather_radius;
   radius_y = config->selection_feather_radius;
@@ -522,11 +522,11 @@ select_border_callback (GtkWidget *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &border_style);
 
   g_object_set (config,
-		"selection-border-radius", size,
-		"selection-border-style",  border_style,
-		"selection-border-edge-lock",
-		gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)),
-		NULL);
+                "selection-border-radius", size,
+                "selection-border-style",  border_style,
+                "selection-border-edge-lock",
+                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)),
+                NULL);
 
   radius_x = ROUND (config->selection_border_radius);
   radius_y = ROUND (config->selection_border_radius);
@@ -550,8 +550,8 @@ select_border_callback (GtkWidget *widget,
 
   gimp_channel_border (gimp_image_get_mask (image), radius_x, radius_y,
                        config->selection_border_style,
-		       config->selection_border_edge_lock,
-		       TRUE);
+                       config->selection_border_edge_lock,
+                       TRUE);
   gimp_image_flush (image);
 }
 
@@ -567,8 +567,8 @@ select_grow_callback (GtkWidget *widget,
   gdouble           radius_y;
 
   g_object_set (config,
-		"selection-grow-radius", size,
-		NULL);
+                "selection-grow-radius", size,
+                NULL);
 
   radius_x = ROUND (config->selection_grow_radius);
   radius_y = ROUND (config->selection_grow_radius);
@@ -609,10 +609,10 @@ select_shrink_callback (GtkWidget *widget,
   button = g_object_get_data (G_OBJECT (widget), "edge-lock-toggle");
 
   g_object_set (config,
-		"selection-shrink-radius",  size,
-		"selection-shrink-edge-lock",
-		gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)),
-		NULL);
+                "selection-shrink-radius",  size,
+                "selection-shrink-edge-lock",
+                gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)),
+                NULL);
 
   radius_x = ROUND (config->selection_shrink_radius);
   radius_y = ROUND (config->selection_shrink_radius);
@@ -636,6 +636,6 @@ select_shrink_callback (GtkWidget *widget,
 
   gimp_channel_shrink (gimp_image_get_mask (image), radius_x, radius_y,
                        config->selection_shrink_edge_lock,
-		       TRUE);
+                       TRUE);
   gimp_image_flush (image);
 }

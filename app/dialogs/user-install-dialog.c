@@ -39,8 +39,8 @@
 
 static GtkWidget * user_install_dialog_new (GimpUserInstall *install);
 static void        user_install_dialog_log (const gchar     *message,
-					    gboolean         error,
-					    gpointer         data);
+                                            gboolean         error,
+                                            gpointer         data);
 
 
 gboolean
@@ -58,8 +58,8 @@ user_install_dialog_run (GimpUserInstall *install)
   if (! success)
     {
       g_signal_connect (dialog, "response",
-			G_CALLBACK (gtk_main_quit),
-			NULL);
+                        G_CALLBACK (gtk_main_quit),
+                        NULL);
 
       gtk_widget_show (dialog);
 
@@ -83,18 +83,18 @@ user_install_dialog_new (GimpUserInstall *install)
   gimp_icons_init ();
 
   dialog = gimp_message_dialog_new (_("GIMP User Installation"),
-				    GIMP_STOCK_WILBER_EEK,
-				    NULL, 0, NULL, NULL,
+                                    GIMP_STOCK_WILBER_EEK,
+                                    NULL, 0, NULL, NULL,
 
-				    GTK_STOCK_QUIT, GTK_RESPONSE_OK,
+                                    GTK_STOCK_QUIT, GTK_RESPONSE_OK,
 
-				    NULL);
+                                    NULL);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-				     _("User installation failed!"));
+                                     _("User installation failed!"));
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-			     _("The GIMP user installation failed; "
-			       "see the log for details."));
+                             _("The GIMP user installation failed; "
+                               "see the log for details."));
 
   frame = gimp_frame_new (_("Installation Log"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);

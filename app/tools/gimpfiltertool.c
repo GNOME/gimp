@@ -298,14 +298,14 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot modify the pixels of layer groups."));
+                           _("Cannot modify the pixels of layer groups."));
       return FALSE;
     }
 
   if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("The active layer's pixels are locked."));
+                           _("The active layer's pixels are locked."));
       return FALSE;
     }
 

@@ -185,8 +185,8 @@ text_tool_direction_cmd_callback (GtkAction *action,
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
   g_object_set (text_tool->proxy,
-		"base-direction", (GimpTextDirection) value,
-		NULL);
+                "base-direction", (GimpTextDirection) value,
+                NULL);
 }
 
 
@@ -194,8 +194,8 @@ text_tool_direction_cmd_callback (GtkAction *action,
 
 static void
 text_tool_load_dialog_response (GtkWidget    *dialog,
-				gint          response_id,
-				GimpTextTool *tool)
+                                gint          response_id,
+                                GimpTextTool *tool)
 {
   if (response_id == GTK_RESPONSE_OK)
     {

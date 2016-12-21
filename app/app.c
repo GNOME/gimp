@@ -223,9 +223,9 @@ app_run (const gchar         *full_prog_name,
       gimp_user_install_run (install);
 #else
       if (! (no_interface ?
-	     gimp_user_install_run (install) :
-	     user_install_dialog_run (install)))
-	exit (EXIT_FAILURE);
+             gimp_user_install_run (install) :
+             user_install_dialog_run (install)))
+        exit (EXIT_FAILURE);
 #endif
 
       gimp_user_install_free (install);

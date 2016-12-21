@@ -144,7 +144,7 @@ select_actions_setup (GimpActionGroup *group)
 {
   gimp_action_group_add_actions (group, "select-action",
                                  select_actions,
-				 G_N_ELEMENTS (select_actions));
+                                 G_N_ELEMENTS (select_actions));
 }
 
 void

@@ -664,7 +664,7 @@ file_open_layers (Gimp                *gimp,
       else
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-			       _("Image doesn't contain any layers"));
+                               _("Image doesn't contain any layers"));
           *status = GIMP_PDB_EXECUTION_ERROR;
         }
 

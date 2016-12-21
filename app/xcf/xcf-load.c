@@ -690,7 +690,7 @@ xcf_load_image_props (XcfInfo   *info,
                 gimp_message (info->gimp, G_OBJECT (info->progress),
                               GIMP_MESSAGE_ERROR,
                               "Unknown compression type: %d",
-			      (gint) compression);
+                              (gint) compression);
                 return FALSE;
               }
 

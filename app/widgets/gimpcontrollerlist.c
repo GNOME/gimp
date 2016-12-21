@@ -581,12 +581,12 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
                                      _("Remove Controller '%s'?"), name);
 
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-			     "%s",
+                             "%s",
                              _("Removing this controller from the list of "
-			       "active controllers will permanently delete "
-			       "all event mappings you have configured.\n\n"
-			       "Selecting \"Disable Controller\" will disable "
-			       "the controller without removing it."));
+                               "active controllers will permanently delete "
+                               "all event mappings you have configured.\n\n"
+                               "Selecting \"Disable Controller\" will disable "
+                               "the controller without removing it."));
 
   switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
     {

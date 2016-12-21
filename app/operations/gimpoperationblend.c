@@ -264,7 +264,7 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
                                    g_param_spec_double ("offset",
                                                         "Offset",
                                                         "Offset relates to the starting and ending coordinates "
-		                                        "specified for the blend. This parameter is mode dependent.",
+                                                        "specified for the blend. This parameter is mode dependent.",
                                                         0, G_MAXDOUBLE, 0,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));

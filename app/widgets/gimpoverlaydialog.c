@@ -502,7 +502,7 @@ gimp_overlay_dialog_response (GimpOverlayDialog *dialog,
   g_return_if_fail (GIMP_IS_OVERLAY_DIALOG (dialog));
 
   g_signal_emit (dialog, signals[RESPONSE], 0,
-		 response_id);
+                 response_id);
 }
 
 void
@@ -636,7 +636,7 @@ response_data_free (gpointer data)
 
 static ResponseData *
 get_response_data (GtkWidget *widget,
-		   gboolean   create)
+                   gboolean   create)
 {
   ResponseData *ad = g_object_get_data (G_OBJECT (widget),
                                         "gimp-overlay-dialog-response-data");

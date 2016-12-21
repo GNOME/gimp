@@ -523,7 +523,7 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
   if (strcmp (line, "# GIMP Curves File") != 0)
     {
       g_set_error_literal (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-			   _("not a GIMP Curves file"));
+                           _("not a GIMP Curves file"));
       g_object_unref (data_input);
       g_free (line);
       return FALSE;
@@ -553,8 +553,8 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
               sscanf (y_str, "%d", &value[i][j]) != 1)
             {
               g_set_error_literal (error,
-				   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-				   _("Parse error, didn't find 2 integers"));
+                                   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                                   _("Parse error, didn't find 2 integers"));
               g_free (x_str);
               g_free (y_str);
               g_object_unref (data_input);

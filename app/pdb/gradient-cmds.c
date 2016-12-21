@@ -47,10 +47,10 @@
 static GimpGradient *
 gradient_get (Gimp                 *gimp,
               const gchar          *name,
-	      gboolean              writable,
+              gboolean              writable,
               gint                  segment,
               GimpGradientSegment **seg,
-	      GError              **error)
+              GError              **error)
 {
   GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, writable, error);
 
@@ -69,7 +69,7 @@ gradient_get_range (Gimp                 *gimp,
                     gint                  end_segment,
                     GimpGradientSegment **start_seg,
                     GimpGradientSegment **end_seg,
-		    GError              **error)
+                    GError              **error)
 {
   GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, TRUE, error);
 

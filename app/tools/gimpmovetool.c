@@ -596,7 +596,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
           else if (layer != gimp_image_get_active_layer (image))
             {
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
-	      modifier    = GIMP_CURSOR_MODIFIER_MOVE;
+              modifier    = GIMP_CURSOR_MODIFIER_MOVE;
             }
         }
       else

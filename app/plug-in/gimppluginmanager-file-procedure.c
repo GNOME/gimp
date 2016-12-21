@@ -199,8 +199,8 @@ file_procedure_find (GSList  *procs,
     {
       /* set an error message unless one was already set */
       if (error && *error == NULL)
-	g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-			     _("Unknown file type"));
+        g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                             _("Unknown file type"));
     }
 
   return file_proc;
