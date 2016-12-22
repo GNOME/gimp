@@ -288,6 +288,51 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
                  "linear",    linear,
                  "opacity",   opacity,
                  NULL);
+
+  switch (mode)
+    {
+    case GIMP_LAYER_MODE_NORMAL:
+    case GIMP_LAYER_MODE_DISSOLVE:
+    case GIMP_LAYER_MODE_BEHIND:
+    case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
+    case GIMP_LAYER_MODE_SCREEN_LEGACY:
+    case GIMP_LAYER_MODE_ADDITION_LEGACY:
+    case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
+    case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
+        gegl_node_set (node,
+           "linear",    TRUE,
+           NULL);
+        break;
+    case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
+    case GIMP_LAYER_MODE_OVERLAY_LEGACY:
+    case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
+    case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
+    case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
+    case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
+    case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
+    case GIMP_LAYER_MODE_DIVIDE_LEGACY:
+    case GIMP_LAYER_MODE_DODGE_LEGACY:
+    case GIMP_LAYER_MODE_BURN_LEGACY:
+    case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
+    case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
+    case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
+    case GIMP_LAYER_MODE_COLOR_ERASE:
+    case GIMP_LAYER_MODE_OVERLAY:
+    case GIMP_LAYER_MODE_ERASE:
+    case GIMP_LAYER_MODE_REPLACE:
+    case GIMP_LAYER_MODE_ANTI_ERASE:
+    case GIMP_LAYER_MODE_LCH_HUE:
+    case GIMP_LAYER_MODE_LCH_CHROMA:
+    case GIMP_LAYER_MODE_LCH_COLOR:
+    case GIMP_LAYER_MODE_LCH_LIGHTNESS:
+    default:
+        gegl_node_set (node,
+           "linear",   FALSE,
+           NULL);
+        break;
+    }
 }
 
 void
