@@ -68,7 +68,7 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                             "sample-average",
                             _("Sample average"),
                             _("Use accumulated color value from "
-                              "all composited visible layers"),
+                              "nearby pixels"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 

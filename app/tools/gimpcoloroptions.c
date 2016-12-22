@@ -67,14 +67,16 @@ gimp_color_options_class_init (GimpColorOptionsClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                             "sample-merged",
                             _("Sample merged"),
-                            NULL,
+                            _("Use accumulated color value from "
+                              "all composited visible layers"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
                             "sample-average",
                             _("Sample average"),
-                            NULL,
+                            _("Use accumulated color value from "
+                              "nearby pixels"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
