@@ -427,6 +427,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                               toggle,                             "sensitive",
                               G_BINDING_SYNC_CREATE);
 
+#if 0
       /*  The Color Options expander  */
       expander = gtk_expander_new (_("Advanced Color Options"));
       gtk_box_pack_end (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
@@ -453,11 +454,15 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
       gtk_widget_show (combo);
 
+#if 0
       /*  The gamma hack toggle  */
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "gamma-hack", NULL);
       gtk_box_pack_start (GTK_BOX (vbox2), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
+#endif
+
+#endif
 
       /*  The area combo  */
       gegl_node_get (filter_tool->operation,
@@ -787,12 +792,14 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       gimp_drawable_filter_set_color_managed (filter_tool->filter,
                                               filter_options->color_managed);
     }
+#if 0
   else if (! strcmp (pspec->name, "gamma-hack") &&
            filter_tool->filter)
     {
       gimp_drawable_filter_set_gamma_hack (filter_tool->filter,
                                            filter_options->gamma_hack);
     }
+#endif
 }
 
 static gboolean
