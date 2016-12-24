@@ -47,11 +47,11 @@ gboolean   gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
 /*  apply specific operations  */
 
-void   gimp_gegl_apply_color_reduction (GeglBuffer             *src_buffer,
+void   gimp_gegl_apply_dither          (GeglBuffer             *src_buffer,
                                         GimpProgress           *progress,
                                         const gchar            *undo_desc,
                                         GeglBuffer             *dest_buffer,
-                                        gint                    bits,
+                                        gint                    levels,
                                         gint                    dither_type);
 
 void   gimp_gegl_apply_flatten         (GeglBuffer             *src_buffer,

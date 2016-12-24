@@ -20,7 +20,7 @@
 
 
 /*  Don't offer dithering when converting down to more than this
- *  number of bits per component. Note that gegl:color-reduction would
+ *  number of bits per component. Note that gegl:dither would
  *  do 16 bit, so this is a limitation of the GUI to values that make
  *  sense. See bug #735895.
  */

@@ -601,7 +601,7 @@
       </menu>
       <separator />
       <menuitem action="filters-color-to-alpha" />
-      <menuitem action="filters-color-reduction" />
+      <menuitem action="filters-dither" />
       <menuitem action="filters-color-temperature" />
       <menuitem action="filters-exposure" />
       <placeholder name="Modify" />

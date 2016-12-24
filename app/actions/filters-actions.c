@@ -152,10 +152,10 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-exchange",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_EXCHANGE */ },
 
-  { "filters-color-reduction", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Color _Reduction..."), NULL, NULL,
-    "gegl:color-reduction",
-    NULL /* FIXME GIMP_HELP_FILTER_COLOR_TEMPERATURE */ },
+  { "filters-dither", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Dithe_r..."), NULL, NULL,
+    "gegl:dither",
+    NULL /* FIXME GIMP_HELP_FILTER_DITHER */ },
 
   { "filters-color-rotate", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Rotate Colors..."), NULL, NULL,
@@ -665,7 +665,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-checkerboard",            writable);
   SET_SENSITIVE ("filters-color-enhance",           writable && !gray);
   SET_SENSITIVE ("filters-color-exchange",          writable);
-  SET_SENSITIVE ("filters-color-reduction",         writable);
+  SET_SENSITIVE ("filters-dither",                  writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);

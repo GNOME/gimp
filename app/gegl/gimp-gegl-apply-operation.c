@@ -271,12 +271,12 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 }
 
 void
-gimp_gegl_apply_color_reduction (GeglBuffer   *src_buffer,
-                                 GimpProgress *progress,
-                                 const gchar  *undo_desc,
-                                 GeglBuffer   *dest_buffer,
-                                 gint          bits,
-                                 gint          dither_type)
+gimp_gegl_apply_dither (GeglBuffer   *src_buffer,
+                        GimpProgress *progress,
+                        const gchar  *undo_desc,
+                        GeglBuffer   *dest_buffer,
+                        gint          levels,
+                        gint          dither_type)
 {
   GeglNode *node;
 
@@ -284,14 +284,14 @@ gimp_gegl_apply_color_reduction (GeglBuffer   *src_buffer,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
-  bits = CLAMP (bits, 1, 16);
+  levels = CLAMP (levels, 2, 65536);
 
   node = gegl_node_new_child (NULL,
-                              "operation",     "gegl:color-reduction",
-                              "red-bits",      bits,
-                              "green-bits",    bits,
-                              "blue-bits",     bits,
-                              "alpha-bits",    bits,
+                              "operation",     "gegl:dither",
+                              "red-levels",    levels,
+                              "green-levels",  levels,
+                              "blue-levels",   levels,
+                              "alpha-bits",    levels,
                               "dither-method", dither_type,
                               NULL);
 

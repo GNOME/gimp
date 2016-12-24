@@ -1071,7 +1071,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   if (old_bits <= new_bits || new_bits > 16)
     {
       /*  don't dither if we are converting to a higher bit depth,
-       *  or to more than 16 bits (gegl:color-reduction only does
+       *  or to more than 16 bits (gegl:dither only does
        *  16 bits).
        */
       layer_dither_type = GEGL_DITHER_NONE;

@@ -1100,9 +1100,9 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
       bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
               babl_format_get_n_components (new_format));
 
-      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
-                                       NULL, NULL,
-                                       src_buffer, bits, layer_dither_type);
+      gimp_gegl_apply_dither (gimp_drawable_get_buffer (drawable),
+                              NULL, NULL,
+                              src_buffer, 1 << bits, layer_dither_type);
     }
 
   dest_buffer =
