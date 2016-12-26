@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir = $(gimpdatadir)/icons/Symbolic-Inverted/hicolor
+iconsdir = $(gimpdatadir)/icons/Symbolic-Inverted
 
 icons_DATA = \
 	index.theme
@@ -10,14 +10,14 @@ include $(top_srcdir)/icons/icon-list.mk
 # As exceptions, we do not want to invert some icons.
 # Just use these as-is: gimp-default-colors, gimp-toilet-paper.png.
 12/gimp-default-colors.png: $(top_srcdir)/icons/Symbolic/12/gimp-default-colors.png
-	mkdir -p `dirname $<` && cp -f $< $@
+	mkdir -p `dirname $@` && cp -f $< $@
 scalable/gimp-default-colors.svg: ../Symbolic/scalable/gimp-default-colors.svg
-	mkdir -p `dirname $<` && cp -f $< $@
+	mkdir -p `dirname $@` && cp -f $< $@
 
 %/gimp-toilet-paper.png: $(top_srcdir)/icons/Symbolic/$(@D)/gimp-toilet-paper.png
-	mkdir -p `dirname $<` && cp -f $< $@
+	mkdir -p `dirname $@` && cp -f $< $@
 scalable/gimp-toilet-paper.svg: ../Symbolic/scalable/gimp-toilet-paper.svg
-	mkdir -p `dirname $<` && cp -f $< $@
+	mkdir -p `dirname $@` && cp -f $< $@
 
 # Other exceptions: inverted gimp-color-picker-white|black are generated
 # from each other.
@@ -48,7 +48,7 @@ scalable/%.svg: ../Symbolic/scalable/%.svg $(top_builddir)/tools/invert-svg$(BUI
 # But it doesn't. If someone knows how, feel free to fix it back into
 # a single rule.
 
-MAKE_ICON = mkdir -p `dirname $@`; $(GEGL) $< -o $@ -- gegl:invert-gamma
+MAKE_ICON = mkdir -p `dirname $@`; GEGL_USE_OPENCL=no GEGL_SWAP=ram $(GEGL) $< -o $@ -- gegl:invert-gamma
 
 12/%.png: $(top_srcdir)/icons/Symbolic/12/%.png
 	$(MAKE_ICON)

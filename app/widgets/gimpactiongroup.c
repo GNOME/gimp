@@ -29,6 +29,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
@@ -258,13 +259,13 @@ gimp_action_group_get_property (GObject    *object,
 
 static gboolean
 gimp_action_group_check_unique_action (GimpActionGroup *group,
-				       const gchar     *action_name)
+                                       const gchar     *action_name)
 {
   if (G_UNLIKELY (gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                                action_name)))
     {
       g_warning ("Refusing to add non-unique action '%s' to action group '%s'",
-	 	 action_name,
+                 action_name,
                  gtk_action_group_get_name (GTK_ACTION_GROUP (group)));
       return FALSE;
     }
@@ -344,7 +345,7 @@ gimp_action_group_update (GimpActionGroup *group,
 
 void
 gimp_action_group_add_actions (GimpActionGroup       *group,
-			       const gchar           *msg_context,
+                               const gchar           *msg_context,
                                const GimpActionEntry *entries,
                                guint                  n_entries)
 {
@@ -677,6 +678,36 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
     }
 }
 
+/**
+ * gimp_action_group_remove_action:
+ * @group:  the #GimpActionGroup to which @action belongs.
+ * @action: the #GimpAction.
+ *
+ * This function removes action from the groupe and clean any
+ * accelerator this action may have set.
+ * If you wish only to only remove the action from the group, use
+ * gtk_action_group_remove_action() instead.
+ */
+void
+gimp_action_group_remove_action (GimpActionGroup *group,
+                                 GimpAction      *action)
+{
+  const gchar *action_name;
+  const gchar *group_name;
+  gchar       *accel_path;
+
+  action_name = gtk_action_get_name (GTK_ACTION (action));
+  group_name  = gtk_action_group_get_name (GTK_ACTION_GROUP (group));
+  accel_path = g_strconcat ("<Actions>/", group_name, "/",
+                            action_name, NULL);
+
+  gtk_accel_map_change_entry (accel_path, 0, 0, FALSE);
+
+  gtk_action_group_remove_action (GTK_ACTION_GROUP (group),
+                                  GTK_ACTION (action));
+  g_free (accel_path);
+}
+
 void
 gimp_action_group_activate_action (GimpActionGroup *group,
                                    const gchar     *action_name)
@@ -866,6 +897,38 @@ gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
     }
 
   return gtk_action_get_tooltip (action);
+}
+
+void
+gimp_action_group_set_action_context (GimpActionGroup *group,
+                                      const gchar     *action_name,
+                                      GimpContext     *context)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to set context of action "
+                 "which doesn't exist: %s",
+                 G_STRFUNC, action_name);
+      return;
+    }
+
+  if (! GIMP_IS_ACTION (action))
+    {
+      g_warning ("%s: Unable to set \"context\" of action "
+                 "which is not a GimpAction: %s",
+                 G_STRFUNC, action_name);
+      return;
+    }
+
+  g_object_set (action, "context", context, NULL);
 }
 
 void

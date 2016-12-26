@@ -40,7 +40,7 @@ static const GimpActionEntry error_console_actions[] =
     NC_("error-console-action", "Error Console Menu"), NULL, NULL, NULL,
     GIMP_HELP_ERRORS_DIALOG },
 
-  { "error-console-clear", GIMP_STOCK_EDIT_CLEAR,
+  { "error-console-clear", "edit-clear",
     NC_("error-console-action", "_Clear"), NULL,
     NC_("error-console-action", "Clear error console"),
     G_CALLBACK (error_console_clear_cmd_callback),
@@ -55,13 +55,13 @@ static const GimpActionEntry error_console_actions[] =
 
 static const GimpEnumActionEntry error_console_save_actions[] =
 {
-  { "error-console-save-all", GIMP_STOCK_SAVE_AS,
+  { "error-console-save-all", "document-save-as",
     NC_("error-console-action", "_Save Error Log to File..."), NULL,
     NC_("error-console-action", "Write all error messages to a file"),
     FALSE, FALSE,
     GIMP_HELP_ERRORS_SAVE },
 
-  { "error-console-save-selection", GIMP_STOCK_SAVE_AS,
+  { "error-console-save-selection", "document-save-as",
     NC_("error-console-action", "Save S_election to File..."), NULL,
     NC_("error-console-action", "Write the selected error messages to a file"),
     TRUE, FALSE,

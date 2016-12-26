@@ -439,7 +439,8 @@ warp_dialog (GimpDrawable *drawable)
 
   /*  Displacement map menu  */
   label = gtk_label_new (_("Displacement map:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -457,7 +458,7 @@ warp_dialog (GimpDrawable *drawable)
 
   /*  Displacement Type  */
   label = gtk_label_new (_("On edges:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -584,7 +585,8 @@ warp_dialog (GimpDrawable *drawable)
 
   /*  Magnitude map menu  */
   label = gtk_label_new (_("Magnitude map:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);

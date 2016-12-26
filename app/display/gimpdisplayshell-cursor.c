@@ -28,6 +28,7 @@
 
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockcontainer.h"
 #include "widgets/gimpsessioninfo.h"
 
 #include "gimpcanvascursor.h"
@@ -124,9 +125,11 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
                                            gdouble              image_x,
                                            gdouble              image_y)
 {
-  GimpStatusbar   *statusbar;
-  GtkWidget       *widget;
-  GimpImage       *image;
+  GimpImageWindow   *image_window;
+  GimpDialogFactory *factory;
+  GimpStatusbar     *statusbar;
+  GtkWidget         *widget;
+  GimpImage         *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -158,13 +161,14 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
 
   gimp_statusbar_update_cursor (statusbar, precision, image_x, image_y);
 
-  widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
-                                            "gimp-cursor-view");
+  image_window = gimp_display_shell_get_window (shell);
+  factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
+
+  widget = gimp_dialog_factory_find_widget (factory, "gimp-cursor-view");
+
   if (widget)
     {
-      GtkWidget *cursor_view;
-
-      cursor_view = gtk_bin_get_child (GTK_BIN (widget));
+      GtkWidget *cursor_view = gtk_bin_get_child (GTK_BIN (widget));
 
       if (cursor_view)
         {
@@ -186,8 +190,10 @@ gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
 void
 gimp_display_shell_clear_software_cursor (GimpDisplayShell *shell)
 {
-  GimpStatusbar *statusbar;
-  GtkWidget     *widget;
+  GimpImageWindow   *image_window;
+  GimpDialogFactory *factory;
+  GimpStatusbar     *statusbar;
+  GtkWidget         *widget;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -197,13 +203,14 @@ gimp_display_shell_clear_software_cursor (GimpDisplayShell *shell)
 
   gimp_statusbar_clear_cursor (statusbar);
 
-  widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
-                                            "gimp-cursor-view");
+  image_window = gimp_display_shell_get_window (shell);
+  factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
+
+  widget = gimp_dialog_factory_find_widget (factory, "gimp-cursor-view");
+
   if (widget)
     {
-      GtkWidget *cursor_view;
-
-      cursor_view = gtk_bin_get_child (GTK_BIN (widget));
+      GtkWidget *cursor_view = gtk_bin_get_child (GTK_BIN (widget));
 
       if (cursor_view)
         gimp_cursor_view_clear_cursor (GIMP_CURSOR_VIEW (cursor_view));

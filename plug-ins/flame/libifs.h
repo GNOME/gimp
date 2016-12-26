@@ -58,14 +58,14 @@ typedef struct {
    double spatial_filter_radius; /* variance of gaussian */
    double sample_density;        /* samples per pixel (not bucket) */
    /* in order to motion blur more accurately we compute the logs of the
-      sample density many times and average the results.  we interplate
+      sample density many times and average the results.  we interpolate
       only this many times. */
    int nbatches;
    /* this much color resolution.  but making it too high induces clipping */
    int white_level;
    int cmap_inter; /* if this is true, then color map interpolates one entry
 		      at a time with a bright edge */
-   double pulse[2][2]; /* [i][0]=magnitute [i][1]=frequency */
+   double pulse[2][2]; /* [i][0]=magnitude [i][1]=frequency */
    double wiggle[2][2]; /* frequency is /minute, assuming 30 frames/s */
 } control_point;
 

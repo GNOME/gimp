@@ -101,7 +101,7 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
   GimpImage               *image       = gimp_display_get_image (display);
   GimpDrawable            *drawable    = gimp_image_get_active_drawable (image);
   GimpPickable            *pickable;
-  GimpRGB                  color;
+  GimpRGB                  srgb;
   gint                     x, y;
 
   x = region_select->x;
@@ -125,13 +125,19 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
 
   gimp_pickable_flush (pickable);
 
-  if (gimp_pickable_get_color_at (pickable, x, y, &color))
-    return gimp_pickable_contiguous_region_by_color (pickable,
-                                                     sel_options->antialias,
-                                                     options->threshold / 255.0,
-                                                     options->select_transparent,
-                                                     options->select_criterion,
-                                                     &color);
+  if (gimp_pickable_get_color_at (pickable, x, y, &srgb))
+    {
+      GimpRGB color;
+
+      gimp_pickable_srgb_to_image_color (pickable, &srgb, &color);
+
+      return gimp_pickable_contiguous_region_by_color (pickable,
+                                                       sel_options->antialias,
+                                                       options->threshold / 255.0,
+                                                       options->select_transparent,
+                                                       options->select_criterion,
+                                                       &color);
+    }
 
   return NULL;
 }

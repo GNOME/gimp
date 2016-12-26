@@ -130,6 +130,7 @@ static void       gimp_layer_scale              (GimpItem           *item,
                                                  GimpProgress       *progress);
 static void       gimp_layer_resize             (GimpItem           *item,
                                                  GimpContext        *context,
+                                                 GimpFillType        fill_type,
                                                  gint                new_width,
                                                  gint                new_height,
                                                  gint                offset_x,
@@ -167,11 +168,9 @@ static gint64     gimp_layer_estimate_memsize   (GimpDrawable       *drawable,
 static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
-                                                 GimpImageBaseType   new_base_type,
-                                                 GimpPrecision       new_precision,
                                                  GimpColorProfile   *dest_profile,
-                                                 gint                layer_dither_type,
-                                                 gint                mask_dither_type,
+                                                 GeglDitherMethod    layer_dither_type,
+                                                 GeglDitherMethod    mask_dither_type,
                                                  gboolean            push_undo,
                                                  GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
@@ -811,9 +810,11 @@ gimp_layer_convert (GimpItem  *item,
       dest_profile)
     {
       gimp_drawable_convert_type (drawable, dest_image,
-                                  new_base_type, new_precision,
+                                  new_base_type,
+                                  new_precision,
+                                  gimp_drawable_has_alpha (drawable),
                                   dest_profile,
-                                  0, 0,
+                                  GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   FALSE, NULL);
     }
 
@@ -929,20 +930,28 @@ gimp_layer_scale (GimpItem              *item,
 }
 
 static void
-gimp_layer_resize (GimpItem    *item,
-                   GimpContext *context,
-                   gint         new_width,
-                   gint         new_height,
-                   gint         offset_x,
-                   gint         offset_y)
+gimp_layer_resize (GimpItem     *item,
+                   GimpContext  *context,
+                   GimpFillType  fill_type,
+                   gint          new_width,
+                   gint          new_height,
+                   gint          offset_x,
+                   gint          offset_y)
 {
   GimpLayer *layer  = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
+  if (fill_type == GIMP_FILL_TRANSPARENT &&
+      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    {
+      fill_type = GIMP_FILL_BACKGROUND;
+    }
+
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, fill_type,
+                                          new_width, new_height,
                                           offset_x, offset_y);
 
   if (layer->mask)
-    gimp_item_resize (GIMP_ITEM (layer->mask), context,
+    gimp_item_resize (GIMP_ITEM (layer->mask), context, GIMP_FILL_TRANSPARENT,
                       new_width, new_height, offset_x, offset_y);
 }
 
@@ -1061,22 +1070,20 @@ gimp_layer_estimate_memsize (GimpDrawable      *drawable,
 }
 
 static void
-gimp_layer_convert_type (GimpDrawable      *drawable,
-                         GimpImage         *dest_image,
-                         const Babl        *new_format,
-                         GimpImageBaseType  new_base_type,
-                         GimpPrecision      new_precision,
-                         GimpColorProfile  *dest_profile,
-                         gint               layer_dither_type,
-                         gint               mask_dither_type,
-                         gboolean           push_undo,
-                         GimpProgress      *progress)
+gimp_layer_convert_type (GimpDrawable     *drawable,
+                         GimpImage        *dest_image,
+                         const Babl       *new_format,
+                         GimpColorProfile *dest_profile,
+                         GeglDitherMethod  layer_dither_type,
+                         GeglDitherMethod  mask_dither_type,
+                         gboolean          push_undo,
+                         GimpProgress     *progress)
 {
   GimpLayer  *layer = GIMP_LAYER (drawable);
   GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
 
-  if (layer_dither_type == 0)
+  if (layer_dither_type == GEGL_DITHER_NONE)
     {
       src_buffer = g_object_ref (gimp_drawable_get_buffer (drawable));
     }
@@ -1093,9 +1100,9 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
       bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
               babl_format_get_n_components (new_format));
 
-      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
-                                       NULL, NULL,
-                                       src_buffer, bits, layer_dither_type);
+      gimp_gegl_apply_dither (gimp_drawable_get_buffer (drawable),
+                              NULL, NULL,
+                              src_buffer, 1 << bits, layer_dither_type);
     }
 
   dest_buffer =
@@ -1125,10 +1132,13 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
   g_object_unref (dest_buffer);
 
   if (layer->mask &&
-      new_precision != gimp_drawable_get_precision (GIMP_DRAWABLE (layer->mask)))
+      gimp_babl_format_get_precision (new_format) !=
+      gimp_drawable_get_precision (GIMP_DRAWABLE (layer->mask)))
     {
       gimp_drawable_convert_type (GIMP_DRAWABLE (layer->mask), dest_image,
-                                  GIMP_GRAY, new_precision,
+                                  GIMP_GRAY,
+                                  gimp_babl_format_get_precision (new_format),
+                                  gimp_drawable_has_alpha (GIMP_DRAWABLE (layer->mask)),
                                   NULL,
                                   layer_dither_type, mask_dither_type,
                                   push_undo, NULL);
@@ -1906,8 +1916,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
 }
 
 void
-gimp_layer_flatten (GimpLayer   *layer,
-                    GimpContext *context)
+gimp_layer_remove_alpha (GimpLayer   *layer,
+                         GimpContext *context)
 {
   GeglBuffer *new_buffer;
   GimpRGB     background;
@@ -1938,8 +1948,9 @@ gimp_layer_flatten (GimpLayer   *layer,
 }
 
 void
-gimp_layer_resize_to_image (GimpLayer   *layer,
-                            GimpContext *context)
+gimp_layer_resize_to_image (GimpLayer    *layer,
+                            GimpContext  *context,
+                            GimpFillType  fill_type)
 {
   GimpImage *image;
   gint       offset_x;
@@ -1955,7 +1966,7 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
                                C_("undo-type", "Layer to Image Size"));
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
-  gimp_item_resize (GIMP_ITEM (layer), context,
+  gimp_item_resize (GIMP_ITEM (layer), context, fill_type,
                     gimp_image_get_width  (image),
                     gimp_image_get_height (image),
                     offset_x, offset_y);

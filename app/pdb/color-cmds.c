@@ -630,11 +630,23 @@ histogram_invoker (GimpProcedure         *procedure,
 
       if (success)
         {
-          GimpHistogram *histogram = gimp_histogram_new (TRUE);
-          gint           start     = start_range;
-          gint           end       = end_range;
+          GimpHistogram *histogram;
+          gint           start = start_range;
+          gint           end   = end_range;
+          gboolean       precision_enabled;
+          gboolean       linear;
           gint           n_bins;
 
+          precision_enabled =
+            gimp->plug_in_manager->current_plug_in &&
+            gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in);
+
+          if (precision_enabled)
+            linear = gimp_drawable_get_linear (drawable);
+          else
+            linear = FALSE;
+
+          histogram = gimp_histogram_new (linear);
           gimp_drawable_calculate_histogram (drawable, histogram);
 
           n_bins = gimp_histogram_n_bins (histogram);
@@ -658,9 +670,7 @@ histogram_invoker (GimpProcedure         *procedure,
 
           g_object_unref (histogram);
 
-          if (n_bins == 256 ||
-              ! gimp->plug_in_manager->current_plug_in ||
-              ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
+          if (n_bins == 256 || ! precision_enabled)
             {
               mean    *= 255;
               std_dev *= 255;
@@ -1244,12 +1254,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-histogram");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-histogram",
-                                     "Returns information on the intensity histogram for the specified drawable.",
-                                     "This tool makes it possible to gather information about the intensity histogram of a drawable. A channel to examine is first specified. This can be either value, red, green, or blue, depending on whether the drawable is of type color or grayscale. Second, a range of intensities are specified. The 'gimp-histogram' function returns statistics based on the pixels in the drawable that fall under this range of values. Mean, standard deviation, median, number of pixels, and percentile are all returned. Additionally, the total count of pixels in the image is returned. Counts of pixels are weighted by any associated alpha values and by the current selection mask. That is, pixels that lie outside an active selection mask will not be counted. Similarly, pixels with transparent alpha values will not be counted. The returned mean, std_dev and median are in the range (0..255) for 8-bit images, or if the plug-in is not precision-aware, and in the range (0.0..1.0) otherwise.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-histogram' instead.",
+                                     "Deprecated: Use 'gimp-drawable-histogram' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-histogram");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1370,12 +1380,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-threshold");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-threshold",
-                                     "Threshold the specified drawable.",
-                                     "This procedures generates a threshold map of the specified drawable. All pixels between the values of 'low_threshold' and 'high_threshold' are replaced with white, and all other pixels with black.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1997",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-threshold' instead.",
+                                     "Deprecated: Use 'gimp-drawable-threshold' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-threshold");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",

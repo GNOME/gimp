@@ -32,6 +32,10 @@ void       gimp_help_show (Gimp         *gimp,
                            const gchar  *help_id);
 
 
+/*  checks if the help browser is available
+ */
+gboolean   gimp_help_browser_is_installed     (Gimp *gimp);
+
 /*  checks if the user manual is installed locally
  */
 gboolean   gimp_help_user_manual_is_installed (Gimp *gimp);

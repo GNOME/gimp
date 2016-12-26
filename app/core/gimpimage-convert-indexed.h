@@ -23,12 +23,12 @@
 
 
 gboolean   gimp_image_convert_indexed      (GimpImage               *image,
-                                            gint                     num_cols,
-                                            GimpConvertDitherType    dither,
-                                            gboolean                 alpha_dither,
-                                            gboolean                 text_layer_dither,
-                                            gboolean                 remove_dups,
                                             GimpConvertPaletteType   palette_type,
+                                            gint                     max_colors,
+                                            gboolean                 remove_duplicates,
+                                            GimpConvertDitherType    dither_type,
+                                            gboolean                 dither_alpha,
+                                            gboolean                 dither_text_layers,
                                             GimpPalette             *custom_palette,
                                             GimpProgress            *progress,
                                             GError                 **error);

@@ -81,6 +81,8 @@ void   view_display_intent_cmd_callback         (GtkAction *action,
                                                  gpointer   data);
 void   view_display_bpc_cmd_callback            (GtkAction *action,
                                                  gpointer   data);
+void   view_softproof_profile_cmd_callback      (GtkAction *action,
+                                                 gpointer   data);
 void   view_softproof_intent_cmd_callback       (GtkAction *action,
                                                  GtkAction *current,
                                                  gpointer   data);

@@ -865,24 +865,24 @@ gimp_image_set_property (GObject      *object,
     case PROP_GIMP:
       image->gimp = g_value_get_object (value);
       break;
-    case PROP_ID:
-      g_assert_not_reached ();
-      break;
+
     case PROP_WIDTH:
       private->width = g_value_get_int (value);
       break;
     case PROP_HEIGHT:
       private->height = g_value_get_int (value);
       break;
+
     case PROP_BASE_TYPE:
       private->base_type = g_value_get_enum (value);
+      _gimp_image_free_color_transforms (image);
       break;
+
     case PROP_PRECISION:
       private->precision = g_value_get_enum (value);
+      _gimp_image_free_color_transforms (image);
       break;
-    case PROP_METADATA:
-    case PROP_BUFFER:
-      break;
+
     case PROP_SYMMETRY:
       {
         GList *iter;
@@ -919,6 +919,10 @@ gimp_image_set_property (GObject      *object,
                         NULL);
       }
       break;
+
+    case PROP_ID:
+    case PROP_METADATA:
+    case PROP_BUFFER:
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -1322,8 +1326,8 @@ gimp_image_get_description (GimpViewable  *viewable,
     *tooltip = g_strdup (gimp_image_get_display_path (image));
 
   return g_strdup_printf ("%s-%d",
-			  gimp_image_get_display_name (image),
-			  gimp_image_get_ID (image));
+                          gimp_image_get_display_name (image),
+                          gimp_image_get_ID (image));
 }
 
 static void
@@ -4117,7 +4121,7 @@ gimp_image_raise_item (GimpImage *image,
   if (index == 0)
     {
       g_set_error_literal (error,  GIMP_ERROR, GIMP_FAILED,
-			   GIMP_ITEM_GET_CLASS (item)->raise_failed);
+                           GIMP_ITEM_GET_CLASS (item)->raise_failed);
       return FALSE;
     }
 
@@ -4159,7 +4163,7 @@ gimp_image_lower_item (GimpImage *image,
   if (index == gimp_container_get_n_children (container) - 1)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   GIMP_ITEM_GET_CLASS (item)->lower_failed);
+                           GIMP_ITEM_GET_CLASS (item)->lower_failed);
       return FALSE;
     }
 

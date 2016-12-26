@@ -372,6 +372,7 @@ def _interact(proc_name, start_params):
     import gimpui
     import gtk
 #    import pango
+    gimpui.gimp_ui_init ()
 
     defaults = _get_defaults(proc_name)
     defaults = defaults[len(start_params):]
@@ -588,7 +589,7 @@ def _interact(proc_name, start_params):
             if default == "/": default = ""
             return DirnameSelector(default)
         else:
-            return FilenameSelector(default, title=title)
+            return FilenameSelector(default, title=title, save_mode=False)
 
     class FilenameSelector(gtk.HBox):
         #gimpfu.FileChooserButton
@@ -625,9 +626,12 @@ def _interact(proc_name, start_params):
                                  gtk.FILE_CHOOSER_ACTION_OPEN),
                          buttons=(gtk.STOCK_CANCEL,
                                 gtk.RESPONSE_CANCEL,
+                                gtk.STOCK_SAVE
+                                     if self.save_mode else
                                 gtk.STOCK_OPEN,
                                 gtk.RESPONSE_OK)
                         )
+            dialog.set_alternative_button_order ((gtk.RESPONSE_OK, gtk.RESPONSE_CANCEL))
             dialog.show_all()
             response = dialog.run()
             if response == gtk.RESPONSE_OK:
@@ -734,6 +738,8 @@ def _interact(proc_name, start_params):
             else:
                 try:
                     dialog.res = run_script(params)
+                except CancelError:
+                    pass
                 except Exception:
                     dlg.set_response_sensitive(gtk.RESPONSE_CANCEL, True)
                     error_dialog(dialog, proc_name)

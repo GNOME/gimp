@@ -343,8 +343,7 @@ gimp_color_area_size_allocate (GtkWidget     *widget,
 {
   GimpColorArea *area = GIMP_COLOR_AREA (widget);
 
-  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
-    GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   if (allocation->width  != area->width ||
       allocation->height != area->height)

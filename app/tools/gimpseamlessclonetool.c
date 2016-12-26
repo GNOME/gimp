@@ -189,7 +189,7 @@ gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
                   "gimp-seamless-clone-tool",
                   _("Seamless Clone"),
                   _("Seamless Clone: Seamlessly paste one image into another"),
-                  N_("_Seamless Clone"), "<shift>L",
+                  N_("_Seamless Clone"), NULL,
                   NULL, GIMP_HELP_TOOL_SEAMLESS_CLONE,
                   GIMP_STOCK_TOOL_SEAMLESS_CLONE,
                   data);

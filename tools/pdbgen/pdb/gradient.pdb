@@ -287,7 +287,7 @@ CODE
 }
 
 sub gradient_get_custom_samples {
-    $blurb = 'Sample the spacified gradient in custom positions.';
+    $blurb = 'Sample the specified gradient in custom positions.';
 
     $help = <<'HELP';
 This procedure samples the active gradient in the specified number of
@@ -655,7 +655,7 @@ sub gradient_segment_set_left_pos {
 This procedure sets the left endpoint position of the specified
 segment of the specified gradient. The final position will be between
 the position of the middle point to the left to the middle point of
-the current segement.
+the current segment.
 
 This procedure returns the final position.
 HELP
@@ -1321,7 +1321,7 @@ sub gradient_segment_range_move {
     $blurb = 'Move the position of an entire segment range by a delta.';
 
     $help = <<'HELP';
-This funtions moves the position of an entire segment range by a delta. The
+This function moves the position of an entire segment range by a delta. The
 actual delta (which is returned) will be limited by the control points of the
 neighboring segments.
 HELP

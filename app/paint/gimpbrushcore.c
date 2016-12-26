@@ -29,6 +29,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "core/gimpbrush.h"
+#include "core/gimpbrushgenerated.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpdynamicsoutput.h"
@@ -364,6 +365,11 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
           core->brush = gimp_brush_select_brush (core->main_brush,
                                                  &last_coords,
                                                  &current_coords);
+        }
+      if ((! GIMP_IS_BRUSH_GENERATED(core->main_brush)) &&
+          (paint_options->brush_hardness != gimp_brush_get_blur_hardness(core->main_brush)))
+        {
+          gimp_brush_flush_blur_caches(core->main_brush);
         }
     }
 

@@ -29,7 +29,8 @@ GtkWidget * gimp_prop_brush_box_new    (GimpContainer *container,
                                         gint           spacing,
                                         const gchar   *view_type_prop,
                                         const gchar   *view_size_prop,
-                                        const gchar   *editor_id);
+                                        const gchar   *editor_id,
+                                        const gchar   *editor_tooltip);
 GtkWidget * gimp_dynamics_box_new      (GimpContainer *container,
                                         GimpContext   *context,
                                         const gchar   *label,
@@ -40,7 +41,8 @@ GtkWidget * gimp_prop_dynamics_box_new (GimpContainer *container,
                                         gint           spacing,
                                         const gchar   *view_type_prop,
                                         const gchar   *view_size_prop,
-                                        const gchar   *editor_id);
+                                        const gchar   *editor_id,
+                                        const gchar   *editor_tooltip);
 
 GtkWidget * gimp_mybrush_box_new       (GimpContainer *container,
                                         GimpContext   *context,
@@ -76,7 +78,8 @@ GtkWidget * gimp_prop_gradient_box_new (GimpContainer *container,
                                         const gchar   *view_type_prop,
                                         const gchar   *view_size_prop,
                                         const gchar   *reverse_prop,
-                                        const gchar   *editor_id);
+                                        const gchar   *editor_id,
+                                        const gchar   *editor_tooltip);
 
 GtkWidget * gimp_palette_box_new       (GimpContainer *container,
                                         GimpContext   *context,
@@ -88,7 +91,8 @@ GtkWidget * gimp_prop_palette_box_new  (GimpContainer *container,
                                         gint           spacing,
                                         const gchar   *view_type_prop,
                                         const gchar   *view_size_prop,
-                                        const gchar   *editor_id);
+                                        const gchar   *editor_id,
+                                        const gchar   *editor_tooltip);
 
 GtkWidget * gimp_font_box_new          (GimpContainer *container,
                                         GimpContext   *context,

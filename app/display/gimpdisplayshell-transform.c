@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -34,6 +36,16 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
 
+
+/*  local function prototypes  */
+
+static void gimp_display_shell_transform_xy_f_noround (GimpDisplayShell *shell,
+                                                       gdouble           x,
+                                                       gdouble           y,
+                                                       gdouble          *nx,
+                                                       gdouble          *ny);
+
+/*  public functions  */
 
 /**
  * gimp_display_shell_zoom_coords:
@@ -380,7 +392,7 @@ gimp_display_shell_unrotate_xy (GimpDisplayShell *shell,
       gdouble fx = x;
       gdouble fy = y;
 
-      cairo_matrix_transform_point (shell->rotate_untransform, &fy, &fy);
+      cairo_matrix_transform_point (shell->rotate_untransform, &fx, &fy);
 
       *nx = CLAMP (fx, G_MININT, G_MAXINT);
       *ny = CLAMP (fy, G_MININT, G_MAXINT);
@@ -689,7 +701,7 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
       gdouble fx = x;
       gdouble fy = y;
 
-      cairo_matrix_transform_point (shell->rotate_untransform, &fy, &fy);
+      cairo_matrix_transform_point (shell->rotate_untransform, &fx, &fy);
 
       x = fx;
       y = fy;
@@ -793,10 +805,10 @@ gimp_display_shell_transform_bounds (GimpDisplayShell *shell,
       gdouble tx3, ty3;
       gdouble tx4, ty4;
 
-      gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1);
-      gimp_display_shell_transform_xy_f (shell, x1, y2, &tx2, &ty2);
-      gimp_display_shell_transform_xy_f (shell, x2, y1, &tx3, &ty3);
-      gimp_display_shell_transform_xy_f (shell, x2, y2, &tx4, &ty4);
+      gimp_display_shell_transform_xy_f_noround (shell, x1, y1, &tx1, &ty1);
+      gimp_display_shell_transform_xy_f_noround (shell, x1, y2, &tx2, &ty2);
+      gimp_display_shell_transform_xy_f_noround (shell, x2, y1, &tx3, &ty3);
+      gimp_display_shell_transform_xy_f_noround (shell, x2, y2, &tx4, &ty4);
 
       *nx1 = MIN4 (tx1, tx2, tx3, tx4);
       *ny1 = MIN4 (ty1, ty2, ty3, ty4);
@@ -805,8 +817,8 @@ gimp_display_shell_transform_bounds (GimpDisplayShell *shell,
     }
   else
     {
-      gimp_display_shell_transform_xy_f (shell, x1, y1, nx1, ny1);
-      gimp_display_shell_transform_xy_f (shell, x2, y2, nx2, ny2);
+      gimp_display_shell_transform_xy_f_noround (shell, x1, y1, nx1, ny1);
+      gimp_display_shell_transform_xy_f_noround (shell, x2, y2, nx2, ny2);
     }
 }
 
@@ -870,18 +882,20 @@ gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
                                          gint             *height)
 {
   GimpImage *image;
-  gint       x1, y1, x2, y2;
+  gdouble    x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_untransform_xy (shell,
-                                     0, 0,
-                                     &x1, &y1,
-                                     FALSE);
-  gimp_display_shell_untransform_xy (shell,
-                                     shell->disp_width, shell->disp_height,
-                                     &x2, &y2,
-                                     FALSE);
+  gimp_display_shell_untransform_bounds (shell,
+                                         0, 0,
+                                         shell->disp_width, shell->disp_height,
+                                         &x1, &y1,
+                                         &x2, &y2);
+
+  x1 = floor (x1);
+  y1 = floor (y1);
+  x2 = ceil (x2);
+  y2 = ceil (y2);
 
   image = gimp_display_get_image (shell->display);
 
@@ -901,4 +915,24 @@ gimp_display_shell_untransform_viewport (GimpDisplayShell *shell,
   if (y)      *y      = y1;
   if (width)  *width  = x2 - x1;
   if (height) *height = y2 - y1;
+}
+
+
+/*  private functions  */
+
+/* Same as gimp_display_shell_transform_xy_f(), but doesn't do any rounding
+ * for the transformed coordinates.
+ */
+static void
+gimp_display_shell_transform_xy_f_noround (GimpDisplayShell *shell,
+                                           gdouble           x,
+                                           gdouble           y,
+                                           gdouble          *nx,
+                                           gdouble          *ny)
+{
+  *nx = shell->scale_x * x - shell->offset_x;
+  *ny = shell->scale_y * y - shell->offset_y;
+
+  if (shell->rotate_transform)
+    cairo_matrix_transform_point (shell->rotate_transform, nx, ny);
 }

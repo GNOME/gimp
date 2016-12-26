@@ -56,13 +56,18 @@ static void    dump_with_linebreaks (GOutputStream    *output,
 
 
 gboolean
-gimp_config_dump (GimpConfigDumpFormat  format)
+gimp_config_dump (GObject              *gimp,
+                  GimpConfigDumpFormat  format)
 {
   GOutputStream    *output;
   GimpConfigWriter *writer;
   GimpConfig       *rc;
 
-  rc = g_object_new (GIMP_TYPE_RC, NULL);
+  g_return_val_if_fail (G_IS_OBJECT (gimp), FALSE);
+
+  rc = g_object_new (GIMP_TYPE_RC,
+                     "gimp", gimp,
+                     NULL);
 
 #ifdef G_OS_WIN32
   output = g_win32_output_stream_new ((gpointer) 1, FALSE);

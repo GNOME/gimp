@@ -1080,7 +1080,7 @@ sub text_layer_get_letter_spacing {
     $blurb = 'Get the letter spacing used in a text layer.';
 
     $help = <<'HELP';
-This procedure returns the additional spacing between the single glyps
+This procedure returns the additional spacing between the single glyphs
 in a text layer.
 HELP
 

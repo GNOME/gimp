@@ -204,6 +204,12 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
   gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
+  gimp_tool_control_set_preserve        (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask      (tool->control,
+                                         GIMP_DIRTY_IMAGE           |
+                                         GIMP_DIRTY_IMAGE_STRUCTURE |
+                                         GIMP_DIRTY_DRAWABLE        |
+                                         GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_wants_click     (tool->control, TRUE);
   gimp_tool_control_set_precision       (tool->control,
                                          GIMP_CURSOR_PRECISION_SUBPIXEL);
@@ -242,14 +248,14 @@ gimp_blend_tool_initialize (GimpTool     *tool,
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot modify the pixels of layer groups."));
+                           _("Cannot modify the pixels of layer groups."));
       return FALSE;
     }
 
   if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("The active layer's pixels are locked."));
+                           _("The active layer's pixels are locked."));
       return FALSE;
     }
 
@@ -911,9 +917,13 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 
   if (blend_tool->filter)
     {
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
       gimp_drawable_filter_abort (blend_tool->filter);
       g_object_unref (blend_tool->filter);
       blend_tool->filter = NULL;
+
+      gimp_tool_control_pop_preserve (tool->control);
 
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
@@ -932,10 +942,14 @@ gimp_blend_tool_commit (GimpBlendTool *blend_tool)
 
   if (blend_tool->filter)
     {
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
       gimp_drawable_filter_commit (blend_tool->filter,
                                    GIMP_PROGRESS (tool), FALSE);
       g_object_unref (blend_tool->filter);
       blend_tool->filter = NULL;
+
+      gimp_tool_control_pop_preserve (tool->control);
 
       gimp_image_flush (gimp_display_get_image (tool->display));
     }

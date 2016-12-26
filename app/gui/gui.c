@@ -123,7 +123,7 @@ static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GtkUIManager       *manager);
 
-static void       gui_global_buffer_changed     (Gimp               *gimp);
+static void       gui_clipboard_changed         (Gimp               *gimp);
 
 static void       gui_menu_show_tooltip         (GimpUIManager      *manager,
                                                  const gchar        *tooltip,
@@ -134,6 +134,17 @@ static void       gui_menu_hide_tooltip         (GimpUIManager      *manager,
 static void       gui_display_changed           (GimpContext        *context,
                                                  GimpDisplay        *display,
                                                  Gimp               *gimp);
+
+static void       gui_compare_accelerator       (gpointer            data,
+                                                 const gchar        *accel_path,
+                                                 guint               accel_key,
+                                                 GdkModifierType     accel_mods,
+                                                 gboolean            changed);
+static void      gui_check_unique_accelerator   (gpointer            data,
+                                                 const gchar        *accel_path,
+                                                 guint               accel_key,
+                                                 GdkModifierType     accel_mods,
+                                                 gboolean            changed);
 
 
 /*  private variables  */
@@ -444,10 +455,13 @@ gui_restore_callback (Gimp               *gimp,
   dialogs_init (gimp, global_menu_factory);
 
   gimp_clipboard_init (gimp);
-  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
+  if (gimp_get_clipboard_image (gimp))
+    gimp_clipboard_set_image (gimp, gimp_get_clipboard_image (gimp));
+  else
+    gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
 
-  g_signal_connect (gimp, "buffer-changed",
-                    G_CALLBACK (gui_global_buffer_changed),
+  g_signal_connect (gimp, "clipboard-changed",
+                    G_CALLBACK (gui_clipboard_changed),
                     NULL);
 
   gimp_devices_init (gimp);
@@ -526,6 +540,10 @@ gui_restore_after_callback (Gimp               *gimp,
                                                     gimp,
                                                     gui_config->tearoff_menus);
   gimp_ui_manager_update (image_ui_manager, gimp);
+
+  /* Check that every accelerator is unique. */
+  gtk_accel_map_foreach_unfiltered (NULL,
+                                    gui_check_unique_accelerator);
 
   gimp_action_history_init (gimp);
 
@@ -663,9 +681,6 @@ gui_exit_callback (Gimp     *gimp,
   if (gui_config->save_session_info)
     session_save (gimp, FALSE);
 
-  if (gui_config->save_accels)
-    menus_save (gimp, FALSE);
-
   if (gui_config->save_device_status)
     gimp_devices_save (gimp, FALSE);
 
@@ -677,6 +692,9 @@ gui_exit_callback (Gimp     *gimp,
                                         gimp);
 
   gimp_displays_delete (gimp);
+
+  if (gui_config->save_accels)
+    menus_save (gimp, FALSE);
 
   gimp_tools_save (gimp, gui_config->save_tool_options, FALSE);
   gimp_tools_exit (gimp);
@@ -715,7 +733,7 @@ gui_exit_after_callback (Gimp     *gimp,
    *  a whole lot of code paths. See bug #731389.
    */
   g_signal_handlers_disconnect_by_func (gimp,
-                                        G_CALLBACK (gui_global_buffer_changed),
+                                        G_CALLBACK (gui_clipboard_changed),
                                         NULL);
   gimp_clipboard_exit (gimp);
 
@@ -779,9 +797,12 @@ gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
 }
 
 static void
-gui_global_buffer_changed (Gimp *gimp)
+gui_clipboard_changed (Gimp *gimp)
 {
-  gimp_clipboard_set_buffer (gimp, gimp->global_buffer);
+  if (gimp_get_clipboard_image (gimp))
+    gimp_clipboard_set_image (gimp, gimp_get_clipboard_image (gimp));
+  else
+    gimp_clipboard_set_buffer (gimp, gimp_get_clipboard_buffer (gimp));
 }
 
 static void
@@ -854,4 +875,51 @@ gui_display_changed (GimpContext *context,
     }
 
   gimp_ui_manager_update (image_ui_manager, display);
+}
+
+typedef struct
+{
+  const gchar     *path;
+  guint            key;
+  GdkModifierType  mods;
+}
+accelData;
+
+static void
+gui_compare_accelerator (gpointer         data,
+                         const gchar     *accel_path,
+                         guint            accel_key,
+                         GdkModifierType  accel_mods,
+                         gboolean         changed)
+{
+  accelData *accel = data;
+
+  if (accel->key == accel_key && accel->mods == accel_mods &&
+      g_strcmp0 (accel->path, accel_path))
+    {
+      g_warning ("Actions \"%s\" and \"%s\" use the same accelerator.\n"
+                 "Disable the accelerator on \"%s\".",
+                 accel->path, accel_path, accel_path);
+      gtk_accel_map_change_entry (accel_path, 0, 0, FALSE);
+    }
+}
+
+static void
+gui_check_unique_accelerator (gpointer         data,
+                              const gchar     *accel_path,
+                              guint            accel_key,
+                              GdkModifierType  accel_mods,
+                              gboolean         changed)
+{
+  if (gtk_accelerator_valid (accel_key, accel_mods))
+    {
+      accelData accel;
+
+      accel.path = accel_path;
+      accel.key  = accel_key;
+      accel.mods = accel_mods;
+
+      gtk_accel_map_foreach_unfiltered (&accel,
+                                        gui_compare_accelerator);
+    }
 }

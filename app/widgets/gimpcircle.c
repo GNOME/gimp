@@ -334,7 +334,7 @@ gimp_circle_size_allocate (GtkWidget     *widget,
 {
   GimpCircle *circle = GIMP_CIRCLE (widget);
 
-  gtk_widget_set_allocation (widget, allocation);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   if (gtk_widget_get_realized (widget))
     gdk_window_move_resize (circle->priv->event_window,

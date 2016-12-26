@@ -7,8 +7,8 @@ WinVersionTooLowError= Esta versão do GIMP requer o Windows XP com o Service Pac
 [CustomMessages]
 ;shown before the wizard starts on development versions of GIMP
 DevelopmentWarningTitle=Versão de Desenvolvimento
-DevelopmentWarning=Esta é uma versão de desenvolvimento do GIMP. Sendo assim, algumas funcionalidades não estão prontas, e ele pode ser instável. Se você encontrar algum problema, primeiro verifique se ele já não foi arrumado no GIT antes de contatar os desenvolvedores.%nEsta versão do GIMP não foi feita para ser usada no dia a dia, uma vez que ela pode ser instável e pode por o seu trabalho em risco. Você quer continuar com esta instalação mesmo assim?
-;DevelopmentWarning=Esta é uma versão de desenvolvimento do instalador do GIMP. Ela não foi testada tanto quanto o instalador estável, o que pode resultar no GIMP não ser corretamente instalado. Por favor, reporte quaisquer problemas que você encontrar no bugizlla do GIMP (Installer component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nHá alguns problemas conhecidos neste instalador:%n- Arquivos TIFF não estão abrindo%n-Tamanho dos arquivos não estão sendo exibidos corretamente%nPor favor não reporte esses problemas, uma vez que já estamos a par dos mesmos.%n%nVocê quer continuar com a instalação mesmo assim?
+;DevelopmentWarning=Esta é uma versão de desenvolvimento do GIMP. Sendo assim, algumas funcionalidades não estão prontas, e ele pode ser instável. Se você encontrar algum problema, primeiro verifique se ele já não foi arrumado no GIT antes de contatar os desenvolvedores.%nEsta versão do GIMP não foi feita para ser usada no dia a dia, uma vez que ela pode ser instável e pode por o seu trabalho em risco. Você quer continuar com esta instalação mesmo assim?
+DevelopmentWarning=Esta é uma versão de desenvolvimento do instalador do GIMP. Ela não foi testada tanto quanto o instalador estável, o que pode resultar no GIMP não ser corretamente instalado. Por favor, reporte quaisquer problemas que você encontrar no bugizlla do GIMP (Installer component):%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nVocê quer continuar com a instalação mesmo assim?
 DevelopmentButtonContinue=&Continuar
 DevelopmentButtonExit=Sair
 
@@ -44,8 +44,8 @@ ComponentsTranslations=Traduções
 ComponentsTranslationsDescription=Traduções
 ComponentsPython=Suporte a scripts em Python
 ComponentsPythonDescription=Permite que você use plug-ins escritos na linguagem Python(necessário para algumas funcionalidades).
-ComponentsGhostscript=Suporte a PostScript
-ComponentsGhostscriptDescription=Permite que o GIMP possa abrir arquivos PostScript
+ComponentsGhostscript=Suporte a Postscript
+ComponentsGhostscriptDescription=Permite que o GIMP possa abrir arquivos Postscript
 ;only when installing on x64 Windows
 ComponentsGimp32=Suporte a plug-ins de 32-bit
 ComponentsGimp32Description=Inclui arquivos necessários para o uso de plug-ins de 32bits.%nNecessário para o suporte a Python.

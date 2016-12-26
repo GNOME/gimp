@@ -62,7 +62,7 @@ gint GIMP_DISPLAY_RENDER_BUF_HEIGHT = 256;
 static RTreeNode *
 rtree_node_create (RTree      *rtree,
                    RTreeNode **prev,
-		   gint        x,
+                   gint        x,
                    gint        y,
                    gint        w,
                    gint        h)
@@ -98,7 +98,7 @@ rtree_node_destroy (RTree     *rtree,
   for (i = 0; i < 2; i++)
     {
       if (node->children[i])
-	rtree_node_destroy (rtree, node->children[i]);
+        rtree_node_destroy (rtree, node->children[i]);
     }
 
   g_slice_free (RTreeNode, node);
@@ -107,7 +107,7 @@ rtree_node_destroy (RTree     *rtree,
 static RTreeNode *
 rtree_node_insert (RTree      *rtree,
                    RTreeNode **prev,
-		   RTreeNode  *node,
+                   RTreeNode  *node,
                    gint        w,
                    gint        h)
 {
@@ -119,23 +119,23 @@ rtree_node_insert (RTree      *rtree,
       gint hh = node->h - h;
 
       if (ww >= hh)
-	{
-	  node->children[0] = rtree_node_create (rtree, prev,
-						 node->x + w, node->y,
-						 ww, node->h);
-	  node->children[1] = rtree_node_create (rtree, prev,
-						 node->x, node->y + h,
-						 w, hh);
-	}
+        {
+          node->children[0] = rtree_node_create (rtree, prev,
+                                                 node->x + w, node->y,
+                                                 ww, node->h);
+          node->children[1] = rtree_node_create (rtree, prev,
+                                                 node->x, node->y + h,
+                                                 w, hh);
+        }
       else
-	{
-	  node->children[0] = rtree_node_create (rtree, prev,
-						 node->x, node->y + h,
-						 node->w, hh);
-	  node->children[1] = rtree_node_create (rtree, prev,
-						 node->x + w, node->y,
-						 ww, h);
-	}
+        {
+          node->children[0] = rtree_node_create (rtree, prev,
+                                                 node->x, node->y + h,
+                                                 node->w, hh);
+          node->children[1] = rtree_node_create (rtree, prev,
+                                                 node->x + w, node->y,
+                                                 ww, h);
+        }
     }
 
   return node;
@@ -182,7 +182,7 @@ rtree_reset (RTree *rtree)
   for (i = 0; i < 2; i++)
     {
       if (rtree->root.children[i] == NULL)
-	continue;
+        continue;
 
       rtree_node_destroy (rtree, rtree->root.children[i]);
       rtree->root.children[i] = NULL;
@@ -255,8 +255,8 @@ gimp_display_xfer_realize (GtkWidget *widget)
       xfer->page = 0;
 
       g_object_set_data_full (G_OBJECT (screen),
-			      "gimp-display-xfer",
-			      xfer, xfer_destroy);
+                              "gimp-display-xfer",
+                              xfer, xfer_destroy);
     }
 
   return xfer;
@@ -264,15 +264,15 @@ gimp_display_xfer_realize (GtkWidget *widget)
 
 cairo_surface_t *
 gimp_display_xfer_get_surface (GimpDisplayXfer *xfer,
-			       gint             w,
+                               gint             w,
                                gint             h,
-			       gint            *src_x,
+                               gint            *src_x,
                                gint            *src_y)
 {
   RTreeNode *node;
 
   g_assert (w <= GIMP_DISPLAY_RENDER_BUF_WIDTH * GIMP_DISPLAY_RENDER_MAX_SCALE &&
-	    h <= GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE);
+            h <= GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE);
 
   node = rtree_insert (&xfer->rtree, w, h);
   if (node == NULL)

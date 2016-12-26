@@ -815,9 +815,14 @@ read_layer_info (PSDimage  *img_a,
 
               block_rem -= 12;
 
-              //Round up to the nearest even byte
-              while (res_a.data_len % 4 != 0)
-                res_a.data_len++;
+              if (res_a.data_len % 2 != 0)
+                {
+                  /*  Warn the user about an invalid length value but
+                   *  try to recover graciously. See bug #771558.
+                   */
+                  g_printerr ("psd-load: Layer extra data length should "
+                              "be even, but it is %d.", res_a.data_len);
+                }
 
               if (res_a.data_len > block_rem)
                 {

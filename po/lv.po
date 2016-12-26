@@ -12149,7 +12149,7 @@ msgstr ""
 #, fuzzy
 #| msgctxt "guides-type"
 #| msgid "Center lines"
-msgid "Center abscisse"
+msgid "Center abscissa"
 msgstr "Viduslīnijas"
 
 #: ../app/core/gimpsymmetry-mandala.c:127

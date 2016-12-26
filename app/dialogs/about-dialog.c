@@ -351,7 +351,7 @@ insert_spacers (const gchar *string)
   return g_string_free (str, FALSE);
 }
 
-static void inline
+static inline void
 mix_colors (const GdkColor *start,
             const GdkColor *end,
             GdkColor       *target,

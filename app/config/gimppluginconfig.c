@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <gio/gio.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -53,7 +54,7 @@ static void  gimp_plugin_config_get_property (GObject      *object,
                                               GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpPluginConfig, gimp_plugin_config, GIMP_TYPE_GUI_CONFIG)
+G_DEFINE_TYPE (GimpPluginConfig, gimp_plugin_config, GIMP_TYPE_DIALOG_CONFIG)
 
 #define parent_class gimp_plugin_config_parent_class
 

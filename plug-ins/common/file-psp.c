@@ -854,7 +854,10 @@ read_creator_block (FILE     *f,
   gchar        *string;
   gchar        *title = NULL, *artist = NULL, *copyright = NULL, *description = NULL;
   guint32       dword;
-  guint32       cdate = 0, mdate = 0, appid, appver;
+  guint32       __attribute__((unused))cdate = 0;
+  guint32       __attribute__((unused))mdate = 0;
+  guint32       __attribute__((unused))appid;
+  guint32       __attribute__((unused))appver;
   GString      *comment;
   GimpParasite *comment_parasite;
 

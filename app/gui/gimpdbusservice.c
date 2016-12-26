@@ -68,8 +68,8 @@ static gboolean   gimp_dbus_service_batch_run      (GimpDBusServiceUI     *servi
                                                     const gchar           *batch_command);
 
 static void       gimp_dbus_service_gimp_opened    (Gimp                  *gimp,
-						    GFile                 *file,
-						    GimpDBusService       *service);
+                                                    GFile                 *file,
+                                                    GimpDBusService       *service);
 
 static gboolean   gimp_dbus_service_queue_open     (GimpDBusService       *service,
                                                     const gchar           *uri,
@@ -132,8 +132,8 @@ gimp_dbus_service_new (Gimp *gimp)
   service->gimp = gimp;
 
   g_signal_connect_object (gimp, "image-opened",
-			   G_CALLBACK (gimp_dbus_service_gimp_opened),
-			   service, 0);
+                           G_CALLBACK (gimp_dbus_service_gimp_opened),
+                           service, 0);
 
   return G_OBJECT (service);
 }
@@ -244,8 +244,8 @@ gimp_dbus_service_batch_run (GimpDBusServiceUI     *service,
 
 static void
 gimp_dbus_service_gimp_opened (Gimp            *gimp,
-			       GFile           *file,
-			       GimpDBusService *service)
+                               GFile           *file,
+                               GimpDBusService *service)
 {
   gchar *uri = g_file_get_uri (file);
 

@@ -28,7 +28,7 @@
 /**
  * SECTION: gimpimagetransform
  * @title: gimpimagetransform
- * @short_description: Transformations onm images.
+ * @short_description: Transformations on images.
  *
  * Operations to scale, resize, crop, flip and rotate images.
  **/

@@ -122,6 +122,10 @@ plug-ins/file-sgi/sgi.c
 plug-ins/file-tiff/file-tiff.c
 plug-ins/file-tiff/file-tiff-load.c
 plug-ins/file-tiff/file-tiff-save.c
+plug-ins/file-webp/file-webp.c
+plug-ins/file-webp/file-webp-dialog.c
+plug-ins/file-webp/file-webp-load.c
+plug-ins/file-webp/file-webp-save.c
 plug-ins/flame/flame.c
 plug-ins/fractal-explorer/fractal-explorer-dialogs.c
 plug-ins/fractal-explorer/fractal-explorer.c

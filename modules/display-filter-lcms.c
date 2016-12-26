@@ -308,7 +308,7 @@ cdisplay_lcms_attach_labelled (GtkTable    *table,
   gtk_widget_show (label);
 
   if (GTK_IS_LABEL (widget))
-    gtk_misc_set_alignment (GTK_MISC (widget), 0.0, 0.5);
+    gtk_label_set_xalign (GTK_LABEL (widget), 0.0);
 
   gtk_table_attach (table, widget, 1, 2, row, row + 1,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);

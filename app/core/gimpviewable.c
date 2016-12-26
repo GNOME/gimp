@@ -111,6 +111,7 @@ static gboolean gimp_viewable_real_get_popup_size    (GimpViewable  *viewable,
                                                       gint          *popup_height);
 static gchar * gimp_viewable_real_get_description    (GimpViewable  *viewable,
                                                       gchar        **tooltip);
+static gboolean gimp_viewable_real_is_name_editable  (GimpViewable  *viewable);
 static GimpContainer * gimp_viewable_real_get_children (GimpViewable *viewable);
 
 static gboolean gimp_viewable_serialize_property     (GimpConfig    *config,
@@ -167,6 +168,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   klass->default_icon_name       = "gimp-question";
   klass->name_changed_signal     = "name-changed";
+  klass->name_editable           = FALSE;
 
   klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
   klass->size_changed            = NULL;
@@ -179,6 +181,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->get_pixbuf              = NULL;
   klass->get_new_pixbuf          = gimp_viewable_real_get_new_pixbuf;
   klass->get_description         = gimp_viewable_real_get_description;
+  klass->is_name_editable        = gimp_viewable_real_is_name_editable;
   klass->get_children            = gimp_viewable_real_get_children;
   klass->set_expanded            = NULL;
   klass->get_expanded            = NULL;
@@ -419,6 +422,12 @@ gimp_viewable_real_get_description (GimpViewable  *viewable,
                                     gchar        **tooltip)
 {
   return g_strdup (gimp_object_get_name (viewable));
+}
+
+static gboolean
+gimp_viewable_real_is_name_editable (GimpViewable *viewable)
+{
+  return GIMP_VIEWABLE_GET_CLASS (viewable)->name_editable;
 }
 
 static GimpContainer *
@@ -1147,6 +1156,20 @@ gimp_viewable_get_description (GimpViewable  *viewable,
 
   return GIMP_VIEWABLE_GET_CLASS (viewable)->get_description (viewable,
                                                               tooltip);
+}
+
+/**
+ * gimp_viewable_is_name_editable:
+ * @viewable: viewable object for which to retrieve a description.
+ *
+ * Returns: whether the viewable's name is editable by the user.
+ **/
+gboolean
+gimp_viewable_is_name_editable (GimpViewable *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
+
+  return GIMP_VIEWABLE_GET_CLASS (viewable)->is_name_editable (viewable);
 }
 
 /**

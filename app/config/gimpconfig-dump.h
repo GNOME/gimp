@@ -30,7 +30,8 @@ typedef enum
 } GimpConfigDumpFormat;
 
 
-gboolean  gimp_config_dump (GimpConfigDumpFormat  format);
+gboolean  gimp_config_dump (GObject              *gimp,
+                            GimpConfigDumpFormat  format);
 
 
 #endif  /* __GIMP_CONFIG_DUMP_H__ */

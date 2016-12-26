@@ -139,7 +139,15 @@ file_open_image (Gimp                *gimp,
                                                           file, error);
 
   if (! file_proc)
-    return NULL;
+    {
+      /*  don't bail out on remote files, they might need to be
+       *  downloaded for magic matching
+       */
+      if (g_file_is_native (file))
+        return NULL;
+
+      g_clear_error (error);
+    }
 
   if (! g_file_is_native (file) &&
       ! file_remote_mount_file (gimp, file, progress, &my_error))
@@ -152,7 +160,7 @@ file_open_image (Gimp                *gimp,
       return NULL;
     }
 
-  if (! file_proc->handles_uri)
+  if (! file_proc || ! file_proc->handles_uri)
     {
       path = g_file_get_path (file);
 
@@ -171,6 +179,22 @@ file_open_image (Gimp                *gimp,
               return NULL;
             }
 
+          /*  if we don't have a file proc yet, try again on the local
+           *  file
+           */
+          if (! file_proc)
+            file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
+                                                                  GIMP_FILE_PROCEDURE_GROUP_OPEN,
+                                                                  local_file, error);
+
+          if (! file_proc)
+            {
+              g_file_delete (local_file, NULL, NULL);
+              g_object_unref (local_file);
+
+              return NULL;
+            }
+
           path = g_file_get_path (local_file);
         }
     }
@@ -183,6 +207,9 @@ file_open_image (Gimp                *gimp,
   if (! entered_uri)
     entered_uri = g_strdup (path);
 
+  if (progress)
+    g_object_add_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
+
   return_vals =
     gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                         context, progress, error,
@@ -191,6 +218,9 @@ file_open_image (Gimp                *gimp,
                                         G_TYPE_STRING,   path,
                                         G_TYPE_STRING,   entered_uri,
                                         G_TYPE_NONE);
+
+  if (progress)
+    g_object_remove_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
 
   g_free (path);
   g_free (entered_uri);
@@ -634,7 +664,7 @@ file_open_layers (Gimp                *gimp,
       else
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-			       _("Image doesn't contain any layers"));
+                               _("Image doesn't contain any layers"));
           *status = GIMP_PDB_EXECUTION_ERROR;
         }
 
@@ -727,6 +757,14 @@ file_open_sanitize_image (GimpImage *image,
    */
   gimp_image_clean_all (image);
 
+  /* Make sure the projection is completely constructed from valid
+   * layers, this is needed in case something triggers projection or
+   * image preview creation before all layers are loaded, see bug #767663.
+   */
+  gimp_image_invalidate (image, 0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
+
   /* Make sure all image states are up-to-date */
   gimp_image_flush (image);
 }
@@ -795,5 +833,5 @@ file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
 {
   return !(file_proc &&
            file_proc->mime_type &&
-           strcmp (file_proc->mime_type, "image/xcf") == 0);
+           strcmp (file_proc->mime_type, "image/x-xcf") == 0);
 }

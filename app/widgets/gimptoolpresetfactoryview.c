@@ -90,9 +90,14 @@ gimp_tool_preset_factory_view_new (GimpViewType      view_type,
   editor = GIMP_EDITOR (GIMP_CONTAINER_EDITOR (factory_view)->view);
 
   button = gimp_editor_add_action_button (editor, "tool-presets",
-                                          "tool-presets-restore", NULL);
+                                          "tool-presets-save", NULL);
   gtk_box_reorder_child (gimp_editor_get_button_box (editor),
                          button, 2);
+
+  button = gimp_editor_add_action_button (editor, "tool-presets",
+                                          "tool-presets-restore", NULL);
+  gtk_box_reorder_child (gimp_editor_get_button_box (editor),
+                         button, 3);
 
   return GTK_WIDGET (factory_view);
 }

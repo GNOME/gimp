@@ -26,6 +26,7 @@
 GtkWidget * _gimp_prop_gui_new_generic (GObject              *config,
                                         GParamSpec          **param_specs,
                                         guint                 n_param_specs,
+                                        GeglRectangle        *area,
                                         GimpContext          *context,
                                         GimpCreatePickerFunc  create_picker_func,
                                         gpointer              picker_creator);
@@ -34,6 +35,7 @@ GtkWidget * _gimp_prop_gui_new_color_rotate
                                        (GObject              *config,
                                         GParamSpec          **param_specs,
                                         guint                 n_param_specs,
+                                        GeglRectangle        *area,
                                         GimpContext          *context,
                                         GimpCreatePickerFunc  create_picker_func,
                                         gpointer              picker_creator);
@@ -42,6 +44,7 @@ GtkWidget * _gimp_prop_gui_new_convolution_matrix
                                        (GObject              *config,
                                         GParamSpec          **param_specs,
                                         guint                 n_param_specs,
+                                        GeglRectangle        *area,
                                         GimpContext          *context,
                                         GimpCreatePickerFunc  create_picker_func,
                                         gpointer              picker_creator);
@@ -50,6 +53,7 @@ GtkWidget * _gimp_prop_gui_new_channel_mixer
                                        (GObject              *config,
                                         GParamSpec          **param_specs,
                                         guint                 n_param_specs,
+                                        GeglRectangle        *area,
                                         GimpContext          *context,
                                         GimpCreatePickerFunc  create_picker_func,
                                         gpointer              picker_creator);
@@ -58,6 +62,7 @@ GtkWidget * _gimp_prop_gui_new_diffraction_patterns
                                        (GObject              *config,
                                         GParamSpec          **param_specs,
                                         guint                 n_param_specs,
+                                        GeglRectangle        *area,
                                         GimpContext          *context,
                                         GimpCreatePickerFunc  create_picker_func,
                                         gpointer              picker_creator);

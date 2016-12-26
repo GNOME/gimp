@@ -348,7 +348,7 @@ borderaverage_dialog (gint32        image_ID,
   GtkSizeGroup *group;
   gboolean      run;
   gdouble       xres, yres;
-  gint          width, height;
+  GeglBuffer   *buffer = NULL;
 
   const gchar *labels[] =
     { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
@@ -386,7 +386,7 @@ borderaverage_dialog (gint32        image_ID,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Thickness:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -406,8 +406,11 @@ borderaverage_dialog (gint32        image_ID,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
-                            MIN (width, height));
+  buffer = gimp_drawable_get_buffer (drawable_id);
+  if (buffer)
+    gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
+                              MIN (gegl_buffer_get_width (buffer),
+                                   gegl_buffer_get_height (buffer)));
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
                                          1.0, 256.0);
@@ -429,7 +432,7 @@ borderaverage_dialog (gint32        image_ID,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("_Bucket size:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

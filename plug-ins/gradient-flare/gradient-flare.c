@@ -2129,7 +2129,7 @@ calc_rays_pix (guchar *dest_pix, gdouble x, gdouble y)
  *  Calc sflare's pixel (RGBA) value
  *
  *  the sflare (second flares) are needed to be rendered one each
- *  sequencially, onto the source image, such as like usual layer
+ *  sequentially, onto the source image, such as like usual layer
  *  operations. So the function takes src_pix as argment.  glow, rays
  *  routines don't have src_pix as argment, because of convienience.
  *
@@ -3286,7 +3286,7 @@ dlg_selector_do_delete_callback (GtkWidget *widget,
 /*************************************************************************/
 
 /*
-        This is gflare editor dilaog, one which opens by clicking
+        This is gflare editor dialog, one which opens by clicking
         "Edit" button on the selector page in the main dialog.
  */
 
@@ -3936,7 +3936,7 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_widget_show (seed_hbox);
 
   label = gtk_label_new (_("Random seed:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -3983,7 +3983,7 @@ ed_put_gradient_menu (GtkWidget    *table,
   GtkWidget *label;
 
   label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_widget_show (label);
 
   gtk_table_attach (GTK_TABLE (table), label,

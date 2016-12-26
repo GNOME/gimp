@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -34,6 +36,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
+#include "gimpdisplayshell-rotate.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-transform.h"
@@ -64,10 +67,12 @@ static void      gimp_display_shell_calculate_scale_x_and_y
                                                           gdouble          *scale_x,
                                                           gdouble          *scale_y);
 
-  static void    gimp_display_shell_scale_to             (GimpDisplayShell *shell,
+static void      gimp_display_shell_scale_to             (GimpDisplayShell *shell,
                                                           gdouble           scale,
                                                           gdouble           viewport_x,
                                                           gdouble           viewport_y);
+static void      gimp_display_shell_scale_fit_or_fill    (GimpDisplayShell *shell,
+                                                          gboolean          fill);
 
 static gboolean  gimp_display_shell_scale_image_starts_to_fit
                                                          (GimpDisplayShell *shell,
@@ -223,6 +228,50 @@ gimp_display_shell_scale_get_image_size (GimpDisplayShell *shell,
   gimp_display_shell_scale_get_image_size_for_scale (shell,
                                                      gimp_zoom_model_get_factor (shell->zoom),
                                                      w, h);
+}
+
+/**
+ * gimp_display_shell_scale_get_image_bounds:
+ * @shell:
+ * @x:
+ * @y:
+ * @w:
+ * @h:
+ *
+ * Gets the screen-space boudning box of the image, after it has
+ * been transformed (i.e., scaled, rotated, and scrolled).
+ **/
+void
+gimp_display_shell_scale_get_image_bounds (GimpDisplayShell *shell,
+                                           gint             *x,
+                                           gint             *y,
+                                           gint             *w,
+                                           gint             *h)
+{
+  GimpImage *image;
+  gdouble    x1, y1;
+  gdouble    x2, y2;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  image = gimp_display_get_image (shell->display);
+
+  gimp_display_shell_transform_bounds (shell,
+                                       0, 0,
+                                       gimp_image_get_width (image),
+                                       gimp_image_get_height (image),
+                                       &x1, &y1,
+                                       &x2, &y2);
+
+  x1 = ceil (x1);
+  y1 = ceil (y1);
+  x2 = floor (x2);
+  y2 = floor (y2);
+
+  if (x) *x = x1 + shell->offset_x;
+  if (y) *y = y1 + shell->offset_y;
+  if (w) *w = x2 - x1;
+  if (h) *h = y2 - y1;
 }
 
 /**
@@ -408,41 +457,41 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
                                        gdouble           height,
                                        gboolean          resize_window)
 {
-  GimpImage *image;
-  gdouble    current_scale;
-  gdouble    new_scale;
-  gdouble    display_width;
-  gdouble    display_height;
-  gdouble    factor   = 1.0;
-  gint       offset_x = 0;
-  gint       offset_y = 0;
-  gdouble    xres;
-  gdouble    yres;
-  gdouble    screen_xres;
-  gdouble    screen_yres;
+  gdouble current_scale;
+  gdouble new_scale;
+  gdouble factor   = 1.0;
+  gint    offset_x = 0;
+  gint    offset_y = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
+  gimp_display_shell_transform_bounds (shell,
+                                       x, y,
+                                       x + width, y + height,
+                                       &x, &y,
+                                       &width, &height);
+
+  /* Convert scrolled (x1, y1, x2, y2) to unscrolled (x, y, width, height). */
+  width  -= x;
+  height -= y;
+  x      += shell->offset_x;
+  y      += shell->offset_y;
 
   width  = MAX (1.0, width);
   height = MAX (1.0, height);
 
   current_scale = gimp_zoom_model_get_factor (shell->zoom);
 
-  display_width  = FUNSCALEX (shell, shell->disp_width);
-  display_height = FUNSCALEY (shell, shell->disp_height);
-
   switch (zoom_type)
     {
     case GIMP_ZOOM_IN:
-      factor = MIN ((display_width  / width),
-                    (display_height / height));
+      factor = MIN ((shell->disp_width  / width),
+                    (shell->disp_height / height));
       break;
 
     case GIMP_ZOOM_OUT:
-      factor = MAX ((width  / display_width),
-                    (height / display_height));
+      factor = MAX ((width  / shell->disp_width),
+                    (height / shell->disp_height));
       break;
 
     default:
@@ -451,10 +500,6 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
     }
 
   new_scale = current_scale * factor;
-
-  gimp_image_get_resolution (image, &xres, &yres);
-  gimp_display_shell_scale_get_screen_resolution (shell,
-                                                  &screen_xres, &screen_yres);
 
   switch (zoom_type)
     {
@@ -468,13 +513,8 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
        *               center of viewport in screen coords without
        *               offset
        */
-      offset_x = RINT (new_scale * (x + width / 2.0) *
-                       screen_xres / xres -
-                       (shell->disp_width / 2.0));
-
-      offset_y = RINT (new_scale * (y + height / 2.0) *
-                       screen_yres / yres -
-                       (shell->disp_height / 2.0));
+      offset_x = RINT (factor * (x + width  / 2.0) - (shell->disp_width  / 2));
+      offset_y = RINT (factor * (y + height / 2.0) - (shell->disp_height / 2));
       break;
 
     case GIMP_ZOOM_OUT:
@@ -487,19 +527,11 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
        *               center of rectangle in screen coords without
        *               offset
        */
-      offset_x = RINT (new_scale * UNSCALEX (shell,
-                                             shell->offset_x +
-                                             shell->disp_width / 2.0) *
-                       screen_xres / xres -
-                       (SCALEX (shell, x + width / 2.0) -
-                        shell->offset_x));
+      offset_x = RINT (factor * (shell->offset_x + shell->disp_width  / 2) -
+                       ((x + width  / 2.0) - shell->offset_x));
 
-      offset_y = RINT (new_scale * UNSCALEY (shell,
-                                             shell->offset_y +
-                                             shell->disp_height / 2.0) *
-                       screen_yres / yres -
-                       (SCALEY (shell, y + height / 2.0) -
-                        shell->offset_y));
+      offset_y = RINT (factor * (shell->offset_y + shell->disp_height / 2) -
+                       ((y + height / 2.0) - shell->offset_y));
       break;
 
     default:
@@ -527,38 +559,11 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
 void
 gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 {
-  GimpImage *image;
-  gint       image_width;
-  gint       image_height;
-  gdouble    xres;
-  gdouble    yres;
-  gdouble    zoom_factor;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
-
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
-
-  gimp_image_get_resolution (image, &xres, &yres);
-
-  if (! shell->dot_for_dot)
-    {
-      image_width  = ROUND (image_width  * shell->monitor_xres / xres);
-      image_height = ROUND (image_height * shell->monitor_yres / yres);
-    }
-
-  zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,
-                     (gdouble) shell->disp_height / (gdouble) image_height);
-
-  gimp_display_shell_scale (shell,
-                            GIMP_ZOOM_TO,
-                            zoom_factor,
-                            GIMP_ZOOM_FOCUS_BEST_GUESS);
-
-  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
-}
+  gimp_display_shell_scale_fit_or_fill (shell,
+                                        /* fill = */ FALSE);
+ }
 
 /**
  * gimp_display_shell_scale_fill:
@@ -570,37 +575,10 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 void
 gimp_display_shell_scale_fill (GimpDisplayShell *shell)
 {
-  GimpImage *image;
-  gint       image_width;
-  gint       image_height;
-  gdouble    xres;
-  gdouble    yres;
-  gdouble    zoom_factor;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
-
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
-
-  gimp_image_get_resolution (image, &xres, &yres);
-
-  if (! shell->dot_for_dot)
-    {
-      image_width  = ROUND (image_width  * shell->monitor_xres / xres);
-      image_height = ROUND (image_height * shell->monitor_yres / yres);
-    }
-
-  zoom_factor = MAX ((gdouble) shell->disp_width  / (gdouble) image_width,
-                     (gdouble) shell->disp_height / (gdouble) image_height);
-
-  gimp_display_shell_scale (shell,
-                            GIMP_ZOOM_TO,
-                            zoom_factor,
-                            GIMP_ZOOM_FOCUS_BEST_GUESS);
-
-  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
+  gimp_display_shell_scale_fit_or_fill (shell,
+                                        /* fill = */ TRUE);
 }
 
 /**
@@ -642,10 +620,39 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   shell->offset_x = offset_x;
   shell->offset_y = offset_y;
 
+  gimp_display_shell_rotate_update_transform (shell);
+
   gimp_display_shell_scale_resize (shell, resize_window, FALSE);
 
   /* re-enable the active tool */
   gimp_display_shell_resume (shell);
+}
+
+void
+gimp_display_shell_scale_drag (GimpDisplayShell *shell,
+                               gdouble           delta_x,
+                               gdouble           delta_y)
+{
+  gdouble scale;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  scale = gimp_zoom_model_get_factor (shell->zoom);
+
+  if (delta_y > 0)
+    {
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_TO,
+                                scale * 1.1,
+                                GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS);
+    }
+  else if (delta_y < 0)
+    {
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_TO,
+                                scale * 0.9,
+                                GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS);
+    }
 }
 
 /**
@@ -782,6 +789,41 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
 
   if (display_height)
     *display_height = shell_height;
+}
+
+/**
+ * gimp_display_shell_get_rotated_scale:
+ * @shell:   the #GimpDisplayShell
+ * @scale_x: horizontal scale output
+ * @scale_y: vertical scale output
+ *
+ * Returns the screen space horizontal and vertical scaling
+ * factors, taking rotation into account.
+ **/
+void
+gimp_display_shell_get_rotated_scale (GimpDisplayShell *shell,
+                                      gdouble          *scale_x,
+                                      gdouble          *scale_y)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->rotate_angle == 0.0 || shell->scale_x == shell->scale_y)
+    {
+      if (scale_x) *scale_x = shell->scale_x;
+      if (scale_y) *scale_y = shell->scale_y;
+    }
+  else
+    {
+      gdouble a     = G_PI * shell->rotate_angle / 180.0;
+      gdouble cos_a = cos (a);
+      gdouble sin_a = sin (a);
+
+      if (scale_x) *scale_x = 1.0 / sqrt (SQR (cos_a / shell->scale_x) +
+                                          SQR (sin_a / shell->scale_y));
+
+      if (scale_y) *scale_y = 1.0 / sqrt (SQR (cos_a / shell->scale_y) +
+                                          SQR (sin_a / shell->scale_x));
+    }
 }
 
 /**
@@ -936,6 +978,59 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
 
   /* re-enable the active tool */
   gimp_display_shell_resume (shell);
+}
+
+/**
+ * gimp_display_shell_scale_fit_or_fill:
+ * @shell: the #GimpDisplayShell
+ * @fill:  whether to scale the image to fill the viewport,
+ *         or fit inside the viewport
+ *
+ * A common implementation for gimp_display_shell_scale_{fit_in,fill}().
+ **/
+static void
+gimp_display_shell_scale_fit_or_fill (GimpDisplayShell *shell,
+                                      gboolean          fill)
+{
+  GimpImage *image;
+  gdouble    image_x;
+  gdouble    image_y;
+  gdouble    image_width;
+  gdouble    image_height;
+  gdouble    current_scale;
+  gdouble    zoom_factor;
+
+  image = gimp_display_get_image (shell->display);
+
+  gimp_display_shell_transform_bounds (shell,
+                                       0, 0,
+                                       gimp_image_get_width  (image),
+                                       gimp_image_get_height (image),
+                                       &image_x, &image_y,
+                                       &image_width, &image_height);
+
+  image_width  -= image_x;
+  image_height -= image_y;
+
+  current_scale = gimp_zoom_model_get_factor (shell->zoom);
+
+  if (fill)
+    {
+      zoom_factor = MAX (shell->disp_width  / image_width,
+                         shell->disp_height / image_height);
+    }
+  else
+    {
+      zoom_factor = MIN (shell->disp_width  / image_width,
+                         shell->disp_height / image_height);
+    }
+
+  gimp_display_shell_scale (shell,
+                            GIMP_ZOOM_TO,
+                            zoom_factor * current_scale,
+                            GIMP_ZOOM_FOCUS_BEST_GUESS);
+
+  gimp_display_shell_scroll_center_image (shell, TRUE, TRUE);
 }
 
 static gboolean

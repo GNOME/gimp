@@ -164,7 +164,7 @@ static const GimpActionFactoryEntry action_groups[] =
   { "filters", N_("Filters"), GIMP_STOCK_GEGL,
     filters_actions_setup,
     filters_actions_update },
-  { "fonts", N_("Fonts"), GIMP_STOCK_FONT,
+  { "fonts", N_("Fonts"), "gtk-select-font",
     fonts_actions_setup,
     fonts_actions_update },
   { "gradient-editor", N_("Gradient Editor"), GIMP_STOCK_GRADIENT,

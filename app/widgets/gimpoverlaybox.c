@@ -210,14 +210,7 @@ gimp_overlay_box_size_allocate (GtkWidget     *widget,
   GimpOverlayBox *box = GIMP_OVERLAY_BOX (widget);
   GList          *list;
 
-  gtk_widget_set_allocation (widget, allocation);
-
-  if (gtk_widget_get_realized (widget))
-    gdk_window_move_resize (gtk_widget_get_window (widget),
-                            allocation->x,
-                            allocation->y,
-                            allocation->width,
-                            allocation->height);
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
   for (list = box->children; list; list = g_list_next (list))
     gimp_overlay_child_size_allocate (box, list->data);

@@ -217,8 +217,8 @@ gimp_window_key_press_event (GtkWidget   *widget,
                                   GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR);
 
   g_object_get (gtk_widget_get_settings (widget),
-		"gtk-enable-mnemonics", &enable_mnemonics,
-		NULL);
+                "gtk-enable-mnemonics", &enable_mnemonics,
+                NULL);
 
   if (enable_mnemonics)
     accel_mods |= gtk_window_get_mnemonic_modifier (window);

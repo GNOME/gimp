@@ -1853,7 +1853,7 @@ gimp_gradient_segment_range_move (GimpGradient        *gradient,
 
   gimp_data_freeze (GIMP_DATA (gradient));
 
-  if (! range_l)
+  if (! range_r)
     range_r = gimp_gradient_segment_get_last (range_l);
 
   /* First or last segments in gradient? */

@@ -134,14 +134,14 @@ gimp_bucket_fill_tool_initialize (GimpTool     *tool,
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot modify the pixels of layer groups."));
+                           _("Cannot modify the pixels of layer groups."));
       return FALSE;
     }
 
   if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("The active layer's pixels are locked."));
+                           _("The active layer's pixels are locked."));
       return FALSE;
     }
 
@@ -182,6 +182,8 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
                                               options->fill_mode,
                                               &error))
         {
+          gimp_fill_options_set_antialias (fill_options, options->antialias);
+
           gimp_context_set_opacity (GIMP_CONTEXT (fill_options),
                                     gimp_context_get_opacity (context));
           gimp_context_set_paint_mode (GIMP_CONTEXT (fill_options),

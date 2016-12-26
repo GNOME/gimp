@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir = $(gimpdatadir)/icons/Symbolic/hicolor
+iconsdir = $(gimpdatadir)/icons/Symbolic
 
 icons_DATA = \
 	index.theme
@@ -9,7 +9,7 @@ icons_DATA = \
 ## official icon themes have the same list.
 include $(top_srcdir)/icons/icon-list.mk
 
-# Vectorial icons are now committed into the repository.
+# Vector icons are now committed into the repository.
 # librsvg is just too buggy to handle build-time extraction with
 # acceptable quality.
 #scalable/%.svg: symbolic-scalable.svg ../../tools/compute-svg-viewbox
@@ -41,6 +41,7 @@ EXTRA_DIST = \
 	$(icons192_images)	\
 	$(icons256_images)	\
 	$(scalable_images)	\
+	$(vector24_images)	\
 	symbolic-scalable.svg
 
 noinst_DATA = \

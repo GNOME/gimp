@@ -42,9 +42,9 @@ static void      run            (const gchar      *name,
                                  gint             *nreturn_vals,
                                  GimpParam       **return_vals);
 
-static gboolean  dialog         (GimpDrawable     *drawable);
+static gboolean  dialog         (gint32            drawable_id);
 
-static gint32    smooth_palette (GimpDrawable     *drawable,
+static gint32    smooth_palette (gint32            drawable_id,
                                  gint32           *layer_id);
 
 
@@ -119,8 +119,8 @@ run (const gchar      *name,
 {
   static GimpParam   values[3];
   GimpRunMode        run_mode;
+  gint32             drawable_id;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpDrawable      *drawable;
 
   run_mode = param[0].data.d_int32;
 
@@ -134,13 +134,13 @@ run (const gchar      *name,
   values[1].type          = GIMP_PDB_IMAGE;
   values[2].type          = GIMP_PDB_LAYER;
 
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  drawable_id = param[2].data.d_drawable;
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_PROC, &config);
-      if (! dialog (drawable))
+      if (! dialog (drawable_id))
         return;
       break;
 
@@ -174,15 +174,14 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (gimp_drawable_is_rgb (drawable->drawable_id))
+      if (gimp_drawable_is_rgb (drawable_id))
         {
           gimp_progress_init (_("Deriving smooth palette"));
 
-          gimp_tile_cache_ntiles (2 * (drawable->width + 1) /
-                                  gimp_tile_width ());
-
-          values[1].data.d_image = smooth_palette (drawable,
+          gegl_init (NULL, NULL);
+          values[1].data.d_image = smooth_palette (drawable_id,
                                                    &values[2].data.d_layer);
+          gegl_exit ();
 
           if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
@@ -194,26 +193,24 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
-
-      gimp_drawable_detach (drawable);
     }
 
   values[0].data.d_status = status;
 }
 
-static long
-pix_diff (guchar *pal,
+static gfloat
+pix_diff (gfloat  *pal,
           guint    bpp,
           gint    i,
           gint    j)
 {
-  glong r = 0;
+  gfloat r = 0.f;
   guint k;
 
   for (k = 0; k < bpp; k++)
     {
-      gint p1 = pal[j * bpp + k];
-      gint p2 = pal[i * bpp + k];
+      gfloat p1 = pal[j * bpp + k];
+      gfloat p2 = pal[i * bpp + k];
       r += (p1 - p2) * (p1 - p2);
     }
 
@@ -221,7 +218,7 @@ pix_diff (guchar *pal,
 }
 
 static void
-pix_swap (guchar *pal,
+pix_swap (gfloat *pal,
           guint   bpp,
           gint    i,
           gint    j)
@@ -230,62 +227,74 @@ pix_swap (guchar *pal,
 
   for (k = 0; k < bpp; k++)
     {
-      guchar t = pal[j * bpp + k];
+      gfloat t = pal[j * bpp + k];
       pal[j * bpp + k] = pal[i * bpp + k];
       pal[i * bpp + k] = t;
     }
 }
 
 static gint32
-smooth_palette (GimpDrawable *drawable,
-                gint32       *layer_id)
+smooth_palette (gint32  drawable_id,
+                gint32 *layer_id)
 {
   gint32        new_image_id;
-  GimpDrawable *new_layer;
   gint          psize, i, j;
-  guchar       *pal;
-  guint         bpp = drawable->bpp;
+  guint         bpp;
   gint          sel_x1, sel_y1;
   gint          width, height;
-  GimpPixelRgn  pr;
+  GeglBuffer   *buffer;
+  gfloat       *pal;
   GRand        *gr;
 
-  gr = g_rand_new ();
+  const Babl *format = babl_format ("RGB float");
 
-  new_image_id = gimp_image_new (config.width, config.height, GIMP_RGB);
+  new_image_id = gimp_image_new_with_precision (config.width,
+                                                config.height,
+                                                GIMP_RGB,
+                                                GIMP_PRECISION_FLOAT_LINEAR);
+
   gimp_image_undo_disable (new_image_id);
+
   *layer_id = gimp_layer_new (new_image_id, _("Background"),
                               config.width, config.height,
-                              gimp_drawable_type (drawable->drawable_id),
+                              gimp_drawable_type (drawable_id),
                               100, GIMP_NORMAL_MODE);
+
   gimp_image_insert_layer (new_image_id, *layer_id, -1, 0);
-  new_layer = gimp_drawable_get (*layer_id);
 
-  psize = config.width;
-
-  pal = g_new (guchar, psize * bpp);
-
-  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+  if (! gimp_drawable_mask_intersect (drawable_id,
                                       &sel_x1, &sel_y1, &width, &height))
     return new_image_id;
 
-  gimp_pixel_rgn_init (&pr, drawable, sel_x1, sel_y1, width, height,
-                       FALSE, FALSE);
+  gr = g_rand_new ();
+
+  psize = config.width;
+
+  buffer = gimp_drawable_get_buffer (drawable_id);
+
+  bpp = babl_format_get_n_components (gegl_buffer_get_format (buffer));
+
+  pal = g_new (gfloat, psize * bpp);
 
   /* get initial palette */
+
   for (i = 0; i < psize; i++)
     {
       gint x = sel_x1 + g_rand_int_range (gr, 0, width);
       gint y = sel_y1 + g_rand_int_range (gr, 0, height);
 
-      gimp_pixel_rgn_get_pixel (&pr, pal + bpp * i, x, y);
+      gegl_buffer_sample (buffer, (gdouble) x, (gdouble) y, NULL, pal + i * bpp,
+                          format, GEGL_SAMPLER_NEAREST,
+                          GEGL_ABYSS_NONE);
     }
+
+  g_object_unref (buffer);
 
   /* reorder */
   if (1)
     {
-      guchar  *pal_best;
-      guchar  *original;
+      gfloat  *pal_best;
+      gfloat  *original;
       gdouble  len_best = 0;
       gint     try;
 
@@ -314,7 +323,7 @@ smooth_palette (GimpDrawable *drawable,
             {
               gint  i0 = 1 + g_rand_int_range (gr, 0, psize-2);
               gint  i1 = 1 + g_rand_int_range (gr, 0, psize-2);
-              glong as_is, swapd;
+              gfloat as_is, swapd;
 
               if (1 == (i0 - i1))
                 {
@@ -354,14 +363,16 @@ smooth_palette (GimpDrawable *drawable,
               len_best = len;
             }
         }
+
       gimp_progress_update (1.0);
       memcpy (pal, pal_best, bpp * psize);
       g_free (pal_best);
       g_free (original);
+
       /* clean */
       for (i = 1; i < 4 * psize; i++)
         {
-          glong as_is, swapd;
+          gfloat as_is, swapd;
           gint i0 = 1 + g_rand_int_range (gr, 0, psize - 2);
           gint i1 = i0 + 1;
 
@@ -369,6 +380,7 @@ smooth_palette (GimpDrawable *drawable,
                    pix_diff (pal, bpp, i1, i1 + 1));
           swapd = (pix_diff (pal, bpp, i0 - 1, i1) +
                    pix_diff (pal, bpp, i0, i1 + 1));
+
           if (swapd < as_is)
             {
               pix_swap (pal, bpp, i0, i1);
@@ -378,25 +390,30 @@ smooth_palette (GimpDrawable *drawable,
     }
 
   /* store smooth palette */
-  gimp_pixel_rgn_init (&pr, new_layer, 0, 0,
-                       config.width, config.height,
-                       TRUE, FALSE);
-  for (j = 0; j < config.height; j++)
-    for (i = 0; i < config.width; i++)
-      gimp_pixel_rgn_set_pixel (&pr, pal + bpp * i, i, j);
-  g_free (pal);
 
-  g_rand_free (gr);
-  gimp_drawable_flush (new_layer);
-  gimp_drawable_update(new_layer->drawable_id, 0, 0,
-                       config.width, config.height);
+  buffer = gimp_drawable_get_buffer (*layer_id);
+
+  for (j = 0; j < config.height; j++)
+    {
+      GeglRectangle row = {0, j, config.width, 1};
+      gegl_buffer_set (buffer, &row, 0, format, pal, GEGL_AUTO_ROWSTRIDE);
+    }
+
+  gegl_buffer_flush (buffer);
+
+  gimp_drawable_update (*layer_id, 0, 0,
+                        config.width, config.height);
   gimp_image_undo_enable (new_image_id);
+
+  g_object_unref (buffer);
+  g_free (pal);
+  g_rand_free (gr);
 
   return new_image_id;
 }
 
 static gboolean
-dialog (GimpDrawable *drawable)
+dialog (gint32 drawable_id)
 {
   GtkWidget     *dlg;
   GtkWidget     *spinbutton;
@@ -425,7 +442,7 @@ dialog (GimpDrawable *drawable)
 
   gimp_window_set_transient (GTK_WINDOW (dlg));
 
-  image_id = gimp_item_get_image (drawable->drawable_id);
+  image_id = gimp_item_get_image (drawable_id);
   unit = gimp_image_get_unit (image_id);
   gimp_image_get_resolution (image_id, &xres, &yres);
 

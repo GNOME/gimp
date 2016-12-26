@@ -112,27 +112,30 @@ gimp_operation_color_erase_mode_process_pixels (gfloat              *in,
 
       if (bgcolor.r < 0.0001)
         alpha.r = color.r;
+      else if (GEGL_FLOAT_EQUAL (color.r, bgcolor.r))
+        alpha.r = 0.0;
       else if ( color.r > bgcolor.r )
         alpha.r = (color.r - bgcolor.r) / (1.0 - bgcolor.r);
-      else if (color.r < bgcolor.r)
+      else
         alpha.r = (bgcolor.r - color.r) / bgcolor.r;
-      else alpha.r = 0.0;
 
       if (bgcolor.g < 0.0001)
         alpha.g = color.g;
+      else if (GEGL_FLOAT_EQUAL (color.g, bgcolor.g))
+        alpha.g = 0.0;
       else if ( color.g > bgcolor.g )
         alpha.g = (color.g - bgcolor.g) / (1.0 - bgcolor.g);
-      else if ( color.g < bgcolor.g )
+      else
         alpha.g = (bgcolor.g - color.g) / (bgcolor.g);
-      else alpha.g = 0.0;
 
       if (bgcolor.b < 0.0001)
         alpha.b = color.b;
+      else if (GEGL_FLOAT_EQUAL (color.b, bgcolor.b))
+        alpha.b = 0.0;
       else if ( color.b > bgcolor.b )
         alpha.b = (color.b - bgcolor.b) / (1.0 - bgcolor.b);
-      else if ( color.b < bgcolor.b )
+      else
         alpha.b = (bgcolor.b - color.b) / (bgcolor.b);
-      else alpha.b = 0.0;
 
       if ( alpha.r > alpha.g )
         {

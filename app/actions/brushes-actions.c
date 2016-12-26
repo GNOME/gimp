@@ -43,7 +43,7 @@ static const GimpActionEntry brushes_actions[] =
     NC_("brushes-action", "Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_DIALOG },
 
-  { "brushes-open-as-image", GIMP_STOCK_OPEN,
+  { "brushes-open-as-image", "document-open",
     NC_("brushes-action", "_Open Brush as Image"), NULL,
     NC_("brushes-action", "Open brush as image"),
     G_CALLBACK (data_open_as_image_cmd_callback),
@@ -61,7 +61,7 @@ static const GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_BRUSH_DUPLICATE },
 
-  { "brushes-copy-location", GIMP_STOCK_CLIPBOARD,
+  { "brushes-copy-location", "edit-copy",
     NC_("brushes-action", "Copy Brush _Location"), NULL,
     NC_("brushes-action", "Copy brush file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),

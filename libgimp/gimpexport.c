@@ -256,19 +256,19 @@ static ExportAction export_action_merge_single =
 
 static ExportAction export_action_animate_or_merge =
 {
-  export_merge,
   NULL,
+  export_merge,
   N_("%s plug-in can only handle layers as animation frames"),
-  { N_("Merge Visible Layers"), N_("Save as Animation")},
+  { N_("Save as Animation"), N_("Merge Visible Layers") },
   0
 };
 
 static ExportAction export_action_animate_or_flatten =
 {
-  export_flatten,
   NULL,
+  export_flatten,
   N_("%s plug-in can only handle layers as animation frames"),
-  { N_("Flatten Image"), N_("Save as Animation") },
+  { N_("Save as Animation"), N_("Flatten Image") },
   0
 };
 
@@ -350,7 +350,7 @@ static ExportAction export_action_convert_rgb_or_indexed =
 {
   export_convert_rgb,
   export_convert_indexed,
-  N_("%s plug-in  can only handle RGB or indexed images"),
+  N_("%s plug-in can only handle RGB or indexed images"),
   { N_("Convert to RGB"), N_("Convert to Indexed using default settings\n"
                              "(Do it manually to tune the result)")},
   0
@@ -381,10 +381,14 @@ static ExportFunc
 export_action_get_func (const ExportAction *action)
 {
   if (action->choice == 0 && action->default_action)
-    return action->default_action;
+    {
+      return action->default_action;
+    }
 
   if (action->choice == 1 && action->alt_action)
-    return action->alt_action;
+    {
+      return action->alt_action;
+    }
 
   return export_void;
 }
@@ -451,7 +455,7 @@ confirm_save_dialog (const gchar *message,
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_icon_name ("gimp-warning",
+  image = gtk_image_new_from_icon_name ("dialog-warning",
                                         GTK_ICON_SIZE_DIALOG);
   gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
@@ -469,7 +473,7 @@ confirm_save_dialog (const gchar *message,
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
@@ -554,7 +558,7 @@ export_dialog (GSList      *actions,
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
@@ -607,7 +611,7 @@ export_dialog (GSList      *actions,
       else if (action->possibilities[0])
         {
           label = gtk_label_new (gettext (action->possibilities[0]));
-          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+          gtk_label_set_xalign (GTK_LABEL (label), 0.0);
           gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
           gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
           gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -624,7 +628,7 @@ export_dialog (GSList      *actions,
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
@@ -1012,7 +1016,7 @@ gimp_export_dialog_new (const gchar *format_name,
   button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
                                    _("_Export"), GTK_RESPONSE_OK);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name ("gimp-save",
+                        gtk_image_new_from_icon_name ("document-save",
                                                       GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),

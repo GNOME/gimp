@@ -101,7 +101,7 @@ typedef struct {
 } WinSnapInterface;
 
 /* We create a DIB section to hold the grabbed area. The scanlines in
- * DIB sections are aligned ona LONG (four byte) boundary. Its pixel
+ * DIB sections are aligned on a LONG (four byte) boundary. Its pixel
  * data is in RGB (BGR actually) format, three bytes per pixel.
  *
  * GIMP uses no alignment for its pixel regions. The GIMP image we

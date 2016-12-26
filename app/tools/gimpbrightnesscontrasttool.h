@@ -37,6 +37,7 @@ struct _GimpBrightnessContrastTool
 {
   GimpFilterTool  parent_instance;
 
+  gboolean        dragging;
   gdouble         x, y;
   gdouble         dx, dy;
 

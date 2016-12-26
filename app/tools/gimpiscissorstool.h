@@ -79,7 +79,6 @@ struct _GimpIscissorsTool
   IscissorsState  state;        /*  state of iscissors                      */
 
   GeglBuffer     *gradient_map; /*  lazily filled gradient map              */
-  GimpTempBuf    *dp_buf;       /*  dynamic programming buffer              */
   GimpChannel    *mask;         /*  selection mask                          */
 };
 

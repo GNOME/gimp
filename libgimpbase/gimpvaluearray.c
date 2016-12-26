@@ -72,7 +72,7 @@ G_DEFINE_BOXED_TYPE (GimpValueArray, gimp_value_array,
  * @value_array: #GimpValueArray to get a value from
  * @index: index of the value of interest
  *
- * Return a pointer to the value at @index containd in @value_array.
+ * Return a pointer to the value at @index contained in @value_array.
  *
  * Returns: (transfer none): pointer to a value at @index in @value_array
  *

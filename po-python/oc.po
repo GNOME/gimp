@@ -3,14 +3,14 @@
 # Copyright (c) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>, 2007, 2008.
-# Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2015.
+# Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp20\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-19 15:30+0000\n"
-"PO-Revision-Date: 2015-06-07 21:51+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
+"ywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-10-11 22:25+0000\n"
+"PO-Revision-Date: 2016-10-16 14:21+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot En Òc\n"
 "Language: oc\n"
@@ -24,37 +24,37 @@ msgstr ""
 "X-Launchpad-Export-Date: 2015-05-20 15:16+0000\n"
 "X-Project-Style: gnome\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
 msgstr "Informacions mancantas sus l'excepcion"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Una error s'es produita pendent l'execucion de %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
 msgstr "_Mai d'informacions"
 
-#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
-#: ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
 msgstr "Non"
 
-#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
 msgstr "Òc"
 
-#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Seleccion del fichièr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:644
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Seleccion del dorsièr Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:733
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Entrada invalida per « %s »"
@@ -185,11 +185,11 @@ msgstr "Op_acitat"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
-msgstr "Decalar las colors dins una paleta"
+msgstr "Descalar las colors dins una paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
-msgstr "_Decalatge de paleta..."
+msgstr "_Descalatge de paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
@@ -200,7 +200,7 @@ msgstr "Paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 msgid "Off_set"
-msgstr "Decalat_ge"
+msgstr "Descalat_ge"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
 msgid "Red"
@@ -380,7 +380,7 @@ msgstr "Dorsièr per l'exportacion dels imatges"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Space between table elements"
-msgstr "Espaçament entre les elements de la taula"
+msgstr "Espaçament entre los elements de la taula"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
@@ -399,31 +399,30 @@ msgstr "Consòla Python"
 msgid "_Browse..."
 msgstr "_Percórrer..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pygimp/plug-ins/python-console.py:144
 msgid "Python Procedure Browser"
 msgstr "Navigador de proceduras python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pygimp/plug-ins/python-console.py:173
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossible de dobrir « %s » per escriure : %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pygimp/plug-ins/python-console.py:188
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Impossible d'escriure cap a « %s » : %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pygimp/plug-ins/python-console.py:196
 msgid "Save Python-Fu Console Output"
 msgstr "Enregistrar las sortidas de la consòla python-fu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
-#, fuzzy
+#: ../plug-ins/pygimp/plug-ins/python-console.py:222
 #| msgid "Interactiva GIMP Python interpreter"
 msgid "Interactive GIMP Python interpreter"
 msgstr "Interpretador interactiu GIMP Python"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pygimp/plug-ins/python-console.py:227
 msgid "_Console"
 msgstr "_Consòla"
 

@@ -329,7 +329,9 @@ layer_add_alpha_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
-        gimp_layer_add_alpha (layer);
+        {
+          gimp_layer_add_alpha (layer);
+        }
       else
        success = FALSE;
     }
@@ -356,7 +358,9 @@ layer_flatten_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
-        gimp_layer_flatten (layer, context);
+        {
+          gimp_layer_remove_alpha (layer, context);
+        }
       else
        success = FALSE;
     }
@@ -485,7 +489,7 @@ layer_resize_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
                                      GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
                                      error))
-        gimp_item_resize (GIMP_ITEM (layer), context,
+        gimp_item_resize (GIMP_ITEM (layer), context, GIMP_FILL_TRANSPARENT,
                           new_width, new_height, offx, offy);
       else
         success = FALSE;
@@ -513,7 +517,7 @@ layer_resize_to_image_size_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
                                      GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
                                      error))
-        gimp_layer_resize_to_image (layer, context);
+        gimp_layer_resize_to_image (layer, context, GIMP_FILL_TRANSPARENT);
       else
         success = FALSE;
     }

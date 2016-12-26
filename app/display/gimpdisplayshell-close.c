@@ -176,12 +176,12 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_free (title);
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          _("_Discard Changes"), GTK_RESPONSE_CLOSE,
-                          GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
                           (file ?
                            GTK_STOCK_SAVE :
                            GTK_STOCK_SAVE_AS),   RESPONSE_SAVE,
-                          NULL);
+                          GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+                          _("_Discard Changes"), GTK_RESPONSE_CLOSE,
+                         NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
@@ -218,7 +218,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   markup = g_strdup_printf ("<i><small>%s</small></i>", hint);
 
   label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_markup (GTK_LABEL (label), markup);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
@@ -266,7 +266,7 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
   if (GTK_IS_WINDOW (window))
     {
       gchar *title = g_strdup_printf (_("Close %s"),
-				      gimp_image_get_display_name (image));
+                                      gimp_image_get_display_name (image));
 
       gtk_window_set_title (GTK_WINDOW (window), title);
       g_free (title);

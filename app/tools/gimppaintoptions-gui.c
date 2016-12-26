@@ -53,7 +53,11 @@
 
 static void gimp_paint_options_gui_brush_changed
                                                (GimpContext      *context,
-                                                GimpBrush        *brush);
+                                                GimpBrush        *brush,
+                                                GtkWidget        *gui);
+static void gimp_paint_options_gui_brush_notify(GimpBrush        *brush,
+                                                const GParamSpec *pspec,
+                                                GimpPaintOptions *options);
 
 static void gimp_paint_options_gui_reset_size  (GtkWidget        *button,
                                                 GimpPaintOptions *paint_options);
@@ -154,7 +158,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options),
                                         _("Brush"), 2,
                                         "brush-view-type", "brush-view-size",
-                                        "gimp-brush-editor");
+                                        "gimp-brush-editor",
+                                        _("Edit this brush"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -170,7 +175,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       hbox = gimp_paint_options_gui_scale_with_buttons
         (config, "brush-aspect-ratio", "brush-link-aspect-ratio",
-         _("Reset aspect ratio to brush's native"),
+         _("Reset aspect ratio to brush's native aspect ratio"),
          0.1, 1.0, 2, -20.0, 20.0, 1.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_aspect_ratio), link_group);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -178,7 +183,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       hbox = gimp_paint_options_gui_scale_with_buttons
         (config, "brush-angle", "brush-link-angle",
-         _("Reset angle to zero"),
+         _("Reset angle to brush's native angle"),
          0.1, 1.0, 2, -180.0, 180.0, 1.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_angle), link_group);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -194,7 +199,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       hbox = gimp_paint_options_gui_scale_with_buttons
         (config, "brush-hardness", "brush-link-hardness",
-         _("Reset hardness to default"),
+         _("Reset hardness to brush's native hardness"),
          0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_hardness), link_group);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -214,7 +219,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                            _("Dynamics"), 2,
                                            "dynamics-view-type",
                                            "dynamics-view-size",
-                                           "gimp-dynamics-editor");
+                                           "gimp-dynamics-editor",
+                                           _("Edit this dynamics"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -226,9 +232,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      g_signal_connect (options, "brush-changed",
-                        G_CALLBACK (gimp_paint_options_gui_brush_changed),
-                        NULL);
+      g_signal_connect_object (options, "brush-changed",
+                               G_CALLBACK (gimp_paint_options_gui_brush_changed),
+                               G_OBJECT (vbox), 0);
     }
 
   /*  the "smooth stroke" options  */
@@ -363,7 +369,8 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
                                         "gradient-view-type",
                                         "gradient-view-size",
                                         "gradient-reverse",
-                                        "gimp-gradient-editor");
+                                        "gimp-gradient-editor",
+                                        _("Edit this gradient"));
       gtk_container_add (GTK_CONTAINER (inner_frame), box);
       gtk_widget_show (box);
     }
@@ -417,31 +424,61 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
 
 static void
 gimp_paint_options_gui_brush_changed (GimpContext *context,
-                                      GimpBrush   *brush)
+                                      GimpBrush   *brush,
+                                      GtkWidget   *gui)
 {
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (context);
 
-  if (brush)
+  if (options->brush)
     {
-      if (options->brush_link_size)
-        gimp_paint_options_set_default_brush_size (options, brush);
-
-      if (options->brush_link_aspect_ratio)
-        g_object_set (options,
-                      "brush-aspect-ratio", 0.0,
-                      NULL);
-
-      if (options->brush_link_angle)
-        g_object_set (options,
-                      "brush-angle", 0.0,
-                      NULL);
-
-      if (options->brush_link_spacing)
-        gimp_paint_options_set_default_brush_spacing (options, brush);
-
-      if (options->brush_link_hardness)
-        gimp_paint_options_set_default_brush_hardness (options, brush);
+      g_signal_handlers_disconnect_by_func (options->brush,
+                                            gimp_paint_options_gui_brush_notify,
+                                            options);
+      g_object_remove_weak_pointer (G_OBJECT (options->brush),
+                                    (gpointer) &options->brush);
     }
+
+  options->brush = brush;
+
+  if (options->brush)
+    {
+      GClosure *closure;
+
+      g_object_add_weak_pointer (G_OBJECT (options->brush),
+                                 (gpointer) &options->brush);
+
+      closure = g_cclosure_new (G_CALLBACK (gimp_paint_options_gui_brush_notify),
+                                options, NULL);
+      g_object_watch_closure (G_OBJECT (gui), closure);
+      g_signal_connect_closure (options->brush, "notify", closure, FALSE);
+
+      gimp_paint_options_gui_brush_notify (options->brush, NULL, options);
+    }
+}
+
+static void
+gimp_paint_options_gui_brush_notify (GimpBrush        *brush,
+                                     const GParamSpec *pspec,
+                                     GimpPaintOptions *options)
+{
+#define IS_PSPEC(p,n) (p == NULL || ! strcmp (n, p->name))
+
+  if (options->brush_link_size && IS_PSPEC (pspec, "radius"))
+    gimp_paint_options_set_default_brush_size (options, brush);
+
+  if (options->brush_link_aspect_ratio && IS_PSPEC (pspec, "aspect-ratio"))
+    gimp_paint_options_set_default_brush_aspect_ratio (options, brush);
+
+  if (options->brush_link_angle && IS_PSPEC (pspec, "angle"))
+    gimp_paint_options_set_default_brush_angle (options, brush);
+
+  if (options->brush_link_spacing && IS_PSPEC (pspec, "spacing"))
+    gimp_paint_options_set_default_brush_spacing (options, brush);
+
+  if (options->brush_link_hardness && IS_PSPEC (pspec, "hardness"))
+    gimp_paint_options_set_default_brush_hardness (options, brush);
+
+#undef IS_SPEC
 }
 
 static void
@@ -458,18 +495,20 @@ static void
 gimp_paint_options_gui_reset_aspect_ratio (GtkWidget        *button,
                                            GimpPaintOptions *paint_options)
 {
-  g_object_set (paint_options,
-                "brush-aspect-ratio", 0.0,
-                NULL);
+  GimpBrush *brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+  if (brush)
+    gimp_paint_options_set_default_brush_aspect_ratio (paint_options, brush);
 }
 
 static void
 gimp_paint_options_gui_reset_angle (GtkWidget        *button,
                                     GimpPaintOptions *paint_options)
 {
-  g_object_set (paint_options,
-                "brush-angle", 0.0,
-                NULL);
+  GimpBrush *brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+  if (brush)
+    gimp_paint_options_set_default_brush_angle (paint_options, brush);
 }
 
 static void

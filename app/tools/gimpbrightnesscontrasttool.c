@@ -184,21 +184,33 @@ gimp_brightness_contrast_tool_button_press (GimpTool            *tool,
                                             GimpDisplay         *display)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
-  gdouble                     brightness;
-  gdouble                     contrast;
 
-  g_object_get (GIMP_FILTER_TOOL (tool)->config,
-                "brightness", &brightness,
-                "contrast",   &contrast,
-                NULL);
+  bc_tool->dragging = ! gimp_filter_tool_on_guide (GIMP_FILTER_TOOL (tool),
+                                                   coords, display);
 
-  bc_tool->x  = coords->x - contrast   * 127.0;
-  bc_tool->y  = coords->y + brightness * 127.0;
-  bc_tool->dx =   contrast   * 127.0;
-  bc_tool->dy = - brightness * 127.0;
+  if (! bc_tool->dragging)
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                    press_type, display);
+    }
+  else
+    {
+      gdouble brightness;
+      gdouble contrast;
 
-  gimp_tool_control_activate (tool->control);
-  tool->display = display;
+      g_object_get (GIMP_FILTER_TOOL (tool)->config,
+                    "brightness", &brightness,
+                    "contrast",   &contrast,
+                    NULL);
+
+      bc_tool->x  = coords->x - contrast   * 127.0;
+      bc_tool->y  = coords->y + brightness * 127.0;
+      bc_tool->dx =   contrast   * 127.0;
+      bc_tool->dy = - brightness * 127.0;
+
+      gimp_tool_control_activate (tool->control);
+      tool->display = display;
+    }
 }
 
 static void
@@ -211,13 +223,23 @@ gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 
-  gimp_tool_control_halt (tool->control);
+  if (! bc_tool->dragging)
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
+                                                      release_type, display);
+    }
+  else
+    {
+      bc_tool->dragging = FALSE;
 
-  if (bc_tool->dx == 0 && bc_tool->dy == 0)
-    return;
+      gimp_tool_control_halt (tool->control);
 
-  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
-    gimp_config_reset (GIMP_CONFIG (GIMP_FILTER_TOOL (tool)->config));
+      if (bc_tool->dx == 0 && bc_tool->dy == 0)
+        return;
+
+      if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+        gimp_config_reset (GIMP_CONFIG (GIMP_FILTER_TOOL (tool)->config));
+    }
 }
 
 static void
@@ -229,13 +251,21 @@ gimp_brightness_contrast_tool_motion (GimpTool         *tool,
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
 
-  bc_tool->dx =   (coords->x - bc_tool->x);
-  bc_tool->dy = - (coords->y - bc_tool->y);
+  if (! bc_tool->dragging)
+    {
+      GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state,
+                                              display);
+    }
+  else
+    {
+      bc_tool->dx =   (coords->x - bc_tool->x);
+      bc_tool->dy = - (coords->y - bc_tool->y);
 
-  g_object_set (GIMP_FILTER_TOOL (tool)->config,
-                "brightness", CLAMP (bc_tool->dy, -127.0, 127.0) / 127.0,
-                "contrast",   CLAMP (bc_tool->dx, -127.0, 127.0) / 127.0,
-                NULL);
+      g_object_set (GIMP_FILTER_TOOL (tool)->config,
+                    "brightness", CLAMP (bc_tool->dy, -127.0, 127.0) / 127.0,
+                    "contrast",   CLAMP (bc_tool->dx, -127.0, 127.0) / 127.0,
+                    NULL);
+    }
 }
 
 

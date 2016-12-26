@@ -243,7 +243,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->add_button, FALSE);
   gtk_widget_show (list->add_button);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_NEXT,
+  image = gtk_image_new_from_icon_name ("go-next",
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->add_button), image);
   gtk_widget_show (image);
@@ -260,7 +260,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->remove_button, FALSE);
   gtk_widget_show (list->remove_button);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_PREVIOUS,
+  image = gtk_image_new_from_icon_name ("go-previous",
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->remove_button), image);
   gtk_widget_show (image);
@@ -581,12 +581,12 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
                                      _("Remove Controller '%s'?"), name);
 
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-			     "%s",
+                             "%s",
                              _("Removing this controller from the list of "
-			       "active controllers will permanently delete "
-			       "all event mappings you have configured.\n\n"
-			       "Selecting \"Disable Controller\" will disable "
-			       "the controller without removing it."));
+                               "active controllers will permanently delete "
+                               "all event mappings you have configured.\n\n"
+                               "Selecting \"Disable Controller\" will disable "
+                               "the controller without removing it."));
 
   switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
     {

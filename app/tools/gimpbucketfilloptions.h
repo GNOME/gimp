@@ -42,6 +42,7 @@ struct _GimpBucketFillOptions
   gboolean            fill_transparent;
   gboolean            sample_merged;
   gboolean            diagonal_neighbors;
+  gboolean            antialias;
   gdouble             threshold;
   GimpSelectCriterion fill_criterion;
 };

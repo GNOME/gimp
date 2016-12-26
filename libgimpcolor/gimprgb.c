@@ -773,7 +773,7 @@ gimp_param_rgb_values_cmp (GParamSpec   *pspec,
  * gimp_param_spec_rgb:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
- * @blurb:         Brief desciption of param.
+ * @blurb:         Brief description of param.
  * @has_alpha:     %TRUE if the alpha channel has relevance.
  * @default_value: Value to use if none is assigned.
  * @flags:         a combination of #GParamFlags

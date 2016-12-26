@@ -26,12 +26,8 @@
 
 #include "text/gimp-fonts.h"
 
-#include "widgets/gimpfontview.h"
-
 #include "actions.h"
 #include "fonts-commands.h"
-
-#include "gimp-intl.h"
 
 
 /*  public functionss */

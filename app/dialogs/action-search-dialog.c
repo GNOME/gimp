@@ -129,8 +129,8 @@ action_search_history_and_actions (GimpSearchPopup *popup,
            * as a search result.
            */
           if (gimp_action_history_excluded_action (name) &&
-              g_strcmp0 (name, "plug-in-repeat") != 0    &&
-              g_strcmp0 (name, "plug-in-reshow") != 0)
+              g_strcmp0 (name, "filters-repeat") != 0    &&
+              g_strcmp0 (name, "filters-reshow") != 0)
             continue;
 
           if (! gtk_action_is_sensitive (action) &&

@@ -53,7 +53,7 @@ struct _DataDeleteDialog
 
 static void  data_delete_dialog_response (GtkWidget        *dialog,
                                           gint              response_id,
-                                          DataDeleteDialog *delete_data);
+                                          DataDeleteDialog *private);
 
 
 /*  public functions  */
@@ -64,7 +64,7 @@ data_delete_dialog_new (GimpDataFactory *factory,
                         GimpContext     *context,
                         GtkWidget       *parent)
 {
-  DataDeleteDialog *delete_data;
+  DataDeleteDialog *private;
   GtkWidget        *dialog;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
@@ -72,12 +72,12 @@ data_delete_dialog_new (GimpDataFactory *factory,
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
-  delete_data = g_slice_new0 (DataDeleteDialog);
+  private = g_slice_new0 (DataDeleteDialog);
 
-  delete_data->factory = factory;
-  delete_data->data    = data;
-  delete_data->context = context;
-  delete_data->parent  = parent;
+  private->factory = factory;
+  private->data    = data;
+  private->context = context;
+  private->parent  = parent;
 
   dialog = gimp_message_dialog_new (_("Delete Object"), "edit-delete",
                                     gtk_widget_get_toplevel (parent), 0,
@@ -99,7 +99,7 @@ data_delete_dialog_new (GimpDataFactory *factory,
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (data_delete_dialog_response),
-                    delete_data);
+                    private);
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("Delete '%s'?"),
@@ -118,23 +118,23 @@ data_delete_dialog_new (GimpDataFactory *factory,
 static void
 data_delete_dialog_response (GtkWidget        *dialog,
                              gint              response_id,
-                             DataDeleteDialog *delete_data)
+                             DataDeleteDialog *private)
 {
   gtk_widget_destroy (dialog);
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpDataFactory *factory    = delete_data->factory;
-      GimpData        *data       = delete_data->data;
+      GimpDataFactory *factory    = private->factory;
+      GimpData        *data       = private->data;
       GimpContainer   *container;
       GimpObject      *new_active = NULL;
       GError          *error      = NULL;
 
       container = gimp_data_factory_get_container (factory);
 
-      if (delete_data->context &&
+      if (private->context &&
           GIMP_OBJECT (data) ==
-          gimp_context_get_by_type (delete_data->context,
+          gimp_context_get_by_type (private->context,
                                     gimp_container_get_children_type (container)))
         {
           new_active = gimp_container_get_neighbor_of (container,
@@ -144,16 +144,16 @@ data_delete_dialog_response (GtkWidget        *dialog,
       if (! gimp_data_factory_data_delete (factory, data, TRUE, &error))
         {
           gimp_message (gimp_data_factory_get_gimp (factory),
-                        G_OBJECT (delete_data->parent), GIMP_MESSAGE_ERROR,
+                        G_OBJECT (private->parent), GIMP_MESSAGE_ERROR,
                         "%s", error->message);
           g_clear_error (&error);
         }
 
       if (new_active)
-        gimp_context_set_by_type (delete_data->context,
+        gimp_context_set_by_type (private->context,
                                   gimp_container_get_children_type (container),
                                   new_active);
     }
 
-  g_slice_free (DataDeleteDialog, delete_data);
+  g_slice_free (DataDeleteDialog, private);
 }

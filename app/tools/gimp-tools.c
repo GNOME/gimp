@@ -274,7 +274,7 @@ gimp_tools_restore (Gimp *gimp)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
   if (gimp_config_deserialize_gfile (GIMP_CONFIG (gimp_list), file,
-                                     NULL, NULL))
+                                     NULL, &error))
     {
       gint n = gimp_container_get_n_children (gimp->tool_info_list);
       gint i;
@@ -298,6 +298,13 @@ gimp_tools_restore (Gimp *gimp)
                                       object, MIN (i, n - 1));
             }
         }
+    }
+  else
+    {
+      if (error->code != G_IO_ERROR_NOT_FOUND)
+        gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING, error->message);
+
+      g_clear_error (&error);
     }
 
   g_object_unref (file);

@@ -108,7 +108,7 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
-  { "file-copy-location", GIMP_STOCK_CLIPBOARD,
+  { "file-copy-location", "edit-copy",
     NC_("file-action", "Copy _Image Location"), NULL,
     NC_("file-action", "Copy image file location to clipboard"),
     G_CALLBACK (file_copy_location_cmd_callback),
@@ -120,7 +120,7 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_show_in_file_manager_cmd_callback),
     GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER },
 
-  { "file-quit", GIMP_STOCK_QUIT,
+  { "file-quit", "application-exit",
     NC_("file-action", "_Quit"), "<primary>Q",
     NC_("file-action", "Quit the GNU Image Manipulation Program"),
     G_CALLBACK (file_quit_cmd_callback),
@@ -129,13 +129,13 @@ static const GimpActionEntry file_actions[] =
 
 static const GimpEnumActionEntry file_save_actions[] =
 {
-  { "file-save", GIMP_STOCK_SAVE,
+  { "file-save", "document-save",
     NC_("file-action", "_Save"), "<primary>S",
     NC_("file-action", "Save this image"),
     GIMP_SAVE_MODE_SAVE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
-  { "file-save-as", GIMP_STOCK_SAVE_AS,
+  { "file-save-as", "document-save-as",
     NC_("file-action", "Save _As..."), "<primary><shift>S",
     NC_("file-action", "Save this image with a different name"),
     GIMP_SAVE_MODE_SAVE_AS, FALSE,
@@ -157,7 +157,7 @@ static const GimpEnumActionEntry file_save_actions[] =
 
   { "file-export", NULL,
     NC_("file-action", "Export..."), "<primary>E",
-    NC_("file-action", "Export the image again"),
+    NC_("file-action", "Export the image"),
     GIMP_SAVE_MODE_EXPORT, FALSE,
     GIMP_HELP_FILE_EXPORT },
 
@@ -198,7 +198,7 @@ file_actions_setup (GimpActionGroup *group)
     {
       entries[i].name           = g_strdup_printf ("file-open-recent-%02d",
                                                    i + 1);
-      entries[i].icon_name      = "gimp-open";
+      entries[i].icon_name      = "document-open";
       entries[i].label          = entries[i].name;
       entries[i].tooltip        = NULL;
       entries[i].value          = i;
@@ -217,17 +217,11 @@ file_actions_setup (GimpActionGroup *group)
 
   for (i = 0; i < n_entries; i++)
     {
-      GtkAction *action;
-
       gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
       gimp_action_group_set_action_always_show_image (group, entries[i].name,
                                                       TRUE);
-
-      action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                            entries[i].name);
-      g_object_set (action,
-                    "context", gimp_get_user_context (group->gimp),
-                    NULL);
+      gimp_action_group_set_action_context (group, entries[i].name,
+                                            gimp_get_user_context (group->gimp));
 
       g_free ((gchar *) entries[i].name);
       if (entries[i].accelerator)

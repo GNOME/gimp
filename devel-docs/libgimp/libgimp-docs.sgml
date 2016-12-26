@@ -48,9 +48,11 @@
       <xi:include href="xml/gimpfileops.xml" />
       <xi:include href="xml/gimpfloatingsel.xml" />
       <xi:include href="xml/gimpimage.xml" />
+      <xi:include href="xml/gimpimagecolorprofile.xml" />
       <xi:include href="xml/gimpimageconvert.xml" />
       <xi:include href="xml/gimpimagegrid.xml" />
       <xi:include href="xml/gimpimageguides.xml" />
+      <xi:include href="xml/gimpimagesamplepoints.xml" />
       <xi:include href="xml/gimpimageselect.xml" />
       <xi:include href="xml/gimpimagetransform.xml" />
       <xi:include href="xml/gimpimageundo.xml" />

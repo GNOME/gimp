@@ -35,6 +35,7 @@ typedef struct _GimpGeglConfig       GimpGeglConfig;
 typedef struct _GimpCoreConfig       GimpCoreConfig;
 typedef struct _GimpDisplayConfig    GimpDisplayConfig;
 typedef struct _GimpGuiConfig        GimpGuiConfig;
+typedef struct _GimpDialogConfig     GimpDialogConfig;
 typedef struct _GimpPluginConfig     GimpPluginConfig;
 typedef struct _GimpRc               GimpRc;
 

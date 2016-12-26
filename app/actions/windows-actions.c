@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
@@ -308,8 +309,8 @@ windows_actions_display_remove (GimpContainer   *container,
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
   if (action)
-    gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
-
+    gimp_action_group_remove_action (group,
+                                     GIMP_ACTION (action));
   g_free (action_name);
 
   windows_actions_update_display_accels (group);
@@ -486,7 +487,7 @@ windows_actions_dock_window_removed (GimpDialogFactory *factory,
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
   if (action)
-    gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+    gimp_action_group_remove_action (group, GIMP_ACTION (action));
 
   g_free (action_name);
 }
@@ -574,7 +575,7 @@ windows_actions_recent_remove (GimpContainer   *container,
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
   if (action)
-    gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+    gimp_action_group_remove_action (group, GIMP_ACTION (action));
 
   g_free (action_name);
 }

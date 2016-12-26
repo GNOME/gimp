@@ -26,6 +26,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimperror.h"
@@ -86,7 +88,6 @@ gimp_devices_restore (Gimp *gimp)
 {
   GimpDeviceManager *manager;
   GimpContext       *user_context;
-  GimpDeviceInfo    *current_device;
   GList             *list;
   GFile             *file;
   GError            *error = NULL;
@@ -130,11 +131,16 @@ gimp_devices_restore (Gimp *gimp)
 
   g_object_unref (file);
 
-  current_device = gimp_device_manager_get_current_device (manager);
+  if (! GIMP_GUI_CONFIG (gimp->config)->devices_share_tool)
+    {
+      GimpDeviceInfo *current_device;
 
-  gimp_context_copy_properties (GIMP_CONTEXT (current_device), user_context,
-                                GIMP_DEVICE_INFO_CONTEXT_MASK);
-  gimp_context_set_parent (GIMP_CONTEXT (current_device), user_context);
+      current_device = gimp_device_manager_get_current_device (manager);
+
+      gimp_context_copy_properties (GIMP_CONTEXT (current_device), user_context,
+                                    GIMP_DEVICE_INFO_CONTEXT_MASK);
+      gimp_context_set_parent (GIMP_CONTEXT (current_device), user_context);
+    }
 }
 
 void

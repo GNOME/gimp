@@ -33,11 +33,14 @@
 #define GIMP_CANVAS_ITEM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_ITEM, GimpCanvasItemClass))
 
 
-typedef struct _GimpCanvasItemClass GimpCanvasItemClass;
+typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
+typedef struct _GimpCanvasItemClass   GimpCanvasItemClass;
 
 struct _GimpCanvasItem
 {
-  GimpObject       parent_instance;
+  GimpObject             parent_instance;
+
+  GimpCanvasItemPrivate *private;
 };
 
 struct _GimpCanvasItemClass

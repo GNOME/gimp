@@ -28,7 +28,6 @@
 
 #include "gegl/gimp-gegl-loops.h"
 
-#include "core/gimpimage.h"
 #include "core/gimppickable.h"
 
 #include "gimptilehandleriscissors.h"
@@ -37,7 +36,7 @@
 enum
 {
   PROP_0,
-  PROP_IMAGE
+  PROP_PICKABLE
 };
 
 
@@ -78,9 +77,9 @@ gimp_tile_handler_iscissors_class_init (GimpTileHandlerIscissorsClass *klass)
 
   validate_class->validate   = gimp_tile_handler_iscissors_validate;
 
-  g_object_class_install_property (object_class, PROP_IMAGE,
-                                   g_param_spec_object ("image", NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
+  g_object_class_install_property (object_class, PROP_PICKABLE,
+                                   g_param_spec_object ("pickable", NULL, NULL,
+                                                        GIMP_TYPE_PICKABLE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
@@ -95,10 +94,10 @@ gimp_tile_handler_iscissors_finalize (GObject *object)
 {
   GimpTileHandlerIscissors *iscissors = GIMP_TILE_HANDLER_ISCISSORS (object);
 
-  if (iscissors->image)
+  if (iscissors->pickable)
     {
-      g_object_unref (iscissors->image);
-      iscissors->image = NULL;
+      g_object_unref (iscissors->pickable);
+      iscissors->pickable = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -114,8 +113,8 @@ gimp_tile_handler_iscissors_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_IMAGE:
-      iscissors->image = g_value_dup_object (value);
+    case PROP_PICKABLE:
+      iscissors->pickable = g_value_dup_object (value);
       break;
 
     default:
@@ -134,8 +133,8 @@ gimp_tile_handler_iscissors_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_IMAGE:
-      g_value_set_object (value, iscissors->image);
+    case PROP_PICKABLE:
+      g_value_set_object (value, iscissors->pickable);
       break;
 
     default:
@@ -197,9 +196,9 @@ gimp_tile_handler_iscissors_validate (GimpTileHandlerValidate *validate,
               rect->height);
 #endif
 
-  gimp_pickable_flush (GIMP_PICKABLE (iscissors->image));
+  gimp_pickable_flush (iscissors->pickable);
 
-  src = gimp_pickable_get_buffer (GIMP_PICKABLE (iscissors->image));
+  src = gimp_pickable_get_buffer (iscissors->pickable);
 
   temp0 = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                            rect->width,
@@ -321,12 +320,12 @@ gimp_tile_handler_iscissors_validate (GimpTileHandlerValidate *validate,
 }
 
 GeglTileHandler *
-gimp_tile_handler_iscissors_new (GimpImage *image)
+gimp_tile_handler_iscissors_new (GimpPickable *pickable)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
   return g_object_new (GIMP_TYPE_TILE_HANDLER_ISCISSORS,
                        "whole-tile", TRUE,
-                       "image",      image,
+                       "pickable",   pickable,
                        NULL);
 }

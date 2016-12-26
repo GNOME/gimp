@@ -55,6 +55,9 @@ struct _GimpColorFrame
   GtkWidget          *value_labels[GIMP_COLOR_FRAME_ROWS];
 
   PangoLayout        *number_layout;
+
+  GimpColorConfig    *config;
+  GimpColorTransform *transform;
 };
 
 struct _GimpColorFrameClass
@@ -63,9 +66,9 @@ struct _GimpColorFrameClass
 };
 
 
-GType       gimp_color_frame_get_type    (void) G_GNUC_CONST;
+GType       gimp_color_frame_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_frame_new         (void);
+GtkWidget * gimp_color_frame_new                (void);
 
 void        gimp_color_frame_set_mode           (GimpColorFrame     *frame,
                                                  GimpColorFrameMode  mode);
@@ -84,6 +87,9 @@ void        gimp_color_frame_set_color          (GimpColorFrame     *frame,
                                                  gpointer            pixel,
                                                  const GimpRGB      *color);
 void        gimp_color_frame_set_invalid        (GimpColorFrame     *frame);
+
+void        gimp_color_frame_set_color_config   (GimpColorFrame     *frame,
+                                                 GimpColorConfig    *config);
 
 
 #endif  /*  __GIMP_COLOR_FRAME_H__  */

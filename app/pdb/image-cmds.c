@@ -52,7 +52,6 @@
 #include "core/gimpprogress.h"
 #include "core/gimpselection.h"
 #include "core/gimptempbuf.h"
-#include "core/gimpunit.h"
 #include "file/file-utils.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"

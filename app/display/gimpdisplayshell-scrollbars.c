@@ -17,10 +17,14 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "display-types.h"
+
+#include "core/gimpimage.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -87,35 +91,36 @@ void
 gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
                                                 gdouble           value)
 {
-  gint    sw;
+  gint    bounds_x;
+  gint    bounds_width;
   gdouble lower;
   gdouble upper;
+  gdouble scale_x;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display ||
-      ! gimp_display_get_image (shell->display))
+  if (! shell->display || ! gimp_display_get_image (shell->display))
     return;
 
-  gimp_display_shell_scale_get_image_size (shell, &sw, NULL);
+  gimp_display_shell_scale_get_image_bounds (shell,
+                                             &bounds_x, NULL,
+                                             &bounds_width, NULL);
 
-  if (shell->disp_width < sw)
+  if (shell->disp_width > bounds_width)
     {
-      lower = MIN (value, 0);
-      upper = MAX (value + shell->disp_width, sw);
+      bounds_x     -= (shell->disp_width - bounds_width) / 2;
+      bounds_width  = shell->disp_width;
     }
-  else
-    {
-      lower = MIN (value, -(shell->disp_width - sw) / 2);
-      upper = MAX (value + shell->disp_width,
-                   sw + (shell->disp_width - sw) / 2);
-    }
+
+  lower = MIN (value, bounds_x);
+  upper = MAX (value + shell->disp_width, bounds_x + bounds_width);
+
+  gimp_display_shell_get_rotated_scale (shell, &scale_x, NULL);
 
   g_object_set (shell->hsbdata,
                 "lower",          lower,
                 "upper",          upper,
-                "step-increment", (gdouble) MAX (shell->scale_x,
-                                                 MINIMUM_STEP_AMOUNT),
+                "step-increment", (gdouble) MAX (scale_x, MINIMUM_STEP_AMOUNT),
                 NULL);
 }
 
@@ -130,35 +135,36 @@ void
 gimp_display_shell_scrollbars_setup_vertical (GimpDisplayShell *shell,
                                               gdouble           value)
 {
-  gint    sh;
+  gint    bounds_y;
+  gint    bounds_height;
   gdouble lower;
   gdouble upper;
+  gdouble scale_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (! shell->display ||
-      ! gimp_display_get_image (shell->display))
+  if (! shell->display || ! gimp_display_get_image (shell->display))
     return;
 
-  gimp_display_shell_scale_get_image_size (shell, NULL, &sh);
+  gimp_display_shell_scale_get_image_bounds (shell,
+                                             NULL, &bounds_y,
+                                             NULL, &bounds_height);
 
-  if (shell->disp_height < sh)
+  if (shell->disp_height > bounds_height)
     {
-      lower = MIN (value, 0);
-      upper = MAX (value + shell->disp_height, sh);
+      bounds_y      -= (shell->disp_height - bounds_height) / 2;
+      bounds_height  = shell->disp_height;
     }
-  else
-    {
-      lower = MIN (value, -(shell->disp_height - sh) / 2);
-      upper = MAX (value + shell->disp_height,
-                   sh + (shell->disp_height - sh) / 2);
-    }
+
+  lower = MIN (value, bounds_y);
+  upper = MAX (value + shell->disp_height, bounds_y + bounds_height);
+
+  gimp_display_shell_get_rotated_scale (shell, NULL, &scale_y);
 
   g_object_set (shell->vsbdata,
                 "lower",          lower,
                 "upper",          upper,
-                "step-increment", (gdouble) MAX (shell->scale_y,
-                                                 MINIMUM_STEP_AMOUNT),
+                "step-increment", (gdouble) MAX (scale_y, MINIMUM_STEP_AMOUNT),
                 NULL);
 }
 

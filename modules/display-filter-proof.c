@@ -264,7 +264,7 @@ cdisplay_proof_profile_changed (GtkWidget     *combo,
 
   if (file)
     {
-      path = g_file_get_path (file);
+      path = gimp_file_get_config_path (file, NULL);
       g_object_unref (file);
     }
 
@@ -303,11 +303,13 @@ cdisplay_proof_configure (GimpColorDisplay *display)
 
   if (proof->profile)
     {
-      GFile *file = g_file_new_for_path (proof->profile);
+      GFile *file = gimp_file_new_for_config_path (proof->profile, NULL);
 
       gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                                     file, NULL);
-      g_object_unref (file);
+
+      if (file)
+        g_object_unref (file);
     }
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -332,9 +334,9 @@ cdisplay_proof_configure (GimpColorDisplay *display)
 static void
 cdisplay_proof_changed (GimpColorDisplay *display)
 {
-  CdisplayProof    *proof = CDISPLAY_PROOF (display);
+  CdisplayProof    *proof         = CDISPLAY_PROOF (display);
+  GimpColorProfile *proof_profile = NULL;
   GimpColorProfile *rgb_profile;
-  GimpColorProfile *proof_profile;
   GFile            *file;
 
   if (proof->transform)
@@ -348,9 +350,13 @@ cdisplay_proof_changed (GimpColorDisplay *display)
 
   rgb_profile = gimp_color_profile_new_rgb_srgb ();
 
-  file = g_file_new_for_path (proof->profile);
-  proof_profile = gimp_color_profile_new_from_file (file, NULL);
-  g_object_unref (file);
+  file = gimp_file_new_for_config_path (proof->profile, NULL);
+
+  if (file)
+    {
+      proof_profile = gimp_color_profile_new_from_file (file, NULL);
+      g_object_unref (file);
+    }
 
   if (proof_profile)
     {

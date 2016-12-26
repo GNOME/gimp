@@ -868,12 +868,6 @@ gimp_display_shell_dispose (GObject *object)
       shell->nav_popup = NULL;
     }
 
-  if (shell->grid_dialog)
-    {
-      gtk_widget_destroy (shell->grid_dialog);
-      shell->grid_dialog = NULL;
-    }
-
   if (shell->blink_timeout_id)
     {
       g_source_remove (shell->blink_timeout_id);

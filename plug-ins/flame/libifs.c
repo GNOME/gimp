@@ -1197,7 +1197,7 @@ random_control_point (control_point *cp,
 /*
  * find a 2d bounding box that does not enclose eps of the fractal density
  * in each compass direction.  works by binary search.
- * this is stupid, it shouldjust use the find nth smallest algorithm.
+ * this is stupid, it should just use the find nth smallest algorithm.
  */
 void
 estimate_bounding_box (control_point *cp,

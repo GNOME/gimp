@@ -528,7 +528,8 @@ xcf_load_image (Gimp     *gimp,
   if (info->active_channel)
     gimp_image_set_active_channel (image, info->active_channel);
 
-  gimp_image_set_file (image, info->file);
+  if (info->file)
+    gimp_image_set_file (image, info->file);
 
   if (info->tattoo_state > 0)
     gimp_image_set_tattoo_state (image, info->tattoo_state);
@@ -689,7 +690,7 @@ xcf_load_image_props (XcfInfo   *info,
                 gimp_message (info->gimp, G_OBJECT (info->progress),
                               GIMP_MESSAGE_ERROR,
                               "Unknown compression type: %d",
-			      (gint) compression);
+                              (gint) compression);
                 return FALSE;
               }
 
@@ -1018,6 +1019,15 @@ xcf_load_layer_props (XcfInfo    *info,
           }
           break;
 
+        case PROP_COLOR_TAG:
+          {
+            GimpColorTag color_tag;
+
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &color_tag, 1);
+            gimp_item_set_color_tag (GIMP_ITEM (*layer), color_tag, FALSE);
+          }
+          break;
+
         case PROP_LOCK_CONTENT:
           {
             gboolean lock_content;
@@ -1141,6 +1151,18 @@ xcf_load_layer_props (XcfInfo    *info,
         case PROP_GROUP_ITEM:
           {
             GimpLayer *group;
+            gboolean   is_active_layer;
+
+            /* We're going to delete *layer, Don't leave its pointers
+             * in @info.  After that, we'll restore them back with the
+             * new pointer. See bug #767873.
+             */
+            is_active_layer = (*layer == info->active_layer);
+            if (is_active_layer)
+              info->active_layer = NULL;
+
+            if (*layer == info->floating_sel)
+              info->floating_sel = NULL;
 
             group = gimp_group_layer_new (image);
 
@@ -1150,6 +1172,13 @@ xcf_load_layer_props (XcfInfo    *info,
             g_object_ref_sink (*layer);
             g_object_unref (*layer);
             *layer = group;
+
+            if (is_active_layer)
+              info->active_layer = *layer;
+
+            /* Don't restore info->floating_sel because group layers
+             * can't be floating selections
+             */
           }
           break;
 
@@ -1220,6 +1249,12 @@ xcf_load_channel_props (XcfInfo      *info,
           {
             GimpChannel *mask;
 
+            /* We're going to delete *channel, Don't leave its pointer
+             * in @info. See bug #767873.
+             */
+            if (*channel == info->active_channel)
+              info->active_channel = NULL;
+
             mask =
               gimp_selection_new (image,
                                   gimp_item_get_width  (GIMP_ITEM (*channel)),
@@ -1234,6 +1269,10 @@ xcf_load_channel_props (XcfInfo      *info,
             *channel = mask;
             (*channel)->boundary_known = FALSE;
             (*channel)->bounds_known   = FALSE;
+
+            /* Don't restore info->active_channel because the
+             * selection can't be the active channel
+             */
           }
           break;
 
@@ -1262,6 +1301,15 @@ xcf_load_channel_props (XcfInfo      *info,
             info->cp += xcf_read_int32 (info->input, (guint32 *) &visible, 1);
             gimp_item_set_visible (GIMP_ITEM (*channel),
                                    visible ? TRUE : FALSE, FALSE);
+          }
+          break;
+
+        case PROP_COLOR_TAG:
+          {
+            GimpColorTag color_tag;
+
+            info->cp += xcf_read_int32 (info->input, (guint32 *) &color_tag, 1);
+            gimp_item_set_color_tag (GIMP_ITEM (*channel), color_tag, FALSE);
           }
           break;
 

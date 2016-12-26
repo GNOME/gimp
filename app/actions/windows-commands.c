@@ -53,16 +53,16 @@ void
 windows_hide_docks_cmd_callback (GtkAction *action,
                                  gpointer   data)
 {
-  gboolean  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   Gimp     *gimp;
+  gboolean  active;
   return_if_no_gimp (gimp, data);
 
-  if (GIMP_GUI_CONFIG (gimp->config)->hide_docks == active)
-    return;
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  g_object_set (gimp->config,
-                "hide-docks", active,
-                NULL);
+  if (active != GIMP_GUI_CONFIG (gimp->config)->hide_docks)
+    g_object_set (gimp->config,
+                  "hide-docks", active,
+                  NULL);
 }
 
 void
@@ -70,32 +70,32 @@ windows_set_tabs_position_cmd_callback (GtkAction *action,
                                         GtkAction *current,
                                         gpointer   data)
 {
-  GimpPosition value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
-  Gimp     *gimp;
+  Gimp         *gimp;
+  GimpPosition  value;
   return_if_no_gimp (gimp, data);
 
-  if (GIMP_GUI_CONFIG (gimp->config)->tabs_position == value)
-    return;
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  g_object_set (gimp->config,
-                "tabs-position", value,
-                NULL);
+  if (value != GIMP_GUI_CONFIG (gimp->config)->tabs_position)
+    g_object_set (gimp->config,
+                  "tabs-position", value,
+                  NULL);
 }
 
 void
 windows_use_single_window_mode_cmd_callback (GtkAction *action,
                                              gpointer   data)
 {
-  gboolean  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
   Gimp     *gimp;
+  gboolean  active;
   return_if_no_gimp (gimp, data);
 
-  if (GIMP_GUI_CONFIG (gimp->config)->single_window_mode == active)
-    return;
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-  g_object_set (gimp->config,
-                "single-window-mode", active,
-                NULL);
+  if (active != GIMP_GUI_CONFIG (gimp->config)->single_window_mode)
+    g_object_set (gimp->config,
+                  "single-window-mode", active,
+                  NULL);
 }
 
 void

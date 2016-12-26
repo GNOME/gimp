@@ -101,10 +101,11 @@ static void       gimp_channel_scale         (GimpItem          *item,
                                               GimpProgress      *progress);
 static void       gimp_channel_resize        (GimpItem          *item,
                                               GimpContext       *context,
+                                              GimpFillType       fill_type,
                                               gint               new_width,
                                               gint               new_height,
-                                              gint               offx,
-                                              gint               offy);
+                                              gint               offset_x,
+                                              gint               offset_y);
 static void       gimp_channel_flip          (GimpItem          *item,
                                               GimpContext       *context,
                                               GimpOrientationType flip_type,
@@ -145,11 +146,9 @@ static void       gimp_channel_to_selection  (GimpItem          *item,
 static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               GimpImage         *dest_image,
                                               const Babl        *new_format,
-                                              GimpImageBaseType  new_base_type,
-                                              GimpPrecision      new_precision,
                                               GimpColorProfile  *dest_profile,
-                                              gint               layer_dither_type,
-                                              gint               mask_dither_type,
+                                              GeglDitherMethod   layer_dither_type,
+                                              GeglDitherMethod   mask_dither_type,
                                               gboolean           push_undo,
                                               GimpProgress      *progress);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
@@ -567,9 +566,12 @@ gimp_channel_convert (GimpItem  *item,
 
   if (! gimp_drawable_is_gray (drawable))
     {
-      gimp_drawable_convert_type (drawable, dest_image, GIMP_GRAY,
+      gimp_drawable_convert_type (drawable, dest_image,
+                                  GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
-                                  NULL, 0, 0,
+                                  gimp_drawable_has_alpha (drawable),
+                                  NULL,
+                                  GEGL_DITHER_NONE, GEGL_DITHER_NONE,
                                   FALSE, NULL);
     }
 
@@ -611,6 +613,7 @@ gimp_channel_convert (GimpItem  *item,
           gimp_item_get_height (item) != height)
         {
           gimp_item_resize (item, gimp_get_user_context (dest_image->gimp),
+                            GIMP_FILL_TRANSPARENT,
                             width, height, 0, 0);
         }
     }
@@ -750,14 +753,16 @@ gimp_channel_scale (GimpItem              *item,
 }
 
 static void
-gimp_channel_resize (GimpItem    *item,
-                     GimpContext *context,
-                     gint         new_width,
-                     gint         new_height,
-                     gint         offset_x,
-                     gint         offset_y)
+gimp_channel_resize (GimpItem     *item,
+                     GimpContext  *context,
+                     GimpFillType  fill_type,
+                     gint          new_width,
+                     gint          new_height,
+                     gint          offset_x,
+                     gint          offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, GIMP_FILL_TRANSPARENT,
+                                          new_width, new_height,
                                           offset_x, offset_y);
 
   if (G_TYPE_FROM_INSTANCE (item) == GIMP_TYPE_CHANNEL)
@@ -833,7 +838,7 @@ gimp_channel_fill (GimpItem         *item,
                                0, 0, 0, 0))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot fill empty channel."));
+                           _("Cannot fill empty channel."));
       return FALSE;
     }
 
@@ -869,7 +874,7 @@ gimp_channel_stroke (GimpItem           *item,
                                0, 0, 0, 0))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot stroke empty channel."));
+                           _("Cannot stroke empty channel."));
       return FALSE;
     }
 
@@ -940,16 +945,14 @@ gimp_channel_to_selection (GimpItem       *item,
 }
 
 static void
-gimp_channel_convert_type (GimpDrawable      *drawable,
-                           GimpImage         *dest_image,
-                           const Babl        *new_format,
-                           GimpImageBaseType  new_base_type,
-                           GimpPrecision      new_precision,
-                           GimpColorProfile  *dest_profile,
-                           gint               layer_dither_type,
-                           gint               mask_dither_type,
-                           gboolean           push_undo,
-                           GimpProgress      *progress)
+gimp_channel_convert_type (GimpDrawable     *drawable,
+                           GimpImage        *dest_image,
+                           const Babl       *new_format,
+                           GimpColorProfile *dest_profile,
+                           GeglDitherMethod  layer_dither_type,
+                           GeglDitherMethod  mask_dither_type,
+                           gboolean          push_undo,
+                           GimpProgress     *progress)
 {
   GeglBuffer *dest_buffer;
 
@@ -959,7 +962,7 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
                      new_format);
 
-  if (mask_dither_type == 0)
+  if (mask_dither_type == GEGL_DITHER_NONE)
     {
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                         GEGL_ABYSS_NONE,
@@ -972,9 +975,9 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
       bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
               babl_format_get_n_components (new_format));
 
-      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
-                                       NULL, NULL,
-                                       dest_buffer, bits, mask_dither_type);
+      gimp_gegl_apply_dither (gimp_drawable_get_buffer (drawable),
+                              NULL, NULL,
+                              dest_buffer, 1 << bits, mask_dither_type);
     }
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);

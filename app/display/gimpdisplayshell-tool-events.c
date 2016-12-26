@@ -49,6 +49,7 @@
 #include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-autoscroll.h"
@@ -321,11 +322,21 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   if (gimp_display_shell_events (canvas, event, shell))
     return TRUE;
 
-  /*  ignore events on overlays, which are the canvas' children
+  /*  events on overlays have a different window, but these windows'
+   *  user_data can still be the canvas, we need to check manually if
+   *  the event's window and the canvas' window are different.
    */
-  if (gtk_widget_is_ancestor (gtk_get_event_widget (event), shell->canvas))
+  if (event->any.window != gtk_widget_get_window (canvas))
     {
-      return FALSE;
+      GtkWidget *event_widget;
+
+      gdk_window_get_user_data (event->any.window, (gpointer) &event_widget);
+
+      /*  if the event came from a different window than the canvas',
+       *  check if it came from a canvas child and bail out.
+       */
+      if (gtk_widget_get_ancestor (event_widget, GIMP_TYPE_CANVAS))
+        return FALSE;
     }
 
   display = shell->display;
@@ -337,6 +348,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
   GIMP_LOG (TOOL_EVENTS, "event (display %p): %s",
             display, gimp_print_event (event));
+
+  /* See bug 771444 */
+  if (shell->pointer_grabbed &&
+      event->type == GDK_MOTION_NOTIFY)
+    {
+      GimpDeviceManager *manager = gimp_devices_get_manager (gimp);
+      GimpDeviceInfo    *info;
+
+      info = gimp_device_manager_get_current_device (manager);
+
+      if (info->device != event->motion.device)
+        return FALSE;
+    }
 
   /*  Find out what device the event occurred upon  */
   if (! gimp->busy &&
@@ -863,6 +887,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                 x,
                                                 y,
                                                 constrain);
+              }
+            else if (shell->scaling)
+              {
+                gimp_display_shell_scale_drag (shell,
+                                               shell->scroll_last_x - x,
+                                               shell->scroll_last_y - y);
               }
             else
               {
@@ -1478,12 +1508,16 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
   shell->scrolling         = TRUE;
   shell->scroll_last_x     = x;
   shell->scroll_last_y     = y;
-  shell->rotating          = (state & GDK_SHIFT_MASK) ? TRUE : FALSE;
+  shell->rotating          = (state & gimp_get_extend_selection_mask ()) ? TRUE : FALSE;
   shell->rotate_drag_angle = shell->rotate_angle;
+  shell->scaling           = (state & gimp_get_toggle_behavior_mask ()) ? TRUE : FALSE;
 
   if (shell->rotating)
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GDK_EXCHANGE);
+  if (shell->scaling)
+    gimp_display_shell_set_override_cursor (shell,
+                                            (GimpCursorType) GIMP_CURSOR_ZOOM);
   else
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GDK_FLEUR);
@@ -1502,6 +1536,7 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   shell->scroll_last_y     = 0;
   shell->rotating          = FALSE;
   shell->rotate_drag_angle = 0.0;
+  shell->scaling           = FALSE;
 
   gimp_display_shell_pointer_ungrab (shell, event);
 }

@@ -94,6 +94,7 @@ static void        print_size_info_set_page_setup     (PrintSizeInfo *info);
 
 static void        print_draw_crop_marks_toggled      (GtkWidget     *widget);
 
+static void        print_resolution_load_defaults     (PrintSizeInfo *info);
 
 static PrintSizeInfo  info;
 
@@ -235,6 +236,7 @@ print_size_frame (PrintData    *data,
   GtkWidget     *chain;
   GtkWidget     *frame;
   GtkWidget     *label;
+  GtkWidget     *button;
   GtkAdjustment *adj;
   gdouble        image_width;
   gdouble        image_height;
@@ -330,6 +332,13 @@ print_size_frame (PrintData    *data,
                                         _("_Y resolution:"), 1, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
+  button = gtk_button_new_with_mnemonic (_("_Load Defaults"));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (print_resolution_load_defaults),
+                            &info);
+  gtk_widget_show (button);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
                                          GIMP_MIN_RESOLUTION,
                                          GIMP_MAX_RESOLUTION);
@@ -403,7 +412,7 @@ print_offset_frame (PrintData    *data,
 
   label = gtk_label_new_with_mnemonic (_("_Left:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 0, 1);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
@@ -424,7 +433,7 @@ print_offset_frame (PrintData    *data,
 
   label = gtk_label_new_with_mnemonic (_("_Right:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 0, 1);
   gtk_widget_show (label);
 
@@ -440,7 +449,7 @@ print_offset_frame (PrintData    *data,
 
   label = gtk_label_new_with_mnemonic (_("_Top:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
@@ -461,7 +470,7 @@ print_offset_frame (PrintData    *data,
 
   label = gtk_label_new_with_mnemonic (_("_Bottom:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 1, 2);
   gtk_widget_show (label);
 
@@ -481,7 +490,7 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("C_enter:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
@@ -909,6 +918,8 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
       x = y = max;
     }
 
+  data->min_xres = x;
+  data->min_yres = y;
   gimp_size_entry_set_refval_boundaries (info->resolution_entry, 0,
                                          x, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval_boundaries (info->resolution_entry, 1,
@@ -923,3 +934,15 @@ print_draw_crop_marks_toggled (GtkWidget *widget)
   info.data->draw_crop_marks = active;
 }
 
+static void
+print_resolution_load_defaults (PrintSizeInfo *info)
+{
+  gdouble xres;
+  gdouble yres;
+
+  gimp_image_get_resolution (info->data->image_id, &xres, &yres);
+
+  gimp_size_entry_set_refval (info->resolution_entry, 0, xres);
+  gimp_size_entry_set_refval (info->resolution_entry, 1, yres);
+  print_size_info_resolution_changed (GTK_WIDGET (info->resolution_entry));
+}

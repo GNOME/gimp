@@ -19,13 +19,19 @@
 #define __GIMP_DRAWABLE_FILL_H__
 
 
-/*  Lowlevel API that is used for initializing the entire drawable
- *  before it is added to the image, doesn't even push an undo.
+/*  Lowlevel API that is used for initializing entire drawables and
+ *  buffers before they are used in images, they don't push an undo.
  */
 
 void       gimp_drawable_fill              (GimpDrawable        *drawable,
                                             GimpContext         *context,
                                             GimpFillType         fill_type);
+void       gimp_drawable_fill_buffer       (GimpDrawable        *drawable,
+                                            GeglBuffer          *buffer,
+                                            const GimpRGB       *color,
+                                            GimpPattern         *pattern,
+                                            gint                 pattern_offset_x,
+                                            gint                 pattern_offset_y);
 
 
 /*  Proper API that is used for actual editing (not just initializing)

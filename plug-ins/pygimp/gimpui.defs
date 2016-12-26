@@ -1443,6 +1443,11 @@
   )
 )
 
+(define-function gimp_ui_init
+  (c-name "gimp_ui_init")
+  (return-type "none")
+)
+
 (define-function gimp_enum_combo_box_new_with_model
   (c-name "gimp_enum_combo_box_new_with_model")
   (return-type "GtkWidget*")

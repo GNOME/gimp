@@ -401,6 +401,37 @@ gimp_matting_engine_get_type (void)
 }
 
 GType
+gimp_paste_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_PASTE_TYPE_FLOATING, "GIMP_PASTE_TYPE_FLOATING", "floating" },
+    { GIMP_PASTE_TYPE_FLOATING_INTO, "GIMP_PASTE_TYPE_FLOATING_INTO", "floating-into" },
+    { GIMP_PASTE_TYPE_NEW_LAYER, "GIMP_PASTE_TYPE_NEW_LAYER", "new-layer" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_PASTE_TYPE_FLOATING, "GIMP_PASTE_TYPE_FLOATING", NULL },
+    { GIMP_PASTE_TYPE_FLOATING_INTO, "GIMP_PASTE_TYPE_FLOATING_INTO", NULL },
+    { GIMP_PASTE_TYPE_NEW_LAYER, "GIMP_PASTE_TYPE_NEW_LAYER", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpPasteType", values);
+      gimp_type_set_translation_context (type, "paste-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_alignment_type_get_type (void)
 {
   static const GEnumValue values[] =
@@ -835,6 +866,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_ITEM_DISPLACE, "GIMP_UNDO_ITEM_DISPLACE", "item-displace" },
     { GIMP_UNDO_ITEM_VISIBILITY, "GIMP_UNDO_ITEM_VISIBILITY", "item-visibility" },
     { GIMP_UNDO_ITEM_LINKED, "GIMP_UNDO_ITEM_LINKED", "item-linked" },
+    { GIMP_UNDO_ITEM_COLOR_TAG, "GIMP_UNDO_ITEM_COLOR_TAG", "item-color-tag" },
     { GIMP_UNDO_ITEM_LOCK_CONTENT, "GIMP_UNDO_ITEM_LOCK_CONTENT", "item-lock-content" },
     { GIMP_UNDO_ITEM_LOCK_POSITION, "GIMP_UNDO_ITEM_LOCK_POSITION", "item-lock-position" },
     { GIMP_UNDO_LAYER_ADD, "GIMP_UNDO_LAYER_ADD", "layer-add" },
@@ -927,6 +959,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_ITEM_DISPLACE, NC_("undo-type", "Move item"), NULL },
     { GIMP_UNDO_ITEM_VISIBILITY, NC_("undo-type", "Item visibility"), NULL },
     { GIMP_UNDO_ITEM_LINKED, NC_("undo-type", "Link/Unlink item"), NULL },
+    { GIMP_UNDO_ITEM_COLOR_TAG, NC_("undo-type", "Item color tag"), NULL },
     { GIMP_UNDO_ITEM_LOCK_CONTENT, NC_("undo-type", "Lock/Unlock content"), NULL },
     { GIMP_UNDO_ITEM_LOCK_POSITION, NC_("undo-type", "Lock/Unlock position"), NULL },
     { GIMP_UNDO_LAYER_ADD, NC_("undo-type", "New layer"), NULL },

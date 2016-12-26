@@ -203,14 +203,19 @@ edit_paste_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp->global_buffer &&
+      GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
+
+      if (buffer &&
           gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                          drawable, gimp->global_buffer,
-                                          paste_into, -1, -1, -1, -1);
+                                          drawable, GIMP_OBJECT (buffer),
+                                          paste_into ?
+                                          GIMP_PASTE_TYPE_FLOATING_INTO :
+                                          GIMP_PASTE_TYPE_FLOATING,
+                                          -1, -1, -1, -1);
 
           if (! floating_sel)
             success = FALSE;
@@ -229,20 +234,22 @@ edit_paste_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-edit_paste_as_new_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
-                           GError               **error)
+edit_paste_as_new_image_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image = NULL;
 
-  if (gimp->global_buffer)
+  GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
+
+  if (buffer)
     {
-      image = gimp_image_new_from_buffer (gimp, NULL, gimp->global_buffer);
+      image = gimp_image_new_from_buffer (gimp, NULL, buffer);
 
       if (! image)
         success = FALSE;
@@ -442,8 +449,11 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                          drawable, buffer,
-                                          paste_into, -1, -1, -1, -1);
+                                          drawable, GIMP_OBJECT (buffer),
+                                          paste_into ?
+                                          GIMP_PASTE_TYPE_FLOATING_INTO :
+                                          GIMP_PASTE_TYPE_FLOATING,
+                                          -1, -1, -1, -1);
           if (! floating_sel)
             success = FALSE;
         }
@@ -461,12 +471,12 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-edit_named_paste_as_new_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
-                                 GError               **error)
+edit_named_paste_as_new_image_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
@@ -1022,7 +1032,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-paste",
                                      "Paste buffer to the specified drawable.",
-                                     "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted buffer will be a new layer in the image which is designated as the image floating selection. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to it's drawable before the new floating selection is added. This procedure returns the new floating layer. The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
+                                     "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted buffer will be a new layer in the image which is designated as the image floating selection. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added. This procedure returns the new floating layer. The resulting floating selection will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -1049,13 +1059,13 @@ register_edit_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-paste-as-new
+   * gimp-edit-paste-as-new-image
    */
-  procedure = gimp_procedure_new (edit_paste_as_new_invoker);
+  procedure = gimp_procedure_new (edit_paste_as_new_image_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-paste-as-new");
+                               "gimp-edit-paste-as-new-image");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-paste-as-new",
+                                     "gimp-edit-paste-as-new-image",
                                      "Paste buffer to a new image.",
                                      "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image or -1 if the edit buffer was empty.",
                                      "Michael Natterer <mitch@gimp.org>",
@@ -1225,15 +1235,15 @@ register_edit_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-edit-named-paste-as-new
+   * gimp-edit-named-paste-as-new-image
    */
-  procedure = gimp_procedure_new (edit_named_paste_as_new_invoker);
+  procedure = gimp_procedure_new (edit_named_paste_as_new_image_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-edit-named-paste-as-new");
+                               "gimp-edit-named-paste-as-new-image");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-edit-named-paste-as-new",
+                                     "gimp-edit-named-paste-as-new-image",
                                      "Paste named buffer to a new image.",
-                                     "This procedure works like 'gimp-edit-paste-as-new' but pastes a named buffer instead of the global buffer.",
+                                     "This procedure works like 'gimp-edit-paste-as-new-image' but pastes a named buffer instead of the global buffer.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2005",

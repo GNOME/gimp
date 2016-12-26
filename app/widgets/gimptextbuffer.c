@@ -873,6 +873,7 @@ gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
                                     name,
                                     "font", description,
                                     NULL);
+  gtk_text_tag_set_priority (tag, 0);
   g_free (description);
   buffer->font_tags = g_list_prepend (buffer->font_tags, tag);
 

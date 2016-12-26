@@ -301,22 +301,22 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
   GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (gbrush);
   gdouble             ratio;
 
-  if (aspect_ratio == 0.0)
-    {
-      ratio = brush->aspect_ratio;
-    }
-  else
-    {
-      ratio = MIN (fabs (aspect_ratio) + 1, 20);
-      /* Since generated brushes are symmetric the dont have input
-       * for aspect ratios  < 1.0. its same as rotate by 90 degrees and
-       * 1 / ratio. So we fix the input up for this case.   */
+  ratio = fabs (aspect_ratio) * 19.0 / 20.0 + 1.0;
+  ratio = MIN (ratio, 20);
 
-      if (aspect_ratio < 0.0)
-        {
-          angle = angle + 0.25;
-        }
-    }
+  /* Since generated brushes are symmetric they don't have aspect
+   * ratios < 1.0. it's the same as rotating by 90 degrees and 1 /
+   * ratio, so we fix the input for this case.
+   */
+  if (aspect_ratio < 0.0)
+    angle = angle + 0.25;
+
+  angle *= 360;
+
+  if (angle < 0.0)
+    angle = -1.0 * fmod (angle, 180.0);
+  else if (angle > 180.0)
+    angle = fmod (angle, 180.0);
 
   gimp_brush_generated_get_size (brush,
                                  brush->shape,
@@ -324,7 +324,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
                                  brush->spikes,
                                  brush->hardness,
                                  ratio,
-                                 (brush->angle + 360 * angle),
+                                 angle,
                                  width, height,
                                  NULL, NULL, NULL, NULL);
 }
@@ -339,23 +339,22 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
   GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
   gdouble             ratio;
 
-  if (aspect_ratio == 0.0)
-    {
-      ratio = brush->aspect_ratio;
-    }
-  else
-    {
-      ratio = MIN (fabs (aspect_ratio) + 1, 20);
-      /* Since generated brushes are symmetric the dont have input
-       * for aspect ratios  < 1.0. its same as rotate by 90 degrees and
-       * 1 / ratio. So we fix the input up for this case.   */
+  ratio = fabs (aspect_ratio) * 19.0 / 20.0 + 1.0;
+  ratio = MIN (ratio, 20);
 
-      if (aspect_ratio < 0.0)
-        {
-          angle = angle + 0.25;
-        }
-   }
+  /* Since generated brushes are symmetric they don't have aspect
+   * ratios < 1.0. it's the same as rotating by 90 degrees and 1 /
+   * ratio, so we fix the input for this case.
+   */
+  if (aspect_ratio < 0.0)
+    angle = angle + 0.25;
 
+  angle *= 360;
+
+  if (angle < 0.0)
+    angle = -1.0 * fmod (angle, 180.0);
+  else if (angle > 180.0)
+    angle = fmod (angle, 180.0);
 
   return gimp_brush_generated_calc (brush,
                                     brush->shape,
@@ -363,7 +362,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                     brush->spikes,
                                     hardness,
                                     ratio,
-                                    (brush->angle + 360 * angle),
+                                    angle,
                                     NULL, NULL);
 }
 

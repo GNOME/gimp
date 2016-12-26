@@ -701,7 +701,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (table);
 
   label = gtk_label_new (_("Source 1:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -716,7 +716,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (combo);
 
   label = gtk_label_new(_("Depth map:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -731,7 +731,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (combo);
 
   label = gtk_label_new (_("Source 2:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -746,7 +746,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (combo);
 
   label = gtk_label_new (_("Depth map:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);

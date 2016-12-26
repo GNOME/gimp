@@ -44,7 +44,7 @@ typedef struct
 #define MAX_COL(bb) ((bb).max_col)
 
 /* See the comments at `get_character_bitmap' in gf_input.c for why the
-   width and height are treated asymetrically.  */
+   width and height are treated asymmetrically.  */
 #define BB_WIDTH(bb) (MAX_COL (bb) - MIN_COL (bb))
 #define BB_HEIGHT(bb) (MAX_ROW (bb) - MIN_ROW (bb) + 1)
 

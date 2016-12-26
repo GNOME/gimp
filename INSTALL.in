@@ -127,7 +127,6 @@ header files installed.
 
      ATK     		@ATK_REQUIRED_VERSION@
      babl		@BABL_REQUIRED_VERSION@
-     libbzip2
      cairo 		@CAIRO_REQUIRED_VERSION@
      Fontconfig 	@FONTCONFIG_REQUIRED_VERSION@
      freetype2 		@FREETYPE2_REQUIRED_VERSION@
@@ -165,6 +164,7 @@ header files installed.
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
      ExcHndl		-		Crash logs on Windows with Dr. MinGW
+     libwebp		@WEBP_REQUIRED_VERSION@		WebP (built with --enable-libwebpmux and --enable-libwebpdemux)
 
  19. Summary of optional runtime dependencies:
 
@@ -184,9 +184,9 @@ compilation and installation output is not shown.
 
   % tar xvfz gimp-@GIMP_VERSION@.tar.gz   # unpack the sources
   % cd gimp-@GIMP_VERSION@                # change to the toplevel directory
-  % ./configure                  # run the `configure' script
-  % make                         # build GIMP
-  % make install                 # install GIMP
+  % ./configure                           # run the `configure' script
+  % make                                  # build GIMP
+  % make install                          # install GIMP
 
 
 The `configure' script examines your system, and adapts GIMP to run on
@@ -196,8 +196,8 @@ options can be listed using the command `./configure --help'. There
 are several special options the GIMP `configure' script recognizes.
 These are:
 
-  --enable-vector-icons.  This option installs vectorial icons instead
-    of raster icons.
+  --enable-vector-icons.  This option installs vector icons instead of
+     raster icons.
 
   --enable-shared and --disable-shared.  This option affects whether
      shared libraries will be built or not. Shared libraries provide
@@ -305,7 +305,7 @@ These are:
   --with-sendmail[=PATH]. This option is used to tell GIMP to send email
      through sendmail instead of xdg-email. You can optionally indicate
      where to find the sendmail command. Otherwise sendmail will simply
-     be search in your $PATH at runtime.
+     be searched in your $PATH at runtime.
 
   --with-desktop-dir=[PATH]. This option specifies where to install
      desktop files. These files are used by desktop environments that

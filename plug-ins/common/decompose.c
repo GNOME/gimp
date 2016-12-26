@@ -849,7 +849,7 @@ decompose_dialog (void)
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("Color _model:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

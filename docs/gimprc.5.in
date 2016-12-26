@@ -60,7 +60,7 @@ Sets how many processors GIMP should try to use simultaneously.  This is an
 integer value.
 
 .TP
-(tile-cache-size 6119176k)
+(tile-cache-size 6118966k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -291,6 +291,8 @@ are yes and no.
     (resolution-unit inches)
     (image-type rgb)
     (precision u8-gamma)
+    (color-managed yes)
+    (color-profile NULL)
     (fill-type background-fill)
     (comment "Created with GIMP"))
 
@@ -318,7 +320,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1529794k)
+(undo-size 1566455296)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -336,8 +338,8 @@ extra-small, small, medium, large, extra-large, huge, enormous and gigantic.
 .TP
 (plug-in-history-size 10)
 
-How many recently used plug-ins to keep on the Filters menu.  This is an
-integer value.
+How many recently used filters and plug-ins to keep on the Filters menu.  This
+is an integer value.
 
 .TP
 (pluginrc-path "${gimp_dir}/pluginrc")
@@ -379,8 +381,10 @@ is specified the size defaults to being specified in kilobytes.
     (display-profile-from-gdk no)
     (display-rendering-intent relative-colorimetric)
     (display-use-black-point-compensation yes)
+    (display-optimize yes)
     (simulation-rendering-intent perceptual)
     (simulation-use-black-point-compensation no)
+    (simulation-optimize yes)
     (simulation-gamut-check no)
     (out-of-gamut-color (color-rgb 0.501961 0.501961 0.501961))
     (display-module "CdisplayLcms"))
@@ -435,13 +439,15 @@ milliseconds (less time indicates faster marching).  This is an integer value.
 (resize-windows-on-zoom no)
 
 When enabled, the image window will automatically resize itself when zooming
-into and out of images.  Possible values are yes and no.
+into and out of images. This setting only takes effect in multi-window mode. 
+Possible values are yes and no.
 
 .TP
 (resize-windows-on-resize no)
 
 When enabled, the image window will automatically resize itself whenever the
-physical image size changes.  Possible values are yes and no.
+physical image size changes. This setting only takes effect in multi-window
+mode.  Possible values are yes and no.
 
 .TP
 (default-dot-for-dot yes)
@@ -455,15 +461,6 @@ pixel on the screen.  Possible values are yes and no.
 When enabled, this will ensure that the full image is visible after a file is
 opened, otherwise it will be displayed with a scale of 1:1.  Possible values
 are yes and no.
-
-.TP
-(perfect-mouse yes)
-
-When enabled, the X server is queried for the mouse's current position on each
-motion event, rather than relying on the position hint.  This means painting
-with large brushes should be more accurate, but it may be slower.  Conversely,
-on some X servers enabling this option results in faster painting.  Possible
-values are yes and no.
 
 .TP
 (cursor-mode tool-icon)
@@ -733,10 +730,10 @@ to be the default behaviour in older versions.  Possible values are yes and
 no.
 
 .TP
-(image-map-tool-max-recent 10)
+(filter-tool-max-recent 10)
 
-How many recent settings to keep around in color correction tools  This is an
-integer value.
+How many recent settings to keep around in filter tools  This is an integer
+value.
 
 .TP
 (trust-dirty-flag no)

@@ -81,21 +81,6 @@ static const FileFormat file_formats[] =
     "file-exr-save",
     "Saves files in the OpenEXR file format",
     "This procedure saves images in the OpenEXR format, using gegl:save"
-  },
-
-  {
-    N_("WebP image"),
-    "image/webp",
-    "webp",
-    "",
-
-    "file-webp-load",
-    "Loads WebP images using GEGL",
-    "This procedure loads images in WebP format, using gegl:load",
-
-    "file-webp-save",
-    "Saves WebP images using GEGL",
-    "This procedure saves images in WebP format, using gegl:save"
   }
 };
 

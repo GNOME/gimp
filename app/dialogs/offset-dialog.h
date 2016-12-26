@@ -19,9 +19,20 @@
 #define __OFFSET_DIALOG_H__
 
 
-GtkWidget * offset_dialog_new (GimpDrawable *drawable,
-                               GimpContext  *context,
-                               GtkWidget    *parent);
+typedef void (* GimpOffsetCallback) (GtkWidget      *dialog,
+                                     GimpDrawable   *drawable,
+                                     GimpContext    *context,
+                                     gboolean        wrap_around,
+                                     GimpOffsetType  fill_type,
+                                     gint            offset_x,
+                                     gint            offset_y);
+
+
+GtkWidget * offset_dialog_new (GimpDrawable       *drawable,
+                               GimpContext        *context,
+                               GtkWidget          *parent,
+                               GimpOffsetCallback  callback,
+                               gpointer            user_data);
 
 
 #endif  /*  __OFFSET_DIALOG_H__  */

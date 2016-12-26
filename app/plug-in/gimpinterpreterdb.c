@@ -148,35 +148,35 @@ gimp_interpreter_db_load (GimpInterpreterDB *db,
       GFileEnumerator *enumerator;
 
       enumerator =
-	g_file_enumerate_children (dir,
+        g_file_enumerate_children (dir,
                                    G_FILE_ATTRIBUTE_STANDARD_NAME ","
-				   G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-				   G_FILE_ATTRIBUTE_STANDARD_TYPE,
-				   G_FILE_QUERY_INFO_NONE,
-				   NULL, NULL);
+                                   G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                   G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                   G_FILE_QUERY_INFO_NONE,
+                                   NULL, NULL);
 
       if (enumerator)
-	{
-	  GFileInfo *info;
+        {
+          GFileInfo *info;
 
-	  while ((info = g_file_enumerator_next_file (enumerator,
-						      NULL, NULL)))
-	    {
-	      if (! g_file_info_get_is_hidden (info) &&
-		  g_file_info_get_file_type (info) == G_FILE_TYPE_REGULAR)
-		{
-		  GFile *file = g_file_enumerator_get_child (enumerator, info);
+          while ((info = g_file_enumerator_next_file (enumerator,
+                                                      NULL, NULL)))
+            {
+              if (! g_file_info_get_is_hidden (info) &&
+                  g_file_info_get_file_type (info) == G_FILE_TYPE_REGULAR)
+                {
+                  GFile *file = g_file_enumerator_get_child (enumerator, info);
 
-		  gimp_interpreter_db_load_interp_file (db, file);
+                  gimp_interpreter_db_load_interp_file (db, file);
 
-		  g_object_unref (file);
-		}
+                  g_object_unref (file);
+                }
 
-	      g_object_unref (info);
-	    }
+              g_object_unref (info);
+            }
 
-	  g_object_unref (enumerator);
-	}
+          g_object_unref (enumerator);
+        }
     }
 
   gimp_interpreter_db_resolve_programs (db);
@@ -216,7 +216,7 @@ gimp_interpreter_db_clear (GimpInterpreterDB *db)
 
 static void
 gimp_interpreter_db_load_interp_file (GimpInterpreterDB *db,
-				      GFile             *file)
+                                      GFile             *file)
 {
   GInputStream     *input;
   GDataInputStream *data_input;
@@ -251,13 +251,13 @@ gimp_interpreter_db_load_interp_file (GimpInterpreterDB *db,
         }
 
       if (g_ascii_isalnum (buffer[0]) || (buffer[0] == '/'))
-	{
-	  gimp_interpreter_db_add_program (db, file, buffer);
-	}
+        {
+          gimp_interpreter_db_add_program (db, file, buffer);
+        }
       else if (! g_ascii_isspace (buffer[0]) && (buffer[0] != '\0'))
-	{
-	  gimp_interpreter_db_add_binfmt_misc (db, file, buffer);
-	}
+        {
+          gimp_interpreter_db_add_binfmt_misc (db, file, buffer);
+        }
 
       g_free (buffer);
     }

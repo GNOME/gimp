@@ -66,6 +66,9 @@ void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter   *filter,
 void       gimp_drawable_filter_set_mode       (GimpDrawableFilter   *filter,
                                                 GimpLayerModeEffects  paint_mode);
 
+void       gimp_drawable_filter_set_color_managed
+                                               (GimpDrawableFilter   *filter,
+                                                gboolean              managed);
 void       gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter   *filter,
                                                 gboolean              gamma_hack);
 

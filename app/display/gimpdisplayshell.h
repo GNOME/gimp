@@ -148,7 +148,6 @@ struct _GimpDisplayShell
   GtkWidget         *scale_dialog;     /*  scale (zoom) dialog                */
   GtkWidget         *rotate_dialog;    /*  rotate dialog                      */
   GtkWidget         *nav_popup;        /*  navigation popup                   */
-  GtkWidget         *grid_dialog;      /*  grid configuration dialog          */
 
   GimpColorConfig   *color_config;     /*  color management settings          */
   gboolean           color_config_set; /*  settings changed from defaults     */
@@ -160,7 +159,6 @@ struct _GimpDisplayShell
 
   GimpColorDisplayStack *filter_stack;   /* color display conversion stuff    */
   guint                  filter_idle_id;
-  GtkWidget             *filters_dialog; /* color display filter dialog       */
 
   const Babl        *filter_format;    /*  filter_buffer's format             */
   GeglBuffer        *filter_buffer;    /*  buffer for display filters         */
@@ -199,6 +197,7 @@ struct _GimpDisplayShell
   gint               scroll_last_y;
   gboolean           rotating;
   gdouble            rotate_drag_angle;
+  gboolean           scaling;
   gpointer           scroll_info;
 
   GeglBuffer        *mask;

@@ -334,7 +334,7 @@ static gdouble
 arc_angle (GdkPoint *pnt,
            GdkPoint *center)
 {
-  /* Get angle (in degress) of point given origin of center */
+  /* Get angle (in degrees) of point given origin of center */
   gint16  shift_x;
   gint16  shift_y;
   gdouble offset_angle;

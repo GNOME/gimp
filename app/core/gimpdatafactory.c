@@ -211,10 +211,10 @@ gimp_data_factory_new (Gimp                             *gimp,
   factory->priv->gimp                   = gimp;
   factory->priv->container              = gimp_list_new (data_type, TRUE);
   gimp_list_set_sort_func (GIMP_LIST (factory->priv->container),
-			   (GCompareFunc) gimp_data_compare);
+                           (GCompareFunc) gimp_data_compare);
   factory->priv->container_obsolete     = gimp_list_new (data_type, TRUE);
   gimp_list_set_sort_func (GIMP_LIST (factory->priv->container_obsolete),
-			   (GCompareFunc) gimp_data_compare);
+                           (GCompareFunc) gimp_data_compare);
 
   factory->priv->path_property_name     = g_strdup (path_property_name);
   factory->priv->writable_property_name = g_strdup (writable_property_name);

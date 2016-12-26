@@ -306,9 +306,16 @@ gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
 
   if (active != gimp_image_get_quick_mask_state (image))
     {
-      gimp_image_set_quick_mask_state (image, active);
+      GimpImageWindow *window = gimp_display_shell_get_window (shell);
 
-      gimp_image_flush (image);
+      if (window)
+        {
+          GimpUIManager *manager = gimp_image_window_get_ui_manager (window);
+
+          gimp_ui_manager_toggle_action (manager,
+                                         "quick-mask", "quick-mask-toggle",
+                                         active);
+        }
     }
 }
 

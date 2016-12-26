@@ -268,7 +268,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   /*  Count label  */
 
   priv->count_label = gtk_label_new (_("Nothing selected"));
-  gtk_misc_set_alignment (GTK_MISC (priv->count_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (priv->count_label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (priv->count_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
@@ -891,7 +891,7 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  * @range: A string representing the set of selected pages.
  *
- * Selectes the pages described by @range. The range string is a
+ * Selects the pages described by @range. The range string is a
  * user-editable list of pages and ranges, e.g. "1,3,5-7,9-12,14".
  * Note that the page numbering in the range string starts with 1,
  * not 0.

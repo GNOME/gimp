@@ -13,6 +13,11 @@ else
 libm = -lm
 endif
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
+endif
+
 if HAVE_WINDRES
 include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
 include gimprc.common
@@ -96,7 +101,7 @@ libexec_PROGRAMS = \
 	file-psp \
 	file-raw-data \
 	file-sunras \
-	$(FILE_SVG) \
+	file-svg \
 	file-tga \
 	$(FILE_WMF) \
 	file-xbm \
@@ -145,7 +150,6 @@ EXTRA_PROGRAMS = \
 	file-pdf-load \
 	file-pdf-save \
 	file-ps \
-	file-svg \
 	file-wmf \
 	file-xmc \
 	file-xpm \
@@ -1604,6 +1608,7 @@ smooth_palette_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(smooth_palette_RC)
@@ -1761,6 +1766,10 @@ warp_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(warp_RC)
+
+web_browser_LDFLAGS = $(framework_cocoa)
+
+web_browser_CPPFLAGS = $(AM_CPPFLAGS) $(xobjective_c)
 
 web_browser_SOURCES = \
 	web-browser.c

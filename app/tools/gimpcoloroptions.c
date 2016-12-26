@@ -148,25 +148,15 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *frame;
   GtkWidget *scale;
-  GtkWidget *button;
 
   /*  the sample average options  */
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
   scale = gimp_prop_spin_scale_new (config, "average-radius", NULL,
                                     1.0, 10.0, 0);
-  gtk_container_add (GTK_CONTAINER (frame), scale);
-  gtk_widget_show (scale);
 
-  button = gimp_prop_check_button_new (config, "sample-average", NULL);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-  gtk_widget_show (button);
-
-  g_object_bind_property (config, "sample-average",
-                          scale,  "sensitive",
-                          G_BINDING_SYNC_CREATE);
+  frame = gimp_prop_expanding_frame_new (config, "sample-average", NULL,
+                                         scale, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   return vbox;
 }

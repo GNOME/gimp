@@ -259,7 +259,7 @@ _gimp_image_convert_color_profile (gint32                    image_ID,
  *
  * This procedure converts from the image's color profile (or the
  * default RGB or grayscale profile if none is set) to an ICC profile
- * precified by 'uri'. Only RGB and grayscale color profiles are
+ * specified by 'uri'. Only RGB and grayscale color profiles are
  * accepted, according to the image's type.
  *
  * Returns: TRUE on success.

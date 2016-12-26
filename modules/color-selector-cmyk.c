@@ -187,7 +187,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
     }
 
   module->name_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (module->name_label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (module->name_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (module->name_label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (module->name_label),
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,

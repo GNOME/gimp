@@ -122,7 +122,7 @@ gimp_color_balance_tool_initialize (GimpTool     *tool,
   if (! gimp_drawable_is_rgb (drawable))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Color Balance operates only on RGB color layers."));
+                           _("Color Balance operates only on RGB color layers."));
       return FALSE;
     }
 
@@ -159,7 +159,7 @@ create_levels_scale (GObject     *config,
   GtkWidget *scale;
 
   label = gtk_label_new (left);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, col, col + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -172,7 +172,7 @@ create_levels_scale (GObject     *config,
   gtk_widget_show (scale);
 
   label = gtk_label_new (right);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, col, col + 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);

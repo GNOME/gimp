@@ -492,6 +492,8 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  * gdouble property in a very space-efficient way.
  * If @label is #NULL, the @property_name's nick will be used as label
  * of the returned widget.
+ * The property's lower and upper values will be used as min/max of the
+ * #GimpSpinScale.
  *
  * Return value:  A new #GimpSpinScale widget.
  *
@@ -516,14 +518,17 @@ gimp_prop_spin_scale_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
+  /* The generic min and max for the property. */
   if (! _gimp_prop_widgets_get_numeric_values (config, param_spec,
                                                &value, &lower, &upper,
                                                G_STRFUNC))
     return NULL;
 
+  /* Get label. */
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
+  /* Also usable on int properties. */
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 
@@ -1599,10 +1604,11 @@ gimp_prop_profile_combo_box_new (GObject      *config,
   GtkWidget  *combo;
   GFile      *file = NULL;
 
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
-                                             property_name);
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
 
-  if (param_spec && G_IS_PARAM_SPEC_STRING (param_spec))
+  if (G_IS_PARAM_SPEC_STRING (param_spec))
     {
       param_spec = check_param_spec_w (config, property_name,
                                        G_TYPE_PARAM_STRING, G_STRFUNC);
@@ -1621,19 +1627,15 @@ gimp_prop_profile_combo_box_new (GObject      *config,
 
   if (G_IS_PARAM_SPEC_STRING (param_spec))
     {
-      gchar *value;
       gchar *path;
 
       g_object_get (config,
-                    property_name, &value,
+                    property_name, &path,
                     NULL);
-
-      path = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
-      g_free (value);
 
       if (path)
         {
-          file = g_file_new_for_path (path);
+          file = gimp_file_new_for_config_path (path, NULL);
           g_free (path);
         }
     }
@@ -1698,7 +1700,7 @@ gimp_prop_profile_combo_callback (GimpColorProfileComboBox *combo,
       gchar *path = NULL;
 
       if (file)
-        path = g_file_get_path (file);
+        path = gimp_file_get_config_path (file, NULL);
 
       g_object_set (config,
                     param_spec->name, path,
@@ -1731,19 +1733,15 @@ gimp_prop_profile_combo_notify (GObject                  *config,
 
   if (G_IS_PARAM_SPEC_STRING (param_spec))
     {
-      gchar *value;
       gchar *path;
 
       g_object_get (config,
-                    param_spec->name, &value,
+                    param_spec->name, &path,
                     NULL);
-
-      path = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
-      g_free (value);
 
       if (path)
         {
-          file = g_file_new_for_path (path);
+          file = gimp_file_new_for_config_path (path, NULL);
           g_free (path);
         }
     }

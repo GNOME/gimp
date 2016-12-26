@@ -252,7 +252,7 @@ gimp_param_memsize_class_init (GParamSpecClass *class)
  * gimp_param_spec_memsize:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
- * @blurb:         Brief desciption of param.
+ * @blurb:         Brief description of param.
  * @minimum:       Smallest allowed value of the parameter.
  * @maximum:       Largest allowed value of the parameter.
  * @default_value: Value to use if none is assigned.

@@ -55,7 +55,7 @@ static const GimpActionEntry mypaint_brushes_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_MYPAINT_BRUSH_DUPLICATE },
 
-  { "mypaint-brushes-copy-location", GIMP_STOCK_CLIPBOARD,
+  { "mypaint-brushes-copy-location", "edit-copy",
     NC_("mypaint-brushes-action", "Copy MyPaint Brush _Location"), NULL,
     NC_("mypaint-brushes-action", "Copy MyPaint brush file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),

@@ -38,6 +38,7 @@
 #include "text/gimptextlayout.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockcontainer.h"
 #include "widgets/gimpoverlaybox.h"
 #include "widgets/gimpoverlayframe.h"
 #include "widgets/gimptextbuffer.h"
@@ -114,6 +115,9 @@ static gboolean gimp_text_tool_im_delete_surrounding
                                                    GimpTextTool    *text_tool);
 
 static void     gimp_text_tool_im_delete_preedit  (GimpTextTool    *text_tool);
+
+static void     gimp_text_tool_editor_copy_selection_to_clipboard
+                                                  (GimpTextTool    *text_tool);
 
 
 /*  public functions  */
@@ -309,8 +313,12 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
 
   switch (press_type)
     {
+      GtkTextIter start, end;
+
     case GIMP_BUTTON_PRESS_NORMAL:
-      gtk_text_buffer_place_cursor (buffer, &cursor);
+      if (gtk_text_buffer_get_selection_bounds (buffer, &start, &end) ||
+          gtk_text_iter_compare (&start, &cursor))
+        gtk_text_buffer_place_cursor (buffer, &cursor);
       break;
 
     case GIMP_BUTTON_PRESS_DOUBLE:
@@ -340,19 +348,7 @@ gimp_text_tool_editor_button_press (GimpTextTool        *text_tool,
 void
 gimp_text_tool_editor_button_release (GimpTextTool *text_tool)
 {
-  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
-
-  if (gtk_text_buffer_get_has_selection (buffer))
-    {
-      GimpTool         *tool  = GIMP_TOOL (text_tool);
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-      GtkClipboard     *clipboard;
-
-      clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
-                                            GDK_SELECTION_PRIMARY);
-
-      gtk_text_buffer_copy_clipboard (buffer, clipboard);
-    }
+  gimp_text_tool_editor_copy_selection_to_clipboard (text_tool);
 }
 
 void
@@ -991,6 +987,7 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
   gimp_text_tool_reset_im_context (text_tool);
 
   gtk_text_buffer_select_range (buffer, &cursor, sel_start);
+  gimp_text_tool_editor_copy_selection_to_clipboard (text_tool);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (text_tool));
 }
@@ -1268,6 +1265,8 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
 {
   GimpTool          *tool    = GIMP_TOOL (text_tool);
   GimpTextOptions   *options = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
+  GimpDisplayShell  *shell   = gimp_display_get_shell (tool->display);
+  GimpImageWindow   *image_window;
   GimpDialogFactory *dialog_factory;
   GtkWindow         *parent  = NULL;
   gdouble            xres    = 1.0;
@@ -1279,14 +1278,8 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
       return;
     }
 
-  dialog_factory = gimp_dialog_factory_get_singleton ();
-
-  if (tool->display)
-    {
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-
-      parent = GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (shell)));
-    }
+  image_window   = gimp_display_shell_get_window (shell);
+  dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
 
   if (text_tool->image)
     gimp_image_get_resolution (text_tool->image, &xres, &yres);
@@ -1304,12 +1297,8 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",
                                    text_tool->editor_dialog,
-                                   parent ?
-                                   gtk_widget_get_screen (GTK_WIDGET (parent)) :
-                                   gdk_screen_get_default (), /* FIXME monitor */
-                                   parent ?
-                                   gimp_widget_get_monitor (GTK_WIDGET (parent)) :
-                                   0 /* FIXME monitor */);
+                                   gtk_widget_get_screen (GTK_WIDGET (image_window)),
+                                   gimp_widget_get_monitor (GTK_WIDGET (image_window)));
 
   g_signal_connect (text_tool->editor_dialog, "destroy",
                     G_CALLBACK (gimp_text_tool_editor_destroy),
@@ -1645,5 +1634,24 @@ gimp_text_tool_im_delete_preedit (GimpTextTool *text_tool)
 
       g_free (text_tool->preedit_string);
       text_tool->preedit_string = NULL;
+    }
+}
+
+static void
+gimp_text_tool_editor_copy_selection_to_clipboard (GimpTextTool *text_tool)
+{
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+
+  if (! text_tool->editor_dialog &&
+      gtk_text_buffer_get_has_selection (buffer))
+    {
+      GimpTool         *tool  = GIMP_TOOL (text_tool);
+      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+      GtkClipboard     *clipboard;
+
+      clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
+                                            GDK_SELECTION_PRIMARY);
+
+      gtk_text_buffer_copy_clipboard (buffer, clipboard);
     }
 }

@@ -61,7 +61,7 @@ static const GimpActionEntry context_actions[] =
                                                               "_Palette")    },
   { "context-gradient-menu",   GIMP_STOCK_GRADIENT,       NC_("context-action",
                                                               "_Gradient")   },
-  { "context-font-menu",       GIMP_STOCK_FONT,           NC_("context-action",
+  { "context-font-menu",       "gtk-select-font",         NC_("context-action",
                                                               "_Font")       },
 
   { "context-brush-shape-menu",    NULL,                  NC_("context-action",
@@ -841,23 +841,23 @@ static const GimpEnumActionEntry context_gradient_select_actions[] =
 
 static const GimpEnumActionEntry context_font_select_actions[] =
 {
-  { "context-font-select-set", GIMP_STOCK_FONT,
+  { "context-font-select-set", "gtk-select-font",
     "Select Font by Index", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
-  { "context-font-select-first", GIMP_STOCK_FONT,
+  { "context-font-select-first", "gtk-select-font",
     "First Font", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
-  { "context-font-select-last", GIMP_STOCK_FONT,
+  { "context-font-select-last", "gtk-select-font",
     "Last Font", NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
-  { "context-font-select-previous", GIMP_STOCK_FONT,
+  { "context-font-select-previous", "gtk-select-font",
     "Previous Font", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
-  { "context-font-select-next", GIMP_STOCK_FONT,
+  { "context-font-select-next", "gtk-select-font",
     "Next Font", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL }
@@ -1243,6 +1243,7 @@ void
 context_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
+#if 0
   GimpContext *context   = action_data_get_context (data);
   gboolean     generated = FALSE;
   gdouble      radius    = 0.0;
@@ -1272,7 +1273,6 @@ context_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, "context-" action, (condition) != 0)
 
-#if 0
   SET_SENSITIVE ("brush-radius-minimum",       generated && radius > 1.0);
   SET_SENSITIVE ("brush-radius-decrease",      generated && radius > 1.0);
   SET_SENSITIVE ("brush-radius-decrease-skip", generated && radius > 1.0);
@@ -1288,7 +1288,7 @@ context_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("brush-angle-maximum",       generated);
   SET_SENSITIVE ("brush-angle-increase",      generated);
   SET_SENSITIVE ("brush-angle-increase-skip", generated);
-#endif
-
 #undef SET_SENSITIVE
+
+#endif
 }

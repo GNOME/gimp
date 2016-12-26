@@ -204,6 +204,25 @@ gimp_context_get_opacity
 gimp_context_set_opacity
 gimp_context_get_paint_mode
 gimp_context_set_paint_mode
+gimp_context_list_paint_methods
+gimp_context_get_paint_method
+gimp_context_set_paint_method
+gimp_context_get_stroke_method
+gimp_context_set_stroke_method
+gimp_context_get_line_width
+gimp_context_set_line_width
+gimp_context_get_line_width_unit
+gimp_context_set_line_width_unit
+gimp_context_get_line_cap_style
+gimp_context_set_line_cap_style
+gimp_context_get_line_join_style
+gimp_context_set_line_join_style
+gimp_context_get_line_miter_limit
+gimp_context_set_line_miter_limit
+gimp_context_get_line_dash_offset
+gimp_context_set_line_dash_offset
+gimp_context_get_line_dash_pattern
+gimp_context_set_line_dash_pattern
 gimp_context_get_brush
 gimp_context_set_brush
 gimp_context_get_brush_size
@@ -223,6 +242,8 @@ gimp_context_get_brush_force
 gimp_context_set_brush_force
 gimp_context_get_dynamics
 gimp_context_set_dynamics
+gimp_context_get_mypaint_brush
+gimp_context_set_mypaint_brush
 gimp_context_get_pattern
 gimp_context_set_pattern
 gimp_context_get_gradient
@@ -231,9 +252,6 @@ gimp_context_get_palette
 gimp_context_set_palette
 gimp_context_get_font
 gimp_context_set_font
-gimp_context_get_paint_method
-gimp_context_set_paint_method
-gimp_context_list_paint_methods
 gimp_context_get_antialias
 gimp_context_set_antialias
 gimp_context_get_feather
@@ -250,6 +268,8 @@ gimp_context_get_sample_threshold_int
 gimp_context_set_sample_threshold_int
 gimp_context_get_sample_transparent
 gimp_context_set_sample_transparent
+gimp_context_get_diagonal_neighbors
+gimp_context_set_diagonal_neighbors
 gimp_context_get_interpolation
 gimp_context_set_interpolation
 gimp_context_get_transform_direction
@@ -394,11 +414,13 @@ gimp_edit_copy
 gimp_edit_copy_visible
 gimp_edit_paste
 gimp_edit_paste_as_new
+gimp_edit_paste_as_new_image
 gimp_edit_named_cut
 gimp_edit_named_copy
 gimp_edit_named_copy_visible
 gimp_edit_named_paste
 gimp_edit_named_paste_as_new
+gimp_edit_named_paste_as_new_image
 gimp_edit_clear
 gimp_edit_fill
 gimp_edit_bucket_fill
@@ -459,6 +481,7 @@ gimp_get_default_unit
 gimp_get_module_load_inhibit
 gimp_get_monitor_resolution
 gimp_get_theme_dir
+gimp_get_icon_theme_dir
 </SECTION>
 
 <SECTION>
@@ -626,6 +649,16 @@ gimp_image_get_vectors_position
 </SECTION>
 
 <SECTION>
+<FILE>gimpimagecolorprofile</FILE>
+gimp_image_get_color_profile
+gimp_image_set_color_profile
+gimp_image_set_color_profile_from_file
+gimp_image_get_effective_color_profile
+gimp_image_convert_color_profile
+gimp_image_convert_color_profile_from_file
+</SECTION>
+
+<SECTION>
 <FILE>gimpimageconvert</FILE>
 gimp_image_convert_rgb
 gimp_image_convert_grayscale
@@ -656,6 +689,14 @@ gimp_image_delete_guide
 gimp_image_find_next_guide
 gimp_image_get_guide_orientation
 gimp_image_get_guide_position
+</SECTION>
+
+<SECTION>
+<FILE>gimpimagesamplepoints</FILE>
+gimp_image_add_sample_point
+gimp_image_delete_sample_point
+gimp_image_find_next_sample_point
+gimp_image_get_sample_point_position
 </SECTION>
 
 <SECTION>
@@ -992,6 +1033,7 @@ gimp_selection_invert
 gimp_selection_feather
 gimp_selection_sharpen
 gimp_selection_border
+gimp_selection_flood
 gimp_selection_translate
 gimp_selection_layer_alpha
 gimp_selection_combine
@@ -1152,6 +1194,7 @@ gimp_drawable_get_sub_thumbnail
 <TITLE>GimpAspectPreview</TITLE>
 GimpAspectPreview
 gimp_aspect_preview_new
+gimp_aspect_preview_new_from_drawable_id
 <SUBSECTION Standard>
 GimpAspectPreviewClass
 GIMP_ASPECT_PREVIEW
@@ -1168,7 +1211,9 @@ GIMP_ASPECT_PREVIEW_GET_CLASS
 <TITLE>GimpDrawablePreview</TITLE>
 GimpDrawablePreview
 gimp_drawable_preview_new
+gimp_drawable_preview_new_from_drawable_id
 gimp_drawable_preview_get_drawable
+gimp_drawable_preview_get_drawable_id
 gimp_drawable_preview_draw_region
 <SUBSECTION Standard>
 GimpDrawablePreviewClass
@@ -1186,13 +1231,17 @@ GIMP_DRAWABLE_PREVIEW_GET_CLASS
 <TITLE>GimpZoomPreview</TITLE>
 GimpZoomPreview
 gimp_zoom_preview_new
+gimp_zoom_preview_new_from_drawable_id
+gimp_zoom_preview_new_with_model_from_drawable_id
 gimp_zoom_preview_new_with_model
 gimp_zoom_preview_get_source
 gimp_zoom_preview_get_drawable
+gimp_zoom_preview_get_drawable_id
 gimp_zoom_preview_get_factor
 gimp_zoom_preview_get_model
 <SUBSECTION Standard>
 GimpZoomPreviewClass
+GimpZoomPreviewPrivate
 GIMP_ZOOM_PREVIEW
 GIMP_IS_ZOOM_PREVIEW
 GIMP_TYPE_ZOOM_PREVIEW

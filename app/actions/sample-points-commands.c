@@ -17,20 +17,13 @@
 
 #include "config.h"
 
-#include <gegl.h>
 #include <gtk/gtk.h>
-
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
 
-#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpsamplepointeditor.h"
 
 #include "sample-points-commands.h"
-
-#include "gimp-intl.h"
 
 
 /*  public functions  */

@@ -61,6 +61,7 @@ static void       gimp_selection_scale         (GimpItem            *item,
                                                 GimpProgress        *progress);
 static void       gimp_selection_resize        (GimpItem            *item,
                                                 GimpContext         *context,
+                                                GimpFillType         fill_type,
                                                 gint                 new_width,
                                                 gint                 new_height,
                                                 gint                 offset_x,
@@ -91,11 +92,9 @@ static gboolean   gimp_selection_stroke        (GimpItem            *item,
 static void       gimp_selection_convert_type  (GimpDrawable        *drawable,
                                                 GimpImage           *dest_image,
                                                 const Babl          *new_format,
-                                                GimpImageBaseType    new_base_type,
-                                                GimpPrecision        new_precision,
                                                 GimpColorProfile    *dest_profile,
-                                                gint                 layer_dither_type,
-                                                gint                 mask_dither_type,
+                                                GeglDitherMethod     layer_dither_type,
+                                                GeglDitherMethod     mask_dither_type,
                                                 gboolean             push_undo,
                                                 GimpProgress        *progress);
 static void gimp_selection_invalidate_boundary (GimpDrawable        *drawable);
@@ -243,14 +242,16 @@ gimp_selection_scale (GimpItem              *item,
 }
 
 static void
-gimp_selection_resize (GimpItem    *item,
-                       GimpContext *context,
-                       gint         new_width,
-                       gint         new_height,
-                       gint         offset_x,
-                       gint         offset_y)
+gimp_selection_resize (GimpItem     *item,
+                       GimpContext  *context,
+                       GimpFillType  fill_type,
+                       gint          new_width,
+                       gint          new_height,
+                       gint          offset_x,
+                       gint          offset_y)
 {
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, new_width, new_height,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, GIMP_FILL_TRANSPARENT,
+                                          new_width, new_height,
                                           offset_x, offset_y);
 
   gimp_item_set_offset (item, 0, 0);
@@ -300,7 +301,7 @@ gimp_selection_fill (GimpItem         *item,
                                0, 0, 0, 0))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("There is no selection to fill."));
+                           _("There is no selection to fill."));
       return FALSE;
     }
 
@@ -336,7 +337,7 @@ gimp_selection_stroke (GimpItem           *item,
                                0, 0, 0, 0))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("There is no selection to stroke."));
+                           _("There is no selection to stroke."));
       return FALSE;
     }
 
@@ -355,20 +356,17 @@ static void
 gimp_selection_convert_type (GimpDrawable      *drawable,
                              GimpImage         *dest_image,
                              const Babl        *new_format,
-                             GimpImageBaseType  new_base_type,
-                             GimpPrecision      new_precision,
                              GimpColorProfile  *dest_profile,
-                             gint               layer_dither_type,
-                             gint               mask_dither_type,
+                             GeglDitherMethod   layer_dither_type,
+                             GeglDitherMethod   mask_dither_type,
                              gboolean           push_undo,
                              GimpProgress      *progress)
 {
-  new_format = gimp_babl_mask_format (new_precision);
+  new_format =
+    gimp_babl_mask_format (gimp_babl_format_get_precision (new_format));
 
   GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
                                                     new_format,
-                                                    new_base_type,
-                                                    new_precision,
                                                     dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,
@@ -565,7 +563,7 @@ gimp_selection_grow (GimpChannel *channel,
                      gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->grow (channel,
-					   radius_x, radius_y,
+                                           radius_x, radius_y,
                                            push_undo);
 }
 
@@ -577,8 +575,8 @@ gimp_selection_shrink (GimpChannel *channel,
                        gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->shrink (channel,
-					     radius_x, radius_y, edge_lock,
-					     push_undo);
+                                             radius_x, radius_y, edge_lock,
+                                             push_undo);
 }
 
 static void
@@ -730,6 +728,8 @@ gimp_selection_extract (GimpSelection *selection,
     {
       non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
                                          &x1, &y1, &x2, &y2);
+
+      gimp_item_get_offset (GIMP_ITEM (pickable), &off_x, &off_y);
     }
   else
     {
@@ -737,13 +737,19 @@ gimp_selection_extract (GimpSelection *selection,
                                     &x1, &y1, &x2, &y2);
       x2 += x1;
       y2 += y1;
+
+      off_x = 0;
+      off_y = 0;
+
+      /* can't cut from non-drawables, fall back to copy */
+      cut_image = FALSE;
     }
 
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Unable to cut or copy because the "
-			     "selected region is empty."));
+                           _("Unable to cut or copy because the "
+                             "selected region is empty."));
       return NULL;
     }
 
@@ -769,15 +775,6 @@ gimp_selection_extract (GimpSelection *selection,
         dest_format = gimp_pickable_get_format_with_alpha (pickable);
       else
         dest_format = src_format;
-    }
-
-  if (GIMP_IS_DRAWABLE (pickable))
-    {
-      gimp_item_get_offset (GIMP_ITEM (pickable), &off_x, &off_y);
-    }
-  else
-    {
-      off_x = off_y = 0;
     }
 
   gimp_pickable_flush (pickable);
@@ -807,33 +804,30 @@ gimp_selection_extract (GimpSelection *selection,
                                - (off_y + y1),
                                1.0);
 
-      if (cut_image && GIMP_IS_DRAWABLE (pickable))
+      if (cut_image)
         {
           gimp_edit_clear (image, GIMP_DRAWABLE (pickable), context);
         }
     }
-  else if (cut_image && GIMP_IS_DRAWABLE (pickable))
+  else if (cut_image)
     {
       /*  If we're cutting without selection, remove either the layer
        *  (or floating selection), the layer mask, or the channel
        */
-      if (cut_image && GIMP_IS_DRAWABLE (pickable))
+      if (GIMP_IS_LAYER (pickable))
         {
-          if (GIMP_IS_LAYER (pickable))
-            {
-              gimp_image_remove_layer (image, GIMP_LAYER (pickable),
-                                       TRUE, NULL);
-            }
-          else if (GIMP_IS_LAYER_MASK (pickable))
-            {
-              gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (pickable)),
-                                     GIMP_MASK_DISCARD, TRUE);
-            }
-          else if (GIMP_IS_CHANNEL (pickable))
-            {
-              gimp_image_remove_channel (image, GIMP_CHANNEL (pickable),
-                                         TRUE, NULL);
-            }
+          gimp_image_remove_layer (image, GIMP_LAYER (pickable),
+                                   TRUE, NULL);
+        }
+      else if (GIMP_IS_LAYER_MASK (pickable))
+        {
+          gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (pickable)),
+                                 GIMP_MASK_DISCARD, TRUE);
+        }
+      else if (GIMP_IS_CHANNEL (pickable))
+        {
+          gimp_image_remove_channel (image, GIMP_CHANNEL (pickable),
+                                     TRUE, NULL);
         }
     }
 
@@ -872,8 +866,8 @@ gimp_selection_float (GimpSelection *selection,
       (x1 == x2 || y1 == y2))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Cannot float selection because the selected "
-			     "region is empty."));
+                           _("Cannot float selection because the selected "
+                             "region is empty."));
       return NULL;
     }
 

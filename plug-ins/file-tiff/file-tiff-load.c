@@ -1029,7 +1029,7 @@ load_image (GFile              *file,
 
 
       /* TODO: in GIMP 2.6, use a dialog to selectively enable the
-       * following code, as the save plug-in will then save layer offests
+       * following code, as the save plug-in will then save layer offsets
        * as well.
        */
 

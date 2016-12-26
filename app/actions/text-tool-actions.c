@@ -59,7 +59,7 @@ static const GimpActionEntry text_tool_actions[] =
     G_CALLBACK (text_tool_cut_cmd_callback),
     NULL },
 
-  { "text-tool-copy", GIMP_STOCK_DUPLICATE,
+  { "text-tool-copy", "edit-copy",
     NC_("text-tool-action", "_Copy"), NULL, "<primary>C",
     G_CALLBACK (text_tool_copy_cmd_callback),
     NULL },
@@ -74,12 +74,12 @@ static const GimpActionEntry text_tool_actions[] =
     G_CALLBACK (text_tool_delete_cmd_callback),
     NULL },
 
-  { "text-tool-load", GIMP_STOCK_OPEN,
+  { "text-tool-load", "document-open",
     NC_("text-tool-action", "_Open text file..."), NULL, NULL,
     G_CALLBACK (text_tool_load_cmd_callback),
     NULL },
 
-  { "text-tool-clear", GIMP_STOCK_EDIT_CLEAR,
+  { "text-tool-clear", "edit-clear",
     NC_("text-tool-action", "Cl_ear"), NULL,
     NC_("text-tool-action", "Clear all text"),
     G_CALLBACK (text_tool_clear_cmd_callback),

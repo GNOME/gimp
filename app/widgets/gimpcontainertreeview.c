@@ -35,6 +35,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcellrendererbutton.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
@@ -321,9 +322,12 @@ gimp_container_tree_view_constructed (GObject *object)
                     G_CALLBACK (gimp_container_tree_view_drag_data_received),
                     tree_view);
 
-  g_signal_connect (tree_view->view, "query-tooltip",
-                    G_CALLBACK (gimp_container_tree_view_tooltip),
-                    tree_view);
+  /* connect_after so external code can connect to "query-tooltip" too
+   * and override the default tip
+   */
+  g_signal_connect_after (tree_view->view, "query-tooltip",
+                          G_CALLBACK (gimp_container_tree_view_tooltip),
+                          tree_view);
 }
 
 static void
@@ -520,7 +524,8 @@ gimp_container_tree_view_add_toggle_cell (GimpContainerTreeView *tree_view,
                                           GtkCellRenderer       *cell)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_TREE_VIEW (tree_view));
-  g_return_if_fail (GIMP_IS_CELL_RENDERER_TOGGLE (cell));
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_TOGGLE (cell) ||
+                    GIMP_IS_CELL_RENDERER_BUTTON (cell));
 
   tree_view->priv->toggle_cells = g_list_prepend (tree_view->priv->toggle_cells,
                                                   cell);
@@ -877,23 +882,40 @@ static void
 gimp_container_tree_view_real_edit_name (GimpContainerTreeView *tree_view)
 {
   GtkTreeIter selected_iter;
+  gboolean    success = FALSE;
 
   if (g_list_find (tree_view->priv->editable_cells,
                    tree_view->priv->name_cell) &&
       gimp_container_tree_view_get_selected_single (tree_view,
                                                     &selected_iter))
     {
-      GtkTreePath *path;
+      GimpViewRenderer *renderer;
 
-      path = gtk_tree_model_get_path (tree_view->model, &selected_iter);
+      gtk_tree_model_get (tree_view->model, &selected_iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
 
-      gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
-                                        tree_view->main_column,
-                                        tree_view->priv->name_cell,
-                                        TRUE);
+      if (gimp_viewable_is_name_editable (renderer->viewable))
+        {
+          GtkTreePath *path;
 
-      gtk_tree_path_free (path);
+          path = gtk_tree_model_get_path (tree_view->model, &selected_iter);
+
+          gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
+                                            tree_view->main_column,
+                                            tree_view->priv->name_cell,
+                                            TRUE);
+
+          gtk_tree_path_free (path);
+
+          success = TRUE;
+        }
+
+      g_object_unref (renderer);
     }
+
+  if (! success)
+    gtk_widget_error_bell (GTK_WIDGET (tree_view));
 }
 
 
@@ -904,9 +926,11 @@ gimp_container_tree_view_edit_focus_out (GtkWidget *widget,
                                          GdkEvent  *event,
                                          gpointer   user_data)
 {
-  /* When focusing out of a tree view, I want its content to be updated
-   * as though it had been activated. */
+  /*  When focusing out of a tree view, we want its content to be
+   *  updated as though it had been activated.
+   */
   g_signal_emit_by_name (widget, "activate", 0);
+
   return TRUE;
 }
 
@@ -1043,7 +1067,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                                      &path, &column, NULL, NULL))
     {
       GimpViewRenderer         *renderer;
-      GimpCellRendererToggle   *toggled_cell = NULL;
+      GtkCellRenderer          *toggled_cell = NULL;
       GimpCellRendererViewable *clicked_cell = NULL;
       GtkCellRenderer          *edit_cell    = NULL;
       GdkRectangle              column_area;
@@ -1053,6 +1077,17 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
       multisel_mode = (gtk_tree_selection_get_mode (tree_view->priv->selection)
                        == GTK_SELECTION_MULTIPLE);
+
+      if (! (bevent->state & (gimp_get_extend_selection_mask () |
+                              gimp_get_modify_selection_mask ())))
+        {
+          /*  don't chain up for multi-selection handling if none of
+           *  the participating modifiers is pressed, we implement
+           *  button_press completely ourselves for a reason and don't
+           *  want the default implementation mess up our state
+           */
+          multisel_mode = FALSE;
+        }
 
       gtk_tree_model_get_iter (tree_view->model, &iter, path);
 
@@ -1098,7 +1133,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
           g_list_free (cells);
         }
 
-      toggled_cell = (GimpCellRendererToggle *)
+      toggled_cell =
         gimp_container_tree_view_find_click_cell (widget,
                                                   tree_view->priv->toggle_cells,
                                                   column, &column_area,
@@ -1181,9 +1216,18 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
                       if (toggled_cell)
                         {
-                          gimp_cell_renderer_toggle_clicked (toggled_cell,
-                                                             path_str,
-                                                             bevent->state);
+                          if (GIMP_IS_CELL_RENDERER_TOGGLE (toggled_cell))
+                            {
+                              gimp_cell_renderer_toggle_clicked (GIMP_CELL_RENDERER_TOGGLE (toggled_cell),
+                                                                 path_str,
+                                                                 bevent->state);
+                            }
+                          else if (GIMP_IS_CELL_RENDERER_BUTTON (toggled_cell))
+                            {
+                              gimp_cell_renderer_button_clicked (GIMP_CELL_RENDERER_BUTTON (toggled_cell),
+                                                                 path_str,
+                                                                 bevent->state);
+                            }
                         }
                       else if (clicked_cell)
                         {
@@ -1209,8 +1253,17 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                 {
                   if (edit_cell)
                     {
-                      gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
-                                                        column, edit_cell, TRUE);
+                      if (gimp_viewable_is_name_editable (renderer->viewable))
+                        {
+                          gtk_tree_view_set_cursor_on_cell (tree_view->view,
+                                                            path,
+                                                            column, edit_cell,
+                                                            TRUE);
+                        }
+                      else
+                        {
+                          gtk_widget_error_bell (widget);
+                        }
                     }
                   else if (! toggled_cell &&
                            ! (bevent->state & gimp_get_all_modifiers_mask ()))

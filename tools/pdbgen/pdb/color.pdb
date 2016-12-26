@@ -547,7 +547,7 @@ for 8-bit images, or if the plug-in is not precision-aware, and in the
 range (0.0..1.0) otherwise.
 HELP
 
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-histogram');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -589,11 +589,23 @@ HELP
 
   if (success)
     {
-      GimpHistogram *histogram = gimp_histogram_new (TRUE);
-      gint           start     = start_range;
-      gint           end       = end_range;
+      GimpHistogram *histogram;
+      gint           start = start_range;
+      gint           end   = end_range;
+      gboolean       precision_enabled;
+      gboolean       linear;
       gint           n_bins;
 
+      precision_enabled =
+        gimp->plug_in_manager->current_plug_in &&
+        gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in);
+
+      if (precision_enabled)
+        linear = gimp_drawable_get_linear (drawable);
+      else
+        linear = FALSE;
+
+      histogram = gimp_histogram_new (linear);
       gimp_drawable_calculate_histogram (drawable, histogram);
 
       n_bins = gimp_histogram_n_bins (histogram);
@@ -617,9 +629,7 @@ HELP
 
       g_object_unref (histogram);
 
-      if (n_bins == 256 ||
-          ! gimp->plug_in_manager->current_plug_in ||
-          ! gimp_plug_in_precision_enabled (gimp->plug_in_manager->current_plug_in))
+      if (n_bins == 256 || ! precision_enabled)
         {
           mean    *= 255;
           std_dev *= 255;
@@ -687,8 +697,7 @@ between the values of 'low_threshold' and 'high_threshold' are replaced with
 white, and all other pixels with black.
 HELP
 
-    &std_pdb_misc;
-    $date = '1997';
+    &std_pdb_deprecated ('gimp-drawable-threshold');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',

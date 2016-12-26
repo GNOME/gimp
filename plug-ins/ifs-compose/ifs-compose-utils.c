@@ -103,7 +103,7 @@ aff2_distort (Aff2    *naff,
   naff->b2 = 0;
 }
 
-/* Find a pure stretch in some directon that brings xo,yo to xn,yn */
+/* Find a pure stretch in some direction that brings xo,yo to xn,yn */
 void
 aff2_compute_stretch (Aff2    *naff,
                       gdouble  xo,
@@ -303,7 +303,7 @@ ipolygon_convex_hull (IPolygon *poly)
 
   qsort (sort_points, num_new - 1, sizeof (SortPoint), ipolygon_sort_func);
 
-  /* now ensure that all turns as we trace the perimiter are
+  /* now ensure that all turns as we trace the perimeter are
      counter-clockwise */
 
   new_points[0] = lowest_pt;

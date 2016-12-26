@@ -105,9 +105,9 @@ gimp_container_combo_box_class_init (GimpContainerComboBoxClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_ELLIPSIZE,
                                    g_param_spec_enum ("ellipsize", NULL, NULL,
-						      PANGO_TYPE_ELLIPSIZE_MODE,
-						      PANGO_ELLIPSIZE_MIDDLE,
-						      GIMP_PARAM_READWRITE |
+                                                      PANGO_TYPE_ELLIPSIZE_MODE,
+                                                      PANGO_ELLIPSIZE_MIDDLE,
+                                                      GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 }
 

@@ -123,6 +123,7 @@ gimp_guide_tool_button_release (GimpTool              *tool,
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
+      /* custom guides are moved live */
       if (guide_tool->guide_custom)
         gimp_image_move_guide (image, guide_tool->guide,
                                guide_tool->guide_old_position, TRUE);
@@ -272,11 +273,19 @@ gimp_guide_tool_motion (GimpTool         *tool,
                              guide_tool->guide ?
                              _("Remove Guide") : _("Cancel Guide"));
     }
+  else if (guide_tool->guide)
+    {
+      gimp_tool_push_status_length (tool, display,
+                                    _("Move Guide: "),
+                                    SWAP_ORIENT (guide_tool->guide_orientation),
+                                    guide_tool->guide_position -
+                                    guide_tool->guide_old_position,
+                                    NULL);
+    }
   else
     {
       gimp_tool_push_status_length (tool, display,
-                                    guide_tool->guide ?
-                                    _("Move Guide: ") : _("Add Guide: "),
+                                    _("Add Guide: "),
                                     SWAP_ORIENT (guide_tool->guide_orientation),
                                     guide_tool->guide_position,
                                     NULL);
@@ -290,6 +299,7 @@ gimp_guide_tool_draw (GimpDrawTool *draw_tool)
 
   if (guide_tool->guide_position != GIMP_GUIDE_POSITION_UNDEFINED)
     {
+      /* custom guides are moved live */
       if (! guide_tool->guide_custom)
         gimp_draw_tool_add_guide (draw_tool,
                                   guide_tool->guide_orientation,
@@ -318,18 +328,18 @@ gimp_guide_tool_start (GimpTool            *parent_tool,
   if (guide)
     {
       guide_tool->guide              = guide;
+      guide_tool->guide_old_position = gimp_guide_get_position (guide);
       guide_tool->guide_position     = gimp_guide_get_position (guide);
       guide_tool->guide_orientation  = gimp_guide_get_orientation (guide);
       guide_tool->guide_custom       = gimp_guide_is_custom (guide);
-      guide_tool->guide_old_position = gimp_guide_get_position (guide);
     }
   else
     {
       guide_tool->guide              = NULL;
+      guide_tool->guide_old_position = 0;
       guide_tool->guide_position     = GIMP_GUIDE_POSITION_UNDEFINED;
       guide_tool->guide_orientation  = orientation;
       guide_tool->guide_custom       = FALSE;
-      guide_tool->guide_old_position = GIMP_GUIDE_POSITION_UNDEFINED;
     }
 
   gimp_tool_set_cursor (tool, display,
@@ -344,11 +354,23 @@ gimp_guide_tool_start (GimpTool            *parent_tool,
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (guide_tool), display);
 
-  gimp_tool_push_status_length (tool, display,
-                                _("Add Guide: "),
-                                SWAP_ORIENT (guide_tool->guide_orientation),
-                                guide_tool->guide_position,
-                                NULL);
+  if (guide_tool->guide)
+    {
+      gimp_tool_push_status_length (tool, display,
+                                    _("Move Guide: "),
+                                    SWAP_ORIENT (guide_tool->guide_orientation),
+                                    guide_tool->guide_position -
+                                    guide_tool->guide_old_position,
+                                    NULL);
+    }
+  else
+    {
+      gimp_tool_push_status_length (tool, display,
+                                    _("Add Guide: "),
+                                    SWAP_ORIENT (guide_tool->guide_orientation),
+                                    guide_tool->guide_position,
+                                    NULL);
+    }
 }
 
 

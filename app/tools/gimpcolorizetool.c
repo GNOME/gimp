@@ -123,7 +123,7 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
   if (gimp_drawable_is_gray (drawable))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Colorize does not operate on grayscale layers."));
+                           _("Colorize does not operate on grayscale layers."));
       return FALSE;
     }
 

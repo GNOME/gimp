@@ -1180,7 +1180,7 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
  *
  * If a procedure call fails, then it might pass an error message with
  * the return values. Plug-ins that are using the libgimp C wrappers
- * don't access the procedure return values directly. Thus ligimp
+ * don't access the procedure return values directly. Thus libgimp
  * stores the error message and makes it available with this
  * function. The next procedure call unsets the error message again.
  *

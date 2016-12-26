@@ -19,35 +19,42 @@
 #define __CHANNEL_OPTIONS_DIALOG_H__
 
 
-typedef struct _ChannelOptionsDialog ChannelOptionsDialog;
+typedef void (* GimpChannelOptionsCallback) (GtkWidget     *dialog,
+                                             GimpImage     *image,
+                                             GimpChannel   *channel,
+                                             GimpContext   *context,
+                                             const gchar   *channel_name,
+                                             const GimpRGB *channel_color,
+                                             gboolean       save_selection,
+                                             gboolean       channel_visible,
+                                             gboolean       channel_linked,
+                                             GimpColorTag   channel_color_tag,
+                                             gboolean       channel_lock_content,
+                                             gboolean       channel_lock_position,
+                                             gpointer       user_data);
 
-struct _ChannelOptionsDialog
-{
-  GtkWidget   *dialog;
-  GtkWidget   *name_entry;
-  GtkWidget   *color_panel;
-  GtkWidget   *save_sel_checkbutton;
 
-  GimpImage   *image;
-  GimpContext *context;
-  GimpChannel *channel;
-};
-
-
-ChannelOptionsDialog * channel_options_dialog_new (GimpImage     *image,
-                                                   GimpChannel   *channel,
-                                                   GimpContext   *context,
-                                                   GtkWidget     *parent,
-                                                   const GimpRGB *channel_color,
-                                                   const gchar   *channel_name,
-                                                   const gchar   *title,
-                                                   const gchar   *role,
-                                                   const gchar   *icon_name,
-                                                   const gchar   *desc,
-                                                   const gchar   *help_id,
-                                                   const gchar   *color_label,
-                                                   const gchar   *opacity_label,
-                                                   gboolean       show_from_sel);
+GtkWidget * channel_options_dialog_new (GimpImage                  *image,
+                                        GimpChannel                *channel,
+                                        GimpContext                *context,
+                                        GtkWidget                  *parent,
+                                        const gchar                *title,
+                                        const gchar                *role,
+                                        const gchar                *icon_name,
+                                        const gchar                *desc,
+                                        const gchar                *help_id,
+                                        const gchar                *color_label,
+                                        const gchar                *opacity_label,
+                                        gboolean                    show_from_sel,
+                                        const gchar                *channel_name,
+                                        const GimpRGB              *channel_color,
+                                        gboolean                    channel_visible,
+                                        gboolean                    channel_linked,
+                                        GimpColorTag                channel_color_tag,
+                                        gboolean                    channel_lock_content,
+                                        gboolean                    channel_lock_position,
+                                        GimpChannelOptionsCallback  callback,
+                                        gpointer                    user_data);
 
 
 #endif /* __CHANNEL_OPTIONS_DIALOG_H__ */

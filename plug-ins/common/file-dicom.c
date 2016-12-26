@@ -381,7 +381,7 @@ load_image (const gchar  *filename,
       guint16  ctx_us;
       guint8  *value;
       guint32  tag;
-      gboolean do_toggle_endian = FALSE;
+      gboolean __attribute__((unused))do_toggle_endian = FALSE;
       gboolean implicit_encoding = FALSE;
 
       if (fread (&group_word, 1, 2, DICOM) == 0)

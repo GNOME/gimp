@@ -9,7 +9,7 @@
 
 #include "arcball.h"
 
-/* Gloval variables */
+/* Global variables */
 /* ================ */
 
 Quat qOne = { 0, 0, 0, 1 };

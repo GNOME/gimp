@@ -572,9 +572,9 @@ gimp_param_unit_value_validate (GParamSpec *pspec,
  * gimp_param_spec_unit:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
- * @blurb:         Brief desciption of param.
+ * @blurb:         Brief description of param.
  * @allow_pixels:  Whether "pixels" is an allowed unit.
- * @allow_percent: Whether "perecent" is an allowed unit.
+ * @allow_percent: Whether "percent" is an allowed unit.
  * @default_value: Unit to use if none is assigned.
  * @flags:         a combination of #GParamFlags
  *

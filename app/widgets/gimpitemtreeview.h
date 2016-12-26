@@ -81,7 +81,6 @@ struct _GimpItemTreeViewClass
   /*  action names  */
   const gchar          *action_group;
   const gchar          *activate_action;
-  const gchar          *edit_action;
   const gchar          *new_action;
   const gchar          *new_default_action;
   const gchar          *raise_action;
@@ -123,7 +122,6 @@ void        gimp_item_tree_view_add_options     (GimpItemTreeView *view,
 GtkWidget * gimp_item_tree_view_get_lock_box    (GimpItemTreeView *view);
 
 GtkWidget * gimp_item_tree_view_get_new_button  (GimpItemTreeView *view);
-GtkWidget * gimp_item_tree_view_get_edit_button (GimpItemTreeView *view);
 
 gint        gimp_item_tree_view_get_drop_index  (GimpItemTreeView *view,
                                                  GimpViewable     *dest_viewable,

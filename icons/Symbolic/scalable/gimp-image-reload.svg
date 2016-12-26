@@ -30,8 +30,8 @@
      id="namedview1512"
      showgrid="true"
      inkscape:zoom="14.75"
-     inkscape:cx="-6.2330009"
-     inkscape:cy="10.101695"
+     inkscape:cx="14.34327"
+     inkscape:cy="10.542373"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -49,7 +49,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
         <dc:contributor>
           <cc:Agent>
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
@@ -149,16 +149,16 @@
        xlink:href="#linearGradient19282-4" />
   </defs>
   <g
-     id="g4286">
+     id="g4266">
     <g
        id="refresh"
        transform="matrix(0.44359232,0,0,0.43109129,18.091378,-432.8546)">
       <path
          sodipodi:open="true"
          sodipodi:end="5.8848662"
-         sodipodi:start="0.7916927"
+         sodipodi:start="1.5119766"
          transform="matrix(1,0,-0.01098084,0.99993971,0,0)"
-         d="m -15.350555,1019.042 a 7.5224843,7.5425611 0 0 1 -8.853666,1.2733 7.5224843,7.5425611 0 0 1 -3.809393,-8.1141 7.5224843,7.5425611 0 0 1 6.620343,-6.0303 7.5224843,7.5425611 0 0 1 7.690685,4.5787"
+         d="m -20.193952,1021.2047 a 7.5224843,7.5425611 0 0 1 -7.853719,-6.2387 7.5224843,7.5425611 0 0 1 5.295399,-8.5288 7.5224843,7.5425611 0 0 1 9.049686,4.3124"
          sodipodi:ry="7.5425611"
          sodipodi:rx="7.5224843"
          sodipodi:cy="1013.6752"

@@ -1533,6 +1533,7 @@ load_dialog (const gchar *filename)
   GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *sw;
+  GtkWidget *viewport;
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *combo;
@@ -1573,10 +1574,14 @@ load_dialog (const gchar *filename)
   gtk_widget_set_size_request (sw, PREVIEW_SIZE, PREVIEW_SIZE);
   gtk_widget_show (sw);
 
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (sw), viewport);
+  gtk_widget_show (viewport);
+
   preview = gimp_preview_area_new ();
   gtk_widget_set_size_request (preview,
                                runtime->image_width, runtime->image_height);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (sw), preview);
+  gtk_container_add (GTK_CONTAINER (viewport), preview);
   gtk_widget_show (preview);
 
   g_signal_connect_after (preview, "size-allocate",

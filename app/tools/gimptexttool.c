@@ -51,6 +51,7 @@
 #include "vectors/gimpvectors-warp.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockcontainer.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimptextbuffer.h"
@@ -315,6 +316,37 @@ gimp_text_tool_finalize (GObject *object)
   gimp_text_tool_editor_finalize (text_tool);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_text_tool_remove_empty_text_layer (GimpTextTool *text_tool)
+{
+  GimpTextLayer *text_layer = text_tool->layer;
+
+  if (text_layer && text_layer->auto_rename)
+    {
+      GimpText *text = gimp_text_layer_get_text (text_layer);
+
+      if (text && text->box_mode == GIMP_TEXT_BOX_DYNAMIC &&
+          (! text->text || text->text[0] == '\0') &&
+          (! text->markup || text->markup[0] == '\0'))
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (text_layer));
+
+          if (text_tool->image == image)
+            g_signal_handlers_block_by_func (image,
+                                             gimp_text_tool_layer_changed,
+                                             text_tool);
+
+          gimp_image_remove_layer (image, GIMP_LAYER (text_layer), TRUE, NULL);
+          gimp_image_flush (image);
+
+          if (text_tool->image == image)
+            g_signal_handlers_unblock_by_func (image,
+                                               gimp_text_tool_layer_changed,
+                                               text_tool);
+        }
+    }
 }
 
 static void
@@ -737,11 +769,14 @@ gimp_text_tool_get_popup (GimpTool         *tool,
     {
       if (! text_tool->ui_manager)
         {
+          GimpDisplayShell  *shell = gimp_display_get_shell (tool->display);
+          GimpImageWindow   *image_window;
           GimpDialogFactory *dialog_factory;
           GtkWidget         *im_menu;
           GList             *children;
 
-          dialog_factory = gimp_dialog_factory_get_singleton ();
+          image_window   = gimp_display_shell_get_window (shell);
+          dialog_factory = gimp_dock_container_get_dialog_factory (GIMP_DOCK_CONTAINER (image_window));
 
           text_tool->ui_manager =
             gimp_menu_factory_manager_new (gimp_dialog_factory_get_menu_factory (dialog_factory),
@@ -1091,6 +1126,8 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
         g_signal_handlers_disconnect_by_func (text_tool->layer,
                                               gimp_text_tool_layer_notify,
                                               text_tool);
+
+      gimp_text_tool_remove_empty_text_layer (text_tool);
 
       text_tool->layer = layer;
 
@@ -1518,7 +1555,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                            "\n\n"
                            "You can edit the layer or create a new "
                            "text layer from its text attributes."));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

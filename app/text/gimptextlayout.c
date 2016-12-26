@@ -171,7 +171,8 @@ gimp_text_layout_new (GimpText  *text,
                               pango_units_from_double
                               (gimp_units_to_pixels (text->box_width,
                                                      text->box_unit,
-                                                     xres)));
+                                                     xres) -
+                               2 * layout->text->border));
       break;
     }
 
@@ -611,7 +612,11 @@ gimp_text_layout_position (GimpTextLayout *layout)
 #endif
 
   if (ink.width < 1 || ink.height < 1)
-    return;
+    {
+      layout->extents.width  = 1;
+      layout->extents.height = logical.height;
+      return;
+    }
 
   x1 = MIN (ink.x, logical.x);
   y1 = MIN (ink.y, logical.y);

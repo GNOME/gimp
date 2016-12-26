@@ -447,7 +447,7 @@ gimp_font_select_button_create_inside (GimpFontSelectButton *font_button)
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_container_add (GTK_CONTAINER (button), hbox);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_FONT, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name ("gtk-select-font", GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
   priv->label = gtk_label_new (priv->font_name);

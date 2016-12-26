@@ -39,6 +39,7 @@ struct _GimpThresholdTool
 
   /*  dialog  */
   GimpHistogram    *histogram;
+  GtkWidget        *channel_menu;
   GimpHistogramBox *histogram_box;
 };
 

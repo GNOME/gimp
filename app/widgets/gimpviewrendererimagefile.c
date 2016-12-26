@@ -100,7 +100,7 @@ gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
 
 static GdkPixbuf *
 get_icon_for_mime_type (const gchar *mime_type,
-			gint         pixel_size)
+                        gint         pixel_size)
 {
   GtkIconTheme *icon_theme;
   const gchar  *separator;

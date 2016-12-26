@@ -55,6 +55,9 @@
 #include "display/gimpdisplayshell-close.h"
 #include "display/gimpimagewindow.h"
 
+#include "dialogs/color-profile-dialog.h"
+#include "dialogs/dialogs.h"
+
 #include "actions.h"
 #include "view-commands.h"
 
@@ -73,10 +76,17 @@
 
 /*  local function prototypes  */
 
-static void   view_padding_color_dialog_update (GimpColorDialog      *dialog,
-                                                const GimpRGB        *color,
-                                                GimpColorDialogState  state,
-                                                GimpDisplayShell     *shell);
+static void   view_softproof_profile_callback  (GtkWidget                *dialog,
+                                                GimpImage                *image,
+                                                GimpColorProfile         *new_profile,
+                                                GFile                    *new_file,
+                                                GimpColorRenderingIntent  intent,
+                                                gboolean                  bpc,
+                                                gpointer                  user_data);
+static void   view_padding_color_dialog_update (GimpColorDialog          *dialog,
+                                                const GimpRGB            *color,
+                                                GimpColorDialogState      state,
+                                                GimpDisplayShell         *shell);
 
 
 /*  public functions  */
@@ -472,18 +482,21 @@ view_display_filters_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
   GimpDisplayShell *shell;
+  GtkWidget        *dialog;
   return_if_no_shell (shell, data);
 
-  if (! shell->filters_dialog)
-    {
-      shell->filters_dialog = gimp_display_shell_filter_dialog_new (shell);
+#define FILTERS_DIALOG_KEY "gimp-display-filters-dialog"
 
-      g_signal_connect (shell->filters_dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &shell->filters_dialog);
+  dialog = dialogs_get_dialog (G_OBJECT (shell), FILTERS_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = gimp_display_shell_filter_dialog_new (shell);
+
+      dialogs_attach_dialog (G_OBJECT (shell), FILTERS_DIALOG_KEY, dialog);
     }
 
-  gtk_window_present (GTK_WINDOW (shell->filters_dialog));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -598,6 +611,69 @@ view_display_intent_cmd_callback (GtkAction *action,
 }
 
 void
+view_display_bpc_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpDisplayShell *shell;
+  GimpColorConfig  *color_config;
+  gboolean          active;
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  if (active != gimp_color_config_get_display_bpc (color_config))
+    {
+      g_object_set (color_config,
+                    "display-use-black-point-compensation", active,
+                    NULL);
+      shell->color_config_set = TRUE;
+    }
+}
+
+void
+view_softproof_profile_cmd_callback (GtkAction *action,
+                                     gpointer   data)
+{
+  GimpImage        *image;
+  GimpDisplayShell *shell;
+  GimpColorConfig  *color_config;
+  GtkWidget        *dialog;
+  return_if_no_image (image, data);
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+#define SOFTPROOF_PROFILE_DIALOG_KEY "gimp-softproof-profile-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (shell), SOFTPROOF_PROFILE_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpColorProfile *current_profile;
+
+      current_profile = gimp_color_config_get_simulation_color_profile (color_config,
+                                                                        NULL);
+
+      dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE,
+                                         image,
+                                         action_data_get_context (data),
+                                         GTK_WIDGET (shell),
+                                         current_profile,
+                                         NULL,
+                                         0, 0,
+                                         view_softproof_profile_callback,
+                                         shell);
+
+      dialogs_attach_dialog (G_OBJECT (shell),
+                             SOFTPROOF_PROFILE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+void
 view_softproof_intent_cmd_callback (GtkAction *action,
                                     GtkAction *current,
                                     gpointer   data)
@@ -615,28 +691,6 @@ view_softproof_intent_cmd_callback (GtkAction *action,
     {
       g_object_set (color_config,
                     "simulation-rendering-intent", value,
-                    NULL);
-      shell->color_config_set = TRUE;
-    }
-}
-
-void
-view_display_bpc_cmd_callback (GtkAction *action,
-                               gpointer   data)
-{
-  GimpDisplayShell *shell;
-  GimpColorConfig  *color_config;
-  gboolean          active;
-  return_if_no_shell (shell, data);
-
-  color_config = gimp_display_shell_get_color_config (shell);
-
-  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-
-  if (active != gimp_color_config_get_display_bpc (color_config))
-    {
-      g_object_set (color_config,
-                    "display-use-black-point-compensation", active,
                     NULL);
       shell->color_config_set = TRUE;
     }
@@ -919,12 +973,14 @@ view_padding_color_cmd_callback (GtkAction *action,
   else
     options = shell->options;
 
+#define PADDING_COLOR_DIALOG_KEY "gimp-padding-color-dialog"
+
   switch ((GimpCanvasPaddingMode) value)
     {
     case GIMP_CANVAS_PADDING_MODE_DEFAULT:
     case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
     case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
-      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
+      dialogs_destroy_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
 
       options->padding_mode_set = TRUE;
 
@@ -934,17 +990,16 @@ view_padding_color_cmd_callback (GtkAction *action,
 
     case GIMP_CANVAS_PADDING_MODE_CUSTOM:
       {
-        GtkWidget *color_dialog;
+        GtkWidget *dialog;
 
-        color_dialog = g_object_get_data (G_OBJECT (shell),
-                                          "padding-color-dialog");
+        dialog = dialogs_get_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
 
-        if (! color_dialog)
+        if (! dialog)
           {
             GimpImage        *image = gimp_display_get_image (display);
             GimpDisplayShell *shell = gimp_display_get_shell (display);
 
-            color_dialog =
+            dialog =
               gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                      action_data_get_context (data),
                                      _("Set Canvas Padding Color"),
@@ -955,21 +1010,20 @@ view_padding_color_cmd_callback (GtkAction *action,
                                      &options->padding_color,
                                      FALSE, FALSE);
 
-            g_signal_connect (color_dialog, "update",
+            g_signal_connect (dialog, "update",
                               G_CALLBACK (view_padding_color_dialog_update),
                               shell);
 
-            g_object_set_data_full (G_OBJECT (shell), "padding-color-dialog",
-                                    color_dialog,
-                                    (GDestroyNotify) gtk_widget_destroy);
+            dialogs_attach_dialog (G_OBJECT (shell),
+                                   PADDING_COLOR_DIALOG_KEY, dialog);
           }
 
-        gtk_window_present (GTK_WINDOW (color_dialog));
+        gtk_window_present (GTK_WINDOW (dialog));
       }
       break;
 
     case GIMP_CANVAS_PADDING_MODE_RESET:
-      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
+      dialogs_destroy_dialog (G_OBJECT (shell), PADDING_COLOR_DIALOG_KEY);
 
       {
         GimpDisplayOptions *default_options;
@@ -1025,6 +1079,32 @@ view_fullscreen_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
+view_softproof_profile_callback (GtkWidget                *dialog,
+                                 GimpImage                *image,
+                                 GimpColorProfile         *new_profile,
+                                 GFile                    *new_file,
+                                 GimpColorRenderingIntent  intent,
+                                 gboolean                  bpc,
+                                 gpointer                  user_data)
+{
+  GimpDisplayShell *shell = user_data;
+  GimpColorConfig  *color_config;
+  gchar            *path  = NULL;
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  if (new_file)
+    path = g_file_get_path (new_file);
+
+  g_object_set (color_config,
+                "printer-profile", path,
+                NULL);
+  shell->color_config_set = TRUE;
+
+  gtk_widget_destroy (dialog);
+}
+
+static void
 view_padding_color_dialog_update (GimpColorDialog      *dialog,
                                   const GimpRGB        *color,
                                   GimpColorDialogState  state,
@@ -1056,7 +1136,7 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
       /* fallthru */
 
     case GIMP_COLOR_DIALOG_CANCEL:
-      g_object_set_data (G_OBJECT (shell), "padding-color-dialog", NULL);
+      gtk_widget_destroy (GTK_WIDGET (dialog));
       break;
 
     default:

@@ -24,23 +24,18 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
-
 #include "gimp.h"
 #include "gimp-palettes.h"
 #include "gimpdrawable.h"
+#include "gimpdrawable-fill.h"
 #include "gimperror.h"
 #include "gimpfilloptions.h"
 #include "gimppattern.h"
-#include "gimppickable.h"
 
 #include "gimp-intl.h"
 
@@ -74,17 +69,25 @@ struct _GimpFillOptionsPrivate
                                      GimpFillOptionsPrivate)
 
 
-static void   gimp_fill_options_set_property (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void   gimp_fill_options_get_property (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
+static void     gimp_fill_options_config_init  (GimpConfigInterface *iface);
+
+static void     gimp_fill_options_set_property (GObject             *object,
+                                                guint                property_id,
+                                                const GValue        *value,
+                                                GParamSpec          *pspec);
+static void     gimp_fill_options_get_property (GObject             *object,
+                                                guint                property_id,
+                                                GValue              *value,
+                                                GParamSpec          *pspec);
+
+static gboolean gimp_fill_options_serialize    (GimpConfig          *config,
+                                                GimpConfigWriter    *writer,
+                                                gpointer             data);
 
 
-G_DEFINE_TYPE (GimpFillOptions, gimp_fill_options, GIMP_TYPE_CONTEXT)
+G_DEFINE_TYPE_WITH_CODE (GimpFillOptions, gimp_fill_options, GIMP_TYPE_CONTEXT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_fill_options_config_init))
 
 
 static void
@@ -128,6 +131,12 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                                                      GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpFillOptionsPrivate));
+}
+
+static void
+gimp_fill_options_config_init (GimpConfigInterface *iface)
+{
+  iface->serialize = gimp_fill_options_serialize;
 }
 
 static void
@@ -194,6 +203,14 @@ gimp_fill_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_fill_options_serialize (GimpConfig       *config,
+                             GimpConfigWriter *writer,
+                             gpointer          data)
+{
+  return gimp_config_serialize_properties (config, writer);
 }
 
 
@@ -411,51 +428,24 @@ gimp_fill_options_create_buffer (GimpFillOptions     *options,
     {
     case GIMP_FILL_STYLE_SOLID:
       {
-        GimpRGB    color;
-        GeglColor *gegl_color;
+        GimpRGB color;
 
         gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
         gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &color);
 
-        gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                           &color, &color);
-
-        gegl_color = gimp_gegl_color_new (&color);
-        gegl_buffer_set_color (buffer, NULL, gegl_color);
-        g_object_unref (gegl_color);
+        gimp_drawable_fill_buffer (drawable, buffer,
+                                   &color, NULL, 0, 0);
       }
       break;
 
     case GIMP_FILL_STYLE_PATTERN:
       {
-        GimpPattern      *pattern;
-        const Babl       *format;
-        GeglBuffer       *src_buffer;
-        GeglBuffer       *dest_buffer;
-        GimpColorProfile *src_profile;
-        GimpColorProfile *dest_profile;
+        GimpPattern *pattern;
 
         pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
 
-        src_buffer = gimp_pattern_create_buffer (pattern);
-        format = gegl_buffer_get_format (src_buffer);
-
-        dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
-                                       gegl_buffer_get_format (src_buffer));
-
-        src_profile  = gimp_babl_format_get_color_profile (format);
-        dest_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
-
-        gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
-                                         dest_buffer, NULL, dest_profile,
-                                         GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                         TRUE,
-                                         NULL);
-
-        gegl_buffer_set_pattern (buffer, NULL, dest_buffer, 0, 0);
-
-        g_object_unref (src_buffer);
-        g_object_unref (dest_buffer);
+        gimp_drawable_fill_buffer (drawable, buffer,
+                                   NULL, pattern, 0, 0);
       }
       break;
     }

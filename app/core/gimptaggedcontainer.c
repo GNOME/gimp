@@ -112,8 +112,10 @@ static void
 gimp_tagged_container_init (GimpTaggedContainer *tagged_container)
 {
   tagged_container->tag_ref_counts =
-    g_hash_table_new ((GHashFunc) gimp_tag_get_hash,
-                      (GEqualFunc) gimp_tag_equals);
+    g_hash_table_new_full ((GHashFunc) gimp_tag_get_hash,
+                           (GEqualFunc) gimp_tag_equals,
+                           (GDestroyNotify) g_object_unref,
+                           (GDestroyNotify) NULL);
 }
 
 static void
@@ -418,7 +420,9 @@ gimp_tagged_container_ref_tag (GimpTaggedContainer *tagged_container,
                                                     tag));
   ref_count++;
   g_hash_table_insert (tagged_container->tag_ref_counts,
-                       tag, GINT_TO_POINTER (ref_count));
+                       g_object_ref (tag),
+                       GINT_TO_POINTER (ref_count));
+
   if (ref_count == 1)
     {
       tagged_container->tag_count++;
@@ -441,7 +445,8 @@ gimp_tagged_container_unref_tag (GimpTaggedContainer *tagged_container,
   if (ref_count > 0)
     {
       g_hash_table_insert (tagged_container->tag_ref_counts,
-                           tag, GINT_TO_POINTER (ref_count));
+                           g_object_ref (tag),
+                           GINT_TO_POINTER (ref_count));
     }
   else
     {

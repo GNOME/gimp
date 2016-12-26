@@ -24,17 +24,19 @@
 
 #include "actions-types.h"
 
-#include "core/gimppalette.h"
-#include "core/gimpcontainer.h"
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimppalette.h"
 
-#include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpview.h"
 #include "widgets/gimpwidgets-utils.h"
+
+#include "dialogs/dialogs.h"
 
 #include "actions.h"
 #include "palettes-commands.h"
@@ -72,16 +74,25 @@ palettes_merge_cmd_callback (GtkAction *action,
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GtkWidget           *dialog;
 
-  dialog = gimp_query_string_box (_("Merge Palette"),
-                                  GTK_WIDGET (editor),
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_PALETTE_MERGE,
-                                  _("Enter a name for the merged palette"),
-                                  NULL,
-                                  G_OBJECT (editor), "destroy",
-                                  palettes_merge_callback,
-                                  editor);
-  gtk_widget_show (dialog);
+#define MERGE_DIALOG_KEY "gimp-palettes-merge-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (editor), MERGE_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = gimp_query_string_box (_("Merge Palettes"),
+                                      GTK_WIDGET (editor),
+                                      gimp_standard_help_func,
+                                      GIMP_HELP_PALETTE_MERGE,
+                                      _("Enter a name for the merged palette"),
+                                      NULL,
+                                      G_OBJECT (editor), "destroy",
+                                      palettes_merge_callback, editor);
+
+      dialogs_attach_dialog (G_OBJECT (editor), MERGE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 
@@ -92,56 +103,48 @@ palettes_merge_callback (GtkWidget   *widget,
                          const gchar *palette_name,
                          gpointer     data)
 {
-  /* FIXME: reimplement palettes_merge_callback() */
-#if 0
-  GimpContainerEditor *editor;
-  GimpPalette         *palette;
+  GimpContainerEditor *editor = data;
+  GimpDataFactoryView *view   = data;
+  GimpDataFactory     *factory;
+  GimpContext         *context;
   GimpPalette         *new_palette;
-  GList               *sel_list;
+  GList               *selected = NULL;
+  GList               *list;
 
-  editor = (GimpContainerEditor *) data;
+  context = gimp_container_view_get_context (editor->view);
+  factory = gimp_data_factory_view_get_data_factory (view);
 
-  sel_list = GTK_LIST (GIMP_CONTAINER_LIST_VIEW (editor->view)->gtk_list)->selection;
+  gimp_container_view_get_selected (editor->view, &selected);
 
-  if (! sel_list)
+  if (g_list_length (selected) < 2)
     {
-      gimp_message_literal (gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            "Can't merge palettes because "
-                            "there are no palettes selected.");
+      gimp_message_literal (context->gimp,
+                            G_OBJECT (editor), GIMP_MESSAGE_WARNING,
+                            _("There must be at least two palettes selected "
+                              "to merge."));
+      g_list_free (selected);
       return;
     }
 
-  new_palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+  new_palette = GIMP_PALETTE (gimp_data_factory_data_new (factory, context,
+                                                          palette_name));
 
-  while (sel_list)
+  for (list = selected; list; list = g_list_next (list))
     {
-      GimpListItem *list_item;
+      GimpPalette *palette = list->data;
+      GList       *cols;
 
-      list_item = GIMP_LIST_ITEM (sel_list->data);
-
-      palette = (GimpPalette *) GIMP_VIEW (list_item->preview)->viewable;
-
-      if (palette)
+      for (cols = gimp_palette_get_colors (palette);
+           cols;
+           cols = g_list_next (cols))
         {
-          GList *cols;
+          GimpPaletteEntry *entry = cols->data;
 
-          for (cols = gimp_palette_get_colors (palette);
-               cols;
-               cols = g_list_next (cols))
-            {
-              GimpPaletteEntry *entry = cols->data;
-
-              gimp_palette_add_entry (new_palette,
-                                      entry->name,
-                                      &entry->color);
-            }
+          gimp_palette_add_entry (new_palette, -1,
+                                  entry->name,
+                                  &entry->color);
         }
-
-      sel_list = sel_list->next;
     }
 
-  gimp_container_add (editor->view->container,
-                      GIMP_OBJECT (new_palette));
-#endif
+  g_list_free (selected);
 }

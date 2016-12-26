@@ -94,7 +94,7 @@ tiff_open (GFile        *file,
                                                         G_FILE_CREATE_NONE,
                                                         NULL, error));
       if (! tiff_io.output)
-        return FALSE;
+        return NULL;
 
       tiff_io.stream = G_OBJECT (tiff_io.output);
     }
@@ -122,7 +122,10 @@ tiff_io_warning (const gchar *module,
 {
   gint tag = 0;
 
-  if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered"))
+  /* Between libtiff 3.7.0beta2 and 4.0.0alpha. */
+  if (! strcmp (fmt, "%s: unknown field with tag %d (0x%x) encountered") ||
+      /* Before libtiff 3.7.0beta2. */
+      ! strcmp (fmt, "%.1000s: unknown field with tag %d (0x%x) encountered"))
     {
       va_list ap_test;
 
@@ -133,7 +136,9 @@ tiff_io_warning (const gchar *module,
       tag = va_arg (ap_test, int);
     }
   /* for older versions of libtiff? */
-  else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored"))
+  else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored") ||
+           /* Since libtiff 4.0.0alpha. */
+           ! strcmp (fmt, "Unknown field with tag %d (0x%x) encountered"))
     {
       va_list ap_test;
 

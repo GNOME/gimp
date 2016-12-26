@@ -20,6 +20,8 @@
     <separator />
     <menuitem action="select-save" />
     <menuitem action="vectors-selection-to-vectors-short" />
+    <separator />
+    <menuitem action="select-fill" />
     <menuitem action="select-stroke" />
   </popup>
 </ui>

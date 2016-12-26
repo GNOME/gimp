@@ -156,35 +156,35 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
       GFileEnumerator *enumerator;
 
       enumerator =
-	g_file_enumerate_children (dir,
+        g_file_enumerate_children (dir,
                                    G_FILE_ATTRIBUTE_STANDARD_NAME ","
-				   G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-				   G_FILE_ATTRIBUTE_STANDARD_TYPE,
-				   G_FILE_QUERY_INFO_NONE,
-				   NULL, NULL);
+                                   G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                   G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                   G_FILE_QUERY_INFO_NONE,
+                                   NULL, NULL);
 
       if (enumerator)
-	{
-	  GFileInfo *info;
+        {
+          GFileInfo *info;
 
-	  while ((info = g_file_enumerator_next_file (enumerator,
-						      NULL, NULL)))
-	    {
-	      if (! g_file_info_get_is_hidden (info) &&
-		  g_file_info_get_file_type (info) == G_FILE_TYPE_REGULAR)
-		{
-		  GFile *file = g_file_enumerator_get_child (enumerator, info);
+          while ((info = g_file_enumerator_next_file (enumerator,
+                                                      NULL, NULL)))
+            {
+              if (! g_file_info_get_is_hidden (info) &&
+                  g_file_info_get_file_type (info) == G_FILE_TYPE_REGULAR)
+                {
+                  GFile *file = g_file_enumerator_get_child (enumerator, info);
 
-		  gimp_environ_table_load_env_file (environ_table, file);
+                  gimp_environ_table_load_env_file (environ_table, file);
 
-		  g_object_unref (file);
-		}
+                  g_object_unref (file);
+                }
 
-	      g_object_unref (info);
-	    }
+              g_object_unref (info);
+            }
 
-	  g_object_unref (enumerator);
-	}
+          g_object_unref (enumerator);
+        }
     }
 }
 
@@ -272,7 +272,7 @@ gimp_environ_table_get_envp (GimpEnvironTable *environ_table)
 
 static void
 gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
-				  GFile            *file)
+                                  GFile            *file)
 {
   GInputStream     *input;
   GDataInputStream *data_input;
@@ -408,7 +408,7 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
        */
 
       if (gimp_environ_table_pass_through (environ_table, *var))
-	g_ptr_array_add (env_array, g_strconcat (*var, "=", g_getenv (*var), NULL));
+        g_ptr_array_add (env_array, g_strconcat (*var, "=", g_getenv (*var), NULL));
 
       var++;
     }

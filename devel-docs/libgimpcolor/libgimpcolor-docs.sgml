@@ -19,6 +19,7 @@
     <xi:include href="xml/gimpcolorspace.xml" />
     <xi:include href="xml/gimpcolormanaged.xml" />
     <xi:include href="xml/gimpcolorprofile.xml" />
+    <xi:include href="xml/gimpcolortransform.xml" />
     <xi:include href="xml/gimpadaptivesupersample.xml" />
     <xi:include href="xml/gimpbilinear.xml" />
     <xi:include href="xml/gimpcairo.xml" />

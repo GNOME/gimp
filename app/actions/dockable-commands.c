@@ -283,6 +283,9 @@ dockable_show_button_bar_cmd_callback (GtkAction *action,
     }
 }
 
+
+/*  private functions  */
+
 static GimpDockable *
 dockable_get_current (GimpDockbook *dockbook)
 {

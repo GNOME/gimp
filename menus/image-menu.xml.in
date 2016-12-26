@@ -8,7 +8,7 @@
       <menuitem action="image-new" />
       <menu action="file-create-menu" name="Create">
         <placeholder name="Acquire">
-          <menuitem action="edit-paste-as-new" />
+          <menuitem action="edit-paste-as-new-image" />
         </placeholder>
         <separator />
       </menu>
@@ -196,8 +196,8 @@
         <menuitem action="edit-paste-into" />
       </placeholder>
       <menu action="edit-paste-as-menu" name="Paste as">
-        <menuitem action="edit-paste-as-new-short" />
         <menuitem action="edit-paste-as-new-layer" />
+        <menuitem action="edit-paste-as-new-image-short" />
       </menu>
       <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />
@@ -313,6 +313,7 @@
 	</menu>
         <menuitem action="view-display-black-point-compensation" />
         <separator />
+        <menuitem action="view-softproof-profile" />
 	<menu action="view-softproof-intent-menu" name="Softproof Rendering Intent">
           <menuitem action="view-softproof-intent-perceptual" />
           <menuitem action="view-softproof-intent-relative-colorimetric" />
@@ -600,7 +601,7 @@
       </menu>
       <separator />
       <menuitem action="filters-color-to-alpha" />
-      <menuitem action="filters-color-reduction" />
+      <menuitem action="filters-dither" />
       <menuitem action="filters-color-temperature" />
       <menuitem action="filters-exposure" />
       <placeholder name="Modify" />

@@ -42,7 +42,7 @@
 enum
 {
   STROKES_UPDATED,
-  UPDATE_UI,
+  GUI_PARAM_CHANGED,
   ACTIVE_CHANGED,
   LAST_SIGNAL
 };
@@ -106,8 +106,8 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
    * settings UI. For instance adding some settings (therefore having
    * a dynamic UI), or changing scale min/max extremes, etc.
    */
-  gimp_symmetry_signals[UPDATE_UI] =
-    g_signal_new ("update-ui",
+  gimp_symmetry_signals[GUI_PARAM_CHANGED] =
+    g_signal_new ("gui-param-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   0,

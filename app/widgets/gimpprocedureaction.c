@@ -165,7 +165,7 @@ gimp_procedure_action_activate (GtkAction *action)
   GimpProcedureAction *procedure_action = GIMP_PROCEDURE_ACTION (action);
 
   /* Not all actions have procedures associated with them, for example
-   * unused "plug-in-recent-[N]" actions, so check for NULL before we
+   * unused "filters-recent-[N]" actions, so check for NULL before we
    * invoke the action
    */
   if (procedure_action->procedure)

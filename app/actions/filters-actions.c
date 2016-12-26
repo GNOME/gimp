@@ -152,10 +152,10 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-exchange",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_EXCHANGE */ },
 
-  { "filters-color-reduction", GIMP_STOCK_GEGL,
-    NC_("filters-action", "Color _Reduction..."), NULL, NULL,
-    "gegl:color-reduction",
-    NULL /* FIXME GIMP_HELP_FILTER_COLOR_TEMPERATURE */ },
+  { "filters-dither", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Dithe_r..."), NULL, NULL,
+    "gegl:dither",
+    NULL /* FIXME GIMP_HELP_FILTER_DITHER */ },
 
   { "filters-color-rotate", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Rotate Colors..."), NULL, NULL,
@@ -589,7 +589,7 @@ filters_actions_setup (GimpActionGroup *group)
 
   for (i = 0; i < n_entries; i++)
     {
-      entries[i].name        = g_strdup_printf ("filter-recent-%02d", i + 1);
+      entries[i].name        = g_strdup_printf ("filters-recent-%02d", i + 1);
       entries[i].icon_name   = NULL;
       entries[i].label       = "";
       entries[i].accelerator = "";
@@ -665,7 +665,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-checkerboard",            writable);
   SET_SENSITIVE ("filters-color-enhance",           writable && !gray);
   SET_SENSITIVE ("filters-color-exchange",          writable);
-  SET_SENSITIVE ("filters-color-reduction",         writable);
+  SET_SENSITIVE ("filters-dither",                  writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
@@ -761,7 +761,7 @@ filters_actions_update (GimpActionGroup *group,
 
     for (i = 0; i < gimp_filter_history_length (group->gimp); i++)
       {
-        gchar    *name = g_strdup_printf ("filter-recent-%02d", i + 1);
+        gchar    *name = g_strdup_printf ("filters-recent-%02d", i + 1);
         gboolean  sensitive;
 
         proc = gimp_filter_history_nth (group->gimp, i);
@@ -872,7 +872,7 @@ filters_actions_history_changed (Gimp            *gimp,
       gchar       *name;
       gboolean     sensitive = FALSE;
 
-      name = g_strdup_printf ("filter-recent-%02d", i + 1);
+      name = g_strdup_printf ("filters-recent-%02d", i + 1);
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
 
@@ -910,7 +910,7 @@ filters_actions_history_changed (Gimp            *gimp,
   for (; i < gimp_filter_history_size (gimp); i++)
     {
       GtkAction *action;
-      gchar     *name = g_strdup_printf ("filter-recent-%02d", i + 1);
+      gchar     *name = g_strdup_printf ("filters-recent-%02d", i + 1);
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);

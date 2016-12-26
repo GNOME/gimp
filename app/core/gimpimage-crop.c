@@ -40,13 +40,14 @@
 /*  public functions  */
 
 void
-gimp_image_crop (GimpImage   *image,
-                 GimpContext *context,
-                 gint         x,
-                 gint         y,
-                 gint         width,
-                 gint         height,
-                 gboolean     crop_layers)
+gimp_image_crop (GimpImage    *image,
+                 GimpContext  *context,
+                 GimpFillType  fill_type,
+                 gint          x,
+                 gint          y,
+                 gint          width,
+                 gint          height,
+                 gboolean      crop_layers)
 {
   GList *list;
   gint   previous_width;
@@ -90,7 +91,8 @@ gimp_image_crop (GimpImage   *image,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, context, width, height, -x, -y);
+      gimp_item_resize (item, context, GIMP_FILL_TRANSPARENT,
+                        width, height, -x, -y);
     }
 
   /*  Resize all vectors  */
@@ -100,11 +102,13 @@ gimp_image_crop (GimpImage   *image,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, context, width, height, -x, -y);
+      gimp_item_resize (item, context, GIMP_FILL_TRANSPARENT,
+                        width, height, -x, -y);
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (image)), context,
+  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (image)),
+                    context, GIMP_FILL_TRANSPARENT,
                     width, height, -x, -y);
 
   /*  crop all layers  */
@@ -137,7 +141,8 @@ gimp_image_crop (GimpImage   *image,
 
           if (width > 0 && height > 0)
             {
-              gimp_item_resize (item, context, width, height,
+              gimp_item_resize (item, context, fill_type,
+                                width, height,
                                 -(lx1 - off_x),
                                 -(ly1 - off_y));
             }

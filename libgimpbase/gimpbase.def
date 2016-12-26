@@ -13,6 +13,7 @@ EXPORTS
 	gimp_check_type_get_type
 	gimp_checks_get_shades
 	gimp_clone_type_get_type
+	gimp_color_tag_get_type
 	gimp_component_type_get_type
 	gimp_convert_palette_type_get_type
 	gimp_convolve_type_get_type

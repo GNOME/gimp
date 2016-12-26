@@ -25,7 +25,9 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-utils.h"
@@ -57,37 +59,82 @@ gimp_drawable_fill (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
+  if (fill_type == GIMP_FILL_TRANSPARENT &&
+      ! gimp_drawable_has_alpha (drawable))
+    {
+      fill_type = GIMP_FILL_BACKGROUND;
+    }
+
   if (! gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
     return;
 
-  if (pattern)
-    {
-      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
-
-      gegl_buffer_set_pattern (gimp_drawable_get_buffer (drawable),
-                               NULL, src_buffer, 0, 0);
-      g_object_unref (src_buffer);
-    }
-  else
-    {
-      GeglColor *gegl_color;
-
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                         &color, &color);
-
-      if (! gimp_drawable_has_alpha (drawable))
-        gimp_rgb_set_alpha (&color, 1.0);
-
-      gegl_color = gimp_gegl_color_new (&color);
-      gegl_buffer_set_color (gimp_drawable_get_buffer (drawable),
-                             NULL, gegl_color);
-      g_object_unref (gegl_color);
-    }
+  gimp_drawable_fill_buffer (drawable,
+                             gimp_drawable_get_buffer (drawable),
+                             &color, pattern, 0, 0);
 
   gimp_drawable_update (drawable,
                         0, 0,
                         gimp_item_get_width  (GIMP_ITEM (drawable)),
                         gimp_item_get_height (GIMP_ITEM (drawable)));
+}
+
+void
+gimp_drawable_fill_buffer (GimpDrawable  *drawable,
+                           GeglBuffer    *buffer,
+                           const GimpRGB *color,
+                           GimpPattern   *pattern,
+                           gint           pattern_offset_x,
+                           gint           pattern_offset_y)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+  g_return_if_fail (color != NULL || pattern != NULL);
+  g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
+
+  if (pattern)
+    {
+      const Babl       *format;
+      GeglBuffer       *src_buffer;
+      GeglBuffer       *dest_buffer;
+      GimpColorProfile *src_profile;
+      GimpColorProfile *dest_profile;
+
+      src_buffer = gimp_pattern_create_buffer (pattern);
+      format = gegl_buffer_get_format (src_buffer);
+
+      dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
+                                     format);
+
+      src_profile  = gimp_babl_format_get_color_profile (format);
+      dest_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (drawable));
+
+      gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+                                       dest_buffer, NULL, dest_profile,
+                                       GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                       TRUE,
+                                       NULL);
+
+      gegl_buffer_set_pattern (buffer, NULL, dest_buffer,
+                               pattern_offset_x, pattern_offset_y);
+
+      g_object_unref (src_buffer);
+      g_object_unref (dest_buffer);
+    }
+  else
+    {
+      GimpRGB    image_color;
+      GeglColor *gegl_color;
+
+      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                         color, &image_color);
+
+      if (! gimp_drawable_has_alpha (drawable))
+        gimp_rgb_set_alpha (&image_color, 1.0);
+
+      gegl_color = gimp_gegl_color_new (&image_color);
+      gegl_buffer_set_color (buffer, NULL, gegl_color);
+      g_object_unref (gegl_color);
+    }
 }
 
 void
@@ -167,7 +214,6 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                                  gboolean         push_undo)
 {
   GimpContext *context;
-  GimpImage   *image;
   GeglBuffer  *buffer;
   GeglBuffer  *mask_buffer;
   gint         x, y, w, h;
@@ -183,23 +229,9 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                     gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
 
   context = GIMP_CONTEXT (options);
-  image   = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  /*  must call gimp_channel_is_empty() instead of relying on
-   *  gimp_item_mask_intersect() because the selection pretends to
-   *  be empty while it is being stroked, to prevent masking itself.
-   */
-  if (gimp_channel_is_empty (gimp_image_get_mask (image)))
-    {
-      x = 0;
-      y = 0;
-      w = gimp_item_get_width  (GIMP_ITEM (drawable));
-      h = gimp_item_get_height (GIMP_ITEM (drawable));
-    }
-  else if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
-    {
-      return;
-    }
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
+    return;
 
   /* fill a 1-bpp GeglBuffer with black, this will describe the shape
    * of the stroke.

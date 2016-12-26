@@ -36,30 +36,18 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_ANCHOR                   "gimp-anchor"
 #define GIMP_STOCK_CENTER                   "gimp-center"
 #define GIMP_STOCK_DUPLICATE                "gimp-duplicate"
-#define GIMP_STOCK_EDIT                     "gimp-edit"
 #define GIMP_STOCK_LINKED                   "gimp-linked"
 #define GIMP_STOCK_PASTE_AS_NEW             "gimp-paste-as-new"
 #define GIMP_STOCK_PASTE_INTO               "gimp-paste-into"
 #define GIMP_STOCK_RESET                    "gimp-reset"
 #define GIMP_STOCK_VISIBLE                  "gimp-visible"
-#define GIMP_STOCK_NEXT                     "gimp-next"
-#define GIMP_STOCK_PREVIOUS                 "gimp-previous"
-#define GIMP_STOCK_OPEN                     "gimp-open"
-#define GIMP_STOCK_SAVE                     "gimp-save"
-#define GIMP_STOCK_SAVE_AS                  "gimp-save-as"
-#define GIMP_STOCK_CANCEL                   "gimp-cancel"
-#define GIMP_STOCK_QUIT                     "gimp-quit"
 
 #define GIMP_STOCK_IMAGE_OPEN               "gimp-image-open"
 #define GIMP_STOCK_IMAGE_RELOAD             "gimp-image-reload"
 #define GIMP_STOCK_CLOSE_ALL                "gimp-close-all"
-#define GIMP_STOCK_REVERT                   "gimp-revert"
 #define GIMP_STOCK_CLIPBOARD                "gimp-clipboard"
 #define GIMP_STOCK_FILE_MANAGER             "gimp-file-manager"
-#define GIMP_STOCK_EDIT_CLEAR               "gimp-edit-clear"
 #define GIMP_STOCK_SHRED                    "gimp-shred"
-#define GIMP_STOCK_DOCUMENT_RECENT          "gimp-document-recent"
-
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
 #define GIMP_STOCK_GRADIENT_BILINEAR             "gimp-gradient-bilinear"
@@ -103,10 +91,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_SELECTION_TO_PATH        "gimp-selection-to-path"
 
 #define GIMP_STOCK_PATH_STROKE              "gimp-path-stroke"
-#define GIMP_STOCK_PATH_NEW                 "gimp-path-new"
-#define GIMP_STOCK_PATH_UP                  "gimp-path-up"
-#define GIMP_STOCK_PATH_DOWN                "gimp-path-down"
-#define GIMP_STOCK_PATH_DELETE              "gimp-path-delete"
 
 #define GIMP_STOCK_CURVE_FREE               "gimp-curve-free"
 #define GIMP_STOCK_CURVE_SMOOTH             "gimp-curve-smooth"
@@ -117,21 +101,12 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_COLOR_TRIANGLE           "gimp-color-triangle"
 #define GIMP_STOCK_COLOR_CMYK               "gimp-color-cmyk"
 #define GIMP_STOCK_COLOR_WATER              "gimp-color-water"
-#define GIMP_STOCK_COLOR_PALETTE            "gimp-color-palette"
 #define GIMP_STOCK_COLOR_PICK_FROM_SCREEN   "gimp-color-pick-from-screen"
 
 #define GIMP_STOCK_CHAR_PICKER              "gimp-char-picker"
 #define GIMP_STOCK_LETTER_SPACING           "gimp-letter-spacing"
 #define GIMP_STOCK_LINE_SPACING             "gimp-line-spacing"
-#define GIMP_STOCK_INDENT                   "gimp-indent"
-#define GIMP_STOCK_JUSTIFY_CENTER           "gimp-justify-center"
-#define GIMP_STOCK_JUSTIFY_FILL             "gimp-justify-fill"
-#define GIMP_STOCK_JUSTIFY_LEFT             "gimp-justify-left"
-#define GIMP_STOCK_JUSTIFY_RIGHT            "gimp-justify-right"
-#define GIMP_STOCK_PRINT_RESOLUTION         "gimp-print-resolution"
-#define GIMP_STOCK_FONT                     "gimp-font"
 #define GIMP_STOCK_PATTERN                  "gimp-pattern"
-#define GIMP_STOCK_BUFFER                   "gimp-buffer"
 
 #define GIMP_STOCK_TEXT_DIR_LTR             "gimp-text-dir-ltr"
 #define GIMP_STOCK_TEXT_DIR_RTL             "gimp-text-dir-rtl"
@@ -320,13 +295,18 @@ G_BEGIN_DECLS
 /*  missing icons:  */
 
 #define GIMP_STOCK_BRUSH                    GIMP_STOCK_TOOL_PAINTBRUSH
+#define GIMP_STOCK_BUFFER                   "edit-paste"
 #define GIMP_STOCK_DETACH                   GTK_STOCK_CONVERT
 #define GIMP_STOCK_GRADIENT                 GIMP_STOCK_TOOL_BLEND
 #define GIMP_STOCK_MYPAINT_BRUSH            GIMP_STOCK_TOOL_MYPAINT_BRUSH
-#define GIMP_STOCK_PALETTE                  GIMP_STOCK_COLOR_PALETTE
+#define GIMP_STOCK_PALETTE                  GTK_STOCK_SELECT_COLOR
 #define GIMP_STOCK_CONTROLLER_MOUSE         GIMP_STOCK_CURSOR
 #define GIMP_STOCK_CONVERT_PRECISION        GIMP_STOCK_CONVERT_RGB
+#define GIMP_STOCK_PRINT_RESOLUTION         "document-print"
 
+/* Deprecated icons: */
+
+#define GIMP_STOCK_EDIT                     "gtk-edit"
 
 GIMP_DEPRECATED_FOR(gimp_icons_init)
 void   gimp_stock_init           (void);

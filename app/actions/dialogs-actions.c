@@ -148,7 +148,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
   { "dialogs-dynamics", GIMP_STOCK_DYNAMICS,
     NC_("dialogs-action", "Paint Dynamics"), NULL,
     NC_("dialogs-action", "Open paint dynamics dialog"),
-    "gimp-dynamics-list",
+    "gimp-dynamics-list|gimp-dynamics-grid",
     GIMP_HELP_DYNAMICS_DIALOG },
 
   { "dialogs-dynamics-editor", GIMP_STOCK_DYNAMICS,
@@ -158,7 +158,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     GIMP_HELP_DYNAMICS_EDITOR_DIALOG },
 
   { "dialogs-mypaint-brushes", GIMP_STOCK_MYPAINT_BRUSH,
-    NC_("dialogs-action", "_MyPaint Brushes"), "<primary><shift>Y",
+    NC_("dialogs-action", "_MyPaint Brushes"), NULL,
     NC_("dialogs-action", "Open the mypaint brushes dialog"),
     "gimp-mypaint-brush-grid|gimp-mapyint-brush-list",
     GIMP_HELP_MYPAINT_BRUSH_DIALOG },
@@ -196,10 +196,10 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
   { "dialogs-tool-presets", GIMP_STOCK_TOOL_PRESET,
     NC_("dialogs-action", "Tool presets"), NULL,
     NC_("dialogs-action", "Open tool presets dialog"),
-    "gimp-tool-preset-list",
+    "gimp-tool-preset-list|gimp-tool-preset-grid",
     GIMP_HELP_TOOL_PRESET_DIALOG },
 
-  { "dialogs-fonts", GIMP_STOCK_FONT,
+  { "dialogs-fonts", "gtk-select-font",
     NC_("dialogs-action", "_Fonts"), NULL,
     NC_("dialogs-action", "Open the fonts dialog"),
     "gimp-font-list|gimp-font-grid",
@@ -217,7 +217,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-image-list|gimp-image-grid",
     GIMP_HELP_IMAGE_DIALOG },
 
-  { "dialogs-document-history", GIMP_STOCK_DOCUMENT_RECENT,
+  { "dialogs-document-history", "document-open-recent",
     NC_("dialogs-action", "Document Histor_y"), "",
     NC_("dialogs-action", "Open the document history dialog"),
     "gimp-document-list|gimp-document-grid",

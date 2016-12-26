@@ -402,6 +402,8 @@ gimp_action_set_proxy (GimpAction *action,
 
           gtk_widget_set_size_request (area, width, height);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), area);
+          gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy),
+                                                     TRUE);
           gtk_widget_show (area);
         }
     }
@@ -441,6 +443,8 @@ gimp_action_set_proxy (GimpAction *action,
                                      width, height, border_width,
                                      FALSE, FALSE, FALSE);
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), view);
+          gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy),
+                                                     TRUE);
           gtk_widget_show (view);
         }
     }
@@ -453,6 +457,8 @@ gimp_action_set_proxy (GimpAction *action,
       if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
         {
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
+          gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (proxy),
+                                                     FALSE);
           g_object_notify (G_OBJECT (action), "icon-name");
         }
     }

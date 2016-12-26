@@ -554,7 +554,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
 
 /*  The weak version doesn't ref the imagefile but deals gracefully
  *  with an imagefile that is destroyed while the thumbnail is
- *  created. Thia allows one to use this function w/o the need to
+ *  created. This allows one to use this function w/o the need to
  *  block the user interface.
  */
 void

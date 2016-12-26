@@ -169,7 +169,7 @@ gimp_buffer_source_box_constructed (GObject *object)
   gtk_widget_show (box->priv->button);
 
   box->priv->label = gtk_label_new (_("(none)"));
-  gtk_misc_set_alignment (GTK_MISC (box->priv->label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (box->priv->label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (box->priv->label), PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (box), box->priv->label, TRUE, TRUE, 0);
   gtk_widget_show (box->priv->label);

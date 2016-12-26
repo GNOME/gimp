@@ -21,12 +21,24 @@
 #define __STROKE_DIALOG_H__
 
 
-GtkWidget * stroke_dialog_new (GimpItem    *item,
-                               GimpContext *context,
-                               const gchar *title,
-                               const gchar *icon_name,
-                               const gchar *help_id,
-                               GtkWidget   *parent);
+typedef void (* GimpStrokeCallback) (GtkWidget         *dialog,
+                                     GimpItem          *item,
+                                     GimpDrawable      *drawable,
+                                     GimpContext       *context,
+                                     GimpStrokeOptions *options,
+                                     gpointer           user_data);
+
+
+GtkWidget * stroke_dialog_new (GimpItem           *item,
+                               GimpDrawable       *drawable,
+                               GimpContext        *context,
+                               const gchar        *title,
+                               const gchar        *icon_name,
+                               const gchar        *help_id,
+                               GtkWidget          *parent,
+                               GimpStrokeOptions  *options,
+                               GimpStrokeCallback  callback,
+                               gpointer            user_data);
 
 
 #endif  /*  __STROKE_DIALOG_H__  */

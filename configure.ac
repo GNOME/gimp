@@ -11,7 +11,7 @@ AC_PREREQ(2.54)
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [9])
-m4_define([gimp_micro_version], [3])
+m4_define([gimp_micro_version], [5])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
@@ -43,8 +43,8 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.14])
-m4_define([gegl_required_version], [0.3.6])
+m4_define([babl_required_version], [0.1.18])
+m4_define([gegl_required_version], [0.3.10])
 m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
@@ -63,18 +63,21 @@ m4_define([rsvg_required_version], [2.36.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [2.10.4])
 m4_define([pycairo_required_version], [1.0.2])
-m4_define([poppler_required_version], [0.12.4])
+m4_define([poppler_required_version], [0.44.0])
 m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.6.1])
 m4_define([libmypaint_required_version], [1.3.0])
-m4_define([lcms_required_version], [2.6])
-m4_define([libpng_required_version], [1.2.37])
+m4_define([lcms_required_version], [2.7])
+m4_define([libpng_required_version], [1.6.25])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([intltool_required_version], [0.40.1])
 m4_define([python2_required_version], [2.5.0])
+m4_define([webp_required_version], [0.5.1])
+m4_define([webpmux_required_version], [0.5.1])
+m4_define([webpdemux_required_version], [0.5.1])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
@@ -158,6 +161,9 @@ POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
 OPENEXR_REQUIRED_VERSION=openexr_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
+WEBP_REQUIRED_VERSION=webp_required_version
+WEBPMUX_REQUIRED_VERSION=webpmux_required_version
+WEBPDEMUX_REQUIRED_VERSION=webpdemux_required_version
 XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
@@ -185,6 +191,9 @@ AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
 AC_SUBST(OPENEXR_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
+AC_SUBST(WEBP_REQUIRED_VERSION)
+AC_SUBST(WEBPMUX_REQUIRED_VERSION)
+AC_SUBST(WEBPDEMUX_REQUIRED_VERSION)
 AC_SUBST(XGETTEXT_RECOMMENDED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
@@ -624,7 +633,7 @@ required_deps=''
 # add_deps_error([dependency], [first line, second line])
 m4_define([add_deps_error], [
   required_deps="$required_deps
-  - $1"
+  - Error: missing dependency $1"
   m4_foreach([more], [$2], [
   required_deps="$required_deps
       *** more"])])
@@ -719,14 +728,6 @@ if test "x$GDK_PIXBUF_CSOURCE" = xno; then
   add_deps_error([gdk-pixbuf-csource],
                  [Could not find gdk-pixbuf-csource in your PATH.])
 fi
-
-AC_MSG_CHECKING([if GdkPixbuf is version 2.31.0 or newer])
-if $PKG_CONFIG --atleast-version=2.31.0 gdk-pixbuf-2.0; then
-  have_gdk_pixbuf_2_31=yes
-else
-  have_gdk_pixbuf_2_31=no
-fi
-AC_MSG_RESULT($have_gdk_pixbuf_2_31)
 
 PKG_CHECK_MODULES(CAIRO, cairo >= cairo_required_version,,
                   [add_deps_error([cairo >= cairo_required_version])])
@@ -1548,6 +1549,32 @@ AC_SUBST(FILE_EXR)
 AM_CONDITIONAL(HAVE_OPENEXR, test "x$have_openexr" = xyes)
 
 
+################
+# Check for WebP
+################
+
+AC_ARG_WITH(webp, [  --without-webp       build without WebP support])
+
+have_webp=no
+if test "x$with_webp" != xno; then
+  have_webp=yes
+  PKG_CHECK_MODULES(WEBP, libwebp >= webp_required_version,,
+    [have_webp="no (WebP not found)"])
+
+  PKG_CHECK_MODULES(WEBPMUX, libwebpmux >= webpmux_required_version,,
+    [have_webp="no (WebP not found)"])
+
+  PKG_CHECK_MODULES(WEBPDEMUX, libwebpdemux >= webpdemux_required_version,,
+    [have_webp="no (WebP not found)"])
+fi
+
+if test "x$have_webp" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/x-webp"
+fi
+
+AM_CONDITIONAL(HAVE_WEBP, test "x$have_webp" = xyes)
+
+
 ######################
 # Check for libmypaint
 ######################
@@ -1583,23 +1610,10 @@ AM_CONDITIONAL(HAVE_WEBKIT, test "x$have_webkit" = xyes)
 # Check for librsvg
 ###################
 
-AC_ARG_WITH(librsvg,[  --without-librsvg       build without librsvg support])
+PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,,
+                  [add_deps_error([rsvg >= rsvg_required_version])])
 
-have_librsvg=no
-if test "x$with_librsvg" != xno; then
-  have_librsvg=yes
-  PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
-    FILE_SVG='file-svg$(EXEEXT)',
-    have_librsvg="no (librsvg not found)")
-else
-   have_librsvg="no (librsvg support disabled)"
-fi
-
-if test "x$have_librsvg" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/svg+xml"
-fi
-
-AC_SUBST(FILE_SVG)
+MIME_TYPES="$MIME_TYPES;image/svg+xml"
 
 
 ####################################
@@ -2049,29 +2063,26 @@ AM_CONDITIONAL(HAVE_XMLLINT, test "x$XMLLINT" != "xno")
 AC_PATH_PROG(XSLTPROC, xsltproc, no)
 AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 
-###########################
-# Check for vectorial icons
-###########################
+
+########################
+# Check for vector icons
+########################
 
 AC_ARG_ENABLE(vector-icons, [  --enable-vector-icons   generate vector icons], ,
               enable_vector_icons=no)
 
 if test "x$enable_vector_icons" = "xyes"; then
-  if test "x$have_librsvg" != "xyes"; then
-    enable_vector_icons="no (librsvg missing)"
+  # Check if librsvg was built with --disable-pixbuf-loader.
+  gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
+  # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
+  # error: cannot check for file existence when cross compiling
+  # So let's test files the shell way.
+  if (test "x$platform_win32" = "xyes" &&
+      test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
+     test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
+    enable_vector_icons="yes"
   else
-    # Check if librsvg was built with --disable-pixbuf-loader.
-    gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
-    # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
-    # error: cannot check for file existence when cross compiling
-    # So let's test files the shell way.
-    if (test "x$platform_win32" = "xyes" &&
-        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
-       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
-      enable_vector_icons="yes"
-    else
-      enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
-    fi
+    enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
   fi
 fi
 
@@ -2219,10 +2230,6 @@ fi
 
 if test "x$have_gtk_2_26" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
-fi
-
-if test "x$have_gdk_pixbuf_2_31" != "xyes"; then
-  CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED"
 fi
 
 if test "x$have_pango_1_32" != "xyes"; then
@@ -2400,6 +2407,7 @@ plug-ins/file-jpeg/Makefile
 plug-ins/file-psd/Makefile
 plug-ins/file-sgi/Makefile
 plug-ins/file-tiff/Makefile
+plug-ins/file-webp/Makefile
 plug-ins/flame/Makefile
 plug-ins/fractal-explorer/Makefile
 plug-ins/fractal-explorer/examples/Makefile
@@ -2544,7 +2552,7 @@ Extra Binaries:
 
 Optional Features:
   Language selection:  $have_iso_codes
-  Vectorial icons:     $enable_vector_icons
+  Vector icons:        $enable_vector_icons
   Dr. Mingw (Win32):   $enable_drmingw
 
 Optional Plug-Ins:
@@ -2554,12 +2562,12 @@ Optional Plug-Ins:
   JPEG 2000:           $have_jp2
   MNG:                 $have_libmng
   OpenEXR:             $have_openexr
+  WebP:                $have_webp
   PDF (import):        $have_poppler
   PDF (export):        $have_cairo_pdf
   Print:               $enable_print
   Python 2:            $enable_python
   Script-Fu:           $have_script_fu
-  SVG:                 $have_librsvg
   TWAIN (Win32):       $os_win32
   Webpage:             $have_webkit
   WMF:                 $have_libwmf
@@ -2584,14 +2592,10 @@ Desktop files install into $DESKTOP_DATADIR
 $optional_deps]);
 else
   AC_MSG_ERROR([
-
-== Summary of optional features ==
 $optional_deps
 
-== Missing mandatory dependencies ==
-
-GIMP configuration failed.
-The following mandatory dependencies are missing:$required_deps
+Error: GIMP configuration failed.
+$required_deps
 
 See the file 'INSTALL' for more help.]);
 fi

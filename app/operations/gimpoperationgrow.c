@@ -263,7 +263,7 @@ gimp_operation_grow_process (GeglOperation       *operation,
       else
         max[i] = &buffer[(self->radius_y + 1) * (roi->width + self->radius_x - 1)];
 
-      for (j = 0; j < self->radius_x + 1; j++)
+      for (j = 0; j < self->radius_y + 1; j++)
         max[i][j] = 0.0;
     }
 

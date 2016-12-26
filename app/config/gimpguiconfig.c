@@ -50,6 +50,7 @@ enum
   PROP_FILTER_TOOL_MAX_RECENT,
   PROP_TRUST_DIRTY_FLAG,
   PROP_SAVE_DEVICE_STATUS,
+  PROP_DEVICES_SHARE_TOOL,
   PROP_SAVE_SESSION_INFO,
   PROP_RESTORE_SESSION,
   PROP_RESTORE_MONITOR,
@@ -153,6 +154,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             "save-device-status",
                             "Save device status",
                             SAVE_DEVICE_STATUS_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEVICES_SHARE_TOOL,
+                            "devices-share-tool",
+                            "Devics share tool",
+                            DEVICES_SHARE_TOOL_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -538,6 +546,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_SAVE_DEVICE_STATUS:
       gui_config->save_device_status = g_value_get_boolean (value);
       break;
+    case PROP_DEVICES_SHARE_TOOL:
+      gui_config->devices_share_tool = g_value_get_boolean (value);
+      break;
     case PROP_SAVE_SESSION_INFO:
       gui_config->save_session_info = g_value_get_boolean (value);
       break;
@@ -694,6 +705,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_SAVE_DEVICE_STATUS:
       g_value_set_boolean (value, gui_config->save_device_status);
+      break;
+    case PROP_DEVICES_SHARE_TOOL:
+      g_value_set_boolean (value, gui_config->devices_share_tool);
       break;
     case PROP_SAVE_SESSION_INFO:
       g_value_set_boolean (value, gui_config->save_session_info);

@@ -99,7 +99,7 @@ SelectItVals selvals =
   TRUE,                   /* Show pos updates              */
   0.0,                    /* Brush fade                    */
   0.0,                    /* Brush gradient                */
-  20.0,                   /* Air bursh pressure            */
+  20.0,                   /* Air brush pressure            */
   ORIGINAL_LAYER,         /* Draw all objects on one layer */
   LAYER_TRANS_BG,         /* New layers background         */
   PAINT_BRUSH_TYPE,       /* Default to use brushes        */

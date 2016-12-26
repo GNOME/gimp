@@ -201,6 +201,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpMattingEngine;
 
 
+#define GIMP_TYPE_PASTE_TYPE (gimp_paste_type_get_type ())
+
+GType gimp_paste_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_PASTE_TYPE_FLOATING,
+  GIMP_PASTE_TYPE_FLOATING_INTO,
+  GIMP_PASTE_TYPE_NEW_LAYER
+} GimpPasteType;
+
+
 #define GIMP_TYPE_ALIGNMENT_TYPE (gimp_alignment_type_get_type ())
 
 GType gimp_alignment_type_get_type (void) G_GNUC_CONST;
@@ -426,6 +438,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_ITEM_DISPLACE,            /*< desc="Move item"                   >*/
   GIMP_UNDO_ITEM_VISIBILITY,          /*< desc="Item visibility"             >*/
   GIMP_UNDO_ITEM_LINKED,              /*< desc="Link/Unlink item"            >*/
+  GIMP_UNDO_ITEM_COLOR_TAG,           /*< desc="Item color tag"              >*/
   GIMP_UNDO_ITEM_LOCK_CONTENT,        /*< desc="Lock/Unlock content"         >*/
   GIMP_UNDO_ITEM_LOCK_POSITION,       /*< desc="Lock/Unlock position"        >*/
   GIMP_UNDO_LAYER_ADD,                /*< desc="New layer"                   >*/
@@ -518,7 +531,7 @@ typedef enum  /*< pdb-skip >*/
 {
   GIMP_COLOR_PROFILE_POLICY_ASK,    /*< desc="Ask what to do"           >*/
   GIMP_COLOR_PROFILE_POLICY_KEEP,   /*< desc="Keep embedded profile"    >*/
-  GIMP_COLOR_PROFILE_POLICY_CONVERT /*< desc="Convert to RGB workspace" >*/
+  GIMP_COLOR_PROFILE_POLICY_CONVERT /*< desc="Convert to preferred RGB color profile" >*/
 } GimpColorProfilePolicy;
 
 

@@ -53,7 +53,7 @@
  * windows and native OS X app windows. But we can use this switch
  * to capture the shadow of a window, which is indeed very Mac-ish.
  *
- * This routines works well with X11 and as a navtive build
+ * This routines works well with X11 and as a native build.
  */
 
 gboolean

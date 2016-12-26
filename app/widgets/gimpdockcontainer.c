@@ -27,7 +27,7 @@
 #include "gimpdockcontainer.h"
 
 
-static void   gimp_dock_container_iface_base_init   (GimpDockContainerInterface *container_iface);
+static void   gimp_dock_container_iface_base_init (GimpDockContainerInterface *container_iface);
 
 
 GType
@@ -86,6 +86,27 @@ gimp_dock_container_get_docks (GimpDockContainer *container)
 
   if (iface->get_docks)
     return iface->get_docks (container);
+
+  return NULL;
+}
+
+/**
+ * gimp_dock_container_get_dialog_factory:
+ * @container: A #GimpDockContainer
+ *
+ * Returns: The #GimpDialogFactory of the #GimpDockContainer
+ **/
+GimpDialogFactory *
+gimp_dock_container_get_dialog_factory (GimpDockContainer *container)
+{
+  GimpDockContainerInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_DOCK_CONTAINER (container), NULL);
+
+  iface = GIMP_DOCK_CONTAINER_GET_INTERFACE (container);
+
+  if (iface->get_dialog_factory)
+    return iface->get_dialog_factory (container);
 
   return NULL;
 }

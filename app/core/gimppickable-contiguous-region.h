@@ -19,7 +19,7 @@
 #define __GIMP_PICKABLE_CONTIGUOUS_REGION_H__
 
 
-GeglBuffer * gimp_pickable_contiguous_region_by_seed  (GimpPickable           *pickable,
+GeglBuffer * gimp_pickable_contiguous_region_by_seed  (GimpPickable        *pickable,
                                                        gboolean             antialias,
                                                        gfloat               threshold,
                                                        gboolean             select_transparent,
@@ -28,7 +28,7 @@ GeglBuffer * gimp_pickable_contiguous_region_by_seed  (GimpPickable           *p
                                                        gint                 x,
                                                        gint                 y);
 
-GeglBuffer * gimp_pickable_contiguous_region_by_color (GimpPickable           *pickable,
+GeglBuffer * gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
                                                        gboolean             antialias,
                                                        gfloat               threshold,
                                                        gboolean             select_transparent,

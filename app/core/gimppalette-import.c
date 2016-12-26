@@ -205,7 +205,11 @@ gimp_palette_import_create_image_palette (gpointer data,
   if (gimp_palette_get_n_colors (palette) >= n_colors)
     return;
 
-  lab = g_strdup_printf ("%s (occurs %u)", _("Untitled"), color_tab->count);
+  /* TRANSLATORS: the "%s" is an item title and "%u" is the number of
+     occurrences for this item. */
+  lab = g_strdup_printf (_("%s (occurs %u)"),
+                         _("Untitled"),
+                         color_tab->count);
 
   /* Adjust the colors to the mean of the the sample */
   gimp_rgba_set_uchar

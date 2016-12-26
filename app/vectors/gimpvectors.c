@@ -93,6 +93,7 @@ static void       gimp_vectors_scale         (GimpItem          *item,
                                               GimpProgress      *progress);
 static void       gimp_vectors_resize        (GimpItem          *item,
                                               GimpContext       *context,
+                                              GimpFillType       fill_type,
                                               gint               new_width,
                                               gint               new_height,
                                               gint               offset_x,
@@ -502,12 +503,13 @@ gimp_vectors_scale (GimpItem              *item,
 }
 
 static void
-gimp_vectors_resize (GimpItem    *item,
-                     GimpContext *context,
-                     gint         new_width,
-                     gint         new_height,
-                     gint         offset_x,
-                     gint         offset_y)
+gimp_vectors_resize (GimpItem     *item,
+                     GimpContext  *context,
+                     GimpFillType  fill_type,
+                     gint          new_width,
+                     gint          new_height,
+                     gint          offset_x,
+                     gint          offset_y)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
   GimpImage   *image   = gimp_item_get_image (item);
@@ -525,7 +527,7 @@ gimp_vectors_resize (GimpItem    *item,
       gimp_stroke_translate (stroke, offset_x, offset_y);
     }
 
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context,
+  GIMP_ITEM_CLASS (parent_class)->resize (item, context, fill_type,
                                           gimp_image_get_width  (image),
                                           gimp_image_get_height (image),
                                           0, 0);

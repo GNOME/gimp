@@ -464,7 +464,7 @@ menus_clear (Gimp    *gimp,
            my_error->code != G_IO_ERROR_NOT_FOUND)
     {
       g_set_error (error, my_error->domain, my_error->code,
-		   _("Deleting \"%s\" failed: %s"),
+                   _("Deleting \"%s\" failed: %s"),
                    gimp_file_get_utf8_name (file), my_error->message);
       success = FALSE;
     }

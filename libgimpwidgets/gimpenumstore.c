@@ -153,14 +153,20 @@ gimp_enum_store_add_value (GtkListStore *store,
 {
   GtkTreeIter  iter = { 0, };
   const gchar *desc;
+  gchar       *stripped;
 
   desc = gimp_enum_value_get_desc (GIMP_ENUM_STORE (store)->enum_class, value);
+
+  /* no mnemonics in combo boxes */
+  stripped = gimp_strip_uline (desc);
 
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
                       GIMP_INT_STORE_VALUE, value->value,
-                      GIMP_INT_STORE_LABEL, desc,
+                      GIMP_INT_STORE_LABEL, stripped,
                       -1);
+
+  g_free (stripped);
 }
 
 
@@ -243,7 +249,7 @@ gimp_enum_store_new_with_range (GType  enum_type,
  * @...:       a list of enum values (exactly @n_values)
  *
  * Creates a new #GimpEnumStore like gimp_enum_store_new() but allows
- * to expliticely list the enum values that should be added to the
+ * to explicitely list the enum values that should be added to the
  * store.
  *
  * Return value: a new #GimpEnumStore.

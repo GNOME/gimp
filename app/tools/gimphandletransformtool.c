@@ -439,7 +439,7 @@ gimp_handle_transform_tool_dialog (GimpTransformTool *tr_tool)
         {
           GtkWidget *label = gtk_label_new (" ");
 
-          gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.0);
+          gtk_label_set_xalign (GTK_LABEL (label), 1.0);
           gtk_label_set_width_chars (GTK_LABEL (label), 12);
           gtk_table_attach (GTK_TABLE (table), label,
                             x, x + 1, y, y + 1, GTK_EXPAND, GTK_FILL, 0, 0);

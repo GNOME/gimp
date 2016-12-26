@@ -77,6 +77,8 @@ void   layers_crop_to_content_cmd_callback    (GtkAction   *action,
 
 void   layers_mask_add_cmd_callback           (GtkAction   *action,
                                                gpointer     data);
+void   layers_mask_add_last_vals_cmd_callback (GtkAction   *action,
+                                               gpointer     data);
 void   layers_mask_apply_cmd_callback         (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
@@ -105,7 +107,19 @@ void   layers_mode_cmd_callback               (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
 
+void   layers_visible_cmd_callback            (GtkAction   *action,
+                                               gpointer     data);
+void   layers_linked_cmd_callback             (GtkAction   *action,
+                                               gpointer     data);
+void   layers_lock_content_cmd_callback       (GtkAction   *action,
+                                               gpointer     data);
+void   layers_lock_position_cmd_callback      (GtkAction   *action,
+                                               gpointer     data);
 void   layers_lock_alpha_cmd_callback         (GtkAction   *action,
+                                               gpointer     data);
+
+void   layers_color_tag_cmd_callback          (GtkAction   *action,
+                                               gint         value,
                                                gpointer     data);
 
 

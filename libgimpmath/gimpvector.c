@@ -48,13 +48,17 @@
 /*************************/
 
 static const GimpVector2 gimp_vector2_zero =   { 0.0, 0.0 };
+#if 0
 static const GimpVector2 gimp_vector2_unit_x = { 1.0, 0.0 };
 static const GimpVector2 gimp_vector2_unit_y = { 0.0, 1.0 };
+#endif
 
 static const GimpVector3 gimp_vector3_zero =   { 0.0, 0.0, 0.0 };
+#if 0
 static const GimpVector3 gimp_vector3_unit_x = { 1.0, 0.0, 0.0 };
 static const GimpVector3 gimp_vector3_unit_y = { 0.0, 1.0, 0.0 };
 static const GimpVector3 gimp_vector3_unit_z = { 0.0, 0.0, 1.0 };
+#endif
 
 /**************************************/
 /* Two   dimensional vector functions */
@@ -984,11 +988,11 @@ gimp_vector3_rotate_val (GimpVector3 vector,
 
 /**
  * gimp_vector_2d_to_3d:
- * @sx: the abscisse of the upper-left screen rectangle.
+ * @sx: the abscissa of the upper-left screen rectangle.
  * @sy: the ordinate of the upper-left screen rectangle.
  * @w: the width of the screen rectangle.
  * @h: the height of the screen rectangle.
- * @x: the abscisse of the point in the screen rectangle to map.
+ * @x: the abscissa of the point in the screen rectangle to map.
  * @y: the ordinate of the point in the screen rectangle to map.
  * @vp: the position of the observer.
  * @p: the resulting point.
@@ -1031,11 +1035,11 @@ gimp_vector_2d_to_3d (gint               sx,
 
 /**
  * gimp_vector_2d_to_3d_val:
- * @sx: the abscisse of the upper-left screen rectangle.
+ * @sx: the abscissa of the upper-left screen rectangle.
  * @sy: the ordinate of the upper-left screen rectangle.
  * @w: the width of the screen rectangle.
  * @h: the height of the screen rectangle.
- * @x: the abscisse of the point in the screen rectangle to map.
+ * @x: the abscissa of the point in the screen rectangle to map.
  * @y: the ordinate of the point in the screen rectangle to map.
  * @vp: position of the observer.
  * @p: the resulting point.
@@ -1079,11 +1083,11 @@ gimp_vector_2d_to_3d_val (gint        sx,
 
 /**
  * gimp_vector_3d_to_2d:
- * @sx: the abscisse of the upper-left screen rectangle.
+ * @sx: the abscissa of the upper-left screen rectangle.
  * @sy: the ordinate of the upper-left screen rectangle.
  * @w: the width of the screen rectangle.
  * @h: the height of the screen rectangle.
- * @x: the abscisse of the point in the screen rectangle to map (return value).
+ * @x: the abscissa of the point in the screen rectangle to map (return value).
  * @y: the ordinate of the point in the screen rectangle to map (return value).
  * @vp: position of the observer.
  * @p: the 3D point to project to the plane.

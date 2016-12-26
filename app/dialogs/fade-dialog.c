@@ -54,12 +54,13 @@ typedef struct
 } FadeDialog;
 
 
+/*  local function prototypes  */
+
+static void   fade_dialog_free            (FadeDialog *private);
 static void   fade_dialog_response        (GtkWidget  *dialog,
                                            gint        response_id,
                                            FadeDialog *private);
-
 static void   fade_dialog_context_changed (FadeDialog *private);
-static void   fade_dialog_free            (FadeDialog *private);
 
 
 /*  public functions  */
@@ -88,8 +89,8 @@ fade_dialog_new (GimpImage *image,
   if (! (undo && undo->applied_buffer))
     return NULL;
 
-  item      = GIMP_ITEM_UNDO (undo)->item;
-  drawable  = GIMP_DRAWABLE (item);
+  item     = GIMP_ITEM_UNDO (undo)->item;
+  drawable = GIMP_DRAWABLE (item);
 
   private = g_slice_new0 (FadeDialog);
 
@@ -108,7 +109,6 @@ fade_dialog_new (GimpImage *image,
 
   title = g_strdup_printf (_("Fade %s"), gimp_object_get_name (undo));
 
-
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable),
                                      private->context,
                                      title, "gimp-edit-fade",
@@ -124,11 +124,12 @@ fade_dialog_new (GimpImage *image,
 
   g_free (title);
 
-  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
 
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) fade_dialog_free, private);
@@ -175,6 +176,12 @@ fade_dialog_new (GimpImage *image,
 /*  private functions  */
 
 static void
+fade_dialog_free (FadeDialog *private)
+{
+  g_slice_free (FadeDialog, private);
+}
+
+static void
 fade_dialog_response (GtkWidget  *dialog,
                       gint        response_id,
                       FadeDialog *private)
@@ -205,10 +212,4 @@ fade_dialog_context_changed (FadeDialog *private)
       private->applied = TRUE;
       gimp_image_flush (private->image);
     }
-}
-
-static void
-fade_dialog_free (FadeDialog *private)
-{
-  g_slice_free (FadeDialog, private);
 }

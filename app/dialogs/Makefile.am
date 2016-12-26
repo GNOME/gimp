@@ -57,6 +57,8 @@ libappdialogs_a_sources = \
 	image-scale-dialog.h		\
 	input-devices-dialog.c		\
 	input-devices-dialog.h		\
+	item-options-dialog.c		\
+	item-options-dialog.h		\
 	keyboard-shortcuts-dialog.c	\
 	keyboard-shortcuts-dialog.h	\
 	layer-add-mask-dialog.c		\
@@ -73,6 +75,8 @@ libappdialogs_a_sources = \
 	palette-import-dialog.h		\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
+	preferences-dialog-utils.c	\
+	preferences-dialog-utils.h	\
 	print-size-dialog.c		\
 	print-size-dialog.h		\
 	quit-dialog.c			\

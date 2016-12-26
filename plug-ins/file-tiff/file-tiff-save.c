@@ -264,44 +264,47 @@ save_image (GFile        *file,
             gint         *saved_bpp,
             GError      **error)       /* created a duplicate            */
 {
-  gboolean       status = FALSE;
-  TIFF          *tif;
-  gushort        red[256];
-  gushort        grn[256];
-  gushort        blu[256];
-  gint           cols, rows, row, i;
-  glong          rowsperstrip;
-  gushort        compression;
-  gushort        extra_samples[1];
-  gboolean       alpha;
-  gshort         predictor;
-  gshort         photometric;
-  const Babl    *format;
-  const Babl    *type;
-  gshort         samplesperpixel;
-  gshort         bitspersample;
-  gshort         sampleformat;
-  gint           bytesperrow;
-  guchar        *src = NULL;
-  guchar        *data = NULL;
-  guchar        *cmap;
-  gint           num_colors;
-  gint           success;
-  GimpImageType  drawable_type;
-  GeglBuffer    *buffer = NULL;
-  gint           tile_height;
-  gint           y, yend;
-  gboolean       is_bw    = FALSE;
-  gboolean       invert   = TRUE;
-  const guchar   bw_map[] = { 0, 0, 0, 255, 255, 255 };
-  const guchar   wb_map[] = { 255, 255, 255, 0, 0, 0 };
-  gint           number_of_sub_IFDs = 1;
-  toff_t         sub_IFDs_offsets[1] = { 0UL };
+  gboolean          status = FALSE;
+  TIFF             *tif;
+  gushort           red[256];
+  gushort           grn[256];
+  gushort           blu[256];
+  gint              cols, rows, row, i;
+  glong             rowsperstrip;
+  gushort           compression;
+  gushort           extra_samples[1];
+  gboolean          alpha;
+  gshort            predictor;
+  gshort            photometric;
+  GimpColorProfile *profile = NULL;
+  gboolean          linear  = FALSE;
+  const Babl       *format;
+  const Babl       *type;
+  gshort            samplesperpixel;
+  gshort            bitspersample;
+  gshort            sampleformat;
+  gint              bytesperrow;
+  guchar           *src = NULL;
+  guchar           *data = NULL;
+  guchar           *cmap;
+  gint              num_colors;
+  gint              success;
+  GimpImageType     drawable_type;
+  GeglBuffer       *buffer = NULL;
+  gint              tile_height;
+  gint              y, yend;
+  gboolean          is_bw    = FALSE;
+  gboolean          invert   = TRUE;
+  const guchar      bw_map[] = { 0, 0, 0, 255, 255, 255 };
+  const guchar      wb_map[] = { 255, 255, 255, 0, 0, 0 };
+  gint              number_of_sub_IFDs = 1;
+  toff_t            sub_IFDs_offsets[1] = { 0UL };
 
   compression = tsvals->compression;
 
   /* Disabled because this isn't in older releases of libtiff, and it
-     wasn't helping much anyway */
+   * wasn't helping much anyway
+   */
 #if 0
   if (TIFFFindCODEC((uint16) compression) == NULL)
     compression = COMPRESSION_NONE; /* CODEC not available */
@@ -314,46 +317,96 @@ save_image (GFile        *file,
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
 
+#ifdef TIFFTAG_ICCPROFILE
+  profile = gimp_image_get_color_profile (orig_image);
+#endif
+
   drawable_type = gimp_drawable_type (layer);
   buffer        = gimp_drawable_get_buffer (layer);
 
   format = gegl_buffer_get_format (buffer);
   type   = babl_format_get_type (format, 0);
 
-  sampleformat = SAMPLEFORMAT_UINT;
+  switch (gimp_image_get_precision (image))
+    {
+    case GIMP_PRECISION_U8_LINEAR:
+      /* only keep 8 bit linear RGB if we also save a profile */
+      if (profile)
+        {
+          bitspersample = 8;
+          sampleformat  = SAMPLEFORMAT_UINT;
+        }
+      else
+        {
+          bitspersample = 16;
+          sampleformat  = SAMPLEFORMAT_UINT;
+          type          = babl_type ("u16");
+        }
+      break;
 
-  if (type == babl_type ("u8"))
-    {
+    case GIMP_PRECISION_U8_GAMMA:
       bitspersample = 8;
-    }
-  else if (type == babl_type ("u16"))
-    {
+      sampleformat  = SAMPLEFORMAT_UINT;
+      break;
+
+    case GIMP_PRECISION_U16_LINEAR:
+    case GIMP_PRECISION_U16_GAMMA:
       bitspersample = 16;
-    }
-  else if (type == babl_type ("half"))
-    {
+      sampleformat  = SAMPLEFORMAT_UINT;
+      break;
+
+    case GIMP_PRECISION_U32_LINEAR:
+    case GIMP_PRECISION_U32_GAMMA:
+      bitspersample = 32;
+      sampleformat  = SAMPLEFORMAT_UINT;
+      break;
+
+    case GIMP_PRECISION_HALF_LINEAR:
+    case GIMP_PRECISION_HALF_GAMMA:
       bitspersample = 16;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
-    }
-  else if (type == babl_type ("u32"))
-    {
-      bitspersample = 32;
-    }
-  else if (type == babl_type ("float"))
-    {
+      break;
+
+    default:
+    case GIMP_PRECISION_FLOAT_LINEAR:
+    case GIMP_PRECISION_FLOAT_GAMMA:
       bitspersample = 32;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
-    }
-  else if (type == babl_type ("double"))
-    {
+      break;
+
+    case GIMP_PRECISION_DOUBLE_LINEAR:
+    case GIMP_PRECISION_DOUBLE_GAMMA:
       bitspersample = 64;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
+      break;
     }
-  else
+
+  switch (gimp_image_get_precision (image))
     {
-      bitspersample = 32;
-      sampleformat  = SAMPLEFORMAT_IEEEFP;
-      type          = babl_type ("float");
+    case GIMP_PRECISION_U8_LINEAR:
+    case GIMP_PRECISION_U16_LINEAR:
+    case GIMP_PRECISION_U32_LINEAR:
+    case GIMP_PRECISION_HALF_LINEAR:
+    case GIMP_PRECISION_FLOAT_LINEAR:
+    case GIMP_PRECISION_DOUBLE_LINEAR:
+      /* save linear RGB only if we save a profile, or a loader won't
+       * do the right thing
+       */
+      if (profile)
+        linear = TRUE;
+      else
+        linear = FALSE;
+      break;
+
+    default:
+    case GIMP_PRECISION_U8_GAMMA:
+    case GIMP_PRECISION_U16_GAMMA:
+    case GIMP_PRECISION_U32_GAMMA:
+    case GIMP_PRECISION_HALF_GAMMA:
+    case GIMP_PRECISION_FLOAT_GAMMA:
+    case GIMP_PRECISION_DOUBLE_GAMMA:
+      linear = FALSE;
+      break;
     }
 
   *saved_bpp = bitspersample;
@@ -368,22 +421,44 @@ save_image (GFile        *file,
       samplesperpixel = 3;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = FALSE;
-      format          = babl_format_new (babl_model ("R'G'B'"),
-                                         type,
-                                         babl_component ("R'"),
-                                         babl_component ("G'"),
-                                         babl_component ("B'"),
-                                         NULL);
+      if (linear)
+        {
+          format = babl_format_new (babl_model ("RGB"),
+                                    type,
+                                    babl_component ("R"),
+                                    babl_component ("G"),
+                                    babl_component ("B"),
+                                    NULL);
+        }
+      else
+        {
+          format = babl_format_new (babl_model ("R'G'B'"),
+                                    type,
+                                    babl_component ("R'"),
+                                    babl_component ("G'"),
+                                    babl_component ("B'"),
+                                    NULL);
+        }
       break;
 
     case GIMP_GRAY_IMAGE:
       samplesperpixel = 1;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = FALSE;
-      format          = babl_format_new (babl_model ("Y'"),
-                                         type,
-                                         babl_component ("Y'"),
-                                         NULL);
+      if (linear)
+        {
+          format = babl_format_new (babl_model ("Y"),
+                                    type,
+                                    babl_component ("Y"),
+                                    NULL);
+        }
+      else
+        {
+          format = babl_format_new (babl_model ("Y'"),
+                                    type,
+                                    babl_component ("Y'"),
+                                    NULL);
+        }
       break;
 
     case GIMP_RGBA_IMAGE:
@@ -393,23 +468,49 @@ save_image (GFile        *file,
       alpha           = TRUE;
       if (tsvals->save_transp_pixels)
         {
-          format = babl_format_new (babl_model ("R'G'B'A"),
-                                    type,
-                                    babl_component ("R'"),
-                                    babl_component ("G'"),
-                                    babl_component ("B'"),
-                                    babl_component ("A"),
-                                    NULL);
+          if (linear)
+            {
+              format = babl_format_new (babl_model ("RGBA"),
+                                        type,
+                                        babl_component ("R"),
+                                        babl_component ("G"),
+                                        babl_component ("B"),
+                                        babl_component ("A"),
+                                        NULL);
+            }
+          else
+            {
+              format = babl_format_new (babl_model ("R'G'B'A"),
+                                        type,
+                                        babl_component ("R'"),
+                                        babl_component ("G'"),
+                                        babl_component ("B'"),
+                                        babl_component ("A"),
+                                        NULL);
+            }
         }
       else
         {
-          format = babl_format_new (babl_model ("R'aG'aB'aA"),
-                                    type,
-                                    babl_component ("R'a"),
-                                    babl_component ("G'a"),
-                                    babl_component ("B'a"),
-                                    babl_component ("A"),
-                                    NULL);
+          if (linear)
+            {
+              format = babl_format_new (babl_model ("RaGaBaA"),
+                                        type,
+                                        babl_component ("Ra"),
+                                        babl_component ("Ga"),
+                                        babl_component ("Ba"),
+                                        babl_component ("A"),
+                                        NULL);
+            }
+          else
+            {
+              format = babl_format_new (babl_model ("R'aG'aB'aA"),
+                                        type,
+                                        babl_component ("R'a"),
+                                        babl_component ("G'a"),
+                                        babl_component ("B'a"),
+                                        babl_component ("A"),
+                                        NULL);
+            }
         }
       break;
 
@@ -419,19 +520,41 @@ save_image (GFile        *file,
       alpha           = TRUE;
       if (tsvals->save_transp_pixels)
         {
-          format = babl_format_new (babl_model ("Y'A"),
-                                    type,
-                                    babl_component ("Y'"),
-                                    babl_component ("A"),
-                                    NULL);
+          if (linear)
+            {
+              format = babl_format_new (babl_model ("YA"),
+                                        type,
+                                        babl_component ("Y"),
+                                        babl_component ("A"),
+                                        NULL);
+            }
+          else
+            {
+              format = babl_format_new (babl_model ("Y'A"),
+                                        type,
+                                        babl_component ("Y'"),
+                                        babl_component ("A"),
+                                        NULL);
+            }
         }
       else
         {
-          format = babl_format_new (babl_model ("Y'aA"),
-                                    type,
-                                    babl_component ("Y'a"),
-                                    babl_component ("A"),
-                                    NULL);
+          if (linear)
+            {
+              format = babl_format_new (babl_model ("YaA"),
+                                        type,
+                                        babl_component ("Ya"),
+                                        babl_component ("A"),
+                                        NULL);
+            }
+          else
+            {
+              format = babl_format_new (babl_model ("Y'aA"),
+                                        type,
+                                        babl_component ("Y'a"),
+                                        babl_component ("A"),
+                                        NULL);
+            }
         }
       break;
 
@@ -631,23 +754,17 @@ save_image (GFile        *file,
 
   /* do we have an ICC profile? If so, write it to the TIFF file */
 #ifdef TIFFTAG_ICCPROFILE
-  {
-    GimpColorProfile *profile;
+  if (profile)
+    {
+      const guint8 *icc_data;
+      gsize         icc_length;
 
-    profile = gimp_image_get_color_profile (orig_image);
+      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
 
-    if (profile)
-      {
-        const guint8 *icc_data;
-        gsize         icc_length;
+      TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
 
-        icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
-
-        TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
-
-        g_object_unref (profile);
-      }
-  }
+      g_object_unref (profile);
+    }
 #endif
 
   /* save path data */

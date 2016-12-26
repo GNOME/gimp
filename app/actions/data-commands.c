@@ -71,7 +71,7 @@ data_open_as_image_cmd_callback (GtkAction *action,
 
   if (data && gimp_data_get_file (data))
     {
-      GFile             *file = gimp_data_get_file (data);
+      GFile             *file   = gimp_data_get_file (data);
       GtkWidget         *widget = GTK_WIDGET (view);
       GimpImage         *image;
       GimpPDBStatusType  status;
@@ -138,8 +138,7 @@ data_duplicate_cmd_callback (GtkAction *action,
     gimp_context_get_by_type (context,
                               gimp_data_factory_view_get_children_type (view));
 
-  if (data && gimp_data_factory_view_have (view,
-                                           GIMP_OBJECT (data)))
+  if (data && gimp_data_factory_view_have (view, GIMP_OBJECT (data)))
     {
       GimpData *new_data;
 
@@ -235,8 +234,7 @@ data_delete_cmd_callback (GtkAction *action,
 
   if (data                          &&
       gimp_data_is_deletable (data) &&
-      gimp_data_factory_view_have (view,
-                                   GIMP_OBJECT (data)))
+      gimp_data_factory_view_have (view, GIMP_OBJECT (data)))
     {
       GimpDataFactory *factory;
       GtkWidget       *dialog;
@@ -278,8 +276,7 @@ data_edit_cmd_callback (GtkAction   *action,
     gimp_context_get_by_type (context,
                               gimp_data_factory_view_get_children_type (view));
 
-  if (data && gimp_data_factory_view_have (view,
-                                           GIMP_OBJECT (data)))
+  if (data && gimp_data_factory_view_have (view, GIMP_OBJECT (data)))
     {
       GdkScreen *screen  = gtk_widget_get_screen (GTK_WIDGET (view));
       gint       monitor = gimp_widget_get_monitor (GTK_WIDGET (view));

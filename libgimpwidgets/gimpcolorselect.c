@@ -188,7 +188,7 @@ static void   gimp_color_select_z_size_allocate (GtkWidget          *widget,
 static gboolean   gimp_color_select_z_expose    (GtkWidget          *widget,
                                                  GdkEventExpose     *eevent,
                                                  GimpColorSelect    *select);
-static gboolean   gimp_color_select_z_events    (GtkWidget          *widet,
+static gboolean   gimp_color_select_z_events    (GtkWidget          *widget,
                                                  GdkEvent           *event,
                                                  GimpColorSelect    *select);
 

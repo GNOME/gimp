@@ -446,14 +446,20 @@ run (const gchar      *name,
               if (orig_quality > jsvals.quality)
                 {
                   jsvals.quality = orig_quality;
-                  jsvals.use_orig_quality = TRUE;
                 }
 
-              if (orig_subsmp == JPEG_SUBSAMPLING_1x1_1x1_1x1 ||
-                  ((gint) orig_subsmp > 0 &&
-                   jsvals.subsmp == JPEG_SUBSAMPLING_1x1_1x1_1x1))
+              /* Skip changing subsampling to original if we alredy have best
+               * setting or if original have worst setting */
+              if (!(jsvals.subsmp == JPEG_SUBSAMPLING_1x1_1x1_1x1 ||
+                    orig_subsmp == JPEG_SUBSAMPLING_2x2_1x1_1x1))
                 {
                   jsvals.subsmp = orig_subsmp;
+                }
+
+              if (orig_quality == jsvals.quality &&
+                  orig_subsmp == jsvals.subsmp)
+                {
+                  jsvals.use_orig_quality = TRUE;
                 }
             }
           break;

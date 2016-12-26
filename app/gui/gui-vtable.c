@@ -398,7 +398,6 @@ gui_display_create (Gimp      *gimp,
       g_return_val_if_fail (image_managers != NULL, NULL);
 
       display = gimp_display_new (gimp, image, unit, scale,
-                                  global_menu_factory,
                                   image_managers->data,
                                   gimp_dialog_factory_get_singleton (),
                                   GDK_SCREEN (screen),

@@ -1129,6 +1129,7 @@ gimp_display_shell_color_config_notify_handler (GObject          *config,
       if (! strcmp (param_spec->name, "mode")                                 ||
           ! strcmp (param_spec->name, "display-rendering-intent")             ||
           ! strcmp (param_spec->name, "display-use-black-point-compensation") ||
+          ! strcmp (param_spec->name, "printer-profile")                      ||
           ! strcmp (param_spec->name, "simulation-rendering-intent")          ||
           ! strcmp (param_spec->name, "simulation-use-black-point-compensation") ||
           ! strcmp (param_spec->name, "simulation-gamut-check"))

@@ -37,6 +37,8 @@
 
 #include "tools/gimptexttool.h"
 
+#include "dialogs/dialogs.h"
+
 #include "text-tool-commands.h"
 
 #include "gimp-intl.h"
@@ -44,11 +46,9 @@
 
 /*  local function prototypes  */
 
-static void   text_tool_load_dialog_destroyed (GtkWidget    *dialog,
-					       GObject      *tool);
-static void   text_tool_load_dialog_response  (GtkWidget    *dialog,
-					       gint          response_id,
-					       GimpTextTool *tool);
+static void   text_tool_load_dialog_response (GtkWidget    *dialog,
+                                              gint          response_id,
+                                              GimpTextTool *tool);
 
 
 /*  public functions  */
@@ -93,63 +93,54 @@ void
 text_tool_load_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpTextTool   *text_tool = GIMP_TEXT_TOOL (data);
-  GtkWidget      *dialog;
-  GtkWidget      *parent    = NULL;
-  GtkFileChooser *chooser;
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (data);
+  GtkWidget    *dialog;
 
-  dialog = g_object_get_data (G_OBJECT (text_tool), "gimp-text-file-dialog");
+  dialog = dialogs_get_dialog (G_OBJECT (text_tool), "gimp-text-file-dialog");
 
-  if (dialog)
+  if (! dialog)
     {
-      gtk_window_present (GTK_WINDOW (dialog));
-      return;
+      GtkWidget *parent = NULL;
+
+      if (GIMP_TOOL (text_tool)->display)
+        {
+          GimpDisplayShell *shell;
+
+          shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+
+          parent = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+        }
+
+      dialog = gtk_file_chooser_dialog_new (_("Open Text File (UTF-8)"),
+                                            parent ? GTK_WINDOW (parent) : NULL,
+                                            GTK_FILE_CHOOSER_ACTION_OPEN,
+
+                                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                            GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+
+                                            NULL);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+      gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                               GTK_RESPONSE_OK,
+                                               GTK_RESPONSE_CANCEL,
+                                               -1);
+
+      gtk_window_set_role (GTK_WINDOW (dialog), "gimp-text-load-file");
+      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (text_tool_load_dialog_response),
+                        text_tool);
+      g_signal_connect (dialog, "delete-event",
+                        G_CALLBACK (gtk_true),
+                        NULL);
+
+      dialogs_attach_dialog (G_OBJECT (text_tool),
+                             "gimp-text-file-dialog", dialog);
     }
 
-  if (GIMP_TOOL (text_tool)->display)
-    {
-      GimpDisplayShell *shell;
-
-      shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
-
-      parent = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-    }
-
-  dialog = gtk_file_chooser_dialog_new (_("Open Text File (UTF-8)"),
-					parent ? GTK_WINDOW (parent) : NULL,
-					GTK_FILE_CHOOSER_ACTION_OPEN,
-
-					GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
-
-					NULL);
-
-  chooser = GTK_FILE_CHOOSER (dialog);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  g_object_set_data (G_OBJECT (text_tool), "gimp-text-file-dialog", dialog);
-
-  g_signal_connect (dialog, "destroy",
-		    G_CALLBACK (text_tool_load_dialog_destroyed),
-		    text_tool);
-
-  gtk_window_set_role (GTK_WINDOW (chooser), "gimp-text-load-file");
-  gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (chooser), GTK_RESPONSE_OK);
-
-  g_signal_connect (chooser, "response",
-                    G_CALLBACK (text_tool_load_dialog_response),
-                    text_tool);
-  g_signal_connect (chooser, "delete-event",
-                    G_CALLBACK (gtk_true),
-                    NULL);
-
-  gtk_widget_show (GTK_WIDGET (chooser));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -194,31 +185,22 @@ text_tool_direction_cmd_callback (GtkAction *action,
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
   g_object_set (text_tool->proxy,
-		"base-direction", (GimpTextDirection) value,
-		NULL);
+                "base-direction", (GimpTextDirection) value,
+                NULL);
 }
 
 
 /*  private functions  */
 
 static void
-text_tool_load_dialog_destroyed (GtkWidget *dialog,
-				 GObject   *tool)
-{
-  g_object_set_data (tool, "gimp-text-file-dialog", NULL);
-}
-
-static void
 text_tool_load_dialog_response (GtkWidget    *dialog,
-				gint          response_id,
-				GimpTextTool *tool)
+                                gint          response_id,
+                                GimpTextTool *tool)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GFile  *file;
+      GFile  *file  = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
       GError *error = NULL;
-
-      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
       if (! gimp_text_buffer_load (tool->buffer, file, &error))
         {

@@ -271,23 +271,21 @@ gimp_controller_wheel_scroll (GimpControllerWheel  *wheel,
    */
   for (i = G_N_ELEMENTS (wheel_events) - 1; i >= 0; i--)
     {
-      if (wheel_events[i].direction == sevent->direction)
+      if (wheel_events[i].direction == sevent->direction &&
+          (wheel_events[i].modifiers & sevent->state) ==
+          wheel_events[i].modifiers)
         {
-          if ((wheel_events[i].modifiers & sevent->state) ==
-              wheel_events[i].modifiers)
-            {
-              GimpControllerEvent         controller_event;
-              GimpControllerEventTrigger *trigger;
+          GimpControllerEvent         controller_event;
+          GimpControllerEventTrigger *trigger;
 
-              trigger = (GimpControllerEventTrigger *) &controller_event;
+          trigger = (GimpControllerEventTrigger *) &controller_event;
 
-              trigger->type     = GIMP_CONTROLLER_EVENT_TRIGGER;
-              trigger->source   = GIMP_CONTROLLER (wheel);
-              trigger->event_id = i;
+          trigger->type     = GIMP_CONTROLLER_EVENT_TRIGGER;
+          trigger->source   = GIMP_CONTROLLER (wheel);
+          trigger->event_id = i;
 
-              return gimp_controller_event (GIMP_CONTROLLER (wheel),
-                                            &controller_event);
-            }
+          return gimp_controller_event (GIMP_CONTROLLER (wheel),
+                                        &controller_event);
         }
     }
 

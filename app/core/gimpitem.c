@@ -54,6 +54,7 @@ enum
 {
   REMOVED,
   LINKED_CHANGED,
+  COLOR_TAG_CHANGED,
   LOCK_CONTENT_CHANGED,
   LOCK_POSITION_CHANGED,
   LAST_SIGNAL
@@ -69,6 +70,7 @@ enum
   PROP_OFFSET_X,
   PROP_OFFSET_Y,
   PROP_LINKED,
+  PROP_COLOR_TAG,
   PROP_LOCK_CONTENT,
   PROP_LOCK_POSITION
 };
@@ -92,7 +94,9 @@ struct _GimpItemPrivate
   guint             lock_content  : 1;  /*  content editability      */
   guint             lock_position : 1;  /*  content movability       */
 
-  guint             removed : 1;        /*  removed from the image?  */
+  guint             removed       : 1;  /*  removed from the image?  */
+
+  GimpColorTag      color_tag;          /*  color tag                */
 
   GList            *offset_nodes;       /*  offset nodes to manage   */
 };
@@ -147,10 +151,12 @@ static void       gimp_item_real_scale              (GimpItem       *item,
                                                      GimpProgress   *progress);
 static void       gimp_item_real_resize             (GimpItem       *item,
                                                      GimpContext    *context,
+                                                     GimpFillType    fill_type,
                                                      gint            new_width,
                                                      gint            new_height,
                                                      gint            offset_x,
                                                      gint            offset_y);
+
 
 
 G_DEFINE_TYPE (GimpItem, gimp_item, GIMP_TYPE_FILTER)
@@ -185,6 +191,15 @@ gimp_item_class_init (GimpItemClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  gimp_item_signals[COLOR_TAG_CHANGED] =
+    g_signal_new ("color-tag-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpItemClass, color_tag_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   gimp_item_signals[LOCK_CONTENT_CHANGED] =
     g_signal_new ("lock-content-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -210,11 +225,13 @@ gimp_item_class_init (GimpItemClass *klass)
 
   gimp_object_class->get_memsize   = gimp_item_get_memsize;
 
+  viewable_class->name_editable    = TRUE;
   viewable_class->get_preview_size = gimp_item_get_preview_size;
   viewable_class->get_popup_size   = gimp_item_get_popup_size;
 
   klass->removed                   = NULL;
   klass->linked_changed            = NULL;
+  klass->color_tag_changed         = NULL;
   klass->lock_content_changed      = NULL;
   klass->lock_position_changed     = NULL;
 
@@ -285,6 +302,12 @@ gimp_item_class_init (GimpItemClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
 
+  g_object_class_install_property (object_class, PROP_COLOR_TAG,
+                                   g_param_spec_enum ("color-tag", NULL, NULL,
+                                                      GIMP_TYPE_COLOR_TAG,
+                                                      GIMP_COLOR_TAG_NONE,
+                                                      GIMP_PARAM_READABLE));
+
   g_object_class_install_property (object_class, PROP_LOCK_CONTENT,
                                    g_param_spec_boolean ("lock-content",
                                                          NULL, NULL,
@@ -307,18 +330,7 @@ gimp_item_init (GimpItem *item)
 
   g_object_force_floating (G_OBJECT (item));
 
-  private->ID            = 0;
-  private->tattoo        = 0;
-  private->image         = NULL;
-  private->parasites     = gimp_parasite_list_new ();
-  private->width         = 0;
-  private->height        = 0;
-  private->offset_x      = 0;
-  private->offset_y      = 0;
-  private->linked        = FALSE;
-  private->lock_content  = FALSE;
-  private->lock_position = FALSE;
-  private->removed       = FALSE;
+  private->parasites = gimp_parasite_list_new ();
 }
 
 static void
@@ -409,6 +421,9 @@ gimp_item_get_property (GObject    *object,
       break;
     case PROP_LINKED:
       g_value_set_boolean (value, private->linked);
+      break;
+    case PROP_COLOR_TAG:
+      g_value_set_enum (value, private->color_tag);
       break;
     case PROP_LOCK_CONTENT:
       g_value_set_boolean (value, private->lock_content);
@@ -525,8 +540,9 @@ gimp_item_real_duplicate (GimpItem *item,
   g_object_unref (GET_PRIVATE (new_item)->parasites);
   GET_PRIVATE (new_item)->parasites = gimp_parasite_list_copy (private->parasites);
 
-  gimp_item_set_visible (new_item, gimp_item_get_visible (item), FALSE);
-  gimp_item_set_linked  (new_item, gimp_item_get_linked (item),  FALSE);
+  gimp_item_set_visible   (new_item, gimp_item_get_visible   (item), FALSE);
+  gimp_item_set_linked    (new_item, gimp_item_get_linked    (item), FALSE);
+  gimp_item_set_color_tag (new_item, gimp_item_get_color_tag (item), FALSE);
 
   if (gimp_item_can_lock_content (new_item))
     gimp_item_set_lock_content (new_item, gimp_item_get_lock_content (item),
@@ -602,12 +618,13 @@ gimp_item_real_scale (GimpItem              *item,
 }
 
 static void
-gimp_item_real_resize (GimpItem    *item,
-                       GimpContext *context,
-                       gint         new_width,
-                       gint         new_height,
-                       gint         offset_x,
-                       gint         offset_y)
+gimp_item_real_resize (GimpItem     *item,
+                       GimpContext  *context,
+                       GimpFillType  fill_type,
+                       gint          new_width,
+                       gint          new_height,
+                       gint          offset_x,
+                       gint          offset_y)
 {
   GimpItemPrivate *private = GET_PRIVATE (item);
 
@@ -1393,12 +1410,13 @@ gimp_item_scale_by_origin (GimpItem              *item,
 }
 
 void
-gimp_item_resize (GimpItem    *item,
-                  GimpContext *context,
-                  gint         new_width,
-                  gint         new_height,
-                  gint         offset_x,
-                  gint         offset_y)
+gimp_item_resize (GimpItem     *item,
+                  GimpContext  *context,
+                  GimpFillType  fill_type,
+                  gint          new_width,
+                  gint          new_height,
+                  gint          offset_x,
+                  gint          offset_y)
 {
   GimpItemClass *item_class;
   GimpImage     *image;
@@ -1418,7 +1436,8 @@ gimp_item_resize (GimpItem    *item,
 
   g_object_freeze_notify (G_OBJECT (item));
 
-  item_class->resize (item, context, new_width, new_height, offset_x, offset_y);
+  item_class->resize (item, context, fill_type,
+                      new_width, new_height, offset_x, offset_y);
 
   g_object_thaw_notify (G_OBJECT (item));
 
@@ -1815,6 +1834,7 @@ gimp_item_replace_item (GimpItem *item,
 
   gimp_item_set_visible       (item, gimp_item_get_visible (replace), FALSE);
   gimp_item_set_linked        (item, gimp_item_get_linked (replace), FALSE);
+  gimp_item_set_color_tag     (item, gimp_item_get_color_tag (replace), FALSE);
   gimp_item_set_lock_content  (item, gimp_item_get_lock_content (replace), FALSE);
   gimp_item_set_lock_position (item, gimp_item_get_lock_position (replace), FALSE);
 }
@@ -2099,6 +2119,39 @@ gimp_item_get_linked (GimpItem *item)
 }
 
 void
+gimp_item_set_color_tag (GimpItem     *item,
+                         GimpColorTag  color_tag,
+                         gboolean      push_undo)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (gimp_item_get_color_tag (item) != color_tag)
+    {
+      if (push_undo && gimp_item_is_attached (item))
+        {
+          GimpImage *image = gimp_item_get_image (item);
+
+          if (image)
+            gimp_image_undo_push_item_color_tag (image, NULL, item);
+        }
+
+      GET_PRIVATE (item)->color_tag = color_tag;
+
+      g_signal_emit (item, gimp_item_signals[COLOR_TAG_CHANGED], 0);
+
+      g_object_notify (G_OBJECT (item), "color-tag");
+    }
+}
+
+GimpColorTag
+gimp_item_get_color_tag (GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), GIMP_COLOR_TAG_NONE);
+
+  return GET_PRIVATE (item)->color_tag;
+}
+
+void
 gimp_item_set_lock_content (GimpItem *item,
                             gboolean  lock_content,
                             gboolean  push_undo)
@@ -2215,7 +2268,7 @@ gimp_item_mask_bounds (GimpItem *item,
 {
   GimpImage   *image;
   GimpChannel *selection;
-  gint         x, y, w, h;
+  gint         x, y, width, height;
   gboolean     retval;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
@@ -2224,41 +2277,45 @@ gimp_item_mask_bounds (GimpItem *item,
   image     = gimp_item_get_image (item);
   selection = gimp_image_get_mask (image);
 
-  if (GIMP_ITEM (selection) != item &&
-      gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &w, &h))
+  /* check for is_empty() before intersecting so we ignore the
+   * selection if it is suspended (like when stroking)
+   */
+  if (GIMP_ITEM (selection) != item       &&
+      ! gimp_channel_is_empty (selection) &&
+      gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &width, &height))
     {
       gint off_x, off_y;
       gint x2, y2;
 
       gimp_item_get_offset (item, &off_x, &off_y);
 
-      x2 = x + w;
-      y2 = y + h;
+      x2 = x + width;
+      y2 = y + height;
 
       x  = CLAMP (x  - off_x, 0, gimp_item_get_width  (item));
       y  = CLAMP (y  - off_y, 0, gimp_item_get_height (item));
       x2 = CLAMP (x2 - off_x, 0, gimp_item_get_width  (item));
       y2 = CLAMP (y2 - off_y, 0, gimp_item_get_height (item));
 
-      w = x2 - x;
-      h = y2 - y;
+      width  = x2 - x;
+      height = y2 - y;
 
       retval = TRUE;
     }
   else
     {
-      x = 0;
-      y = 0;
-      w = gimp_item_get_width  (item);
-      h = gimp_item_get_height (item);
+      x      = 0;
+      y      = 0;
+      width  = gimp_item_get_width  (item);
+      height = gimp_item_get_height (item);
 
       retval = FALSE;
     }
 
   if (x1) *x1 = x;
   if (y1) *y1 = y;
-  if (x2) *x2 = x + w;
-  if (y2) *y2 = y + h;
+  if (x2) *x2 = x + width;
+  if (y2) *y2 = y + height;
 
   return retval;
 }
@@ -2294,7 +2351,11 @@ gimp_item_mask_intersect (GimpItem *item,
   image     = gimp_item_get_image (item);
   selection = gimp_image_get_mask (image);
 
-  if (GIMP_ITEM (selection) != item &&
+  /* check for is_empty() before intersecting so we ignore the
+   * selection if it is suspended (like when stroking)
+   */
+  if (GIMP_ITEM (selection) != item       &&
+      ! gimp_channel_is_empty (selection) &&
       gimp_item_bounds (GIMP_ITEM (selection),
                         &tmp_x, &tmp_y, &tmp_width, &tmp_height))
     {

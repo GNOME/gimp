@@ -29,6 +29,7 @@ void   gimp_image_resize              (GimpImage    *image,
 
 void   gimp_image_resize_with_layers  (GimpImage    *image,
                                        GimpContext  *context,
+                                       GimpFillType  fill_type,
                                        gint          new_width,
                                        gint          new_height,
                                        gint          offset_x,

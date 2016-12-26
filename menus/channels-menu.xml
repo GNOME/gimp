@@ -4,6 +4,17 @@
 <ui>
   <popup action="channels-popup">
     <menuitem action="channels-edit-attributes" />
+    <menu action="channels-color-tag-menu" name="Color Tags">
+     <menuitem action="channels-color-tag-none" />
+     <menuitem action="channels-color-tag-blue" />
+     <menuitem action="channels-color-tag-green" />
+     <menuitem action="channels-color-tag-yellow" />
+     <menuitem action="channels-color-tag-orange" />
+     <menuitem action="channels-color-tag-brown" />
+     <menuitem action="channels-color-tag-red" />
+     <menuitem action="channels-color-tag-violet" />
+     <menuitem action="channels-color-tag-gray" />
+    </menu>
     <separator />
     <menuitem action="channels-new" />
     <menuitem action="channels-raise" />

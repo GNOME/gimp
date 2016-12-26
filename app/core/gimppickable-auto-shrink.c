@@ -60,14 +60,14 @@ static gboolean         gimp_pickable_colors_alpha  (guchar       *col1,
 
 GimpAutoShrink
 gimp_pickable_auto_shrink (GimpPickable *pickable,
-                           gint          start_x1,
-                           gint          start_y1,
-                           gint          start_x2,
-                           gint          start_y2,
-                           gint         *shrunk_x1,
-                           gint         *shrunk_y1,
-                           gint         *shrunk_x2,
-                           gint         *shrunk_y2)
+                           gint          start_x,
+                           gint          start_y,
+                           gint          start_width,
+                           gint          start_height,
+                           gint         *shrunk_x,
+                           gint         *shrunk_y,
+                           gint         *shrunk_width,
+                           gint         *shrunk_height)
 {
   GeglBuffer      *buffer;
   GeglRectangle    rect;
@@ -81,10 +81,10 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
   GimpAutoShrink   retval = GIMP_AUTO_SHRINK_UNSHRINKABLE;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
-  g_return_val_if_fail (shrunk_x1 != NULL, FALSE);
-  g_return_val_if_fail (shrunk_y1 != NULL, FALSE);
-  g_return_val_if_fail (shrunk_x2 != NULL, FALSE);
-  g_return_val_if_fail (shrunk_y2 != NULL, FALSE);
+  g_return_val_if_fail (shrunk_x != NULL, FALSE);
+  g_return_val_if_fail (shrunk_y != NULL, FALSE);
+  g_return_val_if_fail (shrunk_width != NULL, FALSE);
+  g_return_val_if_fail (shrunk_height != NULL, FALSE);
 
   gimp_set_busy (gimp_pickable_get_image (pickable)->gimp);
 
@@ -98,16 +98,16 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
 
   buffer = gimp_pickable_get_buffer (pickable);
 
-  x1 = MAX (start_x1, 0);
-  y1 = MAX (start_y1, 0);
-  x2 = MIN (start_x2, gegl_buffer_get_width  (buffer));
-  y2 = MIN (start_y2, gegl_buffer_get_height (buffer));
+  x1 = MAX (start_x, 0);
+  y1 = MAX (start_y, 0);
+  x2 = MIN (start_x + start_width,  gegl_buffer_get_width  (buffer));
+  y2 = MIN (start_y + start_height, gegl_buffer_get_height (buffer));
 
   /* By default, return the start values */
-  *shrunk_x1 = x1;
-  *shrunk_y1 = y1;
-  *shrunk_x2 = x2;
-  *shrunk_y2 = y2;
+  *shrunk_x      = x1;
+  *shrunk_y      = y1;
+  *shrunk_width  = x2 - x1;
+  *shrunk_height = y2 - y1;
 
   format = babl_format ("R'G'B'A u8");
 
@@ -210,13 +210,15 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
     }
   x2 = x + 1;
 
-  if (x1 != start_x1 || y1 != start_y1 ||
-      x2 != start_x2 || y2 != start_y2)
+  if (x1      != start_x     ||
+      y1      != start_y     ||
+      x2 - x1 != start_width ||
+      y2 - y1 != start_height)
     {
-      *shrunk_x1 = x1;
-      *shrunk_y1 = y1;
-      *shrunk_x2 = x2;
-      *shrunk_y2 = y2;
+      *shrunk_x      = x1;
+      *shrunk_y      = y1;
+      *shrunk_width  = x2 - x1;
+      *shrunk_height = y2 - y1;
 
       retval = GIMP_AUTO_SHRINK_SHRINK;
     }

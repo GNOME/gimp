@@ -70,7 +70,7 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                             _("Use accumulated color value from "
                               "all composited visible layers"),
                             FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_PICK_MODE,
                          "pick-mode",

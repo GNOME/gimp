@@ -271,12 +271,12 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 }
 
 void
-gimp_gegl_apply_color_reduction (GeglBuffer   *src_buffer,
-                                 GimpProgress *progress,
-                                 const gchar  *undo_desc,
-                                 GeglBuffer   *dest_buffer,
-                                 gint          bits,
-                                 gint          dither_type)
+gimp_gegl_apply_dither (GeglBuffer   *src_buffer,
+                        GimpProgress *progress,
+                        const gchar  *undo_desc,
+                        GeglBuffer   *dest_buffer,
+                        gint          levels,
+                        gint          dither_type)
 {
   GeglNode *node;
 
@@ -284,13 +284,15 @@ gimp_gegl_apply_color_reduction (GeglBuffer   *src_buffer,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
+  levels = CLAMP (levels, 2, 65536);
+
   node = gegl_node_new_child (NULL,
-                              "operation",       "gegl:color-reduction",
-                              "red-bits",        bits,
-                              "green-bits",      bits,
-                              "blue-bits",       bits,
-                              "alpha-bits",      bits,
-                              "dither-strategy", dither_type,
+                              "operation",     "gegl:dither",
+                              "red-levels",    levels,
+                              "green-levels",  levels,
+                              "blue-levels",   levels,
+                              "alpha-bits",    levels,
+                              "dither-method", dither_type,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
@@ -685,17 +687,22 @@ gimp_gegl_apply_transform (GeglBuffer            *src_buffer,
                            const gchar           *undo_desc,
                            GeglBuffer            *dest_buffer,
                            GimpInterpolationType  interpolation_type,
+                           GimpTransformResize    clip_result,
                            GimpMatrix3           *transform)
 {
   GeglNode *node;
+  gboolean  clip_to_input;
 
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
 
+  clip_to_input = (clip_result == GIMP_TRANSFORM_RESIZE_CLIP);
+
   node = gegl_node_new_child (NULL,
-                              "operation", "gegl:transform",
-                              "sampler",   interpolation_type,
+                              "operation",     "gegl:transform",
+                              "sampler",       interpolation_type,
+                              "clip-to-input", clip_to_input,
                               NULL);
 
   gimp_gegl_node_set_matrix (node, transform);

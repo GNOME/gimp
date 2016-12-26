@@ -139,7 +139,7 @@ gimp_proc_view_new (const gchar        *name,
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -147,7 +147,7 @@ gimp_proc_view_new (const gchar        *name,
     {
       label = gtk_label_new_with_mnemonic (menu_path);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
@@ -157,7 +157,7 @@ gimp_proc_view_new (const gchar        *name,
     {
       label = gtk_label_new (blurb);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
@@ -209,7 +209,7 @@ gimp_proc_view_new (const gchar        *name,
     {
       label = gtk_label_new (help);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
@@ -232,7 +232,8 @@ gimp_proc_view_new (const gchar        *name,
     {
       label = gtk_label_new (author);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
@@ -244,7 +245,8 @@ gimp_proc_view_new (const gchar        *name,
     {
       label = gtk_label_new (date);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
@@ -256,7 +258,8 @@ gimp_proc_view_new (const gchar        *name,
     {
       label = gtk_label_new (copyright);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
@@ -292,7 +295,8 @@ gimp_proc_view_create_params (const GimpParamDef *params,
 
       /* name */
       label = gtk_label_new (params[i].name);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_size_group_add_widget (name_group, label);
       gtk_table_attach (GTK_TABLE (table), label,
                         0, 1, i, i + 1, GTK_FILL, GTK_FILL, 0, 0);
@@ -312,7 +316,8 @@ gimp_proc_view_create_params (const GimpParamDef *params,
                                  PANGO_ATTR_FAMILY, "monospace",
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_size_group_add_widget (type_group, label);
       gtk_table_attach (GTK_TABLE (table), label,
                         1, 2, i, i + 1, GTK_FILL, GTK_FILL, 0, 0);
@@ -321,7 +326,8 @@ gimp_proc_view_create_params (const GimpParamDef *params,
       /* description */
       label = gtk_label_new (params[i].description);
       gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_size_group_add_widget (desc_group, label);
       gtk_table_attach (GTK_TABLE (table), label,

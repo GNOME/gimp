@@ -21,7 +21,7 @@ open MK, "> $outmk";
 open IGNORE, "> $outignore";
 open RC, "> $outrc";
 
-require 'plugin-defs.pl';
+require './plugin-defs.pl';
 
 $bins = ""; $opts = "";
 
@@ -62,6 +62,11 @@ if OS_WIN32
 mwindows = -mwindows
 else
 libm = -lm
+endif
+
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+framework_cocoa = -framework Cocoa
 endif
 
 if HAVE_WINDRES
@@ -161,6 +166,15 @@ foreach (sort keys %plugins) {
 		$optlib = "\n\t\$(" . $plugins{$_}->{libs} . ")\t\t\\";
     }
 
+    if (exists $plugins{$_}->{ldflags}) {
+	my $ldflags = $plugins{$_}->{ldflags};
+
+	print MK <<EOT;
+
+${makename}_LDFLAGS = $ldflags
+EOT
+    }
+
     if (exists $plugins{$_}->{cflags}) {
 	my $cflags = $plugins{$_}->{cflags};
 	my $cflagsvalue = $cflags =~ /FLAGS/ ? "\$($cflags)" : $cflags;
@@ -168,6 +182,15 @@ foreach (sort keys %plugins) {
 	print MK <<EOT;
 
 ${makename}_CFLAGS = $cflagsvalue
+EOT
+    }
+
+    if (exists $plugins{$_}->{cppflags}) {
+	my $cppflags = $plugins{$_}->{cppflags};
+
+	print MK <<EOT;
+
+${makename}_CPPFLAGS = $cppflags
 EOT
     }
 

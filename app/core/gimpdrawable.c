@@ -35,6 +35,7 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
+#include "gimpdrawable-fill.h"
 #include "gimpdrawable-floating-selection.h"
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-private.h"
@@ -105,6 +106,7 @@ static void       gimp_drawable_scale              (GimpItem          *item,
                                                     GimpProgress      *progress);
 static void       gimp_drawable_resize             (GimpItem          *item,
                                                     GimpContext       *context,
+                                                    GimpFillType       fill_type,
                                                     gint               new_width,
                                                     gint               new_height,
                                                     gint               offset_x,
@@ -154,11 +156,9 @@ static gint64  gimp_drawable_real_estimate_memsize (GimpDrawable      *drawable,
 static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpImage         *dest_image,
                                                     const Babl        *new_format,
-                                                    GimpImageBaseType  new_base_type,
-                                                    GimpPrecision      new_precision,
                                                     GimpColorProfile  *dest_profile,
-                                                    gint               layer_dither_type,
-                                                    gint               mask_dither_type,
+                                                    GeglDitherMethod   layer_dither_type,
+                                                    GeglDitherMethod   mask_dither_type,
                                                     gboolean           push_undo,
                                                     GimpProgress      *progress);
 
@@ -534,12 +534,13 @@ gimp_drawable_scale (GimpItem              *item,
 }
 
 static void
-gimp_drawable_resize (GimpItem    *item,
-                      GimpContext *context,
-                      gint         new_width,
-                      gint         new_height,
-                      gint         offset_x,
-                      gint         offset_y)
+gimp_drawable_resize (GimpItem     *item,
+                      GimpContext  *context,
+                      GimpFillType  fill_type,
+                      gint          new_width,
+                      gint          new_height,
+                      gint          offset_x,
+                      gint          offset_y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
   GeglBuffer   *new_buffer;
@@ -580,26 +581,14 @@ gimp_drawable_resize (GimpItem    *item,
       copy_width  != new_width ||
       copy_height != new_height)
     {
-      /*  Clear the new tiles if needed  */
+      /*  Clear the new buffer if needed  */
 
-      GimpRGB    bg;
-      GeglColor *col;
+      GimpRGB      color;
+      GimpPattern *pattern;
 
-      if (! gimp_drawable_has_alpha (drawable) && ! GIMP_IS_CHANNEL (drawable))
-        {
-          gimp_context_get_background (context, &bg);
-          gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                             &bg, &bg);
-        }
-      else
-        {
-          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
-        }
-
-      col = gimp_gegl_color_new (&bg);
-
-      gegl_buffer_set_color (new_buffer, NULL, col);
-      g_object_unref (col);
+      gimp_get_fill_params (context, fill_type, &color, &pattern, NULL);
+      gimp_drawable_fill_buffer (drawable, new_buffer,
+                                 &color, pattern, 0, 0);
     }
 
   if (intersect && copy_width && copy_height)
@@ -799,11 +788,9 @@ static void
 gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpImage         *dest_image,
                                  const Babl        *new_format,
-                                 GimpImageBaseType  new_base_type,
-                                 GimpPrecision      new_precision,
                                  GimpColorProfile  *dest_profile,
-                                 gint               layer_dither_type,
-                                 gint               mask_dither_type,
+                                 GeglDitherMethod   layer_dither_type,
+                                 GeglDitherMethod   mask_dither_type,
                                  gboolean           push_undo,
                                  GimpProgress      *progress)
 {
@@ -1046,18 +1033,23 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpImage         *dest_image,
                             GimpImageBaseType  new_base_type,
                             GimpPrecision      new_precision,
+                            gboolean           new_has_alpha,
                             GimpColorProfile  *dest_profile,
-                            gint               layer_dither_type,
-                            gint               mask_dither_type,
+                            GeglDitherMethod   layer_dither_type,
+                            GeglDitherMethod   mask_dither_type,
                             gboolean           push_undo,
                             GimpProgress      *progress)
 {
+  const Babl *old_format;
   const Babl *new_format;
+  gint        old_bits;
+  gint        new_bits;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable) ||
                     new_precision != gimp_drawable_get_precision (drawable) ||
+                    new_has_alpha != gimp_drawable_has_alpha (drawable)     ||
                     dest_profile);
   g_return_if_fail (dest_profile == NULL || GIMP_IS_COLOR_PROFILE (dest_profile));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
@@ -1065,15 +1057,29 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
 
+  old_format = gimp_drawable_get_format (drawable);
   new_format = gimp_image_get_format (dest_image,
                                       new_base_type,
                                       new_precision,
-                                      gimp_drawable_has_alpha (drawable));
+                                      new_has_alpha);
+
+  old_bits = (babl_format_get_bytes_per_pixel (old_format) * 8 /
+              babl_format_get_n_components (old_format));
+  new_bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
+              babl_format_get_n_components (new_format));
+
+  if (old_bits <= new_bits || new_bits > 16)
+    {
+      /*  don't dither if we are converting to a higher bit depth,
+       *  or to more than 16 bits (gegl:dither only does
+       *  16 bits).
+       */
+      layer_dither_type = GEGL_DITHER_NONE;
+      mask_dither_type  = GEGL_DITHER_NONE;
+    }
 
   GIMP_DRAWABLE_GET_CLASS (drawable)->convert_type (drawable, dest_image,
                                                     new_format,
-                                                    new_base_type,
-                                                    new_precision,
                                                     dest_profile,
                                                     layer_dither_type,
                                                     mask_dither_type,

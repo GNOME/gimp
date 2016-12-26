@@ -213,7 +213,6 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     statusbar);
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
-  gtk_misc_set_alignment (GTK_MISC (statusbar->cursor_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cursor_label);
 
@@ -278,7 +277,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_container_add (GTK_CONTAINER (statusbar->cancel_button), hbox2);
   gtk_widget_show (hbox2);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_CANCEL, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name ("gtk-cancel", GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox2), image, FALSE, FALSE, 2);
   gtk_widget_show (image);
 
@@ -415,7 +414,8 @@ gimp_statusbar_progress_start (GimpProgress *progress,
 
   if (! statusbar->progress_active)
     {
-      GtkWidget *bar = statusbar->progressbar;
+      GtkWidget     *bar = statusbar->progressbar;
+      GtkAllocation  allocation;
 
       statusbar->progress_active = TRUE;
       statusbar->progress_value  = 0.0;
@@ -438,13 +438,18 @@ gimp_statusbar_progress_start (GimpProgress *progress,
           gtk_widget_show (statusbar->cancel_button);
         }
 
+      gtk_widget_get_allocation (statusbar->label, &allocation);
+
       gtk_widget_show (statusbar->progressbar);
       gtk_widget_hide (statusbar->label);
 
-      /*  This call is needed so that the progress bar is drawn in the
-       *  correct place. Probably due a bug in GTK+.
+      /*  This shit is needed so that the progress bar is drawn in the
+       *  correct place in the cases where we suck completely and run
+       *  an operation that blocks the GUI and doesn't let the main
+       *  loop run.
        */
       gtk_container_resize_children (GTK_CONTAINER (statusbar));
+      gtk_widget_size_allocate (statusbar->progressbar, &allocation);
 
       if (! gtk_widget_get_visible (GTK_WIDGET (statusbar)))
         {

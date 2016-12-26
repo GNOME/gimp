@@ -122,7 +122,7 @@ gimp_font_class_init (GimpFontClass *klass)
   viewable_class->get_popup_size    = gimp_font_get_popup_size;
   viewable_class->get_new_preview   = gimp_font_get_new_preview;
 
-  viewable_class->default_icon_name = "gimp-font";
+  viewable_class->default_icon_name = "gtk-select-font";
 
   g_object_class_install_property (object_class, PROP_PANGO_CONTEXT,
                                    g_param_spec_object ("pango-context",

@@ -37,6 +37,7 @@
 
 #include "actions.h"
 #include "image-commands.h"
+#include "items-actions.h"
 #include "layers-actions.h"
 #include "layers-commands.h"
 
@@ -48,6 +49,10 @@ static const GimpActionEntry layers_actions[] =
   { "layers-popup", GIMP_STOCK_LAYERS,
     NC_("layers-action", "Layers Menu"), NULL, NULL, NULL,
     GIMP_HELP_LAYER_DIALOG },
+
+  { "layers-color-tag-menu", GIMP_STOCK_CLOSE /* abused */,
+    NC_("layers-action", "Color Tag"), NULL, NULL, NULL,
+    GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-menu",                   NULL,
     NC_("layers-action", "_Layer")        },
@@ -97,7 +102,7 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_new_from_visible_cmd_callback),
     GIMP_HELP_LAYER_NEW_FROM_VISIBLE },
 
-  { "layers-new-group", "folder",
+  { "layers-new-group", "folder-new",
     NC_("layers-action", "New Layer _Group"), NULL,
     NC_("layers-action", "Create a new layer group and add it to the image"),
     G_CALLBACK (layers_new_group_cmd_callback),
@@ -225,6 +230,23 @@ static const GimpActionEntry layers_actions[] =
     G_CALLBACK (layers_mask_add_cmd_callback),
     GIMP_HELP_LAYER_MASK_ADD },
 
+  /* this is the same as layers-mask-add, except it's sensitive even if
+   * there is a mask on the layer
+   */
+  { "layers-mask-add-button", GIMP_STOCK_LAYER_MASK,
+    NC_("layers-action", "Add La_yer Mask..."), NULL,
+    NC_("layers-action",
+        "Add a mask that allows non-destructive editing of transparency"),
+    G_CALLBACK (layers_mask_add_cmd_callback),
+    GIMP_HELP_LAYER_MASK_ADD },
+
+  { "layers-mask-add-last-values", GIMP_STOCK_LAYER_MASK,
+    NC_("layers-action", "Add La_yer Mask"), NULL,
+    NC_("layers-action",
+        "Add a mask with last used values"),
+    G_CALLBACK (layers_mask_add_last_vals_cmd_callback),
+    GIMP_HELP_LAYER_MASK_ADD },
+
   { "layers-alpha-add", GIMP_STOCK_TRANSPARENCY,
     NC_("layers-action", "Add Alpha C_hannel"), NULL,
     NC_("layers-action", "Add transparency information to the layer"),
@@ -240,14 +262,6 @@ static const GimpActionEntry layers_actions[] =
 
 static const GimpToggleActionEntry layers_toggle_actions[] =
 {
-  { "layers-lock-alpha", GIMP_STOCK_TRANSPARENCY,
-    NC_("layers-action", "Lock Alph_a Channel"), NULL,
-    NC_("layers-action",
-        "Keep transparency information on this layer from being modified"),
-    G_CALLBACK (layers_lock_alpha_cmd_callback),
-    FALSE,
-    GIMP_HELP_LAYER_LOCK_ALPHA },
-
   { "layers-mask-edit", "gtk-edit",
     NC_("layers-action", "_Edit Layer Mask"), NULL,
     NC_("layers-action", "Work on the layer mask"),
@@ -266,7 +280,96 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     NC_("layers-action", "Dismiss the effect of the layer mask"),
     G_CALLBACK (layers_mask_disable_cmd_callback),
     FALSE,
-    GIMP_HELP_LAYER_MASK_DISABLE }
+    GIMP_HELP_LAYER_MASK_DISABLE },
+
+  { "layers-visible", GIMP_STOCK_VISIBLE,
+    NC_("layers-action", "_Visible"), NULL, NULL,
+    G_CALLBACK (layers_visible_cmd_callback),
+    FALSE,
+    GIMP_HELP_LAYER_VISIBLE },
+
+  { "layers-linked", GIMP_STOCK_LINKED,
+    NC_("layers-action", "_Linked"), NULL, NULL,
+    G_CALLBACK (layers_linked_cmd_callback),
+    FALSE,
+    GIMP_HELP_LAYER_LINKED },
+
+  { "layers-lock-content", NULL /* GIMP_STOCK_LOCK */,
+    NC_("layers-action", "L_ock pixels"), NULL, NULL,
+    G_CALLBACK (layers_lock_content_cmd_callback),
+    FALSE,
+    GIMP_HELP_LAYER_LOCK_PIXELS },
+
+  { "layers-lock-position", GIMP_STOCK_TOOL_MOVE,
+    NC_("layers-action", "L_ock position"), NULL, NULL,
+    G_CALLBACK (layers_lock_position_cmd_callback),
+    FALSE,
+    GIMP_HELP_LAYER_LOCK_POSITION },
+
+  { "layers-lock-alpha", GIMP_STOCK_TRANSPARENCY,
+    NC_("layers-action", "Lock Alph_a Channel"), NULL,
+    NC_("layers-action",
+        "Keep transparency information on this layer from being modified"),
+    G_CALLBACK (layers_lock_alpha_cmd_callback),
+    FALSE,
+    GIMP_HELP_LAYER_LOCK_ALPHA },
+};
+
+static const GimpEnumActionEntry layers_color_tag_actions[] =
+{
+  { "layers-color-tag-none", GIMP_STOCK_CLOSE /* abused */,
+    NC_("layers-action", "None"), NULL,
+    NC_("layers-action", "Clear color tag"),
+    GIMP_COLOR_TAG_NONE, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG },
+
+  { "layers-color-tag-blue", NULL,
+    NC_("layers-action", "Blue"), NULL,
+    NC_("layers-action", "Set color tag to blue"),
+    GIMP_COLOR_TAG_BLUE, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG },
+
+  { "layers-color-tag-green", NULL,
+    NC_("layers-action", "Green"), NULL,
+    NC_("layers-action", "Set color tag to green"),
+    GIMP_COLOR_TAG_GREEN, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG },
+
+  { "layers-color-tag-yellow", NULL,
+    NC_("layers-action", "Yellow"), NULL,
+    NC_("layers-action", "Set color tag to yellow"),
+    GIMP_COLOR_TAG_YELLOW, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG },
+
+  { "layers-color-tag-orange", NULL,
+    NC_("layers-action", "Orange"), NULL,
+    NC_("layers-action", "Set color tag to orange"),
+    GIMP_COLOR_TAG_ORANGE, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG },
+
+  { "layers-color-tag-brown", NULL,
+    NC_("layers-action", "Brown"), NULL,
+    NC_("layers-action", "Set color tag to brown"),
+    GIMP_COLOR_TAG_BROWN, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG },
+
+  { "layers-color-tag-red", NULL,
+    NC_("layers-action", "Red"), NULL,
+    NC_("layers-action", "Set color tag to red"),
+    GIMP_COLOR_TAG_RED, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG },
+
+  { "layers-color-tag-violet", NULL,
+    NC_("layers-action", "Violet"), NULL,
+    NC_("layers-action", "Set color tag to violet"),
+    GIMP_COLOR_TAG_VIOLET, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG },
+
+  { "layers-color-tag-gray", NULL,
+    NC_("layers-action", "Gray"), NULL,
+    NC_("layers-action", "Set color tag to gray"),
+    GIMP_COLOR_TAG_GRAY, FALSE,
+    GIMP_HELP_LAYER_COLOR_TAG }
 };
 
 static const GimpEnumActionEntry layers_mask_apply_actions[] =
@@ -480,6 +583,11 @@ layers_actions_setup (GimpActionGroup *group)
                                         G_N_ELEMENTS (layers_toggle_actions));
 
   gimp_action_group_add_enum_actions (group, "layers-action",
+                                      layers_color_tag_actions,
+                                      G_N_ELEMENTS (layers_color_tag_actions),
+                                      G_CALLBACK (layers_color_tag_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_mask_apply_actions,
                                       G_N_ELEMENTS (layers_mask_apply_actions),
                                       G_CALLBACK (layers_mask_apply_cmd_callback));
@@ -517,6 +625,8 @@ layers_actions_setup (GimpActionGroup *group)
                                       layers_mode_actions,
                                       G_N_ELEMENTS (layers_mode_actions),
                                       G_CALLBACK (layers_mode_cmd_callback));
+
+  items_actions_setup (group, "layers");
 }
 
 void
@@ -660,7 +770,10 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-mask-add",    layer    && !fs && !ac && !mask && !children);
+  SET_SENSITIVE ("layers-mask-add",             layer && !fs && !ac && !mask && !children);
+  SET_SENSITIVE ("layers-mask-add-button",      layer && !fs && !ac && !children);
+  SET_SENSITIVE ("layers-mask-add-last-values", layer && !fs && !ac && !mask && !children);
+
   SET_SENSITIVE ("layers-mask-apply",  writable && !fs && !ac &&  mask && !children);
   SET_SENSITIVE ("layers-mask-delete", layer    && !fs && !ac &&  mask);
 
@@ -686,4 +799,6 @@ layers_actions_update (GimpActionGroup *group,
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
 #undef SET_LABEL
+
+  items_actions_update (group, "layers", GIMP_ITEM (layer));
 }

@@ -158,8 +158,8 @@ splash_create (gboolean   be_verbose,
   g_object_unref (pixbuf);
 
   g_signal_connect_after (splash->area, "expose-event",
-			  G_CALLBACK (splash_area_expose),
-			  splash);
+                          G_CALLBACK (splash_area_expose),
+                          splash);
 
   /*  add a progress bar  */
   splash->progress = gtk_progress_bar_new ();

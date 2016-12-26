@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -97,7 +99,6 @@ enum
 {
   PROP_0,
   PROP_GIMP,
-  PROP_MENU_FACTORY,
   PROP_DIALOG_FACTORY,
   PROP_INITIAL_SCREEN,
   PROP_INITIAL_MONITOR
@@ -184,6 +185,9 @@ static void      gimp_image_window_monitor_changed     (GimpWindow          *win
                                                         gint                 monitor);
 
 static GList *   gimp_image_window_get_docks           (GimpDockContainer   *dock_container);
+static GimpDialogFactory *
+                 gimp_image_window_dock_container_get_dialog_factory
+                                                       (GimpDockContainer   *dock_container);
 static GimpUIManager *
                  gimp_image_window_dock_container_get_ui_manager
                                                        (GimpDockContainer   *dock_container);
@@ -304,12 +308,6 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-  g_object_class_install_property (object_class, PROP_MENU_FACTORY,
-                                   g_param_spec_object ("menu-factory",
-                                                        NULL, NULL,
-                                                        GIMP_TYPE_MENU_FACTORY,
-                                                        GIMP_PARAM_WRITABLE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
                                    g_param_spec_object ("dialog-factory",
@@ -352,10 +350,11 @@ gimp_image_window_init (GimpImageWindow *window)
 static void
 gimp_image_window_dock_container_iface_init (GimpDockContainerInterface *iface)
 {
-  iface->get_docks      = gimp_image_window_get_docks;
-  iface->get_ui_manager = gimp_image_window_dock_container_get_ui_manager;
-  iface->add_dock       = gimp_image_window_add_dock;
-  iface->get_dock_side  = gimp_image_window_get_dock_side;
+  iface->get_docks          = gimp_image_window_get_docks;
+  iface->get_dialog_factory = gimp_image_window_dock_container_get_dialog_factory;
+  iface->get_ui_manager     = gimp_image_window_dock_container_get_ui_manager;
+  iface->add_dock           = gimp_image_window_add_dock;
+  iface->get_dock_side      = gimp_image_window_get_dock_side;
 }
 
 static void
@@ -370,12 +369,20 @@ gimp_image_window_constructed (GObject *object)
 {
   GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpMenuFactory        *menu_factory;
   GimpGuiConfig          *config;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (private->gimp));
-  g_assert (GIMP_IS_UI_MANAGER (private->menubar_manager));
+  g_assert (GIMP_IS_DIALOG_FACTORY (private->dialog_factory));
+
+  menu_factory = gimp_dialog_factory_get_menu_factory (private->dialog_factory);
+
+  private->menubar_manager = gimp_menu_factory_manager_new (menu_factory,
+                                                            "<Image>",
+                                                            window,
+                                                            FALSE);
 
   g_signal_connect_object (private->dialog_factory, "dock-window-added",
                            G_CALLBACK (gimp_image_window_update_ui_manager),
@@ -554,16 +561,6 @@ gimp_image_window_set_property (GObject      *object,
     case PROP_GIMP:
       private->gimp = g_value_get_object (value);
       break;
-    case PROP_MENU_FACTORY:
-      {
-        GimpMenuFactory *factory = g_value_get_object (value);
-
-        private->menubar_manager = gimp_menu_factory_manager_new (factory,
-                                                                  "<Image>",
-                                                                  window,
-                                                                  FALSE);
-      }
-      break;
     case PROP_DIALOG_FACTORY:
       private->dialog_factory = g_value_get_object (value);
       break;
@@ -604,7 +601,6 @@ gimp_image_window_get_property (GObject    *object,
       g_value_set_int (value, private->initial_monitor);
       break;
 
-    case PROP_MENU_FACTORY:
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -859,14 +855,18 @@ gimp_image_window_get_docks (GimpDockContainer *dock_container)
   return all_docks;
 }
 
+static GimpDialogFactory *
+gimp_image_window_dock_container_get_dialog_factory (GimpDockContainer *dock_container)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (dock_container);
+
+  return private->dialog_factory;
+}
+
 static GimpUIManager *
 gimp_image_window_dock_container_get_ui_manager (GimpDockContainer *dock_container)
 {
-  GimpImageWindow *window;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE_WINDOW (dock_container), FALSE);
-
-  window = GIMP_IMAGE_WINDOW (dock_container);
+  GimpImageWindow *window = GIMP_IMAGE_WINDOW (dock_container);
 
   return gimp_image_window_get_ui_manager (window);
 }
@@ -1119,7 +1119,6 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
 GimpImageWindow *
 gimp_image_window_new (Gimp              *gimp,
                        GimpImage         *image,
-                       GimpMenuFactory   *menu_factory,
                        GimpDialogFactory *dialog_factory,
                        GdkScreen         *screen,
                        gint               monitor)
@@ -1129,13 +1128,11 @@ gimp_image_window_new (Gimp              *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
   window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
                          "gimp",            gimp,
-                         "menu-factory",    menu_factory,
                          "dialog-factory",  dialog_factory,
                          "initial-screen",  screen,
                          "initial-monitor", monitor,
@@ -1468,7 +1465,8 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
   GdkRectangle      rect;
   gint              monitor;
   gint              disp_width, disp_height;
-  gint              width, height;
+  gdouble           x, y;
+  gdouble           width, height;
   gint              max_auto_width, max_auto_height;
   gint              border_width, border_height;
   gboolean          resize = FALSE;
@@ -1496,8 +1494,15 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
                                               gtk_widget_get_window (widget));
   gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
-  width  = SCALEX (active_shell, gimp_image_get_width  (image));
-  height = SCALEY (active_shell, gimp_image_get_height (image));
+  gimp_display_shell_transform_bounds (active_shell,
+                                       0, 0,
+                                       gimp_image_get_width (image),
+                                       gimp_image_get_height (image),
+                                       &x, &y,
+                                       &width, &height);
+
+  width  = ceil (width  - x);
+  height = ceil (height - y);
 
   disp_width  = active_shell->disp_width;
   disp_height = active_shell->disp_height;

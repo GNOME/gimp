@@ -166,6 +166,7 @@ static void
 gimp_palette_editor_init (GimpPaletteEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GtkWidget      *viewport;
   GtkWidget      *hbox;
   GtkWidget      *label;
   GtkWidget      *spinbutton;
@@ -183,6 +184,10 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), data_editor->view, TRUE, TRUE, 0);
   gtk_widget_show (data_editor->view);
 
+  viewport = gtk_viewport_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (data_editor->view), viewport);
+  gtk_widget_show (viewport);
+
   editor->view = gimp_view_new_full_by_types (NULL,
                                               GIMP_TYPE_PALETTE_VIEW,
                                               GIMP_TYPE_PALETTE,
@@ -192,9 +197,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
     (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (editor->view)->renderer), -1);
   gimp_view_renderer_palette_set_draw_grid
     (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (editor->view)->renderer), TRUE);
-
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (data_editor->view),
-                                         editor->view);
+  gtk_container_add (GTK_CONTAINER (viewport), editor->view);
   gtk_widget_show (editor->view);
 
   g_signal_connect (gtk_widget_get_parent (editor->view), "size-allocate",

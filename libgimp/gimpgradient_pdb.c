@@ -299,7 +299,7 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
  * @num_color_samples: Length of the color_samples array (4 * num_samples).
  * @color_samples: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  *
- * Sample the spacified gradient in custom positions.
+ * Sample the specified gradient in custom positions.
  *
  * This procedure samples the active gradient in the specified number
  * of points. The procedure will sample the gradient in the specified
@@ -581,7 +581,7 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
  * This procedure sets the left endpoint position of the specified
  * segment of the specified gradient. The final position will be
  * between the position of the middle point to the left to the middle
- * point of the current segement.
+ * point of the current segment.
  * This procedure returns the final position.
  *
  * Returns: TRUE on success.
@@ -1283,7 +1283,7 @@ gimp_gradient_segment_range_blend_opacity (const gchar *name,
  *
  * Move the position of an entire segment range by a delta.
  *
- * This funtions moves the position of an entire segment range by a
+ * This function moves the position of an entire segment range by a
  * delta. The actual delta (which is returned) will be limited by the
  * control points of the neighboring segments.
  *

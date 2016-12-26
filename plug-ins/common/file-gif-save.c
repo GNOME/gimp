@@ -133,7 +133,7 @@ MAIN ()
     { GIMP_PDB_STRING,   "raw-uri",         "The name of the URI to export the image in" }, \
     { GIMP_PDB_INT32,    "interlace",       "Try to export as interlaced" }, \
     { GIMP_PDB_INT32,    "loop",            "(animated gif) loop infinitely" }, \
-    { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between framese in milliseconds" }, \
+    { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between frames in milliseconds" }, \
     { GIMP_PDB_INT32,    "default-dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
 
 static void
@@ -1145,7 +1145,7 @@ file_gif_spin_button_int_init (GtkBuilder  *builder,
   gtk_adjustment_set_value (adjustment, initial_value);
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
-                    &gsvals.default_delay);
+                    value_pointer);
 
   return spin_button;
 }
@@ -1311,14 +1311,18 @@ save_dialog (gint32 image_ID)
 
   frame  = GTK_WIDGET (gtk_builder_get_object (builder, "animation-frame"));
   toggle = GTK_WIDGET (gtk_builder_get_object (builder, "as-animation"));
-  gtk_widget_set_sensitive (toggle, animation_supported);
   if (! animation_supported)
-    gimp_help_set_help_data (toggle,
-                             _("You can only export as animation when the "
-                               "image has more than one layer. The image "
-                               "you are trying to export only has one "
-                               "layer."),
-                             NULL);
+    {
+      gimp_help_set_help_data (toggle,
+                               _("You can only export as animation when the "
+                                 "image has more than one layer. The image "
+                                 "you are trying to export only has one "
+                                 "layer."),
+                               NULL);
+      /* Make sure the checkbox is not checked from session data. */
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
+    }
+  gtk_widget_set_sensitive (toggle, animation_supported);
 
   g_object_bind_property (toggle, "active",
                           frame,  "sensitive",

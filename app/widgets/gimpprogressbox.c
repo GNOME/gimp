@@ -84,7 +84,7 @@ gimp_progress_box_init (GimpProgressBox *box)
 
   box->label = gtk_label_new ("");
   gtk_label_set_ellipsize (GTK_LABEL (box->label), PANGO_ELLIPSIZE_MIDDLE);
-  gtk_misc_set_alignment (GTK_MISC (box->label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (box->label), 0.0);
   gimp_label_set_attributes (GTK_LABEL (box->label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);

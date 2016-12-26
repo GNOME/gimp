@@ -68,7 +68,6 @@
 #include "sanity.h"
 #include "signals.h"
 #include "unique.h"
-#include "units.h"
 #include "version.h"
 
 #ifdef G_OS_WIN32
@@ -716,12 +715,11 @@ gimp_option_dump_gimprc (const gchar  *option_name,
       Gimp     *gimp;
       gboolean  success;
 
-      gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
-
-      units_init (gimp);
       babl_init ();
+      gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+      gimp_load_config (gimp, NULL, NULL);
 
-      success = gimp_config_dump (format);
+      success = gimp_config_dump (G_OBJECT (gimp), format);
 
       g_object_unref (gimp);
 
@@ -743,6 +741,7 @@ gimp_option_dump_pdb_procedures_deprecated (const gchar  *option_name,
 
   babl_init ();
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
+  gimp_load_config (gimp, NULL, NULL);
 
   /* Make sure to turn on compatibility mode so deprecated procedures
    * are included

@@ -1034,7 +1034,7 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
 
       if (accel_key            &&
           accel_key->accel_key &&
-          accel_key->accel_flags & GTK_ACCEL_VISIBLE)
+          (accel_key->accel_flags & GTK_ACCEL_VISIBLE))
         {
           gchar *escaped = g_markup_escape_text (tooltip, -1);
           gchar *accel   = gtk_accelerator_get_label (accel_key->accel_key,
@@ -1054,22 +1054,71 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
     }
 }
 
+static void   gimp_accel_help_widget_weak_notify (gpointer  accel_group,
+                                                  GObject  *where_widget_was);
+
+static void
+gimp_accel_help_accel_group_weak_notify (gpointer  widget,
+                                         GObject  *where_accel_group_was)
+{
+  g_object_weak_unref (widget,
+                       gimp_accel_help_widget_weak_notify,
+                       where_accel_group_was);
+
+  g_object_set_data (widget, "gimp-accel-group", NULL);
+}
+
+static void
+gimp_accel_help_widget_weak_notify (gpointer  accel_group,
+                                    GObject  *where_widget_was)
+{
+  g_object_weak_unref (accel_group,
+                       gimp_accel_help_accel_group_weak_notify,
+                       where_widget_was);
+}
+
 void
 gimp_widget_set_accel_help (GtkWidget *widget,
                             GtkAction *action)
 {
-  GClosure *accel_closure = gtk_action_get_accel_closure (action);
+  GtkAccelGroup *accel_group;
+  GClosure      *accel_closure;
+
+  accel_group = g_object_get_data (G_OBJECT (widget), "gimp-accel-group");
+
+  if (accel_group)
+    {
+      g_signal_handlers_disconnect_by_func (accel_group,
+                                            gimp_widget_accel_changed,
+                                            widget);
+      g_object_weak_unref (G_OBJECT (accel_group),
+                           gimp_accel_help_accel_group_weak_notify,
+                           widget);
+      g_object_weak_unref (G_OBJECT (widget),
+                           gimp_accel_help_widget_weak_notify,
+                           accel_group);
+      g_object_set_data (G_OBJECT (widget), "gimp-accel-group", NULL);
+    }
+
+  accel_closure = gtk_action_get_accel_closure (action);
 
   if (accel_closure)
     {
-      GtkAccelGroup *accel_group;
+      accel_group = gtk_accel_group_from_accel_closure (accel_closure);
+
+      g_object_set_data (G_OBJECT (widget), "gimp-accel-group",
+                         accel_group);
+      g_object_weak_ref (G_OBJECT (accel_group),
+                         gimp_accel_help_accel_group_weak_notify,
+                         widget);
+      g_object_weak_ref (G_OBJECT (widget),
+                         gimp_accel_help_widget_weak_notify,
+                         accel_group);
 
       g_object_set_data (G_OBJECT (widget), "gimp-accel-closure",
                          accel_closure);
       g_object_set_data (G_OBJECT (widget), "gimp-accel-action",
                          action);
-
-      accel_group = gtk_accel_group_from_accel_closure (accel_closure);
 
       g_signal_connect_object (accel_group, "accel-changed",
                                G_CALLBACK (gimp_widget_accel_changed),
@@ -1108,6 +1157,45 @@ gimp_get_message_icon_name (GimpMessageSeverity severity)
     }
 
   g_return_val_if_reached (GIMP_STOCK_WARNING);
+}
+
+gboolean
+gimp_get_color_tag_color (GimpColorTag  color_tag,
+                          GimpRGB      *color)
+{
+  static const struct
+  {
+    guchar r;
+    guchar g;
+    guchar b;
+  }
+  colors[] =
+  {
+    {   0,   0,   0  }, /* none   */
+    {  84, 182, 231  }, /* blue   */
+    { 154, 202,  66  }, /* green  */
+    { 250, 228,  57  }, /* yellow */
+    { 255, 168,  63  }, /* orange */
+    { 179, 101,  65  }, /* brown  */
+    { 245,  44,  52  }, /* red    */
+    { 196, 107, 217  }, /* violet */
+    { 121, 122, 116  }  /* gray   */
+  };
+
+  g_return_val_if_fail (color != NULL, FALSE);
+
+  if (color_tag > GIMP_COLOR_TAG_NONE)
+    {
+      gimp_rgba_set_uchar (color,
+                           colors[color_tag].r,
+                           colors[color_tag].g,
+                           colors[color_tag].b,
+                           255);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 void
@@ -1421,14 +1509,14 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 
       if (base_type == GIMP_GRAY)
         {
-          file = g_file_new_for_path (config->gray_profile);
+          file = gimp_file_new_for_config_path (config->gray_profile, NULL);
 
           label = g_strdup_printf (_("Preferred grayscale (%s)"),
                                    gimp_color_profile_get_label (profile));
         }
       else
         {
-          file = g_file_new_for_path (config->rgb_profile);
+          file = gimp_file_new_for_config_path (config->rgb_profile, NULL);
 
           label = g_strdup_printf (_("Preferred RGB (%s)"),
                                    gimp_color_profile_get_label (profile));

@@ -47,7 +47,6 @@ GType              gimp_image_window_get_type             (void) G_GNUC_CONST;
 
 GimpImageWindow  * gimp_image_window_new                  (Gimp              *gimp,
                                                            GimpImage         *image,
-                                                           GimpMenuFactory   *menu_factory,
                                                            GimpDialogFactory *dialog_factory,
                                                            GdkScreen         *screen,
                                                            gint               monitor);
