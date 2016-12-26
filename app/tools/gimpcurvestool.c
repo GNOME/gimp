@@ -224,7 +224,10 @@ gimp_curves_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  histogram = gimp_histogram_new (FALSE);
+  histogram = gimp_histogram_new (TRUE);
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
+                                      curves_menu_sensitivity, drawable, NULL);
+
   gimp_drawable_calculate_histogram (drawable, histogram);
   gimp_histogram_view_set_background (GIMP_HISTOGRAM_VIEW (c_tool->graph),
                                       histogram);

@@ -169,7 +169,7 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
-  tool->histogram = gimp_histogram_new (FALSE);
+  tool->histogram = gimp_histogram_new (TRUE);
 }
 
 static void

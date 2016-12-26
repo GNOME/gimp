@@ -53,7 +53,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
 
   config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);
 
-  histogram = gimp_histogram_new (FALSE);
+  histogram = gimp_histogram_new (TRUE);
   gimp_drawable_calculate_histogram (drawable, histogram);
 
   gimp_levels_config_stretch (config, histogram,

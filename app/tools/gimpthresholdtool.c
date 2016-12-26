@@ -121,7 +121,7 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
 static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
-  t_tool->histogram = gimp_histogram_new (FALSE);
+  t_tool->histogram = gimp_histogram_new (TRUE);
 }
 
 static void
