@@ -44,10 +44,10 @@ enum
 
 struct _GimpHistogramPrivate
 {
-  gboolean gamma_correct;
-  gint     n_channels;
-  gint     n_bins;
-  gdouble *values;
+  gboolean  linear;
+  gint      n_channels;
+  gint      n_bins;
+  gdouble  *values;
 };
 
 
@@ -188,11 +188,11 @@ gimp_histogram_get_memsize (GimpObject *object,
 /*  public functions  */
 
 GimpHistogram *
-gimp_histogram_new (gboolean gamma_correct)
+gimp_histogram_new (gboolean linear)
 {
   GimpHistogram *histogram = g_object_new (GIMP_TYPE_HISTOGRAM, NULL);
 
-  histogram->priv->gamma_correct = gamma_correct;
+  histogram->priv->linear = linear;
 
   return histogram;
 }
@@ -213,7 +213,7 @@ gimp_histogram_duplicate (GimpHistogram *histogram)
 
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), NULL);
 
-  dup = gimp_histogram_new (histogram->priv->gamma_correct);
+  dup = gimp_histogram_new (histogram->priv->linear);
 
   dup->priv->n_channels = histogram->priv->n_channels;
   dup->priv->n_bins     = histogram->priv->n_bins;
@@ -254,57 +254,55 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
   if (babl_format_is_palette (format))
     {
       if (babl_format_has_alpha (format))
-        format = babl_format ("R'G'B'A float");
+        {
+          if (priv->linear)
+            format = babl_format ("RGB float");
+          else
+            format = babl_format ("R'G'B' float");
+        }
       else
-        format = babl_format ("R'G'B' float");
+        {
+          if (priv->linear)
+            format = babl_format ("RGBA float");
+          else
+            format = babl_format ("R'G'B'A float");
+        }
     }
   else
     {
       const Babl *model = babl_format_get_model (format);
 
-      if (model == babl_model ("Y"))
+      if (model == babl_model ("Y") ||
+          model == babl_model ("Y'"))
         {
-          if (priv->gamma_correct)
-            format = babl_format ("Y' float");
-          else
+          if (priv->linear)
             format = babl_format ("Y float");
-        }
-      else if (model == babl_model ("Y'"))
-        {
-          format = babl_format ("Y' float");
-        }
-      else if (model == babl_model ("YA"))
-        {
-          if (priv->gamma_correct)
-            format = babl_format ("Y'A float");
           else
+            format = babl_format ("Y' float");
+        }
+      else if (model == babl_model ("YA") ||
+               model == babl_model ("Y'A"))
+        {
+          if (priv->linear)
             format = babl_format ("YA float");
-        }
-      else if (model == babl_model ("Y'A"))
-        {
-          format = babl_format ("Y'A float");
-        }
-      else if (model == babl_model ("RGB"))
-        {
-          if (priv->gamma_correct)
-            format = babl_format ("R'G'B' float");
           else
+            format = babl_format ("Y'A float");
+        }
+      else if (model == babl_model ("RGB") ||
+               model == babl_model ("R'G'B'"))
+        {
+          if (priv->linear)
             format = babl_format ("RGB float");
-        }
-      else if (model == babl_model ("R'G'B'"))
-        {
-          format = babl_format ("R'G'B' float");
-        }
-      else if (model == babl_model ("RGBA"))
-        {
-          if (priv->gamma_correct)
-            format = babl_format ("R'G'B'A float");
           else
-            format = babl_format ("RGBA float");
+            format = babl_format ("R'G'B' float");
         }
-      else if (model == babl_model ("R'G'B'A"))
+      else if (model == babl_model ("RGBA") ||
+               model == babl_model ("R'G'B'A"))
         {
-          format = babl_format ("R'G'B'A float");
+          if (priv->linear)
+            format = babl_format ("RGBA float");
+          else
+            format = babl_format ("R'G'B'A float");
         }
       else
         {

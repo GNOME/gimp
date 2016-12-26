@@ -50,7 +50,7 @@ struct _GimpHistogramClass
 
 GType           gimp_histogram_get_type      (void) G_GNUC_CONST;
 
-GimpHistogram * gimp_histogram_new           (gboolean              gamma_correct);
+GimpHistogram * gimp_histogram_new           (gboolean              linear);
 
 GimpHistogram * gimp_histogram_duplicate     (GimpHistogram        *histogram);
 

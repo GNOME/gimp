@@ -36,6 +36,8 @@ struct _GimpHistogramEditor
 {
   GimpImageEditor       parent_instance;
 
+  gboolean              linear;
+
   GimpDrawable         *drawable;
   GimpHistogram        *histogram;
   GimpHistogram        *bg_histogram;
