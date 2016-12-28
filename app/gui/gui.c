@@ -76,9 +76,21 @@
 #include "session.h"
 #include "splash.h"
 #include "themes.h"
+
 #ifdef GDK_WINDOWING_QUARTZ
 #import <AppKit/AppKit.h>
 #include <gtkosxapplication.h>
+
+/* Forward declare since we are building against old SDKs. */
+#if !defined(MAC_OS_X_VERSION_10_12) || \
+    MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_12
+
+@interface NSWindow(ForwardDeclarations)
++ (void)setAllowsAutomaticWindowTabbing:(BOOL)allow;
+@end
+
+#endif
+
 #endif /* GDK_WINDOWING_QUARTZ */
 
 #include "gimp-intl.h"
@@ -226,6 +238,17 @@ gui_init (Gimp     *gimp,
 
   /*  disable automatic startup notification  */
   gtk_window_set_auto_startup_notification (FALSE);
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /* Before the first window is created (typically the splash window),
+   * we need to disable automatic tabbing behavior introduced on Sierra.
+   * This is known to cause all kinds of weird issues (see for instance
+   * Bugzilla #776294) and needs proper GTK+ support if we would want to
+   * enable it.
+   */
+  if ([NSWindow respondsToSelector:@selector(setAllowsAutomaticWindowTabbing:)])
+    [NSWindow setAllowsAutomaticWindowTabbing:NO];
+#endif /* GDK_WINDOWING_QUARTZ */
 
   gimp_dnd_init (gimp);
 
