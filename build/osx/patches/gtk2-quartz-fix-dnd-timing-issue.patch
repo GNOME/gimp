@@ -1,0 +1,107 @@
+From 54d6a8e505b9c0df8ad13337b60c61ee9acf779f Mon Sep 17 00:00:00 2001
+From: Kristian Rietveld <kris@loopnest.org>
+Date: Sun, 7 Aug 2016 16:44:24 +0200
+Subject: [PATCH] Bug 767091 - Gimp Crashes dragging pattern to overlay layer
+
+The problem was caused by the fact that 'draggingUpdated' was sometimes
+called after 'performDragOperation:'. This seems to be timing dependent.
+Because the context was released in 'performDragOperation', updating the
+context from 'draggingUpdated' led to a crash.
+
+It also turns out that 'draggingEnded' is called on every window which
+received 'draggingEntered' earlier, once the drag has been completed.
+We use this to designate 'draggingEnded' as the place to release the
+context from now on.
+
+To solve this bug, we remove the calls to release the context from
+'draggingExited' and 'performDragOperation'. Instead, we have
+'draggingEnded' release the context on the first call (it is called
+multiple times if multiple windows has been touched during the drag).
+The hard assert is removed from update_context_from_dragging_info() and
+soft asserts are added to 'draggingUpdated' and 'performDragOperation'
+to aid with eventual future debugging.
+---
+ gdk/quartz/GdkQuartzWindow.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/gdk/quartz/GdkQuartzWindow.c b/gdk/quartz/GdkQuartzWindow.c
+index dabf051..7e5f05c 100644
+--- a/gdk/quartz/GdkQuartzWindow.c
++++ b/gdk/quartz/GdkQuartzWindow.c
+@@ -501,8 +501,6 @@ drag_action_to_drag_operation (GdkDragAction action)
+ static void
+ update_context_from_dragging_info (id <NSDraggingInfo> sender)
+ {
+-  g_assert (current_context != NULL);
+-
+   GDK_DRAG_CONTEXT_PRIVATE (current_context)->dragging_info = sender;
+   current_context->suggested_action = drag_operation_to_drag_action ([sender draggingSourceOperationMask]);
+   current_context->actions = current_context->suggested_action;
+@@ -529,14 +527,22 @@ update_context_from_dragging_info (id <NSDraggingInfo> sender)
+   return NSDragOperationNone;
+ }
+ 
++/* draggingEnded is typically called when the drag completes and is called
++ * on all views for which draggingEntered has been called. We simply
++ * handle the first call to draggingEnded to obtain the necessary
++ * information and free the object and directly return for subsequent
++ * calls.
++ */
+ - (void)draggingEnded:(id <NSDraggingInfo>)sender
+ {
++  if (!current_context)
++    return;
++
+   /* leave a note for the source about what action was taken */
+-  if (_gdk_quartz_drag_source_context && current_context)
++  if (_gdk_quartz_drag_source_context)
+    _gdk_quartz_drag_source_context->action = current_context->action;
+ 
+-  if (current_context)
+-    g_object_unref (current_context);
++  g_object_unref (current_context);
+   current_context = NULL;
+ }
+ 
+@@ -551,9 +557,6 @@ update_context_from_dragging_info (id <NSDraggingInfo> sender)
+   event.dnd.time = GDK_CURRENT_TIME;
+ 
+   (*_gdk_event_func) (&event, _gdk_event_data);
+-  
+-  g_object_unref (current_context);
+-  current_context = NULL;
+ }
+ 
+ - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
+@@ -563,6 +566,9 @@ update_context_from_dragging_info (id <NSDraggingInfo> sender)
+   GdkEvent event;
+   int gx, gy;
+ 
++  g_return_val_if_fail (current_context != NULL,
++                        NSDragOperationNone);
++
+   update_context_from_dragging_info (sender);
+   _gdk_quartz_window_nspoint_to_gdk_xy (screen_point, &gx, &gy);
+ 
+@@ -588,6 +594,8 @@ update_context_from_dragging_info (id <NSDraggingInfo> sender)
+   GdkEvent event;
+   int gy, gx;
+ 
++  g_return_val_if_fail (current_context != NULL, NO);
++
+   update_context_from_dragging_info (sender);
+   _gdk_quartz_window_nspoint_to_gdk_xy (screen_point, &gx, &gy);
+ 
+@@ -603,9 +611,6 @@ update_context_from_dragging_info (id <NSDraggingInfo> sender)
+ 
+   g_object_unref (event.dnd.window);
+ 
+-  g_object_unref (current_context);
+-  current_context = NULL;
+-
+   return YES;
+ }
+ 
+-- 
+2.7.2
+

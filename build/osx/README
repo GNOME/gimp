@@ -77,6 +77,7 @@ don't need it.
 3. Get the patches for the GIMP build:
 curl --create-dirs -o $HOME/gimp/directory/patches/gmi2-improve-internationalization-of-App-menu-and-other-s.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gmi2-improve-internationalization-of-App-menu-and-other-s.patch?h=gimp-2-8
 curl -o $HOME/gimp/directory/patches/gmi2-keep-separators-between-placeholders.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gmi2-keep-separators-between-placeholders.patch?h=gimp-2-8
+curl -o $HOME/gimp/directory/patches/gmi2-keep-separators-between-placeholders.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-fix-dnd-timing-issue.patch?h=gimp-2-8
 curl -o $HOME/gimp/directory/patches/gmi2-keep-separators-between-placeholders.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-fix-regression-in-imquartz.patch?h=gimp-2-8
 curl -o $HOME/gimp/directory/patches/gmi2-keep-separators-between-placeholders.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-handle-didMove-and-didResize-in-the-same-way.patch?h=gimp-2-8
 curl -o $HOME/gimp/directory/patches/gmi2-keep-separators-between-placeholders.patch https://git.gnome.org/browse/gimp/plain/build/osx/patches/gtk2-quartz-introduce-gdk_quartz_window_is_quartz-function.patch?h=gimp-2-8
