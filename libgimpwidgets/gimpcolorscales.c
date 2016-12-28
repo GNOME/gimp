@@ -131,7 +131,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   static const gdouble slider_initial_vals[] =
     {   0,   0,   0,   0,   0,   0,   0 };
   static const gdouble slider_max_vals[] =
-    { 360, 100, 100, 255, 255, 255, 100 };
+    { 360, 100, 100, 100, 100, 100, 100 };
   static const gdouble slider_incs[] =
     {  30,  10,  10,  16,  16,  16,  10 };
 
@@ -187,7 +187,7 @@ gimp_color_scales_init (GimpColorScales *scales)
                                     slider_initial_vals[i],
                                     0.0, slider_max_vals[i],
                                     1.0, slider_incs[i],
-                                    0,
+                                    1,
                                     gettext (enum_desc->value_help),
                                     NULL);
 
@@ -310,9 +310,9 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
   values[GIMP_COLOR_SELECTOR_HUE]        = ROUND (selector->hsv.h * 360.0);
   values[GIMP_COLOR_SELECTOR_SATURATION] = ROUND (selector->hsv.s * 100.0);
   values[GIMP_COLOR_SELECTOR_VALUE]      = ROUND (selector->hsv.v * 100.0);
-  values[GIMP_COLOR_SELECTOR_RED]        = ROUND (selector->rgb.r * 255.0);
-  values[GIMP_COLOR_SELECTOR_GREEN]      = ROUND (selector->rgb.g * 255.0);
-  values[GIMP_COLOR_SELECTOR_BLUE]       = ROUND (selector->rgb.b * 255.0);
+  values[GIMP_COLOR_SELECTOR_RED]        = ROUND (selector->rgb.r * 100.0);
+  values[GIMP_COLOR_SELECTOR_GREEN]      = ROUND (selector->rgb.g * 100.0);
+  values[GIMP_COLOR_SELECTOR_BLUE]       = ROUND (selector->rgb.b * 100.0);
   values[GIMP_COLOR_SELECTOR_ALPHA]      = ROUND (selector->rgb.a * 100.0);
 
   for (i = 0; i < 7; i++)
@@ -384,15 +384,15 @@ gimp_color_scales_scale_update (GtkAdjustment   *adjustment,
       break;
 
     case GIMP_COLOR_SELECTOR_RED:
-      selector->rgb.r = value / 255.0;
+      selector->rgb.r = value / 100.0;
       break;
 
     case GIMP_COLOR_SELECTOR_GREEN:
-      selector->rgb.g = value / 255.0;
+      selector->rgb.g = value / 100.0;
       break;
 
     case GIMP_COLOR_SELECTOR_BLUE:
-      selector->rgb.b = value / 255.0;
+      selector->rgb.b = value / 100.0;
       break;
 
     case GIMP_COLOR_SELECTOR_ALPHA:
