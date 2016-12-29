@@ -375,9 +375,12 @@ gimp_enum_store_set_icon_prefix (GimpEnumStore *store,
 
           enum_value = g_enum_get_value (store->enum_class, value);
 
-          icon_name = g_strconcat (icon_prefix, "-",
-                                   enum_value->value_nick,
-                                   NULL);
+          if (enum_value)
+            {
+              icon_name = g_strconcat (icon_prefix, "-",
+                                       enum_value->value_nick,
+                                       NULL);
+            }
         }
 
       gtk_list_store_set (GTK_LIST_STORE (store), &iter,
