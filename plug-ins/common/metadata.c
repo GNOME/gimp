@@ -90,7 +90,8 @@ static void       metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
                                                     gint             value_column);
 
 static gchar    * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
-                                                    const gchar     *tag);
+                                                    const gchar     *tag,
+                                                    gboolean         truncate);
 
 static void       metadata_dialog_iptc_callback    (GtkWidget      *dialog,
                                                     GtkBuilder     *builder);
@@ -314,7 +315,8 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
 
       widget = GTK_WIDGET (gtk_builder_get_object (builder, iptc_data[i]));
 
-      value = metadata_dialog_format_tag_value (metadata, iptc_data[i]);
+      value = metadata_dialog_format_tag_value (metadata, iptc_data[i],
+                                                /* truncate = */ FALSE);
 
       if (GTK_IS_ENTRY (widget))
         {
@@ -358,7 +360,8 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
 
       gtk_list_store_append (store, &iter);
 
-      value = metadata_dialog_format_tag_value (metadata, tag);
+      value = metadata_dialog_format_tag_value (metadata, tag,
+                                                /* truncate = */ TRUE);
 
       gtk_list_store_set (store, &iter,
                           tag_column,   tag,
@@ -371,7 +374,8 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
 
 static gchar *
 metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
-                                  const gchar    *tag)
+                                  const gchar    *tag,
+                                  gboolean        truncate)
 {
   const gchar *tag_type;
   gchar       *result;
@@ -393,7 +397,7 @@ metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
 
       size = g_utf8_strlen (value_utf8, -1);
 
-      if (size < TAG_VALUE_MAX_SIZE)
+      if (! truncate || size < TAG_VALUE_MAX_SIZE)
         {
           result = value_utf8;
         }
@@ -431,7 +435,10 @@ metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
       bytes = gexiv2_metadata_get_tag_raw (metadata, tag);
       data  = g_bytes_get_data (bytes, &size);
 
-      display_size = MIN (size, RAW_DATA_MAX_SIZE);
+      if (! truncate)
+        display_size = size;
+      else
+        display_size = MIN (size, RAW_DATA_MAX_SIZE);
 
       str = g_string_sized_new (3 * display_size);
 
