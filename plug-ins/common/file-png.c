@@ -77,6 +77,18 @@
  * Structures...
  */
 
+typedef enum _PngExportformat {
+  PNG_FORMAT_AUTO = 0,
+  PNG_FORMAT_RGB8,
+  PNG_FORMAT_GRAY8,
+  PNG_FORMAT_RGBA8,
+  PNG_FORMAT_GRAYA8,
+  PNG_FORMAT_RGB16,
+  PNG_FORMAT_GRAY16,
+  PNG_FORMAT_RGBA16,
+  PNG_FORMAT_GRAYA16
+} PngExportFormat;
+
 typedef struct
 {
   gboolean  interlaced;
@@ -92,6 +104,7 @@ typedef struct
   gboolean  save_xmp;
   gboolean  save_iptc;
   gboolean  save_thumbnail;
+  PngExportFormat export_format;
 }
 PngSaveVals;
 
@@ -106,6 +119,7 @@ typedef struct
   GtkWidget *phys;
   GtkWidget *time;
   GtkWidget *comment;
+  GtkWidget *pixelformat;
   GtkWidget *save_transp_pixels;
   GtkAdjustment *compression_level;
   GtkWidget *save_exif;
@@ -201,7 +215,8 @@ static const PngSaveVals defaults =
   TRUE,                /* save exif       */
   TRUE,                /* save xmp        */
   TRUE,                /* save iptc        */
-  TRUE                 /* save thumbnail  */
+  TRUE,                /* save thumbnail  */
+  PNG_FORMAT_AUTO
 };
 
 static PngSaveVals pngvals;
@@ -1564,103 +1579,153 @@ save_image (const gchar  *filename,
   for (i = 0; i < 256; i++)
     remap[i] = i;
 
-  /*
-   * Set color type and remember bytes per pixel count
-   */
-
-  switch (type)
+  if (pngvals.export_format == PNG_FORMAT_AUTO)
     {
-    case GIMP_RGB_IMAGE:
-      color_type = PNG_COLOR_TYPE_RGB;
-      if (bit_depth == 8)
-        {
-          if (linear)
-            file_format = babl_format ("RGB u8");
-          else
-            file_format = babl_format ("R'G'B' u8");
-        }
-      else
-        {
-          if (linear)
-            file_format = babl_format ("RGB u16");
-          else
-            file_format = babl_format ("R'G'B' u16");
-        }
-      break;
+    /*
+     * Set color type and remember bytes per pixel count
+     */
 
-    case GIMP_RGBA_IMAGE:
-      color_type = PNG_COLOR_TYPE_RGB_ALPHA;
-      if (bit_depth == 8)
-        {
-          if (linear)
-            file_format = babl_format ("RGBA u8");
-          else
-            file_format = babl_format ("R'G'B'A u8");
-        }
-      else
-        {
-          if (linear)
-            file_format = babl_format ("RGBA u16");
-          else
-            file_format = babl_format ("R'G'B'A u16");
-        }
-      break;
+    switch (type)
+      {
+      case GIMP_RGB_IMAGE:
+        color_type = PNG_COLOR_TYPE_RGB;
+        if (bit_depth == 8)
+          {
+            if (linear)
+              file_format = babl_format ("RGB u8");
+            else
+              file_format = babl_format ("R'G'B' u8");
+          }
+        else
+          {
+            if (linear)
+              file_format = babl_format ("RGB u16");
+            else
+              file_format = babl_format ("R'G'B' u16");
+          }
+        break;
 
-    case GIMP_GRAY_IMAGE:
-      color_type = PNG_COLOR_TYPE_GRAY;
-      if (bit_depth == 8)
-        {
-          if (linear)
-            file_format = babl_format ("Y u8");
-          else
-            file_format = babl_format ("Y' u8");
-        }
-      else
-        {
-          if (linear)
-            file_format = babl_format ("Y u16");
-          else
-            file_format = babl_format ("Y' u16");
-        }
-      break;
+      case GIMP_RGBA_IMAGE:
+        color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+        if (bit_depth == 8)
+          {
+            if (linear)
+              file_format = babl_format ("RGBA u8");
+            else
+              file_format = babl_format ("R'G'B'A u8");
+          }
+        else
+          {
+            if (linear)
+              file_format = babl_format ("RGBA u16");
+            else
+              file_format = babl_format ("R'G'B'A u16");
+          }
+        break;
 
-    case GIMP_GRAYA_IMAGE:
-      color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
-      if (bit_depth == 8)
-        {
-          if (linear)
-            file_format = babl_format ("YA u8");
-          else
-            file_format = babl_format ("Y'A u8");
-        }
-      else
-        {
-          if (linear)
-            file_format = babl_format ("YA u16");
-          else
-            file_format = babl_format ("Y'A u16");
-        }
-      break;
+      case GIMP_GRAY_IMAGE:
+        color_type = PNG_COLOR_TYPE_GRAY;
+        if (bit_depth == 8)
+          {
+            if (linear)
+              file_format = babl_format ("Y u8");
+            else
+              file_format = babl_format ("Y' u8");
+          }
+        else
+          {
+            if (linear)
+              file_format = babl_format ("Y u16");
+            else
+              file_format = babl_format ("Y' u16");
+          }
+        break;
 
-    case GIMP_INDEXED_IMAGE:
-      color_type = PNG_COLOR_TYPE_PALETTE;
-      file_format = gimp_drawable_get_format (drawable_ID);
-      pngg.has_plte = TRUE;
-      pngg.palette = (png_colorp) gimp_image_get_colormap (image_ID,
-                                                           &pngg.num_palette);
-      bit_depth = get_bit_depth_for_palette (pngg.num_palette);
-      break;
+      case GIMP_GRAYA_IMAGE:
+        color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
+        if (bit_depth == 8)
+          {
+            if (linear)
+              file_format = babl_format ("YA u8");
+            else
+              file_format = babl_format ("Y'A u8");
+          }
+        else
+          {
+            if (linear)
+              file_format = babl_format ("YA u16");
+            else
+              file_format = babl_format ("Y'A u16");
+          }
+        break;
 
-    case GIMP_INDEXEDA_IMAGE:
-      color_type = PNG_COLOR_TYPE_PALETTE;
-      file_format = gimp_drawable_get_format (drawable_ID);
-      /* fix up transparency */
-      bit_depth = respin_cmap (pp, info, remap, image_ID, drawable_ID);
-      break;
+      case GIMP_INDEXED_IMAGE:
+        color_type = PNG_COLOR_TYPE_PALETTE;
+        file_format = gimp_drawable_get_format (drawable_ID);
+        pngg.has_plte = TRUE;
+        pngg.palette = (png_colorp) gimp_image_get_colormap (image_ID,
+                                                             &pngg.num_palette);
+        bit_depth = get_bit_depth_for_palette (pngg.num_palette);
+        break;
 
-    default:
-      g_set_error (error, 0, 0, "Image type can't be exported as PNG");
-      return FALSE;
+      case GIMP_INDEXEDA_IMAGE:
+        color_type = PNG_COLOR_TYPE_PALETTE;
+        file_format = gimp_drawable_get_format (drawable_ID);
+        /* fix up transparency */
+        bit_depth = respin_cmap (pp, info, remap, image_ID, drawable_ID);
+        break;
+
+      default:
+        g_set_error (error, 0, 0, "Image type can't be exported as PNG");
+        return FALSE;
+      }
+    }
+  else
+    {
+      switch (pngvals.export_format)
+      {
+        case PNG_FORMAT_RGB8:
+          color_type = PNG_COLOR_TYPE_RGB;
+          file_format = babl_format ("R'G'B' u8");
+          bit_depth = 8;
+          break;
+        case PNG_FORMAT_GRAY8:
+          color_type = PNG_COLOR_TYPE_GRAY;
+          file_format = babl_format ("Y' u8");
+          bit_depth = 8;
+          break;
+        case PNG_FORMAT_AUTO: // shut up gcc
+        case PNG_FORMAT_RGBA8:
+          color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+          file_format = babl_format ("R'G'B'A u8");
+          bit_depth = 8;
+          break;
+        case PNG_FORMAT_GRAYA8:
+          color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
+          file_format = babl_format ("Y'A u8");
+          bit_depth = 8;
+          break;
+        case PNG_FORMAT_RGB16:
+          color_type = PNG_COLOR_TYPE_RGB;
+          file_format = babl_format ("R'G'B' u16");
+          bit_depth = 16;
+          break;
+        case PNG_FORMAT_GRAY16:
+          color_type = PNG_COLOR_TYPE_GRAY;
+          file_format = babl_format ("Y' u16");
+          bit_depth = 16;
+          break;
+        case PNG_FORMAT_RGBA16:
+          color_type = PNG_COLOR_TYPE_RGB_ALPHA;
+          file_format = babl_format ("R'G'B'A u16");
+          bit_depth = 16;
+          break;
+        case PNG_FORMAT_GRAYA16:
+          color_type = PNG_COLOR_TYPE_GRAY_ALPHA;
+          file_format = babl_format ("Y'A u16");
+          bit_depth = 16;
+          break;
+      }
     }
 
   bpp = babl_format_get_bytes_per_pixel (file_format);
@@ -2234,6 +2299,13 @@ toggle_button_init (GtkBuilder  *builder,
   return toggle;
 }
 
+static void pixformat_changed (GtkWidget *widget,
+                                   void      *foo)
+{
+  PngExportFormat *ep = foo;
+  *ep = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
+}
+
 static gboolean
 save_dialog (gint32    image_ID,
              gboolean  alpha)
@@ -2332,6 +2404,21 @@ save_dialog (gint32    image_ID,
   g_signal_connect (pg.compression_level, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);
+
+  /* Compression level scale */
+  pg.pixelformat =
+    GTK_WIDGET (gtk_builder_get_object (builder, "pixelformat-combo"));
+  gtk_combo_box_set_active (GTK_COMBO_BOX (pg.pixelformat), pngvals.export_format);
+  g_signal_connect (pg.pixelformat, "changed",
+                    G_CALLBACK (pixformat_changed),
+                    &pngvals.export_format);
+
+#if 0
+  gtk_adjustment_set_value (pg.compression_level, pngvals.compression_level);
+  g_signal_connect (pg.compression_level, "value-changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &pngvals.compression_level);
+#endif
 
   /* Load/save defaults buttons */
   g_signal_connect_swapped (gtk_builder_get_object (builder, "load-defaults"),

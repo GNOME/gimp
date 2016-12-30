@@ -12,7 +12,7 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
-    <property name="n_rows">11</property>
+    <property name="n_rows">12</property>
     <property name="n_columns">3</property>
     <property name="column_spacing">6</property>
     <property name="row_spacing">6</property>
@@ -143,21 +143,6 @@
       </packing>
     </child>
     <child>
-      <object class="GtkLabel" id="compression-level-label">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="xalign">0</property>
-        <property name="label" translatable="yes">Co_mpression level:</property>
-        <property name="use_underline">True</property>
-        <property name="mnemonic_widget">compression-level-spin</property>
-      </object>
-      <packing>
-        <property name="top_attach">8</property>
-        <property name="bottom_attach">9</property>
-        <property name="x_options"/>
-      </packing>
-    </child>
-    <child>
       <object class="GtkHScale" id="compression-level-scale">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
@@ -167,8 +152,8 @@
       <packing>
         <property name="left_attach">1</property>
         <property name="right_attach">2</property>
-        <property name="top_attach">8</property>
-        <property name="bottom_attach">9</property>
+        <property name="top_attach">9</property>
+        <property name="bottom_attach">10</property>
       </packing>
     </child>
     <child>
@@ -186,8 +171,8 @@
       <packing>
         <property name="left_attach">2</property>
         <property name="right_attach">3</property>
-        <property name="top_attach">8</property>
-        <property name="bottom_attach">9</property>
+        <property name="top_attach">9</property>
+        <property name="bottom_attach">10</property>
         <property name="x_options"/>
       </packing>
     </child>
@@ -228,8 +213,8 @@
       </object>
       <packing>
         <property name="right_attach">3</property>
-        <property name="top_attach">10</property>
-        <property name="bottom_attach">11</property>
+        <property name="top_attach">11</property>
+        <property name="bottom_attach">12</property>
       </packing>
     </child>
     <child>
@@ -316,8 +301,46 @@
       </object>
       <packing>
         <property name="right_attach">3</property>
+        <property name="top_attach">10</property>
+        <property name="bottom_attach">11</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="compression-level-label">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Co_mpression level:</property>
+        <property name="use_underline">True</property>
+        <property name="mnemonic_widget">compression-level-spin</property>
+        <property name="xalign">0</property>
+      </object>
+      <packing>
         <property name="top_attach">9</property>
         <property name="bottom_attach">10</property>
+        <property name="x_options"/>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkComboBoxText" id="pixelformat-combo">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <items>
+          <item translatable="yes">automatic pixelformat</item>
+          <item translatable="yes">8bpc RGB</item>
+          <item translatable="yes">8bpc GRAY</item>
+          <item translatable="yes">8bpc RGBA</item>
+          <item translatable="yes">8bpc GRAYA</item>
+          <item translatable="yes">16bpc RGB</item>
+          <item translatable="yes">16bpc GRAY</item>
+          <item translatable="yes">16bpc RGBA</item>
+          <item translatable="yes">16bpc GRAYA</item>
+        </items>
+      </object>
+      <packing>
+        <property name="left_attach">0</property>
+        <property name="right_attach">3</property>
+        <property name="top_attach">8</property>
+        <property name="bottom_attach">9</property>
       </packing>
     </child>
   </object>
