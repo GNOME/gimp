@@ -38,6 +38,14 @@
 #define IPTC_PREFIX "Iptc."
 #define XMP_PREFIX  "Xmp."
 
+/* The length at which to truncate tag values, in characters. */
+#define TAG_VALUE_MAX_SIZE 1024
+
+/* The length at which to truncate raw data (i.e., tag values
+ * of type "Byte" or "Undefined"), in bytes.
+ */
+#define RAW_DATA_MAX_SIZE 16
+
 enum
 {
   C_XMP_TAG = 0,
@@ -62,21 +70,30 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void       query                         (void);
-static void       run                           (const gchar      *name,
-                                                 gint              nparams,
-                                                 const GimpParam  *param,
-                                                 gint             *nreturn_vals,
-                                                 GimpParam       **return_vals);
+static void       query                            (void);
+static void       run                              (const gchar      *name,
+                                                    gint              nparams,
+                                                    const GimpParam  *param,
+                                                    gint             *nreturn_vals,
+                                                    GimpParam       **return_vals);
 
-static gboolean   metadata_dialog               (gint32          image_id,
-                                                 GExiv2Metadata *metadata);
+static gboolean   metadata_dialog                  (gint32            image_id,
+                                                    GExiv2Metadata   *metadata);
 
-static void       metadata_dialog_set_metadata  (GExiv2Metadata *metadata,
-                                                 GtkBuilder     *builder);
+static void       metadata_dialog_set_metadata     (GExiv2Metadata   *metadata,
+                                                    GtkBuilder       *builder);
 
-static void       metadata_dialog_iptc_callback (GtkWidget      *dialog,
-                                                 GtkBuilder     *builder);
+static void       metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
+                                                    gchar          **tags,
+                                                    GtkListStore    *store,
+                                                    gint             tag_column,
+                                                    gint             value_column);
+
+static gchar    * metadata_dialog_format_tag_value (GExiv2Metadata  *metadata,
+                                                    const gchar     *tag);
+
+static void       metadata_dialog_iptc_callback    (GtkWidget      *dialog,
+                                                    GtkBuilder     *builder);
 
 
 /* local variables */
@@ -270,47 +287,24 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
   GtkListStore  *exif_store;
   GtkListStore  *xmp_store;
   gchar        **exif_data;
-  gchar        **iptc_data;
   gchar        **xmp_data;
+  gchar        **iptc_data;
   gchar         *value;
-  gchar         *value_utf;
-  GtkTreeIter    iter;
   gint           i;
 
+  exif_data  = gexiv2_metadata_get_exif_tags (metadata);
   exif_store = GTK_LIST_STORE (gtk_builder_get_object (builder,
                                                        "exif-liststore"));
-  xmp_store  = GTK_LIST_STORE (gtk_builder_get_object (builder,
+
+  metadata_dialog_append_tags (metadata, exif_data,
+                               exif_store, C_EXIF_TAG, C_EXIF_VALUE);
+
+  xmp_data  = gexiv2_metadata_get_xmp_tags (metadata);
+  xmp_store = GTK_LIST_STORE (gtk_builder_get_object (builder,
                                                        "xmp-liststore"));
 
-  exif_data = gexiv2_metadata_get_exif_tags (metadata);
-
-  for (i = 0; exif_data[i] != NULL; i++)
-    {
-      gtk_list_store_append (exif_store, &iter);
-      value = gexiv2_metadata_get_tag_interpreted_string (metadata,
-                                                          exif_data[i]);
-      value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-
-      gtk_list_store_set (exif_store, &iter,
-                          C_EXIF_TAG,   exif_data[i],
-                          C_EXIF_VALUE, value_utf,
-                          -1);
-    }
-
-  xmp_data = gexiv2_metadata_get_xmp_tags (metadata);
-
-  for (i = 0; xmp_data[i] != NULL; i++)
-    {
-      gtk_list_store_append (xmp_store, &iter);
-      value = gexiv2_metadata_get_tag_interpreted_string (metadata,
-                                                          xmp_data[i]);
-      value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
-
-      gtk_list_store_set (xmp_store, &iter,
-                          C_XMP_TAG,   xmp_data[i],
-                          C_XMP_VALUE, value_utf,
-                          -1);
-    }
+  metadata_dialog_append_tags (metadata, xmp_data,
+                               xmp_store, C_XMP_TAG, C_XMP_VALUE);
 
   iptc_data = gexiv2_metadata_get_iptc_tags (metadata);
 
@@ -319,15 +313,14 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
       GtkWidget *widget;
 
       widget = GTK_WIDGET (gtk_builder_get_object (builder, iptc_data[i]));
-      value = gexiv2_metadata_get_tag_interpreted_string (metadata,
-                                                          iptc_data[i]);
-      value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+
+      value = metadata_dialog_format_tag_value (metadata, iptc_data[i]);
 
       if (GTK_IS_ENTRY (widget))
         {
           GtkEntry *entry_widget = GTK_ENTRY (widget);
 
-          gtk_entry_set_text (entry_widget, value_utf);
+          gtk_entry_set_text (entry_widget, value);
         }
       else if (GTK_IS_TEXT_VIEW (widget))
         {
@@ -335,9 +328,130 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
           GtkTextBuffer *buffer;
 
           buffer = gtk_text_view_get_buffer (text_view);
-          gtk_text_buffer_set_text (buffer, value_utf, -1);
+          gtk_text_buffer_set_text (buffer, value, -1);
+        }
+
+      g_free (value);
+    }
+}
+
+static void
+metadata_dialog_append_tags (GExiv2Metadata  *metadata,
+                             gchar          **tags,
+                             GtkListStore    *store,
+                             gint             tag_column,
+                             gint             value_column)
+{
+  GtkTreeIter  iter;
+  const gchar *tag;
+
+  while ((tag = *tags++))
+    {
+      const gchar *tag_label;
+      gchar       *value;
+
+      tag_label = gexiv2_metadata_get_tag_label (tag);
+
+      /* skip private tags */
+      if (g_strcmp0 (tag_label, "") == 0 || g_strcmp0 (tag_label, NULL) == 0)
+        continue;
+
+      gtk_list_store_append (store, &iter);
+
+      value = metadata_dialog_format_tag_value (metadata, tag);
+
+      gtk_list_store_set (store, &iter,
+                          tag_column,   tag,
+                          value_column, value,
+                          -1);
+
+      g_free (value);
+    }
+}
+
+static gchar *
+metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
+                                  const gchar    *tag)
+{
+  const gchar *tag_type;
+  gchar       *result;
+
+  tag_type = gexiv2_metadata_get_tag_type (tag);
+
+  if (g_strcmp0 (tag_type, "Byte")      != 0 &&
+      g_strcmp0 (tag_type, "Undefined") != 0 &&
+      g_strcmp0 (tag_type, NULL)        != 0)
+    {
+      gchar *value;
+      gchar *value_utf8;
+      glong  size;
+
+      value      = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
+      value_utf8 = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+
+      g_free (value);
+
+      size = g_utf8_strlen (value_utf8, -1);
+
+      if (size < TAG_VALUE_MAX_SIZE)
+        {
+          result = value_utf8;
+        }
+      else
+        {
+          gchar   *value_utf8_trunc;
+          GString *str;
+
+          value_utf8_trunc = g_utf8_substring (value_utf8,
+                                               0, TAG_VALUE_MAX_SIZE);
+
+          g_free (value_utf8);
+
+          str = g_string_new (value_utf8_trunc);
+
+          g_free (value_utf8_trunc);
+
+          g_string_append (str, "... ");
+          g_string_append_printf (str,
+                                  _("(%lu more character(s))"),
+                                  size - TAG_VALUE_MAX_SIZE);
+
+          result = g_string_free (str, FALSE);
         }
     }
+  else
+    {
+      GBytes       *bytes;
+      const guchar *data;
+      gsize         size;
+      gsize         display_size;
+      GString      *str;
+      gint          i;
+
+      bytes = gexiv2_metadata_get_tag_raw (metadata, tag);
+      data  = g_bytes_get_data (bytes, &size);
+
+      display_size = MIN (size, RAW_DATA_MAX_SIZE);
+
+      str = g_string_sized_new (3 * display_size);
+
+      for (i = 0; i < display_size; i++)
+        g_string_append_printf (str, i == 0 ? "%02x" : " %02x", data[i]);
+
+      if (display_size < size)
+        {
+          g_string_append (str, " ... ");
+          g_string_append_printf (str,
+                                  _("(%llu more byte(s))"),
+                                  (unsigned long long) (size - display_size));
+        }
+
+      result = g_string_free (str, FALSE);
+
+      g_bytes_unref (bytes);
+    }
+
+  return result;
 }
 
 static void
