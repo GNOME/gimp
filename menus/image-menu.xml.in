@@ -568,6 +568,7 @@
       <separator />
       <placeholder name="Invert">
         <menuitem action="drawable-invert" />
+        <menuitem action="drawable-linear-invert" />
         <menuitem action="drawable-value-invert" />
       </placeholder>
       <separator />

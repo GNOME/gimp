@@ -23,6 +23,8 @@ void   drawable_equalize_cmd_callback       (GtkAction *action,
                                              gpointer   data);
 void   drawable_invert_cmd_callback         (GtkAction *action,
                                              gpointer   data);
+void   drawable_linear_invert_cmd_callback  (GtkAction *action,
+                                             gpointer   data);
 void   drawable_value_invert_cmd_callback   (GtkAction *action,
                                              gpointer   data);
 void   drawable_levels_stretch_cmd_callback (GtkAction *action,
