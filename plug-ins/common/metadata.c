@@ -397,7 +397,7 @@ metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
 
       size = g_utf8_strlen (value_utf8, -1);
 
-      if (! truncate || size < TAG_VALUE_MAX_SIZE)
+      if (! truncate || size <= TAG_VALUE_MAX_SIZE)
         {
           result = value_utf8;
         }
