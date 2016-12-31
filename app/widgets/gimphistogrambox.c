@@ -228,20 +228,42 @@ gimp_histogram_box_histogram_range (GimpHistogramView *view,
 
   if (box->n_bins != view->n_bins)
     {
+      gdouble upper;
+      gdouble page_increment;
+      gdouble step_increment;
+      guint   digits;
+
       box->n_bins = view->n_bins;
 
       if (box->n_bins == 256)
         {
-          gtk_adjustment_set_upper (box->high_adj, 255);
-          gtk_spin_button_set_digits (GTK_SPIN_BUTTON (box->low_spinbutton), 0);
-          gtk_spin_button_set_digits (GTK_SPIN_BUTTON (box->high_spinbutton), 0);
+          digits         = 0;
+          upper          = 255.0;
+          step_increment = 1.0;
+          page_increment = 16.0;
         }
       else
         {
-          gtk_adjustment_set_upper (box->high_adj, 1.0);
-          gtk_spin_button_set_digits (GTK_SPIN_BUTTON (box->low_spinbutton), 3);
-          gtk_spin_button_set_digits (GTK_SPIN_BUTTON (box->high_spinbutton), 3);
+          digits         = 3;
+          upper          = 1.0;
+          step_increment = 0.01;
+          page_increment = 0.1;
         }
+
+      g_object_set (G_OBJECT (box->high_adj),
+                    "upper", upper,
+                    "step-increment", step_increment,
+                    "page-increment", page_increment,
+                    NULL);
+
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (box->high_spinbutton), digits);
+
+      g_object_set (G_OBJECT (box->low_adj),
+                    "step-increment", step_increment,
+                    "page-increment", page_increment,
+                    NULL);
+
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (box->low_spinbutton), digits);
     }
 
   if (box->n_bins != 256)
