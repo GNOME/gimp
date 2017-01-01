@@ -181,6 +181,8 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
   combo = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
   g_object_unref (store);
 
+  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo), "gimp");
+
   gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (combo),
                                         gimp_paint_mode_menu_separator_func,
                                         GINT_TO_POINTER (-1),
