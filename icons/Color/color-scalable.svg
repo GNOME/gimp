@@ -28,7 +28,7 @@
         <dc:title>Gimp Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
-            <dc:title>many unknown, Lapo Calamandrei, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Marek Dvoroznak, Michael Natterer, Klaus Staedtler</dc:title>
+            <dc:title>many unknown, Lapo Calamandrei, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Ell, Jakub Steiner, Jehan, Johannes Matschke, Marek Dvoroznak, Michael Natterer, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
         <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
@@ -57,17 +57,17 @@
      inkscape:snap-bbox="true"
      inkscape:snap-nodes="true"
      showborder="false"
-     inkscape:current-layer="stock"
-     inkscape:window-maximized="0"
-     inkscape:window-y="27"
-     inkscape:window-x="0"
-     inkscape:cy="271.28704"
-     inkscape:cx="1029.8133"
-     inkscape:zoom="16"
+     inkscape:current-layer="layer3"
+     inkscape:window-maximized="1"
+     inkscape:window-y="24"
+     inkscape:window-x="65"
+     inkscape:cy="113.73969"
+     inkscape:cx="759.15978"
+     inkscape:zoom="1"
      showgrid="true"
      id="namedview88"
-     inkscape:window-height="704"
-     inkscape:window-width="1366"
+     inkscape:window-height="876"
+     inkscape:window-width="1535"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0"
      guidetolerance="10"
@@ -50172,6 +50172,49 @@
            d="m -613.96381,297.14448 0,2.8911 -2.89157,0 0,1.9287 2.89157,0 0,2.8911 1.92772,0 0,-2.8911 2.89157,0 0,-1.9287 -2.89157,0 0,-2.8911 z"
            id="rect11686-8" />
       </g>
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="blending modes"
+     style="display:inline">
+    <text
+       x="624.50372"
+       y="441.11642"
+       id="text10172-3-3"
+       sodipodi:linespacing="125%"
+       text-align="start"
+       line-height="125%"
+       font-weight="bold"
+       font-size="15"
+       style="font-weight:bold;font-size:15px;line-height:125%;font-family:'Droid Sans';text-align:start;display:inline;fill:#ffffff">
+      <tspan
+         sodipodi:role="line"
+         x="624.50372"
+         y="441.11642"
+         id="tspan20212-6">blending modes</tspan>
+    </text>
+    <g
+       id="gimp-mode-backdrop"
+       transform="translate(623,453.2294)">
+      <desc
+         id="desc5277">This is not a standalone icon, but is rather used as a backdrop against the blending mode icons from the symbolic theme.  The color theme's makefile uses this icon, or the corresponding pre-rendered png, when auto-generating the color theme's blending mode icons.</desc>
+      <rect
+         style="opacity:1;fill:#729fcf;fill-opacity:1;stroke:#204a87;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect5395"
+         width="15"
+         height="15"
+         x="0.5"
+         y="0.5"
+         ry="2.5" />
+      <rect
+         style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect6734"
+         width="16"
+         height="16"
+         x="0"
+         y="0" />
     </g>
   </g>
   <text
