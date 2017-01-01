@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg9411"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-hardlight-mode.svg">
+  <title
+     id="title10744">GIMP Hard Light Mode</title>
+  <defs
+     id="defs9413" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="46.1875"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:document-units="px"
+     inkscape:current-layer="svg9411"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       empspacing="4"
+       type="xygrid"
+       id="grid9959" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata9416">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>GIMP Hard Light Mode</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Ell</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+        <dc:date />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     style="display:inline"
+     id="gimp-hardlight-mode">
+    <g
+       id="g16369">
+      <circle
+         style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path4276"
+         cx="8"
+         cy="7.9999828"
+         r="3" />
+      <g
+         id="g16359">
+        <path
+           inkscape:transform-center-y="-5.0010202"
+           inkscape:connector-curvature="0"
+           id="path4278"
+           d="M 8,4 8,2"
+           style="opacity:1;fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           inkscape:transform-center-x="3.5362553"
+           inkscape:transform-center-y="-3.5362202"
+           inkscape:connector-curvature="0"
+           id="path4278-9"
+           d="M 5.1708515,5.1719 3.7566379,3.7577"
+           style="opacity:1;fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           inkscape:transform-center-x="5.0009954"
+           inkscape:transform-center-y="-2.02e-05"
+           inkscape:connector-curvature="0"
+           id="path4278-1"
+           d="m 3.9989998,8.001 -1.9999904,0"
+           style="opacity:1;fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           inkscape:transform-center-x="3.536252"
+           inkscape:transform-center-y="3.5361798"
+           inkscape:connector-curvature="0"
+           id="path4278-9-2"
+           d="M 5.1708513,10.8301 3.7566446,12.2443"
+           style="opacity:1;fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           inkscape:transform-center-x="5.105e-05"
+           inkscape:transform-center-y="5.0009798"
+           inkscape:connector-curvature="0"
+           id="path4278-7"
+           d="m 7.9999513,12.002 -4.8e-6,2"
+           style="opacity:1;fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           inkscape:transform-center-x="-3.5361906"
+           inkscape:transform-center-y="3.5362798"
+           inkscape:connector-curvature="0"
+           id="path4278-9-0"
+           d="m 10.829085,10.8302 1.414211,1.4142"
+           style="opacity:1;fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           inkscape:transform-center-x="-5.0009916"
+           inkscape:transform-center-y="7.98e-05"
+           inkscape:connector-curvature="0"
+           id="path4278-1-9"
+           d="m 12.000997,8.0011 1.999989,0"
+           style="opacity:1;fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        <path
+           inkscape:transform-center-x="-3.5362916"
+           inkscape:transform-center-y="-3.5362202"
+           inkscape:connector-curvature="0"
+           id="path4278-9-2-3"
+           d="M 10.829189,5.1719 12.243394,3.7577"
+           style="opacity:1;fill:none;fill-rule:evenodd;stroke:#bebebe;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+    </g>
+    <rect
+       y="0"
+       x="0"
+       height="16"
+       width="16"
+       id="rect16381"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

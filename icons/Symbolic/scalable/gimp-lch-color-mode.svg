@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   id="svg9411"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="gimp-lch-color-mode.svg">
+  <title
+     id="title10744">GIMP Color (LCH) Mode</title>
+  <defs
+     id="defs9413" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="46.3125"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:document-units="px"
+     inkscape:current-layer="svg9411"
+     showgrid="true"
+     units="px"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       empspacing="4"
+       type="xygrid"
+       id="grid9959" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata9416">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>GIMP Color (LCH) Mode</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Ell</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-sa/3.0/" />
+        <dc:date />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-sa/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="gimp-lch-color-mode">
+    <path
+       id="rect6157"
+       d="M 3 1 C 1.892 1 1 1.892 1 3 L 1 13 C 1 14.108 1.892 15 3 15 L 13 15 C 14.108 15 15 14.108 15 13 L 15 3 C 15 1.892 14.108 1 13 1 L 3 1 z M 11.619141 4.9277344 C 11.949748 4.9277344 12.266155 4.9650065 12.570312 5.0390625 C 12.874472 5.1131185 13.166911 5.2217204 13.447266 5.3671875 L 13.447266 6.59375 C 13.164266 6.4006755 12.886393 6.259847 12.611328 6.1699219 C 12.336263 6.0799967 12.046345 6.0351563 11.742188 6.0351562 C 11.197347 6.0351562 10.769125 6.2094727 10.457031 6.5585938 C 10.144938 6.9077149 9.9882814 7.3883464 9.9882812 8.0019531 C 9.9882812 8.6129151 10.144938 9.0922852 10.457031 9.4414062 C 10.769125 9.7905274 11.197347 9.9648438 11.742188 9.9648438 C 12.046345 9.9648437 12.336263 9.9200033 12.611328 9.8300781 C 12.886393 9.740153 13.164266 9.5993245 13.447266 9.40625 L 13.447266 10.632812 C 13.166911 10.77828 12.874472 10.886881 12.570312 10.960938 C 12.266154 11.034993 11.949748 11.072266 11.619141 11.072266 C 10.632609 11.072266 9.8500166 10.798177 9.2734375 10.248047 C 8.6968588 9.6952717 8.4082031 8.946167 8.4082031 8.0019531 C 8.4082031 7.0550945 8.6968588 6.3059896 9.2734375 5.7558594 C 9.8500166 5.2030843 10.632609 4.9277344 11.619141 4.9277344 z M 2.5527344 5.0351562 L 4.0800781 5.0351562 L 4.0800781 7.2910156 L 6.3339844 7.2910156 L 6.3339844 5.0351562 L 7.8613281 5.0351562 L 7.8613281 10.957031 L 6.3339844 10.957031 L 6.3339844 8.4472656 L 4.0800781 8.4472656 L 4.0800781 10.957031 L 2.5527344 10.957031 L 2.5527344 5.0351562 z "
+       style="opacity:1;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       y="0"
+       x="0"
+       height="16"
+       width="16"
+       id="rect12571"
+       style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>
