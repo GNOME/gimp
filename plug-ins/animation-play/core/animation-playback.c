@@ -502,8 +502,7 @@ animation_playback_set_property (GObject      *object,
     {
     case PROP_ANIMATION:
         {
-          Animation  *animation;
-          GeglBuffer *buffer;
+          Animation *animation;
 
           if (playback->priv->animation)
             g_object_unref (playback->priv->animation);
@@ -520,19 +519,10 @@ animation_playback_set_property (GObject      *object,
           playback->priv->stop  = animation_get_duration (animation) - 1;
           playback->priv->stop_at_end = TRUE;
 
-          g_signal_emit_by_name (animation, "loaded");
           g_signal_connect (animation, "cache-invalidated",
                             G_CALLBACK (on_cache_invalidated), playback);
           g_signal_connect (animation, "duration-changed",
                             G_CALLBACK (on_duration_changed), playback);
-
-          /* Once loaded, let's ask render. */
-          buffer = animation_get_frame (animation, playback->priv->position);
-          g_signal_emit (playback, animation_playback_signals[RENDER], 0,
-                         playback->priv->position, buffer, TRUE);
-
-          if (buffer)
-            g_object_unref (buffer);
         }
       break;
 
