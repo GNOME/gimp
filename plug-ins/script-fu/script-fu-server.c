@@ -553,7 +553,7 @@ execute_command (SFCommand *cmd)
   gboolean    error;
   gint        i;
   gdouble     total_time;
-  GTimer      *timer;
+  GTimer     *timer;
 
   server_log ("Processing request #%d\n", cmd->request_no);
   timer = g_timer_new ();
