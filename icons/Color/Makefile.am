@@ -15,6 +15,28 @@ include $(top_srcdir)/icons/icon-list.mk
 #	SVG=`$(top_srcdir)/tools/extract-vector-icon.sh $< $*` && \
 #	echo $${SVG} > $@
 
+# The blending mode icons are auto-generated from the Symbolic icons, by
+# overlaying a white version of the corresponding symbolic icon on top of the
+# blending-mode icon backdrop (gimp-mode-backdrop.{svg,png} in this theme).
+MAKE_SVG_MODE_ICON = \
+	mkdir -p `dirname $@` && \
+	(sed    '/<\/metadata>/q' $< && \
+	 sed    '1,/<\/metadata>/d;/<\/svg>/Q' `dirname $< | sed 's/\bSymbolic\b/Color/'`/gimp-mode-backdrop.svg && \
+	 sed -r '1,/<\/metadata>/d;s/\#[[:xdigit:]]{6}\b/\#ffffff/g' $<) > $@
+
+scalable/gimp-%-mode.svg: ../Symbolic/scalable/gimp-%-mode.svg scalable/gimp-mode-backdrop.svg
+	$(MAKE_SVG_MODE_ICON)
+
+MAKE_MODE_ICON = \
+	mkdir -p `dirname $@` && \
+	GEGL_USE_OPENCL=no GEGL_SWAP=ram $(GEGL) -o $@ -- \
+	over input=[ png-load path=`dirname $< | sed 's/\bSymbolic\b/Color/'`/gimp-mode-backdrop.png ] \
+	     aux=[ load path=$< levels out-low=1 ] \
+	     srgb=true
+
+16/gimp-%-mode.png: ../Symbolic/16/gimp-%-mode.png 16/gimp-mode-backdrop.png
+	$(MAKE_MODE_ICON)
+
 ## Compiled-in icons for both the core and libgimpwidgets
 
 CORE_IMAGES = \
