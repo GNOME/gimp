@@ -69,8 +69,10 @@ struct _GimpLayerTreeViewPriv
 
   gint             model_column_mask;
   gint             model_column_mask_visible;
+  gint             model_column_mode;
 
   GtkCellRenderer *mask_cell;
+  GtkCellRenderer *mode_cell;
 
   PangoAttrList   *italic_attrs;
   PangoAttrList   *bold_attrs;
@@ -147,6 +149,11 @@ static void       gimp_layer_tree_view_mask_update                (GimpLayerTree
                                                                    GimpLayer                  *layer);
 static void       gimp_layer_tree_view_mask_changed               (GimpLayer                  *layer,
                                                                    GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_mode_update                (GimpLayerTreeView          *view,
+                                                                   GtkTreeIter                *iter,
+                                                                   GimpLayer                  *layer);
+static void       gimp_layer_tree_view_mode_changed               (GimpLayer                  *layer,
+                                                                   GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_renderer_update            (GimpViewRenderer           *renderer,
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_update_borders             (GimpLayerTreeView          *view,
@@ -166,6 +173,11 @@ static void       gimp_layer_tree_view_alpha_update               (GimpLayerTree
                                                                    GimpLayer                  *layer);
 static void       gimp_layer_tree_view_alpha_changed              (GimpLayer                  *layer,
                                                                    GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_mode_cell_data_func        (GtkTreeViewColumn          *tree_column,
+                                                                   GtkCellRenderer            *cell,
+                                                                   GtkTreeModel               *model,
+                                                                   GtkTreeIter                *iter,
+                                                                   gpointer                    data);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayerTreeView, gimp_layer_tree_view,
@@ -262,6 +274,11 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
                                            &tree_view->n_model_columns,
                                            G_TYPE_BOOLEAN);
 
+  view->priv->model_column_mode =
+    gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                           &tree_view->n_model_columns,
+                                           GIMP_TYPE_LAYER_MODE_EFFECTS);
+
   /*  Paint mode menu  */
 
   view->priv->paint_mode_menu = gimp_paint_mode_menu_new (FALSE, FALSE);
@@ -354,6 +371,15 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   gimp_container_tree_view_add_renderer_cell (tree_view,
                                               layer_view->priv->mask_cell);
+
+  layer_view->priv->mode_cell = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_end (tree_view->main_column,
+                                 layer_view->priv->mode_cell,
+                                 FALSE);
+  gtk_tree_view_column_set_cell_data_func (tree_view->main_column,
+                                           layer_view->priv->mode_cell,
+                                           gimp_layer_tree_view_mode_cell_data_func,
+                                           tree_view, NULL);
 
   g_signal_connect (tree_view->renderer_cell, "clicked",
                     G_CALLBACK (gimp_layer_tree_view_layer_clicked),
@@ -459,7 +485,7 @@ gimp_layer_tree_view_set_container (GimpContainerView *view,
     {
       layer_view->priv->mode_changed_handler =
         gimp_tree_handler_connect (container, "mode-changed",
-                                   G_CALLBACK (gimp_layer_tree_view_layer_signal_handler),
+                                   G_CALLBACK (gimp_layer_tree_view_mode_changed),
                                    view);
 
       layer_view->priv->opacity_changed_handler =
@@ -552,6 +578,7 @@ gimp_layer_tree_view_insert_item (GimpContainerView *view,
     gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
 
   gimp_layer_tree_view_mask_update (layer_view, iter, layer);
+  gimp_layer_tree_view_mode_update (layer_view, iter, layer);
 
   return iter;
 }
@@ -1207,6 +1234,39 @@ gimp_layer_tree_view_mask_changed (GimpLayer         *layer,
     gimp_layer_tree_view_mask_update (layer_view, iter, layer);
 }
 
+
+/* Layer Mode callbacks */
+
+static void
+gimp_layer_tree_view_mode_update (GimpLayerTreeView *view,
+                                  GtkTreeIter       *iter,
+                                  GimpLayer         *layer)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GimpLayerModeEffects   mode;
+
+  mode = gimp_layer_get_mode (layer);
+
+  gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
+                      view->priv->model_column_mode, mode,
+                      -1);
+}
+
+static void
+gimp_layer_tree_view_mode_changed (GimpLayer         *layer,
+                                   GimpLayerTreeView *layer_view)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (layer_view);
+  GtkTreeIter       *iter;
+
+  gimp_layer_tree_view_layer_signal_handler (layer, layer_view);
+
+  iter = gimp_container_view_lookup (view, GIMP_VIEWABLE (layer));
+
+  if (iter)
+    gimp_layer_tree_view_mode_update (layer_view, iter, layer);
+}
+
 static void
 gimp_layer_tree_view_renderer_update (GimpViewRenderer  *renderer,
                                       GimpLayerTreeView *layer_view)
@@ -1452,5 +1512,46 @@ gimp_layer_tree_view_alpha_changed (GimpLayer         *layer,
       if (gimp_image_get_active_layer (gimp_item_tree_view_get_image (item_view)) == layer)
         gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
                                          GIMP_VIEWABLE (layer));
+    }
+}
+
+static void
+gimp_layer_tree_view_mode_cell_data_func (GtkTreeViewColumn *tree_column,
+                                          GtkCellRenderer   *cell,
+                                          GtkTreeModel      *model,
+                                          GtkTreeIter       *iter,
+                                          gpointer           data)
+{
+  GimpLayerTreeView    *view = GIMP_LAYER_TREE_VIEW (data);
+  GimpLayerModeEffects  mode;
+
+  gtk_tree_model_get (model, iter,
+                      view->priv->model_column_mode, &mode,
+                      -1);
+
+  if (mode == GIMP_NORMAL_MODE)
+    {
+      g_object_set (cell,
+                    "visible",   FALSE,
+                    "icon-name", NULL,
+                    NULL);
+    }
+  else
+    {
+      GEnumClass *enum_class;
+      GEnumValue *value;
+      gchar      *icon_name;
+
+      enum_class = g_type_class_ref (GIMP_TYPE_LAYER_MODE_EFFECTS);
+      value      = &enum_class->values[mode];
+
+      icon_name = g_strconcat ("gimp-", value->value_nick, NULL);
+
+      g_object_set (cell,
+                    "visible",   TRUE,
+                    "icon-name", icon_name,
+                    NULL);
+
+      g_free (icon_name);
     }
 }
