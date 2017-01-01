@@ -388,12 +388,16 @@ animation_animatic_get_frame (Animation *animation,
                               gint       pos)
 {
   AnimationAnimaticPrivate *priv;
+  GeglBuffer               *frame = NULL;
   gint                      panel;
 
   priv = GET_PRIVATE (animation);
   panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
                                         pos);
-  return g_object_ref (priv->cache[panel]);
+  if (priv->cache[panel])
+    frame = g_object_ref (priv->cache[panel]);
+
+  return frame;
 }
 
 static gboolean
