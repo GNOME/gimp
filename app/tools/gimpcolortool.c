@@ -40,16 +40,12 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockcontainer.h"
 #include "widgets/gimppaletteeditor.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-selection.h"
-#include "display/gimpdisplayshell-transform.h"
 
 #include "gimpcoloroptions.h"
 #include "gimpcolortool.h"
@@ -213,12 +209,6 @@ gimp_color_tool_button_press (GimpTool            *tool,
     }
   else
     {
-      color_tool->center_x = coords->x;
-      color_tool->center_y = coords->y;
-
-      if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
-        gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
-
       gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_START,
                             coords->x, coords->y);
     }
@@ -243,8 +233,6 @@ gimp_color_tool_button_release (GimpTool              *tool,
 
   if (! color_tool->sample_point)
     {
-      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-
       gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_END,
                             coords->x, coords->y);
     }
@@ -283,38 +271,46 @@ gimp_color_tool_oper_update (GimpTool         *tool,
                              gboolean          proximity,
                              GimpDisplay      *display)
 {
-  GimpColorTool    *color_tool   = GIMP_COLOR_TOOL (tool);
-  GimpDisplayShell *shell        = gimp_display_get_shell (display);
-  GimpImage        *image        = gimp_display_get_image (display);
-  GimpSamplePoint  *sample_point = NULL;
+  GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
 
-  if (color_tool->enabled                               &&
-      gimp_display_shell_get_show_sample_points (shell) &&
-      proximity)
+  if (color_tool->enabled)
     {
-      gint snap_distance = display->config->snap_distance;
-
-      sample_point =
-        gimp_image_find_sample_point (image,
-                                      coords->x, coords->y,
-                                      FUNSCALEX (shell, snap_distance),
-                                      FUNSCALEY (shell, snap_distance));
-    }
-
-  if (color_tool->sample_point != sample_point)
-    {
-      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+      GimpDrawTool     *draw_tool    = GIMP_DRAW_TOOL (tool);
+      GimpDisplayShell *shell        = gimp_display_get_shell (display);
+      GimpSamplePoint  *sample_point = NULL;
 
       gimp_draw_tool_pause (draw_tool);
 
       if (gimp_draw_tool_is_active (draw_tool) &&
-          draw_tool->display != display)
-        gimp_draw_tool_stop (draw_tool);
+          (draw_tool->display != display ||
+           ! proximity))
+        {
+          gimp_draw_tool_stop (draw_tool);
+        }
+
+      if (gimp_display_shell_get_show_sample_points (shell) &&
+          proximity)
+        {
+          GimpImage *image         = gimp_display_get_image (display);
+          gint       snap_distance = display->config->snap_distance;
+
+          sample_point =
+            gimp_image_find_sample_point (image,
+                                          coords->x, coords->y,
+                                          FUNSCALEX (shell, snap_distance),
+                                          FUNSCALEY (shell, snap_distance));
+        }
 
       color_tool->sample_point = sample_point;
 
-      if (! gimp_draw_tool_is_active (draw_tool))
-        gimp_draw_tool_start (draw_tool, display);
+      color_tool->center_x = coords->x;
+      color_tool->center_y = coords->y;
+
+      if (! gimp_draw_tool_is_active (draw_tool) &&
+          proximity)
+        {
+          gimp_draw_tool_start (draw_tool, display);
+        }
 
       gimp_draw_tool_resume (draw_tool);
     }
@@ -398,8 +394,7 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
           item = gimp_draw_tool_add_sample_point (draw_tool, x, y, index);
           gimp_canvas_item_set_highlight (item, TRUE);
         }
-      else if (color_tool->options->sample_average &&
-               gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
+      else if (color_tool->options->sample_average)
         {
           gdouble radius = color_tool->options->average_radius;
 
