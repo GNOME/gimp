@@ -60,7 +60,10 @@ scalable_images = \
 	scalable/gtk-select-font.svg				\
 	scalable/gtk-yes.svg						\
 												\
+	scalable/gimp-addition-mode.svg			\
 	scalable/gimp-anchor.svg			\
+	scalable/gimp-behind-mode.svg			\
+	scalable/gimp-burn-mode.svg			\
 	scalable/gimp-cap-butt.svg			\
 	scalable/gimp-cap-round.svg			\
 	scalable/gimp-cap-square.svg			\
@@ -78,6 +81,8 @@ scalable_images = \
 	scalable/gimp-close.svg				\
 	scalable/gimp-close-all.svg			\
 	scalable/gimp-colormap.svg			\
+	scalable/gimp-color-erase-mode.svg		\
+	scalable/gimp-color-mode.svg			\
 	scalable/gimp-color-picker-black.svg		\
 	scalable/gimp-color-picker-gray.svg		\
 	scalable/gimp-color-picker-white.svg		\
@@ -96,14 +101,19 @@ scalable_images = \
 	scalable/gimp-cursor.svg			\
 	scalable/gimp-curve-free.svg			\
 	scalable/gimp-curve-smooth.svg			\
+	scalable/gimp-darken-only-mode.svg		\
 	scalable/gimp-default-colors.svg		\
 	scalable/gimp-device-status.svg			\
+	scalable/gimp-difference-mode.svg		\
 	scalable/gimp-display-filter-colorblind.svg	\
 	scalable/gimp-display-filter-contrast.svg	\
 	scalable/gimp-display-filter-gamma.svg		\
 	scalable/gimp-display-filter-lcms.svg		\
 	scalable/gimp-display-filter-proof.svg		\
 	scalable/gimp-display-filter.svg		\
+	scalable/gimp-dissolve-mode.svg			\
+	scalable/gimp-divide-mode.svg			\
+	scalable/gimp-dodge-mode.svg			\
 	scalable/gimp-duplicate.svg			\
 	scalable/gimp-dynamics.svg			\
 	scalable/gimp-error.svg				\
@@ -123,6 +133,8 @@ scalable_images = \
 	scalable/gimp-gradient-spiral-anticlockwise.svg	\
 	scalable/gimp-gradient-spiral-clockwise.svg	\
 	scalable/gimp-gradient-square.svg		\
+	scalable/gimp-grain-extract-mode.svg		\
+	scalable/gimp-grain-merge-mode.svg		\
 	scalable/gimp-gravity-east.svg			\
 	scalable/gimp-gravity-north-east.svg		\
 	scalable/gimp-gravity-north.svg			\
@@ -133,6 +145,7 @@ scalable_images = \
 	scalable/gimp-gravity-west.svg			\
 	scalable/gimp-grid.svg				\
 	scalable/gimp-group-layer.svg			\
+	scalable/gimp-hardlight-mode.svg		\
 	scalable/gimp-hcenter.svg			\
 	scalable/gimp-hchain-broken.svg			\
 	scalable/gimp-hchain.svg			\
@@ -140,6 +153,7 @@ scalable_images = \
 	scalable/gimp-histogram-linear.svg		\
 	scalable/gimp-histogram-logarithmic.svg		\
 	scalable/gimp-histogram.svg			\
+	scalable/gimp-hue-mode.svg			\
 	scalable/gimp-images.svg			\
 	scalable/gimp-image.svg				\
 	scalable/gimp-image-open.svg			\
@@ -155,7 +169,12 @@ scalable_images = \
 	scalable/gimp-layers.svg			\
 	scalable/gimp-layer.svg				\
 	scalable/gimp-layer-to-imagesize.svg		\
+	scalable/gimp-lch-chroma-mode.svg		\
+	scalable/gimp-lch-color-mode.svg		\
+	scalable/gimp-lch-hue-mode.svg			\
+	scalable/gimp-lch-lightness-mode.svg		\
 	scalable/gimp-letter-spacing.svg		\
+	scalable/gimp-lighten-only-mode.svg		\
 	scalable/gimp-line-spacing.svg			\
 	scalable/gimp-linked.svg			\
 	scalable/gimp-list.svg				\
@@ -163,7 +182,9 @@ scalable_images = \
 	scalable/gimp-menu-right.svg			\
 	scalable/gimp-merge-down.svg			\
 	scalable/gimp-move-to-screen.svg		\
+	scalable/gimp-multiply-mode.svg			\
 	scalable/gimp-navigation.svg			\
+	scalable/gimp-new-overlay-mode.svg		\
 	scalable/gimp-paste-as-new.svg			\
 	scalable/gimp-paste-into.svg			\
 	scalable/gimp-path.svg				\
@@ -221,7 +242,9 @@ scalable_images = \
 	scalable/gimp-rotate-270.svg			\
 	scalable/gimp-rotate-90.svg			\
 	scalable/gimp-sample-point.svg			\
+	scalable/gimp-saturation-mode.svg		\
 	scalable/gimp-scale.svg				\
+	scalable/gimp-screen-mode.svg			\
 	scalable/gimp-selection.svg			\
 	scalable/gimp-selection-add.svg			\
 	scalable/gimp-selection-all.svg			\
@@ -239,6 +262,8 @@ scalable_images = \
 	scalable/gimp-shape-diamond.svg			\
 	scalable/gimp-shape-square.svg			\
 	scalable/gimp-shred.svg				\
+	scalable/gimp-softlight-mode.svg		\
+	scalable/gimp-subtract-mode.svg			\
 	scalable/gimp-swap-colors.svg			\
 	scalable/gimp-symmetry.svg			\
 	scalable/gimp-template.svg			\
@@ -301,6 +326,7 @@ scalable_images = \
 	scalable/gimp-transparency.svg			\
 	scalable/gimp-undo-history.svg			\
 	scalable/gimp-user-manual.svg			\
+	scalable/gimp-value-mode.svg			\
 	scalable/gimp-vcenter.svg			\
 	scalable/gimp-vchain.svg			\
 	scalable/gimp-vchain-broken.svg			\
@@ -541,7 +567,10 @@ icons16_images = \
 	16/gtk-select-font.png						\
 	16/gtk-yes.png								\
 												\
+	16/gimp-addition-mode.png					\
 	16/gimp-anchor.png							\
+	16/gimp-behind-mode.png						\
+	16/gimp-burn-mode.png						\
 	16/gimp-cap-butt.png						\
 	16/gimp-cap-round.png						\
 	16/gimp-cap-square.png						\
@@ -557,6 +586,8 @@ icons16_images = \
 	16/gimp-char-picker.png						\
 	16/gimp-clipboard.png						\
 	16/gimp-close-all.png						\
+	16/gimp-color-erase-mode.png				\
+	16/gimp-color-mode.png						\
 	16/gimp-color-pick-from-screen.png			\
 	16/gimp-color-cmyk.png						\
 	16/gimp-color-triangle.png					\
@@ -573,13 +604,18 @@ icons16_images = \
 	16/gimp-cursor.png							\
 	16/gimp-curve-free.png						\
 	16/gimp-curve-smooth.png					\
+	16/gimp-darken-only-mode.png				\
 	16/gimp-device-status.png					\
+	16/gimp-difference-mode.png					\
 	16/gimp-display-filter-colorblind.png		\
 	16/gimp-display-filter-contrast.png			\
 	16/gimp-display-filter-gamma.png			\
 	16/gimp-display-filter-lcms.png				\
 	16/gimp-display-filter-proof.png			\
 	16/gimp-display-filter.png					\
+	16/gimp-dissolve-mode.png					\
+	16/gimp-divide-mode.png						\
+	16/gimp-dodge-mode.png						\
 	16/gimp-duplicate.png						\
 	16/gimp-dynamics.png						\
 	16/gimp-error.png							\
@@ -599,11 +635,15 @@ icons16_images = \
 	16/gimp-gradient-spiral-anticlockwise.png	\
 	16/gimp-gradient-spiral-clockwise.png		\
 	16/gimp-gradient-square.png					\
+	16/gimp-grain-extract-mode.png				\
+	16/gimp-grain-merge-mode.png				\
 	16/gimp-grid.png							\
 	16/gimp-group-layer.png						\
+	16/gimp-hardlight-mode.png					\
 	16/gimp-histogram-linear.png				\
 	16/gimp-histogram-logarithmic.png			\
 	16/gimp-histogram.png						\
+	16/gimp-hue-mode.png						\
 	16/gimp-image.png							\
 	16/gimp-images.png							\
 	16/gimp-image-open.png						\
@@ -619,10 +659,17 @@ icons16_images = \
 	16/gimp-layer-to-imagesize.png				\
 	16/gimp-layer.png							\
 	16/gimp-layers.png							\
+	16/gimp-lch-chroma-mode.png					\
+	16/gimp-lch-color-mode.png					\
+	16/gimp-lch-hue-mode.png					\
+	16/gimp-lch-lightness-mode.png				\
+	16/gimp-lighten-only-mode.png				\
 	16/gimp-list.png							\
 	16/gimp-merge-down.png						\
 	16/gimp-move-to-screen.png					\
+	16/gimp-multiply-mode.png					\
 	16/gimp-navigation.png						\
+	16/gimp-new-overlay-mode.png				\
 	16/gimp-paste-as-new.png					\
 	16/gimp-paste-into.png						\
 	16/gimp-path-stroke.png						\
@@ -662,7 +709,9 @@ icons16_images = \
 	16/gimp-rotate-270.png						\
 	16/gimp-rotate-90.png						\
 	16/gimp-sample-point.png					\
+	16/gimp-saturation-mode.png					\
 	16/gimp-scale.png							\
+	16/gimp-screen-mode.png						\
 	16/gimp-selection-add.png					\
 	16/gimp-selection-all.png					\
 	16/gimp-selection-border.png				\
@@ -680,6 +729,8 @@ icons16_images = \
 	16/gimp-shape-diamond.png					\
 	16/gimp-shape-square.png					\
 	16/gimp-shred.png							\
+	16/gimp-softlight-mode.png					\
+	16/gimp-subtract-mode.png					\
 	16/gimp-symmetry.png						\
 	16/gimp-template.png						\
 	16/gimp-text-layer.png						\
@@ -739,6 +790,7 @@ icons16_images = \
 	16/gimp-transparency.png					\
 	16/gimp-undo-history.png					\
 	16/gimp-user-manual.png						\
+	16/gimp-value-mode.png						\
 	16/gimp-video.png							\
 	16/gimp-warning.png							\
 	16/gimp-web.png								\
