@@ -39,12 +39,13 @@ struct _GimpColorTool
   GimpDrawTool       parent_instance;
 
   gboolean           enabled;
-  gint               center_x;
-  gint               center_y;
+  GimpColorOptions  *options;
+  gboolean           saved_snap_to;
+
   GimpColorPickMode  pick_mode;
 
-  GimpColorOptions  *options;
-
+  gint               center_x;
+  gint               center_y;
   GimpSamplePoint   *sample_point;
 };
 

@@ -590,6 +590,10 @@ gimp_color_tool_enable (GimpColorTool    *color_tool,
 
   color_tool->options = g_object_ref (options);
 
+  /*  color picking doesn't snap, see bug #768058  */
+  color_tool->saved_snap_to = gimp_tool_control_get_snap_to (tool->control);
+  gimp_tool_control_set_snap_to (tool->control, FALSE);
+
   color_tool->enabled = TRUE;
 }
 
@@ -613,6 +617,9 @@ gimp_color_tool_disable (GimpColorTool *color_tool)
       g_object_unref (color_tool->options);
       color_tool->options = NULL;
     }
+
+  gimp_tool_control_set_snap_to (tool->control, color_tool->saved_snap_to);
+  color_tool->saved_snap_to = FALSE;
 
   color_tool->enabled = FALSE;
 }
