@@ -2403,6 +2403,10 @@ gimp_image_get_xcf_version (GimpImage    *image,
 
           /* new layer modes not supported by gimp-2.8 */
         case GIMP_NEW_OVERLAY_MODE:
+        case GIMP_LCH_HUE_MODE:
+        case GIMP_LCH_CHROMA_MODE:
+        case GIMP_LCH_COLOR_MODE:
+        case GIMP_LCH_LIGHTNESS_MODE:
           version = MAX (9, version);
           break;
 
