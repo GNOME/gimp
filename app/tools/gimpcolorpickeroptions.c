@@ -67,7 +67,7 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAMPLE_AVERAGE,
                             "sample-average",
                             _("Sample average"),
-                            _("Use accumulated color value from "
+                            _("Use averaged color value from "
                               "nearby pixels"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
