@@ -4,7 +4,7 @@
 # Filipe Maia <fmaia@gmx.net>, 2002
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2003, 2004.
 # Pedro Barreira <almufadado@gmail.com>, 2010.
-# Tiago Santos <tiagofsantos81@sapo.pt>, 2014 - 2016.
+# Tiago Santos <tiagofsantos81@sapo.pt>, 2014 - 2017.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 #
 msgid ""
@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-11-26 00:01+0000\n"
-"PO-Revision-Date: 2016-12-05 22:08+0000\n"
+"POT-Creation-Date: 2016-12-30 20:46+0000\n"
+"PO-Revision-Date: 2017-01-02 10:53+0000\n"
 "Last-Translator: Tiago Santos <tiagofsantos81@sapo.pt>\n"
 "Language-Team: Português\n"
 "Language: pt\n"
@@ -340,12 +340,13 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1050 ../plug-ins/common/file-pnm.c:671
-#: ../plug-ins/common/file-raw-data.c:984 ../plug-ins/common/file-sunras.c:1049
-#: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-xbm.c:904
-#: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:258
-#: ../plug-ins/common/tile.c:354 ../plug-ins/file-bmp/bmp-load.c:734
-#: ../plug-ins/file-exr/file-exr.c:258 ../plug-ins/file-faxg3/faxg3.c:525
-#: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
+#: ../plug-ins/common/file-raw-data.c:1162
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
+#: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
+#: ../plug-ins/common/smooth-palette.c:258 ../plug-ins/common/tile.c:354
+#: ../plug-ins/file-bmp/bmp-load.c:734 ../plug-ins/file-exr/file-exr.c:258
+#: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
+#: ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1772 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:922
@@ -880,8 +881,8 @@ msgstr "Gravar parâmetros do explorador CML"
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:734
 #: ../plug-ins/common/file-pdf-save.c:432 ../plug-ins/common/file-png.c:1544
-#: ../plug-ins/common/file-raw-data.c:799
-#: ../plug-ins/common/file-raw-data.c:827 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-raw-data.c:977
+#: ../plug-ins/common/file-raw-data.c:1005 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1474
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
@@ -912,8 +913,8 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:898
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3369
-#: ../plug-ins/common/file-psp.c:1717 ../plug-ins/common/file-raw-data.c:271
-#: ../plug-ins/common/file-raw-data.c:908 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-psp.c:1717 ../plug-ins/common/file-raw-data.c:374
+#: ../plug-ins/common/file-raw-data.c:1086 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:709
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:840
@@ -1181,7 +1182,7 @@ msgid "_Redness cr709:"
 msgstr "A_vermelhado cr709:"
 
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1423
+#: ../plug-ins/common/file-raw-data.c:1601
 msgid "RGB"
 msgstr "RGB"
 
@@ -1428,7 +1429,7 @@ msgstr "Dobrar em curva"
 #: ../plug-ins/common/curve-bend.c:1260
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
-#: ../plug-ins/print/print-page-layout.c:175
+#: ../plug-ins/print/print-page-layout.c:176
 msgid "Preview"
 msgstr "Previsão"
 
@@ -1781,7 +1782,7 @@ msgstr "Origem 2:"
 msgid "O_verlap:"
 msgstr "_Sobreposição:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1451
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1629
 msgid "O_ffset:"
 msgstr "_Desvio:"
 
@@ -1850,11 +1851,11 @@ msgstr "Suprimir riscas"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3495 ../plug-ins/common/file-ps.c:3700
-#: ../plug-ins/common/file-raw-data.c:1464
+#: ../plug-ins/common/file-raw-data.c:1642
 #: ../plug-ins/common/smooth-palette.c:453 ../plug-ins/common/tile.c:464
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
-#: ../plug-ins/print/print-page-layout.c:282
+#: ../plug-ins/print/print-page-layout.c:284
 msgid "_Width:"
 msgstr "_Largura:"
 
@@ -2018,7 +2019,7 @@ msgstr "EOF ou erro ao ler cabeçalho da imagem"
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:890
 #: ../plug-ins/common/file-pnm.c:564 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:901 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:1079 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
@@ -2568,11 +2569,11 @@ msgstr ""
 "A largura para cada célula da tabela. Pode ser um número ou uma percentagem."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3508
-#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1480
+#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1658
 #: ../plug-ins/common/film.c:1005 ../plug-ins/common/smooth-palette.c:458
 #: ../plug-ins/common/tile.c:468 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
-#: ../plug-ins/print/print-page-layout.c:284
+#: ../plug-ins/print/print-page-layout.c:286
 msgid "_Height:"
 msgstr "_Altura:"
 
@@ -2936,7 +2937,7 @@ msgstr "Usar _suavização"
 
 #: ../plug-ins/common/file-pdf-load.c:1457
 #: ../plug-ins/common/file-pdf-load.c:1458 ../plug-ins/common/file-svg.c:914
-#: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:303
+#: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
 msgstr "pixeis/%a"
@@ -3093,13 +3094,13 @@ msgstr "Erro ao criar struct de escrita PNG ao exportar \"%s\"."
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Erro ao exportar \"%s\". Impossível exportar imagem."
 
-#: ../plug-ins/common/file-png.c:2265
+#: ../plug-ins/common/file-png.c:2265 ../plug-ins/common/file-raw-data.c:1784
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Erro ao carregar ficheiro de UI \"%s\": %s"
 
-#: ../plug-ins/common/file-png.c:2266
+#: ../plug-ins/common/file-png.c:2266 ../plug-ins/common/file-raw-data.c:1785
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Erro desconhecido"
@@ -3390,120 +3391,106 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
-#: ../plug-ins/common/file-raw-data.c:200
-#: ../plug-ins/common/file-raw-data.c:215
+#: ../plug-ins/common/file-raw-data.c:253
+#: ../plug-ins/common/file-raw-data.c:268
+#: ../plug-ins/common/file-raw-data.c:283
 msgid "Raw image data"
 msgstr "Dados de imagem Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1371
+#: ../plug-ins/common/file-raw-data.c:1549
 msgid "Load Image from Raw Data"
 msgstr "Carregar imagem a partir de dados Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1413
+#: ../plug-ins/common/file-raw-data.c:1591
 msgid "Image"
 msgstr "Imagem"
 
-#: ../plug-ins/common/file-raw-data.c:1424
+#: ../plug-ins/common/file-raw-data.c:1602
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1425
+#: ../plug-ins/common/file-raw-data.c:1603
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1426
+#: ../plug-ins/common/file-raw-data.c:1604
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1427
+#: ../plug-ins/common/file-raw-data.c:1605
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1428
+#: ../plug-ins/common/file-raw-data.c:1606
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1429
+#: ../plug-ins/common/file-raw-data.c:1607
 msgid "Planar RGB"
 msgstr "RGB plano"
 
-#: ../plug-ins/common/file-raw-data.c:1430
+#: ../plug-ins/common/file-raw-data.c:1608
 msgid "B&W 1 bit"
 msgstr "P&B 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1431
+#: ../plug-ins/common/file-raw-data.c:1609
 msgid "Gray 2 bit"
 msgstr "Cinzento 2 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1432
+#: ../plug-ins/common/file-raw-data.c:1610
 msgid "Gray 4 bit"
 msgstr "Cinzento 4 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1433
+#: ../plug-ins/common/file-raw-data.c:1611
 msgid "Gray 8 bit"
 msgstr "Cinzento 8 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1434
+#: ../plug-ins/common/file-raw-data.c:1612
 msgid "Indexed"
 msgstr "Indexada"
 
-#: ../plug-ins/common/file-raw-data.c:1435
+#: ../plug-ins/common/file-raw-data.c:1613
 msgid "Indexed Alpha"
 msgstr "Alfa indexada"
 
-#: ../plug-ins/common/file-raw-data.c:1440
+#: ../plug-ins/common/file-raw-data.c:1618
 msgid "Image _Type:"
 msgstr "_Tipo de imagem:"
 
-#: ../plug-ins/common/file-raw-data.c:1496
+#: ../plug-ins/common/file-raw-data.c:1674
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/common/file-raw-data.c:1506
-#: ../plug-ins/common/file-raw-data.c:1591
+#: ../plug-ins/common/file-raw-data.c:1684
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:4
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:1507
-#: ../plug-ins/common/file-raw-data.c:1593
+#: ../plug-ins/common/file-raw-data.c:1685
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (estilo BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1512
+#: ../plug-ins/common/file-raw-data.c:1690
 msgid "_Palette Type:"
 msgstr "Tipo de _Paleta:"
 
-#: ../plug-ins/common/file-raw-data.c:1523
+#: ../plug-ins/common/file-raw-data.c:1701
 msgid "Off_set:"
 msgstr "_Desvio:"
 
-#: ../plug-ins/common/file-raw-data.c:1535
+#: ../plug-ins/common/file-raw-data.c:1713
 msgid "Select Palette File"
 msgstr "Selecione o ficheiro de paleta"
 
-#: ../plug-ins/common/file-raw-data.c:1541
+#: ../plug-ins/common/file-raw-data.c:1719
 msgid "Pal_ette File:"
 msgstr "Ficheiro de pal_Eta:"
 
-#: ../plug-ins/common/file-raw-data.c:1569
+#. Dialog init
+#: ../plug-ins/common/file-raw-data.c:1768
 msgid "Raw Image"
 msgstr "Imagem Raw"
-
-#: ../plug-ins/common/file-raw-data.c:1577
-msgid "RGB Save Type"
-msgstr "Tipo de gravação RGB"
-
-#: ../plug-ins/common/file-raw-data.c:1581
-msgid "Standard (RGB RGB RGB ...)"
-msgstr "Padrão (R,G,B)"
-
-#: ../plug-ins/common/file-raw-data.c:1582
-msgid "Planar (RRR... GGG... BBB...)"
-msgstr "Plano (RRR, GGG, BBB)"
-
-#: ../plug-ins/common/file-raw-data.c:1587
-msgid "Indexed Palette Type"
-msgstr "Tipo de paleta indexada"
 
 #: ../plug-ins/common/file-sunras.c:255 ../plug-ins/common/file-sunras.c:275
 msgid "SUN Rasterfile image"
@@ -4803,17 +4790,27 @@ msgstr "_Manter o máximo de canais"
 msgid "Ho_ld the minimal channels"
 msgstr "Man_Ter o mínimo de canais"
 
-#: ../plug-ins/common/metadata.c:130
+#: ../plug-ins/common/metadata.c:148
 msgid "View and edit metadata (Exif, IPTC, XMP)"
 msgstr "Ver e editar metadados (Exif, IPTC, XMP)"
 
-#: ../plug-ins/common/metadata.c:139
+#: ../plug-ins/common/metadata.c:157
 msgid "Image Metadata"
 msgstr "Meta-dados da Imagem"
 
-#: ../plug-ins/common/metadata.c:180
+#: ../plug-ins/common/metadata.c:198
 msgid "This image has no metadata attached to it."
 msgstr "Esta imagem não tem metadados anexados a ela."
+
+#: ../plug-ins/common/metadata.c:420
+#, c-format
+msgid "(%lu more character(s))"
+msgstr "(%lu mais caractéres)"
+
+#: ../plug-ins/common/metadata.c:452
+#, c-format
+msgid "(%llu more byte(s))"
+msgstr "(%llu mais bytes)"
 
 #: ../plug-ins/common/newsprint.c:118
 msgid "Round"
@@ -6747,6 +6744,8 @@ msgstr "Comentário"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1174
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
+#: ../plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "_Carregar predefinições"
 
@@ -8832,6 +8831,7 @@ msgid "Co_mpression level:"
 msgstr "_Nível de compressão:"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:12
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
 msgid "S_ave Defaults"
 msgstr "Gravar _predefinições"
 
@@ -8855,6 +8855,18 @@ msgstr "Gravar miniatura"
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "Advanced"
 msgstr "Avançado"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:1
+msgid "RGB Save Type"
+msgstr "Tipo de gravação RGB"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:2
+msgid "Standard (R,G,B)"
+msgstr "Padrão (R,G,B)"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:3
+msgid "Planar (RRR,GGG,BBB)"
+msgstr "Plano (RRR, GGG, BBB)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
 msgid "Save color values from transparent pixels"
@@ -10453,7 +10465,7 @@ msgstr "Intensidade do ponto de luz"
 #: ../plug-ins/lighting/lighting-ui.c:479
 #: ../plug-ins/map-object/map-object-ui.c:640
 #: ../plug-ins/map-object/map-object-ui.c:967
-#: ../plug-ins/print/print-page-layout.c:376
+#: ../plug-ins/print/print-page-layout.c:385
 msgid "Position"
 msgstr "Posição"
 
@@ -10850,12 +10862,12 @@ msgid "Z scale (size)"
 msgstr "Escala Z (tamanho)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1183
-#: ../plug-ins/print/print-page-layout.c:441
+#: ../plug-ins/print/print-page-layout.c:450
 msgid "_Top:"
 msgstr "_Superior:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1183
-#: ../plug-ins/print/print-page-layout.c:462
+#: ../plug-ins/print/print-page-layout.c:471
 msgid "_Bottom:"
 msgstr "_Inferior:"
 
@@ -10864,7 +10876,7 @@ msgid "Images for the Cap Faces"
 msgstr "Imagens para as faces de cima e baixo"
 
 #: ../plug-ins/map-object/map-object-ui.c:1217
-#: ../plug-ins/print/print-page-layout.c:247
+#: ../plug-ins/print/print-page-layout.c:249
 msgid "Size"
 msgstr "Tamanho"
 
@@ -10972,50 +10984,50 @@ msgstr "Camada enrolada"
 msgid "Page Curl"
 msgstr "Página enrolada"
 
-#: ../plug-ins/print/print-page-layout.c:153
+#: ../plug-ins/print/print-page-layout.c:154
 msgid "Ignore Page _Margins"
 msgstr "Ignorar _Margens da página"
 
 #. crop marks toggle
-#: ../plug-ins/print/print-page-layout.c:164
+#: ../plug-ins/print/print-page-layout.c:165
 msgid "_Draw Crop Marks"
 msgstr "_Desenhar marcas de recorte"
 
-#: ../plug-ins/print/print-page-layout.c:326
+#: ../plug-ins/print/print-page-layout.c:328
 msgid "_X resolution:"
 msgstr "Resolução _X:"
 
-#: ../plug-ins/print/print-page-layout.c:330
+#: ../plug-ins/print/print-page-layout.c:332
 msgid "_Y resolution:"
 msgstr "Resolução _Y:"
 
-#: ../plug-ins/print/print-page-layout.c:404
+#: ../plug-ins/print/print-page-layout.c:413
 msgid "_Left:"
 msgstr "_Esquerda:"
 
-#: ../plug-ins/print/print-page-layout.c:425
+#: ../plug-ins/print/print-page-layout.c:434
 msgid "_Right:"
 msgstr "_Direita:"
 
-#: ../plug-ins/print/print-page-layout.c:483
+#: ../plug-ins/print/print-page-layout.c:492
 msgid "C_enter:"
 msgstr "C_Entrada:"
 
 #. if and how to center the image on the page
-#: ../plug-ins/print/print-page-layout.c:490
+#: ../plug-ins/print/print-page-layout.c:499
 msgctxt "center-mode"
 msgid "None"
 msgstr "Nenhum"
 
-#: ../plug-ins/print/print-page-layout.c:491
+#: ../plug-ins/print/print-page-layout.c:500
 msgid "Horizontally"
 msgstr "Horizontalmente"
 
-#: ../plug-ins/print/print-page-layout.c:492
+#: ../plug-ins/print/print-page-layout.c:501
 msgid "Vertically"
 msgstr "Verticalmente"
 
-#: ../plug-ins/print/print-page-layout.c:493
+#: ../plug-ins/print/print-page-layout.c:502
 msgid "Both"
 msgstr "Ambos"
 
@@ -11409,6 +11421,9 @@ msgstr "_Digitalizador/Câmara..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "A transferir imagem do digitalizador ou da câmara"
+
+#~ msgid "Indexed Palette Type"
+#~ msgstr "Tipo de paleta indexada"
 
 #~ msgid "Use the options below to customize the image."
 #~ msgstr "Utilizar a opção abaixo para personalizar a imagem"
