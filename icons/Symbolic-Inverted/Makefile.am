@@ -21,14 +21,14 @@ scalable/gimp-toilet-paper.svg: ../Symbolic/scalable/gimp-toilet-paper.svg
 
 # Other exceptions: inverted gimp-color-picker-white|black are generated
 # from each other.
-18/gimp-color-picker-black.png: $(top_srcdir)/icons/Symbolic/18/gimp-color-picker-white.png
+18/gimp-color-picker-black.png: $(top_srcdir)/icons/Symbolic/18/gimp-color-picker-white.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
-scalable/gimp-color-picker-black.svg: $(top_builddir)/icons/Symbolic/scalable/gimp-color-picker-white.svg
+scalable/gimp-color-picker-black.svg: $(top_builddir)/icons/Symbolic/scalable/gimp-color-picker-white.svg $(top_builddir)/tools/invert-svg$(BUILD_EXEEXT)
 	$(AM_V_GEN) mkdir -p scalable && $(top_builddir)/tools/invert-svg $< $@
 
-18/gimp-color-picker-white.png: $(top_srcdir)/icons/Symbolic/18/gimp-color-picker-black.png
+18/gimp-color-picker-white.png: $(top_srcdir)/icons/Symbolic/18/gimp-color-picker-black.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
-scalable/gimp-color-picker-white.svg: $(top_builddir)/icons/Symbolic/scalable/gimp-color-picker-black.svg
+scalable/gimp-color-picker-white.svg: $(top_builddir)/icons/Symbolic/scalable/gimp-color-picker-black.svg $(top_builddir)/tools/invert-svg$(BUILD_EXEEXT)
 	$(AM_V_GEN) mkdir -p scalable && $(top_builddir)/tools/invert-svg $< $@
 
 # Rule for all other scalable icons.
@@ -50,43 +50,43 @@ scalable/%.svg: ../Symbolic/scalable/%.svg $(top_builddir)/tools/invert-svg$(BUI
 
 MAKE_ICON = mkdir -p `dirname $@`; GEGL_USE_OPENCL=no GEGL_SWAP=ram $(GEGL) $< -o $@ -- gegl:invert-gamma
 
-12/%.png: $(top_srcdir)/icons/Symbolic/12/%.png
+12/%.png: $(top_srcdir)/icons/Symbolic/12/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-16/%.png: $(top_srcdir)/icons/Symbolic/16/%.png
+16/%.png: $(top_srcdir)/icons/Symbolic/16/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-18/%.png: $(top_srcdir)/icons/Symbolic/18/%.png
+18/%.png: $(top_srcdir)/icons/Symbolic/18/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-20/%.png: $(top_srcdir)/icons/Symbolic/20/%.png
+20/%.png: $(top_srcdir)/icons/Symbolic/20/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-22/%.png: $(top_srcdir)/icons/Symbolic/22/%.png
+22/%.png: $(top_srcdir)/icons/Symbolic/22/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-24/%.png: $(top_srcdir)/icons/Symbolic/24/%.png
+24/%.png: $(top_srcdir)/icons/Symbolic/24/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-32/%.png: $(top_srcdir)/icons/Symbolic/32/%.png
+32/%.png: $(top_srcdir)/icons/Symbolic/32/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-48/%.png: $(top_srcdir)/icons/Symbolic/48/%.png
+48/%.png: $(top_srcdir)/icons/Symbolic/48/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-64/%.png: $(top_srcdir)/icons/Symbolic/64/%.png
+64/%.png: $(top_srcdir)/icons/Symbolic/64/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-96/%.png: $(top_srcdir)/icons/Symbolic/96/%.png
+96/%.png: $(top_srcdir)/icons/Symbolic/96/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-128/%.png: $(top_srcdir)/icons/Symbolic/128/%.png
+128/%.png: $(top_srcdir)/icons/Symbolic/128/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-192/%.png: $(top_srcdir)/icons/Symbolic/192/%.png
+192/%.png: $(top_srcdir)/icons/Symbolic/192/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
-256/%.png: $(top_srcdir)/icons/Symbolic/256/%.png
+256/%.png: $(top_srcdir)/icons/Symbolic/256/%.png Makefile.am
 	$(AM_V_GEN) $(MAKE_ICON)
 
 all_icons = \

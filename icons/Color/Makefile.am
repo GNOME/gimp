@@ -24,7 +24,7 @@ MAKE_SVG_MODE_ICON = \
 	 sed    '1,/<\/metadata>/d;/<\/svg>/Q' `dirname $< | sed 's/\bSymbolic\b/Color/'`/gimp-mode-backdrop.svg && \
 	 sed -r '1,/<\/metadata>/d;s/\#[[:xdigit:]]{6}\b/\#ffffff/g' $<) > $@
 
-scalable/gimp-%-mode.svg: ../Symbolic/scalable/gimp-%-mode.svg scalable/gimp-mode-backdrop.svg
+scalable/gimp-%-mode.svg: ../Symbolic/scalable/gimp-%-mode.svg scalable/gimp-mode-backdrop.svg Makefile.am
 	$(AM_V_GEN) $(MAKE_SVG_MODE_ICON)
 
 MAKE_MODE_ICON = \
@@ -34,7 +34,7 @@ MAKE_MODE_ICON = \
 	     aux=[ load path=$< levels out-low=1 ] \
 	     srgb=true
 
-16/gimp-%-mode.png: ../Symbolic/16/gimp-%-mode.png 16/gimp-mode-backdrop.png
+16/gimp-%-mode.png: ../Symbolic/16/gimp-%-mode.png 16/gimp-mode-backdrop.png Makefile.am
 	$(AM_V_GEN) $(MAKE_MODE_ICON)
 
 ## Compiled-in icons for both the core and libgimpwidgets
