@@ -935,68 +935,6 @@ gimp_item_set_tattoo (gint32 item_ID,
 }
 
 /**
- * _gimp_item_get_metadata:
- * @item_ID: The item.
- *
- * Returns the item's metadata.
- *
- * Returns metadata from the item.
- *
- * Returns: The metadata as a xml string.
- **/
-gchar *
-_gimp_item_get_metadata (gint32 item_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *metadata_string = NULL;
-
-  return_vals = gimp_run_procedure ("gimp-item-get-metadata",
-                                    &nreturn_vals,
-                                    GIMP_PDB_ITEM, item_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    metadata_string = g_strdup (return_vals[1].data.d_string);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return metadata_string;
-}
-
-/**
- * _gimp_item_set_metadata:
- * @item_ID: The item.
- * @metadata_string: The metadata as a xml string.
- *
- * Set the item's metadata.
- *
- * Sets metadata on the item.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_item_set_metadata (gint32       item_ID,
-                         const gchar *metadata_string)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-item-set-metadata",
-                                    &nreturn_vals,
-                                    GIMP_PDB_ITEM, item_ID,
-                                    GIMP_PDB_STRING, metadata_string,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_item_attach_parasite:
  * @item_ID: The item.
  * @parasite: The parasite to attach to the item.

@@ -188,7 +188,6 @@ background_jpeg_save (PreviewPersistent *pp)
           GFile     *file = g_file_new_for_path (pp->file_name);
           GFileInfo *info;
           gchar     *text;
-          gint32     layer_ID;
           GError    *error = NULL;
 
           info = g_file_query_info (file,
@@ -219,7 +218,7 @@ background_jpeg_save (PreviewPersistent *pp)
           g_object_unref (file);
 
           /* and load the preview */
-          load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, &layer_ID, TRUE, NULL, NULL);
+          load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE, NULL, NULL);
         }
 
       /* we cleanup here (load_image doesn't run in the background) */

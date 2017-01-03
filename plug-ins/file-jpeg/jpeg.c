@@ -173,7 +173,6 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
-  gint32             layer_ID;
   gint32             drawable_ID;
   GimpParasite      *parasite;
   GError            *error  = NULL;
@@ -211,7 +210,7 @@ run (const gchar      *name,
           break;
         }
 
-      image_ID = load_image (param[1].data.d_string, run_mode, &layer_ID, FALSE,
+      image_ID = load_image (param[1].data.d_string, run_mode, FALSE,
                              &resolution_loaded, &error);
 
       if (image_ID != -1)
@@ -224,12 +223,12 @@ run (const gchar      *name,
 
           if (metadata)
             {
-              GimpMetadataLoadFlags  flags = GIMP_METADATA_LOAD_ALL;
+              GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
 
               if (resolution_loaded)
                 flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-              gimp_image_metadata_load_finish (image_ID, layer_ID, "image/jpeg",
+              gimp_image_metadata_load_finish (image_ID, "image/jpeg",
                                                metadata, flags,
                                                load_interactive);
 
@@ -575,6 +574,7 @@ run (const gchar      *name,
               g_object_unref (file);
             }
         }
+
       if (metadata)
         g_object_unref (metadata);
     }

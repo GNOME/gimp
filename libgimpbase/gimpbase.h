@@ -23,7 +23,6 @@
 
 #include <libgimpbase/gimpbasetypes.h>
 
-#include <libgimpbase/gimpattribute.h>
 #include <libgimpbase/gimpchecks.h>
 #include <libgimpbase/gimpcpuaccel.h>
 #include <libgimpbase/gimpdatafiles.h>

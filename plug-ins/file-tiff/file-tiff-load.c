@@ -219,7 +219,6 @@ load_dialog (TIFF              *tif,
 
 gint32
 load_image (GFile              *file,
-            gint32             *layer_ID,
             TIFF               *tif,
             TiffSelectedPages  *pages,
             gboolean           *resolution_loaded,
@@ -929,8 +928,6 @@ load_image (GFile              *file,
                                   layer_type, 100, GIMP_NORMAL_MODE);
           g_free (name);
         }
-
-      *layer_ID         = layer;
 
       if (! base_format && image_type == GIMP_INDEXED)
         {

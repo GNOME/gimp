@@ -425,15 +425,14 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_SIZE,               /*< desc="Image size"                  >*/
   GIMP_UNDO_IMAGE_RESOLUTION,         /*< desc="Image resolution change"     >*/
   GIMP_UNDO_IMAGE_GRID,               /*< desc="Grid"                        >*/
+  GIMP_UNDO_IMAGE_METADATA,           /*< desc="Change metadata"             >*/
   GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change indexed palette"      >*/
   GIMP_UNDO_IMAGE_COLOR_MANAGED,      /*< desc="Change color managed state"  >*/
-  GIMP_UNDO_IMAGE_METADATA,           /*< desc="Change metadata              >*/
   GIMP_UNDO_GUIDE,                    /*< desc="Guide"                       >*/
   GIMP_UNDO_SAMPLE_POINT,             /*< desc="Sample Point"                >*/
   GIMP_UNDO_DRAWABLE,                 /*< desc="Layer/Channel"               >*/
   GIMP_UNDO_DRAWABLE_MOD,             /*< desc="Layer/Channel modification"  >*/
   GIMP_UNDO_MASK,                     /*< desc="Selection mask"              >*/
-  GIMP_UNDO_ITEM_METADATA,            /*< desc="Change metadata              >*/
   GIMP_UNDO_ITEM_REORDER,             /*< desc="Reorder item"                >*/
   GIMP_UNDO_ITEM_RENAME,              /*< desc="Rename item"                 >*/
   GIMP_UNDO_ITEM_DISPLACE,            /*< desc="Move item"                   >*/

@@ -166,7 +166,6 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOL_PRESET,              NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_IMAGE,                    NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_IMAGE_METADATA,           NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LAYER,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEXT_LAYER,               NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_FLOATING_SELECTION,       NULL,        0, 0, LIBGIMP_DOMAIN },

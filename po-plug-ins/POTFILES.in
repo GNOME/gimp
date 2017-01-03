@@ -6,7 +6,6 @@
 plug-ins/common/align-layers.c
 plug-ins/common/animation-optimize.c
 plug-ins/common/animation-play.c
-plug-ins/common/attributes.c
 plug-ins/common/blinds.c
 plug-ins/common/blur.c
 plug-ins/common/border-average.c
@@ -74,6 +73,7 @@ plug-ins/common/hot.c
 plug-ins/common/jigsaw.c
 plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
+plug-ins/common/metadata.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
 plug-ins/common/oilify.c
@@ -159,8 +159,7 @@ plug-ins/gimpressionist/utils.c
 [type: gettext/glade]plug-ins/ui/plug-in-file-png.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-raw.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-tiff.ui
-[type: gettext/glade]plug-ins/ui/plug-in-metainfo.ui
-[type: gettext/glade]plug-ins/ui/plug-in-attributes.ui
+[type: gettext/glade]plug-ins/ui/plug-in-metadata.ui
 plug-ins/gradient-flare/gradient-flare.c
 plug-ins/help-browser/dialog.c
 plug-ins/help-browser/help-browser.c
@@ -218,11 +217,6 @@ plug-ins/lighting/lighting-ui.c
 plug-ins/map-object/map-object-apply.c
 plug-ins/map-object/map-object-main.c
 plug-ins/map-object/map-object-ui.c
-plug-ins/metainfo/interface.c
-plug-ins/metainfo/page-administration.c
-plug-ins/metainfo/page-rights.c
-plug-ins/metainfo/page-description.c
-plug-ins/metainfo/page-artwork.c
 plug-ins/pagecurl/pagecurl.c
 plug-ins/print/print-draw-page.c
 plug-ins/print/print-page-layout.c

@@ -5,8 +5,6 @@ uidata_DATA = \
 	plug-in-file-png.ui	\
 	plug-in-file-raw.ui     \
 	plug-in-file-tiff.ui	\
-	plug-in-attributes.ui	\
-	plug-in-iptc.ui	
-
+	plug-in-metadata.ui
 
 EXTRA_DIST = $(uidata_DATA)

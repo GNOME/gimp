@@ -142,7 +142,6 @@ scalable_images = \
 	scalable/gimp-histogram.svg			\
 	scalable/gimp-images.svg			\
 	scalable/gimp-image.svg				\
-	scalable/gimp-image-metadata.svg		\
 	scalable/gimp-image-open.svg			\
 	scalable/gimp-image-reload.svg			\
 	scalable/gimp-info.svg				\
@@ -354,7 +353,6 @@ vector24_images = \
 	24/gimp-grid.svg				\
 	24/gimp-histogram.svg				\
 	24/gimp-image.svg				\
-	24/gimp-image-metadata.svg				\
 	24/gimp-images.svg				\
 	24/gimp-info.svg				\
 	24/gimp-landscape.svg				\
@@ -607,7 +605,6 @@ icons16_images = \
 	16/gimp-histogram-logarithmic.png			\
 	16/gimp-histogram.png						\
 	16/gimp-image.png							\
-	16/gimp-image-metadata.png					\
 	16/gimp-images.png							\
 	16/gimp-image-open.png						\
 	16/gimp-image-reload.png					\
@@ -864,7 +861,6 @@ icons24_images = \
 	24/gimp-hchain.png			\
 	24/gimp-hfill.png			\
 	24/gimp-image.png			\
-	24/gimp-image-metadata.png		\
 	24/gimp-images.png			\
 	24/gimp-info.png			\
 	24/gimp-layer-mask.png			\
@@ -974,7 +970,6 @@ icons48_images = \
 	48/gimp-channel.png			\
 	48/gimp-floating-selection.png		\
 	48/gimp-image.png			\
-	48/gimp-image-metadata.png			\
 	48/gimp-layer-mask.png			\
 	48/gimp-layer.png			\
 	48/gimp-prefs-color-management.png	\

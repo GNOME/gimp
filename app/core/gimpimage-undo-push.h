@@ -118,9 +118,6 @@ GimpUndo * gimp_image_undo_push_item_parasite_remove(GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item,
                                                      const gchar   *name);
-GimpUndo * gimp_image_undo_push_item_metadata       (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpItem      *item);
 
 
 /*  layer undos  */
@@ -236,5 +233,6 @@ GimpUndo * gimp_image_undo_push_fs_to_layer         (GimpImage     *image,
 
 GimpUndo * gimp_image_undo_push_cantundo            (GimpImage     *image,
                                                      const gchar   *undo_desc);
+
 
 #endif  /* __GIMP_IMAGE_UNDO_PUSH_H__ */

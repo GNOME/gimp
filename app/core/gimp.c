@@ -38,8 +38,6 @@
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginmanager-restore.h"
 
-#include "gui/gimpdbusservice-generated.h"
-
 #include "paint/gimp-paint.h"
 
 #include "text/gimp-fonts.h"

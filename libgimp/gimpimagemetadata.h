@@ -35,7 +35,6 @@ GimpMetadata * gimp_image_metadata_load_prepare (gint32                 image_ID
                                                  GFile                 *file,
                                                  GError               **error);
 void           gimp_image_metadata_load_finish  (gint32                 image_ID,
-                                                 gint32                 layer_ID,
                                                  const gchar           *mime_type,
                                                  GimpMetadata          *metadata,
                                                  GimpMetadataLoadFlags  flags,
