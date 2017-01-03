@@ -640,7 +640,7 @@ gzip_save (const char *infile,
   if (!in)
     goto out;
 
-  fd = g_open (outfile, O_CREAT | O_WRONLY | _O_BINARY, 0664);
+  fd = g_open (outfile, O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
   if (fd == -1)
     goto out;
 
@@ -762,7 +762,7 @@ bzip2_save (const char *infile,
   if (!in)
     goto out;
 
-  fd = g_open (outfile, O_CREAT | O_WRONLY | _O_BINARY, 0664);
+  fd = g_open (outfile, O_CREAT | O_WRONLY | O_TRUNC | _O_BINARY, 0664);
   if (fd == -1)
     goto out;
 
