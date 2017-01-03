@@ -274,7 +274,7 @@ cdisplay_colorblind_init (CdisplayColorblind *colorblind)
   gint i;
 
   for (i = 0; i < 256; i++)
-    colorblind->gamma_lut[i] = pow (i, 1.0 / gammaRGB);
+    colorblind->gamma_lut[i] = pow (i, gammaRGB);
 }
 
 static void
