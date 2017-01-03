@@ -1586,7 +1586,7 @@ zoom_in_callback (GtkAction       *action,
   g_signal_handlers_block_by_func (priv->zoomcombo,
                                    G_CALLBACK (zoomcombo_changed),
                                    dialog);
-  update_scale (dialog, scale + 0.1);
+  update_scale (dialog, scale + 0.05);
 
   g_signal_handlers_unblock_by_func (priv->zoomcombo,
                                      G_CALLBACK (zoomcombo_changed),
@@ -1605,7 +1605,7 @@ zoom_out_callback (GtkAction       *action,
       g_signal_handlers_block_by_func (priv->zoomcombo,
                                        G_CALLBACK (zoomcombo_changed),
                                        dialog);
-      update_scale (dialog, scale - 0.1);
+      update_scale (dialog, scale - 0.05);
       g_signal_handlers_unblock_by_func (priv->zoomcombo,
                                          G_CALLBACK (zoomcombo_changed),
                                          dialog);
