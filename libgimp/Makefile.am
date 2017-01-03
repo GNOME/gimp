@@ -222,6 +222,8 @@ libgimp_sources = \
 	gimpimage.h		\
 	gimpimagecolorprofile.c	\
 	gimpimagecolorprofile.h	\
+	gimpitem.c		\
+	gimpitem.h		\
 	gimplayer.c		\
 	gimplayer.h		\
 	gimppalette.c		\
@@ -345,6 +347,7 @@ gimpinclude_HEADERS = \
 	gimpgradientselect.h		\
 	gimpimage.h			\
 	gimpimagecolorprofile.h		\
+	gimpitem.h			\
 	gimplayer.h			\
 	gimppalette.h			\
 	gimppalettes.h			\

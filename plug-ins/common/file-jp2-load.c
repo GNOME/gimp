@@ -57,6 +57,7 @@ static void     run               (const gchar      *name,
                                    gint             *nreturn_vals,
                                    GimpParam       **return_vals);
 static gint32   load_image        (const gchar      *filename,
+                                   gint32           *layer_ID,
                                    GError          **error);
 static gboolean load_icc_profile  (jas_image_t      *jas_image,
                                    gint              image_ID,
@@ -126,6 +127,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               image_ID;
   GError            *error = NULL;
+  gint32             layer_ID;
 
   run_mode = param[0].data.d_int32;
 
@@ -154,7 +156,7 @@ run (const gchar      *name,
           break;
         }
 
-      image_ID = load_image (param[1].data.d_string, &error);
+      image_ID = load_image (param[1].data.d_string, &layer_ID, &error);
 
       if (image_ID != -1)
         {
@@ -168,7 +170,7 @@ run (const gchar      *name,
             {
               GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
 
-              gimp_image_metadata_load_finish (image_ID, "image/jp2",
+              gimp_image_metadata_load_finish (image_ID, layer_ID, "image/jp2",
                                                metadata, flags,
                                                interactive);
 
@@ -203,13 +205,13 @@ run (const gchar      *name,
 
 static gint32
 load_image (const gchar  *filename,
+            gint32       *layer_ID,
             GError      **error)
 {
   gint               fd;
   jas_stream_t      *stream;
   gint32             image_ID = -1;
   jas_image_t       *image;
-  gint32             layer_ID;
   GimpImageType      image_type;
   GimpImageBaseType  base_type;
   gint               width;

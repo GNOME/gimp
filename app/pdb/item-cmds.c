@@ -822,6 +822,67 @@ item_set_tattoo_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+item_get_metadata_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpItem *item;
+  gchar *metadata_string = NULL;
+
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpMetadata *metadata = gimp_item_get_metadata (item);
+
+      if (metadata)
+        metadata_string = gimp_metadata_serialize (metadata);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), metadata_string);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+item_set_metadata_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpItem *item;
+  const gchar *metadata_string;
+
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  metadata_string = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpMetadata *metadata = gimp_metadata_deserialize (metadata_string);
+
+      gimp_item_set_metadata (item, metadata, TRUE);
+
+      if (metadata)
+        g_object_unref (metadata);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 item_attach_parasite_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -1727,6 +1788,66 @@ register_item_procs (GimpPDB *pdb)
                                                   "The new item tattoo",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-get-metadata
+   */
+  procedure = gimp_procedure_new (item_get_metadata_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-get-metadata");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-get-metadata",
+                                     "Returns the item's metadata.",
+                                     "Returns metadata from the item.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("metadata-string",
+                                                           "metadata string",
+                                                           "The metadata as a xml string",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-set-metadata
+   */
+  procedure = gimp_procedure_new (item_set_metadata_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-set-metadata");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-set-metadata",
+                                     "Set the item's metadata.",
+                                     "Sets metadata on the item.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("metadata-string",
+                                                       "metadata string",
+                                                       "The metadata as a xml string",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

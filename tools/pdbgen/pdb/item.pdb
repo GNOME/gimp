@@ -783,6 +783,61 @@ CODE
     );
 }
 
+sub item_get_metadata {
+    $blurb = "Returns the item's metadata.";
+    $help  = 'Returns metadata from the item.';
+
+    &std_pdb_misc('2016', '2.10');
+
+    @inargs = (
+        { name => 'item', type => 'item',
+          desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'metadata_string', type => 'string', wrap => 1,
+	  desc => 'The metadata as a xml string'}
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpMetadata *metadata = gimp_item_get_metadata (item);
+
+  if (metadata)
+    metadata_string = gimp_metadata_serialize (metadata);
+}
+CODE
+    );
+}
+
+sub item_set_metadata {
+    $blurb = "Set the item's metadata.";
+    $help  = 'Sets metadata on the item.';
+
+    &std_pdb_misc('2016', '2.10');
+
+    @inargs = (
+        { name => 'item', type => 'item',
+          desc => 'The item' },
+	{ name => 'metadata_string', type => 'string', wrap => 1,
+	  desc => 'The metadata as a xml string' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpMetadata *metadata = gimp_metadata_deserialize (metadata_string);
+
+  gimp_item_set_metadata (item, metadata, TRUE);
+
+  if (metadata)
+    g_object_unref (metadata);
+}
+CODE
+    );
+}
+
 sub item_attach_parasite {
     $blurb = 'Add a parasite to an item.';
 
@@ -896,10 +951,12 @@ CODE
 }
 
 @headers = qw("core/gimplayermask.h"
+              "libgimpbase/gimpbase.h"
               "core/gimplist.h"
               "core/gimpselection.h"
+              "core/gimpitem.h"
               "text/gimptextlayer.h"
-	      "vectors/gimpvectors.h"
+              "vectors/gimpvectors.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"
               "gimp-intl.h");
@@ -910,13 +967,13 @@ CODE
             item_is_drawable
             item_is_layer
             item_is_text_layer
-	    item_is_channel
-	    item_is_layer_mask
-	    item_is_selection
-	    item_is_vectors
-	    item_is_group
+            item_is_channel
+            item_is_layer_mask
+            item_is_selection
+            item_is_vectors
+            item_is_group
             item_get_parent
-	    item_get_children
+            item_get_children
             item_get_name item_set_name
             item_get_visible item_set_visible
             item_get_linked item_set_linked
@@ -924,9 +981,10 @@ CODE
             item_get_lock_position item_set_lock_position
             item_get_color_tag item_set_color_tag
             item_get_tattoo item_set_tattoo
-	    item_attach_parasite item_detach_parasite
-	    item_get_parasite
-	    item_get_parasite_list);
+            item_get_metadata item_set_metadata
+            item_attach_parasite item_detach_parasite
+            item_get_parasite
+            item_get_parasite_list);
 
 %exports = (app => [@procs], lib => [@procs]);
 

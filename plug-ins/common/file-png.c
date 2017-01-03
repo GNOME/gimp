@@ -140,6 +140,7 @@ static void      run                       (const gchar      *name,
                                             GimpParam       **return_vals);
 
 static gint32    load_image                (const gchar      *filename,
+                                            gint32           *layer_ID,
                                             gboolean          interactive,
                                             gboolean         *resolution_loaded,
                                             GError          **error);
@@ -147,6 +148,7 @@ static gboolean  save_image                (const gchar      *filename,
                                             gint32            image_ID,
                                             gint32            drawable_ID,
                                             gint32            orig_image_ID,
+                                            gint             *bits_depth,
                                             GError          **error);
 
 static int       respin_cmap               (png_structp       pp,
@@ -416,6 +418,7 @@ run (const gchar      *name,
   GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            image_ID;
+  gint32            layer_ID;
   gint32            drawable_ID;
   GError           *error  = NULL;
 
@@ -448,6 +451,7 @@ run (const gchar      *name,
         }
 
       image_ID = load_image (param[1].data.d_string,
+                             &layer_ID,
                              interactive,
                              &resolution_loaded,
                              &error);
@@ -467,7 +471,7 @@ run (const gchar      *name,
               if (resolution_loaded)
                 flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-              gimp_image_metadata_load_finish (image_ID, "image/png",
+              gimp_image_metadata_load_finish (image_ID, layer_ID, "image/png",
                                                metadata, flags,
                                                interactive);
 
@@ -492,6 +496,7 @@ run (const gchar      *name,
       GimpMetadata          *metadata;
       GimpMetadataSaveFlags  metadata_flags;
       gint32                 orig_image_ID;
+      gint                   bits_depth;
       GimpExportReturn       export = GIMP_EXPORT_CANCEL;
       gboolean               alpha;
 
@@ -525,8 +530,8 @@ run (const gchar      *name,
         }
 
       metadata = gimp_image_metadata_save_prepare (orig_image_ID,
-                                                   "image/png",
-                                                   &metadata_flags);
+                                                     "image/png",
+                                                     &metadata_flags);
 
       pngvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
       pngvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
@@ -608,7 +613,7 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           if (save_image (param[3].data.d_string,
-                          image_ID, drawable_ID, orig_image_ID, &error))
+                          image_ID, drawable_ID, orig_image_ID, &bits_depth, &error))
             {
               if (metadata)
                 {
@@ -637,10 +642,12 @@ run (const gchar      *name,
                     metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
+
                   gimp_image_metadata_save_finish (orig_image_ID,
                                                    "image/png",
                                                    metadata, metadata_flags,
                                                    file, NULL);
+                  g_object_unref (metadata);
                   g_object_unref (file);
                 }
 
@@ -655,8 +662,6 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
 
-      if (metadata)
-        g_object_unref (metadata);
     }
   else if (strcmp (name, GET_DEFAULTS_PROC) == 0)
     {
@@ -817,6 +822,7 @@ load_color_profile (png_structp   pp,
  */
 static gint32
 load_image (const gchar  *filename,
+            gint32       *layer_ID,
             gboolean      interactive,
             gboolean     *resolution_loaded,
             GError      **error)
@@ -1350,6 +1356,8 @@ load_image (const gchar  *filename,
       g_object_unref (buffer);
     }
 
+  *layer_ID = layer;
+
   return image;
 }
 
@@ -1427,6 +1435,7 @@ save_image (const gchar  *filename,
             gint32        image_ID,
             gint32        drawable_ID,
             gint32        orig_image_ID,
+            gint         *bits_depth,
             GError      **error)
 {
   gint              i, k;             /* Looping vars */
@@ -1499,6 +1508,8 @@ save_image (const gchar  *filename,
       linear = FALSE;
       break;
     }
+
+  *bits_depth = bit_depth;
 
   pp = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if (!pp)

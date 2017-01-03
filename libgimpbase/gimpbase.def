@@ -1,6 +1,29 @@
 EXPORTS
 	gimp_add_mask_type_get_type
 	gimp_any_to_utf8
+	gimp_attribute_copy
+	gimp_attribute_get_attribute_type
+	gimp_attribute_get_attribute_ifd
+	gimp_attribute_get_attribute_structure
+	gimp_attribute_get_attribute_tag
+	gimp_attribute_get_interpreted_string
+	gimp_attribute_get_name
+	gimp_attribute_get_sortable_name
+	gimp_attribute_get_string
+	gimp_attribute_get_structure_type
+	gimp_attribute_get_tag_type
+	gimp_attribute_get_value
+	gimp_attribute_get_value_type
+	gimp_attribute_get_value_type_from_string
+	gimp_attribute_get_gps_degree
+	gimp_attribute_get_xml
+	gimp_attribute_has_structure
+	gimp_attribute_is_valid
+	gimp_attribute_new_string
+	gimp_attribute_print
+	gimp_attribute_set_interpreted_string
+	gimp_attribute_set_structure_type
+	gimp_attribute_set_value_type
 	gimp_base_init
 	gimp_blend_mode_get_type
 	gimp_brush_generated_shape_get_type
@@ -70,21 +93,36 @@ EXPORTS
 	gimp_memsize_to_string
 	gimp_merge_type_get_type
 	gimp_message_handler_type_get_type
+	gimp_metadata_add_attribute
 	gimp_metadata_deserialize
 	gimp_metadata_duplicate
+	gimp_metadata_get_attribute
 	gimp_metadata_get_colorspace
 	gimp_metadata_get_resolution
+	gimp_metadata_get_table
+	gimp_metadata_get_type
+	gimp_metadata_has_attribute
+	gimp_metadata_has_tag_type
 	gimp_metadata_is_tag_supported
+	gimp_metadata_iter_init
+	gimp_metadata_iter_next
 	gimp_metadata_load_from_file
 	gimp_metadata_new
-	gimp_metadata_save_to_file
+	gimp_metadata_new_attribute
+	gimp_metadata_new_gexiv2metadata
+	gimp_metadata_print
+	gimp_metadata_remove_attribute
+	gimp_metadata_has_attribute
 	gimp_metadata_serialize
 	gimp_metadata_set_bits_per_sample
 	gimp_metadata_set_colorspace
+	gimp_metadata_save_to_file
 	gimp_metadata_set_from_exif
 	gimp_metadata_set_from_xmp
 	gimp_metadata_set_pixel_size
 	gimp_metadata_set_resolution
+	gimp_metadata_size
+	gimp_metadata_to_xmp_packet
 	gimp_micro_version
 	gimp_minor_version
 	gimp_offset_type_get_type
@@ -210,3 +248,5 @@ EXPORTS
 	gp_tile_ack_write
 	gp_tile_data_write
 	gp_tile_req_write
+	rational_free
+	srational_free

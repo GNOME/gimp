@@ -99,6 +99,7 @@ struct _GimpItemPrivate
   GimpColorTag      color_tag;          /*  color tag                */
 
   GList            *offset_nodes;       /*  offset nodes to manage   */
+  GimpMetadata     *metadata            /*  items metadata           */
 };
 
 #define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
@@ -331,6 +332,7 @@ gimp_item_init (GimpItem *item)
   g_object_force_floating (G_OBJECT (item));
 
   private->parasites = gimp_parasite_list_new ();
+  private->metadata = NULL;
 }
 
 static void
@@ -2419,4 +2421,42 @@ gimp_item_is_in_set (GimpItem    *item,
     }
 
   return FALSE;
+}
+
+void
+gimp_item_set_metadata (GimpItem     *item,
+                        GimpMetadata *metadata,
+                        gboolean      push_undo)
+{
+  GimpItemPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  private = GET_PRIVATE (item);
+
+  if (metadata != private->metadata)
+    {
+      if (push_undo)
+        gimp_image_undo_push_item_metadata (gimp_item_get_image (item),
+                                            NULL,
+                                            item);
+
+      if (private->metadata)
+        g_object_unref (private->metadata);
+
+      private->metadata = metadata;
+      g_object_ref (private->metadata);
+    }
+}
+
+GimpMetadata *
+gimp_item_get_metadata (GimpItem *item)
+{
+  GimpItemPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  private = GET_PRIVATE (item);
+
+  return private->metadata;
 }

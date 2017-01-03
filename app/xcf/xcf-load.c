@@ -48,6 +48,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemstack.h"
 #include "core/gimplayer-floating-selection.h"
+#include "core/gimpitem.h"
 #include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
@@ -268,6 +269,31 @@ xcf_load_image (Gimp     *gimp,
       gimp_parasite_list_remove (private->parasites,
                                  gimp_parasite_name (parasite));
     }
+  else
+    {
+
+      /* check for an attributes parasite */
+      parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                           "gimp-image-attributes");
+      if (parasite)
+        {
+          GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+          GimpMetadata     *metadata;
+          const gchar      *attributes_string;
+
+          attributes_string = (gchar *) gimp_parasite_data (parasite);
+          metadata = gimp_metadata_deserialize (attributes_string);
+
+          if (metadata)
+            {
+              gimp_image_set_metadata (image, metadata, FALSE);
+              g_object_unref (metadata);
+            }
+
+          gimp_parasite_list_remove (private->parasites,
+                                     gimp_parasite_name (parasite));
+        }
+    }
 
   /* migrate the old "exif-data" parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
@@ -284,13 +310,10 @@ xcf_load_image (Gimp     *gimp,
         }
       else
         {
-          GimpMetadata *metadata = gimp_image_get_metadata (image);
-          GError       *my_error = NULL;
+          GimpMetadata   *metadata = NULL;
+          GError         *my_error = NULL;
 
-          if (metadata)
-            g_object_ref (metadata);
-          else
-            metadata = gimp_metadata_new ();
+          metadata = gimp_metadata_new ();
 
           if (! gimp_metadata_set_from_exif (metadata,
                                              gimp_parasite_data (parasite),
@@ -341,13 +364,10 @@ xcf_load_image (Gimp     *gimp,
         }
       else
         {
-          GimpMetadata *metadata = gimp_image_get_metadata (image);
-          GError       *my_error = NULL;
+          GimpMetadata   *metadata = NULL;
+          GError         *my_error = NULL;
 
-          if (metadata)
-            g_object_ref (metadata);
-          else
-            metadata = gimp_metadata_new ();
+          metadata = gimp_metadata_new ();
 
           if (! gimp_metadata_set_from_xmp (metadata,
                                             (const guint8 *) xmp_data + 10,
@@ -1443,25 +1463,26 @@ xcf_load_layer (XcfInfo    *info,
                 GimpImage  *image,
                 GList     **item_path)
 {
-  GimpLayer         *layer;
-  GimpLayerMask     *layer_mask;
-  guint32            hierarchy_offset;
-  guint32            layer_mask_offset;
-  gboolean           apply_mask = TRUE;
-  gboolean           edit_mask  = FALSE;
-  gboolean           show_mask  = FALSE;
-  gboolean           active;
-  gboolean           floating;
-  guint32            group_layer_flags = 0;
-  guint32            text_layer_flags = 0;
-  gint               width;
-  gint               height;
-  gint               type;
-  GimpImageBaseType  base_type;
-  gboolean           has_alpha;
-  const Babl        *format;
-  gboolean           is_fs_drawable;
-  gchar             *name;
+  GimpLayer          *layer;
+  GimpLayerMask      *layer_mask;
+  const GimpParasite *parasite;
+  guint32             hierarchy_offset;
+  guint32             layer_mask_offset;
+  gboolean            apply_mask = TRUE;
+  gboolean            edit_mask  = FALSE;
+  gboolean            show_mask  = FALSE;
+  gboolean            active;
+  gboolean            floating;
+  guint32             group_layer_flags = 0;
+  guint32             text_layer_flags = 0;
+  gint                width;
+  gint                height;
+  gint                type;
+  GimpImageBaseType   base_type;
+  gboolean            has_alpha;
+  const Babl         *format;
+  gboolean            is_fs_drawable;
+  gchar              *name;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment in our caller.
@@ -1537,6 +1558,29 @@ xcf_load_layer (XcfInfo    *info,
     goto error;
 
   GIMP_LOG (XCF, "layer props loaded");
+
+  parasite = gimp_item_parasite_find (GIMP_ITEM (layer),
+                                       "gimp-item-metadata");
+  if (parasite)
+    {
+      GimpMetadata   *metadata;
+      const gchar    *metadata_string;
+
+      metadata_string = (gchar *) gimp_parasite_data (parasite);
+      metadata = gimp_metadata_deserialize (metadata_string);
+
+      if (metadata)
+        {
+          gimp_item_set_metadata (GIMP_ITEM (layer), metadata, FALSE);
+          g_object_unref (metadata);
+        }
+
+      gimp_item_parasite_detach (GIMP_ITEM (layer),
+                                 "gimp-item-metadata",
+                                 FALSE);
+    }
+
+  GIMP_LOG (XCF, "layer metadata loaded");
 
   xcf_progress_update (info);
 
@@ -1627,13 +1671,14 @@ static GimpChannel *
 xcf_load_channel (XcfInfo   *info,
                   GimpImage *image)
 {
-  GimpChannel *channel;
-  guint32      hierarchy_offset;
-  gint         width;
-  gint         height;
-  gboolean     is_fs_drawable;
-  gchar       *name;
-  GimpRGB      color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
+  GimpChannel        *channel;
+  const GimpParasite *parasite;
+  guint32             hierarchy_offset;
+  gint                width;
+  gint                height;
+  gboolean            is_fs_drawable;
+  gchar              *name;
+  GimpRGB             color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment in our caller.
@@ -1657,6 +1702,27 @@ xcf_load_channel (XcfInfo   *info,
   /* read in the channel properties */
   if (!xcf_load_channel_props (info, image, &channel))
     goto error;
+
+  parasite = gimp_item_parasite_find (GIMP_ITEM (channel),
+                                       "gimp-item-metadata");
+  if (parasite)
+    {
+      GimpMetadata   *metadata;
+      const gchar    *metadata_string;
+
+      metadata_string = (gchar *) gimp_parasite_data (parasite);
+      metadata = gimp_metadata_deserialize (metadata_string);
+
+      if (metadata)
+        {
+          gimp_item_set_metadata (GIMP_ITEM (channel), metadata, FALSE);
+          g_object_unref (metadata);
+        }
+
+      gimp_item_parasite_detach (GIMP_ITEM (channel),
+                                 "gimp-item-metadata",
+                                 FALSE);
+    }
 
   xcf_progress_update (info);
 

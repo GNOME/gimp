@@ -38,6 +38,8 @@ struct _GimpItemUndo
   GimpUndo  parent_instance;
 
   GimpItem *item;  /* the item this undo is for */
+  GimpMetadata    *metadata;
+
 };
 
 struct _GimpItemUndoClass

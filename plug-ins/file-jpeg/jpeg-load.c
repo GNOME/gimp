@@ -58,12 +58,13 @@ gint32           preview_layer_ID;
 gint32
 load_image (const gchar  *filename,
             GimpRunMode   runmode,
+            gint32       *layer_ID,
             gboolean      preview,
             gboolean     *resolution_loaded,
             GError      **error)
 {
   gint32 volatile  image_ID;
-  gint32           layer_ID;
+  gint32           _layer_ID;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
   jpeg_saved_marker_ptr         marker;
@@ -232,11 +233,11 @@ load_image (const gchar  *filename,
                                          cinfo.output_width,
                                          cinfo.output_height,
                                          layer_type, 100, GIMP_NORMAL_MODE);
-      layer_ID = preview_layer_ID;
+      _layer_ID = preview_layer_ID;
     }
   else
     {
-      layer_ID = gimp_layer_new (image_ID, _("Background"),
+      _layer_ID = gimp_layer_new (image_ID, _("Background"),
                                  cinfo.output_width,
                                  cinfo.output_height,
                                  layer_type, 100, GIMP_NORMAL_MODE);
@@ -343,7 +344,7 @@ load_image (const gchar  *filename,
    * loop counter, so that we don't have to keep track ourselves.
    */
 
-  buffer = gimp_drawable_get_buffer (layer_ID);
+  buffer = gimp_drawable_get_buffer (_layer_ID);
   format = babl_format (image_type == GIMP_RGB ? "R'G'B' u8" : "Y' u8");
 
   while (cinfo.output_scanline < cinfo.output_height)
@@ -412,7 +413,9 @@ load_image (const gchar  *filename,
       gimp_progress_update (1.0);
     }
 
-  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
+  gimp_image_insert_layer (image_ID, _layer_ID, -1, 0);
+
+  *layer_ID = _layer_ID;
 
   return image_ID;
 }

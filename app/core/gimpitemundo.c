@@ -22,6 +22,8 @@
 
 #include "core-types.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpimage.h"
 #include "gimpitem.h"
 #include "gimpitemundo.h"
@@ -34,18 +36,21 @@ enum
 };
 
 
-static void   gimp_item_undo_constructed  (GObject      *object);
-static void   gimp_item_undo_set_property (GObject      *object,
-                                           guint         property_id,
-                                           const GValue *value,
-                                           GParamSpec   *pspec);
-static void   gimp_item_undo_get_property (GObject      *object,
-                                           guint         property_id,
-                                           GValue       *value,
-                                           GParamSpec   *pspec);
+static void   gimp_item_undo_constructed  (GObject             *object);
+static void   gimp_item_undo_set_property (GObject             *object,
+                                           guint                property_id,
+                                           const GValue        *value,
+                                           GParamSpec          *pspec);
+static void   gimp_item_undo_get_property (GObject             *object,
+                                           guint                property_id,
+                                           GValue              *value,
+                                           GParamSpec          *pspec);
 
-static void   gimp_item_undo_free         (GimpUndo     *undo,
-                                           GimpUndoMode  undo_mode);
+static void   gimp_item_undo_free         (GimpUndo            *undo,
+                                           GimpUndoMode         undo_mode);
+static void   gimp_item_undo_pop          (GimpUndo            *undo,
+                                           GimpUndoMode         undo_mode,
+                                           GimpUndoAccumulator *accum);
 
 
 G_DEFINE_TYPE (GimpItemUndo, gimp_item_undo, GIMP_TYPE_UNDO)
@@ -63,6 +68,7 @@ gimp_item_undo_class_init (GimpItemUndoClass *klass)
   object_class->set_property = gimp_item_undo_set_property;
   object_class->get_property = gimp_item_undo_get_property;
 
+  undo_class->pop            = gimp_item_undo_pop;
   undo_class->free           = gimp_item_undo_free;
 
   g_object_class_install_property (object_class, PROP_ITEM,
@@ -84,7 +90,14 @@ gimp_item_undo_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_ITEM (item_undo->item));
+  switch (GIMP_UNDO (object)->undo_type)
+  {
+    case GIMP_UNDO_ITEM_METADATA:
+      item_undo->metadata =
+          gimp_metadata_duplicate (gimp_item_get_metadata (item_undo->item));
+      break;
+  }
+
 }
 
 static void
@@ -139,5 +152,42 @@ gimp_item_undo_free (GimpUndo     *undo,
       item_undo->item = NULL;
     }
 
+  if (item_undo->metadata)
+    {
+      g_object_unref (item_undo->metadata);
+      item_undo->metadata = NULL;
+    }
+
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+}
+
+static void
+gimp_item_undo_pop     (GimpUndo            *undo,
+                        GimpUndoMode         undo_mode,
+                        GimpUndoAccumulator *accum)
+{
+  GimpItemUndo   *item_undo  = GIMP_ITEM_UNDO (undo);
+  GimpItem       *item       = GIMP_ITEM_UNDO (undo)->item;
+
+  switch (undo->undo_type)
+    {
+    case GIMP_UNDO_ITEM_METADATA:
+      {
+        GimpMetadata *metadata;
+
+        metadata = gimp_metadata_duplicate (gimp_item_get_metadata (item));
+
+        gimp_item_set_metadata (item, item_undo->metadata, FALSE);
+
+        if (item_undo->metadata)
+          g_object_unref (item_undo->metadata);
+        item_undo->metadata = metadata;
+      }
+      break;
+
+    default:
+//      g_assert_not_reached ();
+      break;
+
+    }
 }

@@ -49,6 +49,7 @@
 #include "gimpsamplepoint.h"
 #include "gimpsamplepointundo.h"
 #include "gimpselection.h"
+#include "gimpviewable.h"
 
 #include "text/gimptextlayer.h"
 #include "text/gimptextundo.h"
@@ -169,6 +170,21 @@ gimp_image_undo_push_image_metadata (GimpImage   *image,
   return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
                                GIMP_UNDO_IMAGE_METADATA, undo_desc,
                                GIMP_DIRTY_IMAGE_META,
+                               NULL);
+}
+
+
+GimpUndo *
+gimp_image_undo_push_item_metadata (GimpImage    *image,
+                                      const gchar  *undo_desc,
+                                      GimpItem     *item)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
+                               GIMP_UNDO_ITEM_METADATA, undo_desc,
+                               GIMP_DIRTY_IMAGE_META,
+                               "item", item,
                                NULL);
 }
 

@@ -364,5 +364,9 @@ gboolean        gimp_item_mask_intersect     (GimpItem           *item,
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);
 
+void            gimp_item_set_metadata       (GimpItem           *item,
+                                              GimpMetadata       *metadata,
+                                              gboolean            push_undo);
+GimpMetadata  * gimp_item_get_metadata       (GimpItem           *item);
 
 #endif /* __GIMP_ITEM_H__ */

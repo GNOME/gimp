@@ -157,6 +157,7 @@ typedef struct _GimpGroupLayer      GimpGroupLayer;
 typedef struct _GimpUndo            GimpUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
 typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
+typedef struct _GimpViewableUndo      GimpViewableUndo;
 
 
 /* Symmetry transformations */

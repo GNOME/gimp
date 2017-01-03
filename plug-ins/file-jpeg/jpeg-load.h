@@ -20,6 +20,7 @@
 
 gint32 load_image           (const gchar  *filename,
                              GimpRunMode   runmode,
+                             gint32       *layer_ID,
                              gboolean      preview,
                              gboolean     *resolution_loaded,
                              GError      **error);

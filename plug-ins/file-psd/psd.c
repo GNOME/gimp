@@ -211,7 +211,7 @@ run (const gchar      *name,
               if (resolution_loaded)
                 flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-              gimp_image_metadata_load_finish (image_ID, "image/x-psd",
+              gimp_image_metadata_load_finish (image_ID, -1, "image/x-psd",
                                                metadata, flags,
                                                interactive);
 
@@ -315,6 +315,8 @@ run (const gchar      *name,
                                                metadata, metadata_flags,
                                                file, NULL);
               g_object_unref (file);
+
+              g_object_unref (metadata);
             }
 
           values[0].data.d_status = GIMP_PDB_SUCCESS;
@@ -334,8 +336,6 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
 
-      if (metadata)
-        g_object_unref (metadata);
     }
 
   /* Unknown procedure */

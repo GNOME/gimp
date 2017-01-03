@@ -45,6 +45,8 @@ G_BEGIN_DECLS
 #endif
 
 
+typedef struct _GimpAttribute    GimpAttribute;
+typedef struct _GimpMetadata     GimpMetadata;
 typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpDatafileData GimpDatafileData;
 typedef struct _GimpEnumDesc     GimpEnumDesc;
@@ -55,7 +57,6 @@ typedef struct _GimpValueArray   GimpValueArray;
 typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
                                          gpointer                user_data);
 
-typedef struct _GExiv2Metadata GimpMetadata;
 
 
 /**

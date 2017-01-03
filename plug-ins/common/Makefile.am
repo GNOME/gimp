@@ -52,6 +52,7 @@ libexec_PROGRAMS = \
 	align-layers \
 	animation-optimize \
 	animation-play \
+	attributes	\
 	blinds \
 	blur \
 	border-average \
@@ -116,10 +117,10 @@ libexec_PROGRAMS = \
 	grid \
 	guillotine \
 	hot \
+	iptc	\
 	jigsaw \
 	$(MAIL) \
 	max-rgb \
-	metadata \
 	newsprint \
 	nl-filter \
 	oilify \
@@ -217,6 +218,24 @@ animation_play_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(animation_play_RC)
+
+attributes_SOURCES = \
+	attributes.c
+
+attributes_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(attributes_RC)
 
 blinds_SOURCES = \
 	blinds.c
@@ -1354,6 +1373,26 @@ hot_LDADD = \
 	$(INTLLIBS)		\
 	$(hot_RC)
 
+iptc_CFLAGS = $(GEXIV2_CFLAGS)
+
+iptc_SOURCES = \
+	iptc.c
+
+iptc_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEXIV2_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(iptc_RC)
+
 jigsaw_SOURCES = \
 	jigsaw.c
 
@@ -1404,26 +1443,6 @@ max_rgb_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(max_rgb_RC)
-
-metadata_CFLAGS = $(GEXIV2_CFLAGS)
-
-metadata_SOURCES = \
-	metadata.c
-
-metadata_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEXIV2_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(metadata_RC)
 
 newsprint_SOURCES = \
 	newsprint.c

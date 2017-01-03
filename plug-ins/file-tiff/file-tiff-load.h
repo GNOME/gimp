@@ -37,6 +37,7 @@ gboolean   load_dialog (TIFF               *tif,
                         TiffSelectedPages  *pages);
 
 gint32     load_image  (GFile              *file,
+                        gint32             *layer_ID,
                         TIFF               *tif,
                         TiffSelectedPages  *pages,
                         gboolean           *resolution_loaded,
