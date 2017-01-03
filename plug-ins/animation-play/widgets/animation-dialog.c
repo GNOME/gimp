@@ -78,6 +78,7 @@ struct _AnimationDialogPrivate
   GtkWidget         *zoomcombo;
   GtkWidget         *refresh;
 
+  GtkWidget         *scrolled_drawing_area;
   GtkWidget         *drawing_area;
   guchar            *drawing_area_data;
   guint              drawing_area_width;
@@ -592,7 +593,10 @@ animation_dialog_constructed (GObject *object)
   priv->zoomcombo = gtk_combo_box_text_new_with_entry ();
   gtk_entry_set_width_chars (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->zoomcombo))),
                              5);
-  for (index = 0; index < 5; index++)
+
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->zoomcombo),
+                                  _("Fit to display"));
+  for (index = 1; index < 6; index++)
     {
       text = g_strdup_printf  (_("%.1f %%"), get_zoom (dialog, index) * 100.0);
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (priv->zoomcombo), text);
@@ -648,16 +652,17 @@ animation_dialog_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
   gtk_widget_show (abox);
 
-  widget = gtk_scrolled_window_new (NULL, NULL);
-  gtk_container_add (GTK_CONTAINER (abox), widget);
-  gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW (widget),
-                                 GTK_POLICY_AUTOMATIC,
-                                 GTK_POLICY_AUTOMATIC);
-  gtk_widget_show (widget);
+  priv->scrolled_drawing_area = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (abox), priv->scrolled_drawing_area);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (priv->scrolled_drawing_area),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_widget_show (priv->scrolled_drawing_area);
 
   /* I add the drawing area inside an alignment box to prevent it from being resized. */
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (widget), abox);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (priv->scrolled_drawing_area),
+                                         abox);
   gtk_widget_show (abox);
 
   /* Build a drawing area, with a default size same as the image */
@@ -667,7 +672,7 @@ animation_dialog_constructed (GObject *object)
   gtk_widget_show (priv->drawing_area);
 
   g_signal_connect (priv->drawing_area, "size-allocate",
-                    G_CALLBACK(da_size_callback),
+                    G_CALLBACK (da_size_callback),
                     dialog);
   g_signal_connect (priv->drawing_area, "button-press-event",
                     G_CALLBACK (da_button_press),
@@ -1367,24 +1372,28 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   animation_playback_set_animation (priv->playback, animation);
 
   if (gtk_widget_get_realized (GTK_WIDGET (dialog)))
-    animation_load (priv->animation);
+    on_dialog_expose (GTK_WIDGET (dialog), NULL, priv->animation);
   else
     /* Wait for the dialog to be realized because cache loading can
        take time and it is friendlier to have a visible GUI first. */
     g_signal_connect_after (dialog, "expose-event",
-                              G_CALLBACK (on_dialog_expose),
-                              priv->animation);
+                            G_CALLBACK (on_dialog_expose),
+                            priv->animation);
 }
 
 static gboolean
-on_dialog_expose (GtkWidget *widget,
+on_dialog_expose (GtkWidget *dialog,
                   GdkEvent  *event,
                   Animation *animation)
 {
-  g_signal_handlers_disconnect_by_func (widget,
+  g_signal_handlers_disconnect_by_func (dialog,
                                         G_CALLBACK (on_dialog_expose),
                                         animation);
   animation_load (animation);
+
+  /* Fit to display. */
+  update_scale (ANIMATION_DIALOG (dialog),
+                get_zoom (ANIMATION_DIALOG (dialog), 0));
 
   return FALSE;
 }
@@ -2220,9 +2229,9 @@ da_size_callback (GtkWidget       *drawing_area,
                   GtkAllocation   *allocation,
                   AnimationDialog *dialog)
 {
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  guchar **drawing_data;
-  gint     preview_width, preview_height;
+  AnimationDialogPrivate  *priv = GET_PRIVATE (dialog);
+  guchar                 **drawing_data;
+  gint                     preview_width, preview_height;
 
   if (drawing_area == priv->shape_drawing_area)
     {
@@ -2267,7 +2276,6 @@ da_size_callback (GtkWidget       *drawing_area,
   else
     {
       /* Update the zoom information. */
-      AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
       GtkEntry *zoomcombo_text_child;
 
       zoomcombo_text_child = GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->zoomcombo)));
@@ -2791,14 +2799,37 @@ get_zoom (AnimationDialog *dialog,
   switch (index)
     {
     case 0:
-      return 0.51;
+      /* Fit to the scrolled area! */
+        {
+          AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+          gdouble                 zoom = 1.0;
+
+          if (priv->animation)
+            {
+              GtkAllocation allocation;
+              gint          width;
+              gint          height;
+
+              animation_get_size (priv->animation, &width, &height);
+              gtk_widget_get_allocation (priv->scrolled_drawing_area, &allocation);
+              if (width > allocation.width || height > allocation.height)
+                {
+                  zoom = MIN ((gdouble) allocation.width / (gdouble) width,
+                              (gdouble) allocation.height / (gdouble) height);
+                }
+            }
+
+          return zoom;
+        }
     case 1:
-      return 1.0;
+      return 0.51;
     case 2:
-      return 1.25;
+      return 1.0;
     case 3:
-      return 1.5;
+      return 1.25;
     case 4:
+      return 1.5;
+    case 5:
       return 2.0;
     default:
       {
@@ -2824,9 +2855,22 @@ update_scale (AnimationDialog *dialog,
               gdouble          scale)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  GtkEntry               *zoomcombo_text_child;
   guint                   expected_drawing_area_width;
   guint                   expected_drawing_area_height;
   gint                    preview_width, preview_height;
+
+  /* Replace the text with actual (expected) zoom value.
+   * In particular if the user hits "Fit to display" or wrote
+   * free-form text. */
+  zoomcombo_text_child = GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->zoomcombo)));
+  if (zoomcombo_text_child)
+    {
+      char* new_entry_text = g_strdup_printf  (_("%.1f %%"), scale * 100.0);
+
+      gtk_entry_set_text (zoomcombo_text_child, new_entry_text);
+      g_free (new_entry_text);
+    }
 
   if (priv->animation == NULL)
     return;
