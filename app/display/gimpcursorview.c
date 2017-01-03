@@ -321,7 +321,7 @@ gimp_cursor_view_init (GimpCursorView *view)
 
   view->priv->color_frame_2 = gimp_color_frame_new ();
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                             GIMP_COLOR_FRAME_MODE_RGB);
+                             GIMP_COLOR_FRAME_MODE_RGB_PERCENT);
   gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_2,
                       TRUE, TRUE, 0);
   gtk_widget_show (view->priv->color_frame_2);

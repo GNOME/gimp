@@ -376,7 +376,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
   gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (picker_tool->color_frame2),
                                      context->gimp->config->color_management);
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (picker_tool->color_frame2),
-                             GIMP_COLOR_FRAME_MODE_RGB);
+                             GIMP_COLOR_FRAME_MODE_RGB_PERCENT);
   gtk_box_pack_start (GTK_BOX (hbox), picker_tool->color_frame2,
                       FALSE, FALSE, 0);
   gtk_widget_show (picker_tool->color_frame2);

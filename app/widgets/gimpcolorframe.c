@@ -660,7 +660,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
       }
       break;
 
-    case GIMP_COLOR_FRAME_MODE_RGB:
+    case GIMP_COLOR_FRAME_MODE_RGB_PERCENT:
+    case GIMP_COLOR_FRAME_MODE_RGB_U8:
       names[0] = _("Red:");
       names[1] = _("Green:");
       names[2] = _("Blue:");
@@ -668,23 +669,30 @@ gimp_color_frame_update (GimpColorFrame *frame)
       if (has_alpha)
         names[3] = _("Alpha:");
 
-      if (frame->sample_valid)
-        {
-          values = g_new0 (gchar *, 6);
-
-          values[0] = g_strdup_printf ("%.01f %%", frame->color.r * 100.0);
-          values[1] = g_strdup_printf ("%.01f %%", frame->color.g * 100.0);
-          values[2] = g_strdup_printf ("%.01f %%", frame->color.b * 100.0);
-          values[3] = g_strdup_printf ("%.01f %%", frame->color.a * 100.0);
-        }
-
       names[4] = _("Hex:");
 
       if (frame->sample_valid)
         {
-          guchar r, g, b;
+          guchar r, g, b, a;
 
-          gimp_rgb_get_uchar (&frame->color, &r, &g, &b);
+          values = g_new0 (gchar *, 6);
+
+          gimp_rgba_get_uchar (&frame->color, &r, &g, &b, &a);
+
+          if (frame->frame_mode == GIMP_COLOR_FRAME_MODE_RGB_PERCENT)
+            {
+              values[0] = g_strdup_printf ("%.01f %%", frame->color.r * 100.0);
+              values[1] = g_strdup_printf ("%.01f %%", frame->color.g * 100.0);
+              values[2] = g_strdup_printf ("%.01f %%", frame->color.b * 100.0);
+              values[3] = g_strdup_printf ("%.01f %%", frame->color.a * 100.0);
+            }
+          else
+            {
+              values[0] = g_strdup_printf ("%d", r);
+              values[1] = g_strdup_printf ("%d", g);
+              values[2] = g_strdup_printf ("%d", b);
+              values[3] = g_strdup_printf ("%d", a);
+            }
 
           values[4] = g_strdup_printf ("%.2x%.2x%.2x", r, g, b);
         }

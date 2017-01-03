@@ -103,7 +103,8 @@ gimp_color_frame_mode_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_COLOR_FRAME_MODE_PIXEL, "GIMP_COLOR_FRAME_MODE_PIXEL", "pixel" },
-    { GIMP_COLOR_FRAME_MODE_RGB, "GIMP_COLOR_FRAME_MODE_RGB", "rgb" },
+    { GIMP_COLOR_FRAME_MODE_RGB_PERCENT, "GIMP_COLOR_FRAME_MODE_RGB_PERCENT", "rgb-percent" },
+    { GIMP_COLOR_FRAME_MODE_RGB_U8, "GIMP_COLOR_FRAME_MODE_RGB_U8", "rgb-u8" },
     { GIMP_COLOR_FRAME_MODE_HSV, "GIMP_COLOR_FRAME_MODE_HSV", "hsv" },
     { GIMP_COLOR_FRAME_MODE_CMYK, "GIMP_COLOR_FRAME_MODE_CMYK", "cmyk" },
     { 0, NULL, NULL }
@@ -112,7 +113,8 @@ gimp_color_frame_mode_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_COLOR_FRAME_MODE_PIXEL, NC_("color-frame-mode", "Pixel"), NULL },
-    { GIMP_COLOR_FRAME_MODE_RGB, NC_("color-frame-mode", "RGB"), NULL },
+    { GIMP_COLOR_FRAME_MODE_RGB_PERCENT, NC_("color-frame-mode", "RGB (%)"), NULL },
+    { GIMP_COLOR_FRAME_MODE_RGB_U8, NC_("color-frame-mode", "RGB (0..255)"), NULL },
     { GIMP_COLOR_FRAME_MODE_HSV, NC_("color-frame-mode", "HSV"), NULL },
     { GIMP_COLOR_FRAME_MODE_CMYK, NC_("color-frame-mode", "CMYK"), NULL },
     { 0, NULL, NULL }
