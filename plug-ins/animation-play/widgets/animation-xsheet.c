@@ -1190,7 +1190,7 @@ animation_xsheet_suite_do (GtkWidget       *button,
       gboolean  same_numbering = TRUE;
 
       /* Using current selection as base. */
-      regex = g_regex_new ("^(.*[^0-9_-])[ \t_-]*([0-9]+([-_][0-9]+)*)[ \t]*([^0-9]*)[ \t]*$",
+      regex = g_regex_new ("^(.*[^0-9_ -])[ \t_-]*([0-9]+([- _][0-9]+)*)[ \t]*([^0-9]*)[ \t]*$",
                            0, 0, NULL);
 
       /* First pass: check if selected layers use same numbering. */
@@ -1211,7 +1211,7 @@ animation_xsheet_suite_do (GtkWidget       *button,
               gchar  *key;
 
               num = g_match_info_fetch (match, 2);
-              tokens = g_strsplit_set (num, "-_", -1);
+              tokens = g_strsplit_set (num, " -_", -1);
               key = g_strjoinv ("-", tokens);
 
               g_strfreev (tokens);
@@ -1262,7 +1262,7 @@ animation_xsheet_suite_do (GtkWidget       *button,
               title_key    = g_match_info_fetch (match, 2);
               title_suffix = g_match_info_fetch (match, 4);
 
-              tokens = g_strsplit_set (title_key, "-_", -1);
+              tokens = g_strsplit_set (title_key, " -_", -1);
               lower_key = g_new0 (int, g_strv_length (tokens) + 1);
 
               for (k = 0; k < g_strv_length (tokens); k++)
@@ -1996,7 +1996,7 @@ animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
   esc_prefix = g_regex_escape_string (prefix, -1);
   esc_suffix = g_regex_escape_string (suffix, -1);
 
-  regex_string = g_strdup_printf ("^%s[ \t_-]*([0-9]*(([-_][0-9]+)*)?)[ \t]*%s[ \t]*$",
+  regex_string = g_strdup_printf ("^%s[ \t_-]*([0-9]*(([- _][0-9]+)*)?)[ \t]*%s[ \t]*$",
                                   esc_prefix, esc_suffix);
   regex = g_regex_new (regex_string, 0, 0, NULL);
   g_free (esc_prefix);
@@ -2021,7 +2021,7 @@ animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
 
           /* Get the key. */
           num    = g_match_info_fetch (match, 1);
-          tokens = g_strsplit_set (num, "-_", -1);
+          tokens = g_strsplit_set (num, " -_", -1);
           key    = g_new0 (int, g_strv_length (tokens) + 1);
 
           for (k = 0; k < g_strv_length (tokens); k++)
