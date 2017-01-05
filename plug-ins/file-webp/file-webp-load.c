@@ -39,7 +39,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static void
+static gint32
 create_layer (gint32   image_ID,
               uint8_t *layer_data,
               gint32   position,
@@ -78,6 +78,7 @@ load_image (const gchar *filename,
             GError      **error)
 {
   uint8_t  *indata = NULL;
+  gint32    layer;
   gsize     indatalen;
   gint      width;
   gint      height;
@@ -146,8 +147,8 @@ load_image (const gchar *filename,
       if (! outdata)
         return -1;
 
-      create_layer (image_ID, outdata, 0, _("Background"),
-                    width, height);
+      layer = create_layer (image_ID, outdata, 0, _("Background"),
+                            width, height);
 
       /* Free the image data */
       free (outdata);
@@ -268,7 +269,7 @@ load_image (const gchar *filename,
                                                    file, NULL);
       if (metadata)
         {
-          gimp_image_metadata_load_finish (image_ID, "image/webp",
+          gimp_image_metadata_load_finish (image_ID, layer, "image/webp",
                                            metadata, GIMP_METADATA_LOAD_ALL,
                                            interactive);
           g_object_unref (metadata);
