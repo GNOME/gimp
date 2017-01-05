@@ -890,7 +890,7 @@ attributes_export_dialog_response (GtkWidget *dlg,
       buffer = g_string_new (xmp_data);
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dlg));
-      fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
+      fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | O_BINARY, 0666);
       if (fd < 0)
         {
           attributes_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),
