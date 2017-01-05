@@ -42,6 +42,10 @@
 #include <glib/gstdio.h>
 #include <gio/gio.h>
 
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #ifdef G_OS_WIN32
 #include <io.h>
 #endif
@@ -890,11 +894,9 @@ attributes_export_dialog_response (GtkWidget *dlg,
       buffer = g_string_new (xmp_data);
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dlg));
-#ifdef G_OS_WIN32
+
       fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0666);
-#else
-      fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY, 0666);
-#endif
+
       if (fd < 0)
         {
           attributes_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),
