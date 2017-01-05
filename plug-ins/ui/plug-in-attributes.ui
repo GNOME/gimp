@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <!-- interface-naming-policy toplevel-contextual -->
+  <object class="GtkTreeStore" id="exif-treestore">
+    <columns>
+      <!-- column-name c-exif-ifd -->
+      <column type="gchararray"/>
+      <!-- column-name c-exif-tag -->
+      <column type="gchararray"/>
+      <!-- column-name c-exif-value -->
+      <column type="gchararray"/>
+      <!-- column-name sortable -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkVBox" id="attributes-vbox">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="spacing">2</property>
+    <child>
+      <object class="GtkFrame" id="frame1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label_xalign">0</property>
+        <property name="shadow_type">out</property>
+        <child>
+          <object class="GtkHBox" id="header-hbox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="border_width">3</property>
+            <child>
+              <object class="GtkVBox" id="vbox1">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkLabel" id="label-header">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">label</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label-info">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">label</property>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHBox" id="thumb-box">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child type="label_item">
+          <placeholder/>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkNotebook" id="attributes-notebook">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="scrollable">True</property>
+        <child>
+          <object class="GtkScrolledWindow" id="exif-scroll">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="border_width">6</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTreeView" id="exif-treeview">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="model">exif-treestore</property>
+                <property name="headers_clickable">False</property>
+                <property name="expander_column">exif_ifd_column</property>
+                <property name="rules_hint">True</property>
+                <property name="search_column">1</property>
+                <property name="enable_grid_lines">vertical</property>
+                <property name="enable_tree_lines">True</property>
+                <child>
+                  <object class="GtkTreeViewColumn" id="exif_ifd_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Exif IFD</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="exif_ifd_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="exif_tag_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Exif Tag</property>
+                    <property name="expand">True</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="exif_tag_renderer_text"/>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="exif_value_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Value</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="exif_value_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">2</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="exif_sort_column">
+                    <property name="sizing">fixed</property>
+                    <property name="min_width">1</property>
+                    <property name="max_width">1</property>
+                    <property name="visible">FALSE</property>
+                    <property name="title" translatable="yes">Sort</property>
+                    <property name="sort_column_id">3</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="exif_sort_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">3</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="tab">
+          <object class="GtkLabel" id="exif">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="xpad">4</property>
+            <property name="ypad">4</property>
+            <property name="label" translatable="yes">Exif</property>
+          </object>
+          <packing>
+            <property name="tab_expand">True</property>
+            <property name="tab_fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="xmp-scroll">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="border_width">6</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTreeView" id="xmp-treeview">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="model">xmp-treestore</property>
+                <property name="headers_clickable">False</property>
+                <property name="rules_hint">True</property>
+                <property name="search_column">1</property>
+                <property name="enable_grid_lines">vertical</property>
+                <property name="enable_tree_lines">True</property>
+                <child>
+                  <object class="GtkTreeViewColumn" id="xmp_schema_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">XMP schema</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="xmp_schema_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="xmp_tag_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">XMP Property</property>
+                    <property name="expand">True</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="xmp_tag_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="xmp_value_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Value</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="xmp_value_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">2</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="xmp_sort_column">
+                    <property name="sizing">fixed</property>
+                    <property name="min_width">1</property>
+                    <property name="max_width">1</property>
+                    <property name="visible">FALSE</property>
+                    <property name="title" translatable="yes">Sort</property>
+                    <property name="sort_column_id">3</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="xmp_sort_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">3</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child type="tab">
+          <object class="GtkLabel" id="xmp">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="xpad">4</property>
+            <property name="ypad">4</property>
+            <property name="label" translatable="yes">XMP</property>
+          </object>
+          <packing>
+            <property name="position">1</property>
+            <property name="tab_fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="iptc-scroll">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="border_width">6</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <object class="GtkTreeView" id="iptc-treeview">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="model">iptc-treestore</property>
+                <property name="headers_clickable">False</property>
+                <property name="rules_hint">True</property>
+                <property name="search_column">1</property>
+                <property name="enable_grid_lines">vertical</property>
+                <property name="enable_tree_lines">True</property>
+                <child>
+                  <object class="GtkTreeViewColumn" id="iptc_key_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">IPTC key</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="iptc_key_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="iptc_tag_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">IPTC Tag</property>
+                    <property name="expand">True</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="iptc_tag_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="iptc_value_column">
+                    <property name="resizable">True</property>
+                    <property name="title" translatable="yes">Value</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="iptc_value_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">2</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn" id="iptc_sort_column">
+                    <property name="sizing">fixed</property>
+                    <property name="min_width">1</property>
+                    <property name="max_width">1</property>
+                    <property name="visible">FALSE</property>
+                    <property name="title" translatable="yes">Sort</property>
+                    <property name="sort_column_id">3</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                      <attributes>
+                        <attribute name="text">3</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child type="tab">
+          <object class="GtkLabel" id="iptc">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="xpad">4</property>
+            <property name="ypad">4</property>
+            <property name="label" translatable="yes">IPTC</property>
+          </object>
+          <packing>
+            <property name="position">2</property>
+            <property name="tab_fill">False</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+  </object>
+  <object class="GtkTreeStore" id="iptc-treestore">
+    <columns>
+      <!-- column-name c-iptc-ifd -->
+      <column type="gchararray"/>
+      <!-- column-name c-iptc-tag -->
+      <column type="gchararray"/>
+      <!-- column-name c-iptc-value -->
+      <column type="gchararray"/>
+      <!-- column-name sortable -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkTreeStore" id="xmp-treestore">
+    <columns>
+      <!-- column-name c-xmp-ifd -->
+      <column type="gchararray"/>
+      <!-- column-name c-xmp-tag -->
+      <column type="gchararray"/>
+      <!-- column-name c-xmp-value -->
+      <column type="gchararray"/>
+      <!-- column-name sortable -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+</interface>
