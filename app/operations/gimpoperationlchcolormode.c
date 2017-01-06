@@ -128,7 +128,7 @@ color_post_process (const gfloat *in,
     {
       gfloat comp_alpha, new_alpha;
 
-      comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
+      comp_alpha = layer[ALPHA] * opacity;
       if (mask)
         comp_alpha *= *mask++;
 
