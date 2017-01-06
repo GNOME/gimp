@@ -437,6 +437,7 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
                                                                 scanner, 1,
                                                                 NULL))
           {
+            *expected = G_TOKEN_NONE;
             g_object_unref (options);
             break;
           }
