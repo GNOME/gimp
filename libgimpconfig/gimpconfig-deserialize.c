@@ -530,11 +530,38 @@ gimp_config_deserialize_enum (GValue     *value,
 
       enum_value = g_enum_get_value_by_nick (enum_class,
                                              scanner->value.v_identifier);
-      if (!enum_value)
+      if (! enum_value)
         enum_value = g_enum_get_value_by_name (enum_class,
                                                scanner->value.v_identifier);
+      if (! enum_value)
+        {
+          /*  if the value was not found, check if we have a compat
+           *  enum to find the ideitifier
+           */
+          GQuark quark       = g_quark_from_static_string ("gimp-compat-enum");
+          GType  compat_type = (GType) g_param_spec_get_qdata (prop_spec, quark);
 
-      if (!enum_value)
+          if (compat_type)
+            {
+              GEnumClass *compat_class = g_type_class_ref (compat_type);
+
+              enum_value = g_enum_get_value_by_nick (compat_class,
+                                                     scanner->value.v_identifier);
+              if (! enum_value)
+                enum_value = g_enum_get_value_by_name (compat_class,
+                                                       scanner->value.v_identifier);
+
+              /*  finally, if we found a compat value, make sure the
+               *  same value exists in the original enum
+               */
+              if (enum_value)
+                enum_value = g_enum_get_value (enum_class, enum_value->value);
+
+              g_type_class_unref (compat_class);
+           }
+        }
+
+      if (! enum_value)
         {
           g_scanner_error (scanner,
                            _("invalid value '%s' for token %s"),
@@ -549,7 +576,7 @@ gimp_config_deserialize_enum (GValue     *value,
       enum_value = g_enum_get_value (enum_class,
                                      (gint) scanner->value.v_int64);
 
-      if (!enum_value)
+      if (! enum_value)
         {
           g_scanner_error (scanner,
                            _("invalid value '%ld' for token %s"),
