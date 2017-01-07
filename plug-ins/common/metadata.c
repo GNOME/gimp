@@ -300,12 +300,16 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
   metadata_dialog_append_tags (metadata, exif_data,
                                exif_store, C_EXIF_TAG, C_EXIF_VALUE);
 
+  g_strfreev (exif_data);
+
   xmp_data  = gexiv2_metadata_get_xmp_tags (metadata);
   xmp_store = GTK_LIST_STORE (gtk_builder_get_object (builder,
                                                        "xmp-liststore"));
 
   metadata_dialog_append_tags (metadata, xmp_data,
                                xmp_store, C_XMP_TAG, C_XMP_VALUE);
+
+  g_strfreev (xmp_data);
 
   iptc_data = gexiv2_metadata_get_iptc_tags (metadata);
 
@@ -335,6 +339,8 @@ metadata_dialog_set_metadata (GExiv2Metadata *metadata,
 
       g_free (value);
     }
+
+  g_strfreev (iptc_data);
 }
 
 static void
