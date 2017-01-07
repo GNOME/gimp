@@ -262,7 +262,7 @@ iptc_dialog (gint32            item_id,
   switch (source)
   {
     case ATT_IMAGE:
-      fname = g_filename_display_basename (gimp_image_get_uri (item_id));
+      fname = gimp_image_get_name (item_id);
       header  = g_strdup_printf ("Image");
       title = g_strdup_printf ("Image: %s", fname);
       role  = g_strdup_printf ("gimp-image-iptc-dialog");

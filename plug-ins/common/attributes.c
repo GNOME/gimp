@@ -315,7 +315,7 @@ attributes_dialog (gint32           item_id,
   switch (source)
   {
     case ATT_IMAGE:
-      item_name = g_filename_display_basename (gimp_image_get_uri (item_id));
+      item_name = gimp_image_get_name (item_id);
       header  = g_strdup_printf ("Image");
       role  = g_strdup_printf ("gimp-image-attributes-dialog");
       pixbuf = gimp_image_get_thumbnail (item_id, THUMB_SIZE, THUMB_SIZE,

@@ -2756,9 +2756,10 @@ gimp_metadata_load_from_file (GFile   *file,
 
       if (! gexiv2_metadata_open_path (GEXIV2_METADATA (metadata), filename, error))
         {
+          g_set_error (error, gimp_metadata_error_quark (), 0,
+                       _("GExiv2: Can't load metadata"));
           g_free (filename);
           g_object_unref (metadata);
-
           return NULL;
         }
     }
