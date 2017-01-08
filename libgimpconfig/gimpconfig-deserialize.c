@@ -539,7 +539,8 @@ gimp_config_deserialize_enum (GValue     *value,
            *  enum to find the ideitifier
            */
           GQuark quark       = g_quark_from_static_string ("gimp-compat-enum");
-          GType  compat_type = (GType) g_param_spec_get_qdata (prop_spec, quark);
+          GType  compat_type = (GType) g_type_get_qdata (G_VALUE_TYPE (value),
+                                                         quark);
 
           if (compat_type)
             {
