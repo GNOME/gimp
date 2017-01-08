@@ -1,12 +1,12 @@
 # Polish translation for gimp.
-# Copyright © 1999-2016 the gimp authors.
+# Copyright © 1999-2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # Paweł Dziekoński, 1999-2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 # Piotr Zaryk <pzaryk@aviary.pl>, 2008.
 # Robert Gomulka <carramba@epf.pl>, 2008.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
 #
 # Terminy:
 #  drawable    - obszar rysowania (warstwa, kanał itp.)
@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-25 21:24+0100\n"
-"PO-Revision-Date: 2016-12-25 21:25+0100\n"
+"POT-Creation-Date: 2017-01-08 09:54+0100\n"
+"PO-Revision-Date: 2017-01-08 09:55+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -497,7 +497,7 @@ msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
 #: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:307
-#: ../app/gui/gui.c:473
+#: ../app/gui/gui.c:496
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
@@ -1762,7 +1762,7 @@ msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "S_tan i tekst"
 
-#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:255
+#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:257
 msgctxt "tab-style"
 msgid "Automatic"
 msgstr "Automatycznie"
@@ -1929,164 +1929,181 @@ msgstr "Od_wróć"
 
 #: ../app/actions/drawable-actions.c:52
 msgctxt "drawable-action"
-msgid "Invert the colors"
-msgstr "Odwraca kolory"
+msgid "Invert the colors perceptually"
+msgstr "Odwraca kolory percepcyjnie"
 
 #: ../app/actions/drawable-actions.c:57
+msgctxt "drawable-action"
+msgid "_Linear Invert"
+msgstr "Odwróć _liniowo"
+
+#: ../app/actions/drawable-actions.c:58
+msgctxt "drawable-action"
+msgid "Invert the colors in linear light"
+msgstr "Odwraca kolory w świetle liniowym"
+
+#: ../app/actions/drawable-actions.c:63
 msgctxt "drawable-action"
 msgid "_Value Invert"
 msgstr "Od_wróć wartości"
 
-#: ../app/actions/drawable-actions.c:58
+#: ../app/actions/drawable-actions.c:65
 msgctxt "drawable-action"
-msgid "Invert the brightness of each pixel"
-msgstr "Odwraca jasność każdego piksela"
+msgid "Invert the brightness of each pixel, keeping the color"
+msgstr "Odwraca jasność każdego piksela, nie zmieniając koloru"
 
-#: ../app/actions/drawable-actions.c:63
+#: ../app/actions/drawable-actions.c:70
 msgctxt "drawable-action"
 msgid "_White Balance"
 msgstr "_Balans bieli"
 
-#: ../app/actions/drawable-actions.c:64
+#: ../app/actions/drawable-actions.c:71
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
 msgstr "Automatyczna korekcja balansu bieli"
 
-#: ../app/actions/drawable-actions.c:69
+#: ../app/actions/drawable-actions.c:76
 msgctxt "drawable-action"
 msgid "_Dilate"
 msgstr "_Rozciągaj"
 
-#: ../app/actions/drawable-actions.c:70
+#: ../app/actions/drawable-actions.c:77
 msgctxt "drawable-action"
 msgid "Grow lighter areas of the image"
 msgstr "Powiększa jaśniejsze obszary obrazu"
 
-#: ../app/actions/drawable-actions.c:75
+#: ../app/actions/drawable-actions.c:82
 msgctxt "drawable-action"
 msgid "E_rode"
 msgstr "E_rozja"
 
-#: ../app/actions/drawable-actions.c:76
+#: ../app/actions/drawable-actions.c:83
 msgctxt "drawable-action"
 msgid "Grow darker areas of the image"
 msgstr "Powiększa ciemniejsze obszary obrazu"
 
-#: ../app/actions/drawable-actions.c:81
+#: ../app/actions/drawable-actions.c:88
 msgctxt "drawable-action"
 msgid "_Offset..."
 msgstr "_Przesunięcie…"
 
-#: ../app/actions/drawable-actions.c:83
+#: ../app/actions/drawable-actions.c:90
 msgctxt "drawable-action"
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Przesuwa piksele, opcjonalnie otaczając je obramowaniami"
 
-#: ../app/actions/drawable-actions.c:91
+#: ../app/actions/drawable-actions.c:98
 msgctxt "drawable-action"
 msgid "_Visible"
 msgstr "_Widoczne"
 
-#: ../app/actions/drawable-actions.c:92
+#: ../app/actions/drawable-actions.c:99
 msgctxt "drawable-action"
 msgid "Toggle visibility"
 msgstr "Przełącza widoczność"
 
-#: ../app/actions/drawable-actions.c:98
+#: ../app/actions/drawable-actions.c:105
 msgctxt "drawable-action"
 msgid "_Linked"
 msgstr "_Dowiązane"
 
-#: ../app/actions/drawable-actions.c:99
+#: ../app/actions/drawable-actions.c:106
 msgctxt "drawable-action"
 msgid "Toggle the linked state"
 msgstr "Przełącza stan dowiązania"
 
 #. GIMP_STOCK_LOCK
-#: ../app/actions/drawable-actions.c:105
+#: ../app/actions/drawable-actions.c:112
 msgctxt "drawable-action"
 msgid "L_ock pixels"
 msgstr "Zab_lokuj piksele"
 
-#: ../app/actions/drawable-actions.c:107
+#: ../app/actions/drawable-actions.c:114
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
 msgstr "Zabezpiecza piksele przed modyfikacją"
 
-#: ../app/actions/drawable-actions.c:113
+#: ../app/actions/drawable-actions.c:120
 msgctxt "drawable-action"
 msgid "L_ock position of channel"
 msgstr "Za_blokuj położenie kanału"
 
-#: ../app/actions/drawable-actions.c:115
+#: ../app/actions/drawable-actions.c:122
 msgctxt "drawable-action"
 msgid "Keep the position on this drawable from being modified"
 msgstr "Zabezpiecza położenie przed modyfikacją"
 
-#: ../app/actions/drawable-actions.c:124
+#: ../app/actions/drawable-actions.c:131
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
 msgstr "Odbij po_ziomo"
 
-#: ../app/actions/drawable-actions.c:125
+#: ../app/actions/drawable-actions.c:132
 msgctxt "drawable-action"
 msgid "Flip horizontally"
 msgstr "Odbija poziomo"
 
-#: ../app/actions/drawable-actions.c:130
+#: ../app/actions/drawable-actions.c:137
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
 msgstr "Odbij p_ionowo"
 
-#: ../app/actions/drawable-actions.c:131
+#: ../app/actions/drawable-actions.c:138
 msgctxt "drawable-action"
 msgid "Flip vertically"
 msgstr "Odbija pionowo"
 
-#: ../app/actions/drawable-actions.c:139
+#: ../app/actions/drawable-actions.c:146
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Obróć o 90° w _prawo"
 
-#: ../app/actions/drawable-actions.c:140
+#: ../app/actions/drawable-actions.c:147
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Obraca o 90 stopni, zgodnie z ruchem wskazówek zegara"
 
-#: ../app/actions/drawable-actions.c:145
+#: ../app/actions/drawable-actions.c:152
 msgctxt "drawable-action"
 msgid "Rotate _180°"
 msgstr "Obróć o _180°"
 
-#: ../app/actions/drawable-actions.c:146
+#: ../app/actions/drawable-actions.c:153
 msgctxt "drawable-action"
 msgid "Turn upside-down"
 msgstr "Odwraca do góry nogami"
 
-#: ../app/actions/drawable-actions.c:151
+#: ../app/actions/drawable-actions.c:158
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Obróć o 90° w _lewo"
 
-#: ../app/actions/drawable-actions.c:152
+#: ../app/actions/drawable-actions.c:159
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Obraca o 90 stopni, przeciwnie do ruchu wskazówek zegara"
 
-#: ../app/actions/drawable-commands.c:85 ../app/actions/drawable-commands.c:101
-#: ../app/pdb/color-cmds.c:388
+#: ../app/actions/drawable-commands.c:84 ../app/pdb/color-cmds.c:388
 msgid "Invert"
 msgstr "Odwrócenie"
 
-#: ../app/actions/drawable-commands.c:122
+#: ../app/actions/drawable-commands.c:100
+msgid "Linear Invert"
+msgstr "Odwrócenie liniowe"
+
+#: ../app/actions/drawable-commands.c:117
+msgid "Value Invert"
+msgstr "Odwrócenie wartości"
+
+#: ../app/actions/drawable-commands.c:138
 msgid "White Balance operates only on RGB color layers."
 msgstr "Bilans bieli możliwy jest tylko na warstwach RGB."
 
-#: ../app/actions/drawable-commands.c:157
+#: ../app/actions/drawable-commands.c:173
 msgid "Dilate"
 msgstr "Rozciągaj"
 
-#: ../app/actions/drawable-commands.c:189
+#: ../app/actions/drawable-commands.c:205
 msgid "Erode"
 msgstr "Erozja"
 
@@ -10271,17 +10288,17 @@ msgstr " (zastąpiony)"
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:2497
+#: ../app/core/gimpimage.c:2501
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2549
+#: ../app/core/gimpimage.c:2553
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3429
+#: ../app/core/gimpimage.c:3433
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -10289,47 +10306,47 @@ msgstr ""
 "Sprawdzenie poprawności danych pasożytniczych „gimp-comment” się nie "
 "powiodło: komentarz zawiera nieprawidłowe UTF-8"
 
-#: ../app/core/gimpimage.c:3481
+#: ../app/core/gimpimage.c:3485
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3522
+#: ../app/core/gimpimage.c:3526
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4231
+#: ../app/core/gimpimage.c:4235
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4281 ../app/core/gimpimage.c:4301
+#: ../app/core/gimpimage.c:4285 ../app/core/gimpimage.c:4305
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4295
+#: ../app/core/gimpimage.c:4299
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4460
+#: ../app/core/gimpimage.c:4464
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4498 ../app/core/gimpimage.c:4511
+#: ../app/core/gimpimage.c:4502 ../app/core/gimpimage.c:4515
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4565
+#: ../app/core/gimpimage.c:4569
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:4596
+#: ../app/core/gimpimage.c:4600
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -11453,8 +11470,8 @@ msgstr ""
 "Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011\n"
 "Piotr Zaryk <pzaryk@aviary.pl>, 2008\n"
 "Robert Gomulka <carramba@epf.pl>, 2008\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2011-2016\n"
-"Aviary.pl <community-poland@mozilla.org>, 2011-2016"
+"Piotr Drąg <piotrdrag@gmail.com>, 2011-2017\n"
+"Aviary.pl <community-poland@mozilla.org>, 2011-2017"
 
 #: ../app/dialogs/about-dialog.c:531
 msgid "GIMP is brought to you by"
@@ -11688,7 +11705,7 @@ msgstr "Gamma percepcyjna (sRGB)"
 #: ../app/dialogs/convert-precision-dialog.c:211
 #: ../app/widgets/gimptemplateeditor.c:424
 msgid "Linear light"
-msgstr "Liniowe światło"
+msgstr "Światło liniowe"
 
 #: ../app/dialogs/convert-precision-dialog.c:243
 msgid "_Layers:"
@@ -11717,7 +11734,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 
-#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:177
+#: ../app/dialogs/dialogs-constructors.c:214 ../app/gui/gui.c:189
 #: ../app/gui/gui-message.c:157
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
@@ -13925,7 +13942,7 @@ msgstr "Odstęp między liniami"
 #: ../app/display/gimpcursorview.c:697 ../app/display/gimpcursorview.c:699
 #: ../app/display/gimpcursorview.c:812 ../app/display/gimpcursorview.c:813
 #: ../app/display/gimpcursorview.c:814 ../app/display/gimpcursorview.c:815
-#: ../app/widgets/gimpcolorframe.c:781
+#: ../app/widgets/gimpcolorframe.c:789
 msgid "n/a"
 msgstr "Nie dotyczy"
 
@@ -14549,14 +14566,14 @@ msgstr ""
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:221
+#: ../app/gui/gui.c:233
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: ../app/gui/gui.c:517
+#: ../app/gui/gui.c:540
 msgid "Documents"
 msgstr "Dokumenty"
 
@@ -14691,7 +14708,7 @@ msgstr "MyBrush"
 msgid "No MyPaint brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli programu MyPaint dla tego narzędzia."
 
-#: ../app/paint/gimpmybrushoptions.c:85 ../app/tools/gimpcoloroptions.c:83
+#: ../app/paint/gimpmybrushoptions.c:85 ../app/tools/gimpcoloroptions.c:85
 #: ../app/tools/gimprectangleselectoptions.c:92
 #: ../app/tools/gimpselectionoptions.c:94 ../app/widgets/gimpbrusheditor.c:156
 msgid "Radius"
@@ -14940,12 +14957,12 @@ msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Jasność-kontrast"
 
-#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:590
+#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:600
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Poziomy"
 
-#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:660
+#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:670
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Redukcja kolorów"
@@ -14972,11 +14989,11 @@ msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Barwienie"
 
-#: ../app/pdb/color-cmds.c:726 ../app/tools/gimphuesaturationtool.c:96
+#: ../app/pdb/color-cmds.c:736 ../app/tools/gimphuesaturationtool.c:96
 msgid "Hue-Saturation"
 msgstr "Barwa i nasycenie"
 
-#: ../app/pdb/color-cmds.c:770 ../app/pdb/drawable-color-cmds.c:706
+#: ../app/pdb/color-cmds.c:780 ../app/pdb/drawable-color-cmds.c:716
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Progowanie"
@@ -14990,12 +15007,12 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Zaznaczenie pierwszego planu"
 
-#: ../app/pdb/drawable-color-cmds.c:497
+#: ../app/pdb/drawable-color-cmds.c:507
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Barwa i nasycenie"
 
-#: ../app/pdb/drawable-color-cmds.c:530
+#: ../app/pdb/drawable-color-cmds.c:540
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Odwrócenie"
@@ -16232,15 +16249,15 @@ msgstr "Eksportowanie ustawień jasności i kontrastu"
 msgid "Adjust Brightness and Contrast"
 msgstr "Modyfikacja jasności i kontrastu"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:258
+#: ../app/tools/gimpbrightnesscontrasttool.c:288
 msgid "_Brightness"
 msgstr "_Jasność"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:266
+#: ../app/tools/gimpbrightnesscontrasttool.c:296
 msgid "_Contrast"
 msgstr "_Kontrast"
 
-#: ../app/tools/gimpbrightnesscontrasttool.c:273
+#: ../app/tools/gimpbrightnesscontrasttool.c:303
 msgid "Edit these Settings as Levels"
 msgstr "Modyfikuje te ustawienia jako poziomy"
 
@@ -16527,18 +16544,22 @@ msgstr "Kolor barwienia"
 msgid "Pick color from image"
 msgstr "Wybór koloru z obrazu"
 
-#: ../app/tools/gimpcoloroptions.c:76 ../app/tools/gimpcolorpickeroptions.c:69
+#: ../app/tools/gimpcoloroptions.c:70
+msgid "Use merged color value from all composited visible layers"
+msgstr ""
+"Używa połączonych wartości kolorów wszystkich złożonych widocznych warstw"
+
+#: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:69
 msgid "Sample average"
 msgstr "Próbowanie średniej kolorów"
 
-#: ../app/tools/gimpcoloroptions.c:84
+#: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:70
+msgid "Use averaged color value from nearby pixels"
+msgstr "Używa uśrednionych wartości kolorów sąsiednich pikseli"
+
+#: ../app/tools/gimpcoloroptions.c:86
 msgid "Color Picker Average Radius"
 msgstr "Promień średniego pobrania koloru"
-
-#: ../app/tools/gimpcolorpickeroptions.c:70
-msgid "Use accumulated color value from all composited visible layers"
-msgstr ""
-"Używa połączonych wartości kolorów wszystkich złożonych widocznych warstw"
 
 #: ../app/tools/gimpcolorpickeroptions.c:77
 msgid "Pick Mode"
@@ -19196,25 +19217,25 @@ msgstr ""
 "Heksadecymalny zapis koloru jest używany w językach HTML i CSS. To pole "
 "przyjmuje także nazwy kolorów języka CSS."
 
-#: ../app/widgets/gimpcolorframe.c:627 ../app/widgets/gimpcolorframe.c:696
+#: ../app/widgets/gimpcolorframe.c:627 ../app/widgets/gimpcolorframe.c:704
 msgid "Value:"
 msgstr "Wartość:"
 
 #: ../app/widgets/gimpcolorframe.c:630 ../app/widgets/gimpcolorframe.c:639
-#: ../app/widgets/gimpcolorframe.c:669 ../app/widgets/gimpcolorframe.c:699
-#: ../app/widgets/gimpcolorframe.c:724
+#: ../app/widgets/gimpcolorframe.c:670 ../app/widgets/gimpcolorframe.c:707
+#: ../app/widgets/gimpcolorframe.c:732
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: ../app/widgets/gimpcolorframe.c:634 ../app/widgets/gimpcolorframe.c:664
+#: ../app/widgets/gimpcolorframe.c:634 ../app/widgets/gimpcolorframe.c:665
 msgid "Red:"
 msgstr "Czerwony:"
 
-#: ../app/widgets/gimpcolorframe.c:635 ../app/widgets/gimpcolorframe.c:665
+#: ../app/widgets/gimpcolorframe.c:635 ../app/widgets/gimpcolorframe.c:666
 msgid "Green:"
 msgstr "Zielony:"
 
-#: ../app/widgets/gimpcolorframe.c:636 ../app/widgets/gimpcolorframe.c:666
+#: ../app/widgets/gimpcolorframe.c:636 ../app/widgets/gimpcolorframe.c:667
 msgid "Blue:"
 msgstr "Niebieski:"
 
@@ -19222,31 +19243,31 @@ msgstr "Niebieski:"
 msgid "Index:"
 msgstr "Indeks:"
 
-#: ../app/widgets/gimpcolorframe.c:681
+#: ../app/widgets/gimpcolorframe.c:672
 msgid "Hex:"
 msgstr "Heks:"
 
-#: ../app/widgets/gimpcolorframe.c:694
+#: ../app/widgets/gimpcolorframe.c:702
 msgid "Hue:"
 msgstr "Barwa:"
 
-#: ../app/widgets/gimpcolorframe.c:695
+#: ../app/widgets/gimpcolorframe.c:703
 msgid "Sat.:"
 msgstr "Nasycenie:"
 
-#: ../app/widgets/gimpcolorframe.c:718
+#: ../app/widgets/gimpcolorframe.c:726
 msgid "Cyan:"
 msgstr "Niebieskozielony:"
 
-#: ../app/widgets/gimpcolorframe.c:719
+#: ../app/widgets/gimpcolorframe.c:727
 msgid "Magenta:"
 msgstr "Purpurowy:"
 
-#: ../app/widgets/gimpcolorframe.c:720
+#: ../app/widgets/gimpcolorframe.c:728
 msgid "Yellow:"
 msgstr "Żółty:"
 
-#: ../app/widgets/gimpcolorframe.c:721
+#: ../app/widgets/gimpcolorframe.c:729
 msgid "Black:"
 msgstr "Czarny:"
 
@@ -19998,33 +20019,37 @@ msgstr ""
 "Można zainstalować dodatkowe pakiety pomocy lub zmienić ustawienia, aby użyć "
 "wersji sieciowej."
 
-#: ../app/widgets/gimphistogrameditor.c:98
+#: ../app/widgets/gimphistogrameditor.c:109
+msgid "Linear"
+msgstr "Liniowy"
+
+#: ../app/widgets/gimphistogrameditor.c:128
 msgid "Mean:"
 msgstr "Średnia:"
 
-#: ../app/widgets/gimphistogrameditor.c:99
+#: ../app/widgets/gimphistogrameditor.c:129
 msgid "Std dev:"
 msgstr "Odchylenie standardowe:"
 
-#: ../app/widgets/gimphistogrameditor.c:100
+#: ../app/widgets/gimphistogrameditor.c:130
 msgid "Median:"
 msgstr "Mediana:"
 
-#: ../app/widgets/gimphistogrameditor.c:101
+#: ../app/widgets/gimphistogrameditor.c:131
 msgid "Pixels:"
 msgstr "Piksele:"
 
-#: ../app/widgets/gimphistogrameditor.c:102
+#: ../app/widgets/gimphistogrameditor.c:132
 msgid "Count:"
 msgstr "Liczność:"
 
-#: ../app/widgets/gimphistogrameditor.c:103
+#: ../app/widgets/gimphistogrameditor.c:133
 msgid "Percentile:"
 msgstr "Kafelek procentu:"
 
-#: ../app/widgets/gimphistogrameditor.c:121
-msgid "Channel:"
-msgstr "Kanał:"
+#: ../app/widgets/gimphistogrameditor.c:165
+msgid "Histogram channel"
+msgstr "Kanał histogramu"
 
 #: ../app/widgets/gimpiconpicker.c:245
 msgid "From File..."
@@ -20820,97 +20845,102 @@ msgctxt "circle-background"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:114
+#: ../app/widgets/widgets-enums.c:115
 msgctxt "color-frame-mode"
 msgid "Pixel"
 msgstr "Piksel"
 
-#: ../app/widgets/widgets-enums.c:115
-msgctxt "color-frame-mode"
-msgid "RGB"
-msgstr "RGB"
-
 #: ../app/widgets/widgets-enums.c:116
+msgctxt "color-frame-mode"
+msgid "RGB (%)"
+msgstr "RGB (%)"
+
+#: ../app/widgets/widgets-enums.c:117
+msgctxt "color-frame-mode"
+msgid "RGB (0..255)"
+msgstr "RGB (0..255)"
+
+#: ../app/widgets/widgets-enums.c:118
 msgctxt "color-frame-mode"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:117
+#: ../app/widgets/widgets-enums.c:119
 msgctxt "color-frame-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../app/widgets/widgets-enums.c:147
+#: ../app/widgets/widgets-enums.c:149
 msgctxt "color-pick-mode"
 msgid "Pick only"
 msgstr "Tylko wybór"
 
-#: ../app/widgets/widgets-enums.c:148
+#: ../app/widgets/widgets-enums.c:150
 msgctxt "color-pick-mode"
 msgid "Set foreground color"
 msgstr "Ustawienie koloru pierwszoplanowego"
 
-#: ../app/widgets/widgets-enums.c:149
+#: ../app/widgets/widgets-enums.c:151
 msgctxt "color-pick-mode"
 msgid "Set background color"
 msgstr "Ustawienie koloru tła"
 
-#: ../app/widgets/widgets-enums.c:150
+#: ../app/widgets/widgets-enums.c:152
 msgctxt "color-pick-mode"
 msgid "Add to palette"
 msgstr "Dodanie do palety"
 
-#: ../app/widgets/widgets-enums.c:209
+#: ../app/widgets/widgets-enums.c:211
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr "Histogram liniowy"
 
-#: ../app/widgets/widgets-enums.c:210
+#: ../app/widgets/widgets-enums.c:212
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Histogram logarytmiczny"
 
-#: ../app/widgets/widgets-enums.c:246
+#: ../app/widgets/widgets-enums.c:248
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Ikona"
 
-#: ../app/widgets/widgets-enums.c:247
+#: ../app/widgets/widgets-enums.c:249
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Bieżący stan"
 
-#: ../app/widgets/widgets-enums.c:248
+#: ../app/widgets/widgets-enums.c:250
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/widgets/widgets-enums.c:249
+#: ../app/widgets/widgets-enums.c:251
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Opis"
 
-#: ../app/widgets/widgets-enums.c:250
+#: ../app/widgets/widgets-enums.c:252
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Ikona i tekst"
 
-#: ../app/widgets/widgets-enums.c:251
+#: ../app/widgets/widgets-enums.c:253
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Ikona i opis"
 
-#: ../app/widgets/widgets-enums.c:252
+#: ../app/widgets/widgets-enums.c:254
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Stan i tekst"
 
-#: ../app/widgets/widgets-enums.c:253
+#: ../app/widgets/widgets-enums.c:255
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stan i opis"
 
-#: ../app/widgets/widgets-enums.c:254
+#: ../app/widgets/widgets-enums.c:256
 msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Nieokreślone"
