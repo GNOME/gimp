@@ -986,53 +986,74 @@ swab_rect (guint32 *rect)
   rect[3] = GUINT32_FROM_LE (rect[3]);
 }
 
-static GimpLayerModeEffects
+static GimpLayerMode
 gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
 {
   switch (mode)
     {
     case PSP_BLEND_NORMAL:
-      return GIMP_NORMAL_MODE;
+      return GIMP_LAYER_MODE_NORMAL;
+
     case PSP_BLEND_DARKEN:
-      return GIMP_DARKEN_ONLY_MODE;
+      return GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN;
+
     case PSP_BLEND_LIGHTEN:
-      return GIMP_LIGHTEN_ONLY_MODE;
+      return GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN;
+
     case PSP_BLEND_HUE:
-      return GIMP_HUE_MODE;
+      return GIMP_LAYER_MODE_HSV_HUE_BROKEN;
+
     case PSP_BLEND_SATURATION:
-      return GIMP_SATURATION_MODE;
+      return GIMP_LAYER_MODE_HSV_SATURATION_BROKEN;
+
     case PSP_BLEND_COLOR:
-      return GIMP_COLOR_MODE;
+      return GIMP_LAYER_MODE_HSV_COLOR_BROKEN;
+
     case PSP_BLEND_LUMINOSITY:
-      return GIMP_VALUE_MODE;   /* ??? */
+      return GIMP_LAYER_MODE_HSV_VALUE_BROKEN;   /* ??? */
+
     case PSP_BLEND_MULTIPLY:
-      return GIMP_MULTIPLY_MODE;
+      return GIMP_LAYER_MODE_MULTIPLY_BROKEN;
+
     case PSP_BLEND_SCREEN:
-      return GIMP_SCREEN_MODE;
+      return GIMP_LAYER_MODE_SCREEN_BROKEN;
+
     case PSP_BLEND_DISSOLVE:
-      return GIMP_DISSOLVE_MODE;
+      return GIMP_LAYER_MODE_DISSOLVE;
+
     case PSP_BLEND_OVERLAY:
-      return GIMP_NEW_OVERLAY_MODE;
+      return GIMP_LAYER_MODE_OVERLAY;
+
     case PSP_BLEND_HARD_LIGHT:
-      return GIMP_HARDLIGHT_MODE;
+      return GIMP_LAYER_MODE_HARDLIGHT_BROKEN;
+
     case PSP_BLEND_SOFT_LIGHT:
-      return GIMP_SOFTLIGHT_MODE;
+      return GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+
     case PSP_BLEND_DIFFERENCE:
-      return GIMP_DIFFERENCE_MODE;
+      return GIMP_LAYER_MODE_DIFFERENCE_BROKEN;
+
     case PSP_BLEND_DODGE:
-      return GIMP_DODGE_MODE;
+      return GIMP_LAYER_MODE_DODGE_BROKEN;
+
     case PSP_BLEND_BURN:
-      return GIMP_BURN_MODE;
+      return GIMP_LAYER_MODE_BURN_BROKEN;
+
     case PSP_BLEND_EXCLUSION:
       return -1;                /* ??? */
+
     case PSP_BLEND_ADJUST:
       return -1;                /* ??? */
+
     case PSP_BLEND_TRUE_HUE:
       return -1;                /* ??? */
+
     case PSP_BLEND_TRUE_SATURATION:
       return -1;                /* ??? */
+
     case PSP_BLEND_TRUE_COLOR:
       return -1;                /* ??? */
+
     case PSP_BLEND_TRUE_LIGHTNESS:
       return -1;                /* ??? */
     }
@@ -1299,7 +1320,7 @@ read_layer_block (FILE     *f,
   guint16 bitmap_count, channel_count;
   GimpImageType drawable_type;
   guint32 layer_ID = 0;
-  GimpLayerModeEffects layer_mode;
+  GimpLayerMode layer_mode;
   guint32 channel_init_len, channel_total_len;
   guint32 compressed_len, uncompressed_len;
   guint16 bitmap_type, channel_type;
@@ -1401,7 +1422,7 @@ read_layer_block (FILE     *f,
           g_message ("Unsupported PSP layer blend mode %s "
                      "for layer %s, setting layer invisible",
                      blend_mode_name (blend_mode), name);
-          layer_mode = GIMP_NORMAL_MODE;
+          layer_mode = GIMP_LAYER_MODE_NORMAL;
           visibility = FALSE;
         }
 

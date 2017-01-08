@@ -156,7 +156,7 @@ sub brushes_get_brush_data {
 	  desc => 'The brush opacity' },
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
 	  desc => 'The brush spacing' },
-	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+	{ name => 'paint_mode', type => 'enum GimpLayerMode',
 	  desc => 'The paint mode' },
 	{ name => 'width', type => 'int32',
 	  desc => 'The brush width' },
@@ -173,8 +173,8 @@ sub brushes_get_brush_data {
 {
   GimpBrush *brush;
 
-  if (paint_mode == GIMP_OVERLAY_MODE)
-    paint_mode = GIMP_SOFTLIGHT_MODE;
+  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
   if (name && strlen (name))
     brush = gimp_pdb_get_brush (gimp, name, FALSE, error);

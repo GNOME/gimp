@@ -419,7 +419,8 @@ gimp_edit_paste (GimpImage     *image,
       layer = gimp_layer_new_from_buffer (GIMP_BUFFER (paste), image,
                                           floating_format,
                                           _("Pasted Layer"),
-                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                          GIMP_OPACITY_OPAQUE,
+                                          GIMP_LAYER_MODE_NORMAL);
     }
 
   if (! layer)

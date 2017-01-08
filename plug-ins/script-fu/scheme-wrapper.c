@@ -125,9 +125,9 @@ static const NamedConstant const script_constants[] =
   { NULL, 0 }
 };
 
-/* The following constants are deprecated. They are
- * included to keep backwards compatibility with
- * older scripts used with version 2.0 of GIMP.
+/* The following constants are deprecated. They are included to keep
+ * backwards compatibility with older scripts used with older versions
+ * of GIMP.
  */
 static const NamedConstant const old_constants[] =
 {
@@ -170,6 +170,30 @@ static const NamedConstant const old_constants[] =
   { "HIGHLIGHTS",              GIMP_TRANSFER_HIGHLIGHTS },
 
   { "DESATURATE-LUMINOSITY",   GIMP_DESATURATE_LUMA },
+
+  { "NORMAL-MODE",             GIMP_LAYER_MODE_NORMAL                },
+  { "DISSOLVE-MODE",           GIMP_LAYER_MODE_DISSOLVE              },
+  { "BEHIND-MODE",             GIMP_LAYER_MODE_BEHIND                },
+  { "MULTIPLY-MODE",           GIMP_LAYER_MODE_MULTIPLY_BROKEN       },
+  { "SCREEN-MODE",             GIMP_LAYER_MODE_SCREEN_BROKEN         },
+  { "OVERLAY-MODE",            GIMP_LAYER_MODE_OVERLAY_BROKEN        },
+  { "DIFFERENCE-MODE",         GIMP_LAYER_MODE_DIFFERENCE_BROKEN     },
+  { "ADDITION-MODE",           GIMP_LAYER_MODE_ADDITION_BROKEN       },
+  { "SUBTRACT-MODE",           GIMP_LAYER_MODE_SUBTRACT_BROKEN       },
+  { "DARKEN-ONLY-MODE",        GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN    },
+  { "LIGHTEN-ONLY-MODE",       GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN   },
+  { "HUE-MODE",                GIMP_LAYER_MODE_HSV_HUE_BROKEN        },
+  { "SATURATION-MODE",         GIMP_LAYER_MODE_HSV_SATURATION_BROKEN },
+  { "COLOR-MODE",              GIMP_LAYER_MODE_HSV_COLOR_BROKEN      },
+  { "VALUE-MODE",              GIMP_LAYER_MODE_HSV_VALUE_BROKEN      },
+  { "DIVIDE-MODE",             GIMP_LAYER_MODE_DIVIDE_BROKEN         },
+  { "DODGE-MODE",              GIMP_LAYER_MODE_DODGE_BROKEN          },
+  { "BURN-MODE",               GIMP_LAYER_MODE_BURN_BROKEN           },
+  { "HARDLIGHT-MODE",          GIMP_LAYER_MODE_HARDLIGHT_BROKEN      },
+  { "SOFTLIGHT-MODE",          GIMP_LAYER_MODE_SOFTLIGHT_BROKEN      },
+  { "GRAIN-EXTRACT-MODE",      GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN  },
+  { "GRAIN-MERGE-MODE",        GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN    },
+  { "COLOR-ERASE-MODE",        GIMP_LAYER_MODE_COLOR_ERASE           },
 
   { NULL, 0 }
 };

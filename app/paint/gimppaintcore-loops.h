@@ -35,17 +35,17 @@ void paint_mask_to_paint_buffer         (const GimpTempBuf  *paint_mask,
                                          GimpTempBuf        *paint_buf,
                                          gfloat              paint_opacity);
 
-void do_layer_blend                     (GeglBuffer  *src_buffer,
-                                         GeglBuffer  *dst_buffer,
-                                         GimpTempBuf *paint_buf,
-                                         GeglBuffer  *mask_buffer,
-                                         gfloat       opacity,
-                                         gint         x_offset,
-                                         gint         y_offset,
-                                         gint         mask_x_offset,
-                                         gint         mask_y_offset,
-                                         gboolean     linear_mode,
-                                         GimpLayerModeEffects paint_mode);
+void do_layer_blend                     (GeglBuffer    *src_buffer,
+                                         GeglBuffer    *dst_buffer,
+                                         GimpTempBuf   *paint_buf,
+                                         GeglBuffer    *mask_buffer,
+                                         gfloat         opacity,
+                                         gint           x_offset,
+                                         gint           y_offset,
+                                         gint           mask_x_offset,
+                                         gint           mask_y_offset,
+                                         gboolean       linear_mode,
+                                         GimpLayerMode  paint_mode);
 
 void mask_components_onto               (GeglBuffer        *src_buffer,
                                          GeglBuffer        *aux_buffer,

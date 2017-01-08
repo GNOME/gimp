@@ -439,10 +439,12 @@ load_image (const gchar  *file,
   /* Create an indexed-alpha layer to hold the image... */
   if (bpp == 32)
     layer = gimp_layer_new (image, _("Background"), width, height,
-                            GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+                            GIMP_RGBA_IMAGE,
+                            100, GIMP_LAYER_MODE_NORMAL);
   else
     layer = gimp_layer_new (image, _("Background"), width, height,
-                            GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
+                            GIMP_INDEXEDA_IMAGE,
+                            100, GIMP_LAYER_MODE_NORMAL);
   gimp_image_insert_layer (image, layer, -1, 0);
   gimp_layer_set_offsets (layer, offx, offy);
 

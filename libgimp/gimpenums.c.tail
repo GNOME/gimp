@@ -35,7 +35,7 @@ static const GimpGetTypeFunc get_type_funcs[] =
   gimp_ink_blob_type_get_type,
   gimp_interpolation_type_get_type,
   gimp_join_style_get_type,
-  gimp_layer_mode_effects_get_type,
+  gimp_layer_mode_get_type,
   gimp_mask_apply_mode_get_type,
   gimp_merge_type_get_type,
   gimp_message_handler_type_get_type,
@@ -99,7 +99,7 @@ static const gchar * const type_names[] =
   "GimpInkBlobType",
   "GimpInterpolationType",
   "GimpJoinStyle",
-  "GimpLayerModeEffects",
+  "GimpLayerMode",
   "GimpMaskApplyMode",
   "GimpMergeType",
   "GimpMessageHandlerType",
@@ -146,6 +146,7 @@ void
 gimp_enums_init (void)
 {
   const GimpGetTypeFunc *funcs = get_type_funcs;
+  GQuark                 quark;
   gint                   i;
 
   if (enums_initialized)
@@ -157,6 +158,12 @@ gimp_enums_init (void)
 
       g_type_class_ref (type);
     }
+
+  /*  keep compat enum code in sync with app/app.c (app_libs_init)  */
+  quark = g_quark_from_static_string ("gimp-compat-enum");
+
+  g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
+		    (gpointer) GIMP_TYPE_LAYER_MODE_EFFECTS);
 
   enums_initialized = TRUE;
 }

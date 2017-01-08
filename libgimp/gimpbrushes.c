@@ -59,7 +59,7 @@ gimp_brushes_set_opacity (gdouble opacity)
  *
  * Returns: The paint mode.
  */
-GimpLayerModeEffects
+GimpLayerMode
 gimp_brushes_get_paint_mode (void)
 {
   return gimp_context_get_paint_mode ();
@@ -74,7 +74,7 @@ gimp_brushes_get_paint_mode (void)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mode)
+gimp_brushes_set_paint_mode (GimpLayerMode paint_mode)
 {
   return gimp_context_set_paint_mode (paint_mode);
 }

@@ -446,7 +446,7 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+        { name => 'paint_mode', type => 'enum GimpLayerMode',
           desc => 'The paint mode' }
     );
 
@@ -469,15 +469,15 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+        { name => 'paint_mode', type => 'enum GimpLayerMode',
           desc => 'The paint mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (paint_mode == GIMP_OVERLAY_MODE)
-    paint_mode = GIMP_SOFTLIGHT_MODE;
+  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
   gimp_context_set_paint_mode (context, paint_mode);
 }

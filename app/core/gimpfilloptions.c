@@ -315,7 +315,8 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
 
     case GIMP_FILL_TRANSPARENT:
       gimp_context_get_background (context, &color);
-      gimp_context_set_paint_mode (GIMP_CONTEXT (options), GIMP_ERASE_MODE);
+      gimp_context_set_paint_mode (GIMP_CONTEXT (options),
+                                   GIMP_LAYER_MODE_ERASE);
       undo_desc = C_("undo-type", "Fill with Transparency");
       break;
 

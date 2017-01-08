@@ -50,35 +50,35 @@ struct _GimpDrawableFilterClass
 GType      gimp_drawable_filter_get_type       (void) G_GNUC_CONST;
 
 GimpDrawableFilter *
-           gimp_drawable_filter_new            (GimpDrawable         *drawable,
-                                                const gchar          *undo_desc,
-                                                GeglNode             *operation,
-                                                const gchar          *icon_name);
+           gimp_drawable_filter_new            (GimpDrawable        *drawable,
+                                                const gchar         *undo_desc,
+                                                GeglNode            *operation,
+                                                const gchar         *icon_name);
 
-void       gimp_drawable_filter_set_region     (GimpDrawableFilter   *filter,
-                                                GimpFilterRegion      region);
-void       gimp_drawable_filter_set_preview    (GimpDrawableFilter   *filter,
-                                                gboolean              enabled,
-                                                GimpAlignmentType     alignment,
-                                                gdouble               split_position);
-void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter   *filter,
-                                                gdouble               opacity);
-void       gimp_drawable_filter_set_mode       (GimpDrawableFilter   *filter,
-                                                GimpLayerModeEffects  paint_mode);
+void       gimp_drawable_filter_set_region     (GimpDrawableFilter  *filter,
+                                                GimpFilterRegion     region);
+void       gimp_drawable_filter_set_preview    (GimpDrawableFilter  *filter,
+                                                gboolean             enabled,
+                                                GimpAlignmentType    alignment,
+                                                gdouble              split_position);
+void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter  *filter,
+                                                gdouble              opacity);
+void       gimp_drawable_filter_set_mode       (GimpDrawableFilter  *filter,
+                                                GimpLayerMode        paint_mode);
 
 void       gimp_drawable_filter_set_color_managed
-                                               (GimpDrawableFilter   *filter,
-                                                gboolean              managed);
-void       gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter   *filter,
-                                                gboolean              gamma_hack);
+                                               (GimpDrawableFilter  *filter,
+                                                gboolean             managed);
+void       gimp_drawable_filter_set_gamma_hack (GimpDrawableFilter  *filter,
+                                                gboolean             gamma_hack);
 
-void       gimp_drawable_filter_apply          (GimpDrawableFilter   *filter,
-                                                const GeglRectangle  *area);
+void       gimp_drawable_filter_apply          (GimpDrawableFilter  *filter,
+                                                const GeglRectangle *area);
 
-gboolean   gimp_drawable_filter_commit         (GimpDrawableFilter   *filter,
-                                                GimpProgress         *progress,
-                                                gboolean              cancellable);
-void       gimp_drawable_filter_abort          (GimpDrawableFilter   *filter);
+gboolean   gimp_drawable_filter_commit         (GimpDrawableFilter  *filter,
+                                                GimpProgress        *progress,
+                                                gboolean             cancellable);
+void       gimp_drawable_filter_abort          (GimpDrawableFilter  *filter);
 
 
 #endif /* __GIMP_DRAWABLE_FILTER_H__ */

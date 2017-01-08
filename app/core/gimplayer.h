@@ -34,19 +34,19 @@ typedef struct _GimpLayerClass GimpLayerClass;
 
 struct _GimpLayer
 {
-  GimpDrawable          parent_instance;
+  GimpDrawable   parent_instance;
 
-  gdouble               opacity;          /*  layer opacity              */
-  GimpLayerModeEffects  mode;             /*  layer combination mode     */
-  gboolean              lock_alpha;       /*  lock the alpha channel     */
+  gdouble        opacity;          /*  layer opacity              */
+  GimpLayerMode  mode;             /*  layer combination mode     */
+  gboolean       lock_alpha;       /*  lock the alpha channel     */
 
-  GimpLayerMask        *mask;             /*  possible layer mask        */
-  gboolean              apply_mask;       /*  controls mask application  */
-  gboolean              edit_mask;        /*  edit mask or layer?        */
-  gboolean              show_mask;        /*  show mask or layer?        */
+  GimpLayerMask *mask;             /*  possible layer mask        */
+  gboolean       apply_mask;       /*  controls mask application  */
+  gboolean       edit_mask;        /*  edit mask or layer?        */
+  gboolean       show_mask;        /*  show mask or layer?        */
 
-  GeglNode             *layer_offset_node;
-  GeglNode             *mask_offset_node;
+  GeglNode      *layer_offset_node;
+  GeglNode      *mask_offset_node;
 
   /*  Floating selections  */
   struct
@@ -123,9 +123,9 @@ void            gimp_layer_set_opacity         (GimpLayer            *layer,
 gdouble         gimp_layer_get_opacity         (GimpLayer            *layer);
 
 void            gimp_layer_set_mode            (GimpLayer            *layer,
-                                                GimpLayerModeEffects  mode,
+                                                GimpLayerMode         mode,
                                                 gboolean              push_undo);
-GimpLayerModeEffects gimp_layer_get_mode       (GimpLayer            *layer);
+GimpLayerMode   gimp_layer_get_mode            (GimpLayer            *layer);
 
 void            gimp_layer_set_lock_alpha      (GimpLayer            *layer,
                                                 gboolean              lock_alpha,

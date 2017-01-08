@@ -727,7 +727,8 @@ load_image (const gchar  *filename,
         return -1;
 
       layer_ID = gimp_layer_new (image_ID, framename, width, height,
-                                 GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+                                 GIMP_RGBA_IMAGE,
+                                 100, GIMP_LAYER_MODE_NORMAL);
       gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
       /* Adjust layer position to let hotspot sit on the same point. */
@@ -950,8 +951,8 @@ load_thumbnail (const gchar *filename,
   image_ID = gimp_image_new (width, height, GIMP_RGB);
 
   layer_ID = gimp_layer_new (image_ID, NULL, width, height,
-                             GIMP_RGBA_IMAGE, 100,
-                             GIMP_NORMAL_MODE);
+                             GIMP_RGBA_IMAGE,
+                             100, GIMP_LAYER_MODE_NORMAL);
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 

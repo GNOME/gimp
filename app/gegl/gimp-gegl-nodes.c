@@ -139,9 +139,9 @@ gimp_gegl_add_buffer_source (GeglNode   *parent,
 }
 
 void
-gimp_gegl_mode_node_set_mode (GeglNode             *node,
-                              GimpLayerModeEffects  mode,
-                              gboolean              linear)
+gimp_gegl_mode_node_set_mode (GeglNode      *node,
+                              GimpLayerMode  mode,
+                              gboolean       linear)
 {
   const gchar *operation = "gimp:normal-mode";
   gdouble      opacity;
@@ -150,37 +150,128 @@ gimp_gegl_mode_node_set_mode (GeglNode             *node,
 
   switch (mode)
     {
-    case GIMP_NORMAL_MODE:        operation = "gimp:normal-mode"; break;
-    case GIMP_DISSOLVE_MODE:      operation = "gimp:dissolve-mode"; break;
-    case GIMP_BEHIND_MODE:        operation = "gimp:behind-mode"; break;
-    case GIMP_MULTIPLY_MODE:      operation = "gimp:multiply-mode"; break;
-    case GIMP_SCREEN_MODE:        operation = "gimp:screen-mode"; break;
-    case GIMP_OVERLAY_MODE:       operation = "gimp:softlight-mode"; break;
-    case GIMP_DIFFERENCE_MODE:    operation = "gimp:difference-mode"; break;
-    case GIMP_ADDITION_MODE:      operation = "gimp:addition-mode"; break;
-    case GIMP_SUBTRACT_MODE:      operation = "gimp:subtract-mode"; break;
-    case GIMP_DARKEN_ONLY_MODE:   operation = "gimp:darken-only-mode"; break;
-    case GIMP_LIGHTEN_ONLY_MODE:  operation = "gimp:lighten-only-mode"; break;
-    case GIMP_HUE_MODE:           operation = "gimp:hue-mode"; break;
-    case GIMP_SATURATION_MODE:    operation = "gimp:saturation-mode"; break;
-    case GIMP_COLOR_MODE:         operation = "gimp:color-mode"; break;
-    case GIMP_VALUE_MODE:         operation = "gimp:value-mode"; break;
-    case GIMP_DIVIDE_MODE:        operation = "gimp:divide-mode"; break;
-    case GIMP_DODGE_MODE:         operation = "gimp:dodge-mode"; break;
-    case GIMP_BURN_MODE:          operation = "gimp:burn-mode"; break;
-    case GIMP_HARDLIGHT_MODE:     operation = "gimp:hardlight-mode"; break;
-    case GIMP_SOFTLIGHT_MODE:     operation = "gimp:softlight-mode"; break;
-    case GIMP_GRAIN_EXTRACT_MODE: operation = "gimp:grain-extract-mode"; break;
-    case GIMP_GRAIN_MERGE_MODE:   operation = "gimp:grain-merge-mode"; break;
-    case GIMP_COLOR_ERASE_MODE:   operation = "gimp:color-erase-mode"; break;
-    case GIMP_NEW_OVERLAY_MODE:   operation = "gimp:overlay-mode"; break;
-    case GIMP_ERASE_MODE:         operation = "gimp:erase-mode"; break;
-    case GIMP_REPLACE_MODE:       operation = "gimp:replace-mode"; break;
-    case GIMP_ANTI_ERASE_MODE:    operation = "gimp:anti-erase-mode"; break;
-    case GIMP_LCH_HUE_MODE:       operation = "gimp:lch-hue-mode"; break;
-    case GIMP_LCH_CHROMA_MODE:    operation = "gimp:lch-chroma-mode"; break;
-    case GIMP_LCH_COLOR_MODE:     operation = "gimp:lch-color-mode"; break;
-    case GIMP_LCH_LIGHTNESS_MODE: operation = "gimp:lch-lightness-mode"; break;
+    case GIMP_LAYER_MODE_NORMAL:
+      operation = "gimp:normal-mode";
+      break;
+
+    case GIMP_LAYER_MODE_DISSOLVE:
+      operation = "gimp:dissolve-mode";
+      break;
+
+    case GIMP_LAYER_MODE_BEHIND:
+      operation = "gimp:behind-mode";
+      break;
+
+    case GIMP_LAYER_MODE_MULTIPLY_BROKEN:
+      operation = "gimp:multiply-mode";
+      break;
+
+    case GIMP_LAYER_MODE_SCREEN_BROKEN:
+      operation = "gimp:screen-mode";
+      break;
+
+    case GIMP_LAYER_MODE_OVERLAY_BROKEN:
+      operation = "gimp:softlight-mode";
+      break;
+
+    case GIMP_LAYER_MODE_DIFFERENCE_BROKEN:
+      operation = "gimp:difference-mode";
+      break;
+
+    case GIMP_LAYER_MODE_ADDITION_BROKEN:
+      operation = "gimp:addition-mode";
+      break;
+
+    case GIMP_LAYER_MODE_SUBTRACT_BROKEN:
+      operation = "gimp:subtract-mode";
+      break;
+
+    case GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN:
+      operation = "gimp:darken-only-mode";
+      break;
+
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN:
+      operation = "gimp:lighten-only-mode";
+      break;
+
+    case GIMP_LAYER_MODE_HSV_HUE_BROKEN:
+      operation = "gimp:hue-mode";
+      break;
+
+    case GIMP_LAYER_MODE_HSV_SATURATION_BROKEN:
+      operation = "gimp:saturation-mode";
+      break;
+
+    case GIMP_LAYER_MODE_HSV_COLOR_BROKEN:
+      operation = "gimp:color-mode";
+      break;
+
+    case GIMP_LAYER_MODE_HSV_VALUE_BROKEN:
+      operation = "gimp:value-mode";
+      break;
+
+    case GIMP_LAYER_MODE_DIVIDE_BROKEN:
+      operation = "gimp:divide-mode";
+      break;
+
+    case GIMP_LAYER_MODE_DODGE_BROKEN:
+      operation = "gimp:dodge-mode";
+      break;
+
+    case GIMP_LAYER_MODE_BURN_BROKEN:
+      operation = "gimp:burn-mode";
+      break;
+
+    case GIMP_LAYER_MODE_HARDLIGHT_BROKEN:
+      operation = "gimp:hardlight-mode";
+      break;
+
+    case GIMP_LAYER_MODE_SOFTLIGHT_BROKEN:
+      operation = "gimp:softlight-mode";
+      break;
+
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN:
+      operation = "gimp:grain-extract-mode";
+      break;
+
+    case GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN:
+      operation = "gimp:grain-merge-mode";
+      break;
+
+    case GIMP_LAYER_MODE_COLOR_ERASE:
+      operation = "gimp:color-erase-mode";
+      break;
+
+    case GIMP_LAYER_MODE_OVERLAY:
+      operation = "gimp:overlay-mode";
+      break;
+
+    case GIMP_LAYER_MODE_LCH_HUE:
+      operation = "gimp:lch-hue-mode";
+      break;
+
+    case GIMP_LAYER_MODE_LCH_CHROMA:
+      operation = "gimp:lch-chroma-mode";
+      break;
+
+    case GIMP_LAYER_MODE_LCH_COLOR:
+      operation = "gimp:lch-color-mode";
+      break;
+
+    case GIMP_LAYER_MODE_LCH_LIGHTNESS:
+      operation = "gimp:lch-lightness-mode";
+      break;
+
+    case GIMP_LAYER_MODE_ERASE:
+      operation = "gimp:erase-mode"; break;
+
+    case GIMP_LAYER_MODE_REPLACE:
+      operation = "gimp:replace-mode";
+      break;
+
+    case GIMP_LAYER_MODE_ANTI_ERASE:
+      operation = "gimp:anti-erase-mode";
+      break;
     default:
       break;
     }

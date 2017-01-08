@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 typedef void (* GimpRunBrushCallback)   (const gchar          *brush_name,
                                          gdouble               opacity,
                                          gint                  spacing,
-                                         GimpLayerModeEffects  paint_mode,
+                                         GimpLayerMode         paint_mode,
                                          gint                  width,
                                          gint                  height,
                                          const guchar         *mask_data,
@@ -43,7 +43,7 @@ const gchar * gimp_brush_select_new     (const gchar          *title,
                                          const gchar          *brush_name,
                                          gdouble               opacity,
                                          gint                  spacing,
-                                         GimpLayerModeEffects  paint_mode,
+                                         GimpLayerMode         paint_mode,
                                          GimpRunBrushCallback  callback,
                                          gpointer              data);
 void          gimp_brush_select_destroy (const gchar          *brush_callback);

@@ -65,7 +65,7 @@ struct _GimpDialogConfig
   gboolean                  image_resize_resize_text_layers;
 
   gchar                    *layer_new_name;
-  GimpLayerModeEffects      layer_new_mode;
+  GimpLayerMode             layer_new_mode;
   gdouble                   layer_new_opacity;
   GimpFillType              layer_new_fill_type;
 

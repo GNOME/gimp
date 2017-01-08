@@ -966,7 +966,7 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               const GimpCoords         *coords,
                               gdouble                   brush_opacity,
                               gdouble                   image_opacity,
-                              GimpLayerModeEffects      paint_mode,
+                              GimpLayerMode             paint_mode,
                               GimpBrushApplicationMode  brush_hardness,
                               gdouble                   dynamic_force,
                               GimpPaintApplicationMode  mode,
@@ -996,7 +996,8 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                              off_x, off_y,
                              drawable,
                              brush_opacity,
-                             image_opacity, paint_mode,
+                             image_opacity,
+                             paint_mode,
                              mode);
     }
 }

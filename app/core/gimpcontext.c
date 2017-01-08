@@ -153,7 +153,7 @@ static void gimp_context_real_set_opacity    (GimpContext      *context,
 
 /*  paint mode  */
 static void gimp_context_real_set_paint_mode (GimpContext      *context,
-                                              GimpLayerModeEffects paint_mode);
+                                              GimpLayerMode     paint_mode);
 
 /*  brush  */
 static void gimp_context_brush_dirty         (GimpBrush        *brush,
@@ -471,7 +471,7 @@ gimp_context_class_init (GimpContextClass *klass)
                   NULL, NULL,
                   gimp_marshal_VOID__ENUM,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_LAYER_MODE_EFFECTS);
+                  GIMP_TYPE_LAYER_MODE);
 
   gimp_context_signals[BRUSH_CHANGED] =
     g_signal_new ("brush-changed",
@@ -695,8 +695,8 @@ gimp_context_class_init (GimpContextClass *klass)
                          gimp_context_prop_names[GIMP_CONTEXT_PROP_PAINT_MODE],
                          _("Paint Mode"),
                          _("Paint Mode"),
-                         GIMP_TYPE_LAYER_MODE_EFFECTS,
-                         GIMP_NORMAL_MODE,
+                         GIMP_TYPE_LAYER_MODE,
+                         GIMP_LAYER_MODE_NORMAL,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_BRUSH,
@@ -1339,16 +1339,18 @@ gimp_context_deserialize (GimpConfig *config,
                           gint        nest_level,
                           gpointer    data)
 {
-  GimpContext          *context        = GIMP_CONTEXT (config);
-  GimpLayerModeEffects  old_paint_mode = context->paint_mode;
-  gboolean              success;
+  GimpContext   *context        = GIMP_CONTEXT (config);
+  GimpLayerMode  old_paint_mode = context->paint_mode;
+  gboolean       success;
 
   success = gimp_config_deserialize_properties (config, scanner, nest_level);
 
   if (context->paint_mode != old_paint_mode)
     {
-      if (context->paint_mode == GIMP_OVERLAY_MODE)
-        g_object_set (context, "paint-mode", GIMP_SOFTLIGHT_MODE, NULL);
+      if (context->paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+        g_object_set (context,
+                      "paint-mode", GIMP_LAYER_MODE_SOFTLIGHT_BROKEN,
+                      NULL);
     }
 
   return success;
@@ -2584,17 +2586,17 @@ gimp_context_real_set_opacity (GimpContext *context,
 /*****************************************************************************/
 /*  paint mode  **************************************************************/
 
-GimpLayerModeEffects
+GimpLayerMode
 gimp_context_get_paint_mode (GimpContext *context)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_NORMAL_MODE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_LAYER_MODE_NORMAL);
 
   return context->paint_mode;
 }
 
 void
-gimp_context_set_paint_mode (GimpContext          *context,
-                             GimpLayerModeEffects  paint_mode)
+gimp_context_set_paint_mode (GimpContext   *context,
+                             GimpLayerMode  paint_mode)
 {
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   context_find_defined (context, GIMP_CONTEXT_PROP_PAINT_MODE);
@@ -2613,8 +2615,8 @@ gimp_context_paint_mode_changed (GimpContext *context)
 }
 
 static void
-gimp_context_real_set_paint_mode (GimpContext          *context,
-                                  GimpLayerModeEffects  paint_mode)
+gimp_context_real_set_paint_mode (GimpContext   *context,
+                                  GimpLayerMode  paint_mode)
 {
   if (context->paint_mode == paint_mode)
     return;

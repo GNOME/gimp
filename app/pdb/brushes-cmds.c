@@ -207,8 +207,8 @@ brushes_get_brush_data_invoker (GimpProcedure         *procedure,
     {
       GimpBrush *brush;
 
-      if (paint_mode == GIMP_OVERLAY_MODE)
-        paint_mode = GIMP_SOFTLIGHT_MODE;
+      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
       if (name && strlen (name))
         brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
@@ -439,8 +439,8 @@ register_brushes_procs (GimpPDB *pdb)
                                    g_param_spec_enum ("paint-mode",
                                                       "paint mode",
                                                       "The paint mode",
-                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                      GIMP_NORMAL_MODE,
+                                                      GIMP_TYPE_LAYER_MODE,
+                                                      GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("width",

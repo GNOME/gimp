@@ -621,8 +621,8 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
           if (gimp_fill_options_set_by_fill_mode (options, context,
                                                   fill_mode, error))
             {
-              if (paint_mode == GIMP_OVERLAY_MODE)
-                paint_mode = GIMP_SOFTLIGHT_MODE;
+              if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+                paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
               gimp_context_set_opacity (GIMP_CONTEXT (options), opacity / 100.0);
               gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
@@ -698,8 +698,8 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
           if (gimp_fill_options_set_by_fill_mode (options, context,
                                                   fill_mode, error))
             {
-              if (paint_mode == GIMP_OVERLAY_MODE)
-                paint_mode = GIMP_SOFTLIGHT_MODE;
+              if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+                paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
               gimp_context_set_opacity (GIMP_CONTEXT (options), opacity / 100.0);
               gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
@@ -794,8 +794,8 @@ edit_blend_invoker (GimpProcedure         *procedure,
         {
           GimpGradient *gradient;
 
-          if (paint_mode == GIMP_OVERLAY_MODE)
-            paint_mode = GIMP_SOFTLIGHT_MODE;
+          if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+            paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
           if (progress)
             gimp_progress_start (progress, FALSE, _("Blending"));
@@ -1348,8 +1348,8 @@ register_edit_procs (GimpPDB *pdb)
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
                                                   "The paint application mode",
-                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_TYPE_LAYER_MODE,
+                                                  GIMP_LAYER_MODE_NORMAL,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
@@ -1415,8 +1415,8 @@ register_edit_procs (GimpPDB *pdb)
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
                                                   "The paint application mode",
-                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_TYPE_LAYER_MODE,
+                                                  GIMP_LAYER_MODE_NORMAL,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
@@ -1495,8 +1495,8 @@ register_edit_procs (GimpPDB *pdb)
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
                                                   "The paint application mode",
-                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_TYPE_LAYER_MODE,
+                                                  GIMP_LAYER_MODE_NORMAL,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("gradient-type",

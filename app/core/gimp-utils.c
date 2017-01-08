@@ -868,7 +868,7 @@ gimp_create_image_from_buffer (Gimp        *gimp,
   layer = gimp_layer_new_from_gegl_buffer (buffer, image, format,
                                            image_name,
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_NORMAL_MODE,
+                                           GIMP_LAYER_MODE_NORMAL,
                                            NULL /* same image */);
   gimp_image_add_layer (image, layer, NULL, -1, FALSE);
 

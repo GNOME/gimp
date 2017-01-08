@@ -30,33 +30,33 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32   gimp_layer_new                (gint32                image_ID,
-                                        const gchar          *name,
-                                        gint                  width,
-                                        gint                  height,
-                                        GimpImageType         type,
-                                        gdouble               opacity,
-                                        GimpLayerModeEffects  mode);
-gint32   gimp_layer_copy               (gint32                layer_ID);
+gint32   gimp_layer_new                (gint32           image_ID,
+                                        const gchar     *name,
+                                        gint             width,
+                                        gint             height,
+                                        GimpImageType    type,
+                                        gdouble          opacity,
+                                        GimpLayerMode    mode);
+gint32   gimp_layer_copy               (gint32           layer_ID);
 
-gint32   gimp_layer_new_from_pixbuf    (gint32                image_ID,
-                                        const gchar          *name,
-                                        GdkPixbuf            *pixbuf,
-                                        gdouble               opacity,
-                                        GimpLayerModeEffects  mode,
-                                        gdouble               progress_start,
-                                        gdouble               progress_end);
-gint32   gimp_layer_new_from_surface   (gint32                image_ID,
-                                        const gchar          *name,
-                                        cairo_surface_t      *surface,
-                                        gdouble               progress_start,
-                                        gdouble               progress_end);
+gint32   gimp_layer_new_from_pixbuf    (gint32           image_ID,
+                                        const gchar     *name,
+                                        GdkPixbuf       *pixbuf,
+                                        gdouble          opacity,
+                                        GimpLayerMode    mode,
+                                        gdouble          progress_start,
+                                        gdouble          progress_end);
+gint32   gimp_layer_new_from_surface   (gint32           image_ID,
+                                        const gchar     *name,
+                                        cairo_surface_t *surface,
+                                        gdouble          progress_start,
+                                        gdouble          progress_end);
 
 GIMP_DEPRECATED_FOR(gimp_layer_get_lock_alpha)
-gboolean gimp_layer_get_preserve_trans (gint32                layer_ID);
+gboolean gimp_layer_get_preserve_trans (gint32           layer_ID);
 GIMP_DEPRECATED_FOR(gimp_layer_set_lock_alpha)
-gboolean gimp_layer_set_preserve_trans (gint32                layer_ID,
-                                        gboolean              preserve_trans);
+gboolean gimp_layer_set_preserve_trans (gint32           layer_ID,
+                                        gboolean         preserve_trans);
 
 G_END_DECLS
 

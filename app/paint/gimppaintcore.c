@@ -822,7 +822,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                        GimpDrawable             *drawable,
                        gdouble                   paint_opacity,
                        gdouble                   image_opacity,
-                       GimpLayerModeEffects      paint_mode,
+                       GimpLayerMode             paint_mode,
                        GimpPaintApplicationMode  mode)
 {
   gint width  = gegl_buffer_get_width  (core->paint_buffer);
@@ -1031,7 +1031,8 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                              paint_mask_offset_y,
                              drawable,
                              paint_opacity,
-                             image_opacity, GIMP_NORMAL_MODE,
+                             image_opacity,
+                             GIMP_LAYER_MODE_NORMAL,
                              mode);
       return;
     }

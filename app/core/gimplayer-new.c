@@ -47,13 +47,13 @@ static void   gimp_layer_new_convert_buffer (GimpLayer         *layer,
 /*  public functions  */
 
 GimpLayer *
-gimp_layer_new (GimpImage            *image,
-                gint                  width,
-                gint                  height,
-                const Babl           *format,
-                const gchar          *name,
-                gdouble               opacity,
-                GimpLayerModeEffects  mode)
+gimp_layer_new (GimpImage     *image,
+                gint           width,
+                gint           height,
+                const Babl    *format,
+                const gchar   *name,
+                gdouble        opacity,
+                GimpLayerMode  mode)
 {
   GimpLayer *layer;
 
@@ -91,12 +91,12 @@ gimp_layer_new (GimpImage            *image,
  * Return value: The new layer.
  **/
 GimpLayer *
-gimp_layer_new_from_buffer (GimpBuffer           *buffer,
-                            GimpImage            *dest_image,
-                            const Babl           *format,
-                            const gchar          *name,
-                            gdouble               opacity,
-                            GimpLayerModeEffects  mode)
+gimp_layer_new_from_buffer (GimpBuffer    *buffer,
+                            GimpImage     *dest_image,
+                            const Babl    *format,
+                            const gchar   *name,
+                            gdouble        opacity,
+                            GimpLayerMode  mode)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
@@ -124,13 +124,13 @@ gimp_layer_new_from_buffer (GimpBuffer           *buffer,
  * Return value: The new layer.
  **/
 GimpLayer *
-gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
-                                 GimpImage            *dest_image,
-                                 const Babl           *format,
-                                 const gchar          *name,
-                                 gdouble               opacity,
-                                 GimpLayerModeEffects  mode,
-                                 GimpColorProfile     *buffer_profile)
+gimp_layer_new_from_gegl_buffer (GeglBuffer       *buffer,
+                                 GimpImage        *dest_image,
+                                 const Babl       *format,
+                                 const gchar      *name,
+                                 gdouble           opacity,
+                                 GimpLayerMode     mode,
+                                 GimpColorProfile *buffer_profile)
 {
   GimpLayer *layer;
 
@@ -170,12 +170,12 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
  * Return value: The new layer.
  **/
 GimpLayer *
-gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
-                            GimpImage            *dest_image,
-                            const Babl           *format,
-                            const gchar          *name,
-                            gdouble               opacity,
-                            GimpLayerModeEffects  mode)
+gimp_layer_new_from_pixbuf (GdkPixbuf     *pixbuf,
+                            GimpImage     *dest_image,
+                            const Babl    *format,
+                            const gchar   *name,
+                            gdouble        opacity,
+                            GimpLayerMode  mode)
 {
   GimpLayer        *layer;
   GeglBuffer       *buffer;

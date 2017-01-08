@@ -48,35 +48,35 @@
 #include "gimp-intl.h"
 
 
-static const GimpLayerModeEffects paint_modes[] =
+static const GimpLayerMode paint_modes[] =
 {
-  GIMP_NORMAL_MODE,
-  GIMP_DISSOLVE_MODE,
-  GIMP_BEHIND_MODE,
-  GIMP_COLOR_ERASE_MODE,
-  GIMP_MULTIPLY_MODE,
-  GIMP_DIVIDE_MODE,
-  GIMP_SCREEN_MODE,
-  GIMP_NEW_OVERLAY_MODE,
-  GIMP_DODGE_MODE,
-  GIMP_BURN_MODE,
-  GIMP_HARDLIGHT_MODE,
-  GIMP_SOFTLIGHT_MODE,
-  GIMP_GRAIN_EXTRACT_MODE,
-  GIMP_GRAIN_MERGE_MODE,
-  GIMP_DIFFERENCE_MODE,
-  GIMP_ADDITION_MODE,
-  GIMP_SUBTRACT_MODE,
-  GIMP_DARKEN_ONLY_MODE,
-  GIMP_LIGHTEN_ONLY_MODE,
-  GIMP_HUE_MODE,
-  GIMP_SATURATION_MODE,
-  GIMP_COLOR_MODE,
-  GIMP_VALUE_MODE,
-  GIMP_LCH_HUE_MODE,
-  GIMP_LCH_CHROMA_MODE,
-  GIMP_LCH_COLOR_MODE,
-  GIMP_LCH_LIGHTNESS_MODE
+  GIMP_LAYER_MODE_NORMAL,
+  GIMP_LAYER_MODE_DISSOLVE,
+  GIMP_LAYER_MODE_BEHIND,
+  GIMP_LAYER_MODE_COLOR_ERASE,
+  GIMP_LAYER_MODE_MULTIPLY_BROKEN,
+  GIMP_LAYER_MODE_DIVIDE_BROKEN,
+  GIMP_LAYER_MODE_SCREEN_BROKEN,
+  GIMP_LAYER_MODE_OVERLAY,
+  GIMP_LAYER_MODE_DODGE_BROKEN,
+  GIMP_LAYER_MODE_BURN_BROKEN,
+  GIMP_LAYER_MODE_HARDLIGHT_BROKEN,
+  GIMP_LAYER_MODE_SOFTLIGHT_BROKEN,
+  GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN,
+  GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN,
+  GIMP_LAYER_MODE_DIFFERENCE_BROKEN,
+  GIMP_LAYER_MODE_ADDITION_BROKEN,
+  GIMP_LAYER_MODE_SUBTRACT_BROKEN,
+  GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN,
+  GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN,
+  GIMP_LAYER_MODE_HSV_HUE_BROKEN,
+  GIMP_LAYER_MODE_HSV_SATURATION_BROKEN,
+  GIMP_LAYER_MODE_HSV_COLOR_BROKEN,
+  GIMP_LAYER_MODE_HSV_VALUE_BROKEN,
+  GIMP_LAYER_MODE_LCH_HUE,
+  GIMP_LAYER_MODE_LCH_CHROMA,
+  GIMP_LAYER_MODE_LCH_COLOR,
+  GIMP_LAYER_MODE_LCH_LIGHTNESS
 };
 
 
@@ -85,7 +85,7 @@ static const GimpLayerModeEffects paint_modes[] =
 static void     context_select_object    (GimpActionSelectType  select_type,
                                           GimpContext          *context,
                                           GimpContainer        *container);
-static gint     context_paint_mode_index (GimpLayerModeEffects  paint_mode);
+static gint     context_paint_mode_index (GimpLayerMode         paint_mode);
 
 static void     context_select_color     (GimpActionSelectType  select_type,
                                           GimpRGB              *color,
@@ -399,10 +399,10 @@ context_paint_mode_cmd_callback (GtkAction *action,
                                  gint       value,
                                  gpointer   data)
 {
-  GimpContext          *context;
-  GimpToolInfo         *tool_info;
-  GimpLayerModeEffects  paint_mode;
-  gint                  index;
+  GimpContext   *context;
+  GimpToolInfo  *tool_info;
+  GimpLayerMode  paint_mode;
+  gint           index;
   return_if_no_context (context, data);
 
   paint_mode = gimp_context_get_paint_mode (context);
@@ -420,7 +420,7 @@ context_paint_mode_cmd_callback (GtkAction *action,
       GimpDisplay *display;
       const char  *value_desc;
 
-      gimp_enum_get_value (GIMP_TYPE_LAYER_MODE_EFFECTS, index,
+      gimp_enum_get_value (GIMP_TYPE_LAYER_MODE, index,
                            NULL, NULL, &value_desc, NULL);
 
       display = action_data_get_display (data);
@@ -748,7 +748,7 @@ context_select_object (GimpActionSelectType  select_type,
 }
 
 static gint
-context_paint_mode_index (GimpLayerModeEffects paint_mode)
+context_paint_mode_index (GimpLayerMode paint_mode)
 {
   gint i = 0;
 

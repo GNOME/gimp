@@ -49,13 +49,13 @@
  * Returns: The newly created layer.
  */
 gint32
-gimp_layer_new (gint32                image_ID,
-                const gchar          *name,
-                gint                  width,
-                gint                  height,
-                GimpImageType         type,
-                gdouble               opacity,
-                GimpLayerModeEffects  mode)
+gimp_layer_new (gint32         image_ID,
+                const gchar   *name,
+                gint           width,
+                gint           height,
+                GimpImageType  type,
+                gdouble        opacity,
+                GimpLayerMode  mode)
 {
   return _gimp_layer_new (image_ID,
                           width,
@@ -109,13 +109,13 @@ gimp_layer_copy (gint32  layer_ID)
  * Since: 2.4
  */
 gint32
-gimp_layer_new_from_pixbuf (gint32                image_ID,
-                            const gchar          *name,
-                            GdkPixbuf            *pixbuf,
-                            gdouble               opacity,
-                            GimpLayerModeEffects  mode,
-                            gdouble               progress_start,
-                            gdouble               progress_end)
+gimp_layer_new_from_pixbuf (gint32         image_ID,
+                            const gchar   *name,
+                            GdkPixbuf     *pixbuf,
+                            gdouble        opacity,
+                            GimpLayerMode  mode,
+                            gdouble        progress_start,
+                            gdouble        progress_end)
 {
   gint32  layer;
   gint    width;
@@ -274,7 +274,7 @@ gimp_layer_new_from_surface (gint32                image_ID,
   layer = gimp_layer_new (image_ID, name, width, height,
                           format == CAIRO_FORMAT_RGB24 ?
                           GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
-                          100.0, GIMP_NORMAL_MODE);
+                          100.0, GIMP_LAYER_MODE_NORMAL);
 
   if (layer == -1)
     return -1;

@@ -184,7 +184,7 @@ void      gimp_paint_core_paste             (GimpPaintCore            *core,
                                              GimpDrawable             *drawable,
                                              gdouble                   paint_opacity,
                                              gdouble                   image_opacity,
-                                             GimpLayerModeEffects      paint_mode,
+                                             GimpLayerMode             paint_mode,
                                              GimpPaintApplicationMode  mode);
 
 void      gimp_paint_core_replace           (GimpPaintCore            *core,

@@ -363,8 +363,8 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode", NULL, NULL,
-                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                      GIMP_NORMAL_MODE,
+                                                      GIMP_TYPE_LAYER_MODE,
+                                                      GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_LOCK_ALPHA,
@@ -390,7 +390,7 @@ static void
 gimp_layer_init (GimpLayer *layer)
 {
   layer->opacity    = GIMP_OPACITY_OPAQUE;
-  layer->mode       = GIMP_NORMAL_MODE;
+  layer->mode       = GIMP_LAYER_MODE_NORMAL;
   layer->lock_alpha = FALSE;
 
   layer->mask       = NULL;
@@ -508,23 +508,23 @@ gimp_layer_finalize (GObject *object)
 static void
 gimp_layer_update_mode_node (GimpLayer *layer)
 {
-  GeglNode             *mode_node;
-  GimpLayerModeEffects  visible_mode;
-  gboolean              linear;
+  GeglNode      *mode_node;
+  GimpLayerMode  visible_mode;
+  gboolean       linear;
 
   mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
   if (layer->mask && layer->show_mask)
     {
-      visible_mode = GIMP_NORMAL_MODE;
+      visible_mode = GIMP_LAYER_MODE_NORMAL;
       linear       = TRUE;
     }
   else
     {
-      if (layer->mode != GIMP_DISSOLVE_MODE &&
+      if (layer->mode != GIMP_LAYER_MODE_DISSOLVE &&
           gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
         {
-          visible_mode = GIMP_NORMAL_MODE;
+          visible_mode = GIMP_LAYER_MODE_NORMAL;
         }
       else
         {
@@ -2064,9 +2064,9 @@ gimp_layer_get_opacity (GimpLayer *layer)
 }
 
 void
-gimp_layer_set_mode (GimpLayer            *layer,
-                     GimpLayerModeEffects  mode,
-                     gboolean              push_undo)
+gimp_layer_set_mode (GimpLayer     *layer,
+                     GimpLayerMode  mode,
+                     gboolean       push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
@@ -2094,10 +2094,10 @@ gimp_layer_set_mode (GimpLayer            *layer,
     }
 }
 
-GimpLayerModeEffects
+GimpLayerMode
 gimp_layer_get_mode (GimpLayer *layer)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_NORMAL_MODE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_MODE_NORMAL);
 
   return layer->mode;
 }

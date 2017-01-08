@@ -398,9 +398,9 @@ load_image (GFile   *file,
   gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
-                             width,
-                             height,
-                             gdtype, 100, GIMP_NORMAL_MODE);
+                             width, height,
+                             gdtype,
+                             100, GIMP_LAYER_MODE_NORMAL);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
   buffer = gimp_drawable_get_buffer (layer_ID);

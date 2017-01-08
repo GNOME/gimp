@@ -50,7 +50,7 @@ typedef struct _LayerOptionsDialog LayerOptionsDialog;
 struct _LayerOptionsDialog
 {
   GimpLayer                *layer;
-  GimpLayerModeEffects      mode;
+  GimpLayerMode             mode;
   gdouble                   opacity;
   GimpFillType              fill_type;
   gboolean                  lock_alpha;
@@ -94,7 +94,7 @@ layer_options_dialog_new (GimpImage                *image,
                           const gchar              *desc,
                           const gchar              *help_id,
                           const gchar              *layer_name,
-                          GimpLayerModeEffects      layer_mode,
+                          GimpLayerMode             layer_mode,
                           gdouble                   layer_opacity,
                           GimpFillType              layer_fill_type,
                           gboolean                  layer_visible,

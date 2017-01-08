@@ -53,19 +53,19 @@ typedef struct _GimpBrushSelectButtonPrivate GimpBrushSelectButtonPrivate;
 
 struct _GimpBrushSelectButtonPrivate
 {
-  gchar                *title;
+  gchar         *title;
 
-  gchar                *brush_name;      /* Local copy */
-  gdouble               opacity;
-  gint                  spacing;
-  GimpLayerModeEffects  paint_mode;
-  gint                  width;
-  gint                  height;
-  guchar               *mask_data;       /* local copy */
+  gchar         *brush_name;      /* Local copy */
+  gdouble        opacity;
+  gint           spacing;
+  GimpLayerMode  paint_mode;
+  gint           width;
+  gint           height;
+  guchar        *mask_data;       /* local copy */
 
-  GtkWidget            *inside;
-  GtkWidget            *preview;
-  GtkWidget            *popup;
+  GtkWidget     *inside;
+  GtkWidget     *preview;
+  GtkWidget     *popup;
 };
 
 enum
@@ -103,7 +103,7 @@ static void   gimp_brush_select_button_clicked  (GimpBrushSelectButton *button);
 static void   gimp_brush_select_button_callback (const gchar          *brush_name,
                                                  gdouble               opacity,
                                                  gint                  spacing,
-                                                 GimpLayerModeEffects  paint_mode,
+                                                 GimpLayerMode         paint_mode,
                                                  gint                  width,
                                                  gint                  height,
                                                  const guchar         *mask_data,
@@ -225,7 +225,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
   /**
    * GimpBrushSelectButton:paint-mode:
    *
-   * The name of the currently selected brush.
+   * The paint mode.
    *
    * Since: 2.4
    */
@@ -233,7 +233,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
                                    g_param_spec_int ("brush-paint-mode",
                                                      "Brush paint mode",
                                                      "The paint mode of the currently selected brush",
-                                                     -1, GIMP_COLOR_ERASE_MODE,
+                                                     -1, GIMP_LAYER_MODE_LCH_LIGHTNESS,
                                                      -1,
                                                      GIMP_PARAM_READWRITE));
 
@@ -324,11 +324,11 @@ gimp_brush_select_button_init (GimpBrushSelectButton *button)
  * Since: 2.4
  */
 GtkWidget *
-gimp_brush_select_button_new (const gchar          *title,
-                              const gchar          *brush_name,
-                              gdouble               opacity,
-                              gint                  spacing,
-                              GimpLayerModeEffects  paint_mode)
+gimp_brush_select_button_new (const gchar   *title,
+                              const gchar   *brush_name,
+                              gdouble        opacity,
+                              gint           spacing,
+                              GimpLayerMode  paint_mode)
 {
   GtkWidget *button;
 
@@ -368,7 +368,7 @@ const gchar *
 gimp_brush_select_button_get_brush (GimpBrushSelectButton *button,
                                     gdouble               *opacity,
                                     gint                  *spacing,
-                                    GimpLayerModeEffects  *paint_mode)
+                                    GimpLayerMode         *paint_mode)
 {
   GimpBrushSelectButtonPrivate *priv;
 
@@ -406,7 +406,7 @@ gimp_brush_select_button_set_brush (GimpBrushSelectButton *button,
                                     const gchar           *brush_name,
                                     gdouble                opacity,
                                     gint                   spacing,
-                                    GimpLayerModeEffects   paint_mode)
+                                    GimpLayerMode          paint_mode)
 {
   GimpSelectButton *select_button;
 
@@ -572,15 +572,15 @@ gimp_brush_select_button_get_property (GObject    *object,
 }
 
 static void
-gimp_brush_select_button_callback (const gchar          *name,
-                                   gdouble               opacity,
-                                   gint                  spacing,
-                                   GimpLayerModeEffects  paint_mode,
-                                   gint                  width,
-                                   gint                  height,
-                                   const guchar         *mask_data,
-                                   gboolean              dialog_closing,
-                                   gpointer              data)
+gimp_brush_select_button_callback (const gchar   *name,
+                                   gdouble        opacity,
+                                   gint           spacing,
+                                   GimpLayerMode  paint_mode,
+                                   gint           width,
+                                   gint           height,
+                                   const guchar  *mask_data,
+                                   gboolean       dialog_closing,
+                                   gpointer       data)
 {
   GimpBrushSelectButton        *button;
   GimpBrushSelectButtonPrivate *priv;

@@ -123,24 +123,24 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options,
                     GimpSymmetry     *sym)
 {
-  GimpEraserOptions    *options  = GIMP_ERASER_OPTIONS (paint_options);
-  GimpContext          *context  = GIMP_CONTEXT (paint_options);
-  GimpDynamics         *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage            *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-  gdouble               fade_point;
-  gdouble               opacity;
-  GimpLayerModeEffects  paint_mode;
-  GeglBuffer           *paint_buffer;
-  gint                  paint_buffer_x;
-  gint                  paint_buffer_y;
-  GimpRGB               background;
-  GeglColor            *color;
-  gdouble               force;
-  const GimpCoords     *coords;
-  GeglNode             *op;
-  gint                  n_strokes;
-  gint                  paint_width, paint_height;
-  gint                  i;
+  GimpEraserOptions *options  = GIMP_ERASER_OPTIONS (paint_options);
+  GimpContext       *context  = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  gdouble            fade_point;
+  gdouble            opacity;
+  GimpLayerMode      paint_mode;
+  GeglBuffer        *paint_buffer;
+  gint               paint_buffer_x;
+  gint               paint_buffer_y;
+  GimpRGB            background;
+  GeglColor         *color;
+  gdouble            force;
+  const GimpCoords  *coords;
+  GeglNode          *op;
+  gint               n_strokes;
+  gint               paint_width, paint_height;
+  gint               i;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -160,11 +160,11 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   color = gimp_gegl_color_new (&background);
 
   if (options->anti_erase)
-    paint_mode = GIMP_ANTI_ERASE_MODE;
+    paint_mode = GIMP_LAYER_MODE_ANTI_ERASE;
   else if (gimp_drawable_has_alpha (drawable))
-    paint_mode = GIMP_ERASE_MODE;
+    paint_mode = GIMP_LAYER_MODE_ERASE;
   else
-    paint_mode = GIMP_NORMAL_MODE;
+    paint_mode = GIMP_LAYER_MODE_NORMAL;
 
   gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
                                            drawable,

@@ -35,15 +35,15 @@ sub brushes_popup {
 	{ name => 'spacing', type => 'int32 <= 1000',
 	  desc => 'The initial spacing of the brush (if < 0 then use brush
                    default spacing)' },
-	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+	{ name => 'paint_mode', type => 'enum GimpLayerMode',
 	  desc => 'The initial paint mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (paint_mode == GIMP_OVERLAY_MODE)
-    paint_mode = GIMP_SOFTLIGHT_MODE;
+  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
@@ -100,15 +100,15 @@ sub brushes_set_popup {
 	{ name => 'spacing', type => 'int32 <= 1000',
 	  desc => 'The initial spacing of the brush (if < 0 then use brush
                    default spacing)' },
-	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+	{ name => 'paint_mode', type => 'enum GimpLayerMode',
 	  desc => 'The initial paint mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (paint_mode == GIMP_OVERLAY_MODE)
-    paint_mode = GIMP_SOFTLIGHT_MODE;
+  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||

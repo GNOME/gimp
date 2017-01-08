@@ -43,7 +43,7 @@ HELP
 	  desc => 'The layer name', null_ok => 1 },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The layer opacity' },
-	{ name => 'mode', type => 'enum GimpLayerModeEffects',
+	{ name => 'mode', type => 'enum GimpLayerMode',
 	  desc => 'The layer combination mode' }
     );
 
@@ -59,8 +59,8 @@ HELP
   gboolean           has_alpha = FALSE;
   const Babl        *format;
 
-  if (mode == GIMP_OVERLAY_MODE)
-    mode = GIMP_SOFTLIGHT_MODE;
+  if (mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+    mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
   switch (type)
     {
@@ -155,7 +155,7 @@ HELP
                                                                         TRUE),
                                            name,
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_NORMAL_MODE,
+                                           GIMP_LAYER_MODE_NORMAL,
                                            profile);
 }
 CODE
@@ -1160,7 +1160,7 @@ sub layer_get_mode {
     );
 
     @outargs = (
-	{ name => 'mode', type => 'enum GimpLayerModeEffects',
+	{ name => 'mode', type => 'enum GimpLayerMode',
 	  desc => 'The layer combination mode' }
     );
 
@@ -1182,15 +1182,15 @@ sub layer_set_mode {
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'mode', type => 'enum GimpLayerModeEffects',
+	{ name => 'mode', type => 'enum GimpLayerMode',
 	  desc => 'The new layer combination mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (mode == GIMP_OVERLAY_MODE)
-    mode = GIMP_SOFTLIGHT_MODE;
+  if (mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+    mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
   gimp_layer_set_mode (layer, mode, TRUE);
 }

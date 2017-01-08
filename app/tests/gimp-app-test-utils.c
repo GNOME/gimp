@@ -138,7 +138,7 @@ gimp_test_utils_create_image (Gimp *gimp,
                           gimp_image_get_layer_format (image, TRUE),
                           "layer1",
                           1.0,
-                          GIMP_NORMAL_MODE);
+                          GIMP_LAYER_MODE_NORMAL);
 
   gimp_image_add_layer (image,
                         layer,

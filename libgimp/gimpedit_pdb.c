@@ -517,14 +517,14 @@ gimp_edit_fill (gint32       drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_edit_bucket_fill (gint32               drawable_ID,
-                       GimpBucketFillMode   fill_mode,
-                       GimpLayerModeEffects paint_mode,
-                       gdouble              opacity,
-                       gdouble              threshold,
-                       gboolean             sample_merged,
-                       gdouble              x,
-                       gdouble              y)
+gimp_edit_bucket_fill (gint32             drawable_ID,
+                       GimpBucketFillMode fill_mode,
+                       GimpLayerMode      paint_mode,
+                       gdouble            opacity,
+                       gdouble            threshold,
+                       gboolean           sample_merged,
+                       gdouble            x,
+                       gdouble            y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -583,16 +583,16 @@ gimp_edit_bucket_fill (gint32               drawable_ID,
  * Since: 2.4
  **/
 gboolean
-gimp_edit_bucket_fill_full (gint32               drawable_ID,
-                            GimpBucketFillMode   fill_mode,
-                            GimpLayerModeEffects paint_mode,
-                            gdouble              opacity,
-                            gdouble              threshold,
-                            gboolean             sample_merged,
-                            gboolean             fill_transparent,
-                            GimpSelectCriterion  select_criterion,
-                            gdouble              x,
-                            gdouble              y)
+gimp_edit_bucket_fill_full (gint32              drawable_ID,
+                            GimpBucketFillMode  fill_mode,
+                            GimpLayerMode       paint_mode,
+                            gdouble             opacity,
+                            gdouble             threshold,
+                            gboolean            sample_merged,
+                            gboolean            fill_transparent,
+                            GimpSelectCriterion select_criterion,
+                            gdouble             x,
+                            gdouble             y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -649,22 +649,22 @@ gimp_edit_bucket_fill_full (gint32               drawable_ID,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_edit_blend (gint32               drawable_ID,
-                 GimpBlendMode        blend_mode,
-                 GimpLayerModeEffects paint_mode,
-                 GimpGradientType     gradient_type,
-                 gdouble              opacity,
-                 gdouble              offset,
-                 GimpRepeatMode       repeat,
-                 gboolean             reverse,
-                 gboolean             supersample,
-                 gint                 max_depth,
-                 gdouble              threshold,
-                 gboolean             dither,
-                 gdouble              x1,
-                 gdouble              y1,
-                 gdouble              x2,
-                 gdouble              y2)
+gimp_edit_blend (gint32           drawable_ID,
+                 GimpBlendMode    blend_mode,
+                 GimpLayerMode    paint_mode,
+                 GimpGradientType gradient_type,
+                 gdouble          opacity,
+                 gdouble          offset,
+                 GimpRepeatMode   repeat,
+                 gboolean         reverse,
+                 gboolean         supersample,
+                 gint             max_depth,
+                 gdouble          threshold,
+                 gboolean         dither,
+                 gdouble          x1,
+                 gdouble          y1,
+                 gdouble          x2,
+                 gdouble          y2)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

@@ -528,7 +528,8 @@ gimp_image_merge_layers (GimpImage     *image,
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
                                     gimp_image_get_layer_format (image, FALSE),
                                     gimp_object_get_name (layer),
-                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                    GIMP_OPACITY_OPAQUE,
+                                    GIMP_LAYER_MODE_NORMAL);
       if (! merge_layer)
         {
           g_warning ("%s: could not allocate merge layer.", G_STRFUNC);
@@ -560,7 +561,8 @@ gimp_image_merge_layers (GimpImage     *image,
         gimp_layer_new (image, (x2 - x1), (y2 - y1),
                         gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layer)),
                         "merged layer",
-                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                        GIMP_OPACITY_OPAQUE,
+                        GIMP_LAYER_MODE_NORMAL);
 
       if (!merge_layer)
         {
@@ -596,22 +598,22 @@ gimp_image_merge_layers (GimpImage     *image,
 
   for (layers = reverse_list; layers; layers = g_slist_next (layers))
     {
-      GeglBuffer           *merge_buffer;
-      GeglBuffer           *layer_buffer;
-      GimpApplicator       *applicator;
-      GimpLayerModeEffects  mode;
+      GeglBuffer     *merge_buffer;
+      GeglBuffer     *layer_buffer;
+      GimpApplicator *applicator;
+      GimpLayerMode   mode;
 
       layer = layers->data;
 
       gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
-      /* DISSOLVE_MODE is special since it is the only mode that does not
+      /* MODE_DISSOLVE is special since it is the only mode that does not
        *  work on the projection with the lower layer, but only locally on
        *  the layers alpha channel.
        */
       mode = gimp_layer_get_mode (layer);
-      if (layer == bottom_layer && mode != GIMP_DISSOLVE_MODE)
-        mode = GIMP_NORMAL_MODE;
+      if (layer == bottom_layer && mode != GIMP_LAYER_MODE_DISSOLVE)
+        mode = GIMP_LAYER_MODE_NORMAL;
 
       merge_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer));
       layer_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));

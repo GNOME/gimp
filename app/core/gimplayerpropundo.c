@@ -102,7 +102,7 @@ gimp_layer_prop_undo_pop (GimpUndo            *undo,
     {
     case GIMP_UNDO_LAYER_MODE:
       {
-        GimpLayerModeEffects mode;
+        GimpLayerMode mode;
 
         mode = gimp_layer_get_mode (layer);
         gimp_layer_set_mode (layer, layer_prop_undo->mode, FALSE);

@@ -61,8 +61,8 @@ brushes_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (paint_mode == GIMP_OVERLAY_MODE)
-        paint_mode = GIMP_SOFTLIGHT_MODE;
+      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
@@ -129,8 +129,8 @@ brushes_set_popup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (paint_mode == GIMP_OVERLAY_MODE)
-        paint_mode = GIMP_SOFTLIGHT_MODE;
+      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
       if (gimp->no_interface ||
           ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
@@ -203,8 +203,8 @@ register_brush_select_procs (GimpPDB *pdb)
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
                                                   "The initial paint mode",
-                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_TYPE_LAYER_MODE,
+                                                  GIMP_LAYER_MODE_NORMAL,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -277,8 +277,8 @@ register_brush_select_procs (GimpPDB *pdb)
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
                                                   "The initial paint mode",
-                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_TYPE_LAYER_MODE,
+                                                  GIMP_LAYER_MODE_NORMAL,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

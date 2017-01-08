@@ -55,7 +55,7 @@ compute_image (void)
 					 width, height,
 					 GIMP_RGBA_IMAGE,
 					 100.0,
-					 GIMP_NORMAL_MODE);
+					 GIMP_LAYER_MODE_NORMAL);
         }
       else
         {
@@ -66,7 +66,7 @@ compute_image (void)
 					 width, height,
 					 GIMP_RGB_IMAGE,
 					 100.0,
-					 GIMP_NORMAL_MODE);
+					 GIMP_LAYER_MODE_NORMAL);
         }
 
       gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);

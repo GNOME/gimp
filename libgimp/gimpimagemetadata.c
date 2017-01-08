@@ -604,7 +604,7 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
 
       layer_ID = gimp_layer_new_from_pixbuf (image_ID, _("Background"),
                                              pixbuf,
-                                             100.0, GIMP_NORMAL_MODE,
+                                             100.0, GIMP_LAYER_MODE_NORMAL,
                                              0.0, 0.0);
       g_object_unref (pixbuf);
 

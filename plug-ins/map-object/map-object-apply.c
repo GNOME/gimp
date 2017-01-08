@@ -251,13 +251,15 @@ compute_image (void)
       gchar *layername[] = {_("Map to plane"), _("Map to sphere"), _("Map to box"),
                             _("Map to cylinder"), _("Background")};
 
-      new_layer_id = gimp_layer_new (new_image_id, layername[mapvals.create_new_image ? 4 :
-                                                             mapvals.maptype],
+      new_layer_id = gimp_layer_new (new_image_id,
+                                     layername[mapvals.create_new_image ? 4 :
+                                               mapvals.maptype],
                                      width, height,
-                                     mapvals.transparent_background ? GIMP_RGBA_IMAGE
-                                                                    : GIMP_RGB_IMAGE,
+                                     mapvals.transparent_background ?
+                                     GIMP_RGBA_IMAGE :
+                                     GIMP_RGB_IMAGE,
                                      100.0,
-                                     GIMP_NORMAL_MODE);
+                                     GIMP_LAYER_MODE_NORMAL);
 
       insert_layer = TRUE;
       output_drawable = gimp_drawable_get (new_layer_id);

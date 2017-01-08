@@ -642,7 +642,7 @@ do_optimizations (GimpRunMode run_mode,
                                     width, height,
                                     drawabletype_alpha,
                                     100.0,
-                                    GIMP_NORMAL_MODE);
+                                    GIMP_LAYER_MODE_NORMAL);
 
       gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
 
@@ -1065,7 +1065,7 @@ do_optimizations (GimpRunMode run_mode,
                                                bbox_bottom-bbox_top,
                                                drawabletype_alpha,
                                                100.0,
-                                               GIMP_NORMAL_MODE);
+                                               GIMP_LAYER_MODE_NORMAL);
               g_free (newlayer_name);
 
               gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);

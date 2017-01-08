@@ -38,7 +38,7 @@ G_GNUC_INTERNAL gint32 _gimp_layer_new                 (gint32                 i
                                                         GimpImageType          type,
                                                         const gchar           *name,
                                                         gdouble                opacity,
-                                                        GimpLayerModeEffects   mode);
+                                                        GimpLayerMode          mode);
 gint32                 gimp_layer_new_from_visible     (gint32                 image_ID,
                                                         gint32                 dest_image_ID,
                                                         const gchar           *name);
@@ -95,9 +95,9 @@ gboolean               gimp_layer_set_edit_mask        (gint32                 l
 gdouble                gimp_layer_get_opacity          (gint32                 layer_ID);
 gboolean               gimp_layer_set_opacity          (gint32                 layer_ID,
                                                         gdouble                opacity);
-GimpLayerModeEffects   gimp_layer_get_mode             (gint32                 layer_ID);
+GimpLayerMode          gimp_layer_get_mode             (gint32                 layer_ID);
 gboolean               gimp_layer_set_mode             (gint32                 layer_ID,
-                                                        GimpLayerModeEffects   mode);
+                                                        GimpLayerMode          mode);
 
 
 G_END_DECLS

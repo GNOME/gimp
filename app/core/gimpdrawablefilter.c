@@ -57,29 +57,29 @@ enum
 
 struct _GimpDrawableFilter
 {
-  GimpFilter            parent_instance;
+  GimpFilter         parent_instance;
 
-  GimpDrawable         *drawable;
-  GeglNode             *operation;
+  GimpDrawable      *drawable;
+  GeglNode          *operation;
 
-  GimpFilterRegion      region;
-  gboolean              preview_enabled;
-  GimpAlignmentType     preview_alignment;
-  gdouble               preview_position;
-  gdouble               opacity;
-  GimpLayerModeEffects  paint_mode;
-  gboolean              color_managed;
-  gboolean              gamma_hack;
+  GimpFilterRegion   region;
+  gboolean           preview_enabled;
+  GimpAlignmentType  preview_alignment;
+  gdouble            preview_position;
+  gdouble            opacity;
+  GimpLayerMode      paint_mode;
+  gboolean           color_managed;
+  gboolean           gamma_hack;
 
-  GeglRectangle         filter_area;
+  GeglRectangle      filter_area;
 
-  GeglNode             *translate;
-  GeglNode             *crop;
-  GeglNode             *cast_before;
-  GeglNode             *transform_before;
-  GeglNode             *transform_after;
-  GeglNode             *cast_after;
-  GimpApplicator       *applicator;
+  GeglNode          *translate;
+  GeglNode          *crop;
+  GeglNode          *cast_before;
+  GeglNode          *transform_before;
+  GeglNode          *transform_after;
+  GeglNode          *cast_after;
+  GimpApplicator    *applicator;
 };
 
 
@@ -148,7 +148,7 @@ gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
   drawable_filter->preview_alignment = GIMP_ALIGN_LEFT;
   drawable_filter->preview_position  = 1.0;
   drawable_filter->opacity           = GIMP_OPACITY_OPAQUE;
-  drawable_filter->paint_mode        = GIMP_REPLACE_MODE;
+  drawable_filter->paint_mode        = GIMP_LAYER_MODE_REPLACE;
 }
 
 static void
@@ -332,8 +332,8 @@ gimp_drawable_filter_set_opacity (GimpDrawableFilter *filter,
 }
 
 void
-gimp_drawable_filter_set_mode (GimpDrawableFilter   *filter,
-                               GimpLayerModeEffects  paint_mode)
+gimp_drawable_filter_set_mode (GimpDrawableFilter *filter,
+                               GimpLayerMode       paint_mode)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
 

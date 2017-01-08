@@ -1913,7 +1913,7 @@ lay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     unsigned int width, height;
     GimpImageType type = GIMP_RGB_IMAGE;
     double opacity = 100.0;
-    GimpLayerModeEffects mode = GIMP_NORMAL_MODE;
+    GimpLayerMode mode = GIMP_LAYER_MODE_NORMAL;
 
 
     if (!PyArg_ParseTuple(args, "O!sii|idi:gimp.Layer.__init__",
@@ -2071,7 +2071,7 @@ grouplay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     char *name = "Layer Group";
     GimpImageType type = GIMP_RGB_IMAGE;
     double opacity = 100.0;
-    GimpLayerModeEffects mode = GIMP_NORMAL_MODE;
+    GimpLayerMode mode = GIMP_LAYER_MODE_NORMAL;
 
 
     if (!PyArg_ParseTuple(args, "O!|sdi:gimp.Layer.__init__",

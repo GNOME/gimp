@@ -58,7 +58,7 @@ static void
 gimp_applicator_init (GimpApplicator *applicator)
 {
   applicator->opacity    = 1.0;
-  applicator->paint_mode = GIMP_NORMAL_MODE;
+  applicator->paint_mode = GIMP_LAYER_MODE_NORMAL;
   applicator->affect     = GIMP_COMPONENT_MASK_ALL;
 }
 
@@ -449,8 +449,8 @@ gimp_applicator_set_opacity (GimpApplicator *applicator,
 }
 
 void
-gimp_applicator_set_mode (GimpApplicator       *applicator,
-                          GimpLayerModeEffects  paint_mode)
+gimp_applicator_set_mode (GimpApplicator *applicator,
+                          GimpLayerMode   paint_mode)
 {
   g_return_if_fail (GIMP_IS_APPLICATOR (applicator));
 

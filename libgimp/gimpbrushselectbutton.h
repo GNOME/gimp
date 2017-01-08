@@ -56,7 +56,7 @@ struct _GimpBrushSelectButtonClass
                       const gchar           *brush_name,
                       gdouble                opacity,
                       gint                   spacing,
-                      GimpLayerModeEffects   paint_mode,
+                      GimpLayerMode          paint_mode,
                       gint                   width,
                       gint                   height,
                       const guchar          *mask_data,
@@ -76,17 +76,17 @@ GtkWidget    * gimp_brush_select_button_new      (const gchar            *title,
                                                   const gchar            *brush_name,
                                                   gdouble                 opacity,
                                                   gint                    spacing,
-                                                  GimpLayerModeEffects    paint_mode);
+                                                  GimpLayerMode           paint_mode);
 
 const  gchar * gimp_brush_select_button_get_brush (GimpBrushSelectButton *button,
                                                    gdouble               *opacity,
                                                    gint                  *spacing,
-                                                   GimpLayerModeEffects  *paint_mode);
+                                                   GimpLayerMode         *paint_mode);
 void           gimp_brush_select_button_set_brush (GimpBrushSelectButton *button,
                                                    const gchar           *brush_name,
                                                    gdouble                opacity,
                                                    gint                   spacing,
-                                                   GimpLayerModeEffects   paint_mode);
+                                                   GimpLayerMode          paint_mode);
 
 
 G_END_DECLS

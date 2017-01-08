@@ -585,12 +585,12 @@ gimp_context_set_opacity (gdouble opacity)
  *
  * Since: 2.2
  **/
-GimpLayerModeEffects
+GimpLayerMode
 gimp_context_get_paint_mode (void)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  GimpLayerModeEffects paint_mode = 0;
+  GimpLayerMode paint_mode = 0;
 
   return_vals = gimp_run_procedure ("gimp-context-get-paint-mode",
                                     &nreturn_vals,
@@ -617,7 +617,7 @@ gimp_context_get_paint_mode (void)
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
+gimp_context_set_paint_mode (GimpLayerMode paint_mode)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

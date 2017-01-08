@@ -44,13 +44,13 @@
 
 typedef struct
 {
-  GimpImage            *image;
-  GimpDrawable         *drawable;
-  GimpContext          *context;
+  GimpImage     *image;
+  GimpDrawable  *drawable;
+  GimpContext   *context;
 
-  gboolean              applied;
-  GimpLayerModeEffects  orig_paint_mode;
-  gdouble               orig_opacity;
+  gboolean       applied;
+  GimpLayerMode  orig_paint_mode;
+  gdouble        orig_opacity;
 } FadeDialog;
 
 

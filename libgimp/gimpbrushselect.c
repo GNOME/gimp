@@ -64,7 +64,7 @@ gimp_brush_select_new (const gchar          *title,
                        const gchar          *brush_name,
                        gdouble               opacity,
                        gint                  spacing,
-                       GimpLayerModeEffects  paint_mode,
+                       GimpLayerMode         paint_mode,
                        GimpRunBrushCallback  callback,
                        gpointer              data)
 {

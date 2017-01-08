@@ -69,7 +69,7 @@ static void          gimp_brush_select_opacity_changed (GimpContext     *context
                                                         gdouble          opacity,
                                                         GimpBrushSelect *select);
 static void          gimp_brush_select_mode_changed    (GimpContext     *context,
-                                                        GimpLayerModeEffects  paint_mode,
+                                                        GimpLayerMode    paint_mode,
                                                         GimpBrushSelect *select);
 
 static void          gimp_brush_select_opacity_update  (GtkAdjustment   *adj,
@@ -106,8 +106,8 @@ gimp_brush_select_class_init (GimpBrushSelectClass *klass)
 
   g_object_class_install_property (object_class, PROP_PAINT_MODE,
                                    g_param_spec_enum ("paint-mode", NULL, NULL,
-                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                      GIMP_NORMAL_MODE,
+                                                      GIMP_TYPE_LAYER_MODE,
+                                                      GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -307,9 +307,9 @@ gimp_brush_select_opacity_changed (GimpContext     *context,
 }
 
 static void
-gimp_brush_select_mode_changed (GimpContext          *context,
-                                GimpLayerModeEffects  paint_mode,
-                                GimpBrushSelect      *select)
+gimp_brush_select_mode_changed (GimpContext     *context,
+                                GimpLayerMode    paint_mode,
+                                GimpBrushSelect *select)
 {
   g_signal_handlers_block_by_func (select->paint_mode_menu,
                                    gimp_brush_select_mode_update,
@@ -343,7 +343,7 @@ gimp_brush_select_mode_update (GtkWidget       *widget,
                                      &paint_mode))
     {
       gimp_context_set_paint_mode (GIMP_PDB_DIALOG (select)->context,
-                                   (GimpLayerModeEffects) paint_mode);
+                                   (GimpLayerMode) paint_mode);
     }
 }
 

@@ -298,8 +298,8 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          "layer-new-mode",
                          "Default new layer mode",
                          LAYER_NEW_MODE_BLURB,
-                         GIMP_TYPE_LAYER_MODE_EFFECTS,
-                         GIMP_NORMAL_MODE,
+                         GIMP_TYPE_LAYER_MODE,
+                         GIMP_LAYER_MODE_NORMAL,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LAYER_NEW_OPACITY,

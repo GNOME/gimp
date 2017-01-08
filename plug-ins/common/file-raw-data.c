@@ -1160,8 +1160,9 @@ load_image (const gchar  *filename,
                                    itype);
   gimp_image_set_filename(data->image_id, filename);
   layer_id = gimp_layer_new (data->image_id, _("Background"),
-                             runtime->image_width, runtime->image_height, ltype,
-                             100, GIMP_NORMAL_MODE);
+                             runtime->image_width, runtime->image_height,
+                             ltype,
+                             100, GIMP_LAYER_MODE_NORMAL);
   gimp_image_insert_layer (data->image_id, layer_id, -1, 0);
 
   data->buffer = gimp_drawable_get_buffer (layer_id);

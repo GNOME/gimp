@@ -50,7 +50,7 @@ static void compat_callback           (GimpBrushSelectButton *brush_button,
                                        const gchar           *brush_name,
                                        gdouble                opacity,
                                        gint                   spacing,
-                                       GimpLayerModeEffects   paint_mode,
+                                       GimpLayerMode          paint_mode,
                                        gint                   width,
                                        gint                   height,
                                        const guchar          *mask_data,
@@ -80,7 +80,7 @@ gimp_brush_select_widget_new (const gchar          *title,
                               const gchar          *brush_name,
                               gdouble               opacity,
                               gint                  spacing,
-                              GimpLayerModeEffects  paint_mode,
+                              GimpLayerMode         paint_mode,
                               GimpRunBrushCallback  callback,
                               gpointer              data)
 {
@@ -132,11 +132,11 @@ gimp_brush_select_widget_close (GtkWidget *widget)
  * call to gimp_brush_select_widget_new().
  */
 void
-gimp_brush_select_widget_set (GtkWidget            *widget,
-                              const gchar          *brush_name,
-                              gdouble               opacity,
-                              gint                  spacing,
-                              GimpLayerModeEffects  paint_mode)
+gimp_brush_select_widget_set (GtkWidget     *widget,
+                              const gchar   *brush_name,
+                              gdouble        opacity,
+                              gint           spacing,
+                              GimpLayerMode  paint_mode)
 {
   g_return_if_fail (widget != NULL);
 
@@ -150,7 +150,7 @@ compat_callback (GimpBrushSelectButton *brush_button,
                  const gchar           *brush_name,
                  gdouble                opacity,
                  gint                   spacing,
-                 GimpLayerModeEffects   paint_mode,
+                 GimpLayerMode          paint_mode,
                  gint                   width,
                  gint                   height,
                  const guchar          *mask_data,

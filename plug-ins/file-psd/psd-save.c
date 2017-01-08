@@ -196,57 +196,57 @@ psd_lmode_layer (gint32  idLayer,
 {
   switch (gimp_layer_get_mode (idLayer))
     {
-    case GIMP_NORMAL_MODE:
+    case GIMP_LAYER_MODE_NORMAL:
       strcpy (psdMode, "norm");
       break;
-    case GIMP_DARKEN_ONLY_MODE:
+    case GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN:
       strcpy (psdMode, "dark");
       break;
-    case GIMP_LIGHTEN_ONLY_MODE:
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN:
       strcpy (psdMode, "lite");
       break;
-    case GIMP_HUE_MODE:
+    case GIMP_LAYER_MODE_HSV_HUE_BROKEN:
       strcpy (psdMode, "hue ");
       break;
-    case GIMP_SATURATION_MODE:
+    case GIMP_LAYER_MODE_HSV_SATURATION_BROKEN:
       strcpy (psdMode, "sat ");
       break;
-    case GIMP_COLOR_MODE:
+    case GIMP_LAYER_MODE_HSV_COLOR_BROKEN:
       strcpy (psdMode, "colr");
       break;
-    case GIMP_ADDITION_MODE:
+    case GIMP_LAYER_MODE_ADDITION_BROKEN:
       strcpy (psdMode, "lddg");
       break;
-    case GIMP_MULTIPLY_MODE:
+    case GIMP_LAYER_MODE_MULTIPLY_BROKEN:
       strcpy (psdMode, "mul ");
       break;
-    case GIMP_SCREEN_MODE:
+    case GIMP_LAYER_MODE_SCREEN_BROKEN:
       strcpy (psdMode, "scrn");
       break;
-    case GIMP_DISSOLVE_MODE:
+    case GIMP_LAYER_MODE_DISSOLVE:
       strcpy (psdMode, "diss");
       break;
-    case GIMP_DIFFERENCE_MODE:
+    case GIMP_LAYER_MODE_DIFFERENCE_BROKEN:
       strcpy (psdMode, "diff");
       break;
-    case GIMP_VALUE_MODE:                  /* ? */
+    case GIMP_LAYER_MODE_HSV_VALUE_BROKEN:                  /* ? */
       strcpy (psdMode, "lum ");
       break;
-    case GIMP_HARDLIGHT_MODE:
+    case GIMP_LAYER_MODE_HARDLIGHT_BROKEN:
       strcpy (psdMode, "hLit");
       break;
-    case GIMP_OVERLAY_MODE:
-    case GIMP_SOFTLIGHT_MODE:
+    case GIMP_LAYER_MODE_OVERLAY_BROKEN:
+    case GIMP_LAYER_MODE_SOFTLIGHT_BROKEN:
       strcpy (psdMode, "sLit");
       break;
-    case GIMP_NEW_OVERLAY_MODE:
+    case GIMP_LAYER_MODE_OVERLAY:
       strcpy (psdMode, "over");
       break;
     default:
       {
         const gchar *nick = "?";
 
-        gimp_enum_get_value (GIMP_TYPE_LAYER_MODE_EFFECTS,
+        gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
                              gimp_layer_get_mode (idLayer),
                              NULL, &nick, NULL, NULL);
 

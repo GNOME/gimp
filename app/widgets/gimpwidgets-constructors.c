@@ -103,79 +103,79 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
   GtkListStore *store;
   GtkWidget    *combo;
 
-  store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE_EFFECTS,
+  store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
                                            25,
-                                           GIMP_NORMAL_MODE,
-                                           GIMP_DISSOLVE_MODE,
+                                           GIMP_LAYER_MODE_NORMAL,
+                                           GIMP_LAYER_MODE_DISSOLVE,
 
-                                           GIMP_LIGHTEN_ONLY_MODE,
-                                           GIMP_SCREEN_MODE,
-                                           GIMP_DODGE_MODE,
-                                           GIMP_ADDITION_MODE,
+                                           GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN,
+                                           GIMP_LAYER_MODE_SCREEN_BROKEN,
+                                           GIMP_LAYER_MODE_DODGE_BROKEN,
+                                           GIMP_LAYER_MODE_ADDITION_BROKEN,
 
-                                           GIMP_DARKEN_ONLY_MODE,
-                                           GIMP_MULTIPLY_MODE,
-                                           GIMP_BURN_MODE,
+                                           GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN,
+                                           GIMP_LAYER_MODE_MULTIPLY_BROKEN,
+                                           GIMP_LAYER_MODE_BURN_BROKEN,
 
-                                           GIMP_NEW_OVERLAY_MODE,
-                                           GIMP_SOFTLIGHT_MODE,
-                                           GIMP_HARDLIGHT_MODE,
+                                           GIMP_LAYER_MODE_OVERLAY,
+                                           GIMP_LAYER_MODE_SOFTLIGHT_BROKEN,
+                                           GIMP_LAYER_MODE_HARDLIGHT_BROKEN,
 
-                                           GIMP_DIFFERENCE_MODE,
-                                           GIMP_SUBTRACT_MODE,
-                                           GIMP_GRAIN_EXTRACT_MODE,
-                                           GIMP_GRAIN_MERGE_MODE,
-                                           GIMP_DIVIDE_MODE,
+                                           GIMP_LAYER_MODE_DIFFERENCE_BROKEN,
+                                           GIMP_LAYER_MODE_SUBTRACT_BROKEN,
+                                           GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN,
+                                           GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN,
+                                           GIMP_LAYER_MODE_DIVIDE_BROKEN,
 
-                                           GIMP_HUE_MODE,
-                                           GIMP_SATURATION_MODE,
-                                           GIMP_COLOR_MODE,
-                                           GIMP_VALUE_MODE,
+                                           GIMP_LAYER_MODE_HSV_HUE_BROKEN,
+                                           GIMP_LAYER_MODE_HSV_SATURATION_BROKEN,
+                                           GIMP_LAYER_MODE_HSV_COLOR_BROKEN,
+                                           GIMP_LAYER_MODE_HSV_VALUE_BROKEN,
 
-                                           GIMP_LCH_HUE_MODE,
-                                           GIMP_LCH_CHROMA_MODE,
-                                           GIMP_LCH_COLOR_MODE,
-                                           GIMP_LCH_LIGHTNESS_MODE);
-
-  gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_DISSOLVE_MODE, -1);
+                                           GIMP_LAYER_MODE_LCH_HUE,
+                                           GIMP_LAYER_MODE_LCH_CHROMA,
+                                           GIMP_LAYER_MODE_LCH_COLOR,
+                                           GIMP_LAYER_MODE_LCH_LIGHTNESS);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_ADDITION_MODE, -1);
+                                         GIMP_LAYER_MODE_DISSOLVE, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_BURN_MODE, -1);
+                                         GIMP_LAYER_MODE_ADDITION_BROKEN, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_HARDLIGHT_MODE, -1);
+                                         GIMP_LAYER_MODE_BURN_BROKEN, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_DIVIDE_MODE, -1);
+                                         GIMP_LAYER_MODE_HARDLIGHT_BROKEN, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_VALUE_MODE, -1);
+                                         GIMP_LAYER_MODE_DIVIDE_BROKEN, -1);
+
+  gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
+                                         GIMP_LAYER_MODE_HSV_VALUE_BROKEN, -1);
 
   if (with_behind_mode)
     {
       gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
-                                          GIMP_DISSOLVE_MODE,
-                                          GIMP_BEHIND_MODE);
+                                          GIMP_LAYER_MODE_DISSOLVE,
+                                          GIMP_LAYER_MODE_BEHIND);
       gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
-                                          GIMP_BEHIND_MODE,
-                                          GIMP_COLOR_ERASE_MODE);
+                                          GIMP_LAYER_MODE_BEHIND,
+                                          GIMP_LAYER_MODE_COLOR_ERASE);
     }
 
   if (with_replace_modes)
     {
       gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
-                                          GIMP_NORMAL_MODE,
-                                          GIMP_REPLACE_MODE);
+                                          GIMP_LAYER_MODE_NORMAL,
+                                          GIMP_LAYER_MODE_REPLACE);
       gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
-                                          GIMP_COLOR_ERASE_MODE,
-                                          GIMP_ERASE_MODE);
+                                          GIMP_LAYER_MODE_COLOR_ERASE,
+                                          GIMP_LAYER_MODE_ERASE);
       gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
-                                          GIMP_ERASE_MODE,
-                                          GIMP_ANTI_ERASE_MODE);
+                                          GIMP_LAYER_MODE_ERASE,
+                                          GIMP_LAYER_MODE_ANTI_ERASE);
     }
 
   combo = gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));

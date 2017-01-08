@@ -41,10 +41,10 @@ typedef struct
 
 typedef struct
 {
-  gchar                *name;
-  gdouble               opacity;
-  gint                  spacing;
-  GimpLayerModeEffects  paint_mode;
+  gchar         *name;
+  gdouble        opacity;
+  gint           spacing;
+  GimpLayerMode  paint_mode;
 } SFBrush;
 
 typedef struct

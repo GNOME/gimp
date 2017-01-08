@@ -533,7 +533,8 @@ webpage_capture (void)
 
       gimp_image_undo_disable (image);
       layer = gimp_layer_new_from_pixbuf (image, _("Webpage"), webpagevals.pixbuf,
-                                          100, GIMP_NORMAL_MODE, 0.0, 1.0);
+                                          100, GIMP_LAYER_MODE_NORMAL,
+                                          0.0, 1.0);
       gimp_image_insert_layer (image, layer, -1, 0);
       gimp_image_undo_enable (image);
 

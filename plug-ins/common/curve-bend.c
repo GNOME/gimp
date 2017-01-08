@@ -2753,7 +2753,7 @@ p_add_layer (gint       width,
   char      *l_name;
   char      *l_name2;
   gdouble    l_opacity;
-  GimpLayerModeEffects l_mode;
+  GimpLayerMode l_mode;
   gint       l_visible;
   gint32     image_id;
   gint       stack_position;

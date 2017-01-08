@@ -68,7 +68,7 @@ struct _GimpContext
   GimpRGB               background;
 
   gdouble               opacity;
-  GimpLayerModeEffects  paint_mode;
+  GimpLayerMode         paint_mode;
 
   GimpBrush            *brush;
   gchar                *brush_name;
@@ -125,7 +125,7 @@ struct _GimpContextClass
   void (* opacity_changed)    (GimpContext          *context,
                                gdouble               opacity);
   void (* paint_mode_changed) (GimpContext          *context,
-                               GimpLayerModeEffects  paint_mode);
+                               GimpLayerMode         paint_mode);
   void (* brush_changed)      (GimpContext          *context,
                                GimpBrush            *brush);
   void (* dynamics_changed)   (GimpContext          *context,
@@ -271,10 +271,9 @@ void             gimp_context_opacity_changed     (GimpContext     *context);
 
 
 /*  paint mode  */
-GimpLayerModeEffects
-                 gimp_context_get_paint_mode      (GimpContext     *context);
+GimpLayerMode    gimp_context_get_paint_mode      (GimpContext     *context);
 void             gimp_context_set_paint_mode      (GimpContext     *context,
-                                              GimpLayerModeEffects  paint_mode);
+                                                   GimpLayerMode    paint_mode);
 void             gimp_context_paint_mode_changed  (GimpContext     *context);
 
 

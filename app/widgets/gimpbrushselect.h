@@ -38,14 +38,14 @@ typedef struct _GimpBrushSelectClass  GimpBrushSelectClass;
 
 struct _GimpBrushSelect
 {
-  GimpPdbDialog         parent_instance;
+  GimpPdbDialog  parent_instance;
 
-  gdouble               initial_opacity;
-  GimpLayerModeEffects  initial_mode;
+  gdouble        initial_opacity;
+  GimpLayerMode  initial_mode;
 
-  gint                  spacing;
-  GtkAdjustment        *opacity_data;
-  GtkWidget            *paint_mode_menu;
+  gint           spacing;
+  GtkAdjustment *opacity_data;
+  GtkWidget     *paint_mode_menu;
 };
 
 struct _GimpBrushSelectClass

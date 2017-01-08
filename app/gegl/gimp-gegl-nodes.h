@@ -22,25 +22,25 @@
 #define __GIMP_GEGL_NODES_H__
 
 
-GeglNode * gimp_gegl_create_flatten_node       (const GimpRGB        *background);
-GeglNode * gimp_gegl_create_apply_opacity_node (GeglBuffer           *mask,
-                                                gint                  mask_offset_x,
-                                                gint                  mask_offset_y,
-                                                gdouble               opacity);
-GeglNode * gimp_gegl_add_buffer_source         (GeglNode             *parent,
-                                                GeglBuffer           *buffer,
-                                                gint                  offset_x,
-                                                gint                  offset_y);
+GeglNode * gimp_gegl_create_flatten_node       (const GimpRGB     *background);
+GeglNode * gimp_gegl_create_apply_opacity_node (GeglBuffer        *mask,
+                                                gint               mask_offset_x,
+                                                gint               mask_offset_y,
+                                                gdouble            opacity);
+GeglNode * gimp_gegl_add_buffer_source         (GeglNode          *parent,
+                                                GeglBuffer        *buffer,
+                                                gint               offset_x,
+                                                gint               offset_y);
 
-void       gimp_gegl_mode_node_set_mode        (GeglNode             *node,
-                                                GimpLayerModeEffects  mode,
-                                                gboolean              linear);
-void       gimp_gegl_mode_node_set_opacity     (GeglNode             *node,
-                                                gdouble               opacity);
-void       gimp_gegl_node_set_matrix           (GeglNode             *node,
-                                                const GimpMatrix3    *matrix);
-void       gimp_gegl_node_set_color            (GeglNode             *node,
-                                                const GimpRGB        *color);
+void       gimp_gegl_mode_node_set_mode        (GeglNode          *node,
+                                                GimpLayerMode      mode,
+                                                gboolean           linear);
+void       gimp_gegl_mode_node_set_opacity     (GeglNode          *node,
+                                                gdouble            opacity);
+void       gimp_gegl_node_set_matrix           (GeglNode          *node,
+                                                const GimpMatrix3 *matrix);
+void       gimp_gegl_node_set_color            (GeglNode          *node,
+                                                const GimpRGB     *color);
 
 
 #endif /* __GIMP_GEGL_NODES_H__ */

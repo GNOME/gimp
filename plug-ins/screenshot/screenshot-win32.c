@@ -229,7 +229,8 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   new_image_id = gimp_image_new(width, height, imageType);
   layer_id = gimp_layer_new(new_image_id, _("Background"),
                             ROUND4(width), height,
-                            layerType, 100, GIMP_NORMAL_MODE);
+                            layerType,
+                            100, GIMP_LAYER_MODE_NORMAL);
   gimp_image_insert_layer(new_image_id, layer_id, -1, 0);
 
   /* make rectangle */

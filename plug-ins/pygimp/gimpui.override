@@ -917,14 +917,14 @@ _wrap_gimp_brush_select_button_get_brush(PyGObject *self)
     const gchar *brush_name;
     gdouble opacity;
     gint spacing;
-    GimpLayerModeEffects paint_mode;
+    GimpLayerMode paint_mode;
 
     brush_name =
         gimp_brush_select_button_get_brush(GIMP_BRUSH_SELECT_BUTTON(self->obj),
                                            &opacity, &spacing, &paint_mode);
 
     return Py_BuildValue("(sdiN)", brush_name, opacity, spacing,
-                         pyg_enum_from_gtype(GIMP_TYPE_LAYER_MODE_EFFECTS,
+                         pyg_enum_from_gtype(GIMP_TYPE_LAYER_MODE,
                                              paint_mode));
 }
 %%

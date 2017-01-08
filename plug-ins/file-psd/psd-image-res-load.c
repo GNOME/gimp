@@ -1033,7 +1033,8 @@ load_resource_1033 (const PSDimageres  *res_a,
   layer_id = gimp_layer_new (image_id, _("Background"),
                              cinfo.output_width,
                              cinfo.output_height,
-                             GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
+                             GIMP_RGB_IMAGE,
+                             100, GIMP_LAYER_MODE_NORMAL);
   buffer = gimp_drawable_get_buffer (layer_id);
   format = babl_format ("R'G'B' u8");
 

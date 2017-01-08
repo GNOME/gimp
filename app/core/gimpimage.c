@@ -2394,19 +2394,19 @@ gimp_image_get_xcf_version (GimpImage    *image,
       switch (gimp_layer_get_mode (layer))
         {
           /* new layer modes not supported by gimp-1.2 */
-        case GIMP_SOFTLIGHT_MODE:
-        case GIMP_GRAIN_EXTRACT_MODE:
-        case GIMP_GRAIN_MERGE_MODE:
-        case GIMP_COLOR_ERASE_MODE:
+        case GIMP_LAYER_MODE_SOFTLIGHT_BROKEN:
+        case GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN:
+        case GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN:
+        case GIMP_LAYER_MODE_COLOR_ERASE:
           version = MAX (2, version);
           break;
 
           /* new layer modes not supported by gimp-2.8 */
-        case GIMP_NEW_OVERLAY_MODE:
-        case GIMP_LCH_HUE_MODE:
-        case GIMP_LCH_CHROMA_MODE:
-        case GIMP_LCH_COLOR_MODE:
-        case GIMP_LCH_LIGHTNESS_MODE:
+        case GIMP_LAYER_MODE_OVERLAY:
+        case GIMP_LAYER_MODE_LCH_HUE:
+        case GIMP_LAYER_MODE_LCH_CHROMA:
+        case GIMP_LAYER_MODE_LCH_COLOR:
+        case GIMP_LAYER_MODE_LCH_LIGHTNESS:
           version = MAX (9, version);
           break;
 

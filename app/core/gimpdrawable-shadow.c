@@ -101,7 +101,8 @@ gimp_drawable_merge_shadow_buffer (GimpDrawable *drawable,
       gimp_drawable_apply_buffer (drawable, buffer,
                                   GEGL_RECTANGLE (x, y, width, height),
                                   push_undo, undo_desc,
-                                  GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                                  GIMP_OPACITY_OPAQUE,
+                                  GIMP_LAYER_MODE_REPLACE,
                                   NULL, x, y);
 
       g_object_unref (buffer);

@@ -75,7 +75,7 @@ struct _GimpDrawableClass
                                            gboolean              push_undo,
                                            const gchar          *undo_desc,
                                            gdouble               opacity,
-                                           GimpLayerModeEffects  mode,
+                                           GimpLayerMode         mode,
                                            GeglBuffer           *base_buffer,
                                            gint                  base_x,
                                            gint                  base_y);
@@ -155,7 +155,7 @@ void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,
                                                   gboolean             push_undo,
                                                   const gchar         *undo_desc,
                                                   gdouble              opacity,
-                                                  GimpLayerModeEffects mode,
+                                                  GimpLayerMode        mode,
                                                   GeglBuffer          *base_buffer,
                                                   gint                 base_x,
                                                   gint                 base_y);

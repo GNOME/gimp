@@ -247,7 +247,8 @@ gfig_dialog (void)
     {
       newlayer = gimp_layer_new (gfig_context->image_id, "GFig",
                                  img_width, img_height,
-                                 img_type, 100.0, GIMP_NORMAL_MODE);
+                                 img_type,
+                                 100.0, GIMP_LAYER_MODE_NORMAL);
       gimp_drawable_fill (newlayer, GIMP_FILL_TRANSPARENT);
       gimp_image_insert_layer (gfig_context->image_id, newlayer, -1, -1);
       gfig_context->drawable_id = newlayer;
@@ -1921,7 +1922,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
     case FILL_GRADIENT:
       gimp_edit_blend (gfig_context->drawable_id,
                        GIMP_BLEND_CUSTOM,
-                       GIMP_NORMAL_MODE,
+                       GIMP_LAYER_MODE_NORMAL,
                        GIMP_GRADIENT_SHAPEBURST_DIMPLED,
                        100.0,             /* opacity            */
                        0.0,               /* offset             */
@@ -1937,7 +1938,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
     case FILL_VERTICAL:
       gimp_edit_blend (gfig_context->drawable_id,
                        GIMP_BLEND_CUSTOM,
-                       GIMP_NORMAL_MODE,
+                       GIMP_LAYER_MODE_NORMAL,
                        GIMP_GRADIENT_LINEAR,
                        100.0,
                        0.0,
@@ -1953,7 +1954,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
     case FILL_HORIZONTAL:
       gimp_edit_blend (gfig_context->drawable_id,
                        GIMP_BLEND_CUSTOM,
-                       GIMP_NORMAL_MODE,
+                       GIMP_LAYER_MODE_NORMAL,
                        GIMP_GRADIENT_LINEAR,
                        100.0,
                        0.0,
@@ -1970,7 +1971,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 
   gimp_edit_bucket_fill (gfig_context->drawable_id,
                          fill_mode,    /* Fill mode */
-                         GIMP_NORMAL_MODE,
+                         GIMP_LAYER_MODE_NORMAL,
                          current_style->fill_opacity, /* Fill opacity */
                          0.0,                 /* threshold - ignored */
                          FALSE,               /* Sample merged - ignored */

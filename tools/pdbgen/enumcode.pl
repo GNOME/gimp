@@ -177,6 +177,7 @@ void
 gimp_enums_init (void)
 {
   const GimpGetTypeFunc *funcs = get_type_funcs;
+  GQuark                 quark;
   gint                   i;
 
   if (enums_initialized)
@@ -188,6 +189,12 @@ gimp_enums_init (void)
 
       g_type_class_ref (type);
     }
+
+  /*  keep compat enum code in sync with app/app.c (app_libs_init)  */
+  quark = g_quark_from_static_string ("gimp-compat-enum");
+
+  g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
+		    (gpointer) GIMP_TYPE_LAYER_MODE_EFFECTS);
 
   enums_initialized = TRUE;
 }

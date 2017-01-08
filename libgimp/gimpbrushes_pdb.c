@@ -215,14 +215,14 @@ gimp_brushes_set_spacing (gint spacing)
  * Returns: The brush name.
  **/
 gchar *
-gimp_brushes_get_brush_data (const gchar           *name,
-                             gdouble               *opacity,
-                             gint                  *spacing,
-                             GimpLayerModeEffects  *paint_mode,
-                             gint                  *width,
-                             gint                  *height,
-                             gint                  *length,
-                             guint8               **mask_data)
+gimp_brushes_get_brush_data (const gchar    *name,
+                             gdouble        *opacity,
+                             gint           *spacing,
+                             GimpLayerMode  *paint_mode,
+                             gint           *width,
+                             gint           *height,
+                             gint           *length,
+                             guint8        **mask_data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

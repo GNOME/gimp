@@ -60,6 +60,7 @@ EXPORTS
 	gimp_installation_directory
 	gimp_interpolation_type_get_type
 	gimp_join_style_get_type
+	gimp_layer_mode_effects_get_type
 	gimp_locale_directory
 	gimp_locale_directory_file
 	gimp_major_version

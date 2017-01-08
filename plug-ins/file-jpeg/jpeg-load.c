@@ -231,7 +231,8 @@ load_image (const gchar  *filename,
       preview_layer_ID = gimp_layer_new (preview_image_ID, _("JPEG preview"),
                                          cinfo.output_width,
                                          cinfo.output_height,
-                                         layer_type, 100, GIMP_NORMAL_MODE);
+                                         layer_type,
+                                         100, GIMP_LAYER_MODE_NORMAL);
       layer_ID = preview_layer_ID;
     }
   else
@@ -239,7 +240,8 @@ load_image (const gchar  *filename,
       layer_ID = gimp_layer_new (image_ID, _("Background"),
                                  cinfo.output_width,
                                  cinfo.output_height,
-                                 layer_type, 100, GIMP_NORMAL_MODE);
+                                 layer_type,
+                                 100, GIMP_LAYER_MODE_NORMAL);
     }
 
   if (! preview)

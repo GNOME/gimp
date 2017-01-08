@@ -69,45 +69,45 @@ typedef struct
  *  Local Functions
  */
 
-static void   script_fu_interface_quit      (SFScript             *script);
+static void   script_fu_interface_quit      (SFScript      *script);
 
-static void   script_fu_response            (GtkWidget            *widget,
-                                             gint                  response_id,
-                                             SFScript             *script);
-static void   script_fu_ok                  (SFScript             *script);
-static void   script_fu_reset               (SFScript             *script);
+static void   script_fu_response            (GtkWidget     *widget,
+                                             gint           response_id,
+                                             SFScript      *script);
+static void   script_fu_ok                  (SFScript      *script);
+static void   script_fu_reset               (SFScript      *script);
 
-static void   script_fu_file_callback       (GtkWidget            *widget,
-                                             SFFilename           *file);
-static void   script_fu_combo_callback      (GtkWidget            *widget,
-                                             SFOption             *option);
-static void   script_fu_pattern_callback    (gpointer              data,
-                                             const gchar          *name,
-                                             gint                  width,
-                                             gint                  height,
-                                             gint                  bytes,
-                                             const guchar         *mask_data,
-                                             gboolean              closing);
-static void   script_fu_gradient_callback   (gpointer              data,
-                                             const gchar          *name,
-                                             gint                  width,
-                                             const gdouble        *mask_data,
-                                             gboolean              closing);
-static void   script_fu_font_callback       (gpointer              data,
-                                             const gchar          *name,
-                                             gboolean              closing);
-static void   script_fu_palette_callback    (gpointer              data,
-                                             const gchar          *name,
-                                             gboolean              closing);
-static void   script_fu_brush_callback      (gpointer              data,
-                                             const gchar          *name,
-                                             gdouble               opacity,
-                                             gint                  spacing,
-                                             GimpLayerModeEffects  paint_mode,
-                                             gint                  width,
-                                             gint                  height,
-                                             const guchar         *mask_data,
-                                             gboolean              closing);
+static void   script_fu_file_callback       (GtkWidget     *widget,
+                                             SFFilename    *file);
+static void   script_fu_combo_callback      (GtkWidget     *widget,
+                                             SFOption      *option);
+static void   script_fu_pattern_callback    (gpointer       data,
+                                             const gchar   *name,
+                                             gint           width,
+                                             gint           height,
+                                             gint           bytes,
+                                             const guchar  *mask_data,
+                                             gboolean       closing);
+static void   script_fu_gradient_callback   (gpointer       data,
+                                             const gchar   *name,
+                                             gint           width,
+                                             const gdouble *mask_data,
+                                             gboolean       closing);
+static void   script_fu_font_callback       (gpointer       data,
+                                             const gchar   *name,
+                                             gboolean       closing);
+static void   script_fu_palette_callback    (gpointer       data,
+                                             const gchar   *name,
+                                             gboolean       closing);
+static void   script_fu_brush_callback      (gpointer       data,
+                                             const gchar   *name,
+                                             gdouble        opacity,
+                                             gint           spacing,
+                                             GimpLayerMode  paint_mode,
+                                             gint           width,
+                                             gint           height,
+                                             const guchar  *mask_data,
+                                             gboolean       closing);
 
 
 /*
@@ -709,15 +709,15 @@ script_fu_palette_callback (gpointer     data,
 }
 
 static void
-script_fu_brush_callback (gpointer              data,
-                          const gchar          *name,
-                          gdouble               opacity,
-                          gint                  spacing,
-                          GimpLayerModeEffects  paint_mode,
-                          gint                  width,
-                          gint                  height,
-                          const guchar         *mask_data,
-                          gboolean              closing)
+script_fu_brush_callback (gpointer       data,
+                          const gchar   *name,
+                          gdouble        opacity,
+                          gint           spacing,
+                          GimpLayerMode  paint_mode,
+                          gint           width,
+                          gint           height,
+                          const guchar  *mask_data,
+                          gboolean       closing)
 {
   SFBrush *brush = data;
 

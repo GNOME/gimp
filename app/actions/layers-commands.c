@@ -81,33 +81,33 @@
 #include "gimp-intl.h"
 
 
-static const GimpLayerModeEffects layer_modes[] =
+static const GimpLayerMode layer_modes[] =
 {
-  GIMP_NORMAL_MODE,
-  GIMP_DISSOLVE_MODE,
-  GIMP_MULTIPLY_MODE,
-  GIMP_DIVIDE_MODE,
-  GIMP_SCREEN_MODE,
-  GIMP_NEW_OVERLAY_MODE,
-  GIMP_DODGE_MODE,
-  GIMP_BURN_MODE,
-  GIMP_HARDLIGHT_MODE,
-  GIMP_SOFTLIGHT_MODE,
-  GIMP_GRAIN_EXTRACT_MODE,
-  GIMP_GRAIN_MERGE_MODE,
-  GIMP_DIFFERENCE_MODE,
-  GIMP_ADDITION_MODE,
-  GIMP_SUBTRACT_MODE,
-  GIMP_DARKEN_ONLY_MODE,
-  GIMP_LIGHTEN_ONLY_MODE,
-  GIMP_HUE_MODE,
-  GIMP_SATURATION_MODE,
-  GIMP_COLOR_MODE,
-  GIMP_VALUE_MODE,
-  GIMP_LCH_HUE_MODE,
-  GIMP_LCH_CHROMA_MODE,
-  GIMP_LCH_COLOR_MODE,
-  GIMP_LCH_LIGHTNESS_MODE
+  GIMP_LAYER_MODE_NORMAL,
+  GIMP_LAYER_MODE_DISSOLVE,
+  GIMP_LAYER_MODE_MULTIPLY_BROKEN,
+  GIMP_LAYER_MODE_DIVIDE_BROKEN,
+  GIMP_LAYER_MODE_SCREEN_BROKEN,
+  GIMP_LAYER_MODE_OVERLAY,
+  GIMP_LAYER_MODE_DODGE_BROKEN,
+  GIMP_LAYER_MODE_BURN_BROKEN,
+  GIMP_LAYER_MODE_HARDLIGHT_BROKEN,
+  GIMP_LAYER_MODE_SOFTLIGHT_BROKEN,
+  GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN,
+  GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN,
+  GIMP_LAYER_MODE_DIFFERENCE_BROKEN,
+  GIMP_LAYER_MODE_ADDITION_BROKEN,
+  GIMP_LAYER_MODE_SUBTRACT_BROKEN,
+  GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN,
+  GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN,
+  GIMP_LAYER_MODE_HSV_HUE_BROKEN,
+  GIMP_LAYER_MODE_HSV_SATURATION_BROKEN,
+  GIMP_LAYER_MODE_HSV_COLOR_BROKEN,
+  GIMP_LAYER_MODE_HSV_VALUE_BROKEN,
+  GIMP_LAYER_MODE_LCH_HUE,
+  GIMP_LAYER_MODE_LCH_CHROMA,
+  GIMP_LAYER_MODE_LCH_COLOR,
+  GIMP_LAYER_MODE_LCH_LIGHTNESS
 };
 
 
@@ -118,7 +118,7 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                GimpLayer             *layer,
                                                GimpContext           *context,
                                                const gchar           *layer_name,
-                                               GimpLayerModeEffects   layer_mode,
+                                               GimpLayerMode          layer_mode,
                                                gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
                                                gint                   layer_width,
@@ -138,7 +138,7 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                GimpLayer             *layer,
                                                GimpContext           *context,
                                                const gchar           *layer_name,
-                                               GimpLayerModeEffects   layer_mode,
+                                               GimpLayerMode          layer_mode,
                                                gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
                                                gint                   layer_width,
@@ -182,7 +182,7 @@ static void   layers_resize_callback          (GtkWidget             *dialog,
                                                gboolean               unused2,
                                                gpointer               data);
 
-static gint   layers_mode_index               (GimpLayerModeEffects   layer_mode);
+static gint   layers_mode_index               (GimpLayerMode          layer_mode);
 
 
 /*  private variables  */
@@ -346,15 +346,15 @@ void
 layers_new_last_vals_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  GimpImage            *image;
-  GtkWidget            *widget;
-  GimpLayer            *floating_sel;
-  GimpLayer            *new_layer;
-  gint                  width, height;
-  gint                  off_x, off_y;
-  gdouble               opacity;
-  GimpLayerModeEffects  mode;
-  GimpDialogConfig     *config;
+  GimpImage        *image;
+  GtkWidget        *widget;
+  GimpLayer        *floating_sel;
+  GimpLayer        *new_layer;
+  gint              width, height;
+  gint              off_x, off_y;
+  gdouble           opacity;
+  GimpLayerMode     mode;
+  GimpDialogConfig *config;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
@@ -386,7 +386,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       off_x   = 0;
       off_y   = 0;
       opacity = 1.0;
-      mode    = GIMP_NORMAL_MODE;
+      mode    = GIMP_LAYER_MODE_NORMAL;
     }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
@@ -432,7 +432,7 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                                                         TRUE),
                                            _("Visible"),
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_NORMAL_MODE,
+                                           GIMP_LAYER_MODE_NORMAL,
                                            profile);
 
   gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -1109,12 +1109,12 @@ layers_mode_cmd_callback (GtkAction *action,
                           gint       value,
                           gpointer   data)
 {
-  GimpImage            *image;
-  GimpLayer            *layer;
-  GimpLayerModeEffects  layer_mode;
-  gint                  index;
-  GimpUndo             *undo;
-  gboolean              push_undo = TRUE;
+  GimpImage     *image;
+  GimpLayer     *layer;
+  GimpLayerMode  layer_mode;
+  gint           index;
+  GimpUndo      *undo;
+  gboolean       push_undo = TRUE;
   return_if_no_layer (image, layer, data);
 
   undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
@@ -1221,26 +1221,26 @@ layers_color_tag_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-layers_new_callback (GtkWidget            *dialog,
-                     GimpImage            *image,
-                     GimpLayer            *layer,
-                     GimpContext          *context,
-                     const gchar          *layer_name,
-                     GimpLayerModeEffects  layer_mode,
-                     gdouble               layer_opacity,
-                     GimpFillType          layer_fill_type,
-                     gint                  layer_width,
-                     gint                  layer_height,
-                     gint                  layer_offset_x,
-                     gint                  layer_offset_y,
-                     gboolean              layer_visible,
-                     gboolean              layer_linked,
-                     GimpColorTag          layer_color_tag,
-                     gboolean              layer_lock_pixels,
-                     gboolean              layer_lock_position,
-                     gboolean              layer_lock_alpha,
-                     gboolean              rename_text_layer, /* unused */
-                     gpointer              user_data)
+layers_new_callback (GtkWidget     *dialog,
+                     GimpImage     *image,
+                     GimpLayer     *layer,
+                     GimpContext   *context,
+                     const gchar   *layer_name,
+                     GimpLayerMode  layer_mode,
+                     gdouble        layer_opacity,
+                     GimpFillType   layer_fill_type,
+                     gint           layer_width,
+                     gint           layer_height,
+                     gint           layer_offset_x,
+                     gint           layer_offset_y,
+                     gboolean       layer_visible,
+                     gboolean       layer_linked,
+                     GimpColorTag   layer_color_tag,
+                     gboolean       layer_lock_pixels,
+                     gboolean       layer_lock_position,
+                     gboolean       layer_lock_alpha,
+                     gboolean       rename_text_layer, /* unused */
+                     gpointer       user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
@@ -1284,26 +1284,26 @@ layers_new_callback (GtkWidget            *dialog,
 }
 
 static void
-layers_edit_attributes_callback (GtkWidget            *dialog,
-                                 GimpImage            *image,
-                                 GimpLayer            *layer,
-                                 GimpContext          *context,
-                                 const gchar          *layer_name,
-                                 GimpLayerModeEffects  layer_mode,
-                                 gdouble               layer_opacity,
-                                 GimpFillType          unused1,
-                                 gint                  unused2,
-                                 gint                  unused3,
-                                 gint                  layer_offset_x,
-                                 gint                  layer_offset_y,
-                                 gboolean              layer_visible,
-                                 gboolean              layer_linked,
-                                 GimpColorTag          layer_color_tag,
-                                 gboolean              layer_lock_pixels,
-                                 gboolean              layer_lock_position,
-                                 gboolean              layer_lock_alpha,
-                                 gboolean              rename_text_layer,
-                                 gpointer              user_data)
+layers_edit_attributes_callback (GtkWidget     *dialog,
+                                 GimpImage     *image,
+                                 GimpLayer     *layer,
+                                 GimpContext   *context,
+                                 const gchar   *layer_name,
+                                 GimpLayerMode  layer_mode,
+                                 gdouble        layer_opacity,
+                                 GimpFillType   unused1,
+                                 gint           unused2,
+                                 gint           unused3,
+                                 gint           layer_offset_x,
+                                 gint           layer_offset_y,
+                                 gboolean       layer_visible,
+                                 gboolean       layer_linked,
+                                 GimpColorTag   layer_color_tag,
+                                 gboolean       layer_lock_pixels,
+                                 gboolean       layer_lock_position,
+                                 gboolean       layer_lock_alpha,
+                                 gboolean       rename_text_layer,
+                                 gpointer       user_data)
 {
   GimpItem *item = GIMP_ITEM (layer);
 
@@ -1528,7 +1528,7 @@ layers_resize_callback (GtkWidget    *dialog,
 }
 
 static gint
-layers_mode_index (GimpLayerModeEffects layer_mode)
+layers_mode_index (GimpLayerMode layer_mode)
 {
   gint i = 0;
 

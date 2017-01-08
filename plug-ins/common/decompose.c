@@ -607,7 +607,8 @@ create_new_layer (gint32             image_ID,
     layername = _("Background");
 
   layer_ID = gimp_layer_new (image_ID, layername, width, height,
-                             gdtype, 100, GIMP_NORMAL_MODE);
+                             gdtype,
+                             100, GIMP_LAYER_MODE_NORMAL);
   gimp_image_insert_layer (image_ID, layer_ID, -1, position);
 
   return layer_ID;

@@ -612,7 +612,7 @@ load_image (const gchar  *filename,
                              dicominfo->width, dicominfo->height,
                              (dicominfo->samples_per_pixel >= 3 ?
                               GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
-                             100, GIMP_NORMAL_MODE);
+                             100, GIMP_LAYER_MODE_NORMAL);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
   buffer = gimp_drawable_get_buffer (layer_ID);

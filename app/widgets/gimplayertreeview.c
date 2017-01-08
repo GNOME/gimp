@@ -271,7 +271,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
                                    NULL, view->priv->paint_mode_menu);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (view->priv->paint_mode_menu),
-                              GIMP_NORMAL_MODE,
+                              GIMP_LAYER_MODE_NORMAL,
                               G_CALLBACK (gimp_layer_tree_view_paint_mode_menu_callback),
                               view);
 
@@ -808,7 +808,8 @@ gimp_layer_tree_view_drop_pixbuf (GimpContainerTreeView   *tree_view,
     gimp_layer_new_from_pixbuf (pixbuf, image,
                                 gimp_image_get_layer_format (image, TRUE),
                                 _("Dropped Buffer"),
-                                GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                GIMP_OPACITY_OPAQUE,
+                                GIMP_LAYER_MODE_NORMAL);
 
   gimp_image_add_layer (image, new_layer, parent, index, TRUE);
 
@@ -848,7 +849,9 @@ gimp_layer_tree_view_item_new (GimpImage *image)
                               gimp_image_get_width (image),
                               gimp_image_get_height (image),
                               gimp_image_get_layer_format (image, TRUE),
-                              NULL, 1.0, GIMP_NORMAL_MODE);
+                              NULL,
+                              GIMP_OPACITY_OPAQUE,
+                              GIMP_LAYER_MODE_NORMAL);
 
   gimp_image_add_layer (image, new_layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -938,7 +941,7 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
 
       if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
                                          &mode) &&
-          gimp_layer_get_mode (layer) != (GimpLayerModeEffects) mode)
+          gimp_layer_get_mode (layer) != (GimpLayerMode) mode)
         {
           GimpUndo *undo;
           gboolean  push_undo = TRUE;
@@ -951,7 +954,7 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
             push_undo = FALSE;
 
           BLOCK();
-          gimp_layer_set_mode (layer, (GimpLayerModeEffects) mode, push_undo);
+          gimp_layer_set_mode (layer, (GimpLayerMode) mode, push_undo);
           UNBLOCK();
 
           gimp_image_flush (image);

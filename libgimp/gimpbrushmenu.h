@@ -36,7 +36,7 @@ GtkWidget * gimp_brush_select_widget_new   (const gchar          *title,
                                             const gchar          *brush_name,
                                             gdouble               opacity,
                                             gint                  spacing,
-                                            GimpLayerModeEffects  paint_mode,
+                                            GimpLayerMode         paint_mode,
                                             GimpRunBrushCallback  callback,
                                             gpointer              data);
 
@@ -47,7 +47,7 @@ void        gimp_brush_select_widget_set   (GtkWidget            *widget,
                                             const gchar          *brush_name,
                                             gdouble               opacity,
                                             gint                  spacing,
-                                            GimpLayerModeEffects  paint_mode);
+                                            GimpLayerMode         paint_mode);
 
 
 G_END_DECLS

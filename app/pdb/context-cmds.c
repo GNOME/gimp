@@ -419,8 +419,8 @@ context_set_paint_mode_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (paint_mode == GIMP_OVERLAY_MODE)
-        paint_mode = GIMP_SOFTLIGHT_MODE;
+      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
       gimp_context_set_paint_mode (context, paint_mode);
     }
@@ -3138,8 +3138,8 @@ register_context_procs (GimpPDB *pdb)
                                    g_param_spec_enum ("paint-mode",
                                                       "paint mode",
                                                       "The paint mode",
-                                                      GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                      GIMP_NORMAL_MODE,
+                                                      GIMP_TYPE_LAYER_MODE,
+                                                      GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -3162,8 +3162,8 @@ register_context_procs (GimpPDB *pdb)
                                g_param_spec_enum ("paint-mode",
                                                   "paint mode",
                                                   "The paint mode",
-                                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
-                                                  GIMP_NORMAL_MODE,
+                                                  GIMP_TYPE_LAYER_MODE,
+                                                  GIMP_LAYER_MODE_NORMAL,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

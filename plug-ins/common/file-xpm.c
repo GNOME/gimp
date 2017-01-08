@@ -482,7 +482,7 @@ parse_image (gint32    image_ID,
                              xpm_image->height,
                              GIMP_RGBA_IMAGE,
                              100,
-                             GIMP_NORMAL_MODE);
+                             GIMP_LAYER_MODE_NORMAL);
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 

@@ -30,15 +30,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 GIMP_DEPRECATED_FOR(gimp_context_get_opacity)
-gdouble              gimp_brushes_get_opacity    (void);
+gdouble         gimp_brushes_get_opacity    (void);
 GIMP_DEPRECATED_FOR(gimp_context_set_opacity)
-gboolean             gimp_brushes_set_opacity    (gdouble               opacity);
+gboolean        gimp_brushes_set_opacity    (gdouble        opacity);
 GIMP_DEPRECATED_FOR(gimp_context_get_paint_mode)
-GimpLayerModeEffects gimp_brushes_get_paint_mode (void);
+GimpLayerMode   gimp_brushes_get_paint_mode (void);
 GIMP_DEPRECATED_FOR(gimp_context_set_paint_mode)
-gboolean             gimp_brushes_set_paint_mode (GimpLayerModeEffects  paint_mode);
+gboolean        gimp_brushes_set_paint_mode (GimpLayerMode  paint_mode);
 GIMP_DEPRECATED_FOR(gimp_context_set_brush)
-gboolean             gimp_brushes_set_brush      (const gchar          *name);
+gboolean        gimp_brushes_set_brush      (const gchar   *name);
 
 G_END_DECLS
 

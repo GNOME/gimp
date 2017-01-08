@@ -282,17 +282,17 @@ paint_mask_to_paint_buffer (const GimpTempBuf  *paint_mask,
 }
 
 void
-do_layer_blend (GeglBuffer  *src_buffer,
-                GeglBuffer  *dst_buffer,
-                GimpTempBuf *paint_buf,
-                GeglBuffer  *mask_buffer,
-                gfloat       opacity,
-                gint         x_offset,
-                gint         y_offset,
-                gint         mask_x_offset,
-                gint         mask_y_offset,
-                gboolean     linear_mode,
-                GimpLayerModeEffects paint_mode)
+do_layer_blend (GeglBuffer    *src_buffer,
+                GeglBuffer    *dst_buffer,
+                GimpTempBuf   *paint_buf,
+                GeglBuffer    *mask_buffer,
+                gfloat         opacity,
+                gint           x_offset,
+                gint           y_offset,
+                gint           mask_x_offset,
+                gint           mask_y_offset,
+                gboolean       linear_mode,
+                GimpLayerMode  paint_mode)
 {
   GeglRectangle       roi;
   GeglRectangle       mask_roi;
@@ -303,7 +303,8 @@ do_layer_blend (GeglBuffer  *src_buffer,
   const guint         paint_stride = gimp_temp_buf_get_width (paint_buf);
   gfloat             *paint_data   = (gfloat *) gimp_temp_buf_get_data (paint_buf);
 
-  GimpLayerModeFunction apply_func = get_layer_mode_function (paint_mode, linear_mode);
+  GimpLayerModeFunction apply_func = get_layer_mode_function (paint_mode,
+                                                              linear_mode);
 
   if (linear_mode)
     iterator_format = babl_format ("RGBA float");

@@ -625,7 +625,7 @@ HELP
 	  desc => 'The affected drawable' },
 	{ name => 'fill_mode', type => 'enum GimpBucketFillMode',
 	  desc => 'The type of fill' },
-	{ name => paint_mode, type => 'enum GimpLayerModeEffects',
+	{ name => paint_mode, type => 'enum GimpLayerMode',
 	  desc => 'The paint application mode' },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The opacity of the final bucket fill' },
@@ -661,8 +661,8 @@ HELP
       if (gimp_fill_options_set_by_fill_mode (options, context,
                                               fill_mode, error))
         {
-          if (paint_mode == GIMP_OVERLAY_MODE)
-            paint_mode = GIMP_SOFTLIGHT_MODE;
+          if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+            paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
           gimp_context_set_opacity (GIMP_CONTEXT (options), opacity / 100.0);
           gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
@@ -722,7 +722,7 @@ HELP
 	  desc => 'The affected drawable' },
 	{ name => 'fill_mode', type => 'enum GimpBucketFillMode',
 	  desc => 'The type of fill' },
-	{ name => paint_mode, type => 'enum GimpLayerModeEffects',
+	{ name => paint_mode, type => 'enum GimpLayerMode',
 	  desc => 'The paint application mode' },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The opacity of the final bucket fill' },
@@ -766,8 +766,8 @@ HELP
       if (gimp_fill_options_set_by_fill_mode (options, context,
                                               fill_mode, error))
         {
-          if (paint_mode == GIMP_OVERLAY_MODE)
-            paint_mode = GIMP_SOFTLIGHT_MODE;
+          if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+            paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
           gimp_context_set_opacity (GIMP_CONTEXT (options), opacity / 100.0);
           gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
@@ -819,7 +819,7 @@ HELP
 	  desc => 'The affected drawable' },
         { name => 'blend_mode', type => 'enum GimpBlendMode',
 	  desc => 'The type of blend' },
-	{ name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+	{ name => 'paint_mode', type => 'enum GimpLayerMode',
 	  desc => 'The paint application mode' },
 	{ name => 'gradient_type',  type => 'enum GimpGradientType',
 	  desc => 'The type of gradient' },
@@ -871,8 +871,8 @@ HELP
     {
       GimpGradient *gradient;
 
-      if (paint_mode == GIMP_OVERLAY_MODE)
-        paint_mode = GIMP_SOFTLIGHT_MODE;
+      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
 
       if (progress)
         gimp_progress_start (progress, FALSE, _("Blending"));

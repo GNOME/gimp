@@ -35,16 +35,16 @@ typedef struct _GimpDrawableUndoClass GimpDrawableUndoClass;
 
 struct _GimpDrawableUndo
 {
-  GimpItemUndo  parent_instance;
+  GimpItemUndo   parent_instance;
 
-  GeglBuffer   *buffer;
-  gint          x;
-  gint          y;
+  GeglBuffer    *buffer;
+  gint           x;
+  gint           y;
 
   /* stuff for "Fade" */
-  GeglBuffer           *applied_buffer;
-  GimpLayerModeEffects  paint_mode;
-  gdouble               opacity;
+  GeglBuffer    *applied_buffer;
+  GimpLayerMode  paint_mode;
+  gdouble        opacity;
 };
 
 struct _GimpDrawableUndoClass

@@ -38,7 +38,9 @@
 #include <winnls.h>
 #endif
 
+#undef GIMP_DISABLE_DEPRECATED /* for compat enums */
 #include "libgimpbase/gimpbase.h"
+#define GIMP_DISABLE_DEPRECATED
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
@@ -91,6 +93,8 @@ void
 app_libs_init (GOptionContext *context,
                gboolean        no_interface)
 {
+  GQuark quark;
+
   /* disable OpenCL before GEGL is even initialized; this way we only
    * enable if wanted in gimprc, instead of always enabling, and then
    * disabling again if wanted in gimprc
@@ -108,6 +112,12 @@ app_libs_init (GOptionContext *context,
       gui_libs_init (context);
     }
 #endif
+
+  /*  keep compat enum code in sync with tools/pdbgen/enumcode.pl  */
+  quark = g_quark_from_static_string ("gimp-compat-enum");
+
+  g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
+		    (gpointer) GIMP_TYPE_LAYER_MODE_EFFECTS);
 }
 
 void
