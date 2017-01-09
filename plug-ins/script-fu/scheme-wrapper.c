@@ -171,6 +171,14 @@ static const NamedConstant const old_constants[] =
 
   { "DESATURATE-LUMINOSITY",   GIMP_DESATURATE_LUMA },
 
+  { "ALL-HUES",     GIMP_HUE_RANGE_ALL     },
+  { "RED-HUES",     GIMP_HUE_RANGE_RED     },
+  { "YELLOW-HUES",  GIMP_HUE_RANGE_YELLOW  },
+  { "GREEN-HUES",   GIMP_HUE_RANGE_GREEN   },
+  { "CYAN-HUES",    GIMP_HUE_RANGE_CYAN    },
+  { "BLUE-HUES",    GIMP_HUE_RANGE_BLUE    },
+  { "MAGENTA-HUES", GIMP_HUE_RANGE_MAGENTA },
+
   { "NORMAL-MODE",             GIMP_LAYER_MODE_NORMAL                },
   { "DISSOLVE-MODE",           GIMP_LAYER_MODE_DISSOLVE              },
   { "BEHIND-MODE",             GIMP_LAYER_MODE_BEHIND                },

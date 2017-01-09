@@ -85,7 +85,7 @@ map_hue (GimpHueSaturationConfig *config,
          GimpHueRange             range,
          gdouble                  value)
 {
-  value += (config->hue[GIMP_ALL_HUES] + config->hue[range]) / 2.0;
+  value += (config->hue[GIMP_HUE_RANGE_ALL] + config->hue[range]) / 2.0;
 
   if (value < 0)
     return value + 1.0;
@@ -117,7 +117,7 @@ map_hue_overlap (GimpHueSaturationConfig *config,
   gdouble v = config->hue[primary_range]   * primary_intensity +
               config->hue[secondary_range] * secondary_intensity;
 
-  value += (config->hue[GIMP_ALL_HUES] + v) / 2.0;
+  value += (config->hue[GIMP_HUE_RANGE_ALL] + v) / 2.0;
 
   if (value < 0)
     return value + 1.0;
@@ -132,7 +132,7 @@ map_saturation (GimpHueSaturationConfig *config,
                 GimpHueRange             range,
                 gdouble                  value)
 {
-  gdouble v = config->saturation[GIMP_ALL_HUES] + config->saturation[range];
+  gdouble v = config->saturation[GIMP_HUE_RANGE_ALL] + config->saturation[range];
 
   /* This change affects the way saturation is computed. With the old
    * code (different code for value < 0), increasing the saturation
@@ -152,7 +152,7 @@ map_lightness (GimpHueSaturationConfig *config,
                GimpHueRange             range,
                gdouble                  value)
 {
-  gdouble v = (config->lightness[GIMP_ALL_HUES] + config->lightness[range]) / 2.0;
+  gdouble v = (config->lightness[GIMP_HUE_RANGE_ALL] + config->lightness[range]) / 2.0;
 
   if (v < 0)
     return value * (v + 1.0);

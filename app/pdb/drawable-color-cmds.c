@@ -1104,7 +1104,7 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   "hue range",
                                                   "Range of affected hues",
                                                   GIMP_TYPE_HUE_RANGE,
-                                                  GIMP_ALL_HUES,
+                                                  GIMP_HUE_RANGE_ALL,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hue-offset",

@@ -104,6 +104,22 @@ typedef enum
 } GimpFillTypeCompat;
 
 
+#define GIMP_TYPE_HUE_RANGE_COMPAT (gimp_hue_range_compat_get_type ())
+
+GType gimp_hue_range_compat_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ALL_HUES,
+  GIMP_RED_HUES,
+  GIMP_YELLOW_HUES,
+  GIMP_GREEN_HUES,
+  GIMP_CYAN_HUES,
+  GIMP_BLUE_HUES,
+  GIMP_MAGENTA_HUES
+} GimpHueRangeCompat;
+
+
 G_END_DECLS
 
 #endif  /* __GIMP_COMPAT_ENUMS_H__ */

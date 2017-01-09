@@ -59,6 +59,8 @@ gimp_base_init (GimpUnitVtable *vtable)
 		    (gpointer) GIMP_TYPE_CONVOLVE_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_FILL_TYPE, quark,
 		    (gpointer) GIMP_TYPE_FILL_TYPE_COMPAT);
+  g_type_set_qdata (GIMP_TYPE_HUE_RANGE, quark,
+		    (gpointer) GIMP_TYPE_HUE_RANGE_COMPAT);
 
   gimp_base_initialized = TRUE;
 }

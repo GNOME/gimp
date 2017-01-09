@@ -783,25 +783,25 @@ gimp_hue_range_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_ALL_HUES, "GIMP_ALL_HUES", "all-hues" },
-    { GIMP_RED_HUES, "GIMP_RED_HUES", "red-hues" },
-    { GIMP_YELLOW_HUES, "GIMP_YELLOW_HUES", "yellow-hues" },
-    { GIMP_GREEN_HUES, "GIMP_GREEN_HUES", "green-hues" },
-    { GIMP_CYAN_HUES, "GIMP_CYAN_HUES", "cyan-hues" },
-    { GIMP_BLUE_HUES, "GIMP_BLUE_HUES", "blue-hues" },
-    { GIMP_MAGENTA_HUES, "GIMP_MAGENTA_HUES", "magenta-hues" },
+    { GIMP_HUE_RANGE_ALL, "GIMP_HUE_RANGE_ALL", "all" },
+    { GIMP_HUE_RANGE_RED, "GIMP_HUE_RANGE_RED", "red" },
+    { GIMP_HUE_RANGE_YELLOW, "GIMP_HUE_RANGE_YELLOW", "yellow" },
+    { GIMP_HUE_RANGE_GREEN, "GIMP_HUE_RANGE_GREEN", "green" },
+    { GIMP_HUE_RANGE_CYAN, "GIMP_HUE_RANGE_CYAN", "cyan" },
+    { GIMP_HUE_RANGE_BLUE, "GIMP_HUE_RANGE_BLUE", "blue" },
+    { GIMP_HUE_RANGE_MAGENTA, "GIMP_HUE_RANGE_MAGENTA", "magenta" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_ALL_HUES, "GIMP_ALL_HUES", NULL },
-    { GIMP_RED_HUES, "GIMP_RED_HUES", NULL },
-    { GIMP_YELLOW_HUES, "GIMP_YELLOW_HUES", NULL },
-    { GIMP_GREEN_HUES, "GIMP_GREEN_HUES", NULL },
-    { GIMP_CYAN_HUES, "GIMP_CYAN_HUES", NULL },
-    { GIMP_BLUE_HUES, "GIMP_BLUE_HUES", NULL },
-    { GIMP_MAGENTA_HUES, "GIMP_MAGENTA_HUES", NULL },
+    { GIMP_HUE_RANGE_ALL, "GIMP_HUE_RANGE_ALL", NULL },
+    { GIMP_HUE_RANGE_RED, "GIMP_HUE_RANGE_RED", NULL },
+    { GIMP_HUE_RANGE_YELLOW, "GIMP_HUE_RANGE_YELLOW", NULL },
+    { GIMP_HUE_RANGE_GREEN, "GIMP_HUE_RANGE_GREEN", NULL },
+    { GIMP_HUE_RANGE_CYAN, "GIMP_HUE_RANGE_CYAN", NULL },
+    { GIMP_HUE_RANGE_BLUE, "GIMP_HUE_RANGE_BLUE", NULL },
+    { GIMP_HUE_RANGE_MAGENTA, "GIMP_HUE_RANGE_MAGENTA", NULL },
     { 0, NULL, NULL }
   };
 

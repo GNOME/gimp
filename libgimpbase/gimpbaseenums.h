@@ -388,13 +388,23 @@ GType gimp_hue_range_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ALL_HUES,
-  GIMP_RED_HUES,
-  GIMP_YELLOW_HUES,
-  GIMP_GREEN_HUES,
-  GIMP_CYAN_HUES,
-  GIMP_BLUE_HUES,
-  GIMP_MAGENTA_HUES
+  GIMP_HUE_RANGE_ALL,
+  GIMP_HUE_RANGE_RED,
+  GIMP_HUE_RANGE_YELLOW,
+  GIMP_HUE_RANGE_GREEN,
+  GIMP_HUE_RANGE_CYAN,
+  GIMP_HUE_RANGE_BLUE,
+  GIMP_HUE_RANGE_MAGENTA,
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_ALL_HUES     = GIMP_HUE_RANGE_ALL,    /*< skip, pdb-skip >*/
+  GIMP_RED_HUES     = GIMP_HUE_RANGE_RED,    /*< skip, pdb-skip >*/
+  GIMP_YELLOW_HUES  = GIMP_HUE_RANGE_YELLOW, /*< skip, pdb-skip >*/
+  GIMP_GREEN_HUES   = GIMP_HUE_RANGE_GREEN,  /*< skip, pdb-skip >*/
+  GIMP_CYAN_HUES    = GIMP_HUE_RANGE_CYAN,   /*< skip, pdb-skip >*/
+  GIMP_BLUE_HUES    = GIMP_HUE_RANGE_BLUE,   /*< skip, pdb-skip >*/
+  GIMP_MAGENTA_HUES = GIMP_HUE_RANGE_MAGENTA /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpHueRange;
 
 

@@ -210,6 +210,46 @@ gimp_fill_type_compat_get_type (void)
   return type;
 }
 
+GType
+gimp_hue_range_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ALL_HUES, "GIMP_ALL_HUES", "all-hues" },
+    { GIMP_RED_HUES, "GIMP_RED_HUES", "red-hues" },
+    { GIMP_YELLOW_HUES, "GIMP_YELLOW_HUES", "yellow-hues" },
+    { GIMP_GREEN_HUES, "GIMP_GREEN_HUES", "green-hues" },
+    { GIMP_CYAN_HUES, "GIMP_CYAN_HUES", "cyan-hues" },
+    { GIMP_BLUE_HUES, "GIMP_BLUE_HUES", "blue-hues" },
+    { GIMP_MAGENTA_HUES, "GIMP_MAGENTA_HUES", "magenta-hues" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ALL_HUES, "GIMP_ALL_HUES", NULL },
+    { GIMP_RED_HUES, "GIMP_RED_HUES", NULL },
+    { GIMP_YELLOW_HUES, "GIMP_YELLOW_HUES", NULL },
+    { GIMP_GREEN_HUES, "GIMP_GREEN_HUES", NULL },
+    { GIMP_CYAN_HUES, "GIMP_CYAN_HUES", NULL },
+    { GIMP_BLUE_HUES, "GIMP_BLUE_HUES", NULL },
+    { GIMP_MAGENTA_HUES, "GIMP_MAGENTA_HUES", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpHueRangeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "hue-range-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

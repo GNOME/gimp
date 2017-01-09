@@ -94,7 +94,7 @@ gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass *klass)
                          _("Range"),
                          _("The affected range"),
                          GIMP_TYPE_HUE_RANGE,
-                         GIMP_ALL_HUES, 0);
+                         GIMP_HUE_RANGE_ALL, 0);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HUE,
                            "hue",
@@ -227,7 +227,7 @@ gimp_hue_saturation_config_serialize (GimpConfig       *config,
 
   old_range = hs_config->range;
 
-  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+  for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
     {
       hs_config->range = range;
 
@@ -280,7 +280,7 @@ gimp_hue_saturation_config_equal (GimpConfig *a,
   GimpHueSaturationConfig *config_b = GIMP_HUE_SATURATION_CONFIG (b);
   GimpHueRange             range;
 
-  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+  for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
     {
       if (config_a->hue[range]        != config_b->hue[range]        ||
           config_a->saturation[range] != config_b->saturation[range] ||
@@ -302,7 +302,7 @@ gimp_hue_saturation_config_reset (GimpConfig *config)
   GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
   GimpHueRange             range;
 
-  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+  for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
     {
       hs_config->range = range;
       gimp_hue_saturation_config_reset_range (hs_config);
@@ -321,7 +321,7 @@ gimp_hue_saturation_config_copy (GimpConfig   *src,
   GimpHueSaturationConfig *dest_config = GIMP_HUE_SATURATION_CONFIG (dest);
   GimpHueRange             range;
 
-  for (range = GIMP_ALL_HUES; range <= GIMP_MAGENTA_HUES; range++)
+  for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
     {
       dest_config->hue[range]        = src_config->hue[range];
       dest_config->saturation[range] = src_config->saturation[range];

@@ -156,31 +156,20 @@ add_compat_enums(PyObject *m)
     PyModule_AddIntConstant(m, "DESATURATE_LUMINOSITY",
                             GIMP_DESATURATE_LUMA);
 
-    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_RGB",
-                            GIMP_EXPORT_CAN_HANDLE_RGB);
-    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_GRAY",
-                            GIMP_EXPORT_CAN_HANDLE_GRAY);
-    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_INDEXED",
-                            GIMP_EXPORT_CAN_HANDLE_INDEXED);
-    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_BITMAP",
-                            GIMP_EXPORT_CAN_HANDLE_BITMAP);
-    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_ALPHA",
-                            GIMP_EXPORT_CAN_HANDLE_ALPHA);
-    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYERS",
-                            GIMP_EXPORT_CAN_HANDLE_LAYERS);
-    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION",
-                            GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION);
-    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYER_MASKS",
-                            GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
-    PyModule_AddIntConstant(m, "EXPORT_NEEDS_ALPHA",
-                            GIMP_EXPORT_NEEDS_ALPHA);
-
-    PyModule_AddIntConstant(m, "EXPORT_CANCEL",
-                            GIMP_EXPORT_CANCEL);
-    PyModule_AddIntConstant(m, "EXPORT_IGNORE",
-                            GIMP_EXPORT_IGNORE);
-    PyModule_AddIntConstant(m, "EXPORT_EXPORT",
-                            GIMP_EXPORT_EXPORT);
+    PyModule_AddIntConstant (m, "ALL_HUES",
+                             GIMP_HUE_RANGE_ALL);
+    PyModule_AddIntConstant (m, "RED_HUES",
+                             GIMP_HUE_RANGE_RED);
+    PyModule_AddIntConstant (m, "YELLOW_HUES",
+                             GIMP_HUE_RANGE_YELLOW);
+    PyModule_AddIntConstant (m, "GREEN_HUES",
+                             GIMP_HUE_RANGE_GREEN);
+    PyModule_AddIntConstant (m, "CYAN_HUES",
+                             GIMP_HUE_RANGE_CYAN);
+    PyModule_AddIntConstant (m, "BLUE_HUES",
+                             GIMP_HUE_RANGE_BLUE);
+    PyModule_AddIntConstant (m, "MAGENTA_HUES",
+                             GIMP_HUE_RANGE_MAGENTA);
 
     PyModule_AddIntConstant (m, "NORMAL_MODE",
                              GIMP_LAYER_MODE_NORMAL);
@@ -228,6 +217,32 @@ add_compat_enums(PyObject *m)
                              GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY);
     PyModule_AddIntConstant (m, "COLOR_ERASE_MODE",
                              GIMP_LAYER_MODE_COLOR_ERASE);
+
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_RGB",
+                            GIMP_EXPORT_CAN_HANDLE_RGB);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_GRAY",
+                            GIMP_EXPORT_CAN_HANDLE_GRAY);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_INDEXED",
+                            GIMP_EXPORT_CAN_HANDLE_INDEXED);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_BITMAP",
+                            GIMP_EXPORT_CAN_HANDLE_BITMAP);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_ALPHA",
+                            GIMP_EXPORT_CAN_HANDLE_ALPHA);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYERS",
+                            GIMP_EXPORT_CAN_HANDLE_LAYERS);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION",
+                            GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYER_MASKS",
+                            GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
+    PyModule_AddIntConstant(m, "EXPORT_NEEDS_ALPHA",
+                            GIMP_EXPORT_NEEDS_ALPHA);
+
+    PyModule_AddIntConstant(m, "EXPORT_CANCEL",
+                            GIMP_EXPORT_CANCEL);
+    PyModule_AddIntConstant(m, "EXPORT_IGNORE",
+                            GIMP_EXPORT_IGNORE);
+    PyModule_AddIntConstant(m, "EXPORT_EXPORT",
+                            GIMP_EXPORT_EXPORT);
 }
 
 static void

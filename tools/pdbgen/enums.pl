@@ -253,16 +253,17 @@ package Gimp::CodeGen::enums;
     GimpHueRange =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_ALL_HUES GIMP_RED_HUES GIMP_YELLOW_HUES
-			  GIMP_GREEN_HUES GIMP_CYAN_HUES GIMP_BLUE_HUES
-			  GIMP_MAGENTA_HUES) ],
-	  mapping => { GIMP_ALL_HUES => '0',
-		       GIMP_RED_HUES => '1',
-		       GIMP_YELLOW_HUES => '2',
-		       GIMP_GREEN_HUES => '3',
-		       GIMP_CYAN_HUES => '4',
-		       GIMP_BLUE_HUES => '5',
-		       GIMP_MAGENTA_HUES => '6' }
+	  symbols => [ qw(GIMP_HUE_RANGE_ALL GIMP_HUE_RANGE_RED
+			  GIMP_HUE_RANGE_YELLOW GIMP_HUE_RANGE_GREEN
+			  GIMP_HUE_RANGE_CYAN GIMP_HUE_RANGE_BLUE
+			  GIMP_HUE_RANGE_MAGENTA) ],
+	  mapping => { GIMP_HUE_RANGE_ALL => '0',
+		       GIMP_HUE_RANGE_RED => '1',
+		       GIMP_HUE_RANGE_YELLOW => '2',
+		       GIMP_HUE_RANGE_GREEN => '3',
+		       GIMP_HUE_RANGE_CYAN => '4',
+		       GIMP_HUE_RANGE_BLUE => '5',
+		       GIMP_HUE_RANGE_MAGENTA => '6' }
 	},
     GimpIconType =>
 	{ contig => 1,
