@@ -29,9 +29,11 @@
 #include "animation-utils.h"
 
 #include "core/animation.h"
+#include "core/animation-camera.h"
 #include "core/animation-playback.h"
 #include "core/animation-celanimation.h"
 
+#include "animation-keyframe-view.h"
 #include "animation-layer-view.h"
 #include "animation-menus.h"
 
@@ -44,6 +46,7 @@ enum
   PROP_0,
   PROP_ANIMATION,
   PROP_LAYER_VIEW,
+  PROP_KEYFRAME_VIEW,
   PROP_SUITE_CYCLE,
   PROP_SUITE_FPI
 };
@@ -54,6 +57,7 @@ struct _AnimationXSheetPrivate
   AnimationPlayback     *playback;
 
   GtkWidget             *layer_view;
+  GtkWidget             *keyframe_view;
 
   GtkWidget             *track_layout;
 
@@ -66,6 +70,8 @@ struct _AnimationXSheetPrivate
   gint                   suite_level;
   gint                   suite_cycle;
   gint                   suite_fpi;
+
+  GList                 *effect_buttons;
 
   GList                 *cels;
   gint                   selected_track;
@@ -141,10 +147,18 @@ static void     on_animation_loaded            (Animation         *animation,
 static void     on_animation_duration_changed  (Animation         *animation,
                                                 gint               duration,
                                                 AnimationXSheet   *xsheet);
-/* Callbacks on playback. */
-static void     on_animation_stopped           (AnimationPlayback *playback,
+/* Callbacks on camera. */
+static void     on_camera_keyframe_set         (AnimationCamera   *camera,
+                                                gint               position,
                                                 AnimationXSheet   *xsheet);
-static void     on_animation_rendered          (AnimationPlayback *animation,
+static void     on_camera_keyframe_deleted     (AnimationCamera   *camera,
+                                                gint               position,
+                                                AnimationXSheet   *xsheet);
+
+/* Callbacks on playback. */
+static void     on_playback_stopped            (AnimationPlayback *playback,
+                                                AnimationXSheet   *xsheet);
+static void     on_playback_rendered           (AnimationPlayback *animation,
                                                 gint               frame_number,
                                                 GeglBuffer        *buffer,
                                                 gboolean           must_draw_null,
@@ -159,6 +173,9 @@ static void     on_layer_selection             (AnimationLayerView *view,
 static void     animation_xsheet_suite_do            (GtkWidget       *button,
                                                       AnimationXSheet *xsheet);
 static void     animation_xsheet_suite_cancelled     (GtkWidget       *button,
+                                                      AnimationXSheet *xsheet);
+static gboolean animation_xsheet_effect_clicked      (GtkWidget       *button,
+                                                      GdkEvent        *event,
                                                       AnimationXSheet *xsheet);
 static gboolean animation_xsheet_frame_clicked       (GtkWidget       *button,
                                                       GdkEvent        *event,
@@ -245,6 +262,17 @@ animation_xsheet_class_init (AnimationXSheetClass *klass)
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   /**
+   * AnimationXSheet:keyframe-view:
+   *
+   * The associated #AnimationLayerView.
+   */
+  g_object_class_install_property (object_class, PROP_KEYFRAME_VIEW,
+                                   g_param_spec_object ("keyframe-view",
+                                                        NULL, NULL,
+                                                        ANIMATION_TYPE_KEYFRAME_VIEW,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  /**
    * AnimationXSheet:suite-cycle:
    *
    * The configured cycle repeat. 0 means indefinitely.
@@ -284,20 +312,22 @@ animation_xsheet_init (AnimationXSheet *xsheet)
 GtkWidget *
 animation_xsheet_new (AnimationCelAnimation *animation,
                       AnimationPlayback     *playback,
-                      GtkWidget             *layer_view)
+                      GtkWidget             *layer_view,
+                      GtkWidget             *keyframe_view)
 {
   GtkWidget *xsheet;
 
   xsheet = g_object_new (ANIMATION_TYPE_XSHEET,
                          "animation", animation,
                          "layer-view", layer_view,
+                         "keyframe-view", keyframe_view,
                          NULL);
   ANIMATION_XSHEET (xsheet)->priv->playback = playback;
   g_signal_connect (ANIMATION_XSHEET (xsheet)->priv->playback,
-                    "render", G_CALLBACK (on_animation_rendered),
+                    "render", G_CALLBACK (on_playback_rendered),
                     xsheet);
   g_signal_connect (ANIMATION_XSHEET (xsheet)->priv->playback,
-                    "stop", G_CALLBACK (on_animation_stopped),
+                    "stop", G_CALLBACK (on_playback_stopped),
                     xsheet);
 
   return xsheet;
@@ -352,6 +382,9 @@ animation_xsheet_set_property (GObject      *object,
     case PROP_LAYER_VIEW:
       xsheet->priv->layer_view = g_value_dup_object (value);
       break;
+    case PROP_KEYFRAME_VIEW:
+      xsheet->priv->keyframe_view = g_value_dup_object (value);
+      break;
     case PROP_SUITE_CYCLE:
       xsheet->priv->suite_cycle = g_value_get_int (value);
       break;
@@ -381,6 +414,9 @@ animation_xsheet_get_property (GObject      *object,
     case PROP_LAYER_VIEW:
       g_value_set_object (value, xsheet->priv->layer_view);
       break;
+    case PROP_KEYFRAME_VIEW:
+      g_value_set_object (value, xsheet->priv->keyframe_view);
+      break;
     case PROP_SUITE_CYCLE:
       g_value_set_int (value, xsheet->priv->suite_cycle);
       break;
@@ -400,10 +436,10 @@ animation_xsheet_finalize (GObject *object)
   AnimationXSheet *xsheet = ANIMATION_XSHEET (object);
 
   g_signal_handlers_disconnect_by_func (ANIMATION_XSHEET (xsheet)->priv->playback,
-                                        G_CALLBACK (on_animation_rendered),
+                                        G_CALLBACK (on_playback_rendered),
                                         xsheet);
   g_signal_handlers_disconnect_by_func (ANIMATION_XSHEET (xsheet)->priv->playback,
-                                        G_CALLBACK (on_animation_stopped),
+                                        G_CALLBACK (on_playback_stopped),
                                         xsheet);
   if (xsheet->priv->animation)
     g_object_unref (xsheet->priv->animation);
@@ -413,6 +449,7 @@ animation_xsheet_finalize (GObject *object)
 
   g_list_free_full (xsheet->priv->cels, (GDestroyNotify) g_list_free);
   g_list_free (xsheet->priv->comment_fields);
+  g_list_free (xsheet->priv->effect_buttons);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -438,7 +475,7 @@ animation_xsheet_add_headers (AnimationXSheet *xsheet,
                                         frame, level);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
   gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                    frame, level * 9 + 1, level * 9 + 10, 1, 2,
+                    frame, level * 9 + 2, level * 9 + 11, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   label = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (label), title);
@@ -493,7 +530,7 @@ animation_xsheet_add_headers (AnimationXSheet *xsheet,
   gtk_widget_show (GTK_WIDGET (item));
 
   gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                    toolbar, level * 9 + 9, level * 9 + 11, 0, 1,
+                    toolbar, level * 9 + 10, level * 9 + 12, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toolbar);
 
@@ -563,7 +600,7 @@ animation_xsheet_add_headers (AnimationXSheet *xsheet,
   gtk_widget_show (GTK_WIDGET (item));
 
   gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                    toolbar, level * 9 + 2, level * 9 + 9, 0, 1,
+                    toolbar, level * 9 + 3, level * 9 + 10, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (toolbar);
 }
@@ -735,11 +772,41 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
       gtk_widget_show (label);
       gtk_widget_show (frame);
 
+      /* Create effect button. */
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
+      gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
+                        frame, 1, 2, i + 2, i + 3,
+                        GTK_FILL, GTK_FILL, 0, 0);
+
+      label = gtk_toggle_button_new ();
+      xsheet->priv->effect_buttons = g_list_append (xsheet->priv->effect_buttons,
+                                                    label);
+      g_object_set_data (G_OBJECT (label), "frame-position",
+                         GINT_TO_POINTER (i));
+      gtk_button_set_relief (GTK_BUTTON (label), GTK_RELIEF_NONE);
+      gtk_button_set_focus_on_click (GTK_BUTTON (label), FALSE);
+      g_signal_connect (label, "button-press-event",
+                        G_CALLBACK (animation_xsheet_effect_clicked),
+                        xsheet);
+      g_signal_connect (animation_cel_animation_get_main_camera (xsheet->priv->animation),
+                        "keyframe-set",
+                        G_CALLBACK (on_camera_keyframe_set),
+                        xsheet);
+      g_signal_connect (animation_cel_animation_get_main_camera (xsheet->priv->animation),
+                        "keyframe-deleted",
+                        G_CALLBACK (on_camera_keyframe_deleted),
+                        xsheet);
+      gtk_container_add (GTK_CONTAINER (frame), label);
+
+      gtk_widget_show (label);
+      gtk_widget_show (frame);
+
       /* Create new comment fields. */
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
       gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        frame, n_tracks * 9 + 1, n_tracks * 9 + 6, i + 2, i + 3,
+                        frame, n_tracks * 9 + 2, n_tracks * 9 + 7, i + 2, i + 3,
                         GTK_FILL, GTK_FILL, 0, 0);
       comment_field = gtk_text_view_new ();
       xsheet->priv->comment_fields = g_list_append (xsheet->priv->comment_fields,
@@ -836,6 +903,24 @@ animation_xsheet_remove_frames (AnimationXSheet   *xsheet,
   item->prev = NULL;
   g_list_free (item);
 
+  /* Remove the effect button. */
+  item = g_list_nth (xsheet->priv->effect_buttons, position);
+  for (iter = item, i = position; iter && i < position + n_frames; iter = iter->next)
+    {
+      gtk_widget_destroy (gtk_widget_get_parent (iter->data));
+    }
+  if (item->prev)
+    item->prev->next = iter;
+  else
+    xsheet->priv->effect_buttons = iter;
+  if (iter)
+    {
+      iter->prev->next = NULL;
+      iter->prev = item->prev;
+    }
+  item->prev = NULL;
+  g_list_free (item);
+
   /* Remove the comments field. */
   item = g_list_nth (xsheet->priv->comment_fields,
                      position);
@@ -877,6 +962,7 @@ static void
 animation_xsheet_reset_layout (AnimationXSheet *xsheet)
 {
   GtkWidget *frame;
+  GtkWidget *image;
   GtkWidget *label;
   gint       n_tracks;
   gint       n_frames;
@@ -887,6 +973,8 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
                          NULL);
   g_list_free_full (xsheet->priv->cels, (GDestroyNotify) g_list_free);
   xsheet->priv->cels = NULL;
+  g_list_free (xsheet->priv->effect_buttons);
+  xsheet->priv->effect_buttons = NULL;
   g_list_free (xsheet->priv->comment_fields);
   xsheet->priv->comment_fields = NULL;
   g_list_free (xsheet->priv->second_separators);
@@ -926,7 +1014,7 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
   /* Add 4 columns for track names and 1 row for frame numbers. */
   gtk_table_resize (GTK_TABLE (xsheet->priv->track_layout),
                     (guint) (n_frames + 2),
-                    (guint) (n_tracks * 9 + 6));
+                    (guint) (n_tracks * 9 + 7));
   animation_xsheet_add_frames (xsheet, 0, n_frames);
 
   /* Titles. */
@@ -935,13 +1023,20 @@ animation_xsheet_reset_layout (AnimationXSheet *xsheet)
       animation_xsheet_add_headers (xsheet, j);
     }
 
+  image = gtk_image_new_from_icon_name ("camera-video",
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout), image,
+                    1, 2, 1, 2,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (image);
+
   frame = gtk_frame_new (NULL);
   label = gtk_label_new (_("Comments"));
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
   gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                    frame, n_tracks * 9 + 1, n_tracks * 9 + 6, 1, 2,
+                    frame, n_tracks * 9 + 2, n_tracks * 9 + 7, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   xsheet->priv->comments_title = frame;
   gtk_widget_show (frame);
@@ -1143,19 +1238,62 @@ on_animation_duration_changed (Animation       *animation,
 }
 
 static void
-on_animation_stopped (AnimationPlayback   *playback,
-                      AnimationXSheet     *xsheet)
+on_camera_keyframe_set (AnimationCamera *camera,
+                        gint             position,
+                        AnimationXSheet *xsheet)
+{
+  GtkWidget *button;
+
+  button = g_list_nth_data (xsheet->priv->effect_buttons,
+                            position);
+
+  if (button)
+    {
+      GtkWidget *image;
+
+      if (gtk_bin_get_child (GTK_BIN (button)))
+        {
+          gtk_container_remove (GTK_CONTAINER (button),
+                                gtk_bin_get_child (GTK_BIN (button)));
+        }
+      image = gtk_image_new_from_icon_name ("gtk-ok",
+                                            GTK_ICON_SIZE_SMALL_TOOLBAR);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+    }
+}
+
+static void
+on_camera_keyframe_deleted (AnimationCamera *camera,
+                            gint             position,
+                            AnimationXSheet *xsheet)
+{
+  GtkWidget *button;
+
+  button = g_list_nth_data (xsheet->priv->effect_buttons,
+                            position);
+
+  if (button && gtk_bin_get_child (GTK_BIN (button)))
+    {
+      gtk_container_remove (GTK_CONTAINER (button),
+                            gtk_bin_get_child (GTK_BIN (button)));
+    }
+}
+
+static void
+on_playback_stopped (AnimationPlayback *playback,
+                     AnimationXSheet   *xsheet)
 {
   animation_xsheet_jump (xsheet,
                          animation_playback_get_position (playback));
 }
 
 static void
-on_animation_rendered (AnimationPlayback *playback,
-                       gint               frame_number,
-                       GeglBuffer        *buffer,
-                       gboolean           must_draw_null,
-                       AnimationXSheet   *xsheet)
+on_playback_rendered (AnimationPlayback *playback,
+                      gint               frame_number,
+                      GeglBuffer        *buffer,
+                      gboolean           must_draw_null,
+                      AnimationXSheet   *xsheet)
 {
   animation_xsheet_jump (xsheet, frame_number);
 }
@@ -1336,6 +1474,23 @@ animation_xsheet_suite_cancelled (GtkWidget       *button,
   xsheet->priv->suite_box = NULL;
   gtk_widget_show (xsheet->priv->suite_button);
   xsheet->priv->suite_button = NULL;
+}
+
+static gboolean
+animation_xsheet_effect_clicked (GtkWidget       *button,
+                                 GdkEvent        *event,
+                                 AnimationXSheet *xsheet)
+{
+  gpointer position;
+
+  position = g_object_get_data (G_OBJECT (button), "frame-position");
+
+  animation_keyframe_view_show (ANIMATION_KEYFRAME_VIEW (xsheet->priv->keyframe_view),
+                                ANIMATION_CEL_ANIMATION (xsheet->priv->animation),
+                                GPOINTER_TO_INT (position));
+
+  /* All handled here. */
+  return TRUE;
 }
 
 static gboolean
@@ -1604,7 +1759,8 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
     }
   else if (event->type == GDK_BUTTON_RELEASE && event->button == 3)
     {
-      animation_menu_cell (xsheet->priv->animation, event,
+      animation_menu_cell (xsheet->priv->animation,
+                           event,
                            GPOINTER_TO_INT (position),
                            GPOINTER_TO_INT (track_num));
     }
@@ -1951,7 +2107,7 @@ animation_xsheet_attach_cel (AnimationXSheet *xsheet,
       gtk_container_add (GTK_CONTAINER (frame), cel);
     }
   gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                    frame, track * 9 + 1, track * 9 + 10,
+                    frame, track * 9 + 2, track * 9 + 11,
                     pos + 2, pos + 3,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (frame);

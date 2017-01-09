@@ -24,6 +24,10 @@
 #include <libgimp/stdplugins-intl.h>
 
 #include "animation-utils.h"
+
+#include "animation.h"
+#include "animation-camera.h"
+
 #include "animation-celanimation.h"
 
 typedef struct _AnimationCelAnimationPrivate AnimationCelAnimationPrivate;
@@ -38,34 +42,45 @@ Track;
 
 typedef struct
 {
+  gint   tattoo;
+  gint   offset_x;
+  gint   offset_y;
+}
+CompLayer;
+
+typedef struct
+{
   GeglBuffer *buffer;
 
   /* The list of layers (identified by their tattoos) composited into
    * this buffer allows to easily compare caches so that to not
    * duplicate them.*/
-  gint *composition;
-  gint  n_sources;
+  CompLayer  *composition;
+  gint        n_sources;
 
-  gint refs;
+  gint        refs;
 }
 Cache;
 
 struct _AnimationCelAnimationPrivate
 {
   /* The number of frames. */
-  gint   duration;
+  gint             duration;
 
   /* Frames are cached as GEGL buffers. */
-  GList *cache;
+  GList           *cache;
 
   /* Panel comments. */
-  GList *comments;
+  GList           *comments;
 
   /* List of tracks/levels.
    * The background is a special-named track, always present
    * and first.
    * There is always at least 1 additional track. */
-  GList *tracks;
+  GList           *tracks;
+
+  /* The globale camera. */
+  AnimationCamera *camera;
 };
 
 typedef enum
@@ -135,6 +150,12 @@ static void      animation_cel_animation_text              (GMarkupParseContext 
                                                             gpointer              user_data,
                                                             GError              **error);
 
+/* Signal handling */
+
+static void      on_camera_offsets_changed                 (AnimationCamera        *camera,
+                                                            gint                    position,
+                                                            gint                    duration,
+                                                            AnimationCelAnimation  *animation);
 /* Utils */
 
 static void         animation_cel_animation_cache          (AnimationCelAnimation  *animation,
@@ -348,6 +369,12 @@ animation_cel_animation_set_duration (AnimationCelAnimation *animation,
       g_signal_emit_by_name (animation, "duration-changed",
                              duration);
     }
+}
+
+GObject *
+animation_cel_animation_get_main_camera (AnimationCelAnimation *animation)
+{
+  return G_OBJECT (animation->priv->camera);
 }
 
 gint
@@ -748,6 +775,11 @@ animation_cel_animation_reset_defaults (Animation *animation)
                                           layers);
         }
     }
+
+  priv->camera = animation_camera_new (animation);
+  g_signal_connect (priv->camera, "offsets-changed",
+                    G_CALLBACK (on_camera_offsets_changed),
+                    animation);
 }
 
 static gchar *
@@ -910,6 +942,15 @@ animation_cel_animation_deserialize (Animation    *animation,
       cel_animation = ANIMATION_CEL_ANIMATION (animation);
       /* Reverse track order. */
       cel_animation->priv->tracks = g_list_reverse (cel_animation->priv->tracks);
+
+      /* TODO: just testing right now. I will have to add actual
+       * (de)serialization, otherwise there is no persistency of
+       * camera works.
+       */
+      cel_animation->priv->camera = animation_camera_new (animation);
+      g_signal_connect (cel_animation->priv->camera, "offsets-changed",
+                        G_CALLBACK (on_camera_offsets_changed),
+                        animation);
     }
   g_markup_parse_context_free (context);
 
@@ -1207,6 +1248,23 @@ animation_cel_animation_text (GMarkupParseContext  *context,
     }
 }
 
+/**** Signal handling ****/
+
+static void
+on_camera_offsets_changed (AnimationCamera       *camera,
+                           gint                   position,
+                           gint                   duration,
+                           AnimationCelAnimation *animation)
+{
+  gint i;
+
+  for (i = position; i < position + duration; i++)
+    animation_cel_animation_cache (animation, i);
+
+  g_signal_emit_by_name (animation, "cache-invalidated",
+                         position, duration);
+}
+
 /**** Utils ****/
 
 static void
@@ -1216,13 +1274,15 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
   GeglBuffer *backdrop = NULL;
   GList      *iter;
   Cache      *cache;
-  gint       *composition;
+  CompLayer  *composition;
   gint        n_sources = 0;
   gint32      image_id;
   gdouble     proxy_ratio;
   gint        preview_width;
   gint        preview_height;
   gint        i;
+  gint        main_offset_x;
+  gint        main_offset_y;
 
   /* Clean out current cache. */
   iter = g_list_nth (animation->priv->cache, pos);
@@ -1266,8 +1326,11 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
       animation->priv->cache = g_list_reverse (animation->priv->cache);
     }
 
+  animation_camera_get (animation->priv->camera,
+                        pos, &main_offset_x, &main_offset_y);
+
   /* Create the new buffer composition. */
-  composition = g_new0 (int, n_sources);
+  composition = g_new0 (CompLayer, n_sources);
   i = 0;
   for (iter = animation->priv->tracks; iter; iter = iter->next)
     {
@@ -1284,7 +1347,9 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
           tattoo = GPOINTER_TO_INT (layer->data);
           if (tattoo)
             {
-              composition[i++] = tattoo;
+              composition[i].tattoo = tattoo;
+              composition[i].offset_x = main_offset_x;
+              composition[i++].offset_y = main_offset_y;
             }
         }
     }
@@ -1302,7 +1367,9 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
               same = TRUE;
               for (i = 0; i < n_sources; i++)
                 {
-                  if (cache->composition[i] != composition[i])
+                  if (cache->composition[i].tattoo   != composition[i].tattoo   ||
+                      cache->composition[i].offset_x != composition[i].offset_x ||
+                      cache->composition[i].offset_y != composition[i].offset_y)
                     {
                       same = FALSE;
                       break;
@@ -1340,7 +1407,7 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
       gint        layer_offy;
 
       layer = gimp_image_get_layer_by_tattoo (image_id,
-                                              cache->composition[i]);
+                                              cache->composition[i].tattoo);
       if (layer > 0)
         source = gimp_drawable_get_buffer (layer);
       if (layer <= 0 || ! source)
@@ -1353,7 +1420,8 @@ animation_cel_animation_cache (AnimationCelAnimation *animation,
       intermediate = normal_blend (preview_width, preview_height,
                                    backdrop, 1.0, 0, 0,
                                    source, proxy_ratio,
-                                   layer_offx, layer_offy);
+                                   layer_offx + cache->composition[i].offset_x,
+                                   layer_offy + cache->composition[i].offset_y);
       g_object_unref (source);
       if (backdrop)
         {
@@ -1379,6 +1447,8 @@ animation_cel_animation_cleanup (AnimationCelAnimation *animation)
   g_list_free_full (animation->priv->tracks,
                     (GDestroyNotify) animation_cel_animation_clean_track);
   animation->priv->tracks   = NULL;
+
+  g_object_unref (animation->priv->camera);
 }
 
 static gboolean
@@ -1395,7 +1465,9 @@ animation_cel_animation_cache_cmp (Cache *cache1,
       identical = TRUE;
       for (i = 0; i < cache1->n_sources; i++)
         {
-          if (cache1->composition[i] != cache2->composition[i])
+          if (cache1->composition[i].tattoo   != cache2->composition[i].tattoo   ||
+              cache1->composition[i].offset_x != cache2->composition[i].offset_x ||
+              cache1->composition[i].offset_y != cache2->composition[i].offset_y)
             {
               identical = FALSE;
               break;

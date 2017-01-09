@@ -47,18 +47,22 @@ animation_play_SOURCES = \
 	core/animation.c				\
 	core/animation-animatic.h		\
 	core/animation-animatic.c		\
+	core/animation-camera.h			\
+	core/animation-camera.c			\
 	core/animation-celanimation.h	\
 	core/animation-celanimation.c	\
 	core/animation-playback.h		\
 	core/animation-playback.c		\
 	widgets/animation-dialog.h		\
 	widgets/animation-dialog.c		\
+	widgets/animation-keyframe-view.h	\
+	widgets/animation-keyframe-view.c	\
+	widgets/animation-layer-view.h	\
+	widgets/animation-layer-view.c	\
 	widgets/animation-menus.h		\
 	widgets/animation-menus.c		\
 	widgets/animation-storyboard.h	\
 	widgets/animation-storyboard.c	\
-	widgets/animation-layer-view.h	\
-	widgets/animation-layer-view.c	\
 	widgets/animation-xsheet.h		\
 	widgets/animation-xsheet.c		\
 	animation-utils.h				\

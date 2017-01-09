@@ -66,6 +66,8 @@ const gchar * animation_cel_animation_get_comment     (AnimationCelAnimation *an
 void          animation_cel_animation_set_duration    (AnimationCelAnimation *animation,
                                                        gint                   duration);
 
+GObject     * animation_cel_animation_get_main_camera (AnimationCelAnimation *animation);
+
 gint          animation_cel_animation_get_levels      (AnimationCelAnimation *animation);
 gint          animation_cel_animation_level_up        (AnimationCelAnimation *animation,
                                                        gint                   level);

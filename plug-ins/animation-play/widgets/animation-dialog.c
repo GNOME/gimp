@@ -30,10 +30,12 @@
 
 #include "core/animation.h"
 #include "core/animation-animatic.h"
+#include "core/animation-camera.h"
 #include "core/animation-celanimation.h"
 #include "core/animation-playback.h"
 
 #include "animation-dialog.h"
+#include "animation-keyframe-view.h"
 #include "animation-layer-view.h"
 #include "animation-storyboard.h"
 #include "animation-xsheet.h"
@@ -91,7 +93,9 @@ struct _AnimationDialogPrivate
   guint              shape_drawing_area_height;
 
   /* Notebook on the right (layer list, storyboard, settings). */
+  GtkWidget         *right_pane;
   GtkWidget         *right_notebook;
+  GtkWidget         *keyframe_view;
 
   /* Notebook: settings. */
   GtkWidget         *settings;
@@ -103,8 +107,8 @@ struct _AnimationDialogPrivate
   /* Notebook: layer list. */
   GtkWidget         *layer_list;
 
-  /* The vpaned (bottom is timeline, above is preview). */
-  GtkWidget         *vpaned;
+  /* The left panel (bottom is timeline, above is preview). */
+  GtkWidget         *left_pane;
   GtkWidget         *xsheet;
 
   /* Actions */
@@ -425,14 +429,23 @@ animation_dialog_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (dialog), hpaned);
   gtk_widget_show (hpaned);
 
-  priv->vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
-  gtk_paned_pack1 (GTK_PANED (hpaned), priv->vpaned, TRUE, TRUE);
-  gtk_widget_show (priv->vpaned);
+  priv->left_pane = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
+  gtk_paned_pack1 (GTK_PANED (hpaned), priv->left_pane, TRUE, TRUE);
+  gtk_widget_show (priv->left_pane);
+
+  priv->right_pane = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
+  gtk_paned_pack2 (GTK_PANED (hpaned), priv->right_pane,
+                   TRUE, TRUE);
+  gtk_widget_show (priv->right_pane);
 
   priv->right_notebook = gtk_notebook_new ();
-  gtk_paned_pack2 (GTK_PANED (hpaned), priv->right_notebook,
-                   TRUE, TRUE);
+  gtk_paned_pack1 (GTK_PANED (priv->right_pane), priv->right_notebook,
+                   TRUE, FALSE);
   gtk_widget_show (priv->right_notebook);
+
+  priv->keyframe_view = animation_keyframe_view_new ();
+  gtk_paned_pack2 (GTK_PANED (priv->right_pane), priv->keyframe_view,
+                   TRUE, FALSE);
 
   /******************\
   |**** Settings ****|
@@ -579,7 +592,7 @@ animation_dialog_constructed (GObject *object)
 
   /* Playback vertical box. */
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_paned_pack1 (GTK_PANED (priv->vpaned), main_vbox, TRUE, TRUE);
+  gtk_paned_pack1 (GTK_PANED (priv->left_pane), main_vbox, TRUE, TRUE);
   gtk_widget_show (main_vbox);
 
   /*************/
@@ -1327,7 +1340,7 @@ animation_dialog_set_animation (AnimationDialog *dialog,
     }
 
   /* The bottom panel. */
-  frame = gtk_paned_get_child2 (GTK_PANED (priv->vpaned));
+  frame = gtk_paned_get_child2 (GTK_PANED (priv->left_pane));
   if (frame)
     {
       gtk_widget_destroy (frame);
@@ -1337,12 +1350,13 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   if (ANIMATION_IS_CEL_ANIMATION (animation))
     {
       frame = gtk_frame_new (_("X-Sheet"));
-      gtk_paned_pack2 (GTK_PANED (priv->vpaned), frame,
+      gtk_paned_pack2 (GTK_PANED (priv->left_pane), frame,
                        TRUE, TRUE);
       gtk_widget_show (frame);
 
       priv->xsheet = animation_xsheet_new (ANIMATION_CEL_ANIMATION (animation),
-                                           priv->playback, priv->layer_list);
+                                           priv->playback, priv->layer_list,
+                                           priv->keyframe_view);
       gtk_container_add (GTK_CONTAINER (frame), priv->xsheet);
       gtk_widget_show (priv->xsheet);
     }
