@@ -69,7 +69,8 @@
 #include "gimpoperationnormalmode.h"
 #include "gimpoperationdissolvemode.h"
 #include "gimpoperationbehindmode.h"
-#include "gimpoperationmultiplymode.h"
+#include "gimpoperationmultiply.h"
+#include "gimpoperationmultiplylegacy.h"
 #include "gimpoperationscreenmode.h"
 #include "gimpoperationoverlaymode.h"
 #include "gimpoperationdifferencemode.h"
@@ -133,7 +134,8 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_NORMAL_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DISSOLVE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_OVERLAY_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DIFFERENCE_MODE);

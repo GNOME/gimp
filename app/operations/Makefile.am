@@ -102,8 +102,10 @@ libappoperations_generic_a_sources = \
 	gimpoperationdissolvemode.h     	\
 	gimpoperationbehindmode.c       	\
 	gimpoperationbehindmode.h       	\
-	gimpoperationmultiplymode.c     	\
-	gimpoperationmultiplymode.h     	\
+	gimpoperationmultiply.c     	    \
+	gimpoperationmultiply.h     	    \
+	gimpoperationmultiplylegacy.c     	\
+	gimpoperationmultiplylegacy.h     	\
 	gimpoperationscreenmode.c       	\
 	gimpoperationscreenmode.h       	\
 	gimpoperationoverlaymode.c      	\

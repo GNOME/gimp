@@ -29,7 +29,8 @@
 #include "gimpoperationnormalmode.h"
 #include "gimpoperationdissolvemode.h"
 #include "gimpoperationbehindmode.h"
-#include "gimpoperationmultiplymode.h"
+#include "gimpoperationmultiply.h"
+#include "gimpoperationmultiplylegacy.h"
 #include "gimpoperationscreenmode.h"
 #include "gimpoperationoverlaymode.h"
 #include "gimpoperationdifferencemode.h"
@@ -79,7 +80,11 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
-      func = gimp_operation_multiply_mode_process_pixels;
+      func = gimp_operation_multiply_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_MULTIPLY:
+      func = gimp_operation_multiply_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_SCREEN_LEGACY:

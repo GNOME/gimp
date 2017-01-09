@@ -166,6 +166,11 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:multiply-mode";
       break;
 
+    case GIMP_LAYER_MODE_MULTIPLY:
+    case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
+      operation = "gimp:multiply";
+      break;
+
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
       operation = "gimp:screen-mode";
       break;
@@ -293,17 +298,19 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     {
     case GIMP_LAYER_MODE_NORMAL:
     case GIMP_LAYER_MODE_DISSOLVE:
+    case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
+        gegl_node_set (node,
+           "linear",    TRUE,
+           NULL);
+        break;
     case GIMP_LAYER_MODE_BEHIND:
+    case GIMP_LAYER_MODE_MULTIPLY:
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
-        gegl_node_set (node,
-           "linear",    TRUE,
-           NULL);
-        break;
     case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:

@@ -104,7 +104,7 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
   GtkWidget    *combo;
 
   store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
-                                           26,
+                                           27,
                                            GIMP_LAYER_MODE_NORMAL,
                                            GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
                                            GIMP_LAYER_MODE_DISSOLVE,
@@ -115,6 +115,8 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
                                            GIMP_LAYER_MODE_ADDITION_LEGACY,
 
                                            GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,
+                                           GIMP_LAYER_MODE_MULTIPLY,
+                                           GIMP_LAYER_MODE_MULTIPLY_LINEAR,
                                            GIMP_LAYER_MODE_MULTIPLY_LEGACY,
                                            GIMP_LAYER_MODE_BURN_LEGACY,
 
