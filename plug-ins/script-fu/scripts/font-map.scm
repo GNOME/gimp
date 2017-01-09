@@ -79,7 +79,7 @@
                                                           GRAY RGB))))
         (drawable   (car (gimp-layer-new img width height (if (= colors 0)
                                                               GRAY-IMAGE RGB-IMAGE)
-                                         "Background" 100 NORMAL-MODE)))
+                                         "Background" 100 LAYER-MODE-NORMAL)))
         (count      0)
         (font       "")
         )
@@ -101,7 +101,7 @@
           (set! drawable (car (gimp-layer-new img width height
                                               (if (= colors 0)
                                                   GRAYA-IMAGE RGBA-IMAGE)
-                                              "Labels" 100 NORMAL-MODE)))
+                                              "Labels" 100 LAYER-MODE-NORMAL)))
           (gimp-image-insert-layer img drawable 0 -1)))
           (gimp-edit-clear drawable)
 

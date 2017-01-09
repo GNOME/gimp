@@ -38,13 +38,13 @@
 
     ; Create the cloud layer
     (set! diff-clouds (car (gimp-layer-new image width height type
-                                             "Clouds" 100 DIFFERENCE-MODE)))
+                                             "Clouds" 100 LAYER-MODE-DIFFERENCE)))
 
     ; Add the cloud layer above the current layer
     (gimp-image-insert-layer image diff-clouds 0 -1)
 
     ; Clear the layer (so there are no noise in it)
-    (gimp-drawable-fill diff-clouds TRANSPARENT-FILL)
+    (gimp-drawable-fill diff-clouds FILL-TRANSPARENT)
 
     ; Selections are relative to the drawable; adjust the final offset
     (set! offset-x (+ draw-offset-x sel-offset-x))

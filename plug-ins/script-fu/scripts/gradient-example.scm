@@ -24,7 +24,7 @@
   (let* (
         (img (car (gimp-image-new width height RGB)))
         (drawable (car (gimp-layer-new img width height RGB
-                                       "Gradient example" 100 NORMAL-MODE)))
+                                       "Gradient example" 100 LAYER-MODE-NORMAL)))
 
         ; Calculate colors for checkerboard... just like in the gradient editor
 
@@ -47,7 +47,7 @@
 
     ; Render gradient
 
-    (gimp-edit-blend drawable CUSTOM-MODE NORMAL-MODE
+    (gimp-edit-blend drawable BLEND-CUSTOM LAYER-MODE-NORMAL
                      GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
                      FALSE 0 0 TRUE
                      0 0 (- width 1) 0)

@@ -180,7 +180,7 @@
         (height (* radius 2.5))
         (img (car (gimp-image-new width height RGB)))
         (drawable (car (gimp-layer-new img width height RGB-IMAGE
-                                       "Sphere Layer" 100 NORMAL-MODE)))
+                                       "Sphere Layer" 100 LAYER-MODE-NORMAL)))
         (radians (/ (* light *pi*) 180))
         (cx (/ width 2))
         (cy (/ height 2))
@@ -205,7 +205,7 @@
     (gimp-image-insert-layer img drawable 0 0)
     (gimp-context-set-foreground sphere-color)
     (gimp-context-set-background bg-color)
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
     (gimp-context-set-background '(20 20 20))
 
     (if (and
@@ -224,14 +224,14 @@
           (gimp-context-set-feather-radius 7.5 7.5)
           (gimp-image-select-ellipse img CHANNEL-OP-REPLACE shadow-x shadow-y shadow-w shadow-h)
           (gimp-context-set-pattern pattern)
-          (gimp-edit-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY-MODE
+          (gimp-edit-bucket-fill drawable BUCKET-FILL-PATTERN LAYER-MODE-MULTIPLY
                                  100 0 FALSE 0 0)))
 
     (gimp-context-set-feather FALSE)
     (gimp-image-select-ellipse img CHANNEL-OP-REPLACE (- cx radius) (- cy radius)
                                (* 2 radius) (* 2 radius))
 
-    (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
+    (gimp-edit-blend drawable BLEND-FG-BG-RGB LAYER-MODE-NORMAL
                      GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
                      FALSE 0 0 TRUE
                      light-x light-y light-end-x light-end-y)
@@ -241,7 +241,7 @@
     (gimp-context-set-gradient gradient)
     (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 10 10 50 50)
 
-    (gimp-edit-blend drawable CUSTOM-MODE NORMAL-MODE
+    (gimp-edit-blend drawable BLEND-CUSTOM LAYER-MODE-NORMAL
                      GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse
                      FALSE 0 0 TRUE
                      10 10 30 60)

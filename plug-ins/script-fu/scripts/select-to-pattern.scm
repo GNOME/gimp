@@ -63,9 +63,9 @@
 
   (set! pattern-draw
         (car (gimp-layer-new pattern-image selection-width selection-height
-                             pattern-draw-type "Pattern" 100 NORMAL-MODE)))
+                             pattern-draw-type "Pattern" 100 LAYER-MODE-NORMAL)))
 
-  (gimp-drawable-fill pattern-draw TRANSPARENT-FILL)
+  (gimp-drawable-fill pattern-draw FILL-TRANSPARENT)
 
   (gimp-image-insert-layer pattern-image pattern-draw 0 0)
 

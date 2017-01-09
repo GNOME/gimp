@@ -85,7 +85,7 @@
                                brush-draw-type
                                "Brush"
                                100
-                               NORMAL-MODE)))
+                               LAYER-MODE-NORMAL)))
 
     (gimp-image-insert-layer brush-image brush-draw 0 0)
 
@@ -94,8 +94,8 @@
     (if (= type GRAYA-IMAGE)
         (begin
           (gimp-context-set-background '(255 255 255))
-          (gimp-drawable-fill brush-draw BACKGROUND-FILL))
-        (gimp-drawable-fill brush-draw TRANSPARENT-FILL)
+          (gimp-drawable-fill brush-draw FILL-BACKGROUND))
+        (gimp-drawable-fill brush-draw FILL-TRANSPARENT)
     )
 
     (let ((floating-sel (car (gimp-edit-paste brush-draw FALSE))))

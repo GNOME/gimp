@@ -11,7 +11,7 @@
         (original-layer (car (gimp-layer-new new-image
                                              drawable-width drawable-height
                                              RGB-IMAGE "Original"
-                                             100 NORMAL-MODE)))
+                                             100 LAYER-MODE-NORMAL)))
         (original-layer-for-darker 0)
         (original-layer-for-lighter 0)
         (blured-layer-for-darker 0)
@@ -42,7 +42,7 @@
     (set! blured-layer-for-lighter
           (car (gimp-layer-copy blured-layer-for-darker TRUE)))
     (gimp-image-insert-layer new-image original-layer-for-darker 0 -1)
-    (gimp-layer-set-mode original-layer-for-darker SUBTRACT-MODE)
+    (gimp-layer-set-mode original-layer-for-darker LAYER-MODE-SUBTRACT)
     (set! darker-layer
           (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))
     (gimp-item-set-name darker-layer "darker mask")
@@ -51,17 +51,17 @@
     ;; make lighter mask
     (gimp-image-insert-layer new-image original-layer-for-lighter 0 -1)
     (gimp-image-insert-layer new-image blured-layer-for-lighter 0 -1)
-    (gimp-layer-set-mode blured-layer-for-lighter SUBTRACT-MODE)
+    (gimp-layer-set-mode blured-layer-for-lighter LAYER-MODE-SUBTRACT)
     (set! lighter-layer
           (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))
     (gimp-item-set-name lighter-layer "lighter mask")
 
     ;; combine them
     (gimp-item-set-visible original-layer TRUE)
-    (gimp-layer-set-mode darker-layer SUBTRACT-MODE)
+    (gimp-layer-set-mode darker-layer LAYER-MODE-SUBTRACT)
     (gimp-layer-set-opacity darker-layer mask-opacity)
     (gimp-item-set-visible darker-layer TRUE)
-    (gimp-layer-set-mode lighter-layer ADDITION-MODE)
+    (gimp-layer-set-mode lighter-layer LAYER-MODE-ADDITION)
     (gimp-layer-set-opacity lighter-layer mask-opacity)
     (gimp-item-set-visible lighter-layer TRUE)
 

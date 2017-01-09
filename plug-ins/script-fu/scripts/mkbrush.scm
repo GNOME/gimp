@@ -26,7 +26,7 @@
         (img (car (gimp-image-new width height GRAY)))
         (drawable (car (gimp-layer-new img
                                        width height GRAY-IMAGE
-                                       "MakeBrush" 100 NORMAL-MODE)))
+                                       "MakeBrush" 100 LAYER-MODE-NORMAL)))
         (filename (string-append gimp-directory
                                  "/brushes/r"
                                  (number->string width)
@@ -42,12 +42,12 @@
     (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-drawable-fill drawable BACKGROUND-FILL)
+    (gimp-drawable-fill drawable FILL-BACKGROUND)
 
     (gimp-image-select-rectangle img CHANNEL-OP-REPLACE 0 0 width height)
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
 
     (file-gbr-save 1 img drawable filename "" spacing name)
     (gimp-image-delete img)
@@ -84,7 +84,7 @@
         (img (car (gimp-image-new widthplus heightplus GRAY)))
         (drawable (car (gimp-layer-new img
                                        widthplus heightplus GRAY-IMAGE
-                                       "MakeBrush" 100 NORMAL-MODE)))
+                                       "MakeBrush" 100 LAYER-MODE-NORMAL)))
         (filename (string-append gimp-directory
                                  "/brushes/r"
                                  (number->string width)
@@ -101,7 +101,7 @@
     (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-drawable-fill drawable BACKGROUND-FILL)
+    (gimp-drawable-fill drawable FILL-BACKGROUND)
 
     (cond
       ((< 0 feathering)
@@ -115,7 +115,7 @@
     )
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
 
     (file-gbr-save 1 img drawable filename "" spacing name)
     (gimp-image-delete img)
@@ -150,7 +150,7 @@
         (img (car (gimp-image-new width height GRAY)))
         (drawable (car (gimp-layer-new img
                                        width height GRAY-IMAGE
-                                       "MakeBrush" 100 NORMAL-MODE)))
+                                       "MakeBrush" 100 LAYER-MODE-NORMAL)))
         (filename (string-append gimp-directory
                                  "/brushes/e"
                                  (number->string width)
@@ -167,11 +167,11 @@
     (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-drawable-fill drawable BACKGROUND-FILL)
+    (gimp-drawable-fill drawable FILL-BACKGROUND)
     (gimp-context-set-background '(0 0 0))
     (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 0 0 width height)
 
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
 
     (file-gbr-save 1 img drawable filename "" spacing name)
     (gimp-image-delete img)
@@ -209,7 +209,7 @@
         (img (car (gimp-image-new widthplus heightplus GRAY)))
         (drawable (car (gimp-layer-new img
                                        widthplus heightplus GRAY-IMAGE
-                                       "MakeBrush" 100 NORMAL-MODE)))
+                                       "MakeBrush" 100 LAYER-MODE-NORMAL)))
         (filename (string-append gimp-directory
                                  "/brushes/e"
                                  (number->string width)
@@ -227,7 +227,7 @@
     (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-drawable-fill drawable BACKGROUND-FILL)
+    (gimp-drawable-fill drawable FILL-BACKGROUND)
 
     (cond ((> feathering 0)   ; keep from taking out gimp with stupid entry.
         (gimp-context-set-feather TRUE)
@@ -240,7 +240,7 @@
         (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 0 0 width height)))
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
 
     (file-gbr-save 1 img drawable filename "" spacing name)
     (gimp-image-delete img)

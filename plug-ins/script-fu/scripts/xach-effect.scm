@@ -65,7 +65,7 @@
           (set! from-selection TRUE)
           (set! active-selection (car (gimp-selection-save image)))))
 
-    (set! hl-layer (car (gimp-layer-new image image-width image-height type _"Highlight" 100 NORMAL-MODE)))
+    (set! hl-layer (car (gimp-layer-new image image-width image-height type _"Highlight" 100 LAYER-MODE-NORMAL)))
     (gimp-image-insert-layer image hl-layer 0 -1)
 
     (gimp-selection-none image)
@@ -73,17 +73,17 @@
     (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
 
     (gimp-context-set-background hl-color)
-    (gimp-edit-fill hl-layer BACKGROUND-FILL)
+    (gimp-edit-fill hl-layer FILL-BACKGROUND)
     (gimp-selection-translate image hl-offset-x hl-offset-y)
-    (gimp-edit-fill hl-layer BACKGROUND-FILL)
+    (gimp-edit-fill hl-layer FILL-BACKGROUND)
     (gimp-selection-none image)
     (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
 
-    (set! mask (car (gimp-layer-create-mask hl-layer ADD-WHITE-MASK)))
+    (set! mask (car (gimp-layer-create-mask hl-layer ADD-MASK-WHITE)))
     (gimp-layer-add-mask hl-layer mask)
 
     (gimp-context-set-background hl-opacity)
-    (gimp-edit-fill mask BACKGROUND-FILL)
+    (gimp-edit-fill mask FILL-BACKGROUND)
 
     (set! shadow-layer (car (gimp-layer-new image
                                             image-width
@@ -91,14 +91,14 @@
                                             type
                                             _"Shadow"
                                             ds-opacity
-                                            NORMAL-MODE)))
+                                            LAYER-MODE-NORMAL)))
     (gimp-image-insert-layer image shadow-layer 0 -1)
     (gimp-selection-none image)
     (gimp-edit-clear shadow-layer)
     (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
     (gimp-selection-translate image ds-offset-x ds-offset-y)
     (gimp-context-set-background ds-color)
-    (gimp-edit-fill shadow-layer BACKGROUND-FILL)
+    (gimp-edit-fill shadow-layer FILL-BACKGROUND)
     (gimp-selection-none image)
     (plug-in-gauss-rle RUN-NONINTERACTIVE image shadow-layer ds-blur TRUE TRUE)
     (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)

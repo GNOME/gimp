@@ -75,7 +75,7 @@
                                          RGB-IMAGE
                                          _"Bumpmap"
                                          100
-                                         NORMAL-MODE)))
+                                         LAYER-MODE-NORMAL)))
 
         (selection-exists (car (gimp-selection-bounds image)))
         (selection 0)
@@ -115,20 +115,20 @@
     ; Initialise our bumpmap
     ;
     (gimp-context-set-background '(0 0 0))
-    (gimp-drawable-fill bump-layer BACKGROUND-FILL)
+    (gimp-drawable-fill bump-layer FILL-BACKGROUND)
 
     (while (< index thickness)
            (set! greyness (/ (* index 255) thickness))
            (gimp-context-set-background (list greyness greyness greyness))
            ;(gimp-selection-feather image 1) ;Stop the slopey jaggies?
-           (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE
+           (gimp-edit-bucket-fill bump-layer BUCKET-FILL-BG LAYER-MODE-NORMAL
                                   100 0 FALSE 0 0)
            (gimp-selection-shrink image 1)
            (set! index (+ index 1))
     )
     ; Now the white interior
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-bucket-fill bump-layer BG-BUCKET-FILL NORMAL-MODE
+    (gimp-edit-bucket-fill bump-layer BUCKET-FILL-BG LAYER-MODE-NORMAL
                            100 0 FALSE 0 0)
 
     ;------------------------------------------------------------

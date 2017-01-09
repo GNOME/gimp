@@ -18,7 +18,7 @@
                                (gimp-image-select-rectangle img CHANNEL-OP-REPLACE (+ i position-x) position-y 1 height))
                            (if (= type 0)
                                (gimp-edit-clear drawable)
-                               (gimp-edit-fill drawable BACKGROUND-FILL))
+                               (gimp-edit-fill drawable FILL-BACKGROUND))
                            (loop (+ i 2) max))))))
       (loop (if (= which 0)
                 0

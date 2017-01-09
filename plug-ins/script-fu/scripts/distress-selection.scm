@@ -52,12 +52,12 @@
                                         theMode
                                         "Distress Scratch Layer"
                                         100
-                                        NORMAL-MODE)))
+                                        LAYER-MODE-NORMAL)))
 
     (gimp-image-insert-layer theImage theLayer 0 0)
 
     (if (= FALSE (car (gimp-selection-is-empty theImage)))
-        (gimp-edit-fill theLayer BACKGROUND-FILL)
+        (gimp-edit-fill theLayer FILL-BACKGROUND)
     )
 
     (gimp-selection-invert theImage)

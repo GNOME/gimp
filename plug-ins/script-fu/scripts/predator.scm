@@ -76,7 +76,7 @@
                                                   type
                                                   "glow layer"
                                                   100
-                                                  NORMAL-MODE))
+                                                  LAYER-MODE-NORMAL))
           )
 
           (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)

@@ -20,14 +20,14 @@
                                          (car (gimp-drawable-type drawable))
                                          "Ripple Map"
                                          100
-                                         NORMAL-MODE))))
+                                         LAYER-MODE-NORMAL))))
     (gimp-context-push)
     (gimp-image-undo-disable work-image)
 
     ; Create a tile-able displacement map in the first layer
     (gimp-context-set-background '(127 127 127))
     (gimp-image-insert-layer work-image map-layer 0 0)
-    (gimp-edit-fill map-layer BACKGROUND-FILL)
+    (gimp-edit-fill map-layer FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE work-image map-layer FALSE 1.0 1.0 1.0 0.0)
     (plug-in-tile RUN-NONINTERACTIVE work-image map-layer (* width 3) (* height 3) FALSE)
     (plug-in-gauss-iir RUN-NONINTERACTIVE work-image map-layer 35 TRUE TRUE)

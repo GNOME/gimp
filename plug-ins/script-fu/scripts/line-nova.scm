@@ -87,7 +87,7 @@
       )
       (set! index (+ index 1))
     )
-    (gimp-edit-bucket-fill drw FG-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill drw BUCKET-FILL-FG LAYER-MODE-NORMAL 100 0 FALSE 0 0)
 
     (if old-selection
       (begin

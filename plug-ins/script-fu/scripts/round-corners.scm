@@ -106,8 +106,8 @@
                                             type
                                             "Background"
                                             100
-                                            NORMAL-MODE))))
-        (gimp-drawable-fill bg-layer BACKGROUND-FILL)
+                                            LAYER-MODE-NORMAL))))
+        (gimp-drawable-fill bg-layer FILL-BACKGROUND)
         (gimp-image-insert-layer image bg-layer 0 -1)
         (gimp-image-raise-item image pic-layer)
         (if (= shadow-toggle TRUE)

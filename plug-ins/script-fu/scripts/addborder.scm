@@ -105,7 +105,7 @@
          (layer (car (gimp-layer-new img
                                      width height
                                      (car (gimp-drawable-type-with-alpha adraw))
-                                     _"Border Layer" 100 NORMAL-MODE))))
+                                     _"Border Layer" 100 LAYER-MODE-NORMAL))))
 
     (gimp-context-push)
     (gimp-context-set-antialias FALSE)
@@ -120,34 +120,34 @@
                        ysize)
 
     (gimp-image-insert-layer img layer 0 0)
-    (gimp-drawable-fill layer TRANSPARENT-FILL)
+    (gimp-drawable-fill layer FILL-TRANSPARENT)
 
     (gimp-context-set-background (adjcolor color dvalue))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_top_array xsize ysize owidth oheight width height))
-    (gimp-edit-fill layer BACKGROUND-FILL)
+    (gimp-edit-fill layer FILL-BACKGROUND)
     (gimp-context-set-background (adjcolor color (/ dvalue 2)))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_left_array xsize ysize owidth oheight width height))
-    (gimp-edit-fill layer BACKGROUND-FILL)
+    (gimp-edit-fill layer FILL-BACKGROUND)
     (gimp-context-set-background (adjcolor color (- 0 (/ dvalue 2))))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_right_array xsize ysize owidth oheight width height))
 
-    (gimp-edit-fill layer BACKGROUND-FILL)
+    (gimp-edit-fill layer FILL-BACKGROUND)
     (gimp-context-set-background (adjcolor color (- 0 dvalue)))
     (gimp-image-select-polygon img
                                CHANNEL-OP-REPLACE
                                10
                                (gen_bottom_array xsize ysize owidth oheight width height))
 
-    (gimp-edit-fill layer BACKGROUND-FILL)
+    (gimp-edit-fill layer FILL-BACKGROUND)
     (gimp-selection-none img)
     (gimp-image-undo-group-end img)
     (gimp-displays-flush)

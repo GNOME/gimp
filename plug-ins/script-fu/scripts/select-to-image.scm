@@ -60,9 +60,9 @@
                                          selection-height image-type)))
     (set! new-draw (car (gimp-layer-new new-image
                                         selection-width selection-height
-                                        draw-type "Selection" 100 NORMAL-MODE)))
+                                        draw-type "Selection" 100 LAYER-MODE-NORMAL)))
     (gimp-image-insert-layer new-image new-draw 0 0)
-    (gimp-drawable-fill new-draw BACKGROUND-FILL)
+    (gimp-drawable-fill new-draw FILL-BACKGROUND)
 
     (let ((floating-sel (car (gimp-edit-paste new-draw FALSE))))
       (gimp-floating-sel-anchor floating-sel)

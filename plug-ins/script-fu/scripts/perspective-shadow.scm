@@ -100,14 +100,14 @@
                                               type
                                               "Perspective Shadow"
                                               shadow-opacity
-                                              NORMAL-MODE)))
+                                              LAYER-MODE-NORMAL)))
 
 
       (gimp-image-insert-layer image shadow-layer 0 -1)
       (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
-      (gimp-drawable-fill shadow-layer TRANSPARENT-FILL)
+      (gimp-drawable-fill shadow-layer FILL-TRANSPARENT)
       (gimp-context-set-background shadow-color)
-      (gimp-edit-fill shadow-layer BACKGROUND-FILL)
+      (gimp-edit-fill shadow-layer FILL-BACKGROUND)
       (gimp-selection-none image)
 
       (if (= allow-resize TRUE)

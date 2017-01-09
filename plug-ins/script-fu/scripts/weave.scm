@@ -46,13 +46,13 @@
          (darkness (* 255 (/ (- 100 shadow-darkness) 100)))
          (img (car (gimp-image-new tile-size tile-size RGB)))
          (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
-                                        "Weave tile" 100 NORMAL-MODE))))
+                                        "Weave tile" 100 LAYER-MODE-NORMAL))))
 
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
 
     ; Create main horizontal ribbon
 
@@ -66,7 +66,7 @@
                                  (+ (* 2 ribbon-spacing) ribbon-width)
                                  ribbon-width)
 
-    (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
+    (gimp-edit-blend drawable BLEND-FG-BG-RGB LAYER-MODE-NORMAL
                      GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
                      FALSE 0 0 TRUE
                      (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0 0 0)
@@ -80,7 +80,7 @@
                                  ribbon-width
                                  (+ (* 2 ribbon-spacing) ribbon-width))
 
-    (gimp-edit-blend drawable FG-BG-RGB-MODE NORMAL-MODE
+    (gimp-edit-blend drawable BLEND-FG-BG-RGB LAYER-MODE-NORMAL
                      GRADIENT-BILINEAR 100 (- 100 shadow-depth) REPEAT-NONE FALSE
                      FALSE 0 0 TRUE
                      0 (/ (+ (* 2 ribbon-spacing) ribbon-width -1) 2) 0 0)
@@ -165,19 +165,19 @@
   (let* ((tile-size (+ (* 2 ribbon-width) (* 2 ribbon-spacing)))
          (img (car (gimp-image-new tile-size tile-size RGB)))
          (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
-                                        "Mask" 100 NORMAL-MODE))))
+                                        "Mask" 100 LAYER-MODE-NORMAL))))
     (gimp-image-undo-disable img)
     (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
 
     (gimp-image-select-rectangle img CHANNEL-OP-REPLACE r1-x1 r1-y1 r1-width r1-height)
     (gimp-image-select-rectangle img CHANNEL-OP-ADD r2-x1 r2-y1 r2-width r2-height)
     (gimp-image-select-rectangle img CHANNEL-OP-ADD r3-x1 r3-y1 r3-width r3-height)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
     (gimp-selection-none img)
 
     (gimp-image-undo-enable img)
@@ -268,11 +268,11 @@
                               density
                               orientation)
   (let* ((drawable (car (gimp-layer-new img width height RGBA-IMAGE
-                                        "Threads" 100 NORMAL-MODE)))
+                                        "Threads" 100 LAYER-MODE-NORMAL)))
          (dense (/ density 100.0)))
     (gimp-image-insert-layer img drawable 0 -1)
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill drawable BACKGROUND-FILL)
+    (gimp-edit-fill drawable FILL-BACKGROUND)
     (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)
     (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
     (cond ((eq? orientation 'horizontal)
@@ -298,11 +298,11 @@
 
          (h-layer (create-threads-layer w-img width height thread-length
                                         thread-density 'horizontal))
-         (h-mask (car (gimp-layer-create-mask h-layer ADD-WHITE-MASK)))
+         (h-mask (car (gimp-layer-create-mask h-layer ADD-MASK-WHITE)))
 
          (v-layer (create-threads-layer w-img width height thread-length
                                         thread-density 'vertical))
-         (v-mask (car (gimp-layer-create-mask v-layer ADD-WHITE-MASK)))
+         (v-mask (car (gimp-layer-create-mask v-layer ADD-MASK-WHITE)))
 
          (hmask (create-horizontal-mask ribbon-width ribbon-spacing
                                         width height))
@@ -319,7 +319,7 @@
     (gimp-image-delete hm-img)
     (gimp-floating-sel-anchor (car (gimp-edit-paste h-mask FALSE)))
     (gimp-layer-set-opacity h-layer thread-intensity)
-    (gimp-layer-set-mode h-layer MULTIPLY-MODE)
+    (gimp-layer-set-mode h-layer LAYER-MODE-MULTIPLY)
 
     (gimp-layer-add-mask v-layer v-mask)
     (gimp-selection-all vm-img)
@@ -327,7 +327,7 @@
     (gimp-image-delete vm-img)
     (gimp-floating-sel-anchor (car (gimp-edit-paste v-mask FALSE)))
     (gimp-layer-set-opacity v-layer thread-intensity)
-    (gimp-layer-set-mode v-layer MULTIPLY-MODE)
+    (gimp-layer-set-mode v-layer LAYER-MODE-MULTIPLY)
 
     ; Uncomment this if you want to keep the weaving mask image
     ; (gimp-display-new (car (gimp-image-duplicate w-img)))
@@ -375,7 +375,7 @@
       (gimp-layer-set-offsets floating-sel
                               (car d-offsets)
                               (cadr d-offsets))
-      (gimp-layer-set-mode floating-sel MULTIPLY-MODE)
+      (gimp-layer-set-mode floating-sel LAYER-MODE-MULTIPLY)
       (gimp-floating-sel-to-layer floating-sel)
     )
 

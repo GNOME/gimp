@@ -59,7 +59,7 @@
       (let (
 	    (mLayer (car (gimp-layer-new theImage theWidth theHeight
 					 RGBA-IMAGE "Mottle"
-					 100 DARKEN-ONLY-MODE)))
+					 100 LAYER-MODE-DARKEN-ONLY)))
 	    )
 
              (gimp-image-insert-layer theImage mLayer 0 0)

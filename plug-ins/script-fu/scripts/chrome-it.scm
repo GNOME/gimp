@@ -100,11 +100,11 @@
         (feather (sota-scale size 0.5 chrome-factor))
         (brush-size (sota-scale size 0.5 chrome-factor))
         (mask (car (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0))))
-        (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 NORMAL-MODE)))
-        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer 1" 100 NORMAL-MODE)))
-        (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 DIFFERENCE-MODE)))
-        (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 NORMAL-MODE)))
-        (shadow (car (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 NORMAL-MODE)))
+        (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 LAYER-MODE-NORMAL)))
+        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer 1" 100 LAYER-MODE-NORMAL)))
+        (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 LAYER-MODE-DIFFERENCE)))
+        (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 LAYER-MODE-NORMAL)))
+        (shadow (car (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 LAYER-MODE-NORMAL)))
         (mask-fs 0)
         (layer-mask 0)
         )
@@ -129,8 +129,8 @@
 
     (gimp-context-set-background '(255 255 255))
     (gimp-selection-none img)
-    (gimp-edit-fill layer2 BACKGROUND-FILL)
-    (gimp-edit-fill layer3 BACKGROUND-FILL)
+    (gimp-edit-fill layer2 FILL-BACKGROUND)
+    (gimp-edit-fill layer3 FILL-BACKGROUND)
     (gimp-edit-clear shadow)
 
     (gimp-item-set-visible bg-layer FALSE)
@@ -140,9 +140,9 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-translate img offx1 offy1)
     (gimp-selection-feather img feather)
-    (gimp-edit-fill layer2 BACKGROUND-FILL)
+    (gimp-edit-fill layer2 FILL-BACKGROUND)
     (gimp-selection-translate img (* 2 offx2) (* 2 offy2))
-    (gimp-edit-fill layer3 BACKGROUND-FILL)
+    (gimp-edit-fill layer3 FILL-BACKGROUND)
     (gimp-selection-none img)
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer2)
@@ -156,11 +156,11 @@
     (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-curves-spline layer1 HISTOGRAM-VALUE 18 (spline-chrome-it))
 
-    (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
+    (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-MASK-BLACK)))
     (gimp-layer-add-mask layer1 layer-mask)
     (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill layer-mask BACKGROUND-FILL)
+    (gimp-edit-fill layer-mask FILL-BACKGROUND)
 
     (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
     (gimp-image-insert-layer img layer2 0 0)
@@ -171,29 +171,29 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-feather img (* feather 1.5))
     (gimp-selection-translate img (* 2.5 offx1) (* 2.5 offy1))
-    (gimp-edit-fill shadow BACKGROUND-FILL)
+    (gimp-edit-fill shadow FILL-BACKGROUND)
 
     (gimp-selection-all img)
     (gimp-context-set-pattern "Marble #1")
-    (gimp-edit-bucket-fill bg-layer PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill bg-layer BUCKET-FILL-PATTERN LAYER-MODE-NORMAL 100 0 FALSE 0 0)
     (gimp-selection-none img)
 
     (gimp-image-convert-rgb img)
 
-    (gimp-color-balance layer1 SHADOWS TRUE
+    (gimp-color-balance layer1 TRANSFER-SHADOWS TRUE
                         (shadows (rval hc)) (shadows (gval hc)) (shadows (bval hc)))
-    (gimp-color-balance layer1 MIDTONES TRUE
+    (gimp-color-balance layer1 TRANSFER-MIDTONES TRUE
                         (midtones (rval hc)) (midtones (gval hc)) (midtones (bval hc)))
-    (gimp-color-balance layer1 HIGHLIGHTS TRUE
+    (gimp-color-balance layer1 TRANSFER-HIGHLIGHTS TRUE
                         (highlights (rval hc)) (highlights (gval hc)) (highlights (bval hc)))
 
-    (gimp-color-balance layer2 SHADOWS TRUE
+    (gimp-color-balance layer2 TRANSFER-SHADOWS TRUE
                         (shadows (rval cc)) (shadows (gval cc)) (shadows (bval cc)))
-    (gimp-color-balance layer2 MIDTONES TRUE
+    (gimp-color-balance layer2 TRANSFER-MIDTONES TRUE
                         (midtones (rval cc)) (midtones (gval cc)) (midtones (bval cc)))
-    (gimp-color-balance layer2 HIGHLIGHTS TRUE
+    (gimp-color-balance layer2 TRANSFER-HIGHLIGHTS TRUE
                         (highlights (rval cc)) (highlights (gval cc)) (highlights (bval cc)))
-    (gimp-hue-saturation layer2 ALL-HUES 0.0 chrome-lightness chrome-saturation)
+    (gimp-hue-saturation layer2 HUE-RANGE-ALL 0.0 chrome-lightness chrome-saturation)
 
     (gimp-item-set-visible shadow TRUE)
     (gimp-item-set-visible bg-layer TRUE)

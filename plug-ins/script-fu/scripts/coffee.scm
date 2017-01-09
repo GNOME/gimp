@@ -35,7 +35,7 @@
       (set! theStain (car (gimp-layer-new theImage theSize theSize
                                           RGBA-IMAGE _"Stain" 100
                                           (if (= inDark TRUE)
-                                              DARKEN-ONLY-MODE NORMAL-MODE))))
+                                              LAYER-MODE-DARKEN-ONLY LAYER-MODE-NORMAL))))
 
       (gimp-image-insert-layer theImage theStain 0 0)
       (gimp-selection-all theImage)
@@ -55,7 +55,7 @@
 
       (gimp-context-set-gradient "Coffee")
 
-      (gimp-edit-blend theStain CUSTOM-MODE NORMAL-MODE
+      (gimp-edit-blend theStain BLEND-CUSTOM LAYER-MODE-NORMAL
                        GRADIENT-SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE
                        FALSE 0 0 TRUE
                        0 0 0 0)

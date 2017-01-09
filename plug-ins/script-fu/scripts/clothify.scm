@@ -9,8 +9,8 @@
         (width (car (gimp-drawable-width tdrawable)))
         (height (car (gimp-drawable-height tdrawable)))
         (img (car (gimp-image-new width height RGB)))
-;       (layer-two (car (gimp-layer-new img width height RGB-IMAGE "Y Dots" 100 MULTIPLY-MODE)))
-        (layer-one (car (gimp-layer-new img width height RGB-IMAGE "X Dots" 100 NORMAL-MODE)))
+;       (layer-two (car (gimp-layer-new img width height RGB-IMAGE "Y Dots" 100 LAYER-MODE-MULTIPLY)))
+        (layer-one (car (gimp-layer-new img width height RGB-IMAGE "X Dots" 100 LAYER-MODE-NORMAL)))
         (layer-two 0)
         (bump-layer 0)
         )
@@ -22,12 +22,12 @@
     (gimp-image-insert-layer img layer-one 0 0)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-edit-fill layer-one BACKGROUND-FILL)
+    (gimp-edit-fill layer-one FILL-BACKGROUND)
 
     (plug-in-noisify RUN-NONINTERACTIVE img layer-one FALSE 0.7 0.7 0.7 0.7)
 
     (set! layer-two (car (gimp-layer-copy layer-one 0)))
-    (gimp-layer-set-mode layer-two MULTIPLY-MODE)
+    (gimp-layer-set-mode layer-two LAYER-MODE-MULTIPLY)
     (gimp-image-insert-layer img layer-two 0 0)
 
     (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-one bx TRUE FALSE)

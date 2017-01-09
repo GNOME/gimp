@@ -83,14 +83,14 @@
                                          type
                                          "Film"
                                          100
-                                         NORMAL-MODE)))
+                                         LAYER-MODE-NORMAL)))
         (bg-layer (car (gimp-layer-new image
                                        width
                                        height
                                        type
                                        "Background"
                                        100
-                                       NORMAL-MODE)))
+                                       LAYER-MODE-NORMAL)))
         (pic-layer (car (gimp-image-get-active-drawable image)))
         (numbera (string-append number "A"))
         )
@@ -119,12 +119,12 @@
   )
 
 ; add the background layer
-  (gimp-drawable-fill bg-layer BACKGROUND-FILL)
+  (gimp-drawable-fill bg-layer FILL-BACKGROUND)
   (gimp-image-insert-layer image bg-layer 0 -1)
 
 ; add the film layer
   (gimp-context-set-background '(0 0 0))
-  (gimp-drawable-fill film-layer BACKGROUND-FILL)
+  (gimp-drawable-fill film-layer FILL-BACKGROUND)
   (gimp-image-insert-layer image film-layer 0 -1)
 
 ; add the text
@@ -176,7 +176,7 @@
 
 ; create a mask for the holes and cut them out
   (let* (
-        (film-mask (car (gimp-layer-create-mask film-layer ADD-WHITE-MASK)))
+        (film-mask (car (gimp-layer-create-mask film-layer ADD-MASK-WHITE)))
         (hole hole-start)
         (top-y (* height 0.06))
         (bottom-y (* height 0.855))
@@ -202,7 +202,7 @@
     )
 
     (gimp-context-set-foreground '(0 0 0))
-    (gimp-edit-fill film-mask BACKGROUND-FILL)
+    (gimp-edit-fill film-mask FILL-BACKGROUND)
     (gimp-selection-none image)
     (plug-in-gauss-rle RUN-NONINTERACTIVE image film-mask hole-radius TRUE TRUE)
     (gimp-threshold film-mask 127 255)

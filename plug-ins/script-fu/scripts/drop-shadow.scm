@@ -127,16 +127,16 @@
                                             type
                                             "Drop Shadow"
                                             shadow-opacity
-                                            NORMAL-MODE)))
+                                            LAYER-MODE-NORMAL)))
     (gimp-image-set-active-layer image drawable)
     (gimp-image-insert-layer image shadow-layer 0 -1)
     (gimp-layer-set-offsets shadow-layer
                             shadow-offset-x
                             shadow-offset-y))
 
-  (gimp-drawable-fill shadow-layer TRANSPARENT-FILL)
+  (gimp-drawable-fill shadow-layer FILL-TRANSPARENT)
   (gimp-context-set-background shadow-color)
-  (gimp-edit-fill shadow-layer BACKGROUND-FILL)
+  (gimp-edit-fill shadow-layer FILL-BACKGROUND)
   (gimp-selection-none image)
   (gimp-layer-set-lock-alpha shadow-layer FALSE)
   (if (>= shadow-blur 1.0) (plug-in-gauss-rle RUN-NONINTERACTIVE
