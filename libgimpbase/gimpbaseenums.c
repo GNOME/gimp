@@ -13,13 +13,13 @@ gimp_add_mask_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_ADD_MASK_WHITE, "GIMP_ADD_MASK_WHITE", "white-mask" },
-    { GIMP_ADD_MASK_BLACK, "GIMP_ADD_MASK_BLACK", "black-mask" },
-    { GIMP_ADD_MASK_ALPHA, "GIMP_ADD_MASK_ALPHA", "alpha-mask" },
-    { GIMP_ADD_MASK_ALPHA_TRANSFER, "GIMP_ADD_MASK_ALPHA_TRANSFER", "alpha-transfer-mask" },
-    { GIMP_ADD_MASK_SELECTION, "GIMP_ADD_MASK_SELECTION", "selection-mask" },
-    { GIMP_ADD_MASK_COPY, "GIMP_ADD_MASK_COPY", "copy-mask" },
-    { GIMP_ADD_MASK_CHANNEL, "GIMP_ADD_MASK_CHANNEL", "channel-mask" },
+    { GIMP_ADD_MASK_WHITE, "GIMP_ADD_MASK_WHITE", "white" },
+    { GIMP_ADD_MASK_BLACK, "GIMP_ADD_MASK_BLACK", "black" },
+    { GIMP_ADD_MASK_ALPHA, "GIMP_ADD_MASK_ALPHA", "alpha" },
+    { GIMP_ADD_MASK_ALPHA_TRANSFER, "GIMP_ADD_MASK_ALPHA_TRANSFER", "alpha-transfer" },
+    { GIMP_ADD_MASK_SELECTION, "GIMP_ADD_MASK_SELECTION", "selection" },
+    { GIMP_ADD_MASK_COPY, "GIMP_ADD_MASK_COPY", "copy" },
+    { GIMP_ADD_MASK_CHANNEL, "GIMP_ADD_MASK_CHANNEL", "channel" },
     { 0, NULL, NULL }
   };
 
@@ -53,10 +53,10 @@ gimp_blend_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_BLEND_FG_BG_RGB, "GIMP_BLEND_FG_BG_RGB", "fg-bg-rgb-mode" },
-    { GIMP_BLEND_FG_BG_HSV, "GIMP_BLEND_FG_BG_HSV", "fg-bg-hsv-mode" },
-    { GIMP_BLEND_FG_TRANSPARENT, "GIMP_BLEND_FG_TRANSPARENT", "fg-transparent-mode" },
-    { GIMP_BLEND_CUSTOM, "GIMP_BLEND_CUSTOM", "custom-mode" },
+    { GIMP_BLEND_FG_BG_RGB, "GIMP_BLEND_FG_BG_RGB", "fg-bg-rgb" },
+    { GIMP_BLEND_FG_BG_HSV, "GIMP_BLEND_FG_BG_HSV", "fg-bg-hsv" },
+    { GIMP_BLEND_FG_TRANSPARENT, "GIMP_BLEND_FG_TRANSPARENT", "fg-transparent" },
+    { GIMP_BLEND_CUSTOM, "GIMP_BLEND_CUSTOM", "custom" },
     { 0, NULL, NULL }
   };
 
@@ -119,9 +119,9 @@ gimp_bucket_fill_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_BUCKET_FILL_FG, "GIMP_BUCKET_FILL_FG", "fg-bucket-fill" },
-    { GIMP_BUCKET_FILL_BG, "GIMP_BUCKET_FILL_BG", "bg-bucket-fill" },
-    { GIMP_BUCKET_FILL_PATTERN, "GIMP_BUCKET_FILL_PATTERN", "pattern-bucket-fill" },
+    { GIMP_BUCKET_FILL_FG, "GIMP_BUCKET_FILL_FG", "fg" },
+    { GIMP_BUCKET_FILL_BG, "GIMP_BUCKET_FILL_BG", "bg" },
+    { GIMP_BUCKET_FILL_PATTERN, "GIMP_BUCKET_FILL_PATTERN", "pattern" },
     { 0, NULL, NULL }
   };
 
@@ -325,8 +325,8 @@ gimp_clone_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_CLONE_IMAGE, "GIMP_CLONE_IMAGE", "image-clone" },
-    { GIMP_CLONE_PATTERN, "GIMP_CLONE_PATTERN", "pattern-clone" },
+    { GIMP_CLONE_IMAGE, "GIMP_CLONE_IMAGE", "image" },
+    { GIMP_CLONE_PATTERN, "GIMP_CLONE_PATTERN", "pattern" },
     { 0, NULL, NULL }
   };
 
@@ -471,8 +471,8 @@ gimp_convolve_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_CONVOLVE_BLUR, "GIMP_CONVOLVE_BLUR", "blur-convolve" },
-    { GIMP_CONVOLVE_SHARPEN, "GIMP_CONVOLVE_SHARPEN", "sharpen-convolve" },
+    { GIMP_CONVOLVE_BLUR, "GIMP_CONVOLVE_BLUR", "blur" },
+    { GIMP_CONVOLVE_SHARPEN, "GIMP_CONVOLVE_SHARPEN", "sharpen" },
     { 0, NULL, NULL }
   };
 
@@ -565,11 +565,11 @@ gimp_fill_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_FILL_FOREGROUND, "GIMP_FILL_FOREGROUND", "foreground-fill" },
-    { GIMP_FILL_BACKGROUND, "GIMP_FILL_BACKGROUND", "background-fill" },
-    { GIMP_FILL_WHITE, "GIMP_FILL_WHITE", "white-fill" },
-    { GIMP_FILL_TRANSPARENT, "GIMP_FILL_TRANSPARENT", "transparent-fill" },
-    { GIMP_FILL_PATTERN, "GIMP_FILL_PATTERN", "pattern-fill" },
+    { GIMP_FILL_FOREGROUND, "GIMP_FILL_FOREGROUND", "foreground" },
+    { GIMP_FILL_BACKGROUND, "GIMP_FILL_BACKGROUND", "background" },
+    { GIMP_FILL_WHITE, "GIMP_FILL_WHITE", "white" },
+    { GIMP_FILL_TRANSPARENT, "GIMP_FILL_TRANSPARENT", "transparent" },
+    { GIMP_FILL_PATTERN, "GIMP_FILL_PATTERN", "pattern" },
     { 0, NULL, NULL }
   };
 

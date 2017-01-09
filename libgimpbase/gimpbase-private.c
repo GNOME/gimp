@@ -23,11 +23,10 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-
 #include "gimpbasetypes.h"
 
 #include "gimpbase-private.h"
+#include "gimpcompatenums.h"
 
 
 GimpUnitVtable _gimp_unit_vtable = { NULL, };
@@ -37,6 +36,7 @@ void
 gimp_base_init (GimpUnitVtable *vtable)
 {
   static gboolean gimp_base_initialized = FALSE;
+  GQuark          quark;
 
   g_return_if_fail (vtable != NULL);
 
@@ -44,6 +44,21 @@ gimp_base_init (GimpUnitVtable *vtable)
     g_error ("gimp_base_init() must only be called once!");
 
   _gimp_unit_vtable = *vtable;
+
+  quark = g_quark_from_static_string ("gimp-compat-enum");
+
+  g_type_set_qdata (GIMP_TYPE_ADD_MASK_TYPE, quark,
+		    (gpointer) GIMP_TYPE_ADD_MASK_TYPE_COMPAT);
+  g_type_set_qdata (GIMP_TYPE_BLEND_MODE, quark,
+		    (gpointer) GIMP_TYPE_BLEND_MODE_COMPAT);
+  g_type_set_qdata (GIMP_TYPE_BUCKET_FILL_MODE, quark,
+		    (gpointer) GIMP_TYPE_BUCKET_FILL_MODE_COMPAT);
+  g_type_set_qdata (GIMP_TYPE_CLONE_TYPE, quark,
+		    (gpointer) GIMP_TYPE_CLONE_TYPE_COMPAT);
+  g_type_set_qdata (GIMP_TYPE_CONVOLVE_TYPE, quark,
+		    (gpointer) GIMP_TYPE_CONVOLVE_TYPE_COMPAT);
+  g_type_set_qdata (GIMP_TYPE_FILL_TYPE, quark,
+		    (gpointer) GIMP_TYPE_FILL_TYPE_COMPAT);
 
   gimp_base_initialized = TRUE;
 }

@@ -84,6 +84,7 @@ lib_LTLIBRARIES = libgimpbase-@GIMP_API_VERSION@.la
 libgimpbase_sources = \
 	gimpbase.h		\
 	gimpbaseenums.h		\
+	gimpcompatnums.h	\
 	gimpbasetypes.h		\
 	gimpbasetypes.c		\
 	gimplimits.h		\
@@ -127,7 +128,8 @@ libgimpbase_sources = \
 	gimpwire.h
 
 libgimpbase_built_sources = \
-	gimpbaseenums.c
+	gimpbaseenums.c		\
+	gimpcompatenums.c
 
 libgimpbase_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimpbase_sources)	\
@@ -210,6 +212,21 @@ $(srcdir)/gimpbaseenums.c: $(srcdir)/gimpbaseenums.h $(GIMP_MKENUMS)
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
 		$(srcdir)/gimpbaseenums.h > xgen-bec \
+	&& cp xgen-bec $(@F) \
+	&& rm -f xgen-bec
+
+
+$(srcdir)/gimpcompatenums.c: $(srcdir)/gimpcompatenums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpbasetypes.h\"\n#include \"gimpcompatenums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
+		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "    { 0, NULL, NULL }\n  };\n" \
+		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
+		$(srcdir)/gimpcompatenums.h > xgen-bec \
 	&& cp xgen-bec $(@F) \
 	&& rm -f xgen-bec
 
