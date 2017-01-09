@@ -68,6 +68,21 @@ typedef enum
 } GimpBucketFillModeCompat;
 
 
+#define GIMP_TYPE_CHANNEL_TYPE_COMPAT (gimp_channel_type_compat_get_type ())
+
+GType gimp_channel_type_compat_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RED_CHANNEL     = GIMP_CHANNEL_RED,
+  GIMP_GREEN_CHANNEL   = GIMP_CHANNEL_GREEN,
+  GIMP_BLUE_CHANNEL    = GIMP_CHANNEL_BLUE,
+  GIMP_GRAY_CHANNEL    = GIMP_CHANNEL_GRAY,
+  GIMP_INDEXED_CHANNEL = GIMP_CHANNEL_INDEXED,
+  GIMP_ALPHA_CHANNEL   = GIMP_CHANNEL_ALPHA
+} GimpChannelTypeCompat;
+
+
 #define GIMP_TYPE_CLONE_TYPE_COMPAT (gimp_clone_type_compat_get_type ())
 
 GType gimp_clone_type_compat_get_type (void) G_GNUC_CONST;
@@ -90,6 +105,27 @@ typedef enum
 } GimpConvolveTypeCompat;
 
 
+#define GIMP_TYPE_DESATURATE_MODE_COMPAT (gimp_desaturate_mode_compat_get_type ())
+
+GType gimp_desaturate_mode_compat_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_DESATURATE_LUMINOSITY = GIMP_DESATURATE_LUMA
+} GimpDesaturateModeCompat;
+
+
+#define GIMP_TYPE_DODGE_BURN_TYPE_COMPAT (gimp_dodge_burn_type_compat_get_type ())
+
+GType gimp_dodge_burn_type_compat_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_DODGE = GIMP_DODGE_BURN_TYPE_DODGE,
+  GIMP_BURN  = GIMP_DODGE_BURN_TYPE_BURN
+} GimpDodgeBurnTypeCompat;
+
+
 #define GIMP_TYPE_FILL_TYPE_COMPAT (gimp_fill_type_compat_get_type ())
 
 GType gimp_fill_type_compat_get_type (void) G_GNUC_CONST;
@@ -110,14 +146,46 @@ GType gimp_hue_range_compat_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ALL_HUES,
-  GIMP_RED_HUES,
-  GIMP_YELLOW_HUES,
-  GIMP_GREEN_HUES,
-  GIMP_CYAN_HUES,
-  GIMP_BLUE_HUES,
-  GIMP_MAGENTA_HUES
+  GIMP_ALL_HUES     = GIMP_HUE_RANGE_ALL,
+  GIMP_RED_HUES     = GIMP_HUE_RANGE_RED,
+  GIMP_YELLOW_HUES  = GIMP_HUE_RANGE_YELLOW,
+  GIMP_GREEN_HUES   = GIMP_HUE_RANGE_GREEN,
+  GIMP_CYAN_HUES    = GIMP_HUE_RANGE_CYAN,
+  GIMP_BLUE_HUES    = GIMP_HUE_RANGE_BLUE,
+  GIMP_MAGENTA_HUES = GIMP_HUE_RANGE_MAGENTA
 } GimpHueRangeCompat;
+
+
+#define GIMP_TYPE_ICON_TYPE_COMPAT (gimp_icon_type_compat_get_type ())
+
+GType gimp_icon_type_compat_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ICON_TYPE_STOCK_ID = GIMP_ICON_TYPE_ICON_NAME
+} GimpIconTypeCompat;
+
+
+#define GIMP_TYPE_INTERPOLATION_TYPE_COMPAT (gimp_interpolation_type_compat_get_type ())
+
+GType gimp_interpolation_type_compat_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO
+} GimpInterpolationTypeCompat;
+
+
+#define GIMP_TYPE_TRANSFER_MODE_COMPAT (gimp_transfer_mode_compat_get_type ())
+
+GType gimp_transfer_mode_compat_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_SHADOWS    = GIMP_TRANSFER_SHADOWS,
+  GIMP_MIDTONES   = GIMP_TRANSFER_MIDTONES,
+  GIMP_HIGHLIGHTS = GIMP_TRANSFER_HIGHLIGHTS
+} GimpTransferModeCompat;
 
 
 G_END_DECLS

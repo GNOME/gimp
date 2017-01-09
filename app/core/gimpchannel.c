@@ -1716,7 +1716,7 @@ gimp_channel_new_from_alpha (GimpImage     *image,
 
   gegl_buffer_set_format (dest_buffer,
                           gimp_drawable_get_component_format (drawable,
-                                                              GIMP_ALPHA_CHANNEL));
+                                                              GIMP_CHANNEL_ALPHA));
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
                     GEGL_ABYSS_NONE,
                     dest_buffer, NULL);

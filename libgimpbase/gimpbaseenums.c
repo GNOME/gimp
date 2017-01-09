@@ -217,23 +217,23 @@ gimp_channel_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_RED_CHANNEL, "GIMP_RED_CHANNEL", "red-channel" },
-    { GIMP_GREEN_CHANNEL, "GIMP_GREEN_CHANNEL", "green-channel" },
-    { GIMP_BLUE_CHANNEL, "GIMP_BLUE_CHANNEL", "blue-channel" },
-    { GIMP_GRAY_CHANNEL, "GIMP_GRAY_CHANNEL", "gray-channel" },
-    { GIMP_INDEXED_CHANNEL, "GIMP_INDEXED_CHANNEL", "indexed-channel" },
-    { GIMP_ALPHA_CHANNEL, "GIMP_ALPHA_CHANNEL", "alpha-channel" },
+    { GIMP_CHANNEL_RED, "GIMP_CHANNEL_RED", "red" },
+    { GIMP_CHANNEL_GREEN, "GIMP_CHANNEL_GREEN", "green" },
+    { GIMP_CHANNEL_BLUE, "GIMP_CHANNEL_BLUE", "blue" },
+    { GIMP_CHANNEL_GRAY, "GIMP_CHANNEL_GRAY", "gray" },
+    { GIMP_CHANNEL_INDEXED, "GIMP_CHANNEL_INDEXED", "indexed" },
+    { GIMP_CHANNEL_ALPHA, "GIMP_CHANNEL_ALPHA", "alpha" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_RED_CHANNEL, NC_("channel-type", "Red"), NULL },
-    { GIMP_GREEN_CHANNEL, NC_("channel-type", "Green"), NULL },
-    { GIMP_BLUE_CHANNEL, NC_("channel-type", "Blue"), NULL },
-    { GIMP_GRAY_CHANNEL, NC_("channel-type", "Gray"), NULL },
-    { GIMP_INDEXED_CHANNEL, NC_("channel-type", "Indexed"), NULL },
-    { GIMP_ALPHA_CHANNEL, NC_("channel-type", "Alpha"), NULL },
+    { GIMP_CHANNEL_RED, NC_("channel-type", "Red"), NULL },
+    { GIMP_CHANNEL_GREEN, NC_("channel-type", "Green"), NULL },
+    { GIMP_CHANNEL_BLUE, NC_("channel-type", "Blue"), NULL },
+    { GIMP_CHANNEL_GRAY, NC_("channel-type", "Gray"), NULL },
+    { GIMP_CHANNEL_INDEXED, NC_("channel-type", "Indexed"), NULL },
+    { GIMP_CHANNEL_ALPHA, NC_("channel-type", "Alpha"), NULL },
     { 0, NULL, NULL }
   };
 

@@ -460,7 +460,7 @@ register_channel_procs (GimpPDB *pdb)
                                                   "component",
                                                   "The image component",
                                                   GIMP_TYPE_CHANNEL_TYPE,
-                                                  GIMP_RED_CHANNEL,
+                                                  GIMP_CHANNEL_RED,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",

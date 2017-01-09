@@ -141,12 +141,21 @@ GType gimp_channel_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RED_CHANNEL,      /*< desc="Red"     >*/
-  GIMP_GREEN_CHANNEL,    /*< desc="Green"   >*/
-  GIMP_BLUE_CHANNEL,     /*< desc="Blue"    >*/
-  GIMP_GRAY_CHANNEL,     /*< desc="Gray"    >*/
-  GIMP_INDEXED_CHANNEL,  /*< desc="Indexed" >*/
-  GIMP_ALPHA_CHANNEL     /*< desc="Alpha"   >*/
+  GIMP_CHANNEL_RED,      /*< desc="Red"     >*/
+  GIMP_CHANNEL_GREEN,    /*< desc="Green"   >*/
+  GIMP_CHANNEL_BLUE,     /*< desc="Blue"    >*/
+  GIMP_CHANNEL_GRAY,     /*< desc="Gray"    >*/
+  GIMP_CHANNEL_INDEXED,  /*< desc="Indexed" >*/
+  GIMP_CHANNEL_ALPHA,    /*< desc="Alpha"   >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_RED_CHANNEL     = GIMP_CHANNEL_RED,     /*< skip, pdb-skip >*/
+  GIMP_GREEN_CHANNEL   = GIMP_CHANNEL_GREEN,   /*< skip, pdb-skip >*/
+  GIMP_BLUE_CHANNEL    = GIMP_CHANNEL_BLUE,    /*< skip, pdb-skip >*/
+  GIMP_GRAY_CHANNEL    = GIMP_CHANNEL_GRAY,    /*< skip, pdb-skip >*/
+  GIMP_INDEXED_CHANNEL = GIMP_CHANNEL_INDEXED, /*< skip, pdb-skip >*/
+  GIMP_ALPHA_CHANNEL   = GIMP_CHANNEL_ALPHA    /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpChannelType;
 
 

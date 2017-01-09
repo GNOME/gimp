@@ -1847,9 +1847,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (component == GIMP_GRAY_CHANNEL)
+  if (component == GIMP_CHANNEL_GRAY)
     success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
-  else if (component == GIMP_INDEXED_CHANNEL)
+  else if (component == GIMP_CHANNEL_INDEXED)
     success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
   else
     success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
@@ -1885,9 +1885,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (component == GIMP_GRAY_CHANNEL)
+  if (component == GIMP_CHANNEL_GRAY)
     success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
-  else if (component == GIMP_INDEXED_CHANNEL)
+  else if (component == GIMP_CHANNEL_INDEXED)
     success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
   else
     success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
@@ -1926,9 +1926,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (component == GIMP_GRAY_CHANNEL)
+  if (component == GIMP_CHANNEL_GRAY)
     success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
-  else if (component == GIMP_INDEXED_CHANNEL)
+  else if (component == GIMP_CHANNEL_INDEXED)
     success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
   else
     success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);
@@ -1964,9 +1964,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (component == GIMP_GRAY_CHANNEL)
+  if (component == GIMP_CHANNEL_GRAY)
     success = gimp_pdb_image_is_base_type (image, GIMP_GRAY, error);
-  else if (component == GIMP_INDEXED_CHANNEL)
+  else if (component == GIMP_CHANNEL_INDEXED)
     success = gimp_pdb_image_is_base_type (image, GIMP_INDEXED, error);
   else
     success = gimp_pdb_image_is_base_type (image, GIMP_RGB, error);

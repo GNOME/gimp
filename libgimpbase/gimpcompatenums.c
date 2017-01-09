@@ -115,6 +115,44 @@ gimp_bucket_fill_mode_compat_get_type (void)
 }
 
 GType
+gimp_channel_type_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_RED_CHANNEL, "GIMP_RED_CHANNEL", "red-channel" },
+    { GIMP_GREEN_CHANNEL, "GIMP_GREEN_CHANNEL", "green-channel" },
+    { GIMP_BLUE_CHANNEL, "GIMP_BLUE_CHANNEL", "blue-channel" },
+    { GIMP_GRAY_CHANNEL, "GIMP_GRAY_CHANNEL", "gray-channel" },
+    { GIMP_INDEXED_CHANNEL, "GIMP_INDEXED_CHANNEL", "indexed-channel" },
+    { GIMP_ALPHA_CHANNEL, "GIMP_ALPHA_CHANNEL", "alpha-channel" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_RED_CHANNEL, "GIMP_RED_CHANNEL", NULL },
+    { GIMP_GREEN_CHANNEL, "GIMP_GREEN_CHANNEL", NULL },
+    { GIMP_BLUE_CHANNEL, "GIMP_BLUE_CHANNEL", NULL },
+    { GIMP_GRAY_CHANNEL, "GIMP_GRAY_CHANNEL", NULL },
+    { GIMP_INDEXED_CHANNEL, "GIMP_INDEXED_CHANNEL", NULL },
+    { GIMP_ALPHA_CHANNEL, "GIMP_ALPHA_CHANNEL", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpChannelTypeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "channel-type-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_clone_type_compat_get_type (void)
 {
   static const GEnumValue values[] =
@@ -168,6 +206,64 @@ gimp_convolve_type_compat_get_type (void)
       type = g_enum_register_static ("GimpConvolveTypeCompat", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
       gimp_type_set_translation_context (type, "convolve-type-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_desaturate_mode_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DESATURATE_LUMINOSITY, "GIMP_DESATURATE_LUMINOSITY", "luminosity" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DESATURATE_LUMINOSITY, "GIMP_DESATURATE_LUMINOSITY", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDesaturateModeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "desaturate-mode-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_dodge_burn_type_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DODGE, "GIMP_DODGE", "dodge" },
+    { GIMP_BURN, "GIMP_BURN", "burn" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DODGE, "GIMP_DODGE", NULL },
+    { GIMP_BURN, "GIMP_BURN", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDodgeBurnTypeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "dodge-burn-type-compat");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -244,6 +340,94 @@ gimp_hue_range_compat_get_type (void)
       type = g_enum_register_static ("GimpHueRangeCompat", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
       gimp_type_set_translation_context (type, "hue-range-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_icon_type_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ICON_TYPE_STOCK_ID, "GIMP_ICON_TYPE_STOCK_ID", "id" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ICON_TYPE_STOCK_ID, "GIMP_ICON_TYPE_STOCK_ID", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpIconTypeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "icon-type-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_interpolation_type_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_INTERPOLATION_LANCZOS, "GIMP_INTERPOLATION_LANCZOS", "lanczos" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_INTERPOLATION_LANCZOS, "GIMP_INTERPOLATION_LANCZOS", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpInterpolationTypeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "interpolation-type-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_transfer_mode_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_SHADOWS, "GIMP_SHADOWS", "shadows" },
+    { GIMP_MIDTONES, "GIMP_MIDTONES", "midtones" },
+    { GIMP_HIGHLIGHTS, "GIMP_HIGHLIGHTS", "highlights" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_SHADOWS, "GIMP_SHADOWS", NULL },
+    { GIMP_MIDTONES, "GIMP_MIDTONES", NULL },
+    { GIMP_HIGHLIGHTS, "GIMP_HIGHLIGHTS", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpTransferModeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "transfer-mode-compat");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

@@ -84,15 +84,15 @@ package Gimp::CodeGen::enums;
     GimpChannelType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_RED_CHANNEL GIMP_GREEN_CHANNEL
-			  GIMP_BLUE_CHANNEL GIMP_GRAY_CHANNEL
-			  GIMP_INDEXED_CHANNEL GIMP_ALPHA_CHANNEL) ],
-	  mapping => { GIMP_RED_CHANNEL => '0',
-		       GIMP_GREEN_CHANNEL => '1',
-		       GIMP_BLUE_CHANNEL => '2',
-		       GIMP_GRAY_CHANNEL => '3',
-		       GIMP_INDEXED_CHANNEL => '4',
-		       GIMP_ALPHA_CHANNEL => '5' }
+	  symbols => [ qw(GIMP_CHANNEL_RED GIMP_CHANNEL_GREEN
+			  GIMP_CHANNEL_BLUE GIMP_CHANNEL_GRAY
+			  GIMP_CHANNEL_INDEXED GIMP_CHANNEL_ALPHA) ],
+	  mapping => { GIMP_CHANNEL_RED => '0',
+		       GIMP_CHANNEL_GREEN => '1',
+		       GIMP_CHANNEL_BLUE => '2',
+		       GIMP_CHANNEL_GRAY => '3',
+		       GIMP_CHANNEL_INDEXED => '4',
+		       GIMP_CHANNEL_ALPHA => '5' }
 	},
     GimpCloneType =>
 	{ contig => 1,

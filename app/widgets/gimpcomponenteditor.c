@@ -342,24 +342,24 @@ gimp_component_editor_create_components (GimpComponentEditor *editor)
     {
     case GIMP_RGB:
       n_components  = 3;
-      components[0] = GIMP_RED_CHANNEL;
-      components[1] = GIMP_GREEN_CHANNEL;
-      components[2] = GIMP_BLUE_CHANNEL;
+      components[0] = GIMP_CHANNEL_RED;
+      components[1] = GIMP_CHANNEL_GREEN;
+      components[2] = GIMP_CHANNEL_BLUE;
       break;
 
     case GIMP_GRAY:
       n_components  = 1;
-      components[0] = GIMP_GRAY_CHANNEL;
+      components[0] = GIMP_CHANNEL_GRAY;
       break;
 
     case GIMP_INDEXED:
       n_components  = 1;
-      components[0] = GIMP_INDEXED_CHANNEL;
+      components[0] = GIMP_CHANNEL_INDEXED;
       break;
     }
 
   if (gimp_image_has_alpha (image))
-    components[n_components++] = GIMP_ALPHA_CHANNEL;
+    components[n_components++] = GIMP_CHANNEL_ALPHA;
 
   enum_class = g_type_class_ref (GIMP_TYPE_CHANNEL_TYPE);
 

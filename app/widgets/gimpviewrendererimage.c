@@ -72,7 +72,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
    */
   if (rendererimage->channel == -1 ||
       (gimp_image_get_component_visible (image, rendererimage->channel) &&
-       gimp_image_get_component_visible (image, GIMP_ALPHA_CHANNEL)))
+       gimp_image_get_component_visible (image, GIMP_CHANNEL_ALPHA)))
     {
       gint         view_width;
       gint         view_height;
@@ -158,12 +158,12 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
   switch (rendererimage->channel)
     {
-    case GIMP_RED_CHANNEL:     icon_name = GIMP_STOCK_CHANNEL_RED;     break;
-    case GIMP_GREEN_CHANNEL:   icon_name = GIMP_STOCK_CHANNEL_GREEN;   break;
-    case GIMP_BLUE_CHANNEL:    icon_name = GIMP_STOCK_CHANNEL_BLUE;    break;
-    case GIMP_GRAY_CHANNEL:    icon_name = GIMP_STOCK_CHANNEL_GRAY;    break;
-    case GIMP_INDEXED_CHANNEL: icon_name = GIMP_STOCK_CHANNEL_INDEXED; break;
-    case GIMP_ALPHA_CHANNEL:   icon_name = GIMP_STOCK_CHANNEL_ALPHA;   break;
+    case GIMP_CHANNEL_RED:     icon_name = GIMP_STOCK_CHANNEL_RED;     break;
+    case GIMP_CHANNEL_GREEN:   icon_name = GIMP_STOCK_CHANNEL_GREEN;   break;
+    case GIMP_CHANNEL_BLUE:    icon_name = GIMP_STOCK_CHANNEL_BLUE;    break;
+    case GIMP_CHANNEL_GRAY:    icon_name = GIMP_STOCK_CHANNEL_GRAY;    break;
+    case GIMP_CHANNEL_INDEXED: icon_name = GIMP_STOCK_CHANNEL_INDEXED; break;
+    case GIMP_CHANNEL_ALPHA:   icon_name = GIMP_STOCK_CHANNEL_ALPHA;   break;
 
     default:
       icon_name = gimp_viewable_get_icon_name (renderer->viewable);

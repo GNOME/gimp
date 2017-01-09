@@ -2696,32 +2696,32 @@ gimp_image_get_component_format (GimpImage       *image,
 
   switch (channel)
     {
-    case GIMP_RED_CHANNEL:
+    case GIMP_CHANNEL_RED:
       return gimp_babl_component_format (GIMP_RGB,
                                          gimp_image_get_precision (image),
                                          RED);
 
-    case GIMP_GREEN_CHANNEL:
+    case GIMP_CHANNEL_GREEN:
       return gimp_babl_component_format (GIMP_RGB,
                                          gimp_image_get_precision (image),
                                          GREEN);
 
-    case GIMP_BLUE_CHANNEL:
+    case GIMP_CHANNEL_BLUE:
       return gimp_babl_component_format (GIMP_RGB,
                                          gimp_image_get_precision (image),
                                          BLUE);
 
-    case GIMP_ALPHA_CHANNEL:
+    case GIMP_CHANNEL_ALPHA:
       return gimp_babl_component_format (GIMP_RGB,
                                          gimp_image_get_precision (image),
                                          ALPHA);
 
-    case GIMP_GRAY_CHANNEL:
+    case GIMP_CHANNEL_GRAY:
       return gimp_babl_component_format (GIMP_GRAY,
                                          gimp_image_get_precision (image),
                                          GRAY);
 
-    case GIMP_INDEXED_CHANNEL:
+    case GIMP_CHANNEL_INDEXED:
       return babl_format ("Y u8"); /* will extract grayscale, the best
                                     * we can do here */
     }
@@ -2737,12 +2737,12 @@ gimp_image_get_component_index (GimpImage       *image,
 
   switch (channel)
     {
-    case GIMP_RED_CHANNEL:     return RED;
-    case GIMP_GREEN_CHANNEL:   return GREEN;
-    case GIMP_BLUE_CHANNEL:    return BLUE;
-    case GIMP_GRAY_CHANNEL:    return GRAY;
-    case GIMP_INDEXED_CHANNEL: return INDEXED;
-    case GIMP_ALPHA_CHANNEL:
+    case GIMP_CHANNEL_RED:     return RED;
+    case GIMP_CHANNEL_GREEN:   return GREEN;
+    case GIMP_CHANNEL_BLUE:    return BLUE;
+    case GIMP_CHANNEL_GRAY:    return GRAY;
+    case GIMP_CHANNEL_INDEXED: return INDEXED;
+    case GIMP_CHANNEL_ALPHA:
       switch (gimp_image_get_base_type (image))
         {
         case GIMP_RGB:     return ALPHA;

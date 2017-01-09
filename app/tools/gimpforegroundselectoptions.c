@@ -100,7 +100,7 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
                          _("Preview color"),
                          _("Color of selection preview mask"),
                          GIMP_TYPE_CHANNEL_TYPE,
-                         GIMP_BLUE_CHANNEL,
+                         GIMP_CHANNEL_BLUE,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_ENGINE,
@@ -301,7 +301,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
 
   /*  mask color */
   combo = gimp_prop_enum_combo_box_new (config, "mask-color",
-                                        GIMP_RED_CHANNEL, GIMP_GRAY_CHANNEL);
+                                        GIMP_CHANNEL_RED, GIMP_CHANNEL_GRAY);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Preview color"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
@@ -374,19 +374,19 @@ gimp_foreground_select_options_get_mask_color (GimpForegroundSelectOptions *opti
 
   switch (options->mask_color)
     {
-    case GIMP_RED_CHANNEL:
+    case GIMP_CHANNEL_RED:
       gimp_rgba_set (color, 1, 0, 0, 0.7);
       break;
 
-    case GIMP_GREEN_CHANNEL:
+    case GIMP_CHANNEL_GREEN:
       gimp_rgba_set (color, 0, 1, 0, 0.7);
       break;
 
-    case GIMP_BLUE_CHANNEL:
+    case GIMP_CHANNEL_BLUE:
       gimp_rgba_set (color, 0, 0, 1, 0.7);
       break;
 
-    case GIMP_GRAY_CHANNEL:
+    case GIMP_CHANNEL_GRAY:
       gimp_rgba_set (color, 1, 1, 1, 0.7);
       break;
 

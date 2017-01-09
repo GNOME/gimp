@@ -1486,7 +1486,7 @@ gimp_layer_create_mask (GimpLayer       *layer,
           dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
 
           component_format =
-            gimp_image_get_component_format (image, GIMP_ALPHA_CHANNEL);
+            gimp_image_get_component_format (image, GIMP_CHANNEL_ALPHA);
 
           gegl_buffer_set_format (dest_buffer, component_format);
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
