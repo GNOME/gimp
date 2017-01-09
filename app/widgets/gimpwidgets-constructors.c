@@ -111,6 +111,7 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
 
                                            GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
                                            GIMP_LAYER_MODE_SCREEN_LEGACY,
+                                           GIMP_LAYER_MODE_DODGE,
                                            GIMP_LAYER_MODE_DODGE_LEGACY,
                                            GIMP_LAYER_MODE_ADDITION_LEGACY,
 

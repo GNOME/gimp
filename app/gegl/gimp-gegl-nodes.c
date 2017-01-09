@@ -219,8 +219,12 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:divide-mode";
       break;
 
+    case GIMP_LAYER_MODE_DODGE:
+      operation = "gimp:dodge";
+      break;
+
     case GIMP_LAYER_MODE_DODGE_LEGACY:
-      operation = "gimp:dodge-mode";
+      operation = "gimp:dodge-legacy";
       break;
 
     case GIMP_LAYER_MODE_BURN_LEGACY:
@@ -319,6 +323,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
+    case GIMP_LAYER_MODE_DODGE:
     case GIMP_LAYER_MODE_DODGE_LEGACY:
     case GIMP_LAYER_MODE_BURN_LEGACY:
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:

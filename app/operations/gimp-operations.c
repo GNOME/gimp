@@ -83,7 +83,8 @@
 #include "gimpoperationcolormode.h"
 #include "gimpoperationvaluemode.h"
 #include "gimpoperationdividemode.h"
-#include "gimpoperationdodgemode.h"
+#include "gimpoperationdodge.h"
+#include "gimpoperationdodgelegacy.h"
 #include "gimpoperationburnmode.h"
 #include "gimpoperationhardlightmode.h"
 #include "gimpoperationsoftlightmode.h"
@@ -148,7 +149,8 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_VALUE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_DODGE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DODGE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DODGE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_BURN_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_HARDLIGHT_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_SOFTLIGHT_MODE);

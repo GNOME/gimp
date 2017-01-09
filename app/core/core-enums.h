@@ -170,7 +170,7 @@ typedef enum
   GIMP_LAYER_MODE_HSV_COLOR_LEGACY,       /*< desc="Color (HSV)"          >*/
   GIMP_LAYER_MODE_HSV_VALUE_LEGACY,       /*< desc="Value (HSV)"          >*/
   GIMP_LAYER_MODE_DIVIDE_LEGACY,          /*< desc="Divide"               >*/
-  GIMP_LAYER_MODE_DODGE_LEGACY,           /*< desc="Dodge"                >*/
+  GIMP_LAYER_MODE_DODGE_LEGACY,           /*< desc="Dodge (legacy)"       >*/
   GIMP_LAYER_MODE_BURN_LEGACY,            /*< desc="Burn"                 >*/
   GIMP_LAYER_MODE_HARDLIGHT_LEGACY,       /*< desc="Hard light"           >*/
   GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,       /*< desc="Soft light"           >*/
@@ -185,6 +185,7 @@ typedef enum
   GIMP_LAYER_MODE_NORMAL,                 /*< desc="Normal"               >*/
   GIMP_LAYER_MODE_MULTIPLY,               /*< desc="Multiply"             >*/
   GIMP_LAYER_MODE_MULTIPLY_LINEAR,        /*< desc="Multiply (linear)"    >*/
+  GIMP_LAYER_MODE_DODGE,                  /*< desc="Dodge"                >*/
 
   /* internal modes, not available to the PDB */
   GIMP_LAYER_MODE_ERASE      = 1000, /*< pdb-skip, desc="Erase"      >*/

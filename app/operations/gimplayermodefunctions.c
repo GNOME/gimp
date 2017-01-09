@@ -43,7 +43,8 @@
 #include "gimpoperationcolormode.h"
 #include "gimpoperationvaluemode.h"
 #include "gimpoperationdividemode.h"
-#include "gimpoperationdodgemode.h"
+#include "gimpoperationdodge.h"
+#include "gimpoperationdodgelegacy.h"
 #include "gimpoperationburnmode.h"
 #include "gimpoperationhardlightmode.h"
 #include "gimpoperationsoftlightmode.h"
@@ -135,8 +136,12 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_divide_mode_process_pixels;
       break;
 
+    case GIMP_LAYER_MODE_DODGE:
+      func = gimp_operation_dodge_process_pixels;
+      break;
+
     case GIMP_LAYER_MODE_DODGE_LEGACY:
-      func = gimp_operation_dodge_mode_process_pixels;
+      func = gimp_operation_dodge_legacy_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_BURN_LEGACY:

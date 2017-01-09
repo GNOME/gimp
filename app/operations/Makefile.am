@@ -130,8 +130,10 @@ libappoperations_generic_a_sources = \
 	gimpoperationvaluemode.h        	\
 	gimpoperationdividemode.c       	\
 	gimpoperationdividemode.h       	\
-	gimpoperationdodgemode.c        	\
-	gimpoperationdodgemode.h        	\
+	gimpoperationdodge.c        	    \
+	gimpoperationdodge.h             	\
+	gimpoperationdodgelegacy.c    	    \
+	gimpoperationdodgelegacy.h         	\
 	gimpoperationburnmode.c         	\
 	gimpoperationburnmode.h         	\
 	gimpoperationhardlightmode.c    	\
