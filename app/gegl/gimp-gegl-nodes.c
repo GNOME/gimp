@@ -183,8 +183,12 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:softlight-mode";
       break;
 
+    case GIMP_LAYER_MODE_DIFFERENCE:
+      operation = "gimp:difference";
+      break;
+
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
-      operation = "gimp:difference-mode";
+      operation = "gimp:difference-legacyy";
       break;
 
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
@@ -323,6 +327,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
+    case GIMP_LAYER_MODE_DIFFERENCE:
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:

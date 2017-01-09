@@ -23,27 +23,27 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationdifferencemode.h"
-
-
-static gboolean gimp_operation_difference_mode_process (GeglOperation       *operation,
-                                                        void                *in_buf,
-                                                        void                *aux_buf,
-                                                        void                *aux2_buf,
-                                                        void                *out_buf,
-                                                        glong                samples,
-                                                        const GeglRectangle *roi,
-                                                        gint                 level);
+#include "gimpoperationdifferencelegacy.h"
 
 
-G_DEFINE_TYPE (GimpOperationDifferenceMode, gimp_operation_difference_mode,
+static gboolean gimp_operation_difference_legacy_process (GeglOperation       *operation,
+                                                          void                *in_buf,
+                                                          void                *aux_buf,
+                                                          void                *aux2_buf,
+                                                          void                *out_buf,
+                                                          glong                samples,
+                                                          const GeglRectangle *roi,
+                                                          gint                 level);
+
+
+G_DEFINE_TYPE (GimpOperationDifferenceLegacy, gimp_operation_difference_legacy,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
-gimp_operation_difference_mode_class_init (GimpOperationDifferenceModeClass *klass)
+gimp_operation_difference_legacy_class_init (GimpOperationDifferenceLegacyClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -56,38 +56,38 @@ gimp_operation_difference_mode_class_init (GimpOperationDifferenceModeClass *kla
                                  "description", "GIMP difference mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_difference_mode_process;
+  point_class->process = gimp_operation_difference_legacy_process;
 }
 
 static void
-gimp_operation_difference_mode_init (GimpOperationDifferenceMode *self)
+gimp_operation_difference_legacy_init (GimpOperationDifferenceLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_difference_mode_process (GeglOperation       *operation,
-                                        void                *in_buf,
-                                        void                *aux_buf,
-                                        void                *aux2_buf,
-                                        void                *out_buf,
-                                        glong                samples,
-                                        const GeglRectangle *roi,
-                                        gint                 level)
+gimp_operation_difference_legacy_process (GeglOperation       *operation,
+                                          void                *in_buf,
+                                          void                *aux_buf,
+                                          void                *aux2_buf,
+                                          void                *out_buf,
+                                          glong                samples,
+                                          const GeglRectangle *roi,
+                                          gint                 level)
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_difference_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_difference_legacy_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_difference_mode_process_pixels (gfloat              *in,
-                                               gfloat              *layer,
-                                               gfloat              *mask,
-                                               gfloat              *out,
-                                               gfloat               opacity,
-                                               glong                samples,
-                                               const GeglRectangle *roi,
-                                               gint                 level)
+gimp_operation_difference_legacy_process_pixels (gfloat              *in,
+                                                 gfloat              *layer,
+                                                 gfloat              *mask,
+                                                 gfloat              *out,
+                                                 gfloat               opacity,
+                                                 glong                samples,
+                                                 const GeglRectangle *roi,
+                                                 gint                 level)
 {
   const gboolean has_mask = mask != NULL;
 

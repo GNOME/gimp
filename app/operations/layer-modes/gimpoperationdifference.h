@@ -1,8 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdifferencemode.h
+ * gimpoperationdifference.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ *               2017 Øyvind Kolås <pippin@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,39 +19,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_DIFFERENCE_MODE_H__
-#define __GIMP_OPERATION_DIFFERENCE_MODE_H__
+#ifndef __GIMP_OPERATION_DIFFERENCE_H__
+#define __GIMP_OPERATION_DIFFERENCE_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "../gimpoperationpointlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_DIFFERENCE_MODE            (gimp_operation_difference_mode_get_type ())
-#define GIMP_OPERATION_DIFFERENCE_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_DIFFERENCE_MODE, GimpOperationDifferenceMode))
-#define GIMP_OPERATION_DIFFERENCE_MODE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_DIFFERENCE_MODE, GimpOperationDifferenceModeClass))
-#define GIMP_IS_OPERATION_DIFFERENCE_MODE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_DIFFERENCE_MODE))
-#define GIMP_IS_OPERATION_DIFFERENCE_MODE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_DIFFERENCE_MODE))
-#define GIMP_OPERATION_DIFFERENCE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DIFFERENCE_MODE, GimpOperationDifferenceModeClass))
+#define GIMP_TYPE_OPERATION_DIFFERENCE            (gimp_operation_difference_get_type ())
+#define GIMP_OPERATION_DIFFERENCE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_DIFFERENCE, GimpOperationDifference))
+#define GIMP_OPERATION_DIFFERENCE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_DIFFERENCE, GimpOperationDifferenceClass))
+#define GIMP_IS_OPERATION_DIFFERENCE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_DIFFERENCE))
+#define GIMP_IS_OPERATION_DIFFERENCE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_DIFFERENCE))
+#define GIMP_OPERATION_DIFFERENCE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_DIFFERENCE, GimpOperationDifferenceClass))
 
 
-typedef struct _GimpOperationDifferenceMode      GimpOperationDifferenceMode;
-typedef struct _GimpOperationDifferenceModeClass GimpOperationDifferenceModeClass;
+typedef struct _GimpOperationDifference      GimpOperationDifference;
+typedef struct _GimpOperationDifferenceClass GimpOperationDifferenceClass;
 
-struct _GimpOperationDifferenceMode
+struct _GimpOperationDifference
 {
   GimpOperationPointLayerMode  parent_instance;
 };
 
-struct _GimpOperationDifferenceModeClass
+struct _GimpOperationDifferenceClass
 {
   GimpOperationPointLayerModeClass  parent_class;
 };
 
 
-GType   gimp_operation_difference_mode_get_type (void) G_GNUC_CONST;
+GType   gimp_operation_difference_get_type (void) G_GNUC_CONST;
 
 
-gboolean gimp_operation_difference_mode_process_pixels (gfloat              *in,
+gboolean gimp_operation_difference_process_pixels (gfloat              *in,
                                                         gfloat              *layer,
                                                         gfloat              *mask,
                                                         gfloat              *out,
@@ -59,4 +60,4 @@ gboolean gimp_operation_difference_mode_process_pixels (gfloat              *in,
                                                         const GeglRectangle *roi,
                                                         gint                 level);
 
-#endif /* __GIMP_OPERATION_DIFFERENCE_MODE_H__ */
+#endif /* __GIMP_OPERATION_DIFFERENCE_H__ */

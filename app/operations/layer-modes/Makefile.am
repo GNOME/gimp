@@ -25,7 +25,9 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationmultiply.c		\
 	gimpoperationmultiply.h         \
 	gimpoperationscreen.c  		\
-	gimpoperationscreen.h
+	gimpoperationscreen.h           \
+	gimpoperationdifference.c	\
+	gimpoperationdifference.h
 
 libapplayermodes_sse2_a_sources = \
 	gimpoperationnormal-sse2.c

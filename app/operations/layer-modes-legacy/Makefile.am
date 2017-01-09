@@ -20,4 +20,6 @@ libapplayermodeslegacy_a_SOURCES = \
 	gimpoperationdodgelegacy.c	\
 	gimpoperationdodgelegacy.h      \
 	gimpoperationscreenlegacy.c	\
-	gimpoperationscreenlegacy.h
+	gimpoperationscreenlegacy.h     \
+	gimpoperationdifferencelegacy.c	\
+	gimpoperationdifferencelegacy.h
