@@ -74,7 +74,8 @@
 #include "layer-modes/gimpoperationscreen.h"
 #include "layer-modes-legacy/gimpoperationscreenlegacy.h"
 #include "layer-modes/gimpoperationoverlay.h"
-#include "gimpoperationdifferencemode.h"
+#include "layer-modes/gimpoperationdifference.h"
+#include "layer-modes-legacy/gimpoperationdifferencelegacy.h"
 #include "gimpoperationadditionmode.h"
 #include "gimpoperationsubtractmode.h"
 #include "gimpoperationdarkenonlymode.h"
@@ -138,9 +139,11 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_OVERLAY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_DIFFERENCE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DIFFERENCE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DIFFERENCE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_ADDITION_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_SUBTRACT_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE);

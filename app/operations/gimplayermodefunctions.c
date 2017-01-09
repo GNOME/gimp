@@ -34,7 +34,8 @@
 #include "layer-modes/gimpoperationscreen.h"
 #include "layer-modes-legacy/gimpoperationscreenlegacy.h"
 #include "layer-modes/gimpoperationoverlay.h"
-#include "gimpoperationdifferencemode.h"
+#include "layer-modes/gimpoperationdifference.h"
+#include "layer-modes-legacy/gimpoperationdifferencelegacy.h"
 #include "gimpoperationadditionmode.h"
 #include "gimpoperationsubtractmode.h"
 #include "gimpoperationdarkenonlymode.h"
@@ -102,7 +103,11 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
-      func = gimp_operation_difference_mode_process_pixels;
+      func = gimp_operation_difference_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_DIFFERENCE:
+      func = gimp_operation_difference_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_ADDITION_LEGACY:

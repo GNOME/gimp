@@ -25,12 +25,12 @@
 #include "../gimpoperationpointlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_SCREEN_MODE            (gimp_operation_screen_get_type ())
-#define GIMP_OPERATION_SCREEN_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_SCREEN_MODE, GimpOperationScreen))
-#define GIMP_OPERATION_SCREEN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_SCREEN_MODE, GimpOperationScreenClass))
-#define GIMP_IS_OPERATION_SCREEN_MODE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_SCREEN_MODE))
-#define GIMP_IS_OPERATION_SCREEN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_SCREEN_MODE))
-#define GIMP_OPERATION_SCREEN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SCREEN_MODE, GimpOperationScreenClass))
+#define GIMP_TYPE_OPERATION_SCREEN            (gimp_operation_screen_get_type ())
+#define GIMP_OPERATION_SCREEN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_SCREEN, GimpOperationScreen))
+#define GIMP_OPERATION_SCREEN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_SCREEN, GimpOperationScreenClass))
+#define GIMP_IS_OPERATION_SCREEN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_SCREEN))
+#define GIMP_IS_OPERATION_SCREEN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_SCREEN))
+#define GIMP_OPERATION_SCREEN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_SCREEN, GimpOperationScreenClass))
 
 
 typedef struct _GimpOperationScreen      GimpOperationScreen;
