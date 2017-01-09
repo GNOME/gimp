@@ -686,6 +686,14 @@ animation_dialog_constructed (GObject *object)
   /*****************/
 
   hbox = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+  /* Without changing resize mode on the toolbar, it would change size when
+   * text length in the progress bar changes, and subsequently would the
+   * preview display.
+   * XXX: gtk_container_set_resize_mode() is deprecated in GTK+ 3.12, but I
+   * should check whether this issue still happens before removing the call, or
+   * find a new solution.
+   */
+  gtk_container_set_resize_mode (GTK_CONTAINER (hbox), GTK_RESIZE_QUEUE);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
