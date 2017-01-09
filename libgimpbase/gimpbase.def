@@ -1,21 +1,27 @@
 EXPORTS
+	gimp_add_mask_type_compat_get_type
 	gimp_add_mask_type_get_type
 	gimp_any_to_utf8
 	gimp_base_init
+	gimp_blend_mode_compat_get_type
 	gimp_blend_mode_get_type
 	gimp_brush_generated_shape_get_type
+	gimp_bucket_fill_mode_compat_get_type
 	gimp_bucket_fill_mode_get_type
 	gimp_canonicalize_identifier
 	gimp_cap_style_get_type
 	gimp_channel_ops_get_type
+	gimp_channel_type_compat_get_type
 	gimp_channel_type_get_type
 	gimp_check_size_get_type
 	gimp_check_type_get_type
 	gimp_checks_get_shades
+	gimp_clone_type_compat_get_type
 	gimp_clone_type_get_type
 	gimp_color_tag_get_type
 	gimp_component_type_get_type
 	gimp_convert_palette_type_get_type
+	gimp_convolve_type_compat_get_type
 	gimp_convolve_type_get_type
 	gimp_cpu_accel_get_support
 	gimp_cpu_accel_set_use
@@ -23,9 +29,11 @@ EXPORTS
 	gimp_data_directory_file
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
+	gimp_desaturate_mode_compat_get_type
 	gimp_desaturate_mode_get_type
 	gimp_directory
 	gimp_directory_file
+	gimp_dodge_burn_type_compat_get_type
 	gimp_dodge_burn_type_get_type
 	gimp_enum_get_desc
 	gimp_enum_get_value
@@ -39,6 +47,7 @@ EXPORTS
 	gimp_file_has_extension
 	gimp_file_show_in_file_manager
 	gimp_filename_to_utf8
+	gimp_fill_type_compat_get_type
 	gimp_fill_type_get_type
 	gimp_flags_get_first_desc
 	gimp_flags_get_first_value
@@ -52,12 +61,15 @@ EXPORTS
 	gimp_gradient_type_get_type
 	gimp_grid_style_get_type
 	gimp_gtkrc
+	gimp_hue_range_compat_get_type
 	gimp_hue_range_get_type
+	gimp_icon_type_compat_get_type
 	gimp_icon_type_get_type
 	gimp_image_base_type_get_type
 	gimp_image_type_get_type
 	gimp_ink_blob_type_get_type
 	gimp_installation_directory
+	gimp_interpolation_type_compat_get_type
 	gimp_interpolation_type_get_type
 	gimp_join_style_get_type
 	gimp_layer_mode_effects_get_type
@@ -145,6 +157,7 @@ EXPORTS
 	gimp_text_direction_get_type
 	gimp_text_hint_style_get_type
 	gimp_text_justification_get_type
+	gimp_transfer_mode_compat_get_type
 	gimp_transfer_mode_get_type
 	gimp_transform_direction_get_type
 	gimp_transform_resize_get_type
