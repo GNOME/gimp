@@ -102,6 +102,8 @@ LDADD = \
 	$(top_builddir)/app/libapp.a				\
 	$(top_builddir)/app/gegl/libappgegl.a			\
 	$(top_builddir)/app/operations/libappoperations.a	\
+	$(top_builddir)/app/operations/layer-modes/libapplayermodes.a	\
+	$(top_builddir)/app/operations/layer-modes-legacy/libapplayermodeslegacy.a	\
 	libgimpapptestutils.a					\
 	$(libgimpwidgets)					\
 	$(libgimpconfig)					\

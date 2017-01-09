@@ -25,12 +25,12 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "operations-types.h"
+#include "operations/operations-types.h"
 
-#include "gimpoperationnormalmode.h"
+#include "gimpoperationnormal.h"
 
 
-GimpLayerModeFunction gimp_operation_normal_mode_process_pixels = NULL;
+GimpLayerModeFunction gimp_operation_normal_process_pixels = NULL;
 
 
 static gboolean gimp_operation_normal_parent_process (GeglOperation        *operation,
@@ -38,7 +38,7 @@ static gboolean gimp_operation_normal_parent_process (GeglOperation        *oper
                                                       const gchar          *output_prop,
                                                       const GeglRectangle  *result,
                                                       gint                  level);
-static gboolean gimp_operation_normal_mode_process   (GeglOperation        *operation,
+static gboolean gimp_operation_normal_process        (GeglOperation        *operation,
                                                       void                 *in_buf,
                                                       void                 *aux_buf,
                                                       void                 *aux2_buf,
@@ -48,10 +48,10 @@ static gboolean gimp_operation_normal_mode_process   (GeglOperation        *oper
                                                       gint                  level);
 
 
-G_DEFINE_TYPE (GimpOperationNormalMode, gimp_operation_normal_mode,
+G_DEFINE_TYPE (GimpOperationNormal, gimp_operation_normal,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-#define parent_class gimp_operation_normal_mode_parent_class
+#define parent_class gimp_operation_normal_parent_class
 
 static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "<gegl>"
@@ -71,7 +71,7 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 
 
 static void
-gimp_operation_normal_mode_class_init (GimpOperationNormalModeClass *klass)
+gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -88,23 +88,23 @@ gimp_operation_normal_mode_class_init (GimpOperationNormalModeClass *klass)
 
   operation_class->process     = gimp_operation_normal_parent_process;
 
-  point_class->process         = gimp_operation_normal_mode_process;
+  point_class->process         = gimp_operation_normal_process;
 
-  gimp_operation_normal_mode_process_pixels = gimp_operation_normal_mode_process_pixels_core;
+  gimp_operation_normal_process_pixels = gimp_operation_normal_process_pixels_core;
 
 #if COMPILE_SSE2_INTRINISICS
   if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE2)
-    gimp_operation_normal_mode_process_pixels = gimp_operation_normal_mode_process_pixels_sse2;
+    gimp_operation_normal_process_pixels = gimp_operation_normal_process_pixels_sse2;
 #endif /* COMPILE_SSE2_INTRINISICS */
 
 #if COMPILE_SSE4_1_INTRINISICS
   if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE4_1)
-    gimp_operation_normal_mode_process_pixels = gimp_operation_normal_mode_process_pixels_sse4;
+    gimp_operation_normal_process_pixels = gimp_operation_normal_process_pixels_sse4;
 #endif /* COMPILE_SSE4_1_INTRINISICS */
 }
 
 static void
-gimp_operation_normal_mode_init (GimpOperationNormalMode *self)
+gimp_operation_normal_init (GimpOperationNormal *self)
 {
 }
 
@@ -164,29 +164,29 @@ gimp_operation_normal_parent_process (GeglOperation        *operation,
 }
 
 static gboolean
-gimp_operation_normal_mode_process (GeglOperation       *operation,
-                                    void                *in_buf,
-                                    void                *aux_buf,
-                                    void                *aux2_buf,
-                                    void                *out_buf,
-                                    glong                samples,
-                                    const GeglRectangle *roi,
-                                    gint                 level)
+gimp_operation_normal_process (GeglOperation       *operation,
+                               void                *in_buf,
+                               void                *aux_buf,
+                               void                *aux2_buf,
+                               void                *out_buf,
+                               glong                samples,
+                               const GeglRectangle *roi,
+                               gint                 level)
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_normal_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_normal_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_normal_mode_process_pixels_core (gfloat              *in,
-                                                gfloat              *aux,
-                                                gfloat              *mask,
-                                                gfloat              *out,
-                                                gfloat               opacity,
-                                                glong                samples,
-                                                const GeglRectangle *roi,
-                                                gint                 level)
+gimp_operation_normal_process_pixels_core (gfloat              *in,
+                                           gfloat              *aux,
+                                           gfloat              *mask,
+                                           gfloat              *out,
+                                           gfloat               opacity,
+                                           glong                samples,
+                                           const GeglRectangle *roi,
+                                           gint                 level)
 {
   const gboolean has_mask = mask != NULL;
 

@@ -22,30 +22,31 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "operations/operations-types.h"
 
-#include "gimpoperationnormalmode.h"
+#include "gimpoperationnormal.h"
 
-#if COMPILE_SSE2_INTRINISICS
-/* SSE2 */
-#include <emmintrin.h>
+
+#if COMPILE_SSE4_1_INTRINISICS
+/* SSE4 */
+#include <smmintrin.h>
 
 gboolean
-gimp_operation_normal_mode_process_pixels_sse2 (gfloat              *in,
-                                                gfloat              *aux,
-                                                gfloat              *mask,
-                                                gfloat              *out,
-                                                gfloat               opacity,
-                                                glong                samples,
-                                                const GeglRectangle *roi,
-                                                gint                 level)
+gimp_operation_normal_process_pixels_sse4 (gfloat              *in,
+                                           gfloat              *aux,
+                                           gfloat              *mask,
+                                           gfloat              *out,
+                                           gfloat               opacity,
+                                           glong                samples,
+                                           const GeglRectangle *roi,
+                                           gint                 level)
 {
   /* check alignment */
   if ((((uintptr_t)in) | ((uintptr_t)aux) | ((uintptr_t)out)) & 0x0F)
     {
-      return gimp_operation_normal_mode_process_pixels_core (in, aux, mask, out,
-                                                             opacity, samples,
-                                                             roi, level);
+      return gimp_operation_normal_process_pixels_core (in, aux, mask, out,
+                                                        opacity, samples,
+                                                        roi, level);
     }
   else
     {
@@ -80,7 +81,7 @@ gimp_operation_normal_mode_process_pixels_sse2 (gfloat              *in,
 
           if (_mm_ucomigt_ss (alpha, _mm_setzero_ps ()))
             {
-              __v4sf dst_alpha, a_term, out_pixel, out_alpha, out_pixel_rbaa;
+              __v4sf dst_alpha, a_term, out_pixel, out_alpha;
 
               /* expand alpha */
               dst_alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_in,
@@ -99,8 +100,7 @@ gimp_operation_normal_mode_process_pixels_sse2 (gfloat              *in,
               out_pixel = out_pixel / out_alpha;
 
               /* swap in the real alpha */
-              out_pixel_rbaa = _mm_shuffle_ps (out_pixel, out_alpha, _MM_SHUFFLE (3, 3, 2, 0));
-              out_pixel = _mm_shuffle_ps (out_pixel, out_pixel_rbaa, _MM_SHUFFLE (2, 1, 1, 0));
+              out_pixel = _mm_blend_ps (out_pixel, out_alpha, 0x08);
 
               *v_out++ = out_pixel;
             }
@@ -113,4 +113,4 @@ gimp_operation_normal_mode_process_pixels_sse2 (gfloat              *in,
 
   return TRUE;
 }
-#endif /* COMPILE_SSE2_INTRINISICS */
+#endif /* COMPILE_SSE4_1_INTRINISICS */

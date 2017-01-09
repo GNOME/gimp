@@ -66,11 +66,11 @@
 #include "gimplevelsconfig.h"
 
 #include "gimpoperationpointlayermode.h"
-#include "gimpoperationnormalmode.h"
+#include "layer-modes/gimpoperationnormal.h"
 #include "gimpoperationdissolvemode.h"
 #include "gimpoperationbehindmode.h"
-#include "gimpoperationmultiply.h"
-#include "gimpoperationmultiplylegacy.h"
+#include "layer-modes/gimpoperationmultiply.h"
+#include "layer-modes-legacy/gimpoperationmultiplylegacy.h"
 #include "gimpoperationscreenmode.h"
 #include "gimpoperationoverlaymode.h"
 #include "gimpoperationdifferencemode.h"
@@ -83,8 +83,8 @@
 #include "gimpoperationcolormode.h"
 #include "gimpoperationvaluemode.h"
 #include "gimpoperationdividemode.h"
-#include "gimpoperationdodge.h"
-#include "gimpoperationdodgelegacy.h"
+#include "layer-modes/gimpoperationdodge.h"
+#include "layer-modes-legacy/gimpoperationdodgelegacy.h"
 #include "gimpoperationburnmode.h"
 #include "gimpoperationhardlightmode.h"
 #include "gimpoperationsoftlightmode.h"
@@ -132,7 +132,7 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_THRESHOLD);
 
   g_type_class_ref (GIMP_TYPE_OPERATION_POINT_LAYER_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_NORMAL_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_NORMAL);
   g_type_class_ref (GIMP_TYPE_OPERATION_DISSOLVE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY);

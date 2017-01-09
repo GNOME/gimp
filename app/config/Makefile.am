@@ -92,35 +92,37 @@ test_config_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec
 
 test_config_LDADD = \
-	../xcf/libappxcf.a			\
-	../pdb/libappinternal-procs.a		\
-	../pdb/libapppdb.a			\
-	../plug-in/libappplug-in.a		\
-	../vectors/libappvectors.a		\
-	../core/libappcore.a			\
-	../file/libappfile.a			\
-	../text/libapptext.a			\
-	../paint/libapppaint.a			\
-	../gegl/libappgegl.a			\
-	../operations/libappoperations.a	\
-	libappconfig.a				\
-	../gimp-debug.o				\
-	../gimp-log.o				\
-	$(libgimpmodule)			\
-	$(libgimpcolor)				\
-	$(libgimpthumb)				\
-	$(libgimpmath)				\
-	$(libgimpconfig)			\
-	$(libgimpbase)				\
-	$(PANGOCAIRO_LIBS)			\
-	$(HARFBUZZ_LIBS)			\
-	$(GDK_PIXBUF_LIBS)			\
-	$(GEGL_LIBS)				\
-	$(GIO_LIBS)				\
-	$(GEXIV2_LIBS)				\
-	$(Z_LIBS)				\
-	$(JSON_C_LIBS)				\
-	$(LIBMYPAINT_LIBS)		\
+	../xcf/libappxcf.a						\
+	../pdb/libappinternal-procs.a					\
+	../pdb/libapppdb.a						\
+	../plug-in/libappplug-in.a					\
+	../vectors/libappvectors.a					\
+	../core/libappcore.a						\
+	../file/libappfile.a						\
+	../text/libapptext.a						\
+	../paint/libapppaint.a						\
+	../gegl/libappgegl.a						\
+	../operations/libappoperations.a				\
+	../operations/layer-modes/libapplayermodes.a			\
+	../operations/layer-modes-legacy/libapplayermodeslegacy.a	\
+	libappconfig.a							\
+	../gimp-debug.o							\
+	../gimp-log.o							\
+	$(libgimpmodule)						\
+	$(libgimpcolor)							\
+	$(libgimpthumb)							\
+	$(libgimpmath)							\
+	$(libgimpconfig)						\
+	$(libgimpbase)							\
+	$(PANGOCAIRO_LIBS)						\
+	$(HARFBUZZ_LIBS)						\
+	$(GDK_PIXBUF_LIBS)						\
+	$(GEGL_LIBS)							\
+	$(GIO_LIBS)							\
+	$(GEXIV2_LIBS)							\
+	$(Z_LIBS)							\
+	$(JSON_C_LIBS)							\
+	$(LIBMYPAINT_LIBS)						\
 	$(libm)
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc

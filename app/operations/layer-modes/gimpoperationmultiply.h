@@ -22,7 +22,9 @@
 #ifndef __GIMP_OPERATION_MULTIPLY_H__
 #define __GIMP_OPERATION_MULTIPLY_H__
 
-#include "gimpoperationpointlayermode.h"
+
+#include "operations/gimpoperationpointlayermode.h"
+
 
 #define GIMP_TYPE_OPERATION_MULTIPLY            (gimp_operation_multiply_get_type ())
 #define GIMP_OPERATION_MULTIPLY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_MULTIPLY, GimpOperationMultiply))
@@ -46,7 +48,7 @@ struct _GimpOperationMultiplyClass
 };
 
 
-GType   gimp_operation_multiply_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_multiply_get_type       (void) G_GNUC_CONST;
 
 gboolean gimp_operation_multiply_process_pixels (gfloat              *in,
                                                  gfloat              *layer,
@@ -56,5 +58,6 @@ gboolean gimp_operation_multiply_process_pixels (gfloat              *in,
                                                  glong                samples,
                                                  const GeglRectangle *roi,
                                                  gint                 level);
+
 
 #endif /* __GIMP_OPERATION_MULTIPLY_H__ */

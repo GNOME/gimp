@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DODGE_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "operations/gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DODGE            (gimp_operation_dodge_get_type ())
@@ -48,7 +48,7 @@ struct _GimpOperationDodgeClass
 };
 
 
-GType   gimp_operation_dodge_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_dodge_get_type       (void) G_GNUC_CONST;
 
 gboolean gimp_operation_dodge_process_pixels (gfloat              *in,
                                               gfloat              *layer,
@@ -56,7 +56,8 @@ gboolean gimp_operation_dodge_process_pixels (gfloat              *in,
                                               gfloat              *out,
                                               gfloat               opacity,
                                               glong                samples,
-                                                   const GeglRectangle *roi,
-                                                   gint                 level);
+                                              const GeglRectangle *roi,
+                                              gint                 level);
+
 
 #endif /* __GIMP_OPERATION_DODGE_H__ */

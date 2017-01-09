@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_MULTIPLY_LEGACY_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "operations/gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_MULTIPLY_LEGACY            (gimp_operation_multiply_legacy_get_type ())
@@ -47,7 +47,7 @@ struct _GimpOperationMultiplyLegacyClass
 };
 
 
-GType   gimp_operation_multiply_legacy_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_multiply_legacy_get_type       (void) G_GNUC_CONST;
 
 gboolean gimp_operation_multiply_legacy_process_pixels (gfloat              *in,
                                                         gfloat              *layer,
@@ -57,5 +57,6 @@ gboolean gimp_operation_multiply_legacy_process_pixels (gfloat              *in,
                                                         glong                samples,
                                                         const GeglRectangle *roi,
                                                         gint                 level);
+
 
 #endif /* __GIMP_OPERATION_MULTIPLY_LEGACY_H__ */

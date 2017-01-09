@@ -23,7 +23,7 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "operations/operations-types.h"
 
 #include "gimpoperationmultiplylegacy.h"
 

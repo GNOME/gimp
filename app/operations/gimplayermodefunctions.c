@@ -25,12 +25,12 @@
 #include "operations-types.h"
 
 #include "gimplayermodefunctions.h"
-#include "gimpoperationpointlayermode.h"
-#include "gimpoperationnormalmode.h"
+
+#include "layer-modes/gimpoperationnormal.h"
 #include "gimpoperationdissolvemode.h"
 #include "gimpoperationbehindmode.h"
-#include "gimpoperationmultiply.h"
-#include "gimpoperationmultiplylegacy.h"
+#include "layer-modes/gimpoperationmultiply.h"
+#include "layer-modes-legacy/gimpoperationmultiplylegacy.h"
 #include "gimpoperationscreenmode.h"
 #include "gimpoperationoverlaymode.h"
 #include "gimpoperationdifferencemode.h"
@@ -43,8 +43,8 @@
 #include "gimpoperationcolormode.h"
 #include "gimpoperationvaluemode.h"
 #include "gimpoperationdividemode.h"
-#include "gimpoperationdodge.h"
-#include "gimpoperationdodgelegacy.h"
+#include "layer-modes/gimpoperationdodge.h"
+#include "layer-modes-legacy/gimpoperationdodgelegacy.h"
 #include "gimpoperationburnmode.h"
 #include "gimpoperationhardlightmode.h"
 #include "gimpoperationsoftlightmode.h"
@@ -64,12 +64,12 @@ GimpLayerModeFunction
 get_layer_mode_function (GimpLayerMode  paint_mode,
                          gboolean       linear_mode)
 {
-  GimpLayerModeFunction func = gimp_operation_normal_mode_process_pixels;
+  GimpLayerModeFunction func = gimp_operation_normal_process_pixels;
 
   switch (paint_mode)
     {
     case GIMP_LAYER_MODE_NORMAL:
-      func = gimp_operation_normal_mode_process_pixels;
+      func = gimp_operation_normal_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_DISSOLVE:
@@ -210,7 +210,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
 
     default:
       g_warning ("No direct function for layer mode (%d), using gimp:normal-mode", paint_mode);
-      func = gimp_operation_normal_mode_process_pixels;
+      func = gimp_operation_normal_process_pixels;
       break;
     }
 

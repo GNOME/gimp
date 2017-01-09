@@ -2366,6 +2366,8 @@ app/actions/Makefile
 app/config/Makefile
 app/core/Makefile
 app/operations/Makefile
+app/operations/layer-modes/Makefile
+app/operations/layer-modes-legacy/Makefile
 app/operations/tests/Makefile
 app/gegl/Makefile
 app/dialogs/Makefile
