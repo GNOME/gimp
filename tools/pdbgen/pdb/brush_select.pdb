@@ -42,8 +42,8 @@ sub brushes_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
@@ -107,8 +107,8 @@ sub brushes_set_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||

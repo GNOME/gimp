@@ -108,29 +108,29 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
                                            GIMP_LAYER_MODE_NORMAL,
                                            GIMP_LAYER_MODE_DISSOLVE,
 
-                                           GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN,
-                                           GIMP_LAYER_MODE_SCREEN_BROKEN,
-                                           GIMP_LAYER_MODE_DODGE_BROKEN,
-                                           GIMP_LAYER_MODE_ADDITION_BROKEN,
+                                           GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
+                                           GIMP_LAYER_MODE_SCREEN_LEGACY,
+                                           GIMP_LAYER_MODE_DODGE_LEGACY,
+                                           GIMP_LAYER_MODE_ADDITION_LEGACY,
 
-                                           GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN,
-                                           GIMP_LAYER_MODE_MULTIPLY_BROKEN,
-                                           GIMP_LAYER_MODE_BURN_BROKEN,
+                                           GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,
+                                           GIMP_LAYER_MODE_MULTIPLY_LEGACY,
+                                           GIMP_LAYER_MODE_BURN_LEGACY,
 
                                            GIMP_LAYER_MODE_OVERLAY,
-                                           GIMP_LAYER_MODE_SOFTLIGHT_BROKEN,
-                                           GIMP_LAYER_MODE_HARDLIGHT_BROKEN,
+                                           GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,
+                                           GIMP_LAYER_MODE_HARDLIGHT_LEGACY,
 
-                                           GIMP_LAYER_MODE_DIFFERENCE_BROKEN,
-                                           GIMP_LAYER_MODE_SUBTRACT_BROKEN,
-                                           GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN,
-                                           GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN,
-                                           GIMP_LAYER_MODE_DIVIDE_BROKEN,
+                                           GIMP_LAYER_MODE_DIFFERENCE_LEGACY,
+                                           GIMP_LAYER_MODE_SUBTRACT_LEGACY,
+                                           GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,
+                                           GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,
+                                           GIMP_LAYER_MODE_DIVIDE_LEGACY,
 
-                                           GIMP_LAYER_MODE_HSV_HUE_BROKEN,
-                                           GIMP_LAYER_MODE_HSV_SATURATION_BROKEN,
-                                           GIMP_LAYER_MODE_HSV_COLOR_BROKEN,
-                                           GIMP_LAYER_MODE_HSV_VALUE_BROKEN,
+                                           GIMP_LAYER_MODE_HSV_HUE_LEGACY,
+                                           GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,
+                                           GIMP_LAYER_MODE_HSV_COLOR_LEGACY,
+                                           GIMP_LAYER_MODE_HSV_VALUE_LEGACY,
 
                                            GIMP_LAYER_MODE_LCH_HUE,
                                            GIMP_LAYER_MODE_LCH_CHROMA,
@@ -141,19 +141,19 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
                                          GIMP_LAYER_MODE_DISSOLVE, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_LAYER_MODE_ADDITION_BROKEN, -1);
+                                         GIMP_LAYER_MODE_ADDITION_LEGACY, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_LAYER_MODE_BURN_BROKEN, -1);
+                                         GIMP_LAYER_MODE_BURN_LEGACY, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_LAYER_MODE_HARDLIGHT_BROKEN, -1);
+                                         GIMP_LAYER_MODE_HARDLIGHT_LEGACY, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_LAYER_MODE_DIVIDE_BROKEN, -1);
+                                         GIMP_LAYER_MODE_DIVIDE_LEGACY, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_LAYER_MODE_HSV_VALUE_BROKEN, -1);
+                                         GIMP_LAYER_MODE_HSV_VALUE_LEGACY, -1);
 
   if (with_behind_mode)
     {

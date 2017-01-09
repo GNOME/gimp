@@ -78,79 +78,79 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_behind_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_MULTIPLY_BROKEN:
+    case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
       func = gimp_operation_multiply_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_SCREEN_BROKEN:
+    case GIMP_LAYER_MODE_SCREEN_LEGACY:
       func = gimp_operation_screen_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_OVERLAY_BROKEN:
+    case GIMP_LAYER_MODE_OVERLAY_LEGACY:
       func = gimp_operation_softlight_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_DIFFERENCE_BROKEN:
+    case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
       func = gimp_operation_difference_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_ADDITION_BROKEN:
+    case GIMP_LAYER_MODE_ADDITION_LEGACY:
       func = gimp_operation_addition_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_SUBTRACT_BROKEN:
+    case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
       func = gimp_operation_subtract_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN:
+    case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
       func = gimp_operation_darken_only_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN:
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
       func = gimp_operation_lighten_only_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_HSV_HUE_BROKEN:
+    case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
       func = gimp_operation_hue_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_HSV_SATURATION_BROKEN:
+    case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
       func = gimp_operation_saturation_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_HSV_COLOR_BROKEN:
+    case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
       func = gimp_operation_color_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_HSV_VALUE_BROKEN:
+    case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
       func = gimp_operation_value_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_DIVIDE_BROKEN:
+    case GIMP_LAYER_MODE_DIVIDE_LEGACY:
       func = gimp_operation_divide_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_DODGE_BROKEN:
+    case GIMP_LAYER_MODE_DODGE_LEGACY:
       func = gimp_operation_dodge_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_BURN_BROKEN:
+    case GIMP_LAYER_MODE_BURN_LEGACY:
       func = gimp_operation_burn_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_HARDLIGHT_BROKEN:
+    case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
       func = gimp_operation_hardlight_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_SOFTLIGHT_BROKEN:
+    case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
       func = gimp_operation_softlight_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN:
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
       func = gimp_operation_grain_extract_mode_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN:
+    case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
       func = gimp_operation_grain_merge_mode_process_pixels;
       break;
 

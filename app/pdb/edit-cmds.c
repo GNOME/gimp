@@ -621,8 +621,8 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
           if (gimp_fill_options_set_by_fill_mode (options, context,
                                                   fill_mode, error))
             {
-              if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-                paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+              if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+                paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
               gimp_context_set_opacity (GIMP_CONTEXT (options), opacity / 100.0);
               gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
@@ -698,8 +698,8 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
           if (gimp_fill_options_set_by_fill_mode (options, context,
                                                   fill_mode, error))
             {
-              if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-                paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+              if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+                paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
               gimp_context_set_opacity (GIMP_CONTEXT (options), opacity / 100.0);
               gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
@@ -794,8 +794,8 @@ edit_blend_invoker (GimpProcedure         *procedure,
         {
           GimpGradient *gradient;
 
-          if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-            paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+          if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+            paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
           if (progress)
             gimp_progress_start (progress, FALSE, _("Blending"));

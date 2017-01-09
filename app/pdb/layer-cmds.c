@@ -88,8 +88,8 @@ layer_new_invoker (GimpProcedure         *procedure,
       gboolean           has_alpha = FALSE;
       const Babl        *format;
 
-      if (mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-        mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+      if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+        mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
       switch (type)
         {
@@ -1140,8 +1140,8 @@ layer_set_mode_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-        mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+      if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+        mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
       gimp_layer_set_mode (layer, mode, TRUE);
     }

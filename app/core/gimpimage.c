@@ -2394,9 +2394,9 @@ gimp_image_get_xcf_version (GimpImage    *image,
       switch (gimp_layer_get_mode (layer))
         {
           /* new layer modes not supported by gimp-1.2 */
-        case GIMP_LAYER_MODE_SOFTLIGHT_BROKEN:
-        case GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN:
-        case GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN:
+        case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
+        case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
+        case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
         case GIMP_LAYER_MODE_COLOR_ERASE:
           version = MAX (2, version);
           break;

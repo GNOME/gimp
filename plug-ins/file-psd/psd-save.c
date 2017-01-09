@@ -199,44 +199,44 @@ psd_lmode_layer (gint32  idLayer,
     case GIMP_LAYER_MODE_NORMAL:
       strcpy (psdMode, "norm");
       break;
-    case GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN:
+    case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
       strcpy (psdMode, "dark");
       break;
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN:
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
       strcpy (psdMode, "lite");
       break;
-    case GIMP_LAYER_MODE_HSV_HUE_BROKEN:
+    case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
       strcpy (psdMode, "hue ");
       break;
-    case GIMP_LAYER_MODE_HSV_SATURATION_BROKEN:
+    case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
       strcpy (psdMode, "sat ");
       break;
-    case GIMP_LAYER_MODE_HSV_COLOR_BROKEN:
+    case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
       strcpy (psdMode, "colr");
       break;
-    case GIMP_LAYER_MODE_ADDITION_BROKEN:
+    case GIMP_LAYER_MODE_ADDITION_LEGACY:
       strcpy (psdMode, "lddg");
       break;
-    case GIMP_LAYER_MODE_MULTIPLY_BROKEN:
+    case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
       strcpy (psdMode, "mul ");
       break;
-    case GIMP_LAYER_MODE_SCREEN_BROKEN:
+    case GIMP_LAYER_MODE_SCREEN_LEGACY:
       strcpy (psdMode, "scrn");
       break;
     case GIMP_LAYER_MODE_DISSOLVE:
       strcpy (psdMode, "diss");
       break;
-    case GIMP_LAYER_MODE_DIFFERENCE_BROKEN:
+    case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
       strcpy (psdMode, "diff");
       break;
-    case GIMP_LAYER_MODE_HSV_VALUE_BROKEN:                  /* ? */
+    case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:                  /* ? */
       strcpy (psdMode, "lum ");
       break;
-    case GIMP_LAYER_MODE_HARDLIGHT_BROKEN:
+    case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
       strcpy (psdMode, "hLit");
       break;
-    case GIMP_LAYER_MODE_OVERLAY_BROKEN:
-    case GIMP_LAYER_MODE_SOFTLIGHT_BROKEN:
+    case GIMP_LAYER_MODE_OVERLAY_LEGACY:
+    case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
       strcpy (psdMode, "sLit");
       break;
     case GIMP_LAYER_MODE_OVERLAY:

@@ -162,79 +162,79 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:behind-mode";
       break;
 
-    case GIMP_LAYER_MODE_MULTIPLY_BROKEN:
+    case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
       operation = "gimp:multiply-mode";
       break;
 
-    case GIMP_LAYER_MODE_SCREEN_BROKEN:
+    case GIMP_LAYER_MODE_SCREEN_LEGACY:
       operation = "gimp:screen-mode";
       break;
 
-    case GIMP_LAYER_MODE_OVERLAY_BROKEN:
+    case GIMP_LAYER_MODE_OVERLAY_LEGACY:
       operation = "gimp:softlight-mode";
       break;
 
-    case GIMP_LAYER_MODE_DIFFERENCE_BROKEN:
+    case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
       operation = "gimp:difference-mode";
       break;
 
-    case GIMP_LAYER_MODE_ADDITION_BROKEN:
+    case GIMP_LAYER_MODE_ADDITION_LEGACY:
       operation = "gimp:addition-mode";
       break;
 
-    case GIMP_LAYER_MODE_SUBTRACT_BROKEN:
+    case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
       operation = "gimp:subtract-mode";
       break;
 
-    case GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN:
+    case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
       operation = "gimp:darken-only-mode";
       break;
 
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN:
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
       operation = "gimp:lighten-only-mode";
       break;
 
-    case GIMP_LAYER_MODE_HSV_HUE_BROKEN:
+    case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
       operation = "gimp:hue-mode";
       break;
 
-    case GIMP_LAYER_MODE_HSV_SATURATION_BROKEN:
+    case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
       operation = "gimp:saturation-mode";
       break;
 
-    case GIMP_LAYER_MODE_HSV_COLOR_BROKEN:
+    case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
       operation = "gimp:color-mode";
       break;
 
-    case GIMP_LAYER_MODE_HSV_VALUE_BROKEN:
+    case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
       operation = "gimp:value-mode";
       break;
 
-    case GIMP_LAYER_MODE_DIVIDE_BROKEN:
+    case GIMP_LAYER_MODE_DIVIDE_LEGACY:
       operation = "gimp:divide-mode";
       break;
 
-    case GIMP_LAYER_MODE_DODGE_BROKEN:
+    case GIMP_LAYER_MODE_DODGE_LEGACY:
       operation = "gimp:dodge-mode";
       break;
 
-    case GIMP_LAYER_MODE_BURN_BROKEN:
+    case GIMP_LAYER_MODE_BURN_LEGACY:
       operation = "gimp:burn-mode";
       break;
 
-    case GIMP_LAYER_MODE_HARDLIGHT_BROKEN:
+    case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
       operation = "gimp:hardlight-mode";
       break;
 
-    case GIMP_LAYER_MODE_SOFTLIGHT_BROKEN:
+    case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
       operation = "gimp:softlight-mode";
       break;
 
-    case GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN:
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
       operation = "gimp:grain-extract-mode";
       break;
 
-    case GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN:
+    case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
       operation = "gimp:grain-merge-mode";
       break;
 

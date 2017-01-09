@@ -189,43 +189,43 @@ add_compat_enums(PyObject *m)
     PyModule_AddIntConstant (m, "BEHIND_MODE",
                              GIMP_LAYER_MODE_BEHIND);
     PyModule_AddIntConstant (m, "MULTIPLY_MODE",
-                             GIMP_LAYER_MODE_MULTIPLY_BROKEN);
+                             GIMP_LAYER_MODE_MULTIPLY_LEGACY);
     PyModule_AddIntConstant (m, "SCREEN_MODE",
-                             GIMP_LAYER_MODE_SCREEN_BROKEN);
+                             GIMP_LAYER_MODE_SCREEN_LEGACY);
     PyModule_AddIntConstant (m, "OVERLAY_MODE",
-                             GIMP_LAYER_MODE_OVERLAY_BROKEN);
+                             GIMP_LAYER_MODE_OVERLAY_LEGACY);
     PyModule_AddIntConstant (m, "DIFFERENCE_MODE",
-                             GIMP_LAYER_MODE_DIFFERENCE_BROKEN);
+                             GIMP_LAYER_MODE_DIFFERENCE_LEGACY);
     PyModule_AddIntConstant (m, "ADDITION_MODE",
-                             GIMP_LAYER_MODE_ADDITION_BROKEN);
+                             GIMP_LAYER_MODE_ADDITION_LEGACY);
     PyModule_AddIntConstant (m, "SUBTRACT_MODE",
-                             GIMP_LAYER_MODE_SUBTRACT_BROKEN);
+                             GIMP_LAYER_MODE_SUBTRACT_LEGACY);
     PyModule_AddIntConstant (m, "DARKEN_ONLY_MODE",
-                             GIMP_LAYER_MODE_DARKEN_ONLY_BROKEN);
+                             GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY);
     PyModule_AddIntConstant (m, "LIGHTEN_ONLY_MODE",
-                             GIMP_LAYER_MODE_LIGHTEN_ONLY_BROKEN);
+                             GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY);
     PyModule_AddIntConstant (m, "HUE_MODE",
-                             GIMP_LAYER_MODE_HSV_HUE_BROKEN);
+                             GIMP_LAYER_MODE_HSV_HUE_LEGACY);
     PyModule_AddIntConstant (m, "SATURATION_MODE",
-                             GIMP_LAYER_MODE_HSV_SATURATION_BROKEN);
+                             GIMP_LAYER_MODE_HSV_SATURATION_LEGACY);
     PyModule_AddIntConstant (m, "COLOR_MODE",
-                             GIMP_LAYER_MODE_HSV_COLOR_BROKEN);
+                             GIMP_LAYER_MODE_HSV_COLOR_LEGACY);
     PyModule_AddIntConstant (m, "VALUE_MODE",
-                             GIMP_LAYER_MODE_HSV_VALUE_BROKEN);
+                             GIMP_LAYER_MODE_HSV_VALUE_LEGACY);
     PyModule_AddIntConstant (m, "DIVIDE_MODE",
-                             GIMP_LAYER_MODE_DIVIDE_BROKEN);
+                             GIMP_LAYER_MODE_DIVIDE_LEGACY);
     PyModule_AddIntConstant (m, "DODGE_MODE",
-                             GIMP_LAYER_MODE_DODGE_BROKEN);
+                             GIMP_LAYER_MODE_DODGE_LEGACY);
     PyModule_AddIntConstant (m, "BURN_MODE",
-                             GIMP_LAYER_MODE_BURN_BROKEN);
+                             GIMP_LAYER_MODE_BURN_LEGACY);
     PyModule_AddIntConstant (m, "HARDLIGHT_MODE",
-                             GIMP_LAYER_MODE_HARDLIGHT_BROKEN);
+                             GIMP_LAYER_MODE_HARDLIGHT_LEGACY);
     PyModule_AddIntConstant (m, "SOFTLIGHT_MODE",
-                             GIMP_LAYER_MODE_SOFTLIGHT_BROKEN);
+                             GIMP_LAYER_MODE_SOFTLIGHT_LEGACY);
     PyModule_AddIntConstant (m, "GRAIN_EXTRACT_MODE",
-                             GIMP_LAYER_MODE_GRAIN_EXTRACT_BROKEN);
+                             GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY);
     PyModule_AddIntConstant (m, "GRAIN_MERGE_MODE",
-                             GIMP_LAYER_MODE_GRAIN_MERGE_BROKEN);
+                             GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY);
     PyModule_AddIntConstant (m, "COLOR_ERASE_MODE",
                              GIMP_LAYER_MODE_COLOR_ERASE);
 }

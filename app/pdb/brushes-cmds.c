@@ -207,8 +207,8 @@ brushes_get_brush_data_invoker (GimpProcedure         *procedure,
     {
       GimpBrush *brush;
 
-      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
       if (name && strlen (name))
         brush = gimp_pdb_get_brush (gimp, name, FALSE, error);

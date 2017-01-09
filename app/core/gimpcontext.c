@@ -1347,9 +1347,9 @@ gimp_context_deserialize (GimpConfig *config,
 
   if (context->paint_mode != old_paint_mode)
     {
-      if (context->paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
+      if (context->paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
         g_object_set (context,
-                      "paint-mode", GIMP_LAYER_MODE_SOFTLIGHT_BROKEN,
+                      "paint-mode", GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,
                       NULL);
     }
 

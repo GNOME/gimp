@@ -419,8 +419,8 @@ context_set_paint_mode_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_BROKEN)
-        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_BROKEN;
+      if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
+        paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
       gimp_context_set_paint_mode (context, paint_mode);
     }
