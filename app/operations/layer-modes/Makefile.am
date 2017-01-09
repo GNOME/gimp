@@ -23,7 +23,9 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationdodge.c		\
 	gimpoperationdodge.h		\
 	gimpoperationmultiply.c		\
-	gimpoperationmultiply.h
+	gimpoperationmultiply.h         \
+	gimpoperationscreen.c  		\
+	gimpoperationscreen.h
 
 libapplayermodes_sse2_a_sources = \
 	gimpoperationnormal-sse2.c

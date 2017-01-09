@@ -723,7 +723,7 @@ package Gimp::CodeGen::enums;
 			  GIMP_LAYER_MODE_LCH_LIGHTNESS
 			  GIMP_LAYER_MODE_NORMAL GIMP_LAYER_MODE_MULTIPLY
 			  GIMP_LAYER_MODE_MULTIPLY_LINEAR
-			  GIMP_LAYER_MODE_DODGE) ],
+			  GIMP_LAYER_MODE_DODGE GIMP_LAYER_MODE_SCREEN) ],
 	  mapping => { GIMP_LAYER_MODE_NORMAL_NON_LINEAR => '0',
 		       GIMP_LAYER_MODE_DISSOLVE => '1',
 		       GIMP_LAYER_MODE_BEHIND => '2',
@@ -755,7 +755,8 @@ package Gimp::CodeGen::enums;
 		       GIMP_LAYER_MODE_NORMAL => '28',
 		       GIMP_LAYER_MODE_MULTIPLY => '29',
 		       GIMP_LAYER_MODE_MULTIPLY_LINEAR => '30',
-		       GIMP_LAYER_MODE_DODGE => '31' }
+		       GIMP_LAYER_MODE_DODGE => '31',
+		       GIMP_LAYER_MODE_SCREEN => '32' }
 	},
     GimpBrushApplicationMode =>
 	{ contig => 1,

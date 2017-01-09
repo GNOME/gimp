@@ -171,8 +171,12 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:multiply";
       break;
 
+    case GIMP_LAYER_MODE_SCREEN:
+      operation = "gimp:screen";
+      break;
+
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
-      operation = "gimp:screen-mode";
+      operation = "gimp:screen-legacy";
       break;
 
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
@@ -310,6 +314,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_BEHIND:
     case GIMP_LAYER_MODE_MULTIPLY:
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
+    case GIMP_LAYER_MODE_SCREEN:
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
