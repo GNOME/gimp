@@ -50,6 +50,8 @@
 #undef cons
 
 static void     ts_init_constants                (scheme    *sc);
+static void     ts_init_enum                     (scheme    *sc,
+                                                  GType      enum_type);
 static void     ts_init_procedures               (scheme    *sc,
                                                   gboolean   register_scipts);
 static void     convert_string                   (gchar     *str);
@@ -121,87 +123,6 @@ static const NamedConstant const script_constants[] =
   /* For SF-ADJUSTMENT */
   { "SF-SLIDER",      SF_SLIDER     },
   { "SF-SPINNER",     SF_SPINNER    },
-
-  { NULL, 0 }
-};
-
-/* The following constants are deprecated. They are included to keep
- * backwards compatibility with older scripts used with older versions
- * of GIMP.
- */
-static const NamedConstant const old_constants[] =
-{
-  /*  the following enums got cleaned up with properly named values in 2.10  */
-
-  { "ADD-WHITE-MASK",          GIMP_ADD_MASK_WHITE          },
-  { "ADD-BLACK-MASK",          GIMP_ADD_MASK_BLACK          },
-  { "ADD-ALPHA-MASK",          GIMP_ADD_MASK_ALPHA          },
-  { "ADD-ALPHA-TRANSFER-MASK", GIMP_ADD_MASK_ALPHA_TRANSFER },
-  { "ADD-SELECTION-MASK",      GIMP_ADD_MASK_SELECTION      },
-  { "ADD-COPY-MASK",           GIMP_ADD_MASK_COPY           },
-  { "ADD-CHANNEL-MASK",        GIMP_ADD_MASK_CHANNEL        },
-
-  { "FG-BG-RGB-MODE",          GIMP_BLEND_FG_BG_RGB      },
-  { "FG-BG-HSV-MODE",          GIMP_BLEND_FG_BG_HSV      },
-  { "FG-TRANSPARENT-MODE",     GIMP_BLEND_FG_TRANSPARENT },
-  { "CUSTOM-MODE",             GIMP_BLEND_CUSTOM         },
-
-  { "FG-BUCKET-FILL",          GIMP_BUCKET_FILL_FG      },
-  { "BG-BUCKET-FILL",          GIMP_BUCKET_FILL_BG      },
-  { "PATTERN-BUCKET-FILL",     GIMP_BUCKET_FILL_PATTERN },
-
-  { "BLUR-CONVOLVE",           GIMP_CONVOLVE_BLUR    },
-  { "SHARPEN-CONVOLVE",        GIMP_CONVOLVE_SHARPEN },
-
-  { "IMAGE-CLONE",             GIMP_CLONE_IMAGE   },
-  { "PATTERN-CLONE",           GIMP_CLONE_PATTERN },
-
-  { "FOREGROUND-FILL",         GIMP_FILL_FOREGROUND  },
-  { "BACKGROUND-FILL",         GIMP_FILL_BACKGROUND  },
-  { "WHITE-FILL",              GIMP_FILL_WHITE       },
-  { "TRANSPARENT-FILL",        GIMP_FILL_TRANSPARENT },
-  { "PATTERN-FILL",            GIMP_FILL_PATTERN     },
-
-  { "DODGE",                   GIMP_DODGE_BURN_TYPE_DODGE },
-  { "BURN",                    GIMP_DODGE_BURN_TYPE_BURN  },
-
-  { "SHADOWS",                 GIMP_TRANSFER_SHADOWS    },
-  { "MIDTONES",                GIMP_TRANSFER_MIDTONES   },
-  { "HIGHLIGHTS",              GIMP_TRANSFER_HIGHLIGHTS },
-
-  { "DESATURATE-LUMINOSITY",   GIMP_DESATURATE_LUMA },
-
-  { "ALL-HUES",     GIMP_HUE_RANGE_ALL     },
-  { "RED-HUES",     GIMP_HUE_RANGE_RED     },
-  { "YELLOW-HUES",  GIMP_HUE_RANGE_YELLOW  },
-  { "GREEN-HUES",   GIMP_HUE_RANGE_GREEN   },
-  { "CYAN-HUES",    GIMP_HUE_RANGE_CYAN    },
-  { "BLUE-HUES",    GIMP_HUE_RANGE_BLUE    },
-  { "MAGENTA-HUES", GIMP_HUE_RANGE_MAGENTA },
-
-  { "NORMAL-MODE",             GIMP_LAYER_MODE_NORMAL                },
-  { "DISSOLVE-MODE",           GIMP_LAYER_MODE_DISSOLVE              },
-  { "BEHIND-MODE",             GIMP_LAYER_MODE_BEHIND                },
-  { "MULTIPLY-MODE",           GIMP_LAYER_MODE_MULTIPLY_LEGACY       },
-  { "SCREEN-MODE",             GIMP_LAYER_MODE_SCREEN_LEGACY         },
-  { "OVERLAY-MODE",            GIMP_LAYER_MODE_OVERLAY_LEGACY        },
-  { "DIFFERENCE-MODE",         GIMP_LAYER_MODE_DIFFERENCE_LEGACY     },
-  { "ADDITION-MODE",           GIMP_LAYER_MODE_ADDITION_LEGACY       },
-  { "SUBTRACT-MODE",           GIMP_LAYER_MODE_SUBTRACT_LEGACY       },
-  { "DARKEN-ONLY-MODE",        GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY    },
-  { "LIGHTEN-ONLY-MODE",       GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY   },
-  { "HUE-MODE",                GIMP_LAYER_MODE_HSV_HUE_LEGACY        },
-  { "SATURATION-MODE",         GIMP_LAYER_MODE_HSV_SATURATION_LEGACY },
-  { "COLOR-MODE",              GIMP_LAYER_MODE_HSV_COLOR_LEGACY      },
-  { "VALUE-MODE",              GIMP_LAYER_MODE_HSV_VALUE_LEGACY      },
-  { "DIVIDE-MODE",             GIMP_LAYER_MODE_DIVIDE_LEGACY         },
-  { "DODGE-MODE",              GIMP_LAYER_MODE_DODGE_LEGACY          },
-  { "BURN-MODE",               GIMP_LAYER_MODE_BURN_LEGACY           },
-  { "HARDLIGHT-MODE",          GIMP_LAYER_MODE_HARDLIGHT_LEGACY      },
-  { "SOFTLIGHT-MODE",          GIMP_LAYER_MODE_SOFTLIGHT_LEGACY      },
-  { "GRAIN-EXTRACT-MODE",      GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY  },
-  { "GRAIN-MERGE-MODE",        GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY    },
-  { "COLOR-ERASE-MODE",        GIMP_LAYER_MODE_COLOR_ERASE           },
 
   { NULL, 0 }
 };
@@ -360,6 +281,7 @@ ts_init_constants (scheme *sc)
   gint          n_enum_type_names;
   gint          i;
   pointer       symbol;
+  GQuark        quark;
 
   symbol = sc->vptr->mk_symbol (sc, "gimp-directory");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
@@ -387,33 +309,19 @@ ts_init_constants (scheme *sc)
   sc->vptr->setimmutable (symbol);
 
   enum_type_names = gimp_enums_get_type_names (&n_enum_type_names);
+  quark           = g_quark_from_static_string ("gimp-compat-enum");
 
   for (i = 0; i < n_enum_type_names; i++)
     {
       const gchar *enum_name  = enum_type_names[i];
       GType        enum_type  = g_type_from_name (enum_name);
-      GEnumClass  *enum_class = g_type_class_ref (enum_type);
-      GEnumValue  *value;
 
-      for (value = enum_class->values; value->value_name; value++)
-        {
-          if (g_str_has_prefix (value->value_name, "GIMP_"))
-            {
-              gchar *scheme_name;
+      ts_init_enum (sc, enum_type);
 
-              scheme_name = g_strdup (value->value_name + strlen ("GIMP_"));
-              convert_string (scheme_name);
+      enum_type = (GType) g_type_get_qdata (enum_type, quark);
 
-              symbol = sc->vptr->mk_symbol (sc, scheme_name);
-              sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                                       sc->vptr->mk_integer (sc, value->value));
-              sc->vptr->setimmutable (symbol);
-
-              g_free (scheme_name);
-            }
-        }
-
-      g_type_class_unref (enum_class);
+      if (enum_type)
+        ts_init_enum (sc, enum_type);
     }
 
   /* Constants used in the register block of scripts */
@@ -453,15 +361,35 @@ ts_init_constants (scheme *sc)
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
                            sc->vptr->mk_string (sc, gimp_plug_in_directory ()));
   sc->vptr->setimmutable (symbol);
+}
 
-  for (i = 0; old_constants[i].name != NULL; ++i)
+static void
+ts_init_enum (scheme *sc,
+              GType   enum_type)
+{
+  GEnumClass  *enum_class = g_type_class_ref (enum_type);
+  GEnumValue  *value;
+
+  for (value = enum_class->values; value->value_name; value++)
     {
-      symbol = sc->vptr->mk_symbol (sc, old_constants[i].name);
-      sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                               sc->vptr->mk_integer (sc,
-                                                     old_constants[i].value));
-      sc->vptr->setimmutable (symbol);
+      if (g_str_has_prefix (value->value_name, "GIMP_"))
+        {
+          gchar   *scheme_name;
+          pointer  symbol;
+
+          scheme_name = g_strdup (value->value_name + strlen ("GIMP_"));
+          convert_string (scheme_name);
+
+          symbol = sc->vptr->mk_symbol (sc, scheme_name);
+          sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                                   sc->vptr->mk_integer (sc, value->value));
+          sc->vptr->setimmutable (symbol);
+
+          g_free (scheme_name);
+        }
     }
+
+  g_type_class_unref (enum_class);
 }
 
 static void
