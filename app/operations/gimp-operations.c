@@ -73,7 +73,7 @@
 #include "layer-modes-legacy/gimpoperationmultiplylegacy.h"
 #include "layer-modes/gimpoperationscreen.h"
 #include "layer-modes-legacy/gimpoperationscreenlegacy.h"
-#include "gimpoperationoverlaymode.h"
+#include "layer-modes/gimpoperationoverlay.h"
 #include "gimpoperationdifferencemode.h"
 #include "gimpoperationadditionmode.h"
 #include "gimpoperationsubtractmode.h"
@@ -139,7 +139,7 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_OVERLAY_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_OVERLAY);
   g_type_class_ref (GIMP_TYPE_OPERATION_DIFFERENCE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ADDITION_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_SUBTRACT_MODE);

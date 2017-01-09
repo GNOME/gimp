@@ -33,7 +33,7 @@
 #include "layer-modes-legacy/gimpoperationmultiplylegacy.h"
 #include "layer-modes/gimpoperationscreen.h"
 #include "layer-modes-legacy/gimpoperationscreenlegacy.h"
-#include "gimpoperationoverlaymode.h"
+#include "layer-modes/gimpoperationoverlay.h"
 #include "gimpoperationdifferencemode.h"
 #include "gimpoperationadditionmode.h"
 #include "gimpoperationsubtractmode.h"
@@ -174,7 +174,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_OVERLAY:
-      func = gimp_operation_overlay_mode_process_pixels;
+      func = gimp_operation_overlay_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LCH_HUE:

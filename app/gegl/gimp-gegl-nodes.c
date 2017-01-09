@@ -260,7 +260,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_OVERLAY:
-      operation = "gimp:overlay-mode";
+      operation = "gimp:overlay";
       break;
 
     case GIMP_LAYER_MODE_LCH_HUE:
@@ -280,7 +280,8 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_ERASE:
-      operation = "gimp:erase-mode"; break;
+      operation = "gimp:erase-mode";
+      break;
 
     case GIMP_LAYER_MODE_REPLACE:
       operation = "gimp:replace-mode";
@@ -289,6 +290,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_ANTI_ERASE:
       operation = "gimp:anti-erase-mode";
       break;
+
     default:
       break;
     }

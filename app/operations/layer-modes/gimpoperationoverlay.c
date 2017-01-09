@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationoverlaymode.c
+ * gimpoperationoverlay.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
@@ -23,27 +23,27 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationoverlaymode.h"
-
-
-static gboolean gimp_operation_overlay_mode_process (GeglOperation       *operation,
-                                                     void                *in_buf,
-                                                     void                *aux_buf,
-                                                     void                *aux2_buf,
-                                                     void                *out_buf,
-                                                     glong                samples,
-                                                     const GeglRectangle *roi,
-                                                     gint                 level);
+#include "gimpoperationoverlay.h"
 
 
-G_DEFINE_TYPE (GimpOperationOverlayMode, gimp_operation_overlay_mode,
+static gboolean gimp_operation_overlay_process (GeglOperation       *operation,
+                                                void                *in_buf,
+                                                void                *aux_buf,
+                                                void                *aux2_buf,
+                                                void                *out_buf,
+                                                glong                samples,
+                                                const GeglRectangle *roi,
+                                                gint                 level);
+
+
+G_DEFINE_TYPE (GimpOperationOverlay, gimp_operation_overlay,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
-gimp_operation_overlay_mode_class_init (GimpOperationOverlayModeClass *klass)
+gimp_operation_overlay_class_init (GimpOperationOverlayClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -52,42 +52,42 @@ gimp_operation_overlay_mode_class_init (GimpOperationOverlayModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:overlay-mode",
+                                 "name",        "gimp:overlay",
                                  "description", "GIMP overlay mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_overlay_mode_process;
+  point_class->process = gimp_operation_overlay_process;
 }
 
 static void
-gimp_operation_overlay_mode_init (GimpOperationOverlayMode *self)
+gimp_operation_overlay_init (GimpOperationOverlay *self)
 {
 }
 
 static gboolean
-gimp_operation_overlay_mode_process (GeglOperation       *operation,
-                                     void                *in_buf,
-                                     void                *aux_buf,
-                                     void                *aux2_buf,
-                                     void                *out_buf,
-                                     glong                samples,
-                                     const GeglRectangle *roi,
-                                     gint                 level)
+gimp_operation_overlay_process (GeglOperation       *operation,
+                                void                *in_buf,
+                                void                *aux_buf,
+                                void                *aux2_buf,
+                                void                *out_buf,
+                                glong                samples,
+                                const GeglRectangle *roi,
+                                gint                 level)
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_overlay_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_overlay_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_overlay_mode_process_pixels (gfloat              *in,
-                                            gfloat              *layer,
-                                            gfloat              *mask,
-                                            gfloat              *out,
-                                            gfloat               opacity,
-                                            glong                samples,
-                                            const GeglRectangle *roi,
-                                            gint                 level)
+gimp_operation_overlay_process_pixels (gfloat              *in,
+                                       gfloat              *layer,
+                                       gfloat              *mask,
+                                       gfloat              *out,
+                                       gfloat               opacity,
+                                       glong                samples,
+                                       const GeglRectangle *roi,
+                                       gint                 level)
 {
   const gboolean has_mask = mask != NULL;
 

@@ -101,8 +101,6 @@ libappoperations_a_SOURCES = \
 	gimpoperationdissolvemode.h     	\
 	gimpoperationbehindmode.c       	\
 	gimpoperationbehindmode.h       	\
-	gimpoperationoverlaymode.c      	\
-	gimpoperationoverlaymode.h      	\
 	gimpoperationadditionmode.c     	\
 	gimpoperationadditionmode.h     	\
 	gimpoperationsubtractmode.c     	\
