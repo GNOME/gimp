@@ -84,7 +84,7 @@ lib_LTLIBRARIES = libgimpbase-@GIMP_API_VERSION@.la
 libgimpbase_sources = \
 	gimpbase.h		\
 	gimpbaseenums.h		\
-	gimpcompatnums.h	\
+	gimpcompatenums.h	\
 	gimpbasetypes.h		\
 	gimpbasetypes.c		\
 	gimplimits.h		\
