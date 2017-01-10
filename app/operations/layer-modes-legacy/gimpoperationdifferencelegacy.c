@@ -52,7 +52,7 @@ gimp_operation_difference_legacy_class_init (GimpOperationDifferenceLegacyClass 
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:difference-mode",
+                                 "name",        "gimp:difference-legacy",
                                  "description", "GIMP difference mode operation",
                                  NULL);
 
