@@ -445,7 +445,7 @@ gimp_drawable_get_node (GimpFilter *filter)
 
   drawable->private->mode_node =
     gegl_node_new_child (node,
-                         "operation", "gimp:normal-mode",
+                         "operation", "gimp:normal",
                          NULL);
 
   input  = gegl_node_get_input_proxy  (node, "input");

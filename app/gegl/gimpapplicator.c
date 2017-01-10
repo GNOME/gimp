@@ -133,7 +133,7 @@ gimp_applicator_new (GeglNode *parent,
     gegl_node_get_output_proxy (applicator->node, "output");
 
   applicator->mode_node = gegl_node_new_child (applicator->node,
-                                               "operation", "gimp:normal-mode",
+                                               "operation", "gimp:normal",
                                                NULL);
 
   gimp_gegl_mode_node_set_mode (applicator->mode_node,

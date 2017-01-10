@@ -143,7 +143,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
                               GimpLayerMode  mode,
                               gboolean       linear)
 {
-  const gchar *operation = "gimp:normal-mode";
+  const gchar *operation = "gimp:normal";
   gdouble      opacity;
 
   g_return_if_fail (GEGL_IS_NODE (node));
@@ -151,7 +151,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
   switch (mode)
     {
     case GIMP_LAYER_MODE_NORMAL:
-      operation = "gimp:normal-mode";
+      operation = "gimp:normal";
       break;
 
     case GIMP_LAYER_MODE_DISSOLVE:

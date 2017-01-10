@@ -259,7 +259,8 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     default:
-      g_warning ("No direct function for layer mode (%d), using gimp:normal-mode", paint_mode);
+      g_warning ("No direct function for layer mode (%d), using gimp:normal",
+                 paint_mode);
       func = gimp_operation_normal_process_pixels;
       break;
     }

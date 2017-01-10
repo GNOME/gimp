@@ -55,7 +55,7 @@ G_DEFINE_TYPE (GimpOperationNormal, gimp_operation_normal,
 
 static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "<gegl>"
-"<node operation='gimp:normal-mode'>"
+"<node operation='gimp:normal'>"
 "  <node operation='gegl:load'>"
 "    <params>"
 "      <param name='path'>blending-test-B.png</param>"
@@ -80,7 +80,7 @@ gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",                  "gimp:normal-mode",
+                                 "name",                  "gimp:normal",
                                  "description",           "GIMP normal mode operation",
                                  "reference-image",       "normal-mode.png",
                                  "reference-composition", reference_xml,
