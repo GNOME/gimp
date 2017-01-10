@@ -155,7 +155,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_DISSOLVE:
-      operation = "gimp:dissolve-mode";
+      operation = "gimp:dissolve";
       break;
 
     case GIMP_LAYER_MODE_BEHIND:

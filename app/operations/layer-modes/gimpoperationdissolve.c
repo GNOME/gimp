@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdissolvemode.c
+ * gimpoperationdissolve.c
  * Copyright (C) 2012 Ville Sokk <ville.sokk@gmail.com>
  *               2012 Øyvind Kolås <pippin@gimp.org>
  *               2003 Helvetix Victorinox
@@ -24,32 +24,32 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationdissolvemode.h"
+#include "gimpoperationdissolve.h"
 
 
 #define RANDOM_TABLE_SIZE 4096
 
 
-static gboolean gimp_operation_dissolve_mode_process (GeglOperation       *operation,
-                                                      void                *in_buf,
-                                                      void                *aux_buf,
-                                                      void                *aux2_buf,
-                                                      void                *out_buf,
-                                                      glong                samples,
-                                                      const GeglRectangle *result,
-                                                      gint                 level);
+static gboolean gimp_operation_dissolve_process (GeglOperation       *operation,
+                                                 void                *in_buf,
+                                                 void                *aux_buf,
+                                                 void                *aux2_buf,
+                                                 void                *out_buf,
+                                                 glong                samples,
+                                                 const GeglRectangle *result,
+                                                 gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationDissolveMode, gimp_operation_dissolve_mode,
+G_DEFINE_TYPE (GimpOperationDissolve, gimp_operation_dissolve,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 static gint32 random_table[RANDOM_TABLE_SIZE];
 
 
 static void
-gimp_operation_dissolve_mode_class_init (GimpOperationDissolveModeClass *klass)
+gimp_operation_dissolve_class_init (GimpOperationDissolveClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_composer_class;
@@ -60,12 +60,12 @@ gimp_operation_dissolve_mode_class_init (GimpOperationDissolveModeClass *klass)
   point_composer_class = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:dissolve-mode",
+                                 "name",        "gimp:dissolve",
                                  "description", "GIMP dissolve mode operation",
                                  "categories",  "compositors",
                                  NULL);
 
-  point_composer_class->process = gimp_operation_dissolve_mode_process;
+  point_composer_class->process = gimp_operation_dissolve_process;
 
   /* generate a table of random seeds */
   gr = g_rand_new_with_seed (314159265);
@@ -76,34 +76,34 @@ gimp_operation_dissolve_mode_class_init (GimpOperationDissolveModeClass *klass)
 }
 
 static void
-gimp_operation_dissolve_mode_init (GimpOperationDissolveMode *self)
+gimp_operation_dissolve_init (GimpOperationDissolve *self)
 {
 }
 
 static gboolean
-gimp_operation_dissolve_mode_process (GeglOperation       *operation,
-                                      void                *in_buf,
-                                      void                *aux_buf,
-                                      void                *aux2_buf,
-                                      void                *out_buf,
-                                      glong                samples,
-                                      const GeglRectangle *result,
-                                      gint                 level)
+gimp_operation_dissolve_process (GeglOperation       *operation,
+                                 void                *in_buf,
+                                 void                *aux_buf,
+                                 void                *aux2_buf,
+                                 void                *out_buf,
+                                 glong                samples,
+                                 const GeglRectangle *result,
+                                 gint                 level)
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_dissolve_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, result, level);
+  return gimp_operation_dissolve_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, result, level);
 }
 
 gboolean
-gimp_operation_dissolve_mode_process_pixels (gfloat              *in,
-                                             gfloat              *aux,
-                                             gfloat              *mask,
-                                             gfloat              *out,
-                                             gfloat               opacity,
-                                             glong                samples,
-                                             const GeglRectangle *result,
-                                             gint                 level)
+gimp_operation_dissolve_process_pixels (gfloat              *in,
+                                        gfloat              *aux,
+                                        gfloat              *mask,
+                                        gfloat              *out,
+                                        gfloat               opacity,
+                                        glong                samples,
+                                        const GeglRectangle *result,
+                                        gint                 level)
 {
   const gboolean has_mask = mask != NULL;
   gint           x, y;

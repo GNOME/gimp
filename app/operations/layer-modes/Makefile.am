@@ -20,6 +20,8 @@ noinst_LIBRARIES = \
 libapplayermodes_generic_a_sources = \
 	gimpoperationnormal.c		\
 	gimpoperationnormal.h		\
+	gimpoperationdissolve.c		\
+	gimpoperationdissolve.h		\
 	gimpoperationdodge.c		\
 	gimpoperationdodge.h		\
 	gimpoperationmultiply.c		\

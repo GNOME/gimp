@@ -97,8 +97,6 @@ libappoperations_a_SOURCES = \
 	\
 	gimpoperationpointlayermode.c		\
 	gimpoperationpointlayermode.h		\
-	gimpoperationdissolvemode.c     	\
-	gimpoperationdissolvemode.h     	\
 	gimpoperationbehindmode.c       	\
 	gimpoperationbehindmode.h       	\
 	gimpoperationdarkenonlymode.c   	\

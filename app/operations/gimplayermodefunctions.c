@@ -27,7 +27,7 @@
 #include "gimplayermodefunctions.h"
 
 #include "layer-modes/gimpoperationnormal.h"
-#include "gimpoperationdissolvemode.h"
+#include "layer-modes/gimpoperationdissolve.h"
 #include "gimpoperationbehindmode.h"
 #include "layer-modes/gimpoperationmultiply.h"
 #include "layer-modes-legacy/gimpoperationmultiplylegacy.h"
@@ -77,7 +77,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_DISSOLVE:
-      func = gimp_operation_dissolve_mode_process_pixels;
+      func = gimp_operation_dissolve_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_BEHIND:
