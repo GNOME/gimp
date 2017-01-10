@@ -113,12 +113,8 @@ libappoperations_a_SOURCES = \
 	gimpoperationgrainmergemode.h   	\
 	gimpoperationcolorerasemode.c   	\
 	gimpoperationcolorerasemode.h   	\
-	gimpoperationerasemode.c        	\
-	gimpoperationerasemode.h        	\
 	gimpoperationreplacemode.c      	\
 	gimpoperationreplacemode.h      	\
-	gimpoperationantierasemode.c    	\
-	gimpoperationantierasemode.h		\
 	\
 	gimplayermodefunctions.c		\
 	gimplayermodefunctions.h

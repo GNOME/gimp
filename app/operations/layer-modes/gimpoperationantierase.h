@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationerasemode.h
+ * gimpoperationantierase.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_ERASE_MODE_H__
-#define __GIMP_OPERATION_ERASE_MODE_H__
+#ifndef __GIMP_OPERATION_ANTI_ERASE_H__
+#define __GIMP_OPERATION_ANTI_ERASE_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "../gimpoperationpointlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_ERASE_MODE            (gimp_operation_erase_mode_get_type ())
-#define GIMP_OPERATION_ERASE_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_ERASE_MODE, GimpOperationEraseMode))
-#define GIMP_OPERATION_ERASE_MODE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_ERASE_MODE, GimpOperationEraseModeClass))
-#define GIMP_IS_OPERATION_ERASE_MODE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_ERASE_MODE))
-#define GIMP_IS_OPERATION_ERASE_MODE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_ERASE_MODE))
-#define GIMP_OPERATION_ERASE_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_ERASE_MODE, GimpOperationEraseModeClass))
+#define GIMP_TYPE_OPERATION_ANTI_ERASE            (gimp_operation_anti_erase_get_type ())
+#define GIMP_OPERATION_ANTI_ERASE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_ANTI_ERASE, GimpOperationAntiErase))
+#define GIMP_OPERATION_ANTI_ERASE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_ANTI_ERASE, GimpOperationAntiEraseClass))
+#define GIMP_IS_OPERATION_ANTI_ERASE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_ANTI_ERASE))
+#define GIMP_IS_OPERATION_ANTI_ERASE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_ANTI_ERASE))
+#define GIMP_OPERATION_ANTI_ERASE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_ANTI_ERASE, GimpOperationAntiEraseClass))
 
 
-typedef struct _GimpOperationEraseMode      GimpOperationEraseMode;
-typedef struct _GimpOperationEraseModeClass GimpOperationEraseModeClass;
+typedef struct _GimpOperationAntiErase      GimpOperationAntiErase;
+typedef struct _GimpOperationAntiEraseClass GimpOperationAntiEraseClass;
 
-struct _GimpOperationEraseMode
+struct _GimpOperationAntiErase
 {
   GimpOperationPointLayerMode  parent_instance;
 };
 
-struct _GimpOperationEraseModeClass
+struct _GimpOperationAntiEraseClass
 {
   GimpOperationPointLayerModeClass  parent_class;
 };
 
 
-GType   gimp_operation_erase_mode_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_anti_erase_get_type       (void) G_GNUC_CONST;
 
-gboolean gimp_operation_erase_mode_process_pixels (gfloat              *in,
+gboolean gimp_operation_anti_erase_process_pixels (gfloat              *in,
                                                    gfloat              *layer,
                                                    gfloat              *mask,
                                                    gfloat              *out,
@@ -58,4 +58,5 @@ gboolean gimp_operation_erase_mode_process_pixels (gfloat              *in,
                                                    const GeglRectangle *roi,
                                                    gint                 level);
 
-#endif /* __GIMP_OPERATION_ERASE_MODE_H__ */
+
+#endif /* __GIMP_OPERATION_ANTI_ERASE_H__ */

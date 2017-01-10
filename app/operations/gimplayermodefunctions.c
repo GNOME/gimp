@@ -65,9 +65,9 @@
 #include "layer-modes/gimpoperationlchchroma.h"
 #include "layer-modes/gimpoperationlchcolor.h"
 #include "layer-modes/gimpoperationlchlightness.h"
-#include "gimpoperationerasemode.h"
+#include "layer-modes/gimpoperationerase.h"
 #include "gimpoperationreplacemode.h"
-#include "gimpoperationantierasemode.h"
+#include "layer-modes/gimpoperationantierase.h"
 
 
 GimpLayerModeFunction
@@ -247,7 +247,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_ERASE:
-      func = gimp_operation_erase_mode_process_pixels;
+      func = gimp_operation_erase_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_REPLACE:
@@ -255,7 +255,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_ANTI_ERASE:
-      func = gimp_operation_anti_erase_mode_process_pixels;
+      func = gimp_operation_anti_erase_process_pixels;
       break;
 
     default:

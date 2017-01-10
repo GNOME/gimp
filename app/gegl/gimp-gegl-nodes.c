@@ -312,7 +312,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_ERASE:
-      operation = "gimp:erase-mode";
+      operation = "gimp:erase";
       break;
 
     case GIMP_LAYER_MODE_REPLACE:
@@ -320,7 +320,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_ANTI_ERASE:
-      operation = "gimp:anti-erase-mode";
+      operation = "gimp:anti-erase";
       break;
 
     default:

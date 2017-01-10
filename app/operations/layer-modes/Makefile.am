@@ -55,7 +55,11 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationhsvcolor.c         \
 	gimpoperationhsvcolor.h         \
 	gimpoperationhsvvalue.c         \
-	gimpoperationhsvvalue.h
+	gimpoperationhsvvalue.h		\
+	gimpoperationerase.c		\
+	gimpoperationerase.h		\
+	gimpoperationantierase.c	\
+	gimpoperationantierase.h
 
 libapplayermodes_sse2_a_sources = \
 	gimpoperationnormal-sse2.c

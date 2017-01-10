@@ -105,9 +105,9 @@
 #include "layer-modes/gimpoperationlchchroma.h"
 #include "layer-modes/gimpoperationlchcolor.h"
 #include "layer-modes/gimpoperationlchlightness.h"
-#include "gimpoperationerasemode.h"
+#include "layer-modes/gimpoperationerase.h"
 #include "gimpoperationreplacemode.h"
-#include "gimpoperationantierasemode.h"
+#include "layer-modes/gimpoperationantierase.h"
 
 
 void
@@ -181,9 +181,9 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_CHROMA);
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_COLOR);
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_LIGHTNESS);
-  g_type_class_ref (GIMP_TYPE_OPERATION_ERASE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_ERASE);
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);
 
   gimp_gegl_config_register ("gimp:brightness-contrast",
                              GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG);
