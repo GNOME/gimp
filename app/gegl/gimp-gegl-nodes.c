@@ -163,7 +163,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
-      operation = "gimp:multiply-mode";
+      operation = "gimp:multiply-legacy";
       break;
 
     case GIMP_LAYER_MODE_MULTIPLY:
