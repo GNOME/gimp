@@ -1,12 +1,12 @@
 # Polish translation for gimp.
-# Copyright © 1999-2016 the gimp authors.
+# Copyright © 1999-2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # Paweł Dziekoński, 1999-2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 # Piotr Zaryk <pzaryk@aviary.pl>, 2008.
 # Robert Gomulka <carramba@epf.pl>, 2008.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
 #
 # Terminy:
 #  drawable    - obszar rysowania (warstwa, kanał itp.)
@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 18:48+0200\n"
-"PO-Revision-Date: 2016-09-07 18:49+0200\n"
+"POT-Creation-Date: 2017-01-10 16:33+0100\n"
+"PO-Revision-Date: 2017-01-10 16:34+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -457,7 +457,7 @@ msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:441
+#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:464
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
 
@@ -4433,11 +4433,11 @@ msgstr "Rysuje wzdłuż zaznaczenia za pomocą ostatnio użytych wartości"
 
 #: ../app/actions/select-commands.c:156
 msgid "Feather Selection"
-msgstr "Zmiękcza zaznaczenie"
+msgstr "Zmiękczenie zaznaczenia"
 
 #: ../app/actions/select-commands.c:160
 msgid "Feather selection by"
-msgstr "Zmiękcza zaznaczenie o"
+msgstr "Stopień zmiękczenia zaznaczenia"
 
 #: ../app/actions/select-commands.c:197
 msgid "Shrink Selection"
@@ -4449,7 +4449,7 @@ msgstr "Stopień zmniejszenia zaznaczenia"
 
 #: ../app/actions/select-commands.c:209
 msgid "_Shrink from image border"
-msgstr "_Zmniejsz od granic obrazu"
+msgstr "_Zmniejszenie od granic obrazu"
 
 #: ../app/actions/select-commands.c:237
 msgid "Grow Selection"
@@ -8959,8 +8959,8 @@ msgstr ""
 "Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011\n"
 "Piotr Zaryk <pzaryk@aviary.pl>, 2008\n"
 "Robert Gomulka <carramba@epf.pl>, 2008\n"
-"Piotr Drąg <piotrdrag@gmail.com>, 2011-2016\n"
-"Aviary.pl <community-poland@mozilla.org>, 2011-2016"
+"Piotr Drąg <piotrdrag@gmail.com>, 2011-2017\n"
+"Aviary.pl <community-poland@mozilla.org>, 2011-2017"
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
@@ -9034,7 +9034,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 
-#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:162
+#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:174
 #: ../app/gui/gui-message.c:149
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
@@ -10986,12 +10986,12 @@ msgstr "Wypełnienie pierwotnego położenia klatki prostym kolorem"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:207
+#: ../app/gui/gui.c:219
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. initialize the document history
-#: ../app/gui/gui.c:438
+#: ../app/gui/gui.c:461
 msgid "Documents"
 msgstr "Dokumenty"
 
@@ -11812,7 +11812,7 @@ msgstr ""
 "Niektóre właściwości tekstu mogą być błędne. Jeśli tekst nie będzie "
 "modyfikowany, to nie ma to większego znaczenia."
 
-#: ../app/text/gimptextlayout.c:577
+#: ../app/text/gimptextlayout.c:578
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -12013,7 +12013,7 @@ msgstr "Gradient nie pracuje na warstwach indeksowanych."
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:625
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
@@ -12065,7 +12065,7 @@ msgstr "_Kontrast:"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:343
 msgid "Edit these Settings as Levels"
-msgstr "Modyfikuje te ustawienia jako poziomy"
+msgstr "Modyfikacja tych ustawień jako poziomy"
 
 #: ../app/tools/gimpbucketfilloptions.c:93
 msgid "Which area will be filled"
@@ -13199,11 +13199,11 @@ msgstr "Dopasowuje poziomy automatycznie"
 
 #: ../app/tools/gimplevelstool.c:686
 msgid "Edit these Settings as Curves"
-msgstr "Modyfikuje te ustawienia jako krzywe"
+msgstr "Modyfikacja tych ustawień jako krzywe"
 
 #: ../app/tools/gimplevelstool.c:829
 msgid "Use _old levels file format"
-msgstr "Użycie _starego formatu pliku poziomów"
+msgstr "_Stary format pliku poziomów"
 
 #: ../app/tools/gimpmagnifyoptions.c:79
 msgid "Resize image window to accommodate new zoom level"
@@ -13285,7 +13285,7 @@ msgstr "Kliknięcie i przeciągnięcie przemieści wszystkie punkty"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:633
+#: ../app/tools/gimppainttool.c:634
 msgid "pixels"
 msgstr "piksele"
 
@@ -13455,7 +13455,7 @@ msgstr "%s wybiera kolor"
 msgid "Cannot paint on layer groups."
 msgstr "Nie można narysować grup warstw."
 
-#: ../app/tools/gimppainttool.c:679
+#: ../app/tools/gimppainttool.c:680
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s rysuje prostą linię"
