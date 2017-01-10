@@ -26,4 +26,8 @@ libapplayermodeslegacy_a_SOURCES = \
 	gimpoperationadditionlegacy.c	\
 	gimpoperationadditionlegacy.h   \
 	gimpoperationsubtractlegacy.c	\
-	gimpoperationsubtractlegacy.h
+	gimpoperationsubtractlegacy.h   \
+	gimpoperationdarkenonlylegacy.c \
+	gimpoperationdarkenonlylegacy.h \
+	gimpoperationlightenonlylegacy.c \
+	gimpoperationlightenonlylegacy.h

@@ -40,8 +40,10 @@
 #include "layer-modes/gimpoperationsubtract.h"
 #include "layer-modes-legacy/gimpoperationadditionlegacy.h"
 #include "layer-modes-legacy/gimpoperationsubtractlegacy.h"
-#include "gimpoperationdarkenonlymode.h"
-#include "gimpoperationlightenonlymode.h"
+#include "layer-modes/gimpoperationdarkenonly.h"
+#include "layer-modes-legacy/gimpoperationdarkenonlylegacy.h"
+#include "layer-modes/gimpoperationlightenonly.h"
+#include "layer-modes-legacy/gimpoperationlightenonlylegacy.h"
 #include "gimpoperationhuemode.h"
 #include "gimpoperationsaturationmode.h"
 #include "gimpoperationcolormode.h"
@@ -128,12 +130,20 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_subtract_legacy_process_pixels;
       break;
 
+    case GIMP_LAYER_MODE_DARKEN_ONLY:
+      func = gimp_operation_darken_only_process_pixels;
+      break;
+
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
-      func = gimp_operation_darken_only_mode_process_pixels;
+      func = gimp_operation_darken_only_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY:
+      func = gimp_operation_lighten_only_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
-      func = gimp_operation_lighten_only_mode_process_pixels;
+      func = gimp_operation_lighten_only_legacy_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:

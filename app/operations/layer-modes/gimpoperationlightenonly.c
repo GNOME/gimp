@@ -4,6 +4,7 @@
  * gimpoperationlightenonlymode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
+ *               2017 Øyvind Kolås <pippin@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +24,12 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationlightenonlymode.h"
+#include "gimpoperationlightenonly.h"
 
 
-static gboolean gimp_operation_lighten_only_mode_process (GeglOperation       *operation,
+static gboolean gimp_operation_lighten_only_process (GeglOperation       *operation,
                                                           void                *in_buf,
                                                           void                *aux_buf,
                                                           void                *aux2_buf,
@@ -38,12 +39,12 @@ static gboolean gimp_operation_lighten_only_mode_process (GeglOperation       *o
                                                           gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationLightenOnlyMode, gimp_operation_lighten_only_mode,
+G_DEFINE_TYPE (GimpOperationLightenOnly, gimp_operation_lighten_only,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
-gimp_operation_lighten_only_mode_class_init (GimpOperationLightenOnlyModeClass *klass)
+gimp_operation_lighten_only_class_init (GimpOperationLightenOnlyClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -52,65 +53,62 @@ gimp_operation_lighten_only_mode_class_init (GimpOperationLightenOnlyModeClass *
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:lighten-only-mode",
+                                 "name",        "gimp:lighten-only",
                                  "description", "GIMP lighten only mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_lighten_only_mode_process;
+  point_class->process = gimp_operation_lighten_only_process;
 }
 
 static void
-gimp_operation_lighten_only_mode_init (GimpOperationLightenOnlyMode *self)
+gimp_operation_lighten_only_init (GimpOperationLightenOnly *self)
 {
 }
 
 static gboolean
-gimp_operation_lighten_only_mode_process (GeglOperation       *operation,
-                                          void                *in_buf,
-                                          void                *aux_buf,
-                                          void                *aux2_buf,
-                                          void                *out_buf,
-                                          glong                samples,
-                                          const GeglRectangle *roi,
-                                          gint                 level)
+gimp_operation_lighten_only_process (GeglOperation       *operation,
+                                     void                *in_buf,
+                                     void                *aux_buf,
+                                     void                *aux2_buf,
+                                     void                *out_buf,
+                                     glong                samples,
+                                     const GeglRectangle *roi,
+                                     gint                 level)
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_lighten_only_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_lighten_only_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_lighten_only_mode_process_pixels (gfloat              *in,
-                                                 gfloat              *layer,
-                                                 gfloat              *mask,
-                                                 gfloat              *out,
-                                                 gfloat               opacity,
-                                                 glong                samples,
-                                                 const GeglRectangle *roi,
-                                                 gint                 level)
+gimp_operation_lighten_only_process_pixels (gfloat              *in,
+                                            gfloat              *layer,
+                                            gfloat              *mask,
+                                            gfloat              *out,
+                                            gfloat               opacity,
+                                            glong                samples,
+                                            const GeglRectangle *roi,
+                                            gint                 level)
 {
   const gboolean has_mask = mask != NULL;
 
   while (samples--)
     {
-      gfloat comp_alpha, new_alpha;
+      gfloat comp_alpha;
 
-      comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
+      comp_alpha = layer[ALPHA] * opacity;
       if (has_mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
-
-      if (comp_alpha && new_alpha)
+      if (comp_alpha != 0.0)
         {
           gint   b;
-          gfloat ratio = comp_alpha / new_alpha;
 
           for (b = RED; b < ALPHA; b++)
             {
               gfloat comp = MAX (layer[b], in[b]);
 
-              out[b] = comp * ratio + in[b] * (1.0 - ratio);
+              out[b] = comp * comp_alpha + in[b] * (1.0 - comp_alpha);
             }
         }
       else

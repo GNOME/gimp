@@ -163,8 +163,8 @@ typedef enum
   GIMP_LAYER_MODE_DIFFERENCE_LEGACY,      /*< desc="Difference (legacy)"  >*/
   GIMP_LAYER_MODE_ADDITION_LEGACY,        /*< desc="Addition (legacy)"    >*/
   GIMP_LAYER_MODE_SUBTRACT_LEGACY,        /*< desc="Subtract (legacy)"    >*/
-  GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,     /*< desc="Darken only"          >*/
-  GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,    /*< desc="Lighten only"         >*/
+  GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,     /*< desc="Darken only (legacy)" >*/
+  GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,    /*< desc="Lighten only (legacy)">*/
   GIMP_LAYER_MODE_HSV_HUE_LEGACY,         /*< desc="Hue (HSV)"            >*/
   GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,  /*< desc="Saturation (HSV)"     >*/
   GIMP_LAYER_MODE_HSV_COLOR_LEGACY,       /*< desc="Color (HSV)"          >*/
@@ -190,6 +190,8 @@ typedef enum
   GIMP_LAYER_MODE_DIFFERENCE,             /*< desc="Difference"           >*/
   GIMP_LAYER_MODE_ADDITION,               /*< desc="Addition"             >*/
   GIMP_LAYER_MODE_SUBTRACT,               /*< desc="Subtract"             >*/
+  GIMP_LAYER_MODE_DARKEN_ONLY,            /*< desc="Darken only"          >*/
+  GIMP_LAYER_MODE_LIGHTEN_ONLY,           /*< desc="Lighten only"         >*/
 
   /* internal modes, not available to the PDB */
   GIMP_LAYER_MODE_ERASE      = 1000, /*< pdb-skip, desc="Erase"      >*/

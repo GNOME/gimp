@@ -207,12 +207,20 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:subtract-legacy";
       break;
 
+    case GIMP_LAYER_MODE_DARKEN_ONLY:
+      operation = "gimp:darken-only";
+      break;
+
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
-      operation = "gimp:darken-only-mode";
+      operation = "gimp:darken-only-legacy";
+      break;
+
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY:
+      operation = "gimp:lighten-only";
       break;
 
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
-      operation = "gimp:lighten-only-mode";
+      operation = "gimp:lighten-only-legacy";
       break;
 
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
@@ -334,7 +342,9 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_SUBTRACT:
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
+    case GIMP_LAYER_MODE_DARKEN_ONLY:
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY:
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
     case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:

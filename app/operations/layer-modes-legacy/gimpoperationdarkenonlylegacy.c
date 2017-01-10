@@ -23,27 +23,27 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationdarkenonlymode.h"
-
-
-static gboolean gimp_operation_darken_only_mode_process (GeglOperation       *operation,
-                                                         void                *in_buf,
-                                                         void                *aux_buf,
-                                                         void                *aux2_buf,
-                                                         void                *out_buf,
-                                                         glong                samples,
-                                                         const GeglRectangle *roi,
-                                                         gint                 level);
+#include "gimpoperationdarkenonlylegacy.h"
 
 
-G_DEFINE_TYPE (GimpOperationDarkenOnlyMode, gimp_operation_darken_only_mode,
+static gboolean gimp_operation_darken_only_legacy_process (GeglOperation       *operation,
+                                                           void                *in_buf,
+                                                           void                *aux_buf,
+                                                           void                *aux2_buf,
+                                                           void                *out_buf,
+                                                           glong                samples,
+                                                           const GeglRectangle *roi,
+                                                           gint                 level);
+
+
+G_DEFINE_TYPE (GimpOperationDarkenOnlyLegacy, gimp_operation_darken_only_legacy,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
-gimp_operation_darken_only_mode_class_init (GimpOperationDarkenOnlyModeClass *klass)
+gimp_operation_darken_only_legacy_class_init (GimpOperationDarkenOnlyLegacyClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -52,35 +52,35 @@ gimp_operation_darken_only_mode_class_init (GimpOperationDarkenOnlyModeClass *kl
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:darken-only-mode",
+                                 "name",        "gimp:darken-only-legacy",
                                  "description", "GIMP darken only mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_darken_only_mode_process;
+  point_class->process = gimp_operation_darken_only_legacy_process;
 }
 
 static void
-gimp_operation_darken_only_mode_init (GimpOperationDarkenOnlyMode *self)
+gimp_operation_darken_only_legacy_init (GimpOperationDarkenOnlyLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_darken_only_mode_process (GeglOperation       *operation,
-                                         void                *in_buf,
-                                         void                *aux_buf,
-                                         void                *aux2_buf,
-                                         void                *out_buf,
-                                         glong                samples,
-                                         const GeglRectangle *roi,
-                                         gint                 level)
+gimp_operation_darken_only_legacy_process (GeglOperation       *operation,
+                                           void                *in_buf,
+                                           void                *aux_buf,
+                                           void                *aux2_buf,
+                                           void                *out_buf,
+                                           glong                samples,
+                                           const GeglRectangle *roi,
+                                           gint                 level)
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_darken_only_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_darken_only_legacy_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_darken_only_mode_process_pixels (gfloat              *in,
+gimp_operation_darken_only_legacy_process_pixels (gfloat              *in,
                                                 gfloat              *layer,
                                                 gfloat              *mask,
                                                 gfloat              *out,

@@ -80,8 +80,10 @@
 #include "layer-modes-legacy/gimpoperationadditionlegacy.h"
 #include "layer-modes/gimpoperationsubtract.h"
 #include "layer-modes-legacy/gimpoperationsubtractlegacy.h"
-#include "gimpoperationdarkenonlymode.h"
-#include "gimpoperationlightenonlymode.h"
+#include "layer-modes/gimpoperationdarkenonly.h"
+#include "layer-modes-legacy/gimpoperationdarkenonlylegacy.h"
+#include "layer-modes/gimpoperationlightenonly.h"
+#include "layer-modes-legacy/gimpoperationlightenonlylegacy.h"
 #include "gimpoperationhuemode.h"
 #include "gimpoperationsaturationmode.h"
 #include "gimpoperationcolormode.h"
@@ -150,8 +152,10 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_ADDITION_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_SUBTRACT);
   g_type_class_ref (GIMP_TYPE_OPERATION_SUBTRACT_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_DARKEN_ONLY_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DARKEN_ONLY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DARKEN_ONLY_LEGACY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HUE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_SATURATION_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_MODE);
