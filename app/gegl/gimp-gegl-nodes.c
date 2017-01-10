@@ -191,12 +191,20 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:difference-legacyy";
       break;
 
+    case GIMP_LAYER_MODE_ADDITION:
+      operation = "gimp:addition";
+      break;
+
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
-      operation = "gimp:addition-mode";
+      operation = "gimp:addition-legacy";
+      break;
+
+    case GIMP_LAYER_MODE_SUBTRACT:
+      operation = "gimp:subtract";
       break;
 
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
-      operation = "gimp:subtract-mode";
+      operation = "gimp:subtract-legacy";
       break;
 
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
@@ -322,6 +330,8 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
     case GIMP_LAYER_MODE_SCREEN:
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
+    case GIMP_LAYER_MODE_ADDITION:
+    case GIMP_LAYER_MODE_SUBTRACT:
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:

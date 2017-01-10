@@ -36,8 +36,10 @@
 #include "layer-modes/gimpoperationoverlay.h"
 #include "layer-modes/gimpoperationdifference.h"
 #include "layer-modes-legacy/gimpoperationdifferencelegacy.h"
-#include "gimpoperationadditionmode.h"
-#include "gimpoperationsubtractmode.h"
+#include "layer-modes/gimpoperationaddition.h"
+#include "layer-modes/gimpoperationsubtract.h"
+#include "layer-modes-legacy/gimpoperationadditionlegacy.h"
+#include "layer-modes-legacy/gimpoperationsubtractlegacy.h"
 #include "gimpoperationdarkenonlymode.h"
 #include "gimpoperationlightenonlymode.h"
 #include "gimpoperationhuemode.h"
@@ -110,12 +112,20 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_difference_process_pixels;
       break;
 
+    case GIMP_LAYER_MODE_ADDITION:
+      func = gimp_operation_addition_process_pixels;
+      break;
+
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
-      func = gimp_operation_addition_mode_process_pixels;
+      func = gimp_operation_addition_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_SUBTRACT:
+      func = gimp_operation_subtract_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
-      func = gimp_operation_subtract_mode_process_pixels;
+      func = gimp_operation_subtract_legacy_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:

@@ -161,8 +161,8 @@ typedef enum
   GIMP_LAYER_MODE_SCREEN_LEGACY,          /*< desc="Screen (legacy)"      >*/
   GIMP_LAYER_MODE_OVERLAY_LEGACY,         /*< desc="Old broken Overlay"   >*/
   GIMP_LAYER_MODE_DIFFERENCE_LEGACY,      /*< desc="Difference (legacy)"  >*/
-  GIMP_LAYER_MODE_ADDITION_LEGACY,        /*< desc="Addition"             >*/
-  GIMP_LAYER_MODE_SUBTRACT_LEGACY,        /*< desc="Subtract"             >*/
+  GIMP_LAYER_MODE_ADDITION_LEGACY,        /*< desc="Addition (legacy)"    >*/
+  GIMP_LAYER_MODE_SUBTRACT_LEGACY,        /*< desc="Subtract (legacy)"    >*/
   GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,     /*< desc="Darken only"          >*/
   GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,    /*< desc="Lighten only"         >*/
   GIMP_LAYER_MODE_HSV_HUE_LEGACY,         /*< desc="Hue (HSV)"            >*/
@@ -188,6 +188,8 @@ typedef enum
   GIMP_LAYER_MODE_DODGE,                  /*< desc="Dodge"                >*/
   GIMP_LAYER_MODE_SCREEN,                 /*< desc="Screen"               >*/
   GIMP_LAYER_MODE_DIFFERENCE,             /*< desc="Difference"           >*/
+  GIMP_LAYER_MODE_ADDITION,               /*< desc="Addition"             >*/
+  GIMP_LAYER_MODE_SUBTRACT,               /*< desc="Subtract"             >*/
 
   /* internal modes, not available to the PDB */
   GIMP_LAYER_MODE_ERASE      = 1000, /*< pdb-skip, desc="Erase"      >*/
