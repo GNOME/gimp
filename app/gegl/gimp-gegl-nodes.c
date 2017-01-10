@@ -223,20 +223,36 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:lighten-only-legacy";
       break;
 
+    case GIMP_LAYER_MODE_HSV_HUE:
+      operation = "gimp:hue";
+      break;
+
+    case GIMP_LAYER_MODE_HSV_SATURATION:
+      operation = "gimp:saturation";
+      break;
+
+    case GIMP_LAYER_MODE_HSV_COLOR:
+      operation = "gimp:color";
+      break;
+
+    case GIMP_LAYER_MODE_HSV_VALUE:
+      operation = "gimp:value";
+      break;
+
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
-      operation = "gimp:hue-mode";
+      operation = "gimp:hue-legacy";
       break;
 
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
-      operation = "gimp:saturation-mode";
+      operation = "gimp:saturation-legacy";
       break;
 
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
-      operation = "gimp:color-mode";
+      operation = "gimp:color-legacy";
       break;
 
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
-      operation = "gimp:value-mode";
+      operation = "gimp:value-legacy";
       break;
 
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
@@ -350,6 +366,10 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
     case GIMP_LAYER_MODE_DIFFERENCE:
+    case GIMP_LAYER_MODE_HSV_HUE:
+    case GIMP_LAYER_MODE_HSV_SATURATION:
+    case GIMP_LAYER_MODE_HSV_COLOR:
+    case GIMP_LAYER_MODE_HSV_VALUE:
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:

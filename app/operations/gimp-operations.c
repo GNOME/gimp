@@ -84,10 +84,14 @@
 #include "layer-modes-legacy/gimpoperationdarkenonlylegacy.h"
 #include "layer-modes/gimpoperationlightenonly.h"
 #include "layer-modes-legacy/gimpoperationlightenonlylegacy.h"
-#include "gimpoperationhuemode.h"
-#include "gimpoperationsaturationmode.h"
-#include "gimpoperationcolormode.h"
-#include "gimpoperationvaluemode.h"
+#include "layer-modes/gimpoperationhsvhue.h"
+#include "layer-modes/gimpoperationhsvsaturation.h"
+#include "layer-modes/gimpoperationhsvcolor.h"
+#include "layer-modes/gimpoperationhsvvalue.h"
+#include "layer-modes-legacy/gimpoperationhsvhuelegacy.h"
+#include "layer-modes-legacy/gimpoperationhsvsaturationlegacy.h"
+#include "layer-modes-legacy/gimpoperationhsvcolorlegacy.h"
+#include "layer-modes-legacy/gimpoperationhsvvaluelegacy.h"
 #include "gimpoperationdividemode.h"
 #include "layer-modes/gimpoperationdodge.h"
 #include "layer-modes-legacy/gimpoperationdodgelegacy.h"
@@ -156,10 +160,14 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_DARKEN_ONLY_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_HUE_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_SATURATION_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_VALUE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_HUE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_SATURATION);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_COLOR);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_VALUE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_HUE_LEGACY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_SATURATION_LEGACY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_VALUE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DODGE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DODGE_LEGACY);

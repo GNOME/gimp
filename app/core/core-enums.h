@@ -165,10 +165,10 @@ typedef enum
   GIMP_LAYER_MODE_SUBTRACT_LEGACY,        /*< desc="Subtract (legacy)"    >*/
   GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,     /*< desc="Darken only (legacy)" >*/
   GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,    /*< desc="Lighten only (legacy)">*/
-  GIMP_LAYER_MODE_HSV_HUE_LEGACY,         /*< desc="Hue (HSV)"            >*/
-  GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,  /*< desc="Saturation (HSV)"     >*/
-  GIMP_LAYER_MODE_HSV_COLOR_LEGACY,       /*< desc="Color (HSV)"          >*/
-  GIMP_LAYER_MODE_HSV_VALUE_LEGACY,       /*< desc="Value (HSV)"          >*/
+  GIMP_LAYER_MODE_HSV_HUE_LEGACY,         /*< desc="Hue (HSV) (legacy)"   >*/
+  GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,  /*< desc="Saturation (HSV) (legacy)">*/
+  GIMP_LAYER_MODE_HSV_COLOR_LEGACY,       /*< desc="Color (HSV) (legacy)" >*/
+  GIMP_LAYER_MODE_HSV_VALUE_LEGACY,       /*< desc="Value (HSV) (legacy)" >*/
   GIMP_LAYER_MODE_DIVIDE_LEGACY,          /*< desc="Divide"               >*/
   GIMP_LAYER_MODE_DODGE_LEGACY,           /*< desc="Dodge (legacy)"       >*/
   GIMP_LAYER_MODE_BURN_LEGACY,            /*< desc="Burn"                 >*/
@@ -192,6 +192,10 @@ typedef enum
   GIMP_LAYER_MODE_SUBTRACT,               /*< desc="Subtract"             >*/
   GIMP_LAYER_MODE_DARKEN_ONLY,            /*< desc="Darken only"          >*/
   GIMP_LAYER_MODE_LIGHTEN_ONLY,           /*< desc="Lighten only"         >*/
+  GIMP_LAYER_MODE_HSV_HUE,                /*< desc="Hue (HSV)"            >*/
+  GIMP_LAYER_MODE_HSV_SATURATION,         /*< desc="Saturation (HSV)"     >*/
+  GIMP_LAYER_MODE_HSV_COLOR,              /*< desc="Color (HSV)"          >*/
+  GIMP_LAYER_MODE_HSV_VALUE,              /*< desc="Value (HSV)"          >*/
 
   /* internal modes, not available to the PDB */
   GIMP_LAYER_MODE_ERASE      = 1000, /*< pdb-skip, desc="Erase"      >*/

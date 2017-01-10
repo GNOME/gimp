@@ -44,10 +44,14 @@
 #include "layer-modes-legacy/gimpoperationdarkenonlylegacy.h"
 #include "layer-modes/gimpoperationlightenonly.h"
 #include "layer-modes-legacy/gimpoperationlightenonlylegacy.h"
-#include "gimpoperationhuemode.h"
-#include "gimpoperationsaturationmode.h"
-#include "gimpoperationcolormode.h"
-#include "gimpoperationvaluemode.h"
+#include "layer-modes/gimpoperationhsvhue.h"
+#include "layer-modes-legacy/gimpoperationhsvhuelegacy.h"
+#include "layer-modes/gimpoperationhsvsaturation.h"
+#include "layer-modes-legacy/gimpoperationhsvsaturationlegacy.h"
+#include "layer-modes/gimpoperationhsvcolor.h"
+#include "layer-modes-legacy/gimpoperationhsvcolorlegacy.h"
+#include "layer-modes/gimpoperationhsvvalue.h"
+#include "layer-modes-legacy/gimpoperationhsvvaluelegacy.h"
 #include "gimpoperationdividemode.h"
 #include "layer-modes/gimpoperationdodge.h"
 #include "layer-modes-legacy/gimpoperationdodgelegacy.h"
@@ -146,20 +150,36 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_lighten_only_legacy_process_pixels;
       break;
 
+    case GIMP_LAYER_MODE_HSV_HUE:
+      func = gimp_operation_hsv_hue_process_pixels;
+      break;
+
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
-      func = gimp_operation_hue_mode_process_pixels;
+      func = gimp_operation_hsv_hue_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_HSV_SATURATION:
+      func = gimp_operation_hsv_saturation_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
-      func = gimp_operation_saturation_mode_process_pixels;
+      func = gimp_operation_hsv_saturation_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_HSV_COLOR:
+      func = gimp_operation_hsv_color_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
-      func = gimp_operation_color_mode_process_pixels;
+      func = gimp_operation_hsv_color_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_HSV_VALUE:
+      func = gimp_operation_hsv_value_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
-      func = gimp_operation_value_mode_process_pixels;
+      func = gimp_operation_hsv_value_legacy_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:

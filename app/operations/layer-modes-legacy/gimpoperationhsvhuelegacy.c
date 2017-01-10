@@ -27,27 +27,27 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationhuemode.h"
-
-
-static gboolean gimp_operation_hue_mode_process (GeglOperation       *operation,
-                                                 void                *in_buf,
-                                                 void                *aux_buf,
-                                                 void                *aux2_buf,
-                                                 void                *out_buf,
-                                                 glong                samples,
-                                                 const GeglRectangle *roi,
-                                                 gint                 level);
+#include "gimpoperationhsvhuelegacy.h"
 
 
-G_DEFINE_TYPE (GimpOperationHueMode, gimp_operation_hue_mode,
+static gboolean gimp_operation_hsv_hue_legacy_process (GeglOperation       *operation,
+                                                       void                *in_buf,
+                                                       void                *aux_buf,
+                                                       void                *aux2_buf,
+                                                       void                *out_buf,
+                                                       glong                samples,
+                                                       const GeglRectangle *roi,
+                                                       gint                 level);
+
+
+G_DEFINE_TYPE (GimpOperationHsvHueLegacy, gimp_operation_hsv_hue_legacy,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
-gimp_operation_hue_mode_class_init (GimpOperationHueModeClass *klass)
+gimp_operation_hsv_hue_legacy_class_init (GimpOperationHsvHueLegacyClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -56,42 +56,42 @@ gimp_operation_hue_mode_class_init (GimpOperationHueModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:hue-mode",
+                                 "name",        "gimp:hsv-hue-legacy",
                                  "description", "GIMP hue mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_hue_mode_process;
+  point_class->process = gimp_operation_hsv_hue_legacy_process;
 }
 
 static void
-gimp_operation_hue_mode_init (GimpOperationHueMode *self)
+gimp_operation_hsv_hue_legacy_init (GimpOperationHsvHueLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_hue_mode_process (GeglOperation       *operation,
-                                 void                *in_buf,
-                                 void                *aux_buf,
-                                 void                *aux2_buf,
-                                 void                *out_buf,
-                                 glong                samples,
-                                 const GeglRectangle *roi,
-                                 gint                 level)
+gimp_operation_hsv_hue_legacy_process (GeglOperation       *operation,
+                                       void                *in_buf,
+                                       void                *aux_buf,
+                                       void                *aux2_buf,
+                                       void                *out_buf,
+                                       glong                samples,
+                                       const GeglRectangle *roi,
+                                       gint                 level)
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_hue_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_hsv_hue_legacy_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_hue_mode_process_pixels (gfloat              *in,
-                                        gfloat              *layer,
-                                        gfloat              *mask,
-                                        gfloat              *out,
-                                        gfloat               opacity,
-                                        glong                samples,
-                                        const GeglRectangle *roi,
-                                        gint                 level)
+gimp_operation_hsv_hue_legacy_process_pixels (gfloat              *in,
+                                              gfloat              *layer,
+                                              gfloat              *mask,
+                                              gfloat              *out,
+                                              gfloat               opacity,
+                                              glong                samples,
+                                              const GeglRectangle *roi,
+                                              gint                 level)
 {
   const gboolean has_mask = mask != NULL;
 

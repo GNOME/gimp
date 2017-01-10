@@ -47,7 +47,15 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationdarkenonly.c   	\
 	gimpoperationdarkenonly.h   	\
 	gimpoperationlightenonly.c  	\
-	gimpoperationlightenonly.h
+	gimpoperationlightenonly.h      \
+	gimpoperationhsvhue.c           \
+	gimpoperationhsvhue.h           \
+	gimpoperationhsvsaturation.c    \
+	gimpoperationhsvsaturation.h    \
+	gimpoperationhsvcolor.c         \
+	gimpoperationhsvcolor.h         \
+	gimpoperationhsvvalue.c         \
+	gimpoperationhsvvalue.h
 
 libapplayermodes_sse2_a_sources = \
 	gimpoperationnormal-sse2.c
