@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-08 09:54+0100\n"
-"PO-Revision-Date: 2017-01-08 09:55+0100\n"
+"PO-Revision-Date: 2017-01-10 16:40+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -5758,11 +5758,11 @@ msgstr "Rysuje wzdłuż zaznaczenia za pomocą ostatnio użytych wartości"
 
 #: ../app/actions/select-commands.c:156
 msgid "Feather Selection"
-msgstr "Zmiękcza zaznaczenie"
+msgstr "Zmiękczenie zaznaczenia"
 
 #: ../app/actions/select-commands.c:160
 msgid "Feather selection by"
-msgstr "Zmiękcza zaznaczenie o"
+msgstr "Stopień zmiękczenia zaznaczenia"
 
 #: ../app/actions/select-commands.c:216
 msgid "Shrink Selection"
@@ -16259,7 +16259,7 @@ msgstr "_Kontrast"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:303
 msgid "Edit these Settings as Levels"
-msgstr "Modyfikuje te ustawienia jako poziomy"
+msgstr "Modyfikacja tych ustawień jako poziomy"
 
 #: ../app/tools/gimpbucketfilloptions.c:102
 msgid "Fill selection"
@@ -17488,11 +17488,11 @@ msgstr "Dopasowuje poziomy automatycznie dla wszystkich kanałów"
 
 #: ../app/tools/gimplevelstool.c:623
 msgid "Edit these Settings as Curves"
-msgstr "Modyfikuje te ustawienia jako krzywe"
+msgstr "Modyfikacja tych ustawień jako krzywe"
 
 #: ../app/tools/gimplevelstool.c:774
 msgid "Use _old levels file format"
-msgstr "Użycie _starego formatu pliku poziomów"
+msgstr "_Stary format pliku poziomów"
 
 #: ../app/tools/gimpmagnifyoptions.c:83
 msgid "Auto-resize window"
