@@ -52,7 +52,7 @@ gimp_operation_subtract_legacy_class_init (GimpOperationSubtractLegacyClass *kla
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:subtract-mode",
+                                 "name",        "gimp:subtract-legacy",
                                  "description", "GIMP subtract mode operation",
                                  NULL);
 
