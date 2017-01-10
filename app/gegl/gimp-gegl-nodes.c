@@ -224,39 +224,43 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_HSV_HUE:
-      operation = "gimp:hue";
+      operation = "gimp:hsv-hue";
       break;
 
     case GIMP_LAYER_MODE_HSV_SATURATION:
-      operation = "gimp:saturation";
+      operation = "gimp:hsv-saturation";
       break;
 
     case GIMP_LAYER_MODE_HSV_COLOR:
-      operation = "gimp:color";
+      operation = "gimp:hsv-color";
       break;
 
     case GIMP_LAYER_MODE_HSV_VALUE:
-      operation = "gimp:value";
+      operation = "gimp:hsv-value";
       break;
 
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
-      operation = "gimp:hue-legacy";
+      operation = "gimp:hsv-hue-legacy";
       break;
 
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
-      operation = "gimp:saturation-legacy";
+      operation = "gimp:hsv-saturation-legacy";
       break;
 
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
-      operation = "gimp:color-legacy";
+      operation = "gimp:hsv-color-legacy";
       break;
 
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
-      operation = "gimp:value-legacy";
+      operation = "gimp:hsv-value-legacy";
+      break;
+
+    case GIMP_LAYER_MODE_DIVIDE:
+      operation = "gimp:divide";
       break;
 
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
-      operation = "gimp:divide-mode";
+      operation = "gimp:divide-legacy";
       break;
 
     case GIMP_LAYER_MODE_DODGE:
@@ -267,8 +271,12 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:dodge-legacy";
       break;
 
+    case GIMP_LAYER_MODE_BURN:
+      operation = "gimp:burn";
+      break;
+
     case GIMP_LAYER_MODE_BURN_LEGACY:
-      operation = "gimp:burn-mode";
+      operation = "gimp:burn-legacy";
       break;
 
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
@@ -374,9 +382,11 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
+    case GIMP_LAYER_MODE_DIVIDE:
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
     case GIMP_LAYER_MODE_DODGE:
     case GIMP_LAYER_MODE_DODGE_LEGACY:
+    case GIMP_LAYER_MODE_BURN:
     case GIMP_LAYER_MODE_BURN_LEGACY:
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
