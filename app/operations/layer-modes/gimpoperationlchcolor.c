@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlchcolormode.c
+ * gimpoperationlchcolor.c
  * Copyright (C) 2015 Elle Stone <ellestone@ninedegreesbelow.com>
  *                    Massimo Valentini <mvalentini@src.gnome.org>
  *                    Thomas Manni <thomas.manni@free.fr>
@@ -28,29 +28,29 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationlchcolormode.h"
-
-
-static gboolean gimp_operation_lch_color_mode_process (GeglOperation       *operation,
-                                                       void                *in_buf,
-                                                       void                *aux_buf,
-                                                       void                *aux2_buf,
-                                                       void                *out_buf,
-                                                       glong                samples,
-                                                       const GeglRectangle *roi,
-                                                       gint                 level);
+#include "gimpoperationlchcolor.h"
 
 
-G_DEFINE_TYPE (GimpOperationLchColorMode, gimp_operation_lch_color_mode,
+static gboolean gimp_operation_lch_color_process (GeglOperation       *operation,
+                                                  void                *in_buf,
+                                                  void                *aux_buf,
+                                                  void                *aux2_buf,
+                                                  void                *out_buf,
+                                                  glong                samples,
+                                                  const GeglRectangle *roi,
+                                                  gint                 level);
+
+
+G_DEFINE_TYPE (GimpOperationLchColor, gimp_operation_lch_color,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-#define parent_class gimp_operation_lch_color_mode_parent_class
+#define parent_class gimp_operation_lch_color_parent_class
 
 
 static void
-gimp_operation_lch_color_mode_class_init (GimpOperationLchColorModeClass *klass)
+gimp_operation_lch_color_class_init (GimpOperationLchColorClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -61,34 +61,34 @@ gimp_operation_lch_color_mode_class_init (GimpOperationLchColorModeClass *klass)
   operation_class->want_in_place = FALSE;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:lch-color-mode",
+                                 "name",        "gimp:lch-color",
                                  "description", "GIMP LCH color mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_lch_color_mode_process;
+  point_class->process = gimp_operation_lch_color_process;
 }
 
 static void
-gimp_operation_lch_color_mode_init (GimpOperationLchColorMode *self)
+gimp_operation_lch_color_init (GimpOperationLchColor *self)
 {
 }
 
 static gboolean
-gimp_operation_lch_color_mode_process (GeglOperation       *operation,
-                                       void                *in_buf,
-                                       void                *aux_buf,
-                                       void                *aux2_buf,
-                                       void                *out_buf,
-                                       glong                samples,
-                                       const GeglRectangle *roi,
-                                       gint                 level)
+gimp_operation_lch_color_process (GeglOperation       *operation,
+                                  void                *in_buf,
+                                  void                *aux_buf,
+                                  void                *aux2_buf,
+                                  void                *out_buf,
+                                  glong                samples,
+                                  const GeglRectangle *roi,
+                                  gint                 level)
 {
   GimpOperationPointLayerMode *gimp_op = GIMP_OPERATION_POINT_LAYER_MODE (operation);
   gfloat                       opacity = gimp_op->opacity;
   gboolean                     linear  = gimp_op->linear;
 
-  return (linear ? gimp_operation_lch_color_mode_process_pixels_linear :
-                   gimp_operation_lch_color_mode_process_pixels)
+  return (linear ? gimp_operation_lch_color_process_pixels_linear :
+                   gimp_operation_lch_color_process_pixels)
     (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
@@ -161,14 +161,14 @@ color_post_process (const gfloat *in,
 }
 
 gboolean
-gimp_operation_lch_color_mode_process_pixels_linear (gfloat              *in,
-                                                     gfloat              *layer,
-                                                     gfloat              *mask,
-                                                     gfloat              *out,
-                                                     gfloat               opacity,
-                                                     glong                samples,
-                                                     const GeglRectangle *roi,
-                                                     gint                 level)
+gimp_operation_lch_color_process_pixels_linear (gfloat              *in,
+                                                gfloat              *layer,
+                                                gfloat              *mask,
+                                                gfloat              *out,
+                                                gfloat               opacity,
+                                                glong                samples,
+                                                const GeglRectangle *roi,
+                                                gint                 level)
 {
   color_pre_process (babl_format ("RGBA float"), in, layer, out, samples);
   color_post_process (in, layer, mask, out, opacity, samples);
@@ -177,14 +177,14 @@ gimp_operation_lch_color_mode_process_pixels_linear (gfloat              *in,
 }
 
 gboolean
-gimp_operation_lch_color_mode_process_pixels (gfloat              *in,
-                                              gfloat              *layer,
-                                              gfloat              *mask,
-                                              gfloat              *out,
-                                              gfloat               opacity,
-                                              glong                samples,
-                                              const GeglRectangle *roi,
-                                              gint                 level)
+gimp_operation_lch_color_process_pixels (gfloat              *in,
+                                         gfloat              *layer,
+                                         gfloat              *mask,
+                                         gfloat              *out,
+                                         gfloat               opacity,
+                                         glong                samples,
+                                         const GeglRectangle *roi,
+                                         gint                 level)
 {
   color_pre_process (babl_format ("R'G'B'A float"), in, layer, out, samples);
   color_post_process (in, layer, mask, out, opacity, samples);

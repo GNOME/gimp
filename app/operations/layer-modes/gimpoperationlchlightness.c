@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlchlightnessmode.c
+ * gimpoperationlchlightness.c
  * Copyright (C) 2015 Elle Stone <ellestone@ninedegreesbelow.com>
  *                    Massimo Valentini <mvalentini@src.gnome.org>
  *                    Thomas Manni <thomas.manni@free.fr>
@@ -28,28 +28,28 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationlchlightnessmode.h"
+#include "gimpoperationlchlightness.h"
 
 
-static gboolean gimp_operation_lch_lightness_mode_process (GeglOperation       *operation,
-                                                           void                *in_buf,
-                                                           void                *aux_buf,
-                                                           void                *aux2_buf,
-                                                           void                *out_buf,
-                                                           glong                samples,
-                                                           const GeglRectangle *roi,
-                                                           gint                 level);
+static gboolean gimp_operation_lch_lightness_process (GeglOperation       *operation,
+                                                      void                *in_buf,
+                                                      void                *aux_buf,
+                                                      void                *aux2_buf,
+                                                      void                *out_buf,
+                                                      glong                samples,
+                                                      const GeglRectangle *roi,
+                                                      gint                 level);
 
-G_DEFINE_TYPE (GimpOperationLchLightnessMode, gimp_operation_lch_lightness_mode,
+G_DEFINE_TYPE (GimpOperationLchLightness, gimp_operation_lch_lightness,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-#define parent_class gimp_operation_lch_lightness_mode_parent_class
+#define parent_class gimp_operation_lch_lightness_parent_class
 
 
 static void
-gimp_operation_lch_lightness_mode_class_init (GimpOperationLchLightnessModeClass *klass)
+gimp_operation_lch_lightness_class_init (GimpOperationLchLightnessClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -60,34 +60,34 @@ gimp_operation_lch_lightness_mode_class_init (GimpOperationLchLightnessModeClass
   operation_class->want_in_place = FALSE;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:lch-lightness-mode",
+                                 "name",        "gimp:lch-lightness",
                                  "description", "GIMP LCH lightness mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_lch_lightness_mode_process;
+  point_class->process = gimp_operation_lch_lightness_process;
 }
 
 static void
-gimp_operation_lch_lightness_mode_init (GimpOperationLchLightnessMode *self)
+gimp_operation_lch_lightness_init (GimpOperationLchLightness *self)
 {
 }
 
 static gboolean
-gimp_operation_lch_lightness_mode_process (GeglOperation       *operation,
-                                           void                *in_buf,
-                                           void                *aux_buf,
-                                           void                *aux2_buf,
-                                           void                *out_buf,
-                                           glong                samples,
-                                           const GeglRectangle *roi,
-                                           gint                 level)
+gimp_operation_lch_lightness_process (GeglOperation       *operation,
+                                      void                *in_buf,
+                                      void                *aux_buf,
+                                      void                *aux2_buf,
+                                      void                *out_buf,
+                                      glong                samples,
+                                      const GeglRectangle *roi,
+                                      gint                 level)
 {
   GimpOperationPointLayerMode *gimp_op = GIMP_OPERATION_POINT_LAYER_MODE (operation);
   gfloat                       opacity = gimp_op->opacity;
   gboolean                     linear  = gimp_op->linear;
 
-  return (linear ? gimp_operation_lch_lightness_mode_process_pixels_linear :
-                   gimp_operation_lch_lightness_mode_process_pixels)
+  return (linear ? gimp_operation_lch_lightness_process_pixels_linear :
+                   gimp_operation_lch_lightness_process_pixels)
     (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
@@ -155,14 +155,14 @@ lightness_post_process (const gfloat *in,
 }
 
 gboolean
-gimp_operation_lch_lightness_mode_process_pixels_linear (gfloat              *in,
-                                                         gfloat              *layer,
-                                                         gfloat              *mask,
-                                                         gfloat              *out,
-                                                         gfloat               opacity,
-                                                         glong                samples,
-                                                         const GeglRectangle *roi,
-                                                         gint                 level)
+gimp_operation_lch_lightness_process_pixels_linear (gfloat              *in,
+                                                    gfloat              *layer,
+                                                    gfloat              *mask,
+                                                    gfloat              *out,
+                                                    gfloat               opacity,
+                                                    glong                samples,
+                                                    const GeglRectangle *roi,
+                                                    gint                 level)
 {
   lightness_pre_process (babl_format ("RGBA float"), in, layer, out, samples);
   lightness_post_process (in, layer, mask, out, opacity, samples);
@@ -171,14 +171,14 @@ gimp_operation_lch_lightness_mode_process_pixels_linear (gfloat              *in
 }
 
 gboolean
-gimp_operation_lch_lightness_mode_process_pixels (gfloat              *in,
-                                                  gfloat              *layer,
-                                                  gfloat              *mask,
-                                                  gfloat              *out,
-                                                  gfloat               opacity,
-                                                  glong                samples,
-                                                  const GeglRectangle *roi,
-                                                  gint                 level)
+gimp_operation_lch_lightness_process_pixels (gfloat              *in,
+                                             gfloat              *layer,
+                                             gfloat              *mask,
+                                             gfloat              *out,
+                                             gfloat               opacity,
+                                             glong                samples,
+                                             const GeglRectangle *roi,
+                                             gint                 level)
 {
   lightness_pre_process (babl_format ("R'G'B'A float"), in, layer, out, samples);
   lightness_post_process (in, layer, mask, out, opacity, samples);

@@ -93,10 +93,10 @@
 #include "gimpoperationgrainextractmode.h"
 #include "gimpoperationgrainmergemode.h"
 #include "gimpoperationcolorerasemode.h"
-#include "gimpoperationlchhuemode.h"
-#include "gimpoperationlchchromamode.h"
-#include "gimpoperationlchcolormode.h"
-#include "gimpoperationlchlightnessmode.h"
+#include "layer-modes/gimpoperationlchhue.h"
+#include "layer-modes/gimpoperationlchchroma.h"
+#include "layer-modes/gimpoperationlchcolor.h"
+#include "layer-modes/gimpoperationlchlightness.h"
 #include "gimpoperationerasemode.h"
 #include "gimpoperationreplacemode.h"
 #include "gimpoperationantierasemode.h"
@@ -161,10 +161,10 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_ERASE_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_HUE_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_CHROMA_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_COLOR_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_LIGHTNESS_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_HUE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_CHROMA);
+  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_COLOR);
+  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_LIGHTNESS);
   g_type_class_ref (GIMP_TYPE_OPERATION_ERASE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE_MODE);

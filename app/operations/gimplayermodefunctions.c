@@ -53,10 +53,10 @@
 #include "gimpoperationgrainextractmode.h"
 #include "gimpoperationgrainmergemode.h"
 #include "gimpoperationcolorerasemode.h"
-#include "gimpoperationlchhuemode.h"
-#include "gimpoperationlchchromamode.h"
-#include "gimpoperationlchcolormode.h"
-#include "gimpoperationlchlightnessmode.h"
+#include "layer-modes/gimpoperationlchhue.h"
+#include "layer-modes/gimpoperationlchchroma.h"
+#include "layer-modes/gimpoperationlchcolor.h"
+#include "layer-modes/gimpoperationlchlightness.h"
 #include "gimpoperationerasemode.h"
 #include "gimpoperationreplacemode.h"
 #include "gimpoperationantierasemode.h"
@@ -184,26 +184,26 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
 
     case GIMP_LAYER_MODE_LCH_HUE:
       func = linear_mode ?
-             gimp_operation_lch_hue_mode_process_pixels_linear :
-             gimp_operation_lch_hue_mode_process_pixels;
+             gimp_operation_lch_hue_process_pixels_linear :
+             gimp_operation_lch_hue_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LCH_CHROMA:
       func = linear_mode ?
-             gimp_operation_lch_chroma_mode_process_pixels_linear :
-             gimp_operation_lch_chroma_mode_process_pixels;
+             gimp_operation_lch_chroma_process_pixels_linear :
+             gimp_operation_lch_chroma_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LCH_COLOR:
       func = linear_mode ?
-             gimp_operation_lch_color_mode_process_pixels_linear :
-             gimp_operation_lch_color_mode_process_pixels;
+             gimp_operation_lch_color_process_pixels_linear :
+             gimp_operation_lch_color_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
       func = linear_mode ?
-             gimp_operation_lch_lightness_mode_process_pixels_linear :
-             gimp_operation_lch_lightness_mode_process_pixels;
+             gimp_operation_lch_lightness_process_pixels_linear :
+             gimp_operation_lch_lightness_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_ERASE:

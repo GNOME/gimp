@@ -264,19 +264,19 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_LCH_HUE:
-      operation = "gimp:lch-hue-mode";
+      operation = "gimp:lch-hue";
       break;
 
     case GIMP_LAYER_MODE_LCH_CHROMA:
-      operation = "gimp:lch-chroma-mode";
+      operation = "gimp:lch-chroma";
       break;
 
     case GIMP_LAYER_MODE_LCH_COLOR:
-      operation = "gimp:lch-color-mode";
+      operation = "gimp:lch-color";
       break;
 
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-      operation = "gimp:lch-lightness-mode";
+      operation = "gimp:lch-lightness";
       break;
 
     case GIMP_LAYER_MODE_ERASE:

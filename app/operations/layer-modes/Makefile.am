@@ -29,7 +29,15 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationscreen.c  		\
 	gimpoperationscreen.h           \
 	gimpoperationdifference.c	\
-	gimpoperationdifference.h
+	gimpoperationdifference.h	\
+	gimpoperationlchhue.c		\
+	gimpoperationlchhue.h		\
+	gimpoperationlchchroma.c	\
+	gimpoperationlchchroma.h	\
+	gimpoperationlchcolor.c		\
+	gimpoperationlchcolor.h		\
+	gimpoperationlchlightness.c	\
+	gimpoperationlchlightness.h
 
 libapplayermodes_sse2_a_sources = \
 	gimpoperationnormal-sse2.c

@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlchhuemode.c
+ * gimpoperationlchhue.c
  * Copyright (C) 2015 Elle Stone <ellestone@ninedegreesbelow.com>
  *                    Massimo Valentini <mvalentini@src.gnome.org>
  *                    Thomas Manni <thomas.manni@free.fr>
@@ -28,29 +28,29 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationlchhuemode.h"
-
-
-static gboolean gimp_operation_lch_hue_mode_process (GeglOperation       *operation,
-                                                     void                *in_buf,
-                                                     void                *aux_buf,
-                                                     void                *aux2_buf,
-                                                     void                *out_buf,
-                                                     glong                samples,
-                                                     const GeglRectangle *roi,
-                                                     gint                 level);
+#include "gimpoperationlchhue.h"
 
 
-G_DEFINE_TYPE (GimpOperationLchHueMode, gimp_operation_lch_hue_mode,
+static gboolean gimp_operation_lch_hue_process (GeglOperation       *operation,
+                                                void                *in_buf,
+                                                void                *aux_buf,
+                                                void                *aux2_buf,
+                                                void                *out_buf,
+                                                glong                samples,
+                                                const GeglRectangle *roi,
+                                                gint                 level);
+
+
+G_DEFINE_TYPE (GimpOperationLchHue, gimp_operation_lch_hue,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-#define parent_class gimp_operation_lch_hue_mode_parent_class
+#define parent_class gimp_operation_lch_hue_parent_class
 
 
 static void
-gimp_operation_lch_hue_mode_class_init (GimpOperationLchHueModeClass *klass)
+gimp_operation_lch_hue_class_init (GimpOperationLchHueClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -61,34 +61,34 @@ gimp_operation_lch_hue_mode_class_init (GimpOperationLchHueModeClass *klass)
   operation_class->want_in_place = FALSE;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:lch-hue-mode",
+                                 "name",        "gimp:lch-hue",
                                  "description", "GIMP LCH hue mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_lch_hue_mode_process;
+  point_class->process = gimp_operation_lch_hue_process;
 }
 
 static void
-gimp_operation_lch_hue_mode_init (GimpOperationLchHueMode *self)
+gimp_operation_lch_hue_init (GimpOperationLchHue *self)
 {
 }
 
 static gboolean
-gimp_operation_lch_hue_mode_process (GeglOperation       *operation,
-                                     void                *in_buf,
-                                     void                *aux_buf,
-                                     void                *aux2_buf,
-                                     void                *out_buf,
-                                     glong                samples,
-                                     const GeglRectangle *roi,
-                                     gint                 level)
+gimp_operation_lch_hue_process (GeglOperation       *operation,
+                                void                *in_buf,
+                                void                *aux_buf,
+                                void                *aux2_buf,
+                                void                *out_buf,
+                                glong                samples,
+                                const GeglRectangle *roi,
+                                gint                 level)
 {
   GimpOperationPointLayerMode *gimp_op = GIMP_OPERATION_POINT_LAYER_MODE (operation);
   gfloat                       opacity = gimp_op->opacity;
   gboolean                     linear  = gimp_op->linear;
 
-  return (linear ? gimp_operation_lch_hue_mode_process_pixels_linear :
-                   gimp_operation_lch_hue_mode_process_pixels)
+  return (linear ? gimp_operation_lch_hue_process_pixels_linear :
+                   gimp_operation_lch_hue_process_pixels)
     (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
@@ -172,14 +172,14 @@ hue_post_process (const gfloat *in,
 }
 
 gboolean
-gimp_operation_lch_hue_mode_process_pixels_linear (gfloat              *in,
-                                                   gfloat              *layer,
-                                                   gfloat              *mask,
-                                                   gfloat              *out,
-                                                   gfloat               opacity,
-                                                   glong                samples,
-                                                   const GeglRectangle *roi,
-                                                   gint                 level)
+gimp_operation_lch_hue_process_pixels_linear (gfloat              *in,
+                                              gfloat              *layer,
+                                              gfloat              *mask,
+                                              gfloat              *out,
+                                              gfloat               opacity,
+                                              glong                samples,
+                                              const GeglRectangle *roi,
+                                              gint                 level)
 {
   hue_pre_process (babl_format ("RGBA float"), in, layer, out, samples);
   hue_post_process (in, layer, mask, out, opacity, samples);
@@ -188,14 +188,14 @@ gimp_operation_lch_hue_mode_process_pixels_linear (gfloat              *in,
 }
 
 gboolean
-gimp_operation_lch_hue_mode_process_pixels (gfloat              *in,
-                                            gfloat              *layer,
-                                            gfloat              *mask,
-                                            gfloat              *out,
-                                            gfloat               opacity,
-                                            glong                samples,
-                                            const GeglRectangle *roi,
-                                            gint                 level)
+gimp_operation_lch_hue_process_pixels (gfloat              *in,
+                                       gfloat              *layer,
+                                       gfloat              *mask,
+                                       gfloat              *out,
+                                       gfloat               opacity,
+                                       glong                samples,
+                                       const GeglRectangle *roi,
+                                       gint                 level)
 {
   hue_pre_process (babl_format ("R'G'B'A float"), in, layer, out, samples);
   hue_post_process (in, layer, mask, out, opacity, samples);

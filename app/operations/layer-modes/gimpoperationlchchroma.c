@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlchchromamode.c
+ * gimpoperationlchchroma.c
  * Copyright (C) 2015 Elle Stone <ellestone@ninedegreesbelow.com>
  *                    Massimo Valentini <mvalentini@src.gnome.org>
  *                    Thomas Manni <thomas.manni@free.fr>
@@ -28,29 +28,29 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationlchchromamode.h"
-
-
-static gboolean gimp_operation_lch_chroma_mode_process (GeglOperation       *operation,
-                                                        void                *in_buf,
-                                                        void                *aux_buf,
-                                                        void                *aux2_buf,
-                                                        void                *out_buf,
-                                                        glong                samples,
-                                                        const GeglRectangle *roi,
-                                                        gint                 level);
+#include "gimpoperationlchchroma.h"
 
 
-G_DEFINE_TYPE (GimpOperationLchChromaMode, gimp_operation_lch_chroma_mode,
+static gboolean gimp_operation_lch_chroma_process (GeglOperation       *operation,
+                                                   void                *in_buf,
+                                                   void                *aux_buf,
+                                                   void                *aux2_buf,
+                                                   void                *out_buf,
+                                                   glong                samples,
+                                                   const GeglRectangle *roi,
+                                                   gint                 level);
+
+
+G_DEFINE_TYPE (GimpOperationLchChroma, gimp_operation_lch_chroma,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-#define parent_class gimp_operation_lch_chroma_mode_parent_class
+#define parent_class gimp_operation_lch_chroma_parent_class
 
 
 static void
-gimp_operation_lch_chroma_mode_class_init (GimpOperationLchChromaModeClass *klass)
+gimp_operation_lch_chroma_class_init (GimpOperationLchChromaClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -61,34 +61,34 @@ gimp_operation_lch_chroma_mode_class_init (GimpOperationLchChromaModeClass *klas
   operation_class->want_in_place = FALSE;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:lch-chroma-mode",
+                                 "name",        "gimp:lch-chroma",
                                  "description", "GIMP LCH chroma mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_lch_chroma_mode_process;
+  point_class->process = gimp_operation_lch_chroma_process;
 }
 
 static void
-gimp_operation_lch_chroma_mode_init (GimpOperationLchChromaMode *self)
+gimp_operation_lch_chroma_init (GimpOperationLchChroma *self)
 {
 }
 
 static gboolean
-gimp_operation_lch_chroma_mode_process (GeglOperation       *operation,
-                                        void                *in_buf,
-                                        void                *aux_buf,
-                                        void                *aux2_buf,
-                                        void                *out_buf,
-                                        glong                samples,
-                                        const GeglRectangle *roi,
-                                        gint                 level)
+gimp_operation_lch_chroma_process (GeglOperation       *operation,
+                                   void                *in_buf,
+                                   void                *aux_buf,
+                                   void                *aux2_buf,
+                                   void                *out_buf,
+                                   glong                samples,
+                                   const GeglRectangle *roi,
+                                   gint                 level)
 {
   GimpOperationPointLayerMode *gimp_op = GIMP_OPERATION_POINT_LAYER_MODE (operation);
   gfloat                       opacity = gimp_op->opacity;
   gboolean                     linear  = gimp_op->linear;
 
-  return (linear ? gimp_operation_lch_chroma_mode_process_pixels_linear :
-                   gimp_operation_lch_chroma_mode_process_pixels)
+  return (linear ? gimp_operation_lch_chroma_process_pixels_linear :
+                   gimp_operation_lch_chroma_process_pixels)
     (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
@@ -172,14 +172,14 @@ chroma_post_process (const gfloat *in,
 }
 
 gboolean
-gimp_operation_lch_chroma_mode_process_pixels_linear (gfloat              *in,
-                                                      gfloat              *layer,
-                                                      gfloat              *mask,
-                                                      gfloat              *out,
-                                                      gfloat               opacity,
-                                                      glong                samples,
-                                                      const GeglRectangle *roi,
-                                                      gint                 level)
+gimp_operation_lch_chroma_process_pixels_linear (gfloat              *in,
+                                                 gfloat              *layer,
+                                                 gfloat              *mask,
+                                                 gfloat              *out,
+                                                 gfloat               opacity,
+                                                 glong                samples,
+                                                 const GeglRectangle *roi,
+                                                 gint                 level)
 {
   chroma_pre_process (babl_format ("RGBA float"), in, layer, out, samples);
   chroma_post_process (in, layer, mask, out, opacity, samples);
@@ -188,14 +188,14 @@ gimp_operation_lch_chroma_mode_process_pixels_linear (gfloat              *in,
 }
 
 gboolean
-gimp_operation_lch_chroma_mode_process_pixels (gfloat              *in,
-                                               gfloat              *layer,
-                                               gfloat              *mask,
-                                               gfloat              *out,
-                                               gfloat               opacity,
-                                               glong                samples,
-                                               const GeglRectangle *roi,
-                                               gint                 level)
+gimp_operation_lch_chroma_process_pixels (gfloat              *in,
+                                          gfloat              *layer,
+                                          gfloat              *mask,
+                                          gfloat              *out,
+                                          gfloat               opacity,
+                                          glong                samples,
+                                          const GeglRectangle *roi,
+                                          gint                 level)
 {
   chroma_pre_process (babl_format ("R'G'B'A float"), in, layer, out, samples);
   chroma_post_process (in, layer, mask, out, opacity, samples);
