@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_MULTIPLY_LEGACY_H__
 
 
-#include "operations/gimpoperationpointlayermode.h"
+#include "operations/layer-modes/gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_MULTIPLY_LEGACY            (gimp_operation_multiply_legacy_get_type ())

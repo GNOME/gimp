@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_OVERLAY_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_OVERLAY            (gimp_operation_overlay_get_type ())

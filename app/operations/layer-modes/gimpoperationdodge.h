@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DODGE_H__
 
 
-#include "operations/gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DODGE            (gimp_operation_dodge_get_type ())

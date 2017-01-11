@@ -95,7 +95,5 @@ libappoperations_a_SOURCES = \
 	gimpoperationthreshold.c		\
 	gimpoperationthreshold.h		\
 	\
-	gimpoperationpointlayermode.c		\
-	gimpoperationpointlayermode.h		\
 	gimplayermodefunctions.c		\
 	gimplayermodefunctions.h

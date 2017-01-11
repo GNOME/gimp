@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdarken_onlymode.h
+ * gimpoperationdarkenonlylegacy.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_DARKEN_ONLY_LEGACY_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "operations/layer-modes/gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DARKEN_ONLY_LEGACY            (gimp_operation_darken_only_legacy_get_type ())
@@ -47,7 +47,7 @@ struct _GimpOperationDarkenOnlyLegacyClass
 };
 
 
-GType   gimp_operation_darken_only_legacy_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_darken_only_legacy_get_type       (void) G_GNUC_CONST;
 
 gboolean gimp_operation_darken_only_legacy_process_pixels (gfloat              *in,
                                                            gfloat              *layer,
@@ -57,5 +57,6 @@ gboolean gimp_operation_darken_only_legacy_process_pixels (gfloat              *
                                                            glong                samples,
                                                            const GeglRectangle *roi,
                                                            gint                 level);
+
 
 #endif /* __GIMP_OPERATION_DARKEN_ONLY_LEGACY_H__ */

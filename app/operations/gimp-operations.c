@@ -65,7 +65,6 @@
 #include "gimphuesaturationconfig.h"
 #include "gimplevelsconfig.h"
 
-#include "gimpoperationpointlayermode.h"
 #include "layer-modes/gimpoperationnormal.h"
 #include "layer-modes/gimpoperationdissolve.h"
 #include "layer-modes/gimpoperationbehind.h"
@@ -147,7 +146,6 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_POSTERIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_THRESHOLD);
 
-  g_type_class_ref (GIMP_TYPE_OPERATION_POINT_LAYER_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_NORMAL);
   g_type_class_ref (GIMP_TYPE_OPERATION_DISSOLVE);
   g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND);

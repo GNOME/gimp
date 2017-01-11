@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationhuemode.h
+ * gimpoperationhsvhue.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *               2017 Øyvind Kolås <pippin@gimp.org>
  *
@@ -19,11 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_HUE_H__
-#define __GIMP_OPERATION_HUE_H__
+#ifndef __GIMP_OPERATION_HSV_HUE_H__
+#define __GIMP_OPERATION_HSV_HUE_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_HSV_HUE        (gimp_operation_hsv_hue_get_type ())
@@ -48,7 +48,7 @@ struct _GimpOperationHsvHueClass
 };
 
 
-GType   gimp_operation_hsv_hue_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_hsv_hue_get_type       (void) G_GNUC_CONST;
 
 gboolean gimp_operation_hsv_hue_process_pixels (gfloat              *in,
                                                 gfloat              *layer,
@@ -59,4 +59,5 @@ gboolean gimp_operation_hsv_hue_process_pixels (gfloat              *in,
                                                 const GeglRectangle *roi,
                                                 gint                 level);
 
-#endif /* __GIMP_OPERATION_HUE_H__ */
+
+#endif /* __GIMP_OPERATION_HSV_HUE_H__ */

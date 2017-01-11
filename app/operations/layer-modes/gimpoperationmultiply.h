@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_MULTIPLY_H__
 
 
-#include "operations/gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_MULTIPLY            (gimp_operation_multiply_get_type ())

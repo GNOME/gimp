@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_DISSOLVE_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DISSOLVE            (gimp_operation_dissolve_get_type ())

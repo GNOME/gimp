@@ -24,7 +24,7 @@
 #define __GIMP_OPERATION_LCH_COLOR_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_LCH_COLOR            (gimp_operation_lch_color_get_type ())

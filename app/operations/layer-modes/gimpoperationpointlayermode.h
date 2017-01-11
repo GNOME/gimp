@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlayermode.h
+ * gimpoperationpointlayermode.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,9 @@
 #ifndef __GIMP_OPERATION_POINT_LAYER_MODE_H__
 #define __GIMP_OPERATION_POINT_LAYER_MODE_H__
 
+
 #include <gegl-plugin.h>
+
 
 #define GIMP_TYPE_OPERATION_POINT_LAYER_MODE            (gimp_operation_point_layer_mode_get_type ())
 #define GIMP_OPERATION_POINT_LAYER_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_POINT_LAYER_MODE, GimpOperationPointLayerMode))

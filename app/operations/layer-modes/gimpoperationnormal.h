@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_NORMAL_H__
 
 
-#include "operations/gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_NORMAL            (gimp_operation_normal_get_type ())
@@ -47,7 +47,7 @@ struct _GimpOperationNormalClass
 };
 
 
-GType   gimp_operation_normal_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_normal_get_type            (void) G_GNUC_CONST;
 
 extern GimpLayerModeFunction gimp_operation_normal_process_pixels;
 
@@ -77,5 +77,6 @@ gboolean gimp_operation_normal_process_pixels_sse4 (gfloat              *in,
                                                     glong                samples,
                                                     const GeglRectangle *roi,
                                                     gint                 level);
+
 
 #endif /* __GIMP_OPERATION_NORMAL_H__ */

@@ -24,7 +24,7 @@
 #define __GIMP_OPERATION_LCH_HUE_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_LCH_HUE            (gimp_operation_lch_hue_get_type ())
@@ -68,5 +68,6 @@ gboolean gimp_operation_lch_hue_process_pixels        (gfloat              *in,
                                                        glong                samples,
                                                        const GeglRectangle *roi,
                                                        gint                 level);
+
 
 #endif /* __GIMP_OPERATION_LCH_HUE_H__ */

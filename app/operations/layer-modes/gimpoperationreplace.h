@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_REPLACE_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_REPLACE            (gimp_operation_replace_get_type ())

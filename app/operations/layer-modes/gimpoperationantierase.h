@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_ANTI_ERASE_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_ANTI_ERASE            (gimp_operation_anti_erase_get_type ())

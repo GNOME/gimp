@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdodgemode.h
+ * gimpoperationdodgelegacy.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_DODGE_LEGACY_H__
 
 
-#include "operations/gimpoperationpointlayermode.h"
+#include "operations/layer-modes/gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DODGE_LEGACY            (gimp_operation_dodge_legacy_get_type ())

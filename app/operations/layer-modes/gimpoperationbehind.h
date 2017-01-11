@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_BEHIND_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_BEHIND            (gimp_operation_behind_get_type ())

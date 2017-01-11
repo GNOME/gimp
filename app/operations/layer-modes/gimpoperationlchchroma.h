@@ -24,7 +24,7 @@
 #define __GIMP_OPERATION_LCH_CHROMA_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_LCH_CHROMA            (gimp_operation_lch_chroma_get_type ())

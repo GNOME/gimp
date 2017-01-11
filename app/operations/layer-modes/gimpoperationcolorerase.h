@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcolor_erase.h
+ * gimpoperationcolorerase.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_COLOR_ERASE_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_COLOR_ERASE            (gimp_operation_color_erase_get_type ())

@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationscreenmode.h
+ * gimpoperationscreen.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_SCREEN_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_SCREEN            (gimp_operation_screen_get_type ())
@@ -47,7 +47,7 @@ struct _GimpOperationScreenClass
 };
 
 
-GType   gimp_operation_screen_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_screen_get_type       (void) G_GNUC_CONST;
 
 gboolean gimp_operation_screen_process_pixels (gfloat              *in,
                                                gfloat              *layer,

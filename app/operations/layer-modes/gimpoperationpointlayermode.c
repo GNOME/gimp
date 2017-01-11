@@ -27,7 +27,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
 #include "gimpoperationpointlayermode.h"
 

@@ -24,7 +24,7 @@
 #define __GIMP_OPERATION_LCH_LIGHTNESS_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_LCH_LIGHTNESS            (gimp_operation_lch_lightness_get_type ())

@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DIFFERENCE_H__
 
 
-#include "../gimpoperationpointlayermode.h"
+#include "gimpoperationpointlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DIFFERENCE            (gimp_operation_difference_get_type ())
@@ -48,16 +48,17 @@ struct _GimpOperationDifferenceClass
 };
 
 
-GType   gimp_operation_difference_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_difference_get_type       (void) G_GNUC_CONST;
 
 
 gboolean gimp_operation_difference_process_pixels (gfloat              *in,
-                                                        gfloat              *layer,
-                                                        gfloat              *mask,
-                                                        gfloat              *out,
-                                                        gfloat               opacity,
-                                                        glong                samples,
-                                                        const GeglRectangle *roi,
-                                                        gint                 level);
+                                                   gfloat              *layer,
+                                                   gfloat              *mask,
+                                                   gfloat              *out,
+                                                   gfloat               opacity,
+                                                   glong                samples,
+                                                   const GeglRectangle *roi,
+                                                   gint                 level);
+
 
 #endif /* __GIMP_OPERATION_DIFFERENCE_H__ */
