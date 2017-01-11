@@ -88,24 +88,22 @@ gimp_operation_replace_mode_process_pixels (gfloat              *in,
                                             const GeglRectangle *roi,
                                             gint                 level)
 {
+  const gboolean has_mask = mask != NULL;
+
   while (samples--)
     {
-      gint   b;
+      gfloat opacity_value = opacity;
       gfloat new_alpha;
+      gint   b;
 
-      if (mask)
-        new_alpha = (layer[ALPHA] - in[ALPHA]) * (*mask) * opacity + in[ALPHA];
-      else
-        new_alpha = (layer[ALPHA] - in[ALPHA]) * opacity + in[ALPHA];
+      if (has_mask)
+        opacity_value *= *mask;
+
+      new_alpha = (layer[ALPHA] - in[ALPHA]) * opacity_value + in[ALPHA];
 
       if (new_alpha)
         {
-          gfloat ratio;
-
-          if (mask)
-            ratio = *mask * opacity * layer[ALPHA] / new_alpha;
-          else
-            ratio = opacity * layer[ALPHA] / new_alpha;
+          gfloat ratio = opacity_value * layer[ALPHA] / new_alpha;
 
           for (b = RED; b < ALPHA; b++)
             {
@@ -135,8 +133,8 @@ gimp_operation_replace_mode_process_pixels (gfloat              *in,
       layer += 4;
       out   += 4;
 
-      if (mask)
-        mask += 1;
+      if (has_mask)
+        mask++;
     }
 
   return TRUE;
