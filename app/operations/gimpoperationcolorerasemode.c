@@ -114,7 +114,7 @@ gimp_operation_color_erase_mode_process_pixels (gfloat              *in,
         alpha.r = color.r;
       else if (GEGL_FLOAT_EQUAL (color.r, bgcolor.r))
         alpha.r = 0.0;
-      else if ( color.r > bgcolor.r )
+      else if (color.r > bgcolor.r)
         alpha.r = (color.r - bgcolor.r) / (1.0 - bgcolor.r);
       else
         alpha.r = (bgcolor.r - color.r) / bgcolor.r;
@@ -137,9 +137,9 @@ gimp_operation_color_erase_mode_process_pixels (gfloat              *in,
       else
         alpha.b = (bgcolor.b - color.b) / (bgcolor.b);
 
-      if ( alpha.r > alpha.g )
+      if (alpha.r > alpha.g)
         {
-          if ( alpha.r > alpha.b )
+          if (alpha.r > alpha.b)
             {
               color.a = alpha.r;
             }
@@ -148,7 +148,7 @@ gimp_operation_color_erase_mode_process_pixels (gfloat              *in,
               color.a = alpha.b;
             }
         }
-      else if ( alpha.g > alpha.b )
+      else if (alpha.g > alpha.b)
         {
           color.a = alpha.g;
         }
@@ -184,4 +184,3 @@ gimp_operation_color_erase_mode_process_pixels (gfloat              *in,
 
   return TRUE;
 }
-
