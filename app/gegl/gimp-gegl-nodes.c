@@ -188,7 +188,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
-      operation = "gimp:difference-legacyy";
+      operation = "gimp:difference-legacy";
       break;
 
     case GIMP_LAYER_MODE_ADDITION:
