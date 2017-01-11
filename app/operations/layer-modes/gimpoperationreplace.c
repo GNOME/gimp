@@ -106,20 +106,7 @@ gimp_operation_replace_process_pixels (gfloat              *in,
           gfloat ratio = opacity_value * layer[ALPHA] / new_alpha;
 
           for (b = RED; b < ALPHA; b++)
-            {
-              gfloat t;
-
-              if (layer[b] > in[b])
-                {
-                  t = (layer[b] - in[b]) * ratio;
-                  out[b] = in[b] + t;
-                }
-              else
-                {
-                  t = (in[b] - layer[b]) * ratio;
-                  out[b] = in[b] - t;
-                }
-            }
+            out[b] = (layer[b] - in[b]) * ratio + in[b];
         }
       else
         {
