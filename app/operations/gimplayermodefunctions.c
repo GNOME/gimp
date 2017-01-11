@@ -58,8 +58,10 @@
 #include "layer-modes-legacy/gimpoperationdodgelegacy.h"
 #include "layer-modes/gimpoperationburn.h"
 #include "layer-modes-legacy/gimpoperationburnlegacy.h"
-#include "gimpoperationhardlightmode.h"
-#include "gimpoperationsoftlightmode.h"
+#include "layer-modes/gimpoperationhardlight.h"
+#include "layer-modes-legacy/gimpoperationhardlightlegacy.h"
+#include "layer-modes/gimpoperationsoftlight.h"
+#include "layer-modes-legacy/gimpoperationsoftlightlegacy.h"
 #include "gimpoperationgrainextractmode.h"
 #include "gimpoperationgrainmergemode.h"
 #include "gimpoperationcolorerasemode.h"
@@ -208,12 +210,20 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_burn_process_pixels;
       break;
 
+    case GIMP_LAYER_MODE_HARDLIGHT:
+      func = gimp_operation_hardlight_process_pixels;
+      break;
+
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
-      func = gimp_operation_hardlight_mode_process_pixels;
+      func = gimp_operation_hardlight_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_SOFTLIGHT:
+      func = gimp_operation_softlight_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
-      func = gimp_operation_softlight_mode_process_pixels;
+      func = gimp_operation_softlight_legacy_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:

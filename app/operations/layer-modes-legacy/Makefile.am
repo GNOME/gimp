@@ -42,4 +42,9 @@ libapplayermodeslegacy_a_SOURCES = \
 	gimpoperationdividelegacy.c     \
 	gimpoperationdividelegacy.h     \
 	gimpoperationburnlegacy.c   	\
-	gimpoperationburnlegacy.h 
+	gimpoperationburnlegacy.h       \
+	gimpoperationhardlightlegacy.c  \
+	gimpoperationhardlightlegacy.h  \
+	gimpoperationsoftlightlegacy.c  \
+	gimpoperationsoftlightlegacy.h
+

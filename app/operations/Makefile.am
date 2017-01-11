@@ -99,10 +99,6 @@ libappoperations_a_SOURCES = \
 	gimpoperationpointlayermode.h		\
 	gimpoperationbehindmode.c       	\
 	gimpoperationbehindmode.h       	\
-	gimpoperationhardlightmode.c    	\
-	gimpoperationhardlightmode.h    	\
-	gimpoperationsoftlightmode.c    	\
-	gimpoperationsoftlightmode.h    	\
 	gimpoperationgrainextractmode.c 	\
 	gimpoperationgrainextractmode.h 	\
 	gimpoperationgrainmergemode.c   	\

@@ -279,12 +279,20 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:burn-legacy";
       break;
 
+    case GIMP_LAYER_MODE_HARDLIGHT:
+      operation = "gimp:hardlight";
+      break;
+
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
-      operation = "gimp:hardlight-mode";
+      operation = "gimp:hardlight-legacy";
+      break;
+
+    case GIMP_LAYER_MODE_SOFTLIGHT:
+      operation = "gimp:softlight";
       break;
 
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
-      operation = "gimp:softlight-mode";
+      operation = "gimp:softlight-legacy";
       break;
 
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:

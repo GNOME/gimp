@@ -172,8 +172,8 @@ typedef enum
   GIMP_LAYER_MODE_DIVIDE_LEGACY,          /*< desc="Divide (legacy)"      >*/
   GIMP_LAYER_MODE_DODGE_LEGACY,           /*< desc="Dodge (legacy)"       >*/
   GIMP_LAYER_MODE_BURN_LEGACY,            /*< desc="Burn (legacy)"        >*/
-  GIMP_LAYER_MODE_HARDLIGHT_LEGACY,       /*< desc="Hard light"           >*/
-  GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,       /*< desc="Soft light"           >*/
+  GIMP_LAYER_MODE_HARDLIGHT_LEGACY,       /*< desc="Hard light (legacy)"  >*/
+  GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,       /*< desc="Soft light (legacy)"  >*/
   GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,   /*< desc="Grain extract"        >*/
   GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,     /*< desc="Grain merge"          >*/
   GIMP_LAYER_MODE_COLOR_ERASE,            /*< desc="Color erase"          >*/
@@ -198,6 +198,8 @@ typedef enum
   GIMP_LAYER_MODE_HSV_VALUE,              /*< desc="Value (HSV)"          >*/
   GIMP_LAYER_MODE_DIVIDE,                 /*< desc="Divide"               >*/
   GIMP_LAYER_MODE_BURN,                   /*< desc="Burn"                 >*/
+  GIMP_LAYER_MODE_HARDLIGHT,              /*< desc="Hard light"           >*/
+  GIMP_LAYER_MODE_SOFTLIGHT,              /*< desc="Soft light"           >*/
 
   /* internal modes, not available to the PDB */
   GIMP_LAYER_MODE_ERASE      = 1000, /*< pdb-skip, desc="Erase"      >*/

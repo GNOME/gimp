@@ -64,7 +64,11 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationdivide.c       	\
 	gimpoperationdivide.h       	\
 	gimpoperationburn.c         	\
-	gimpoperationburn.h 
+	gimpoperationburn.h             \
+	gimpoperationhardlight.c    	\
+	gimpoperationhardlight.h    	\
+	gimpoperationsoftlight.c    	\
+	gimpoperationsoftlight.h
 
 libapplayermodes_sse2_a_sources = \
 	gimpoperationnormal-sse2.c
