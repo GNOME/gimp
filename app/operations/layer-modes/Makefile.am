@@ -20,6 +20,8 @@ noinst_LIBRARIES = \
 libapplayermodes_generic_a_sources = \
 	gimpoperationpointlayermode.c	\
 	gimpoperationpointlayermode.h	\
+	gimplayermodefunctions.c	\
+	gimplayermodefunctions.h	\
 	\
 	gimpoperationaddition.c		\
 	gimpoperationaddition.h		\

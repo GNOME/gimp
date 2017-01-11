@@ -23,8 +23,11 @@
 #include "paint-types.h"
 
 #include "core/gimptempbuf.h"
+
+#include "operations/layer-modes/gimplayermodefunctions.h"
+
 #include "gimppaintcore-loops.h"
-#include "operations/gimplayermodefunctions.h"
+
 
 void
 combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
