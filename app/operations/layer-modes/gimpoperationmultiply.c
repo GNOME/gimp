@@ -53,7 +53,7 @@ gimp_operation_multiply_class_init (GimpOperationMultiplyClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:multiply-mode",
+                                 "name",        "gimp:multiply",
                                  "description", "GIMP multiply mode operation",
                                  NULL);
 

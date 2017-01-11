@@ -255,8 +255,12 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:hsv-value-legacy";
       break;
 
+    case GIMP_LAYER_MODE_DIVIDE:
+      operation = "gimp:divide";
+      break;
+
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
-      operation = "gimp:divide-mode";
+      operation = "gimp:divide-legacy";
       break;
 
     case GIMP_LAYER_MODE_DODGE:
@@ -267,8 +271,12 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:dodge-legacy";
       break;
 
+    case GIMP_LAYER_MODE_BURN:
+      operation = "gimp:burn";
+      break;
+
     case GIMP_LAYER_MODE_BURN_LEGACY:
-      operation = "gimp:burn-mode";
+      operation = "gimp:burn-legacy";
       break;
 
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
@@ -374,9 +382,11 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
+    case GIMP_LAYER_MODE_DIVIDE:
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
     case GIMP_LAYER_MODE_DODGE:
     case GIMP_LAYER_MODE_DODGE_LEGACY:
+    case GIMP_LAYER_MODE_BURN:
     case GIMP_LAYER_MODE_BURN_LEGACY:
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
@@ -391,7 +401,6 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_LCH_CHROMA:
     case GIMP_LAYER_MODE_LCH_COLOR:
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-    default:
         gegl_node_set (node,
            "linear",   FALSE,
            NULL);

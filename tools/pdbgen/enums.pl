@@ -731,7 +731,8 @@ package Gimp::CodeGen::enums;
 			  GIMP_LAYER_MODE_HSV_HUE
 			  GIMP_LAYER_MODE_HSV_SATURATION
 			  GIMP_LAYER_MODE_HSV_COLOR
-			  GIMP_LAYER_MODE_HSV_VALUE) ],
+			  GIMP_LAYER_MODE_HSV_VALUE GIMP_LAYER_MODE_DIVIDE
+			  GIMP_LAYER_MODE_BURN) ],
 	  mapping => { GIMP_LAYER_MODE_NORMAL_NON_LINEAR => '0',
 		       GIMP_LAYER_MODE_DISSOLVE => '1',
 		       GIMP_LAYER_MODE_BEHIND => '2',
@@ -773,7 +774,9 @@ package Gimp::CodeGen::enums;
 		       GIMP_LAYER_MODE_HSV_HUE => '38',
 		       GIMP_LAYER_MODE_HSV_SATURATION => '39',
 		       GIMP_LAYER_MODE_HSV_COLOR => '40',
-		       GIMP_LAYER_MODE_HSV_VALUE => '41' }
+		       GIMP_LAYER_MODE_HSV_VALUE => '41',
+		       GIMP_LAYER_MODE_DIVIDE => '42',
+		       GIMP_LAYER_MODE_BURN => '43' }
 	},
     GimpBrushApplicationMode =>
 	{ contig => 1,

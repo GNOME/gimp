@@ -169,9 +169,9 @@ typedef enum
   GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,  /*< desc="Saturation (HSV) (legacy)">*/
   GIMP_LAYER_MODE_HSV_COLOR_LEGACY,       /*< desc="Color (HSV) (legacy)" >*/
   GIMP_LAYER_MODE_HSV_VALUE_LEGACY,       /*< desc="Value (HSV) (legacy)" >*/
-  GIMP_LAYER_MODE_DIVIDE_LEGACY,          /*< desc="Divide"               >*/
+  GIMP_LAYER_MODE_DIVIDE_LEGACY,          /*< desc="Divide (legacy)"      >*/
   GIMP_LAYER_MODE_DODGE_LEGACY,           /*< desc="Dodge (legacy)"       >*/
-  GIMP_LAYER_MODE_BURN_LEGACY,            /*< desc="Burn"                 >*/
+  GIMP_LAYER_MODE_BURN_LEGACY,            /*< desc="Burn (legacy)"        >*/
   GIMP_LAYER_MODE_HARDLIGHT_LEGACY,       /*< desc="Hard light"           >*/
   GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,       /*< desc="Soft light"           >*/
   GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,   /*< desc="Grain extract"        >*/
@@ -196,6 +196,8 @@ typedef enum
   GIMP_LAYER_MODE_HSV_SATURATION,         /*< desc="Saturation (HSV)"     >*/
   GIMP_LAYER_MODE_HSV_COLOR,              /*< desc="Color (HSV)"          >*/
   GIMP_LAYER_MODE_HSV_VALUE,              /*< desc="Value (HSV)"          >*/
+  GIMP_LAYER_MODE_DIVIDE,                 /*< desc="Divide"               >*/
+  GIMP_LAYER_MODE_BURN,                   /*< desc="Burn"                 >*/
 
   /* internal modes, not available to the PDB */
   GIMP_LAYER_MODE_ERASE      = 1000, /*< pdb-skip, desc="Erase"      >*/

@@ -92,10 +92,12 @@
 #include "layer-modes-legacy/gimpoperationhsvsaturationlegacy.h"
 #include "layer-modes-legacy/gimpoperationhsvcolorlegacy.h"
 #include "layer-modes-legacy/gimpoperationhsvvaluelegacy.h"
-#include "gimpoperationdividemode.h"
+#include "layer-modes/gimpoperationdivide.h"
+#include "layer-modes-legacy/gimpoperationdividelegacy.h"
 #include "layer-modes/gimpoperationdodge.h"
 #include "layer-modes-legacy/gimpoperationdodgelegacy.h"
-#include "gimpoperationburnmode.h"
+#include "layer-modes/gimpoperationburn.h"
+#include "layer-modes-legacy/gimpoperationburnlegacy.h"
 #include "gimpoperationhardlightmode.h"
 #include "gimpoperationsoftlightmode.h"
 #include "gimpoperationgrainextractmode.h"
@@ -168,10 +170,12 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_SATURATION_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_VALUE_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_DODGE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DODGE_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_BURN_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_BURN);
+  g_type_class_ref (GIMP_TYPE_OPERATION_BURN_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HARDLIGHT_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_SOFTLIGHT_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT_MODE);

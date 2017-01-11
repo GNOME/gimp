@@ -52,10 +52,12 @@
 #include "layer-modes-legacy/gimpoperationhsvcolorlegacy.h"
 #include "layer-modes/gimpoperationhsvvalue.h"
 #include "layer-modes-legacy/gimpoperationhsvvaluelegacy.h"
-#include "gimpoperationdividemode.h"
+#include "layer-modes/gimpoperationdivide.h"
+#include "layer-modes-legacy/gimpoperationdividelegacy.h"
 #include "layer-modes/gimpoperationdodge.h"
 #include "layer-modes-legacy/gimpoperationdodgelegacy.h"
-#include "gimpoperationburnmode.h"
+#include "layer-modes/gimpoperationburn.h"
+#include "layer-modes-legacy/gimpoperationburnlegacy.h"
 #include "gimpoperationhardlightmode.h"
 #include "gimpoperationsoftlightmode.h"
 #include "gimpoperationgrainextractmode.h"
@@ -182,8 +184,12 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_hsv_value_legacy_process_pixels;
       break;
 
+    case GIMP_LAYER_MODE_DIVIDE:
+      func = gimp_operation_divide_process_pixels;
+      break;
+
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
-      func = gimp_operation_divide_mode_process_pixels;
+      func = gimp_operation_divide_legacy_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_DODGE:
@@ -195,7 +201,11 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_BURN_LEGACY:
-      func = gimp_operation_burn_mode_process_pixels;
+      func = gimp_operation_burn_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_BURN:
+      func = gimp_operation_burn_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:

@@ -38,4 +38,8 @@ libapplayermodeslegacy_a_SOURCES = \
 	gimpoperationhsvcolorlegacy.c   \
 	gimpoperationhsvcolorlegacy.h   \
 	gimpoperationhsvvaluelegacy.c   \
-	gimpoperationhsvvaluelegacy.h
+	gimpoperationhsvvaluelegacy.h   \
+	gimpoperationdividelegacy.c     \
+	gimpoperationdividelegacy.h     \
+	gimpoperationburnlegacy.c   	\
+	gimpoperationburnlegacy.h 

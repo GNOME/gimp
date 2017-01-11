@@ -59,7 +59,12 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationerase.c		\
 	gimpoperationerase.h		\
 	gimpoperationantierase.c	\
-	gimpoperationantierase.h
+	gimpoperationantierase.h        \
+	gimpoperationhsvvalue.h         \
+	gimpoperationdivide.c       	\
+	gimpoperationdivide.h       	\
+	gimpoperationburn.c         	\
+	gimpoperationburn.h 
 
 libapplayermodes_sse2_a_sources = \
 	gimpoperationnormal-sse2.c
