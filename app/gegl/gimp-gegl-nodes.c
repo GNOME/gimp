@@ -180,7 +180,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
-      operation = "gimp:softlight-mode";
+      operation = "gimp:softlight-legacy";
       break;
 
     case GIMP_LAYER_MODE_DIFFERENCE:
