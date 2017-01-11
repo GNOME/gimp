@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationbehindmode.h
+ * gimpoperationcolor_erase.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_BEHIND_MODE_H__
-#define __GIMP_OPERATION_BEHIND_MODE_H__
+#ifndef __GIMP_OPERATION_COLOR_ERASE_H__
+#define __GIMP_OPERATION_COLOR_ERASE_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "../gimpoperationpointlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_BEHIND_MODE            (gimp_operation_behind_mode_get_type ())
-#define GIMP_OPERATION_BEHIND_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_BEHIND_MODE, GimpOperationBehindMode))
-#define GIMP_OPERATION_BEHIND_MODE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_BEHIND_MODE, GimpOperationBehindModeClass))
-#define GIMP_IS_OPERATION_BEHIND_MODE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_BEHIND_MODE))
-#define GIMP_IS_OPERATION_BEHIND_MODE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_BEHIND_MODE))
-#define GIMP_OPERATION_BEHIND_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_BEHIND_MODE, GimpOperationBehindModeClass))
+#define GIMP_TYPE_OPERATION_COLOR_ERASE            (gimp_operation_color_erase_get_type ())
+#define GIMP_OPERATION_COLOR_ERASE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_COLOR_ERASE, GimpOperationColorErase))
+#define GIMP_OPERATION_COLOR_ERASE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_COLOR_ERASE, GimpOperationColorEraseClass))
+#define GIMP_IS_OPERATION_COLOR_ERASE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_COLOR_ERASE))
+#define GIMP_IS_OPERATION_COLOR_ERASE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_COLOR_ERASE))
+#define GIMP_OPERATION_COLOR_ERASE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_COLOR_ERASE, GimpOperationColorEraseClass))
 
 
-typedef struct _GimpOperationBehindMode      GimpOperationBehindMode;
-typedef struct _GimpOperationBehindModeClass GimpOperationBehindModeClass;
+typedef struct _GimpOperationColorErase      GimpOperationColorErase;
+typedef struct _GimpOperationColorEraseClass GimpOperationColorEraseClass;
 
-struct _GimpOperationBehindMode
+struct _GimpOperationColorErase
 {
   GimpOperationPointLayerMode  parent_instance;
 };
 
-struct _GimpOperationBehindModeClass
+struct _GimpOperationColorEraseClass
 {
   GimpOperationPointLayerModeClass  parent_class;
 };
 
 
-GType   gimp_operation_behind_mode_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_color_erase_get_type       (void) G_GNUC_CONST;
 
-gboolean gimp_operation_behind_mode_process_pixels (gfloat              *in,
+gboolean gimp_operation_color_erase_process_pixels (gfloat              *in,
                                                     gfloat              *layer,
                                                     gfloat              *mask,
                                                     gfloat              *out,
@@ -58,4 +58,5 @@ gboolean gimp_operation_behind_mode_process_pixels (gfloat              *in,
                                                     const GeglRectangle *roi,
                                                     gint                 level);
 
-#endif /* __GIMP_OPERATION_BEHIND_MODE_H__ */
+
+#endif /* __GIMP_OPERATION_COLOR_ERASE_H__ */

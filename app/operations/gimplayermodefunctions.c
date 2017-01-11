@@ -28,7 +28,7 @@
 
 #include "layer-modes/gimpoperationnormal.h"
 #include "layer-modes/gimpoperationdissolve.h"
-#include "gimpoperationbehindmode.h"
+#include "layer-modes/gimpoperationbehind.h"
 #include "layer-modes/gimpoperationmultiply.h"
 #include "layer-modes-legacy/gimpoperationmultiplylegacy.h"
 #include "layer-modes/gimpoperationscreen.h"
@@ -66,13 +66,13 @@
 #include "layer-modes-legacy/gimpoperationgrainextractlegacy.h"
 #include "layer-modes/gimpoperationgrainmerge.h"
 #include "layer-modes-legacy/gimpoperationgrainmergelegacy.h"
-#include "gimpoperationcolorerasemode.h"
+#include "layer-modes/gimpoperationcolorerase.h"
 #include "layer-modes/gimpoperationlchhue.h"
 #include "layer-modes/gimpoperationlchchroma.h"
 #include "layer-modes/gimpoperationlchcolor.h"
 #include "layer-modes/gimpoperationlchlightness.h"
 #include "layer-modes/gimpoperationerase.h"
-#include "gimpoperationreplacemode.h"
+#include "layer-modes/gimpoperationreplace.h"
 #include "layer-modes/gimpoperationantierase.h"
 
 
@@ -93,7 +93,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_BEHIND:
-      func = gimp_operation_behind_mode_process_pixels;
+      func = gimp_operation_behind_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
@@ -245,7 +245,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
-      func = gimp_operation_color_erase_mode_process_pixels;
+      func = gimp_operation_color_erase_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_OVERLAY:
@@ -281,7 +281,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_REPLACE:
-      func = gimp_operation_replace_mode_process_pixels;
+      func = gimp_operation_replace_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_ANTI_ERASE:

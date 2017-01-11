@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationbehindmode.c
+ * gimpoperationcolorerase.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
@@ -21,14 +21,18 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gegl-plugin.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "operations-types.h"
+#include "libgimpcolor/gimpcolor.h"
 
-#include "gimpoperationbehindmode.h"
+#include "../operations-types.h"
+
+#include "gimpoperationcolorerase.h"
 
 
-static gboolean gimp_operation_behind_mode_process (GeglOperation       *operation,
+static gboolean gimp_operation_color_erase_process (GeglOperation       *operation,
                                                     void                *in_buf,
                                                     void                *aux_buf,
                                                     void                *aux2_buf,
@@ -38,12 +42,12 @@ static gboolean gimp_operation_behind_mode_process (GeglOperation       *operati
                                                     gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationBehindMode, gimp_operation_behind_mode,
+G_DEFINE_TYPE (GimpOperationColorErase, gimp_operation_color_erase,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
-gimp_operation_behind_mode_class_init (GimpOperationBehindModeClass *klass)
+gimp_operation_color_erase_class_init (GimpOperationColorEraseClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -52,20 +56,20 @@ gimp_operation_behind_mode_class_init (GimpOperationBehindModeClass *klass)
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:behind-mode",
-                                 "description", "GIMP behind mode operation",
+                                 "name",        "gimp:color-erase",
+                                 "description", "GIMP color erase mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_behind_mode_process;
+  point_class->process = gimp_operation_color_erase_process;
 }
 
 static void
-gimp_operation_behind_mode_init (GimpOperationBehindMode *self)
+gimp_operation_color_erase_init (GimpOperationColorErase *self)
 {
 }
 
 static gboolean
-gimp_operation_behind_mode_process (GeglOperation       *operation,
+gimp_operation_color_erase_process (GeglOperation       *operation,
                                     void                *in_buf,
                                     void                *aux_buf,
                                     void                *aux2_buf,
@@ -76,11 +80,11 @@ gimp_operation_behind_mode_process (GeglOperation       *operation,
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_behind_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_color_erase_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_behind_mode_process_pixels (gfloat              *in,
+gimp_operation_color_erase_process_pixels (gfloat              *in,
                                            gfloat              *layer,
                                            gfloat              *mask,
                                            gfloat              *out,
@@ -93,35 +97,82 @@ gimp_operation_behind_mode_process_pixels (gfloat              *in,
 
   while (samples--)
     {
-      gfloat src1_alpha = in[ALPHA];
-      gfloat src2_alpha = layer[ALPHA] * opacity;
-      gfloat new_alpha;
-      gint   b;
+      gfloat  layer_alpha;
+      GimpRGB bgcolor, color, alpha;
 
+      layer_alpha = layer[ALPHA] * opacity;
       if (has_mask)
-        src2_alpha *= *mask;
+        layer_alpha *= *mask;
 
-      new_alpha = src2_alpha + (1.0 - src2_alpha) * src1_alpha;
+      gimp_rgba_set (&color, in[0], in[1], in[2], in[3]);
+      gimp_rgba_set (&bgcolor, layer[0], layer[1], layer[2], layer_alpha);
 
-      if (new_alpha)
+      /* start of helper function copied from legacy 8-bit blending code */
+      alpha.a = color.a;
+
+      if (bgcolor.r < 0.0001)
+        alpha.r = color.r;
+      else if (GEGL_FLOAT_EQUAL (color.r, bgcolor.r))
+        alpha.r = 0.0;
+      else if (color.r > bgcolor.r)
+        alpha.r = (color.r - bgcolor.r) / (1.0 - bgcolor.r);
+      else
+        alpha.r = (bgcolor.r - color.r) / bgcolor.r;
+
+      if (bgcolor.g < 0.0001)
+        alpha.g = color.g;
+      else if (GEGL_FLOAT_EQUAL (color.g, bgcolor.g))
+        alpha.g = 0.0;
+      else if ( color.g > bgcolor.g )
+        alpha.g = (color.g - bgcolor.g) / (1.0 - bgcolor.g);
+      else
+        alpha.g = (bgcolor.g - color.g) / (bgcolor.g);
+
+      if (bgcolor.b < 0.0001)
+        alpha.b = color.b;
+      else if (GEGL_FLOAT_EQUAL (color.b, bgcolor.b))
+        alpha.b = 0.0;
+      else if ( color.b > bgcolor.b )
+        alpha.b = (color.b - bgcolor.b) / (1.0 - bgcolor.b);
+      else
+        alpha.b = (bgcolor.b - color.b) / (bgcolor.b);
+
+      if (alpha.r > alpha.g)
         {
-          gfloat ratio = in[ALPHA] / new_alpha;
-          gfloat compl_ratio = 1.0f - ratio;
-
-          for (b = RED; b < ALPHA; b++)
+          if (alpha.r > alpha.b)
             {
-              out[b] = in[b] * ratio + layer[b] * compl_ratio;
+              color.a = alpha.r;
             }
+          else
+            {
+              color.a = alpha.b;
+            }
+        }
+      else if (alpha.g > alpha.b)
+        {
+          color.a = alpha.g;
         }
       else
         {
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = layer[b];
-            }
+          color.a = alpha.b;
         }
 
-      out[ALPHA] = new_alpha;
+      color.a = (1.0 - bgcolor.a) + (color.a * bgcolor.a);
+
+      if (color.a > 0.0001)
+        {
+          color.r = (color.r - bgcolor.r) / color.a + bgcolor.r;
+          color.g = (color.g - bgcolor.g) / color.a + bgcolor.g;
+          color.b = (color.b - bgcolor.b) / color.a + bgcolor.b;
+
+          color.a *= alpha.a;
+        }
+      /* end of helper function */
+
+      out[0] = color.r;
+      out[1] = color.g;
+      out[2] = color.b;
+      out[3] = color.a;
 
       in    += 4;
       layer += 4;

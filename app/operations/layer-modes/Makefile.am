@@ -72,7 +72,13 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationgrainextract.c 	\
 	gimpoperationgrainextract.h 	\
 	gimpoperationgrainmerge.c   	\
-	gimpoperationgrainmerge.h
+	gimpoperationgrainmerge.h	\
+	gimpoperationbehind.c		\
+	gimpoperationbehind.h		\
+	gimpoperationcolorerase.c	\
+	gimpoperationcolorerase.h	\
+	gimpoperationreplace.c		\
+	gimpoperationreplace.h
 
 libapplayermodes_sse2_a_sources = \
 	gimpoperationnormal-sse2.c

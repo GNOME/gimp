@@ -68,7 +68,7 @@
 #include "gimpoperationpointlayermode.h"
 #include "layer-modes/gimpoperationnormal.h"
 #include "layer-modes/gimpoperationdissolve.h"
-#include "gimpoperationbehindmode.h"
+#include "layer-modes/gimpoperationbehind.h"
 #include "layer-modes/gimpoperationmultiply.h"
 #include "layer-modes-legacy/gimpoperationmultiplylegacy.h"
 #include "layer-modes/gimpoperationscreen.h"
@@ -106,13 +106,13 @@
 #include "layer-modes-legacy/gimpoperationgrainextractlegacy.h"
 #include "layer-modes/gimpoperationgrainmerge.h"
 #include "layer-modes-legacy/gimpoperationgrainmergelegacy.h"
-#include "gimpoperationcolorerasemode.h"
+#include "layer-modes/gimpoperationcolorerase.h"
 #include "layer-modes/gimpoperationlchhue.h"
 #include "layer-modes/gimpoperationlchchroma.h"
 #include "layer-modes/gimpoperationlchcolor.h"
 #include "layer-modes/gimpoperationlchlightness.h"
 #include "layer-modes/gimpoperationerase.h"
-#include "gimpoperationreplacemode.h"
+#include "layer-modes/gimpoperationreplace.h"
 #include "layer-modes/gimpoperationantierase.h"
 
 
@@ -150,7 +150,7 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_POINT_LAYER_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_NORMAL);
   g_type_class_ref (GIMP_TYPE_OPERATION_DISSOLVE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND);
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN);
@@ -188,13 +188,13 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_ERASE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_ERASE);
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_HUE);
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_CHROMA);
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_COLOR);
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_LIGHTNESS);
   g_type_class_ref (GIMP_TYPE_OPERATION_ERASE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);
 
   gimp_gegl_config_register ("gimp:brightness-contrast",

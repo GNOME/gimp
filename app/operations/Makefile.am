@@ -97,12 +97,5 @@ libappoperations_a_SOURCES = \
 	\
 	gimpoperationpointlayermode.c		\
 	gimpoperationpointlayermode.h		\
-	gimpoperationbehindmode.c       	\
-	gimpoperationbehindmode.h       	\
-	gimpoperationcolorerasemode.c   	\
-	gimpoperationcolorerasemode.h   	\
-	gimpoperationreplacemode.c      	\
-	gimpoperationreplacemode.h      	\
-	\
 	gimplayermodefunctions.c		\
 	gimplayermodefunctions.h

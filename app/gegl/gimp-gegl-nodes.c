@@ -159,7 +159,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_BEHIND:
-      operation = "gimp:behind-mode";
+      operation = "gimp:behind";
       break;
 
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
@@ -312,7 +312,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
-      operation = "gimp:color-erase-mode";
+      operation = "gimp:color-erase";
       break;
 
     case GIMP_LAYER_MODE_OVERLAY:
@@ -340,7 +340,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       break;
 
     case GIMP_LAYER_MODE_REPLACE:
-      operation = "gimp:replace-mode";
+      operation = "gimp:replace";
       break;
 
     case GIMP_LAYER_MODE_ANTI_ERASE:
