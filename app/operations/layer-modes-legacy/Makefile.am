@@ -15,40 +15,40 @@ noinst_LIBRARIES = \
 	libapplayermodeslegacy.a
 
 libapplayermodeslegacy_a_SOURCES = \
-	gimpoperationmultiplylegacy.c	\
-	gimpoperationmultiplylegacy.h	\
-	gimpoperationdodgelegacy.c	\
-	gimpoperationdodgelegacy.h      \
-	gimpoperationscreenlegacy.c	\
-	gimpoperationscreenlegacy.h     \
-	gimpoperationdifferencelegacy.c	\
-	gimpoperationdifferencelegacy.h \
-	gimpoperationadditionlegacy.c	\
-	gimpoperationadditionlegacy.h   \
-	gimpoperationsubtractlegacy.c	\
-	gimpoperationsubtractlegacy.h   \
-	gimpoperationdarkenonlylegacy.c \
-	gimpoperationdarkenonlylegacy.h \
-	gimpoperationlightenonlylegacy.c\
-	gimpoperationlightenonlylegacy.h\
-	gimpoperationhsvhuelegacy.c     \
-	gimpoperationhsvhuelegacy.h     \
-	gimpoperationhsvsaturationlegacy.c \
-	gimpoperationhsvsaturationlegacy.h \
-	gimpoperationhsvcolorlegacy.c   \
-	gimpoperationhsvcolorlegacy.h   \
-	gimpoperationhsvvaluelegacy.c   \
-	gimpoperationhsvvaluelegacy.h   \
-	gimpoperationdividelegacy.c     \
-	gimpoperationdividelegacy.h     \
-	gimpoperationburnlegacy.c   	\
-	gimpoperationburnlegacy.h       \
-	gimpoperationhardlightlegacy.c  \
-	gimpoperationhardlightlegacy.h  \
-	gimpoperationsoftlightlegacy.c  \
-	gimpoperationsoftlightlegacy.h  \
-	gimpoperationgrainextractlegacy.c 	\
-	gimpoperationgrainextractlegacy.h 	\
-	gimpoperationgrainmergelegacy.c   	\
-	gimpoperationgrainmergelegacy.h
+	gimpoperationadditionlegacy.c		\
+	gimpoperationadditionlegacy.h		\
+	gimpoperationburnlegacy.c		\
+	gimpoperationburnlegacy.h		\
+	gimpoperationdarkenonlylegacy.c		\
+	gimpoperationdarkenonlylegacy.h		\
+	gimpoperationdifferencelegacy.c		\
+	gimpoperationdifferencelegacy.h		\
+	gimpoperationdividelegacy.c		\
+	gimpoperationdividelegacy.h		\
+	gimpoperationdodgelegacy.c		\
+	gimpoperationdodgelegacy.h		\
+	gimpoperationgrainextractlegacy.c	\
+	gimpoperationgrainextractlegacy.h	\
+	gimpoperationgrainmergelegacy.c		\
+	gimpoperationgrainmergelegacy.h		\
+	gimpoperationhardlightlegacy.c		\
+	gimpoperationhardlightlegacy.h		\
+	gimpoperationhsvcolorlegacy.c		\
+	gimpoperationhsvcolorlegacy.h		\
+	gimpoperationhsvhuelegacy.c		\
+	gimpoperationhsvhuelegacy.h		\
+	gimpoperationhsvsaturationlegacy.c	\
+	gimpoperationhsvsaturationlegacy.h	\
+	gimpoperationhsvvaluelegacy.c		\
+	gimpoperationhsvvaluelegacy.h		\
+	gimpoperationlightenonlylegacy.c	\
+	gimpoperationlightenonlylegacy.h	\
+	gimpoperationmultiplylegacy.c		\
+	gimpoperationmultiplylegacy.h		\
+	gimpoperationscreenlegacy.c		\
+	gimpoperationscreenlegacy.h		\
+	gimpoperationsoftlightlegacy.c		\
+	gimpoperationsoftlightlegacy.h		\
+	gimpoperationsubtractlegacy.c		\
+	gimpoperationsubtractlegacy.h
 
