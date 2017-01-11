@@ -295,12 +295,20 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:softlight-legacy";
       break;
 
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT:
+      operation = "gimp:grain-extract";
+      break;
+
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
-      operation = "gimp:grain-extract-mode";
+      operation = "gimp:grain-extract-legacy";
+      break;
+
+    case GIMP_LAYER_MODE_GRAIN_MERGE:
+      operation = "gimp:grain-merge";
       break;
 
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
-      operation = "gimp:grain-merge-mode";
+      operation = "gimp:grain-merge-legacy";
       break;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
@@ -398,7 +406,9 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
     case GIMP_LAYER_MODE_BURN_LEGACY:
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
+    case GIMP_LAYER_MODE_GRAIN_MERGE:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
     case GIMP_LAYER_MODE_COLOR_ERASE:
     case GIMP_LAYER_MODE_OVERLAY:

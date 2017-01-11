@@ -102,8 +102,10 @@
 #include "layer-modes-legacy/gimpoperationhardlightlegacy.h"
 #include "layer-modes/gimpoperationsoftlight.h"
 #include "layer-modes-legacy/gimpoperationsoftlightlegacy.h"
-#include "gimpoperationgrainextractmode.h"
-#include "gimpoperationgrainmergemode.h"
+#include "layer-modes/gimpoperationgrainextract.h"
+#include "layer-modes-legacy/gimpoperationgrainextractlegacy.h"
+#include "layer-modes/gimpoperationgrainmerge.h"
+#include "layer-modes-legacy/gimpoperationgrainmergelegacy.h"
 #include "gimpoperationcolorerasemode.h"
 #include "layer-modes/gimpoperationlchhue.h"
 #include "layer-modes/gimpoperationlchchroma.h"
@@ -182,8 +184,10 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_HARDLIGHT_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_SOFTLIGHT);
   g_type_class_ref (GIMP_TYPE_OPERATION_SOFTLIGHT_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT_MODE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE_MODE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT);
+  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT_LEGACY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_ERASE_MODE);
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_HUE);
   g_type_class_ref (GIMP_TYPE_OPERATION_LCH_CHROMA);

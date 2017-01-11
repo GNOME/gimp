@@ -46,5 +46,9 @@ libapplayermodeslegacy_a_SOURCES = \
 	gimpoperationhardlightlegacy.c  \
 	gimpoperationhardlightlegacy.h  \
 	gimpoperationsoftlightlegacy.c  \
-	gimpoperationsoftlightlegacy.h
+	gimpoperationsoftlightlegacy.h  \
+	gimpoperationgrainextractlegacy.c 	\
+	gimpoperationgrainextractlegacy.h 	\
+	gimpoperationgrainmergelegacy.c   	\
+	gimpoperationgrainmergelegacy.h
 

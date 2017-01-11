@@ -174,8 +174,8 @@ typedef enum
   GIMP_LAYER_MODE_BURN_LEGACY,            /*< desc="Burn (legacy)"        >*/
   GIMP_LAYER_MODE_HARDLIGHT_LEGACY,       /*< desc="Hard light (legacy)"  >*/
   GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,       /*< desc="Soft light (legacy)"  >*/
-  GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,   /*< desc="Grain extract"        >*/
-  GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,     /*< desc="Grain merge"          >*/
+  GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,   /*< desc="Grain extract (legacy)">*/
+  GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,     /*< desc="Grain merge (legacy)" >*/
   GIMP_LAYER_MODE_COLOR_ERASE,            /*< desc="Color erase"          >*/
   GIMP_LAYER_MODE_OVERLAY,                /*< desc="Overlay"              >*/
   GIMP_LAYER_MODE_LCH_HUE,                /*< desc="Hue (LCH)"            >*/
@@ -200,6 +200,8 @@ typedef enum
   GIMP_LAYER_MODE_BURN,                   /*< desc="Burn"                 >*/
   GIMP_LAYER_MODE_HARDLIGHT,              /*< desc="Hard light"           >*/
   GIMP_LAYER_MODE_SOFTLIGHT,              /*< desc="Soft light"           >*/
+  GIMP_LAYER_MODE_GRAIN_EXTRACT,          /*< desc="Grain extract"        >*/
+  GIMP_LAYER_MODE_GRAIN_MERGE,            /*< desc="Grain merge"          >*/
 
   /* internal modes, not available to the PDB */
   GIMP_LAYER_MODE_ERASE      = 1000, /*< pdb-skip, desc="Erase"      >*/

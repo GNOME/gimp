@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationgrainmergemode.c
+ * gimpoperationhardlightmode.c
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
@@ -23,12 +23,12 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationgrainmergemode.h"
+#include "gimpoperationhardlightlegacy.h"
 
 
-static gboolean gimp_operation_grain_merge_mode_process (GeglOperation       *operation,
+static gboolean gimp_operation_hardlight_legacy_process (GeglOperation       *operation,
                                                          void                *in_buf,
                                                          void                *aux_buf,
                                                          void                *aux2_buf,
@@ -36,14 +36,14 @@ static gboolean gimp_operation_grain_merge_mode_process (GeglOperation       *op
                                                          glong                samples,
                                                          const GeglRectangle *roi,
                                                          gint                 level);
+ 
 
-
-G_DEFINE_TYPE (GimpOperationGrainMergeMode, gimp_operation_grain_merge_mode,
+G_DEFINE_TYPE (GimpOperationHardlightLegacy, gimp_operation_hardlight_legacy,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
-gimp_operation_grain_merge_mode_class_init (GimpOperationGrainMergeModeClass *klass)
+gimp_operation_hardlight_legacy_class_init (GimpOperationHardlightLegacyClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -52,20 +52,20 @@ gimp_operation_grain_merge_mode_class_init (GimpOperationGrainMergeModeClass *kl
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:grain-merge-mode",
-                                 "description", "GIMP grain merge mode operation",
+                                 "name",        "gimp:hardlight-legacy",
+                                 "description", "GIMP hardlight mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_grain_merge_mode_process;
+  point_class->process = gimp_operation_hardlight_legacy_process;
 }
 
 static void
-gimp_operation_grain_merge_mode_init (GimpOperationGrainMergeMode *self)
+gimp_operation_hardlight_legacy_init (GimpOperationHardlightLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_grain_merge_mode_process (GeglOperation       *operation,
+gimp_operation_hardlight_legacy_process (GeglOperation       *operation,
                                          void                *in_buf,
                                          void                *aux_buf,
                                          void                *aux2_buf,
@@ -76,11 +76,11 @@ gimp_operation_grain_merge_mode_process (GeglOperation       *operation,
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_grain_merge_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_hardlight_legacy_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_grain_merge_mode_process_pixels (gfloat              *in,
+gimp_operation_hardlight_legacy_process_pixels (gfloat              *in,
                                                 gfloat              *layer,
                                                 gfloat              *mask,
                                                 gfloat              *out,
@@ -108,10 +108,20 @@ gimp_operation_grain_merge_mode_process_pixels (gfloat              *in,
 
           for (b = RED; b < ALPHA; b++)
             {
-              gfloat comp = in[b] + layer[b] - 0.5;
+              gfloat comp;
+
+              if (layer[b] > 0.5)
+                {
+                  comp = (1.0 - in[b]) * (1.0 - (layer[b] - 0.5) * 2.0);
+                  comp = MIN (1 - comp, 1);
+                }
+              else
+                {
+                  comp = in[b] * (layer[b] * 2.0);
+                  comp = MIN (comp, 1.0);
+                }
 
               out[b] = comp * ratio + in[b] * (1.0 - ratio);
-              out[b] = CLAMP (out[b], 0.0, 1.0);
             }
         }
       else

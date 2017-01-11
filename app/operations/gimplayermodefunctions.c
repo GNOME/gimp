@@ -62,8 +62,10 @@
 #include "layer-modes-legacy/gimpoperationhardlightlegacy.h"
 #include "layer-modes/gimpoperationsoftlight.h"
 #include "layer-modes-legacy/gimpoperationsoftlightlegacy.h"
-#include "gimpoperationgrainextractmode.h"
-#include "gimpoperationgrainmergemode.h"
+#include "layer-modes/gimpoperationgrainextract.h"
+#include "layer-modes-legacy/gimpoperationgrainextractlegacy.h"
+#include "layer-modes/gimpoperationgrainmerge.h"
+#include "layer-modes-legacy/gimpoperationgrainmergelegacy.h"
 #include "gimpoperationcolorerasemode.h"
 #include "layer-modes/gimpoperationlchhue.h"
 #include "layer-modes/gimpoperationlchchroma.h"
@@ -111,7 +113,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
-      func = gimp_operation_softlight_mode_process_pixels;
+      func = gimp_operation_softlight_legacy_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
@@ -226,12 +228,20 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_softlight_legacy_process_pixels;
       break;
 
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT:
+      func = gimp_operation_grain_extract_process_pixels;
+      break;
+
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
-      func = gimp_operation_grain_extract_mode_process_pixels;
+      func = gimp_operation_grain_extract_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_GRAIN_MERGE:
+      func = gimp_operation_grain_merge_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
-      func = gimp_operation_grain_merge_mode_process_pixels;
+      func = gimp_operation_grain_merge_legacy_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:

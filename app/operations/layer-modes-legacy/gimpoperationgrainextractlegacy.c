@@ -23,12 +23,12 @@
 
 #include <gegl-plugin.h>
 
-#include "operations-types.h"
+#include "../operations-types.h"
 
-#include "gimpoperationgrainextractmode.h"
+#include "gimpoperationgrainextractlegacy.h"
 
 
-static gboolean gimp_operation_grain_extract_mode_process (GeglOperation       *operation,
+static gboolean gimp_operation_grain_extract_legacy_process (GeglOperation       *operation,
                                                            void                *in_buf,
                                                            void                *aux_buf,
                                                            void                *aux2_buf,
@@ -38,12 +38,12 @@ static gboolean gimp_operation_grain_extract_mode_process (GeglOperation       *
                                                            gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationGrainExtractMode, gimp_operation_grain_extract_mode,
+G_DEFINE_TYPE (GimpOperationGrainExtractLegacy, gimp_operation_grain_extract_legacy,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
 
 static void
-gimp_operation_grain_extract_mode_class_init (GimpOperationGrainExtractModeClass *klass)
+gimp_operation_grain_extract_legacy_class_init (GimpOperationGrainExtractLegacyClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -52,42 +52,42 @@ gimp_operation_grain_extract_mode_class_init (GimpOperationGrainExtractModeClass
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:grain-extract-mode",
+                                 "name",        "gimp:grain-extract-legacy",
                                  "description", "GIMP grain extract mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_grain_extract_mode_process;
+  point_class->process = gimp_operation_grain_extract_legacy_process;
 }
 
 static void
-gimp_operation_grain_extract_mode_init (GimpOperationGrainExtractMode *self)
+gimp_operation_grain_extract_legacy_init (GimpOperationGrainExtractLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_grain_extract_mode_process (GeglOperation       *operation,
-                                           void                *in_buf,
-                                           void                *aux_buf,
-                                           void                *aux2_buf,
-                                           void                *out_buf,
-                                           glong                samples,
-                                           const GeglRectangle *roi,
-                                           gint                 level)
+gimp_operation_grain_extract_legacy_process (GeglOperation       *operation,
+                                             void                *in_buf,
+                                             void                *aux_buf,
+                                             void                *aux2_buf,
+                                             void                *out_buf,
+                                             glong                samples,
+                                             const GeglRectangle *roi,
+                                             gint                 level)
 {
   gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
 
-  return gimp_operation_grain_extract_mode_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_grain_extract_legacy_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
 }
 
 gboolean
-gimp_operation_grain_extract_mode_process_pixels (gfloat              *in,
-                                                  gfloat              *layer,
-                                                  gfloat              *mask,
-                                                  gfloat              *out,
-                                                  gfloat               opacity,
-                                                  glong                samples,
-                                                  const GeglRectangle *roi,
-                                                  gint                 level)
+gimp_operation_grain_extract_legacy_process_pixels (gfloat              *in,
+                                                    gfloat              *layer,
+                                                    gfloat              *mask,
+                                                    gfloat              *out,
+                                                    gfloat               opacity,
+                                                    glong                samples,
+                                                    const GeglRectangle *roi,
+                                                    gint                 level)
 {
   const gboolean has_mask = mask != NULL;
 
