@@ -156,7 +156,7 @@ typedef enum
 {
   GIMP_LAYER_MODE_NORMAL_NON_LINEAR,      /*< desc="Normal (non-linear)"  >*/
   GIMP_LAYER_MODE_DISSOLVE,               /*< desc="Dissolve"             >*/
-  GIMP_LAYER_MODE_BEHIND,                 /*< desc="Behind"               >*/
+  GIMP_LAYER_MODE_BEHIND_NON_LINEAR,      /*< desc="Behind (non-linear)"  >*/
   GIMP_LAYER_MODE_MULTIPLY_LEGACY,        /*< desc="Multiply (legacy)"    >*/
   GIMP_LAYER_MODE_SCREEN_LEGACY,          /*< desc="Screen (legacy)"      >*/
   GIMP_LAYER_MODE_OVERLAY_LEGACY,         /*< desc="Old broken Overlay"   >*/
@@ -202,6 +202,7 @@ typedef enum
   GIMP_LAYER_MODE_SOFTLIGHT,              /*< desc="Soft light"           >*/
   GIMP_LAYER_MODE_GRAIN_EXTRACT,          /*< desc="Grain extract"        >*/
   GIMP_LAYER_MODE_GRAIN_MERGE,            /*< desc="Grain merge"          >*/
+  GIMP_LAYER_MODE_BEHIND,                 /*< desc="Behind"               >*/
 
   /* internal modes, not available to the PDB */
   GIMP_LAYER_MODE_ERASE      = 1000, /*< pdb-skip, desc="Erase"      >*/

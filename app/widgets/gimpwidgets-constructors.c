@@ -176,6 +176,9 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
                                           GIMP_LAYER_MODE_BEHIND);
       gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
                                           GIMP_LAYER_MODE_BEHIND,
+                                          GIMP_LAYER_MODE_BEHIND_NON_LINEAR);
+      gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
+                                          GIMP_LAYER_MODE_BEHIND_NON_LINEAR,
                                           GIMP_LAYER_MODE_COLOR_ERASE);
     }
 

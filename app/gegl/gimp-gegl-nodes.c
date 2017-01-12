@@ -146,8 +146,9 @@ gimp_gegl_mode_is_linear (GimpLayerMode mode)
     case GIMP_LAYER_MODE_NORMAL:
     case GIMP_LAYER_MODE_DISSOLVE:
     case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
-      return TRUE;
     case GIMP_LAYER_MODE_BEHIND:
+      return TRUE;
+    case GIMP_LAYER_MODE_BEHIND_NON_LINEAR:
     case GIMP_LAYER_MODE_MULTIPLY:
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
     case GIMP_LAYER_MODE_SCREEN:

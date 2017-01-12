@@ -291,7 +291,7 @@ gimp_layer_mode_get_type (void)
   {
     { GIMP_LAYER_MODE_NORMAL_NON_LINEAR, "GIMP_LAYER_MODE_NORMAL_NON_LINEAR", "normal-non-linear" },
     { GIMP_LAYER_MODE_DISSOLVE, "GIMP_LAYER_MODE_DISSOLVE", "dissolve" },
-    { GIMP_LAYER_MODE_BEHIND, "GIMP_LAYER_MODE_BEHIND", "behind" },
+    { GIMP_LAYER_MODE_BEHIND_NON_LINEAR, "GIMP_LAYER_MODE_BEHIND_NON_LINEAR", "behind-non-linear" },
     { GIMP_LAYER_MODE_MULTIPLY_LEGACY, "GIMP_LAYER_MODE_MULTIPLY_LEGACY", "multiply-legacy" },
     { GIMP_LAYER_MODE_SCREEN_LEGACY, "GIMP_LAYER_MODE_SCREEN_LEGACY", "screen-legacy" },
     { GIMP_LAYER_MODE_OVERLAY_LEGACY, "GIMP_LAYER_MODE_OVERLAY_LEGACY", "overlay-legacy" },
@@ -337,6 +337,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_SOFTLIGHT, "GIMP_LAYER_MODE_SOFTLIGHT", "softlight" },
     { GIMP_LAYER_MODE_GRAIN_EXTRACT, "GIMP_LAYER_MODE_GRAIN_EXTRACT", "grain-extract" },
     { GIMP_LAYER_MODE_GRAIN_MERGE, "GIMP_LAYER_MODE_GRAIN_MERGE", "grain-merge" },
+    { GIMP_LAYER_MODE_BEHIND, "GIMP_LAYER_MODE_BEHIND", "behind" },
     { GIMP_LAYER_MODE_ERASE, "GIMP_LAYER_MODE_ERASE", "erase" },
     { GIMP_LAYER_MODE_REPLACE, "GIMP_LAYER_MODE_REPLACE", "replace" },
     { GIMP_LAYER_MODE_ANTI_ERASE, "GIMP_LAYER_MODE_ANTI_ERASE", "anti-erase" },
@@ -347,7 +348,7 @@ gimp_layer_mode_get_type (void)
   {
     { GIMP_LAYER_MODE_NORMAL_NON_LINEAR, NC_("layer-mode", "Normal (non-linear)"), NULL },
     { GIMP_LAYER_MODE_DISSOLVE, NC_("layer-mode", "Dissolve"), NULL },
-    { GIMP_LAYER_MODE_BEHIND, NC_("layer-mode", "Behind"), NULL },
+    { GIMP_LAYER_MODE_BEHIND_NON_LINEAR, NC_("layer-mode", "Behind (non-linear)"), NULL },
     { GIMP_LAYER_MODE_MULTIPLY_LEGACY, NC_("layer-mode", "Multiply (legacy)"), NULL },
     { GIMP_LAYER_MODE_SCREEN_LEGACY, NC_("layer-mode", "Screen (legacy)"), NULL },
     { GIMP_LAYER_MODE_OVERLAY_LEGACY, NC_("layer-mode", "Old broken Overlay"), NULL },
@@ -393,6 +394,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_SOFTLIGHT, NC_("layer-mode", "Soft light"), NULL },
     { GIMP_LAYER_MODE_GRAIN_EXTRACT, NC_("layer-mode", "Grain extract"), NULL },
     { GIMP_LAYER_MODE_GRAIN_MERGE, NC_("layer-mode", "Grain merge"), NULL },
+    { GIMP_LAYER_MODE_BEHIND, NC_("layer-mode", "Behind"), NULL },
     { GIMP_LAYER_MODE_ERASE, NC_("layer-mode", "Erase"), NULL },
     { GIMP_LAYER_MODE_REPLACE, NC_("layer-mode", "Replace"), NULL },
     { GIMP_LAYER_MODE_ANTI_ERASE, NC_("layer-mode", "Anti erase"), NULL },
