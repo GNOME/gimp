@@ -86,6 +86,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
   switch (paint_mode)
     {
     case GIMP_LAYER_MODE_NORMAL:
+    case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
       func = gimp_operation_normal_process_pixels;
       break;
 
@@ -94,6 +95,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_BEHIND:
+    case GIMP_LAYER_MODE_BEHIND_NON_LINEAR:
       func = gimp_operation_behind_process_pixels;
       break;
 
@@ -102,6 +104,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_MULTIPLY:
+    case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
       func = gimp_operation_multiply_process_pixels;
       break;
 
@@ -288,7 +291,6 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
     case GIMP_LAYER_MODE_ANTI_ERASE:
       func = gimp_operation_anti_erase_process_pixels;
       break;
-
     default:
       g_warning ("No direct function for layer mode (%d), using gimp:normal",
                  paint_mode);
