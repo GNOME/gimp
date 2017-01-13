@@ -132,21 +132,16 @@ hue_post_process (const gfloat *in,
 {
   while (samples--)
     {
-      gfloat comp_alpha, new_alpha;
+      gfloat comp_alpha = layer[ALPHA] * opacity;
 
-      comp_alpha = layer[ALPHA] * opacity;
       if (mask)
         comp_alpha *= *mask++;
 
-      new_alpha = in[ALPHA] + (1.0f - in[ALPHA]) * comp_alpha;
-
-      if (comp_alpha && new_alpha)
+      if (comp_alpha != 0.0f)
         {
-          gfloat ratio = comp_alpha / new_alpha;
-
-          out[RED]   = out[RED]   * ratio + in[RED]   * (1.0f - ratio);
-          out[GREEN] = out[GREEN] * ratio + in[GREEN] * (1.0f - ratio);
-          out[BLUE]  = out[BLUE]  * ratio + in[BLUE]  * (1.0f - ratio);
+          out[RED]   = out[RED]   * comp_alpha + in[RED]   * (1.0f - comp_alpha);
+          out[GREEN] = out[GREEN] * comp_alpha + in[GREEN] * (1.0f - comp_alpha);
+          out[BLUE]  = out[BLUE]  * comp_alpha + in[BLUE]  * (1.0f - comp_alpha);
         }
       else
         {
