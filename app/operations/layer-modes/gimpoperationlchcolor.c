@@ -110,45 +110,6 @@ color_pre_process (const Babl   *format,
   babl_process (babl_fish ("CIE Lab alpha float", format), out, out, samples);
 }
 
-static void
-color_post_process (const gfloat *in,
-                    const gfloat *layer,
-                    const gfloat *mask,
-                    gfloat       *out,
-                    gfloat        opacity,
-                    glong         samples)
-{
-  while (samples--)
-    {
-      gfloat comp_alpha = layer[ALPHA] * opacity;
-
-      if (mask)
-        comp_alpha *= *mask++;
-
-      if (comp_alpha != 0.0f)
-        {
-          out[RED]   = out[RED]   * comp_alpha + in[RED]   * (1.0f - comp_alpha);
-          out[GREEN] = out[GREEN] * comp_alpha + in[GREEN] * (1.0f - comp_alpha);
-          out[BLUE]  = out[BLUE]  * comp_alpha + in[BLUE]  * (1.0f - comp_alpha);
-        }
-      else
-        {
-          gint b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
-        }
-
-      out[ALPHA] = in[ALPHA];
-
-      in    += 4;
-      layer += 4;
-      out   += 4;
-    }
-}
-
 gboolean
 gimp_operation_lch_color_process_pixels_linear (gfloat              *in,
                                                 gfloat              *layer,
@@ -159,8 +120,16 @@ gimp_operation_lch_color_process_pixels_linear (gfloat              *in,
                                                 const GeglRectangle *roi,
                                                 gint                 level)
 {
+  static const Babl *from_fish;
+  static const Babl *to_fish;
+  
+  if (!from_fish)
+    from_fish = babl_fish ("RGBA float", "CIE Lab alpha float");
+  if (!to_fish)
+     to_fish = babl_fish ("CIE Lab alpha float", "RGBA float");
+
   color_pre_process (babl_format ("RGBA float"), in, layer, out, samples);
-  color_post_process (in, layer, mask, out, opacity, samples);
+  gimp_operation_layer_composite (in, layer, mask, out, opacity, samples);
 
   return TRUE;
 }
@@ -175,8 +144,16 @@ gimp_operation_lch_color_process_pixels (gfloat              *in,
                                          const GeglRectangle *roi,
                                          gint                 level)
 {
+  static const Babl *from_fish = NULL;
+  static const Babl *to_fish = NULL;
+  
+  if (!from_fish)
+    from_fish = babl_fish ("R'G'B'A float", "CIE Lab alpha float");
+  if (!to_fish)
+     to_fish = babl_fish ("CIE Lab alpha float", "R'G'B'A float");
+
   color_pre_process (babl_format ("R'G'B'A float"), in, layer, out, samples);
-  color_post_process (in, layer, mask, out, opacity, samples);
+  gimp_operation_layer_composite (in, layer, mask, out, opacity, samples);
 
   return TRUE;
 }
