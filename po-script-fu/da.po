@@ -1,37 +1,33 @@
-# Danish translation of GIMP script-fu.
+# Danish translation for GIMP Script-Fu.
 # Copyright (C) 2010 Free Software Foundation, Inc.
+#
+# Yderligere oplysninger og konventioner kan findes på
+# http://wiki.dansk-gruppen.dk/index.php/GIMP
+#
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
 # Ole Laursen <olau@hardworking.dk>, 2001, 2002, 2004.
 # Mads Lundby <lundbymads@gmail.com>, 2009.
 # Joe Hansen <joedalton2@yahoo.dk>, 2010, 2011.
-#
-# Konventioner:
-#
-#  bevel -> facet
-#  DB Browser -> proceduredatabase (browser er overflødigt)
-#  distress -> urolig
-#  header -> sidehoved
-#  script -> program
-#  tube -> rør
-#  utils -> værktøjer
-#  web page themes -> hjemmesidetemaer
-#
-# Bemærk at en hel del af oversættelserne af programnavnene optræder i to
-# sammenhænge og derfor skal synkroniseres.
+# scootergrisen, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-03 22:00+1200\n"
-"PO-Revision-Date: 2011-07-25 20:42+0100\n"
-"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
-"Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
+"Report-Msgid-Bugs-To: "
+"http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-01-10 15:38+0000\n"
+"PO-Revision-Date: 2016-10-08 22:44+0200\n"
+"Last-Translator: scootergrisen\n"
+"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Language: da_DK\n"
+"X-Source-Language: C\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -49,98 +45,98 @@ msgstr "Server for ekstern Script-Fu-handling"
 msgid "_Start Server..."
 msgstr "_Start server..."
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_GIMP Online"
 msgstr "_GIMP online"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_User Manual"
 msgstr "_Brugermanual"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:316
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Buttons"
 msgstr "_Knapper"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Logos"
 msgstr "_Logoer"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Patterns"
 msgstr "_Mønstre"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Web Page Themes"
-msgstr "_Hjemmesidetemaer"
+msgstr "_Websidetemaer"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Alien Glow"
 msgstr "_Rumvæsenglød"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "_Beveled Pattern"
 msgstr "Fac_etmønster"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:332
+#: ../plug-ins/script-fu/script-fu.c:331
 msgid "Alpha to _Logo"
 msgstr "Alfa til _logo"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Genindlæs alle tilgængelige Script-Fu-programmer"
 
-#: ../plug-ins/script-fu/script-fu.c:340
+#: ../plug-ins/script-fu/script-fu.c:339
 msgid "_Refresh Scripts"
-msgstr "_Opdater programmer"
+msgstr "_Genindlæs scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:363
+#: ../plug-ins/script-fu/script-fu.c:362
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"Du kan ikke bruge \"Opdater programmer\", når et Script-Fu-dialogvindue er "
+"Du kan ikke bruge \"Genindlæs scripts\", når et Script-Fu-dialogvindue er "
 "åbent. Luk alle Script-Fu-vinduer og prøv igen."
 
-#: ../plug-ins/script-fu/script-fu-console.c:130
-#: ../plug-ins/script-fu/script-fu-console.c:197
+#: ../plug-ins/script-fu/script-fu-console.c:127
+#: ../plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Script-Fu-konsol"
 
 # går ud fra TinyScheme er et navn.
-#: ../plug-ins/script-fu/script-fu-console.c:193
+#: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
 msgstr "Velkommen til TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:199
+#: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Interactive Scheme Development"
 msgstr "Interaktiv skemaudvikling"
 
-#: ../plug-ins/script-fu/script-fu-console.c:235
+#: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
 msgstr "_Gennemse..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:293
+#: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
-msgstr "Uddata fra Script-Fu-konsol"
+msgstr "Gem konsoloutput fra Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:340
+#: ../plug-ins/script-fu/script-fu-console.c:335
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kunne ikke åbne \"%s\" til skrivning: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:369
+#: ../plug-ins/script-fu/script-fu-console.c:364
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-procedurebrowser"
 
@@ -148,16 +144,16 @@ msgstr "Script-Fu-procedurebrowser"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu evalueringstilstand kan kun startes ikke-interaktivt"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:200
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan ikke behandle to programmer på samme tid."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "Du kører allerede programmet \"%s\"."
+msgstr "Du kører allerede scriptet \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:226
+#: ../plug-ins/script-fu/script-fu-interface.c:228
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -165,82 +161,84 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:290
+#: ../plug-ins/script-fu/script-fu-interface.c:291
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:337
+#: ../plug-ins/script-fu/script-fu-interface.c:338
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-farvevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:446
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:451
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:464
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-skrifttypevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-paletvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-mønstervælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:490
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-farveovergangsvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:499
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:840
+#: ../plug-ins/script-fu/script-fu-interface.c:868
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fejl ved kørsel af %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:146
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "For få argumenter for kaldet 'script-fu-register'"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:605
+#: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Fejl ved indlæsning af %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-tjenesteindstillinger"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "_Start Server"
 msgstr "_Start server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
-msgstr ""
+msgstr "Lyt på IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+#: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
 msgstr "Serverport:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+#: ../plug-ins/script-fu/script-fu-server.c:881
 msgid "Server logfile:"
 msgstr "Serverlogfil:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:890
+#: ../plug-ins/script-fu/script-fu-server.c:894
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
+"Lytning på en anden IP-adresse end 127.0.0.1 (særligt 0.0.0.0) kan give "
+"fjern-computere mulighed for at udføre kode på denne computer."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
@@ -277,7 +275,7 @@ msgstr "Kantlag"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:160
 msgid "Add _Border..."
-msgstr "Tilføj _Kant..."
+msgstr "Tilføj _kant..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:161
 msgid "Add a border around an image"
@@ -339,7 +337,7 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Programmet til laserbrænding skal bruge to lag i alt. Et forgrundslag med "
+"Scriptet laserbrænding skal bruge to lag i alt. Et forgrundslag med "
 "gennemsigtighed og et baggrundslag."
 
 # http://fuchur.leute.server.de/burn_in/
@@ -352,8 +350,8 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"Lav et mellemliggende lag for at lave en animeret \"laserbrændings\"-"
-"overgang mellem to lag"
+"Lav et mellemliggende lag for at lave en animeret "
+"\"laserbrændings\"-overgang mellem to lag"
 
 # Ok, men det kunne nok også skrives "Glødfarve"
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
@@ -430,9 +428,8 @@ msgid "Background"
 msgstr "Baggrund"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:104
-#, fuzzy
 msgid "Layer 1"
-msgstr "Lag1"
+msgstr "Lag 1"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:105
 msgid "Layer 2"
@@ -453,7 +450,7 @@ msgstr "Forkrom"
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:202
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:68
 msgid "Highlight"
-msgstr "Højlys"
+msgstr "Highlight"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:214
 msgid "Stencil C_hrome..."
@@ -486,7 +483,7 @@ msgstr "Omgivelsesreflektioner"
 # nogle områder er stærkt belyste
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:228
 msgid "Highlight balance"
-msgstr "Højlysbalance"
+msgstr "Highlightbalance"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:229
 msgid "Chrome balance"
@@ -496,15 +493,15 @@ msgstr "Krombalance"
 msgid "Chrome white areas"
 msgstr "Forkrom hvide flader"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:81
+#: ../plug-ins/script-fu/scripts/circuit.scm:74
 msgid "Effect layer"
 msgstr "Effektlag"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:134
+#: ../plug-ins/script-fu/scripts/circuit.scm:127
 msgid "_Circuit..."
 msgstr "_Kredsløb..."
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#: ../plug-ins/script-fu/scripts/circuit.scm:128
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
@@ -514,26 +511,26 @@ msgstr ""
 # "Maskestørrelse for olieficering"
 # Er /olieficering/ en udtværende effekt, skaber den mere genskin, ændrer
 # den farverne, eller?
-#: ../plug-ins/script-fu/scripts/circuit.scm:142
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
 msgid "Oilify mask size"
 msgstr "Olieficer maskestørrelse"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:143
+#: ../plug-ins/script-fu/scripts/circuit.scm:136
 msgid "Circuit seed"
 msgstr "Startværdi for kredsløb"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:144
+#: ../plug-ins/script-fu/scripts/circuit.scm:137
 msgid "No background (only for separate layer)"
 msgstr "Ingen baggrund (kun til separate lag)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:145
+#: ../plug-ins/script-fu/scripts/circuit.scm:138
 #: ../plug-ins/script-fu/scripts/lava.scm:129
 #: ../plug-ins/script-fu/scripts/predator.scm:132
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Behold markering"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:146
+#: ../plug-ins/script-fu/scripts/circuit.scm:139
 #: ../plug-ins/script-fu/scripts/lava.scm:130
 #: ../plug-ins/script-fu/scripts/predator.scm:133
 msgid "Separate layer"
@@ -587,44 +584,43 @@ msgstr "Stænk"
 msgid "Darken only"
 msgstr "Formørk kun"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "Difference Clouds..."
 msgstr "Forskelsskyer..."
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Konstant støj påført i tilstanden lagforskelle"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:102
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
 msgstr "_Forvræng..."
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:103
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
 msgstr "Gør markering uroligt"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:110
-#, fuzzy
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "Threshold (bigger 1<-->254 smaller)"
-msgstr "Tærskel (større 1<-->255 mindre)"
+msgstr "Grænse (større 1<-->255 mindre)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:111
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
 msgid "Spread"
 msgstr "Spredning"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:112
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
 msgid "Granularity (1 is low)"
 msgstr "Kornethed (1 er lav)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
 msgid "Smooth"
 msgstr "Udjævn"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
 msgid "Smooth horizontally"
 msgstr "Vandret udjævning"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
 msgid "Smooth vertically"
 msgstr "Lodret udjævning"
 
@@ -660,7 +656,7 @@ msgstr "Farve"
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Opacity"
-msgstr "Uigennemsigtighed"
+msgstr "Synlighed"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
@@ -740,11 +736,11 @@ msgstr "_Filter (reg. udtryk)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:162
 msgid "Font _size (pixels)"
-msgstr "Skrift_størrelse (skærmpunkter)"
+msgstr "Skrift_størrelse (pixels)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
 msgid "_Border (pixels)"
-msgstr "_Kant (skærmpunkter)"
+msgstr "_Kant (pixels)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "_Color scheme"
@@ -796,7 +792,7 @@ msgstr "Fladgør billede"
 # afsnit i en manual eller lignende.
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "Using _Paths"
-msgstr "Bruger hjæl_pelinjer"
+msgstr "Bruge hjæl_pelinjer"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:60
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:73
@@ -811,7 +807,7 @@ msgstr "Bogmærke til brugermanualen"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
-msgstr "_Tilpas dine billeder til internettet"
+msgstr "_Klargør dine billeder til nettet"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
@@ -831,7 +827,7 @@ msgstr "Sådan bruger du _dialoger"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:137
 msgid "Drawing _Simple Objects"
-msgstr "Tegning af _simple objekter"
+msgstr "Tegn _simple objekter"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "Create and Use _Selections"
@@ -839,27 +835,27 @@ msgstr "Opret og brug _markeringer"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:178
 msgid "_Main Web Site"
-msgstr "_Hovedhjemmeside"
+msgstr "_Hovedwebsted"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:179
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:192
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:205
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:218
 msgid "Bookmark to the GIMP web site"
-msgstr "Bogmærk til GIMP-hjemmesiden"
+msgstr "Bogmærk til GIMP-webstedet"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:191
 msgid "_Developer Web Site"
-msgstr "_Internetside for udviklere"
+msgstr "_Websted for udviklere"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:204
 msgid "_User Manual Web Site"
-msgstr "_Hjemmeside for brugermanual"
+msgstr "_Brugermanualens webside"
 
 # "Register for udvidelsesmoduler"
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:217
 msgid "Plug-in _Registry"
-msgstr "Udvidelsesmodul_register"
+msgstr "Plugin_registreringsdatabase"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:63
 msgid "Custom _Gradient..."
@@ -867,7 +863,8 @@ msgstr "Brugerdefineret farveover_gang..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:64
 msgid "Create an image filled with an example of the current gradient"
-msgstr "Opret et billede udfyldt med et eksempel på den aktuelle farveovergang"
+msgstr ""
+"Opret et billede udfyldt med et eksempel på den aktuelle farveovergang"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:70
@@ -914,16 +911,16 @@ msgid "New Guides from _Selection"
 msgstr "Nye hjælpelinjer fra _markering"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
-#, fuzzy
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Afrund hjørnerne på den nuværende markering"
+msgstr "Opret fire hjælpelinjer omkring kanterne på den nuværende markering"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "Ny hjælpelinje (ud fra _procent)..."
+msgstr "Ny hjælpelinje (i _procent)..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
-msgid "Add a guide at the position specified as a percentage of the image size"
+msgid ""
+"Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 "Tilføj en hjælpelinje ved den position, som er angivet som en procentdel af "
 "billedstørrelsen"
@@ -946,7 +943,7 @@ msgstr "Lodret"
 # "Position (procentangivelse)" / "Position (%)" / "Position (i procent)"
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
 msgid "Position (in %)"
-msgstr "Position (i %)"
+msgstr "Placering (i %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
@@ -955,12 +952,11 @@ msgstr "Ny _hjælpelinje..."
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
-"Tlføj en hjælpelinje ved den angivne orientering og position (i "
-"billedpunkter)"
+"Tlføj en hjælpelinje ved den angivne orientering og position (i pixels)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "Position"
-msgstr "Position"
+msgstr "Placering"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
@@ -999,32 +995,31 @@ msgstr "Farveovergang"
 msgid "Use current gradient"
 msgstr "Brug aktiv farveovergang"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:106
+#: ../plug-ins/script-fu/scripts/line-nova.scm:108
 msgid "Line _Nova..."
 msgstr "Linje_nova..."
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:107
-#, fuzzy
+#: ../plug-ins/script-fu/scripts/line-nova.scm:109
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
 msgstr ""
-"Udfyld et lag med stråler, der stråler ud fra dets centrum med brug af "
+"Udfyld et lag med stråler, der går ud fra dets midte med brug af "
 "forgrundsfarven"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:114
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
 msgid "Number of lines"
 msgstr "Antal linjer"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:115
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Sharpness (degrees)"
 msgstr "Skarphed (grader)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+#: ../plug-ins/script-fu/scripts/line-nova.scm:118
 msgid "Offset radius"
 msgstr "Forskydningsradius"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+#: ../plug-ins/script-fu/scripts/line-nova.scm:119
 msgid "Randomness"
 msgstr "Tilfældighed"
 
@@ -1105,11 +1100,11 @@ msgstr "Sepia"
 msgid "Mottle"
 msgstr "Spætter"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
-msgstr "Mappe for uddatafilen"
+msgstr "Mappe til outputfilen"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
@@ -1117,11 +1112,11 @@ msgstr ""
 "Navnet på filen der skal oprettes (hvis en fil med dette navn allerede "
 "findes, så vil den blive erstattet)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Filnavnet du indtastede er ikke et egnet navn for en fil."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1129,7 +1124,7 @@ msgstr ""
 "Alle tegn i navnet er enten blanktegn eller tegn som ikke kan være i "
 "filnavne."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1137,15 +1132,15 @@ msgstr ""
 "Eksporter den aktive palet som et CSS-stilark med farvepunktnavnet som deres "
 "klassenavn og selve farven som farveattributten"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Eksporter den aktive palet som en PHP-ordbog (navn => farve)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Eksporter den aktive palet som en Pythonordbog (navn: farve)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1153,18 +1148,18 @@ msgstr ""
 "Skriv alle farverne i en palette til en tekstfil, en heksadecimal værdi per "
 "linje (ingen navne)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:408
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgstr "Eksporter den aktive palet som en java.util.Hashtable<streng, farve>"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
 msgid "There is no image data in the clipboard to paste."
-msgstr "Der er ingen billeddata i udklipsholderen at indsætte."
+msgstr "Der er ikke nogen billeddata at indsætte fra udklipsholderen."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
 msgid "New _Brush..."
-msgstr "Ny _Pensel..."
+msgstr "Ny _pensel..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste the clipboard contents into a new brush"
@@ -1221,11 +1216,11 @@ msgstr "Interpolering"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:121
 msgid "_Predator..."
-msgstr "_Rovdyr..."
+msgstr "_Predator..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Tilføj en rovdyrseffekt til det markerede område (eller alfa)"
+msgstr "Tilføj en 'Predator'-effekt til det markerede område (eller alfa)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
 msgid "Edge amount"
@@ -1248,39 +1243,42 @@ msgstr "Omvendt lagrækkefølge"
 msgid "Reverse the order of layers in the image"
 msgstr "Vend rækkefølgen for lag i billedet"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:119
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:67
 msgid "_Rippling..."
 msgstr "_Krusning..."
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:120
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
+#, fuzzy
+#| msgid ""
+#| "Create a multi-layer image by adding a ripple effect to the current image"
 msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
+"Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
 "Opret et flerlagsbillede ved at tilføje en krusningseffelt til det aktuelle "
 "billede"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:127
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
 msgid "Rippling strength"
 msgstr "Krusningsstyrke"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:128
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:76
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:105
 msgid "Number of frames"
-msgstr "Antal rammer"
+msgstr "Antal billeder"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Edge behavior"
 msgstr "Kantopførsel"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Wrap"
 msgstr "Ombryd"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Smear"
 msgstr "Udsmør"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Black"
 msgstr "Sort"
 
@@ -1320,7 +1318,7 @@ msgstr "Tilføj baggrund"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "_Angiv farvekort..."
+msgstr "_Sæt farvekort..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
@@ -1401,7 +1399,8 @@ msgid "_Spinning Globe..."
 msgstr "_Roterende kugle..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
-msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgid ""
+"Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
 "Opret en animation ved at placere det aktuelle billede på en roterende kugle"
 
@@ -1501,7 +1500,7 @@ msgstr "Indre tand"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
 msgid "Margin (pixels)"
-msgstr "Margen (skærmpunkter)"
+msgstr "Margen (pixels)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
 msgid "Hole ratio"
@@ -1526,7 +1525,7 @@ msgstr "Pensel"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
 msgid "Airbrush"
-msgstr "Sprøjtepensel"
+msgstr "Sprøjtepistol"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Color method"
@@ -1545,9 +1544,8 @@ msgid "Gradient: Loop Triangle"
 msgstr "Overgang: trekantsløkke"
 
 #: ../plug-ins/script-fu/scripts/test-sphere.scm:267
-#, fuzzy
 msgid "_Sphere..."
-msgstr "Forkr_om..."
+msgstr "_Kugle..."
 
 # 'tileable' er ikke let at oversætte
 # Hvis vi skal have hele meningen med bliver det noget i retning af "Slør
@@ -1588,11 +1586,11 @@ msgstr "RLE"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
 msgid "Mask size"
-msgstr "Maskestørrelse"
+msgstr "Maskens størrelse"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
 msgid "Mask opacity"
-msgstr "Maskeuigennemsigtighed"
+msgstr "Maskens synlighed"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:95
 msgid "_Waves..."
@@ -1674,19 +1672,19 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
-msgstr "X-forskydning for højlys"
+msgstr "X-forskydning for highlight"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight Y offset"
-msgstr "Y-forskydning for højlys"
+msgstr "Y-forskydning for highlight"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight color"
-msgstr "Højlysfarve"
+msgstr "Highlightfarve"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
-msgstr "Uigennemsigtighed for højlys"
+msgstr "Highlight synlighed"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
@@ -1694,7 +1692,7 @@ msgstr "Slagskyggefarve"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow opacity"
-msgstr "Uigennemsigtighed for slagskygge"
+msgstr "Slagskygge synlighed"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
@@ -1708,783 +1706,3 @@ msgstr "X-forskydning for slagskygge"
 msgid "Drop shadow Y offset"
 msgstr "Y-forskydning for slagskygge"
 
-#~ msgid "3D _Outline..."
-#~ msgstr "3D-_omrids..."
-
-# hm, dækker vist nogenlunde
-#~ msgid "Bumpmap (alpha layer) blur radius"
-#~ msgstr "Ujævnhedskort (alfalag) sløringsradius"
-
-#~ msgid "Create a logo with outlined text and a drop shadow"
-#~ msgstr "Opret et logo med tekstomrids og en slagskygge"
-
-#~ msgid "Default bumpmap settings"
-#~ msgstr "Standardindstillinger for ujævnhedskort"
-
-#~ msgid "Font size (pixels)"
-#~ msgstr "Skriftstørrelse (skærmpunkter)"
-
-#~ msgid "Outline blur radius"
-#~ msgstr "Radius for omridssløring"
-
-#~ msgid ""
-#~ "Outline the selected region (or alpha) with a pattern and add a drop "
-#~ "shadow"
-#~ msgstr ""
-#~ "Lav et omrids med et mønster for den valgte markering (eller alfa) og "
-#~ "tilføj en slagskygge"
-
-#~ msgid "Pattern"
-#~ msgstr "Mønster"
-
-#~ msgid "Shadow blur radius"
-#~ msgstr "Skyggesløringsradius"
-
-# Truchet er en effekt opkaldt efter navnet på en munk. Derfor egennavn
-#~ msgid "3_D Truchet..."
-#~ msgstr "3_D-Truchet..."
-
-#~ msgid "Background color"
-#~ msgstr "Baggrundsfarve"
-
-#~ msgid "Block size"
-#~ msgstr "Blokstørrelse"
-
-# Truchet er en effekt opkaldt efter navnet på en munk. Derfor egennavn
-#~ msgid "Create an image filled with a 3D Truchet pattern"
-#~ msgstr "Lav et billede der er udfyldt med et 3D-Truchet-mønster"
-
-#~ msgid "End blend"
-#~ msgstr "Afslut blanding"
-
-#~ msgid "Number of X tiles"
-#~ msgstr "Antal x-fliser"
-
-#~ msgid "Number of Y tiles"
-#~ msgstr "Antal y-fliser"
-
-#~ msgid "Start blend"
-#~ msgstr "Start blanding"
-
-# 'supersampling' dækker over 'adaptive supersampling' som vist nok går
-# ud på en intelligent form for udjævning vha. ekstra prøver der hvor
-# det er nødvendigt
-#~ msgid "Supersample"
-#~ msgstr "Adaptiv udjævning"
-
-#~ msgid "Alien Glow"
-#~ msgstr "Rumvæsenglød"
-
-#~ msgid "Arrow"
-#~ msgstr "Pil"
-
-#~ msgid "Create an arrow graphic with an eerie glow for web pages"
-#~ msgstr "Lav en pilegrafik med en mystisk glød til hjemmesider"
-
-#~ msgid "Down"
-#~ msgstr "Ned"
-
-#~ msgid "Left"
-#~ msgstr "Venstre"
-
-# "Orientering"
-#~ msgid "Orientation"
-#~ msgstr "Retning"
-
-#~ msgid "Right"
-#~ msgstr "Højre"
-
-#~ msgid "Up"
-#~ msgstr "Op"
-
-#~ msgid "_Arrow..."
-#~ msgstr "_Pil..."
-
-#~ msgid "Bar"
-#~ msgstr "Bjælke"
-
-#~ msgid "Bar height"
-#~ msgstr "Bjælkehøjde"
-
-#~ msgid "Bar length"
-#~ msgstr "Bjælkelængde"
-
-#~ msgid "Create an Hrule graphic with an eerie glow for web pages"
-#~ msgstr ""
-#~ "Lav en \"vandret skillelinje\"-grafik med en mystisk glød til hjemmesider"
-
-#~ msgid "_Hrule..."
-#~ msgstr "_Vandret skillelinje..."
-
-#~ msgid "Bullet"
-#~ msgstr "Punkttegn"
-
-#~ msgid "Create a bullet graphic with an eerie glow for web pages"
-#~ msgstr "Lav en punkttegnsgrafik med en mystisk glød til hjemmesider"
-
-#~ msgid "_Bullet..."
-#~ msgstr "_Punkttegn..."
-
-#~ msgid "B_utton..."
-#~ msgstr "_Knap..."
-
-#~ msgid "Button"
-#~ msgstr "Knap"
-
-#~ msgid "Create a button graphic with an eerie glow for web pages"
-#~ msgstr "Lav en knapgrafik med en mystisk glød til hjemmesider"
-
-#~ msgid "Glow"
-#~ msgstr "Glød"
-
-# eller "Glødradius"
-#~ msgid "Glow radius"
-#~ msgstr "Gløderadius"
-
-#~ msgid "Padding"
-#~ msgstr "Fyldning"
-
-#~ msgid "Text color"
-#~ msgstr "Tekstfarve"
-
-#~ msgid "Add an eerie glow around the selected region (or alpha)"
-#~ msgstr "Tilføj en mystisk glød rundt om det markerede område (eller alfa)"
-
-#~ msgid "Alien _Glow..."
-#~ msgstr "Mystisk _glød..."
-
-#~ msgid "Create a logo with an alien glow around the text"
-#~ msgstr "Lav et logo med en alien-glød rundt om teksten"
-
-#~ msgid "Glow size (pixels * 4)"
-#~ msgstr "Glødestørrelse (skærmpunkter * 4)"
-
-#~ msgid "Add psychedelic outlines to the selected region (or alpha)"
-#~ msgstr "Tilføj psykedeliske omrids til det markerede område (eller alfa)"
-
-#~ msgid "Alien _Neon..."
-#~ msgstr "Rumvæsen_neon..."
-
-#~ msgid "Create a logo with psychedelic outlines around the text"
-#~ msgstr "Lav et logo med psykedeliske omrids rundt om teksten"
-
-#~ msgid "Fade away"
-#~ msgstr "Udtoning"
-
-#~ msgid "Number of bands"
-#~ msgstr "Antal bånd"
-
-#~ msgid "Width of bands"
-#~ msgstr "Båndbredde"
-
-#~ msgid "Width of gaps"
-#~ msgstr "Mellemrumsbredde"
-
-#~ msgid ""
-#~ "Add a gradient effect, a drop shadow, and a background to the selected "
-#~ "region (or alpha)"
-#~ msgstr ""
-#~ "Tilføj en farveovergangseffekt, en slagskygge og en baggrund til det "
-#~ "markerede område (eller alfa)"
-
-#~ msgid ""
-#~ "Create a plain text logo with a gradient effect, a drop shadow, and a "
-#~ "background"
-#~ msgstr ""
-#~ "Lav et klartekstlogo med en farveovergangseffekt, en slagskygge og en "
-#~ "baggrund"
-
-#~ msgid "_Basic I..."
-#~ msgstr "_Basis I..."
-
-#~ msgid "Add a shadow and a highlight to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Tilføj en skygge og et højlysområde til det markerede område (eller alfa)"
-
-#~ msgid "B_asic II..."
-#~ msgstr "B_asis II..."
-
-#~ msgid "Create a simple logo with a shadow and a highlight"
-#~ msgstr "Lav et simpelt logo med en skygge og et højlysområde"
-
-#~ msgid "Bevel width"
-#~ msgstr "Facetbredde"
-
-#~ msgid "Create a simple, beveled button graphic for webpages"
-#~ msgstr "Lav en simpel facetskåret grafikknap til hjemmesider"
-
-#~ msgid "Lower-right color"
-#~ msgstr "Nederste-højre farve"
-
-#~ msgid "Pressed"
-#~ msgstr "Trykket"
-
-#~ msgid "Simple _Beveled Button..."
-#~ msgstr "Simpel _facetskåret knap..."
-
-#~ msgid "Upper-left color"
-#~ msgstr "Farve øverst til venstre"
-
-#~ msgid "Create a beveled pattern arrow for webpages"
-#~ msgstr "Lav en facetskåret mønsterpil til hjemmesider"
-
-#~ msgid "Create a beveled pattern bullet for webpages"
-#~ msgstr "Lav et facetskåret mønsterpunkttegn til hjemmesider"
-
-#~ msgid "Diameter"
-#~ msgstr "Diameter"
-
-#~ msgid "Create a beveled pattern button for webpages"
-#~ msgstr "Lav en facetskåret mønsterknap til hjemmesider"
-
-#~ msgid "Create a beveled pattern heading for webpages"
-#~ msgstr "Lav et facetskåret mønstertoppanel til hjemmesider"
-
-# Sidehoved, Er det ikke nærmere "Overskrift" eller "Tekst"
-#~ msgid "H_eading..."
-#~ msgstr "_Overskrift..."
-
-#~ msgid "Create a beveled pattern hrule for webpages"
-#~ msgstr "Lav en facetmønstret vandret skillelinje til hjemmesider"
-
-#~ msgid "Rule"
-#~ msgstr "Skillelinje"
-
-#~ msgid ""
-#~ "Add blended backgrounds, highlights, and shadows to the selected region "
-#~ "(or alpha)"
-#~ msgstr ""
-#~ "Tilføj blandede baggrunde, højlysområder og skygger til det markerede "
-#~ "område (eller alfa)"
-
-#~ msgid "Blen_ded..."
-#~ msgstr "Blan_det..."
-
-#~ msgid "Blend mode"
-#~ msgstr "Blandingsmåde"
-
-#~ msgid "Create a logo with blended backgrounds, highlights, and shadows"
-#~ msgstr "Lav et logo med blandede baggrunde, højlys og skygger"
-
-#~ msgid "Custom Gradient"
-#~ msgstr "Brugerdefineret farveovergang"
-
-# forskellige blandingsmåder
-# "Forgrund-baggrund-HSV" / "FG-BG-HSV"
-#~ msgid "FG-BG-HSV"
-#~ msgstr "Forgrund-baggrund (HSV)"
-
-# "Forgrund-baggrund-RGB" / "FG-BG-RGB"
-#~ msgid "FG-BG-RGB"
-#~ msgstr "Forgrund-baggrund (RGB)"
-
-# "Forgrund-gennemsigtig"
-#~ msgid "FG-Transparent"
-#~ msgstr "Forgrund, gennemsigtig"
-
-#~ msgid "Offset (pixels)"
-#~ msgstr "Forskydning (skærmpunkter)"
-
-#~ msgid "Add 'cow spots' to the selected region (or alpha)"
-#~ msgstr "Tilføj \"ko-pletter\" til det markerede område (eller alfa)"
-
-#~ msgid "Background Color"
-#~ msgstr "Baggrundsfarve"
-
-#~ msgid "Bo_vination..."
-#~ msgstr "K_vægeffekt..."
-
-#~ msgid "Create a logo with text in the style of 'cow spots'"
-#~ msgstr "Lav et logo med tekst i stil med \"ko-pletter\""
-
-# Vandret plettæthed
-#~ msgid "Spots density X"
-#~ msgstr "Plettæthed x"
-
-# "Lodret plettæthed"
-#~ msgid "Spots density Y"
-#~ msgstr "Plettæthed y"
-
-#~ msgid "Color 1"
-#~ msgstr "Farve 1"
-
-#~ msgid "Color 2"
-#~ msgstr "Farve 2"
-
-#~ msgid "Color 3"
-#~ msgstr "Farve 3"
-
-#~ msgid "Create an image filled with a camouflage pattern"
-#~ msgstr "Lav et billede udfyldt med et kamuflagemønster"
-
-#~ msgid "Granularity"
-#~ msgstr "Kornethed"
-
-#~ msgid "Image size"
-#~ msgstr "Billedstørrelse"
-
-#~ msgid "_Camouflage..."
-#~ msgstr "_Kamuflage..."
-
-#~ msgid "Background Image"
-#~ msgstr "Baggrundsbillede"
-
-# man kan enten få hugget teksten ind i baggrunden eller baggrunden
-# hugget væk så teksten står ud
-#~ msgid "Carve raised text"
-#~ msgstr "Udhug tekstomgivelser"
-
-#~ msgid "Carved..."
-#~ msgstr "Udskåret..."
-
-#~ msgid ""
-#~ "Create a logo with text raised above or carved in to the specified "
-#~ "background image"
-#~ msgstr ""
-#~ "Lav et logo med tekst hævet over eller udskåret ind i det angivne "
-#~ "baggrundsbillede"
-
-#~ msgid "Padding around text"
-#~ msgstr "Fyldning omkring tekst"
-
-#~ msgid "Chalk color"
-#~ msgstr "Kridtfarve"
-
-#~ msgid "Create a chalk drawing effect for the selected region (or alpha)"
-#~ msgstr "Lav en kridttegningseffekt til det markerede område (eller alfa)"
-
-#~ msgid "Create a logo resembling chalk scribbled on a blackboard"
-#~ msgstr "Lav et logo, der ligner kridt på en tavle"
-
-#~ msgid "_Chalk..."
-#~ msgstr "_Kridt..."
-
-#~ msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Tilføj en skåret træudskæringseffekt til det markerede område (eller alfa)"
-
-#~ msgid "Blur amount"
-#~ msgstr "Sløringsmængde"
-
-#~ msgid "Chip Awa_y..."
-#~ msgstr "Skær _væk..."
-
-# dækker så nogenlunde
-#~ msgid "Chip amount"
-#~ msgstr "Afskalningsmængde"
-
-# "en træudskæring" / "en trædskæring med hakker
-#~ msgid "Create a logo resembling a chipped wood carving"
-#~ msgstr "Opret et logo der ligner en skåret træudskæring"
-
-#~ msgid "Drop shadow"
-#~ msgstr "Slagskygge"
-
-#~ msgid "Fill BG with pattern"
-#~ msgstr "Udfyld baggrund med mønster"
-
-#~ msgid "Invert"
-#~ msgstr "Invertér"
-
-#~ msgid "Keep background"
-#~ msgstr "Behold baggrund"
-
-#~ msgid "Add a simple chrome effect to the selected region (or alpha)"
-#~ msgstr "Tilføj en enkel kromeffekt til det markerede område (eller alfa)"
-
-#~ msgid "Create a simplistic, but cool, chromed logo"
-#~ msgstr "Opret et enkelt, men smart, forkromet logo"
-
-#~ msgid "Offsets (pixels * 2)"
-#~ msgstr "Forskydning (skærmpunkter * 2)"
-
-#~ msgid ""
-#~ "Add a comic-book effect to the selected region (or alpha) by outlining "
-#~ "and filling with a gradient"
-#~ msgstr ""
-#~ "Tilføj en tegneserieeffekt til det markerede område (eller alfa) ved at "
-#~ "omridse og udfylde med en farveovergang"
-
-#~ msgid "Comic Boo_k..."
-#~ msgstr "Te_gneserie..."
-
-#~ msgid ""
-#~ "Create a comic-book style logo by outlining and filling with a gradient"
-#~ msgstr ""
-#~ "Opret et logo med en tegneseriestil omridset og udfyldt med en "
-#~ "farveovergang"
-
-#~ msgid "Outline color"
-#~ msgstr "Omridsfarve"
-
-#~ msgid "Outline size"
-#~ msgstr "Omridsstørrelse"
-
-#~ msgid ""
-#~ "Add a metallic effect to the selected region (or alpha) with reflections "
-#~ "and perspective shadows"
-#~ msgstr ""
-#~ "Tilføj en metaleffekt til det markerede område (eller alfa) med "
-#~ "reflektioner og perspektivskygger"
-
-#~ msgid "Cool _Metal..."
-#~ msgstr "Smart _metal..."
-
-#~ msgid "Create a metallic logo with reflections and perspective shadows"
-#~ msgstr "Opret et metallogo med reflektioner og perspektivskygger"
-
-#~ msgid "Effect size (pixels)"
-#~ msgstr "Effektstørrelse (skærmpunkter)"
-
-#~ msgid "Background image"
-#~ msgstr "Baggrundsbillede"
-
-#~ msgid ""
-#~ "Create a logo with a crystal/gel effect displacing the image underneath"
-#~ msgstr ""
-#~ "Opret et logo med en krystal-/gel-effekt der viser billedet nedenunder"
-
-#~ msgid "Crystal..."
-#~ msgstr "Krystal..."
-
-#~ msgid "Create an image filled with a Land Pattern"
-#~ msgstr "Opret et billede udfyldt med et landmønster"
-
-#~ msgid "Detail level"
-#~ msgstr "Detaljeniveau"
-
-#~ msgid "Image height"
-#~ msgstr "Billedhøjde"
-
-#~ msgid "Image width"
-#~ msgstr "Billedbredde"
-
-#~ msgid "Random seed"
-#~ msgstr "Startværdi for tilfældighedsgenerator"
-
-#~ msgid "Scale X"
-#~ msgstr "X-skalering"
-
-#~ msgid "Scale Y"
-#~ msgstr "Y-skalering"
-
-#~ msgid "_Flatland..."
-#~ msgstr "_Fladt land..."
-
-#~ msgid ""
-#~ "Add a frost effect to the selected region (or alpha) with an added drop "
-#~ "shadow"
-#~ msgstr ""
-#~ "Tilføj en frosteffekt til det markerede område (eller alfa) med en "
-#~ "tilføjet slagskygge"
-
-#~ msgid "Create frozen logo with an added drop shadow"
-#~ msgstr "Opret frossent logo med en tilføjet slagskygge"
-
-#~ msgid "_Frosty..."
-#~ msgstr "_Frosset..."
-
-#~ msgid ""
-#~ "Add gradients, patterns, shadows, and bump maps to the selected region "
-#~ "(or alpha)"
-#~ msgstr ""
-#~ "Tilføj farveovergange, mønstre, skygger og ujævnhedskort til det "
-#~ "markerede område (eller alfa)"
-
-# 'blend' er vist overflødigt
-#~ msgid "Blend gradient (outline)"
-#~ msgstr "Farveovergang (omrids)"
-
-#~ msgid "Blend gradient (text)"
-#~ msgstr "Farveovergang (tekst)"
-
-#~ msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-#~ msgstr "Lav et logo med farveovergange, mønstre, skygger og ujævnhedskort"
-
-#~ msgid "Glo_ssy..."
-#~ msgstr "_Blank..."
-
-#~ msgid "Outline gradient reverse"
-#~ msgstr "Omridsfarveovergang, omvendt"
-
-#~ msgid "Pattern (outline)"
-#~ msgstr "Mønster (omrids)"
-
-#~ msgid "Pattern (overlay)"
-#~ msgstr "Mønster (overlægning)"
-
-#~ msgid "Pattern (text)"
-#~ msgstr "Mønster (tekst)"
-
-#~ msgid "Text gradient reverse"
-#~ msgstr "Tekstovergang, omvendt"
-
-#~ msgid "Use pattern for outline instead of gradient"
-#~ msgstr "Benyt mønster til omrids i stedet for farveovergang"
-
-#~ msgid "Use pattern for text instead of gradient"
-#~ msgstr "Benyt mønster til tekst i stedet for farveovergang"
-
-#~ msgid "Use pattern overlay"
-#~ msgstr "Benyt mønsteroverlægning"
-
-#~ msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Tilføj en glødende varm metaleffekt til det markerede område (eller alfa)"
-
-#~ msgid "Create a logo that looks like glowing hot metal"
-#~ msgstr "Lav et logo der ser ud som glødende varmt metal"
-
-#~ msgid "Glo_wing Hot..."
-#~ msgstr "Glø_dende varmt..."
-
-#~ msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Tilføj et skinnende udseende og kanteffekt til det markerede område "
-#~ "(eller alfa)"
-
-#~ msgid "Bevel height (sharpness)"
-#~ msgstr "Facethøjde (skarphed)"
-
-#~ msgid "Border size (pixels)"
-#~ msgstr "Kantstørrelse (skærmpunkter)"
-
-#~ msgid "Create a logo with a shiny look and beveled edges"
-#~ msgstr "Lav et logo med et skinnende udseende og facetskårne kanter"
-
-#~ msgid "Gradient Beve_l..."
-#~ msgstr "Fa_cetkant med farveovergang..."
-
-#~ msgid "Create a logo in a two-color, scribbled text style"
-#~ msgstr "Opret et logo i en tofarvet, griflet tekststil"
-
-#~ msgid "Frame color"
-#~ msgstr "Rammefarve"
-
-#~ msgid "Frame size"
-#~ msgstr "Rammestørrelse"
-
-# Imigre ser ud til at være et firma der laver skrifttyper
-#~ msgid "Imigre-_26..."
-#~ msgstr "Imigre-_26..."
-
-#~ msgid "Create an image filled with a topographic map pattern"
-#~ msgstr "Opret et billede udfyldt med et topografisk kortmønster"
-
-#~ msgid "Land height"
-#~ msgstr "Landhøjde"
-
-# 'sea' er havet her (drejer sig om landkort)
-#~ msgid "Sea depth"
-#~ msgstr "Havdybde"
-
-#~ msgid "_Land..."
-#~ msgstr "_Land..."
-
-#~ msgid "Convert the selected region (or alpha) into a neon-sign like object"
-#~ msgstr ""
-#~ "Omdan det valgte område (eller alfa) til et neonskiltlignende objekt"
-
-#~ msgid "Create a logo in the style of a neon sign"
-#~ msgstr "Lav et logo i stil med et neonskilt"
-
-#~ msgid "Create shadow"
-#~ msgstr "Generér skygge"
-
-#~ msgid "N_eon..."
-#~ msgstr "N_eon..."
-
-#~ msgid "Cell size (pixels)"
-#~ msgstr "Cellestørrelse (skærmpunkter)"
-
-#~ msgid "Create a logo in the style of newspaper printing"
-#~ msgstr "Lav et logo i stil med avistrykning"
-
-#~ msgid "Density (%)"
-#~ msgstr "Tæthed (%)"
-
-#~ msgid "Newsprint Te_xt..."
-#~ msgstr "Avistr_yk-tekst..."
-
-#~ msgid "Create images, each containing an oval button graphic"
-#~ msgstr "Lav billeder, der hver indeholder en oval knapgrafik"
-
-#~ msgid "Lower color"
-#~ msgstr "Nederste farve"
-
-#~ msgid "Lower color (active)"
-#~ msgstr "Nederste farve (aktiv)"
-
-#~ msgid "Not pressed"
-#~ msgstr "Ikke trykket"
-
-#~ msgid "Not pressed (active)"
-#~ msgstr "Ikke trykket (aktiv)"
-
-#~ msgid "Padding X"
-#~ msgstr "Fyldning x"
-
-#~ msgid "Padding Y"
-#~ msgstr "Fyldning y"
-
-#~ msgid "Round ratio"
-#~ msgstr "Afrundingsforhold"
-
-#~ msgid "Text color (active)"
-#~ msgstr "Tekstfarve (aktiv)"
-
-#~ msgid "Upper color"
-#~ msgstr "Øverste farve"
-
-#~ msgid "Upper color (active)"
-#~ msgstr "Øverste farve (aktiv)"
-
-#~ msgid "_Round Button..."
-#~ msgstr "_Rund knap..."
-
-#~ msgid "Behavior"
-#~ msgstr "Opførsel"
-
-#~ msgid "Create an image filled with an Earth-like map pattern"
-#~ msgstr "Opret et billede udfyldt med et jordlignende kortmønster"
-
-#~ msgid "Detail in Middle"
-#~ msgstr "Detaljer i midten"
-
-#~ msgid "Render _Map..."
-#~ msgstr "Optegn _kort..."
-
-#~ msgid "Tile"
-#~ msgstr "Flise"
-
-#~ msgid "Create a State Of The Art chromed logo"
-#~ msgstr "Opret et hypermoderne forkromet logo"
-
-#~ msgid "SOTA Chrome..."
-#~ msgstr "SOTA-krom..."
-
-#~ msgid "Create a logo with a speedy text effect"
-#~ msgstr "Opret et logo med en fartteksteffekt"
-
-#~ msgid "Speed Text..."
-#~ msgstr "Farttekst..."
-
-#~ msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-#~ msgstr ""
-#~ "Opret et logo der bruger en stenlignende tekstur, en novaglød og skygge"
-
-#~ msgid "Sta_rscape..."
-#~ msgstr "Stje_rnehimmel..."
-
-#~ msgid "Create an image filled with a swirled tile effect"
-#~ msgstr "Opret et billede udfyldt med en hvirvlet felteffekt"
-
-#~ msgid "Swirl-_Tile..."
-#~ msgstr "_Hvirvelfelt..."
-
-#~ msgid "Whirl amount"
-#~ msgstr "Omdrejningsgrad"
-
-#~ msgid "Create an image filled with a swirly pattern"
-#~ msgstr "Opret et billede udfyldt med et hvirvelmønster"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "Antal omdrejninger"
-
-#~ msgid "Quarter size"
-#~ msgstr "Størrelse for fjerdedel"
-
-#~ msgid "Whirl angle"
-#~ msgstr "Omdrejningsvinkel"
-
-#~ msgid "_Swirly..."
-#~ msgstr "_Hvirvlende..."
-
-#~ msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Tilføj spor af partikeleffekter til det markerede område (eller alfa)"
-
-#~ msgid "Base color"
-#~ msgstr "Grundfarve"
-
-#~ msgid "Create a logo using a Trace Of Particles effect"
-#~ msgstr "Opret et logo der bruger effekten spor af partikler"
-
-#~ msgid "Edge only"
-#~ msgstr "Kun kant"
-
-#~ msgid "Edge width"
-#~ msgstr "Kantbredde"
-
-#~ msgid "Hit rate"
-#~ msgstr "Sammenstødsgrad"
-
-#~ msgid "_Particle Trace..."
-#~ msgstr "_Partikelspor..."
-
-#~ msgid "Antialias"
-#~ msgstr "Udjævning"
-
-#~ msgid ""
-#~ "Create a logo by rendering the specified text along the perimeter of a "
-#~ "circle"
-#~ msgstr ""
-#~ "Opret et logo ved at optegne den angivne tekst langs omkredsen af en "
-#~ "cirkel"
-
-#~ msgid "Fill angle"
-#~ msgstr "Udfyldningsvinkel"
-
-#~ msgid "Text C_ircle..."
-#~ msgstr "Tekstc_irkel..."
-
-#~ msgid ""
-#~ "Create a textured logo with highlights, shadows, and a mosaic background"
-#~ msgstr ""
-#~ "Opret et teksturlogo med fremhævninger, skygger og en mosaikbaggrund"
-
-#~ msgid "Ending blend"
-#~ msgstr "Afslutter blanding"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a texture and add highlights, "
-#~ "shadows, and a mosaic background"
-#~ msgstr ""
-#~ "Udfyld det markerede område (eller alfa) med en tekstur og tilføj "
-#~ "fremhævninger, skygger og en mosaikbaggrund"
-
-#~ msgid "Hexagons"
-#~ msgstr "Sekskanter"
-
-#~ msgid "Mosaic tile type"
-#~ msgstr "Mosaikflisetype"
-
-#~ msgid "Octagons"
-#~ msgstr "Ottekanter"
-
-#~ msgid "Squares"
-#~ msgstr "Firkanter"
-
-#~ msgid "Starting blend"
-#~ msgstr "Starter blanding"
-
-#~ msgid "Text pattern"
-#~ msgstr "Tekstmønster"
-
-#~ msgid "_Textured..."
-#~ msgstr "Med _tekstur..."
-
-#~ msgid "Create a decorative web title header"
-#~ msgstr "Opret et dekorativt internetsidehoved for titlen"
-
-#~ msgid "Web Title Header..."
-#~ msgstr "Internetsidehoved for titlen..."
-
-#~ msgid "Create an image filled with a Truchet pattern"
-#~ msgstr "Opret et billede udfyldt med et Truchetmønster"
-
-#~ msgid "Foreground color"
-#~ msgstr "Forgrundsfarve"
-
-#~ msgid "T_ruchet..."
-#~ msgstr "_Truchet..."
