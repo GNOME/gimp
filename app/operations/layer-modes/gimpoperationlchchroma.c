@@ -87,7 +87,8 @@ gimp_operation_lch_chroma_process (GeglOperation       *operation,
 }
 
 static void
-chroma_pre_process (const Babl   *format,
+chroma_pre_process (const Babl   *from_fish,
+                    const Babl   *to_fish,
                     const gfloat *in,
                     const gfloat *layer,
                     gfloat       *out,
@@ -96,8 +97,8 @@ chroma_pre_process (const Babl   *format,
   gfloat tmp[4 * samples], *layer_lab = tmp;
   gint   i;
 
-  babl_process (babl_fish (format, "CIE Lab alpha float"), in, out, samples);
-  babl_process (babl_fish (format, "CIE Lab alpha float"), layer, layer_lab, samples);
+  babl_process (from_fish, in, out, samples);
+  babl_process (from_fish, layer, layer_lab, samples);
 
   for (i = 0; i < samples; ++i)
     {
@@ -118,24 +119,22 @@ chroma_pre_process (const Babl   *format,
         }
     }
 
-  babl_process (babl_fish ("CIE Lab alpha float", format), out, out, samples);
+  babl_process (to_fish, out, out, samples);
 }
 
 static void
-chroma_post_process (const gfloat *in,
-                     const gfloat *layer,
-                     const gfloat *mask,
-                     gfloat       *out,
-                     gfloat        opacity,
-                     glong         samples)
+gimp_operation_layer_composite (const gfloat *in,
+                                const gfloat *layer,
+                                const gfloat *mask,
+                                gfloat       *out,
+                                gfloat        opacity,
+                                glong         samples)
 {
   while (samples--)
     {
       gfloat comp_alpha = layer[ALPHA] * opacity;
-
       if (mask)
         comp_alpha *= *mask++;
-
       if (comp_alpha != 0.0f)
         {
           out[RED]   = out[RED]   * comp_alpha + in[RED]   * (1.0f - comp_alpha);
@@ -145,7 +144,6 @@ chroma_post_process (const gfloat *in,
       else
         {
           gint b;
-
           for (b = RED; b < ALPHA; b++)
             {
               out[b] = in[b];
@@ -170,8 +168,16 @@ gimp_operation_lch_chroma_process_pixels_linear (gfloat              *in,
                                                  const GeglRectangle *roi,
                                                  gint                 level)
 {
-  chroma_pre_process (babl_format ("RGBA float"), in, layer, out, samples);
-  chroma_post_process (in, layer, mask, out, opacity, samples);
+  static const Babl *from_fish;
+  static const Babl *to_fish;
+  
+  if (!from_fish)
+    from_fish = babl_fish ("RGBA float", "CIE Lab alpha float");
+  if (!to_fish)
+     to_fish = babl_fish ("CIE Lab alpha float", "RGBA float");
+
+  chroma_pre_process (from_fish, to_fish, in, layer, out, samples);
+  gimp_operation_layer_composite (in, layer, mask, out, opacity, samples);
 
   return TRUE;
 }
@@ -186,8 +192,17 @@ gimp_operation_lch_chroma_process_pixels (gfloat              *in,
                                           const GeglRectangle *roi,
                                           gint                 level)
 {
-  chroma_pre_process (babl_format ("R'G'B'A float"), in, layer, out, samples);
-  chroma_post_process (in, layer, mask, out, opacity, samples);
+  static const Babl *from_fish = NULL;
+  static const Babl *to_fish = NULL;
+  
+  if (!from_fish)
+    from_fish = babl_fish ("R'G'B'A float", "CIE Lab alpha float");
+  if (!to_fish)
+     to_fish = babl_fish ("CIE Lab alpha float", "R'G'B'A float");
+
+  chroma_pre_process (from_fish, to_fish, in, layer, out, samples);
+  gimp_operation_layer_composite (in, layer, mask, out, opacity, samples);
 
   return TRUE;
 }
+
