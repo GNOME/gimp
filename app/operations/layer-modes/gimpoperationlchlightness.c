@@ -98,14 +98,14 @@ lightness_pre_process (const Babl   *format,
                        gfloat       *out,
                        glong         samples)
 {
-  gfloat tmp[2 * samples], *layer_lab = tmp;
+  gfloat lightness_alpha[samples * 2];
   gint   i;
 
   babl_process (babl_fish (format, "CIE Lab alpha float"), in, out, samples);
-  babl_process (babl_fish (format, "CIE L alpha float"), layer, layer_lab, samples);
+  babl_process (babl_fish (format, "CIE L alpha float"), layer, lightness_alpha, samples);
 
   for (i = 0; i < samples; ++i)
-    out[4 * i] = layer_lab[2 * i];
+    out[4 * i] = lightness_alpha[2 * i];
 
   babl_process (babl_fish ("CIE Lab alpha float", format), out, out, samples);
 }
