@@ -5,6 +5,7 @@
  * Copyright (C) 2015 Elle Stone <ellestone@ninedegreesbelow.com>
  *                    Massimo Valentini <mvalentini@src.gnome.org>
  *                    Thomas Manni <thomas.manni@free.fr>
+ *               2017 Øyvind Kolås <pippin@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,17 +22,10 @@
  */
 
 #include "config.h"
-
-#include <cairo.h>
 #include <gegl-plugin.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include "libgimpmath/gimpmath.h"
-
+#include <math.h>
 #include "../operations-types.h"
-
 #include "gimpoperationlchchroma.h"
-
 
 static gboolean gimp_operation_lch_chroma_process (GeglOperation       *operation,
                                                    void                *in_buf,
@@ -109,7 +103,7 @@ chroma_pre_process (const Babl   *format,
     {
       gfloat A1 = out[4 * i + 1];
       gfloat B1 = out[4 * i + 2];
-      gfloat c1 = hypot (A1, B1);
+      gfloat c1 = hypotf (A1, B1);
 
       if (c1 != 0)
         {

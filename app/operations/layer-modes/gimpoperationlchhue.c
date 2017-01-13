@@ -21,16 +21,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include "config.h"
-
-#include <cairo.h>
+#include "config.h"
 #include <gegl-plugin.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include "libgimpmath/gimpmath.h"
-
+#include <math.h>
 #include "../operations-types.h"
-
 #include "gimpoperationlchhue.h"
 
 

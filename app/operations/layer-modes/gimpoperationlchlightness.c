@@ -5,6 +5,7 @@
  * Copyright (C) 2015 Elle Stone <ellestone@ninedegreesbelow.com>
  *                    Massimo Valentini <mvalentini@src.gnome.org>
  *                    Thomas Manni <thomas.manni@free.fr>
+ *               2017 Øyvind Kolås <pippin@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +23,7 @@
 
  #include "config.h"
 
-#include <cairo.h>
 #include <gegl-plugin.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include "libgimpcolor/gimpcolor.h"
-
 #include "../operations-types.h"
 
 #include "gimpoperationlchlightness.h"
