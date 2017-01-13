@@ -96,7 +96,8 @@ gimp_operation_grain_extract_process_pixels (gfloat              *in,
     {
       gfloat comp_alpha;
 
-      comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
+      comp_alpha = layer[ALPHA] * opacity;
+
       if (has_mask)
         comp_alpha *= *mask;
 
