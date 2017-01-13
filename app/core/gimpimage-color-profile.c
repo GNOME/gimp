@@ -743,9 +743,7 @@ gimp_image_convert_profile_layers (GimpImage                *image,
                                        intent, bpc,
                                        sub_progress);
 
-      gimp_drawable_update (drawable, 0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (drawable)),
-                            gimp_item_get_height (GIMP_ITEM (drawable)));
+      gimp_drawable_update (drawable, 0, 0, -1, -1);
 
       if (sub_progress)
         g_object_unref (sub_progress);

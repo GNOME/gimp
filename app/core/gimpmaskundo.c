@@ -271,10 +271,7 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   mask_undo->y      = y;
   mask_undo->format = format;
 
-  gimp_drawable_update (drawable,
-                        0, 0,
-                        gimp_item_get_width  (item),
-                        gimp_item_get_height (item));
+  gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 static void

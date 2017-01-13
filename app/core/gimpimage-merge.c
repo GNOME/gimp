@@ -687,10 +687,7 @@ gimp_image_merge_layers (GimpImage     *image,
                             TRUE);
     }
 
-  gimp_drawable_update (GIMP_DRAWABLE (merge_layer),
-                        0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (merge_layer)),
-                        gimp_item_get_height (GIMP_ITEM (merge_layer)));
+  gimp_drawable_update (GIMP_DRAWABLE (merge_layer), 0, 0, -1, -1);
 
   return merge_layer;
 }

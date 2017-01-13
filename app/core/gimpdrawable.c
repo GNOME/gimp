@@ -973,6 +973,12 @@ gimp_drawable_update (GimpDrawable *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
+  if (width == -1)
+    width = gimp_item_get_width (GIMP_ITEM (drawable));
+
+  if (height == -1)
+    height = gimp_item_get_height (GIMP_ITEM (drawable));
+
   g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
                  x, y, width, height);
 }
@@ -1192,10 +1198,7 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
       gimp_item_get_offset_x (item) != offset_x                        ||
       gimp_item_get_offset_y (item) != offset_y)
     {
-      gimp_drawable_update (drawable,
-                            0, 0,
-                            gimp_item_get_width  (item),
-                            gimp_item_get_height (item));
+      gimp_drawable_update (drawable, 0, 0, -1, -1);
     }
 
   g_object_freeze_notify (G_OBJECT (drawable));
@@ -1207,10 +1210,7 @@ gimp_drawable_set_buffer_full (GimpDrawable *drawable,
 
   g_object_thaw_notify (G_OBJECT (drawable));
 
-  gimp_drawable_update (drawable,
-                        0, 0,
-                        gimp_item_get_width  (item),
-                        gimp_item_get_height (item));
+  gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 GeglNode *

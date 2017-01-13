@@ -392,10 +392,9 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
   layer = gimp_image_get_active_layer (image);
 
   if (layer && gimp_layer_is_floating_sel (layer))
-    gimp_drawable_update (GIMP_DRAWABLE (layer),
-                          0, 0,
-                          gimp_item_get_width  (GIMP_ITEM (layer)),
-                          gimp_item_get_height (GIMP_ITEM (layer)));
+    {
+      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+    }
 
 #if 0
   /*  invalidate the preview  */
@@ -663,8 +662,7 @@ gimp_selection_load (GimpSelection *selection,
 
   GIMP_CHANNEL (selection)->bounds_known = FALSE;
 
-  gimp_drawable_update (GIMP_DRAWABLE (selection),
-                        0, 0, width, height);
+  gimp_drawable_update (GIMP_DRAWABLE (selection), 0, 0, -1, -1);
 }
 
 GimpChannel *

@@ -72,10 +72,7 @@ gimp_drawable_fill (GimpDrawable *drawable,
                              gimp_drawable_get_buffer (drawable),
                              &color, pattern, 0, 0);
 
-  gimp_drawable_update (drawable,
-                        0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (drawable)),
-                        gimp_item_get_height (GIMP_ITEM (drawable)));
+  gimp_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 void

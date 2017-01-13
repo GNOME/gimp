@@ -1275,9 +1275,7 @@ gimp_channel_real_feather (GimpChannel *channel,
 
   channel->bounds_known = FALSE;
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (channel)),
-                        gimp_item_get_height (GIMP_ITEM (channel)));
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
@@ -1299,9 +1297,7 @@ gimp_channel_real_sharpen (GimpChannel *channel,
 
   channel->bounds_known = FALSE;
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (channel)),
-                        gimp_item_get_height (GIMP_ITEM (channel)));
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
@@ -1342,9 +1338,7 @@ gimp_channel_real_clear (GimpChannel *channel,
   channel->x2           = gimp_item_get_width  (GIMP_ITEM (channel));
   channel->y2           = gimp_item_get_height (GIMP_ITEM (channel));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (channel)),
-                        gimp_item_get_height (GIMP_ITEM (channel)));
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
@@ -1373,9 +1367,7 @@ gimp_channel_real_all (GimpChannel *channel,
   channel->x2           = gimp_item_get_width  (GIMP_ITEM (channel));
   channel->y2           = gimp_item_get_height (GIMP_ITEM (channel));
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (channel)),
-                        gimp_item_get_height (GIMP_ITEM (channel)));
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
@@ -1402,9 +1394,7 @@ gimp_channel_real_invert (GimpChannel *channel,
 
       channel->bounds_known = FALSE;
 
-      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (channel)),
-                            gimp_item_get_height (GIMP_ITEM (channel)));
+      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
     }
 }
 
@@ -1480,9 +1470,7 @@ gimp_channel_real_border (GimpChannel            *channel,
 
   channel->bounds_known = FALSE;
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (channel)),
-                        gimp_item_get_height (GIMP_ITEM (channel)));
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
@@ -1548,9 +1536,7 @@ gimp_channel_real_grow (GimpChannel *channel,
 
   channel->bounds_known = FALSE;
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (channel)),
-                        gimp_item_get_height (GIMP_ITEM (channel)));
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
@@ -1606,9 +1592,7 @@ gimp_channel_real_shrink (GimpChannel *channel,
 
   channel->bounds_known = FALSE;
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (channel)),
-                        gimp_item_get_height (GIMP_ITEM (channel)));
+  gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 }
 
 static void
@@ -1797,10 +1781,7 @@ gimp_channel_set_color (GimpChannel   *channel,
                                     &channel->color);
         }
 
-      gimp_drawable_update (GIMP_DRAWABLE (channel),
-                            0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (channel)),
-                            gimp_item_get_height (GIMP_ITEM (channel)));
+      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 
       g_signal_emit (channel, channel_signals[COLOR_CHANGED], 0);
     }
@@ -1851,10 +1832,7 @@ gimp_channel_set_opacity (GimpChannel *channel,
                                     &channel->color);
         }
 
-      gimp_drawable_update (GIMP_DRAWABLE (channel),
-                            0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (channel)),
-                            gimp_item_get_height (GIMP_ITEM (channel)));
+      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
 
       g_signal_emit (channel, channel_signals[COLOR_CHANGED], 0);
     }
@@ -1900,10 +1878,7 @@ gimp_channel_set_show_masked (GimpChannel *channel,
             }
         }
 
-      gimp_drawable_update (GIMP_DRAWABLE (channel),
-                            0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (channel)),
-                            gimp_item_get_height (GIMP_ITEM (channel)));
+      gimp_drawable_update (GIMP_DRAWABLE (channel), 0, 0, -1, -1);
     }
 }
 

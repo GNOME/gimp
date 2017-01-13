@@ -336,10 +336,7 @@ gimp_drawable_fs_affect_changed (GimpImage       *image,
 
   gimp_drawable_sync_fs_filter (drawable);
 
-  gimp_drawable_update (GIMP_DRAWABLE (fs),
-                        0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (fs)),
-                        gimp_item_get_height (GIMP_ITEM (fs)));
+  gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
@@ -350,10 +347,7 @@ gimp_drawable_fs_mask_changed (GimpImage    *image,
 
   gimp_drawable_sync_fs_filter (drawable);
 
-  gimp_drawable_update (GIMP_DRAWABLE (fs),
-                        0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (fs)),
-                        gimp_item_get_height (GIMP_ITEM (fs)));
+  gimp_drawable_update (GIMP_DRAWABLE (fs), 0, 0, -1, -1);
 }
 
 static void
