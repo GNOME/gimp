@@ -5,6 +5,7 @@
  * Copyright (C) 2015 Elle Stone <ellestone@ninedegreesbelow.com>
  *                    Massimo Valentini <mvalentini@src.gnome.org>
  *                    Thomas Manni <thomas.manni@free.fr>
+ *               2017 Øyvind Kolås <pippin@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,13 +110,13 @@ hue_pre_process (const Babl   *format,
     {
       gfloat A2 = layer_lab[4 * i + 1];
       gfloat B2 = layer_lab[4 * i + 2];
-      gfloat c2 = hypot (A2, B2);
+      gfloat c2 = hypotf (A2, B2);
 
-      if (c2 > 0.1)
+      if (c2 > 0.1f)
         {
           gfloat A1 = out[4 * i + 1];
           gfloat B1 = out[4 * i + 2];
-          gfloat c1 = hypot (A1, B1);
+          gfloat c1 = hypotf (A1, B1);
           gfloat A = c1 * A2 / c2;
           gfloat B = c1 * B2 / c2;
 
