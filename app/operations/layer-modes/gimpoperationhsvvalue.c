@@ -101,43 +101,28 @@ gimp_operation_hsv_value_process_pixels (gfloat              *in,
       GimpHSV layer_hsv, out_hsv;
       GimpRGB layer_rgb = {layer[0], layer[1], layer[2]};
       GimpRGB out_rgb   = {in[0], in[1], in[2]};
-      gfloat  comp_alpha, new_alpha;
+      gfloat  comp_alpha = layer[ALPHA] * opacity;
 
-      comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
       if (has_mask)
         comp_alpha *= *mask;
 
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
-
-      if (comp_alpha && new_alpha)
+      if (comp_alpha != 0.0f)
         {
-          gint   b;
-          gfloat out_tmp[3];
-          gfloat ratio = comp_alpha / new_alpha;
-
           gimp_rgb_to_hsv (&layer_rgb, &layer_hsv);
           gimp_rgb_to_hsv (&out_rgb, &out_hsv);
 
           out_hsv.v = layer_hsv.v;
           gimp_hsv_to_rgb (&out_hsv, &out_rgb);
 
-          out_tmp[0] = out_rgb.r;
-          out_tmp[1] = out_rgb.g;
-          out_tmp[2] = out_rgb.b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = out_tmp[b] * ratio + in[b] * (1.0 - ratio);
-            }
+          out[RED]   = out_rgb.r * comp_alpha + in[RED]   * (1.0 - comp_alpha);
+          out[GREEN] = out_rgb.g * comp_alpha + in[GREEN] * (1.0 - comp_alpha);
+          out[BLUE]  = out_rgb.b * comp_alpha + in[BLUE]  * (1.0 - comp_alpha);
         }
       else
         {
-          gint b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
+          out[RED]   = in[RED];
+          out[GREEN] = in[GREEN];
+          out[BLUE]  = in[BLUE];
         }
 
       out[ALPHA] = in[ALPHA];
