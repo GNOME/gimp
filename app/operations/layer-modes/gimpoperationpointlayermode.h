@@ -52,4 +52,42 @@ struct _GimpOperationPointLayerMode
 GType   gimp_operation_point_layer_mode_get_type (void) G_GNUC_CONST;
 
 
+static inline void
+gimp_operation_layer_composite (const gfloat *in,
+                                const gfloat *layer,
+                                const gfloat *mask,
+                                gfloat       *out,
+                                gfloat        opacity,
+                                glong         samples)
+{
+  while (samples--)
+    {
+      gfloat comp_alpha = layer[ALPHA] * opacity;
+      if (mask)
+        comp_alpha *= *mask++;
+      if (comp_alpha != 0.0f)
+        {
+          out[RED]   = out[RED]   * comp_alpha + in[RED]   * (1.0f - comp_alpha);
+          out[GREEN] = out[GREEN] * comp_alpha + in[GREEN] * (1.0f - comp_alpha);
+          out[BLUE]  = out[BLUE]  * comp_alpha + in[BLUE]  * (1.0f - comp_alpha);
+        }
+      else
+        {
+          gint b;
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+        }
+
+      out[ALPHA] = in[ALPHA];
+
+      in    += 4;
+      layer += 4;
+      out   += 4;
+    }
+}
+
+
+
 #endif /* __GIMP_OPERATION_POINT_LAYER_MODE_H__ */

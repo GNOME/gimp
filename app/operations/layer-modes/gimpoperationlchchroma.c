@@ -122,42 +122,6 @@ chroma_pre_process (const Babl   *from_fish,
   babl_process (to_fish, out, out, samples);
 }
 
-static void
-gimp_operation_layer_composite (const gfloat *in,
-                                const gfloat *layer,
-                                const gfloat *mask,
-                                gfloat       *out,
-                                gfloat        opacity,
-                                glong         samples)
-{
-  while (samples--)
-    {
-      gfloat comp_alpha = layer[ALPHA] * opacity;
-      if (mask)
-        comp_alpha *= *mask++;
-      if (comp_alpha != 0.0f)
-        {
-          out[RED]   = out[RED]   * comp_alpha + in[RED]   * (1.0f - comp_alpha);
-          out[GREEN] = out[GREEN] * comp_alpha + in[GREEN] * (1.0f - comp_alpha);
-          out[BLUE]  = out[BLUE]  * comp_alpha + in[BLUE]  * (1.0f - comp_alpha);
-        }
-      else
-        {
-          gint b;
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
-        }
-
-      out[ALPHA] = in[ALPHA];
-
-      in    += 4;
-      layer += 4;
-      out   += 4;
-    }
-}
-
 gboolean
 gimp_operation_lch_chroma_process_pixels_linear (gfloat              *in,
                                                  gfloat              *layer,
