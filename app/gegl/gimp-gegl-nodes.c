@@ -182,8 +182,8 @@ gimp_gegl_mode_is_linear (GimpLayerMode mode)
     case GIMP_LAYER_MODE_DISSOLVE:
       return TRUE;
 
-    case GIMP_LAYER_MODE_BEHIND_NON_LINEAR:
-      return TRUE;
+    case GIMP_LAYER_MODE_BEHIND:
+      return FALSE;
 
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
@@ -215,7 +215,6 @@ gimp_gegl_mode_is_linear (GimpLayerMode mode)
       return FALSE;
 
     case GIMP_LAYER_MODE_NORMAL:
-    case GIMP_LAYER_MODE_BEHIND:
       return TRUE;
 
     case GIMP_LAYER_MODE_MULTIPLY:
@@ -238,6 +237,7 @@ gimp_gegl_mode_is_linear (GimpLayerMode mode)
     case GIMP_LAYER_MODE_GRAIN_MERGE:
       return FALSE;
 
+    case GIMP_LAYER_MODE_BEHIND_LINEAR:
     case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
     case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
     case GIMP_LAYER_MODE_ADDITION_LINEAR:
@@ -285,8 +285,8 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
       operation = "gimp:dissolve";
       break;
 
-    case GIMP_LAYER_MODE_BEHIND_NON_LINEAR:
     case GIMP_LAYER_MODE_BEHIND:
+    case GIMP_LAYER_MODE_BEHIND_LINEAR:
       operation = "gimp:behind";
       break;
 

@@ -157,7 +157,7 @@ typedef enum
   /*  Modes that exist since ancient times  */
   GIMP_LAYER_MODE_NORMAL_NON_LINEAR,     /*< desc="Normal (non-linear)"      >*/
   GIMP_LAYER_MODE_DISSOLVE,              /*< desc="Dissolve"                 >*/
-  GIMP_LAYER_MODE_BEHIND_NON_LINEAR,     /*< desc="Behind (non-linear)"      >*/
+  GIMP_LAYER_MODE_BEHIND,                /*< desc="Behind"                   >*/
   GIMP_LAYER_MODE_MULTIPLY_LEGACY,       /*< desc="Multiply (legacy)"        >*/
   GIMP_LAYER_MODE_SCREEN_LEGACY,         /*< desc="Screen (legacy)"          >*/
   GIMP_LAYER_MODE_OVERLAY_LEGACY,        /*< desc="Old broken Overlay"       >*/
@@ -188,7 +188,7 @@ typedef enum
 
   /*  Since 2.10  */
   GIMP_LAYER_MODE_NORMAL,                /*< desc="Normal"                   >*/
-  GIMP_LAYER_MODE_BEHIND,                /*< desc="Behind"                   >*/
+  GIMP_LAYER_MODE_BEHIND_LINEAR,         /*< desc="Behind (linear)"          >*/
   GIMP_LAYER_MODE_MULTIPLY,              /*< desc="Multiply"                 >*/
   GIMP_LAYER_MODE_MULTIPLY_LINEAR,       /*< desc="Multiply (linear)"        >*/
   GIMP_LAYER_MODE_SCREEN,                /*< desc="Screen"                   >*/

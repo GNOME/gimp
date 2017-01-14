@@ -81,7 +81,7 @@ GimpLayerModeFunction
 get_layer_mode_function (GimpLayerMode  paint_mode,
                          gboolean       linear_mode)
 {
-  GimpLayerModeFunction func = gimp_operation_normal_process_pixels;
+  GimpLayerModeFunction func;
 
   switch (paint_mode)
     {
@@ -95,7 +95,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_BEHIND:
-    case GIMP_LAYER_MODE_BEHIND_NON_LINEAR:
+    case GIMP_LAYER_MODE_BEHIND_LINEAR:
       func = gimp_operation_behind_process_pixels;
       break;
 
@@ -125,39 +125,44 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_DIFFERENCE:
+    case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
       func = gimp_operation_difference_process_pixels;
-      break;
-
-    case GIMP_LAYER_MODE_ADDITION:
-      func = gimp_operation_addition_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
       func = gimp_operation_addition_legacy_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_SUBTRACT:
-      func = gimp_operation_subtract_process_pixels;
+    case GIMP_LAYER_MODE_ADDITION:
+    case GIMP_LAYER_MODE_ADDITION_LINEAR:
+      func = gimp_operation_addition_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
       func = gimp_operation_subtract_legacy_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_DARKEN_ONLY:
-      func = gimp_operation_darken_only_process_pixels;
+    case GIMP_LAYER_MODE_SUBTRACT:
+    case GIMP_LAYER_MODE_SUBTRACT_LINEAR:
+      func = gimp_operation_subtract_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
       func = gimp_operation_darken_only_legacy_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY:
-      func = gimp_operation_lighten_only_process_pixels;
+    case GIMP_LAYER_MODE_DARKEN_ONLY:
+    case GIMP_LAYER_MODE_DARKEN_ONLY_LINEAR:
+      func = gimp_operation_darken_only_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
       func = gimp_operation_lighten_only_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY:
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LINEAR:
+      func = gimp_operation_lighten_only_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_HSV_HUE:
@@ -192,20 +197,22 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       func = gimp_operation_hsv_value_legacy_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_DIVIDE:
-      func = gimp_operation_divide_process_pixels;
-      break;
-
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
       func = gimp_operation_divide_legacy_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_DODGE:
-      func = gimp_operation_dodge_process_pixels;
+    case GIMP_LAYER_MODE_DIVIDE:
+    case GIMP_LAYER_MODE_DIVIDE_LINEAR:
+      func = gimp_operation_divide_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_DODGE_LEGACY:
       func = gimp_operation_dodge_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_DODGE:
+    case GIMP_LAYER_MODE_DODGE_LINEAR:
+      func = gimp_operation_dodge_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_BURN_LEGACY:
@@ -213,39 +220,42 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_BURN:
+    case GIMP_LAYER_MODE_BURN_LINEAR:
       func = gimp_operation_burn_process_pixels;
-      break;
-
-    case GIMP_LAYER_MODE_HARDLIGHT:
-      func = gimp_operation_hardlight_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
       func = gimp_operation_hardlight_legacy_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_SOFTLIGHT:
-      func = gimp_operation_softlight_process_pixels;
+    case GIMP_LAYER_MODE_HARDLIGHT:
+      func = gimp_operation_hardlight_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
       func = gimp_operation_softlight_legacy_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_GRAIN_EXTRACT:
-      func = gimp_operation_grain_extract_process_pixels;
+    case GIMP_LAYER_MODE_SOFTLIGHT:
+      func = gimp_operation_softlight_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
       func = gimp_operation_grain_extract_legacy_process_pixels;
       break;
 
-    case GIMP_LAYER_MODE_GRAIN_MERGE:
-      func = gimp_operation_grain_merge_process_pixels;
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT:
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
+      func = gimp_operation_grain_extract_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
       func = gimp_operation_grain_merge_legacy_process_pixels;
+      break;
+
+    case GIMP_LAYER_MODE_GRAIN_MERGE:
+    case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
+      func = gimp_operation_grain_merge_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
@@ -291,6 +301,7 @@ get_layer_mode_function (GimpLayerMode  paint_mode,
     case GIMP_LAYER_MODE_ANTI_ERASE:
       func = gimp_operation_anti_erase_process_pixels;
       break;
+
     default:
       g_warning ("No direct function for layer mode (%d), using gimp:normal",
                  paint_mode);
