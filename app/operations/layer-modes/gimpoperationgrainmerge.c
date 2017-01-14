@@ -109,7 +109,6 @@ gimp_operation_grain_merge_process_pixels (gfloat              *in,
               gfloat comp = in[b] + layer[b] - 0.5;
 
               out[b] = comp * comp_alpha + in[b] * (1.0 - comp_alpha);
-              out[b] = CLAMP (out[b], 0.0, 1.0);
             }
         }
       else
