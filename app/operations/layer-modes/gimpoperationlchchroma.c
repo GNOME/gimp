@@ -110,7 +110,7 @@ chroma_pre_process (const Babl   *from_fish,
         {
           gfloat A2 = layer_lab[4 * i + 1];
           gfloat B2 = layer_lab[4 * i + 2];
-          gfloat c2 = hypot (A2, B2);
+          gfloat c2 = hypotf (A2, B2);
           gfloat A  = c2 * A1 / c1;
           gfloat B  = c2 * B1 / c1;
 
