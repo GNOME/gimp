@@ -424,9 +424,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
   gegl_node_set (node,
                  "operation", operation,
                  "opacity",   opacity,
-                 NULL);
-
-  gegl_node_set (node, "linear", gimp_gegl_mode_is_linear (mode)?TRUE:FALSE,
+                 "linear",    gimp_gegl_mode_is_linear (mode),
                  NULL);
 }
 
