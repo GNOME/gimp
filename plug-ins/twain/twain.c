@@ -567,7 +567,7 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
 					   _("Background"),
 					   imageInfo->ImageWidth,
 					   imageInfo->ImageLength,
-					   layerType, 100, GIMP_NORMAL_MODE);
+					   layerType, 100, GIMP_LAYER_MODE_NORMAL);
 
   /* Add the layer to the image */
   gimp_image_insert_layer(theClientData->image_id,
