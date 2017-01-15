@@ -106,10 +106,14 @@ gimp_operation_divide_process_pixels (gfloat              *in,
 
           for (b = RED; b < ALPHA; b++)
             {
-              gfloat comp = (4294967296.0 / 4294967295.0 * in[b]) / (1.0 / 4294967295.0 + layer[b]);
+              gfloat comp = in[b] / layer[b];
+
+              /* make infitinities(or NaN) correspond to a really high number,
+               * to get more predictable math */
+              if (!(comp > -4294967296.0f && comp < 4294967296.0f))
+                comp = 4294967296.0f;
 
               out[b] = comp * comp_alpha + in[b] * (1.0 - comp_alpha);
-              out[b] = CLAMP (out[b], 0.0, 1.0);
             }
         }
       else
