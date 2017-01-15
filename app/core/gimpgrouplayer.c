@@ -386,7 +386,13 @@ gimp_group_layer_get_size (GimpViewable *viewable,
       return TRUE;
     }
 
-  return GIMP_VIEWABLE_CLASS (parent_class)->get_size (viewable, width, height);
+  /*  return the size only if there are children...  */
+  if (gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children)))
+    return GIMP_VIEWABLE_CLASS (parent_class)->get_size (viewable,
+                                                         width, height);
+
+  /*  ...otherwise return "no content"  */
+  return FALSE;
 }
 
 static GimpContainer *
@@ -1143,13 +1149,24 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
        list = g_list_next (list))
     {
       GimpItem *child = list->data;
+      gint      child_width;
+      gint      child_height;
+
+      if (! gimp_viewable_get_size (GIMP_VIEWABLE (child),
+                                    &child_width, &child_height))
+        {
+          /*  ignore children without content (empty group layers);
+           *  see bug 777017
+           */
+          continue;
+        }
 
       if (first)
         {
           x      = gimp_item_get_offset_x (child);
           y      = gimp_item_get_offset_y (child);
-          width  = gimp_item_get_width    (child);
-          height = gimp_item_get_height   (child);
+          width  = child_width;
+          height = child_height;
 
           first = FALSE;
         }
@@ -1158,8 +1175,8 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           gimp_rectangle_union (x, y, width, height,
                                 gimp_item_get_offset_x (child),
                                 gimp_item_get_offset_y (child),
-                                gimp_item_get_width    (child),
-                                gimp_item_get_height   (child),
+                                child_width,
+                                child_height,
                                 &x, &y, &width, &height);
         }
     }
