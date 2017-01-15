@@ -42,8 +42,5 @@ void       gimp_gegl_node_set_matrix           (GeglNode          *node,
 void       gimp_gegl_node_set_color            (GeglNode          *node,
                                                 const GimpRGB     *color);
 
-gboolean   gimp_gegl_mode_is_legacy            (GimpLayerMode      mode);
-gboolean   gimp_gegl_mode_is_linear            (GimpLayerMode      mode);
-
 
 #endif /* __GIMP_GEGL_NODES_H__ */

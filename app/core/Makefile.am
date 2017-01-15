@@ -44,6 +44,8 @@ libappcore_a_sources = \
 	gimp-gradients.h			\
 	gimp-gui.c				\
 	gimp-gui.h				\
+	gimp-layer-modes.c			\
+	gimp-layer-modes.h			\
 	gimp-memsize.c				\
 	gimp-memsize.h				\
 	gimp-modules.c				\
