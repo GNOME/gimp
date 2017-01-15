@@ -89,7 +89,8 @@ test_config_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
-	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec
+	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
+	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_linear
 
 test_config_LDADD = \
 	../xcf/libappxcf.a						\
