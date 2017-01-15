@@ -129,6 +129,8 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
 
     case GIMP_LAYER_MODE_BEHIND_LINEAR:
     case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
+    case GIMP_LAYER_MODE_SCREEN_LINEAR:
+    case GIMP_LAYER_MODE_OVERLAY_LINEAR:
     case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
     case GIMP_LAYER_MODE_ADDITION_LINEAR:
     case GIMP_LAYER_MODE_SUBTRACT_LINEAR:
@@ -137,6 +139,8 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_DIVIDE_LINEAR:
     case GIMP_LAYER_MODE_DODGE_LINEAR:
     case GIMP_LAYER_MODE_BURN_LINEAR:
+    case GIMP_LAYER_MODE_HARDLIGHT_LINEAR:
+    case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
       return TRUE;
@@ -181,10 +185,15 @@ gimp_layer_mode_get_operation (GimpLayerMode  mode)
       return "gimp:screen-legacy";
 
     case GIMP_LAYER_MODE_SCREEN:
+    case GIMP_LAYER_MODE_SCREEN_LINEAR:
       return "gimp:screen";
 
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
       return "gimp:softlight-legacy";
+
+    case GIMP_LAYER_MODE_OVERLAY:
+    case GIMP_LAYER_MODE_OVERLAY_LINEAR:
+      return "gimp:overlay";
 
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
       return "gimp:difference-legacy";
@@ -270,12 +279,14 @@ gimp_layer_mode_get_operation (GimpLayerMode  mode)
       return "gimp:hardlight-legacy";
 
     case GIMP_LAYER_MODE_HARDLIGHT:
+    case GIMP_LAYER_MODE_HARDLIGHT_LINEAR:
       return "gimp:hardlight";
 
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
       return "gimp:softlight-legacy";
 
     case GIMP_LAYER_MODE_SOFTLIGHT:
+    case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
       return "gimp:softlight";
 
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
@@ -294,9 +305,6 @@ gimp_layer_mode_get_operation (GimpLayerMode  mode)
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
       return "gimp:color-erase";
-
-    case GIMP_LAYER_MODE_OVERLAY:
-      return "gimp:overlay";
 
     case GIMP_LAYER_MODE_LCH_HUE:
       return "gimp:lch-hue";

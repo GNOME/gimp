@@ -192,6 +192,8 @@ typedef enum
   GIMP_LAYER_MODE_MULTIPLY,              /*< desc="Multiply"                 >*/
   GIMP_LAYER_MODE_MULTIPLY_LINEAR,       /*< desc="Multiply (linear)"        >*/
   GIMP_LAYER_MODE_SCREEN,                /*< desc="Screen"                   >*/
+  GIMP_LAYER_MODE_SCREEN_LINEAR,         /*< desc="Screen (linear)"          >*/
+  GIMP_LAYER_MODE_OVERLAY_LINEAR,        /*< desc="Overlay (linear)"         >*/
   GIMP_LAYER_MODE_DIFFERENCE,            /*< desc="Difference"               >*/
   GIMP_LAYER_MODE_DIFFERENCE_LINEAR,     /*< desc="Difference (linear)"      >*/
   GIMP_LAYER_MODE_ADDITION,              /*< desc="Addition"                 >*/
@@ -213,7 +215,9 @@ typedef enum
   GIMP_LAYER_MODE_BURN,                  /*< desc="Burn"                     >*/
   GIMP_LAYER_MODE_BURN_LINEAR,           /*< desc="Burn (linear)"            >*/
   GIMP_LAYER_MODE_HARDLIGHT,             /*< desc="Hard light"               >*/
+  GIMP_LAYER_MODE_HARDLIGHT_LINEAR,      /*< desc="Hard light (linear)"      >*/
   GIMP_LAYER_MODE_SOFTLIGHT,             /*< desc="Soft light"               >*/
+  GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,      /*< desc="Soft light (linear)"      >*/
   GIMP_LAYER_MODE_GRAIN_EXTRACT,         /*< desc="Grain extract"            >*/
   GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,  /*< desc="Grain extract (linear)"   >*/
   GIMP_LAYER_MODE_GRAIN_MERGE,           /*< desc="Grain merge"              >*/
