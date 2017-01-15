@@ -173,20 +173,22 @@ gimp_operation_normal_process (GeglOperation       *operation,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
-
-  return gimp_operation_normal_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
+  return gimp_operation_normal_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
 }
 
 gboolean
-gimp_operation_normal_process_pixels_core (gfloat              *in,
-                                           gfloat              *aux,
-                                           gfloat              *mask,
-                                           gfloat              *out,
-                                           gfloat               opacity,
-                                           glong                samples,
-                                           const GeglRectangle *roi,
-                                           gint                 level)
+gimp_operation_normal_process_pixels_core (gfloat                *in,
+                                           gfloat                *aux,
+                                           gfloat                *mask,
+                                           gfloat                *out,
+                                           gfloat                 opacity,
+                                           glong                  samples,
+                                           const GeglRectangle   *roi,
+                                           gint                   level,
+                                           GimpLayerBlendTRC      blend_trc,
+                                           GimpLayerBlendTRC      composite_trc,
+                                           GimpLayerCompositeMode composite_mode)
 {
   const gboolean has_mask = mask != NULL;
 

@@ -56,7 +56,10 @@ gboolean gimp_operation_hsv_color_legacy_process_pixels (gfloat              *in
                                                          gfloat               opacity,
                                                          glong                samples,
                                                          const GeglRectangle *roi,
-                                                         gint                 level);
+                                                         gint                 level,
+                                                         GimpLayerBlendTRC    blend_trc, 
+                                                         GimpLayerBlendTRC    composite_trc,
+                                                         GimpLayerCompositeMode composite_mode);
 
 
 #endif /* __GIMP_OPERATION_HSV_COLOR_LEGACY_H__ */

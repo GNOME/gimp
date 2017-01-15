@@ -26,6 +26,7 @@
 #include <math.h>
 #include "../operations-types.h"
 #include "gimpoperationlchhue.h"
+#include "gimpblendcomposite.h"
 
 
 static gboolean gimp_operation_lch_hue_process (GeglOperation       *operation,
@@ -78,13 +79,11 @@ gimp_operation_lch_hue_process (GeglOperation       *operation,
                                 const GeglRectangle *roi,
                                 gint                 level)
 {
-  GimpOperationPointLayerMode *gimp_op = GIMP_OPERATION_POINT_LAYER_MODE (operation);
-  gfloat                       opacity = gimp_op->opacity;
-  gboolean                     linear  = gimp_op->linear;
+  GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
 
-  return (linear ? gimp_operation_lch_hue_process_pixels_linear :
+  return (layer_mode->linear ? gimp_operation_lch_hue_process_pixels_linear :
                    gimp_operation_lch_hue_process_pixels)
-    (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+    (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
 }
 
 static void
@@ -123,39 +122,19 @@ hue_pre_process (const Babl   *from_fish,
   babl_process (to_fish, out, out, samples);
 }
 
+/* XXX: this should be removed along with _pre_process */
 gboolean
-gimp_operation_lch_hue_process_pixels_linear (gfloat              *in,
-                                              gfloat              *layer,
-                                              gfloat              *mask,
-                                              gfloat              *out,
-                                              gfloat               opacity,
-                                              glong                samples,
-                                              const GeglRectangle *roi,
-                                              gint                 level)
-{
-  static const Babl *from_fish = NULL;
-  static const Babl *to_fish = NULL;
-  
-  if (!from_fish)
-    from_fish = babl_fish ("RGBA float", "CIE Lab alpha float");
-  if (!to_fish)
-     to_fish = babl_fish ("CIE Lab alpha float", "RGBA float");
-
-  hue_pre_process (from_fish, to_fish, in, layer, out, samples);
-  gimp_operation_layer_composite (in, layer, mask, out, opacity, samples);
-
-  return TRUE;
-}
-
-gboolean
-gimp_operation_lch_hue_process_pixels (gfloat              *in,
-                                       gfloat              *layer,
-                                       gfloat              *mask,
-                                       gfloat              *out,
-                                       gfloat               opacity,
-                                       glong                samples,
-                                       const GeglRectangle *roi,
-                                       gint                 level)
+gimp_operation_lch_hue_process_pixels (gfloat                *in,
+                                       gfloat                *layer,
+                                       gfloat                *mask,
+                                       gfloat                *out,
+                                       gfloat                 opacity,
+                                       glong                  samples,
+                                       const GeglRectangle   *roi,
+                                       gint                   level,
+                                       GimpLayerBlendTRC      blend_trc,
+                                       GimpLayerBlendTRC      composite_trc,
+                                       GimpLayerCompositeMode composite_mode)
 {
   static const Babl *from_fish = NULL;
   static const Babl *to_fish = NULL;
@@ -166,7 +145,26 @@ gimp_operation_lch_hue_process_pixels (gfloat              *in,
      to_fish = babl_fish ("CIE Lab alpha float", "R'G'B'A float");
 
   hue_pre_process (from_fish, to_fish, in, layer, out, samples);
-  gimp_operation_layer_composite (in, layer, mask, out, opacity, samples);
+  compfun_src_atop (in, layer, mask, opacity, out, samples);
 
+  return TRUE;
+}
+
+
+gboolean
+gimp_operation_lch_hue_process_pixels_linear (gfloat                *in,
+                                              gfloat                *layer,
+                                              gfloat                *mask,
+                                              gfloat                *out,
+                                              gfloat                 opacity,
+                                              glong                  samples,
+                                              const GeglRectangle   *roi,
+                                              gint                   level,
+                                              GimpLayerBlendTRC      blend_trc,
+                                              GimpLayerBlendTRC      composite_trc,
+                                              GimpLayerCompositeMode composite_mode)
+{
+  gimp_composite_blend (in, layer, mask, out, opacity, samples, blend_trc,
+                        composite_trc, composite_mode, blendfun_lch_hue);
   return TRUE;
 }

@@ -31,6 +31,7 @@
 #include "../operations-types.h"
 
 #include "gimpoperationhsvhue.h"
+#include "gimpblendcomposite.h"
 
 
 static gboolean gimp_operation_hsv_hue_process (GeglOperation       *operation,
@@ -79,79 +80,25 @@ gimp_operation_hsv_hue_process (GeglOperation       *operation,
                                 const GeglRectangle *roi,
                                 gint                 level)
 {
-  gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
 
-  return gimp_operation_hsv_hue_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_hsv_hue_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
 }
 
 gboolean
-gimp_operation_hsv_hue_process_pixels (gfloat              *in,
-                                       gfloat              *layer,
-                                       gfloat              *mask,
-                                       gfloat              *out,
-                                       gfloat               opacity,
-                                       glong                samples,
-                                       const GeglRectangle *roi,
-                                       gint                 level)
+gimp_operation_hsv_hue_process_pixels (gfloat                *in,
+                                       gfloat                *layer,
+                                       gfloat                *mask,
+                                       gfloat                *out,
+                                       gfloat                 opacity,
+                                       glong                  samples,
+                                       const GeglRectangle   *roi,
+                                       gint                   level,
+                                       GimpLayerBlendTRC      blend_trc,
+                                       GimpLayerBlendTRC      composite_trc,
+                                       GimpLayerCompositeMode composite_mode)
 {
-  const gboolean has_mask = mask != NULL;
-
-  while (samples--)
-    {
-      GimpHSV layer_hsv, out_hsv;
-      GimpRGB layer_rgb = {layer[0], layer[1], layer[2]};
-      GimpRGB out_rgb   = {in[0], in[1], in[2]};
-      gfloat  comp_alpha;
-
-      comp_alpha = layer[ALPHA] * opacity;
-      if (has_mask)
-        comp_alpha *= *mask;
-
-      if (comp_alpha != 0.0f)
-        {
-          gint   b;
-          gfloat out_tmp[3];
-
-          gimp_rgb_to_hsv (&layer_rgb, &layer_hsv);
-          gimp_rgb_to_hsv (&out_rgb, &out_hsv);
-
-          /*  Composition should have no effect if saturation is zero.
-           *  otherwise, black would be painted red (see bug #123296).
-           */
-          if (layer_hsv.s)
-            {
-              out_hsv.h = layer_hsv.h;
-            }
-          gimp_hsv_to_rgb (&out_hsv, &out_rgb);
-
-          out_tmp[0] = out_rgb.r;
-          out_tmp[1] = out_rgb.g;
-          out_tmp[2] = out_rgb.b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = out_tmp[b] * comp_alpha + in[b] * (1.0 - comp_alpha);
-            }
-        }
-      else
-        {
-          gint b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
-        }
-
-      out[ALPHA] = in[ALPHA];
-
-      in    += 4;
-      layer += 4;
-      out   += 4;
-
-      if (has_mask)
-        mask++;
-    }
-
+  gimp_composite_blend (in, layer, mask, out, opacity, samples, blend_trc,
+                        composite_trc, composite_mode, blendfun_hsv_hue);
   return TRUE;
 }

@@ -49,14 +49,16 @@ struct _GimpOperationSoftlightClass
 
 GType    gimp_operation_softlight_get_type       (void) G_GNUC_CONST;
 
-gboolean gimp_operation_softlight_process_pixels (gfloat              *in,
-                                                  gfloat              *layer,
-                                                  gfloat              *mask,
-                                                  gfloat              *out,
-                                                  gfloat               opacity,
-                                                  glong                samples,
-                                                  const GeglRectangle *roi,
-                                                  gint                 level);
-
+gboolean gimp_operation_softlight_process_pixels (gfloat                *in,
+                                                  gfloat                *layer,
+                                                  gfloat                *mask,
+                                                  gfloat                *out,
+                                                  gfloat                 opacity,
+                                                  glong                  samples,
+                                                  const GeglRectangle   *roi,
+                                                  gint                   level,
+                                                  GimpLayerBlendTRC      blend_trc, 
+                                                  GimpLayerBlendTRC      composite_trc,
+                                                  GimpLayerCompositeMode composite_mode);
 
 #endif /* __GIMP_OPERATION_SOFTLIGHT_H__ */

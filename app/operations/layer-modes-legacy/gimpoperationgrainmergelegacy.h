@@ -56,7 +56,10 @@ gboolean gimp_operation_grain_merge_legacy_process_pixels (gfloat              *
                                                            gfloat               opacity,
                                                            glong                samples,
                                                            const GeglRectangle *roi,
-                                                           gint                 level);
+                                                           gint                 level,
+                                                           GimpLayerBlendTRC    blend_trc, 
+                                                           GimpLayerBlendTRC    composite_trc,
+                                                           GimpLayerCompositeMode composite_mode);
 
 
 #endif /* __GIMP_OPERATION_GRAIN_MERGE_LEGACY_H__ */

@@ -98,11 +98,13 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
     case GIMP_LAYER_MODE_OVERLAY:
+      return FALSE;
+
     case GIMP_LAYER_MODE_LCH_HUE:
     case GIMP_LAYER_MODE_LCH_CHROMA:
     case GIMP_LAYER_MODE_LCH_COLOR:
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-      return FALSE;
+      return TRUE;
 
     case GIMP_LAYER_MODE_NORMAL:
       return TRUE;
@@ -125,7 +127,7 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:
     case GIMP_LAYER_MODE_GRAIN_MERGE:
-      return FALSE;
+      return TRUE;
 
     case GIMP_LAYER_MODE_BEHIND_LINEAR:
     case GIMP_LAYER_MODE_MULTIPLY_LINEAR:

@@ -297,6 +297,9 @@ do_layer_blend (GeglBuffer    *src_buffer,
                 gboolean       linear_mode,
                 GimpLayerMode  paint_mode)
 {
+  GimpLayerBlendTRC   blend_trc = GIMP_LAYER_BLEND_RGB_PERCEPTUAL;//XXX
+  GimpLayerBlendTRC   composite_trc = GIMP_LAYER_BLEND_RGB_LINEAR;//placeholders
+  GimpLayerCompositeMode composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER;//placeholders
   GeglRectangle       roi;
   GeglRectangle       mask_roi;
   GeglRectangle       process_roi;
@@ -366,7 +369,10 @@ do_layer_blend (GeglBuffer    *src_buffer,
                          opacity,
                          iter->roi[0].width,
                          &process_roi,
-                         0);
+                         0,
+                         blend_trc,
+                         composite_trc,
+                         composite_mode);
 
           in_pixel    += iter->roi[0].width * 4;
           out_pixel   += iter->roi[0].width * 4;

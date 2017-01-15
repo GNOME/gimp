@@ -22,6 +22,7 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationpointlayermode.h	\
 	gimplayermodefunctions.c	\
 	gimplayermodefunctions.h	\
+	gimpblendcomposite.h            \
 	\
 	gimpoperationaddition.c		\
 	gimpoperationaddition.h		\

@@ -49,14 +49,17 @@ struct _GimpOperationReplaceClass
 
 GType    gimp_operation_replace_get_type       (void) G_GNUC_CONST;
 
-gboolean gimp_operation_replace_process_pixels (gfloat              *in,
-                                                gfloat              *layer,
-                                                gfloat              *mask,
-                                                gfloat              *out,
-                                                gfloat               opacity,
-                                                glong                samples,
-                                                const GeglRectangle *roi,
-                                                gint                 level);
+gboolean gimp_operation_replace_process_pixels (gfloat                *in,
+                                                gfloat                *layer,
+                                                gfloat                *mask,
+                                                gfloat                *out,
+                                                gfloat                 opacity,
+                                                glong                  samples,
+                                                const GeglRectangle   *roi,
+                                                gint                   level,
+                                                GimpLayerBlendTRC      blend_trc, 
+                                                GimpLayerBlendTRC      composite_trc,
+                                                GimpLayerCompositeMode composite_mode);
 
 
 #endif /* __GIMP_OPERATION_REPLACE_H__ */

@@ -49,14 +49,17 @@ struct _GimpOperationDissolve
 
 GType    gimp_operation_dissolve_get_type       (void) G_GNUC_CONST;
 
-gboolean gimp_operation_dissolve_process_pixels (gfloat              *in,
-                                                 gfloat              *layer,
-                                                 gfloat              *mask,
-                                                 gfloat              *out,
-                                                 gfloat               opacity,
-                                                 glong                samples,
-                                                 const GeglRectangle *result,
-                                                 gint                 level);
+gboolean gimp_operation_dissolve_process_pixels (gfloat                *in,
+                                                 gfloat                *layer,
+                                                 gfloat                *mask,
+                                                 gfloat                *out,
+                                                 gfloat                 opacity,
+                                                 glong                  samples,
+                                                 const GeglRectangle   *result,
+                                                 gint                   level,
+                                                 GimpLayerBlendTRC      blend_trc, 
+                                                 GimpLayerBlendTRC      composite_trc,
+                                                 GimpLayerCompositeMode composite_mode);
 
 
 #endif /* __GIMP_OPERATION_DISSOLVE_H__ */

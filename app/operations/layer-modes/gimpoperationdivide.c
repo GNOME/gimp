@@ -27,6 +27,7 @@
 #include "../operations-types.h"
 
 #include "gimpoperationdivide.h"
+#include "gimpblendcomposite.h"
 
 
 static gboolean gimp_operation_divide_process (GeglOperation       *operation,
@@ -75,66 +76,25 @@ gimp_operation_divide_process (GeglOperation       *operation,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  GimpOperationPointLayerMode *layer_mode = (void*)operation;
 
-  return gimp_operation_divide_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_divide_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
 }
 
 gboolean
-gimp_operation_divide_process_pixels (gfloat              *in,
-                                      gfloat              *layer,
-                                      gfloat              *mask,
-                                      gfloat              *out,
-                                      gfloat               opacity,
-                                      glong                samples,
-                                      const GeglRectangle *roi,
-                                      gint                 level)
+gimp_operation_divide_process_pixels (gfloat                *in,
+                                      gfloat                *layer,
+                                      gfloat                *mask,
+                                      gfloat                *out,
+                                      gfloat                 opacity,
+                                      glong                  samples,
+                                      const GeglRectangle   *roi,
+                                      gint                   level,
+                                      GimpLayerBlendTRC      blend_trc,
+                                      GimpLayerBlendTRC      composite_trc,
+                                      GimpLayerCompositeMode composite_mode)
 {
-  const gboolean has_mask = mask != NULL;
-
-  while (samples--)
-    {
-      gfloat comp_alpha;
-
-      comp_alpha = layer[ALPHA] * opacity;
-      if (has_mask)
-        comp_alpha *= *mask;
-
-      if (comp_alpha != 0.0f)
-        {
-          gint   b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              gfloat comp = in[b] / layer[b];
-
-              /* make infitinities(or NaN) correspond to a really high number,
-               * to get more predictable math */
-              if (!(comp > -4294967296.0f && comp < 5.0f))
-                comp = 5.0f;
-
-              out[b] = comp * comp_alpha + in[b] * (1.0 - comp_alpha);
-            }
-        }
-      else
-        {
-          gint b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
-        }
-
-      out[ALPHA] = in[ALPHA];
-
-      in    += 4;
-      layer += 4;
-      out   += 4;
-
-      if (has_mask)
-        mask++;
-    }
-
+   gimp_composite_blend (in, layer, mask, out, opacity, samples,
+                    blend_trc, composite_trc, composite_mode, blendfun_divide);
   return TRUE;
 }

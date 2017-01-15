@@ -66,28 +66,31 @@ gimp_operation_subtract_legacy_init (GimpOperationSubtractLegacy *self)
 
 static gboolean
 gimp_operation_subtract_legacy_process (GeglOperation       *operation,
-                                      void                *in_buf,
-                                      void                *aux_buf,
-                                      void                *aux2_buf,
-                                      void                *out_buf,
-                                      glong                samples,
-                                      const GeglRectangle *roi,
-                                      gint                 level)
+                                        void                *in_buf,
+                                        void                *aux_buf,
+                                        void                *aux2_buf,
+                                        void                *out_buf,
+                                        glong                samples,
+                                        const GeglRectangle *roi,
+                                        gint                 level)
 {
-  gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
 
-  return gimp_operation_subtract_legacy_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_subtract_legacy_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
 }
 
 gboolean
-gimp_operation_subtract_legacy_process_pixels (gfloat              *in,
-                                             gfloat              *layer,
-                                             gfloat              *mask,
-                                             gfloat              *out,
-                                             gfloat               opacity,
-                                             glong                samples,
-                                             const GeglRectangle *roi,
-                                             gint                 level)
+gimp_operation_subtract_legacy_process_pixels (gfloat                *in,
+                                               gfloat                *layer,
+                                               gfloat                *mask,
+                                               gfloat                *out,
+                                               gfloat                 opacity,
+                                               glong                  samples,
+                                               const GeglRectangle   *roi,
+                                               gint                   level,
+                                               GimpLayerBlendTRC      blend_trc,
+                                               GimpLayerBlendTRC      composite_trc,
+                                               GimpLayerCompositeMode composite_mode)
 {
   const gboolean has_mask = mask != NULL;
 

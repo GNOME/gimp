@@ -51,32 +51,41 @@ GType    gimp_operation_normal_get_type            (void) G_GNUC_CONST;
 
 extern GimpLayerModeFunc gimp_operation_normal_process_pixels;
 
-gboolean gimp_operation_normal_process_pixels_core (gfloat              *in,
-                                                    gfloat              *aux,
-                                                    gfloat              *mask,
-                                                    gfloat              *out,
-                                                    gfloat               opacity,
-                                                    glong                samples,
-                                                    const GeglRectangle *roi,
-                                                    gint                 level);
+gboolean gimp_operation_normal_process_pixels_core (gfloat                *in,
+                                                    gfloat                *aux,
+                                                    gfloat                *mask,
+                                                    gfloat                *out,
+                                                    gfloat                 opacity,
+                                                    glong                  samples,
+                                                    const GeglRectangle   *roi,
+                                                    gint                   level,
+                                                    GimpLayerBlendTRC      blend_trc, 
+                                                    GimpLayerBlendTRC      composite_trc,
+                                                    GimpLayerCompositeMode composite_mode);
 
-gboolean gimp_operation_normal_process_pixels_sse2 (gfloat              *in,
-                                                    gfloat              *aux,
-                                                    gfloat              *mask,
-                                                    gfloat              *out,
-                                                    gfloat               opacity,
-                                                    glong                samples,
-                                                    const GeglRectangle *roi,
-                                                    gint                 level);
+gboolean gimp_operation_normal_process_pixels_sse2 (gfloat                *in,
+                                                    gfloat                *aux,
+                                                    gfloat                *mask,
+                                                    gfloat                *out,
+                                                    gfloat                 opacity,
+                                                    glong                  samples,
+                                                    const GeglRectangle   *roi,
+                                                    gint                   level,
+                                                    GimpLayerBlendTRC      blend_trc, 
+                                                    GimpLayerBlendTRC      composite_trc,
+                                                    GimpLayerCompositeMode composite_mode);
 
-gboolean gimp_operation_normal_process_pixels_sse4 (gfloat              *in,
-                                                    gfloat              *aux,
-                                                    gfloat              *mask,
-                                                    gfloat              *out,
-                                                    gfloat               opacity,
-                                                    glong                samples,
-                                                    const GeglRectangle *roi,
-                                                    gint                 level);
+gboolean gimp_operation_normal_process_pixels_sse4 (gfloat                *in,
+                                                    gfloat                *aux,
+                                                    gfloat                *mask,
+                                                    gfloat                *out,
+                                                    gfloat                 opacity,
+                                                    glong                  samples,
+                                                    const GeglRectangle   *roi,
+                                                    gint                   level,
+                                                    GimpLayerBlendTRC      blend_trc, 
+                                                    GimpLayerBlendTRC      composite_trc,
+                                                    GimpLayerCompositeMode composite_mode);
 
 
 #endif /* __GIMP_OPERATION_NORMAL_H__ */

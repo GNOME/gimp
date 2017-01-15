@@ -32,21 +32,26 @@
 #include <emmintrin.h>
 
 gboolean
-gimp_operation_normal_process_pixels_sse2 (gfloat              *in,
-                                           gfloat              *aux,
-                                           gfloat              *mask,
-                                           gfloat              *out,
-                                           gfloat               opacity,
-                                           glong                samples,
-                                           const GeglRectangle *roi,
-                                           gint                 level)
+gimp_operation_normal_process_pixels_sse2 (gfloat                *in,
+                                           gfloat                *aux,
+                                           gfloat                *mask,
+                                           gfloat                *out,
+                                           gfloat                 opacity,
+                                           glong                  samples,
+                                           const GeglRectangle   *roi,
+                                           gint                   level,
+                                           GimpLayerBlendTRC      blend_trc,
+                                           GimpLayerBlendTRC      composite_trc,
+                                           GimpLayerCompositeMode composite_mode)
 {
   /* check alignment */
   if ((((uintptr_t)in) | ((uintptr_t)aux) | ((uintptr_t)out)) & 0x0F)
     {
       return gimp_operation_normal_process_pixels_core (in, aux, mask, out,
                                                         opacity, samples,
-                                                        roi, level);
+                                                        roi, level, blend_trc,
+                                                        composite_trc,
+                                                        composite_mode);
     }
   else
     {

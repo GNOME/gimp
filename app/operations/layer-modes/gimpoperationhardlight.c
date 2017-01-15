@@ -26,6 +26,7 @@
 #include "../operations-types.h"
 
 #include "gimpoperationhardlight.h"
+#include "gimpblendcomposite.h"
 
 
 static gboolean gimp_operation_hardlight_process (GeglOperation       *operation,
@@ -74,75 +75,25 @@ gimp_operation_hardlight_process (GeglOperation       *operation,
                                   const GeglRectangle *roi,
                                   gint                 level)
 {
-  gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
 
-  return gimp_operation_hardlight_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, roi, level);
+  return gimp_operation_hardlight_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
 }
 
 gboolean
-gimp_operation_hardlight_process_pixels (gfloat              *in,
-                                         gfloat              *layer,
-                                         gfloat              *mask,
-                                         gfloat              *out,
-                                         gfloat               opacity,
-                                         glong                samples,
-                                         const GeglRectangle *roi,
-                                         gint                 level)
+gimp_operation_hardlight_process_pixels (gfloat                *in,
+                                         gfloat                *layer,
+                                         gfloat                *mask,
+                                         gfloat                *out,
+                                         gfloat                 opacity,
+                                         glong                  samples,
+                                         const GeglRectangle   *roi,
+                                         gint                   level,
+                                         GimpLayerBlendTRC      blend_trc,
+                                         GimpLayerBlendTRC      composite_trc,
+                                         GimpLayerCompositeMode composite_mode)
 {
-  const gboolean has_mask = mask != NULL;
-
-  while (samples--)
-    {
-      gfloat comp_alpha, new_alpha;
-
-      comp_alpha = layer[ALPHA] * opacity;
-      if (has_mask)
-        comp_alpha *= *mask;
-
-      new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
-
-      if (comp_alpha && new_alpha)
-        {
-          gfloat ratio = comp_alpha / new_alpha;
-          gint   b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              gfloat comp;
-
-              if (layer[b] > 0.5)
-                {
-                  comp = (1.0 - in[b]) * (1.0 - (layer[b] - 0.5) * 2.0);
-                  comp = MIN (1 - comp, 1);
-                }
-              else
-                {
-                  comp = in[b] * (layer[b] * 2.0);
-                  comp = MIN (comp, 1.0);
-                }
-
-              out[b] = comp * ratio + in[b] * (1.0 - ratio);
-            }
-        }
-      else
-        {
-          gint b;
-
-          for (b = RED; b < ALPHA; b++)
-            {
-              out[b] = in[b];
-            }
-        }
-
-      out[ALPHA] = in[ALPHA];
-
-      in    += 4;
-      layer += 4;
-      out   += 4;
-
-      if (has_mask)
-        mask ++;
-    }
-
+  gimp_composite_blend (in, layer, mask, out, opacity, samples,
+             blend_trc, composite_trc, composite_mode, blendfun_hardlight);
   return TRUE;
 }

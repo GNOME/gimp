@@ -90,20 +90,23 @@ gimp_operation_dissolve_process (GeglOperation       *operation,
                                  const GeglRectangle *result,
                                  gint                 level)
 {
-  gfloat opacity = GIMP_OPERATION_POINT_LAYER_MODE (operation)->opacity;
+  GimpOperationPointLayerMode *layer_mode = (void*) operation;
 
-  return gimp_operation_dissolve_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, opacity, samples, result, level);
+  return gimp_operation_dissolve_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, result, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
 }
 
 gboolean
-gimp_operation_dissolve_process_pixels (gfloat              *in,
-                                        gfloat              *aux,
-                                        gfloat              *mask,
-                                        gfloat              *out,
-                                        gfloat               opacity,
-                                        glong                samples,
-                                        const GeglRectangle *result,
-                                        gint                 level)
+gimp_operation_dissolve_process_pixels (gfloat                *in,
+                                        gfloat                *aux,
+                                        gfloat                *mask,
+                                        gfloat                *out,
+                                        gfloat                 opacity,
+                                        glong                  samples,
+                                        const GeglRectangle   *result,
+                                        gint                   level,
+                                        GimpLayerBlendTRC      blend_trc,
+                                        GimpLayerBlendTRC      composite_trc,
+                                        GimpLayerCompositeMode composite_mode)
 {
   const gboolean has_mask = mask != NULL;
   gint           x, y;

@@ -21,8 +21,8 @@
 
 #include "config.h"
 
-#include <cairo.h>
 #include <gegl-plugin.h>
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -65,6 +65,13 @@ G_DEFINE_TYPE (GimpOperationPointLayerMode, gimp_operation_point_layer_mode,
 
 #define parent_class gimp_operation_point_layer_mode_parent_class
 
+
+const Babl *_gimp_fish_rgba_to_perceptual = NULL;
+const Babl *_gimp_fish_perceptual_to_rgba = NULL;
+const Babl *_gimp_fish_perceptual_to_laba = NULL;
+const Babl *_gimp_fish_rgba_to_laba = NULL;
+const Babl *_gimp_fish_laba_to_rgba = NULL;
+const Babl *_gimp_fish_laba_to_perceptual = NULL;
 
 static void
 gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *klass)
@@ -117,6 +124,15 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
+  if (_gimp_fish_rgba_to_perceptual == NULL)
+  {
+    _gimp_fish_rgba_to_perceptual = babl_fish ("RGBA float", "R'G'B'A float");
+    _gimp_fish_perceptual_to_rgba = babl_fish ("R'G'B'A float", "RGBA float");
+    _gimp_fish_perceptual_to_laba = babl_fish ("R'G'B'A float", "CIE Lab alpha float");
+    _gimp_fish_rgba_to_laba = babl_fish ("RGBA float", "CIE Lab alpha float");
+    _gimp_fish_laba_to_rgba = babl_fish ("CIE Lab alpha float", "RGBA float");
+    _gimp_fish_laba_to_perceptual = babl_fish ("CIE Lab alpha float", "R'G'B'A float");
+  }
 }
 
 static void
