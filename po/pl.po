@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-15 14:57+0100\n"
-"PO-Revision-Date: 2017-01-15 14:58+0100\n"
+"POT-Creation-Date: 2017-01-15 17:23+0100\n"
+"PO-Revision-Date: 2017-01-15 17:24+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -8549,984 +8549,1006 @@ msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../app/core/core-enums.c:359
+#: ../app/core/core-enums.c:363
 msgctxt "layer-mode"
 msgid "Normal (non-linear)"
 msgstr "Zwykłe (nieliniowe)"
 
-#: ../app/core/core-enums.c:360
+#: ../app/core/core-enums.c:364
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "Przenikanie"
 
-#: ../app/core/core-enums.c:361
+#: ../app/core/core-enums.c:365
 msgctxt "layer-mode"
 msgid "Behind"
 msgstr "Z tyłu"
 
-#: ../app/core/core-enums.c:362
+#: ../app/core/core-enums.c:366
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
 msgstr "Mnożenie (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:363
+#: ../app/core/core-enums.c:367
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
 msgstr "Przesiewanie (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:364
+#: ../app/core/core-enums.c:368
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
 msgstr "Poprzednie, uszkodzone pokrywanie"
 
-#: ../app/core/core-enums.c:365
+#: ../app/core/core-enums.c:369
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
 msgstr "Różnica (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:366
+#: ../app/core/core-enums.c:370
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
 msgstr "Suma (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:367
+#: ../app/core/core-enums.c:371
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
 msgstr "Odejmowanie (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:368
+#: ../app/core/core-enums.c:372
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
 msgstr "Tylko ciemniejsze (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:369
+#: ../app/core/core-enums.c:373
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
 msgstr "Tylko jaśniejsze (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:370
+#: ../app/core/core-enums.c:374
 msgctxt "layer-mode"
 msgid "Hue (HSV) (legacy)"
 msgstr "Barwa (HSV, poprzednia wersja)"
 
-#: ../app/core/core-enums.c:371
+#: ../app/core/core-enums.c:375
 msgctxt "layer-mode"
 msgid "Saturation (HSV) (legacy)"
 msgstr "Nasycenie (HSV, poprzednia wersja)"
 
-#: ../app/core/core-enums.c:372
+#: ../app/core/core-enums.c:376
 msgctxt "layer-mode"
 msgid "Color (HSV) (legacy)"
 msgstr "Kolor (HSV, poprzednia wersja)"
 
-#: ../app/core/core-enums.c:373
+#: ../app/core/core-enums.c:377
 msgctxt "layer-mode"
 msgid "Value (HSV) (legacy)"
 msgstr "Wartość (HSV, poprzednia wersja)"
 
-#: ../app/core/core-enums.c:374
+#: ../app/core/core-enums.c:378
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
 msgstr "Dzielenie (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:375
+#: ../app/core/core-enums.c:379
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
 msgstr "Rozjaśnianie (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:376
+#: ../app/core/core-enums.c:380
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
 msgstr "Przyciemnianie (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:377
+#: ../app/core/core-enums.c:381
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
 msgstr "Twarde światło (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:378
+#: ../app/core/core-enums.c:382
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
 msgstr "Miękkie światło (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:379
+#: ../app/core/core-enums.c:383
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
 msgstr "Wydobycie ziarna (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:380
+#: ../app/core/core-enums.c:384
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
 msgstr "Połączenie ziarna (poprzednia wersja)"
 
-#: ../app/core/core-enums.c:381
+#: ../app/core/core-enums.c:385
 msgctxt "layer-mode"
 msgid "Color erase"
 msgstr "Usuwanie koloru"
 
-#: ../app/core/core-enums.c:382
+#: ../app/core/core-enums.c:386
 msgctxt "layer-mode"
 msgid "Overlay"
 msgstr "Pokrywanie"
 
-#: ../app/core/core-enums.c:383
+#: ../app/core/core-enums.c:387
 msgctxt "layer-mode"
 msgid "Hue (LCH)"
 msgstr "Barwa (LCH)"
 
-#: ../app/core/core-enums.c:384
+#: ../app/core/core-enums.c:388
 msgctxt "layer-mode"
 msgid "Chroma (LCH)"
 msgstr "Nasycenie (LCH)"
 
-#: ../app/core/core-enums.c:385
+#: ../app/core/core-enums.c:389
 msgctxt "layer-mode"
 msgid "Color (LCH)"
 msgstr "Kolor (LCH)"
 
-#: ../app/core/core-enums.c:386
+#: ../app/core/core-enums.c:390
 msgctxt "layer-mode"
 msgid "Lightness (LCH)"
 msgstr "Jasność (LCH)"
 
-#: ../app/core/core-enums.c:387
+#: ../app/core/core-enums.c:391
 msgctxt "layer-mode"
 msgid "Normal"
 msgstr "Zwykłe"
 
-#: ../app/core/core-enums.c:388
+#: ../app/core/core-enums.c:392
 msgctxt "layer-mode"
 msgid "Behind (linear)"
 msgstr "Z tyłu (liniowe)"
 
-#: ../app/core/core-enums.c:389
+#: ../app/core/core-enums.c:393
 msgctxt "layer-mode"
 msgid "Multiply"
 msgstr "Mnożenie"
 
-#: ../app/core/core-enums.c:390
+#: ../app/core/core-enums.c:394
 msgctxt "layer-mode"
 msgid "Multiply (linear)"
 msgstr "Mnożenie (liniowe)"
 
-#: ../app/core/core-enums.c:391
+#: ../app/core/core-enums.c:395
 msgctxt "layer-mode"
 msgid "Screen"
 msgstr "Przesiewanie"
 
-#: ../app/core/core-enums.c:392
+#: ../app/core/core-enums.c:396
+msgctxt "layer-mode"
+msgid "Screen (linear)"
+msgstr "Przesiewanie (liniowe)"
+
+#: ../app/core/core-enums.c:397
+msgctxt "layer-mode"
+msgid "Overlay (linear)"
+msgstr "Pokrywanie (liniowe)"
+
+#: ../app/core/core-enums.c:398
 msgctxt "layer-mode"
 msgid "Difference"
 msgstr "Różnica"
 
-#: ../app/core/core-enums.c:393
+#: ../app/core/core-enums.c:399
 msgctxt "layer-mode"
 msgid "Difference (linear)"
 msgstr "Różnica (liniowe)"
 
-#: ../app/core/core-enums.c:394
+#: ../app/core/core-enums.c:400
 msgctxt "layer-mode"
 msgid "Addition"
 msgstr "Suma"
 
-#: ../app/core/core-enums.c:395
+#: ../app/core/core-enums.c:401
 msgctxt "layer-mode"
 msgid "Addition (linear)"
 msgstr "Suma (liniowe)"
 
-#: ../app/core/core-enums.c:396
+#: ../app/core/core-enums.c:402
 msgctxt "layer-mode"
 msgid "Subtract"
 msgstr "Odejmowanie"
 
-#: ../app/core/core-enums.c:397
+#: ../app/core/core-enums.c:403
 msgctxt "layer-mode"
 msgid "Subtract (linear)"
 msgstr "Odejmowanie (liniowe)"
 
-#: ../app/core/core-enums.c:398
+#: ../app/core/core-enums.c:404
 msgctxt "layer-mode"
 msgid "Darken only"
 msgstr "Tylko ciemniejsze"
 
-#: ../app/core/core-enums.c:399
+#: ../app/core/core-enums.c:405
 msgctxt "layer-mode"
 msgid "Darken only (linear)"
 msgstr "Tylko ciemniejsze (liniowe)"
 
-#: ../app/core/core-enums.c:400
+#: ../app/core/core-enums.c:406
 msgctxt "layer-mode"
 msgid "Lighten only"
 msgstr "Tylko jaśniejsze"
 
-#: ../app/core/core-enums.c:401
+#: ../app/core/core-enums.c:407
 msgctxt "layer-mode"
 msgid "Lighten only (linear)"
 msgstr "Tylko jaśniejsze (liniowe)"
 
-#: ../app/core/core-enums.c:402
+#: ../app/core/core-enums.c:408
 msgctxt "layer-mode"
 msgid "Hue (HSV)"
 msgstr "Barwa (HSV)"
 
-#: ../app/core/core-enums.c:403
+#: ../app/core/core-enums.c:409
 msgctxt "layer-mode"
 msgid "Saturation (HSV)"
 msgstr "Nasycenie (HSV)"
 
-#: ../app/core/core-enums.c:404
+#: ../app/core/core-enums.c:410
 msgctxt "layer-mode"
 msgid "Color (HSV)"
 msgstr "Kolor (HSV)"
 
-#: ../app/core/core-enums.c:405
+#: ../app/core/core-enums.c:411
 msgctxt "layer-mode"
 msgid "Value (HSV)"
 msgstr "Wartość (HSV)"
 
-#: ../app/core/core-enums.c:406
+#: ../app/core/core-enums.c:412
 msgctxt "layer-mode"
 msgid "Divide"
 msgstr "Dzielenie"
 
-#: ../app/core/core-enums.c:407
+#: ../app/core/core-enums.c:413
 msgctxt "layer-mode"
 msgid "Divide (linear)"
 msgstr "Dzielenie (liniowe)"
 
-#: ../app/core/core-enums.c:408
+#: ../app/core/core-enums.c:414
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "Rozjaśnianie"
 
-#: ../app/core/core-enums.c:409
+#: ../app/core/core-enums.c:415
 msgctxt "layer-mode"
 msgid "Dodge (linear)"
 msgstr "Rozjaśnianie (liniowe)"
 
-#: ../app/core/core-enums.c:410
+#: ../app/core/core-enums.c:416
 msgctxt "layer-mode"
 msgid "Burn"
 msgstr "Przyciemnianie"
 
-#: ../app/core/core-enums.c:411
+#: ../app/core/core-enums.c:417
 msgctxt "layer-mode"
 msgid "Burn (linear)"
 msgstr "Przyciemnianie (liniowe)"
 
-#: ../app/core/core-enums.c:412
+#: ../app/core/core-enums.c:418
 msgctxt "layer-mode"
 msgid "Hard light"
 msgstr "Twarde światło"
 
-#: ../app/core/core-enums.c:413
+#: ../app/core/core-enums.c:419
+#, fuzzy
+msgctxt "layer-mode"
+msgid "Hard light (linear)"
+msgstr "Twarde światło (poprzednia wersja)"
+
+#: ../app/core/core-enums.c:420
 msgctxt "layer-mode"
 msgid "Soft light"
 msgstr "Miękkie światło"
 
-#: ../app/core/core-enums.c:414
+#: ../app/core/core-enums.c:421
+#, fuzzy
+msgctxt "layer-mode"
+msgid "Soft light (linear)"
+msgstr "Miękkie światło (poprzednia wersja)"
+
+#: ../app/core/core-enums.c:422
 msgctxt "layer-mode"
 msgid "Grain extract"
 msgstr "Wydobycie ziarna"
 
-#: ../app/core/core-enums.c:415
+#: ../app/core/core-enums.c:423
 msgctxt "layer-mode"
 msgid "Grain extract (linear)"
 msgstr "Wydobycie ziarna (liniowe)"
 
-#: ../app/core/core-enums.c:416
+#: ../app/core/core-enums.c:424
 msgctxt "layer-mode"
 msgid "Grain merge"
 msgstr "Połączenie ziarna"
 
-#: ../app/core/core-enums.c:417
+#: ../app/core/core-enums.c:425
 msgctxt "layer-mode"
 msgid "Grain merge (linear)"
 msgstr "Połączenie ziarna (liniowe)"
 
-#: ../app/core/core-enums.c:418
+#: ../app/core/core-enums.c:426
 msgctxt "layer-mode"
 msgid "Erase"
 msgstr "Zanikanie"
 
-#: ../app/core/core-enums.c:419
+#: ../app/core/core-enums.c:427
 msgctxt "layer-mode"
 msgid "Replace"
 msgstr "Zastąpienie"
 
-#: ../app/core/core-enums.c:420
+#: ../app/core/core-enums.c:428
 msgctxt "layer-mode"
 msgid "Anti erase"
 msgstr "Cofanie wycierania"
 
-#: ../app/core/core-enums.c:448
+#: ../app/core/core-enums.c:456
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr "Globalne mierzwienie"
 
-#: ../app/core/core-enums.c:449
+#: ../app/core/core-enums.c:457
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "Mierzwienie Levina"
 
-#: ../app/core/core-enums.c:565
+#: ../app/core/core-enums.c:573
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Pierwszy obiekt"
 
-#: ../app/core/core-enums.c:566
+#: ../app/core/core-enums.c:574
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Obraz"
 
-#: ../app/core/core-enums.c:567
+#: ../app/core/core-enums.c:575
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Zaznaczenie"
 
-#: ../app/core/core-enums.c:568
+#: ../app/core/core-enums.c:576
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Aktywna warstwa"
 
-#: ../app/core/core-enums.c:569
+#: ../app/core/core-enums.c:577
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Aktywny kanał"
 
-#: ../app/core/core-enums.c:570
+#: ../app/core/core-enums.c:578
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Aktywna ścieżka"
 
-#: ../app/core/core-enums.c:598
+#: ../app/core/core-enums.c:606
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Pełny kolor"
 
-#: ../app/core/core-enums.c:599
+#: ../app/core/core-enums.c:607
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Deseń"
 
-#: ../app/core/core-enums.c:636
+#: ../app/core/core-enums.c:644
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Dowolnie"
 
-#: ../app/core/core-enums.c:637
+#: ../app/core/core-enums.c:645
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Linia"
 
-#: ../app/core/core-enums.c:638
+#: ../app/core/core-enums.c:646
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Długie kreski"
 
-#: ../app/core/core-enums.c:639
+#: ../app/core/core-enums.c:647
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Średnie kreski"
 
-#: ../app/core/core-enums.c:640
+#: ../app/core/core-enums.c:648
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Krótkie kreski"
 
-#: ../app/core/core-enums.c:641
+#: ../app/core/core-enums.c:649
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Rzadkie punkty"
 
-#: ../app/core/core-enums.c:642
+#: ../app/core/core-enums.c:650
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Zwykłe punkty"
 
-#: ../app/core/core-enums.c:643
+#: ../app/core/core-enums.c:651
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Gęste punkty"
 
-#: ../app/core/core-enums.c:644
+#: ../app/core/core-enums.c:652
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Kropkowania"
 
-#: ../app/core/core-enums.c:645
+#: ../app/core/core-enums.c:653
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Kreska, kropka"
 
-#: ../app/core/core-enums.c:646
+#: ../app/core/core-enums.c:654
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Kreska, kropka, kropka"
 
-#: ../app/core/core-enums.c:677
+#: ../app/core/core-enums.c:685
 msgctxt "item-set"
 msgid "None"
 msgstr "Brak"
 
-#: ../app/core/core-enums.c:678
+#: ../app/core/core-enums.c:686
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Wszystkie warstwy"
 
-#: ../app/core/core-enums.c:679
+#: ../app/core/core-enums.c:687
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Warstwy o wymiarach obrazu"
 
-#: ../app/core/core-enums.c:680
+#: ../app/core/core-enums.c:688
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Wszystkie widoczne warstwy"
 
-#: ../app/core/core-enums.c:681
+#: ../app/core/core-enums.c:689
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Wszystkie dowiązane warstwy"
 
-#: ../app/core/core-enums.c:716
+#: ../app/core/core-enums.c:724
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Drobny"
 
-#: ../app/core/core-enums.c:717
+#: ../app/core/core-enums.c:725
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Bardzo mały"
 
-#: ../app/core/core-enums.c:718
+#: ../app/core/core-enums.c:726
 msgctxt "view-size"
 msgid "Small"
 msgstr "Mały"
 
-#: ../app/core/core-enums.c:719
+#: ../app/core/core-enums.c:727
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Średni"
 
-#: ../app/core/core-enums.c:720
+#: ../app/core/core-enums.c:728
 msgctxt "view-size"
 msgid "Large"
 msgstr "Duży"
 
-#: ../app/core/core-enums.c:721
+#: ../app/core/core-enums.c:729
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Bardzo duży"
 
-#: ../app/core/core-enums.c:722
+#: ../app/core/core-enums.c:730
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Potężny"
 
-#: ../app/core/core-enums.c:723
+#: ../app/core/core-enums.c:731
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Ogromny"
 
-#: ../app/core/core-enums.c:724
+#: ../app/core/core-enums.c:732
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantyczny"
 
-#: ../app/core/core-enums.c:752
+#: ../app/core/core-enums.c:760
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Wyświetlaj jako listy"
 
-#: ../app/core/core-enums.c:753
+#: ../app/core/core-enums.c:761
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Wyświetlaj jako siatkę"
 
-#: ../app/core/core-enums.c:782
+#: ../app/core/core-enums.c:790
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Bez miniatur"
 
-#: ../app/core/core-enums.c:783
+#: ../app/core/core-enums.c:791
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Zwykłe (128×128)"
 
-#: ../app/core/core-enums.c:784
+#: ../app/core/core-enums.c:792
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Duże (256×256)"
 
-#: ../app/core/core-enums.c:968
+#: ../app/core/core-enums.c:976
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "«nieprawidłowe»"
 
-#: ../app/core/core-enums.c:969
+#: ../app/core/core-enums.c:977
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Przeskalowanie obrazu"
 
-#: ../app/core/core-enums.c:970
+#: ../app/core/core-enums.c:978
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Zmiana wymiarów obrazu"
 
-#: ../app/core/core-enums.c:971
+#: ../app/core/core-enums.c:979
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Odbicie obrazu"
 
-#: ../app/core/core-enums.c:972
+#: ../app/core/core-enums.c:980
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Obrót obrazu"
 
-#: ../app/core/core-enums.c:973
+#: ../app/core/core-enums.c:981
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Kadrowanie obrazu"
 
-#: ../app/core/core-enums.c:974
+#: ../app/core/core-enums.c:982
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Konwersja obrazu"
 
-#: ../app/core/core-enums.c:975
+#: ../app/core/core-enums.c:983
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Usunięcie elementu"
 
-#: ../app/core/core-enums.c:976
+#: ../app/core/core-enums.c:984
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Połączenie warstw"
 
-#: ../app/core/core-enums.c:977
+#: ../app/core/core-enums.c:985
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Połączenie ścieżek"
 
-#: ../app/core/core-enums.c:978
+#: ../app/core/core-enums.c:986
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Szybka maska"
 
-#: ../app/core/core-enums.c:979 ../app/core/core-enums.c:1010
+#: ../app/core/core-enums.c:987 ../app/core/core-enums.c:1018
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Siatka"
 
-#: ../app/core/core-enums.c:980 ../app/core/core-enums.c:1014
+#: ../app/core/core-enums.c:988 ../app/core/core-enums.c:1022
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Prowadnica"
 
-#: ../app/core/core-enums.c:981 ../app/core/core-enums.c:1015
+#: ../app/core/core-enums.c:989 ../app/core/core-enums.c:1023
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Punkt wzorcowy"
 
-#: ../app/core/core-enums.c:982 ../app/core/core-enums.c:1016
+#: ../app/core/core-enums.c:990 ../app/core/core-enums.c:1024
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Warstwa/kanał"
 
-#: ../app/core/core-enums.c:983 ../app/core/core-enums.c:1017
+#: ../app/core/core-enums.c:991 ../app/core/core-enums.c:1025
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Modyfikacja warstwy/kanału"
 
-#: ../app/core/core-enums.c:984 ../app/core/core-enums.c:1018
+#: ../app/core/core-enums.c:992 ../app/core/core-enums.c:1026
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Maska zaznaczenia"
 
-#: ../app/core/core-enums.c:985 ../app/core/core-enums.c:1022
+#: ../app/core/core-enums.c:993 ../app/core/core-enums.c:1030
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Widoczność elementu"
 
-#: ../app/core/core-enums.c:986 ../app/core/core-enums.c:1023
+#: ../app/core/core-enums.c:994 ../app/core/core-enums.c:1031
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Powiązanie/usunięcie dowiązania elementu"
 
-#: ../app/core/core-enums.c:987
+#: ../app/core/core-enums.c:995
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Właściwości elementu"
 
-#: ../app/core/core-enums.c:988 ../app/core/core-enums.c:1021
+#: ../app/core/core-enums.c:996 ../app/core/core-enums.c:1029
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Przesunięcie elementu"
 
-#: ../app/core/core-enums.c:989
+#: ../app/core/core-enums.c:997
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Przeskalowanie elementu"
 
-#: ../app/core/core-enums.c:990
+#: ../app/core/core-enums.c:998
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Zmiana wymiarów elementu"
 
-#: ../app/core/core-enums.c:991
+#: ../app/core/core-enums.c:999
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/core-enums.c:992 ../app/core/core-enums.c:1038
+#: ../app/core/core-enums.c:1000 ../app/core/core-enums.c:1046
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/core-enums.c:993 ../app/core/core-enums.c:1040
+#: ../app/core/core-enums.c:1001 ../app/core/core-enums.c:1048
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/core-enums.c:994 ../app/core/core-enums.c:1048
+#: ../app/core/core-enums.c:1002 ../app/core/core-enums.c:1056
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Oderwane zaznaczenie na warstwę"
 
-#: ../app/core/core-enums.c:995
+#: ../app/core/core-enums.c:1003
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Oderwanie zaznaczenia"
 
-#: ../app/core/core-enums.c:996
+#: ../app/core/core-enums.c:1004
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/core-enums.c:997 ../app/core/gimp-edit.c:439
+#: ../app/core/core-enums.c:1005 ../app/core/gimp-edit.c:439
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Wklejenie"
 
-#: ../app/core/core-enums.c:998 ../app/core/gimp-edit.c:691
+#: ../app/core/core-enums.c:1006 ../app/core/gimp-edit.c:691
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Wycięcie"
 
-#: ../app/core/core-enums.c:999
+#: ../app/core/core-enums.c:1007
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/core/core-enums.c:1000 ../app/core/core-enums.c:1049
+#: ../app/core/core-enums.c:1008 ../app/core/core-enums.c:1057
 #: ../app/core/gimpdrawable-transform.c:672
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
 
-#: ../app/core/core-enums.c:1001 ../app/core/core-enums.c:1050
+#: ../app/core/core-enums.c:1009 ../app/core/core-enums.c:1058
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Rysowanie"
 
-#: ../app/core/core-enums.c:1002 ../app/core/core-enums.c:1053
+#: ../app/core/core-enums.c:1010 ../app/core/core-enums.c:1061
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Dołączenie danych pasożytniczych"
 
-#: ../app/core/core-enums.c:1003 ../app/core/core-enums.c:1054
+#: ../app/core/core-enums.c:1011 ../app/core/core-enums.c:1062
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Usunięcie danych pasożytniczych"
 
-#: ../app/core/core-enums.c:1004
+#: ../app/core/core-enums.c:1012
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Import ścieżek"
 
-#: ../app/core/core-enums.c:1005
+#: ../app/core/core-enums.c:1013
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Wtyczka"
 
-#: ../app/core/core-enums.c:1006
+#: ../app/core/core-enums.c:1014
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Typ obrazu"
 
-#: ../app/core/core-enums.c:1007
+#: ../app/core/core-enums.c:1015
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Dokładność obrazu"
 
-#: ../app/core/core-enums.c:1008
+#: ../app/core/core-enums.c:1016
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Wymiary obrazu"
 
-#: ../app/core/core-enums.c:1009
+#: ../app/core/core-enums.c:1017
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/core-enums.c:1011
+#: ../app/core/core-enums.c:1019
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Zmiana metadanych"
 
-#: ../app/core/core-enums.c:1012
+#: ../app/core/core-enums.c:1020
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Zmiana palety indeksowanej"
 
-#: ../app/core/core-enums.c:1013
+#: ../app/core/core-enums.c:1021
 msgctxt "undo-type"
 msgid "Change color managed state"
 msgstr "Zmiana stanu zarządzania kolorami"
 
-#: ../app/core/core-enums.c:1019
+#: ../app/core/core-enums.c:1027
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Zmiana kolejności elementu"
 
-#: ../app/core/core-enums.c:1020
+#: ../app/core/core-enums.c:1028
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Zmiana nazwy elementu"
 
-#: ../app/core/core-enums.c:1024
+#: ../app/core/core-enums.c:1032
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Etykieta koloru elementu"
 
-#: ../app/core/core-enums.c:1025
+#: ../app/core/core-enums.c:1033
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Zablokowanie/odblokowanie zawartości"
 
-#: ../app/core/core-enums.c:1026
+#: ../app/core/core-enums.c:1034
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Zablokowanie/odblokowanie położenia"
 
-#: ../app/core/core-enums.c:1027
+#: ../app/core/core-enums.c:1035
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nowa warstwa"
 
-#: ../app/core/core-enums.c:1028
+#: ../app/core/core-enums.c:1036
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/core-enums.c:1029
+#: ../app/core/core-enums.c:1037
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Ustawienie trybu warstwy"
 
-#: ../app/core/core-enums.c:1030
+#: ../app/core/core-enums.c:1038
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Ustawienie krycia warstwy"
 
-#: ../app/core/core-enums.c:1031
+#: ../app/core/core-enums.c:1039
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Zablokowanie/odblokowanie kanału alfa"
 
-#: ../app/core/core-enums.c:1032
+#: ../app/core/core-enums.c:1040
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Wstrzymanie zmiany wymiarów grupy warstw"
 
-#: ../app/core/core-enums.c:1033
+#: ../app/core/core-enums.c:1041
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Wznowienie zmiany wymiarów grupy warstw"
 
-#: ../app/core/core-enums.c:1034
+#: ../app/core/core-enums.c:1042
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Konwertowanie grupy warstw"
 
-#: ../app/core/core-enums.c:1035
+#: ../app/core/core-enums.c:1043
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Warstwa tekstowa"
 
-#: ../app/core/core-enums.c:1036
+#: ../app/core/core-enums.c:1044
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Zmiana warstwy tekstu"
 
-#: ../app/core/core-enums.c:1037
+#: ../app/core/core-enums.c:1045
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Konwertowanie warstwy tekstowej"
 
-#: ../app/core/core-enums.c:1039
+#: ../app/core/core-enums.c:1047
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/core-enums.c:1041
+#: ../app/core/core-enums.c:1049
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/core-enums.c:1042
+#: ../app/core/core-enums.c:1050
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Nowy kanał"
 
-#: ../app/core/core-enums.c:1043
+#: ../app/core/core-enums.c:1051
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/core-enums.c:1044
+#: ../app/core/core-enums.c:1052
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Kolor kanału"
 
-#: ../app/core/core-enums.c:1045
+#: ../app/core/core-enums.c:1053
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Nowa ścieżka"
 
-#: ../app/core/core-enums.c:1046
+#: ../app/core/core-enums.c:1054
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Usunięcie ścieżki"
 
-#: ../app/core/core-enums.c:1047
+#: ../app/core/core-enums.c:1055
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Modyfikacja ścieżki"
 
-#: ../app/core/core-enums.c:1051
+#: ../app/core/core-enums.c:1059
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Stalówka"
 
-#: ../app/core/core-enums.c:1052
+#: ../app/core/core-enums.c:1060
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Zaznaczenie pierwszego planu"
 
-#: ../app/core/core-enums.c:1055
+#: ../app/core/core-enums.c:1063
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nie do cofnięcia"
 
-#: ../app/core/core-enums.c:1168
+#: ../app/core/core-enums.c:1176
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Komunikat"
 
-#: ../app/core/core-enums.c:1169
+#: ../app/core/core-enums.c:1177
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: ../app/core/core-enums.c:1170
+#: ../app/core/core-enums.c:1178
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Błąd"
 
-#: ../app/core/core-enums.c:1199
+#: ../app/core/core-enums.c:1207
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Pytanie, co zrobić"
 
-#: ../app/core/core-enums.c:1200
+#: ../app/core/core-enums.c:1208
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Zachowanie osadzonego profilu"
 
-#: ../app/core/core-enums.c:1201
+#: ../app/core/core-enums.c:1209
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
 msgstr "Konwertowanie do preferowanego profilu kolorów RGB"
 
-#: ../app/core/core-enums.c:1238
+#: ../app/core/core-enums.c:1246
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Krycie"
 
-#: ../app/core/core-enums.c:1239
+#: ../app/core/core-enums.c:1247
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../app/core/core-enums.c:1240
+#: ../app/core/core-enums.c:1248
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Kąt"
 
-#: ../app/core/core-enums.c:1241
+#: ../app/core/core-enums.c:1249
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Kolor"
 
-#: ../app/core/core-enums.c:1242
+#: ../app/core/core-enums.c:1250
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Twardość"
 
-#: ../app/core/core-enums.c:1243
+#: ../app/core/core-enums.c:1251
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Siła"
 
-#: ../app/core/core-enums.c:1244
+#: ../app/core/core-enums.c:1252
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Proporcje"
 
-#: ../app/core/core-enums.c:1245
+#: ../app/core/core-enums.c:1253
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Odstępy"
 
-#: ../app/core/core-enums.c:1246
+#: ../app/core/core-enums.c:1254
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Tempo"
 
-#: ../app/core/core-enums.c:1247
+#: ../app/core/core-enums.c:1255
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/core/core-enums.c:1248
+#: ../app/core/core-enums.c:1256
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Drganie"
 
-#: ../app/core/core-enums.c:1276
+#: ../app/core/core-enums.c:1284
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Użycie zaznaczenia jako wejścia"
 
-#: ../app/core/core-enums.c:1277
+#: ../app/core/core-enums.c:1285
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Użycie całej warstwy jako wejścia"
 
-#: ../app/core/core-enums.c:1306
+#: ../app/core/core-enums.c:1314
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Twardy"
 
-#: ../app/core/core-enums.c:1307
+#: ../app/core/core-enums.c:1315
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Wygładzony"
 
-#: ../app/core/core-enums.c:1308
+#: ../app/core/core-enums.c:1316
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Zmiękczony"
