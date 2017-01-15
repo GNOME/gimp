@@ -44,15 +44,22 @@ print_draw_page (GtkPrintContext *context,
 {
   cairo_t         *cr = gtk_print_context_get_cairo_context (context);
   cairo_surface_t *surface;
-  gint             width;
-  gint             height;
-  gdouble          scale_x;
-  gdouble          scale_y;
 
   surface = print_surface_from_drawable (data->drawable_id, error);
 
   if (surface)
     {
+      gint    width;
+      gint    height;
+      gdouble scale_x;
+      gdouble scale_y;
+
+      /*  create a white rectangle covering the entire page, just
+       *  to be safe; see bug #777233.
+       */
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
+      cairo_paint (cr);
+
       width  = cairo_image_surface_get_width (surface);
       height = cairo_image_surface_get_height (surface);
 
@@ -74,10 +81,8 @@ print_draw_page (GtkPrintContext *context,
 
       return TRUE;
     }
-  else
-    {
-      return FALSE;
-    }
+
+  return FALSE;
 }
 
 
