@@ -25,6 +25,8 @@
 
 #include "gegl/gimp-gegl-types.h"
 
+#include "operations-enums.h"
+
 
 /*  operations  */
 

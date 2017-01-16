@@ -21,6 +21,7 @@ noinst_LIBRARIES = \
 
 libappoperations_a_SOURCES = \
 	operations-types.h			\
+	operations-enums.h			\
 	gimp-operations.c			\
 	gimp-operations.h			\
 	\
