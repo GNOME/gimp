@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-15 17:23+0100\n"
-"PO-Revision-Date: 2017-01-15 17:24+0100\n"
+"POT-Creation-Date: 2017-01-16 12:29+0100\n"
+"PO-Revision-Date: 2017-01-16 12:30+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -8830,10 +8830,9 @@ msgid "Hard light"
 msgstr "Twarde światło"
 
 #: ../app/core/core-enums.c:419
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Hard light (linear)"
-msgstr "Twarde światło (poprzednia wersja)"
+msgstr "Twarde światło (liniowe)"
 
 #: ../app/core/core-enums.c:420
 msgctxt "layer-mode"
@@ -8841,10 +8840,9 @@ msgid "Soft light"
 msgstr "Miękkie światło"
 
 #: ../app/core/core-enums.c:421
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Soft light (linear)"
-msgstr "Miękkie światło (poprzednia wersja)"
+msgstr "Miękkie światło (liniowe)"
 
 #: ../app/core/core-enums.c:422
 msgctxt "layer-mode"
