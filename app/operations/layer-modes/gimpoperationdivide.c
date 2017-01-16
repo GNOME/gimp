@@ -110,8 +110,8 @@ gimp_operation_divide_process_pixels (gfloat              *in,
 
               /* make infitinities(or NaN) correspond to a really high number,
                * to get more predictable math */
-              if (!(comp > -4294967296.0f && comp < 4294967296.0f))
-                comp = 4294967296.0f;
+              if (!(comp > -4294967296.0f && comp < 5.0f))
+                comp = 5.0f;
 
               out[b] = comp * comp_alpha + in[b] * (1.0 - comp_alpha);
             }
