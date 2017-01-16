@@ -30,9 +30,6 @@
 #include "gimpoperationnormal.h"
 
 
-GimpLayerModeFunction gimp_operation_normal_process_pixels = NULL;
-
-
 static gboolean gimp_operation_normal_parent_process (GeglOperation        *operation,
                                                       GeglOperationContext *context,
                                                       const gchar          *output_prop,
@@ -53,6 +50,7 @@ G_DEFINE_TYPE (GimpOperationNormal, gimp_operation_normal,
 
 #define parent_class gimp_operation_normal_parent_class
 
+
 static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "<gegl>"
 "<node operation='gimp:normal'>"
@@ -68,6 +66,8 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "  </params>"
 "</node>"
 "</gegl>";
+
+GimpLayerModeFunc gimp_operation_normal_process_pixels = NULL;
 
 
 static void

@@ -22,8 +22,8 @@
 #define __GIMP_LAYER_MODE_FUNCTIONS_H__
 
 
-GimpLayerModeFunction get_layer_mode_function (GimpLayerMode  paint_mode,
-                                               gboolean       linear_mode);
+GimpLayerModeFunc   gimp_get_layer_mode_function (GimpLayerMode  paint_mode,
+                                                  gboolean       linear_mode);
 
 
 #endif /* __GIMP_LAYER_MODE_FUNCTIONS_H__ */

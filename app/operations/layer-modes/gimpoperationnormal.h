@@ -49,7 +49,7 @@ struct _GimpOperationNormalClass
 
 GType    gimp_operation_normal_get_type            (void) G_GNUC_CONST;
 
-extern GimpLayerModeFunction gimp_operation_normal_process_pixels;
+extern GimpLayerModeFunc gimp_operation_normal_process_pixels;
 
 gboolean gimp_operation_normal_process_pixels_core (gfloat              *in,
                                                     gfloat              *aux,

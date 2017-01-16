@@ -77,11 +77,11 @@
 #include "gimpoperationsubtract.h"
 
 
-GimpLayerModeFunction
-get_layer_mode_function (GimpLayerMode  paint_mode,
-                         gboolean       linear_mode)
+GimpLayerModeFunc
+gimp_get_layer_mode_function (GimpLayerMode  paint_mode,
+                              gboolean       linear_mode)
 {
-  GimpLayerModeFunction func;
+  GimpLayerModeFunc func;
 
   switch (paint_mode)
     {
