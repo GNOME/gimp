@@ -15,6 +15,9 @@ Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 
 Core:
 
+  - Layer modes' code is now refactored to separate gamma-corrected
+    variations from the linear light ones, legacy modes have been
+    preserved to support older XCF files.
   - New clipboard implementation allows copying/pasting layers and
     layer groups.
   - Color tags simplify managing large projects with a lot of layers
@@ -55,6 +58,14 @@ GUI:
   - Toolbox buttons do not grab focus anymore, which used to breake
     usage of the Tab key and other canvas-related shortcuts after
     changing tools with a pointing device click.
+  - Delete Layer/Channel/Path are consistently the last option in
+    respective dialogs now.
+  - Extend the text along the tangent of the last path stroke, when
+    the length of the path along which the text layer content is
+    warped is shorter than the width of the text.
+  - Allow to toggle the histogram dialog between gamma and linear.
+  - New 'Colors -> Linear Invert' command to provide radiometrically
+    correct color inversion.
 
 Configurability:
 
@@ -81,6 +92,10 @@ Tools:
     crisp lines after an erase.
   - Select by Color and Color Picker tools work correctly in color
     spaces other than sRGB now.
+  - Color Picker doesn't snap to anything when picking colors anymore, 
+    always draws the outline of the averaged region (not only while the
+    mouse is being pressed), and supports arbitrary range of values
+    regardless of the actual image color precision.
   - Uncommitted selection by the Intelligent Scissors tool is not
     discarded on tool change anymore.
   - GIMP now checks, whether the first and the last isegments are
@@ -105,9 +120,17 @@ File Formats
   - Load PSD files with layers which contain additional information
     with a length that is not divisible by 4.
 
+Printing
+
+  - Print resolution can now be reset to defaults, new values for the
+    same image is actually used now without reloading the image.
+
 Plug-ins
 
   - Port smooth-palette to GEGL.
+  - Enhance the raw (not the digital negative) files plugin: 
+    introduce exporting settings and remember them across sessions, 
+    make the plugin be able to be invoked non-interactively, and more.
 
 Color Palettes
 
@@ -138,7 +161,7 @@ Translations:
 
   - Updated: Catalan, Czech, Danish, Finnish, French, German, Greek,
     Hungarian, Icelandic, Italian, Occitan, Polish, Portuguese, Russian,
-    Scottish Gaelic, Serbian, Slovenian, Spanish, Swedish.
+    Scottish Gaelic, Serbian, Slovak, Slovenian, Spanish, Swedish.
 
 
 Overview of Changes from GIMP 2.9.2 to GIMP 2.9.4
