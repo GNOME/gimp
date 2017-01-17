@@ -158,6 +158,24 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
   return FALSE;
 }
 
+GimpLayerBlendTRC
+gimp_layer_mode_get_blend_trc (GimpLayerMode  mode)
+{
+  return GIMP_LAYER_BLEND_RGB_LINEAR;
+}
+
+GimpLayerBlendTRC
+gimp_layer_mode_get_composite_trc (GimpLayerMode  mode)
+{
+  return GIMP_LAYER_BLEND_RGB_LINEAR;
+}
+
+GimpLayerCompositeMode
+gimp_layer_mode_get_composite_mode (GimpLayerMode  mode)
+{
+  return GIMP_LAYER_COMPOSITE_OVER;
+}
+
 const gchar *
 gimp_layer_mode_get_operation (GimpLayerMode  mode)
 {

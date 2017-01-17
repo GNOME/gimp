@@ -36,7 +36,10 @@ enum
 {
   PROP_0,
   PROP_LINEAR,
-  PROP_OPACITY
+  PROP_OPACITY,
+  PROP_BLEND_TRC,
+  PROP_COMPOSITE_TRC,
+  PROP_COMPOSITE_MODE
 };
 
 
@@ -88,6 +91,32 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
                                                         0.0, 1.0, 1.0,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_BLEND_TRC,
+                                   g_param_spec_enum ("blend-trc",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_LAYER_BLEND_TRC,
+                                                      GIMP_LAYER_BLEND_RGB_LINEAR,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+
+  g_object_class_install_property (object_class, PROP_COMPOSITE_TRC,
+                                   g_param_spec_enum ("composite-trc",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_LAYER_BLEND_TRC,
+                                                      GIMP_LAYER_BLEND_RGB_LINEAR,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_COMPOSITE_MODE,
+                                   g_param_spec_enum ("composite-mode",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_LAYER_COMPOSITE_MODE,
+                                                      GIMP_LAYER_COMPOSITE_SRC_OVER,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
 }
 
 static void
@@ -113,6 +142,18 @@ gimp_operation_point_layer_mode_set_property (GObject      *object,
       self->opacity = g_value_get_double (value);
       break;
 
+    case PROP_BLEND_TRC:
+      self->blend_trc = g_value_get_enum (value);
+      break;
+
+    case PROP_COMPOSITE_TRC:
+      self->composite_trc = g_value_get_enum (value);
+      break;
+
+    case PROP_COMPOSITE_MODE:
+      self->composite_mode = g_value_get_enum (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -135,6 +176,18 @@ gimp_operation_point_layer_mode_get_property (GObject    *object,
 
     case PROP_OPACITY:
       g_value_set_double (value, self->opacity);
+      break;
+
+    case PROP_BLEND_TRC:
+      g_value_set_enum (value, self->blend_trc);
+      break;
+
+    case PROP_COMPOSITE_TRC:
+      g_value_set_enum (value, self->composite_trc);
+      break;
+
+    case PROP_COMPOSITE_MODE:
+      g_value_set_enum (value, self->composite_mode);
       break;
 
     default:
@@ -176,7 +229,7 @@ gimp_operation_point_layer_mode_process (GeglOperation        *operation,
     {
       GObject *input;
 
-      /* get the raw values this does not increase the reference count */
+      /* get the raw values, this does not increase the reference count */
       input = gegl_operation_context_get_object (context, "input");
 
       if (input)

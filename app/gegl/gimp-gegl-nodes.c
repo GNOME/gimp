@@ -157,9 +157,12 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
    * all its properties
    */
   gegl_node_set (node,
-                 "operation", gimp_layer_mode_get_operation (mode),
-                 "opacity",   opacity,
-                 "linear",    gimp_layer_mode_is_linear (mode),
+                 "operation",      gimp_layer_mode_get_operation (mode),
+                 "opacity",        opacity,
+                 "linear",         gimp_layer_mode_is_linear (mode),
+                 "blend-trc",      gimp_layer_mode_get_blend_trc (mode),
+                 "composite-trc",  gimp_layer_mode_get_composite_trc (mode),
+                 "composite-mode", gimp_layer_mode_get_composite_mode (mode),
                  NULL);
 }
 
