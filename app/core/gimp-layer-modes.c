@@ -173,7 +173,7 @@ gimp_layer_mode_get_composite_trc (GimpLayerMode  mode)
 GimpLayerCompositeMode
 gimp_layer_mode_get_composite_mode (GimpLayerMode  mode)
 {
-  return GIMP_LAYER_COMPOSITE_OVER;
+  return GIMP_LAYER_COMPOSITE_SRC_OVER;
 }
 
 const gchar *
