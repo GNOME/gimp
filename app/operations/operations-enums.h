@@ -21,12 +21,21 @@
 #define __OPERATIONS_ENUMS_H__
 
 
+#define GIMP_TYPE_LAYER_BLEND_TRC (gimp_layer_blend_trc_get_type ())
+
+GType gimp_layer_blend_trc_get_type (void) G_GNUC_CONST;
+
 typedef enum
 {
   GIMP_LAYER_BLEND_RGB_LINEAR,
   GIMP_LAYER_BLEND_RGB_PERCEPTUAL,
   GIMP_LAYER_BLEND_LAB,
-} GimpBlendBlend;
+} GimpLayerBlendTRC;
+
+
+#define GIMP_TYPE_LAYER_COMPOSITE_MODE (gimp_layer_composite_mode_get_type ())
+
+GType gimp_layer_composite_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
@@ -34,7 +43,7 @@ typedef enum
   GIMP_LAYER_COMPOSITE_SRC_OVER,
   GIMP_LAYER_COMPOSITE_SRC_IN,
   GIMP_LAYER_COMPOSITE_DST_ATOP
-} GimpLayerComposite;
+} GimpLayerCompositeMode;
 
 
 #endif /* __OPERATIONS_ENUMS_H__ */
