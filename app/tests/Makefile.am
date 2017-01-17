@@ -102,9 +102,9 @@ LDADD = \
 	../config/libappconfig.a					\
 	../libapp.a							\
 	../gegl/libappgegl.a						\
-	../operations/libappoperations.a				\
 	../operations/layer-modes/libapplayermodes.a			\
 	../operations/layer-modes-legacy/libapplayermodeslegacy.a	\
+	../operations/libappoperations.a				\
 	libgimpapptestutils.a						\
 	$(libgimpwidgets)						\
 	$(libgimpconfig)						\
