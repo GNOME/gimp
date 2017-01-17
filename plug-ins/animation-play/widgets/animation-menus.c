@@ -42,9 +42,9 @@ typedef struct
 }
 CellData;
 
-static void on_delete_cell (GtkMenuItem *menuitem,
-                            gpointer     user_data);
 static void on_add_cell    (GtkMenuItem *menuitem,
+                            gpointer     user_data);
+static void on_delete_cell (GtkMenuItem *menuitem,
                             gpointer     user_data);
 
 
