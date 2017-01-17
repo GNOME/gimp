@@ -214,10 +214,7 @@ gimp_drawable_filter_new (GimpDrawable *drawable,
 
   gegl_node_add_child (node, operation);
 
-  filter->applicator =
-    gimp_applicator_new (node,
-                         gimp_drawable_get_linear (filter->drawable),
-                         TRUE, TRUE);
+  filter->applicator = gimp_applicator_new (node, TRUE, TRUE);
 
   gimp_filter_set_applicator (GIMP_FILTER (filter), filter->applicator);
 

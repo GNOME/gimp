@@ -510,14 +510,12 @@ gimp_layer_update_mode_node (GimpLayer *layer)
 {
   GeglNode      *mode_node;
   GimpLayerMode  visible_mode;
-  gboolean       linear;
 
   mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
   if (layer->mask && layer->show_mask)
     {
       visible_mode = GIMP_LAYER_MODE_NORMAL;
-      linear       = TRUE;
     }
   else
     {
@@ -530,11 +528,9 @@ gimp_layer_update_mode_node (GimpLayer *layer)
         {
           visible_mode = layer->mode;
         }
-
-      linear = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
     }
 
-  gimp_gegl_mode_node_set_mode (mode_node, visible_mode, linear);
+  gimp_gegl_mode_node_set_mode (mode_node, visible_mode);
   gimp_gegl_mode_node_set_opacity (mode_node, layer->opacity);
 }
 

@@ -57,7 +57,6 @@ struct _GimpApplicator
 
   gdouble            opacity;
   GimpLayerMode      paint_mode;
-  gboolean           linear;
   GeglNode          *mode_node;
 
   GimpComponentMask  affect;
@@ -88,7 +87,6 @@ struct _GimpApplicatorClass
 GType        gimp_applicator_get_type         (void) G_GNUC_CONST;
 
 GimpApplicator * gimp_applicator_new          (GeglNode             *parent,
-                                               gboolean              linear,
                                                gboolean              use_split_preview,
                                                gboolean              use_result_cache);
 

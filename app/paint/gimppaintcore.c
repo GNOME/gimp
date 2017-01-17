@@ -34,6 +34,7 @@
 #include "gegl/gimpapplicator.h"
 
 #include "core/gimp.h"
+#include "core/gimp-layer-modes.h"
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
@@ -446,8 +447,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   if (paint_options->use_applicator)
     {
-      core->applicator = gimp_applicator_new (NULL, core->linear_mode,
-                                              FALSE, FALSE);
+      core->applicator = gimp_applicator_new (NULL, FALSE, FALSE);
 
       if (core->mask_buffer)
         {
@@ -972,7 +972,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                       core->paint_buffer_y,
                       core->mask_x_offset,
                       core->mask_y_offset,
-                      core->linear_mode,
+                      gimp_layer_mode_is_linear (paint_mode),
                       paint_mode);
 
       if (core->comp_buffer)
@@ -980,12 +980,12 @@ gimp_paint_core_paste (GimpPaintCore            *core,
           mask_components_onto (src_buffer,
                                 core->comp_buffer,
                                 gimp_drawable_get_buffer (drawable),
-                                GEGL_RECTANGLE(core->paint_buffer_x,
-                                               core->paint_buffer_y,
-                                               width,
-                                               height),
+                                GEGL_RECTANGLE (core->paint_buffer_x,
+                                                core->paint_buffer_y,
+                                                width,
+                                                height),
                                 gimp_drawable_get_active_mask (drawable),
-                                core->linear_mode);
+                                gimp_layer_mode_is_linear (paint_mode));
         }
     }
 

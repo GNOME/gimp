@@ -142,8 +142,7 @@ gimp_gegl_add_buffer_source (GeglNode   *parent,
 
 void
 gimp_gegl_mode_node_set_mode (GeglNode      *node,
-                              GimpLayerMode  mode,
-                              gboolean       linear)
+                              GimpLayerMode  mode)
 {
   gdouble opacity;
 
