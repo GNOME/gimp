@@ -22,15 +22,15 @@ Core:
     layer groups.
   - Color tags simplify managing large projects with a lot of layers
     and layer groups.
-  - The Mouse Pointer dialog and colors applied to images are
-    color-managed now.
+  - The Mouse Pointer dialog and colors applied to images are now
+    color-managed.
   - Gamma and precision selectors for newly created images.
   - Never dither when converting to a higher bit depth, or to anything
-    more than 16 bits, don't offer dithering options in these cases
+    more than 16 bits; don't offer dithering options in these cases.
   - Default to linear when converting to 16-bit float.
   - Pre-initialize some babl-based pixel format conversion routines
-    at the start-up to decrease the initial lazy intialization cost
-    for some interactions.
+    at start-up to decrease the initial lazy intialization cost for
+    some interactions.
 
 GUI:
 
@@ -55,14 +55,14 @@ GUI:
   - Standard (Freedesktop) and GTK+ icons can now be set by the icon
     theme for a fully consistent style.
   - Many new icons.
-  - Toolbox buttons do not grab focus anymore, which used to breake
+  - Toolbox buttons do not grab focus anymore, which used to break
     usage of the Tab key and other canvas-related shortcuts after
     changing tools with a pointing device click.
   - Delete Layer/Channel/Path are consistently the last option in
     respective dialogs now.
   - Extend the text along the tangent of the last path stroke, when
-    the length of the path along which the text layer content is
-    warped is shorter than the width of the text.
+    the length of the path is shorter than the width of the text to be
+    warped.
   - Allow to toggle the histogram dialog between gamma and linear.
   - New 'Colors -> Linear Invert' command to provide radiometrically
     correct color inversion.
@@ -90,22 +90,22 @@ Tools:
     improved.
   - The Warp Transform tool now uses the linear sampler to ensure
     crisp lines after an erase.
-  - Select by Color and Color Picker tools work correctly in color
-    spaces other than sRGB now.
-  - Color Picker doesn't snap to anything when picking colors anymore, 
+  - Select by Color and Color Picker tools work now correctly in color
+    spaces other than sRGB.
+  - Color Picker doesn't snap to anything when picking colors anymore,
     always draws the outline of the averaged region (not only while the
     mouse is being pressed), and supports arbitrary range of values
     regardless of the actual image color precision.
   - Uncommitted selection by the Intelligent Scissors tool is not
     discarded on tool change anymore.
-  - GIMP now checks, whether the first and the last isegments are
+  - GIMP now checks whether the first and the last isegments are
     distinct before closing the curve.
 
 Painting:
 
   - Rulers, scrollbars, and the Navigation dialog follow canvas
     rotation now.
-  - Canvas rotation is snappier in certain cases now.
+  - Canvas rotation is now snappier in certain cases.
   - For bitmap brushes, GIMP now caches hardness and disables dynamic
     change of hardness to improve painting performance. Bitmap brushes
     also don't get clipped anymore, when hardness is less than 100.
@@ -128,9 +128,9 @@ Printing
 Plug-ins
 
   - Port smooth-palette to GEGL.
-  - Enhance the raw (not the digital negative) files plugin: 
-    introduce exporting settings and remember them across sessions, 
-    make the plugin be able to be invoked non-interactively, and more.
+  - Enhance the raw (not the digital negative) files plugin:
+    introduce exporting settings and remember them across sessions,
+    make the plugin invokable non-interactively, and more.
 
 Color Palettes
 
