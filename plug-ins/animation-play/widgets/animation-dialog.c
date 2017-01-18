@@ -143,7 +143,8 @@ static void        connect_accelerators      (GtkUIManager     *ui_manager,
                                               GtkActionGroup   *group);
 
 static void        animation_dialog_set_animation (AnimationDialog *dialog,
-                                                   Animation       *animation);
+                                                   Animation       *animation,
+                                                   const gchar     *xml);
 
 static gboolean    on_dialog_expose                (GtkWidget      *widget,
                                                     GdkEvent       *event,
@@ -336,7 +337,7 @@ animation_dialog_new (gint32 image_id)
   GtkWidget      *dialog;
   Animation      *animation;
   GimpParasite   *parasite;
-  const gchar    *xml = NULL;
+  gchar          *xml               = NULL;
   gboolean        animatic_selected = TRUE;
 
   parasite = gimp_image_get_parasite (image_id,
@@ -371,14 +372,14 @@ animation_dialog_new (gint32 image_id)
     }
 
   animation = animation_new (image_id, animatic_selected, xml);
-  g_free ((gchar *) xml);
 
   dialog = g_object_new (ANIMATION_TYPE_DIALOG,
                          "type",  GTK_WINDOW_TOPLEVEL,
                          "image", image_id,
                          NULL);
   animation_dialog_set_animation (ANIMATION_DIALOG (dialog),
-                                  animation);
+                                  animation, xml);
+  g_free (xml);
 
   return dialog;
 }
@@ -948,7 +949,13 @@ static void
 animation_dialog_finalize (GObject *object)
 {
   AnimationDialog        *dialog = ANIMATION_DIALOG (object);
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  AnimationDialogPrivate *priv   = GET_PRIVATE (dialog);
+  gchar                  *playback_xml;
+
+  /* Save first, before cleaning anything. */
+  playback_xml = animation_playback_serialize (priv->playback);
+  animation_save_to_parasite (priv->animation, playback_xml);
+  g_free (playback_xml);
 
   if (priv->shape_window)
     gtk_widget_destroy (GTK_WIDGET (priv->shape_window));
@@ -1177,7 +1184,8 @@ connect_accelerators (GtkUIManager   *ui_manager,
 
 static void
 animation_dialog_set_animation (AnimationDialog *dialog,
-                                Animation       *animation)
+                                Animation       *animation,
+                                const gchar     *xml)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   GtkWidget              *frame;
@@ -1390,8 +1398,8 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                     G_CALLBACK (low_framerate_cb),
                     dialog);
 
-  /* Set the playback */
-  animation_playback_set_animation (priv->playback, animation);
+  /* Set the playback and its default state. */
+  animation_playback_set_animation (priv->playback, animation, xml);
 
   if (gtk_widget_get_realized (GTK_WIDGET (dialog)))
     on_dialog_expose (GTK_WIDGET (dialog), NULL, priv->animation);
@@ -1467,10 +1475,10 @@ static void
 animation_type_changed (GtkWidget       *combo,
                         AnimationDialog *dialog)
 {
-  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   Animation              *animation;
+  AnimationDialogPrivate *priv     = GET_PRIVATE (dialog);
   GimpParasite           *parasite = NULL;
-  const gchar            *xml = NULL;
+  gchar                  *xml      = NULL;
   gint                    index;
 
   index = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
@@ -1494,12 +1502,10 @@ animation_type_changed (GtkWidget       *combo,
       xml = g_strdup (gimp_parasite_data (parasite));
       gimp_parasite_free (parasite);
     }
-  animation = animation_new (priv->image_id,
-                             (index == 0),
-                             xml);
-  g_free ((gchar *) xml);
+  animation = animation_new (priv->image_id, (index == 0), xml);
   animation_dialog_set_animation (ANIMATION_DIALOG (dialog),
-                                  animation);
+                                  animation, xml);
+  g_free (xml);
 }
 
 static void

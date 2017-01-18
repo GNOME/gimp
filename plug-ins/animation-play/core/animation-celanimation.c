@@ -87,6 +87,7 @@ typedef enum
 {
   START_STATE,
   ANIMATION_STATE,
+  PLAYBACK_STATE,
   SEQUENCE_STATE,
   FRAME_STATE,
   LAYER_STATE,
@@ -126,7 +127,8 @@ static gboolean     animation_cel_animation_same           (Animation         *a
 static void         animation_cel_animation_purge_cache    (Animation         *animation);
 
 static void         animation_cel_animation_reset_defaults (Animation         *animation);
-static gchar      * animation_cel_animation_serialize      (Animation         *animation);
+static gchar      * animation_cel_animation_serialize      (Animation         *animation,
+                                                            const gchar       *playback_xml);
 static gboolean     animation_cel_animation_deserialize    (Animation         *animation,
                                                             const gchar       *xml,
                                                             GError           **error);
@@ -202,9 +204,6 @@ animation_cel_animation_init (AnimationCelAnimation *animation)
 static void
 animation_cel_animation_finalize (GObject *object)
 {
-  /* Save first, before cleaning anything. */
-  animation_save_to_parasite (ANIMATION (object));
-
   animation_cel_animation_cleanup (ANIMATION_CEL_ANIMATION (object));
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -783,7 +782,8 @@ animation_cel_animation_reset_defaults (Animation *animation)
 }
 
 static gchar *
-animation_cel_animation_serialize (Animation *animation)
+animation_cel_animation_serialize (Animation   *animation,
+                                   const gchar *playback_xml)
 {
   AnimationCelAnimationPrivate *priv;
   gchar                        *xml;
@@ -795,9 +795,9 @@ animation_cel_animation_serialize (Animation *animation)
   priv = ANIMATION_CEL_ANIMATION (animation)->priv;
 
   xml = g_strdup_printf ("<animation type=\"cels\" framerate=\"%f\" "
-                          " duration=\"%d\" width=\"\" height=\"\">",
+                          " duration=\"%d\" width=\"\" height=\"\">%s",
                           animation_get_framerate (animation),
-                          priv->duration);
+                          priv->duration, playback_xml);
 
   for (iter = priv->tracks; iter; iter = iter->next)
     {
@@ -1041,6 +1041,10 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
         {
           status->state = COMMENTS_STATE;
         }
+      else if (g_strcmp0 (element_name, "playback") == 0)
+        {
+          status->state = PLAYBACK_STATE;
+        }
       else
         {
           g_set_error (error, 0, 0,
@@ -1049,6 +1053,9 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
                        element_name);
           return;
         }
+      break;
+    case PLAYBACK_STATE:
+      /* Leave processing to the playback. */
       break;
     case SEQUENCE_STATE:
       if (g_strcmp0 (element_name, "frame") != 0)
@@ -1200,6 +1207,7 @@ animation_cel_animation_end_element (GMarkupParseContext *context,
     {
     case SEQUENCE_STATE:
     case COMMENTS_STATE:
+    case PLAYBACK_STATE:
       status->state = ANIMATION_STATE;
       break;
     case FRAME_STATE:

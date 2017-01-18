@@ -95,7 +95,8 @@ static gboolean     animation_animatic_same           (Animation         *animat
 static void         animation_animatic_purge_cache    (Animation         *animation);
 
 static void         animation_animatic_reset_defaults (Animation         *animation);
-static gchar      * animation_animatic_serialize      (Animation         *animation);
+static gchar      * animation_animatic_serialize      (Animation         *animation,
+                                                       const gchar       *playback_xml);
 static gboolean     animation_animatic_deserialize    (Animation         *animation,
                                                        const gchar       *xml,
                                                        GError           **error);
@@ -195,9 +196,6 @@ animation_animatic_finalize (GObject *object)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (object);
   gint                      i;
-
-  /* Save first, before cleaning anything. */
-  animation_save_to_parasite (ANIMATION (object));
 
   if (priv->tattoos)
     g_free (priv->tattoos);
@@ -503,7 +501,8 @@ animation_animatic_reset_defaults (Animation *animation)
 }
 
 static gchar *
-animation_animatic_serialize (Animation *animation)
+animation_animatic_serialize (Animation   *animation,
+                              const gchar *playback_xml)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   gchar                    *text;
@@ -512,9 +511,9 @@ animation_animatic_serialize (Animation *animation)
 
   text = g_strdup_printf ("<animation type=\"animatic\" framerate=\"%f\" "
                           " duration=\"%d\" width=\"\" height=\"\">"
-                          "<sequence>",
+                          "%s<sequence>",
                           animation_get_framerate (animation),
-                          priv->n_panels);
+                          priv->n_panels, playback_xml);
   for (i = 0; i < priv->n_panels; i++)
     {
       gchar  *panel;

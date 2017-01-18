@@ -23,6 +23,7 @@
 #include <string.h>
 
 #include <libgimp/gimp.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include "animation.h"
 #include "animation-playback.h"
@@ -59,6 +60,12 @@ struct _AnimationPlaybackPrivate
   gint64       frames_played;
 };
 
+typedef struct
+{
+  AnimationPlayback *playback;
+
+  gint               level;
+} ParseStatus;
 
 #define ANIMATION_PLAYBACK_GET_PRIVATE(playback) \
         G_TYPE_INSTANCE_GET_PRIVATE (playback, \
@@ -85,6 +92,18 @@ static void       on_cache_invalidated                      (Animation         *
 
 /* Timer callback for playback. */
 static gboolean   animation_playback_advance_frame_callback (AnimationPlayback *playback);
+
+/* XML parsing */
+static void       animation_playback_start_element          (GMarkupParseContext  *context,
+                                                             const gchar          *element_name,
+                                                             const gchar         **attribute_names,
+                                                             const gchar         **attribute_values,
+                                                             gpointer              user_data,
+                                                             GError              **error);
+static void       animation_playback_end_element            (GMarkupParseContext  *context,
+                                                             const gchar          *element_name,
+                                                             gpointer              user_data,
+                                                             GError              **error);
 
 
 G_DEFINE_TYPE (AnimationPlayback, animation_playback, G_TYPE_OBJECT)
@@ -230,13 +249,55 @@ animation_playback_new (void)
   return playback;
 }
 
+gchar *
+animation_playback_serialize (AnimationPlayback *playback)
+{
+  gchar *xml;
+
+  xml = g_strdup_printf ("<playback position=\"%d\" "
+                         "start=\"%d\" stop=\"%d\"/>",
+                         playback->priv->position,
+                         playback->priv->start,
+                         playback->priv->stop);
+  return xml;
+}
+
 void
 animation_playback_set_animation (AnimationPlayback *playback,
-                                  Animation         *animation)
+                                  Animation         *animation,
+                                  const gchar       *xml)
 {
   g_object_set (playback,
                 "animation", animation,
                 NULL);
+
+  if (xml)
+    {
+      /* Reset to last known playback status. */
+      const GMarkupParser  markup_parser =
+        {
+          animation_playback_start_element,
+          animation_playback_end_element,
+          NULL,  /*  text         */
+          NULL,  /*  passthrough  */
+          NULL   /*  error        */
+        };
+      GMarkupParseContext *context;
+      ParseStatus          status = { 0, };
+      GError              *error = NULL;
+
+      status.playback = playback;
+      status.level    = 0;
+      context = g_markup_parse_context_new (&markup_parser,
+                                            0, &status, NULL);
+      g_markup_parse_context_parse (context, xml, strlen (xml), &error);
+      if (error == NULL)
+        g_markup_parse_context_end_parse (context, &error);
+      g_markup_parse_context_free (context);
+      if (error)
+        g_warning ("Error parsing XML: %s", error->message);
+      g_clear_error (&error);
+    }
 }
 
 Animation *
@@ -655,4 +716,98 @@ animation_playback_advance_frame_callback (AnimationPlayback *playback)
                                         (AnimationPlayback *) playback);
 
   return G_SOURCE_REMOVE;
+}
+
+static void
+animation_playback_start_element (GMarkupParseContext  *context,
+                                  const gchar          *element_name,
+                                  const gchar         **attribute_names,
+                                  const gchar         **attribute_values,
+                                  gpointer              user_data,
+                                  GError              **error)
+{
+  const gchar       **names    = attribute_names;
+  const gchar       **values   = attribute_values;
+  ParseStatus        *status   = (ParseStatus *) user_data;
+  AnimationPlayback  *playback = status->playback;
+
+  if (status->level == 1 && g_strcmp0 (element_name, "playback") == 0)
+    {
+      gint duration;
+
+      duration = animation_get_duration (playback->priv->animation);
+      while (*names && *values)
+        {
+          if (strcmp (*names, "position") == 0 && **values)
+            {
+              gint position = g_ascii_strtoll (*values, NULL, 10);
+
+              if (position >= duration)
+                {
+                  g_set_error (error, 0, 0,
+                               _("Playback position %d out of range [0, %d]."),
+                               position, duration - 1);
+                }
+              else
+                {
+                  playback->priv->position = position;
+                }
+            }
+          else if (strcmp (*names, "start") == 0 && **values)
+            {
+              gint start = g_ascii_strtoll (*values, NULL, 10);
+
+              if (start >= duration)
+                {
+                  g_set_error (error, 0, 0,
+                               _("Playback start %d out of range [0, %d]."),
+                               start, duration - 1);
+                }
+              else
+                {
+                  playback->priv->start = start;
+                }
+            }
+          else if (strcmp (*names, "stop") == 0 && **values)
+            {
+              gint stop = g_ascii_strtoll (*values, NULL, 10);
+
+              if (stop >= duration)
+                {
+                  g_set_error (error, 0, 0,
+                               _("Playback stop %d out of range [0, %d]."),
+                               stop, duration - 1);
+                }
+              else
+                {
+                  playback->priv->stop = stop;
+                  playback->priv->stop_at_end = (stop == duration - 1);
+                }
+            }
+
+          names++;
+          values++;
+        }
+      if (playback->priv->stop < playback->priv->start)
+        {
+          playback->priv->stop = duration - 1;
+          playback->priv->stop_at_end = TRUE;
+        }
+
+      if (playback->priv->position < playback->priv->start ||
+          playback->priv->position > playback->priv->stop)
+        {
+          playback->priv->position = playback->priv->start;
+        }
+    }
+  status->level++;
+}
+
+static void
+animation_playback_end_element (GMarkupParseContext  *context,
+                                const gchar          *element_name,
+                                gpointer              user_data,
+                                GError              **error)
+{
+  ((ParseStatus *) user_data)->level--;
 }

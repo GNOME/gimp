@@ -68,7 +68,8 @@ struct _AnimationClass
   void         (*purge_cache)        (Animation    *animation);
 
   void         (*reset_defaults)     (Animation    *animation);
-  gchar      * (*serialize)          (Animation    *animation);
+  gchar      * (*serialize)          (Animation    *animation,
+                                      const gchar  *playback_xml);
   gboolean     (*deserialize)        (Animation    *animation,
                                       const gchar  *xml,
                                       GError      **error);
@@ -84,7 +85,8 @@ gint32        animation_get_image_id       (Animation   *animation);
 
 void          animation_load               (Animation   *animation);
 
-void          animation_save_to_parasite   (Animation   *animation);
+void          animation_save_to_parasite   (Animation   *animation,
+                                            const gchar *playback_xml);
 
 gint          animation_get_duration       (Animation   *animation);
 

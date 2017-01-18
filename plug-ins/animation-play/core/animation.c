@@ -169,7 +169,7 @@ animation_class_init (AnimationClass *klass)
    * @animation: the animation.
    * @duration: the new duration of @animation in number of frames.
    *
-   * The ::playback-range signal must be emitted when the duration of
+   * The ::duration signal must be emitted when the duration of
    * @animation changes.
    */
   animation_signals[DURATION_CHANGED] =
@@ -187,7 +187,7 @@ animation_class_init (AnimationClass *klass)
    * @animation: the animation.
    * @framerate: the new framerate of @animation in frames per second.
    *
-   * The ::playback-range signal is emitted when the framerate of
+   * The ::framerate-changed signal is emitted when the framerate of
    * @animation changes.
    */
   animation_signals[FRAMERATE_CHANGED] =
@@ -311,7 +311,8 @@ animation_load (Animation *animation)
 }
 
 void
-animation_save_to_parasite (Animation *animation)
+animation_save_to_parasite (Animation   *animation,
+                            const gchar *playback_xml)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
   GimpParasite     *old_parasite;
@@ -326,7 +327,8 @@ animation_save_to_parasite (Animation *animation)
   gimp_set_data (PLUG_IN_PROC, &settings, sizeof (&settings));
 
   /* Then as a parasite for the specific image. */
-  xml = ANIMATION_GET_CLASS (animation)->serialize (animation);
+  xml = ANIMATION_GET_CLASS (animation)->serialize (animation,
+                                                    playback_xml);
 
   if (ANIMATION_IS_ANIMATIC (animation))
     {
@@ -360,6 +362,8 @@ animation_save_to_parasite (Animation *animation)
       gimp_parasite_free (parasite);
     }
   gimp_parasite_free (old_parasite);
+  if (xml)
+    g_free (xml);
 
   old_parasite = gimp_image_get_parasite (priv->image_id,
                                           PLUG_IN_PROC "/selected");
@@ -543,8 +547,10 @@ animation_get_property (GObject    *object,
         {
           gchar *xml;
 
-          xml = ANIMATION_GET_CLASS (animation)->serialize (animation);
+          xml = ANIMATION_GET_CLASS (animation)->serialize (animation,
+                                                            NULL);
           g_value_take_string (value, xml);
+          g_free (xml);
         }
       break;
 

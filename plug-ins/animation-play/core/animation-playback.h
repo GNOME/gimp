@@ -60,9 +60,11 @@ struct _AnimationPlaybackClass
 GType         animation_playback_get_type (void);
 
 AnimationPlayback * animation_playback_new     (void);
+gchar       * animation_playback_serialize     (AnimationPlayback   *playback);
 
 void          animation_playback_set_animation (AnimationPlayback   *playback,
-                                                Animation           *animation);
+                                                Animation           *animation,
+                                                const gchar         *xml);
 Animation   * animation_playback_get_animation (AnimationPlayback   *playback);
 
 gint          animation_playback_get_position  (AnimationPlayback   *playback);
