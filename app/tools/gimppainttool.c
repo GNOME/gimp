@@ -642,7 +642,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
            */
 
           gchar   *status_help;
-          gdouble  dx, dy, dist;
+          gdouble  dx, dy, pixel_dist;
 
           gimp_paint_core_round_line (core, paint_options,
                                       (state & constrain_mask) != 0);
@@ -656,29 +656,38 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
                                                 _("%s for constrained angles"),
                                                 NULL);
 
+          pixel_dist = sqrt (SQR (dx) + SQR (dy));
+
           /*  show distance in statusbar  */
           if (shell->unit == GIMP_UNIT_PIXEL)
             {
-              dist = sqrt (SQR (dx) + SQR (dy));
-
               gimp_tool_push_status (tool, display, "%.1f %s.  %s",
-                                     dist, _("pixels"), status_help);
+                                     pixel_dist, _("pixels"), status_help);
             }
           else
             {
               gdouble xres;
               gdouble yres;
+              gdouble dist;
+              gint    digits;
               gchar   format_str[64];
 
+              /* The distance in unit. */
               gimp_image_get_resolution (image, &xres, &yres);
-
-              g_snprintf (format_str, sizeof (format_str), "%%.%df %s.  %%s",
-                          gimp_unit_get_digits (shell->unit),
-                          gimp_unit_get_symbol (shell->unit));
-
               dist = (gimp_unit_get_factor (shell->unit) *
                       sqrt (SQR (dx / xres) +
                             SQR (dy / yres)));
+
+              /* The ideal digit precision for unit in current resolution. */
+              digits = gimp_unit_get_digits (shell->unit);
+              if (dist > 0.0)
+                {
+                  digits = MAX (ceil (log10 (pixel_dist / dist)),
+                                digits);
+                }
+
+              g_snprintf (format_str, sizeof (format_str), "%%.%df %s.  %%s",
+                          digits, gimp_unit_get_symbol (shell->unit));
 
               gimp_tool_push_status (tool, display, format_str,
                                      dist, status_help);
