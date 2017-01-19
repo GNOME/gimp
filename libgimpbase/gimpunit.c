@@ -159,7 +159,7 @@ gimp_unit_get_number_of_built_in_units (void)
  *
  * Returns the integer ID of the new #GimpUnit.
  *
- * Note that a new unit is always created with it's deletion flag
+ * Note that a new unit is always created with its deletion flag
  * set to %TRUE. You will have to set it to %FALSE with
  * gimp_unit_set_deletion_flag() to make the unit definition persistent.
  *
@@ -258,7 +258,7 @@ gimp_unit_get_digits (GimpUnit unit)
  * gimp_unit_get_identifier:
  * @unit: The unit you want to know the identifier of.
  *
- * This is an unstranslated string and must not be changed or freed.
+ * This is an untranslated string and must not be changed or freed.
  *
  * Returns: The unit's identifier.
  **/
@@ -615,7 +615,7 @@ gimp_param_spec_unit (const gchar *name,
  * gimp_pixels_to_units:
  * @pixels:     value in pixels
  * @unit:       unit to convert to
- * @resolution: resloution in DPI
+ * @resolution: resolution in DPI
  *
  * Converts a @value specified in pixels to @unit.
  *
