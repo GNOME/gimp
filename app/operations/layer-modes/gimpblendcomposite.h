@@ -660,9 +660,8 @@ blendfun_hardlight (const float *dest,
 
               out[c] = comp;
             }
-
-          out[ALPHA] = src[ALPHA];
         }
+      out[ALPHA] = src[ALPHA];
 
       out  += 4;
       src  += 4;
@@ -690,9 +689,8 @@ blendfun_softlight (const float *dest,
 
               out[c] = comp;
             }
-
-          out[ALPHA] = src[ALPHA];
         }
+      out[ALPHA] = src[ALPHA];
 
       out  += 4;
       src  += 4;
@@ -727,9 +725,8 @@ blendfun_overlay (const float *dest,
 
               out[c] = comp;
             }
-
-          out[ALPHA] = src[ALPHA];
         }
+      out[ALPHA] = src[ALPHA];
 
       out  += 4;
       src  += 4;
