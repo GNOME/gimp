@@ -209,8 +209,8 @@ gimp_composite_blend (gfloat                 *in,
                       gfloat                 *out,
                       gfloat                  opacity,
                       glong                   samples,
-                      GimpLayerBlendTRC       blend_trc,
-                      GimpLayerBlendTRC       composite_trc,
+                      GimpLayerColorSpace     blend_trc,
+                      GimpLayerColorSpace     composite_trc,
                       GimpLayerCompositeMode  composite_mode,
                       GimpBlendFunc           blend_func)
 {
@@ -225,60 +225,60 @@ gimp_composite_blend (gfloat                 *in,
   switch (blend_trc)
     {
     default:
-    case GIMP_LAYER_BLEND_RGB_LINEAR:
+    case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
       fish_to_blend   =  NULL;
       switch (composite_trc)
         {
-        case GIMP_LAYER_BLEND_LAB:
+        case GIMP_LAYER_COLOR_SPACE_LAB:
           fish_to_composite   = _gimp_fish_rgba_to_laba;
           fish_from_composite = _gimp_fish_laba_to_rgba;
           break;
         default:
-        case GIMP_LAYER_BLEND_RGB_LINEAR:
+        case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
           fish_to_composite   = NULL;
           fish_from_composite = NULL;
           break;
-        case GIMP_LAYER_BLEND_RGB_PERCEPTUAL:
+        case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
           fish_to_composite   = _gimp_fish_rgba_to_perceptual;
           fish_from_composite = _gimp_fish_perceptual_to_rgba;
           break;
         }
       break;
 
-    case GIMP_LAYER_BLEND_LAB:
+    case GIMP_LAYER_COLOR_SPACE_LAB:
       fish_to_blend   = _gimp_fish_rgba_to_laba;
       switch (composite_trc)
         {
-        case GIMP_LAYER_BLEND_LAB:
+        case GIMP_LAYER_COLOR_SPACE_LAB:
         default:
           fish_to_composite = NULL;
           fish_from_composite = _gimp_fish_laba_to_rgba;
           break;
-        case GIMP_LAYER_BLEND_RGB_LINEAR:
+        case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
           fish_to_composite = _gimp_fish_laba_to_rgba;
           fish_from_composite = NULL;
           break;
-        case GIMP_LAYER_BLEND_RGB_PERCEPTUAL:
+        case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
           fish_to_composite = _gimp_fish_laba_to_perceptual;
           fish_from_composite = _gimp_fish_perceptual_to_rgba;
           break;
         }
       break;
 
-    case GIMP_LAYER_BLEND_RGB_PERCEPTUAL:
+    case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
       fish_to_blend = _gimp_fish_rgba_to_perceptual;
       switch (composite_trc)
         {
-        case GIMP_LAYER_BLEND_LAB:
+        case GIMP_LAYER_COLOR_SPACE_LAB:
         default:
           fish_to_composite = _gimp_fish_perceptual_to_laba;
           fish_from_composite = NULL;
           break;
-        case GIMP_LAYER_BLEND_RGB_LINEAR:
+        case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
           fish_to_composite = _gimp_fish_perceptual_to_rgba;
           fish_from_composite = NULL;
           break;
-        case GIMP_LAYER_BLEND_RGB_PERCEPTUAL:
+        case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
           fish_to_composite = NULL;
           fish_from_composite = _gimp_fish_perceptual_to_rgba;
           break;
@@ -306,7 +306,7 @@ gimp_composite_blend (gfloat                 *in,
 
   if (fish_to_composite)
     {
-      if (composite_trc == GIMP_LAYER_BLEND_RGB_LINEAR)
+      if (composite_trc == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR)
         {
           blend_in    = in;
           blend_layer = layer;

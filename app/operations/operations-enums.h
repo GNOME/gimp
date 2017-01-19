@@ -21,16 +21,16 @@
 #define __OPERATIONS_ENUMS_H__
 
 
-#define GIMP_TYPE_LAYER_BLEND_TRC (gimp_layer_blend_trc_get_type ())
+#define GIMP_TYPE_LAYER_COLOR_SPACE (gimp_layer_color_space_get_type ())
 
-GType gimp_layer_blend_trc_get_type (void) G_GNUC_CONST;
+GType gimp_layer_color_space_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_LAYER_BLEND_RGB_LINEAR,
-  GIMP_LAYER_BLEND_RGB_PERCEPTUAL,
-  GIMP_LAYER_BLEND_LAB,
-} GimpLayerBlendTRC;
+  GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+  GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+  GIMP_LAYER_COLOR_SPACE_LAB,
+} GimpLayerColorSpace;
 
 
 #define GIMP_TYPE_LAYER_COMPOSITE_MODE (gimp_layer_composite_mode_get_type ())

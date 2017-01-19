@@ -46,8 +46,8 @@ struct _GimpOperationPointLayerMode
 
   gboolean                     linear;
   gdouble                      opacity;
-  GimpLayerBlendTRC            blend_trc;
-  GimpLayerBlendTRC            composite_trc;
+  GimpLayerColorSpace          blend_trc;
+  GimpLayerColorSpace          composite_trc;
   GimpLayerCompositeMode       composite_mode;
 };
 

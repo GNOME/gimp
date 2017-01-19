@@ -63,8 +63,8 @@ typedef gboolean (* GimpLayerModeFunc) (gfloat                 *in,
                                         glong                   samples,
                                         const GeglRectangle    *roi,
                                         gint                    level,
-                                        GimpLayerBlendTRC       blend_trc,
-                                        GimpLayerBlendTRC       composite_trc,
+                                        GimpLayerColorSpace     blend_trc,
+                                        GimpLayerColorSpace     composite_trc,
                                         GimpLayerCompositeMode  composite_mode);
 
 typedef  void    (* GimpBlendFunc)     (const float            *dest,

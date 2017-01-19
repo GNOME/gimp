@@ -96,8 +96,8 @@ gimp_operation_grain_merge_process_pixels (gfloat                *in,
                                            glong                  samples,
                                            const GeglRectangle   *roi,
                                            gint                   level,
-                                           GimpLayerBlendTRC      blend_trc,
-                                           GimpLayerBlendTRC      composite_trc,
+                                           GimpLayerColorSpace    blend_trc,
+                                           GimpLayerColorSpace    composite_trc,
                                            GimpLayerCompositeMode composite_mode)
 {
   gimp_composite_blend (in, layer, mask, out, opacity, samples,

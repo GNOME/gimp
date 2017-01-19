@@ -160,19 +160,19 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
   return FALSE;
 }
 
-GimpLayerBlendTRC
-gimp_layer_mode_get_blend_trc (GimpLayerMode  mode)
+GimpLayerColorSpace
+gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
 {
   switch (mode)
     {
     case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
-      return GIMP_LAYER_BLEND_RGB_PERCEPTUAL;
+      return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
 
     case GIMP_LAYER_MODE_DISSOLVE:
-      return GIMP_LAYER_BLEND_RGB_LINEAR;
+      return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_BEHIND:
-      return GIMP_LAYER_BLEND_RGB_PERCEPTUAL;
+      return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
 
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
@@ -197,16 +197,16 @@ gimp_layer_mode_get_blend_trc (GimpLayerMode  mode)
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
     case GIMP_LAYER_MODE_OVERLAY:
-      return GIMP_LAYER_BLEND_RGB_PERCEPTUAL;
+      return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
 
     case GIMP_LAYER_MODE_LCH_HUE:
     case GIMP_LAYER_MODE_LCH_CHROMA:
     case GIMP_LAYER_MODE_LCH_COLOR:
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-      return GIMP_LAYER_BLEND_LAB;
+      return GIMP_LAYER_COLOR_SPACE_LAB;
 
     case GIMP_LAYER_MODE_NORMAL:
-      return GIMP_LAYER_BLEND_RGB_LINEAR;
+      return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_MULTIPLY:
     case GIMP_LAYER_MODE_SCREEN:
@@ -226,7 +226,7 @@ gimp_layer_mode_get_blend_trc (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:
     case GIMP_LAYER_MODE_GRAIN_MERGE:
-      return GIMP_LAYER_BLEND_RGB_PERCEPTUAL;
+      return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
 
     case GIMP_LAYER_MODE_BEHIND_LINEAR:
     case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
@@ -244,25 +244,25 @@ gimp_layer_mode_get_blend_trc (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
-      return GIMP_LAYER_BLEND_RGB_LINEAR;
+      return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_ERASE:
-      return GIMP_LAYER_BLEND_RGB_LINEAR;
+      return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_REPLACE:
-      return GIMP_LAYER_BLEND_RGB_PERCEPTUAL;
+      return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
 
     case GIMP_LAYER_MODE_ANTI_ERASE:
-      return GIMP_LAYER_BLEND_RGB_LINEAR;
+      return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
   }
 
-  return GIMP_LAYER_BLEND_RGB_LINEAR;
+  return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 }
 
-GimpLayerBlendTRC
-gimp_layer_mode_get_composite_trc (GimpLayerMode  mode)
+GimpLayerColorSpace
+gimp_layer_mode_get_composite_space (GimpLayerMode  mode)
 {
-  return GIMP_LAYER_BLEND_RGB_LINEAR;
+  return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 }
 
 GimpLayerCompositeMode

@@ -23,14 +23,14 @@
 #define __GIMP_LAYER_MODES_H__
 
 
-gboolean                 gimp_layer_mode_is_legacy          (GimpLayerMode  mode);
-gboolean                 gimp_layer_mode_is_linear          (GimpLayerMode  mode);
+gboolean                 gimp_layer_mode_is_legacy           (GimpLayerMode  mode);
+gboolean                 gimp_layer_mode_is_linear           (GimpLayerMode  mode);
 
-GimpLayerBlendTRC        gimp_layer_mode_get_blend_trc      (GimpLayerMode  mode);
-GimpLayerBlendTRC        gimp_layer_mode_get_composite_trc  (GimpLayerMode  mode);
-GimpLayerCompositeMode   gimp_layer_mode_get_composite_mode (GimpLayerMode  mode);
+GimpLayerColorSpace      gimp_layer_mode_get_blend_space     (GimpLayerMode  mode);
+GimpLayerColorSpace      gimp_layer_mode_get_composite_space (GimpLayerMode  mode);
+GimpLayerCompositeMode   gimp_layer_mode_get_composite_mode  (GimpLayerMode  mode);
 
-const gchar            * gimp_layer_mode_get_operation      (GimpLayerMode  mode);
+const gchar            * gimp_layer_mode_get_operation       (GimpLayerMode  mode);
 
 
 #endif /* __GIMP_LAYER_MODES_H__ */

@@ -103,8 +103,8 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
   g_object_class_install_property (object_class, PROP_BLEND_TRC,
                                    g_param_spec_enum ("blend-trc",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_LAYER_BLEND_TRC,
-                                                      GIMP_LAYER_BLEND_RGB_LINEAR,
+                                                      GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                      GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -112,8 +112,8 @@ gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *kl
   g_object_class_install_property (object_class, PROP_COMPOSITE_TRC,
                                    g_param_spec_enum ("composite-trc",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_LAYER_BLEND_TRC,
-                                                      GIMP_LAYER_BLEND_RGB_LINEAR,
+                                                      GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                      GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 

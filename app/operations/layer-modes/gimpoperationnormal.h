@@ -59,8 +59,8 @@ gboolean gimp_operation_normal_process_pixels_core (gfloat                *in,
                                                     glong                  samples,
                                                     const GeglRectangle   *roi,
                                                     gint                   level,
-                                                    GimpLayerBlendTRC      blend_trc,
-                                                    GimpLayerBlendTRC      composite_trc,
+                                                    GimpLayerColorSpace    blend_trc,
+                                                    GimpLayerColorSpace    composite_trc,
                                                     GimpLayerCompositeMode composite_mode);
 
 gboolean gimp_operation_normal_process_pixels_sse2 (gfloat                *in,
@@ -71,8 +71,8 @@ gboolean gimp_operation_normal_process_pixels_sse2 (gfloat                *in,
                                                     glong                  samples,
                                                     const GeglRectangle   *roi,
                                                     gint                   level,
-                                                    GimpLayerBlendTRC      blend_trc,
-                                                    GimpLayerBlendTRC      composite_trc,
+                                                    GimpLayerColorSpace    blend_trc,
+                                                    GimpLayerColorSpace    composite_trc,
                                                     GimpLayerCompositeMode composite_mode);
 
 gboolean gimp_operation_normal_process_pixels_sse4 (gfloat                *in,
@@ -83,8 +83,8 @@ gboolean gimp_operation_normal_process_pixels_sse4 (gfloat                *in,
                                                     glong                  samples,
                                                     const GeglRectangle   *roi,
                                                     gint                   level,
-                                                    GimpLayerBlendTRC      blend_trc,
-                                                    GimpLayerBlendTRC      composite_trc,
+                                                    GimpLayerColorSpace    blend_trc,
+                                                    GimpLayerColorSpace    composite_trc,
                                                     GimpLayerCompositeMode composite_mode);
 
 

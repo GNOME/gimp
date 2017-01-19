@@ -110,8 +110,8 @@ gimp_operation_dissolve_process_pixels (gfloat                *in,
                                         glong                  samples,
                                         const GeglRectangle   *result,
                                         gint                   level,
-                                        GimpLayerBlendTRC      blend_trc,
-                                        GimpLayerBlendTRC      composite_trc,
+                                        GimpLayerColorSpace    blend_trc,
+                                        GimpLayerColorSpace    composite_trc,
                                         GimpLayerCompositeMode composite_mode)
 {
   const gboolean has_mask = mask != NULL;

@@ -57,8 +57,8 @@ gboolean gimp_operation_grain_extract_legacy_process_pixels (gfloat             
                                                              glong                  samples,
                                                              const GeglRectangle   *roi,
                                                              gint                   level,
-                                                             GimpLayerBlendTRC      blend_trc,
-                                                             GimpLayerBlendTRC      composite_trc,
+                                                             GimpLayerColorSpace    blend_trc,
+                                                             GimpLayerColorSpace    composite_trc,
                                                              GimpLayerCompositeMode composite_mode);
 
 

@@ -57,8 +57,8 @@ gboolean gimp_operation_multiply_legacy_process_pixels (gfloat                *i
                                                         glong                  samples,
                                                         const GeglRectangle   *roi,
                                                         gint                   level,
-                                                        GimpLayerBlendTRC      blend_trc,
-                                                        GimpLayerBlendTRC      composite_trc,
+                                                        GimpLayerColorSpace    blend_trc,
+                                                        GimpLayerColorSpace    composite_trc,
                                                         GimpLayerCompositeMode composite_mode);
 
 
