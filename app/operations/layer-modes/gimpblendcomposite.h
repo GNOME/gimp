@@ -145,6 +145,8 @@ compfun_dst_atop (gfloat *in,
         }
       else
         {
+          gint b;
+
           for (b = RED; b < ALPHA; b++)
             out[b] = comp[b] * in[ALPHA] + layer[b] * (1.0f - in[ALPHA]);
         }
