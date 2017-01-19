@@ -75,9 +75,10 @@ compfun_src_atop (gfloat *in,
 static inline void
 compfun_src_over (gfloat *in,
                   gfloat *layer,
+                  gfloat *comp,
                   gfloat *mask,
-                  gfloat *out,
                   gfloat  opacity,
+                  gfloat *out,
                   gint    samples)
 {
   while (samples--)
@@ -100,13 +101,14 @@ compfun_src_over (gfloat *in,
           gint   b;
           gfloat ratio = comp_alpha / new_alpha;
           for (b = RED; b < ALPHA; b++)
-            out[b] = layer[b] * ratio + in[b] * (1.0f - ratio);
+            out[b] = ratio * (in[ALPHA] * (comp[b] - layer[b]) + layer[b] - in[b]) + in[b];
         }
  
       out[ALPHA] = new_alpha;
  
       in    += 4;
       layer += 4;
+      comp  += 4;
       out   += 4;
  
       if (mask)
@@ -260,8 +262,9 @@ gimp_composite_blend (gfloat                *in,
       compfun_src_atop (blend_in, blend_out, mask, opacity, out, samples);
       break;
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
-      //compfun_src_over (blend_in, blend_out, mask, opacity, out, samples);
-      gimp_operation_normal_process_pixels (blend_in, blend_out, mask, out, opacity, samples, NULL, 0, 0, 0, 0);
+      if (fish_to_composite)
+        babl_process (fish_to_composite, blend_layer, blend_layer,  samples);
+      compfun_src_over (blend_in, blend_layer, blend_out, mask, opacity, out, samples);
       break;
     case GIMP_LAYER_COMPOSITE_DST_ATOP:
       if (fish_to_composite)
