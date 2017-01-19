@@ -308,8 +308,7 @@ do_layer_blend (GeglBuffer    *src_buffer,
 
   const guint         paint_stride = gimp_temp_buf_get_width (paint_buf);
   gfloat             *paint_data   = (gfloat *) gimp_temp_buf_get_data (paint_buf);
-  GimpLayerModeFunc   apply_func   = gimp_get_layer_mode_function (paint_mode,
-                                                                   linear_mode);
+  GimpLayerModeFunc   apply_func   = gimp_get_layer_mode_function (paint_mode);
 
   if (linear_mode)
     iterator_format = babl_format ("RGBA float");

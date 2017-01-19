@@ -49,30 +49,18 @@ struct _GimpOperationLchHueClass
 };
 
 
-GType    gimp_operation_lch_hue_get_type              (void) G_GNUC_CONST;
+GType    gimp_operation_lch_hue_get_type       (void) G_GNUC_CONST;
 
-gboolean gimp_operation_lch_hue_process_pixels_linear (gfloat                *in,
-                                                       gfloat                *layer,
-                                                       gfloat                *mask,
-                                                       gfloat                *out,
-                                                       gfloat                 opacity,
-                                                       glong                  samples,
-                                                       const GeglRectangle   *roi,
-                                                       gint                   level,
-                                                       GimpLayerBlendTRC      blend_trc,
-                                                       GimpLayerBlendTRC      composite_trc,
-                                                       GimpLayerCompositeMode composite_mode);
-
-gboolean gimp_operation_lch_hue_process_pixels        (gfloat                *in,
-                                                       gfloat                *layer,
-                                                       gfloat                *mask,
-                                                       gfloat                *out,
-                                                       gfloat                 opacity,
-                                                       glong                  samples,
-                                                       const GeglRectangle   *roi,
-                                                       gint                   level,
-                                                       GimpLayerBlendTRC      blend_trc,
-                                                       GimpLayerBlendTRC      composite_trc,
-                                                       GimpLayerCompositeMode composite_mode);
+gboolean gimp_operation_lch_hue_process_pixels (gfloat                *in,
+                                                gfloat                *layer,
+                                                gfloat                *mask,
+                                                gfloat                *out,
+                                                gfloat                 opacity,
+                                                glong                  samples,
+                                                const GeglRectangle   *roi,
+                                                gint                   level,
+                                                GimpLayerBlendTRC      blend_trc,
+                                                GimpLayerBlendTRC      composite_trc,
+                                                GimpLayerCompositeMode composite_mode);
 
 #endif /* __GIMP_OPERATION_LCH_HUE_H__ */

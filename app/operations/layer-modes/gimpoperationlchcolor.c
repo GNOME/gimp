@@ -81,46 +81,17 @@ gimp_operation_lch_color_process (GeglOperation       *operation,
                                   const GeglRectangle *roi,
                                   gint                 level)
 {
-  GimpOperationPointLayerMode *gimp_op = GIMP_OPERATION_POINT_LAYER_MODE (operation);
+  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
 
-  return (gimp_op->linear ? gimp_operation_lch_color_process_pixels_linear :
-                   gimp_operation_lch_color_process_pixels)
-    (in_buf, aux_buf, aux2_buf,
-     out_buf,
-     gimp_op->opacity,
-     samples, roi, level,
-     gimp_op->blend_trc,
-     gimp_op->composite_trc,
-     gimp_op->composite_mode);
+  return gimp_operation_lch_color_process_pixels (in_buf, aux_buf, aux2_buf,
+                                                  out_buf,
+                                                  layer_mode->opacity,
+                                                  samples, roi, level,
+                                                  layer_mode->blend_trc,
+                                                  layer_mode->composite_trc,
+                                                  layer_mode->composite_mode);
 }
 
-static void
-color_pre_process (const Babl   *from_fish_la,
-                   const Babl   *from_fish_laba,
-                   const Babl   *to_fish,
-                   const gfloat *in,
-                   const gfloat *layer,
-                   gfloat       *out,
-                   glong         samples)
-{
-  gfloat tmp[4 * samples], *layer_lab = tmp;
-  gint   i;
-
-  babl_process (from_fish_la, in, &out[2 * samples], samples);
-  babl_process (from_fish_laba, layer, layer_lab, samples);
-
-  for (i = 0; i < samples; ++i)
-    {
-      out[4 * i + 0] = out[2 * samples + 2 * i + 0];
-      out[4 * i + 1] = layer_lab[4 * i + 1];
-      out[4 * i + 2] = layer_lab[4 * i + 2];
-      out[4 * i + 3] = out[2 * samples + 2 * i + 1];
-    }
-
-  babl_process (to_fish, out, out, samples);
-}
-
-/* XXX: should be removed along with the pre_process fun */
 gboolean
 gimp_operation_lch_color_process_pixels (gfloat                *in,
                                          gfloat                *layer,
@@ -133,37 +104,6 @@ gimp_operation_lch_color_process_pixels (gfloat                *in,
                                          GimpLayerBlendTRC      blend_trc,
                                          GimpLayerBlendTRC      composite_trc,
                                          GimpLayerCompositeMode composite_mode)
-{
-  static const Babl *from_fish_laba = NULL;
-  static const Babl *from_fish_la = NULL;
-  static const Babl *to_fish = NULL;
-
-  if (!from_fish_laba)
-    from_fish_laba  = babl_fish ("R'G'B'A float", "CIE Lab alpha float");
-  if (!from_fish_la)
-    from_fish_la =  babl_fish ("R'G'B'A float", "CIE L alpha float");
-  if (!to_fish)
-     to_fish = babl_fish ("CIE Lab alpha float", "R'G'B'A float");
-
-  color_pre_process (from_fish_la, from_fish_laba, to_fish, in, layer, out, samples);
-  compfun_src_atop (in, layer, mask, opacity, out, samples);
-
-  return TRUE;
-}
-
-
-gboolean
-gimp_operation_lch_color_process_pixels_linear (gfloat                *in,
-                                                gfloat                *layer,
-                                                gfloat                *mask,
-                                                gfloat                *out,
-                                                gfloat                 opacity,
-                                                glong                  samples,
-                                                const GeglRectangle   *roi,
-                                                gint                   level,
-                                                GimpLayerBlendTRC      blend_trc,
-                                                GimpLayerBlendTRC      composite_trc,
-                                                GimpLayerCompositeMode composite_mode)
 {
   gimp_composite_blend (in, layer, mask, out, opacity, samples,
                         blend_trc, composite_trc, composite_mode,

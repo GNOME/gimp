@@ -81,39 +81,17 @@ gimp_operation_lch_lightness_process (GeglOperation       *operation,
                                       const GeglRectangle *roi,
                                       gint                 level)
 {
-  GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
-  return (layer_mode->linear ? gimp_operation_lch_lightness_process_pixels_linear : gimp_operation_lch_lightness_process_pixels)
-    (in_buf, aux_buf, aux2_buf,
-     out_buf,
-     layer_mode->opacity,
-     samples, roi, level,
-     layer_mode->blend_trc,
-     layer_mode->composite_trc,
-     layer_mode->composite_mode);
+  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
+
+  return gimp_operation_lch_lightness_process_pixels (in_buf, aux_buf, aux2_buf,
+                                                      out_buf,
+                                                      layer_mode->opacity,
+                                                      samples, roi, level,
+                                                      layer_mode->blend_trc,
+                                                      layer_mode->composite_trc,
+                                                      layer_mode->composite_mode);
 }
 
-static void
-lightness_pre_process (const Babl   *from_fish_la,
-                       const Babl   *from_fish_laba,
-                       const Babl   *to_fish,
-                       const gfloat *in,
-                       const gfloat *layer,
-                       gfloat       *out,
-                       glong         samples)
-{
-  gfloat lightness_alpha[samples * 2];
-  gint   i;
-
-  babl_process (from_fish_laba, in, out, samples);
-  babl_process (from_fish_la, layer, lightness_alpha, samples);
-
-  for (i = 0; i < samples; ++i)
-    out[4 * i] = lightness_alpha[2 * i];
-
-  babl_process (to_fish, out, out, samples);
-}
-
-/* XXX: this should be remove along with _pre_process */
 gboolean
 gimp_operation_lch_lightness_process_pixels (gfloat                *in,
                                              gfloat                *layer,
@@ -126,38 +104,6 @@ gimp_operation_lch_lightness_process_pixels (gfloat                *in,
                                              GimpLayerBlendTRC      blend_trc,
                                              GimpLayerBlendTRC      composite_trc,
                                              GimpLayerCompositeMode composite_mode)
-{
-  static const Babl *from_fish_laba = NULL;
-  static const Babl *from_fish_la = NULL;
-  static const Babl *to_fish = NULL;
-
-  if (!from_fish_laba)
-    from_fish_laba  = babl_fish ("R'G'B'A float", "CIE Lab alpha float");
-  if (!from_fish_la)
-    from_fish_la =  babl_fish ("R'G'B'A float", "CIE L alpha float");
-  if (!to_fish)
-     to_fish = babl_fish ("CIE Lab alpha float", "R'G'B'A float");
-
-
-  lightness_pre_process (from_fish_la, from_fish_laba, to_fish, in, layer, out, samples);
-  compfun_src_atop (in, layer, mask, opacity, out, samples);
-
-  return TRUE;
-}
-
-
-gboolean
-gimp_operation_lch_lightness_process_pixels_linear (gfloat                *in,
-                                                    gfloat                *layer,
-                                                    gfloat                *mask,
-                                                    gfloat                *out,
-                                                    gfloat                 opacity,
-                                                    glong                  samples,
-                                                    const GeglRectangle   *roi,
-                                                    gint                   level,
-                                                    GimpLayerBlendTRC      blend_trc,
-                                                    GimpLayerBlendTRC      composite_trc,
-                                                    GimpLayerCompositeMode composite_mode)
 {
   gimp_composite_blend (in, layer, mask, out, opacity, samples,
                         blend_trc, composite_trc, composite_mode,

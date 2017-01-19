@@ -78,8 +78,7 @@
 
 
 GimpLayerModeFunc
-gimp_get_layer_mode_function (GimpLayerMode  paint_mode,
-                              gboolean       linear_mode)
+gimp_get_layer_mode_function (GimpLayerMode  paint_mode)
 {
   GimpLayerModeFunc func;
 
@@ -267,27 +266,19 @@ gimp_get_layer_mode_function (GimpLayerMode  paint_mode,
       break;
 
     case GIMP_LAYER_MODE_LCH_HUE:
-      func = linear_mode ?
-             gimp_operation_lch_hue_process_pixels_linear :
-             gimp_operation_lch_hue_process_pixels;
+      func = gimp_operation_lch_hue_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LCH_CHROMA:
-      func = linear_mode ?
-             gimp_operation_lch_chroma_process_pixels_linear :
-             gimp_operation_lch_chroma_process_pixels;
+      func = gimp_operation_lch_chroma_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LCH_COLOR:
-      func = linear_mode ?
-             gimp_operation_lch_color_process_pixels_linear :
-             gimp_operation_lch_color_process_pixels;
+      func = gimp_operation_lch_color_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-      func = linear_mode ?
-             gimp_operation_lch_lightness_process_pixels_linear :
-             gimp_operation_lch_lightness_process_pixels;
+      func = gimp_operation_lch_lightness_process_pixels;
       break;
 
     case GIMP_LAYER_MODE_ERASE:
