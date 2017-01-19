@@ -45,12 +45,12 @@ compfun_src_atop (gfloat *in,
 {
   while (samples--)
     {
-      gfloat comp_alpha = layer[ALPHA] * opacity;
+      gfloat layer_alpha = layer[ALPHA] * opacity;
 
       if (mask)
-        comp_alpha *= *mask;
+        layer_alpha *= *mask;
 
-      if (comp_alpha == 0.0f)
+      if (layer_alpha == 0.0f)
         {
           out[RED]   = in[RED];
           out[GREEN] = in[GREEN];
@@ -61,7 +61,7 @@ compfun_src_atop (gfloat *in,
           gint b;
 
           for (b = RED; b < ALPHA; b++)
-            out[b] = layer[b] * comp_alpha + in[b] * (1.0f - comp_alpha);
+            out[b] = layer[b] * layer_alpha + in[b] * (1.0f - layer_alpha);
         }
 
       out[ALPHA] = in[ALPHA];
@@ -87,14 +87,14 @@ compfun_src_over (gfloat *in,
   while (samples--)
     {
       gfloat new_alpha;
-      gfloat comp_alpha = layer[ALPHA] * opacity;
+      gfloat layer_alpha = layer[ALPHA] * opacity;
 
       if (mask)
-        comp_alpha *= *mask;
+        layer_alpha *= *mask;
 
-      new_alpha = comp_alpha + (1.0f - comp_alpha) * in[ALPHA];
+      new_alpha = layer_alpha + (1.0f - layer_alpha) * in[ALPHA];
 
-      if (comp_alpha == 0.0f || new_alpha == 0.0f)
+      if (layer_alpha == 0.0f || new_alpha == 0.0f)
         {
           out[RED]   = in[RED];
           out[GREEN] = in[GREEN];
@@ -102,7 +102,7 @@ compfun_src_over (gfloat *in,
         }
       else
         {
-          gfloat ratio = comp_alpha / new_alpha;
+          gfloat ratio = layer_alpha / new_alpha;
           gint   b;
 
           for (b = RED; b < ALPHA; b++)
@@ -121,6 +121,45 @@ compfun_src_over (gfloat *in,
     }
 }
 
+static inline void
+compfun_dst_atop (gfloat *in,
+                  gfloat *layer,
+                  gfloat *comp,
+                  gfloat *mask,
+                  gfloat  opacity,
+                  gfloat *out,
+                  gint    samples)
+{
+  while (samples--)
+    {
+      gfloat layer_alpha = layer[ALPHA] * opacity;
+
+      if (mask)
+        layer_alpha *= *mask;
+
+      if (layer_alpha == 0.0f)
+        {
+          out[RED]   = in[RED];
+          out[GREEN] = in[GREEN];
+          out[BLUE]  = in[BLUE];
+        }
+      else
+        {
+          for (b = RED; b < ALPHA; b++)
+            out[b] = comp[b] * in[ALPHA] + layer[b] * (1.0f - in[ALPHA]);
+        }
+
+      out[ALPHA] = layer_alpha;
+
+      in    += 4;
+      layer += 4;
+      comp  += 4;
+      out   += 4;
+
+      if (mask)
+        mask++;
+    }
+}
 
 static inline void
 compfun_src_in (gfloat *in,
@@ -261,7 +300,26 @@ gimp_composite_blend (gfloat                 *in,
 
   if (fish_to_composite)
     {
-      babl_process (fish_to_composite, blend_in, blend_in,   samples);
+      if (composite_trc == GIMP_LAYER_BLEND_RGB_LINEAR)
+        {
+          blend_in    = in;
+          blend_layer = layer;
+        }
+      else
+        {
+          if (composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+              composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
+            {
+              babl_process (fish_to_composite, blend_in, blend_in, samples);
+            }
+
+          if (composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+              composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP)
+            {
+              babl_process (fish_to_composite, blend_layer, blend_layer, samples);
+            }
+        }
+
       babl_process (fish_to_composite, blend_out, blend_out, samples);
     }
 
@@ -273,16 +331,11 @@ gimp_composite_blend (gfloat                 *in,
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
-      if (fish_to_composite)
-        babl_process (fish_to_composite, blend_layer, blend_layer,  samples);
       compfun_src_over (blend_in, blend_layer, blend_out, mask, opacity, out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_DST_ATOP:
-      if (fish_to_composite)
-        babl_process (fish_to_composite, blend_layer, blend_layer,  samples);
-
-      compfun_src_atop (blend_out, blend_in, mask, opacity, out, samples); /* swapped arguments */
+      compfun_dst_atop (blend_in, blend_layer, blend_out, mask, opacity, out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_IN:
