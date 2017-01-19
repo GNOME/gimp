@@ -218,6 +218,9 @@ gimp_composite_blend (gfloat                 *in,
   gfloat *blend_layer = layer;
   gfloat *blend_out   = out;
 
+  gfloat *composite_in;
+  gfloat *composite_layer;
+
   const Babl *fish_to_blend       = NULL;
   const Babl *fish_to_composite   = NULL;
   const Babl *fish_from_composite = NULL;
@@ -290,39 +293,46 @@ gimp_composite_blend (gfloat                 *in,
                     read it for the compositing stage  */
     blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
 
-  if (fish_to_blend || fish_to_composite)
+  if (fish_to_blend)
     {
       blend_in    = g_alloca (sizeof (gfloat) * 4 * samples);
       blend_layer = g_alloca (sizeof (gfloat) * 4 * samples);
-    }
-
-  if (fish_to_blend)
-    {
       babl_process (fish_to_blend, in,    blend_in,  samples);
       babl_process (fish_to_blend, layer, blend_layer,  samples);
     }
 
   blend_func (blend_in, blend_layer, blend_out, samples);
 
+  composite_in    = blend_in;
+  composite_layer = blend_layer;
+
   if (fish_to_composite)
     {
       if (composite_trc == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR)
         {
-          blend_in    = in;
-          blend_layer = layer;
+          composite_in    = in;
+          composite_layer = layer;
         }
       else
         {
           if (composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
               composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
             {
-              babl_process (fish_to_composite, blend_in, blend_in, samples);
+              if (composite_in == in)
+                composite_in = g_alloca (sizeof (gfloat) * 4 * samples);
+
+              babl_process (fish_to_composite,
+                            blend_in, composite_in, samples);
             }
 
           if (composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
               composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP)
             {
-              babl_process (fish_to_composite, blend_layer, blend_layer, samples);
+              if (composite_layer == layer)
+                composite_layer = g_alloca (sizeof (gfloat) * 4 * samples);
+
+              babl_process (fish_to_composite,
+                            blend_layer, composite_layer, samples);
             }
         }
 
@@ -333,19 +343,19 @@ gimp_composite_blend (gfloat                 *in,
     {
     case GIMP_LAYER_COMPOSITE_SRC_ATOP:
     default:
-      compfun_src_atop (blend_in, blend_out, mask, opacity, out, samples);
+      compfun_src_atop (composite_in, blend_out, mask, opacity, out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
-      compfun_src_over (blend_in, blend_layer, blend_out, mask, opacity, out, samples);
+      compfun_src_over (composite_in, composite_layer, blend_out, mask, opacity, out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_DST_ATOP:
-      compfun_dst_atop (blend_in, blend_layer, blend_out, mask, opacity, out, samples);
+      compfun_dst_atop (composite_in, composite_layer, blend_out, mask, opacity, out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_IN:
-      compfun_src_in (blend_in, blend_out, mask, opacity, out, samples);
+      compfun_src_in (composite_in, blend_out, mask, opacity, out, samples);
       break;
     }
 
