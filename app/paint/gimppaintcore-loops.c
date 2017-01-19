@@ -297,8 +297,8 @@ do_layer_blend (GeglBuffer    *src_buffer,
                 gboolean       linear_mode,
                 GimpLayerMode  paint_mode)
 {
-  GimpLayerBlendTRC   blend_trc = GIMP_LAYER_BLEND_RGB_PERCEPTUAL;//XXX
-  GimpLayerBlendTRC   composite_trc = GIMP_LAYER_BLEND_RGB_LINEAR;//placeholders
+  GimpLayerColorSpace blend_trc = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;//XXX
+  GimpLayerColorSpace composite_trc = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;//placeholders
   GimpLayerCompositeMode composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER;//placeholders
   GeglRectangle       roi;
   GeglRectangle       mask_roi;

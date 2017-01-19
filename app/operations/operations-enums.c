@@ -9,21 +9,21 @@
 
 /* enumerations from "./operations-enums.h" */
 GType
-gimp_layer_blend_trc_get_type (void)
+gimp_layer_color_space_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_LAYER_BLEND_RGB_LINEAR, "GIMP_LAYER_BLEND_RGB_LINEAR", "rgb-linear" },
-    { GIMP_LAYER_BLEND_RGB_PERCEPTUAL, "GIMP_LAYER_BLEND_RGB_PERCEPTUAL", "rgb-perceptual" },
-    { GIMP_LAYER_BLEND_LAB, "GIMP_LAYER_BLEND_LAB", "lab" },
+    { GIMP_LAYER_COLOR_SPACE_RGB_LINEAR, "GIMP_LAYER_COLOR_SPACE_RGB_LINEAR", "rgb-linear" },
+    { GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL, "GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL", "rgb-perceptual" },
+    { GIMP_LAYER_COLOR_SPACE_LAB, "GIMP_LAYER_COLOR_SPACE_LAB", "lab" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_LAYER_BLEND_RGB_LINEAR, "GIMP_LAYER_BLEND_RGB_LINEAR", NULL },
-    { GIMP_LAYER_BLEND_RGB_PERCEPTUAL, "GIMP_LAYER_BLEND_RGB_PERCEPTUAL", NULL },
-    { GIMP_LAYER_BLEND_LAB, "GIMP_LAYER_BLEND_LAB", NULL },
+    { GIMP_LAYER_COLOR_SPACE_RGB_LINEAR, "GIMP_LAYER_COLOR_SPACE_RGB_LINEAR", NULL },
+    { GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL, "GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL", NULL },
+    { GIMP_LAYER_COLOR_SPACE_LAB, "GIMP_LAYER_COLOR_SPACE_LAB", NULL },
     { 0, NULL, NULL }
   };
 
@@ -31,8 +31,8 @@ gimp_layer_blend_trc_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpLayerBlendTRC", values);
-      gimp_type_set_translation_context (type, "layer-blend-trc");
+      type = g_enum_register_static ("GimpLayerColorSpace", values);
+      gimp_type_set_translation_context (type, "layer-color-space");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
