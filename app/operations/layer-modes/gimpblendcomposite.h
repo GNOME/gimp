@@ -290,10 +290,14 @@ gimp_composite_blend (gfloat                 *in,
                     read it for the compositing stage  */
     blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
 
-  if (fish_to_blend)
+  if (fish_to_blend || fish_to_composite)
     {
       blend_in    = g_alloca (sizeof (gfloat) * 4 * samples);
       blend_layer = g_alloca (sizeof (gfloat) * 4 * samples);
+    }
+
+  if (fish_to_blend)
+    {
       babl_process (fish_to_blend, in,    blend_in,  samples);
       babl_process (fish_to_blend, layer, blend_layer,  samples);
     }
