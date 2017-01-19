@@ -184,6 +184,7 @@ gimp_composite_blend (gfloat                 *in,
         case GIMP_LAYER_BLEND_LAB:
           fish_to_composite   = _gimp_fish_rgba_to_laba;
           fish_from_composite = _gimp_fish_laba_to_rgba;
+          break;
         default:
         case GIMP_LAYER_BLEND_RGB_LINEAR:
           fish_to_composite   = NULL;
@@ -204,6 +205,7 @@ gimp_composite_blend (gfloat                 *in,
         default:
           fish_to_composite = NULL;
           fish_from_composite = _gimp_fish_laba_to_rgba;
+          break;
         case GIMP_LAYER_BLEND_RGB_LINEAR:
           fish_to_composite = _gimp_fish_laba_to_rgba;
           fish_from_composite = NULL;
@@ -223,6 +225,7 @@ gimp_composite_blend (gfloat                 *in,
         default:
           fish_to_composite = _gimp_fish_perceptual_to_laba;
           fish_from_composite = NULL;
+          break;
         case GIMP_LAYER_BLEND_RGB_LINEAR:
           fish_to_composite = _gimp_fish_perceptual_to_rgba;
           fish_from_composite = NULL;
