@@ -90,7 +90,7 @@ gimp_operation_dissolve_process (GeglOperation       *operation,
                                  const GeglRectangle *result,
                                  gint                 level)
 {
-  GimpOperationPointLayerMode *layer_mode = (void*) operation;
+  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
 
   return gimp_operation_dissolve_process_pixels (in_buf, aux_buf, aux2_buf,
                                                  out_buf,

@@ -62,5 +62,4 @@ gboolean gimp_operation_hsv_hue_legacy_process_pixels (gfloat                *in
                                                        GimpLayerCompositeMode composite_mode);
 
 
-
 #endif /* __GIMP_OPERATION_HSV_HUE_LEGACY_H__ */

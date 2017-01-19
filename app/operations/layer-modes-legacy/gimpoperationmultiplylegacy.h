@@ -61,4 +61,5 @@ gboolean gimp_operation_multiply_legacy_process_pixels (gfloat                *i
                                                         GimpLayerBlendTRC      composite_trc,
                                                         GimpLayerCompositeMode composite_mode);
 
+
 #endif /* __GIMP_OPERATION_MULTIPLY_LEGACY_H__ */

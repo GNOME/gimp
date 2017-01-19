@@ -50,7 +50,6 @@ struct _GimpOperationDifferenceClass
 
 GType    gimp_operation_difference_get_type       (void) G_GNUC_CONST;
 
-
 gboolean gimp_operation_difference_process_pixels (gfloat                *in,
                                                    gfloat                *layer,
                                                    gfloat                *mask,

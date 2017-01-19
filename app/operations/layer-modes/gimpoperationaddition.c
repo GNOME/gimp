@@ -76,7 +76,8 @@ gimp_operation_addition_process (GeglOperation       *operation,
                                  const GeglRectangle *roi,
                                  gint                 level)
 {
-  GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
+  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
+
   return gimp_operation_addition_process_pixels (in_buf, aux_buf, aux2_buf,
                                                  out_buf,
                                                  layer_mode->opacity,

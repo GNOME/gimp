@@ -29,6 +29,7 @@
 #include "gimpoperationburn.h"
 #include "gimpblendcomposite.h"
 
+
 static gboolean gimp_operation_burn_process (GeglOperation       *operation,
                                              void                *in_buf,
                                              void                *aux_buf,
@@ -75,7 +76,7 @@ gimp_operation_burn_process (GeglOperation       *operation,
                              const GeglRectangle *roi,
                              gint                 level)
 {
-  GimpOperationPointLayerMode *layer_mode = (void*)operation;
+  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
 
   return gimp_operation_burn_process_pixels (in_buf, aux_buf, aux2_buf,
                                              out_buf,
@@ -85,7 +86,6 @@ gimp_operation_burn_process (GeglOperation       *operation,
                                              layer_mode->composite_mode,
                                              layer_mode->composite_mode);
 }
-
 
 gboolean
 gimp_operation_burn_process_pixels (gfloat                *in,
@@ -100,8 +100,8 @@ gimp_operation_burn_process_pixels (gfloat                *in,
                                     GimpLayerBlendTRC      composite_trc,
                                     GimpLayerCompositeMode composite_mode)
 {
-  gimp_composite_blend (in, layer, mask, out, opacity, samples, blend_trc,
-                        composite_trc, composite_mode, blendfun_burn);
+  gimp_composite_blend (in, layer, mask, out, opacity, samples,
+                        blend_trc, composite_trc, composite_mode,
+                        blendfun_burn);
   return TRUE;
 }
-

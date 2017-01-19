@@ -61,4 +61,5 @@ gboolean gimp_operation_softlight_process_pixels (gfloat                *in,
                                                   GimpLayerBlendTRC      composite_trc,
                                                   GimpLayerCompositeMode composite_mode);
 
+
 #endif /* __GIMP_OPERATION_SOFTLIGHT_H__ */
