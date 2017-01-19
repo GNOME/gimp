@@ -887,6 +887,9 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   gdouble           xres;
   gdouble           yres;
   gchar             format[128];
+  gint              unit_distance_digits;
+  gint              unit_width_digits;
+  gint              unit_height_digits;
 
   /*  calculate distance and angle  */
   ax = measure->x[1] - measure->x[0];
@@ -936,6 +939,20 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   if (unit_angle > 180.0)
     unit_angle = fabs (360.0 - unit_angle);
 
+  /* Compute minimum digits to display accurate values, so that
+     every pixel shows a different value in unit. */
+  unit_distance_digits = ceil (log10 (pixel_distance / unit_distance));
+  unit_distance_digits = MAX (gimp_unit_get_digits (shell->unit),
+                              unit_distance_digits);
+
+  unit_width_digits    = ceil (log10 (pixel_width / unit_width));
+  unit_width_digits    = MAX (gimp_unit_get_digits (shell->unit),
+                              unit_width_digits);
+
+  unit_height_digits   = ceil (log10 (pixel_height / unit_height));
+  unit_height_digits   = MAX (gimp_unit_get_digits (shell->unit),
+                              unit_height_digits);
+
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
       gimp_tool_replace_status (GIMP_TOOL (measure), display,
@@ -947,10 +964,10 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
     {
       g_snprintf (format, sizeof (format),
                   "%%.%df %s, %%.2f\302\260 (%%.%df × %%.%df)",
-                  gimp_unit_get_digits (shell->unit),
+                  unit_distance_digits,
                   gimp_unit_get_plural (shell->unit),
-                  gimp_unit_get_digits (shell->unit),
-                  gimp_unit_get_digits (shell->unit));
+                  unit_width_digits,
+                  unit_height_digits);
 
       gimp_tool_replace_status (GIMP_TOOL (measure), display, format,
                                 unit_distance, unit_angle,
@@ -962,15 +979,14 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
     {
       gchar buf[128];
 
-      g_snprintf (format, sizeof (format), "%%.%df",
-                  gimp_unit_get_digits (shell->unit));
-
       /* Distance */
       g_snprintf (buf, sizeof (buf), "%.1f", pixel_distance);
       gtk_label_set_text (GTK_LABEL (measure->distance_label[0]), buf);
 
       if (shell->unit != GIMP_UNIT_PIXEL)
         {
+          g_snprintf (format, sizeof (format), "%%.%df",
+                      unit_distance_digits);
           g_snprintf (buf, sizeof (buf), format, unit_distance);
           gtk_label_set_text (GTK_LABEL (measure->distance_label[1]), buf);
 
@@ -1006,6 +1022,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
 
       if (shell->unit != GIMP_UNIT_PIXEL)
         {
+          g_snprintf (format, sizeof (format), "%%.%df",
+                      unit_width_digits);
           g_snprintf (buf, sizeof (buf), format, unit_width);
           gtk_label_set_text (GTK_LABEL (measure->width_label[1]), buf);
 
@@ -1024,6 +1042,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       /* Height */
       if (shell->unit != GIMP_UNIT_PIXEL)
         {
+          g_snprintf (format, sizeof (format), "%%.%df",
+                      unit_height_digits);
           g_snprintf (buf, sizeof (buf), format, unit_height);
           gtk_label_set_text (GTK_LABEL (measure->height_label[1]), buf);
 
