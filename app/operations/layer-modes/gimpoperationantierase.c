@@ -28,7 +28,6 @@
 #include "gimpoperationantierase.h"
 
 
-static void     gimp_operation_anti_erase_prepare (GeglOperation       *operation);
 static gboolean gimp_operation_anti_erase_process (GeglOperation       *operation,
                                                    void                *in_buf,
                                                    void                *aux_buf,
@@ -57,24 +56,12 @@ gimp_operation_anti_erase_class_init (GimpOperationAntiEraseClass *klass)
                                  "description", "GIMP anti erase mode operation",
                                  NULL);
 
-  operation_class->prepare = gimp_operation_anti_erase_prepare;
-  point_class->process     = gimp_operation_anti_erase_process;
+  point_class->process = gimp_operation_anti_erase_process;
 }
 
 static void
 gimp_operation_anti_erase_init (GimpOperationAntiErase *self)
 {
-}
-
-static void
-gimp_operation_anti_erase_prepare (GeglOperation *operation)
-{
-  const Babl *format = babl_format ("RGBA float");
-
-  gegl_operation_set_format (operation, "input",  format);
-  gegl_operation_set_format (operation, "aux",    format);
-  gegl_operation_set_format (operation, "aux2",   babl_format ("Y float"));
-  gegl_operation_set_format (operation, "output", format);
 }
 
 static gboolean
@@ -87,7 +74,7 @@ gimp_operation_anti_erase_process (GeglOperation       *operation,
                                    const GeglRectangle *roi,
                                    gint                 level)
 {
-  GimpOperationPointLayerMode *layer_mode = (void*)operation;
+  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
 
   return gimp_operation_anti_erase_process_pixels (in_buf, aux_buf, aux2_buf,
                                                    out_buf,
