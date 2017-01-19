@@ -155,19 +155,16 @@ compfun_src_in (gfloat *in,
 }
 
 static inline void
-gimp_composite_blend (gfloat                *in,
-                      gfloat                *layer,
-                      gfloat                *mask,
-                      gfloat                *out,
-                      gfloat                 opacity,
-                      glong                  samples,
-                      GimpLayerBlendTRC      blend_trc,
-                      GimpLayerBlendTRC      composite_trc,
-                      GimpLayerCompositeMode composite_mode,
-                      void (*blendfun) (const float *dst,
-                                        const float *src,
-                                              float *out,
-                                              int samples))
+gimp_composite_blend (gfloat                 *in,
+                      gfloat                 *layer,
+                      gfloat                 *mask,
+                      gfloat                 *out,
+                      gfloat                  opacity,
+                      glong                   samples,
+                      GimpLayerBlendTRC       blend_trc,
+                      GimpLayerBlendTRC       composite_trc,
+                      GimpLayerCompositeMode  composite_mode,
+                      GimpBlendFunc           blend_func)
 {
   gfloat *blend_in    = in;
   gfloat *blend_layer = layer;
@@ -250,7 +247,7 @@ gimp_composite_blend (gfloat                *in,
       babl_process (fish_to_blend, layer, blend_layer,  samples);
     }
 
-  blendfun (blend_in, blend_layer, blend_out, samples);
+  blend_func (blend_in, blend_layer, blend_out, samples);
 
   if (fish_to_composite)
     {
