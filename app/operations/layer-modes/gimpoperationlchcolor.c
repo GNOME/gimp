@@ -22,8 +22,11 @@
  */
 
 #include "config.h"
+
 #include <gegl-plugin.h>
+
 #include "../operations-types.h"
+
 #include "gimpoperationlchcolor.h"
 #include "gimpblendcomposite.h"
 
@@ -82,7 +85,13 @@ gimp_operation_lch_color_process (GeglOperation       *operation,
 
   return (gimp_op->linear ? gimp_operation_lch_color_process_pixels_linear :
                    gimp_operation_lch_color_process_pixels)
-    (in_buf, aux_buf, aux2_buf, out_buf, gimp_op->opacity, samples, roi, level, gimp_op->blend_trc, gimp_op->composite_trc, gimp_op->composite_mode);
+    (in_buf, aux_buf, aux2_buf,
+     out_buf,
+     gimp_op->opacity,
+     samples, roi, level,
+     gimp_op->blend_trc,
+     gimp_op->composite_trc,
+     gimp_op->composite_mode);
 }
 
 static void
@@ -128,7 +137,7 @@ gimp_operation_lch_color_process_pixels (gfloat                *in,
   static const Babl *from_fish_laba = NULL;
   static const Babl *from_fish_la = NULL;
   static const Babl *to_fish = NULL;
-  
+
   if (!from_fish_laba)
     from_fish_laba  = babl_fish ("R'G'B'A float", "CIE Lab alpha float");
   if (!from_fish_la)
@@ -157,6 +166,7 @@ gimp_operation_lch_color_process_pixels_linear (gfloat                *in,
                                                 GimpLayerCompositeMode composite_mode)
 {
   gimp_composite_blend (in, layer, mask, out, opacity, samples,
-     blend_trc, composite_trc, composite_mode, blendfun_lch_color);
+                        blend_trc, composite_trc, composite_mode,
+                        blendfun_lch_color);
   return TRUE;
 }

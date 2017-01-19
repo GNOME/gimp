@@ -59,7 +59,7 @@ gboolean gimp_operation_lch_chroma_process_pixels_linear (gfloat              *i
                                                           glong                samples,
                                                           const GeglRectangle *roi,
                                                           gint                 level,
-                                                          GimpLayerBlendTRC    blend_trc, 
+                                                          GimpLayerBlendTRC    blend_trc,
                                                           GimpLayerBlendTRC    composite_trc,
                                                           GimpLayerCompositeMode composite_mode);
 
@@ -71,7 +71,7 @@ gboolean gimp_operation_lch_chroma_process_pixels        (gfloat                
                                                           glong                  samples,
                                                           const GeglRectangle   *roi,
                                                           gint                   level,
-                                                          GimpLayerBlendTRC      blend_trc, 
+                                                          GimpLayerBlendTRC      blend_trc,
                                                           GimpLayerBlendTRC      composite_trc,
                                                           GimpLayerCompositeMode composite_mode);
 

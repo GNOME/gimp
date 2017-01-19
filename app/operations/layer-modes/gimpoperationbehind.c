@@ -76,10 +76,13 @@ gimp_operation_behind_process (GeglOperation       *operation,
 {
   GimpOperationPointLayerMode *layer_mode = (void*)operation;
 
-  return gimp_operation_behind_process_pixels (in_buf, aux_buf, aux2_buf, 
-                       out_buf, layer_mode->opacity, samples, roi, level,
-                       layer_mode->blend_trc, layer_mode->composite_trc,
-                       layer_mode->composite_mode);
+  return gimp_operation_behind_process_pixels (in_buf, aux_buf, aux2_buf,
+                                               out_buf,
+                                               layer_mode->opacity,
+                                               samples, roi, level,
+                                               layer_mode->blend_trc,
+                                               layer_mode->composite_trc,
+                                               layer_mode->composite_mode);
 }
 
 gboolean

@@ -58,7 +58,7 @@ gboolean gimp_operation_hsv_saturation_process_pixels (gfloat                *in
                                                        glong                  samples,
                                                        const GeglRectangle   *roi,
                                                        gint                   level,
-                                                       GimpLayerBlendTRC      blend_trc, 
+                                                       GimpLayerBlendTRC      blend_trc,
                                                        GimpLayerBlendTRC      composite_trc,
                                                        GimpLayerCompositeMode composite_mode);
 

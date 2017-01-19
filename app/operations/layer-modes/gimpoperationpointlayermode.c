@@ -73,6 +73,7 @@ const Babl *_gimp_fish_rgba_to_laba = NULL;
 const Babl *_gimp_fish_laba_to_rgba = NULL;
 const Babl *_gimp_fish_laba_to_perceptual = NULL;
 
+
 static void
 gimp_operation_point_layer_mode_class_init (GimpOperationPointLayerModeClass *klass)
 {

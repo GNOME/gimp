@@ -76,21 +76,27 @@ gimp_operation_screen_legacy_process (GeglOperation       *operation,
 {
   GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
 
-  return gimp_operation_screen_legacy_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
+  return gimp_operation_screen_legacy_process_pixels (in_buf, aux_buf, aux2_buf,
+                                                      out_buf,
+                                                      layer_mode->opacity,
+                                                      samples, roi, level,
+                                                      layer_mode->blend_trc,
+                                                      layer_mode->composite_trc,
+                                                      layer_mode->composite_mode);
 }
 
 gboolean
-gimp_operation_screen_legacy_process_pixels (gfloat              *in,
-                                           gfloat                *layer,
-                                           gfloat                *mask,
-                                           gfloat                *out,
-                                           gfloat                 opacity,
-                                           glong                  samples,
-                                           const GeglRectangle   *roi,
-                                           gint                   level,
-                                           GimpLayerBlendTRC      blend_trc,
-                                           GimpLayerBlendTRC      composite_trc,
-                                           GimpLayerCompositeMode composite_mode)
+gimp_operation_screen_legacy_process_pixels (gfloat                *in,
+                                             gfloat                *layer,
+                                             gfloat                *mask,
+                                             gfloat                *out,
+                                             gfloat                 opacity,
+                                             glong                  samples,
+                                             const GeglRectangle   *roi,
+                                             gint                   level,
+                                             GimpLayerBlendTRC      blend_trc,
+                                             GimpLayerBlendTRC      composite_trc,
+                                             GimpLayerCompositeMode composite_mode)
 {
   const gboolean  has_mask = mask != NULL;
 

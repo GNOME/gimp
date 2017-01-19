@@ -21,9 +21,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- #include "config.h"
+#include "config.h"
 
 #include <gegl-plugin.h>
+
 #include "../operations-types.h"
 
 #include "gimpoperationlchlightness.h"
@@ -38,6 +39,7 @@ static gboolean gimp_operation_lch_lightness_process (GeglOperation       *opera
                                                       glong                samples,
                                                       const GeglRectangle *roi,
                                                       gint                 level);
+
 
 G_DEFINE_TYPE (GimpOperationLchLightness, gimp_operation_lch_lightness,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
@@ -81,7 +83,13 @@ gimp_operation_lch_lightness_process (GeglOperation       *operation,
 {
   GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
   return (layer_mode->linear ? gimp_operation_lch_lightness_process_pixels_linear : gimp_operation_lch_lightness_process_pixels)
-    (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
+    (in_buf, aux_buf, aux2_buf,
+     out_buf,
+     layer_mode->opacity,
+     samples, roi, level,
+     layer_mode->blend_trc,
+     layer_mode->composite_trc,
+     layer_mode->composite_mode);
 }
 
 static void
@@ -122,7 +130,7 @@ gimp_operation_lch_lightness_process_pixels (gfloat                *in,
   static const Babl *from_fish_laba = NULL;
   static const Babl *from_fish_la = NULL;
   static const Babl *to_fish = NULL;
-  
+
   if (!from_fish_laba)
     from_fish_laba  = babl_fish ("R'G'B'A float", "CIE Lab alpha float");
   if (!from_fish_la)
@@ -152,6 +160,7 @@ gimp_operation_lch_lightness_process_pixels_linear (gfloat                *in,
                                                     GimpLayerCompositeMode composite_mode)
 {
   gimp_composite_blend (in, layer, mask, out, opacity, samples,
-     blend_trc, composite_trc, composite_mode, blendfun_lch_lightness);
+                        blend_trc, composite_trc, composite_mode,
+                        blendfun_lch_lightness);
   return TRUE;
 }

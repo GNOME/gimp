@@ -59,7 +59,7 @@ gboolean gimp_operation_normal_process_pixels_core (gfloat                *in,
                                                     glong                  samples,
                                                     const GeglRectangle   *roi,
                                                     gint                   level,
-                                                    GimpLayerBlendTRC      blend_trc, 
+                                                    GimpLayerBlendTRC      blend_trc,
                                                     GimpLayerBlendTRC      composite_trc,
                                                     GimpLayerCompositeMode composite_mode);
 
@@ -71,7 +71,7 @@ gboolean gimp_operation_normal_process_pixels_sse2 (gfloat                *in,
                                                     glong                  samples,
                                                     const GeglRectangle   *roi,
                                                     gint                   level,
-                                                    GimpLayerBlendTRC      blend_trc, 
+                                                    GimpLayerBlendTRC      blend_trc,
                                                     GimpLayerBlendTRC      composite_trc,
                                                     GimpLayerCompositeMode composite_mode);
 
@@ -83,7 +83,7 @@ gboolean gimp_operation_normal_process_pixels_sse4 (gfloat                *in,
                                                     glong                  samples,
                                                     const GeglRectangle   *roi,
                                                     gint                   level,
-                                                    GimpLayerBlendTRC      blend_trc, 
+                                                    GimpLayerBlendTRC      blend_trc,
                                                     GimpLayerBlendTRC      composite_trc,
                                                     GimpLayerCompositeMode composite_mode);
 

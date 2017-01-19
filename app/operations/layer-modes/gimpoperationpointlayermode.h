@@ -23,13 +23,7 @@
 
 
 #include <gegl-plugin.h>
-#include <math.h>
-#include <alloca.h>
-#include <cairo.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include "../operations-enums.h"
-#include "../operations-types.h"
-#include "libgimpcolor/gimpcolor.h"
+
 
 #define GIMP_TYPE_OPERATION_POINT_LAYER_MODE            (gimp_operation_point_layer_mode_get_type ())
 #define GIMP_OPERATION_POINT_LAYER_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_POINT_LAYER_MODE, GimpOperationPointLayerMode))
@@ -57,9 +51,8 @@ struct _GimpOperationPointLayerMode
   GimpLayerCompositeMode       composite_mode;
 };
 
-GType   gimp_operation_point_layer_mode_get_type (void) G_GNUC_CONST;
 
-#include "gimpoperationnormal.h"
+GType   gimp_operation_point_layer_mode_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_OPERATION_POINT_LAYER_MODE_H__ */

@@ -20,6 +20,13 @@
 #define __GIMP_BLEND_COMPOSITE_H__
 
 
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
+
+
 extern const Babl *_gimp_fish_rgba_to_perceptual;
 extern const Babl *_gimp_fish_perceptual_to_rgba;
 extern const Babl *_gimp_fish_perceptual_to_laba;

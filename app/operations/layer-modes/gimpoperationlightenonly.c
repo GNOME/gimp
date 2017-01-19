@@ -78,7 +78,13 @@ gimp_operation_lighten_only_process (GeglOperation       *operation,
 {
   GimpOperationPointLayerMode *layer_mode = (GimpOperationPointLayerMode*)operation;
 
-  return gimp_operation_lighten_only_process_pixels (in_buf, aux_buf, aux2_buf, out_buf, layer_mode->opacity, samples, roi, level, layer_mode->blend_trc, layer_mode->composite_trc, layer_mode->composite_mode);
+  return gimp_operation_lighten_only_process_pixels (in_buf, aux_buf, aux2_buf,
+                                                     out_buf,
+                                                     layer_mode->opacity,
+                                                     samples, roi, level,
+                                                     layer_mode->blend_trc,
+                                                     layer_mode->composite_trc,
+                                                     layer_mode->composite_mode);
 }
 
 gboolean
@@ -95,6 +101,7 @@ gimp_operation_lighten_only_process_pixels (gfloat                *in,
                                             GimpLayerCompositeMode composite_mode)
 {
   gimp_composite_blend (in, layer, mask, out, opacity, samples,
-     blend_trc, composite_trc, composite_mode, blendfun_lighten_only);
+                        blend_trc, composite_trc, composite_mode,
+                        blendfun_lighten_only);
   return TRUE;
 }

@@ -57,7 +57,7 @@ gboolean gimp_operation_subtract_legacy_process_pixels (gfloat                *i
                                                         glong                  samples,
                                                         const GeglRectangle   *roi,
                                                         gint                   level,
-                                                        GimpLayerBlendTRC      blend_trc, 
+                                                        GimpLayerBlendTRC      blend_trc,
                                                         GimpLayerBlendTRC      composite_trc,
                                                         GimpLayerCompositeMode composite_mode);
 
