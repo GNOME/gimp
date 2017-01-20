@@ -79,6 +79,8 @@ void          gimp_unit_set_deletion_flag   (GimpUnit     unit,
 gdouble       gimp_unit_get_factor          (GimpUnit     unit);
 
 gint          gimp_unit_get_digits          (GimpUnit     unit);
+gint          gimp_unit_get_scaled_digits   (GimpUnit     unit,
+                                             gdouble      resolution);
 
 const gchar * gimp_unit_get_identifier      (GimpUnit     unit);
 

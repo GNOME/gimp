@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <math.h>
 #include <string.h>
 
 #include <glib-object.h>
@@ -253,6 +254,36 @@ gimp_unit_get_digits (GimpUnit unit)
   g_return_val_if_fail (_gimp_unit_vtable.unit_get_digits != NULL, 2);
 
   return _gimp_unit_vtable.unit_get_digits (unit);
+}
+
+/**
+ * gimp_unit_get_scaled_digits:
+ * @unit: The unit you want to know the digits.
+ * @resolution: the resolution in PPI.
+ *
+ * Returns the number of digits a @unit field should provide to get
+ * enough accuracy so that every pixel position shows a different
+ * value from neighboring pixels.
+ *
+ * Note: when needing digit accuracy to display a diagonal distance,
+ * the @resolution may not correspond to the image's horizontal or
+ * vertical resolution, but instead to the result of:
+ * `distance_in_pixel / distance_in_inch`.
+ *
+ * Returns: The suggested number of digits.
+ **/
+gint
+gimp_unit_get_scaled_digits (GimpUnit unit,
+                             gdouble  resolution)
+{
+  gint digits;
+
+  g_return_val_if_fail (_gimp_unit_vtable.unit_get_digits != NULL, 2);
+
+  digits = ceil (log10 (1.0 /
+                        gimp_pixels_to_units (1.0, unit, resolution)));
+
+  return MAX (digits, gimp_unit_get_digits (unit));
 }
 
 /**
