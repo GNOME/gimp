@@ -22,6 +22,7 @@
 
 #include "paint-types.h"
 
+#include "core/gimp-layer-modes.h"
 #include "core/gimptempbuf.h"
 
 #include "operations/layer-modes/gimplayermodefunctions.h"
@@ -39,7 +40,7 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
                                    gfloat             opacity,
                                    gboolean           stipple)
 {
-  GeglRectangle roi;
+  GeglRectangle       roi;
   GeglBufferIterator *iter;
 
   const gint   mask_stride       = gimp_temp_buf_get_width (paint_mask);
@@ -297,18 +298,25 @@ do_layer_blend (GeglBuffer    *src_buffer,
                 gboolean       linear_mode,
                 GimpLayerMode  paint_mode)
 {
-  GimpLayerColorSpace blend_trc = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;//XXX
-  GimpLayerColorSpace composite_trc = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;//placeholders
-  GimpLayerCompositeMode composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER;//placeholders
-  GeglRectangle       roi;
-  GeglRectangle       mask_roi;
-  GeglRectangle       process_roi;
-  const Babl         *iterator_format;
-  GeglBufferIterator *iter;
+  GeglRectangle           roi;
+  GeglRectangle           mask_roi;
+  GeglRectangle           process_roi;
+  const Babl             *iterator_format;
+  GeglBufferIterator     *iter;
+  guint                   paint_stride;
+  gfloat                 *paint_data;
+  GimpLayerModeFunc       apply_func;
+  GimpLayerColorSpace     blend_trc;
+  GimpLayerColorSpace     composite_trc;
+  GimpLayerCompositeMode  composite_mode;
 
-  const guint         paint_stride = gimp_temp_buf_get_width (paint_buf);
-  gfloat             *paint_data   = (gfloat *) gimp_temp_buf_get_data (paint_buf);
-  GimpLayerModeFunc   apply_func   = gimp_get_layer_mode_function (paint_mode);
+  paint_stride = gimp_temp_buf_get_width (paint_buf);
+  paint_data   = (gfloat *) gimp_temp_buf_get_data (paint_buf);
+
+  apply_func     = gimp_get_layer_mode_function (paint_mode);
+  blend_trc      = gimp_layer_mode_get_blend_space (paint_mode);
+  composite_trc  = gimp_layer_mode_get_composite_space (paint_mode);
+  composite_mode = gimp_layer_mode_get_composite_mode (paint_mode);
 
   if (linear_mode)
     iterator_format = babl_format ("RGBA float");
