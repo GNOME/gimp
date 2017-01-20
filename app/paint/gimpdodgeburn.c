@@ -150,7 +150,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
       coords = gimp_symmetry_get_coords (sym, i);
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                       paint_options, coords,
+                                                       paint_options,
+                                                       GIMP_LAYER_MODE_NORMAL,
+                                                       coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,
                                                        &paint_width,

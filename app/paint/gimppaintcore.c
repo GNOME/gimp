@@ -106,6 +106,7 @@ static GeglBuffer *
                gimp_paint_core_real_get_paint_buffer (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options,
+                                                      GimpLayerMode     paint_mode,
                                                       const GimpCoords *coords,
                                                       gint             *paint_buffer_x,
                                                       gint             *paint_buffer_y,
@@ -268,6 +269,7 @@ static GeglBuffer *
 gimp_paint_core_real_get_paint_buffer (GimpPaintCore    *core,
                                        GimpDrawable     *drawable,
                                        GimpPaintOptions *paint_options,
+                                       GimpLayerMode     paint_mode,
                                        const GimpCoords *coords,
                                        gint             *paint_buffer_x,
                                        gint             *paint_buffer_y,
@@ -443,8 +445,6 @@ gimp_paint_core_start (GimpPaintCore     *core,
       core->mask_buffer = NULL;
     }
 
-  core->linear_mode = gimp_drawable_get_linear (drawable);
-
   if (paint_options->use_applicator)
     {
       core->applicator = gimp_applicator_new (NULL, FALSE, FALSE);
@@ -476,7 +476,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
         {
           const Babl *format;
 
-          if (core->linear_mode)
+          if (gimp_drawable_get_linear (drawable))
             format = babl_format ("RGBA float");
           else
             format = babl_format ("R'G'B'A float");
@@ -765,6 +765,7 @@ GeglBuffer *
 gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
                                   GimpDrawable     *drawable,
                                   GimpPaintOptions *paint_options,
+                                  GimpLayerMode     paint_mode,
                                   const GimpCoords *coords,
                                   gint             *paint_buffer_x,
                                   gint             *paint_buffer_y,
@@ -784,6 +785,7 @@ gimp_paint_core_get_paint_buffer (GimpPaintCore    *core,
   paint_buffer =
     GIMP_PAINT_CORE_GET_CLASS (core)->get_paint_buffer (core, drawable,
                                                         paint_options,
+                                                        paint_mode,
                                                         coords,
                                                         paint_buffer_x,
                                                         paint_buffer_y,
@@ -972,7 +974,6 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                       core->paint_buffer_y,
                       core->mask_x_offset,
                       core->mask_y_offset,
-                      gimp_layer_mode_is_linear (paint_mode),
                       paint_mode);
 
       if (core->comp_buffer)
@@ -985,7 +986,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
                                                 width,
                                                 height),
                                 gimp_drawable_get_active_mask (drawable),
-                                gimp_layer_mode_is_linear (paint_mode));
+                                gimp_drawable_get_linear (drawable));
         }
     }
 

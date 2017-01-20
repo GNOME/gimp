@@ -295,7 +295,6 @@ do_layer_blend (GeglBuffer    *src_buffer,
                 gint           y_offset,
                 gint           mask_x_offset,
                 gint           mask_y_offset,
-                gboolean       linear_mode,
                 GimpLayerMode  paint_mode)
 {
   GeglRectangle           roi;
@@ -318,7 +317,7 @@ do_layer_blend (GeglBuffer    *src_buffer,
   composite_trc  = gimp_layer_mode_get_composite_space (paint_mode);
   composite_mode = gimp_layer_mode_get_composite_mode (paint_mode);
 
-  if (linear_mode)
+  if (gimp_layer_mode_is_linear (paint_mode))
     iterator_format = babl_format ("RGBA float");
   else
     iterator_format = babl_format ("R'G'B'A float");

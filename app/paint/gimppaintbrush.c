@@ -136,6 +136,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpContext              *context    = GIMP_CONTEXT (paint_options);
   GimpDynamics             *dynamics   = brush_core->dynamics;
   GimpImage                *image;
+  GimpLayerMode             paint_mode;
   GimpRGB                   gradient_color;
   GeglBuffer               *paint_buffer;
   gint                      paint_buffer_x;
@@ -181,6 +182,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                                coords);
     }
 
+  paint_mode = gimp_context_get_paint_mode (context);
+
   n_strokes = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
@@ -189,7 +192,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       coords = gimp_symmetry_get_coords (sym, i);
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                       paint_options, coords,
+                                                       paint_options,
+                                                       paint_mode,
+                                                       coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,
                                                        &paint_width,
@@ -263,7 +268,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                     coords,
                                     MIN (opacity, GIMP_OPACITY_OPAQUE),
                                     gimp_context_get_opacity (context),
-                                    gimp_context_get_paint_mode (context),
+                                    paint_mode,
                                     gimp_paint_options_get_brush_mode (paint_options),
                                     force,
                                     paint_appl_mode, op);

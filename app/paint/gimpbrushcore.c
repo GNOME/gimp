@@ -28,6 +28,7 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "core/gimp-layer-modes.h"
 #include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpdrawable.h"
@@ -83,6 +84,7 @@ static void      gimp_brush_core_interpolate        (GimpPaintCore    *core,
 static GeglBuffer * gimp_brush_core_get_paint_buffer(GimpPaintCore    *paint_core,
                                                      GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
+                                                     GimpLayerMode     paint_mode,
                                                      const GimpCoords *coords,
                                                      gint             *paint_buffer_x,
                                                      gint             *paint_buffer_y,
@@ -819,6 +821,7 @@ static GeglBuffer *
 gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
                                   GimpDrawable     *drawable,
                                   GimpPaintOptions *paint_options,
+                                  GimpLayerMode     paint_mode,
                                   const GimpCoords *coords,
                                   gint             *paint_buffer_x,
                                   gint             *paint_buffer_y,
@@ -858,7 +861,7 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
       GimpTempBuf *temp_buf;
       const Babl  *format;
 
-      if (gimp_drawable_get_linear (drawable))
+      if (gimp_layer_mode_is_linear (paint_mode))
         format = babl_format ("RGBA float");
       else
         format = babl_format ("R'G'B'A float");

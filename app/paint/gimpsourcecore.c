@@ -376,6 +376,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   gint               paint_area_height;
   gdouble            fade_point;
   gdouble            opacity;
+  GimpLayerMode      paint_mode;
   GeglNode          *op;
   GimpCoords        *origin;
   GimpCoords        *coords;
@@ -424,13 +425,17 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                                            paint_options,
                                            origin);
 
+  paint_mode = gimp_context_get_paint_mode (GIMP_CONTEXT (paint_options));
+
   n_strokes  = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
       coords = gimp_symmetry_get_coords (sym, i);
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                       paint_options, coords,
+                                                       paint_options,
+                                                       paint_mode,
+                                                       coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,
                                                        NULL, NULL);

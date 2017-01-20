@@ -28,6 +28,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "core/gimp-layer-modes.h"
 #include "core/gimp-palettes.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -60,6 +61,7 @@ static void         gimp_ink_paint            (GimpPaintCore    *paint_core,
 static GeglBuffer * gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
                                                GimpDrawable     *drawable,
                                                GimpPaintOptions *paint_options,
+                                               GimpLayerMode     paint_mode,
                                                const GimpCoords *coords,
                                                gint             *paint_buffer_x,
                                                gint             *paint_buffer_y,
@@ -222,6 +224,7 @@ static GeglBuffer *
 gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
                            GimpDrawable     *drawable,
                            GimpPaintOptions *paint_options,
+                           GimpLayerMode     paint_mode,
                            const GimpCoords *coords,
                            gint             *paint_buffer_x,
                            gint             *paint_buffer_y,
@@ -255,7 +258,7 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       GimpTempBuf *temp_buf;
       const Babl  *format;
 
-      if (gimp_drawable_get_linear (drawable))
+      if (gimp_layer_mode_is_linear (paint_mode))
         format = babl_format ("RGBA float");
       else
         format = babl_format ("R'G'B'A float");
@@ -306,6 +309,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   GeglBuffer     *paint_buffer;
   gint            paint_buffer_x;
   gint            paint_buffer_y;
+  GimpLayerMode   paint_mode;
   GimpRGB         foreground;
   GeglColor      *color;
   GimpBlob       *last_blob;
@@ -380,7 +384,13 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
       blobs_to_render = g_list_reverse (blobs_to_render);
     }
 
-  /* Get the buffer */
+  paint_mode = gimp_context_get_paint_mode (context);
+
+  gimp_context_get_foreground (context, &foreground);
+  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+                                     &foreground, &foreground);
+  color = gimp_gegl_color_new (&foreground);
+
   for (i = 0; i < n_strokes; i++)
     {
       GimpBlob *blob_to_render = g_list_nth_data (blobs_to_render, i);
@@ -389,7 +399,9 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
 
       ink->cur_blob = blob_to_render;
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
-                                                       paint_options, coords,
+                                                       paint_options,
+                                                       paint_mode,
+                                                       coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,
                                                        NULL, NULL);
@@ -398,13 +410,7 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
       if (! paint_buffer)
         continue;
 
-      gimp_context_get_foreground (context, &foreground);
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
-                                         &foreground, &foreground);
-      color = gimp_gegl_color_new (&foreground);
-
       gegl_buffer_set_color (paint_buffer, NULL, color);
-      g_object_unref (color);
 
       /*  draw the blob directly to the canvas_buffer  */
       render_blob (paint_core->canvas_buffer,
@@ -422,10 +428,12 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
                              drawable,
                              GIMP_OPACITY_OPAQUE,
                              gimp_context_get_opacity (context),
-                             gimp_context_get_paint_mode (context),
+                             paint_mode,
                              GIMP_PAINT_CONSTANT);
 
     }
+
+  g_object_unref (color);
 
   g_list_free_full (blob_unions, g_free);
 }
