@@ -181,7 +181,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    g_param_spec_boolean ("use-applicator",
                                                          "Use GimpApplicator",
                                                          NULL,
-                                                         TRUE,
+                                                         FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
