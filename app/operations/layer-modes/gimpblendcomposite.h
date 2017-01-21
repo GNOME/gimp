@@ -212,21 +212,29 @@ gimp_composite_blend (gpointer                op,
                       GimpBlendFunc           blend_func)
 {
   GimpOperationPointLayerMode *layer_mode = op;
+
+  gfloat                 opacity        = layer_mode->opacity;
+  GimpLayerColorSpace    blend_trc      = layer_mode->blend_trc;
+  GimpLayerColorSpace    composite_trc  = layer_mode->composite_trc;
+  GimpLayerCompositeMode composite_mode = layer_mode->composite_mode;
+
   gfloat *blend_in    = in;
   gfloat *blend_layer = layer;
   gfloat *blend_out   = out;
 
-  gfloat *composite_in;
-  gfloat *composite_layer;
+  gfloat *composite_in    = NULL;
+  gfloat *composite_layer = NULL;
+
+  gboolean composite_needs_in_color =
+    composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+    composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP;
+  gboolean composite_needs_layer_color =
+    composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+    composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP;
 
   const Babl *fish_to_blend       = NULL;
   const Babl *fish_to_composite   = NULL;
   const Babl *fish_from_composite = NULL;
-
-  float opacity = layer_mode->opacity;
-  GimpLayerColorSpace blend_trc = layer_mode->blend_trc;
-  GimpLayerColorSpace composite_trc = layer_mode->composite_trc;
-  GimpLayerCompositeMode composite_mode = layer_mode->composite_mode;
 
   switch (blend_trc)
     {
@@ -298,9 +306,12 @@ gimp_composite_blend (gpointer                op,
 
   if (fish_to_blend)
     {
-      if (! (blend_in == out &&
-             composite_trc != GIMP_LAYER_COLOR_SPACE_RGB_LINEAR))
+      if (in != out || (composite_needs_in_color &&
+                        composite_trc == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR))
         {
+          /* don't convert input in-place if we're not doing in-place output,
+           * or if we're going to need the original input for compositing.
+           */
           blend_in = g_alloca (sizeof (gfloat) * 4 * samples);
         }
       blend_layer  = g_alloca (sizeof (gfloat) * 4 * samples);
@@ -323,8 +334,7 @@ gimp_composite_blend (gpointer                op,
         }
       else
         {
-          if (composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-              composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
+          if (composite_needs_in_color)
             {
               if (composite_in == in && in != out)
                 composite_in = g_alloca (sizeof (gfloat) * 4 * samples);
@@ -333,8 +343,7 @@ gimp_composite_blend (gpointer                op,
                             blend_in, composite_in, samples);
             }
 
-          if (composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-              composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP)
+          if (composite_needs_layer_color)
             {
               if (composite_layer == layer)
                 composite_layer = g_alloca (sizeof (gfloat) * 4 * samples);
