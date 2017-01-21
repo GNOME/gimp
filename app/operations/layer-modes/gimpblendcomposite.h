@@ -318,7 +318,7 @@ gimp_composite_blend (gfloat                 *in,
           if (composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
               composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
             {
-              if (composite_in == in)
+              if (composite_in == in && in != out)
                 composite_in = g_alloca (sizeof (gfloat) * 4 * samples);
 
               babl_process (fish_to_composite,
