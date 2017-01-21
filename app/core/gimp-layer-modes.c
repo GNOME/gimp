@@ -193,7 +193,7 @@ gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
-      return FALSE;
+      return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
     case GIMP_LAYER_MODE_OVERLAY:
