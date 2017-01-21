@@ -295,10 +295,15 @@ gimp_composite_blend (gfloat                 *in,
 
   if (fish_to_blend)
     {
-      blend_in    = g_alloca (sizeof (gfloat) * 4 * samples);
-      blend_layer = g_alloca (sizeof (gfloat) * 4 * samples);
-      babl_process (fish_to_blend, in,    blend_in,  samples);
-      babl_process (fish_to_blend, layer, blend_layer,  samples);
+      if (! (blend_in == out &&
+             composite_trc != GIMP_LAYER_COLOR_SPACE_RGB_LINEAR))
+        {
+          blend_in = g_alloca (sizeof (gfloat) * 4 * samples);
+        }
+      blend_layer  = g_alloca (sizeof (gfloat) * 4 * samples);
+
+      babl_process (fish_to_blend, in,    blend_in,    samples);
+      babl_process (fish_to_blend, layer, blend_layer, samples);
     }
 
   blend_func (blend_in, blend_layer, blend_out, samples);
