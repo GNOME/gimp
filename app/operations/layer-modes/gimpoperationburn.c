@@ -29,8 +29,9 @@
 #include "gimpoperationburn.h"
 #include "gimpblendcomposite.h"
 
+
 G_DEFINE_TYPE (GimpOperationBurn, gimp_operation_burn,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
@@ -54,7 +55,6 @@ static void
 gimp_operation_burn_init (GimpOperationBurn *self)
 {
 }
-
 
 gboolean
 gimp_operation_burn_process (GeglOperation       *operation,

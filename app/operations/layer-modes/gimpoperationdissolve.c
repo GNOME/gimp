@@ -33,7 +33,8 @@
 
 
 G_DEFINE_TYPE (GimpOperationDissolve, gimp_operation_dissolve,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
+
 
 static gint32 random_table[RANDOM_TABLE_SIZE];
 
@@ -71,20 +72,23 @@ gimp_operation_dissolve_init (GimpOperationDissolve *self)
 }
 
 gboolean
-gimp_operation_dissolve_process (GeglOperation         *op,
-                                 void                  *in_p,
-                                 void                  *aux_p,
-                                 void                  *mask_p,
-                                 void                  *out_p,
-                                 glong                  samples,
-                                 const GeglRectangle   *result,
-                                 gint                   level)
+gimp_operation_dissolve_process (GeglOperation       *op,
+                                 void                *in_p,
+                                 void                *layer_p,
+                                 void                *mask_p,
+                                 void                *out_p,
+                                 glong                samples,
+                                 const GeglRectangle *result,
+                                 gint                 level)
 {
-  GimpOperationPointLayerMode *layer_mode = (gpointer) op;
-  gfloat opacity = layer_mode->opacity;
-  gfloat *in = in_p, *aux = aux_p, *mask = mask_p, *out = out_p;
-  const gboolean has_mask = mask != NULL;
-  gint           x, y;
+  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  gfloat                 *in         = in_p;
+  gfloat                 *out        = out_p;
+  gfloat                 *layer      = layer_p;
+  gfloat                 *mask       = mask_p;
+  gfloat                  opacity    = layer_mode->opacity;
+  const gboolean          has_mask   = mask != NULL;
+  gint                    x, y;
 
   for (y = result->y; y < result->y + result->height; y++)
     {
@@ -96,7 +100,7 @@ gimp_operation_dissolve_process (GeglOperation         *op,
 
       for (x = result->x; x < result->x + result->width; x++)
         {
-          gfloat value = aux[ALPHA] * opacity * 255;
+          gfloat value = layer[ALPHA] * opacity * 255;
 
           if (has_mask)
             value *= *mask;
@@ -110,19 +114,20 @@ gimp_operation_dissolve_process (GeglOperation         *op,
             }
           else
             {
-              out[0] = aux[0];
-              out[1] = aux[1];
-              out[2] = aux[2];
+              out[0] = layer[0];
+              out[1] = layer[1];
+              out[2] = layer[2];
               out[3] = 1.0;
             }
 
-          in   += 4;
-          out  += 4;
-          aux  += 4;
+          in    += 4;
+          layer += 4;
+          out   += 4;
 
           if (has_mask)
-            mask ++;
+            mask++;
         }
+
       g_rand_free (gr);
     }
 

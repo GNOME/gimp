@@ -211,12 +211,11 @@ gimp_composite_blend (gpointer                op,
                       glong                   samples,
                       GimpBlendFunc           blend_func)
 {
-  GimpOperationPointLayerMode *layer_mode = op;
-
-  gfloat                 opacity        = layer_mode->opacity;
-  GimpLayerColorSpace    blend_trc      = layer_mode->blend_trc;
-  GimpLayerColorSpace    composite_trc  = layer_mode->composite_trc;
-  GimpLayerCompositeMode composite_mode = layer_mode->composite_mode;
+  GimpOperationLayerMode *layer_mode     = op;
+  gfloat                  opacity        = layer_mode->opacity;
+  GimpLayerColorSpace     blend_trc      = layer_mode->blend_trc;
+  GimpLayerColorSpace     composite_trc  = layer_mode->composite_trc;
+  GimpLayerCompositeMode  composite_mode = layer_mode->composite_mode;
 
   gfloat *blend_in    = in;
   gfloat *blend_layer = layer;

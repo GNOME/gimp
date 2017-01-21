@@ -30,10 +30,9 @@
 #include "gimpoperationlchcolor.h"
 #include "gimpblendcomposite.h"
 
-G_DEFINE_TYPE (GimpOperationLchColor, gimp_operation_lch_color,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-#define parent_class gimp_operation_lch_color_parent_class
+G_DEFINE_TYPE (GimpOperationLchColor, gimp_operation_lch_color,
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
@@ -61,14 +60,14 @@ gimp_operation_lch_color_init (GimpOperationLchColor *self)
 }
 
 gboolean
-gimp_operation_lch_color_process (GeglOperation         *op,
-                                  void                  *in,
-                                  void                  *layer,
-                                  void                  *mask,
-                                  void                  *out,
-                                  glong                  samples,
-                                  const GeglRectangle   *roi,
-                                  gint                   level)
+gimp_operation_lch_color_process (GeglOperation       *op,
+                                  void                *in,
+                                  void                *layer,
+                                  void                *mask,
+                                  void                *out,
+                                  glong                samples,
+                                  const GeglRectangle *roi,
+                                  gint                 level)
 {
   gimp_composite_blend (op, in, layer, mask, out, samples,
                         blendfun_lch_color);

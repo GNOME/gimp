@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_DARKEN_ONLY_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DARKEN_ONLY            (gimp_operation_darken_only_get_type ())
@@ -39,25 +39,25 @@ typedef struct _GimpOperationDarkenOnlyClass GimpOperationDarkenOnlyClass;
 
 struct _GimpOperationDarkenOnly
 {
-  GimpOperationPointLayerMode  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationDarkenOnlyClass
 {
-  GimpOperationPointLayerModeClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 
-GType    gimp_operation_darken_only_get_type       (void) G_GNUC_CONST;
+GType    gimp_operation_darken_only_get_type (void) G_GNUC_CONST;
 
-gboolean gimp_operation_darken_only_process (GeglOperation         *op,
-                                             void                  *in,
-                                             void                  *layer,
-                                             void                  *mask,
-                                             void                  *out,
-                                             glong                  samples,
-                                             const GeglRectangle   *roi,
-                                             gint                   level);
+gboolean gimp_operation_darken_only_process  (GeglOperation       *op,
+                                              void                *in,
+                                              void                *layer,
+                                              void                *mask,
+                                              void                *out,
+                                              glong                samples,
+                                              const GeglRectangle *roi,
+                                              gint                 level);
 
 
 #endif /* __GIMP_OPERATION_DARKEN_ONLY_H__ */

@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_MULTIPLY_LEGACY_H__
 
 
-#include "operations/layer-modes/gimpoperationpointlayermode.h"
+#include "operations/layer-modes/gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_MULTIPLY_LEGACY            (gimp_operation_multiply_legacy_get_type ())
@@ -38,25 +38,25 @@ typedef struct _GimpOperationMultiplyLegacyClass GimpOperationMultiplyLegacyClas
 
 struct _GimpOperationMultiplyLegacy
 {
-  GimpOperationPointLayerMode  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationMultiplyLegacyClass
 {
-  GimpOperationPointLayerModeClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 
-GType    gimp_operation_multiply_legacy_get_type       (void) G_GNUC_CONST;
+GType    gimp_operation_multiply_legacy_get_type (void) G_GNUC_CONST;
 
-gboolean gimp_operation_multiply_legacy_process (GeglOperation       *op,
-                                                 void                *in,
-                                                 void                *layer,
-                                                 void                *mask,
-                                                 void                *out,
-                                                 glong                samples,
-                                                 const GeglRectangle *roi,
-                                                 gint                 level);
+gboolean gimp_operation_multiply_legacy_process  (GeglOperation       *op,
+                                                  void                *in,
+                                                  void                *layer,
+                                                  void                *mask,
+                                                  void                *out,
+                                                  glong                samples,
+                                                  const GeglRectangle *roi,
+                                                  gint                 level);
 
 
 #endif /* __GIMP_OPERATION_MULTIPLY_LEGACY_H__ */

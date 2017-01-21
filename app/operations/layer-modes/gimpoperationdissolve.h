@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_DISSOLVE_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_DISSOLVE            (gimp_operation_dissolve_get_type ())
@@ -38,25 +38,25 @@ typedef struct _GimpOperationDissolveClass GimpOperationDissolveClass;
 
 struct _GimpOperationDissolveClass
 {
-  GimpOperationPointLayerModeClass parent_class;
+  GimpOperationLayerModeClass parent_class;
 };
 
 struct _GimpOperationDissolve
 {
-  GimpOperationPointLayerMode parent_instance;
+  GimpOperationLayerMode parent_instance;
 };
 
 
-GType    gimp_operation_dissolve_get_type       (void) G_GNUC_CONST;
+GType    gimp_operation_dissolve_get_type (void) G_GNUC_CONST;
 
-gboolean gimp_operation_dissolve_process (GeglOperation         *op,
-                                          void                  *in,
-                                          void                  *layer,
-                                          void                  *mask,
-                                          void                  *out,
-                                          glong                  samples,
-                                          const GeglRectangle   *result,
-                                          gint                   level);
+gboolean gimp_operation_dissolve_process  (GeglOperation       *op,
+                                           void                *in,
+                                           void                *layer,
+                                           void                *mask,
+                                           void                *out,
+                                           glong                samples,
+                                           const GeglRectangle *result,
+                                           gint                 level);
 
 
 #endif /* __GIMP_OPERATION_DISSOLVE_H__ */

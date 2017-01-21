@@ -29,8 +29,9 @@
 #include "gimpoperationaddition.h"
 #include "gimpblendcomposite.h"
 
+
 G_DEFINE_TYPE (GimpOperationAddition, gimp_operation_addition,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
@@ -65,6 +66,8 @@ gimp_operation_addition_process (GeglOperation       *op,
                                  const GeglRectangle *roi,
                                  gint                 level)
 {
-  gimp_composite_blend (op, in, layer, mask, out, samples, blendfun_addition);
+  gimp_composite_blend (op, in, layer, mask, out, samples,
+                        blendfun_addition);
+
   return TRUE;
 }

@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_LIGHTEN_ONLY_LEGACY_H__
 
 
-#include "operations/layer-modes/gimpoperationpointlayermode.h"
+#include "operations/layer-modes/gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_LIGHTEN_ONLY_LEGACY            (gimp_operation_lighten_only_legacy_get_type ())
@@ -38,25 +38,25 @@ typedef struct _GimpOperationLightenOnlyLegacyClass GimpOperationLightenOnlyLega
 
 struct _GimpOperationLightenOnlyLegacy
 {
-  GimpOperationPointLayerMode  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationLightenOnlyLegacyClass
 {
-  GimpOperationPointLayerModeClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 
-GType    gimp_operation_lighten_only_legacy_get_type       (void) G_GNUC_CONST;
+GType    gimp_operation_lighten_only_legacy_get_type (void) G_GNUC_CONST;
 
-gboolean gimp_operation_lighten_only_legacy_process (GeglOperation       *op,
-                                                     void                *in,
-                                                     void                *layer,
-                                                     void                *mask,
-                                                     void                *out,
-                                                     glong                samples,
-                                                     const GeglRectangle *roi,
-                                                     gint                 level);
+gboolean gimp_operation_lighten_only_legacy_process  (GeglOperation       *op,
+                                                      void                *in,
+                                                      void                *layer,
+                                                      void                *mask,
+                                                      void                *out,
+                                                      glong                samples,
+                                                      const GeglRectangle *roi,
+                                                      gint                 level);
 
 
 #endif /* __GIMP_OPERATION_LIGHTEN_ONLY_LEGACY_H__ */

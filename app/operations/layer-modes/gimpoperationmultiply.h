@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_MULTIPLY_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_MULTIPLY            (gimp_operation_multiply_get_type ())
@@ -39,25 +39,25 @@ typedef struct _GimpOperationMultiplyClass GimpOperationMultiplyClass;
 
 struct _GimpOperationMultiply
 {
-  GimpOperationPointLayerMode  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationMultiplyClass
 {
-  GimpOperationPointLayerModeClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 
-GType    gimp_operation_multiply_get_type       (void) G_GNUC_CONST;
+GType    gimp_operation_multiply_get_type (void) G_GNUC_CONST;
 
-gboolean gimp_operation_multiply_process (GeglOperation         *op,
-                                          void                  *in,
-                                          void                  *layer,
-                                          void                  *mask,
-                                          void                  *out,
-                                          glong                  samples,
-                                          const GeglRectangle   *roi,
-                                          gint                   level);
+gboolean gimp_operation_multiply_process  (GeglOperation       *op,
+                                           void                *in,
+                                           void                *layer,
+                                           void                *mask,
+                                           void                *out,
+                                           glong                samples,
+                                           const GeglRectangle *roi,
+                                           gint                 level);
 
 
 #endif /* __GIMP_OPERATION_MULTIPLY_H__ */

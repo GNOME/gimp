@@ -30,7 +30,7 @@
 
 
 G_DEFINE_TYPE (GimpOperationHardlight, gimp_operation_hardlight,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
@@ -56,14 +56,14 @@ gimp_operation_hardlight_init (GimpOperationHardlight *self)
 }
 
 gboolean
-gimp_operation_hardlight_process (GeglOperation         *op,
-                                  void                  *in,
-                                  void                  *layer,
-                                  void                  *mask,
-                                  void                  *out,
-                                  glong                  samples,
-                                  const GeglRectangle   *roi,
-                                  gint                   level)
+gimp_operation_hardlight_process (GeglOperation       *op,
+                                  void                *in,
+                                  void                *layer,
+                                  void                *mask,
+                                  void                *out,
+                                  glong                samples,
+                                  const GeglRectangle *roi,
+                                  gint                 level)
 {
   gimp_composite_blend (op, in, layer, mask, out, samples,
                         blendfun_hardlight);

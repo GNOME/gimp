@@ -24,13 +24,15 @@
 
 #include <gegl-plugin.h>
 
-#include "operations/operations-types.h"
+#include "../operations-types.h"
 
 #include "gimpoperationmultiply.h"
 #include "gimpblendcomposite.h"
 
+
 G_DEFINE_TYPE (GimpOperationMultiply, gimp_operation_multiply,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
+
 
 static void
 gimp_operation_multiply_class_init (GimpOperationMultiplyClass *klass)
@@ -55,14 +57,14 @@ gimp_operation_multiply_init (GimpOperationMultiply *self)
 }
 
 gboolean
-gimp_operation_multiply_process (GeglOperation         *op,
-                                 void                  *in,
-                                 void                  *layer,
-                                 void                  *mask,
-                                 void                  *out,
-                                 glong                  samples,
-                                 const GeglRectangle   *roi,
-                                 gint                   level)
+gimp_operation_multiply_process (GeglOperation       *op,
+                                 void                *in,
+                                 void                *layer,
+                                 void                *mask,
+                                 void                *out,
+                                 glong                samples,
+                                 const GeglRectangle *roi,
+                                 gint                 level)
 {
   gimp_composite_blend (op, in, layer, mask, out, samples,
                         blendfun_multiply);

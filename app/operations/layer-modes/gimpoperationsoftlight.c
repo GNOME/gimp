@@ -28,8 +28,10 @@
 #include "gimpoperationsoftlight.h"
 #include "gimpblendcomposite.h"
 
+
 G_DEFINE_TYPE (GimpOperationSoftlight, gimp_operation_softlight,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
+
 
 static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "<gegl>"
@@ -71,7 +73,6 @@ static void
 gimp_operation_softlight_init (GimpOperationSoftlight *self)
 {
 }
-
 
 gboolean
 gimp_operation_softlight_process (GeglOperation       *op,

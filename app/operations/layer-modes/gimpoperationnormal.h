@@ -22,7 +22,7 @@
 #define __GIMP_OPERATION_NORMAL_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_NORMAL            (gimp_operation_normal_get_type ())
@@ -38,45 +38,45 @@ typedef struct _GimpOperationNormalClass GimpOperationNormalClass;
 
 struct _GimpOperationNormal
 {
-  GimpOperationPointLayerMode  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationNormalClass
 {
-  GimpOperationPointLayerModeClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 
-GType    gimp_operation_normal_get_type            (void) G_GNUC_CONST;
+GType    gimp_operation_normal_get_type     (void) G_GNUC_CONST;
 
 extern GimpLayerModeFunc gimp_operation_normal_process;
 
-gboolean gimp_operation_normal_process_core (GeglOperation         *op,
-                                             void                  *in,
-                                             void                  *aux,
-                                             void                  *mask,
-                                             void                  *out,
-                                             glong                  samples,
-                                             const GeglRectangle   *roi,
-                                             gint                   level);
+gboolean gimp_operation_normal_process_core (GeglOperation       *op,
+                                             void                *in,
+                                             void                *aux,
+                                             void                *mask,
+                                             void                *out,
+                                             glong                samples,
+                                             const GeglRectangle *roi,
+                                             gint                 level);
 
-gboolean gimp_operation_normal_process_sse2 (GeglOperation         *op,
-                                             void                  *in,
-                                             void                  *aux,
-                                             void                  *mask,
-                                             void                  *out,
-                                             glong                  samples,
-                                             const GeglRectangle   *roi,
-                                             gint                   level);
+gboolean gimp_operation_normal_process_sse2 (GeglOperation       *op,
+                                             void                *in,
+                                             void                *aux,
+                                             void                *mask,
+                                             void                *out,
+                                             glong                samples,
+                                             const GeglRectangle *roi,
+                                             gint                 level);
 
-gboolean gimp_operation_normal_process_sse4 (GeglOperation         *op,
-                                             void                  *in,
-                                             void                  *aux,
-                                             void                  *mask,
-                                             void                  *out,
-                                             glong                  samples,
-                                             const GeglRectangle   *roi,
-                                             gint                   level);
+gboolean gimp_operation_normal_process_sse4 (GeglOperation       *op,
+                                             void                *in,
+                                             void                *aux,
+                                             void                *mask,
+                                             void                *out,
+                                             glong                samples,
+                                             const GeglRectangle *roi,
+                                             gint                 level);
 
 
 #endif /* __GIMP_OPERATION_NORMAL_H__ */

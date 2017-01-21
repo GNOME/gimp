@@ -18,8 +18,8 @@ noinst_LIBRARIES = \
 	libapplayermodes.a
 
 libapplayermodes_generic_a_sources = \
-	gimpoperationpointlayermode.c	\
-	gimpoperationpointlayermode.h	\
+	gimpoperationlayermode.c	\
+	gimpoperationlayermode.h	\
 	gimplayermodefunctions.c	\
 	gimplayermodefunctions.h	\
 	gimpblendcomposite.h            \

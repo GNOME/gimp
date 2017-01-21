@@ -23,7 +23,7 @@
 #define __GIMP_OPERATION_GRAIN_MERGE_H__
 
 
-#include "gimpoperationpointlayermode.h"
+#include "gimpoperationlayermode.h"
 
 
 #define GIMP_TYPE_OPERATION_GRAIN_MERGE            (gimp_operation_grain_merge_get_type ())
@@ -39,25 +39,25 @@ typedef struct _GimpOperationGrainMergeClass GimpOperationGrainMergeClass;
 
 struct _GimpOperationGrainMerge
 {
-  GimpOperationPointLayerMode  parent_instance;
+  GimpOperationLayerMode  parent_instance;
 };
 
 struct _GimpOperationGrainMergeClass
 {
-  GimpOperationPointLayerModeClass  parent_class;
+  GimpOperationLayerModeClass  parent_class;
 };
 
 
-GType    gimp_operation_grain_merge_get_type       (void) G_GNUC_CONST;
+GType    gimp_operation_grain_merge_get_type (void) G_GNUC_CONST;
 
-gboolean gimp_operation_grain_merge_process (GeglOperation         *op,
-                                             void                  *in,
-                                             void                  *layer,
-                                             void                  *mask,
-                                             void                  *out,
-                                             glong                  samples,
-                                             const GeglRectangle   *roi,
-                                             gint                   level);
+gboolean gimp_operation_grain_merge_process  (GeglOperation       *op,
+                                              void                *in,
+                                              void                *layer,
+                                              void                *mask,
+                                              void                *out,
+                                              glong                samples,
+                                              const GeglRectangle *roi,
+                                              gint                 level);
 
 
 #endif /* __GIMP_OPERATION_GRAIN_MERGE_H__ */

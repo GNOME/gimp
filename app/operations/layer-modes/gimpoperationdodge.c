@@ -31,7 +31,7 @@
 
 
 G_DEFINE_TYPE (GimpOperationDodge, gimp_operation_dodge,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
@@ -66,6 +66,7 @@ gimp_operation_dodge_process (GeglOperation       *op,
                               const GeglRectangle *roi,
                               gint                 level)
 {
-  gimp_composite_blend (op, in, layer, mask, out, samples, blendfun_dodge);
+  gimp_composite_blend (op, in, layer, mask, out, samples,
+                        blendfun_dodge);
   return TRUE;
 }

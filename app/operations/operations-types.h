@@ -31,7 +31,7 @@
 /*  operations  */
 
 typedef struct _GimpOperationPointFilter        GimpOperationPointFilter;
-typedef struct _GimpOperationPointLayerMode     GimpOperationPointLayerMode;
+typedef struct _GimpOperationLayerMode          GimpOperationLayerMode;
 
 
 /*  operation config objects  */

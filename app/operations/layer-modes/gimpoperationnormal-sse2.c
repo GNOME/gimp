@@ -28,18 +28,19 @@
 
 
 #if COMPILE_SSE2_INTRINISICS
+
 /* SSE2 */
 #include <emmintrin.h>
 
 gboolean
-gimp_operation_normal_process_sse2 (GeglOperation         *operation,
-                                    void                  *in,
-                                    void                  *aux,
-                                    void                  *mask_p,
-                                    void                  *out,
-                                    glong                  samples,
-                                    const GeglRectangle   *roi,
-                                    gint                   level)
+gimp_operation_normal_process_sse2 (GeglOperation       *operation,
+                                    void                *in,
+                                    void                *aux,
+                                    void                *mask_p,
+                                    void                *out,
+                                    glong                samples,
+                                    const GeglRectangle *roi,
+                                    gint                 level)
 {
   /* check alignment */
   if ((((uintptr_t)in) | ((uintptr_t)aux) | ((uintptr_t)out)) & 0x0F)
@@ -50,7 +51,7 @@ gimp_operation_normal_process_sse2 (GeglOperation         *operation,
     }
   else
     {
-      gfloat opacity = ((GimpOperationPointLayerMode*)(operation))->opacity;
+      gfloat opacity = ((GimpOperationLayerMode *)(operation))->opacity;
       gfloat *mask = mask_p;
       const __v4sf *v_in  = (const __v4sf*) in;
       const __v4sf *v_aux = (const __v4sf*) aux;
@@ -116,4 +117,5 @@ gimp_operation_normal_process_sse2 (GeglOperation         *operation,
 
   return TRUE;
 }
+
 #endif /* COMPILE_SSE2_INTRINISICS */

@@ -28,18 +28,19 @@
 
 
 #if COMPILE_SSE4_1_INTRINISICS
+
 /* SSE4 */
 #include <smmintrin.h>
 
 gboolean
-gimp_operation_normal_process_sse4 (GeglOperation         *operation,
-                                    void                  *in,
-                                    void                  *aux,
-                                    void                  *mask_p,
-                                    void                  *out,
-                                    glong                  samples,
-                                    const GeglRectangle   *roi,
-                                    gint                   level)
+gimp_operation_normal_process_sse4 (GeglOperation       *operation,
+                                    void                *in,
+                                    void                *aux,
+                                    void                *mask_p,
+                                    void                *out,
+                                    glong                samples,
+                                    const GeglRectangle *roi,
+                                    gint                 level)
 {
   /* check alignment */
   if ((((uintptr_t)in) | ((uintptr_t)aux) | ((uintptr_t)out)) & 0x0F)
@@ -51,7 +52,7 @@ gimp_operation_normal_process_sse4 (GeglOperation         *operation,
     }
   else
     {
-      gfloat opacity = ((GimpOperationPointLayerMode*)(operation))->opacity;
+      gfloat opacity = ((GimpOperationLayerMode *)(operation))->opacity;
       gfloat *mask = mask_p;
       const __v4sf *v_in  = (const __v4sf*) in;
       const __v4sf *v_aux = (const __v4sf*) aux;
@@ -116,4 +117,5 @@ gimp_operation_normal_process_sse4 (GeglOperation         *operation,
 
   return TRUE;
 }
+
 #endif /* COMPILE_SSE4_1_INTRINISICS */

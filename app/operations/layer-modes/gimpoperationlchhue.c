@@ -30,10 +30,9 @@
 #include "gimpoperationlchhue.h"
 #include "gimpblendcomposite.h"
 
-G_DEFINE_TYPE (GimpOperationLchHue, gimp_operation_lch_hue,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
-#define parent_class gimp_operation_lch_hue_parent_class
+G_DEFINE_TYPE (GimpOperationLchHue, gimp_operation_lch_hue,
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void

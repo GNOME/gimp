@@ -28,8 +28,9 @@
 #include "gimpoperationoverlay.h"
 #include "gimpblendcomposite.h"
 
+
 G_DEFINE_TYPE (GimpOperationOverlay, gimp_operation_overlay,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void

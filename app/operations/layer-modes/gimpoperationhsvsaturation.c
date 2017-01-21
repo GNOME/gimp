@@ -33,8 +33,10 @@
 #include "gimpoperationhsvsaturation.h"
 #include "gimpblendcomposite.h"
 
+
 G_DEFINE_TYPE (GimpOperationHsvSaturation, gimp_operation_hsv_saturation,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
+
 
 static void
 gimp_operation_hsv_saturation_class_init (GimpOperationHsvSaturationClass *klass)
@@ -59,14 +61,14 @@ gimp_operation_hsv_saturation_init (GimpOperationHsvSaturation *self)
 }
 
 gboolean
-gimp_operation_hsv_saturation_process (GeglOperation         *op,
-                                       void                  *in,
-                                       void                  *layer,
-                                       void                  *mask,
-                                       void                  *out,
-                                       glong                  samples,
-                                       const GeglRectangle   *roi,
-                                       gint                   level)
+gimp_operation_hsv_saturation_process (GeglOperation       *op,
+                                       void                *in,
+                                       void                *layer,
+                                       void                *mask,
+                                       void                *out,
+                                       glong                samples,
+                                       const GeglRectangle *roi,
+                                       gint                 level)
 {
   gimp_composite_blend (op, in, layer, mask, out, samples,
                         blendfun_hsv_saturation);

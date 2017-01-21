@@ -27,8 +27,9 @@
 
 #include "gimpoperationadditionlegacy.h"
 
+
 G_DEFINE_TYPE (GimpOperationAdditionLegacy, gimp_operation_addition_legacy,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
@@ -63,10 +64,13 @@ gimp_operation_addition_legacy_process (GeglOperation       *op,
                                         const GeglRectangle *roi,
                                         gint                 level)
 {
-  GimpOperationPointLayerMode *layer_mode = (gpointer)op;
-  gfloat opacity = layer_mode->opacity;
-  gfloat *in = in_p, *out = out_p, *layer = layer_p, *mask  = mask_p;
-  const gboolean has_mask = mask != NULL;
+  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  gfloat                 *in         = in_p;
+  gfloat                 *out        = out_p;
+  gfloat                 *layer      = layer_p;
+  gfloat                 *mask       = mask_p;
+  gfloat                  opacity    = layer_mode->opacity;
+  const gboolean          has_mask   = mask != NULL;
 
   while (samples--)
     {

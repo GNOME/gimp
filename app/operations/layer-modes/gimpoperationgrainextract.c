@@ -31,7 +31,7 @@
 
 
 G_DEFINE_TYPE (GimpOperationGrainExtract, gimp_operation_grain_extract,
-               GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
+               GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
@@ -57,14 +57,14 @@ gimp_operation_grain_extract_init (GimpOperationGrainExtract *self)
 }
 
 gboolean
-gimp_operation_grain_extract_process (GeglOperation         *op,
-                                      void                  *in,
-                                      void                  *layer,
-                                      void                  *mask,
-                                      void                  *out,
-                                      glong                  samples,
-                                      const GeglRectangle   *roi,
-                                      gint                   level)
+gimp_operation_grain_extract_process (GeglOperation       *op,
+                                      void                *in,
+                                      void                *layer,
+                                      void                *mask,
+                                      void                *out,
+                                      glong                samples,
+                                      const GeglRectangle *roi,
+                                      gint                 level)
 {
   gimp_composite_blend (op, in, layer, mask, out, samples,
                         blendfun_grain_extract);
