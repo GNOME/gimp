@@ -32,29 +32,27 @@
 #include <smmintrin.h>
 
 gboolean
-gimp_operation_normal_process_pixels_sse4 (gfloat                *in,
-                                           gfloat                *aux,
-                                           gfloat                *mask,
-                                           gfloat                *out,
-                                           gfloat                 opacity,
-                                           glong                  samples,
-                                           const GeglRectangle   *roi,
-                                           gint                   level,
-                                           GimpLayerColorSpace    blend_trc,
-                                           GimpLayerColorSpace    composite_trc,
-                                           GimpLayerCompositeMode composite_mode)
+gimp_operation_normal_process_sse4 (GeglOperation         *operation,
+                                    void                  *in,
+                                    void                  *aux,
+                                    void                  *mask_p,
+                                    void                  *out,
+                                    glong                  samples,
+                                    const GeglRectangle   *roi,
+                                    gint                   level)
 {
   /* check alignment */
   if ((((uintptr_t)in) | ((uintptr_t)aux) | ((uintptr_t)out)) & 0x0F)
     {
-      return gimp_operation_normal_process_pixels_core (in, aux, mask, out,
-                                                        opacity, samples,
-                                                        roi, level, blend_trc,
-                                                        composite_trc,
-                                                        composite_mode);
+      return gimp_operation_normal_process_core (operation,
+                                                 in, aux, mask_p, out,
+                                                 samples,
+                                                 roi, level);
     }
   else
     {
+      gfloat opacity = ((GimpOperationPointLayerMode*)(operation))->opacity;
+      gfloat *mask = mask_p;
       const __v4sf *v_in  = (const __v4sf*) in;
       const __v4sf *v_aux = (const __v4sf*) aux;
             __v4sf *v_out = (      __v4sf*) out;

@@ -86,217 +86,217 @@ gimp_get_layer_mode_function (GimpLayerMode  paint_mode)
     {
     case GIMP_LAYER_MODE_NORMAL:
     case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
-      func = gimp_operation_normal_process_pixels;
+      func = gimp_operation_normal_process;
       break;
 
     case GIMP_LAYER_MODE_DISSOLVE:
-      func = gimp_operation_dissolve_process_pixels;
+      func = gimp_operation_dissolve_process;
       break;
 
     case GIMP_LAYER_MODE_BEHIND:
     case GIMP_LAYER_MODE_BEHIND_LINEAR:
-      func = gimp_operation_behind_process_pixels;
+      func = gimp_operation_behind_process;
       break;
 
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
-      func = gimp_operation_multiply_legacy_process_pixels;
+      func = gimp_operation_multiply_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_MULTIPLY:
     case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
-      func = gimp_operation_multiply_process_pixels;
+      func = gimp_operation_multiply_process;
       break;
 
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
-      func = gimp_operation_screen_legacy_process_pixels;
+      func = gimp_operation_screen_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_SCREEN:
-      func = gimp_operation_screen_process_pixels;
+      func = gimp_operation_screen_process;
       break;
 
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
-      func = gimp_operation_softlight_legacy_process_pixels;
+      func = gimp_operation_softlight_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
-      func = gimp_operation_difference_legacy_process_pixels;
+      func = gimp_operation_difference_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_DIFFERENCE:
     case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
-      func = gimp_operation_difference_process_pixels;
+      func = gimp_operation_difference_process;
       break;
 
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
-      func = gimp_operation_addition_legacy_process_pixels;
+      func = gimp_operation_addition_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_ADDITION:
     case GIMP_LAYER_MODE_ADDITION_LINEAR:
-      func = gimp_operation_addition_process_pixels;
+      func = gimp_operation_addition_process;
       break;
 
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
-      func = gimp_operation_subtract_legacy_process_pixels;
+      func = gimp_operation_subtract_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_SUBTRACT:
     case GIMP_LAYER_MODE_SUBTRACT_LINEAR:
-      func = gimp_operation_subtract_process_pixels;
+      func = gimp_operation_subtract_process;
       break;
 
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
-      func = gimp_operation_darken_only_legacy_process_pixels;
+      func = gimp_operation_darken_only_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_DARKEN_ONLY:
     case GIMP_LAYER_MODE_DARKEN_ONLY_LINEAR:
-      func = gimp_operation_darken_only_process_pixels;
+      func = gimp_operation_darken_only_process;
       break;
 
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
-      func = gimp_operation_lighten_only_legacy_process_pixels;
+      func = gimp_operation_lighten_only_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_LIGHTEN_ONLY:
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LINEAR:
-      func = gimp_operation_lighten_only_process_pixels;
+      func = gimp_operation_lighten_only_process;
       break;
 
     case GIMP_LAYER_MODE_HSV_HUE:
-      func = gimp_operation_hsv_hue_process_pixels;
+      func = gimp_operation_hsv_hue_process;
       break;
 
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
-      func = gimp_operation_hsv_hue_legacy_process_pixels;
+      func = gimp_operation_hsv_hue_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_HSV_SATURATION:
-      func = gimp_operation_hsv_saturation_process_pixels;
+      func = gimp_operation_hsv_saturation_process;
       break;
 
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
-      func = gimp_operation_hsv_saturation_legacy_process_pixels;
+      func = gimp_operation_hsv_saturation_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_HSV_COLOR:
-      func = gimp_operation_hsv_color_process_pixels;
+      func = gimp_operation_hsv_color_process;
       break;
 
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
-      func = gimp_operation_hsv_color_legacy_process_pixels;
+      func = gimp_operation_hsv_color_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_HSV_VALUE:
-      func = gimp_operation_hsv_value_process_pixels;
+      func = gimp_operation_hsv_value_process;
       break;
 
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
-      func = gimp_operation_hsv_value_legacy_process_pixels;
+      func = gimp_operation_hsv_value_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
-      func = gimp_operation_divide_legacy_process_pixels;
+      func = gimp_operation_divide_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_DIVIDE:
     case GIMP_LAYER_MODE_DIVIDE_LINEAR:
-      func = gimp_operation_divide_process_pixels;
+      func = gimp_operation_divide_process;
       break;
 
     case GIMP_LAYER_MODE_DODGE_LEGACY:
-      func = gimp_operation_dodge_legacy_process_pixels;
+      func = gimp_operation_dodge_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_DODGE:
     case GIMP_LAYER_MODE_DODGE_LINEAR:
-      func = gimp_operation_dodge_process_pixels;
+      func = gimp_operation_dodge_process;
       break;
 
     case GIMP_LAYER_MODE_BURN_LEGACY:
-      func = gimp_operation_burn_legacy_process_pixels;
+      func = gimp_operation_burn_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_BURN:
     case GIMP_LAYER_MODE_BURN_LINEAR:
-      func = gimp_operation_burn_process_pixels;
+      func = gimp_operation_burn_process;
       break;
 
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
-      func = gimp_operation_hardlight_legacy_process_pixels;
+      func = gimp_operation_hardlight_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_HARDLIGHT:
-      func = gimp_operation_hardlight_process_pixels;
+      func = gimp_operation_hardlight_process;
       break;
 
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
-      func = gimp_operation_softlight_legacy_process_pixels;
+      func = gimp_operation_softlight_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_SOFTLIGHT:
-      func = gimp_operation_softlight_process_pixels;
+      func = gimp_operation_softlight_process;
       break;
 
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
-      func = gimp_operation_grain_extract_legacy_process_pixels;
+      func = gimp_operation_grain_extract_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
-      func = gimp_operation_grain_extract_process_pixels;
+      func = gimp_operation_grain_extract_process;
       break;
 
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
-      func = gimp_operation_grain_merge_legacy_process_pixels;
+      func = gimp_operation_grain_merge_legacy_process;
       break;
 
     case GIMP_LAYER_MODE_GRAIN_MERGE:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
-      func = gimp_operation_grain_merge_process_pixels;
+      func = gimp_operation_grain_merge_process;
       break;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
-      func = gimp_operation_color_erase_process_pixels;
+      func = gimp_operation_color_erase_process;
       break;
 
     case GIMP_LAYER_MODE_OVERLAY:
-      func = gimp_operation_overlay_process_pixels;
+      func = gimp_operation_overlay_process;
       break;
 
     case GIMP_LAYER_MODE_LCH_HUE:
-      func = gimp_operation_lch_hue_process_pixels;
+      func = gimp_operation_lch_hue_process;
       break;
 
     case GIMP_LAYER_MODE_LCH_CHROMA:
-      func = gimp_operation_lch_chroma_process_pixels;
+      func = gimp_operation_lch_chroma_process;
       break;
 
     case GIMP_LAYER_MODE_LCH_COLOR:
-      func = gimp_operation_lch_color_process_pixels;
+      func = gimp_operation_lch_color_process;
       break;
 
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-      func = gimp_operation_lch_lightness_process_pixels;
+      func = gimp_operation_lch_lightness_process;
       break;
 
     case GIMP_LAYER_MODE_ERASE:
-      func = gimp_operation_erase_process_pixels;
+      func = gimp_operation_erase_process;
       break;
 
     case GIMP_LAYER_MODE_REPLACE:
-      func = gimp_operation_replace_process_pixels;
+      func = gimp_operation_replace_process;
       break;
 
     case GIMP_LAYER_MODE_ANTI_ERASE:
-      func = gimp_operation_anti_erase_process_pixels;
+      func = gimp_operation_anti_erase_process;
       break;
 
     default:
       g_warning ("No direct function for layer mode (%d), using gimp:normal",
                  paint_mode);
-      func = gimp_operation_normal_process_pixels;
+      func = gimp_operation_normal_process;
       break;
     }
 

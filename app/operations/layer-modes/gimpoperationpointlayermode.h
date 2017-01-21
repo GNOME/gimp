@@ -49,6 +49,7 @@ struct _GimpOperationPointLayerMode
   GimpLayerColorSpace          blend_trc;
   GimpLayerColorSpace          composite_trc;
   GimpLayerCompositeMode       composite_mode;
+  GimpBlendFunc                blend_func;
 };
 
 

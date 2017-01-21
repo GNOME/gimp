@@ -27,17 +27,6 @@
 
 #include "gimpoperationantierase.h"
 
-
-static gboolean gimp_operation_anti_erase_process (GeglOperation       *operation,
-                                                   void                *in_buf,
-                                                   void                *aux_buf,
-                                                   void                *aux2_buf,
-                                                   void                *out_buf,
-                                                   glong                samples,
-                                                   const GeglRectangle *roi,
-                                                   gint                 level);
-
-
 G_DEFINE_TYPE (GimpOperationAntiErase, gimp_operation_anti_erase,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
@@ -64,40 +53,18 @@ gimp_operation_anti_erase_init (GimpOperationAntiErase *self)
 {
 }
 
-static gboolean
-gimp_operation_anti_erase_process (GeglOperation       *operation,
-                                   void                *in_buf,
-                                   void                *aux_buf,
-                                   void                *aux2_buf,
-                                   void                *out_buf,
-                                   glong                samples,
-                                   const GeglRectangle *roi,
-                                   gint                 level)
-{
-  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
-
-  return gimp_operation_anti_erase_process_pixels (in_buf, aux_buf, aux2_buf,
-                                                   out_buf,
-                                                   layer_mode->opacity,
-                                                   samples, roi, level,
-                                                   layer_mode->blend_trc,
-                                                   layer_mode->composite_trc,
-                                                   layer_mode->composite_mode);
-}
-
 gboolean
-gimp_operation_anti_erase_process_pixels (gfloat                *in,
-                                          gfloat                *layer,
-                                          gfloat                *mask,
-                                          gfloat                *out,
-                                          gfloat                 opacity,
-                                          glong                  samples,
-                                          const GeglRectangle   *roi,
-                                          gint                   level,
-                                          GimpLayerColorSpace    blend_trc,
-                                          GimpLayerColorSpace    composite_trc,
-                                          GimpLayerCompositeMode composite_mode)
+gimp_operation_anti_erase_process (GeglOperation         *op,
+                                   void                  *in_p,
+                                   void                  *layer_p,
+                                   void                  *mask_p,
+                                   void                  *out_p,
+                                   glong                  samples,
+                                   const GeglRectangle   *roi,
+                                   gint                   level)
 {
+  gfloat *out = out_p, *in = in_p, *layer = layer_p, *mask = mask_p;
+  gfloat  opacity = ((GimpOperationPointLayerMode*)(op))->opacity;
   const gboolean has_mask = mask != NULL;
 
   while (samples--)

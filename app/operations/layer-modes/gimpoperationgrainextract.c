@@ -30,16 +30,6 @@
 #include "gimpblendcomposite.h"
 
 
-static gboolean gimp_operation_grain_extract_process (GeglOperation       *operation,
-                                                      void                *in_buf,
-                                                      void                *aux_buf,
-                                                      void                *aux2_buf,
-                                                      void                *out_buf,
-                                                      glong                samples,
-                                                      const GeglRectangle *roi,
-                                                      gint                 level);
-
-
 G_DEFINE_TYPE (GimpOperationGrainExtract, gimp_operation_grain_extract,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
@@ -66,42 +56,17 @@ gimp_operation_grain_extract_init (GimpOperationGrainExtract *self)
 {
 }
 
-static gboolean
-gimp_operation_grain_extract_process (GeglOperation       *operation,
-                                      void                *in_buf,
-                                      void                *aux_buf,
-                                      void                *aux2_buf,
-                                      void                *out_buf,
-                                      glong                samples,
-                                      const GeglRectangle *roi,
-                                      gint                 level)
-{
-  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
-
-  return gimp_operation_grain_extract_process_pixels (in_buf, aux_buf, aux2_buf,
-                                                      out_buf,
-                                                      layer_mode->opacity,
-                                                      samples, roi, level,
-                                                      layer_mode->blend_trc,
-                                                      layer_mode->composite_trc,
-                                                      layer_mode->composite_mode);
-}
-
 gboolean
-gimp_operation_grain_extract_process_pixels (gfloat                *in,
-                                             gfloat                *layer,
-                                             gfloat                *mask,
-                                             gfloat                *out,
-                                             gfloat                 opacity,
-                                             glong                  samples,
-                                             const GeglRectangle   *roi,
-                                             gint                   level,
-                                             GimpLayerColorSpace    blend_trc,
-                                             GimpLayerColorSpace    composite_trc,
-                                             GimpLayerCompositeMode composite_mode)
+gimp_operation_grain_extract_process (GeglOperation         *op,
+                                      void                  *in,
+                                      void                  *layer,
+                                      void                  *mask,
+                                      void                  *out,
+                                      glong                  samples,
+                                      const GeglRectangle   *roi,
+                                      gint                   level)
 {
-  gimp_composite_blend (in, layer, mask, out, opacity, samples,
-                        blend_trc, composite_trc, composite_mode,
+  gimp_composite_blend (op, in, layer, mask, out, samples,
                         blendfun_grain_extract);
   return TRUE;
 }

@@ -31,17 +31,6 @@
 
 #include "gimpoperationhsvvaluelegacy.h"
 
-
-static gboolean gimp_operation_hsv_value_legacy_process (GeglOperation       *operation,
-                                                         void                *in_buf,
-                                                         void                *aux_buf,
-                                                         void                *aux2_buf,
-                                                         void                *out_buf,
-                                                         glong                samples,
-                                                         const GeglRectangle *roi,
-                                                         gint                 level);
-
-
 G_DEFINE_TYPE (GimpOperationHsvValueLegacy, gimp_operation_hsv_value_legacy,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
@@ -68,41 +57,19 @@ gimp_operation_hsv_value_legacy_init (GimpOperationHsvValueLegacy *self)
 {
 }
 
-static gboolean
-gimp_operation_hsv_value_legacy_process (GeglOperation       *operation,
-                                         void                *in_buf,
-                                         void                *aux_buf,
-                                         void                *aux2_buf,
-                                         void                *out_buf,
-                                         glong                samples,
-                                         const GeglRectangle *roi,
-                                         gint                 level)
-{
-  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
-
-  return gimp_operation_hsv_value_legacy_process_pixels (in_buf, aux_buf, aux2_buf,
-                                                         out_buf,
-                                                         layer_mode->opacity,
-                                                         samples, roi, level,
-                                                         layer_mode->blend_trc,
-                                                         layer_mode->composite_trc,
-                                                         layer_mode->composite_mode);
-}
-
 gboolean
-gimp_operation_hsv_value_legacy_process_pixels (gfloat                *in,
-                                                gfloat                *layer,
-                                                gfloat                *mask,
-                                                gfloat                *out,
-                                                gfloat                 opacity,
-                                                glong                  samples,
-                                                const GeglRectangle   *roi,
-                                                gint                   level,
-                                                GimpLayerColorSpace    blend_trc,
-                                                GimpLayerColorSpace    composite_trc,
-                                                GimpLayerCompositeMode composite_mode)
+gimp_operation_hsv_value_legacy_process (GeglOperation         *op,
+                                         void                  *in_p,
+                                         void                  *layer_p,
+                                         void                  *mask_p,
+                                         void                  *out_p,
+                                         glong                  samples,
+                                         const GeglRectangle   *roi,
+                                         gint                   level)
 {
-  const gboolean has_mask = mask != NULL;
+  GimpOperationPointLayerMode *layer_mode = (gpointer)op;
+  gfloat opacity = layer_mode->opacity;
+  gfloat *in = in_p, *out = out_p, *layer = layer_p, *mask  = mask_p;
 
   while (samples--)
     {
@@ -112,7 +79,7 @@ gimp_operation_hsv_value_legacy_process_pixels (gfloat                *in,
       gfloat  comp_alpha, new_alpha;
 
       comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
-      if (has_mask)
+      if (mask)
         comp_alpha *= *mask;
 
       new_alpha = in[ALPHA] + (1.0 - in[ALPHA]) * comp_alpha;
@@ -154,7 +121,7 @@ gimp_operation_hsv_value_legacy_process_pixels (gfloat                *in,
       layer += 4;
       out   += 4;
 
-      if (has_mask)
+      if (mask)
         mask++;
     }
 

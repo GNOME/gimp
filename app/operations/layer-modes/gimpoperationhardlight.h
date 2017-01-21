@@ -49,17 +49,14 @@ struct _GimpOperationHardlightClass
 
 GType    gimp_operation_hardlight_get_type       (void) G_GNUC_CONST;
 
-gboolean gimp_operation_hardlight_process_pixels (gfloat                *in,
-                                                  gfloat                *layer,
-                                                  gfloat                *mask,
-                                                  gfloat                *out,
-                                                  gfloat                 opacity,
-                                                  glong                  samples,
-                                                  const GeglRectangle   *roi,
-                                                  gint                   level,
-                                                  GimpLayerColorSpace    blend_trc,
-                                                  GimpLayerColorSpace    composite_trc,
-                                                  GimpLayerCompositeMode composite_mode);
+gboolean gimp_operation_hardlight_process (GeglOperation         *op,
+                                           void                  *in,
+                                           void                  *layer,
+                                           void                  *mask,
+                                           void                  *out,
+                                           glong                  samples,
+                                           const GeglRectangle   *roi,
+                                           gint                   level);
 
 
 #endif /* __GIMP_OPERATION_HARDLIGHT_H__ */

@@ -35,15 +35,6 @@ static gboolean gimp_operation_normal_parent_process (GeglOperation        *oper
                                                       const gchar          *output_prop,
                                                       const GeglRectangle  *result,
                                                       gint                  level);
-static gboolean gimp_operation_normal_process        (GeglOperation        *operation,
-                                                      void                 *in_buf,
-                                                      void                 *aux_buf,
-                                                      void                 *aux2_buf,
-                                                      void                 *out_buf,
-                                                      glong                 samples,
-                                                      const GeglRectangle  *roi,
-                                                      gint                  level);
-
 
 G_DEFINE_TYPE (GimpOperationNormal, gimp_operation_normal,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
@@ -67,7 +58,7 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "</node>"
 "</gegl>";
 
-GimpLayerModeFunc gimp_operation_normal_process_pixels = NULL;
+GimpLayerModeFunc gimp_operation_normal_process = NULL;
 
 
 static void
@@ -88,19 +79,20 @@ gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
 
   operation_class->process     = gimp_operation_normal_parent_process;
 
-  point_class->process         = gimp_operation_normal_process;
 
-  gimp_operation_normal_process_pixels = gimp_operation_normal_process_pixels_core;
+  gimp_operation_normal_process = gimp_operation_normal_process_core;
 
 #if COMPILE_SSE2_INTRINISICS
   if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE2)
-    gimp_operation_normal_process_pixels = gimp_operation_normal_process_pixels_sse2;
+    gimp_operation_normal_process = gimp_operation_normal_process_sse2;
 #endif /* COMPILE_SSE2_INTRINISICS */
 
 #if COMPILE_SSE4_1_INTRINISICS
   if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE4_1)
-    gimp_operation_normal_process_pixels = gimp_operation_normal_process_pixels_sse4;
+    gimp_operation_normal_process = gimp_operation_normal_process_sse4;
 #endif /* COMPILE_SSE4_1_INTRINISICS */
+
+  point_class->process         = gimp_operation_normal_process;
 }
 
 static void
@@ -163,40 +155,19 @@ gimp_operation_normal_parent_process (GeglOperation        *operation,
                                                        level);
 }
 
-static gboolean
-gimp_operation_normal_process (GeglOperation       *operation,
-                               void                *in_buf,
-                               void                *aux_buf,
-                               void                *aux2_buf,
-                               void                *out_buf,
-                               glong                samples,
-                               const GeglRectangle *roi,
-                               gint                 level)
-{
-  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
-
-  return gimp_operation_normal_process_pixels (in_buf, aux_buf, aux2_buf,
-                                               out_buf,
-                                               layer_mode->opacity,
-                                               samples, roi, level,
-                                               layer_mode->blend_trc,
-                                               layer_mode->composite_trc,
-                                               layer_mode->composite_mode);
-}
-
 gboolean
-gimp_operation_normal_process_pixels_core (gfloat                *in,
-                                           gfloat                *aux,
-                                           gfloat                *mask,
-                                           gfloat                *out,
-                                           gfloat                 opacity,
-                                           glong                  samples,
-                                           const GeglRectangle   *roi,
-                                           gint                   level,
-                                           GimpLayerColorSpace    blend_trc,
-                                           GimpLayerColorSpace    composite_trc,
-                                           GimpLayerCompositeMode composite_mode)
+gimp_operation_normal_process_core (GeglOperation         *operation,
+                                    void                  *in_p,
+                                    void                  *aux_p,
+                                    void                  *mask_p,
+                                    void                  *out_p,
+                                    glong                  samples,
+                                    const GeglRectangle   *roi,
+                                    gint                   level)
 {
+  GimpOperationPointLayerMode *layer_mode = (gpointer)operation;
+  gfloat opacity = layer_mode->opacity;
+  gfloat *in = in_p, *aux = aux_p, *mask = mask_p, *out = out_p;
   const gboolean has_mask = mask != NULL;
 
   while (samples--)

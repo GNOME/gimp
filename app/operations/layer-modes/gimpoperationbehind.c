@@ -27,17 +27,6 @@
 
 #include "gimpoperationbehind.h"
 
-
-static gboolean gimp_operation_behind_process (GeglOperation       *operation,
-                                               void                *in_buf,
-                                               void                *aux_buf,
-                                               void                *aux2_buf,
-                                               void                *out_buf,
-                                               glong                samples,
-                                               const GeglRectangle *roi,
-                                               gint                 level);
-
-
 G_DEFINE_TYPE (GimpOperationBehind, gimp_operation_behind,
                GIMP_TYPE_OPERATION_POINT_LAYER_MODE)
 
@@ -64,40 +53,18 @@ gimp_operation_behind_init (GimpOperationBehind *self)
 {
 }
 
-static gboolean
-gimp_operation_behind_process (GeglOperation       *operation,
-                               void                *in_buf,
-                               void                *aux_buf,
-                               void                *aux2_buf,
-                               void                *out_buf,
+gboolean
+gimp_operation_behind_process (GeglOperation       *op,
+                               void                *in_p,
+                               void                *layer_p,
+                               void                *mask_p,
+                               void                *out_p,
                                glong                samples,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  GimpOperationPointLayerMode *layer_mode = (gpointer) operation;
-
-  return gimp_operation_behind_process_pixels (in_buf, aux_buf, aux2_buf,
-                                               out_buf,
-                                               layer_mode->opacity,
-                                               samples, roi, level,
-                                               layer_mode->blend_trc,
-                                               layer_mode->composite_trc,
-                                               layer_mode->composite_mode);
-}
-
-gboolean
-gimp_operation_behind_process_pixels (gfloat                *in,
-                                      gfloat                *layer,
-                                      gfloat                *mask,
-                                      gfloat                *out,
-                                      gfloat                 opacity,
-                                      glong                  samples,
-                                      const GeglRectangle   *roi,
-                                      gint                   level,
-                                      GimpLayerColorSpace    blend_trc,
-                                      GimpLayerColorSpace    composite_trc,
-                                      GimpLayerCompositeMode composite_mode)
-{
+  gfloat opacity = ((GimpOperationPointLayerMode *)(op))->opacity;
+  gfloat *in = in_p, *layer = layer_p, *mask = mask_p, *out = out_p;
   const gboolean has_mask = mask != NULL;
 
   while (samples--)

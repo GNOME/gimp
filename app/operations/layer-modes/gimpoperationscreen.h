@@ -49,17 +49,14 @@ struct _GimpOperationScreenClass
 
 GType    gimp_operation_screen_get_type       (void) G_GNUC_CONST;
 
-gboolean gimp_operation_screen_process_pixels (gfloat                *in,
-                                               gfloat                *layer,
-                                               gfloat                *mask,
-                                               gfloat                *out,
-                                               gfloat                 opacity,
-                                               glong                  samples,
-                                               const GeglRectangle   *roi,
-                                               gint                   level,
-                                               GimpLayerColorSpace    blend_trc,
-                                               GimpLayerColorSpace    composite_trc,
-                                               GimpLayerCompositeMode composite_mode);
+gboolean gimp_operation_screen_process (GeglOperation       *op,
+                                        void                *in,
+                                        void                *layer,
+                                        void                *mask,
+                                        void                *out,
+                                        glong                samples,
+                                        const GeglRectangle *roi,
+                                        gint                 level);
 
 
 #endif /* __GIMP_OPERATION_SCREEN_H__ */

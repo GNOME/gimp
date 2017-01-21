@@ -203,17 +203,15 @@ compfun_src_in (gfloat *in,
 }
 
 static inline void
-gimp_composite_blend (gfloat                 *in,
+gimp_composite_blend (gpointer                op,
+                      gfloat                 *in,
                       gfloat                 *layer,
                       gfloat                 *mask,
                       gfloat                 *out,
-                      gfloat                  opacity,
                       glong                   samples,
-                      GimpLayerColorSpace     blend_trc,
-                      GimpLayerColorSpace     composite_trc,
-                      GimpLayerCompositeMode  composite_mode,
                       GimpBlendFunc           blend_func)
 {
+  GimpOperationPointLayerMode *layer_mode = op;
   gfloat *blend_in    = in;
   gfloat *blend_layer = layer;
   gfloat *blend_out   = out;
@@ -224,6 +222,11 @@ gimp_composite_blend (gfloat                 *in,
   const Babl *fish_to_blend       = NULL;
   const Babl *fish_to_composite   = NULL;
   const Babl *fish_from_composite = NULL;
+
+  float opacity = layer_mode->opacity;
+  GimpLayerColorSpace blend_trc = layer_mode->blend_trc;
+  GimpLayerColorSpace composite_trc = layer_mode->composite_trc;
+  GimpLayerCompositeMode composite_mode = layer_mode->composite_mode;
 
   switch (blend_trc)
     {
@@ -1072,5 +1075,27 @@ blendfun_lch_lightness (const float *dest,
       dest += 4;
     }
 }
+
+
+static inline void
+blendfun_copy (const float *dest,
+               const float *src,
+               float       *out,
+               int          samples)
+{
+  while (samples--)
+    {
+      gint c;
+      for (c = 0; c < 4; c++)
+        out[c] = src[c];
+
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
 
 #endif /* __GIMP_BLEND_COMPOSITE_H__ */

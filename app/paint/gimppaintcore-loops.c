@@ -26,6 +26,7 @@
 #include "core/gimptempbuf.h"
 
 #include "operations/layer-modes/gimplayermodefunctions.h"
+#include "operations/layer-modes/gimpoperationpointlayermode.h"
 
 #include "gimppaintcore-loops.h"
 
@@ -356,6 +357,12 @@ do_layer_blend (GeglBuffer    *src_buffer,
       gfloat *mask_pixel  = NULL;
       gfloat *paint_pixel = paint_data + ((iter->roi[0].y - roi.y) * paint_stride + iter->roi[0].x - roi.x) * 4;
       int iy;
+      GimpOperationPointLayerMode layer_data;
+
+      layer_data.opacity = opacity;
+      layer_data.blend_trc = blend_trc;
+      layer_data.composite_trc = composite_trc;
+      layer_data.composite_mode = composite_mode;
 
       if (mask_buffer)
         mask_pixel  = (gfloat *)iter->data[2];
@@ -364,21 +371,19 @@ do_layer_blend (GeglBuffer    *src_buffer,
       process_roi.width  = iter->roi[0].width;
       process_roi.height = 1;
 
+
       for (iy = 0; iy < iter->roi[0].height; iy++)
         {
           process_roi.y = iter->roi[0].y + iy;
 
-          (*apply_func) (in_pixel,
+          (*apply_func) ((GeglOperation*)&layer_data,
+                         in_pixel,
                          paint_pixel,
                          mask_pixel,
                          out_pixel,
-                         opacity,
                          iter->roi[0].width,
                          &process_roi,
-                         0,
-                         blend_trc,
-                         composite_trc,
-                         composite_mode);
+                         0);
 
           in_pixel    += iter->roi[0].width * 4;
           out_pixel   += iter->roi[0].width * 4;
