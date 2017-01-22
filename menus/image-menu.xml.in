@@ -742,6 +742,7 @@
         <menuitem action="filters-difference-of-gaussians" />
         <menuitem action="filters-edge" />
         <menuitem action="filters-edge-laplace" />
+        <menuitem action="filters-edge-neon" />
         <menuitem action="filters-edge-sobel" />
       </menu>
       <menu action="filters-generic-menu" name="Generic">

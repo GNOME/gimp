@@ -552,6 +552,7 @@ sanity_check_gegl_ops (void)
     "gegl:dropshadow",
     "gegl:edge",
     "gegl:edge-laplace",
+    "gegl:edge-neon",
     "gegl:edge-sobel",
     "gegl:emboss",
     "gegl:engrave",
