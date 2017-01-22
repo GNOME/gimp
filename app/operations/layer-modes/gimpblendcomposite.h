@@ -405,7 +405,7 @@ blendfun_screen (const float *dest,
     }
 }
 
-static inline void
+static inline void /* aka linear_dodge */
 blendfun_addition (const float *dest,
                    const float *src,
                    float       *out,
@@ -419,6 +419,31 @@ blendfun_addition (const float *dest,
 
           for (c = 0; c < 3; c++)
             out[c] = dest[c] + src[c];
+        }
+
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+
+static inline void 
+blendfun_linear_burn (const float *dest,
+                      const float *src,
+                      float       *out,
+                      int          samples)
+{
+  while (samples--)
+    {
+      if (src[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            out[c] = dest[c] + src[c] - 1.0f;
         }
 
       out[ALPHA] = src[ALPHA];
@@ -1105,5 +1130,141 @@ blendfun_copy (const float *dest,
     }
 }
 
+/* added according to: 
+    http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
+static inline void
+blendfun_vivid_light (const float *dest,
+                      const float *src,
+                      float       *out,
+                      int          samples)
+{
+  while (samples--)
+    {
+      if (src[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            {
+              gfloat comp;
+
+              if (src[c] > 0.5f)
+                {
+                  comp = (1.0f - (1.0f - dest[c]) / (2.0f * (src[c] - 0.5f)));
+                }
+              else
+                {
+                  comp = dest[c] / (1.0f - 2.0f * src[c]);
+                }
+
+              out[c] = comp;
+            }
+        }
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+
+/* added according to: 
+    http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
+static inline void
+blendfun_linear_light (const float *dest,
+                       const float *src,
+                       float       *out,
+                       int          samples)
+{
+  while (samples--)
+    {
+      if (src[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            {
+              gfloat comp;
+              if (src[c] > 0.5f)
+                {
+                  comp = dest[c] + 2.0 * (src[c] - 0.5);
+                }
+              else
+                {
+                  comp = dest[c] + 2 * (src[c] - 1.0);
+                }
+              out[c] = comp;
+            }
+        }
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+
+/* added according to: 
+    http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
+static inline void
+blendfun_pin_light (const float *dest,
+                    const float *src,
+                    float       *out,
+                    int          samples)
+{
+  while (samples--)
+    {
+      if (src[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            {
+              gfloat comp;
+              if (src[c] > 0.5f)
+                {
+                  comp = MAX(dest[c], 2 * (src[c] - 0.5));
+                }
+              else
+                {
+                  comp = MIN(dest[c], 2 * src[c]);
+                }
+              out[c] = comp;
+            }
+        }
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+static inline void
+blendfun_exclusion (const float *dest,
+                    const float *src,
+                    float       *out,
+                    int          samples)
+{
+  while (samples--)
+    {
+      if (src[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            {
+              out[c] = 0.5f - 2.0f * (dest[c] - 0.5f) * (src[c] - 0.5f);
+            }
+        }
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
 
 #endif /* __GIMP_BLEND_COMPOSITE_H__ */
