@@ -157,6 +157,7 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
    */
   gegl_node_set (node,
                  "operation",      gimp_layer_mode_get_operation (mode),
+                 "layer-mode",     mode,
                  "opacity",        opacity,
                  "linear",         gimp_layer_mode_is_linear (mode),
                  "blend-trc",      gimp_layer_mode_get_blend_space (mode),

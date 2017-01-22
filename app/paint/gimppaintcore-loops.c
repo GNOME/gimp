@@ -305,6 +305,7 @@ do_layer_blend (GeglBuffer    *src_buffer,
   GeglBufferIterator     *iter;
   guint                   paint_stride;
   gfloat                 *paint_data;
+  gboolean                linear;
   GimpLayerModeFunc       apply_func;
   GimpLayerColorSpace     blend_trc;
   GimpLayerColorSpace     composite_trc;
@@ -313,12 +314,13 @@ do_layer_blend (GeglBuffer    *src_buffer,
   paint_stride = gimp_temp_buf_get_width (paint_buf);
   paint_data   = (gfloat *) gimp_temp_buf_get_data (paint_buf);
 
+  linear         = gimp_layer_mode_is_linear (paint_mode);
   apply_func     = gimp_get_layer_mode_function (paint_mode);
   blend_trc      = gimp_layer_mode_get_blend_space (paint_mode);
   composite_trc  = gimp_layer_mode_get_composite_space (paint_mode);
   composite_mode = gimp_layer_mode_get_composite_mode (paint_mode);
 
-  if (gimp_layer_mode_is_linear (paint_mode))
+  if (linear)
     iterator_format = babl_format ("RGBA float");
   else
     iterator_format = babl_format ("R'G'B'A float");
@@ -361,6 +363,8 @@ do_layer_blend (GeglBuffer    *src_buffer,
 
       paint_pixel = paint_data + ((iter->roi[0].y - roi.y) * paint_stride + iter->roi[0].x - roi.x) * 4;
 
+      layer_data.layer_mode     = paint_mode;
+      layer_data.linear         = linear;
       layer_data.opacity        = opacity;
       layer_data.blend_trc      = blend_trc;
       layer_data.composite_trc  = composite_trc;

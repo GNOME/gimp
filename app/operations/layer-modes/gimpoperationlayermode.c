@@ -35,6 +35,7 @@
 enum
 {
   PROP_0,
+  PROP_LAYER_MODE,
   PROP_LINEAR,
   PROP_OPACITY,
   PROP_BLEND_TRC,
@@ -85,6 +86,14 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
 
   operation_class->prepare   = gimp_operation_layer_mode_prepare;
   operation_class->process   = gimp_operation_layer_mode_process;
+
+  g_object_class_install_property (object_class, PROP_LAYER_MODE,
+                                   g_param_spec_enum ("layer-mode",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_LAYER_MODE,
+                                                      GIMP_LAYER_MODE_NORMAL,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_LINEAR,
                                    g_param_spec_boolean ("linear",
@@ -149,6 +158,10 @@ gimp_operation_layer_mode_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_LAYER_MODE:
+      self->layer_mode = g_value_get_enum (value);
+      break;
+
     case PROP_LINEAR:
       self->linear = g_value_get_boolean (value);
       break;
@@ -185,6 +198,10 @@ gimp_operation_layer_mode_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_LAYER_MODE:
+      g_value_set_enum (value, self->layer_mode);
+      break;
+
     case PROP_LINEAR:
       g_value_set_boolean (value, self->linear);
       break;

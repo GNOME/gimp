@@ -44,6 +44,7 @@ struct _GimpOperationLayerMode
 {
   GeglOperationPointComposer3  parent_instance;
 
+  GimpLayerMode                layer_mode;
   gboolean                     linear;
   gdouble                      opacity;
   GimpLayerColorSpace          blend_trc;
