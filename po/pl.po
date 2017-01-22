@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-16 12:29+0100\n"
-"PO-Revision-Date: 2017-01-16 12:30+0100\n"
+"POT-Creation-Date: 2017-01-22 21:19+0100\n"
+"PO-Revision-Date: 2017-01-22 21:20+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -272,7 +272,7 @@ msgstr ""
 "Wyjście programu GIMP. Można zminimalizować to okno, ale nie należy go "
 "zamykać."
 
-#: ../app/sanity.c:661
+#: ../app/sanity.c:662
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -284,7 +284,7 @@ msgstr ""
 "\n"
 "Proszę sprawdzić wartość zmiennej środowiskowej G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:680
+#: ../app/sanity.c:681
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -3098,344 +3098,349 @@ msgstr "_Laplace"
 
 #: ../app/actions/filters-actions.c:231
 msgctxt "filters-action"
+msgid "_Neon..."
+msgstr "_Neon…"
+
+#: ../app/actions/filters-actions.c:236
+msgctxt "filters-action"
 msgid "_Sobel..."
 msgstr "_Sobel…"
 
-#: ../app/actions/filters-actions.c:236
+#: ../app/actions/filters-actions.c:241
 msgctxt "filters-action"
 msgid "_Emboss..."
 msgstr "_Wytłoczenie…"
 
-#: ../app/actions/filters-actions.c:241
+#: ../app/actions/filters-actions.c:246
 msgctxt "filters-action"
 msgid "En_grave..."
 msgstr "_Graweruj…"
 
-#: ../app/actions/filters-actions.c:246
+#: ../app/actions/filters-actions.c:251
 msgctxt "filters-action"
 msgid "E_xposure..."
 msgstr "_Ekspozycja…"
 
-#: ../app/actions/filters-actions.c:251
+#: ../app/actions/filters-actions.c:256
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
 msgstr "Śledzenie _fraktalne…"
 
-#: ../app/actions/filters-actions.c:256
+#: ../app/actions/filters-actions.c:261
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
 msgstr "Rozmycie _Gaussa…"
 
-#: ../app/actions/filters-actions.c:261
+#: ../app/actions/filters-actions.c:266
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
 msgstr "_Wybiórcze rozmycie Gaussa…"
 
-#: ../app/actions/filters-actions.c:266
+#: ../app/actions/filters-actions.c:271
 msgctxt "filters-action"
 msgid "_GEGL graph..."
 msgstr "Wykres biblioteki _GEGL…"
 
-#: ../app/actions/filters-actions.c:271
+#: ../app/actions/filters-actions.c:276
 msgctxt "filters-action"
 msgid "_Grid..."
 msgstr "_Siatka…"
 
-#: ../app/actions/filters-actions.c:276
+#: ../app/actions/filters-actions.c:281
 msgctxt "filters-action"
 msgid "_High Pass..."
 msgstr "_Wysokie przejście…"
 
-#: ../app/actions/filters-actions.c:281
+#: ../app/actions/filters-actions.c:286
 msgctxt "filters-action"
 msgid "_Illusion..."
 msgstr "_Iluzja…"
 
-#: ../app/actions/filters-actions.c:286
+#: ../app/actions/filters-actions.c:291
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Kalejdoskop…"
 
-#: ../app/actions/filters-actions.c:291
+#: ../app/actions/filters-actions.c:296
 msgctxt "filters-action"
 msgid "Lens Distortion..."
 msgstr "Zniekształcenie soczewki…"
 
-#: ../app/actions/filters-actions.c:296
+#: ../app/actions/filters-actions.c:301
 msgctxt "filters-action"
 msgid "Lens Flare..."
 msgstr "Błysk soczewki…"
 
-#: ../app/actions/filters-actions.c:301
+#: ../app/actions/filters-actions.c:306
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Labirynt…"
 
-#: ../app/actions/filters-actions.c:306
+#: ../app/actions/filters-actions.c:311
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Mikser monochromatyczny…"
 
-#: ../app/actions/filters-actions.c:311
+#: ../app/actions/filters-actions.c:316
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mozaika…"
 
-#: ../app/actions/filters-actions.c:316
+#: ../app/actions/filters-actions.c:321
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Koliste rozmycie ruchu…"
 
-#: ../app/actions/filters-actions.c:321
+#: ../app/actions/filters-actions.c:326
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Liniowe rozmycie ruchu…"
 
-#: ../app/actions/filters-actions.c:326
+#: ../app/actions/filters-actions.c:331
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Rozmycie ruchu powiększenia…"
 
-#: ../app/actions/filters-actions.c:331
+#: ../app/actions/filters-actions.c:336
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "Szum _komórkowy…"
 
-#: ../app/actions/filters-actions.c:336
+#: ../app/actions/filters-actions.c:341
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Szum lch CIE…"
 
-#: ../app/actions/filters-actions.c:341
+#: ../app/actions/filters-actions.c:346
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Szum HSV…"
 
-#: ../app/actions/filters-actions.c:346
+#: ../app/actions/filters-actions.c:351
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Wygnieć…"
 
-#: ../app/actions/filters-actions.c:351
+#: ../app/actions/filters-actions.c:356
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Szum _Perlina…"
 
-#: ../app/actions/filters-actions.c:356
+#: ../app/actions/filters-actions.c:361
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Wyciosaj…"
 
-#: ../app/actions/filters-actions.c:361
+#: ../app/actions/filters-actions.c:366
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Szum _RGB…"
 
-#: ../app/actions/filters-actions.c:366
+#: ../app/actions/filters-actions.c:371
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "R_edukcja szumu…"
 
-#: ../app/actions/filters-actions.c:371
+#: ../app/actions/filters-actions.c:376
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Szum Simplex…"
 
-#: ../app/actions/filters-actions.c:376
+#: ../app/actions/filters-actions.c:381
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Rozszarp…"
 
-#: ../app/actions/filters-actions.c:381
+#: ../app/actions/filters-actions.c:386
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Jednolity szum…"
 
-#: ../app/actions/filters-actions.c:386
+#: ../app/actions/filters-actions.c:391
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Rozrzuć…"
 
-#: ../app/actions/filters-actions.c:391
+#: ../app/actions/filters-actions.c:396
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Farba _olejna…"
 
-#: ../app/actions/filters-actions.c:396
+#: ../app/actions/filters-actions.c:401
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Rzut panoramy…"
 
-#: ../app/actions/filters-actions.c:401
+#: ../app/actions/filters-actions.c:406
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopia…"
 
-#: ../app/actions/filters-actions.c:406
+#: ../app/actions/filters-actions.c:411
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pikselizuj…"
 
-#: ../app/actions/filters-actions.c:411
+#: ../app/actions/filters-actions.c:416
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plazma…"
 
-#: ../app/actions/filters-actions.c:416
+#: ../app/actions/filters-actions.c:421
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Współrzędne p_olarne…"
 
-#: ../app/actions/filters-actions.c:421
+#: ../app/actions/filters-actions.c:426
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Redukcja kolorów…"
 
-#: ../app/actions/filters-actions.c:426
+#: ../app/actions/filters-actions.c:431
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Usuwanie efektu _czerwonych oczu…"
 
-#: ../app/actions/filters-actions.c:431
+#: ../app/actions/filters-actions.c:436
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Falowanie…"
 
-#: ../app/actions/filters-actions.c:436
+#: ../app/actions/filters-actions.c:441
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Nasycenie…"
 
-#: ../app/actions/filters-actions.c:441
+#: ../app/actions/filters-actions.c:446
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "Pół_spłaszczenie…"
 
-#: ../app/actions/filters-actions.c:446
+#: ../app/actions/filters-actions.c:451
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:451
+#: ../app/actions/filters-actions.c:456
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Przesuń…"
 
-#: ../app/actions/filters-actions.c:456
+#: ../app/actions/filters-actions.c:461
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus…"
 
-#: ../app/actions/filters-actions.c:461
+#: ../app/actions/filters-actions.c:466
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Lekki żar…"
 
-#: ../app/actions/filters-actions.c:466
+#: ../app/actions/filters-actions.c:471
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Rozciągnij kontrast…"
 
-#: ../app/actions/filters-actions.c:471
+#: ../app/actions/filters-actions.c:476
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV..."
 msgstr "_Rozciągnij kontrast HSV…"
 
-#: ../app/actions/filters-actions.c:476
+#: ../app/actions/filters-actions.c:481
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nowa…"
 
-#: ../app/actions/filters-actions.c:481
+#: ../app/actions/filters-actions.c:486
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Próg alfy…"
 
-#: ../app/actions/filters-actions.c:486
+#: ../app/actions/filters-actions.c:491
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Szklane płytki…"
 
-#: ../app/actions/filters-actions.c:491
+#: ../app/actions/filters-actions.c:496
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Kawałki papieru…"
 
-#: ../app/actions/filters-actions.c:496
+#: ../app/actions/filters-actions.c:501
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Bezszwowe kafelki…"
 
-#: ../app/actions/filters-actions.c:501
+#: ../app/actions/filters-actions.c:506
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Maska wyostrzająca…"
 
-#: ../app/actions/filters-actions.c:506
+#: ../app/actions/filters-actions.c:511
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Rozprowadzanie _wartości…"
 
-#: ../app/actions/filters-actions.c:511
+#: ../app/actions/filters-actions.c:516
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradacja wideo…"
 
-#: ../app/actions/filters-actions.c:516
+#: ../app/actions/filters-actions.c:521
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Winieta…"
 
-#: ../app/actions/filters-actions.c:521
+#: ../app/actions/filters-actions.c:526
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Fale…"
 
-#: ../app/actions/filters-actions.c:526
+#: ../app/actions/filters-actions.c:531
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "S_kręć i zaciśnij…"
 
-#: ../app/actions/filters-actions.c:531
+#: ../app/actions/filters-actions.c:536
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_iatr…"
 
-#: ../app/actions/filters-actions.c:539
+#: ../app/actions/filters-actions.c:544
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:541
+#: ../app/actions/filters-actions.c:546
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Uruchamia ponownie ostatnio używany filtr z tymi samymi ustawieniami"
 
-#: ../app/actions/filters-actions.c:546
+#: ../app/actions/filters-actions.c:551
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Wyświetl ponownie ostatni"
 
-#: ../app/actions/filters-actions.c:547
+#: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Wyświetla jeszcze raz okno ostatnio używanego filtru"
 
-#: ../app/actions/filters-actions.c:820
+#: ../app/actions/filters-actions.c:826
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz „%s”"
 
-#: ../app/actions/filters-actions.c:821
+#: ../app/actions/filters-actions.c:827
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl ponownie „%s”"
 
-#: ../app/actions/filters-actions.c:859
+#: ../app/actions/filters-actions.c:865
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:861
+#: ../app/actions/filters-actions.c:867
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -10212,7 +10217,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Zrównanie"
 
-#: ../app/core/gimpdrawable-floating-selection.c:171
+#: ../app/core/gimpdrawable-floating-selection.c:170
 msgid "Floating Selection"
 msgstr "Oderwane zaznaczenie"
 
@@ -10903,7 +10908,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:843
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:839
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -10979,13 +10984,13 @@ msgstr "Nie można bardziej podnieść warstwy."
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:564 ../app/core/gimplayer.c:1437
+#: ../app/core/gimplayer.c:560 ../app/core/gimplayer.c:1433
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "maska %s"
 
-#: ../app/core/gimplayer.c:603
+#: ../app/core/gimplayer.c:599
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -10994,60 +10999,60 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1343
+#: ../app/core/gimplayer.c:1339
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1354
+#: ../app/core/gimplayer.c:1350
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1360
+#: ../app/core/gimplayer.c:1356
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1488
+#: ../app/core/gimplayer.c:1484
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: ../app/core/gimplayer.c:1639
+#: ../app/core/gimplayer.c:1635
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1640
+#: ../app/core/gimplayer.c:1636
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/gimplayer.c:1742
+#: ../app/core/gimplayer.c:1738
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Włączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1743
+#: ../app/core/gimplayer.c:1739
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Wyłączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1819
+#: ../app/core/gimplayer.c:1815
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/gimplayer.c:1892
+#: ../app/core/gimplayer.c:1888
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:1924
+#: ../app/core/gimplayer.c:1920
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:1945
+#: ../app/core/gimplayer.c:1941
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
@@ -12266,12 +12271,12 @@ msgstr "_Nazwa warstwy:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:183
-#: ../app/tools/gimpmeasuretool.c:1139
+#: ../app/tools/gimpmeasuretool.c:1159
 msgid "Width:"
 msgstr "Szerokość:"
 
 #: ../app/dialogs/layer-options-dialog.c:189
-#: ../app/tools/gimpmeasuretool.c:1167
+#: ../app/tools/gimpmeasuretool.c:1187
 msgid "Height:"
 msgstr "Wysokość:"
 
@@ -14344,7 +14349,7 @@ msgid "Select Rotation Angle"
 msgstr "Wybór kąta obrotu"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:1111
+#: ../app/tools/gimpmeasuretool.c:1131
 msgid "Angle:"
 msgstr "Kąt:"
 
@@ -14773,11 +14778,11 @@ msgstr "Tylko ruch"
 msgid "Flow"
 msgstr "Strumień"
 
-#: ../app/paint/gimpbrushcore.c:411
+#: ../app/paint/gimpbrushcore.c:413
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
 
-#: ../app/paint/gimpbrushcore.c:418
+#: ../app/paint/gimpbrushcore.c:420
 msgid "No paint dynamics available for use with this tool."
 msgstr "Brak dostępnych dynamik rysowania dla tego narzędzia."
 
@@ -14834,7 +14839,7 @@ msgstr "Łatka"
 msgid "Healing does not operate on indexed layers."
 msgstr "Łatanie nie jest możliwe na warstwach indeksowanych."
 
-#: ../app/paint/gimpink.c:104 ../app/tools/gimpinktool.c:61
+#: ../app/paint/gimpink.c:106 ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Stalówka"
 
@@ -14906,7 +14911,7 @@ msgstr "Wycieranie za pomocą tego pędzla"
 msgid "Paintbrush"
 msgstr "Pędzel"
 
-#: ../app/paint/gimppaintcore.c:144
+#: ../app/paint/gimppaintcore.c:146
 msgid "Paint"
 msgstr "Rysowanie"
 
@@ -17339,8 +17344,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Różdżka"
 
-#: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:466
-#: ../app/tools/gimpgegltool.c:467 ../app/tools/gimpoperationtool.c:132
+#: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:467
+#: ../app/tools/gimpgegltool.c:468 ../app/tools/gimpoperationtool.c:132
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -17352,7 +17357,7 @@ msgstr "GEGL: wykonuje wybrane działanie biblioteki GEGL"
 msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
-#: ../app/tools/gimpgegltool.c:421
+#: ../app/tools/gimpgegltool.c:422
 msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
@@ -17743,17 +17748,17 @@ msgstr "Kliknięcie i przeciągnięcie doda nowy punkt"
 msgid "Click-Drag to move all points"
 msgstr "Kliknięcie i przeciągnięcie przemieści wszystkie punkty"
 
-#: ../app/tools/gimpmeasuretool.c:943 ../app/tools/gimpmeasuretool.c:1094
-#: ../app/tools/gimpmeasuretool.c:1150 ../app/tools/gimpmeasuretool.c:1178
+#: ../app/tools/gimpmeasuretool.c:960 ../app/tools/gimpmeasuretool.c:1114
+#: ../app/tools/gimpmeasuretool.c:1170 ../app/tools/gimpmeasuretool.c:1198
 #: ../app/tools/gimppainttool.c:665
 msgid "pixels"
 msgstr "piksele"
 
-#: ../app/tools/gimpmeasuretool.c:1058
+#: ../app/tools/gimpmeasuretool.c:1078
 msgid "Measure Distances and Angles"
 msgstr "Pomiary odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:1083
+#: ../app/tools/gimpmeasuretool.c:1103
 msgid "Distance:"
 msgstr "Odległość:"
 
@@ -17990,7 +17995,7 @@ msgstr "%s wybiera kolor"
 msgid "Cannot paint on layer groups."
 msgstr "Nie można narysować grup warstw."
 
-#: ../app/tools/gimppainttool.c:711
+#: ../app/tools/gimppainttool.c:720
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s rysuje prostą linię"
