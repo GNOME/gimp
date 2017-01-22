@@ -110,7 +110,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_BLEND_SPACE,
-                                   g_param_spec_enum ("blend-trc",
+                                   g_param_spec_enum ("blend-space",
                                                       NULL, NULL,
                                                       GIMP_TYPE_LAYER_COLOR_SPACE,
                                                       GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -119,7 +119,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
 
 
   g_object_class_install_property (object_class, PROP_COMPOSITE_SPACE,
-                                   g_param_spec_enum ("composite-trc",
+                                   g_param_spec_enum ("composite-space",
                                                       NULL, NULL,
                                                       GIMP_TYPE_LAYER_COLOR_SPACE,
                                                       GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
