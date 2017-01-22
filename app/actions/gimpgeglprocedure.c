@@ -326,6 +326,16 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 
   if (GIMP_IS_OPERATION_TOOL (active_tool))
     {
+      /*  Remember the prodecure that created this tool, because we
+       *  can't just switch to an operation tool using
+       *  gimp_context_set_tool(), we also have to go through the
+       *  initialization code below, otherwise we end up with a dummy
+       *  tool that does nothing. See bug #776370.
+       */
+      g_object_set_data_full (G_OBJECT (active_tool), "gimp-gegl-procedure",
+                              g_object_ref (procedure),
+                              (GDestroyNotify) g_object_unref);
+
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
                                          procedure->original_name,
                                          gimp_procedure_get_label (procedure),

@@ -29,7 +29,9 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-filter-history.h"
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
@@ -1821,8 +1823,45 @@ gimp_display_shell_initialize_tool (GimpDisplayShell *shell,
                 (gimp_tool_control_get_dirty_mask (active_tool->control) &
                  GIMP_DIRTY_ACTIVE_DRAWABLE)))
         {
-          /*  create a new one, deleting the current  */
-          gimp_context_tool_changed (gimp_get_user_context (gimp));
+          GimpProcedure *procedure = g_object_get_data (G_OBJECT (active_tool),
+                                                        "gimp-gegl-procedure");
+
+          if (image == gimp_item_get_image (GIMP_ITEM (active_tool->drawable)))
+            {
+              /*  When changing between drawables if the *same* image,
+               *  halt the tool so it doesn't get committed on tool
+               *  change. This is a pure "probably better this way"
+               *  decision because the user is likely changing their
+               *  mind or was simply on the wrong layer. See bug
+               *  #776370.
+               */
+              tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT,
+                                           active_tool->display);
+            }
+
+          if (procedure)
+            {
+              /*  We can't just recreate an operation tool, we must
+               *  make sure the right stuff gets set on it, so
+               *  re-activate the procedure that created it instead of
+               *  just calling gimp_context_tool_changed(). See
+               *  GimpGeglProcedure and bug #776370.
+               */
+              GimpImageWindow *window;
+              GimpUIManager   *manager;
+
+              window  = gimp_display_shell_get_window (shell);
+              manager = gimp_image_window_get_ui_manager (window);
+
+              gimp_filter_history_add (gimp, procedure);
+              gimp_ui_manager_activate_action (manager, "filters",
+                                               "filters-reshow");
+            }
+          else
+            {
+              /*  create a new one, deleting the current  */
+              gimp_context_tool_changed (gimp_get_user_context (gimp));
+            }
 
           /*  make sure the newly created tool has the right state  */
           gimp_display_shell_update_focus (shell, TRUE, image_coords, state);
