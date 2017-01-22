@@ -123,15 +123,20 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
                                            GIMP_LAYER_MODE_MULTIPLY_LEGACY,
                                            GIMP_LAYER_MODE_BURN,
                                            GIMP_LAYER_MODE_BURN_LEGACY,
+                                           GIMP_LAYER_MODE_LINEAR_BURN,
                                            GIMP_LAYER_MODE_OVERLAY,
                                            GIMP_LAYER_MODE_SOFTLIGHT,
                                            GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,
                                            GIMP_LAYER_MODE_HARDLIGHT,
                                            GIMP_LAYER_MODE_HARDLIGHT_LEGACY,
+                                           GIMP_LAYER_MODE_VIVID_LIGHT,
+                                           GIMP_LAYER_MODE_PIN_LIGHT,
+                                           GIMP_LAYER_MODE_LINEAR_LIGHT,
                                            GIMP_LAYER_MODE_DIFFERENCE,
                                            GIMP_LAYER_MODE_DIFFERENCE_LEGACY,
                                            GIMP_LAYER_MODE_SUBTRACT,
                                            GIMP_LAYER_MODE_SUBTRACT_LEGACY,
+                                           GIMP_LAYER_MODE_EXCLUSION,
                                            GIMP_LAYER_MODE_GRAIN_EXTRACT,
                                            GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,
                                            GIMP_LAYER_MODE_GRAIN_MERGE,
@@ -158,10 +163,10 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
                                          GIMP_LAYER_MODE_ADDITION_LEGACY, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_LAYER_MODE_BURN_LEGACY, -1);
+                                         GIMP_LAYER_MODE_LINEAR_BURN, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
-                                         GIMP_LAYER_MODE_HARDLIGHT_LEGACY, -1);
+                                         GIMP_LAYER_MODE_LINEAR_LIGHT, -1);
 
   gimp_int_store_insert_separator_after (GIMP_INT_STORE (store),
                                          GIMP_LAYER_MODE_DIVIDE_LEGACY, -1);

@@ -128,6 +128,11 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:
     case GIMP_LAYER_MODE_GRAIN_MERGE:
+    case GIMP_LAYER_MODE_VIVID_LIGHT:
+    case GIMP_LAYER_MODE_PIN_LIGHT:
+    case GIMP_LAYER_MODE_LINEAR_LIGHT:
+    case GIMP_LAYER_MODE_EXCLUSION:
+    case GIMP_LAYER_MODE_LINEAR_BURN:
       return TRUE;
 
     case GIMP_LAYER_MODE_BEHIND_LINEAR:
@@ -146,6 +151,11 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
+    case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
+    case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
       return TRUE;
 
     case GIMP_LAYER_MODE_ERASE:
@@ -158,7 +168,7 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
       return TRUE;
   }
 
-  return FALSE;
+  return TRUE;
 }
 
 GimpLayerColorSpace
@@ -227,6 +237,11 @@ gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:
     case GIMP_LAYER_MODE_GRAIN_MERGE:
+    case GIMP_LAYER_MODE_VIVID_LIGHT:
+    case GIMP_LAYER_MODE_PIN_LIGHT:
+    case GIMP_LAYER_MODE_LINEAR_LIGHT:
+    case GIMP_LAYER_MODE_EXCLUSION:
+    case GIMP_LAYER_MODE_LINEAR_BURN:
       return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
 
     case GIMP_LAYER_MODE_BEHIND_LINEAR:
@@ -245,6 +260,11 @@ gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
+    case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
+    case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
       return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_ERASE:
@@ -328,6 +348,11 @@ gimp_layer_mode_get_composite_mode (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:
     case GIMP_LAYER_MODE_GRAIN_MERGE:
+    case GIMP_LAYER_MODE_VIVID_LIGHT:
+    case GIMP_LAYER_MODE_PIN_LIGHT:
+    case GIMP_LAYER_MODE_LINEAR_LIGHT:
+    case GIMP_LAYER_MODE_EXCLUSION:
+    case GIMP_LAYER_MODE_LINEAR_BURN:
       return GIMP_LAYER_COMPOSITE_SRC_ATOP;
 
     case GIMP_LAYER_MODE_BEHIND_LINEAR:
@@ -346,6 +371,11 @@ gimp_layer_mode_get_composite_mode (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
+    case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
+    case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
       return GIMP_LAYER_COMPOSITE_SRC_ATOP;
 
     case GIMP_LAYER_MODE_ERASE:
@@ -376,146 +406,63 @@ gimp_layer_mode_get_operation (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
       return "gimp:multiply-legacy";
 
-    case GIMP_LAYER_MODE_MULTIPLY:
-    case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
-      return "gimp:multiply";
-
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
       return "gimp:screen-legacy";
 
-    case GIMP_LAYER_MODE_SCREEN:
-    case GIMP_LAYER_MODE_SCREEN_LINEAR:
-      return "gimp:screen";
-
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
-      return "gimp:softlight-legacy";
 
-    case GIMP_LAYER_MODE_OVERLAY:
-    case GIMP_LAYER_MODE_OVERLAY_LINEAR:
-      return "gimp:overlay";
+      return "gimp:softlight-legacy";
 
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
       return "gimp:difference-legacy";
 
-    case GIMP_LAYER_MODE_DIFFERENCE:
-    case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
-      return "gimp:difference";
-
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
       return "gimp:addition-legacy";
-
-    case GIMP_LAYER_MODE_ADDITION:
-    case GIMP_LAYER_MODE_ADDITION_LINEAR:
-      return "gimp:addition";
 
     case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
       return "gimp:subtract-legacy";
 
-    case GIMP_LAYER_MODE_SUBTRACT:
-    case GIMP_LAYER_MODE_SUBTRACT_LINEAR:
-      return "gimp:subtract";
-
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
       return "gimp:darken-only-legacy";
-
-    case GIMP_LAYER_MODE_DARKEN_ONLY:
-    case GIMP_LAYER_MODE_DARKEN_ONLY_LINEAR:
-      return "gimp:darken-only";
 
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
       return "gimp:lighten-only-legacy";
 
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY:
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LINEAR:
-      return "gimp:lighten-only";
-
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
       return "gimp:hsv-hue-legacy";
-
-    case GIMP_LAYER_MODE_HSV_HUE:
-      return "gimp:hsv-hue";
 
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
       return "gimp:hsv-saturation-legacy";
 
-    case GIMP_LAYER_MODE_HSV_SATURATION:
-      return "gimp:hsv-saturation";
-
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
       return "gimp:hsv-color-legacy";
-
-    case GIMP_LAYER_MODE_HSV_COLOR:
-      return "gimp:hsv-color";
 
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
       return "gimp:hsv-value-legacy";
 
-    case GIMP_LAYER_MODE_HSV_VALUE:
-      return "gimp:hsv-value";
-
     case GIMP_LAYER_MODE_DIVIDE_LEGACY:
       return "gimp:divide-legacy";
-
-    case GIMP_LAYER_MODE_DIVIDE:
-    case GIMP_LAYER_MODE_DIVIDE_LINEAR:
-      return "gimp:divide";
 
     case GIMP_LAYER_MODE_DODGE_LEGACY:
       return "gimp:dodge-legacy";
 
-    case GIMP_LAYER_MODE_DODGE:
-    case GIMP_LAYER_MODE_DODGE_LINEAR:
-      return "gimp:dodge";
-
     case GIMP_LAYER_MODE_BURN_LEGACY:
       return "gimp:burn-legacy";
-
-    case GIMP_LAYER_MODE_BURN:
-    case GIMP_LAYER_MODE_BURN_LINEAR:
-      return "gimp:burn";
 
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
       return "gimp:hardlight-legacy";
 
-    case GIMP_LAYER_MODE_HARDLIGHT:
-    case GIMP_LAYER_MODE_HARDLIGHT_LINEAR:
-      return "gimp:hardlight";
-
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
       return "gimp:softlight-legacy";
-
-    case GIMP_LAYER_MODE_SOFTLIGHT:
-    case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
-      return "gimp:softlight";
 
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
       return "gimp:grain-extract-legacy";
 
-    case GIMP_LAYER_MODE_GRAIN_EXTRACT:
-    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
-      return "gimp:grain-extract";
-
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
       return "gimp:grain-merge-legacy";
 
-    case GIMP_LAYER_MODE_GRAIN_MERGE:
-    case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
-      return "gimp:grain-merge";
-
     case GIMP_LAYER_MODE_COLOR_ERASE:
       return "gimp:color-erase";
-
-    case GIMP_LAYER_MODE_LCH_HUE:
-      return "gimp:lch-hue";
-
-    case GIMP_LAYER_MODE_LCH_CHROMA:
-      return "gimp:lch-chroma";
-
-    case GIMP_LAYER_MODE_LCH_COLOR:
-      return "gimp:lch-color";
-
-    case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-      return "gimp:lch-lightness";
 
     case GIMP_LAYER_MODE_ERASE:
       return "gimp:erase";
@@ -525,7 +472,8 @@ gimp_layer_mode_get_operation (GimpLayerMode  mode)
 
     case GIMP_LAYER_MODE_ANTI_ERASE:
       return "gimp:anti-erase";
+    default:
+      return "gimp:layer-mode";
     }
-
-  return NULL;
+  return "gimp:layer-mode";
 }

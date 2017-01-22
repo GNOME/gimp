@@ -222,6 +222,16 @@ typedef enum
   GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,  /*< desc="Grain extract (linear)"   >*/
   GIMP_LAYER_MODE_GRAIN_MERGE,           /*< desc="Grain merge"              >*/
   GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,    /*< desc="Grain merge (linear)"     >*/
+  GIMP_LAYER_MODE_VIVID_LIGHT,           /*< desc="Vivid light"              >*/
+  GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,    /*< desc="Vivid light (linear)"     >*/
+  GIMP_LAYER_MODE_PIN_LIGHT,             /*< desc="Pin light"                >*/
+  GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,      /*< desc="Pin light (linear)"       >*/
+  GIMP_LAYER_MODE_LINEAR_LIGHT,          /*< desc="Linear light"             >*/
+  GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,   /*< desc="Linear light (linear)"    >*/
+  GIMP_LAYER_MODE_EXCLUSION,             /*< desc="Exclusion"                >*/
+  GIMP_LAYER_MODE_EXCLUSION_LINEAR,      /*< desc="Exclusion (linear)"       >*/
+  GIMP_LAYER_MODE_LINEAR_BURN,           /*< desc="Linear light"             >*/
+  GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,    /*< desc="Linear burn (linear)"     >*/
 
   /*  Internal modes, not available to the PDB  */
   GIMP_LAYER_MODE_ERASE      = 1000,     /*< pdb-skip, desc="Erase"          >*/

@@ -84,36 +84,13 @@
 #include "layer-modes-legacy/gimpoperationsoftlightlegacy.h"
 #include "layer-modes-legacy/gimpoperationsubtractlegacy.h"
 
-#include "layer-modes/gimpoperationaddition.h"
 #include "layer-modes/gimpoperationantierase.h"
 #include "layer-modes/gimpoperationbehind.h"
-#include "layer-modes/gimpoperationburn.h"
-#include "layer-modes/gimpoperationcolorerase.h"
-#include "layer-modes/gimpoperationdarkenonly.h"
-#include "layer-modes/gimpoperationdifference.h"
-#include "layer-modes/gimpoperationdissolve.h"
-#include "layer-modes/gimpoperationdivide.h"
-#include "layer-modes/gimpoperationdodge.h"
 #include "layer-modes/gimpoperationerase.h"
-#include "layer-modes/gimpoperationgrainextract.h"
-#include "layer-modes/gimpoperationgrainmerge.h"
-#include "layer-modes/gimpoperationhardlight.h"
-#include "layer-modes/gimpoperationhsvcolor.h"
-#include "layer-modes/gimpoperationhsvhue.h"
-#include "layer-modes/gimpoperationhsvsaturation.h"
-#include "layer-modes/gimpoperationhsvvalue.h"
-#include "layer-modes/gimpoperationlchchroma.h"
-#include "layer-modes/gimpoperationlchcolor.h"
-#include "layer-modes/gimpoperationlchhue.h"
-#include "layer-modes/gimpoperationlchlightness.h"
-#include "layer-modes/gimpoperationlightenonly.h"
-#include "layer-modes/gimpoperationmultiply.h"
+#include "layer-modes/gimpoperationcolorerase.h"
+#include "layer-modes/gimpoperationdissolve.h"
 #include "layer-modes/gimpoperationnormal.h"
-#include "layer-modes/gimpoperationoverlay.h"
 #include "layer-modes/gimpoperationreplace.h"
-#include "layer-modes/gimpoperationscreen.h"
-#include "layer-modes/gimpoperationsoftlight.h"
-#include "layer-modes/gimpoperationsubtract.h"
 
 
 void
@@ -150,48 +127,25 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_NORMAL);
   g_type_class_ref (GIMP_TYPE_OPERATION_DISSOLVE);
   g_type_class_ref (GIMP_TYPE_OPERATION_BEHIND);
-  g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_MULTIPLY_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN);
   g_type_class_ref (GIMP_TYPE_OPERATION_SCREEN_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_OVERLAY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_DIFFERENCE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DIFFERENCE_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_ADDITION);
   g_type_class_ref (GIMP_TYPE_OPERATION_ADDITION_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_SUBTRACT);
   g_type_class_ref (GIMP_TYPE_OPERATION_SUBTRACT_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_DARKEN_ONLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_DARKEN_ONLY_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY);
   g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_HUE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_SATURATION);
-  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_COLOR);
-  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_VALUE);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_HUE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_SATURATION_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_VALUE_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_DODGE);
   g_type_class_ref (GIMP_TYPE_OPERATION_DODGE_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_BURN);
   g_type_class_ref (GIMP_TYPE_OPERATION_BURN_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_HARDLIGHT);
   g_type_class_ref (GIMP_TYPE_OPERATION_HARDLIGHT_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_SOFTLIGHT);
   g_type_class_ref (GIMP_TYPE_OPERATION_SOFTLIGHT_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_ERASE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_HUE);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_CHROMA);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_COLOR);
-  g_type_class_ref (GIMP_TYPE_OPERATION_LCH_LIGHTNESS);
   g_type_class_ref (GIMP_TYPE_OPERATION_ERASE);
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);

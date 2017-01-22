@@ -56,5 +56,14 @@ struct _GimpOperationLayerMode
 
 GType   gimp_operation_layer_mode_get_type (void) G_GNUC_CONST;
 
+gboolean
+gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,
+                                          void                *in,
+                                          void                *layer,
+                                          void                *mask,
+                                          void                *out,
+                                          glong                samples,
+                                          const GeglRectangle *roi,
+                                          gint                 level);
 
 #endif /* __GIMP_OPERATION_LAYER_MODE_H__ */
