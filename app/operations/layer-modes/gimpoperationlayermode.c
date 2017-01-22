@@ -38,8 +38,8 @@ enum
   PROP_LAYER_MODE,
   PROP_LINEAR,
   PROP_OPACITY,
-  PROP_BLEND_TRC,
-  PROP_COMPOSITE_TRC,
+  PROP_BLEND_SPACE,
+  PROP_COMPOSITE_SPACE,
   PROP_COMPOSITE_MODE
 };
 
@@ -109,7 +109,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_BLEND_TRC,
+  g_object_class_install_property (object_class, PROP_BLEND_SPACE,
                                    g_param_spec_enum ("blend-trc",
                                                       NULL, NULL,
                                                       GIMP_TYPE_LAYER_COLOR_SPACE,
@@ -118,7 +118,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
                                                       G_PARAM_CONSTRUCT));
 
 
-  g_object_class_install_property (object_class, PROP_COMPOSITE_TRC,
+  g_object_class_install_property (object_class, PROP_COMPOSITE_SPACE,
                                    g_param_spec_enum ("composite-trc",
                                                       NULL, NULL,
                                                       GIMP_TYPE_LAYER_COLOR_SPACE,
@@ -170,12 +170,12 @@ gimp_operation_layer_mode_set_property (GObject      *object,
       self->opacity = g_value_get_double (value);
       break;
 
-    case PROP_BLEND_TRC:
-      self->blend_trc = g_value_get_enum (value);
+    case PROP_BLEND_SPACE:
+      self->blend_space = g_value_get_enum (value);
       break;
 
-    case PROP_COMPOSITE_TRC:
-      self->composite_trc = g_value_get_enum (value);
+    case PROP_COMPOSITE_SPACE:
+      self->composite_space = g_value_get_enum (value);
       break;
 
     case PROP_COMPOSITE_MODE:
@@ -210,12 +210,12 @@ gimp_operation_layer_mode_get_property (GObject    *object,
       g_value_set_double (value, self->opacity);
       break;
 
-    case PROP_BLEND_TRC:
-      g_value_set_enum (value, self->blend_trc);
+    case PROP_BLEND_SPACE:
+      g_value_set_enum (value, self->blend_space);
       break;
 
-    case PROP_COMPOSITE_TRC:
-      g_value_set_enum (value, self->composite_trc);
+    case PROP_COMPOSITE_SPACE:
+      g_value_set_enum (value, self->composite_space);
       break;
 
     case PROP_COMPOSITE_MODE:

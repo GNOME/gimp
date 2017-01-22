@@ -213,8 +213,8 @@ gimp_composite_blend (gpointer                op,
 {
   GimpOperationLayerMode *layer_mode     = op;
   gfloat                  opacity        = layer_mode->opacity;
-  GimpLayerColorSpace     blend_trc      = layer_mode->blend_trc;
-  GimpLayerColorSpace     composite_trc  = layer_mode->composite_trc;
+  GimpLayerColorSpace     blend_space    = layer_mode->blend_space;
+  GimpLayerColorSpace     composite_space= layer_mode->composite_space;
   GimpLayerCompositeMode  composite_mode = layer_mode->composite_mode;
 
   gfloat *blend_in    = in;
@@ -235,12 +235,12 @@ gimp_composite_blend (gpointer                op,
   const Babl *fish_to_composite   = NULL;
   const Babl *fish_from_composite = NULL;
 
-  switch (blend_trc)
+  switch (blend_space)
     {
     default:
     case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
       fish_to_blend   =  NULL;
-      switch (composite_trc)
+      switch (composite_space)
         {
         case GIMP_LAYER_COLOR_SPACE_LAB:
           fish_to_composite   = _gimp_fish_rgba_to_laba;
@@ -260,7 +260,7 @@ gimp_composite_blend (gpointer                op,
 
     case GIMP_LAYER_COLOR_SPACE_LAB:
       fish_to_blend   = _gimp_fish_rgba_to_laba;
-      switch (composite_trc)
+      switch (composite_space)
         {
         case GIMP_LAYER_COLOR_SPACE_LAB:
         default:
@@ -280,7 +280,7 @@ gimp_composite_blend (gpointer                op,
 
     case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
       fish_to_blend = _gimp_fish_rgba_to_perceptual;
-      switch (composite_trc)
+      switch (composite_space)
         {
         case GIMP_LAYER_COLOR_SPACE_LAB:
         default:
@@ -306,7 +306,7 @@ gimp_composite_blend (gpointer                op,
   if (fish_to_blend)
     {
       if (in != out || (composite_needs_in_color &&
-                        composite_trc == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR))
+                        composite_space == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR))
         {
           /* don't convert input in-place if we're not doing in-place output,
            * or if we're going to need the original input for compositing.
@@ -326,7 +326,7 @@ gimp_composite_blend (gpointer                op,
 
   if (fish_to_composite)
     {
-      if (composite_trc == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR)
+      if (composite_space == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR)
         {
           composite_in    = in;
           composite_layer = layer;

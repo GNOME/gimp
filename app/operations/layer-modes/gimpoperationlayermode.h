@@ -47,8 +47,8 @@ struct _GimpOperationLayerMode
   GimpLayerMode                layer_mode;
   gboolean                     linear;
   gdouble                      opacity;
-  GimpLayerColorSpace          blend_trc;
-  GimpLayerColorSpace          composite_trc;
+  GimpLayerColorSpace          blend_space;
+  GimpLayerColorSpace          composite_space;
   GimpLayerCompositeMode       composite_mode;
   GimpBlendFunc                blend_func;
 };
