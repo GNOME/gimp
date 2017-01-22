@@ -151,7 +151,7 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
       return TRUE;
 
     case GIMP_LAYER_MODE_REPLACE:
-      return FALSE;
+      return TRUE;
 
     case GIMP_LAYER_MODE_ANTI_ERASE:
       return TRUE;
@@ -250,7 +250,7 @@ gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
       return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_REPLACE:
-      return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
+      return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_ANTI_ERASE:
       return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
