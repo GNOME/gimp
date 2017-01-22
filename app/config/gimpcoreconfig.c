@@ -106,6 +106,8 @@ enum
   PROP_COLOR_MANAGEMENT,
   PROP_SAVE_DOCUMENT_HISTORY,
   PROP_QUICK_MASK_COLOR,
+  PROP_IMPORT_PROMOTE_FLOAT,
+  PROP_IMPORT_PROMOTE_DITHER,
 
   /* ignored, only for backward compatibility: */
   PROP_INSTALL_COLORMAP,
@@ -591,7 +593,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 
   GIMP_CONFIG_PROP_MEMSIZE (object_class, PROP_THUMBNAIL_FILESIZE_LIMIT,
                             "thumbnail-filesize-limit",
-                            "Thumbnail file size limie",
+                            "Thumbnail file size limit",
                             THUMBNAIL_FILESIZE_LIMIT_BLURB,
                             0, GIMP_MAX_MEMSIZE, 1 << 22,
                             GIMP_PARAM_STATIC_STRINGS);
@@ -608,6 +610,20 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             "save-document-history",
                             "Save document history",
                             SAVE_DOCUMENT_HISTORY_BLURB,
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMPORT_PROMOTE_FLOAT,
+                            "import-promote-float",
+                            "Import promote float",
+                            IMPORT_PROMOTE_FLOAT_BLURB,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMPORT_PROMOTE_DITHER,
+                            "import-promote-dither",
+                            "Import promote dither",
+                            IMPORT_PROMOTE_DITHER_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
@@ -902,6 +918,12 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_QUICK_MASK_COLOR:
       gimp_value_get_rgb (value, &core_config->quick_mask_color);
       break;
+    case PROP_IMPORT_PROMOTE_FLOAT:
+      core_config->import_promote_float = g_value_get_boolean (value);
+      break;
+    case PROP_IMPORT_PROMOTE_DITHER:
+      core_config->import_promote_dither = g_value_get_boolean (value);
+      break;
 
     case PROP_INSTALL_COLORMAP:
     case PROP_MIN_COLORS:
@@ -1076,6 +1098,12 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_QUICK_MASK_COLOR:
       gimp_value_set_rgb (value, &core_config->quick_mask_color);
+      break;
+    case PROP_IMPORT_PROMOTE_FLOAT:
+      g_value_set_boolean (value, core_config->import_promote_float);
+      break;
+    case PROP_IMPORT_PROMOTE_DITHER:
+      g_value_set_boolean (value, core_config->import_promote_dither);
       break;
 
     case PROP_INSTALL_COLORMAP:

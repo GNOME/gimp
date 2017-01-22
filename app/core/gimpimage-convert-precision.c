@@ -31,6 +31,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "gimpdrawable.h"
+#include "gimpdrawable-operation.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpimage-convert-precision.h"
@@ -246,4 +247,61 @@ gimp_image_convert_precision (GimpImage        *image,
 
   if (progress)
     gimp_progress_end (progress);
+}
+
+void
+gimp_image_convert_dither_u8 (GimpImage    *image,
+                              GimpProgress *progress)
+{
+  GeglNode *dither;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
+  dither = gegl_node_new_child (NULL,
+                                "operation", "gegl:noise-rgb",
+                                "red",      1.0 / 256.0,
+                                "green",    1.0 / 256.0,
+                                "blue",     1.0 / 256.0,
+                                "alpha",    1.0 / 256.0,
+                                "linear",   FALSE,
+                                "gaussian", FALSE,
+                                NULL);
+
+  if (dither)
+    {
+      GList *drawables;
+      GList *list;
+
+      drawables = gimp_image_get_layer_list (image);
+
+      for (list = drawables; list; list = g_list_next (list))
+        {
+          if (! gimp_viewable_get_children (list->data) &&
+              ! gimp_item_is_text_layer (list->data))
+            {
+              gimp_drawable_apply_operation (list->data, progress,
+                                             _("Dithering"),
+                                             dither);
+            }
+        }
+
+      g_list_free (drawables);
+
+      drawables = gimp_image_get_channel_list (image);
+
+      for (list = drawables; list; list = g_list_next (list))
+        {
+          if (! gimp_viewable_get_children (list->data))
+            {
+              gimp_drawable_apply_operation (list->data, progress,
+                                             _("Dithering"),
+                                             dither);
+            }
+        }
+
+      g_list_free (drawables);
+
+      g_object_unref (dither);
+    }
 }

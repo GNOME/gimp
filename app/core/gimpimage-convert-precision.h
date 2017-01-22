@@ -29,5 +29,8 @@ void   gimp_image_convert_precision (GimpImage        *image,
                                      GeglDitherMethod  mask_dither_type,
                                      GimpProgress     *progress);
 
+void   gimp_image_convert_dither_u8 (GimpImage        *image,
+                                     GimpProgress     *progress);
+
 
 #endif  /*  __GIMP_IMAGE_CONVERT_PRECISION_H__  */

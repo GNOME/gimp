@@ -90,6 +90,8 @@ struct _GimpCoreConfig
   GimpColorConfig        *color_management;
   gboolean                save_document_history;
   GimpRGB                 quick_mask_color;
+  gboolean                import_promote_float;
+  gboolean                import_promote_dither;
 };
 
 struct _GimpCoreConfigClass

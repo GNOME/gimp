@@ -37,6 +37,7 @@
 #include "core/gimpdocumentlist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
+#include "core/gimpimage-convert-precision.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
@@ -277,6 +278,28 @@ file_open_image (Gimp                *gimp,
   if (image)
     {
       gimp_image_undo_disable (image);
+
+      if (run_mode == GIMP_RUN_INTERACTIVE   &&
+          gimp->config->import_promote_float &&
+          file_open_file_proc_is_import (file_proc))
+        {
+          GimpPrecision old_precision = gimp_image_get_precision (image);
+
+          if (old_precision != GIMP_PRECISION_FLOAT_LINEAR)
+            {
+              gimp_image_convert_precision (image, GIMP_PRECISION_FLOAT_LINEAR,
+                                            GEGL_DITHER_NONE,
+                                            GEGL_DITHER_NONE,
+                                            GEGL_DITHER_NONE,
+                                            progress);
+
+              if (gimp->config->import_promote_dither &&
+                  old_precision == GIMP_PRECISION_U8_GAMMA)
+                {
+                  gimp_image_convert_dither_u8 (image, progress);
+                }
+            }
+        }
 
       gimp_image_import_color_profile (image, context, progress,
                                        run_mode == GIMP_RUN_INTERACTIVE ?

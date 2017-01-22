@@ -181,6 +181,14 @@ _("Sets the text to appear in image window status bars.")
 #define IMAGE_TITLE_FORMAT_BLURB \
 _("Sets the text to appear in image window titles.")
 
+#define IMPORT_PROMOTE_FLOAT_BLURB \
+_("Promote imported images to floating point precision. Does not apply " \
+  "to indexed images.")
+
+#define IMPORT_PROMOTE_DITHER_BLURB \
+_("When promoting imported images to floating point precision, also add " \
+  "minimal noise in order do distribute color values a bit.")
+
 #define INITIAL_ZOOM_TO_FIT_BLURB \
 _("When enabled, this will ensure that the full image is visible after a " \
   "file is opened, otherwise it will be displayed with a scale of 1:1.")
