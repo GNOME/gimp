@@ -1150,12 +1150,13 @@ blendfun_vivid_light (const float *dest,
 
               if (src[c] > 0.5f)
                 {
-                  comp = (1.0f - (1.0f - dest[c]) / (2.0f * (src[c] - 0.5f)));
+                  comp = (1.0f - (1.0f - dest[c]) / (2.0f * (src[c])));
                 }
               else
                 {
-                  comp = dest[c] / (1.0f - 2.0f * src[c]);
+                  comp = dest[c] / (1.0f - 2.0f * (src[c] - 0.5));
                 }
+              comp = MIN (comp, 1.0f);
 
               out[c] = comp;
             }
