@@ -97,8 +97,9 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
       return FALSE;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
-    case GIMP_LAYER_MODE_OVERLAY:
       return FALSE;
+    case GIMP_LAYER_MODE_OVERLAY:
+      return TRUE;
 
     case GIMP_LAYER_MODE_LCH_HUE:
     case GIMP_LAYER_MODE_LCH_CHROMA:
