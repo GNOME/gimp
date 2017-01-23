@@ -802,7 +802,7 @@ blendfun_softlight (const float *dest,
             {
               gfloat multiply = dest[c] * src[c];
               gfloat screen   = 1.0f - (1.0f - dest[c]) * (1.0f - src[c]);
-              gfloat comp     = (1.0f - src[c]) * multiply + dest[c] * screen;
+              gfloat comp     = (1.0f - dest[c]) * multiply + dest[c] * screen;
 
               out[c] = comp;
             }
@@ -1192,7 +1192,7 @@ blendfun_linear_light (const float *dest,
                 }
               else
                 {
-                  comp = dest[c] + 2 * (src[c] - 1.0);
+                  comp = dest[c] + 2.0 * src[c] - 1.0;
                 }
               out[c] = comp;
             }
