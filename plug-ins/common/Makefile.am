@@ -140,6 +140,7 @@ libexec_PROGRAMS = \
 	unsharp-mask \
 	van-gogh-lic \
 	warp \
+	wavelet-decompose \
 	web-browser \
 	$(WEB_PAGE)
 
@@ -1608,7 +1609,6 @@ smooth_palette_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(smooth_palette_RC)
@@ -1766,6 +1766,24 @@ warp_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(warp_RC)
+
+wavelet_decompose_SOURCES = \
+	wavelet-decompose.c
+
+wavelet_decompose_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(wavelet_decompose_RC)
 
 web_browser_LDFLAGS = $(framework_cocoa)
 

@@ -94,6 +94,7 @@ plug-ins/common/unit-editor.c
 plug-ins/common/unsharp-mask.c
 plug-ins/common/van-gogh-lic.c
 plug-ins/common/warp.c
+plug-ins/common/wavelet-decompose.c
 plug-ins/common/web-browser.c
 plug-ins/common/web-page.c
 plug-ins/file-bmp/bmp-load.c

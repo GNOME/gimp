@@ -90,6 +90,7 @@
     'unsharp-mask' => { ui => 1 },
     'van-gogh-lic' => { ui => 1 },
     'warp' => { ui => 1 },
+    'wavelet-decompose' => { ui => 1, gegl => 1 },
     'web-browser' => { ui => 1, ldflags => '$(framework_cocoa)', cppflags => '$(AM_CPPFLAGS) $(xobjective_c)' },
     'web-page' => { ui => 1, optional => 1, libs => 'WEBKIT_LIBS', cflags => 'WEBKIT_CFLAGS' }
 );
