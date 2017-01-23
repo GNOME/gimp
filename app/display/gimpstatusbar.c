@@ -1345,24 +1345,11 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
     }
   else /* show real world units */
     {
-      gint w_digits = 0;
-      gint h_digits = 0;
-      gint length_digits;
+      gint w_digits;
+      gint h_digits;
 
-      if (image)
-        {
-          w_digits = ceil (log10 (image_width /
-                                  gimp_pixels_to_units (image_width,
-                                                        shell->unit,
-                                                        image_xres)));
-          h_digits = ceil (log10 (image_width /
-                                  gimp_pixels_to_units (image_height,
-                                                        shell->unit,
-                                                        image_yres)));
-        }
-      w_digits = MAX (w_digits, gimp_unit_get_digits (shell->unit));
-      h_digits = MAX (h_digits, gimp_unit_get_digits (shell->unit));
-      length_digits = MAX (w_digits, h_digits);
+      w_digits = gimp_unit_get_scaled_digits (shell->unit, image_xres);
+      h_digits = gimp_unit_get_scaled_digits (shell->unit, image_yres);
 
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
@@ -1371,7 +1358,7 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       strcpy (statusbar->cursor_format_str_f, statusbar->cursor_format_str);
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
-                  "%%s%%.%df%%s", length_digits);
+                  "%%s%%.%df%%s", MAX (w_digits, h_digits));
     }
 
   gimp_statusbar_update_cursor (statusbar, GIMP_CURSOR_PRECISION_SUBPIXEL,

@@ -668,29 +668,26 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
             {
               gdouble xres;
               gdouble yres;
-              gdouble dist;
-              gint    digits;
+              gdouble inch_dist;
+              gdouble unit_dist;
+              gint    digits = 0;
               gchar   format_str[64];
 
               /* The distance in unit. */
               gimp_image_get_resolution (image, &xres, &yres);
-              dist = (gimp_unit_get_factor (shell->unit) *
-                      sqrt (SQR (dx / xres) +
-                            SQR (dy / yres)));
+              inch_dist = sqrt (SQR (dx / xres) + SQR (dy / yres));
+              unit_dist = gimp_unit_get_factor (shell->unit) * inch_dist;
 
               /* The ideal digit precision for unit in current resolution. */
-              digits = gimp_unit_get_digits (shell->unit);
-              if (dist > 0.0)
-                {
-                  digits = MAX (ceil (log10 (pixel_dist / dist)),
-                                digits);
-                }
+              if (inch_dist)
+                digits = gimp_unit_get_scaled_digits (shell->unit,
+                                                      pixel_dist / inch_dist);
 
               g_snprintf (format_str, sizeof (format_str), "%%.%df %s.  %%s",
                           digits, gimp_unit_get_symbol (shell->unit));
 
               gimp_tool_push_status (tool, display, format_str,
-                                     dist, status_help);
+                                     unit_dist, status_help);
             }
 
           g_free (status_help);

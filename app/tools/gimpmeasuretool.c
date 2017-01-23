@@ -881,13 +881,14 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   gdouble           unit_height;
   gdouble           pixel_distance;
   gdouble           unit_distance;
+  gdouble           inch_distance;
   gdouble           theta1, theta2;
   gdouble           pixel_angle;
   gdouble           unit_angle;
   gdouble           xres;
   gdouble           yres;
   gchar             format[128];
-  gint              unit_distance_digits;
+  gint              unit_distance_digits = 0;
   gint              unit_width_digits;
   gint              unit_height_digits;
 
@@ -915,9 +916,9 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   unit_height = gimp_pixels_to_units (pixel_height, shell->unit, yres);
 
   pixel_distance = sqrt (SQR (ax - bx) + SQR (ay - by));
-  unit_distance  = (gimp_unit_get_factor (shell->unit) *
-                    sqrt (SQR ((gdouble) (ax - bx) / xres) +
-                          SQR ((gdouble) (ay - by) / yres)));
+  inch_distance = sqrt (SQR ((gdouble) (ax - bx) / xres) +
+                        SQR ((gdouble) (ay - by) / yres));
+  unit_distance  = gimp_unit_get_factor (shell->unit) * inch_distance;
 
   if (measure->num_points != 3)
     bx = ax > 0 ? 1 : -1;
@@ -941,17 +942,11 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
 
   /* Compute minimum digits to display accurate values, so that
      every pixel shows a different value in unit. */
-  unit_distance_digits = ceil (log10 (pixel_distance / unit_distance));
-  unit_distance_digits = MAX (gimp_unit_get_digits (shell->unit),
-                              unit_distance_digits);
-
-  unit_width_digits    = ceil (log10 (pixel_width / unit_width));
-  unit_width_digits    = MAX (gimp_unit_get_digits (shell->unit),
-                              unit_width_digits);
-
-  unit_height_digits   = ceil (log10 (pixel_height / unit_height));
-  unit_height_digits   = MAX (gimp_unit_get_digits (shell->unit),
-                              unit_height_digits);
+  if (inch_distance)
+    unit_distance_digits = gimp_unit_get_scaled_digits (shell->unit,
+                                                        pixel_distance / inch_distance);
+  unit_width_digits    = gimp_unit_get_scaled_digits (shell->unit, xres);
+  unit_height_digits   = gimp_unit_get_scaled_digits (shell->unit, yres);
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
