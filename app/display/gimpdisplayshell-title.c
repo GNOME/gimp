@@ -360,7 +360,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   gimp_image_get_resolution (image, &xres, &yres);
 
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                              gimp_unit_get_digits (shell->unit) + 1);
+                              gimp_unit_get_scaled_digits (shell->unit, xres));
                   i += print (title, title_len, i, unit_format,
                               gimp_pixels_to_units (gimp_image_get_width (image),
                                                     shell->unit, xres));
@@ -383,7 +383,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   gimp_image_get_resolution (image, &xres, &yres);
 
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                              gimp_unit_get_digits (shell->unit) + 1);
+                              gimp_unit_get_scaled_digits (shell->unit, yres));
                   i += print (title, title_len, i, unit_format,
                               gimp_pixels_to_units (gimp_image_get_height (image),
                                                     shell->unit, yres));
@@ -416,7 +416,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   gimp_image_get_resolution (image, &xres, &yres);
 
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                              gimp_unit_get_digits (shell->unit) + 1);
+                              gimp_unit_get_scaled_digits (shell->unit, xres));
                   i += print (title, title_len, i, unit_format,
                               gimp_pixels_to_units (gimp_item_get_width
                                                     (GIMP_ITEM (drawable)),
@@ -441,7 +441,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   gimp_image_get_resolution (image, &xres, &yres);
 
                   g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                              gimp_unit_get_digits (shell->unit) + 1);
+                              gimp_unit_get_scaled_digits (shell->unit, yres));
                   i += print (title, title_len, i, unit_format,
                               gimp_pixels_to_units (gimp_item_get_height
                                                     (GIMP_ITEM (drawable)),

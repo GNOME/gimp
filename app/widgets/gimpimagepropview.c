@@ -417,7 +417,6 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   GimpPrecision      precision;
   GimpUnit           unit;
   gdouble            unit_factor;
-  gint               unit_digits;
   const gchar       *desc;
   gchar              format_buf[32];
   gchar              buf[256];
@@ -437,10 +436,9 @@ gimp_image_prop_view_update (GimpImagePropView *view)
   /*  print size  */
   unit = gimp_get_default_unit ();
 
-  unit_digits = gimp_unit_get_digits (unit);
-
   g_snprintf (format_buf, sizeof (format_buf), "%%.%df × %%.%df %s",
-              unit_digits + 1, unit_digits + 1,
+              gimp_unit_get_scaled_digits (unit, xres),
+              gimp_unit_get_scaled_digits (unit, yres),
               gimp_unit_get_plural (unit));
   g_snprintf (buf, sizeof (buf), format_buf,
               gimp_pixels_to_units (gimp_image_get_width  (image), unit, xres),
