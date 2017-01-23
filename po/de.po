@@ -20,16 +20,16 @@ msgstr ""
 "Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-09-22 21:11+0000\n"
-"PO-Revision-Date: 2016-09-23 00:56+0200\n"
-"Last-Translator: Benedikt M. Thoma <gnome@thomba.net>\n"
+"POT-Creation-Date: 2017-01-10 15:36+0000\n"
+"PO-Revision-Date: 2017-01-13 12:34+0100\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Project-Style: gnome\n"
 
 #: ../app/about.h:23
@@ -459,7 +459,7 @@ msgid "Text Editor"
 msgstr "Texteditor"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:441
+#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:464
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
@@ -9099,7 +9099,7 @@ msgstr ""
 "Sind Sie sicher, dass »%s« aus der Liste entfernt und von der Festplatte "
 "gelöscht werden soll?"
 
-#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:162
+#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:174
 #: ../app/gui/gui-message.c:149
 msgid "GIMP Message"
 msgstr "GIMP-Meldung"
@@ -11058,12 +11058,12 @@ msgstr "Die Originalposition des Käfigs mit einer reinen Farbe füllen"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:207
+#: ../app/gui/gui.c:219
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. initialize the document history
-#: ../app/gui/gui.c:438
+#: ../app/gui/gui.c:461
 msgid "Documents"
 msgstr "Dokumente"
 
@@ -11892,7 +11892,7 @@ msgstr ""
 "Möglicherweise sind eines oder mehrere Textattribute fehlerhaft. Falls Sie "
 "die Textebene nicht bearbeiten, können Sie dies einfach ignorieren."
 
-#: ../app/text/gimptextlayout.c:577
+#: ../app/text/gimptextlayout.c:578
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -12093,7 +12093,7 @@ msgstr "Farbverläufe funktioniert nicht mit Ebenen im indizierten Farbmodus."
 msgid "No gradient available for use with this tool."
 msgstr "Es ist kein Farbverlauf zur Verwendung mit diesem Werkzeug vorhanden."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:625
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s für eingeschränkte Winkel"
@@ -13361,7 +13361,7 @@ msgstr "Klicken und ziehen Sie zum Verschieben aller Punkte"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:633
+#: ../app/tools/gimppainttool.c:634
 msgid "pixels"
 msgstr "Pixel"
 
@@ -13532,7 +13532,7 @@ msgstr "%s zum Wählen einer Farbe"
 msgid "Cannot paint on layer groups."
 msgstr "Es kann nicht auf Ebenenmasken gezeichnet werden."
 
-#: ../app/tools/gimppainttool.c:679
+#: ../app/tools/gimppainttool.c:680
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s für eine gerade Linie"
@@ -15427,15 +15427,10 @@ msgid "Could not start the GIMP help browser plug-in."
 msgstr "Der GIMP-Hilfe-Browser konnte nicht gestartet werden."
 
 #: ../app/widgets/gimphelp.c:354
-#, fuzzy
-#| msgid ""
-#| "The GIMP help browser plug-in appears to be missing from your "
-#| "installation. You may instead use the web browser for reading the help "
-#| "pages."
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
-"Das Hilfe-Browser-Plugin scheint in Ihrer GIMP-Installation zu fehlen. Sie "
-"können stattdessen den Internet-Browser verwenden, um die Hilfe zu lesen."
+"Sie können stattdessen den Internet-Browser verwenden, um die Hilfeseiten zu "
+"lesen."
 
 #: ../app/widgets/gimphelp.c:380
 msgid "Use _Web Browser"
