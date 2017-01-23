@@ -623,6 +623,7 @@ sanity_check_gegl_ops (void)
     "gegl:video-degradation",
     "gegl:vignette",
     "gegl:warp",
+    "gegl:wavelet-blur",
     "gegl:waves",
     "gegl:whirl-pinch",
     "gegl:write-buffer"
