@@ -441,7 +441,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR, NC_("layer-mode", "Linear light (linear)"), NULL },
     { GIMP_LAYER_MODE_EXCLUSION, NC_("layer-mode", "Exclusion"), NULL },
     { GIMP_LAYER_MODE_EXCLUSION_LINEAR, NC_("layer-mode", "Exclusion (linear)"), NULL },
-    { GIMP_LAYER_MODE_LINEAR_BURN, NC_("layer-mode", "Linear light"), NULL },
+    { GIMP_LAYER_MODE_LINEAR_BURN, NC_("layer-mode", "Linear burn"), NULL },
     { GIMP_LAYER_MODE_LINEAR_BURN_LINEAR, NC_("layer-mode", "Linear burn (linear)"), NULL },
     { GIMP_LAYER_MODE_ERASE, NC_("layer-mode", "Erase"), NULL },
     { GIMP_LAYER_MODE_REPLACE, NC_("layer-mode", "Replace"), NULL },
