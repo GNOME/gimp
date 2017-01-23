@@ -230,7 +230,7 @@ typedef enum
   GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,   /*< desc="Linear light (linear)"    >*/
   GIMP_LAYER_MODE_EXCLUSION,             /*< desc="Exclusion"                >*/
   GIMP_LAYER_MODE_EXCLUSION_LINEAR,      /*< desc="Exclusion (linear)"       >*/
-  GIMP_LAYER_MODE_LINEAR_BURN,           /*< desc="Linear light"             >*/
+  GIMP_LAYER_MODE_LINEAR_BURN,           /*< desc="Linear burn"              >*/
   GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,    /*< desc="Linear burn (linear)"     >*/
 
   /*  Internal modes, not available to the PDB  */
