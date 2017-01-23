@@ -80,7 +80,7 @@
     'ripple' => { ui => 1 },
     'sample-colorize' => { ui => 1 },
     'sharpen' => { ui => 1 },
-    'smooth-palette' => { ui => 1 },
+    'smooth-palette' => { ui => 1, gegl => 1 },
     'softglow' => { ui => 1 },
     'sparkle' => { ui => 1 },
     'sphere-designer' => { ui => 1 },
