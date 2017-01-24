@@ -1583,7 +1583,7 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_MERGE:    return blendfun_grain_merge;
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
-    case GIMP_LAYER_MODE_GRAIN_EXTRACT:  return blendfun_grain_merge;
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT:  return blendfun_grain_extract;
     case GIMP_LAYER_MODE_DODGE_LINEAR: 
     case GIMP_LAYER_MODE_DODGE:          return blendfun_dodge;
     case GIMP_LAYER_MODE_OVERLAY_LINEAR:
@@ -1647,4 +1647,5 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_ANTI_ERASE:
       return (void*)dummy_fun;
   }
+  return (void*)dummy_fun;
 }
