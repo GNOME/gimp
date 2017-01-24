@@ -1502,18 +1502,27 @@ animation_xsheet_frame_clicked (GtkWidget       *button,
 
   position = g_object_get_data (G_OBJECT (button), "frame-position");
 
-  animation_playback_jump (xsheet->priv->playback,
-                           GPOINTER_TO_INT (position));
-  if (xsheet->priv->active_pos_button)
+  if (event->type == GDK_BUTTON_PRESS)
     {
-      GtkToggleButton *active_button;
+      /* Single click: jump to the position. */
+      animation_playback_jump (xsheet->priv->playback,
+                               GPOINTER_TO_INT (position));
+      if (xsheet->priv->active_pos_button)
+        {
+          GtkToggleButton *active_button;
 
-      active_button = GTK_TOGGLE_BUTTON (xsheet->priv->active_pos_button);
-      gtk_toggle_button_set_active (active_button, FALSE);
+          active_button = GTK_TOGGLE_BUTTON (xsheet->priv->active_pos_button);
+          gtk_toggle_button_set_active (active_button, FALSE);
+        }
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+      xsheet->priv->active_pos_button = button;
     }
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                TRUE);
-  xsheet->priv->active_pos_button = button;
+  else if (event->type == GDK_2BUTTON_PRESS)
+    {
+      /* Double click: update GIMP view. */
+      animation_update_paint_view (ANIMATION (xsheet->priv->animation),
+                                   GPOINTER_TO_INT (position));
+    }
 
   /* All handled here. */
   return TRUE;

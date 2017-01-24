@@ -73,6 +73,9 @@ struct _AnimationClass
   gboolean     (*deserialize)        (Animation    *animation,
                                       const gchar  *xml,
                                       GError      **error);
+
+  void         (*update_paint_view)  (Animation    *animation,
+                                      gint          position);
 };
 
 GType         animation_get_type (void);
@@ -105,5 +108,8 @@ void          animation_set_framerate      (Animation   *animation,
 gdouble       animation_get_framerate      (Animation   *animation);
 
 gboolean      animation_loaded             (Animation   *animation);
+
+void          animation_update_paint_view  (Animation   *animation,
+                                            gint         position);
 
 #endif  /*  __ANIMATION_H__  */

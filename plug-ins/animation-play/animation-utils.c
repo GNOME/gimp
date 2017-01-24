@@ -275,3 +275,36 @@ show_scrolled_child (GtkScrolledWindow *window,
       gtk_adjustment_set_value (vadj, y);
     }
 }
+
+void
+hide_item (gint     item,
+           gboolean recursive)
+{
+  gimp_item_set_visible (item, FALSE);
+
+  if (recursive && gimp_item_is_group (item))
+    {
+      gint32 *children;
+      gint32  n_children;
+      gint    i;
+
+      children = gimp_item_get_children (item, &n_children);
+
+      for (i = 0; i < n_children; i++)
+        {
+          hide_item (children[i], TRUE);
+        }
+    }
+}
+
+void
+show_item (gint item)
+{
+  gint32 parent;
+
+  gimp_item_set_visible (item, TRUE);
+  parent = gimp_item_get_parent (item);
+
+  if (parent > 0)
+    show_item (parent);
+}

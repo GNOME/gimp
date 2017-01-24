@@ -481,6 +481,14 @@ animation_loaded (Animation *animation)
   return priv->loaded;
 }
 
+void
+animation_update_paint_view (Animation *animation,
+                             gint       position)
+{
+  ANIMATION_GET_CLASS (animation)->update_paint_view (animation, position);
+  gimp_displays_flush ();
+}
+
 /************ Private Functions ****************/
 
 static void

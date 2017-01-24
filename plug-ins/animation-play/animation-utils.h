@@ -47,6 +47,11 @@ GeglBuffer * normal_blend        (gint               width,
 
 void         show_scrolled_child (GtkScrolledWindow *window,
                                   GtkWidget         *child);
+
+void         hide_item           (gint               item,
+                                  gboolean           recursive);
+void         show_item           (gint               item);
+
 #endif  /*  __ANIMATION_UTILS_H__  */
 
 

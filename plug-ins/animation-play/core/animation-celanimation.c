@@ -133,6 +133,9 @@ static gboolean     animation_cel_animation_deserialize    (Animation         *a
                                                             const gchar       *xml,
                                                             GError           **error);
 
+static void         animation_cel_animation_update_paint_view (Animation      *animation,
+                                                               gint            position);
+
 /* XML parsing */
 
 static void      animation_cel_animation_start_element     (GMarkupParseContext *context,
@@ -189,6 +192,8 @@ animation_cel_animation_class_init (AnimationCelAnimationClass *klass)
   anim_class->reset_defaults = animation_cel_animation_reset_defaults;
   anim_class->serialize      = animation_cel_animation_serialize;
   anim_class->deserialize    = animation_cel_animation_deserialize;
+
+  anim_class->update_paint_view = animation_cel_animation_update_paint_view;
 
   g_type_class_add_private (klass, sizeof (AnimationCelAnimationPrivate));
 }
@@ -955,6 +960,47 @@ animation_cel_animation_deserialize (Animation    *animation,
   g_markup_parse_context_free (context);
 
   return (*error == NULL);
+}
+
+static void
+animation_cel_animation_update_paint_view (Animation *animation,
+                                           gint       position)
+{
+  AnimationCelAnimation *cel_animation;
+  Cache                 *cache;
+  gint                  *layers;
+  gint                   num_layers;
+  gint32                 image_id;
+  gint                   i;
+
+  image_id = animation_get_image_id (animation);
+
+  /* Hide all layers. */
+  layers = gimp_image_get_layers (image_id, &num_layers);
+  for (i = 0; i < num_layers; i++)
+    {
+      hide_item (layers[i], TRUE);
+    }
+
+  /* Show layers */
+  cel_animation = ANIMATION_CEL_ANIMATION (animation);
+
+  cache = g_list_nth_data (cel_animation->priv->cache,
+                           position);
+  if (cache)
+    {
+      gint i;
+
+      for (i = 0; i < cache->n_sources; i++)
+        {
+          gint tattoo = cache->composition[i].tattoo;
+          gint layer;
+
+          layer = gimp_image_get_layer_by_tattoo (image_id, tattoo);
+
+          show_item (layer);
+        }
+    }
 }
 
 static void
