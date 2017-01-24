@@ -176,6 +176,38 @@ typedef enum
 } GimpInterpolationTypeCompat;
 
 
+#define GIMP_TYPE_LAYER_MODE_EFFECTS (gimp_layer_mode_effects_get_type ())
+
+GType gimp_layer_mode_effects_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_NORMAL_MODE,
+  GIMP_DISSOLVE_MODE,
+  GIMP_BEHIND_MODE,
+  GIMP_MULTIPLY_MODE,
+  GIMP_SCREEN_MODE,
+  GIMP_OVERLAY_MODE,
+  GIMP_DIFFERENCE_MODE,
+  GIMP_ADDITION_MODE,
+  GIMP_SUBTRACT_MODE,
+  GIMP_DARKEN_ONLY_MODE,
+  GIMP_LIGHTEN_ONLY_MODE,
+  GIMP_HUE_MODE,
+  GIMP_SATURATION_MODE,
+  GIMP_COLOR_MODE,
+  GIMP_VALUE_MODE,
+  GIMP_DIVIDE_MODE,
+  GIMP_DODGE_MODE,
+  GIMP_BURN_MODE,
+  GIMP_HARDLIGHT_MODE,
+  GIMP_SOFTLIGHT_MODE,
+  GIMP_GRAIN_EXTRACT_MODE,
+  GIMP_GRAIN_MERGE_MODE,
+  GIMP_COLOR_ERASE_MODE
+} GimpLayerModeEffects;
+
+
 #define GIMP_TYPE_TRANSFER_MODE_COMPAT (gimp_transfer_mode_compat_get_type ())
 
 GType gimp_transfer_mode_compat_get_type (void) G_GNUC_CONST;
