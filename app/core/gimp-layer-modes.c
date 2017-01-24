@@ -98,6 +98,7 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
       return FALSE;
+
     case GIMP_LAYER_MODE_OVERLAY:
       return TRUE;
 
@@ -159,16 +160,28 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
       return TRUE;
 
     case GIMP_LAYER_MODE_ERASE:
-      return TRUE;
-
     case GIMP_LAYER_MODE_REPLACE:
-      return TRUE;
-
     case GIMP_LAYER_MODE_ANTI_ERASE:
       return TRUE;
   }
 
   return TRUE;
+}
+
+GimpLayerModeGroup
+gimp_layer_mode_get_group (GimpLayerMode  mode)
+{
+  if (gimp_layer_mode_is_legacy (mode))
+    {
+      return GIMP_LAYER_MODE_GROUP_LEGACY;
+    }
+  else if (gimp_layer_mode_get_blend_space (mode) ==
+           GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
+    {
+      return GIMP_LAYER_MODE_GROUP_PERCEPTUAL;
+    }
+
+  return GIMP_LAYER_MODE_GROUP_LINEAR;
 }
 
 GimpLayerColorSpace
@@ -270,11 +283,7 @@ gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
       return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_ERASE:
-      return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
-
     case GIMP_LAYER_MODE_REPLACE:
-      return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
-
     case GIMP_LAYER_MODE_ANTI_ERASE:
       return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
   }

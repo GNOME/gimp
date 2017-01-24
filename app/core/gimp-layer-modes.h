@@ -26,6 +26,8 @@
 gboolean                 gimp_layer_mode_is_legacy           (GimpLayerMode  mode);
 gboolean                 gimp_layer_mode_is_linear           (GimpLayerMode  mode);
 
+GimpLayerModeGroup       gimp_layer_mode_get_group           (GimpLayerMode  mode);
+
 GimpLayerColorSpace      gimp_layer_mode_get_blend_space     (GimpLayerMode  mode);
 GimpLayerColorSpace      gimp_layer_mode_get_composite_space (GimpLayerMode  mode);
 GimpLayerCompositeMode   gimp_layer_mode_get_composite_mode  (GimpLayerMode  mode);

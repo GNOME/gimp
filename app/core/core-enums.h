@@ -240,6 +240,18 @@ typedef enum
 } GimpLayerMode;
 
 
+#define GIMP_TYPE_LAYER_MODE_GROUP (gimp_layer_mode_group_get_type ())
+
+GType gimp_layer_mode_group_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_LAYER_MODE_GROUP_LINEAR,      /*< desc="Linear light" >*/
+  GIMP_LAYER_MODE_GROUP_PERCEPTUAL,  /*< desc="Perceptual"   >*/
+  GIMP_LAYER_MODE_GROUP_LEGACY,      /*< desc="Legacy"       >*/
+} GimpLayerModeGroup;
+
+
 #define GIMP_TYPE_MATTING_ENGINE (gimp_matting_engine_get_type ())
 
 GType gimp_matting_engine_get_type (void) G_GNUC_CONST;
