@@ -681,7 +681,7 @@ blendfun_screen (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -705,7 +705,7 @@ blendfun_addition (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -730,7 +730,7 @@ blendfun_linear_burn (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -754,7 +754,7 @@ blendfun_subtract (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -778,7 +778,7 @@ blendfun_multiply (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -802,7 +802,7 @@ blendfun_normal (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -826,7 +826,7 @@ blendfun_burn (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -857,7 +857,7 @@ blendfun_darken_only (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -881,7 +881,7 @@ blendfun_lighten_only (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -905,7 +905,7 @@ blendfun_difference (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -934,7 +934,7 @@ blendfun_divide (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -970,7 +970,7 @@ blendfun_dodge (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1000,7 +1000,7 @@ blendfun_grain_extract (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1024,7 +1024,7 @@ blendfun_grain_merge (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1048,7 +1048,7 @@ blendfun_hardlight (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1086,7 +1086,7 @@ blendfun_softlight (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1115,7 +1115,7 @@ blendfun_overlay (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1151,7 +1151,7 @@ blendfun_hsv_color (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           GimpRGB dest_rgb = { dest[0], dest[1], dest[2] };
           GimpRGB src_rgb  = { src[0], src[1], src[2] };
@@ -1186,7 +1186,7 @@ blendfun_hsv_hue (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           GimpRGB dest_rgb = { dest[0], dest[1], dest[2] };
           GimpRGB src_rgb  = { src[0],  src[1],  src[2] };
@@ -1219,7 +1219,7 @@ blendfun_hsv_saturation (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           GimpRGB dest_rgb = { dest[0], dest[1], dest[2] };
           GimpRGB src_rgb  = { src[0], src[1], src[2] };
@@ -1252,7 +1252,7 @@ blendfun_hsv_value (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           GimpRGB dest_rgb = { dest[0], dest[1], dest[2] };
           GimpRGB src_rgb  = { src[0], src[1], src[2] };
@@ -1285,7 +1285,7 @@ blendfun_lch_chroma (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gfloat A1 = dest[1];
           gfloat B1 = dest[2];
@@ -1321,7 +1321,7 @@ blendfun_lch_color (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           out[0] = dest[0];
           out[1] = src[1];
@@ -1344,7 +1344,7 @@ blendfun_lch_hue (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gfloat A2 = src[1];
           gfloat B2 = src[2];
@@ -1386,7 +1386,7 @@ blendfun_lch_lightness (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           out[0] = src[0];
           out[1] = dest[1];
@@ -1432,7 +1432,7 @@ blendfun_vivid_light (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1472,7 +1472,7 @@ blendfun_linear_light (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1509,7 +1509,7 @@ blendfun_pin_light (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
@@ -1543,7 +1543,7 @@ blendfun_exclusion (const float *dest,
 {
   while (samples--)
     {
-      if (src[ALPHA] != 0.0f)
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
           gint c;
 
