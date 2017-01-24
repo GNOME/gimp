@@ -101,8 +101,8 @@ color_profile_import_dialog_run (GimpImage                 *image,
                               gimp_standard_help_func,
                               GIMP_HELP_IMAGE_COLOR_PROFILE_IMPORT,
 
-                              _("Keep"),    GTK_RESPONSE_CANCEL,
-                              _("Convert"), GTK_RESPONSE_OK,
+                              _("_Keep"),    GTK_RESPONSE_CANCEL,
+                              _("C_onvert"), GTK_RESPONSE_OK,
 
                               NULL);
 
