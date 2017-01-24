@@ -1576,6 +1576,7 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_SUBTRACT:       return blendfun_subtract;
     case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
     case GIMP_LAYER_MODE_MULTIPLY:       return blendfun_multiply;
+    case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
     case GIMP_LAYER_MODE_NORMAL:         return blendfun_normal;
     case GIMP_LAYER_MODE_BURN_LINEAR:
     case GIMP_LAYER_MODE_BURN:           return blendfun_burn;
@@ -1603,14 +1604,47 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_DIVIDE_LINEAR:  return blendfun_divide;
     case GIMP_LAYER_MODE_DIFFERENCE_LINEAR: 
     case GIMP_LAYER_MODE_DIFFERENCE:     return blendfun_difference;
+    case GIMP_LAYER_MODE_DARKEN_ONLY_LINEAR:
     case GIMP_LAYER_MODE_DARKEN_ONLY:    return blendfun_darken_only;
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LINEAR:
     case GIMP_LAYER_MODE_LIGHTEN_ONLY:   return blendfun_lighten_only;
+    case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_VIVID_LIGHT:  return blendfun_vivid_light;
+    case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_PIN_LIGHT:    return blendfun_pin_light;
+    case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_LINEAR_LIGHT: return blendfun_linear_light;
+    case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
     case GIMP_LAYER_MODE_EXCLUSION:    return blendfun_exclusion;
+    case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
     case GIMP_LAYER_MODE_LINEAR_BURN:  return blendfun_linear_burn;
-    default:
+
+    case GIMP_LAYER_MODE_DISSOLVE:
+    case GIMP_LAYER_MODE_BEHIND:
+    case GIMP_LAYER_MODE_BEHIND_LINEAR:
+    case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
+    case GIMP_LAYER_MODE_SCREEN_LEGACY:
+    case GIMP_LAYER_MODE_OVERLAY_LEGACY:
+    case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
+    case GIMP_LAYER_MODE_ADDITION_LEGACY:
+    case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
+    case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
+    case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
+    case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
+    case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
+    case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
+    case GIMP_LAYER_MODE_DIVIDE_LEGACY:
+    case GIMP_LAYER_MODE_DODGE_LEGACY:
+    case GIMP_LAYER_MODE_BURN_LEGACY:
+    case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
+    case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
+    case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
+    case GIMP_LAYER_MODE_COLOR_ERASE:
+    case GIMP_LAYER_MODE_ERASE:
+    case GIMP_LAYER_MODE_REPLACE:
+    case GIMP_LAYER_MODE_ANTI_ERASE:
       return (void*)dummy_fun;
   }
 }
