@@ -1534,28 +1534,10 @@ gimp_vector_tool_vectors_visible (GimpVectors    *vectors,
 {
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (vector_tool);
 
-  if (gimp_draw_tool_is_active (draw_tool) && draw_tool->paused_count == 0)
+  if (gimp_draw_tool_is_active (draw_tool))
     {
-      GimpStroke *stroke = NULL;
-
-      while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
-        {
-          GArray   *coords;
-          gboolean  closed;
-
-          coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
-          if (coords)
-            {
-              if (coords->len)
-                gimp_draw_tool_add_strokes (draw_tool,
-                                            &g_array_index (coords,
-                                                            GimpCoords, 0),
-                                            coords->len, FALSE);
-
-              g_array_free (coords, TRUE);
-            }
-        }
+      gimp_draw_tool_pause (draw_tool);
+      gimp_draw_tool_resume (draw_tool);
     }
 }
 
