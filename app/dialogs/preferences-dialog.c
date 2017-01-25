@@ -1293,7 +1293,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   button = prefs_check_button_add (object, "import-promote-float",
                                    _("Promote imported images to "
-                                     "_floating point precition"),
+                                     "_floating point precision"),
                                    GTK_BOX (vbox2));
   button = prefs_check_button_add (object, "import-promote-dither",
                                    _("Dither images when promoting to "
