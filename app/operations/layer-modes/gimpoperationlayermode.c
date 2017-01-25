@@ -572,13 +572,12 @@ compfun_src_atop_sse2 (gfloat *in,
      
       while (samples--)
       {
-        __v4sf  alpha, rgba_in, rgba_layer, out_alpha;
+        __v4sf  alpha, rgba_in, rgba_layer;
 
         rgba_in    = *v_in ++;
         rgba_layer = *v_layer++;
 
         alpha = (__v4sf)_mm_shuffle_epi32((__m128i)rgba_layer,_MM_SHUFFLE(3,3,3,3)) * v_opacity;
-        out_alpha = (__v4sf)_mm_shuffle_epi32((__m128i)rgba_in,_MM_SHUFFLE(3,3,3,3));
 
         if (mask)
           {
@@ -587,8 +586,9 @@ compfun_src_atop_sse2 (gfloat *in,
 
         if (_mm_ucomigt_ss (alpha, _mm_setzero_ps ()))
           {
-            __v4sf out_pixel, out_pixel_rbaa;
+            __v4sf out_pixel, out_pixel_rbaa, out_alpha;
 
+            out_alpha      = (__v4sf)_mm_shuffle_epi32((__m128i)rgba_in,_MM_SHUFFLE(3,3,3,3));
             out_pixel      = rgba_layer * alpha + rgba_in * (v_one - alpha);
             out_pixel_rbaa = _mm_shuffle_ps (out_pixel, out_alpha, _MM_SHUFFLE (3, 3, 2, 0));
             out_pixel      = _mm_shuffle_ps (out_pixel, out_pixel_rbaa, _MM_SHUFFLE (2, 1, 1, 0));
