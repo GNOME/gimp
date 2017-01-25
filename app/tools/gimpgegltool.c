@@ -213,6 +213,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:lcms-from-profile", /* not usable here */
     "gegl:linear-gradient", /* we use the blend tool */
     "gegl:matting-global", /* used in the foreground select tool */
+    "gegl:matting-levin", /* used in the foreground select tool */
     "gegl:opacity", /* poinless */
     "gegl:path",
     "gegl:posterize", /* we use gimp's op */
