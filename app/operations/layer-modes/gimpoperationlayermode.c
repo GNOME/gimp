@@ -24,9 +24,9 @@
 #include <gegl-plugin.h>
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
 #include "libgimpcolor/gimpcolor.h"
-
+#include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 #include "../operations-types.h"
 
 #include "gimpoperationlayermode.h"
@@ -73,6 +73,58 @@ const Babl *_gimp_fish_rgba_to_laba = NULL;
 const Babl *_gimp_fish_laba_to_rgba = NULL;
 const Babl *_gimp_fish_laba_to_perceptual = NULL;
 
+typedef void (*CompFun)(gfloat *in,
+                        gfloat *layer,
+                        gfloat *comp,
+                        gfloat *mask,
+                        float opacity,
+                        gfloat *out,
+                        gint samples);
+
+
+static inline void compfun_src_atop (gfloat *in,
+                                     gfloat *layer,
+                                     gfloat *comp,
+                                     gfloat *mask,
+                                     gfloat  opacity,
+                                     gfloat *out,
+                                     gint    samples);
+static inline void compfun_dst_atop (gfloat *in,
+                                     gfloat *layer,
+                                     gfloat *comp,
+                                     gfloat *mask,
+                                     gfloat  opacity,
+                                     gfloat *out,
+                                     gint    samples);
+static inline void compfun_src_in   (gfloat *in,
+                                     gfloat *layer,
+                                     gfloat *comp,
+                                     gfloat *mask,
+                                     gfloat  opacity,
+                                     gfloat *out,
+                                     gint    samples);
+static inline void compfun_src_over (gfloat *in,
+                                     gfloat *layer,
+                                     gfloat *comp,
+                                     gfloat *mask,
+                                     gfloat  opacity,
+                                     gfloat *out,
+                                     gint    samples);
+
+static CompFun compfun_src_atop_dispatch = compfun_src_atop;
+static CompFun compfun_dst_atop_dispatch = compfun_dst_atop;
+static CompFun compfun_src_in_dispatch   = compfun_src_in;
+static CompFun compfun_src_over_dispatch = compfun_src_over;
+#if COMPILE_SSE2_INTRINISICS
+
+static inline void compfun_src_atop_sse2 (gfloat *in,
+                                          gfloat *layer,
+                                          gfloat *comp,
+                                          gfloat *mask,
+                                          gfloat  opacity,
+                                          gfloat *out,
+                                          gint    samples);
+#endif
 
 static void
 gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
@@ -80,6 +132,11 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
   GObjectClass                     *object_class;
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_composer3_class;
+
+#if COMPILE_SSE2_INTRINISICS
+  if (gimp_cpu_accel_get_support () & GIMP_CPU_ACCEL_X86_SSE2)
+    compfun_src_atop_dispatch = compfun_src_atop_sse2;
+#endif
 
   object_class          = G_OBJECT_CLASS (klass);
   operation_class       = GEGL_OPERATION_CLASS (klass);
@@ -312,24 +369,12 @@ gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,
 }
 
 
-#include <cairo.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-
-
-extern const Babl *_gimp_fish_rgba_to_perceptual;
-extern const Babl *_gimp_fish_perceptual_to_rgba;
-extern const Babl *_gimp_fish_perceptual_to_laba;
-extern const Babl *_gimp_fish_rgba_to_laba;
-extern const Babl *_gimp_fish_laba_to_rgba;
-extern const Babl *_gimp_fish_laba_to_perceptual;
 
 
 static inline void
 compfun_src_atop (gfloat *in,
                   gfloat *layer,
+                  gfloat *comp,
                   gfloat *mask,
                   gfloat  opacity,
                   gfloat *out,
@@ -366,6 +411,7 @@ compfun_src_atop (gfloat *in,
         mask++;
     }
 }
+
 
 static inline void
 compfun_src_over (gfloat *in,
@@ -458,6 +504,7 @@ compfun_dst_atop (gfloat *in,
 static inline void
 compfun_src_in (gfloat *in,
                 gfloat *layer,
+                gfloat *comp,
                 gfloat *mask,
                 gfloat  opacity,
                 gfloat *out,
@@ -493,6 +540,70 @@ compfun_src_in (gfloat *in,
         mask++;
     }
 }
+
+#if COMPILE_SSE2_INTRINISICS
+
+#include <emmintrin.h>
+
+static inline void
+compfun_src_atop_sse2 (gfloat *in,
+                       gfloat *layer,
+                       gfloat *comp,
+                       gfloat *mask,
+                       gfloat  opacity,
+                       gfloat *out,
+                       gint    samples)
+{
+  if ((((uintptr_t)in)    | /* alignment check */
+       ((uintptr_t)mask)  | 
+       ((uintptr_t)comp)  |
+       ((uintptr_t)layer) |
+       ((uintptr_t)out)    ) & 0x0F)
+    {
+      return compfun_src_atop (in, layer, comp, mask, opacity, out, samples);
+    }
+  else
+    {
+      const __v4sf *v_in      = (const __v4sf*) in;
+      const __v4sf *v_layer   = (const __v4sf*) layer;
+            __v4sf *v_out     = (__v4sf*) out;
+      const __v4sf  v_one     =  _mm_set1_ps (1.0f);
+      const __v4sf  v_opacity =  _mm_set1_ps (opacity);
+     
+      while (samples--)
+      {
+        __v4sf  alpha, rgba_in, rgba_layer, out_alpha;
+
+        rgba_in    = *v_in ++;
+        rgba_layer = *v_layer++;
+
+        alpha = (__v4sf)_mm_shuffle_epi32((__m128i)rgba_layer,_MM_SHUFFLE(3,3,3,3)) * v_opacity;
+        out_alpha = (__v4sf)_mm_shuffle_epi32((__m128i)rgba_in,_MM_SHUFFLE(3,3,3,3));
+
+        if (mask)
+          {
+            alpha = alpha * _mm_set1_ps (*mask++);
+          }
+
+        if (_mm_ucomigt_ss (alpha, _mm_setzero_ps ()))
+          {
+            __v4sf out_pixel, out_pixel_rbaa;
+
+            out_pixel      = rgba_layer * alpha + rgba_in * (v_one - alpha);
+            out_pixel_rbaa = _mm_shuffle_ps (out_pixel, out_alpha, _MM_SHUFFLE (3, 3, 2, 0));
+            out_pixel      = _mm_shuffle_ps (out_pixel, out_pixel_rbaa, _MM_SHUFFLE (2, 1, 1, 0));
+
+            *v_out++ = out_pixel;
+          }
+        else
+          {
+	    *v_out ++ = rgba_in;
+          }
+      }
+    }
+}
+
+#endif
 
 static inline void
 gimp_composite_blend (gpointer                op,
@@ -651,19 +762,19 @@ gimp_composite_blend (gpointer                op,
     {
     case GIMP_LAYER_COMPOSITE_SRC_ATOP:
     default:
-      compfun_src_atop (composite_in, blend_out, mask, opacity, out, samples);
+      compfun_src_atop_dispatch (composite_in, blend_out, NULL, mask, opacity, out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
-      compfun_src_over (composite_in, composite_layer, blend_out, mask, opacity, out, samples);
+      compfun_src_over_dispatch (composite_in, composite_layer, blend_out, mask, opacity, out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_DST_ATOP:
-      compfun_dst_atop (composite_in, composite_layer, blend_out, mask, opacity, out, samples);
+      compfun_dst_atop_dispatch (composite_in, composite_layer, blend_out, mask, opacity, out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_IN:
-      compfun_src_in (composite_in, blend_out, mask, opacity, out, samples);
+      compfun_src_in_dispatch (composite_in, blend_out, NULL, mask, opacity, out, samples);
       break;
     }
 
