@@ -1695,7 +1695,7 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_GRAIN_MERGE:    return blendfun_grain_merge;
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:  return blendfun_grain_extract;
-    case GIMP_LAYER_MODE_DODGE_LINEAR: 
+    case GIMP_LAYER_MODE_DODGE_LINEAR:
     case GIMP_LAYER_MODE_DODGE:          return blendfun_dodge;
     case GIMP_LAYER_MODE_OVERLAY_LINEAR:
     case GIMP_LAYER_MODE_OVERLAY:        return blendfun_overlay;
@@ -1713,11 +1713,9 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_SOFTLIGHT:      return blendfun_softlight;
     case GIMP_LAYER_MODE_DIVIDE:
     case GIMP_LAYER_MODE_DIVIDE_LINEAR:  return blendfun_divide;
-    case GIMP_LAYER_MODE_DIFFERENCE_LINEAR: 
+    case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
     case GIMP_LAYER_MODE_DIFFERENCE:     return blendfun_difference;
-    case GIMP_LAYER_MODE_DARKEN_ONLY_LINEAR:
     case GIMP_LAYER_MODE_DARKEN_ONLY:    return blendfun_darken_only;
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LINEAR:
     case GIMP_LAYER_MODE_LIGHTEN_ONLY:   return blendfun_lighten_only;
     case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_VIVID_LIGHT:  return blendfun_vivid_light;
