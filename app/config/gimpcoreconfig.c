@@ -626,7 +626,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                             "import-promote-float",
                             "Import promote float",
                             IMPORT_PROMOTE_FLOAT_BLURB,
-                            FALSE,
+                            TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_IMPORT_PROMOTE_DITHER,
