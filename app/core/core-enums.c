@@ -368,7 +368,7 @@ gimp_layer_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_LAYER_MODE_NORMAL_NON_LINEAR, NC_("layer-mode", "Normal (non-linear)"), NULL },
+    { GIMP_LAYER_MODE_NORMAL_NON_LINEAR, NC_("layer-mode", "Normal"), NULL },
     { GIMP_LAYER_MODE_DISSOLVE, NC_("layer-mode", "Dissolve"), NULL },
     { GIMP_LAYER_MODE_BEHIND, NC_("layer-mode", "Behind"), NULL },
     { GIMP_LAYER_MODE_MULTIPLY_LEGACY, NC_("layer-mode", "Multiply (legacy)"), NULL },
@@ -396,7 +396,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_LCH_CHROMA, NC_("layer-mode", "Chroma (LCH)"), NULL },
     { GIMP_LAYER_MODE_LCH_COLOR, NC_("layer-mode", "Color (LCH)"), NULL },
     { GIMP_LAYER_MODE_LCH_LIGHTNESS, NC_("layer-mode", "Lightness (LCH)"), NULL },
-    { GIMP_LAYER_MODE_NORMAL, NC_("layer-mode", "Normal"), NULL },
+    { GIMP_LAYER_MODE_NORMAL, NC_("layer-mode", "Normal (linear)"), NULL },
     { GIMP_LAYER_MODE_BEHIND_LINEAR, NC_("layer-mode", "Behind (linear)"), NULL },
     { GIMP_LAYER_MODE_MULTIPLY, NC_("layer-mode", "Multiply"), NULL },
     { GIMP_LAYER_MODE_MULTIPLY_LINEAR, NC_("layer-mode", "Multiply (linear)"), NULL },
@@ -462,6 +462,7 @@ gimp_layer_mode_group_get_type (void)
 {
   static const GEnumValue values[] =
   {
+    { GIMP_LAYER_MODE_GROUP_DEFAULT, "GIMP_LAYER_MODE_GROUP_DEFAULT", "default" },
     { GIMP_LAYER_MODE_GROUP_LINEAR, "GIMP_LAYER_MODE_GROUP_LINEAR", "linear" },
     { GIMP_LAYER_MODE_GROUP_PERCEPTUAL, "GIMP_LAYER_MODE_GROUP_PERCEPTUAL", "perceptual" },
     { GIMP_LAYER_MODE_GROUP_LEGACY, "GIMP_LAYER_MODE_GROUP_LEGACY", "legacy" },
@@ -470,6 +471,7 @@ gimp_layer_mode_group_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
+    { GIMP_LAYER_MODE_GROUP_DEFAULT, NC_("layer-mode-group", "Default"), NULL },
     { GIMP_LAYER_MODE_GROUP_LINEAR, NC_("layer-mode-group", "Linear light"), NULL },
     { GIMP_LAYER_MODE_GROUP_PERCEPTUAL, NC_("layer-mode-group", "Perceptual"), NULL },
     { GIMP_LAYER_MODE_GROUP_LEGACY, NC_("layer-mode-group", "Legacy"), NULL },

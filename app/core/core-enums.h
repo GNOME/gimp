@@ -155,7 +155,7 @@ GType gimp_layer_mode_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   /*  Modes that exist since ancient times  */
-  GIMP_LAYER_MODE_NORMAL_NON_LINEAR,     /*< desc="Normal (non-linear)"      >*/
+  GIMP_LAYER_MODE_NORMAL_NON_LINEAR,     /*< desc="Normal"                   >*/
   GIMP_LAYER_MODE_DISSOLVE,              /*< desc="Dissolve"                 >*/
   GIMP_LAYER_MODE_BEHIND,                /*< desc="Behind"                   >*/
   GIMP_LAYER_MODE_MULTIPLY_LEGACY,       /*< desc="Multiply (legacy)"        >*/
@@ -187,7 +187,7 @@ typedef enum
   GIMP_LAYER_MODE_LCH_LIGHTNESS,         /*< desc="Lightness (LCH)"          >*/
 
   /*  Since 2.10  */
-  GIMP_LAYER_MODE_NORMAL,                /*< desc="Normal"                   >*/
+  GIMP_LAYER_MODE_NORMAL,                /*< desc="Normal (linear)"          >*/
   GIMP_LAYER_MODE_BEHIND_LINEAR,         /*< desc="Behind (linear)"          >*/
   GIMP_LAYER_MODE_MULTIPLY,              /*< desc="Multiply"                 >*/
   GIMP_LAYER_MODE_MULTIPLY_LINEAR,       /*< desc="Multiply (linear)"        >*/
@@ -244,6 +244,7 @@ GType gimp_layer_mode_group_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
+  GIMP_LAYER_MODE_GROUP_DEFAULT,     /*< desc="Default"      >*/
   GIMP_LAYER_MODE_GROUP_LINEAR,      /*< desc="Linear light" >*/
   GIMP_LAYER_MODE_GROUP_PERCEPTUAL,  /*< desc="Perceptual"   >*/
   GIMP_LAYER_MODE_GROUP_LEGACY,      /*< desc="Legacy"       >*/
