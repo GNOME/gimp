@@ -279,8 +279,9 @@ file_open_image (Gimp                *gimp,
     {
       gimp_image_undo_disable (image);
 
-      if (run_mode == GIMP_RUN_INTERACTIVE   &&
-          gimp->config->import_promote_float &&
+      if (run_mode == GIMP_RUN_INTERACTIVE                 &&
+          gimp_image_get_base_type (image) != GIMP_INDEXED &&
+          gimp->config->import_promote_float               &&
           file_open_file_proc_is_import (file_proc))
         {
           GimpPrecision old_precision = gimp_image_get_precision (image);
