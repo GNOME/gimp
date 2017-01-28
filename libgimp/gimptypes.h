@@ -46,7 +46,7 @@ typedef struct _GimpParam       GimpParam;
  */
 typedef GimpLayerMode GimpLayerModeEffects;
 
-#define GIMP_NORMAL_MODE        GIMP_LAYER_MODE_NORMAL_NON_LINEAR
+#define GIMP_NORMAL_MODE        GIMP_LAYER_MODE_NORMAL
 #define GIMP_DISSOLVE_MODE      GIMP_LAYER_MODE_DISSOLVE
 #define GIMP_BEHIND_MODE        GIMP_LAYER_MODE_BEHIND
 #define GIMP_MULTIPLY_MODE      GIMP_LAYER_MODE_MULTIPLY_LEGACY
