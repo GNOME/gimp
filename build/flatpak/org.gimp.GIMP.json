@@ -1,0 +1,227 @@
+{
+    "id": "org.gimp.GIMP",
+    "branch": "master",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "3.22",
+    "sdk": "org.gnome.Sdk",
+    "command": "gimp-2.9",
+    "rename-desktop-file": "gimp.desktop",
+    "rename-appdata-file": "gimp.appdata.xml",
+    "rename-icon": "gimp",
+    "finish-args": ["--share=ipc", "--socket=x11", "--filesystem=host", "--filesystem=xdg-config/GIMP" ],
+    "tags": ["dev"],
+    "desktop-file-name-prefix": "(Dev) ",
+    "build-options" : {
+        "cflags": "-O2 -g",
+        "cxxflags": "-O2 -g",
+        "env": {
+            "V": "1"
+        }
+    },
+    "cleanup": ["/include", "/lib/pkgconfig", "/share/pkgconfig", "/share/aclocal", "/man", "/share/man", "/share/gtk-doc", "/share/vala", "*.la", "*.a"],
+    "modules": [
+        {
+            "name": "py2cairo",
+            "rm-configure": true,
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://cairographics.org/releases/py2cairo-1.10.0.tar.bz2",
+                    "sha256": "d30439f06c2ec1a39e27464c6c828b6eface3b22ee17b2de05dc409e429a7431"
+                },
+                {
+                    "type": "script",
+                    "commands": [
+                        "libtoolize --force",
+                        "aclocal",
+                        "autoheader",
+                        "automake --force-missing --add-missing --foreign",
+                        "autoconf"
+                    ],
+                    "dest-filename": "autogen.sh"
+                }
+            ]
+        },
+        {
+            "name": "pygobject",
+            "config-opts": [ "--disable-introspection" ],
+            "cleanup": [ "/bin", "/share/pygobject/2.0/codegen" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.6.tar.xz",
+                    "sha256": "fb8a1d4f665130a125011659bd347c7339c944232163dbb9a34fd0686577adb8"
+                }
+            ]
+        },
+        {
+            "name": "pygtk",
+            "cleanup": [ "/bin", "/lib/pygtk" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz",
+                    "sha256": "6e3e54fa6e65a69ac60bd58cb2e60a57f3346ac52efe995f3d10b6c38c972fd8"
+                }
+            ]
+        },
+        {
+            "name": "exiv2",
+            "cleanup": [ "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.exiv2.org/exiv2-0.25.tar.gz",
+                    "sha256": "c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4"
+                }
+            ]
+        },
+        {
+            "name": "gexiv2",
+            "config-opts": [ "--disable-introspection" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://download.gnome.org/sources/gexiv2/0.10/gexiv2-0.10.4.tar.xz",
+                    "sha256": "ad8d31afdc0a1932cc44c4cfcea449497c0d0b445c0ad2f9735707b306e71ca4"
+                }
+            ]
+        },
+        {
+            "name": "ilmbase",
+            "config-opts": [ "--disable-static" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.0.tar.gz",
+                    "sha256": "ecf815b60695555c1fbc73679e84c7c9902f4e8faa6e8000d2f905b8b86cedc7"
+                }
+            ]
+        },
+        {
+            "name": "openexr",
+            "config-opts": [ "--disable-static", "--disable-ilmbasetest" ],
+            "cleanup": [ "/bin", "/share/doc" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.savannah.nongnu.org/releases/openexr/openexr-2.2.0.tar.gz",
+                    "sha256": "36a012f6c43213f840ce29a8b182700f6cf6b214bea0d5735594136b44914231"
+                }
+            ]
+        },
+        {
+            "name": "jasper",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/bin", "/share" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.ece.uvic.ca/~frodo/jasper/software/jasper-1.900.29.tar.gz",
+                    "sha256": "2ae7e9d3ba189ddcd4231e7255348d3144757d5c2ff8dd853f37e0df783925c0"
+                }
+            ]
+        },
+        {
+            "name": "libraw",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/bin", "/share/doc" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://www.libraw.org/data/LibRaw-0.18.0.tar.gz",
+                    "sha256": "d56a0c9a0e6d1b8c8c5585346acf2cfb0554eee0f0948da66f580cd65c8c5c9b"
+                }
+            ]
+        },
+        {
+            "name": "popplerdata",
+            "no-autogen": true,
+            "make-install-args": ["prefix=/app"],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://poppler.freedesktop.org/poppler-data-0.4.7.tar.gz",
+                    "sha256": "e752b0d88a7aba54574152143e7bf76436a7ef51977c55d6bd9a48dccde3a7de"
+                }
+            ]
+        },
+        {
+            "name": "poppler",
+            "config-opts": [ "--disable-libopenjpeg", "--disable-introspection" ],
+            "cleanup": [ "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://poppler.freedesktop.org/poppler-0.51.0.tar.xz",
+                    "sha256": "e997c9ad81a8372f2dd03a02b00692b8cc479c220340c8881edaca540f402c1f"
+                }
+            ]
+        },
+        {
+            "name": "libpng",
+            "cleanup": [ "/bin", "/share" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.sourceforge.net/libpng/libpng-1.6.28.tar.xz",
+                    "sha256": "d8d3ec9de6b5db740fefac702c37ffcf96ae46cb17c18c1544635a3852f78f7a"
+                }
+            ]
+        },
+        {
+            "name": "lcms2",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/bin", "/share" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.sourceforge.net/lcms/lcms2-2.8.tar.gz",
+                    "sha256": "66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22"
+                }
+            ]
+        },
+        {
+            "name": "babl",
+            "config-opts": [ "--disable-docs" ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://git.gnome.org/babl"
+                }
+            ]
+        },
+        {
+            "name": "gegl",
+            "config-opts": [ "--disable-docs" ],
+            "cleanup": [ "/bin" ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://git.gnome.org/gegl"
+                }
+            ]
+        },
+        {
+            "name": "libmypaint",
+            "config-opts": [ "--disable-gegl", "--disable-introspection" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.3.0/libmypaint-1.3.0.tar.xz",
+                    "sha256": "6a07d9d57fea60f68d218a953ce91b168975a003db24de6ac01ad69dcc94a671"
+                }
+            ]
+        },
+        {
+            "name": "gimp",
+            "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html", "--enable-vector-icons" ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "git://git.gnome.org/gimp"
+                }
+            ]
+        }
+    ]
+}
