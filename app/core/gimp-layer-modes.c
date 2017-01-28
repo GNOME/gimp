@@ -166,22 +166,6 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
   return TRUE;
 }
 
-GimpLayerModeGroup
-gimp_layer_mode_get_group (GimpLayerMode  mode)
-{
-  if (gimp_layer_mode_is_legacy (mode))
-    {
-      return GIMP_LAYER_MODE_GROUP_LEGACY;
-    }
-  else if (gimp_layer_mode_get_blend_space (mode) ==
-           GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
-    {
-      return GIMP_LAYER_MODE_GROUP_PERCEPTUAL;
-    }
-
-  return GIMP_LAYER_MODE_GROUP_LINEAR;
-}
-
 GimpLayerColorSpace
 gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
 {
@@ -471,4 +455,272 @@ gimp_layer_mode_get_operation (GimpLayerMode  mode)
     }
 
   return "gimp:layer-mode";
+}
+
+GimpLayerModeGroup
+gimp_layer_mode_get_group (GimpLayerMode  mode)
+{
+  if (gimp_layer_mode_is_legacy (mode))
+    {
+      return GIMP_LAYER_MODE_GROUP_LEGACY;
+    }
+  else if (gimp_layer_mode_get_blend_space (mode) ==
+           GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
+    {
+      return GIMP_LAYER_MODE_GROUP_PERCEPTUAL;
+    }
+
+  return GIMP_LAYER_MODE_GROUP_LINEAR;
+}
+
+gboolean
+gimp_layer_mode_get_for_group (GimpLayerMode       old_mode,
+                               GimpLayerModeGroup  new_group,
+                               GimpLayerMode      *new_mode)
+{
+  static GimpLayerMode mode_groups[][4] =
+  {
+    {
+      GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
+      GIMP_LAYER_MODE_NORMAL,
+      GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
+      GIMP_LAYER_MODE_NORMAL_NON_LINEAR
+    },
+
+    {
+      GIMP_LAYER_MODE_DISSOLVE,
+      GIMP_LAYER_MODE_DISSOLVE,
+      GIMP_LAYER_MODE_DISSOLVE,
+      GIMP_LAYER_MODE_DISSOLVE
+    },
+
+    {
+      GIMP_LAYER_MODE_BEHIND,
+      GIMP_LAYER_MODE_BEHIND_LINEAR,
+      GIMP_LAYER_MODE_BEHIND,
+      GIMP_LAYER_MODE_BEHIND
+    },
+
+    {
+      GIMP_LAYER_MODE_MULTIPLY,
+      GIMP_LAYER_MODE_MULTIPLY_LINEAR,
+      GIMP_LAYER_MODE_MULTIPLY,
+      GIMP_LAYER_MODE_MULTIPLY_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_SCREEN,
+      GIMP_LAYER_MODE_SCREEN_LINEAR,
+      GIMP_LAYER_MODE_SCREEN,
+      GIMP_LAYER_MODE_SCREEN_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_OVERLAY,
+      GIMP_LAYER_MODE_OVERLAY_LINEAR,
+      GIMP_LAYER_MODE_OVERLAY,
+      -1
+    },
+
+    {
+      GIMP_LAYER_MODE_DIFFERENCE,
+      GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
+      GIMP_LAYER_MODE_DIFFERENCE,
+      GIMP_LAYER_MODE_DIFFERENCE_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_ADDITION,
+      GIMP_LAYER_MODE_ADDITION_LINEAR,
+      GIMP_LAYER_MODE_ADDITION,
+      GIMP_LAYER_MODE_ADDITION_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_SUBTRACT,
+      GIMP_LAYER_MODE_SUBTRACT_LINEAR,
+      GIMP_LAYER_MODE_SUBTRACT,
+      GIMP_LAYER_MODE_SUBTRACT_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_DARKEN_ONLY,
+      GIMP_LAYER_MODE_DARKEN_ONLY,
+      GIMP_LAYER_MODE_DARKEN_ONLY,
+      GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_LIGHTEN_ONLY,
+      GIMP_LAYER_MODE_LIGHTEN_ONLY,
+      GIMP_LAYER_MODE_LIGHTEN_ONLY,
+      GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_HSV_HUE,
+      -1,
+      GIMP_LAYER_MODE_HSV_HUE,
+      GIMP_LAYER_MODE_HSV_HUE_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_HSV_SATURATION,
+      -1,
+      GIMP_LAYER_MODE_HSV_SATURATION,
+      GIMP_LAYER_MODE_HSV_SATURATION_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_HSV_COLOR,
+      -1,
+      GIMP_LAYER_MODE_HSV_COLOR,
+      GIMP_LAYER_MODE_HSV_COLOR_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_HSV_VALUE,
+      -1,
+      GIMP_LAYER_MODE_HSV_VALUE,
+      GIMP_LAYER_MODE_HSV_VALUE_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_DIVIDE,
+      GIMP_LAYER_MODE_DIVIDE_LINEAR,
+      GIMP_LAYER_MODE_DIVIDE,
+      GIMP_LAYER_MODE_DIVIDE_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_DODGE,
+      GIMP_LAYER_MODE_DODGE_LINEAR,
+      GIMP_LAYER_MODE_DODGE,
+      GIMP_LAYER_MODE_DODGE_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_BURN,
+      GIMP_LAYER_MODE_BURN_LINEAR,
+      GIMP_LAYER_MODE_BURN,
+      GIMP_LAYER_MODE_BURN_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_HARDLIGHT,
+      GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
+      GIMP_LAYER_MODE_HARDLIGHT,
+      GIMP_LAYER_MODE_HARDLIGHT_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_SOFTLIGHT,
+      GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
+      GIMP_LAYER_MODE_SOFTLIGHT,
+      GIMP_LAYER_MODE_SOFTLIGHT_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_GRAIN_EXTRACT,
+      GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
+      GIMP_LAYER_MODE_GRAIN_EXTRACT,
+      GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_GRAIN_MERGE,
+      GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
+      GIMP_LAYER_MODE_GRAIN_MERGE,
+      GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY
+    },
+
+    {
+      GIMP_LAYER_MODE_COLOR_ERASE,
+      -1,
+      GIMP_LAYER_MODE_COLOR_ERASE,
+      -1,
+    },
+
+    {
+      GIMP_LAYER_MODE_VIVID_LIGHT,
+      GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
+      GIMP_LAYER_MODE_VIVID_LIGHT,
+      -1
+    },
+
+    {
+      GIMP_LAYER_MODE_PIN_LIGHT,
+      GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
+      GIMP_LAYER_MODE_PIN_LIGHT,
+      -1
+    },
+
+    {
+      GIMP_LAYER_MODE_LINEAR_LIGHT,
+      GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
+      GIMP_LAYER_MODE_LINEAR_LIGHT,
+      -1
+    },
+
+    {
+      GIMP_LAYER_MODE_EXCLUSION,
+      GIMP_LAYER_MODE_EXCLUSION_LINEAR,
+      GIMP_LAYER_MODE_EXCLUSION,
+      -1
+    },
+
+    {
+      GIMP_LAYER_MODE_LINEAR_BURN,
+      GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,
+      GIMP_LAYER_MODE_LINEAR_BURN,
+      -1
+    },
+
+    {
+      GIMP_LAYER_MODE_ERASE,
+      GIMP_LAYER_MODE_ERASE,
+      -1,
+      -1
+    },
+
+    {
+      GIMP_LAYER_MODE_REPLACE,
+      GIMP_LAYER_MODE_REPLACE,
+      -1,
+      -1
+    },
+
+    {
+      GIMP_LAYER_MODE_ANTI_ERASE,
+      GIMP_LAYER_MODE_ANTI_ERASE,
+      -1,
+      -1
+    },
+  };
+
+  gint i;
+
+  g_return_val_if_fail (new_mode != NULL, FALSE);
+
+  for (i = 0; i < G_N_ELEMENTS (mode_groups); i++)
+    {
+      gint j;
+
+      for (j = 0; j < 4; j++)
+        {
+          if (mode_groups[i][j] == old_mode)
+            {
+              *new_mode = mode_groups[i][new_group];
+
+              if (*new_mode != -1)
+                return TRUE;
+
+              return FALSE;
+            }
+        }
+    }
+
+  *new_mode = -1;
+
+  return FALSE;
 }
