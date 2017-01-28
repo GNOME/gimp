@@ -985,6 +985,70 @@ blendfun_darken_only (const float *dest,
 }
 
 static inline void
+blendfun_luminance_lighten_only (const float *dest,
+                                 const float *src,
+                                 float       *out,
+                                 int          samples)
+{
+  while (samples--)
+    {
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
+        {
+          gint c;
+          float dest_luminance =
+             GIMP_RGB_LUMINANCE(dest[0], dest[1], dest[2]);
+          float src_luminance =
+             GIMP_RGB_LUMINANCE(src[0], src[1], src[2]);
+
+          if (dest_luminance >= src_luminance)
+            for (c = 0; c < 3; c++)
+              out[c] = dest[c];
+          else
+            for (c = 0; c < 3; c++)
+              out[c] = src[c];
+        }
+
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+static inline void
+blendfun_luminance_darken_only (const float *dest,
+                                const float *src,
+                                float       *out,
+                                int          samples)
+{
+  while (samples--)
+    {
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
+        {
+          gint c;
+          float dest_luminance =
+             GIMP_RGB_LUMINANCE(dest[0], dest[1], dest[2]);
+          float src_luminance =
+             GIMP_RGB_LUMINANCE(src[0], src[1], src[2]);
+
+          if (dest_luminance <= src_luminance)
+            for (c = 0; c < 3; c++)
+              out[c] = dest[c];
+          else
+            for (c = 0; c < 3; c++)
+              out[c] = src[c];
+        }
+
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+static inline void
 blendfun_lighten_only (const float *dest,
                        const float *src,
                        float       *out,
@@ -1717,6 +1781,8 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_DIFFERENCE:     return blendfun_difference;
     case GIMP_LAYER_MODE_DARKEN_ONLY:    return blendfun_darken_only;
     case GIMP_LAYER_MODE_LIGHTEN_ONLY:   return blendfun_lighten_only;
+    case GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY:  return blendfun_luminance_darken_only;
+    case GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY: return blendfun_luminance_lighten_only;
     case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_VIVID_LIGHT:  return blendfun_vivid_light;
     case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
