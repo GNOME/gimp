@@ -321,7 +321,7 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
 
   store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
                                            30,
-                                           GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
+                                           GIMP_LAYER_MODE_NORMAL,
                                            GIMP_LAYER_MODE_DISSOLVE,
                                            GIMP_LAYER_MODE_LIGHTEN_ONLY,
                                            GIMP_LAYER_MODE_SCREEN,
@@ -386,7 +386,7 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
   if (combo->priv->with_replace)
     {
       gimp_layer_mode_combo_box_insert_value (store,
-                                              GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
+                                              GIMP_LAYER_MODE_NORMAL,
                                               GIMP_LAYER_MODE_REPLACE);
       gimp_layer_mode_combo_box_insert_value (store,
                                               GIMP_LAYER_MODE_COLOR_ERASE,
@@ -406,7 +406,7 @@ gimp_layer_mode_combo_box_create_linear_model (GimpLayerModeComboBox *combo)
 
   store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
                                            22,
-                                           GIMP_LAYER_MODE_NORMAL,
+                                           GIMP_LAYER_MODE_NORMAL_LINEAR,
                                            GIMP_LAYER_MODE_DISSOLVE,
                                            GIMP_LAYER_MODE_LIGHTEN_ONLY,
                                            GIMP_LAYER_MODE_SCREEN_LINEAR,
@@ -454,7 +454,7 @@ gimp_layer_mode_combo_box_create_linear_model (GimpLayerModeComboBox *combo)
   if (combo->priv->with_replace)
     {
       gimp_layer_mode_combo_box_insert_value (store,
-                                              GIMP_LAYER_MODE_NORMAL,
+                                              GIMP_LAYER_MODE_NORMAL_LINEAR,
                                               GIMP_LAYER_MODE_REPLACE);
       gimp_layer_mode_combo_box_insert_value (store,
                                               GIMP_LAYER_MODE_REPLACE,
@@ -474,7 +474,7 @@ gimp_layer_mode_combo_box_create_perceptual_model (GimpLayerModeComboBox *combo)
 
   store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
                                            30,
-                                           GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
+                                           GIMP_LAYER_MODE_NORMAL,
                                            GIMP_LAYER_MODE_DISSOLVE,
                                            GIMP_LAYER_MODE_LIGHTEN_ONLY,
                                            GIMP_LAYER_MODE_SCREEN,
@@ -546,7 +546,7 @@ gimp_layer_mode_combo_box_create_legacy_model (GimpLayerModeComboBox *combo)
 
   store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
                                            20,
-                                           GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
+                                           GIMP_LAYER_MODE_NORMAL,
                                            GIMP_LAYER_MODE_DISSOLVE,
                                            GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
                                            GIMP_LAYER_MODE_SCREEN_LEGACY,

@@ -62,7 +62,7 @@ gimp_get_layer_mode_function (GimpLayerMode  paint_mode)
   switch (paint_mode)
     {
     case GIMP_LAYER_MODE_NORMAL:
-    case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
+    case GIMP_LAYER_MODE_NORMAL_LINEAR:
       func = gimp_operation_normal_process;
       break;
 

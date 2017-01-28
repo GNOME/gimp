@@ -66,7 +66,7 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
 {
   switch (mode)
     {
-    case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
+    case GIMP_LAYER_MODE_NORMAL:
       return FALSE;
 
     case GIMP_LAYER_MODE_DISSOLVE:
@@ -108,7 +108,7 @@ gimp_layer_mode_is_linear (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
       return TRUE;
 
-    case GIMP_LAYER_MODE_NORMAL:
+    case GIMP_LAYER_MODE_NORMAL_LINEAR:
       return TRUE;
 
     case GIMP_LAYER_MODE_MULTIPLY:
@@ -171,7 +171,7 @@ gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
 {
   switch (mode)
     {
-    case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
+    case GIMP_LAYER_MODE_NORMAL:
       return GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
 
     case GIMP_LAYER_MODE_DISSOLVE:
@@ -211,7 +211,7 @@ gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:
       return GIMP_LAYER_COLOR_SPACE_LAB;
 
-    case GIMP_LAYER_MODE_NORMAL:
+    case GIMP_LAYER_MODE_NORMAL_LINEAR:
       return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
 
     case GIMP_LAYER_MODE_MULTIPLY:
@@ -280,8 +280,8 @@ gimp_layer_mode_get_composite_mode (GimpLayerMode  mode)
 {
   switch (mode)
     {
-    case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
     case GIMP_LAYER_MODE_NORMAL:
+    case GIMP_LAYER_MODE_NORMAL_LINEAR:
     case GIMP_LAYER_MODE_DISSOLVE:
     case GIMP_LAYER_MODE_BEHIND:
     case GIMP_LAYER_MODE_BEHIND_LINEAR:
@@ -369,8 +369,8 @@ gimp_layer_mode_get_operation (GimpLayerMode  mode)
 {
   switch (mode)
     {
-    case GIMP_LAYER_MODE_NORMAL_NON_LINEAR:
     case GIMP_LAYER_MODE_NORMAL:
+    case GIMP_LAYER_MODE_NORMAL_LINEAR:
       return "gimp:normal";
 
     case GIMP_LAYER_MODE_DISSOLVE:
@@ -481,10 +481,10 @@ gimp_layer_mode_get_for_group (GimpLayerMode       old_mode,
   static GimpLayerMode mode_groups[][4] =
   {
     {
-      GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
       GIMP_LAYER_MODE_NORMAL,
-      GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
-      GIMP_LAYER_MODE_NORMAL_NON_LINEAR
+      GIMP_LAYER_MODE_NORMAL_LINEAR,
+      GIMP_LAYER_MODE_NORMAL,
+      GIMP_LAYER_MODE_NORMAL
     },
 
     {

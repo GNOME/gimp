@@ -105,8 +105,8 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
 
   store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
                                            45,
-                                           GIMP_LAYER_MODE_NORMAL_NON_LINEAR,
                                            GIMP_LAYER_MODE_NORMAL,
+                                           GIMP_LAYER_MODE_NORMAL_LINEAR,
                                            GIMP_LAYER_MODE_DISSOLVE,
                                            GIMP_LAYER_MODE_LIGHTEN_ONLY,
                                            GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
@@ -190,7 +190,7 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
   if (with_replace_modes)
     {
       gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
-                                          GIMP_LAYER_MODE_NORMAL,
+                                          GIMP_LAYER_MODE_NORMAL_LINEAR,
                                           GIMP_LAYER_MODE_REPLACE);
       gimp_enum_store_insert_value_after (GIMP_ENUM_STORE (store),
                                           GIMP_LAYER_MODE_COLOR_ERASE,
