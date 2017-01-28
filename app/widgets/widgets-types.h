@@ -68,6 +68,7 @@ typedef struct _GimpGradientEditor           GimpGradientEditor;
 typedef struct _GimpPaletteEditor            GimpPaletteEditor;
 typedef struct _GimpToolPresetEditor         GimpToolPresetEditor;
 
+
 /*  GimpImageEditor widgets  */
 
 typedef struct _GimpColormapEditor           GimpColormapEditor;
@@ -119,6 +120,7 @@ typedef struct _GimpDynamicsFactoryView      GimpDynamicsFactoryView;
 typedef struct _GimpPatternFactoryView       GimpPatternFactoryView;
 typedef struct _GimpToolPresetFactoryView    GimpToolPresetFactoryView;
 
+
 /*  menus  */
 
 typedef struct _GimpAction                   GimpAction;
@@ -130,12 +132,14 @@ typedef struct _GimpProcedureAction          GimpProcedureAction;
 typedef struct _GimpStringAction             GimpStringAction;
 typedef struct _GimpUIManager                GimpUIManager;
 
+
 /*  file dialogs  */
 
 typedef struct _GimpExportDialog             GimpExportDialog;
 typedef struct _GimpFileDialog               GimpFileDialog;
 typedef struct _GimpOpenDialog               GimpOpenDialog;
 typedef struct _GimpSaveDialog               GimpSaveDialog;
+
 
 /*  misc dialogs  */
 
@@ -194,6 +198,7 @@ typedef struct _GimpImagePropView            GimpImagePropView;
 typedef struct _GimpLanguageComboBox         GimpLanguageComboBox;
 typedef struct _GimpLanguageEntry            GimpLanguageEntry;
 typedef struct _GimpLanguageStore            GimpLanguageStore;
+typedef struct _GimpLayerModeComboBox        GimpLayerModeComboBox;
 typedef struct _GimpMessageBox               GimpMessageBox;
 typedef struct _GimpOverlayBox               GimpOverlayBox;
 typedef struct _GimpPickableButton           GimpPickableButton;
