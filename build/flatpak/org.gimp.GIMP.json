@@ -182,6 +182,42 @@
             ]
         },
         {
+            "name": "aalib",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/bin", "/info", "/man" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.sourceforge.net/aa-project/aalib-1.4rc5.tar.gz",
+                    "sha256": "fbddda9230cf6ee2a4f5706b4b11e2190ae45f5eda1f0409dc4f99b35e0a70ee"
+                }
+            ]
+        },
+        {
+            "name": "libmng",
+            "config-opts": [ "--disable-static" ],
+            "cleanup": [ "/share" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://download.sourceforge.net/libmng/libmng-2.0.3.tar.xz",
+                    "sha256": "4a462fdd48d4bc82c1d7a21106c8a18b62f8cc0042454323058e6da0dbb57dd3"
+                }
+            ]
+        },
+        {
+            "name": "libwebp",
+            "config-opts": [ "--disable-static", "--enable-libwebpmux", "--enable-libwebpdemux" ],
+            "cleanup": [ "/share", "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.webmproject.org/releases/webp/libwebp-0.5.2.tar.gz",
+                    "sha256": "b75310c810b3eda222c77f6d6c26b061240e3d9060095de44b2c1bae291ecdef"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],
             "sources": [
