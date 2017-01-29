@@ -214,9 +214,6 @@ gimp_levels_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
-                                      levels_menu_sensitivity, drawable, NULL);
-
   gimp_drawable_calculate_histogram (drawable, l_tool->histogram);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->histogram_view),
                                      l_tool->histogram);
@@ -376,6 +373,8 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
 
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (tool->channel_menu),
                                        "gimp-channel");
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (tool->channel_menu),
+                                      levels_menu_sensitivity, filter_tool, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), tool->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (tool->channel_menu);
 
@@ -918,8 +917,11 @@ static gboolean
 levels_menu_sensitivity (gint      value,
                          gpointer  data)
 {
-  GimpDrawable         *drawable = GIMP_DRAWABLE (data);
+  GimpDrawable         *drawable = GIMP_FILTER_TOOL (data)->drawable;
   GimpHistogramChannel  channel  = value;
+
+  if (!drawable)
+    return FALSE;
 
   switch (channel)
     {

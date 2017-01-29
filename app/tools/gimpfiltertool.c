@@ -484,9 +484,9 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   gimp_tool_gui_set_shell (filter_tool->gui, shell);
   gimp_tool_gui_set_viewable (filter_tool->gui, GIMP_VIEWABLE (drawable));
 
+  filter_tool->drawable = drawable;
   gimp_tool_gui_show (filter_tool->gui);
 
-  filter_tool->drawable = drawable;
   gimp_filter_tool_create_map (filter_tool);
 
   return TRUE;

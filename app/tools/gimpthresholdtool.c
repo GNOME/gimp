@@ -162,10 +162,6 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (t_tool->channel_menu),
-                                      gimp_threshold_tool_channel_sensitive,
-                                      drawable, NULL);
-
   gimp_drawable_calculate_histogram (drawable, t_tool->histogram);
   gimp_histogram_view_set_histogram (t_tool->histogram_box->view,
                                      t_tool->histogram);
@@ -230,6 +226,11 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
                                                        "channel", -1, -1);
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (t_tool->channel_menu),
                                        "gimp-channel");
+
+  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (t_tool->channel_menu),
+                                      gimp_threshold_tool_channel_sensitive,
+                                      filter_tool, NULL);
+
   gtk_box_pack_start (GTK_BOX (hbox), t_tool->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (t_tool->channel_menu);
 
@@ -331,8 +332,11 @@ static gboolean
 gimp_threshold_tool_channel_sensitive (gint     value,
                                        gpointer data)
 {
-  GimpDrawable         *drawable = GIMP_DRAWABLE (data);
+  GimpDrawable         *drawable = GIMP_FILTER_TOOL (data)->drawable;
   GimpHistogramChannel  channel  = value;
+
+  if (!drawable)
+    return FALSE;
 
   switch (channel)
     {
