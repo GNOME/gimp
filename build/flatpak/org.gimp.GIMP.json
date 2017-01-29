@@ -8,7 +8,7 @@
     "rename-desktop-file": "gimp.desktop",
     "rename-appdata-file": "gimp.appdata.xml",
     "rename-icon": "gimp",
-    "finish-args": ["--share=ipc", "--socket=x11", "--filesystem=host", "--filesystem=xdg-config/GIMP" ],
+    "finish-args": ["--share=ipc", "--socket=x11", "--filesystem=host", "--filesystem=xdg-config/GIMP", "--share=network", "--socket=system-bus", "--socket=session-bus" ],
     "tags": ["dev"],
     "desktop-file-name-prefix": "(Dev) ",
     "build-options" : {
