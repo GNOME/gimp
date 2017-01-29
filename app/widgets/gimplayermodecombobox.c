@@ -250,9 +250,13 @@ gimp_layer_mode_combo_box_changed (GtkComboBox *gtk_combo)
  * Return value: a new #GimpLayerModeComboBox.
  **/
 GtkWidget *
-gimp_layer_mode_combo_box_new (void)
+gimp_layer_mode_combo_box_new (gboolean with_behind,
+                               gboolean with_replace)
 {
-  return g_object_new (GIMP_TYPE_LAYER_MODE_COMBO_BOX, NULL);
+  return g_object_new (GIMP_TYPE_LAYER_MODE_COMBO_BOX,
+                       "with-behind",  with_behind,
+                       "with-replace", with_replace,
+                       NULL);
 }
 
 void

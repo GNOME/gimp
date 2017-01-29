@@ -237,6 +237,8 @@ libappwidgets_a_sources = \
 	gimplanguagestore.h		\
 	gimplanguagestore-parser.c	\
 	gimplanguagestore-parser.h	\
+	gimplayermodebox.c		\
+	gimplayermodebox.h		\
 	gimplayermodecombobox.c		\
 	gimplayermodecombobox.h		\
 	gimplayertreeview.c		\

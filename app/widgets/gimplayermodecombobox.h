@@ -48,7 +48,8 @@ struct _GimpLayerModeComboBoxClass
 
 GType                gimp_layer_mode_combo_box_get_type (void) G_GNUC_CONST;
 
-GtkWidget          * gimp_layer_mode_combo_box_new      (void);
+GtkWidget          * gimp_layer_mode_combo_box_new      (gboolean               with_behind,
+                                                         gboolean               with_replace);
 
 void                 gimp_layer_mode_combo_box_set_mode (GimpLayerModeComboBox *combo,
                                                          GimpLayerMode          mode);
