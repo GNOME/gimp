@@ -218,6 +218,18 @@
             ]
         },
         {
+            "name": "libwmf",
+            "config-opts": [ "--disable-static", "--disable-dependency-tracking" ],
+            "cleanup": [ "/share/doc", "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "http://downloads.sourceforge.net/wvware/libwmf-0.2.8.4.tar.gz",
+                    "sha256": "5b345c69220545d003ad52bfd035d5d6f4f075e65204114a9e875e84895a7cf8"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],
             "sources": [
