@@ -1,0 +1,68 @@
+GIMP Flatpak HowTo
+==================
+
+* GIMP uses Flatpak's GNOME runtime, which contains a base of libraries,
+  some of which are dependencies of GIMP.
+  Check out the available versions at: http://flatpak.org/runtimes.html
+  Verify that we use the last runtime version in `org.gimp.GIMP.json`:
+
+> "runtime-version": "3.22"
+
+* Install this runtime and the corresponding SDK if you haven't already:
+
+> $ flatpak remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo
+> $ flatpak install gnome org.gnome.Platform//3.22 org.gnome.Sdk//3.22
+
+* Other GIMP dependencies which are not available in the GNOME runtime
+  should be built along as modules within GIMP's flatpak.
+  Check format in `org.gimp.GIMP.json` and add modules if necessary.
+  For more information and options, check flatpak builder's manifest
+  format:
+  http://flatpak.org/flatpak/flatpak-docs.html#flatpak-builder
+
+* On the other hand, if we increased the runtime version in particular,
+  some modules may no longer be necessary.
+  For instance, at time of writing, GNOME runtime 3.22 includes libpng
+  1.6.17 but GIMP requires "libpng >= 1.6.25".
+  Similarly lcms2 was available in the runtime but on a low version.
+  On a higher version runtime, these modules can likely be removed from
+  our manifest.
+
+  Note: I could find the GNOME runtime manifest at:
+  https://git.gnome.org/browse/gnome-sdk-images/tree/org.gnome.Sdk.json.in
+  But this one is based on the Freedesktop runtime and I couldn't find
+  its contents yet.
+
+* For a stable release, remove the following line from the manifest:
+
+>  "desktop-file-name-prefix": "(Dev) ",
+
+* Run the flatpak builder with the following command:
+
+> flatpak-builder --repo=gimp-repo gimp-flatpak-build org.gimp.GIMP.json
+
+  Note: if you ever want to check the `config.log` of any of the module,
+  this is available in a hidden directory of your working path.
+  For instance GIMP build dir will be `.flatpak-builder/build/gimp-1/`.
+  The number will be incrementing at each build (`flatpak-builder`
+  apparently caches every build).
+
+  If it ends successfuly, this will have built then installed GIMP in a
+  new folder `gimp-flatpak-build/` and all its dependencies based on the
+  information from the manifest. It will also create or update the
+  folder `gimp-repo` which is a flatpak repository.
+
+* Test it with:
+
+> flatpak --user remote-add --no-gpg-verify gimp-repo gimp-repo
+> flatpak --user install gimp-repo org.gimp.GIMP
+> flatpak run org.gimp.GIMP
+
+  Also an entry "(Dev) GNU Image Manipulation Software" should now be
+  available in your menus (or GNOME Overview). This will run the flatpak
+  build.
+
+* TODO: this is my current state. I still have to probably write a
+  `.flatpakrepo` file which we can upload on `gimp.org` and should allow
+  GNU/Linux users to install GIMP and our flatpak repo in a few clicks.
+  We will also have to sign the repo with GPG, etc.
