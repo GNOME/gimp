@@ -1422,7 +1422,7 @@ if test "x$with_gs" != xno; then
   if test "x$have_gs" != xyes -a "x$with_gs" = xyes; then
     AC_MSG_ERROR([
 *** Checks for Ghostscript library failed. You can build without it by passing
-*** --without-gs to configure but you won't be able to use PostPcript files then.])
+*** --without-gs to configure but you won't be able to use PostScript files then.])
   fi
 fi
 
