@@ -1781,8 +1781,10 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_DIFFERENCE:     return blendfun_difference;
     case GIMP_LAYER_MODE_DARKEN_ONLY:    return blendfun_darken_only;
     case GIMP_LAYER_MODE_LIGHTEN_ONLY:   return blendfun_lighten_only;
-    case GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY:  return blendfun_luminance_darken_only;
-    case GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY: return blendfun_luminance_lighten_only;
+    case GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY:
+    case GIMP_LAYER_MODE_LUMA_DARKEN_ONLY:  return blendfun_luminance_darken_only;
+    case GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY:
+    case GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY: return blendfun_luminance_lighten_only;
     case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_VIVID_LIGHT:  return blendfun_vivid_light;
     case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
