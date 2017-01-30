@@ -158,6 +158,10 @@ gimp_layer_mode_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (box), group_combo, FALSE, FALSE, 0);
   gtk_widget_show (group_combo);
 
+  gimp_help_set_help_data (group_combo,
+                           _("Switch to another group of modes"),
+                           NULL);
+
   layout = GTK_CELL_LAYOUT (gtk_bin_get_child (GTK_BIN (group_combo)));
   gtk_cell_layout_clear (layout);
 
