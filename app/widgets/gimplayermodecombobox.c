@@ -349,6 +349,9 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
                                            GIMP_LAYER_MODE_OVERLAY,
                                            GIMP_LAYER_MODE_SOFTLIGHT,
                                            GIMP_LAYER_MODE_HARDLIGHT,
+                                           GIMP_LAYER_MODE_VIVID_LIGHT,
+                                           GIMP_LAYER_MODE_PIN_LIGHT,
+                                           GIMP_LAYER_MODE_LINEAR_LIGHT,
                                            GIMP_LAYER_MODE_DIFFERENCE,
                                            GIMP_LAYER_MODE_SUBTRACT,
                                            GIMP_LAYER_MODE_GRAIN_EXTRACT,
@@ -358,9 +361,6 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
                                            GIMP_LAYER_MODE_LCH_CHROMA,
                                            GIMP_LAYER_MODE_LCH_COLOR,
                                            GIMP_LAYER_MODE_LCH_LIGHTNESS,
-                                           GIMP_LAYER_MODE_VIVID_LIGHT,
-                                           GIMP_LAYER_MODE_PIN_LIGHT,
-                                           GIMP_LAYER_MODE_LINEAR_LIGHT,
                                            GIMP_LAYER_MODE_EXCLUSION,
                                            GIMP_LAYER_MODE_LINEAR_BURN);
 
@@ -374,7 +374,7 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
                                               GIMP_LAYER_MODE_BURN, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
-                                              GIMP_LAYER_MODE_HARDLIGHT, -1);
+                                              GIMP_LAYER_MODE_LINEAR_LIGHT, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DIVIDE, -1);
@@ -429,14 +429,14 @@ gimp_layer_mode_combo_box_create_linear_model (GimpLayerModeComboBox *combo)
                                            GIMP_LAYER_MODE_OVERLAY_LINEAR,
                                            GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
                                            GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
+                                           GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
+                                           GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
+                                           GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
                                            GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
                                            GIMP_LAYER_MODE_SUBTRACT_LINEAR,
                                            GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
                                            GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
                                            GIMP_LAYER_MODE_DIVIDE_LINEAR,
-                                           GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
-                                           GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
-                                           GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
                                            GIMP_LAYER_MODE_EXCLUSION_LINEAR,
                                            GIMP_LAYER_MODE_LINEAR_BURN_LINEAR);
 
@@ -450,7 +450,7 @@ gimp_layer_mode_combo_box_create_linear_model (GimpLayerModeComboBox *combo)
                                               GIMP_LAYER_MODE_BURN_LINEAR, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
-                                              GIMP_LAYER_MODE_HARDLIGHT_LINEAR, -1);
+                                              GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DIVIDE_LINEAR, -1);
@@ -499,6 +499,9 @@ gimp_layer_mode_combo_box_create_perceptual_model (GimpLayerModeComboBox *combo)
                                            GIMP_LAYER_MODE_OVERLAY,
                                            GIMP_LAYER_MODE_SOFTLIGHT,
                                            GIMP_LAYER_MODE_HARDLIGHT,
+                                           GIMP_LAYER_MODE_VIVID_LIGHT,
+                                           GIMP_LAYER_MODE_PIN_LIGHT,
+                                           GIMP_LAYER_MODE_LINEAR_LIGHT,
                                            GIMP_LAYER_MODE_DIFFERENCE,
                                            GIMP_LAYER_MODE_SUBTRACT,
                                            GIMP_LAYER_MODE_GRAIN_EXTRACT,
@@ -512,9 +515,6 @@ gimp_layer_mode_combo_box_create_perceptual_model (GimpLayerModeComboBox *combo)
                                            GIMP_LAYER_MODE_LCH_CHROMA,
                                            GIMP_LAYER_MODE_LCH_COLOR,
                                            GIMP_LAYER_MODE_LCH_LIGHTNESS,
-                                           GIMP_LAYER_MODE_VIVID_LIGHT,
-                                           GIMP_LAYER_MODE_PIN_LIGHT,
-                                           GIMP_LAYER_MODE_LINEAR_LIGHT,
                                            GIMP_LAYER_MODE_EXCLUSION,
                                            GIMP_LAYER_MODE_LINEAR_BURN);
 
@@ -528,7 +528,7 @@ gimp_layer_mode_combo_box_create_perceptual_model (GimpLayerModeComboBox *combo)
                                               GIMP_LAYER_MODE_BURN, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
-                                              GIMP_LAYER_MODE_HARDLIGHT, -1);
+                                              GIMP_LAYER_MODE_LINEAR_LIGHT, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DIVIDE, -1);
