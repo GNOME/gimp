@@ -89,3 +89,9 @@ Or simply update them:
   `.flatpakrepo` file which we can upload on `gimp.org` and should allow
   GNU/Linux users to install GIMP and our flatpak repo in a few clicks.
   We will also have to sign the repo with GPG, etc.
+
+* TODO: Windows builds are defined in: build/windows/jhbuild/build.jhbuildrc
+  It would be a good idea to compare contents and maybe deactivate some
+  useless options from dependencies. Also if all builds end up having a
+  very similar dependency list, maybe there could be a meta-format from
+  which both the jhbuild and the flatpak manifest could be generated.
