@@ -246,6 +246,20 @@
             ]
         },
         {
+            "name": "webkitgtk",
+            "disabled": true,
+            "config-opts": [ "--with-gtk=2.0", "--disable-webkit2", "--disable-geolocation", "--disable-video",
+                             "--disable-spellcheck", "--disable-credential-storage", "--disable-web-audio" ],
+            "cleanup": [ "/share/doc", "/bin" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.webkitgtk.org/releases/webkitgtk-2.4.11.tar.xz",
+                    "sha256": "588aea051bfbacced27fdfe0335a957dca839ebe36aa548df39c7bbafdb65bf7"
+                }
+            ]
+        },
+        {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],
             "sources": [
