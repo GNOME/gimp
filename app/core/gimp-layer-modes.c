@@ -570,28 +570,28 @@ gimp_layer_mode_get_for_group (GimpLayerMode       old_mode,
     },
 
     {
-      GIMP_LAYER_MODE_HSV_HUE,
+      -1,
       -1,
       GIMP_LAYER_MODE_HSV_HUE,
       GIMP_LAYER_MODE_HSV_HUE_LEGACY
     },
 
     {
-      GIMP_LAYER_MODE_HSV_SATURATION,
+      -1,
       -1,
       GIMP_LAYER_MODE_HSV_SATURATION,
       GIMP_LAYER_MODE_HSV_SATURATION_LEGACY
     },
 
     {
-      GIMP_LAYER_MODE_HSV_COLOR,
+      -1,
       -1,
       GIMP_LAYER_MODE_HSV_COLOR,
       GIMP_LAYER_MODE_HSV_COLOR_LEGACY
     },
 
     {
-      GIMP_LAYER_MODE_HSV_VALUE,
+      -1,
       -1,
       GIMP_LAYER_MODE_HSV_VALUE,
       GIMP_LAYER_MODE_HSV_VALUE_LEGACY

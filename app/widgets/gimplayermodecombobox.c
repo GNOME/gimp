@@ -334,7 +334,7 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
   GtkListStore *store;
 
   store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
-                                           32,
+                                           28,
                                            GIMP_LAYER_MODE_NORMAL,
                                            GIMP_LAYER_MODE_DISSOLVE,
                                            GIMP_LAYER_MODE_LIGHTEN_ONLY,
@@ -354,10 +354,6 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
                                            GIMP_LAYER_MODE_GRAIN_EXTRACT,
                                            GIMP_LAYER_MODE_GRAIN_MERGE,
                                            GIMP_LAYER_MODE_DIVIDE,
-                                           GIMP_LAYER_MODE_HSV_HUE,
-                                           GIMP_LAYER_MODE_HSV_SATURATION,
-                                           GIMP_LAYER_MODE_HSV_COLOR,
-                                           GIMP_LAYER_MODE_HSV_VALUE,
                                            GIMP_LAYER_MODE_LCH_HUE,
                                            GIMP_LAYER_MODE_LCH_CHROMA,
                                            GIMP_LAYER_MODE_LCH_COLOR,
@@ -382,9 +378,6 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DIVIDE, -1);
-
-  gimp_layer_mode_combo_box_insert_separator (store,
-                                              GIMP_LAYER_MODE_HSV_VALUE, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_LCH_LIGHTNESS, -1);
