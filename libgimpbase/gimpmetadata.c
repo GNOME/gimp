@@ -48,6 +48,8 @@ struct _GimpMetadata
 
 struct _GimpMetadataPrivate
 {
+  /* dummy entry to avoid a critical warning due to size 0 */
+  gpointer _gimp_reserved1;
 };
 
 struct _GimpMetadataClass
