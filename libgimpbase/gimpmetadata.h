@@ -24,6 +24,13 @@
 
 G_BEGIN_DECLS
 
+#define GIMP_TYPE_METADATA            (gimp_metadata_get_type ())
+#define GIMP_METADATA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_METADATA, GimpMetadata))
+#define GIMP_METADATA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_METADATA, GimpMetadataClass))
+#define GIMP_IS_METADATA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_METADATA))
+#define GIMP_IS_METADATA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_METADATA))
+#define GIMP_METADATA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_METADATA, GimpMetadataClass))
+
 typedef enum
 {
   GIMP_METADATA_LOAD_COMMENT     = 1 << 0,
@@ -52,6 +59,7 @@ typedef enum
   GIMP_METADATA_COLORSPACE_ADOBERGB
 } GimpMetadataColorspace;
 
+GType          gimp_metadata_get_type            (void) G_GNUC_CONST;
 
 GimpMetadata * gimp_metadata_new                 (void);
 GimpMetadata * gimp_metadata_duplicate           (GimpMetadata           *metadata);

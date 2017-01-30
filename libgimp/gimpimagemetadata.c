@@ -100,7 +100,7 @@ gimp_image_metadata_load_prepare (gint32        image_ID,
       }
 #endif
 
-      gexiv2_metadata_erase_exif_thumbnail (metadata);
+      gexiv2_metadata_erase_exif_thumbnail (GEXIV2_METADATA (metadata));
     }
 
   return metadata;
@@ -135,10 +135,10 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
     {
       gchar *comment;
 
-      comment = gexiv2_metadata_get_tag_interpreted_string (metadata,
+      comment = gexiv2_metadata_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
                                                             "Exif.Photo.UserComment");
       if (! comment)
-        comment = gexiv2_metadata_get_tag_interpreted_string (metadata,
+        comment = gexiv2_metadata_get_tag_interpreted_string (GEXIV2_METADATA (metadata),
                                                               "Exif.Image.ImageDescription");
 
       if (comment)
@@ -256,6 +256,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
       gdouble             xres;
       gdouble             yres;
       gchar               buffer[32];
+      GExiv2Metadata     *g2metadata = GEXIV2_METADATA (metadata);
 
       image_width  = gimp_image_width  (image_ID);
       image_height = gimp_image_height (image_ID);
@@ -268,15 +269,15 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       /* Exif */
 
-      if (! gexiv2_metadata_has_exif (metadata))
+      if (! gexiv2_metadata_has_exif (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_EXIF;
 
       if (comment)
         {
-          gexiv2_metadata_set_tag_string (metadata,
+          gexiv2_metadata_set_tag_string (g2metadata,
                                           "Exif.Photo.UserComment",
                                           comment);
-          gexiv2_metadata_set_tag_string (metadata,
+          gexiv2_metadata_set_tag_string (g2metadata,
                                           "Exif.Image.ImageDescription",
                                           comment);
         }
@@ -289,11 +290,11 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
                   g_date_time_get_hour (datetime),
                   g_date_time_get_minute (datetime),
                   g_date_time_get_second (datetime));
-      gexiv2_metadata_set_tag_string (metadata,
+      gexiv2_metadata_set_tag_string (g2metadata,
                                       "Exif.Image.DateTime",
                                       buffer);
 
-      gexiv2_metadata_set_tag_string (metadata,
+      gexiv2_metadata_set_tag_string (g2metadata,
                                       "Exif.Image.Software",
                                       PACKAGE_STRING);
 
@@ -306,10 +307,10 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
 
       /* XMP */
 
-      if (! gexiv2_metadata_has_xmp (metadata))
+      if (! gexiv2_metadata_has_xmp (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_XMP;
 
-      gexiv2_metadata_set_tag_string (metadata,
+      gexiv2_metadata_set_tag_string (g2metadata,
                                       "Xmp.dc.Format",
                                       mime_type);
 
@@ -318,12 +319,12 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
           /* TIFF specific XMP data */
 
           g_snprintf (buffer, sizeof (buffer), "%d", image_width);
-          gexiv2_metadata_set_tag_string (metadata,
+          gexiv2_metadata_set_tag_string (g2metadata,
                                           "Xmp.tiff.ImageWidth",
                                           buffer);
 
           g_snprintf (buffer, sizeof (buffer), "%d", image_height);
-          gexiv2_metadata_set_tag_string (metadata,
+          gexiv2_metadata_set_tag_string (g2metadata,
                                           "Xmp.tiff.ImageLength",
                                           buffer);
 
@@ -335,14 +336,14 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
                       g_date_time_get_hour (datetime),
                       g_date_time_get_minute (datetime),
                       g_date_time_get_second (datetime));
-          gexiv2_metadata_set_tag_string (metadata,
+          gexiv2_metadata_set_tag_string (g2metadata,
                                           "Xmp.tiff.DateTime",
                                           buffer);
         }
 
       /* IPTC */
 
-      if (! gexiv2_metadata_has_iptc (metadata))
+      if (! gexiv2_metadata_has_iptc (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
 
       g_snprintf (buffer, sizeof (buffer),
@@ -350,7 +351,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
                   g_date_time_get_year (datetime),
                   g_date_time_get_month (datetime),
                   g_date_time_get_day_of_month (datetime));
-      gexiv2_metadata_set_tag_string (metadata,
+      gexiv2_metadata_set_tag_string (g2metadata,
                                       "Iptc.Application2.DateCreated",
                                       buffer);
 
@@ -361,7 +362,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
                   g_date_time_get_second (datetime),
                   g_date_time_get_hour (datetime),
                   g_date_time_get_minute (datetime));
-      gexiv2_metadata_set_tag_string (metadata,
+      gexiv2_metadata_set_tag_string (g2metadata,
                                       "Iptc.Application2.TimeCreated",
                                       buffer);
 
@@ -401,7 +402,8 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
                                  GFile                  *file,
                                  GError                **error)
 {
-  GExiv2Metadata *new_metadata;
+  GimpMetadata   *new_metadata;
+  GExiv2Metadata *new_g2metadata;
   gboolean        support_exif;
   gboolean        support_xmp;
   gboolean        support_iptc;
@@ -423,25 +425,27 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
   /* read metadata from saved file */
   new_metadata = gimp_metadata_load_from_file (file, error);
+  new_g2metadata = GEXIV2_METADATA (new_metadata);
 
   if (! new_metadata)
     return FALSE;
 
-  support_exif = gexiv2_metadata_get_supports_exif (new_metadata);
-  support_xmp  = gexiv2_metadata_get_supports_xmp  (new_metadata);
-  support_iptc = gexiv2_metadata_get_supports_iptc (new_metadata);
+  support_exif = gexiv2_metadata_get_supports_exif (new_g2metadata);
+  support_xmp  = gexiv2_metadata_get_supports_xmp  (new_g2metadata);
+  support_iptc = gexiv2_metadata_get_supports_iptc (new_g2metadata);
 
   if ((flags & GIMP_METADATA_SAVE_EXIF) && support_exif)
     {
-      gchar **exif_data = gexiv2_metadata_get_exif_tags (metadata);
+      gchar **exif_data = gexiv2_metadata_get_exif_tags (GEXIV2_METADATA (metadata));
 
       for (i = 0; exif_data[i] != NULL; i++)
         {
-          if (! gexiv2_metadata_has_tag (new_metadata, exif_data[i]) &&
+          if (! gexiv2_metadata_has_tag (new_g2metadata, exif_data[i]) &&
               gimp_metadata_is_tag_supported (exif_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (metadata, exif_data[i]);
-              gexiv2_metadata_set_tag_string (new_metadata, exif_data[i],
+              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
+                                                      exif_data[i]);
+              gexiv2_metadata_set_tag_string (new_g2metadata, exif_data[i],
                                               value);
               g_free (value);
             }
@@ -452,15 +456,15 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
   if ((flags & GIMP_METADATA_SAVE_XMP) && support_xmp)
     {
-      gchar **xmp_data = gexiv2_metadata_get_xmp_tags (metadata);
+      gchar **xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
 
       for (i = 0; xmp_data[i] != NULL; i++)
         {
-          if (! gexiv2_metadata_has_tag (new_metadata, xmp_data[i]) &&
+          if (! gexiv2_metadata_has_tag (new_g2metadata, xmp_data[i]) &&
               gimp_metadata_is_tag_supported (xmp_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (metadata, xmp_data[i]);
-              gexiv2_metadata_set_tag_string (new_metadata, xmp_data[i],
+              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata), xmp_data[i]);
+              gexiv2_metadata_set_tag_string (new_g2metadata, xmp_data[i],
                                               value);
               g_free (value);
             }
@@ -471,15 +475,16 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
   if ((flags & GIMP_METADATA_SAVE_IPTC) && support_iptc)
     {
-      gchar **iptc_data = gexiv2_metadata_get_iptc_tags (metadata);
+      gchar **iptc_data = gexiv2_metadata_get_iptc_tags (GEXIV2_METADATA (metadata));
 
       for (i = 0; iptc_data[i] != NULL; i++)
         {
-          if (! gexiv2_metadata_has_tag (new_metadata, iptc_data[i]) &&
+          if (! gexiv2_metadata_has_tag (new_g2metadata, iptc_data[i]) &&
               gimp_metadata_is_tag_supported (iptc_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (metadata, iptc_data[i]);
-              gexiv2_metadata_set_tag_string (new_metadata, iptc_data[i],
+              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
+                                                      iptc_data[i]);
+              gexiv2_metadata_set_tag_string (new_g2metadata, iptc_data[i],
                                               value);
               g_free (value);
             }
@@ -524,27 +529,27 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
         {
           gchar buffer[32];
 
-          gexiv2_metadata_set_exif_thumbnail_from_buffer (new_metadata,
+          gexiv2_metadata_set_exif_thumbnail_from_buffer (new_g2metadata,
                                                           (guchar *) thumb_buffer,
                                                           count);
 
           g_snprintf (buffer, sizeof (buffer), "%d", thumbw);
-          gexiv2_metadata_set_tag_string (new_metadata,
+          gexiv2_metadata_set_tag_string (new_g2metadata,
                                           "Exif.Thumbnail.ImageWidth",
                                           buffer);
 
           g_snprintf (buffer, sizeof (buffer), "%d", thumbh);
-          gexiv2_metadata_set_tag_string (new_metadata,
+          gexiv2_metadata_set_tag_string (new_g2metadata,
                                           "Exif.Thumbnail.ImageLength",
                                           buffer);
 
-          gexiv2_metadata_set_tag_string (new_metadata,
+          gexiv2_metadata_set_tag_string (new_g2metadata,
                                           "Exif.Thumbnail.BitsPerSample",
                                           "8 8 8");
-          gexiv2_metadata_set_tag_string (new_metadata,
+          gexiv2_metadata_set_tag_string (new_g2metadata,
                                           "Exif.Thumbnail.SamplesPerPixel",
                                           "3");
-          gexiv2_metadata_set_tag_string (new_metadata,
+          gexiv2_metadata_set_tag_string (new_g2metadata,
                                           "Exif.Thumbnail.PhotometricInterpretation",
                                           "6");
 
@@ -579,7 +584,7 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
   if (! metadata)
     return -1;
 
-  if (! gexiv2_metadata_get_exif_thumbnail (metadata,
+  if (! gexiv2_metadata_get_exif_thumbnail (GEXIV2_METADATA (metadata),
                                             &thumbnail_buffer,
                                             &thumbnail_size))
     {
@@ -611,7 +616,7 @@ gimp_image_metadata_load_thumbnail (GFile   *file,
       gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
       gimp_image_metadata_rotate (image_ID,
-                                  gexiv2_metadata_get_orientation (metadata));
+                                  gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata)));
     }
 
   g_object_unref (metadata);
@@ -731,7 +736,7 @@ gimp_image_metadata_rotate_query (gint32        image_ID,
   GExiv2Orientation  orientation;
   gboolean           query = interactive;
 
-  orientation = gexiv2_metadata_get_orientation (metadata);
+  orientation = gexiv2_metadata_get_orientation (GEXIV2_METADATA (metadata));
 
   if (orientation <= GEXIV2_ORIENTATION_NORMAL ||
       orientation >  GEXIV2_ORIENTATION_MAX)
@@ -771,9 +776,9 @@ gimp_image_metadata_rotate_query (gint32        image_ID,
 
   gimp_image_metadata_rotate (image_ID, orientation);
 
-  gexiv2_metadata_set_tag_string (metadata,
+  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                   "Exif.Image.Orientation", "1");
-  gexiv2_metadata_set_tag_string (metadata,
+  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                   "Xmp.tiff.Orientation", "1");
 }
 

@@ -55,7 +55,7 @@ typedef struct _GimpValueArray   GimpValueArray;
 typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
                                          gpointer                user_data);
 
-typedef struct _GExiv2Metadata GimpMetadata;
+typedef struct _GimpMetadata GimpMetadata;
 
 
 /**

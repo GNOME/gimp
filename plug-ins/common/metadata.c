@@ -78,7 +78,7 @@ static void       run                              (const gchar      *name,
                                                     GimpParam       **return_vals);
 
 static gboolean   metadata_dialog                  (gint32            image_id,
-                                                    GExiv2Metadata   *metadata);
+                                                    GimpMetadata     *metadata);
 
 static void       metadata_dialog_set_metadata     (GExiv2Metadata   *metadata,
                                                     GtkBuilder       *builder);
@@ -209,8 +209,8 @@ run (const gchar      *name,
 }
 
 static gboolean
-metadata_dialog (gint32          image_id,
-                 GExiv2Metadata *metadata)
+metadata_dialog (gint32        image_id,
+                 GimpMetadata *metadata)
 {
   GtkBuilder *builder;
   GtkWidget  *dialog;
@@ -271,7 +271,7 @@ metadata_dialog (gint32          image_id,
                     G_CALLBACK (metadata_dialog_iptc_callback),
                     builder);
 
-  metadata_dialog_set_metadata (metadata, builder);
+  metadata_dialog_set_metadata (GEXIV2_METADATA (metadata), builder);
 
   gtk_dialog_run (GTK_DIALOG (dialog));
 
@@ -472,7 +472,7 @@ metadata_dialog_iptc_callback (GtkWidget  *dialog,
                                GtkBuilder *builder)
 {
 #if 0
-  GExiv2Metadata *metadata;
+  GimpMetadata *metadata;
   gint            i;
 
   metadata = gimp_image_get_metadata (handler->image);
@@ -486,7 +486,8 @@ metadata_dialog_iptc_callback (GtkWidget  *dialog,
         {
           GtkEntry *entry = GTK_ENTRY (object);
 
-          gexiv2_metadata_set_tag_string (metadata, iptc_tags[i].tag,
+          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                          iptc_tags[i].tag,
                                           gtk_entry_get_text (entry));
         }
       else  if (!strcmp ("multi", iptc_tags[i].mode))
@@ -502,7 +503,8 @@ metadata_dialog_iptc_callback (GtkWidget  *dialog,
           gtk_text_buffer_get_end_iter (buffer, &end);
 
           text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
-          gexiv2_metadata_set_tag_string (metadata, iptc_tags[i].tag, text);
+          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                          iptc_tags[i].tag, text);
           g_free (text);
         }
     }

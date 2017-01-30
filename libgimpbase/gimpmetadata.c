@@ -38,6 +38,32 @@
 
 #include "libgimp/libgimp-intl.h"
 
+typedef struct _GimpMetadataClass   GimpMetadataClass;
+typedef struct _GimpMetadataPrivate GimpMetadataPrivate;
+
+struct _GimpMetadata
+{
+  GExiv2Metadata parent_instance;
+};
+
+struct _GimpMetadataPrivate
+{
+};
+
+struct _GimpMetadataClass
+{
+  GExiv2MetadataClass parent_class;
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+};
 
 /**
  * SECTION: gimpmetadata
@@ -142,6 +168,25 @@ static const guint8 wilber_jpg[] =
 
 static const guint wilber_jpg_len = G_N_ELEMENTS (wilber_jpg);
 
+G_DEFINE_TYPE_WITH_PRIVATE (GimpMetadata, gimp_metadata, GEXIV2_TYPE_METADATA)
+
+
+static void
+gimp_metadata_class_init (GimpMetadataClass *klass)
+{
+  /* this is just a placeholder class to avoid being limited by
+   * GExiv2Metadata in the future...
+   */
+}
+
+static void
+gimp_metadata_init (GimpMetadata *metadata)
+{
+  /* this is just a placeholder class to avoid being limited by
+   * GExiv2Metadata in the future...
+   */
+}
+
 
 /**
  * gimp_metadata_new:
@@ -155,13 +200,15 @@ static const guint wilber_jpg_len = G_N_ELEMENTS (wilber_jpg);
 GimpMetadata *
 gimp_metadata_new (void)
 {
-  GExiv2Metadata *metadata = NULL;
+  GimpMetadata *metadata = NULL;
 
   if (gexiv2_initialize ())
     {
-      metadata = gexiv2_metadata_new ();
+      metadata = g_object_new (GIMP_TYPE_METADATA, NULL);
+                               gexiv2_metadata_new ();
 
-      if (! gexiv2_metadata_open_buf (metadata, wilber_jpg, wilber_jpg_len,
+      if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (metadata),
+                                      wilber_jpg, wilber_jpg_len,
                                       NULL))
         {
           g_object_unref (metadata);
@@ -296,7 +343,7 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
           decoded = g_base64_decode (value, &len);
 
           if (decoded[len - 1] == '\0')
-            gexiv2_metadata_set_tag_string (parse_data->metadata,
+            gexiv2_metadata_set_tag_string (GEXIV2_METADATA (parse_data->metadata),
                                             parse_data->name,
                                             (const gchar *) decoded);
 
@@ -304,7 +351,7 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
         }
       else
         {
-          gexiv2_metadata_set_tag_string (parse_data->metadata,
+          gexiv2_metadata_set_tag_string (GEXIV2_METADATA (parse_data->metadata),
                                           parse_data->name,
                                           value);
         }
@@ -440,13 +487,14 @@ gimp_metadata_serialize (GimpMetadata *metadata)
   g_string_append (string, "<?xml version='1.0' encoding='UTF-8'?>\n");
   g_string_append (string, "<metadata>\n");
 
-  exif_data = gexiv2_metadata_get_exif_tags (metadata);
+  exif_data = gexiv2_metadata_get_exif_tags (GEXIV2_METADATA (metadata));
 
   if (exif_data)
     {
       for (i = 0; exif_data[i] != NULL; i++)
         {
-          value = gexiv2_metadata_get_tag_string (metadata, exif_data[i]);
+          value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
+                                                  exif_data[i]);
           escaped = gimp_metadata_escape (exif_data[i], value, &base64);
           g_free (value);
 
@@ -456,13 +504,14 @@ gimp_metadata_serialize (GimpMetadata *metadata)
       g_strfreev (exif_data);
     }
 
-  xmp_data = gexiv2_metadata_get_xmp_tags (metadata);
+  xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
 
   if (xmp_data)
     {
       for (i = 0; xmp_data[i] != NULL; i++)
         {
-          value = gexiv2_metadata_get_tag_string (metadata, xmp_data[i]);
+          value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
+                                                  xmp_data[i]);
           escaped = gimp_metadata_escape (xmp_data[i], value, &base64);
           g_free (value);
 
@@ -472,13 +521,14 @@ gimp_metadata_serialize (GimpMetadata *metadata)
       g_strfreev (xmp_data);
     }
 
-  iptc_data = gexiv2_metadata_get_iptc_tags (metadata);
+  iptc_data = gexiv2_metadata_get_iptc_tags (GEXIV2_METADATA (metadata));
 
   if (iptc_data)
     {
       for (i = 0; iptc_data[i] != NULL; i++)
         {
-          value = gexiv2_metadata_get_tag_string (metadata, iptc_data[i]);
+          value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
+                                                  iptc_data[i]);
           escaped = gimp_metadata_escape (iptc_data[i], value, &base64);
           g_free (value);
 
@@ -508,9 +558,9 @@ GimpMetadata  *
 gimp_metadata_load_from_file (GFile   *file,
                               GError **error)
 {
-  GExiv2Metadata *meta = NULL;
-  gchar          *path;
-  gchar          *filename;
+  GimpMetadata *meta = NULL;
+  gchar        *path;
+  gchar        *filename;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -534,9 +584,9 @@ gimp_metadata_load_from_file (GFile   *file,
 
   if (gexiv2_initialize ())
     {
-      meta = gexiv2_metadata_new ();
+      meta = g_object_new (GIMP_TYPE_METADATA, NULL);
 
-      if (! gexiv2_metadata_open_path (meta, filename, error))
+      if (! gexiv2_metadata_open_path (GEXIV2_METADATA (meta), filename, error))
         {
           g_object_unref (meta);
           g_free (filename);
@@ -592,7 +642,8 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
 
   g_free (path);
 
-  success = gexiv2_metadata_save_file (metadata, filename, error);
+  success = gexiv2_metadata_save_file (GEXIV2_METADATA (metadata),
+                                       filename, error);
 
   g_free (filename);
 
@@ -624,7 +675,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
   guint8        data_size[2] = { 0, };
   const guint8  eoi[2] = { 0xff, 0xd9 };
 
-  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (GIMP_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (exif_data != NULL, FALSE);
   g_return_val_if_fail (exif_data_length > 0, FALSE);
   g_return_val_if_fail (exif_data_length + 2 < 65536, FALSE);
@@ -644,7 +695,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
 
   exif_metadata = gimp_metadata_new ();
 
-  if (! gexiv2_metadata_open_buf (exif_metadata,
+  if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (exif_metadata),
                                   exif_bytes->data, exif_bytes->len, error))
     {
       g_object_unref (exif_metadata);
@@ -652,7 +703,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
       return FALSE;
     }
 
-  if (! gexiv2_metadata_has_exif (exif_metadata))
+  if (! gexiv2_metadata_has_exif (GEXIV2_METADATA (exif_metadata)))
     {
       g_set_error (error, gimp_metadata_error_quark (), 0,
                    _("Parsing Exif data failed."));
@@ -696,14 +747,14 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
 
   xmp_metadata = gimp_metadata_new ();
 
-  if (! gexiv2_metadata_open_buf (xmp_metadata,
+  if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (xmp_metadata),
                                   xmp_data, xmp_data_length, error))
     {
       g_object_unref (xmp_metadata);
       return FALSE;
     }
 
-  if (! gexiv2_metadata_has_xmp (xmp_metadata))
+  if (! gexiv2_metadata_has_xmp (GEXIV2_METADATA (xmp_metadata)))
     {
       g_set_error (error, gimp_metadata_error_quark (), 0,
                    _("Parsing XMP data failed."));
@@ -737,10 +788,12 @@ gimp_metadata_set_pixel_size (GimpMetadata *metadata,
   g_return_if_fail (GEXIV2_IS_METADATA (metadata));
 
   g_snprintf (buffer, sizeof (buffer), "%d", width);
-  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.ImageWidth", buffer);
+  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                  "Exif.Image.ImageWidth", buffer);
 
   g_snprintf (buffer, sizeof (buffer), "%d", height);
-  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.ImageLength", buffer);
+  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                  "Exif.Image.ImageLength", buffer);
 }
 
 /**
@@ -762,7 +815,8 @@ gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
 
   g_snprintf (buffer, sizeof (buffer), "%d %d %d",
               bits_per_sample, bits_per_sample, bits_per_sample);
-  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.BitsPerSample", buffer);
+  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                  "Exif.Image.BitsPerSample", buffer);
 }
 
 /**
@@ -790,17 +844,17 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
 
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
 
-  if (gexiv2_metadata_get_exif_tag_rational (metadata,
+  if (gexiv2_metadata_get_exif_tag_rational (GEXIV2_METADATA (metadata),
                                              "Exif.Image.XResolution",
                                              &xnom, &xdenom) &&
-      gexiv2_metadata_get_exif_tag_rational (metadata,
+      gexiv2_metadata_get_exif_tag_rational (GEXIV2_METADATA (metadata),
                                              "Exif.Image.YResolution",
                                              &ynom, &ydenom))
     {
       gchar *un;
       gint   exif_unit = 2;
 
-      un = gexiv2_metadata_get_tag_string (metadata,
+      un = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
                                            "Exif.Image.ResolutionUnit");
       if (un)
         {
@@ -890,16 +944,17 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
         break;
     }
 
-  gexiv2_metadata_set_exif_tag_rational (metadata,
+  gexiv2_metadata_set_exif_tag_rational (GEXIV2_METADATA (metadata),
                                          "Exif.Image.XResolution",
                                          ROUND (xres * factor), factor);
 
-  gexiv2_metadata_set_exif_tag_rational (metadata,
+  gexiv2_metadata_set_exif_tag_rational (GEXIV2_METADATA (metadata),
                                          "Exif.Image.YResolution",
                                          ROUND (yres * factor), factor);
 
   g_snprintf (buffer, sizeof (buffer), "%d", exif_unit);
-  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.ResolutionUnit", buffer);
+  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                  "Exif.Image.ResolutionUnit", buffer);
 }
 
 /**
@@ -919,19 +974,21 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
 {
   glong exif_cs = -1;
 
-  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata),
+  g_return_val_if_fail (GIMP_IS_METADATA (metadata),
                         GIMP_METADATA_COLORSPACE_UNSPECIFIED);
 
   /*  the logic here was mostly taken from darktable and libkexiv2  */
 
-  if (gexiv2_metadata_has_tag (metadata, "Exif.Photo.ColorSpace"))
+  if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
+                               "Exif.Photo.ColorSpace"))
     {
-      exif_cs = gexiv2_metadata_get_tag_long (metadata,
+      exif_cs = gexiv2_metadata_get_tag_long (GEXIV2_METADATA (metadata),
                                               "Exif.Photo.ColorSpace");
     }
-  else if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
+  else if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
+                                    "Xmp.exif.ColorSpace"))
     {
-      exif_cs = gexiv2_metadata_get_tag_long (metadata,
+      exif_cs = gexiv2_metadata_get_tag_long (GEXIV2_METADATA (metadata),
                                               "Xmp.exif.ColorSpace");
     }
 
@@ -949,7 +1006,7 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
         {
           gchar *iop_index;
 
-          iop_index = gexiv2_metadata_get_tag_string (metadata,
+          iop_index = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
                                                       "Exif.Iop.InteroperabilityIndex");
 
           if (! g_strcmp0 (iop_index, "R03"))
@@ -968,11 +1025,12 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
           g_free (iop_index);
         }
 
-      if (gexiv2_metadata_has_tag (metadata, "Exif.Nikon3.ColorSpace"))
+      if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
+                                   "Exif.Nikon3.ColorSpace"))
         {
           glong nikon_cs;
 
-          nikon_cs = gexiv2_metadata_get_tag_long (metadata,
+          nikon_cs = gexiv2_metadata_get_tag_long (GEXIV2_METADATA (metadata),
                                                    "Exif.Nikon3.ColorSpace");
 
           if (nikon_cs == 0x01)
@@ -985,11 +1043,12 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
             }
         }
 
-      if (gexiv2_metadata_has_tag (metadata, "Exif.Canon.ColorSpace"))
+      if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
+                                   "Exif.Canon.ColorSpace"))
         {
           glong canon_cs;
 
-          canon_cs = gexiv2_metadata_get_tag_long (metadata,
+          canon_cs = gexiv2_metadata_get_tag_long (GEXIV2_METADATA (metadata),
                                                    "Exif.Canon.ColorSpace");
 
           if (canon_cs == 0x01)
@@ -1024,59 +1083,59 @@ void
 gimp_metadata_set_colorspace (GimpMetadata           *metadata,
                               GimpMetadataColorspace  colorspace)
 {
-  g_return_if_fail (GEXIV2_IS_METADATA (metadata));
+  GExiv2Metadata *g2metadata = GEXIV2_METADATA (metadata);
 
   switch (colorspace)
     {
     case GIMP_METADATA_COLORSPACE_UNSPECIFIED:
-      gexiv2_metadata_clear_tag (metadata, "Exif.Photo.ColorSpace");
-      gexiv2_metadata_clear_tag (metadata, "Xmp.exif.ColorSpace");
-      gexiv2_metadata_clear_tag (metadata, "Exif.Iop.InteroperabilityIndex");
-      gexiv2_metadata_clear_tag (metadata, "Exif.Nikon3.ColorSpace");
-      gexiv2_metadata_clear_tag (metadata, "Exif.Canon.ColorSpace");
+      gexiv2_metadata_clear_tag (g2metadata, "Exif.Photo.ColorSpace");
+      gexiv2_metadata_clear_tag (g2metadata, "Xmp.exif.ColorSpace");
+      gexiv2_metadata_clear_tag (g2metadata, "Exif.Iop.InteroperabilityIndex");
+      gexiv2_metadata_clear_tag (g2metadata, "Exif.Nikon3.ColorSpace");
+      gexiv2_metadata_clear_tag (g2metadata, "Exif.Canon.ColorSpace");
       break;
 
     case GIMP_METADATA_COLORSPACE_UNCALIBRATED:
-      gexiv2_metadata_set_tag_long (metadata, "Exif.Photo.ColorSpace", 0xffff);
-      if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
-        gexiv2_metadata_set_tag_long (metadata, "Xmp.exif.ColorSpace", 0xffff);
-      gexiv2_metadata_clear_tag (metadata, "Exif.Iop.InteroperabilityIndex");
-      gexiv2_metadata_clear_tag (metadata, "Exif.Nikon3.ColorSpace");
-      gexiv2_metadata_clear_tag (metadata, "Exif.Canon.ColorSpace");
+      gexiv2_metadata_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0xffff);
+      if (gexiv2_metadata_has_tag (g2metadata, "Xmp.exif.ColorSpace"))
+        gexiv2_metadata_set_tag_long (g2metadata, "Xmp.exif.ColorSpace", 0xffff);
+      gexiv2_metadata_clear_tag (g2metadata, "Exif.Iop.InteroperabilityIndex");
+      gexiv2_metadata_clear_tag (g2metadata, "Exif.Nikon3.ColorSpace");
+      gexiv2_metadata_clear_tag (g2metadata, "Exif.Canon.ColorSpace");
       break;
 
     case GIMP_METADATA_COLORSPACE_SRGB:
-      gexiv2_metadata_set_tag_long (metadata, "Exif.Photo.ColorSpace", 0x01);
+      gexiv2_metadata_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0x01);
 
-      if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
-        gexiv2_metadata_set_tag_long (metadata, "Xmp.exif.ColorSpace", 0x01);
+      if (gexiv2_metadata_has_tag (g2metadata, "Xmp.exif.ColorSpace"))
+        gexiv2_metadata_set_tag_long (g2metadata, "Xmp.exif.ColorSpace", 0x01);
 
-      if (gexiv2_metadata_has_tag (metadata, "Exif.Iop.InteroperabilityIndex"))
-        gexiv2_metadata_set_tag_string (metadata,
+      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Iop.InteroperabilityIndex"))
+        gexiv2_metadata_set_tag_string (g2metadata,
                                         "Exif.Iop.InteroperabilityIndex", "R98");
 
-      if (gexiv2_metadata_has_tag (metadata, "Exif.Nikon3.ColorSpace"))
-        gexiv2_metadata_set_tag_long (metadata, "Exif.Nikon3.ColorSpace", 0x01);
+      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Nikon3.ColorSpace"))
+        gexiv2_metadata_set_tag_long (g2metadata, "Exif.Nikon3.ColorSpace", 0x01);
 
-      if (gexiv2_metadata_has_tag (metadata, "Exif.Canon.ColorSpace"))
-        gexiv2_metadata_set_tag_long (metadata, "Exif.Canon.ColorSpace", 0x01);
+      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Canon.ColorSpace"))
+        gexiv2_metadata_set_tag_long (g2metadata, "Exif.Canon.ColorSpace", 0x01);
       break;
 
     case GIMP_METADATA_COLORSPACE_ADOBERGB:
-      gexiv2_metadata_set_tag_long (metadata, "Exif.Photo.ColorSpace", 0x02);
+      gexiv2_metadata_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0x02);
 
-      if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
-        gexiv2_metadata_set_tag_long (metadata, "Xmp.exif.ColorSpace", 0x02);
+      if (gexiv2_metadata_has_tag (g2metadata, "Xmp.exif.ColorSpace"))
+        gexiv2_metadata_set_tag_long (g2metadata, "Xmp.exif.ColorSpace", 0x02);
 
-      if (gexiv2_metadata_has_tag (metadata, "Exif.Iop.InteroperabilityIndex"))
-        gexiv2_metadata_set_tag_string (metadata,
+      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Iop.InteroperabilityIndex"))
+        gexiv2_metadata_set_tag_string (g2metadata,
                                         "Exif.Iop.InteroperabilityIndex", "R03");
 
-      if (gexiv2_metadata_has_tag (metadata, "Exif.Nikon3.ColorSpace"))
-        gexiv2_metadata_set_tag_long (metadata, "Exif.Nikon3.ColorSpace", 0x02);
+      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Nikon3.ColorSpace"))
+        gexiv2_metadata_set_tag_long (g2metadata, "Exif.Nikon3.ColorSpace", 0x02);
 
-      if (gexiv2_metadata_has_tag (metadata, "Exif.Canon.ColorSpace"))
-        gexiv2_metadata_set_tag_long (metadata, "Exif.Canon.ColorSpace", 0x02);
+      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Canon.ColorSpace"))
+        gexiv2_metadata_set_tag_long (g2metadata, "Exif.Canon.ColorSpace", 0x02);
       break;
     }
 }
@@ -1151,20 +1210,22 @@ static void
 gimp_metadata_add (GimpMetadata *src,
                    GimpMetadata *dest)
 {
+  GExiv2Metadata *g2src  = GEXIV2_METADATA (src);
+  GExiv2Metadata *g2dest = GEXIV2_METADATA (dest);
   gchar *value;
   gint   i;
 
-  if (gexiv2_metadata_get_supports_exif (src) &&
-      gexiv2_metadata_get_supports_exif (dest))
+  if (gexiv2_metadata_get_supports_exif (g2src) &&
+      gexiv2_metadata_get_supports_exif (g2dest))
     {
-      gchar **exif_data = gexiv2_metadata_get_exif_tags (src);
+      gchar **exif_data = gexiv2_metadata_get_exif_tags (g2src);
 
       if (exif_data)
         {
           for (i = 0; exif_data[i] != NULL; i++)
             {
-              value = gexiv2_metadata_get_tag_string (src, exif_data[i]);
-              gexiv2_metadata_set_tag_string (dest, exif_data[i], value);
+              value = gexiv2_metadata_get_tag_string (g2src, exif_data[i]);
+              gexiv2_metadata_set_tag_string (g2dest, exif_data[i], value);
               g_free (value);
             }
 
@@ -1172,17 +1233,17 @@ gimp_metadata_add (GimpMetadata *src,
         }
     }
 
-  if (gexiv2_metadata_get_supports_xmp (src) &&
-      gexiv2_metadata_get_supports_xmp (dest))
+  if (gexiv2_metadata_get_supports_xmp (g2src) &&
+      gexiv2_metadata_get_supports_xmp (g2dest))
     {
-      gchar **xmp_data = gexiv2_metadata_get_xmp_tags (src);
+      gchar **xmp_data = gexiv2_metadata_get_xmp_tags (g2src);
 
       if (xmp_data)
         {
           for (i = 0; xmp_data[i] != NULL; i++)
             {
-              value = gexiv2_metadata_get_tag_string (src, xmp_data[i]);
-              gexiv2_metadata_set_tag_string (dest, xmp_data[i], value);
+              value = gexiv2_metadata_get_tag_string (g2src, xmp_data[i]);
+              gexiv2_metadata_set_tag_string (g2dest, xmp_data[i], value);
               g_free (value);
             }
 
@@ -1190,17 +1251,17 @@ gimp_metadata_add (GimpMetadata *src,
         }
     }
 
-  if (gexiv2_metadata_get_supports_iptc (src) &&
-      gexiv2_metadata_get_supports_iptc (dest))
+  if (gexiv2_metadata_get_supports_iptc (g2src) &&
+      gexiv2_metadata_get_supports_iptc (g2dest))
     {
-      gchar **iptc_data = gexiv2_metadata_get_iptc_tags (src);
+      gchar **iptc_data = gexiv2_metadata_get_iptc_tags (g2src);
 
       if (iptc_data)
         {
           for (i = 0; iptc_data[i] != NULL; i++)
             {
-              value = gexiv2_metadata_get_tag_string (src, iptc_data[i]);
-              gexiv2_metadata_set_tag_string (dest, iptc_data[i], value);
+              value = gexiv2_metadata_get_tag_string (g2src, iptc_data[i]);
+              gexiv2_metadata_set_tag_string (g2dest, iptc_data[i], value);
               g_free (value);
             }
 

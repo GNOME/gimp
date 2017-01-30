@@ -471,9 +471,12 @@ run (const gchar      *name,
                    * exiv2 saves them with wrong type and the original values
                    * could be invalid, see also bug 761823
                    */
-                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.0x0118");
-                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.0x0119");
-                  gexiv2_metadata_clear_tag (metadata, "Exif.Image.PageNumber");
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata),
+                                             "Exif.Image.0x0118");
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata),
+                                             "Exif.Image.0x0119");
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata),
+                                             "Exif.Image.PageNumber");
 
                   gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
 
