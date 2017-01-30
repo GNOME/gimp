@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-22 21:19+0100\n"
-"PO-Revision-Date: 2017-01-22 21:20+0100\n"
+"POT-Creation-Date: 2017-01-30 02:11+0100\n"
+"PO-Revision-Date: 2017-01-30 02:12+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2774,7 +2774,7 @@ msgstr "Domyślna przerwa między klatkami:"
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1546
 #: ../plug-ins/file-webp/file-webp-dialog.c:306
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "ms"
 
@@ -6086,6 +6086,23 @@ msgstr "Wyszukiwanie gradientu XY"
 msgid "Flow step %d"
 msgstr "Płynący krok %d"
 
+#: ../plug-ins/common/wavelet-decompose.c:86
+#: ../plug-ins/common/wavelet-decompose.c:267
+msgid "Wavelet decompose"
+msgstr "Rozkład falki"
+
+#: ../plug-ins/common/wavelet-decompose.c:91
+msgid "Wavelet-decompose"
+msgstr "Rozkład falki"
+
+#: ../plug-ins/common/wavelet-decompose.c:161
+msgid "Wavelet-Decompose"
+msgstr "Rozkład falki"
+
+#: ../plug-ins/common/wavelet-decompose.c:296
+msgid "Scales:"
+msgstr "Waga:"
+
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
 msgstr "W systemie operacyjnym brakuje pamięci lub zasobów."
@@ -8777,19 +8794,23 @@ msgstr "_Powtarzanie w nieskończoność"
 msgid "_Delay between frames where unspecified:"
 msgstr "_Opóźnienie między klatkami, jeśli nie podano:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:8
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:7
+msgid "GIF supports hundredths of a second precision."
+msgstr "Format GIF obsługuje dokładność na poziomie setnych sekundy."
+
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:9
 msgid "_Frame disposal where unspecified:"
 msgstr "Traktowanie _klatek, jeśli nie podano:"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:9
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
 msgid "_Use delay entered above for all frames"
 msgstr "_Użycie opóźnienia podanego powyżej dla wszystkich klatek"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:10
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
 msgid "U_se disposal entered above for all frames"
 msgstr "Uży_cie traktowania podanego powyżej dla wszystkich klatek"
 
-#: ../plug-ins/ui/plug-in-file-gif.ui.h:11
+#: ../plug-ins/ui/plug-in-file-gif.ui.h:12
 msgid "Animated GIF Options"
 msgstr "Opcje animacji GIF"
 
