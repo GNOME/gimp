@@ -28,6 +28,7 @@
 
 #include "paint/gimppaintoptions.h"
 
+#include "widgets/gimplayermodebox.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpspinscale.h"
 #include "widgets/gimpviewablebox.h"
@@ -113,9 +114,10 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   tool_type = tool_options->tool_info->tool_type;
 
   /*  the paint mode menu  */
-  menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (menu), _("Mode"));
-  g_object_set (menu, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  menu = gimp_prop_layer_mode_box_new (config, "paint-mode", TRUE, FALSE);
+  gimp_layer_mode_box_set_label (GIMP_LAYER_MODE_BOX (menu), _("Mode"));
+  gimp_layer_mode_box_set_ellipsize (GIMP_LAYER_MODE_BOX (menu),
+                                     PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (vbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 

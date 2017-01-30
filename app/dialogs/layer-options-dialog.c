@@ -35,9 +35,9 @@
 #include "text/gimptextlayer.h"
 
 #include "widgets/gimpcontainertreeview.h"
+#include "widgets/gimplayermodebox.h"
 #include "widgets/gimpspinscale.h"
 #include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-constructors.h"
 
 #include "item-options-dialog.h"
 #include "layer-options-dialog.h"
@@ -58,6 +58,7 @@ struct _LayerOptionsDialog
   GimpLayerOptionsCallback  callback;
   gpointer                  user_data;
 
+  GtkWidget                *mode_box;
   GtkWidget                *size_se;
   GtkWidget                *offset_se;
 };
@@ -157,12 +158,10 @@ layer_options_dialog_new (GimpImage                *image,
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) layer_options_dialog_free, private);
 
-  combo = gimp_paint_mode_menu_new (FALSE, FALSE);
-  item_options_dialog_add_widget (dialog, _("_Mode:"), combo);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                              private->mode,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
-                              &private->mode);
+  private->mode_box = gimp_layer_mode_box_new (FALSE, FALSE);
+  item_options_dialog_add_widget (dialog, _("_Mode:"), private->mode_box);
+  gimp_layer_mode_box_set_mode (GIMP_LAYER_MODE_BOX (private->mode_box),
+                                private->mode);
 
   adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (private->opacity, 0.0, 100.0,
                                                    1.0, 10.0, 0.0));
@@ -420,6 +419,9 @@ layer_options_dialog_callback (GtkWidget    *dialog,
   gint                height  = 0;
   gint                offset_x;
   gint                offset_y;
+
+  private->mode =
+    gimp_layer_mode_box_get_mode (GIMP_LAYER_MODE_BOX (private->mode_box));
 
   if (private->size_se)
     {

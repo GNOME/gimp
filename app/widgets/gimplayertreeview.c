@@ -51,11 +51,11 @@
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
+#include "gimplayermodebox.h"
 #include "gimplayertreeview.h"
 #include "gimpspinscale.h"
 #include "gimpuimanager.h"
 #include "gimpviewrenderer.h"
-#include "gimpwidgets-constructors.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -63,7 +63,7 @@
 
 struct _GimpLayerTreeViewPriv
 {
-  GtkWidget       *paint_mode_menu;
+  GtkWidget       *layer_mode_box;
   GtkAdjustment   *opacity_adjustment;
   GtkWidget       *lock_alpha_toggle;
 
@@ -130,7 +130,8 @@ static void       gimp_layer_tree_view_set_image                  (GimpItemTreeV
 static GimpItem * gimp_layer_tree_view_item_new                   (GimpImage                  *image);
 static void       gimp_layer_tree_view_floating_selection_changed (GimpImage                  *image,
                                                                    GimpLayerTreeView          *view);
-static void       gimp_layer_tree_view_paint_mode_menu_callback   (GtkWidget                  *widget,
+static void       gimp_layer_tree_view_layer_mode_box_callback    (GtkWidget                  *widget,
+                                                                   const GParamSpec           *pspec,
                                                                    GimpLayerTreeView          *view);
 static void       gimp_layer_tree_view_opacity_scale_changed      (GtkAdjustment              *adj,
                                                                    GimpLayerTreeView          *view);
@@ -264,18 +265,17 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Paint mode menu  */
 
-  view->priv->paint_mode_menu = gimp_paint_mode_menu_new (FALSE, FALSE);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (view->priv->paint_mode_menu),
-                                _("Mode"));
-  gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view),
-                                   NULL, view->priv->paint_mode_menu);
+  view->priv->layer_mode_box = gimp_layer_mode_box_new (FALSE, FALSE);
+  gimp_layer_mode_box_set_label (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
+                                 _("Mode"));
+  gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view), NULL,
+                                   view->priv->layer_mode_box);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (view->priv->paint_mode_menu),
-                              GIMP_LAYER_MODE_NORMAL,
-                              G_CALLBACK (gimp_layer_tree_view_paint_mode_menu_callback),
-                              view);
+  g_signal_connect (view->priv->layer_mode_box, "notify::layer-mode",
+                    G_CALLBACK (gimp_layer_tree_view_layer_mode_box_callback),
+                    view);
 
-  gimp_help_set_help_data (view->priv->paint_mode_menu, NULL,
+  gimp_help_set_help_data (view->priv->layer_mode_box, NULL,
                            GIMP_HELP_LAYER_DIALOG_PAINT_MODE_MENU);
 
   /*  Opacity scale  */
@@ -923,8 +923,9 @@ gimp_layer_tree_view_floating_selection_changed (GimpImage         *image,
 
 
 static void
-gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
-                                               GimpLayerTreeView *view)
+gimp_layer_tree_view_layer_mode_box_callback (GtkWidget         *widget,
+                                              const GParamSpec  *pspec,
+                                              GimpLayerTreeView *view)
 {
   GimpImage *image;
   GimpLayer *layer = NULL;
@@ -937,11 +938,10 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
 
   if (layer)
     {
-      gint mode;
+      GimpLayerMode mode =
+        gimp_layer_mode_box_get_mode (GIMP_LAYER_MODE_BOX (widget));
 
-      if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                         &mode) &&
-          gimp_layer_get_mode (layer) != (GimpLayerMode) mode)
+      if (gimp_layer_get_mode (layer) != mode)
         {
           GimpUndo *undo;
           gboolean  push_undo = TRUE;
@@ -1073,14 +1073,14 @@ static void
 gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
                                      GimpLayer         *layer)
 {
-  BLOCK (view->priv->paint_mode_menu,
-         gimp_layer_tree_view_paint_mode_menu_callback);
+  BLOCK (view->priv->layer_mode_box,
+         gimp_layer_tree_view_layer_mode_box_callback);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (view->priv->paint_mode_menu),
-                                 gimp_layer_get_mode (layer));
+  gimp_layer_mode_box_set_mode (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
+                                gimp_layer_get_mode (layer));
 
-  UNBLOCK (view->priv->paint_mode_menu,
-           gimp_layer_tree_view_paint_mode_menu_callback);
+  UNBLOCK (view->priv->layer_mode_box,
+           gimp_layer_tree_view_layer_mode_box_callback);
 
   if (gimp_layer_get_lock_alpha (layer) !=
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (view->priv->lock_alpha_toggle)))

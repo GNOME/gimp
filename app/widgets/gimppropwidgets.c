@@ -45,12 +45,12 @@
 #include "gimpiconpicker.h"
 #include "gimplanguagecombobox.h"
 #include "gimplanguageentry.h"
+#include "gimplayermodebox.h"
 #include "gimpscalebutton.h"
 #include "gimpspinscale.h"
 #include "gimpview.h"
 #include "gimppolar.h"
 #include "gimppropwidgets.h"
-#include "gimpwidgets-constructors.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -142,106 +142,47 @@ gimp_prop_expanding_frame_new (GObject      *config,
 }
 
 
-/*********************/
-/*  paint mode menu  */
-/*********************/
-
-static void   gimp_prop_paint_menu_callback (GtkWidget   *widget,
-                                             GObject     *config);
-static void   gimp_prop_paint_menu_notify   (GObject     *config,
-                                             GParamSpec  *param_spec,
-                                             GtkWidget   *menu);
+/********************/
+/*  layer mode box  */
+/********************/
 
 /**
- * gimp_prop_paint_mode_menu_new:
+ * gimp_prop_layer_mode_box_new:
  * @config:             #GimpConfig object to which property is attached.
  * @property_name:      Name of Enum property.
  * @with_behind_mode:   Whether to include "Behind" mode in the menu.
  * @with_replace_modes: Whether to include the "Replace", "Erase" and
  *                      "Anti Erase" modes in the menu.
  *
- * Creates a #GimpPaintModeMenu widget to display and set the specified
- * Enum property, for which the enum must be #GimpLayerModeEffects.
+ * Creates a #GimpLayerModeBox widget to display and set the specified
+ * Enum property, for which the enum must be #GimpLayerMode.
  *
- * Return value: The newly created #GimpPaintModeMenu widget.
+ * Return value: The newly created #GimpLayerModeBox widget.
  *
  * Since GIMP 2.4
  */
 GtkWidget *
-gimp_prop_paint_mode_menu_new (GObject     *config,
-                               const gchar *property_name,
-                               gboolean     with_behind_mode,
-                               gboolean     with_replace_modes)
+gimp_prop_layer_mode_box_new (GObject     *config,
+                              const gchar *property_name,
+                              gboolean     with_behind_mode,
+                              gboolean     with_replace_modes)
 {
   GParamSpec *param_spec;
-  GtkWidget  *menu;
-  gint        value;
+  GtkWidget  *box;
 
   param_spec = check_param_spec_w (config, property_name,
                                    G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
-  g_object_get (config,
-                property_name, &value,
-                NULL);
+  box = gimp_layer_mode_box_new (with_behind_mode, with_replace_modes);
 
-  menu = gimp_paint_mode_menu_new (with_behind_mode, with_replace_modes);
+  g_object_bind_property (config,          property_name,
+                          G_OBJECT (box), "layer-mode",
+                          G_BINDING_BIDIRECTIONAL |
+                          G_BINDING_SYNC_CREATE);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (menu),
-                              value,
-                              G_CALLBACK (gimp_prop_paint_menu_callback),
-                              config);
-
-  set_param_spec (G_OBJECT (menu), menu, param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_paint_menu_notify),
-                  menu);
-
-  return menu;
-}
-
-static void
-gimp_prop_paint_menu_callback (GtkWidget *widget,
-                               GObject   *config)
-{
-  GParamSpec *param_spec;
-  gint        value;
-
-  param_spec = get_param_spec (G_OBJECT (widget));
-  if (! param_spec)
-    return;
-
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
-    {
-      g_object_set (config,
-                    param_spec->name, value,
-                    NULL);
-    }
-}
-
-static void
-gimp_prop_paint_menu_notify (GObject    *config,
-                             GParamSpec *param_spec,
-                             GtkWidget  *menu)
-{
-  gint value;
-
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  g_signal_handlers_block_by_func (menu,
-                                   gimp_prop_paint_menu_callback,
-                                   config);
-
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (menu), value);
-
-  g_signal_handlers_unblock_by_func (menu,
-                                     gimp_prop_paint_menu_callback,
-                                     config);
-
+  return box;
 }
 
 

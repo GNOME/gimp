@@ -45,7 +45,7 @@ struct _GimpBrushSelect
 
   gint           spacing;
   GtkAdjustment *opacity_data;
-  GtkWidget     *paint_mode_menu;
+  GtkWidget     *layer_mode_box;
 };
 
 struct _GimpBrushSelectClass

@@ -19,9 +19,6 @@
 #define __GIMP_WIDGETS_CONSTRUCTORS_H__
 
 
-GtkWidget * gimp_paint_mode_menu_new     (gboolean          with_behind_mode,
-                                          gboolean          with_replace_modes);
-
 GtkWidget * gimp_icon_button_new         (const gchar      *icon_name,
                                           const gchar      *label);
 
