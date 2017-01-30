@@ -10,8 +10,12 @@ GIMP Flatpak HowTo
 
 * Install this runtime and the corresponding SDK if you haven't already:
 
-> $ flatpak remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo
-> $ flatpak install gnome org.gnome.Platform//3.22 org.gnome.Sdk//3.22
+> flatpak remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo
+> flatpak install gnome org.gnome.Platform//3.22 org.gnome.Sdk//3.22
+
+Or simply update them:
+
+> flatpak update
 
 * Other GIMP dependencies which are not available in the GNOME runtime
   should be built along as modules within GIMP's flatpak.
@@ -28,10 +32,29 @@ GIMP Flatpak HowTo
   On a higher version runtime, these modules can likely be removed from
   our manifest.
 
-  Note: I could find the GNOME runtime manifest at:
-  https://git.gnome.org/browse/gnome-sdk-images/tree/org.gnome.Sdk.json.in
-  But this one is based on the Freedesktop runtime and I couldn't find
-  its contents yet.
+  A flatpak is a layered set of modules. Our GIMP build in particular is
+  built over the GNOME runtime, itself built over the Freedesktop
+  runtime, itself based on a yocto-built image.
+  Other than by trial and error, you can find the installed dependencies
+  by running:
+
+> flatpak run --devel --command=bash org.gimp.GIMP
+
+  GIMP manifest available at:
+
+> less /app/manifest.json
+
+  GNOME module list:
+
+> less /usr/manifest.json
+
+  Freedesktop module list:
+
+> less /usr/manifest-base-1.json
+
+  Finally the contents of the yocto-built image:
+
+> less /usr/manifest.base
 
 * For a stable release, remove the following line from the manifest:
 
