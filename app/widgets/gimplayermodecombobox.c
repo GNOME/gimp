@@ -272,14 +272,19 @@ gimp_layer_mode_combo_box_set_mode (GimpLayerModeComboBox *combo,
 
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
+      g_object_freeze_notify (G_OBJECT (combo));
+
       if (! gimp_int_store_lookup_by_value (model, mode, &dummy))
         {
           combo->priv->group = gimp_layer_mode_get_group (mode);
+          g_object_notify (G_OBJECT (combo), "group");
 
           gimp_layer_mode_combo_box_update_model (combo, FALSE);
         }
 
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), mode);
+
+      g_object_thaw_notify (G_OBJECT (combo));
     }
 }
 
@@ -300,9 +305,14 @@ gimp_layer_mode_combo_box_set_group (GimpLayerModeComboBox *combo,
 
   if (group != combo->priv->group)
     {
+      g_object_freeze_notify (G_OBJECT (combo));
+
       combo->priv->group = group;
+      g_object_notify (G_OBJECT (combo), "group");
 
       gimp_layer_mode_combo_box_update_model (combo, TRUE);
+
+      g_object_thaw_notify (G_OBJECT (combo));
     }
 }
 
