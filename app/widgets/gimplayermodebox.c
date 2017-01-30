@@ -131,8 +131,10 @@ gimp_layer_mode_box_constructed (GObject *object)
   GimpLayerModeBox *box = GIMP_LAYER_MODE_BOX (object);
   GtkWidget        *mode_combo;
   GtkWidget        *group_combo;
+  GtkTreeModel     *group_model;
   GtkCellLayout    *layout;
   GtkCellRenderer  *cell;
+  gint              i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -156,14 +158,30 @@ gimp_layer_mode_box_constructed (GObject *object)
   layout = GTK_CELL_LAYOUT (gtk_bin_get_child (GTK_BIN (group_combo)));
   gtk_cell_layout_clear (layout);
 
-  cell = gtk_cell_renderer_text_new ();
-  g_object_set (cell,
-                "width-chars", 1,
-                NULL);
+  group_model = gtk_combo_box_get_model (GTK_COMBO_BOX (group_combo));
 
-  gtk_cell_layout_pack_start (layout, cell, TRUE);
+  for (i = 0; i < 4; i++)
+    {
+      static const gchar *icons[] =
+      {
+        "gimp-reset",
+        "gimp-histogram-linear",
+        "gimp-visible",
+        "gimp-wilber-eek"
+      };
+
+      GtkTreeIter iter;
+
+      if (gimp_int_store_lookup_by_value (group_model, i, &iter))
+        gtk_list_store_set (GTK_LIST_STORE (group_model), &iter,
+                            GIMP_INT_STORE_ICON_NAME, icons[i],
+                            -1);
+    }
+
+  cell = gtk_cell_renderer_pixbuf_new ();
+  gtk_cell_layout_pack_start (layout, cell, FALSE);
   gtk_cell_layout_set_attributes (layout, cell,
-                                  "text", GIMP_INT_STORE_LABEL,
+                                  "icon-name", GIMP_INT_STORE_ICON_NAME,
                                   NULL);
 }
 
