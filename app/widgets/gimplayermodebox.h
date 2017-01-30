@@ -46,14 +46,19 @@ struct _GimpLayerModeBoxClass
 };
 
 
-GType           gimp_layer_mode_box_get_type (void) G_GNUC_CONST;
+GType           gimp_layer_mode_box_get_type      (void) G_GNUC_CONST;
 
-GtkWidget     * gimp_layer_mode_box_new      (gboolean          with_behind,
-                                              gboolean          with_replace);
+GtkWidget     * gimp_layer_mode_box_new           (gboolean            with_behind,
+                                                   gboolean            with_replace);
 
-void            gimp_layer_mode_box_set_mode (GimpLayerModeBox *combo,
-                                              GimpLayerMode     mode);
-GimpLayerMode   gimp_layer_mode_box_get_mode (GimpLayerModeBox *combo);
+void            gimp_layer_mode_box_set_mode      (GimpLayerModeBox   *box,
+                                                   GimpLayerMode       mode);
+GimpLayerMode   gimp_layer_mode_box_get_mode      (GimpLayerModeBox   *box);
+
+void            gimp_layer_mode_box_set_label     (GimpLayerModeBox   *box,
+                                                   const gchar        *label);
+void            gimp_layer_mode_box_set_ellipsize (GimpLayerModeBox   *box,
+                                                   PangoEllipsizeMode  mode);
 
 
 #endif  /* __GIMP_LAYER_MODE_BOX_H__ */

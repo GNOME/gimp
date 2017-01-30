@@ -56,9 +56,12 @@ enum
 
 struct _GimpLayerModeBoxPrivate
 {
-  GimpLayerMode      layer_mode;
-  gboolean           with_behind;
-  gboolean           with_replace;
+  GimpLayerMode  layer_mode;
+  gboolean       with_behind;
+  gboolean       with_replace;
+
+  GtkWidget     *mode_combo;
+  GtkWidget     *group_combo;
 };
 
 
@@ -138,10 +141,9 @@ gimp_layer_mode_box_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  mode_combo = gimp_layer_mode_combo_box_new (box->priv->with_behind,
-                                              box->priv->with_replace);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (mode_combo),
-                                _("Mode"));
+  box->priv->mode_combo = mode_combo =
+    gimp_layer_mode_combo_box_new (box->priv->with_behind,
+                                   box->priv->with_replace);
   gtk_box_pack_start (GTK_BOX (box), mode_combo, TRUE, TRUE, 0);
   gtk_widget_show (mode_combo);
 
@@ -150,8 +152,9 @@ gimp_layer_mode_box_constructed (GObject *object)
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
-  group_combo = gimp_prop_enum_combo_box_new (G_OBJECT (mode_combo),
-                                              "group", 0, 0);
+  box->priv->group_combo = group_combo =
+    gimp_prop_enum_combo_box_new (G_OBJECT (mode_combo),
+                                  "group", 0, 0);
   gtk_box_pack_start (GTK_BOX (box), group_combo, FALSE, FALSE, 0);
   gtk_widget_show (group_combo);
 
@@ -279,4 +282,25 @@ gimp_layer_mode_box_get_mode (GimpLayerModeBox *box)
                         GIMP_LAYER_MODE_NORMAL);
 
   return box->priv->layer_mode;
+}
+
+void
+gimp_layer_mode_box_set_label (GimpLayerModeBox *box,
+                               const gchar      *label)
+{
+  g_return_if_fail (GIMP_IS_LAYER_MODE_BOX (box));
+
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (box->priv->mode_combo),
+                                label);
+}
+
+void
+gimp_layer_mode_box_set_ellipsize (GimpLayerModeBox   *box,
+                                   PangoEllipsizeMode  mode)
+{
+  g_return_if_fail (GIMP_IS_LAYER_MODE_BOX (box));
+
+  g_object_set (box->priv->mode_combo,
+                "ellipsize", mode,
+                NULL);
 }
