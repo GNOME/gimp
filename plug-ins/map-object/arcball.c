@@ -286,7 +286,12 @@ V3_Unit (HVect v)
   static HVect u = {0, 0, 0, 0};
   double vlen = sqrt(V3_Norm(v));
 
-  if (vlen != 0.0) u.x = v.x/vlen; u.y = v.y/vlen; u.z = v.z/vlen;
+  if (vlen != 0.0)
+    {
+      u.x = v.x/vlen;
+      u.y = v.y/vlen;
+      u.z = v.z/vlen;
+    }
   return (u);
 }
 
