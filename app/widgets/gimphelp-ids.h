@@ -345,7 +345,7 @@
 #define GIMP_HELP_FILTER_COLOR_EXCHANGE           "gimp-filter-color-exchange"
 #define GIMP_HELP_FILTER_DITHER                   "gimp-filter-dither"
 #define GIMP_HELP_FILTER_COLOR_ROTATE             "gimp-filter-color-rotate"
-#define	GIMP_HELP_FILTER_COLOR_TEMPERATURE        "gimp-filter-color-temperature"
+#define GIMP_HELP_FILTER_COLOR_TEMPERATURE        "gimp-filter-color-temperature"
 #define GIMP_HELP_FILTER_COLOR_TO_ALPHA           "gimp-filter-color-to-alpha"
 #define GIMP_HELP_FILTER_CONVOLUTION_MATRIX       "gimp-filter-convolution-matrix"
 #define GIMP_HELP_FILTER_CUBISM                   "gimp-filter-cubism"

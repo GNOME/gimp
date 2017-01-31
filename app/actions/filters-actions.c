@@ -52,47 +52,47 @@ static void   filters_actions_history_changed (Gimp            *gimp,
 static const GimpActionEntry filters_menu_actions[] =
 {
   { "filters-menu",                 NULL, NC_("filters-action",
-                                              "Filte_rs")         },
+                                              "Filte_rs")          },
   { "filters-recent-menu",          NULL, NC_("filters-action",
-                                              "Recently Used")    },
+                                              "Recently Used")     },
   { "filters-blur-menu",            NULL, NC_("filters-action",
-                                              "_Blur")            },
+                                              "_Blur")             },
   { "filters-noise-menu",           NULL, NC_("filters-action",
-                                              "_Noise")           },
+                                              "_Noise")            },
   { "filters-edge-detect-menu",     NULL, NC_("filters-action",
-                                              "Edge-De_tect")     },
+                                              "Edge-De_tect")      },
   { "filters-enhance-menu",         NULL, NC_("filters-action",
-                                              "En_hance")         },
+                                              "En_hance")          },
   { "filters-combine-menu",         NULL, NC_("filters-action",
-                                              "C_ombine")         },
+                                              "C_ombine")          },
   { "filters-generic-menu",         NULL, NC_("filters-action",
-                                              "_Generic")         },
+                                              "_Generic")          },
   { "filters-light-shadow-menu",    NULL, NC_("filters-action",
                                               "_Light and Shadow") },
   { "filters-distorts-menu",        NULL, NC_("filters-action",
-                                              "_Distorts")        },
+                                              "_Distorts")         },
   { "filters-artistic-menu",        NULL, NC_("filters-action",
-                                              "_Artistic")        },
+                                              "_Artistic")         },
   { "filters-decor-menu",           NULL, NC_("filters-action",
-                                              "_Decor")           },
+                                              "_Decor")            },
   { "filters-map-menu",             NULL, NC_("filters-action",
-                                              "_Map")             },
+                                              "_Map")              },
   { "filters-render-menu",          NULL, NC_("filters-action",
-                                              "_Render")          },
+                                              "_Render")           },
   { "filters-render-clouds-menu",   NULL, NC_("filters-action",
-                                              "_Clouds")          },
+                                              "_Clouds")           },
   { "filters-render-fractals-menu", NULL, NC_("filters-action",
-                                              "_Fractals")        },
+                                              "_Fractals")         },
   { "filters-render-nature-menu",   NULL, NC_("filters-action",
-                                              "_Nature")          },
+                                              "_Nature")           },
   { "filters-render-noise-menu",    NULL, NC_("filters-action",
-                                              "N_oise")           },
+                                              "N_oise")            },
   { "filters-render-pattern-menu",  NULL, NC_("filters-action",
-                                              "_Pattern")         },
+                                              "_Pattern")          },
   { "filters-web-menu",             NULL, NC_("filters-action",
-                                              "_Web")             },
+                                              "_Web")              },
   { "filters-animation-menu",       NULL, NC_("filters-action",
-                                              "An_imation")       }
+                                              "An_imation")        }
 };
 
 static const GimpStringActionEntry filters_actions[] =
@@ -586,7 +586,7 @@ filters_actions_setup (GimpActionGroup *group)
       if (description)
         gimp_action_group_set_action_tooltip (group, entry->name,
                                               description);
-   }
+    }
 
   n_entries = gimp_filter_history_size (group->gimp);
 
@@ -601,7 +601,7 @@ filters_actions_setup (GimpActionGroup *group)
       entries[i].tooltip     = NULL;
       entries[i].procedure   = NULL;
       entries[i].help_id     = GIMP_HELP_FILTER_RESHOW;
-   }
+    }
 
   gimp_action_group_add_procedure_actions (group, entries, n_entries,
                                            G_CALLBACK (filters_history_cmd_callback));
@@ -610,7 +610,7 @@ filters_actions_setup (GimpActionGroup *group)
     {
       gimp_action_group_set_action_visible (group, entries[i].name, FALSE);
       g_free ((gchar *) entries[i].name);
-   }
+    }
 
   g_free (entries);
 
@@ -653,7 +653,7 @@ filters_actions_update (GimpActionGroup *group,
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             writable = FALSE;
-       }
+        }
    }
 
 #define SET_SENSITIVE(action,condition) \
@@ -758,7 +758,7 @@ filters_actions_update (GimpActionGroup *group,
       {
         gimp_action_group_set_action_sensitive (group, "filters-repeat", TRUE);
         gimp_action_group_set_action_sensitive (group, "filters-reshow", TRUE);
-     }
+      }
     else
       {
         gimp_action_group_set_action_sensitive (group, "filters-repeat", FALSE);
@@ -777,7 +777,7 @@ filters_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, name, sensitive);
 
         g_free (name);
-     }
+      }
  }
 }
 
@@ -795,7 +795,7 @@ filters_actions_get_plug_in_group (GimpActionGroup *group)
       /* if this is our UI manager */
       if (gimp_ui_manager_get_action_group (manager, "filters") == group)
         return gimp_ui_manager_get_action_group (manager, "plug-in");
-   }
+    }
 
   /* this happens during initial UI manager construction */
   return NULL;
@@ -837,7 +837,7 @@ filters_actions_history_changed (Gimp            *gimp,
           actual_action =
             gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                          gimp_object_get_name (proc));
-       }
+        }
       else if (plug_in_group)
         {
           /*  copy the sensitivity of the plug-in procedure's actual
@@ -849,7 +849,7 @@ filters_actions_history_changed (Gimp            *gimp,
           actual_action =
             gtk_action_group_get_action (GTK_ACTION_GROUP (plug_in_group),
                                          gimp_object_get_name (proc));
-       }
+        }
 
       if (actual_action)
         sensitive = gtk_action_get_sensitive (actual_action);
@@ -868,7 +868,7 @@ filters_actions_history_changed (Gimp            *gimp,
 
       gimp_action_group_set_action_sensitive (group, "filters-repeat", FALSE);
       gimp_action_group_set_action_sensitive (group, "filters-reshow", FALSE);
-   }
+    }
 
   for (i = 0; i < gimp_filter_history_length (gimp); i++)
     {
@@ -891,14 +891,14 @@ filters_actions_history_changed (Gimp            *gimp,
           actual_action =
             gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                          gimp_object_get_name (proc));
-       }
+        }
       else if (plug_in_group)
         {
           /*  see comment above  */
           actual_action =
             gtk_action_group_get_action (GTK_ACTION_GROUP (plug_in_group),
                                          gimp_object_get_name (proc));
-       }
+        }
 
       if (actual_action)
         sensitive = gtk_action_get_sensitive (actual_action);
@@ -911,7 +911,7 @@ filters_actions_history_changed (Gimp            *gimp,
                     "icon-name", gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc)),
                     "tooltip",   gimp_procedure_get_blurb (proc),
                     NULL);
-   }
+    }
 
   for (; i < gimp_filter_history_size (gimp); i++)
     {
@@ -925,5 +925,5 @@ filters_actions_history_changed (Gimp            *gimp,
                     "visible",   FALSE,
                     "procedure", NULL,
                     NULL);
-   }
+    }
 }
