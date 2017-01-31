@@ -693,7 +693,5 @@
 #define GIMP_HELP_CONTROLLER_MOUSE                "gimp-controller-mouse"
 #define GIMP_HELP_CONTROLLER_WHEEL                "gimp-controller-wheel"
 
-#define GIMP_HELP_CONFIG_USE_GEGL                 "gimp-config-use-gegl"
-
 
 #endif /* __GIMP_HELP_IDS_H__ */
