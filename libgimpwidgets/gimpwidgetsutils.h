@@ -50,6 +50,8 @@ void                 gimp_widget_track_monitor       (GtkWidget         *widget,
                                                       GCallback          monitor_changed_callback,
                                                       gpointer           user_data);
 
+GimpColorProfile   * gimp_screen_get_color_profile   (GdkScreen         *screen,
+                                                      gint               monitor);
 GimpColorProfile   * gimp_widget_get_color_profile   (GtkWidget         *widget);
 
 GimpColorTransform * gimp_widget_get_color_transform (GtkWidget         *widget,

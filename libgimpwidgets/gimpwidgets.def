@@ -357,6 +357,7 @@ EXPORTS
 	gimp_scale_entry_new
 	gimp_scale_entry_set_logarithmic
 	gimp_scale_entry_set_sensitive
+	gimp_screen_get_color_profile
 	gimp_scrolled_preview_freeze
 	gimp_scrolled_preview_get_type
 	gimp_scrolled_preview_set_policy

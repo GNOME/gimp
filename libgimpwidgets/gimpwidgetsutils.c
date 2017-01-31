@@ -470,25 +470,27 @@ gimp_widget_track_monitor (GtkWidget *widget,
     track_monitor_hierarchy_changed (widget, NULL, track_data);
 }
 
+/**
+ * gimp_screen_get_color_profile:
+ * @screen:  a #GdkScreen
+ * @monitor: the monitor number
+ *
+ * This function returns the #GimpColorProfile of monitor number @monitor
+ * of @screen, or %NULL if there is no profile configured.
+ *
+ * Since: 2.10
+ *
+ * Return value: the monitor's #GimpColorProfile, or %NULL.
+ **/
 GimpColorProfile *
-gimp_widget_get_color_profile (GtkWidget *widget)
+gimp_screen_get_color_profile (GdkScreen *screen,
+                               gint       monitor)
 {
   GimpColorProfile *profile = NULL;
-  GdkScreen        *screen;
-  gint              monitor;
 
-  g_return_val_if_fail (widget == NULL || GTK_IS_WIDGET (widget), NULL);
-
-  if (widget)
-    {
-      screen  = gtk_widget_get_screen (widget);
-      monitor = gimp_widget_get_monitor (widget);
-    }
-  else
-    {
-      screen  = gdk_screen_get_default ();
-      monitor = 0;
-    }
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+  g_return_val_if_fail (monitor >= 0, NULL);
+  g_return_val_if_fail (monitor < gdk_screen_get_n_monitors (screen), NULL);
 
 #if defined GDK_WINDOWING_X11
   {
@@ -577,6 +579,28 @@ gimp_widget_get_color_profile (GtkWidget *widget)
 #endif
 
   return profile;
+}
+
+GimpColorProfile *
+gimp_widget_get_color_profile (GtkWidget *widget)
+{
+  GdkScreen *screen;
+  gint       monitor;
+
+  g_return_val_if_fail (widget == NULL || GTK_IS_WIDGET (widget), NULL);
+
+  if (widget)
+    {
+      screen  = gtk_widget_get_screen (widget);
+      monitor = gimp_widget_get_monitor (widget);
+    }
+  else
+    {
+      screen  = gdk_screen_get_default ();
+      monitor = 0;
+    }
+
+  return gimp_screen_get_color_profile (screen, monitor);
 }
 
 static GimpColorProfile *
