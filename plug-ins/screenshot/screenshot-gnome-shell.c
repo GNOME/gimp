@@ -84,6 +84,7 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
   const gchar *method = NULL;
   GVariant    *args   = NULL;
   GVariant    *retval;
+  gint         monitor = shootvals->monitor;
   gboolean     success;
 
   if (shootvals->select_delay > 0)
@@ -99,6 +100,8 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
                               shootvals->show_cursor,
                               TRUE, /* flash */
                               filename);
+
+      /* FIXME: figure profile */
       break;
 
     case SHOOT_REGION:
@@ -126,6 +129,11 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
                               shootvals->y2 - shootvals->y1,
                               TRUE, /* flash */
                               filename);
+
+      monitor =
+        gdk_screen_get_monitor_at_point (screen,
+                                         (shootvals->x1 + shootvals->x2) / 2,
+                                         (shootvals->y1 + shootvals->y2) / 2);
       break;
 
     case SHOOT_WINDOW:
@@ -135,6 +143,8 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
                               shootvals->show_cursor,
                               TRUE, /* flash */
                               filename);
+
+      /* FIXME: figure monitor */
       break;
     }
 
@@ -154,9 +164,19 @@ screenshot_gnome_shell_shoot (ScreenshotValues  *shootvals,
 
   if (success && filename)
     {
+      GimpColorProfile *profile;
+
       *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                                   filename, filename);
       gimp_image_set_filename (*image_ID, "screenshot.png");
+
+      profile = gimp_screen_get_color_profile (screen, monitor);
+
+      if (profile)
+        {
+          gimp_image_set_color_profile (*image_ID, profile);
+          g_object_unref (profile);
+        }
 
       g_unlink (filename);
       g_free (filename);

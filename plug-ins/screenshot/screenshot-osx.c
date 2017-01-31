@@ -125,6 +125,9 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
 
   if (system ((const char *) command) == EXIT_SUCCESS)
     {
+      /* don't attach a profile, screencapture attached one
+       */
+
       *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                                   filename, filename);
       gimp_image_set_filename (*image_ID, "screenshot.png");

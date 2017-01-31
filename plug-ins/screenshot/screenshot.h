@@ -38,6 +38,12 @@ typedef enum
 
 typedef enum
 {
+  SCREENSHOT_PROFILE_POLICY_MONITOR,
+  SCREENSHOT_PROFILE_POLICY_SRGB
+} ScreenshotProfilePolicy;
+
+typedef enum
+{
   SHOOT_ROOT,
   SHOOT_REGION,
   SHOOT_WINDOW
@@ -45,15 +51,17 @@ typedef enum
 
 typedef struct
 {
-  ShootType  shoot_type;
-  gboolean   decorate;
-  guint      window_id;
-  guint      select_delay;
-  gint       x1;
-  gint       y1;
-  gint       x2;
-  gint       y2;
-  gboolean   show_cursor;
+  ShootType               shoot_type;
+  gboolean                decorate;
+  guint                   window_id;
+  gint                    monitor;
+  guint                   select_delay;
+  gint                    x1;
+  gint                    y1;
+  gint                    x2;
+  gint                    y2;
+  gboolean                show_cursor;
+  ScreenshotProfilePolicy profile_policy;
 } ScreenshotValues;
 
 

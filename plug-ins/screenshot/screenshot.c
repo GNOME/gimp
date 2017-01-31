@@ -77,12 +77,14 @@ static ScreenshotValues shootvals =
   SHOOT_WINDOW, /* root window  */
   TRUE,         /* include WM decorations */
   0,            /* window ID    */
+  0,            /* monitor      */
   0,            /* select delay */
   0,            /* coords of region dragged out by pointer */
   0,
   0,
   0,
-  FALSE         /* show cursor */
+  FALSE,        /* show cursor */
+  SCREENSHOT_PROFILE_POLICY_MONITOR
 };
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -217,7 +219,7 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_PROC, &shootvals);
       shootvals.window_id = 0;
 
-     /* Get information from the dialog */
+      /* Get information from the dialog */
       if (! shoot_dialog (&screen))
         status = GIMP_PDB_CANCEL;
       break;
@@ -253,7 +255,9 @@ run (const gchar      *name,
         {
           if (shootvals.shoot_type == SHOOT_WINDOW ||
               shootvals.shoot_type == SHOOT_REGION)
-            status = GIMP_PDB_CALLING_ERROR;
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
         }
         break;
 
@@ -274,6 +278,17 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       gchar *comment = gimp_get_default_comment ();
+
+      if (shootvals.profile_policy == SCREENSHOT_PROFILE_POLICY_SRGB)
+        {
+          GimpColorProfile *srgb_profile = gimp_color_profile_new_rgb_srgb ();
+
+          gimp_image_convert_color_profile (image_ID,
+                                            srgb_profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            TRUE);
+          g_object_unref (srgb_profile);
+        }
 
       if (comment)
         {
@@ -435,28 +450,13 @@ shoot_dialog (GdkScreen **screen)
                       main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
-  /*  Hints  */
+
+  /*  Create delay hints notebook early  */
   notebook = g_object_new (GTK_TYPE_NOTEBOOK,
                            "show-border", FALSE,
                            "show-tabs",   FALSE,
                            NULL);
-  gtk_box_pack_end (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
-  gtk_widget_show (notebook);
 
-  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_ROOT,
-                         _("After the delay, the screenshot is taken."));
-  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_REGION,
-                         _("After the delay, drag your mouse to select "
-                           "the region for the screenshot."));
-#ifdef G_OS_WIN32
-  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
-                         _("Click in a window to snap it after delay."));
-#else
-  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
-                         _("At the end of the delay, click in a window "
-                           "to snap it."));
-#endif
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
 
   /*  Area  */
   frame = gimp_frame_new (_("Area"));
@@ -467,8 +467,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-
-  /*  single window  */
+  /*  Aingle window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
                                                _("Take a screenshot of "
                                                  "a single _window"));
@@ -483,7 +482,7 @@ shoot_dialog (GdkScreen **screen)
                     G_CALLBACK (shoot_radio_button_toggled),
                     notebook);
 
-  /*  window decorations  */
+  /*  Window decorations  */
   if (capabilities & SCREENSHOT_CAN_SHOOT_DECORATIONS)
     {
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -508,7 +507,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_WINDOW);
 
-  /*  whole screen  */
+  /*  Whole screen  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
                                                _("Take a screenshot of "
                                                  "the entire _screen"));
@@ -523,7 +522,7 @@ shoot_dialog (GdkScreen **screen)
                     G_CALLBACK (shoot_radio_button_toggled),
                     notebook);
 
-  /*  mouse pointer  */
+  /*  Mouse pointer  */
   if (capabilities & SCREENSHOT_CAN_SHOOT_POINTER)
     {
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
@@ -548,7 +547,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_ROOT);
 
-  /*  dragged region  */
+  /*  Dragged region  */
   if (capabilities & SCREENSHOT_CAN_SHOOT_REGION)
     {
       button = gtk_radio_button_new_with_mnemonic (radio_group,
@@ -592,10 +591,49 @@ shoot_dialog (GdkScreen **screen)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &shootvals.select_delay);
 
-  /* this is the unit label of a spinbutton */
+  /*  translators: this is the unit label of a spinbutton  */
   label = gtk_label_new (_("seconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  /*  Delay hints  */
+  gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
+  gtk_widget_show (notebook);
+
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_ROOT,
+                         _("After the delay, the screenshot is taken."));
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_REGION,
+                         _("After the delay, drag your mouse to select "
+                           "the region for the screenshot."));
+#ifdef G_OS_WIN32
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
+                         _("Click in a window to snap it after delay."));
+#else
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
+                         _("At the end of the delay, click in a window "
+                           "to snap it."));
+#endif
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
+
+  /*  Color profile  */
+  frame = gimp_int_radio_group_new (TRUE,
+                                    _("Color Profile"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &shootvals.profile_policy,
+                                    SCREENSHOT_PROFILE_POLICY_MONITOR,
+
+                                    _("Tag image with _monitor profile"),
+                                    SCREENSHOT_PROFILE_POLICY_MONITOR,
+                                    NULL,
+
+                                    _("Convert image to sR_GB"),
+                                    SCREENSHOT_PROFILE_POLICY_SRGB,
+                                    NULL,
+
+                                    NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
 
   gtk_widget_show (dialog);
 
