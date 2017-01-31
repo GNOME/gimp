@@ -328,42 +328,59 @@ gimp_layer_mode_combo_box_get_group (GimpLayerModeComboBox *combo)
 
 /*  private functions  */
 
-static GtkTreeModel *
-gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
+static void
+gimp_enum_store_add_value (GtkListStore *store,
+                           GEnumValue   *value)
+{
+  GtkTreeIter  iter = { 0, };
+  const gchar *desc;
+  gchar       *stripped;
+
+  desc = gimp_enum_value_get_desc (GIMP_ENUM_STORE (store)->enum_class, value);
+
+  /* no mnemonics in combo boxes */
+  stripped = gimp_strip_uline (desc);
+
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set (store, &iter,
+                      GIMP_INT_STORE_VALUE, value->value,
+                      GIMP_INT_STORE_LABEL, stripped,
+                      -1);
+
+  g_free (stripped);
+}
+
+static GtkListStore *
+gimp_enum_store_new_from_array (GType       enum_type,
+                                gint        n_values,
+                                const gint *values)
 {
   GtkListStore *store;
+  GEnumValue   *value;
+  gint          i;
 
-  store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
-                                           28,
-                                           GIMP_LAYER_MODE_NORMAL,
-                                           GIMP_LAYER_MODE_DISSOLVE,
-                                           GIMP_LAYER_MODE_LIGHTEN_ONLY,
-                                           GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-                                           GIMP_LAYER_MODE_SCREEN,
-                                           GIMP_LAYER_MODE_DODGE,
-                                           GIMP_LAYER_MODE_ADDITION,
-                                           GIMP_LAYER_MODE_DARKEN_ONLY,
-                                           GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-                                           GIMP_LAYER_MODE_MULTIPLY,
-                                           GIMP_LAYER_MODE_BURN,
-                                           GIMP_LAYER_MODE_OVERLAY,
-                                           GIMP_LAYER_MODE_SOFTLIGHT,
-                                           GIMP_LAYER_MODE_HARDLIGHT,
-                                           GIMP_LAYER_MODE_VIVID_LIGHT,
-                                           GIMP_LAYER_MODE_PIN_LIGHT,
-                                           GIMP_LAYER_MODE_LINEAR_LIGHT,
-                                           GIMP_LAYER_MODE_DIFFERENCE,
-                                           GIMP_LAYER_MODE_SUBTRACT,
-                                           GIMP_LAYER_MODE_GRAIN_EXTRACT,
-                                           GIMP_LAYER_MODE_GRAIN_MERGE,
-                                           GIMP_LAYER_MODE_DIVIDE,
-                                           GIMP_LAYER_MODE_LCH_HUE,
-                                           GIMP_LAYER_MODE_LCH_CHROMA,
-                                           GIMP_LAYER_MODE_LCH_COLOR,
-                                           GIMP_LAYER_MODE_LCH_LIGHTNESS,
-                                           GIMP_LAYER_MODE_EXCLUSION,
-                                           GIMP_LAYER_MODE_LINEAR_BURN);
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+  g_return_val_if_fail (n_values > 1, NULL);
+  g_return_val_if_fail (values != NULL, NULL);
 
+  store = g_object_new (GIMP_TYPE_ENUM_STORE,
+                        "enum-type", enum_type,
+                        NULL);
+
+  for (i = 0; i < n_values; i++)
+    {
+      value = g_enum_get_value (GIMP_ENUM_STORE (store)->enum_class, values[i]);
+      if (value)
+        gimp_enum_store_add_value (store, value);
+    }
+
+  return store;
+}
+
+static void
+gimp_layer_mode_combo_box_fix_default_store (GimpLayerModeComboBox *combo,
+                                             GtkListStore          *store)
+{
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DISSOLVE, -1);
 
@@ -404,42 +421,12 @@ gimp_layer_mode_combo_box_create_default_model (GimpLayerModeComboBox *combo)
                                               GIMP_LAYER_MODE_ERASE,
                                               GIMP_LAYER_MODE_ANTI_ERASE);
     }
-
-  return GTK_TREE_MODEL (store);
 }
 
-static GtkTreeModel *
-gimp_layer_mode_combo_box_create_linear_model (GimpLayerModeComboBox *combo)
+static void
+gimp_layer_mode_combo_box_fix_linear_store (GimpLayerModeComboBox *combo,
+                                            GtkListStore          *store)
 {
-  GtkListStore *store;
-
-  store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
-                                           24,
-                                           GIMP_LAYER_MODE_NORMAL_LINEAR,
-                                           GIMP_LAYER_MODE_DISSOLVE,
-                                           GIMP_LAYER_MODE_LIGHTEN_ONLY,
-                                           GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-                                           GIMP_LAYER_MODE_SCREEN_LINEAR,
-                                           GIMP_LAYER_MODE_DODGE_LINEAR,
-                                           GIMP_LAYER_MODE_ADDITION_LINEAR,
-                                           GIMP_LAYER_MODE_DARKEN_ONLY,
-                                           GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-                                           GIMP_LAYER_MODE_MULTIPLY_LINEAR,
-                                           GIMP_LAYER_MODE_BURN_LINEAR,
-                                           GIMP_LAYER_MODE_OVERLAY_LINEAR,
-                                           GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
-                                           GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
-                                           GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
-                                           GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
-                                           GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
-                                           GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
-                                           GIMP_LAYER_MODE_SUBTRACT_LINEAR,
-                                           GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
-                                           GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
-                                           GIMP_LAYER_MODE_DIVIDE_LINEAR,
-                                           GIMP_LAYER_MODE_EXCLUSION_LINEAR,
-                                           GIMP_LAYER_MODE_LINEAR_BURN_LINEAR);
-
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DISSOLVE, -1);
 
@@ -474,50 +461,12 @@ gimp_layer_mode_combo_box_create_linear_model (GimpLayerModeComboBox *combo)
                                               GIMP_LAYER_MODE_ERASE,
                                               GIMP_LAYER_MODE_ANTI_ERASE);
     }
-
-  return GTK_TREE_MODEL (store);
 }
 
-static GtkTreeModel *
-gimp_layer_mode_combo_box_create_perceptual_model (GimpLayerModeComboBox *combo)
+static void
+gimp_layer_mode_combo_box_fix_perceptual_store (GimpLayerModeComboBox *combo,
+                                                GtkListStore          *store)
 {
-  GtkListStore *store;
-
-  store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
-                                           32,
-                                           GIMP_LAYER_MODE_NORMAL,
-                                           GIMP_LAYER_MODE_DISSOLVE,
-                                           GIMP_LAYER_MODE_LIGHTEN_ONLY,
-                                           GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
-                                           GIMP_LAYER_MODE_SCREEN,
-                                           GIMP_LAYER_MODE_DODGE,
-                                           GIMP_LAYER_MODE_ADDITION,
-                                           GIMP_LAYER_MODE_DARKEN_ONLY,
-                                           GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
-                                           GIMP_LAYER_MODE_MULTIPLY,
-                                           GIMP_LAYER_MODE_BURN,
-                                           GIMP_LAYER_MODE_OVERLAY,
-                                           GIMP_LAYER_MODE_SOFTLIGHT,
-                                           GIMP_LAYER_MODE_HARDLIGHT,
-                                           GIMP_LAYER_MODE_VIVID_LIGHT,
-                                           GIMP_LAYER_MODE_PIN_LIGHT,
-                                           GIMP_LAYER_MODE_LINEAR_LIGHT,
-                                           GIMP_LAYER_MODE_DIFFERENCE,
-                                           GIMP_LAYER_MODE_SUBTRACT,
-                                           GIMP_LAYER_MODE_GRAIN_EXTRACT,
-                                           GIMP_LAYER_MODE_GRAIN_MERGE,
-                                           GIMP_LAYER_MODE_DIVIDE,
-                                           GIMP_LAYER_MODE_HSV_HUE,
-                                           GIMP_LAYER_MODE_HSV_SATURATION,
-                                           GIMP_LAYER_MODE_HSV_COLOR,
-                                           GIMP_LAYER_MODE_HSV_VALUE,
-                                           GIMP_LAYER_MODE_LCH_HUE,
-                                           GIMP_LAYER_MODE_LCH_CHROMA,
-                                           GIMP_LAYER_MODE_LCH_COLOR,
-                                           GIMP_LAYER_MODE_LCH_LIGHTNESS,
-                                           GIMP_LAYER_MODE_EXCLUSION,
-                                           GIMP_LAYER_MODE_LINEAR_BURN);
-
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DISSOLVE, -1);
 
@@ -548,38 +497,12 @@ gimp_layer_mode_combo_box_create_perceptual_model (GimpLayerModeComboBox *combo)
                                               GIMP_LAYER_MODE_BEHIND,
                                               GIMP_LAYER_MODE_COLOR_ERASE);
     }
-
-  return GTK_TREE_MODEL (store);
 }
 
-static GtkTreeModel *
-gimp_layer_mode_combo_box_create_legacy_model (GimpLayerModeComboBox *combo)
+static void
+gimp_layer_mode_combo_box_fix_legacy_store (GimpLayerModeComboBox *combo,
+                                            GtkListStore          *store)
 {
-  GtkListStore *store;
-
-  store = gimp_enum_store_new_with_values (GIMP_TYPE_LAYER_MODE,
-                                           20,
-                                           GIMP_LAYER_MODE_NORMAL,
-                                           GIMP_LAYER_MODE_DISSOLVE,
-                                           GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
-                                           GIMP_LAYER_MODE_SCREEN_LEGACY,
-                                           GIMP_LAYER_MODE_DODGE_LEGACY,
-                                           GIMP_LAYER_MODE_ADDITION_LEGACY,
-                                           GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,
-                                           GIMP_LAYER_MODE_MULTIPLY_LEGACY,
-                                           GIMP_LAYER_MODE_BURN_LEGACY,
-                                           GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,
-                                           GIMP_LAYER_MODE_HARDLIGHT_LEGACY,
-                                           GIMP_LAYER_MODE_DIFFERENCE_LEGACY,
-                                           GIMP_LAYER_MODE_SUBTRACT_LEGACY,
-                                           GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,
-                                           GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,
-                                           GIMP_LAYER_MODE_DIVIDE_LEGACY,
-                                           GIMP_LAYER_MODE_HSV_HUE_LEGACY,
-                                           GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,
-                                           GIMP_LAYER_MODE_HSV_COLOR_LEGACY,
-                                           GIMP_LAYER_MODE_HSV_VALUE_LEGACY);
-
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DISSOLVE, -1);
 
@@ -594,40 +517,44 @@ gimp_layer_mode_combo_box_create_legacy_model (GimpLayerModeComboBox *combo)
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DIVIDE_LEGACY, -1);
-
-  return GTK_TREE_MODEL (store);
 }
 
 static void
 gimp_layer_mode_combo_box_update_model (GimpLayerModeComboBox *combo,
                                         gboolean               change_mode)
 {
-  GtkTreeModel *model;
+  GtkListStore        *store;
+  const GimpLayerMode *modes;
+  gint                 n_modes;
+
+  modes = gimp_layer_mode_get_group_array (combo->priv->group, &n_modes);
+  store = gimp_enum_store_new_from_array (GIMP_TYPE_LAYER_MODE,
+                                          n_modes, (gint *) modes);
 
   switch (combo->priv->group)
     {
     case GIMP_LAYER_MODE_GROUP_DEFAULT:
-      model = gimp_layer_mode_combo_box_create_default_model (combo);
+      gimp_layer_mode_combo_box_fix_default_store (combo, store);
       break;
 
     case GIMP_LAYER_MODE_GROUP_LINEAR:
-      model = gimp_layer_mode_combo_box_create_linear_model (combo);
+      gimp_layer_mode_combo_box_fix_linear_store (combo, store);
       break;
 
     case GIMP_LAYER_MODE_GROUP_PERCEPTUAL:
-      model = gimp_layer_mode_combo_box_create_perceptual_model (combo);
+      gimp_layer_mode_combo_box_fix_perceptual_store (combo, store);
       break;
 
     case GIMP_LAYER_MODE_GROUP_LEGACY:
-      model = gimp_layer_mode_combo_box_create_legacy_model (combo);
+      gimp_layer_mode_combo_box_fix_legacy_store (combo, store);
       break;
 
     default:
       g_return_if_reached ();
     }
 
-  gtk_combo_box_set_model (GTK_COMBO_BOX (combo), model);
-  g_object_unref (model);
+  gtk_combo_box_set_model (GTK_COMBO_BOX (combo), GTK_TREE_MODEL (store));
+  g_object_unref (store);
 
   if (change_mode)
     {
@@ -644,7 +571,7 @@ gimp_layer_mode_combo_box_update_model (GimpLayerModeComboBox *combo,
           GtkTreeIter iter;
 
           /*  switch to the first mode, which will be one of the "normal"  */
-          gtk_tree_model_get_iter_first (model, &iter);
+          gtk_tree_model_get_iter_first (GTK_TREE_MODEL (store), &iter);
           gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
         }
     }

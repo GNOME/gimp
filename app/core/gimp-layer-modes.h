@@ -34,6 +34,9 @@ const gchar            * gimp_layer_mode_get_operation       (GimpLayerMode     
 
 GimpLayerModeGroup       gimp_layer_mode_get_group           (GimpLayerMode       mode);
 
+const GimpLayerMode    * gimp_layer_mode_get_group_array     (GimpLayerModeGroup  group,
+                                                              gint               *n_modes);
+
 gboolean                 gimp_layer_mode_get_for_group       (GimpLayerMode       old_mode,
                                                               GimpLayerModeGroup  new_group,
                                                               GimpLayerMode      *new_mode);
