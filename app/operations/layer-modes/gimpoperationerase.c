@@ -72,27 +72,134 @@ gimp_operation_erase_process (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  while (samples--)
+  switch (layer_mode->composite_mode)
     {
-      gfloat value = opacity;
-      gint   b;
-
-      if (has_mask)
-        value *= (*mask);
-
-      for (b = RED; b < ALPHA; b++)
+    case GIMP_LAYER_COMPOSITE_SRC_OVER:
+      while (samples--)
         {
-          out[b] = in[b];
+          gfloat layer_alpha;
+          gfloat new_alpha;
+          gint   b;
+
+          layer_alpha = layer[ALPHA] * opacity;
+
+          if (has_mask)
+            layer_alpha *= (*mask);
+
+          new_alpha = in[ALPHA] + layer_alpha - 2.0f * in[ALPHA] * layer_alpha;
+
+          if (new_alpha != 0.0f)
+            {
+              gfloat ratio;
+
+              ratio = (1.0f - in[ALPHA]) * layer_alpha / new_alpha;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = ratio * layer[b] + (1.0f - ratio) * in[b];
+                }
+            }
+          else
+            {
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = in[b];
+                }
+            }
+
+          out[ALPHA] = new_alpha;
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask ++;
         }
+      break;
 
-      out[ALPHA] = in[ALPHA] - in[ALPHA] * layer[ALPHA] * value;
+    case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+      while (samples--)
+        {
+          gfloat layer_alpha;
+          gfloat new_alpha;
+          gint   b;
 
-      in    += 4;
-      layer += 4;
-      out   += 4;
+          layer_alpha = layer[ALPHA] * opacity;
 
-      if (has_mask)
-        mask ++;
+          if (has_mask)
+            layer_alpha *= (*mask);
+
+          new_alpha = (1.0f - layer_alpha) * in[ALPHA];
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+
+          out[ALPHA] = new_alpha;
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask ++;
+        }
+      break;
+
+    case GIMP_LAYER_COMPOSITE_DST_ATOP:
+      while (samples--)
+        {
+          gfloat        layer_alpha;
+          gfloat        new_alpha;
+          const gfloat *src;
+          gint          b;
+
+          layer_alpha = layer[ALPHA] * opacity;
+
+          if (has_mask)
+            layer_alpha *= (*mask);
+
+          new_alpha = (1.0f - in[ALPHA]) * layer_alpha;
+
+          src = layer;
+
+          if (new_alpha == 0.0f)
+            src = in;
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = src[b];
+            }
+
+          out[ALPHA] = new_alpha;
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask ++;
+        }
+      break;
+
+    case GIMP_LAYER_COMPOSITE_SRC_IN:
+      while (samples--)
+        {
+          gint b;
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+
+          out[ALPHA] = 0.0f;
+
+          in    += 4;
+          out   += 4;
+        }
+      break;
     }
 
   return TRUE;
