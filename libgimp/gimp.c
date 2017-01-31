@@ -263,7 +263,7 @@ gimp_main (const GimpPlugInInfo *info,
     t_SetDllDirectoryA p_SetDllDirectoryA;
 
     p_SetDllDirectoryA = GetProcAddress (GetModuleHandle ("kernel32.dll"),
-					 "SetDllDirectoryA");
+                                         "SetDllDirectoryA");
     if (p_SetDllDirectoryA)
       (*p_SetDllDirectoryA) ("");
   }
@@ -338,7 +338,7 @@ gimp_main (const GimpPlugInInfo *info,
     t_SetProcessDEPPolicy p_SetProcessDEPPolicy;
 
     p_SetProcessDEPPolicy = GetProcAddress (GetModuleHandle ("kernel32.dll"),
-					    "SetProcessDEPPolicy");
+                                            "SetProcessDEPPolicy");
     if (p_SetProcessDEPPolicy)
       (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
   }
@@ -932,7 +932,7 @@ gimp_run_procedure (const gchar *name,
           (void) va_arg (args, gchar **);
           break;
         case GIMP_PDB_COLOR:
-	case GIMP_PDB_COLORARRAY:
+        case GIMP_PDB_COLORARRAY:
           (void) va_arg (args, GimpRGB *);
           break;
         case GIMP_PDB_PARASITE:
@@ -1591,26 +1591,26 @@ gimp_extension_process (guint timeout)
       struct timeval *tvp;
 
       if (timeout)
-	{
-	  tv.tv_sec  = timeout / 1000;
-	  tv.tv_usec = (timeout % 1000) * 1000;
-	  tvp = &tv;
-	}
+        {
+          tv.tv_sec  = timeout / 1000;
+          tv.tv_usec = (timeout % 1000) * 1000;
+          tvp = &tv;
+        }
       else
-	tvp = NULL;
+        tvp = NULL;
 
       FD_ZERO (&readfds);
       FD_SET (g_io_channel_unix_get_fd (_readchannel), &readfds);
 
       if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
-	{
-	  gimp_single_message ();
-	}
+        {
+          gimp_single_message ();
+        }
       else if (select_val == -1 && errno != EINTR)
-	{
-	  perror ("gimp_extension_process");
-	  gimp_quit ();
-	}
+        {
+          perror ("gimp_extension_process");
+          gimp_quit ();
+        }
     }
   while (select_val == -1 && errno == EINTR);
 #else
