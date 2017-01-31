@@ -444,7 +444,7 @@ gimp_layer_mode_is_legacy (GimpLayerMode  mode)
 }
 
 gboolean
-gimp_layer_mode_is_linear (GimpLayerMode  mode)
+gimp_layer_mode_wants_linear_data (GimpLayerMode  mode)
 {
   switch (mode)
     {

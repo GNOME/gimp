@@ -314,7 +314,7 @@ do_layer_blend (GeglBuffer    *src_buffer,
   paint_stride = gimp_temp_buf_get_width (paint_buf);
   paint_data   = (gfloat *) gimp_temp_buf_get_data (paint_buf);
 
-  linear          = gimp_layer_mode_is_linear (paint_mode);
+  linear          = gimp_layer_mode_wants_linear_data (paint_mode);
   apply_func      = gimp_get_layer_mode_function (paint_mode);
   blend_space     = gimp_layer_mode_get_blend_space (paint_mode);
   composite_space = gimp_layer_mode_get_composite_space (paint_mode);

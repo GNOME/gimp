@@ -258,7 +258,7 @@ gimp_ink_get_paint_buffer (GimpPaintCore    *paint_core,
       GimpTempBuf *temp_buf;
       const Babl  *format;
 
-      if (gimp_layer_mode_is_linear (paint_mode))
+      if (gimp_layer_mode_wants_linear_data (paint_mode))
         format = babl_format ("RGBA float");
       else
         format = babl_format ("R'G'B'A float");

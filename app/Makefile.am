@@ -134,7 +134,7 @@ AM_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
-	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_linear
+	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a						\
