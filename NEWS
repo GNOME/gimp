@@ -15,6 +15,12 @@ Core:
 
  - Avoid D-Bus error message when built without D-Bus support
  - fix OS X min required conditional in gimpimagewindow.c
+ - Saving to existing .xcf.bz and .xcf.gz files didn't truncate them
+   and could lead to unnecessarily large files
+ - Text layer created by gimp-text-fontname doesn't respect border
+   when resized
+ - avoid seeking when saving XCF files to prevent corruption with
+   file network shares (fixed since 2014, but not mentioned in NEWS yet)
 
 
 GUI:
@@ -24,11 +30,22 @@ GUI:
  - Vertical ruler shows artifacts if the status bar isn't showing
  - Tablet stylus misbehaves when crossing the edge of a dock in
    multi-window-mode
+ - Disable the new "automatic window tabbing" feature introduced on macOS
+   Sierra
+ - Improve the visiblity of slider handles with dark themes
+ - Make it harder to switch to renaming if selecting already selected
+   items in resource lists
+
+
+Tools:
+
+ - make toggling to color picker mode of paint tools more robust
 
 
 Libgimp:
 
  - call gimp_file_entry_set_filename() with filename encoding
+
 
 Windows Installer:
 
@@ -43,6 +60,11 @@ macOS DMG:
  - Ship the Tango icon theme with the DMG for a complete set of icons
  - fix the way mime data is copied into the bundle
  - no longer copy Pango modules into the bundle
+ - prevent a crash caused by drag&drop on OSX by patching the included
+   GTK+
+ - ship a patch for gettext to make sure the preferred UI language
+   will be used
+
 
 Plug-ins:
 
@@ -52,10 +74,15 @@ Plug-ins:
  - only use -xobjective-c for compile commands
  - mkgen.pl: fix calls to write_file() routine to write to current
    directory
+ - When printing, the images are composed onto a white background to
+   prevent printing a black box instead of a transaprent image
+ - Fix color visison deficiency display filters to apply gamma
+   correction directly
 
 
 Updated Translations:
 
+ - Catalan
  - Czech
  - Danish
  - Finnish
@@ -67,6 +94,7 @@ Updated Translations:
  - Italian
  - Polish
  - Portuguese
+ - Slovak
  - Slovenian
  - Scottish Gaelic
  - Spanish
