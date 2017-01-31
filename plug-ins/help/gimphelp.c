@@ -125,6 +125,22 @@ gimp_help_parse_locales (const gchar *help_locales)
   for (p = strchr (s, ':'); p; p = strchr (s, ':'))
     {
       gchar *new = g_strndup (s, p - s);
+      gchar *c;
+
+      /* Apparently some systems (i.e. Windows) would return a value as
+       * IETF language tag, which is a different format from POSIX
+       * locale; especially it would separate the lang and the region
+       * with an hyphen instead of an underscore.
+       * Actually the difference is much deeper, and IETF language tags
+       * can have extended language subtags, a script subtag, variants,
+       * moreover using different codes.
+       * We'd actually need to look into this in details (TODO).
+       * this dirty hack should do for easy translation at least (like
+       * "en-GB" -> "en_GB).
+       */
+      c = strchr (new, '-');
+      if (c)
+        *c = '_';
 
       locales = g_list_append (locales, new);
       s = p + 1;
