@@ -1,0 +1,11 @@
+diff -ru webkitgtk-2.4.11/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp webkitgtk-2.4.11.raw.patched/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp
+--- webkitgtk-2.4.11/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp	2016-04-10 08:48:37.000000000 +0200
++++ webkitgtk-2.4.11.raw.patched/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp	2017-01-30 23:43:13.427189343 +0100
+@@ -40,6 +40,7 @@
+ #include "PaintInfo.h"
+ #include "PlatformContextCairo.h"
+ #include "RenderElement.h"
++#include "RenderBox.h"
+ #include "TextDirection.h"
+ #include "UserAgentStyleSheets.h"
+ #include "WidgetRenderingContext.h"
