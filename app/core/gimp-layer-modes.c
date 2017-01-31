@@ -750,6 +750,8 @@ gimp_layer_mode_get_composite_mode (GimpLayerMode  mode)
        return GIMP_LAYER_COMPOSITE_SRC_ATOP;
 
     case GIMP_LAYER_MODE_ERASE:
+      return GIMP_LAYER_COMPOSITE_SRC_ATOP;
+
     case GIMP_LAYER_MODE_REPLACE:
     case GIMP_LAYER_MODE_ANTI_ERASE:
       return GIMP_LAYER_COMPOSITE_SRC_OVER;
