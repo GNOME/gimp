@@ -164,7 +164,7 @@ static const GimpStringActionEntry filters_actions[] =
 
   { "filters-color-temperature", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color T_emperature..."), NULL, NULL,
-    "gegl:color-temperature", 
+    "gegl:color-temperature",
     GIMP_HELP_FILTER_COLOR_TEMPERATURE },
 
   { "filters-color-to-alpha", GIMP_STOCK_GEGL,
@@ -190,7 +190,7 @@ static const GimpStringActionEntry filters_actions[] =
   { "filters-desaturate", GIMP_STOCK_TOOL_DESATURATE,
     NC_("filters-action", "_Desaturate..."), NULL, NULL,
     "gimp:desaturate",
-    GIMP_HELP_TOOL_DESATURATE },
+    GIMP_HELP_FILTER_DESATURATE },
 
   { "filters-difference-of-gaussians", GIMP_STOCK_GEGL,
     NC_("filters-action", "Difference of Gaussians..."), NULL, NULL,
@@ -425,7 +425,7 @@ static const GimpStringActionEntry filters_actions[] =
   { "filters-posterize", GIMP_STOCK_TOOL_POSTERIZE,
     NC_("filters-action", "_Posterize..."), NULL, NULL,
     "gimp:posterize",
-    GIMP_HELP_TOOL_POSTERIZE },
+    GIMP_HELP_FILTER_POSTERIZE },
 
   { "filters-red-eye-removal", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Red Eye Removal..."), NULL, NULL,
