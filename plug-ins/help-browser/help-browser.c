@@ -96,11 +96,11 @@ query (void)
   gimp_install_procedure (GIMP_HELP_BROWSER_EXT_PROC,
                           "Browse the GIMP user manual",
                           "A small and simple HTML browser optimized for "
-			  "browsing the GIMP user manual.",
+                          "browsing the GIMP user manual.",
                           "Sven Neumann <sven@gimp.org>, "
-			  "Michael Natterer <mitch@gimp.org>"
+                          "Michael Natterer <mitch@gimp.org>"
                           "Henrik Brix Andersen <brix@gimp.org>",
-			  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+                          "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
                           "1999-2008",
                           NULL,
                           "",
@@ -185,27 +185,27 @@ temp_proc_install (void)
   };
 
   gimp_install_temp_proc (GIMP_HELP_BROWSER_TEMP_EXT_PROC,
-			  "DON'T USE THIS ONE",
-			  "(Temporary procedure)",
-			  "Sven Neumann <sven@gimp.org>, "
-			  "Michael Natterer <mitch@gimp.org>"
+                          "DON'T USE THIS ONE",
+                          "(Temporary procedure)",
+                          "Sven Neumann <sven@gimp.org>, "
+                          "Michael Natterer <mitch@gimp.org>"
                           "Henrik Brix Andersen <brix@gimp.org>",
-			  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-			  "1999-2008",
-			  NULL,
-			  "",
-			  GIMP_TEMPORARY,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL,
-			  temp_proc_run);
+                          "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+                          "1999-2008",
+                          NULL,
+                          "",
+                          GIMP_TEMPORARY,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL,
+                          temp_proc_run);
 }
 
 static void
 temp_proc_run (const gchar      *name,
-	       gint              nparams,
-	       const GimpParam  *param,
-	       gint             *nreturn_vals,
-	       GimpParam       **return_vals)
+               gint              nparams,
+               const GimpParam  *param,
+               gint             *nreturn_vals,
+               GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
