@@ -1198,6 +1198,53 @@ CODE
     );
 }
 
+sub layer_get_composite_mode {
+    $blurb = 'Get the composite mode of the specified layer.';
+    $help  = "This procedure returns the specified layer's composite mode.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'composite_mode', type => 'enum GimpLayerCompositeMode',
+	  desc => 'The layer composite mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  composite_mode = gimp_layer_get_composite (layer);
+}
+CODE
+    );
+}
+
+sub layer_set_composite_mode {
+    $blurb = 'Set the composite mode of the specified layer.';
+    $help  = "This procedure sets the specified layer's composite mode.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'composite_mode', type => 'enum GimpLayerCompositeMode',
+	  desc => 'The new layer composite mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_layer_set_composite (layer, composite_mode, TRUE);
+}
+CODE
+    );
+}
+
 @headers = qw(<cairo.h>
               "libgimpbase/gimpbase.h"
               "libgimpcolor/gimpcolor.h"
@@ -1234,7 +1281,8 @@ CODE
             layer_get_show_mask layer_set_show_mask
             layer_get_edit_mask layer_set_edit_mask
             layer_get_opacity layer_set_opacity
-            layer_get_mode layer_set_mode);
+            layer_get_mode layer_set_mode
+            layer_get_composite_mode layer_set_composite_mode);
 
 %exports = (app => [@procs], lib => [@procs]);
 

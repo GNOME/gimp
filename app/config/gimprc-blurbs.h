@@ -482,6 +482,9 @@ _("Sets the default layer name for the 'New Layer' dialog.")
 #define LAYER_NEW_MODE_BLURB \
 _("Sets the default mode for the 'New Layer' dialog.")
 
+#define LAYER_NEW_COMPOSITE_MODE_BLURB \
+_("Sets the default composite mode for the 'New Layer' dialog.")
+
 #define LAYER_NEW_OPACITY_BLURB \
 _("Sets the default opacity for the 'New Layer' dialog.")
 

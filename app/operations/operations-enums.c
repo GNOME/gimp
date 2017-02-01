@@ -44,8 +44,9 @@ gimp_layer_composite_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_LAYER_COMPOSITE_SRC_ATOP, "GIMP_LAYER_COMPOSITE_SRC_ATOP", "src-atop" },
+    { GIMP_LAYER_COMPOSITE_AUTO, "GIMP_LAYER_COMPOSITE_AUTO", "auto" },
     { GIMP_LAYER_COMPOSITE_SRC_OVER, "GIMP_LAYER_COMPOSITE_SRC_OVER", "src-over" },
+    { GIMP_LAYER_COMPOSITE_SRC_ATOP, "GIMP_LAYER_COMPOSITE_SRC_ATOP", "src-atop" },
     { GIMP_LAYER_COMPOSITE_SRC_IN, "GIMP_LAYER_COMPOSITE_SRC_IN", "src-in" },
     { GIMP_LAYER_COMPOSITE_DST_ATOP, "GIMP_LAYER_COMPOSITE_DST_ATOP", "dst-atop" },
     { 0, NULL, NULL }
@@ -53,10 +54,11 @@ gimp_layer_composite_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_LAYER_COMPOSITE_SRC_ATOP, "GIMP_LAYER_COMPOSITE_SRC_ATOP", NULL },
-    { GIMP_LAYER_COMPOSITE_SRC_OVER, "GIMP_LAYER_COMPOSITE_SRC_OVER", NULL },
-    { GIMP_LAYER_COMPOSITE_SRC_IN, "GIMP_LAYER_COMPOSITE_SRC_IN", NULL },
-    { GIMP_LAYER_COMPOSITE_DST_ATOP, "GIMP_LAYER_COMPOSITE_DST_ATOP", NULL },
+    { GIMP_LAYER_COMPOSITE_AUTO, NC_("layer-composite-mode", "Auto"), NULL },
+    { GIMP_LAYER_COMPOSITE_SRC_OVER, NC_("layer-composite-mode", "Source over"), NULL },
+    { GIMP_LAYER_COMPOSITE_SRC_ATOP, NC_("layer-composite-mode", "Source atop"), NULL },
+    { GIMP_LAYER_COMPOSITE_SRC_IN, NC_("layer-composite-mode", "Source in"), NULL },
+    { GIMP_LAYER_COMPOSITE_DST_ATOP, NC_("layer-composite-mode", "Destination atop"), NULL },
     { 0, NULL, NULL }
   };
 

@@ -64,7 +64,8 @@ void       gimp_drawable_filter_set_preview    (GimpDrawableFilter  *filter,
 void       gimp_drawable_filter_set_opacity    (GimpDrawableFilter  *filter,
                                                 gdouble              opacity);
 void       gimp_drawable_filter_set_mode       (GimpDrawableFilter  *filter,
-                                                GimpLayerMode        paint_mode);
+                                                GimpLayerMode        paint_mode,
+                                                GimpLayerCompositeMode composite_mode);
 
 void       gimp_drawable_filter_set_color_managed
                                                (GimpDrawableFilter  *filter,

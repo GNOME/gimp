@@ -261,6 +261,7 @@ app/file/file-utils.c
 app/gegl/gimp-babl.c
 app/gegl/gimp-gegl-enums.c
 
+app/operations/operations-enums.c
 app/operations/gimpbrightnesscontrastconfig.c
 app/operations/gimpcolorbalanceconfig.c
 app/operations/gimpcolorizeconfig.c

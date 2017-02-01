@@ -40,16 +40,17 @@
 
 
 void
-gimp_drawable_real_apply_buffer (GimpDrawable        *drawable,
-                                 GeglBuffer          *buffer,
-                                 const GeglRectangle *buffer_region,
-                                 gboolean             push_undo,
-                                 const gchar         *undo_desc,
-                                 gdouble              opacity,
-                                 GimpLayerMode        mode,
-                                 GeglBuffer          *base_buffer,
-                                 gint                 base_x,
-                                 gint                 base_y)
+gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
+                                 GeglBuffer             *buffer,
+                                 const GeglRectangle    *buffer_region,
+                                 gboolean                push_undo,
+                                 const gchar            *undo_desc,
+                                 gdouble                 opacity,
+                                 GimpLayerMode           mode,
+                                 GimpLayerCompositeMode  composite,
+                                 GeglBuffer             *base_buffer,
+                                 gint                    base_x,
+                                 gint                    base_y)
 {
   GimpItem          *item  = GIMP_ITEM (drawable);
   GimpImage         *image = gimp_item_get_image (item);
@@ -102,8 +103,9 @@ gimp_drawable_real_apply_buffer (GimpDrawable        *drawable,
 
       if (undo)
         {
-          undo->paint_mode = mode;
-          undo->opacity    = opacity;
+          undo->paint_mode     = mode;
+          undo->composite_mode = composite;
+          undo->opacity        = opacity;
 
           undo->applied_buffer =
             gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
@@ -141,7 +143,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable        *drawable,
                                     base_y - buffer_region->y);
 
   gimp_applicator_set_opacity (applicator, opacity);
-  gimp_applicator_set_mode (applicator, mode);
+  gimp_applicator_set_mode (applicator, mode, composite);
   gimp_applicator_set_affect (applicator,
                               gimp_drawable_get_active_mask (drawable));
 

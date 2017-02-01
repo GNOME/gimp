@@ -66,6 +66,7 @@ struct _GimpDialogConfig
 
   gchar                    *layer_new_name;
   GimpLayerMode             layer_new_mode;
+  GimpLayerCompositeMode    layer_new_composite_mode;
   gdouble                   layer_new_opacity;
   GimpFillType              layer_new_fill_type;
 

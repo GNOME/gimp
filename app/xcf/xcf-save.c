@@ -534,6 +534,8 @@ xcf_save_layer_props (XcfInfo    *info,
                                   offset_x, offset_y));
   xcf_check_error (xcf_save_prop (info, image, PROP_MODE, error,
                                   gimp_layer_get_mode (layer)));
+  xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE, error,
+                                  gimp_layer_get_composite (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_item_get_tattoo (GIMP_ITEM (layer))));
 
@@ -732,6 +734,19 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
         xcf_write_int32_check_error (info, (guint32 *) &mode, 1);
+      }
+      break;
+
+    case PROP_COMPOSITE:
+      {
+        gint32 composite;
+
+        composite = va_arg (args, gint32);
+        size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+        xcf_write_int32_check_error (info, (guint32 *) &composite, 1);
       }
       break;
 

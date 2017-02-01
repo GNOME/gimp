@@ -669,6 +669,20 @@ package Gimp::CodeGen::enums;
 		       GIMP_COLOR_RENDERING_INTENT_SATURATION => '2',
 		       GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC => '3' }
 	},
+    GimpLayerCompositeMode =>
+	{ contig => 1,
+	  header => 'operations/operations-enums.h',
+	  symbols => [ qw(GIMP_LAYER_COMPOSITE_AUTO
+			  GIMP_LAYER_COMPOSITE_SRC_OVER
+			  GIMP_LAYER_COMPOSITE_SRC_ATOP
+			  GIMP_LAYER_COMPOSITE_SRC_IN
+			  GIMP_LAYER_COMPOSITE_DST_ATOP) ],
+	  mapping => { GIMP_LAYER_COMPOSITE_AUTO => '0',
+		       GIMP_LAYER_COMPOSITE_SRC_OVER => '1',
+		       GIMP_LAYER_COMPOSITE_SRC_ATOP => '2',
+		       GIMP_LAYER_COMPOSITE_SRC_IN => '3',
+		       GIMP_LAYER_COMPOSITE_DST_ATOP => '4' }
+	},
     GimpConvertDitherType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',

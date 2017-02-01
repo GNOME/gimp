@@ -103,6 +103,7 @@ gimp_drawable_merge_shadow_buffer (GimpDrawable *drawable,
                                   push_undo, undo_desc,
                                   GIMP_OPACITY_OPAQUE,
                                   GIMP_LAYER_MODE_REPLACE,
+                                  GIMP_LAYER_COMPOSITE_AUTO,
                                   NULL, x, y);
 
       g_object_unref (buffer);

@@ -34,19 +34,20 @@ typedef struct _GimpLayerClass GimpLayerClass;
 
 struct _GimpLayer
 {
-  GimpDrawable   parent_instance;
+  GimpDrawable            parent_instance;
 
-  gdouble        opacity;          /*  layer opacity              */
-  GimpLayerMode  mode;             /*  layer combination mode     */
-  gboolean       lock_alpha;       /*  lock the alpha channel     */
+  gdouble                 opacity;          /*  layer opacity              */
+  GimpLayerMode           mode;             /*  layer combination mode     */
+  GimpLayerCompositeMode  composite;        /*  layer composite mode       */
+  gboolean                lock_alpha;       /*  lock the alpha channel     */
 
-  GimpLayerMask *mask;             /*  possible layer mask        */
-  gboolean       apply_mask;       /*  controls mask application  */
-  gboolean       edit_mask;        /*  edit mask or layer?        */
-  gboolean       show_mask;        /*  show mask or layer?        */
+  GimpLayerMask          *mask;             /*  possible layer mask        */
+  gboolean                apply_mask;       /*  controls mask application  */
+  gboolean                edit_mask;        /*  edit mask or layer?        */
+  gboolean                show_mask;        /*  show mask or layer?        */
 
-  GeglNode      *layer_offset_node;
-  GeglNode      *mask_offset_node;
+  GeglNode               *layer_offset_node;
+  GeglNode               *mask_offset_node;
 
   /*  Floating selections  */
   struct
@@ -64,6 +65,7 @@ struct _GimpLayerClass
 
   void (* opacity_changed)    (GimpLayer *layer);
   void (* mode_changed)       (GimpLayer *layer);
+  void (* composite_changed)  (GimpLayer *layer);
   void (* lock_alpha_changed) (GimpLayer *layer);
   void (* mask_changed)       (GimpLayer *layer);
   void (* apply_mask_changed) (GimpLayer *layer);
@@ -126,6 +128,12 @@ void            gimp_layer_set_mode            (GimpLayer            *layer,
                                                 GimpLayerMode         mode,
                                                 gboolean              push_undo);
 GimpLayerMode   gimp_layer_get_mode            (GimpLayer            *layer);
+
+void            gimp_layer_set_composite       (GimpLayer            *layer,
+                                                GimpLayerCompositeMode  composite,
+                                                gboolean              push_undo);
+GimpLayerCompositeMode
+                gimp_layer_get_composite       (GimpLayer            *layer);
 
 void            gimp_layer_set_lock_alpha      (GimpLayer            *layer,
                                                 gboolean              lock_alpha,

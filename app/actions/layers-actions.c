@@ -50,6 +50,10 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "Layers Menu"), NULL, NULL, NULL,
     GIMP_HELP_LAYER_DIALOG },
 
+  { "layers-composite-menu", NULL,
+    NC_("layers-action", "Composite"), NULL, NULL, NULL,
+    NULL },
+
   { "layers-color-tag-menu", GIMP_STOCK_CLOSE /* abused */,
     NC_("layers-action", "Color Tag"), NULL, NULL, NULL,
     GIMP_HELP_LAYER_COLOR_TAG },
@@ -313,6 +317,34 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
     G_CALLBACK (layers_lock_alpha_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_LOCK_ALPHA },
+};
+
+static const GimpRadioActionEntry layers_composite_actions[] =
+{
+  { "layers-composite-auto", NULL,
+    NC_("layers-action", "Auto"), NULL, NULL,
+    GIMP_LAYER_COMPOSITE_AUTO,
+    NULL },
+
+  { "layers-composite-src-over", NULL,
+    NC_("layers-action", "Source over"), NULL, NULL,
+    GIMP_LAYER_COMPOSITE_SRC_OVER,
+    NULL },
+
+  { "layers-composite-src-atop", NULL,
+    NC_("layers-action", "Source atop"), NULL, NULL,
+    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    NULL },
+
+  { "layers-composite-src-in", NULL,
+    NC_("layers-action", "Source in"), NULL, NULL,
+    GIMP_LAYER_COMPOSITE_SRC_IN,
+    NULL },
+
+  { "layers-composite-dst-atop", NULL,
+    NC_("layers-action", "Destination atop"), NULL, NULL,
+    GIMP_LAYER_COMPOSITE_DST_ATOP,
+    NULL }
 };
 
 static const GimpEnumActionEntry layers_color_tag_actions[] =
@@ -582,6 +614,12 @@ layers_actions_setup (GimpActionGroup *group)
                                         layers_toggle_actions,
                                         G_N_ELEMENTS (layers_toggle_actions));
 
+  gimp_action_group_add_radio_actions (group, "layers-action",
+                                       layers_composite_actions,
+                                       G_N_ELEMENTS (layers_composite_actions),
+                                       NULL, 0,
+                                       G_CALLBACK (layers_composite_cmd_callback));
+
   gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_color_tag_actions,
                                       G_N_ELEMENTS (layers_color_tag_actions),
@@ -662,8 +700,25 @@ layers_actions_update (GimpActionGroup *group,
 
       if (layer)
         {
-          GList *layer_list;
-          GList *list;
+          const gchar *action = NULL;
+          GList       *layer_list;
+          GList       *list;
+
+          switch (gimp_layer_get_composite (layer))
+            {
+            case GIMP_LAYER_COMPOSITE_AUTO:
+              action = "layers-composite-auto"; break;
+            case GIMP_LAYER_COMPOSITE_SRC_OVER:
+              action = "layers-composite-src-over"; break;
+            case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+              action = "layers-composite-src-atop"; break;
+            case GIMP_LAYER_COMPOSITE_SRC_IN:
+              action = "layers-composite-src-in"; break;
+            case GIMP_LAYER_COMPOSITE_DST_ATOP:
+              action = "layers-composite-dst-atop"; break;
+            }
+
+          gimp_action_group_set_action_active (group, action, TRUE);
 
           mask           = gimp_layer_get_mask (layer);
           lock_alpha     = gimp_layer_get_lock_alpha (layer);
@@ -769,6 +824,12 @@ layers_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
+
+  SET_SENSITIVE ("layers-composite-auto",     layer);
+  SET_SENSITIVE ("layers-composite-src-over", layer);
+  SET_SENSITIVE ("layers-composite-src-atop", layer);
+  SET_SENSITIVE ("layers-composite-src-in",   layer);
+  SET_SENSITIVE ("layers-composite-dst-atop", layer);
 
   SET_SENSITIVE ("layers-mask-add",             layer && !fs && !ac && !mask && !children);
   SET_SENSITIVE ("layers-mask-add-button",      layer && !fs && !ac && !children);

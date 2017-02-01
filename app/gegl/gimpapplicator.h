@@ -34,48 +34,49 @@ typedef struct _GimpApplicatorClass GimpApplicatorClass;
 
 struct _GimpApplicator
 {
-  GObject            parent_instance;
+  GObject                 parent_instance;
 
-  GeglNode          *node;
-  GeglNode          *input_node;
-  GeglNode          *aux_node;
-  GeglNode          *output_node;
+  GeglNode               *node;
+  GeglNode               *input_node;
+  GeglNode               *aux_node;
+  GeglNode               *output_node;
 
-  GeglBuffer        *apply_buffer;
-  GeglNode          *apply_src_node;
+  GeglBuffer             *apply_buffer;
+  GeglNode               *apply_src_node;
 
-  gint               apply_offset_x;
-  gint               apply_offset_y;
-  GeglNode          *apply_offset_node;
+  gint                    apply_offset_x;
+  gint                    apply_offset_y;
+  GeglNode               *apply_offset_node;
 
-  GeglNode          *dup_apply_buffer_node;
+  GeglNode               *dup_apply_buffer_node;
 
-  gboolean           preview_enabled;
-  GeglRectangle      preview_rect;
-  GeglNode          *preview_cache_node;
-  GeglNode          *preview_crop_node;
+  gboolean                preview_enabled;
+  GeglRectangle           preview_rect;
+  GeglNode               *preview_cache_node;
+  GeglNode               *preview_crop_node;
 
-  gdouble            opacity;
-  GimpLayerMode      paint_mode;
-  GeglNode          *mode_node;
+  gdouble                 opacity;
+  GimpLayerMode           paint_mode;
+  GimpLayerCompositeMode  composite_mode;
+  GeglNode               *mode_node;
 
-  GimpComponentMask  affect;
-  GeglNode          *affect_node;
+  GimpComponentMask       affect;
+  GeglNode               *affect_node;
 
-  GeglNode          *output_cache_node;
+  GeglNode               *output_cache_node;
 
-  GeglBuffer        *src_buffer;
-  GeglNode          *src_node;
+  GeglBuffer             *src_buffer;
+  GeglNode               *src_node;
 
-  GeglBuffer        *dest_buffer;
-  GeglNode          *dest_node;
+  GeglBuffer             *dest_buffer;
+  GeglNode               *dest_node;
 
-  GeglBuffer        *mask_buffer;
-  GeglNode          *mask_node;
+  GeglBuffer             *mask_buffer;
+  GeglNode               *mask_node;
 
-  gint               mask_offset_x;
-  gint               mask_offset_y;
-  GeglNode          *mask_offset_node;
+  gint                    mask_offset_x;
+  gint                    mask_offset_y;
+  GeglNode               *mask_offset_node;
 };
 
 struct _GimpApplicatorClass
@@ -110,7 +111,8 @@ void         gimp_applicator_set_apply_offset (GimpApplicator       *applicator,
 void         gimp_applicator_set_opacity      (GimpApplicator       *applicator,
                                                gdouble               opacity);
 void         gimp_applicator_set_mode         (GimpApplicator       *applicator,
-                                               GimpLayerMode         paint_mode);
+                                               GimpLayerMode         paint_mode,
+                                               GimpLayerCompositeMode  composite_mode);
 void         gimp_applicator_set_affect       (GimpApplicator       *applicator,
                                                GimpComponentMask     affect);
 

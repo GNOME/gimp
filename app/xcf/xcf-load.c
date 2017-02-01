@@ -1100,6 +1100,17 @@ xcf_load_layer_props (XcfInfo    *info,
           }
           break;
 
+        case PROP_COMPOSITE:
+          {
+            guint32 composite;
+
+            info->cp += xcf_read_int32 (info->input, &composite, 1);
+
+            gimp_layer_set_composite (*layer,
+                                      (GimpLayerCompositeMode) composite, FALSE);
+          }
+          break;
+
         case PROP_TATTOO:
           {
             GimpTattoo tattoo;

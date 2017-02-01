@@ -1152,3 +1152,69 @@ gimp_layer_set_mode (gint32        layer_ID,
 
   return success;
 }
+
+/**
+ * gimp_layer_get_composite_mode:
+ * @layer_ID: The layer.
+ *
+ * Get the composite mode of the specified layer.
+ *
+ * This procedure returns the specified layer's composite mode.
+ *
+ * Returns: The layer composite mode.
+ *
+ * Since: 2.10
+ **/
+GimpLayerCompositeMode
+gimp_layer_get_composite_mode (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpLayerCompositeMode composite_mode = 0;
+
+  return_vals = gimp_run_procedure ("gimp-layer-get-composite-mode",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    composite_mode = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return composite_mode;
+}
+
+/**
+ * gimp_layer_set_composite_mode:
+ * @layer_ID: The layer.
+ * @composite_mode: The new layer composite mode.
+ *
+ * Set the composite mode of the specified layer.
+ *
+ * This procedure sets the specified layer's composite mode.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_layer_set_composite_mode (gint32                 layer_ID,
+                               GimpLayerCompositeMode composite_mode)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-layer-set-composite-mode",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_INT32, composite_mode,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

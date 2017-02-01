@@ -59,6 +59,7 @@ enum
 {
   OPACITY_CHANGED,
   MODE_CHANGED,
+  COMPOSITE_CHANGED,
   LOCK_ALPHA_CHANGED,
   MASK_CHANGED,
   APPLY_MASK_CHANGED,
@@ -72,6 +73,7 @@ enum
   PROP_0,
   PROP_OPACITY,
   PROP_MODE,
+  PROP_COMPOSITE,
   PROP_LOCK_ALPHA,
   PROP_MASK,
   PROP_FLOATING_SELECTION
@@ -247,6 +249,15 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  layer_signals[COMPOSITE_CHANGED] =
+    g_signal_new ("composite-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLayerClass, composite_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   layer_signals[LOCK_ALPHA_CHANGED] =
     g_signal_new ("lock-alpha-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -348,6 +359,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
+  klass->composite_changed            = NULL;
   klass->lock_alpha_changed           = NULL;
   klass->mask_changed                 = NULL;
   klass->apply_mask_changed           = NULL;
@@ -365,6 +377,12 @@ gimp_layer_class_init (GimpLayerClass *klass)
                                    g_param_spec_enum ("mode", NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE,
                                                       GIMP_LAYER_MODE_NORMAL,
+                                                      GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_COMPOSITE,
+                                   g_param_spec_enum ("composite", NULL, NULL,
+                                                      GIMP_TYPE_LAYER_COMPOSITE_MODE,
+                                                      GIMP_LAYER_COMPOSITE_AUTO,
                                                       GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_LOCK_ALPHA,
@@ -391,6 +409,7 @@ gimp_layer_init (GimpLayer *layer)
 {
   layer->opacity    = GIMP_OPACITY_OPAQUE;
   layer->mode       = GIMP_LAYER_MODE_NORMAL;
+  layer->composite  = GIMP_LAYER_COMPOSITE_AUTO;
   layer->lock_alpha = FALSE;
 
   layer->mask       = NULL;
@@ -448,6 +467,9 @@ gimp_layer_get_property (GObject    *object,
       break;
     case PROP_MODE:
       g_value_set_enum (value, gimp_layer_get_mode (layer));
+      break;
+    case PROP_COMPOSITE:
+      g_value_set_enum (value, gimp_layer_get_composite (layer));
       break;
     case PROP_LOCK_ALPHA:
       g_value_set_boolean (value, gimp_layer_get_lock_alpha (layer));
@@ -508,29 +530,33 @@ gimp_layer_finalize (GObject *object)
 static void
 gimp_layer_update_mode_node (GimpLayer *layer)
 {
-  GeglNode      *mode_node;
-  GimpLayerMode  visible_mode;
+  GeglNode               *mode_node;
+  GimpLayerMode           visible_mode;
+  GimpLayerCompositeMode  visible_composite;
 
   mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
   if (layer->mask && layer->show_mask)
     {
-      visible_mode = GIMP_LAYER_MODE_NORMAL;
+      visible_mode      = GIMP_LAYER_MODE_NORMAL;
+      visible_composite = GIMP_LAYER_COMPOSITE_AUTO;
     }
   else
     {
       if (layer->mode != GIMP_LAYER_MODE_DISSOLVE &&
           gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
         {
-          visible_mode = GIMP_LAYER_MODE_NORMAL;
+          visible_mode      = GIMP_LAYER_MODE_NORMAL;
+          visible_composite = GIMP_LAYER_COMPOSITE_AUTO;
         }
       else
         {
-          visible_mode = layer->mode;
+          visible_mode      = layer->mode;
+          visible_composite = layer->composite;
         }
     }
 
-  gimp_gegl_mode_node_set_mode (mode_node, visible_mode);
+  gimp_gegl_mode_node_set_mode (mode_node, visible_mode, visible_composite);
   gimp_gegl_mode_node_set_opacity (mode_node, layer->opacity);
 }
 
@@ -747,8 +773,12 @@ gimp_layer_duplicate (GimpItem *item,
       GimpLayer *layer     = GIMP_LAYER (item);
       GimpLayer *new_layer = GIMP_LAYER (new_item);
 
-      gimp_layer_set_mode    (new_layer, gimp_layer_get_mode (layer),    FALSE);
-      gimp_layer_set_opacity (new_layer, gimp_layer_get_opacity (layer), FALSE);
+      gimp_layer_set_mode      (new_layer,
+                                gimp_layer_get_mode (layer), FALSE);
+      gimp_layer_set_composite (new_layer,
+                                gimp_layer_get_composite (layer), FALSE);
+      gimp_layer_set_opacity   (new_layer,
+                                gimp_layer_get_opacity (layer), FALSE);
 
       if (gimp_layer_can_lock_alpha (new_layer))
         gimp_layer_set_lock_alpha (new_layer,
@@ -2051,10 +2081,25 @@ gimp_layer_set_mode (GimpLayer     *layer,
           gimp_image_undo_push_layer_mode (image, NULL, layer);
         }
 
+      g_object_freeze_notify (G_OBJECT (layer));
+
       layer->mode = mode;
 
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "mode");
+
+      /*  when changing modes, we always switch to AUTO composite in
+       *  order to avoid confusion
+       */
+      if (layer->composite != GIMP_LAYER_COMPOSITE_AUTO)
+        {
+          layer->composite = GIMP_LAYER_COMPOSITE_AUTO;
+
+          g_signal_emit (layer, layer_signals[COMPOSITE_CHANGED], 0);
+          g_object_notify (G_OBJECT (layer), "composite");
+        }
+
+      g_object_thaw_notify (G_OBJECT (layer));
 
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
         gimp_layer_update_mode_node (layer);
@@ -2069,6 +2114,42 @@ gimp_layer_get_mode (GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_MODE_NORMAL);
 
   return layer->mode;
+}
+
+void
+gimp_layer_set_composite (GimpLayer              *layer,
+                          GimpLayerCompositeMode  composite,
+                          gboolean                push_undo)
+{
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (layer->composite != composite)
+    {
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+          gimp_image_undo_push_layer_mode (image, NULL, layer);
+        }
+
+      layer->composite = composite;
+
+      g_signal_emit (layer, layer_signals[COMPOSITE_CHANGED], 0);
+      g_object_notify (G_OBJECT (layer), "composite");
+
+      if (gimp_filter_peek_node (GIMP_FILTER (layer)))
+        gimp_layer_update_mode_node (layer);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+    }
+}
+
+GimpLayerCompositeMode
+gimp_layer_get_composite (GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
+  return layer->composite;
 }
 
 void

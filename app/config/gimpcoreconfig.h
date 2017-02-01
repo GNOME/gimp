@@ -21,6 +21,7 @@
 #ifndef __GIMP_CORE_CONFIG_H__
 #define __GIMP_CORE_CONFIG_H__
 
+#include "operations/operations-enums.h"
 #include "core/core-enums.h"
 
 #include "config/gimpgeglconfig.h"

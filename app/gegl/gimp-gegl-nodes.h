@@ -32,8 +32,9 @@ GeglNode * gimp_gegl_add_buffer_source         (GeglNode          *parent,
                                                 gint               offset_x,
                                                 gint               offset_y);
 
-void       gimp_gegl_mode_node_set_mode        (GeglNode          *node,
-                                                GimpLayerMode      mode);
+void       gimp_gegl_mode_node_set_mode        (GeglNode               *node,
+                                                GimpLayerMode           mode,
+                                                GimpLayerCompositeMode  composite);
 void       gimp_gegl_mode_node_set_opacity     (GeglNode          *node,
                                                 gdouble            opacity);
 

@@ -642,7 +642,8 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
            ! strcmp (pspec->name, "paint-mode"))
     {
       gimp_drawable_filter_set_mode (blend_tool->filter,
-                                     gimp_context_get_paint_mode (context));
+                                     gimp_context_get_paint_mode (context),
+                                     GIMP_LAYER_COMPOSITE_AUTO);
     }
 }
 
@@ -1203,7 +1204,8 @@ gimp_blend_tool_create_filter (GimpBlendTool *blend_tool,
   gimp_drawable_filter_set_opacity (blend_tool->filter,
                                     gimp_context_get_opacity (context));
   gimp_drawable_filter_set_mode (blend_tool->filter,
-                                 gimp_context_get_paint_mode (context));
+                                 gimp_context_get_paint_mode (context),
+                                 GIMP_LAYER_COMPOSITE_AUTO);
 
   g_signal_connect (blend_tool->filter, "flush",
                     G_CALLBACK (gimp_blend_tool_filter_flush),

@@ -1097,16 +1097,17 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
 }
 
 void
-gimp_drawable_apply_buffer (GimpDrawable        *drawable,
-                            GeglBuffer          *buffer,
-                            const GeglRectangle *buffer_region,
-                            gboolean             push_undo,
-                            const gchar         *undo_desc,
-                            gdouble              opacity,
-                            GimpLayerMode        mode,
-                            GeglBuffer          *base_buffer,
-                            gint                 base_x,
-                            gint                 base_y)
+gimp_drawable_apply_buffer (GimpDrawable           *drawable,
+                            GeglBuffer             *buffer,
+                            const GeglRectangle    *buffer_region,
+                            gboolean                push_undo,
+                            const gchar            *undo_desc,
+                            gdouble                 opacity,
+                            GimpLayerMode           mode,
+                            GimpLayerCompositeMode  composite,
+                            GeglBuffer             *base_buffer,
+                            gint                    base_x,
+                            gint                    base_y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -1117,7 +1118,7 @@ gimp_drawable_apply_buffer (GimpDrawable        *drawable,
   GIMP_DRAWABLE_GET_CLASS (drawable)->apply_buffer (drawable, buffer,
                                                     buffer_region,
                                                     push_undo, undo_desc,
-                                                    opacity, mode,
+                                                    opacity, mode, composite,
                                                     base_buffer,
                                                     base_x, base_y);
 }

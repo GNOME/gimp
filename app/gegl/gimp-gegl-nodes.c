@@ -141,12 +141,16 @@ gimp_gegl_add_buffer_source (GeglNode   *parent,
 }
 
 void
-gimp_gegl_mode_node_set_mode (GeglNode      *node,
-                              GimpLayerMode  mode)
+gimp_gegl_mode_node_set_mode (GeglNode               *node,
+                              GimpLayerMode           mode,
+                              GimpLayerCompositeMode  composite)
 {
   gdouble opacity;
 
   g_return_if_fail (GEGL_IS_NODE (node));
+
+  if (composite == GIMP_LAYER_COMPOSITE_AUTO)
+    composite = gimp_layer_mode_get_composite_mode (mode);
 
   gegl_node_get (node,
                  "opacity", &opacity,
@@ -158,11 +162,11 @@ gimp_gegl_mode_node_set_mode (GeglNode      *node,
   gegl_node_set (node,
                  "operation",       gimp_layer_mode_get_operation (mode),
                  "layer-mode",      mode,
+                 "composite-mode",  composite,
                  "opacity",         opacity,
                  "linear",          gimp_layer_mode_wants_linear_data (mode),
                  "blend-space",     gimp_layer_mode_get_blend_space (mode),
                  "composite-space", gimp_layer_mode_get_composite_space (mode),
-                 "composite-mode",  gimp_layer_mode_get_composite_mode (mode),
                  NULL);
 }
 

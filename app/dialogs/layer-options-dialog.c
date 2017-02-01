@@ -51,6 +51,7 @@ struct _LayerOptionsDialog
 {
   GimpLayer                *layer;
   GimpLayerMode             mode;
+  GimpLayerCompositeMode    composite;
   gdouble                   opacity;
   GimpFillType              fill_type;
   gboolean                  lock_alpha;
@@ -96,6 +97,7 @@ layer_options_dialog_new (GimpImage                *image,
                           const gchar              *help_id,
                           const gchar              *layer_name,
                           GimpLayerMode             layer_mode,
+                          GimpLayerCompositeMode    layer_composite,
                           gdouble                   layer_opacity,
                           GimpFillType              layer_fill_type,
                           gboolean                  layer_visible,
@@ -129,6 +131,7 @@ layer_options_dialog_new (GimpImage                *image,
 
   private->layer              = layer;
   private->mode               = layer_mode;
+  private->composite          = layer_composite;
   private->opacity            = layer_opacity * 100.0;
   private->fill_type          = layer_fill_type;
   private->lock_alpha         = layer_lock_alpha;
@@ -162,6 +165,15 @@ layer_options_dialog_new (GimpImage                *image,
   item_options_dialog_add_widget (dialog, _("_Mode:"), private->mode_box);
   gimp_layer_mode_box_set_mode (GIMP_LAYER_MODE_BOX (private->mode_box),
                                 private->mode);
+
+  combo = gimp_enum_combo_box_new (GIMP_TYPE_LAYER_COMPOSITE_MODE);
+  item_options_dialog_add_widget (dialog, _("Composite:"), combo);
+  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
+                                       "gimp-layer-composite");
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              private->composite,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &private->composite);
 
   adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (private->opacity, 0.0, 100.0,
                                                    1.0, 10.0, 0.0));
@@ -446,6 +458,7 @@ layer_options_dialog_callback (GtkWidget    *dialog,
                      context,
                      item_name,
                      private->mode,
+                     private->composite,
                      private->opacity / 100.0,
                      private->fill_type,
                      width,

@@ -42,6 +42,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitemundo.h"
+#include "core/gimplayerpropundo.h"
 #include "core/gimplayer-floating-selection.h"
 #include "core/gimplayer-new.h"
 #include "core/gimppickable.h"
@@ -119,6 +120,7 @@ static void   layers_new_callback             (GtkWidget             *dialog,
                                                GimpContext           *context,
                                                const gchar           *layer_name,
                                                GimpLayerMode          layer_mode,
+                                               GimpLayerCompositeMode layer_composite,
                                                gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
                                                gint                   layer_width,
@@ -139,6 +141,7 @@ static void   layers_edit_attributes_callback (GtkWidget             *dialog,
                                                GimpContext           *context,
                                                const gchar           *layer_name,
                                                GimpLayerMode          layer_mode,
+                                               GimpLayerCompositeMode layer_composite,
                                                gdouble                layer_opacity,
                                                GimpFillType           layer_fill_type,
                                                gint                   layer_width,
@@ -259,6 +262,7 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
                                          GIMP_HELP_LAYER_EDIT,
                                          gimp_object_get_name (layer),
                                          gimp_layer_get_mode (layer),
+                                         gimp_layer_get_composite (layer),
                                          gimp_layer_get_opacity (layer),
                                          0 /* unused */,
                                          gimp_item_get_visible (item),
@@ -325,6 +329,7 @@ layers_new_cmd_callback (GtkAction *action,
                                          GIMP_HELP_LAYER_NEW,
                                          config->layer_new_name,
                                          config->layer_new_mode,
+                                         config->layer_new_composite_mode,
                                          config->layer_new_opacity,
                                          config->layer_new_fill_type,
                                          TRUE,
@@ -1134,6 +1139,34 @@ layers_mode_cmd_callback (GtkAction *action,
 }
 
 void
+layers_composite_cmd_callback (GtkAction *action,
+                               GtkAction *current,
+                               gpointer   data)
+{
+  GimpImage              *image;
+  GimpLayer              *layer;
+  GimpLayerCompositeMode  composite;
+  return_if_no_layer (image, layer, data);
+
+  composite = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+
+  if (composite != gimp_layer_get_composite (layer))
+    {
+      GimpUndo *undo;
+      gboolean  push_undo = TRUE;
+
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_LAYER_PROP_UNDO,
+                                           GIMP_UNDO_LAYER_MODE);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
+        push_undo = FALSE;
+
+      gimp_layer_set_composite (layer, composite, push_undo);
+      gimp_image_flush (image);
+    }
+}
+
+void
 layers_visible_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
@@ -1221,34 +1254,36 @@ layers_color_tag_cmd_callback (GtkAction *action,
 /*  private functions  */
 
 static void
-layers_new_callback (GtkWidget     *dialog,
-                     GimpImage     *image,
-                     GimpLayer     *layer,
-                     GimpContext   *context,
-                     const gchar   *layer_name,
-                     GimpLayerMode  layer_mode,
-                     gdouble        layer_opacity,
-                     GimpFillType   layer_fill_type,
-                     gint           layer_width,
-                     gint           layer_height,
-                     gint           layer_offset_x,
-                     gint           layer_offset_y,
-                     gboolean       layer_visible,
-                     gboolean       layer_linked,
-                     GimpColorTag   layer_color_tag,
-                     gboolean       layer_lock_pixels,
-                     gboolean       layer_lock_position,
-                     gboolean       layer_lock_alpha,
-                     gboolean       rename_text_layer, /* unused */
-                     gpointer       user_data)
+layers_new_callback (GtkWidget              *dialog,
+                     GimpImage              *image,
+                     GimpLayer              *layer,
+                     GimpContext            *context,
+                     const gchar            *layer_name,
+                     GimpLayerMode           layer_mode,
+                     GimpLayerCompositeMode  layer_composite,
+                     gdouble                 layer_opacity,
+                     GimpFillType            layer_fill_type,
+                     gint                    layer_width,
+                     gint                    layer_height,
+                     gint                    layer_offset_x,
+                     gint                    layer_offset_y,
+                     gboolean                layer_visible,
+                     gboolean                layer_linked,
+                     GimpColorTag            layer_color_tag,
+                     gboolean                layer_lock_pixels,
+                     gboolean                layer_lock_position,
+                     gboolean                layer_lock_alpha,
+                     gboolean                rename_text_layer, /* unused */
+                     gpointer                user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
   g_object_set (config,
-                "layer-new-name",      layer_name,
-                "layer-new-mode",      layer_mode,
-                "layer-new-opacity",   layer_opacity,
-                "layer-new-fill-type", layer_fill_type,
+                "layer-new-name",           layer_name,
+                "layer-new-mode",           layer_mode,
+                "layer-new-composite-mode", layer_composite,
+                "layer-new-opacity",        layer_opacity,
+                "layer-new-fill-type",      layer_fill_type,
                 NULL);
 
   layer = gimp_layer_new (image, layer_width, layer_height,
@@ -1270,6 +1305,7 @@ layers_new_callback (GtkWidget     *dialog,
       gimp_item_set_lock_position (GIMP_ITEM (layer), layer_lock_position,
                                    FALSE);
       gimp_layer_set_lock_alpha (layer, layer_lock_alpha, FALSE);
+      gimp_layer_set_composite (layer, layer_composite, FALSE);
 
       gimp_image_add_layer (image, layer,
                             GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -1284,31 +1320,33 @@ layers_new_callback (GtkWidget     *dialog,
 }
 
 static void
-layers_edit_attributes_callback (GtkWidget     *dialog,
-                                 GimpImage     *image,
-                                 GimpLayer     *layer,
-                                 GimpContext   *context,
-                                 const gchar   *layer_name,
-                                 GimpLayerMode  layer_mode,
-                                 gdouble        layer_opacity,
-                                 GimpFillType   unused1,
-                                 gint           unused2,
-                                 gint           unused3,
-                                 gint           layer_offset_x,
-                                 gint           layer_offset_y,
-                                 gboolean       layer_visible,
-                                 gboolean       layer_linked,
-                                 GimpColorTag   layer_color_tag,
-                                 gboolean       layer_lock_pixels,
-                                 gboolean       layer_lock_position,
-                                 gboolean       layer_lock_alpha,
-                                 gboolean       rename_text_layer,
-                                 gpointer       user_data)
+layers_edit_attributes_callback (GtkWidget              *dialog,
+                                 GimpImage              *image,
+                                 GimpLayer              *layer,
+                                 GimpContext            *context,
+                                 const gchar            *layer_name,
+                                 GimpLayerMode           layer_mode,
+                                 GimpLayerCompositeMode  layer_composite,
+                                 gdouble                 layer_opacity,
+                                 GimpFillType            unused1,
+                                 gint                    unused2,
+                                 gint                    unused3,
+                                 gint                    layer_offset_x,
+                                 gint                    layer_offset_y,
+                                 gboolean                layer_visible,
+                                 gboolean                layer_linked,
+                                 GimpColorTag            layer_color_tag,
+                                 gboolean                layer_lock_pixels,
+                                 gboolean                layer_lock_position,
+                                 gboolean                layer_lock_alpha,
+                                 gboolean                rename_text_layer,
+                                 gpointer                user_data)
 {
   GimpItem *item = GIMP_ITEM (layer);
 
   if (strcmp (layer_name, gimp_object_get_name (layer))         ||
       layer_mode          != gimp_layer_get_mode (layer)        ||
+      layer_composite     != gimp_layer_get_composite (layer)   ||
       layer_opacity       != gimp_layer_get_opacity (layer)     ||
       layer_offset_x      != gimp_item_get_offset_x (item)      ||
       layer_offset_y      != gimp_item_get_offset_y (item)      ||
@@ -1338,6 +1376,9 @@ layers_edit_attributes_callback (GtkWidget     *dialog,
 
       if (layer_mode != gimp_layer_get_mode (layer))
         gimp_layer_set_mode (layer, layer_mode, TRUE);
+
+      if (layer_composite != gimp_layer_get_composite (layer))
+        gimp_layer_set_composite (layer, layer_composite, TRUE);
 
       if (layer_opacity != gimp_layer_get_opacity (layer))
         gimp_layer_set_opacity (layer, layer_opacity, TRUE);

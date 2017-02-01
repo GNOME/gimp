@@ -1150,6 +1150,59 @@ layer_set_mode_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
+static GimpValueArray *
+layer_get_composite_mode_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpLayer *layer;
+  gint32 composite_mode = 0;
+
+  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      composite_mode = gimp_layer_get_composite (layer);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), composite_mode);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+layer_set_composite_mode_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 composite_mode;
+
+  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
+  composite_mode = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_layer_set_composite (layer, composite_mode, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_layer_procs (GimpPDB *pdb)
 {
@@ -2179,6 +2232,66 @@ register_layer_procs (GimpPDB *pdb)
                                                   "The new layer combination mode",
                                                   GIMP_TYPE_LAYER_MODE,
                                                   GIMP_LAYER_MODE_NORMAL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-get-composite-mode
+   */
+  procedure = gimp_procedure_new (layer_get_composite_mode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-composite-mode");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-composite-mode",
+                                     "Get the composite mode of the specified layer.",
+                                     "This procedure returns the specified layer's composite mode.",
+                                     "Ell",
+                                     "Ell",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("composite-mode",
+                                                      "composite mode",
+                                                      "The layer composite mode",
+                                                      GIMP_TYPE_LAYER_COMPOSITE_MODE,
+                                                      GIMP_LAYER_COMPOSITE_AUTO,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-set-composite-mode
+   */
+  procedure = gimp_procedure_new (layer_set_composite_mode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-composite-mode");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-composite-mode",
+                                     "Set the composite mode of the specified layer.",
+                                     "This procedure sets the specified layer's composite mode.",
+                                     "Ell",
+                                     "Ell",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("composite-mode",
+                                                  "composite mode",
+                                                  "The new layer composite mode",
+                                                  GIMP_TYPE_LAYER_COMPOSITE_MODE,
+                                                  GIMP_LAYER_COMPOSITE_AUTO,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

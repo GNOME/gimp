@@ -5,6 +5,13 @@
   <popup action="layers-popup">
     <menuitem action="layers-text-tool" />
     <menuitem action="layers-edit-attributes" />
+    <menu action="layers-composite-menu" name="Composite">
+     <menuitem action="layers-composite-auto" />
+     <menuitem action="layers-composite-src-over" />
+     <menuitem action="layers-composite-src-atop" />
+     <menuitem action="layers-composite-src-in" />
+     <menuitem action="layers-composite-dst-atop" />
+    </menu>
     <menu action="layers-color-tag-menu" name="Color Tags">
      <menuitem action="layers-color-tag-none" />
      <menuitem action="layers-color-tag-blue" />

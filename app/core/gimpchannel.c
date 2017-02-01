@@ -164,6 +164,7 @@ static void      gimp_channel_apply_buffer   (GimpDrawable        *drawable,
                                               const gchar         *undo_desc,
                                               gdouble              opacity,
                                               GimpLayerMode        mode,
+                                              GimpLayerCompositeMode composite,
                                               GeglBuffer          *base_buffer,
                                               gint                 base_x,
                                               gint                 base_y);
@@ -1007,23 +1008,24 @@ gimp_channel_get_active_mask (GimpDrawable *drawable)
 }
 
 static void
-gimp_channel_apply_buffer (GimpDrawable        *drawable,
-                           GeglBuffer          *buffer,
-                           const GeglRectangle *buffer_region,
-                           gboolean             push_undo,
-                           const gchar         *undo_desc,
-                           gdouble              opacity,
-                           GimpLayerMode        mode,
-                           GeglBuffer          *base_buffer,
-                           gint                 base_x,
-                           gint                 base_y)
+gimp_channel_apply_buffer (GimpDrawable           *drawable,
+                           GeglBuffer             *buffer,
+                           const GeglRectangle    *buffer_region,
+                           gboolean                push_undo,
+                           const gchar            *undo_desc,
+                           gdouble                 opacity,
+                           GimpLayerMode           mode,
+                           GimpLayerCompositeMode  composite,
+                           GeglBuffer             *base_buffer,
+                           gint                    base_x,
+                           gint                    base_y)
 {
   gimp_drawable_invalidate_boundary (drawable);
 
   GIMP_DRAWABLE_CLASS (parent_class)->apply_buffer (drawable, buffer,
                                                     buffer_region,
                                                     push_undo, undo_desc,
-                                                    opacity, mode,
+                                                    opacity, mode, composite,
                                                     base_buffer,
                                                     base_x, base_y);
 

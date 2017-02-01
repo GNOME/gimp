@@ -76,6 +76,7 @@ struct _GimpDrawableClass
                                            const gchar          *undo_desc,
                                            gdouble               opacity,
                                            GimpLayerMode         mode,
+                                           GimpLayerCompositeMode composite,
                                            GeglBuffer           *base_buffer,
                                            gint                  base_x,
                                            gint                  base_y);
@@ -156,6 +157,7 @@ void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,
                                                   const gchar         *undo_desc,
                                                   gdouble              opacity,
                                                   GimpLayerMode        mode,
+                                                  GimpLayerCompositeMode composite,
                                                   GeglBuffer          *base_buffer,
                                                   gint                 base_x,
                                                   gint                 base_y);

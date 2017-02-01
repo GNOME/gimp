@@ -63,6 +63,20 @@ typedef enum
 } GimpHistogramChannel;
 
 
+#define GIMP_TYPE_LAYER_COMPOSITE_MODE (gimp_layer_composite_mode_get_type ())
+
+GType gimp_layer_composite_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_LAYER_COMPOSITE_AUTO,
+  GIMP_LAYER_COMPOSITE_SRC_OVER,
+  GIMP_LAYER_COMPOSITE_SRC_ATOP,
+  GIMP_LAYER_COMPOSITE_SRC_IN,
+  GIMP_LAYER_COMPOSITE_DST_ATOP
+} GimpLayerCompositeMode;
+
+
 #define GIMP_TYPE_LAYER_MODE (gimp_layer_mode_get_type ())
 
 GType gimp_layer_mode_get_type (void) G_GNUC_CONST;

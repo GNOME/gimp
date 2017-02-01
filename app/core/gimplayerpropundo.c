@@ -72,7 +72,8 @@ gimp_layer_prop_undo_constructed (GObject *object)
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_LAYER_MODE:
-      layer_prop_undo->mode = gimp_layer_get_mode (layer);
+      layer_prop_undo->mode      = gimp_layer_get_mode (layer);
+      layer_prop_undo->composite = gimp_layer_get_composite (layer);
       break;
 
     case GIMP_UNDO_LAYER_OPACITY:
@@ -102,11 +103,17 @@ gimp_layer_prop_undo_pop (GimpUndo            *undo,
     {
     case GIMP_UNDO_LAYER_MODE:
       {
-        GimpLayerMode mode;
+        GimpLayerMode          mode;
+        GimpLayerCompositeMode composite;
 
-        mode = gimp_layer_get_mode (layer);
+        mode      = gimp_layer_get_mode (layer);
+        composite = gimp_layer_get_composite (layer);
+
         gimp_layer_set_mode (layer, layer_prop_undo->mode, FALSE);
-        layer_prop_undo->mode = mode;
+        gimp_layer_set_composite (layer, layer_prop_undo->composite, FALSE);
+
+        layer_prop_undo->mode      = mode;
+        layer_prop_undo->composite = composite;
       }
       break;
 

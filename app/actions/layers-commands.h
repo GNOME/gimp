@@ -106,6 +106,9 @@ void   layers_opacity_cmd_callback            (GtkAction   *action,
 void   layers_mode_cmd_callback               (GtkAction   *action,
                                                gint         value,
                                                gpointer     data);
+void   layers_composite_cmd_callback          (GtkAction   *action,
+                                               GtkAction   *current,
+                                               gpointer     data);
 
 void   layers_visible_cmd_callback            (GtkAction   *action,
                                                gpointer     data);

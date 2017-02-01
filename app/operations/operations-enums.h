@@ -25,7 +25,7 @@
 
 GType gimp_layer_color_space_get_type (void) G_GNUC_CONST;
 
-typedef enum
+typedef enum  /*< pdb-skip >*/
 {
   GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
   GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -39,10 +39,11 @@ GType gimp_layer_composite_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_LAYER_COMPOSITE_SRC_ATOP,
-  GIMP_LAYER_COMPOSITE_SRC_OVER,
-  GIMP_LAYER_COMPOSITE_SRC_IN,
-  GIMP_LAYER_COMPOSITE_DST_ATOP
+  GIMP_LAYER_COMPOSITE_AUTO,      /*< desc="Auto"             >*/
+  GIMP_LAYER_COMPOSITE_SRC_OVER,  /*< desc="Source over"      >*/
+  GIMP_LAYER_COMPOSITE_SRC_ATOP,  /*< desc="Source atop"      >*/
+  GIMP_LAYER_COMPOSITE_SRC_IN,    /*< desc="Source in"        >*/
+  GIMP_LAYER_COMPOSITE_DST_ATOP   /*< desc="Destination atop" >*/
 } GimpLayerCompositeMode;
 
 
