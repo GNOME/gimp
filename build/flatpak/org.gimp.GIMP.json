@@ -21,63 +21,70 @@
     "cleanup": ["/include", "/lib/pkgconfig", "/share/pkgconfig", "/share/aclocal", "/man", "/share/man", "/share/gtk-doc", "/share/vala", "*.la", "*.a"],
     "modules": [
         {
-            "name": "py2cairo",
-            "rm-configure": true,
-            "sources": [
+            "name": "python",
+            "modules": [
                 {
-                    "type": "archive",
-                    "url": "http://cairographics.org/releases/py2cairo-1.10.0.tar.bz2",
-                    "sha256": "d30439f06c2ec1a39e27464c6c828b6eface3b22ee17b2de05dc409e429a7431"
+                    "name": "py2cairo",
+                    "rm-configure": true,
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://cairographics.org/releases/py2cairo-1.10.0.tar.bz2",
+                            "sha256": "d30439f06c2ec1a39e27464c6c828b6eface3b22ee17b2de05dc409e429a7431"
+                        },
+                        {
+                            "type": "script",
+                            "commands": [
+                                "libtoolize --force",
+                                "aclocal",
+                                "autoheader",
+                                "automake --force-missing --add-missing --foreign",
+                                "autoconf"
+                            ],
+                            "dest-filename": "autogen.sh"
+                        }
+                    ]
                 },
                 {
-                    "type": "script",
-                    "commands": [
-                        "libtoolize --force",
-                        "aclocal",
-                        "autoheader",
-                        "automake --force-missing --add-missing --foreign",
-                        "autoconf"
-                    ],
-                    "dest-filename": "autogen.sh"
-                }
-            ]
-        },
-        {
-            "name": "pygobject",
-            "config-opts": [ "--disable-introspection" ],
-            "cleanup": [ "/bin", "/share/pygobject/2.0/codegen" ],
-            "sources": [
+                    "name": "pygobject",
+                    "config-opts": [ "--disable-introspection" ],
+                    "cleanup": [ "/bin", "/share/pygobject/2.0/codegen" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.6.tar.xz",
+                            "sha256": "fb8a1d4f665130a125011659bd347c7339c944232163dbb9a34fd0686577adb8"
+                        }
+                    ]
+                },
                 {
-                    "type": "archive",
-                    "url": "http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.6.tar.xz",
-                    "sha256": "fb8a1d4f665130a125011659bd347c7339c944232163dbb9a34fd0686577adb8"
-                }
-            ]
-        },
-        {
-            "name": "pygtk",
-            "cleanup": [ "/bin", "/lib/pygtk" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz",
-                    "sha256": "6e3e54fa6e65a69ac60bd58cb2e60a57f3346ac52efe995f3d10b6c38c972fd8"
-                }
-            ]
-        },
-        {
-            "name": "exiv2",
-            "cleanup": [ "/bin" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://www.exiv2.org/exiv2-0.25.tar.gz",
-                    "sha256": "c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4"
+                    "name": "pygtk",
+                    "cleanup": [ "/bin", "/lib/pygtk" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz",
+                            "sha256": "6e3e54fa6e65a69ac60bd58cb2e60a57f3346ac52efe995f3d10b6c38c972fd8"
+                        }
+                    ]
                 }
             ]
         },
         {
             "name": "gexiv2",
+            "modules": [
+                {
+                    "name": "exiv2",
+                    "cleanup": [ "/bin" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://www.exiv2.org/exiv2-0.25.tar.gz",
+                            "sha256": "c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4"
+                        }
+                    ]
+                }
+            ],
             "config-opts": [ "--disable-introspection" ],
             "sources": [
                 {
@@ -88,18 +95,20 @@
             ]
         },
         {
-            "name": "ilmbase",
-            "config-opts": [ "--disable-static" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.0.tar.gz",
-                    "sha256": "ecf815b60695555c1fbc73679e84c7c9902f4e8faa6e8000d2f905b8b86cedc7"
-                }
-            ]
-        },
-        {
             "name": "openexr",
+            "modules": [
+                {
+                    "name": "ilmbase",
+                    "config-opts": [ "--disable-static" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.0.tar.gz",
+                            "sha256": "ecf815b60695555c1fbc73679e84c7c9902f4e8faa6e8000d2f905b8b86cedc7"
+                        }
+                    ]
+                }
+            ],
             "config-opts": [ "--disable-static", "--disable-ilmbasetest" ],
             "cleanup": [ "/bin", "/share/doc" ],
             "sources": [
@@ -161,25 +170,30 @@
             ]
         },
         {
-            "name": "libpng",
-            "cleanup": [ "/bin", "/share" ],
-            "sources": [
+            "name": "duplicate-dependencies",
+            "modules": [
                 {
-                    "type": "archive",
-                    "url": "http://download.sourceforge.net/libpng/libpng-1.6.28.tar.xz",
-                    "sha256": "d8d3ec9de6b5db740fefac702c37ffcf96ae46cb17c18c1544635a3852f78f7a"
-                }
-            ]
-        },
-        {
-            "name": "lcms2",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/bin", "/share" ],
-            "sources": [
+                    "name": "libpng",
+                    "cleanup": [ "/bin", "/share" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://download.sourceforge.net/libpng/libpng-1.6.28.tar.xz",
+                            "sha256": "d8d3ec9de6b5db740fefac702c37ffcf96ae46cb17c18c1544635a3852f78f7a"
+                        }
+                    ]
+                },
                 {
-                    "type": "archive",
-                    "url": "http://download.sourceforge.net/lcms/lcms2-2.8.tar.gz",
-                    "sha256": "66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22"
+                    "name": "lcms2",
+                    "config-opts": [ "--disable-static" ],
+                    "cleanup": [ "/bin", "/share" ],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://download.sourceforge.net/lcms/lcms2-2.8.tar.gz",
+                            "sha256": "66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22"
+                        }
+                    ]
                 }
             ]
         },
