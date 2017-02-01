@@ -1142,6 +1142,7 @@ add_layers (gint32     image_id,
   GeglBuffer           *buffer;
   GimpImageType         image_type;
   GimpLayerMode         layer_mode;
+  GimpLayerCompositeMode layer_composite;
 
 
   IFDBG(2) g_debug ("Number of layers: %d", img_a->num_layers);
@@ -1408,8 +1409,9 @@ add_layers (gint32     image_id,
                   IFDBG(2) g_debug ("End group layer id %d.", layer_id);
                   if (layer_id != -1)
                     {
-                      layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode);
+                      layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &layer_composite);
                       gimp_layer_set_mode (layer_id, layer_mode);
+                      gimp_layer_set_composite_mode (layer_id, layer_composite);
                       gimp_layer_set_opacity (layer_id,
                                               lyr_a[lidx]->opacity * 100 / 255);
                       gimp_item_set_name (layer_id, lyr_a[lidx]->name);
@@ -1462,10 +1464,11 @@ add_layers (gint32     image_id,
                   g_free (lyr_chn[channel_idx[cidx]]->data);
                 }
 
-              layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode);
+              layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &layer_composite);
               layer_id = gimp_layer_new (image_id, lyr_a[lidx]->name, l_w, l_h,
                                          image_type, lyr_a[lidx]->opacity * 100 / 255,
                                          layer_mode);
+              gimp_layer_set_composite_mode (layer_id, layer_composite);
               IFDBG(3) g_debug ("Layer tattoo: %d", layer_id);
               g_free (lyr_a[lidx]->name);
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
