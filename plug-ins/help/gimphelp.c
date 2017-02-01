@@ -127,6 +127,16 @@ gimp_help_parse_locales (const gchar *help_locales)
       gchar *new = g_strndup (s, p - s);
       gchar *c;
 
+      /* After a dot is displayed the optional encoding.
+       * We don't care in context of our help system.
+       */
+      c = strchr (new, '.');
+      if (c)
+        *c = '\0';
+      /* We don't care about variants as well. */
+      c = strchr (new, '@');
+      if (c)
+        *c = '\0';
       /* Apparently some systems (i.e. Windows) would return a value as
        * IETF language tag, which is a different format from POSIX
        * locale; especially it would separate the lang and the region
@@ -141,8 +151,36 @@ gimp_help_parse_locales (const gchar *help_locales)
       c = strchr (new, '-');
       if (c)
         *c = '_';
+      if (new && *new &&
+          ! g_list_find_custom (locales, new,
+                                (GCompareFunc) g_strcmp0))
+        {
+          gchar *base;
 
-      locales = g_list_append (locales, new);
+          /* Adding this locale. */
+          locales = g_list_append (locales, new);
+
+          /* Adding the base language as well. */
+          base = strdup (new);
+          c = strchr (base, '_');
+          if (c)
+            *c = '\0';
+          if (base && *base &&
+              ! g_list_find_custom (locales, base,
+                                    (GCompareFunc) g_strcmp0))
+            {
+              locales = g_list_append (locales, base);
+            }
+          else
+            {
+              g_free (base);
+            }
+        }
+      else
+        {
+          g_free (new);
+        }
+
       s = p + 1;
     }
 
