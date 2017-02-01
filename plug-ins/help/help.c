@@ -103,7 +103,7 @@ query (void)
                           "", /* FIXME */
                           "", /* FIXME */
                           "Sven Neumann <sven@gimp.org>, "
-			  "Michael Natterer <mitch@gimp.org>, "
+                          "Michael Natterer <mitch@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>",
                           "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
                           "1999-2008",
@@ -182,11 +182,11 @@ temp_proc_install (void)
   gimp_install_temp_proc (GIMP_HELP_TEMP_EXT_PROC,
                           "DON'T USE THIS ONE",
                           "(Temporary procedure)",
-			  "Sven Neumann <sven@gimp.org>, "
-			  "Michael Natterer <mitch@gimp.org>"
+                          "Sven Neumann <sven@gimp.org>, "
+                          "Michael Natterer <mitch@gimp.org>"
                           "Henrik Brix Andersen <brix@gimp.org",
-			  "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
-			  "1999-2008",
+                          "Sven Neumann, Michael Natterer & Henrik Brix Andersen",
+                          "1999-2008",
                           NULL,
                           "",
                           GIMP_TEMPORARY,
