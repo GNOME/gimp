@@ -30,12 +30,6 @@
 #include "gimpoperationnormal.h"
 
 
-static gboolean gimp_operation_normal_parent_process (GeglOperation        *operation,
-                                                      GeglOperationContext *context,
-                                                      const gchar          *output_prop,
-                                                      const GeglRectangle  *result,
-                                                      gint                  level);
-
 G_DEFINE_TYPE (GimpOperationNormal, gimp_operation_normal,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -77,9 +71,6 @@ gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
                                  "reference-composition", reference_xml,
                                  NULL);
 
-  operation_class->process     = gimp_operation_normal_parent_process;
-
-
   gimp_operation_normal_process = gimp_operation_normal_process_core;
 
 #if COMPILE_SSE2_INTRINISICS
@@ -98,59 +89,6 @@ gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
 static void
 gimp_operation_normal_init (GimpOperationNormal *self)
 {
-}
-
-static gboolean
-gimp_operation_normal_parent_process (GeglOperation        *operation,
-                                      GeglOperationContext *context,
-                                      const gchar          *output_prop,
-                                      const GeglRectangle  *result,
-                                      gint                  level)
-{
-  GimpOperationLayerMode *layer_mode = GIMP_OPERATION_LAYER_MODE (operation);
-
-  if (layer_mode->opacity == 1.0 &&
-      ! gegl_operation_context_get_object (context, "aux2"))
-    {
-      const GeglRectangle *in_extent  = NULL;
-      const GeglRectangle *aux_extent = NULL;
-      GObject             *input;
-      GObject             *aux;
-
-      /* get the raw values this does not increase the reference count */
-      input = gegl_operation_context_get_object (context, "input");
-      aux   = gegl_operation_context_get_object (context, "aux");
-
-      /* pass the input/aux buffers directly through if they are not
-       * overlapping
-       */
-      if (input)
-        in_extent = gegl_buffer_get_abyss (GEGL_BUFFER (input));
-
-      if (! input ||
-          (aux && ! gegl_rectangle_intersect (NULL, in_extent, result)))
-        {
-          gegl_operation_context_set_object (context, "output", aux);
-          return TRUE;
-        }
-
-      if (aux)
-        aux_extent = gegl_buffer_get_abyss (GEGL_BUFFER (aux));
-
-      if (! aux ||
-          (input && ! gegl_rectangle_intersect (NULL, aux_extent, result)))
-        {
-          gegl_operation_context_set_object (context, "output", input);
-          return TRUE;
-        }
-    }
-
-  /* chain up, which will create the needed buffers for our actual
-   * process function
-   */
-  return GEGL_OPERATION_CLASS (parent_class)->process (operation, context,
-                                                       output_prop, result,
-                                                       level);
 }
 
 gboolean

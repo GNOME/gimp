@@ -32,6 +32,9 @@
 #define RANDOM_TABLE_SIZE 4096
 
 
+static GimpLayerModeAffectMask gimp_operation_dissolve_get_affect_mask (GimpOperationLayerMode *layer_mode);
+
+
 G_DEFINE_TYPE (GimpOperationDissolve, gimp_operation_dissolve,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -44,11 +47,13 @@ gimp_operation_dissolve_class_init (GimpOperationDissolveClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_composer_class;
+  GimpOperationLayerModeClass      *layer_mode_class;
   GRand                            *gr;
   gint                              i;
 
   operation_class      = GEGL_OPERATION_CLASS (klass);
   point_composer_class = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  layer_mode_class     = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:dissolve",
@@ -57,6 +62,8 @@ gimp_operation_dissolve_class_init (GimpOperationDissolveClass *klass)
                                  NULL);
 
   point_composer_class->process = gimp_operation_dissolve_process;
+
+  layer_mode_class->get_affect_mask = gimp_operation_dissolve_get_affect_mask;
 
   /* generate a table of random seeds */
   gr = g_rand_new_with_seed (314159265);
@@ -132,4 +139,10 @@ gimp_operation_dissolve_process (GeglOperation       *op,
     }
 
   return TRUE;
+}
+
+static GimpLayerModeAffectMask
+gimp_operation_dissolve_get_affect_mask (GimpOperationLayerMode *layer_mode)
+{
+  return GIMP_LAYER_MODE_AFFECT_SRC;
 }

@@ -38,6 +38,14 @@ typedef struct _GimpOperationLayerModeClass GimpOperationLayerModeClass;
 struct _GimpOperationLayerModeClass
 {
   GeglOperationPointComposer3Class  parent_class;
+
+  /*  virtual functions  */
+
+  /* Returns the set of inputs that the layer mode affects, apart
+   * from the overlapping regions.  Returns an empty set by default,
+   * which is suitable for almost all layer modes.
+   */
+  GimpLayerModeAffectMask (* get_affect_mask) (GimpOperationLayerMode *layer_mode);
 };
 
 struct _GimpOperationLayerMode
@@ -54,7 +62,9 @@ struct _GimpOperationLayerMode
 };
 
 
-GType   gimp_operation_layer_mode_get_type (void) G_GNUC_CONST;
+GType                   gimp_operation_layer_mode_get_type        (void) G_GNUC_CONST;
+
+GimpLayerModeAffectMask gimp_operation_layer_mode_get_affect_mask (GimpOperationLayerMode *layer_mode);
 
 gboolean
 gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,

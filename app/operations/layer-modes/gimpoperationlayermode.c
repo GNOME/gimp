@@ -44,21 +44,24 @@ enum
 };
 
 
-static void     gimp_operation_layer_mode_set_property (GObject              *object,
-                                                        guint                 property_id,
-                                                        const GValue         *value,
-                                                        GParamSpec           *pspec);
-static void     gimp_operation_layer_mode_get_property (GObject              *object,
-                                                        guint                 property_id,
-                                                        GValue               *value,
-                                                        GParamSpec           *pspec);
+static void     gimp_operation_layer_mode_set_property (GObject                *object,
+                                                        guint                   property_id,
+                                                        const GValue           *value,
+                                                        GParamSpec             *pspec);
+static void     gimp_operation_layer_mode_get_property (GObject                *object,
+                                                        guint                   property_id,
+                                                        GValue                 *value,
+                                                        GParamSpec             *pspec);
 
-static void     gimp_operation_layer_mode_prepare      (GeglOperation        *operation);
-static gboolean gimp_operation_layer_mode_process      (GeglOperation        *operation,
-                                                        GeglOperationContext *context,
-                                                        const gchar          *output_prop,
-                                                        const GeglRectangle  *result,
-                                                        gint                  level);
+static void     gimp_operation_layer_mode_prepare      (GeglOperation          *operation);
+static gboolean gimp_operation_layer_mode_process      (GeglOperation          *operation,
+                                                        GeglOperationContext   *context,
+                                                        const gchar            *output_prop,
+                                                        const GeglRectangle    *result,
+                                                        gint                    level);
+
+static GimpLayerModeAffectMask
+        gimp_operation_layer_mode_real_get_affect_mask (GimpOperationLayerMode *layer_mode);
 
 G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
                GEGL_TYPE_OPERATION_POINT_COMPOSER3)
@@ -151,6 +154,8 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
   operation_class->prepare       = gimp_operation_layer_mode_prepare;
   operation_class->process       = gimp_operation_layer_mode_process;
   point_composer3_class->process = gimp_operation_layer_mode_process_pixels;
+
+  klass->get_affect_mask = gimp_operation_layer_mode_real_get_affect_mask;
 
   g_object_class_install_property (object_class, PROP_LAYER_MODE,
                                    g_param_spec_enum ("layer-mode",
@@ -318,20 +323,114 @@ gimp_operation_layer_mode_process (GeglOperation        *operation,
                                    gint                  level)
 {
   GimpOperationLayerMode *point = GIMP_OPERATION_LAYER_MODE (operation);
+  GObject                *input;
+  GObject                *aux;
+  gboolean                has_input;
+  gboolean                has_aux;
 
-  if (point->opacity == 0.0 ||
-      ! gegl_operation_context_get_object (context, "aux"))
+  /* get the raw values.  this does not increase the reference count. */
+  input = gegl_operation_context_get_object (context, "input");
+  aux   = gegl_operation_context_get_object (context, "aux");
+
+  /* disregard 'input' if it's not included in the roi. */
+  has_input =
+    input &&
+    gegl_rectangle_intersect (NULL,
+                              gegl_buffer_get_extent (GEGL_BUFFER (input)),
+                              result);
+
+  /* disregard 'aux' if it's not included in the roi, or if it's fully
+   * transparent.
+   */
+  has_aux =
+    aux &&
+    point->opacity != 0.0 &&
+    gegl_rectangle_intersect (NULL,
+                              gegl_buffer_get_extent (GEGL_BUFFER (aux)),
+                              result);
+
+  /* if there's no 'input' ... */
+  if (! has_input)
     {
-      GObject *input;
-
-      /* get the raw values, this does not increase the reference count */
-      input = gegl_operation_context_get_object (context, "input");
-
-      if (input)
+      /* ... and there's 'aux', and the composite mode includes it ... */
+      if (has_aux &&
+          (point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+           point->composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP))
         {
-          gegl_operation_context_set_object (context, "output", input);
+          GimpLayerModeAffectMask affect_mask;
+
+          affect_mask = gimp_operation_layer_mode_get_affect_mask (point);
+
+          /* ... and the op doesn't otherwise affect 'aux', or changes its
+           * alpha ...
+           */
+          if (! (affect_mask & GIMP_LAYER_MODE_AFFECT_SRC) &&
+              point->opacity == 1.0                        &&
+              ! gegl_operation_context_get_object (context, "aux2"))
+            {
+              /* pass 'aux' directly as output; */
+              gegl_operation_context_set_object (context, "output", aux);
+              return TRUE;
+            }
+
+          /* otherwise, if the op affects 'aux', or changes its alpha, process
+           * it even though there's no 'input';
+           */
+        }
+      /* otherwise, there's no 'aux', or the composite mode doesn't include it,
+       * and so ...
+       */
+      else
+        {
+          /* ... the output is empty. */
+          gegl_operation_context_set_object (context, "output", NULL);
           return TRUE;
         }
+    }
+  /* otherwise, if there's 'input' but no 'aux' ... */
+  else if (! has_aux)
+    {
+      /* ... and the composite mode includes 'input' ... */
+      if (point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+          point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
+        {
+          GimpLayerModeAffectMask affect_mask;
+
+          affect_mask = gimp_operation_layer_mode_get_affect_mask (point);
+
+          /* ... and the op doesn't otherwise affect 'input' ... */
+          if (! (affect_mask & GIMP_LAYER_MODE_AFFECT_DST))
+            {
+              /* pass 'input' directly as output; */
+              gegl_operation_context_set_object (context, "output", input);
+              return TRUE;
+            }
+
+          /* otherwise, if the op affects 'input', process it even though
+           * there's no 'aux';
+           */
+        }
+
+      /* otherwise, the output is fully transparent, but we process it anyway
+       * to maintain the 'input' color values.
+       */
+    }
+
+  /* FIXME: we don't actually handle the case where one of the inputs
+   * is NULL -- it'll just segfault.  'input' is not expected to be NULL,
+   * but 'aux' might be, currently.
+   */
+  if (! input || ! aux)
+    {
+      GObject *empty = G_OBJECT (gegl_buffer_new (NULL, NULL));
+
+      if (! input) gegl_operation_context_set_object (context, "input", empty);
+      if (! aux)   gegl_operation_context_set_object (context, "aux",   empty);
+
+      if (! input && ! aux)
+        gegl_object_set_has_forked (G_OBJECT (empty));
+
+      g_object_unref (empty);
     }
 
   /* chain up, which will create the needed buffers for our actual
@@ -341,6 +440,29 @@ gimp_operation_layer_mode_process (GeglOperation        *operation,
                                                        output_prop, result,
                                                        level);
 }
+
+static GimpLayerModeAffectMask
+gimp_operation_layer_mode_real_get_affect_mask (GimpOperationLayerMode *layer_mode)
+{
+  /* most modes only affect the overlapping regions. */
+  return GIMP_LAYER_MODE_AFFECT_NONE;
+}
+
+
+/* public functions */
+
+
+GimpLayerModeAffectMask
+gimp_operation_layer_mode_get_affect_mask (GimpOperationLayerMode *layer_mode)
+{
+  g_return_val_if_fail (GIMP_IS_OPERATION_LAYER_MODE (layer_mode),
+                        GIMP_LAYER_MODE_AFFECT_NONE);
+
+  return GIMP_OPERATION_LAYER_MODE_GET_CLASS (layer_mode)->get_affect_mask (layer_mode);
+}
+
+
+/* compositing and blending functions */
 
 
 static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode);

@@ -47,4 +47,17 @@ typedef enum
 } GimpLayerCompositeMode;
 
 
+/*
+ * non-registered enums; register them if needed
+ */
+
+
+typedef enum  /*< pdb-skip, skip >*/
+{
+  GIMP_LAYER_MODE_AFFECT_NONE = 0,
+  GIMP_LAYER_MODE_AFFECT_DST  = 1 << 0,
+  GIMP_LAYER_MODE_AFFECT_SRC  = 1 << 1
+} GimpLayerModeAffectMask;
+
+
 #endif /* __OPERATIONS_ENUMS_H__ */

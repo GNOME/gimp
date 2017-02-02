@@ -27,6 +27,9 @@
 #include "gimpoperationreplace.h"
 
 
+static GimpLayerModeAffectMask gimp_operation_replace_get_affect_mask (GimpOperationLayerMode *layer_mode);
+
+
 G_DEFINE_TYPE (GimpOperationReplace, gimp_operation_replace,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -36,9 +39,11 @@ gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
+  GimpOperationLayerModeClass      *layer_mode_class;
 
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  operation_class  = GEGL_OPERATION_CLASS (klass);
+  point_class      = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:replace",
@@ -46,6 +51,8 @@ gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
                                  NULL);
 
   point_class->process = gimp_operation_replace_process;
+
+  layer_mode_class->get_affect_mask = gimp_operation_replace_get_affect_mask;
 }
 
 static void
@@ -106,4 +113,19 @@ gimp_operation_replace_process (GeglOperation       *op,
     }
 
   return TRUE;
+}
+
+static GimpLayerModeAffectMask
+gimp_operation_replace_get_affect_mask (GimpOperationLayerMode *layer_mode)
+{
+  GimpLayerModeAffectMask affect_mask = GIMP_LAYER_MODE_AFFECT_NONE;
+
+  if (layer_mode->opacity != 0.0)
+    affect_mask |= GIMP_LAYER_MODE_AFFECT_DST;
+
+  /* if opacity != 1.0, or we have a mask, thne we also affect SRC, but this is
+   * considered the case anyway, so no need for special handling.
+   */
+
+  return affect_mask;
 }
