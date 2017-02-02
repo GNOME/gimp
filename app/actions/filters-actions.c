@@ -172,6 +172,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-to-alpha",
     GIMP_HELP_FILTER_COLOR_TO_ALPHA },
 
+  { "filters-component-extract", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Extract Component..."), NULL, NULL,
+    "gegl:component-extract",
+    GIMP_HELP_FILTER_COMPONENT_EXTRACT },
+
   { "filters-convolution-matrix", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Convolution Matrix..."), NULL, NULL,
     "gegl:convolution-matrix",
@@ -432,6 +437,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:red-eye-removal",
     GIMP_HELP_FILTER_RED_EYE_REMOVAL },
 
+  { "filters-rgb-clip", GIMP_STOCK_GEGL,
+    NC_("filters-action", "RGB _Clip..."), NULL, NULL,
+    "gegl:rgb-clip",
+    GIMP_HELP_FILTER_RGB_CLIP },
+
   { "filters-ripple", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Ripple..."), NULL, NULL,
     "gegl:ripple",
@@ -461,6 +471,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Sinus..."), NULL, NULL,
     "gegl:sinus",
     GIMP_HELP_FILTER_SINUS },
+
+  { "filters-slic", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Simple Linear Iterative Clustering..."), NULL, NULL,
+    "gegl:slic",
+    GIMP_HELP_FILTER_SLIC },
 
   { "filters-softglow", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Softglow..."), NULL, NULL,
@@ -521,6 +536,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Vignette..."), NULL, NULL,
     "gegl:vignette",
     GIMP_HELP_FILTER_VIGNETTE },
+
+  { "filters-waterpixels", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Waterpixels..."), NULL, NULL,
+    "gegl:waterpixels",
+    GIMP_HELP_FILTER_WATERPIXELS },
 
   { "filters-waves", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Waves..."), NULL, NULL,
@@ -674,6 +694,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
+  SET_SENSITIVE ("filters-component-extract",       writable);
   SET_SENSITIVE ("filters-convolution-matrix",      writable);
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
@@ -726,12 +747,14 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
   SET_SENSITIVE ("filters-posterize",               writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
+  SET_SENSITIVE ("filters-rgb-clip",                writable);
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-saturation",              writable && !gray);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-sepia",                   writable && !gray);
   SET_SENSITIVE ("filters-shift",                   writable);
   SET_SENSITIVE ("filters-sinus",                   writable);
+  SET_SENSITIVE ("filters-slic",                    writable);
   SET_SENSITIVE ("filters-softglow",                writable);
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
@@ -744,6 +767,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-value-propagate",         writable);
   SET_SENSITIVE ("filters-video-degradation",       writable);
   SET_SENSITIVE ("filters-vignette",                writable);
+  SET_SENSITIVE ("filters-waterpixels",             writable);
   SET_SENSITIVE ("filters-waves",                   writable);
   SET_SENSITIVE ("filters-whirl-pinch",             writable);
   SET_SENSITIVE ("filters-wind",                    writable);

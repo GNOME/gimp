@@ -127,6 +127,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:color-rotate",
     "gegl:color-temperature",
     "gegl:color-to-alpha",
+    "gegl:component-extract",
     "gegl:convolution-matrix",
     "gegl:cubism",
     "gegl:deinterlace",
@@ -178,12 +179,14 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:plasma",
     "gegl:polar-coordinates",
     "gegl:red-eye-removal",
+    "gegl:rgb-clip",
     "gegl:ripple",
     "gegl:saturation",
     "gegl:sepia",
     "gegl:shift",
     "gegl:simplex-noise",
     "gegl:sinus",
+    "gegl:slic",
     "gegl:softglow",
     "gegl:stretch-contrast",
     "gegl:stretch-contrast-hsv",
@@ -197,6 +200,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:value-propagate",
     "gegl:video-degradation",
     "gegl:vignette",
+    "gegl:waterpixels",
     "gegl:wavelet-blur",
     "gegl:waves",
     "gegl:whirl-pinch",
@@ -212,16 +216,20 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:layer", /* we use gimp's ops */
     "gegl:lcms-from-profile", /* not usable here */
     "gegl:linear-gradient", /* we use the blend tool */
+    "gegl:map-absolute", /* pointless */
+    "gegl:map-relative", /* pointless */
     "gegl:matting-global", /* used in the foreground select tool */
     "gegl:matting-levin", /* used in the foreground select tool */
     "gegl:opacity", /* poinless */
     "gegl:path",
     "gegl:posterize", /* we use gimp's op */
     "gegl:radial-gradient", /* we use the blend tool */
+    "gegl:rectangle", /* pointless */
     "gegl:seamless-clone", /* used in the seamless clone tool */
     "gegl:text", /* we use gimp's text rendering */
     "gegl:threshold", /* we use gimp's op */
     "gegl:tile", /* pointless */
+    "gegl:unpremus", /* pointless */
     "gegl:vector-stroke",
   };
 
