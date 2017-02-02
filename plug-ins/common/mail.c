@@ -32,8 +32,10 @@
 
 #include <string.h>
 
+#ifdef SENDMAIL
 #include <sys/types.h>
 #include <sys/wait.h>
+#endif
 
 #include <glib/gstdio.h>
 
