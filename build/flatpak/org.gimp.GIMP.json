@@ -146,19 +146,21 @@
             ]
         },
         {
-            "name": "popplerdata",
-            "no-autogen": true,
-            "make-install-args": ["prefix=/app"],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://poppler.freedesktop.org/poppler-data-0.4.7.tar.gz",
-                    "sha256": "e752b0d88a7aba54574152143e7bf76436a7ef51977c55d6bd9a48dccde3a7de"
-                }
-            ]
-        },
-        {
             "name": "poppler",
+            "modules": [
+                {
+                    "name": "popplerdata",
+                    "no-autogen": true,
+                    "make-install-args": ["prefix=/app"],
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "http://poppler.freedesktop.org/poppler-data-0.4.7.tar.gz",
+                            "sha256": "e752b0d88a7aba54574152143e7bf76436a7ef51977c55d6bd9a48dccde3a7de"
+                        }
+                    ]
+                }
+            ],
             "config-opts": [ "--disable-libopenjpeg", "--disable-introspection" ],
             "cleanup": [ "/bin" ],
             "sources": [
