@@ -632,6 +632,7 @@ required_deps=''
 # If details about the dependency are needed:
 # add_deps_error([dependency], [first line, second line])
 m4_define([add_deps_error], [
+  AC_MSG_NOTICE([Eeeeeeeeeeeeeeeeeeeeek! Missing dep: $1])
   required_deps="$required_deps
   - Error: missing dependency $1"
   m4_foreach([more], [$2], [
