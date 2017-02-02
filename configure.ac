@@ -916,7 +916,7 @@ SSE2_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE2_CFLAG"
 CFLAGS="$intrinsics_save_CFLAGS $SSE2_EXTRA_CFLAGS"
 
 AC_MSG_CHECKING(whether we can compile SSE2 intrinsics)
-AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <emmintrin.h>],[__m128i one = _mm_set1_epi32 (1);])],
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <emmintrin.h>]],[[__m128i one = _mm_set1_epi32 (1);]])],
   AC_DEFINE(COMPILE_SSE2_INTRINISICS, 1, [Define to 1 if SSE2 intrinsics are available.])
   AC_SUBST(SSE2_EXTRA_CFLAGS)
   AC_MSG_RESULT(yes)
@@ -931,7 +931,7 @@ SSE4_1_EXTRA_CFLAGS="$SSE_MATH_CFLAG $SSE4_1_CFLAG"
 CFLAGS="$intrinsics_save_CFLAGS $SSE4_1_EXTRA_CFLAGS"
 
 AC_MSG_CHECKING(whether we can compile SSE4.1 intrinsics)
-AC_LINK_IFELSE([AC_LANG_PROGRAM([#include <smmintrin.h>],[__v4sf a, b, c; c = _mm_blend_ps(a, b, 0x08);])],
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <smmintrin.h>]],[[__v4sf a, b, c; c = _mm_blend_ps(a, b, 0x08);]])],
   AC_DEFINE(COMPILE_SSE4_1_INTRINISICS, 1, [Define to 1 if SSE4.1 intrinsics are available.])
   AC_SUBST(SSE4_1_EXTRA_CFLAGS)
   AC_MSG_RESULT(yes)
@@ -963,7 +963,7 @@ if test "x$enable_mmx" = xyes; then
   mmx_save_CFLAGS="$CFLAGS"
   CFLAGS="$mmx_save_CFLAGS $MMX_EXTRA_CFLAGS"
 
-  AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("movq 0, %mm0");])],
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[[asm ("movq 0, %mm0");]])],
 
     AC_DEFINE(USE_MMX, 1, [Define to 1 if MMX assembly is available.])
     AC_MSG_RESULT(yes)
@@ -976,7 +976,7 @@ if test "x$enable_mmx" = xyes; then
 
       CFLAGS="$CFLAGS $sse_flag"
 
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("movntps %xmm0, 0");])],
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[[asm ("movntps %xmm0, 0");]])],
         AC_DEFINE(USE_SSE, 1, [Define to 1 if SSE assembly is available.])
         AC_MSG_RESULT(yes)
       ,
@@ -1039,7 +1039,7 @@ if test "x$enable_altivec" = xyes; then
          [Define to 1 if the altivec runtime test should use a sysctl.])
         ;;
       *)
-        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("vand %v0, %v0, %v0");])],
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[[asm ("vand %v0, %v0, %v0");]])],
           can_use_altivec=yes, can_use_altivec=no)
         ;;
     esac
@@ -1386,8 +1386,8 @@ if test -z "$BZIP2_LIBS"; then
     [AC_MSG_CHECKING([for BZ2_bzCompress in -lbz2]);
     AC_LINK_IFELSE(
       [AC_LANG_PROGRAM(
-        [#include <bzlib.h>],
-        [BZ2_bzCompress (NULL, 0);])],
+        [[#include <bzlib.h>]],
+        [[BZ2_bzCompress (NULL, 0);]])],
       [AC_MSG_RESULT([yes]); BZIP2_LIBS='-lbz2'],
       add_deps_error([libbzip2], [libbzip2 library not found]))],
     add_deps_error([libbzip2], [libbzip2 header files not found]))
