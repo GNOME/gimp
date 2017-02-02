@@ -257,6 +257,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:exposure",
     GIMP_HELP_FILTER_EXPOSURE },
 
+  { "filters-fattal-2002", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Fattal et al. 2002..."), NULL, NULL,
+    "gegl:fattal02",
+    GIMP_HELP_FILTER_FATTAL_2002 },
+
   { "filters-fractal-trace", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Fractal Trace..."), NULL, NULL,
     "gegl:fractal-trace",
@@ -311,6 +316,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Lens Flare..."), NULL, NULL,
     "gegl:lens-flare",
     GIMP_HELP_FILTER_LENS_FLARE },
+
+  { "filters-mantiuk-2006", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Mantiuk 2006..."), NULL, NULL,
+    "gegl:mantiuk06",
+    GIMP_HELP_FILTER_MANTIUK_2006 },
 
   { "filters-maze", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Maze..."), NULL, NULL,
@@ -442,6 +452,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:red-eye-removal",
     GIMP_HELP_FILTER_RED_EYE_REMOVAL },
 
+  { "filters-reinhard-2005", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Reinhard 2005..."), NULL, NULL,
+    "gegl:reinhard05",
+    GIMP_HELP_FILTER_REINHARD_2005 },
+
   { "filters-rgb-clip", GIMP_STOCK_GEGL,
     NC_("filters-action", "RGB _Clip..."), NULL, NULL,
     "gegl:rgb-clip",
@@ -501,6 +516,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Stretch Contrast HSV..."), NULL, NULL,
     "gegl:stretch-contrast-hsv",
     GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV },
+
+  { "filters-stress", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Stress..."), NULL, NULL,
+    "gegl:stress",
+    GIMP_HELP_FILTER_STRESS },
 
   { "filters-supernova", GIMP_STOCK_GEGL,
     NC_("filters-action", "Super_nova..."), NULL, NULL,
@@ -721,6 +741,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-emboss",                  writable);
   SET_SENSITIVE ("filters-engrave",                 writable);
   SET_SENSITIVE ("filters-exposure",                writable);
+  SET_SENSITIVE ("filters-fattal-2002",             writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-gaussian-blur-selective", writable);
@@ -732,6 +753,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-lens-flare",              writable);
+  SET_SENSITIVE ("filters-mantiuk-2006",            writable);
   SET_SENSITIVE ("filters-maze",                    writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-mosaic",                  writable);
@@ -758,6 +780,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-polar-coordinates",       writable);
   SET_SENSITIVE ("filters-posterize",               writable);
   SET_SENSITIVE ("filters-red-eye-removal",         writable && !gray);
+  SET_SENSITIVE ("filters-reinhard-2005",           writable);
   SET_SENSITIVE ("filters-rgb-clip",                writable);
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-saturation",              writable && !gray);
@@ -770,6 +793,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-softglow",                writable);
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
+  SET_SENSITIVE ("filters-stress",                  writable);
   SET_SENSITIVE ("filters-supernova",               writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-tile-glass",              writable);

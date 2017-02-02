@@ -597,6 +597,13 @@
 	<menuitem action="filters-color-exchange" />
 	<menuitem action="filters-color-rotate" />
       </menu>
+      <menu action="colors-tone-mapping-menu" name="Tone Mapping">
+	<menuitem action="filters-fattal-2002" />
+	<menuitem action="filters-mantiuk-2006" />
+	<menuitem action="filters-reinhard-2005" />
+	<menuitem action="filters-stress" />
+        <separator />
+      </menu>
       <menu action="colors-info-menu" name="Info">
         <menuitem action="dialogs-histogram" />
       </menu>
