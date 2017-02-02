@@ -363,7 +363,7 @@ gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,
                                           gint                 level)
 {
   GimpOperationLayerMode *layer_mode = (GimpOperationLayerMode*)(operation);
-  gimp_composite_blend (operation, in, layer, mask, out, samples, 
+  gimp_composite_blend (operation, in, layer, mask, out, samples,
                         gimp_layer_mode_get_blend_fun (layer_mode->layer_mode));
   return TRUE;
 }
@@ -555,7 +555,7 @@ compfun_src_atop_sse2 (gfloat *in,
                        gint    samples)
 {
   if ((((uintptr_t)in)    | /* alignment check */
-       ((uintptr_t)mask)  | 
+       ((uintptr_t)mask)  |
        ((uintptr_t)comp)  |
        ((uintptr_t)layer) |
        ((uintptr_t)out)    ) & 0x0F)
@@ -569,7 +569,7 @@ compfun_src_atop_sse2 (gfloat *in,
             __v4sf *v_out     = (__v4sf*) out;
       const __v4sf  v_one     =  _mm_set1_ps (1.0f);
       const __v4sf  v_opacity =  _mm_set1_ps (opacity);
-     
+
       while (samples--)
       {
         __v4sf  alpha, rgba_in, rgba_layer;
@@ -597,7 +597,7 @@ compfun_src_atop_sse2 (gfloat *in,
           }
         else
           {
-	    *v_out ++ = rgba_in;
+            *v_out ++ = rgba_in;
           }
       }
     }
@@ -833,7 +833,7 @@ blendfun_addition (const float *dest,
 }
 
 
-static inline void 
+static inline void
 blendfun_linear_burn (const float *dest,
                       const float *src,
                       float       *out,
@@ -1597,7 +1597,7 @@ blendfun_copy (const float *dest,
     }
 }
 
-/* added according to: 
+/* added according to:
     http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
 static inline void
 blendfun_vivid_light (const float *dest,
@@ -1637,7 +1637,7 @@ blendfun_vivid_light (const float *dest,
 }
 
 
-/* added according to: 
+/* added according to:
     http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
 static inline void
 blendfun_linear_light (const float *dest,
@@ -1674,7 +1674,7 @@ blendfun_linear_light (const float *dest,
 }
 
 
-/* added according to: 
+/* added according to:
     http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
 static inline void
 blendfun_pin_light (const float *dest,
