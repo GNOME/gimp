@@ -292,6 +292,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:illusion",
     GIMP_HELP_FILTER_ILLUSION },
 
+  { "filters-image-gradient", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Image Gradient..."), NULL, NULL,
+    "gegl:image-gradient",
+    GIMP_HELP_FILTER_IMAGE_GRADIENT },
+
   { "filters-kaleidoscope", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Kaleidoscope..."), NULL, NULL,
     "gegl:mirrors",
@@ -476,6 +481,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Simple Linear Iterative Clustering..."), NULL, NULL,
     "gegl:slic",
     GIMP_HELP_FILTER_SLIC },
+
+  { "filters-snn-mean", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Symmetric Nearest Neighbor..."), NULL, NULL,
+    "gegl:snn-mean",
+    GIMP_HELP_FILTER_SNN_MEAN },
 
   { "filters-softglow", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Softglow..."), NULL, NULL,
@@ -718,6 +728,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-grid",                    writable);
   SET_SENSITIVE ("filters-high-pass",               writable);
   SET_SENSITIVE ("filters-illusion",                writable);
+  SET_SENSITIVE ("filters-image-gradient",          writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-lens-flare",              writable);
@@ -755,6 +766,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-shift",                   writable);
   SET_SENSITIVE ("filters-sinus",                   writable);
   SET_SENSITIVE ("filters-slic",                    writable);
+  SET_SENSITIVE ("filters-snn-mean",                writable);
   SET_SENSITIVE ("filters-softglow",                writable);
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);

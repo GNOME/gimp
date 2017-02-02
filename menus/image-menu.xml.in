@@ -580,6 +580,7 @@
       </menu>
       <menu action="colors-components-menu" name="Components">
 	<menuitem action="filters-channel-mixer" />
+	<menuitem action="filters-component-extract" />
 	<menuitem action="filters-mono-mixer" />
       </menu>
       <menu action="colors-desaturate-menu" name="Desaturate">
@@ -605,6 +606,7 @@
       <menuitem action="filters-posterize" />
       <menuitem action="filters-color-to-alpha" />
       <menuitem action="filters-dither" />
+      <menuitem action="filters-rgb-clip" />
       <placeholder name="Modify" />
     </menu>
 
@@ -698,6 +700,7 @@
         <menuitem action="filters-high-pass" />
         <menuitem action="filters-noise-reduction" />
         <menuitem action="filters-red-eye-removal" />
+        <menuitem action="filters-snn-mean" />
         <menuitem action="filters-unsharp-mask" />
       </menu>
       <menu action="filters-distorts-menu" name="Distorts">
@@ -744,6 +747,7 @@
         <menuitem action="filters-edge-laplace" />
         <menuitem action="filters-edge-neon" />
         <menuitem action="filters-edge-sobel" />
+        <menuitem action="filters-image-gradient" />
       </menu>
       <menu action="filters-generic-menu" name="Generic">
         <menuitem action="filters-convolution-matrix" />
@@ -760,7 +764,9 @@
 	<menuitem action="filters-tile-glass" />
 	<menuitem action="filters-oilify" />
 	<menuitem action="filters-photocopy" />
+	<menuitem action="filters-slic" />
 	<menuitem action="filters-softglow" />
+	<menuitem action="filters-waterpixels" />
       </menu>
       <menu action="filters-decor-menu" name="Decor" />
       <menu action="filters-map-menu" name="Map">
