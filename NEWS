@@ -32,7 +32,7 @@ GUI:
    multi-window-mode
  - Disable the new "automatic window tabbing" feature introduced on macOS
    Sierra
- - Improve the visiblity of slider handles with dark themes
+ - Improve the visibility of slider handles with dark themes
  - Make it harder to switch to renaming if selecting already selected
    items in resource lists
 
@@ -52,7 +52,7 @@ Windows Installer:
  - Reduce the memory requirement when running the installer (has
    already been shipped in a 2.8.18 installer-only update)
  - Ship an updated libcairo to fix GTK+ UI rendering problems, like
-   missing palette border/bevel and shadowa under tab labels
+   missing palette border/bevel and shadows under tab labels
 
 
 macOS DMG:
@@ -75,8 +75,8 @@ Plug-ins:
  - mkgen.pl: fix calls to write_file() routine to write to current
    directory
  - When printing, the images are composed onto a white background to
-   prevent printing a black box instead of a transaprent image
- - Fix color visison deficiency display filters to apply gamma
+   prevent printing a black box instead of a transparent image
+ - Fix color vision deficiency display filters to apply gamma
    correction directly
 
 
