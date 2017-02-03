@@ -1965,19 +1965,14 @@ static GimpLayerModeInfo gimp_layer_mode_infos[]=
   { GIMP_LAYER_MODE_NORMAL,
     "gimp:normal",
     0,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_DISSOLVE,
     "gimp:dissolve",
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
   },
   { GIMP_LAYER_MODE_BEHIND,
     "gimp:behind",
     0,
-    GIMP_LAYER_COMPOSITE_SRC_OVER
   },
   { GIMP_LAYER_MODE_MULTIPLY_LEGACY,
     "gimp:multiply-legacy",
@@ -1986,135 +1981,78 @@ static GimpLayerModeInfo gimp_layer_mode_infos[]=
   { GIMP_LAYER_MODE_SCREEN_LEGACY,
     "gimp:screen-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_OVERLAY_LEGACY,
     "gimp:overlay-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_DIFFERENCE_LEGACY,
     "gimp:difference-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_ADDITION_LEGACY,
     "gimp:addition-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_SUBTRACT_LEGACY,
     "gimp:subtract-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,
     "gimp:darken-only-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
     "gimp:lighten-only-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_HSV_HUE_LEGACY,
     "gimp:hsv-hue-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,
     "gimp:hsv-saturation-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_HSV_COLOR_LEGACY,
     "gimp:hsv-color-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_HSV_VALUE_LEGACY,
     "gimp:hsv-value-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_DIVIDE_LEGACY,
     "gimp:divide-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_DODGE_LEGACY,
     "gimp:dodge-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_BURN_LEGACY,
     "gimp:burn-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_HARDLIGHT_LEGACY,
     "gimp:hardlight-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,
     "gimp:softlight-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,
     "gimp:grain-extract-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,
     "gimp:grain-merge-legacy",
     GIMP_LAYER_MODE_FLAG_LEGACY,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_COLOR_ERASE,
     "gimp:color-erase",
     0,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_OVERLAY,
     "gimp:layer-mode",
@@ -2154,16 +2092,10 @@ static GimpLayerModeInfo gimp_layer_mode_infos[]=
   { GIMP_LAYER_MODE_NORMAL_LINEAR,
     "gimp:normal",
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_BEHIND_LINEAR,
     "gimp:behind",
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_MULTIPLY,
     "gimp:layer-mode",
@@ -2187,6 +2119,13 @@ static GimpLayerModeInfo gimp_layer_mode_infos[]=
     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
   { GIMP_LAYER_MODE_SCREEN_LINEAR,
+    "gimp:layer-mode",
+    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+  },
+  { GIMP_LAYER_MODE_OVERLAY_LINEAR,
     "gimp:layer-mode",
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -2331,7 +2270,7 @@ static GimpLayerModeInfo gimp_layer_mode_infos[]=
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
     GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
   { GIMP_LAYER_MODE_SOFTLIGHT,
     "gimp:layer-mode",
@@ -2475,31 +2414,23 @@ static GimpLayerModeInfo gimp_layer_mode_infos[]=
   },
   { GIMP_LAYER_MODE_ERASE,
     "gimp:erase",
-    0,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
   },
   { GIMP_LAYER_MODE_REPLACE,
     "gimp:replace",
-    0,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
   },
   { GIMP_LAYER_MODE_ANTI_ERASE,
     "gimp:anti-erase",
-    0,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
   },
 };
 
 const GimpLayerModeInfo *gimp_layer_mode_info (GimpLayerMode mode)
 {
   int i;
-  for (i = 0; i < sizeof (gimp_layer_mode_infos) / sizeof (gimp_layer_mode_infos[0]); i++)
+  for (i = 0; i < sizeof (gimp_layer_mode_infos) /
+                  sizeof (gimp_layer_mode_infos[0]); i++)
     {
       if (gimp_layer_mode_infos[i].layer_mode == mode)
         return &gimp_layer_mode_infos[i];
@@ -2507,3 +2438,44 @@ const GimpLayerModeInfo *gimp_layer_mode_info (GimpLayerMode mode)
   return NULL;
 }
 
+#if 0
+/* the following is test code for verifying that the above data matches 
+   the apis it takes over for
+ */
+
+#include "core/gimp-layer-modes.h"
+
+void verify_layer_mode_info (void);
+void verify_layer_mode_info (void)
+{
+  int i;
+  for (i = 0; i < sizeof (gimp_layer_mode_infos) / sizeof (gimp_layer_mode_infos[0]); i++)
+  {
+     GimpLayerModeInfo *info = &gimp_layer_mode_infos[i];
+     printf ("%i  - %s\n", i,  info->op_name);
+     int mode = info->layer_mode;
+     if (info->layer_mode != i)
+     {
+        printf (" enum mismatch\n");
+     }
+     if ((gimp_layer_mode_is_legacy (mode) !=
+           ((info->flags & GIMP_LAYER_MODE_FLAG_LEGACY) != 0)))
+        printf (" legacy mismatch\n");
+     if ((gimp_layer_mode_wants_linear_data (mode) !=
+           ((info->flags & GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA) != 0)))
+        printf (" wants linear data mismatch\n");
+     if (!strcmp (info->op_name, "gimp:layer-mode"))
+     {
+     if (gimp_layer_mode_get_blend_space (mode) != info->blend_space)
+        printf (" blend space mismatch\n");
+     if (gimp_layer_mode_get_composite_space (mode) != info->composite_space)
+        printf (" composite space mismatch\n");
+     if (gimp_layer_mode_get_composite_mode (mode) != info->composite_mode)
+        printf (" composite mode mismatch\n");
+     if (strcmp (gimp_layer_mode_get_operation (mode), info->op_name))
+        printf (" operation mismatch\n");
+     }
+  }
+  exit(0);
+}
+#endif
