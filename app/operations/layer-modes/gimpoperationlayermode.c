@@ -1600,6 +1600,12 @@ blendfun_lch_chroma (const float *dest,
               out[1] = A;
               out[2] = B;
             }
+          else
+            {
+              out[0] = dest[0];
+              out[1] = dest[1];
+              out[2] = dest[2];
+            }
         }
 
       out[ALPHA] = src[ALPHA];
