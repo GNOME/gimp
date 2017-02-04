@@ -226,6 +226,8 @@ typedef enum
   GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,      /*< desc="Pin light (linear)"       >*/
   GIMP_LAYER_MODE_LINEAR_LIGHT,          /*< desc="Linear light"             >*/
   GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,   /*< desc="Linear light (linear)"    >*/
+  GIMP_LAYER_MODE_HARD_MIX,              /*< desc="Hard mix"                 >*/
+  GIMP_LAYER_MODE_HARD_MIX_LINEAR,       /*< desc="Hard mix (linear)"        >*/
   GIMP_LAYER_MODE_EXCLUSION,             /*< desc="Exclusion"                >*/
   GIMP_LAYER_MODE_EXCLUSION_LINEAR,      /*< desc="Exclusion (linear)"       >*/
   GIMP_LAYER_MODE_LINEAR_BURN,           /*< desc="Linear burn"              >*/

@@ -1839,6 +1839,31 @@ blendfun_pin_light (const float *dest,
 }
 
 static inline void
+blendfun_hard_mix (const float *dest,
+                   const float *src,
+                   float       *out,
+                   int          samples)
+{
+  while (samples--)
+    {
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
+        {
+          gint c;
+
+          for (c = 0; c < 3; c++)
+            {
+              out[c] = dest[c] + src[c] < 1.0f ? 0.0f : 1.0f;
+            }
+        }
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+static inline void
 blendfun_exclusion (const float *dest,
                     const float *src,
                     float       *out,
@@ -1862,6 +1887,7 @@ blendfun_exclusion (const float *dest,
       dest += 4;
     }
 }
+
 
 static inline void dummy_fun(void)
 {
@@ -1919,6 +1945,8 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_PIN_LIGHT:    return blendfun_pin_light;
     case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_LINEAR_LIGHT: return blendfun_linear_light;
+    case GIMP_LAYER_MODE_HARD_MIX_LINEAR:
+    case GIMP_LAYER_MODE_HARD_MIX:  return blendfun_hard_mix;
     case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
     case GIMP_LAYER_MODE_EXCLUSION:    return blendfun_exclusion;
     case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
@@ -2379,6 +2407,20 @@ static GimpLayerModeInfo gimp_layer_mode_infos[]=
     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
   { GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
+    "gimp:layer-mode",
+    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+  },
+  { GIMP_LAYER_MODE_HARD_MIX,
+    "gimp:layer-mode",
+    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+  },
+  { GIMP_LAYER_MODE_HARD_MIX_LINEAR,
     "gimp:layer-mode",
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,

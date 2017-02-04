@@ -391,7 +391,7 @@ gimp_layer_mode_combo_box_fix_default_store (GimpLayerModeComboBox *combo,
                                               GIMP_LAYER_MODE_BURN, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
-                                              GIMP_LAYER_MODE_LINEAR_LIGHT, -1);
+                                              GIMP_LAYER_MODE_HARD_MIX, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DIVIDE, -1);
@@ -437,7 +437,7 @@ gimp_layer_mode_combo_box_fix_linear_store (GimpLayerModeComboBox *combo,
                                               GIMP_LAYER_MODE_BURN_LINEAR, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
-                                              GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR, -1);
+                                              GIMP_LAYER_MODE_HARD_MIX_LINEAR, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DIVIDE_LINEAR, -1);
@@ -477,7 +477,7 @@ gimp_layer_mode_combo_box_fix_perceptual_store (GimpLayerModeComboBox *combo,
                                               GIMP_LAYER_MODE_BURN, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
-                                              GIMP_LAYER_MODE_LINEAR_LIGHT, -1);
+                                              GIMP_LAYER_MODE_HARD_MIX, -1);
 
   gimp_layer_mode_combo_box_insert_separator (store,
                                               GIMP_LAYER_MODE_DIVIDE, -1);
