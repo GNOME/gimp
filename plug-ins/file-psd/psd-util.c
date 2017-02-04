@@ -807,10 +807,12 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("norm", 4);
       break;
 
+    case GIMP_LAYER_MODE_MULTIPLY:
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
       psd_mode = g_strndup ("mul ", 4);                       /* Multiply (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_SCREEN:
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
       psd_mode = g_strndup ("scrn", 4);                       /* Screen (ps3) */
       break;
@@ -819,10 +821,12 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("over", 4);                       /* Overlay (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_DIFFERENCE:
     case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
       psd_mode = g_strndup ("diff", 4);                       /* Difference (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_ADDITION:
     case GIMP_LAYER_MODE_ADDITION_LEGACY:
       psd_mode = g_strndup ("lddg", 4);                       /* Linear dodge (ps7)*/
       break;
@@ -834,34 +838,40 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("norm", 4);
       break;
 
+    case GIMP_LAYER_MODE_DARKEN_ONLY:
     case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
       psd_mode = g_strndup ("dark", 4);                       /* Darken (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_LIGHTEN_ONLY:
     case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
       psd_mode = g_strndup ("lite", 4);                       /* Lighten (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_LCH_HUE:
     case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
       psd_mode = g_strndup ("hue ", 4);                       /* Hue (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_LCH_CHROMA:
     case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
       if (CONVERSION_WARNINGS)
-        g_message ("Gimp uses a different equation to photoshop for "
-                   "blend mode: %s. Results will differ.",
+        g_message ("GIMP uses a different equation to Photoshop for "
+                   "blend mode: %s. Results may differ.",
                    gimp_layer_mode_effects_name (layer_mode));
       psd_mode = g_strndup ("sat ", 4);                       /* Saturation (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_LCH_COLOR:
     case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
       psd_mode = g_strndup ("colr", 4);                       /* Color (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_LCH_LIGHTNESS:
     case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
       if (CONVERSION_WARNINGS)
-        g_message ("Gimp uses a different equation to photoshop for "
-                   "blend mode: %s. Results will differ.",
+        g_message ("GIMP uses a different equation to Photoshop for "
+                   "blend mode: %s. Results may differ.",
                    gimp_layer_mode_effects_name (layer_mode));
       psd_mode = g_strndup ("lum ", 4);                       /* Luminosity (ps3) */
       break;
@@ -873,16 +883,39 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("norm", 4);
       break;
 
+    case GIMP_LAYER_MODE_DODGE:
     case GIMP_LAYER_MODE_DODGE_LEGACY:
       psd_mode = g_strndup ("div ", 4);                       /* Color Dodge (ps6) */
       break;
 
+    case GIMP_LAYER_MODE_EXCLUSION:
+      psd_mode = g_strndup ("smud", 4);                       /* Exclusion (ps6) */
+      break;
+
+    case GIMP_LAYER_MODE_BURN:
     case GIMP_LAYER_MODE_BURN_LEGACY:
       psd_mode = g_strndup ("idiv", 4);                       /* Color Burn (ps6) */
       break;
 
+    case GIMP_LAYER_MODE_HARDLIGHT:
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
       psd_mode = g_strndup ("hLit", 4);                       /* Hard Light (ps3) */
+      break;
+
+    case GIMP_LAYER_MODE_VIVID_LIGHT:
+      if (CONVERSION_WARNINGS)
+        g_message ("GIMP uses a different equation to Photoshop for "
+                   "blend mode: %s. Results may differ.",
+                   gimp_layer_mode_effects_name (layer_mode));
+      psd_mode = g_strndup ("vLit", 4);                       /* Vivid Light (ps3) */
+      break;
+
+    case GIMP_LAYER_MODE_LINEAR_LIGHT:
+      psd_mode = g_strndup ("lLit", 4);                       /* Linear light (ps7)*/
+      break;
+
+    case GIMP_LAYER_MODE_PIN_LIGHT:
+      psd_mode = g_strndup ("pLit", 4);                       /* Pin light (ps7)*/
       break;
 
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
@@ -893,6 +926,7 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("sLit", 4);                       /* Soft Light (ps3) */
       break;
 
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported blend mode: %s. Mode reverts to normal",
@@ -900,6 +934,7 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("norm", 4);
       break;
 
+    case GIMP_LAYER_MODE_GRAIN_MERGE:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported blend mode: %s. Mode reverts to normal",
@@ -910,6 +945,32 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
     case GIMP_LAYER_MODE_COLOR_ERASE:
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                   gimp_layer_mode_effects_name (layer_mode));
+      psd_mode = g_strndup ("norm", 4);
+      break;
+
+    case GIMP_LAYER_MODE_SCREEN_LINEAR:
+    case GIMP_LAYER_MODE_ADDITION_LINEAR:
+    case GIMP_LAYER_MODE_SUBTRACT_LINEAR:
+    case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
+    case GIMP_LAYER_MODE_NORMAL_LINEAR:
+    case GIMP_LAYER_MODE_BURN_LINEAR:
+    case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
+    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
+    case GIMP_LAYER_MODE_DODGE_LINEAR:
+    case GIMP_LAYER_MODE_OVERLAY_LINEAR:
+    case GIMP_LAYER_MODE_HARDLIGHT_LINEAR:
+    case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
+    case GIMP_LAYER_MODE_DIVIDE_LINEAR:
+    case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
+    case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
+    case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
+    case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
+      if (CONVERSION_WARNINGS)
+        g_message ("GIMP cannot export linear pixel data in blend mode: %s."
+                   "Mode reverts to normal",
                    gimp_layer_mode_effects_name (layer_mode));
       psd_mode = g_strndup ("norm", 4);
       break;
