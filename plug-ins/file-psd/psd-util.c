@@ -622,13 +622,13 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
     }
 
   if (g_ascii_strncasecmp (psd_mode, "dark", 4) == 0)           /* Darken (ps3) */
-    return GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY;
+    return GIMP_LAYER_MODE_DARKEN_ONLY;
 
   if (g_ascii_strncasecmp (psd_mode, "lite", 4) == 0)           /* Lighten (ps3) */
-      return GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY;
+      return GIMP_LAYER_MODE_LIGHTEN_ONLY;
 
   if (g_ascii_strncasecmp (psd_mode, "hue ", 4) == 0)           /* Hue (ps3) */
-    return GIMP_LAYER_MODE_HSV_HUE_LEGACY;
+    return GIMP_LAYER_MODE_LCH_HUE;
 
   if (g_ascii_strncasecmp (psd_mode, "sat ", 4) == 0)           /* Saturation (ps3) */
     {
@@ -639,11 +639,11 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
                      "blend mode: %s. Results will differ.",
                      mode_name);
         }
-      return GIMP_LAYER_MODE_HSV_SATURATION_LEGACY;
+      return GIMP_LAYER_MODE_LCH_CHROMA;
     }
 
   if (g_ascii_strncasecmp (psd_mode, "colr", 4) == 0)           /* Color (ps3) */
-    return GIMP_LAYER_MODE_HSV_COLOR_LEGACY;
+    return GIMP_LAYER_MODE_LCH_COLOR;
 
   if (g_ascii_strncasecmp (psd_mode, "lum ", 4) == 0)           /* Luminosity (ps3) */
     {
@@ -654,17 +654,17 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
                      "blend mode: %s. Results will differ.",
                      mode_name);
         }
-      return GIMP_LAYER_MODE_HSV_VALUE_LEGACY;
+      return GIMP_LAYER_MODE_LCH_LIGHTNESS;
     }
 
   if (g_ascii_strncasecmp (psd_mode, "mul ", 4) == 0)           /* Multiply (ps3) */
-    return GIMP_LAYER_MODE_MULTIPLY_LEGACY;
+    return GIMP_LAYER_MODE_MULTIPLY;
 
   if (g_ascii_strncasecmp (psd_mode, "lddg", 4) == 0)           /* Linear Dodge (cs2) */
-    return GIMP_LAYER_MODE_ADDITION_LEGACY;
+    return GIMP_LAYER_MODE_ADDITION;
 
   if (g_ascii_strncasecmp (psd_mode, "scrn", 4) == 0)           /* Screen (ps3) */
-    return GIMP_LAYER_MODE_SCREEN_LEGACY;
+    return GIMP_LAYER_MODE_SCREEN;
 
   if (g_ascii_strncasecmp (psd_mode, "diss", 4) == 0)           /* Dissolve (ps3) */
     {
@@ -676,90 +676,54 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
     return GIMP_LAYER_MODE_OVERLAY;
 
   if (g_ascii_strncasecmp (psd_mode, "hLit", 4) == 0)           /* Hard light (ps3) */
-    return GIMP_LAYER_MODE_HARDLIGHT_LEGACY;
+    return GIMP_LAYER_MODE_HARDLIGHT;
 
   if (g_ascii_strncasecmp (psd_mode, "sLit", 4) == 0)           /* Soft light (ps3) */
     {
       if (CONVERSION_WARNINGS)
         {
           static gchar  *mode_name = "SOFT LIGHT";
-          g_message ("Gimp uses a different equation to photoshop for "
+          g_message ("GIMP uses a different equation to Photoshop for "
                      "blend mode: %s. Results will differ.",
                      mode_name);
         }
-    return GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+    return GIMP_LAYER_MODE_SOFTLIGHT;
     }
 
   if (g_ascii_strncasecmp (psd_mode, "diff", 4) == 0)           /* Difference (ps3) */
-    return GIMP_LAYER_MODE_DIFFERENCE_LEGACY;
+    return GIMP_LAYER_MODE_DIFFERENCE;
 
   if (g_ascii_strncasecmp (psd_mode, "smud", 4) == 0)           /* Exclusion (ps6) */
-    {
-      if (CONVERSION_WARNINGS)
-        {
-          static gchar  *mode_name = "EXCLUSION";
-          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
-                     mode_name);
-        }
-      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
-    }
+      return GIMP_LAYER_MODE_EXCLUSION;
 
   if (g_ascii_strncasecmp (psd_mode, "div ", 4) == 0)           /* Color dodge (ps6) */
-      return GIMP_LAYER_MODE_DODGE_LEGACY;
+      return GIMP_LAYER_MODE_DODGE;
 
   if (g_ascii_strncasecmp (psd_mode, "idiv", 4) == 0)           /* Color burn (ps6) */
-      return GIMP_LAYER_MODE_BURN_LEGACY;
+      return GIMP_LAYER_MODE_BURN;
 
   if (g_ascii_strncasecmp (psd_mode, "lbrn", 4) == 0)           /* Linear burn (ps7)*/
-    {
-      if (CONVERSION_WARNINGS)
-        {
-          static gchar  *mode_name = "LINEAR BURN";
-          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
-                     mode_name);
-        }
-      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
-    }
+      return GIMP_LAYER_MODE_LINEAR_BURN;
 
   if (g_ascii_strncasecmp (psd_mode, "lddg", 4) == 0)           /* Linear dodge (ps7)*/
-    return GIMP_LAYER_MODE_ADDITION_LEGACY;
+      return GIMP_LAYER_MODE_ADDITION;
 
   if (g_ascii_strncasecmp (psd_mode, "lLit", 4) == 0)           /* Linear light (ps7)*/
-    {
-      if (CONVERSION_WARNINGS)
-        {
-          static gchar  *mode_name = "LINEAR LIGHT";
-          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
-                     mode_name);
-        }
-      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
-    }
+      return GIMP_LAYER_MODE_LINEAR_LIGHT;
 
   if (g_ascii_strncasecmp (psd_mode, "pLit", 4) == 0)           /* Pin light (ps7)*/
-    {
-      if (CONVERSION_WARNINGS)
-        {
-          static gchar  *mode_name = "PIN LIGHT";
-          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
-                     mode_name);
-        }
-      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
-    }
+      return GIMP_LAYER_MODE_PIN_LIGHT;
 
   if (g_ascii_strncasecmp (psd_mode, "vLit", 4) == 0)           /* Vivid light (ps7)*/
     {
       if (CONVERSION_WARNINGS)
         {
           static gchar  *mode_name = "VIVID LIGHT";
-          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+          g_message ("GIMP uses a different equation to Photoshop for "
+                     "blend mode: %s. Results will differ.",
                      mode_name);
         }
-      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
+    return GIMP_LAYER_MODE_VIVID_LIGHT;
     }
 
   if (g_ascii_strncasecmp (psd_mode, "hMix", 4) == 0)           /* Hard Mix (CS)*/
