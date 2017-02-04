@@ -416,42 +416,54 @@ gboolean
 gimp_layer_mode_is_legacy (GimpLayerMode  mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  return info?info->flags & GIMP_LAYER_MODE_FLAG_LEGACY:FALSE;
+  if (!info)
+    return FALSE;
+  return (info->flags & GIMP_LAYER_MODE_FLAG_LEGACY) != 0;
 }
 
 gboolean
 gimp_layer_mode_wants_linear_data (GimpLayerMode  mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  return info?info->flags & GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA:FALSE;
+  if (!info)
+    return FALSE;
+  return (info->flags & GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA) != 0;
 }
 
 GimpLayerColorSpace
 gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  return info?info->blend_space:GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
+  if (!info)
+    return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
+  return info->blend_space;
 }
 
 GimpLayerColorSpace
 gimp_layer_mode_get_composite_space (GimpLayerMode  mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  return info?info->composite_space:GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
+  if (!info)
+    return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
+  return info->composite_space;
 }
 
 GimpLayerCompositeMode
 gimp_layer_mode_get_composite_mode (GimpLayerMode  mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  return info?info->composite_mode:GIMP_LAYER_COMPOSITE_SRC_ATOP;
+  if (!info)
+    return GIMP_LAYER_COMPOSITE_SRC_OVER;
+  return info->composite_mode;
 }
 
 const gchar *
 gimp_layer_mode_get_operation (GimpLayerMode  mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  return info?info->op_name:"gimp:layer-mode";
+  if (!info)
+    return "gimp:layer-mode";
+  return info->op_name;
 }
 
 static gboolean
