@@ -897,6 +897,10 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("idiv", 4);                       /* Color Burn (ps6) */
       break;
 
+    case GIMP_LAYER_MODE_LINEAR_BURN:
+      psd_mode = g_strndup ("lbrn", 4);                       /* Linear Burn (ps6) */
+      break;
+
     case GIMP_LAYER_MODE_HARDLIGHT:
     case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
       psd_mode = g_strndup ("hLit", 4);                       /* Hard Light (ps3) */
@@ -999,6 +1003,7 @@ gimp_layer_mode_effects_name (GimpLayerMode mode)
     "DIFFERENCE",
     "ADD",
     "SUBTRACT",
+    "EXCLUSION"
     "DARKEN",
     "LIGHTEN",
     "HUE",
@@ -1008,8 +1013,12 @@ gimp_layer_mode_effects_name (GimpLayerMode mode)
     "DIVIDE",
     "DODGE",
     "BURN",
+    "LINEAR BURN"
     "HARD LIGHT",
     "SOFT LIGHT",
+    "VIVID LIGHT",
+    "LINEAR LIGHT",
+    "PIN LIGHT",
     "GRAIN EXTRACT",
     "GRAIN MERGE",
     "COLOR ERASE"
