@@ -738,6 +738,30 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
       return GIMP_LAYER_MODE_NORMAL;
     }
 
+  if (g_ascii_strncasecmp (psd_mode, "dkCl", 4) == 0)           /* Darker Color */
+    {
+      if (CONVERSION_WARNINGS)
+        {
+          static gchar  *mode_name = "DARKER COLOR";
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+        }
+      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
+      return GIMP_LAYER_MODE_NORMAL;
+    }
+
+  if (g_ascii_strncasecmp (psd_mode, "lgCl", 4) == 0)           /* Lighter Color */
+    {
+      if (CONVERSION_WARNINGS)
+        {
+          static gchar  *mode_name = "LIGHTER COLOR";
+          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
+                     mode_name);
+        }
+      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
+      return GIMP_LAYER_MODE_NORMAL;
+    }
+
   if (CONVERSION_WARNINGS)
     {
       gchar  *mode_name = g_strndup (psd_mode, 4);
