@@ -1766,7 +1766,7 @@ blendfun_vivid_light (const float *dest,
 
 
 /* added according to:
-    http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
+    http://www.simplefilter.de/en/basics/mixmods.html */
 static inline void
 blendfun_linear_light (const float *dest,
                        const float *src,
@@ -1782,14 +1782,7 @@ blendfun_linear_light (const float *dest,
           for (c = 0; c < 3; c++)
             {
               gfloat comp;
-              if (src[c] > 0.5f)
-                {
-                  comp = dest[c] + 2.0 * (src[c] - 0.5);
-                }
-              else
-                {
-                  comp = dest[c] + 2.0 * src[c] - 1.0;
-                }
+              comp = dest[c] + 2.0f * src[c] - 1.0f;
               out[c] = comp;
             }
         }
