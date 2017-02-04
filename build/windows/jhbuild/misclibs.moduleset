@@ -55,9 +55,9 @@
 </autotools>
 
 <autotools id="lcms2" autogen-sh="configure">
-	<branch version="2.7" repo="sf.net"
-			module="lcms/lcms/2.7/lcms2-2.7.tar.gz"
-			hash="sha1:625f0d74bad4a0f6f917120fd992437d26f754d2">
+	<branch version="2.8" repo="sf.net"
+			module="lcms/lcms/2.8/lcms2-2.8.tar.gz"
+			hash="sha1:e9535ec4a572b8fc7a1c405c35e6f4dc97714197">
 	</branch>
 </autotools>
 
@@ -69,9 +69,9 @@
 </autotools>
 
 <autotools id="iso-codes" autogen-sh="configure">
-	<branch version="3.58" repo="pkg-isocodes"
-			module="iso-codes-3.58.tar.xz"
-			hash="sha1:9f231aac990f5ce781970cebf02fb673baf1c44f">
+	<branch version="3.74" repo="pkg-isocodes"
+			module="iso-codes-3.74.tar.xz"
+			hash="sha256:21f4f3cea8fe09f5b53784522303a0e1e7d083964ecaf1c75b1441d4d9ec6aee">
 	</branch>
 </autotools>
 
@@ -122,9 +122,9 @@
 </autotools>
 
 <autotools id="poppler" autogen-sh="configure">
-	<branch version="0.34.0" repo="poppler"
-			module="poppler-0.34.0.tar.xz"
-			hash="sha1:f204cb6a57730971ef561732a269e7bafc8e8476">
+	<branch version="0.51.0" repo="poppler"
+			module="poppler-0.51.0.tar.xz"
+			hash="sha256:e997c9ad81a8372f2dd03a02b00692b8cc479c220340c8881edaca540f402c1f">
 		<!-- https://bugs.freedesktop.org/show_bug.cgi?id=91384 -->
 		<patch file="poppler-windows-h.patch" strip="1"/>
 	</branch>
@@ -154,9 +154,9 @@
 </cmake>
 
 <autotools id="libgexiv2" autogen-sh="configure">
-	<branch version="0.10.3" repo="gnome.org"
-			module="gexiv2/0.10/gexiv2-0.10.3.tar.xz"
-			hash="sha256:390cfb966197fa9f3f32200bc578d7c7f3560358c235e6419657206a362d3988">
+	<branch version="0.10.4" repo="gnome.org"
+			module="gexiv2/0.10/gexiv2-0.10.4.tar.xz"
+			hash="sha256:ad8d31afdc0a1932cc44c4cfcea449497c0d0b445c0ad2f9735707b306e71ca4">
 	</branch>
 	<dependencies>
 		<dep package="exiv2"/>
@@ -165,9 +165,9 @@
 </autotools>
 
 <autotools id="hicolor-icon-theme" autogen-sh="configure">
-	<branch version="0.13" repo="icon-theme.freedesktop.org"
-			module="hicolor-icon-theme-0.13.tar.gz"
-			hash="sha256:a38b038915480d1ddd4e3c421562560a14d42ace0449a5acc07c50f57f9c3406">
+	<branch version="0.15" repo="icon-theme.freedesktop.org"
+			module="hicolor-icon-theme-0.15.tar.xz"
+			hash="sha256:9cc45ac3318c31212ea2d8cb99e64020732393ee7630fa6c1810af5f987033cc">
 	</branch>
 </autotools>
 
@@ -190,9 +190,9 @@
 </autotools>
 
 <autotools id="json-glib" autogen-sh="configure">
-	<branch version="1.0.2" repo="gnome.org"
-			module="json-glib/1.0/json-glib-1.0.2.tar.xz"
-			hash="sha256:887bd192da8f5edc53b490ec51bf3ffebd958a671f5963e4f3af32c22e35660a">
+	<branch version="1.2.2" repo="gnome.org"
+			module="json-glib/1.2/json-glib-1.2.2.tar.xz"
+			hash="sha256:ea128ab52a824fcd06e5448fbb2bd8d9a13740d51c66d445828edba71321a621">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
@@ -200,10 +200,10 @@
 </autotools>
 
 <autotools id="json-c" autogen-sh="configure">
-	<branch version="0.12" repo="json-c"
-			module="json-c-0.12-nodoc.tar.gz"
-			checkoutdir="json-c-0.12-nodoc"
-			hash="sha256:6fd6d2311d610b279e1bcdd5c6d4f699700159d3e0786de8306af7b4bc94fb35">
+	<branch version="0.12.1" repo="json-c"
+			module="json-c-0.12.1-nodoc.tar.gz"
+			checkoutdir="json-c-0.12.1-nodoc"
+			hash="sha256:5a617da9aade997938197ef0f8aabd7f97b670c216dc173977e1d56eef9e1291">
 		<!-- Local patch: -->
 		<patch file="json-c-disable-werror.patch" strip="1"/>
 	</branch>

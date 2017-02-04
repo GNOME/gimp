@@ -22,9 +22,9 @@
 		href="https://github.com/"/>
 
 <autotools id="cairo">
-	<branch version="1.14.2" repo="cairographics.org"
-			module="cairo-1.14.2.tar.xz"
-			hash="sha1:c8da68aa66ca0855b5d0ff552766d3e8679e1d24">
+	<branch version="1.14.8" repo="cairographics.org"
+			module="cairo-1.14.8.tar.xz"
+			hash="sha1:c6f7b99986f93c9df78653c3e6a3b5043f65145e">
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
@@ -36,16 +36,16 @@
 </autotools>
 
 <autotools id="pixman" autogen-sh="configure">
-	<branch version="0.32.6" repo="cairographics.org"
-			module="pixman-0.32.6.tar.gz"
-			hash="sha1:8791343cbf6d99451f4d08e8209d6ac11bf96df2">
+	<branch version="0.34.0" repo="cairographics.org"
+			module="pixman-0.34.0.tar.gz"
+			hash="sha1:a1b1683c1a55acce9d928fea1ab6ceb79142ddc7">
 	</branch>
 </autotools>
 
 <autotools id="pango" autogen-sh="configure">
-	<branch version="1.36.8" repo="gnome.org"
-			module="pango/1.36/pango-1.36.8.tar.xz"
-			hash="sha256:18dbb51b8ae12bae0ab7a958e7cf3317c9acfc8a1e1103ec2f147164a0fc2d07">
+	<branch version="1.40.3" repo="gnome.org"
+			module="pango/1.40/pango-1.40.3.tar.xz"
+			hash="sha256:abba8b5ce728520c3a0f1535eab19eac3c14aeef7faa5aded90017ceac2711d3">
 	</branch>
 	<dependencies>
 		<dep package="cairo"/>
@@ -57,9 +57,9 @@
 </autotools>
 
 <autotools id="atk" autogen-sh="configure" makeinstallargs="install -j1">
-	<branch version="2.16.0" repo="gnome.org"
-			module="atk/2.16/atk-2.16.0.tar.xz"
-			hash="sha256:095f986060a6a0b22eb15eef84ae9f14a1cf8082488faa6886d94c37438ae562">
+	<branch version="2.22.0" repo="gnome.org"
+			module="atk/2.22/atk-2.22.0.tar.xz"
+			hash="sha256:d349f5ca4974c9c76a4963e5b254720523b0c78672cbc0e1a3475dbd9b3d44b6">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
@@ -67,9 +67,9 @@
 </autotools>
 
 <autotools id="fontconfig" autogen-sh="configure" makeinstallargs="install -j1">
-	<branch version="2.11.1" repo="freedesktop.org"
-			module="fontconfig/release/fontconfig-2.11.1.tar.bz2"
-			hash="sha256:dc62447533bca844463a3c3fd4083b57c90f18a70506e7a9f4936b5a1e516a99">
+	<branch version="2.12.1" repo="freedesktop.org"
+			module="fontconfig/release/fontconfig-2.12.1.tar.bz2"
+			hash="sha256:b449a3e10c47e1d1c7a6ec6e2016cca73d3bd68fbbd4f0ae5cc6b573f7d6c7f3">
 	</branch>
 	<dependencies>
 		<dep package="freetype2"/>
@@ -77,9 +77,9 @@
 </autotools>
 
 <autotools id="freetype2" autogen-sh="configure">
-	<branch version="2.5.5" repo="savannah.gnu.org"
-			module="freetype/freetype-2.5.5.tar.bz2"
-			hash="sha256:387bcc4b780b12484aa2ec9f7db1a55d8286eb5639f45fbc0fbba7a4e5a1afb9">
+	<branch version="2.7.1" repo="savannah.gnu.org"
+			module="freetype/freetype-2.7.1.tar.bz2"
+			hash="sha256:3a3bb2c4e15ffb433f2032f50a5b5a92558206822e22bfe8cbe339af4aa82f88">
 	</branch>
 	<dependencies>
 		<dep package="bzip2"/>
@@ -111,9 +111,9 @@
 </autotools>
 
 <autotools id="harfbuzz">
-	<branch version="0.9.41" repo="freedesktop.org"
-			module="harfbuzz/release/harfbuzz-0.9.41.tar.bz2"
-			hash="sha256:d81aa53d0c02b437beeaac159d7fc16394d676bbce0860fb6f6a10b587dc057c">
+	<branch version="1.4.2" repo="freedesktop.org"
+			module="harfbuzz/release/harfbuzz-1.4.2.tar.bz2"
+			hash="sha256:8f234dcfab000fdec24d43674fffa2fdbdbd654eb176afbde30e8826339cb7b3">
 	</branch>
 	<dependencies>
 		<dep package="cairo"/>
@@ -123,9 +123,9 @@
 </autotools>
 
 <autotools id="libxml2" autogen-sh="configure">
-	<branch version="2.9.2" repo="xmlsoft.org"
-			module="libxml2/libxml2-2.9.2.tar.gz"
-			hash="sha256:5178c30b151d044aefb1b08bf54c3003a0ac55c59c866763997529d60770d5bc">
+	<branch version="2.9.4" repo="xmlsoft.org"
+			module="libxml2/libxml2-2.9.4.tar.gz"
+			hash="sha256:ffb911191e509b966deb55de705387f14156e1a56b21824357cdf0053233633c">
 	</branch>
 	<dependencies>
 		<dep package="iconv"/>
@@ -147,9 +147,9 @@
 </autotools>
 
 <autotools id="gdk-pixbuf2" autogen-sh="configure">
-	<branch version="2.30.8" repo="gnome.org"
-			module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.8.tar.xz"
-			hash="sha256:4853830616113db4435837992c0aebd94cbb993c44dc55063cee7f72a7bef8be">
+	<branch version="2.36.4" repo="gnome.org"
+			module="gdk-pixbuf/2.36/gdk-pixbuf-2.36.4.tar.xz"
+			hash="sha256:0b19901c3eb0596141d2d48ddb9dac79ad1524bdf59366af58ab38fcb9ee7463">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
@@ -165,9 +165,9 @@
 </autotools>
 
 <autotools id="gtk2" autogen-sh="configure" makeargs=" || rm -f gtk/gtk.def &amp;&amp; make" makeinstallargs="install -j1">
-	<branch version="2.24.28" repo="gnome.org"
-			module="gtk+/2.24/gtk+-2.24.28.tar.xz"
-			hash="sha256:b2c6441e98bc5232e5f9bba6965075dcf580a8726398f7374d39f90b88ed4656">
+	<branch version="2.24.31" repo="gnome.org"
+			module="gtk+/2.24/gtk+-2.24.31.tar.xz"
+			hash="sha256:68c1922732c7efc08df4656a5366dcc3afdc8791513400dac276009b40954658">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>

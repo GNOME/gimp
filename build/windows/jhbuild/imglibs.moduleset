@@ -13,9 +13,9 @@
 	<include href="compresslibs.moduleset"/>
 
 <autotools id="libtiff" autogen-sh="configure">
-	<branch version="4.0.3" repo="osgeo.org"
-			module="libtiff/tiff-4.0.3.zip"
-			hash="sha1:851126a9876e261bee808f347711be74e3566ed6">
+	<branch version="4.0.7" repo="osgeo.org"
+			module="libtiff/tiff-4.0.7.zip"
+			hash="sha256:6ba82d82b5abb508fc6c480c8ef63fd1c9bdea31735b30bc47bdebe2272087a7">
 	</branch>
 	<dependencies>
 		<dep package="libjpeg-turbo"/>
@@ -77,9 +77,9 @@
 </autotools>
 
 <autotools id="libwebp" autogen-sh="configure">
-	<branch version="0.4.3" repo="webmproject.org"
-			module="webp/libwebp-0.4.3.tar.gz"
-			hash="sha1:1c307a61c4d0018620b4ba9a58e8f48a8d6640ef">
+	<branch version="0.6.0" repo="webmproject.org"
+			module="webp/libwebp-0.6.0.tar.gz"
+			hash="sha256:c928119229d4f8f35e20113ffb61f281eda267634a8dc2285af4b0ee27cf2b40">
 	</branch>
 </autotools>
 
