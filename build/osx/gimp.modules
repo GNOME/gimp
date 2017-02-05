@@ -264,6 +264,8 @@
 			<!-- Until https://bugzilla.gnome.org/show_bug.cgi?id=753992 is merged -->
 			<patch file="gtk2-quartz-introduce-gdk_quartz_window_is_quartz-function.patch" strip="1" />
 			<patch file="gtk2-quartz-fix-regression-in-imquartz.patch" strip="1" />
+			<!-- Until https://bugzilla.gnome.org/show_bug.cgi?id=767091 is merged -->
+			<patch file="gtk2-quartz-fix-dnd-timing-issue.patch" strip="1" />
 		</branch>
 		<dependencies>
 			<dep package="glib" />
