@@ -28,6 +28,19 @@
 #include "gimp-layer-modes.h"
 
 
+typedef struct _GimpLayerModeInfo GimpLayerModeInfo;
+
+struct _GimpLayerModeInfo
+{
+  GimpLayerMode          layer_mode;
+  gchar                 *op_name;
+  GimpLayerModeFlags     flags;
+  GimpLayerCompositeMode composite_mode;
+  GimpLayerColorSpace    composite_space;
+  GimpLayerColorSpace    blend_space;
+};
+
+
 /*  static variables  */
 
 static GimpLayerModeInfo layer_mode_infos[]=
@@ -1014,7 +1027,7 @@ gimp_layer_modes_init (void)
     }
 }
 
-const GimpLayerModeInfo *
+static const GimpLayerModeInfo *
 gimp_layer_mode_info (GimpLayerMode mode)
 {
   g_return_val_if_fail (mode < G_N_ELEMENTS (layer_mode_infos),

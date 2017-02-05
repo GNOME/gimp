@@ -23,22 +23,7 @@
 #define __GIMP_LAYER_MODES_H__
 
 
-typedef struct _GimpLayerModeInfo GimpLayerModeInfo;
-
-struct _GimpLayerModeInfo
-{
-  GimpLayerMode          layer_mode;
-  gchar                 *op_name;
-  GimpLayerModeFlags     flags;
-  GimpLayerCompositeMode composite_mode;
-  GimpLayerColorSpace    composite_space;
-  GimpLayerColorSpace    blend_space;
-};
-
-
 void                     gimp_layer_modes_init               (void);
-
-const GimpLayerModeInfo *gimp_layer_mode_info                (GimpLayerMode       mode);
 
 gboolean                 gimp_layer_mode_is_legacy           (GimpLayerMode       mode);
 gboolean                 gimp_layer_mode_wants_linear_data   (GimpLayerMode       mode);
