@@ -128,7 +128,7 @@ gimp_gegl_procedure_finalize (GObject *object)
 
 static gint64
 gimp_gegl_procedure_get_memsize (GimpObject *object,
-                                    gint64     *gui_size)
+                                 gint64     *gui_size)
 {
   GimpGeglProcedure *proc    = GIMP_GEGL_PROCEDURE (object);
   gint64             memsize = 0;
@@ -142,7 +142,7 @@ gimp_gegl_procedure_get_memsize (GimpObject *object,
 
 static gchar *
 gimp_gegl_procedure_get_description (GimpViewable  *viewable,
-                                        gchar        **tooltip)
+                                     gchar        **tooltip)
 {
   GimpProcedure *procedure = GIMP_PROCEDURE (viewable);
 
