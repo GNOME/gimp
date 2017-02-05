@@ -53,6 +53,9 @@ export FONTCONFIG_FILE="$bundle_etc/fonts/fonts.conf"
 # Include GEGL path
 export GEGL_PATH="$bundle_lib/gegl-0.2"
 
+# Include BABL path
+export BABL_PATH="$bundle_lib/babl-0.1"
+
 # Set up Python
 echo "Enabling internal Python..."
 export PYTHONHOME="$bundle_res"
