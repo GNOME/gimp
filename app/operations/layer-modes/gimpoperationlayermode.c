@@ -2486,6 +2486,7 @@ static GimpLayerModeInfo gimp_layer_mode_infos[]=
   { GIMP_LAYER_MODE_ERASE,
     "gimp:erase",
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    GIMP_LAYER_COMPOSITE_SRC_ATOP
   },
   { GIMP_LAYER_MODE_REPLACE,
     "gimp:replace",
