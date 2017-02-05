@@ -319,7 +319,7 @@ do_layer_blend (GeglBuffer    *src_buffer,
   apply_func      = gimp_get_layer_mode_function (paint_mode);
   blend_space     = gimp_layer_mode_get_blend_space (paint_mode);
   composite_space = gimp_layer_mode_get_composite_space (paint_mode);
-  composite_mode  = gimp_layer_mode_get_composite_mode (paint_mode);
+  composite_mode  = GIMP_LAYER_COMPOSITE_SRC_OVER;
 
   if (linear)
     iterator_format = babl_format ("RGBA float");
