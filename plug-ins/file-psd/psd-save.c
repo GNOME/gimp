@@ -276,6 +276,10 @@ psd_lmode_layer (gint32  idLayer,
     case GIMP_LAYER_MODE_VIVID_LIGHT:
       strcpy (psdMode, "vLit");
       break;
+    case GIMP_LAYER_MODE_HARD_MIX:
+      strcpy (psdMode, "hMix");
+      break;
+
     default:
       {
         const gchar *nick = "?";

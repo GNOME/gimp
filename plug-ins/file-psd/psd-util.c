@@ -715,28 +715,10 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
       return GIMP_LAYER_MODE_PIN_LIGHT;
 
   if (g_ascii_strncasecmp (psd_mode, "vLit", 4) == 0)           /* Vivid light (ps7)*/
-    {
-      if (CONVERSION_WARNINGS)
-        {
-          static gchar  *mode_name = "VIVID LIGHT";
-          g_message ("GIMP uses a different equation to Photoshop for "
-                     "blend mode: %s. Results will differ.",
-                     mode_name);
-        }
     return GIMP_LAYER_MODE_VIVID_LIGHT;
-    }
 
   if (g_ascii_strncasecmp (psd_mode, "hMix", 4) == 0)           /* Hard Mix (CS)*/
-    {
-      if (CONVERSION_WARNINGS)
-        {
-          static gchar  *mode_name = "HARD MIX";
-          g_message ("Unsupported blend mode: %s. Mode reverts to normal",
-                     mode_name);
-        }
-      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
-    }
+      return GIMP_LAYER_MODE_HARD_MIX;
 
   if (g_ascii_strncasecmp (psd_mode, "dkCl", 4) == 0)           /* Darker Color */
     {
@@ -922,6 +904,10 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("pLit", 4);                       /* Pin light (ps7)*/
       break;
 
+    case GIMP_LAYER_MODE_HARD_MIX:
+      psd_mode = g_strndup ("hMix", 4);                       /* Hard Mix (CS)*/
+      break;
+
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
       if (CONVERSION_WARNINGS)
@@ -972,6 +958,7 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
     case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
     case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
+    case GIMP_LAYER_MODE_HARD_MIX_LINEAR:
       if (CONVERSION_WARNINGS)
         g_message ("GIMP cannot export linear pixel data in blend mode: %s."
                    "Mode reverts to normal",
@@ -1019,6 +1006,7 @@ gimp_layer_mode_effects_name (GimpLayerMode mode)
     "VIVID LIGHT",
     "LINEAR LIGHT",
     "PIN LIGHT",
+    "HARD MIX"
     "GRAIN EXTRACT",
     "GRAIN MERGE",
     "COLOR ERASE"
