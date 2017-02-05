@@ -26,33 +26,34 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
-#include "gimp-gegl-types.h"
+#include "operations-types.h"
 
 #include "core/gimplist.h"
 #include "core/gimpparamspecs-duplicate.h"
 #include "core/gimpviewable.h"
 
-#include "gimp-gegl-config.h"
-#include "gimp-gegl-utils.h"
+#include "gegl/gimp-gegl-utils.h"
+
+#include "gimp-operation-config.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_gegl_config_config_sync   (GObject          *config,
-                                              const GParamSpec *gimp_pspec,
-                                              GeglNode         *node);
-static void   gimp_gegl_config_config_notify (GObject          *config,
-                                              const GParamSpec *gimp_pspec,
-                                              GeglNode         *node);
-static void   gimp_gegl_config_node_notify   (GeglNode         *node,
-                                              const GParamSpec *gegl_pspec,
-                                              GObject          *config);
+static void   gimp_operation_config_config_sync   (GObject          *config,
+                                                   const GParamSpec *gimp_pspec,
+                                                   GeglNode         *node);
+static void   gimp_operation_config_config_notify (GObject          *config,
+                                                   const GParamSpec *gimp_pspec,
+                                                   GeglNode         *node);
+static void   gimp_operation_config_node_notify   (GeglNode         *node,
+                                                   const GParamSpec *gegl_pspec,
+                                                   GObject          *config);
 
 
 /*  public functions  */
 
 static GHashTable *
-gimp_gegl_config_get_type_table (void)
+gimp_operation_config_get_type_table (void)
 {
   static GHashTable *config_types = NULL;
 
@@ -66,7 +67,7 @@ gimp_gegl_config_get_type_table (void)
 }
 
 static GHashTable *
-gimp_gegl_config_get_container_table (void)
+gimp_operation_config_get_container_table (void)
 {
   static GHashTable *config_containers = NULL;
 
@@ -80,7 +81,7 @@ gimp_gegl_config_get_container_table (void)
 }
 
 static GValue *
-gimp_gegl_config_value_new (GParamSpec *pspec)
+gimp_operation_config_value_new (GParamSpec *pspec)
 {
   GValue *value = g_slice_new0 (GValue);
 
@@ -90,14 +91,14 @@ gimp_gegl_config_value_new (GParamSpec *pspec)
 }
 
 static void
-gimp_gegl_config_value_free (GValue *value)
+gimp_operation_config_value_free (GValue *value)
 {
   g_value_unset (value);
   g_slice_free (GValue, value);
 }
 
 static GHashTable *
-gimp_gegl_config_get_properties (GObject *object)
+gimp_operation_config_get_properties (GObject *object)
 {
   GHashTable *properties = g_object_get_data (object, "properties");
 
@@ -106,7 +107,7 @@ gimp_gegl_config_get_properties (GObject *object)
       properties = g_hash_table_new_full (g_str_hash,
                                           g_str_equal,
                                           (GDestroyNotify) g_free,
-                                          (GDestroyNotify) gimp_gegl_config_value_free);
+                                          (GDestroyNotify) gimp_operation_config_value_free);
 
       g_object_set_data_full (object, "properties", properties,
                               (GDestroyNotify) g_hash_table_unref);
@@ -116,17 +117,17 @@ gimp_gegl_config_get_properties (GObject *object)
 }
 
 static GValue *
-gimp_gegl_config_value_get (GObject    *object,
-                            GParamSpec *pspec)
+gimp_operation_config_value_get (GObject    *object,
+                                 GParamSpec *pspec)
 {
-  GHashTable *properties = gimp_gegl_config_get_properties (object);
+  GHashTable *properties = gimp_operation_config_get_properties (object);
   GValue     *value;
 
   value = g_hash_table_lookup (properties, pspec->name);
 
   if (! value)
     {
-      value = gimp_gegl_config_value_new (pspec);
+      value = gimp_operation_config_value_new (pspec);
       g_hash_table_insert (properties, g_strdup (pspec->name), value);
     }
 
@@ -134,37 +135,37 @@ gimp_gegl_config_value_get (GObject    *object,
 }
 
 static void
-gimp_gegl_config_set_property (GObject      *object,
-                               guint         property_id,
-                               const GValue *value,
-                               GParamSpec   *pspec)
+gimp_operation_config_set_property (GObject      *object,
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
-  GValue *val = gimp_gegl_config_value_get (object, pspec);
+  GValue *val = gimp_operation_config_value_get (object, pspec);
 
   g_value_copy (value, val);
 }
 
 static void
-gimp_gegl_config_get_property (GObject    *object,
-                               guint       property_id,
-                               GValue     *value,
-                               GParamSpec *pspec)
+gimp_operation_config_get_property (GObject    *object,
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
 {
-  GValue *val = gimp_gegl_config_value_get (object, pspec);
+  GValue *val = gimp_operation_config_value_get (object, pspec);
 
   g_value_copy (val, value);
 }
 
 static void
-gimp_gegl_config_class_init (GObjectClass *klass,
-                             const gchar  *operation)
+gimp_operation_config_class_init (GObjectClass *klass,
+                                  const gchar  *operation)
 {
   GParamSpec **pspecs;
   guint        n_pspecs;
   gint         i;
 
-  klass->set_property = gimp_gegl_config_set_property;
-  klass->get_property = gimp_gegl_config_get_property;
+  klass->set_property = gimp_operation_config_set_property;
+  klass->get_property = gimp_operation_config_get_property;
 
   pspecs = gegl_operation_list_properties (operation, &n_pspecs);
 
@@ -190,8 +191,8 @@ gimp_gegl_config_class_init (GObjectClass *klass,
 }
 
 static gboolean
-gimp_gegl_config_equal (GimpConfig *a,
-                        GimpConfig *b)
+gimp_operation_config_equal (GimpConfig *a,
+                             GimpConfig *b)
 {
   GList    *diff;
   gboolean  equal = TRUE;
@@ -225,24 +226,24 @@ gimp_gegl_config_equal (GimpConfig *a,
 }
 
 static void
-gimp_gegl_config_config_iface_init (GimpConfigInterface *iface)
+gimp_operation_config_config_iface_init (GimpConfigInterface *iface)
 {
-  iface->equal = gimp_gegl_config_equal;
+  iface->equal = gimp_operation_config_equal;
 }
 
 
 /*  public functions  */
 
 void
-gimp_gegl_config_register (const gchar *operation,
-                           GType        config_type)
+gimp_operation_config_register (const gchar *operation,
+                                GType        config_type)
 {
   GHashTable *config_types;
 
   g_return_if_fail (operation != NULL);
   g_return_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT));
 
-  config_types = gimp_gegl_config_get_type_table ();
+  config_types = gimp_operation_config_get_type_table ();
 
   g_hash_table_insert (config_types,
                        g_strdup (operation),
@@ -250,9 +251,9 @@ gimp_gegl_config_register (const gchar *operation,
  }
 
 GimpObject *
-gimp_gegl_config_new (const gchar *operation,
-                      const gchar *icon_name,
-                      GType        parent_type)
+gimp_operation_config_new (const gchar *operation,
+                           const gchar *icon_name,
+                           GType        parent_type)
 {
   GHashTable *config_types;
   GType       config_type;
@@ -260,7 +261,7 @@ gimp_gegl_config_new (const gchar *operation,
   g_return_val_if_fail (operation != NULL, NULL);
   g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), NULL);
 
-  config_types = gimp_gegl_config_get_type_table ();
+  config_types = gimp_operation_config_get_type_table ();
 
   config_type = (GType) g_hash_table_lookup (config_types, operation);
 
@@ -272,24 +273,24 @@ gimp_gegl_config_new (const gchar *operation,
 
       {
         GTypeInfo info =
-          {
-            query.class_size,
-            (GBaseInitFunc) NULL,
-            (GBaseFinalizeFunc) NULL,
-            (GClassInitFunc) gimp_gegl_config_class_init,
-            NULL,           /* class_finalize */
-            operation,
-            query.instance_size,
-            0,              /* n_preallocs */
-            (GInstanceInitFunc) NULL,
-          };
+        {
+          query.class_size,
+          (GBaseInitFunc) NULL,
+          (GBaseFinalizeFunc) NULL,
+          (GClassInitFunc) gimp_operation_config_class_init,
+          NULL,           /* class_finalize */
+          operation,
+          query.instance_size,
+          0,              /* n_preallocs */
+          (GInstanceInitFunc) NULL,
+        };
 
         const GInterfaceInfo config_info =
-          {
-            (GInterfaceInitFunc) gimp_gegl_config_config_iface_init,
-            NULL, /* interface_finalize */
-            NULL  /* interface_data     */
-          };
+        {
+          (GInterfaceInitFunc) gimp_operation_config_config_iface_init,
+          NULL, /* interface_finalize */
+          NULL  /* interface_data     */
+        };
 
         gchar *type_name = g_strdup_printf ("GimpGegl-%s-config",
                                             operation);
@@ -314,7 +315,7 @@ gimp_gegl_config_new (const gchar *operation,
             g_type_class_unref (viewable_class);
           }
 
-        gimp_gegl_config_register (operation, config_type);
+        gimp_operation_config_register (operation, config_type);
       }
     }
 
@@ -322,14 +323,14 @@ gimp_gegl_config_new (const gchar *operation,
 }
 
 GimpContainer *
-gimp_gegl_config_get_container (GType config_type)
+gimp_operation_config_get_container (GType config_type)
 {
   GHashTable    *config_containers;
   GimpContainer *container;
 
   g_return_val_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT), NULL);
 
-  config_containers = gimp_gegl_config_get_container_table ();
+  config_containers = gimp_operation_config_get_container_table ();
 
   container = g_hash_table_lookup (config_containers, (gpointer) config_type);
 
@@ -345,8 +346,8 @@ gimp_gegl_config_get_container (GType config_type)
 }
 
 void
-gimp_gegl_config_sync_node (GimpObject *config,
-                            GeglNode   *node)
+gimp_operation_config_sync_node (GimpObject *config,
+                                 GeglNode   *node)
 {
   GParamSpec **pspecs;
   gchar       *operation;
@@ -423,8 +424,8 @@ gimp_gegl_config_sync_node (GimpObject *config,
 }
 
 void
-gimp_gegl_config_connect_node (GimpObject *config,
-                               GeglNode   *node)
+gimp_operation_config_connect_node (GimpObject *config,
+                                    GeglNode   *node)
 {
   GParamSpec **pspecs;
   gchar       *operation;
@@ -454,7 +455,7 @@ gimp_gegl_config_connect_node (GimpObject *config,
           pspec->value_type == G_TYPE_FROM_INSTANCE (config))
         {
           g_signal_connect_object (config, "notify",
-                                   G_CALLBACK (gimp_gegl_config_config_sync),
+                                   G_CALLBACK (gimp_operation_config_config_sync),
                                    node, 0);
           g_free (pspecs);
           return;
@@ -472,11 +473,11 @@ gimp_gegl_config_connect_node (GimpObject *config,
           gchar *notify_name = g_strconcat ("notify::", gimp_pspec->name, NULL);
 
           g_signal_connect_object (config, notify_name,
-                                   G_CALLBACK (gimp_gegl_config_config_notify),
+                                   G_CALLBACK (gimp_operation_config_config_notify),
                                    node, 0);
 
           g_signal_connect_object (node, notify_name,
-                                   G_CALLBACK (gimp_gegl_config_node_notify),
+                                   G_CALLBACK (gimp_operation_config_node_notify),
                                    config, 0);
 
           g_free (notify_name);
@@ -490,17 +491,17 @@ gimp_gegl_config_connect_node (GimpObject *config,
 /*  private functions  */
 
 static void
-gimp_gegl_config_config_sync (GObject          *config,
-                              const GParamSpec *gimp_pspec,
-                              GeglNode         *node)
+gimp_operation_config_config_sync (GObject          *config,
+                                   const GParamSpec *gimp_pspec,
+                                   GeglNode         *node)
 {
-  gimp_gegl_config_sync_node (GIMP_OBJECT (config), node);
+  gimp_operation_config_sync_node (GIMP_OBJECT (config), node);
 }
 
 static void
-gimp_gegl_config_config_notify (GObject          *config,
-                                const GParamSpec *gimp_pspec,
-                                GeglNode         *node)
+gimp_operation_config_config_notify (GObject          *config,
+                                     const GParamSpec *gimp_pspec,
+                                     GeglNode         *node)
 {
   GParamSpec *gegl_pspec = gegl_node_find_property (node, gimp_pspec->name);
 
@@ -533,7 +534,7 @@ gimp_gegl_config_config_notify (GObject          *config,
                                        0,
                                        g_quark_from_string (gegl_pspec->name),
                                        NULL,
-                                       gimp_gegl_config_node_notify,
+                                       gimp_operation_config_node_notify,
                                        config);
 
       if (handler)
@@ -549,9 +550,9 @@ gimp_gegl_config_config_notify (GObject          *config,
 }
 
 static void
-gimp_gegl_config_node_notify (GeglNode         *node,
-                              const GParamSpec *gegl_pspec,
-                              GObject          *config)
+gimp_operation_config_node_notify (GeglNode         *node,
+                                   const GParamSpec *gegl_pspec,
+                                   GObject          *config)
 {
   GParamSpec *gimp_pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                          gegl_pspec->name);
@@ -597,7 +598,7 @@ gimp_gegl_config_node_notify (GeglNode         *node,
                                        0,
                                        g_quark_from_string (gimp_pspec->name),
                                        NULL,
-                                       gimp_gegl_config_config_notify,
+                                       gimp_operation_config_config_notify,
                                        node);
 
       if (handler)

@@ -39,7 +39,8 @@
 
 #include "config/gimpguiconfig.h"
 
-#include "gegl/gimp-gegl-config.h"
+#include "operations/gimp-operation-config.h"
+
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
@@ -379,7 +380,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
           GFile         *default_folder;
           GtkWidget     *settings_ui;
 
-          settings = gimp_gegl_config_get_container (type);
+          settings = gimp_operation_config_get_container (type);
           if (! gimp_list_get_sort_func (GIMP_LIST (settings)))
             gimp_list_set_sort_func (GIMP_LIST (settings),
                                      (GCompareFunc) gimp_settings_compare);
@@ -1306,14 +1307,15 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   filter_tool->operation = gegl_node_new_child (NULL,
                                                 "operation", operation_name,
                                                 NULL);
-  filter_tool->config = G_OBJECT (gimp_gegl_config_new (operation_name,
-                                                        filter_tool->icon_name,
-                                                        GIMP_TYPE_SETTINGS));
+  filter_tool->config =
+    G_OBJECT (gimp_operation_config_new (operation_name,
+                                         filter_tool->icon_name,
+                                         GIMP_TYPE_SETTINGS));
 
-  gimp_gegl_config_sync_node (GIMP_OBJECT (filter_tool->config),
-                              filter_tool->operation);
-  gimp_gegl_config_connect_node (GIMP_OBJECT (filter_tool->config),
-                                 filter_tool->operation);
+  gimp_operation_config_sync_node (GIMP_OBJECT (filter_tool->config),
+                                   filter_tool->operation);
+  gimp_operation_config_connect_node (GIMP_OBJECT (filter_tool->config),
+                                      filter_tool->operation);
 
   if (filter_tool->gui)
     {

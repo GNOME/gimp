@@ -29,7 +29,6 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimp-gegl-config.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpchannel.h"

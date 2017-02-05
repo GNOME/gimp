@@ -26,8 +26,6 @@
 
 #include "core/gimp.h"
 
-#include "gegl/gimp-gegl-config.h"
-
 #include "gimp-operations.h"
 
 #include "gimpoperationblend.h"
@@ -58,6 +56,7 @@
 #include "gimpoperationposterize.h"
 #include "gimpoperationthreshold.h"
 
+#include "gimp-operation-config.h"
 #include "gimpbrightnesscontrastconfig.h"
 #include "gimpcolorbalanceconfig.h"
 #include "gimpcolorizeconfig.h"
@@ -153,16 +152,16 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);
 
-  gimp_gegl_config_register ("gimp:brightness-contrast",
-                             GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG);
-  gimp_gegl_config_register ("gimp:color-balance",
-                             GIMP_TYPE_COLOR_BALANCE_CONFIG);
-  gimp_gegl_config_register ("gimp:colorize",
-                             GIMP_TYPE_COLORIZE_CONFIG);
-  gimp_gegl_config_register ("gimp:curves",
-                             GIMP_TYPE_CURVES_CONFIG);
-  gimp_gegl_config_register ("gimp:hue-saturation",
-                             GIMP_TYPE_HUE_SATURATION_CONFIG);
-  gimp_gegl_config_register ("gimp:levels",
-                             GIMP_TYPE_LEVELS_CONFIG);
+  gimp_operation_config_register ("gimp:brightness-contrast",
+                                  GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG);
+  gimp_operation_config_register ("gimp:color-balance",
+                                  GIMP_TYPE_COLOR_BALANCE_CONFIG);
+  gimp_operation_config_register ("gimp:colorize",
+                                  GIMP_TYPE_COLORIZE_CONFIG);
+  gimp_operation_config_register ("gimp:curves",
+                                  GIMP_TYPE_CURVES_CONFIG);
+  gimp_operation_config_register ("gimp:hue-saturation",
+                                  GIMP_TYPE_HUE_SATURATION_CONFIG);
+  gimp_operation_config_register ("gimp:levels",
+                                  GIMP_TYPE_LEVELS_CONFIG);
 }

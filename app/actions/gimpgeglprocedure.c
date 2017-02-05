@@ -30,6 +30,8 @@
 
 #include "actions-types.h"
 
+#include "operations/gimp-operation-config.h"
+
 #include "core/gimp.h"
 #include "core/gimp-memsize.h"
 #include "core/gimpcontainer.h"
@@ -40,8 +42,6 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
-
-#include "gegl/gimp-gegl-config.h"
 
 #include "display/gimpdisplay.h"
 
@@ -251,11 +251,11 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   GimpContainer *container;
   GimpTool      *active_tool;
 
-  settings = gimp_gegl_config_new (procedure->original_name,
-                                   gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
-                                   GIMP_TYPE_SETTINGS);
+  settings = gimp_operation_config_new (procedure->original_name,
+                                        gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
+                                        GIMP_TYPE_SETTINGS);
 
-  container = gimp_gegl_config_get_container (G_TYPE_FROM_INSTANCE (settings));
+  container = gimp_operation_config_get_container (G_TYPE_FROM_INSTANCE (settings));
 
   g_object_unref (settings);
 
@@ -279,7 +279,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
           node = gegl_node_new_child (NULL,
                                       "operation", procedure->original_name,
                                       NULL);
-          gimp_gegl_config_sync_node (settings, node);
+          gimp_operation_config_sync_node (settings, node);
 
           image = gimp_value_get_image (gimp_value_array_index (args, 1),
                                         gimp);

@@ -31,7 +31,7 @@
 
 #include "tools-types.h"
 
-#include "gegl/gimp-gegl-config.h"
+#include "operations/gimp-operation-config.h"
 
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
@@ -880,7 +880,8 @@ gimp_blend_tool_start (GimpBlendTool *blend_tool,
   gimp_blend_tool_create_filter (blend_tool, drawable);
 
   /* Initially sync all of the properties */
-  gimp_gegl_config_sync_node (GIMP_OBJECT (options), blend_tool->render_node);
+  gimp_operation_config_sync_node (GIMP_OBJECT (options),
+                                   blend_tool->render_node);
 
   /* Connect signal handlers for the gradient */
   gimp_blend_tool_set_gradient (blend_tool, context->gradient);

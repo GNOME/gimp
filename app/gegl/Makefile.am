@@ -24,8 +24,6 @@ libappgegl_a_sources = \
 	gimp-gegl.h			\
 	gimp-gegl-apply-operation.c	\
 	gimp-gegl-apply-operation.h	\
-	gimp-gegl-config.c		\
-	gimp-gegl-config.h		\
 	gimp-gegl-loops.c		\
 	gimp-gegl-loops.h		\
 	gimp-gegl-mask.c		\
