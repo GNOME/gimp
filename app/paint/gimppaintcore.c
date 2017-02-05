@@ -28,13 +28,14 @@
 
 #include "paint-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimpapplicator.h"
 
 #include "core/gimp.h"
-#include "core/gimp-layer-modes.h"
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"

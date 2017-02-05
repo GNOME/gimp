@@ -22,7 +22,8 @@
 
 #include "paint-types.h"
 
-#include "core/gimp-layer-modes.h"
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "core/gimptempbuf.h"
 
 #include "operations/layer-modes/gimplayermodefunctions.h"

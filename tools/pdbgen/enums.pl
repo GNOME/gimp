@@ -683,32 +683,9 @@ package Gimp::CodeGen::enums;
 		       GIMP_LAYER_COMPOSITE_SRC_IN => '3',
 		       GIMP_LAYER_COMPOSITE_DST_ATOP => '4' }
 	},
-    GimpConvertDitherType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_NO_DITHER GIMP_FS_DITHER
-			  GIMP_FSLOWBLEED_DITHER GIMP_FIXED_DITHER) ],
-	  mapping => { GIMP_NO_DITHER => '0',
-		       GIMP_FS_DITHER => '1',
-		       GIMP_FSLOWBLEED_DITHER => '2',
-		       GIMP_FIXED_DITHER => '3' }
-	},
-    GimpHistogramChannel =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_HISTOGRAM_VALUE GIMP_HISTOGRAM_RED
-			  GIMP_HISTOGRAM_GREEN GIMP_HISTOGRAM_BLUE
-			  GIMP_HISTOGRAM_ALPHA GIMP_HISTOGRAM_LUMINANCE) ],
-	  mapping => { GIMP_HISTOGRAM_VALUE => '0',
-		       GIMP_HISTOGRAM_RED => '1',
-		       GIMP_HISTOGRAM_GREEN => '2',
-		       GIMP_HISTOGRAM_BLUE => '3',
-		       GIMP_HISTOGRAM_ALPHA => '4',
-		       GIMP_HISTOGRAM_LUMINANCE => '5' }
-	},
     GimpLayerMode =>
 	{ contig => 1,
-	  header => 'core/core-enums.h',
+	  header => 'operations/operations-enums.h',
 	  symbols => [ qw(GIMP_LAYER_MODE_NORMAL GIMP_LAYER_MODE_DISSOLVE
 			  GIMP_LAYER_MODE_BEHIND
 			  GIMP_LAYER_MODE_MULTIPLY_LEGACY
@@ -858,6 +835,29 @@ package Gimp::CodeGen::enums;
 		       GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY => '74',
 		       GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY => '75',
 		       GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY => '76' }
+	},
+    GimpConvertDitherType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_NO_DITHER GIMP_FS_DITHER
+			  GIMP_FSLOWBLEED_DITHER GIMP_FIXED_DITHER) ],
+	  mapping => { GIMP_NO_DITHER => '0',
+		       GIMP_FS_DITHER => '1',
+		       GIMP_FSLOWBLEED_DITHER => '2',
+		       GIMP_FIXED_DITHER => '3' }
+	},
+    GimpHistogramChannel =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_HISTOGRAM_VALUE GIMP_HISTOGRAM_RED
+			  GIMP_HISTOGRAM_GREEN GIMP_HISTOGRAM_BLUE
+			  GIMP_HISTOGRAM_ALPHA GIMP_HISTOGRAM_LUMINANCE) ],
+	  mapping => { GIMP_HISTOGRAM_VALUE => '0',
+		       GIMP_HISTOGRAM_RED => '1',
+		       GIMP_HISTOGRAM_GREEN => '2',
+		       GIMP_HISTOGRAM_BLUE => '3',
+		       GIMP_HISTOGRAM_ALPHA => '4',
+		       GIMP_HISTOGRAM_LUMINANCE => '5' }
 	},
     GimpBrushApplicationMode =>
 	{ contig => 1,

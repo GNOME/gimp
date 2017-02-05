@@ -24,7 +24,7 @@
 
 #include "gimp-gegl-types.h"
 
-#include "core/gimp-layer-modes.h"
+#include "operations/layer-modes/gimp-layer-modes.h"
 
 #include "gimp-gegl-nodes.h"
 #include "gimp-gegl-utils.h"

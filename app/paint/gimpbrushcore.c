@@ -26,9 +26,10 @@
 
 #include "paint-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gegl/gimp-babl.h"
 
-#include "core/gimp-layer-modes.h"
 #include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpdrawable.h"

@@ -84,6 +84,7 @@
 #include "layer-modes-legacy/gimpoperationsoftlightlegacy.h"
 #include "layer-modes-legacy/gimpoperationsubtractlegacy.h"
 
+#include "layer-modes/gimp-layer-modes.h"
 #include "layer-modes/gimpoperationantierase.h"
 #include "layer-modes/gimpoperationbehind.h"
 #include "layer-modes/gimpoperationerase.h"
@@ -96,6 +97,8 @@
 void
 gimp_operations_init (void)
 {
+  gimp_layer_modes_init ();
+
   g_type_class_ref (GIMP_TYPE_OPERATION_BLEND);
   g_type_class_ref (GIMP_TYPE_OPERATION_BORDER);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);

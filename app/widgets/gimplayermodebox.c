@@ -28,7 +28,7 @@
 
 #include "widgets-types.h"
 
-#include "core/gimp-layer-modes.h"
+#include "operations/layer-modes/gimp-layer-modes.h"
 
 #include "gimplayermodebox.h"
 #include "gimplayermodecombobox.h"

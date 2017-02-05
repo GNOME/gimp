@@ -48,26 +48,6 @@ struct _GimpOperationLayerModeClass
   GimpLayerModeAffectMask (* get_affect_mask) (GimpOperationLayerMode *layer_mode);
 };
 
-typedef struct _GimpLayerModeInfo GimpLayerModeInfo;
-
-typedef enum GimpLayerModeFlags {
-  GIMP_LAYER_MODE_FLAG_LEGACY = (1<<0),
-  GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA = (1<<1)
-} GimpLayerModeFlags;
-
-
-struct _GimpLayerModeInfo
-{
-  GimpLayerMode          layer_mode;
-  gchar                 *op_name;
-  GimpLayerModeFlags     flags;
-  GimpLayerCompositeMode composite_mode;
-  GimpLayerColorSpace    composite_space;
-  GimpLayerColorSpace    blend_space;
-};
-
-const GimpLayerModeInfo *gimp_layer_mode_info (GimpLayerMode mode);
-
 
 struct _GimpOperationLayerMode
 {
