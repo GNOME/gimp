@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-30 02:11+0100\n"
-"PO-Revision-Date: 2017-01-30 02:12+0100\n"
+"POT-Creation-Date: 2017-02-05 18:25+0100\n"
+"PO-Revision-Date: 2017-02-05 18:27+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -345,12 +345,12 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1773 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1776 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:923
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
-#: ../plug-ins/screenshot/screenshot-win32.c:230 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/screenshot/screenshot-win32.c:257 ../plug-ins/twain/twain.c:567
 msgid "Background"
 msgstr "Tło"
 
@@ -883,7 +883,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1079
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1523
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1561
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -2108,7 +2108,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1073
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1554
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -4709,45 +4709,45 @@ msgstr "Każdy kawałek ma proste krawędzie"
 msgid "Each piece has curved sides"
 msgstr "Każdy kawałek ma zaokrąglone krawędzie"
 
-#: ../plug-ins/common/mail.c:156
+#: ../plug-ins/common/mail.c:158
 msgid "Send the image by email"
 msgstr "Wysyła obraz przez e-mail"
 
-#: ../plug-ins/common/mail.c:166
+#: ../plug-ins/common/mail.c:168
 msgid "Send by E_mail..."
 msgstr "Wyślij przez e-_mail…"
 
-#: ../plug-ins/common/mail.c:496
+#: ../plug-ins/common/mail.c:498
 msgid "Send by Email"
 msgstr "Wysłanie przez e-mail"
 
-#: ../plug-ins/common/mail.c:501
+#: ../plug-ins/common/mail.c:503
 msgid "_Send"
 msgstr "_Nadawca"
 
-#: ../plug-ins/common/mail.c:533
+#: ../plug-ins/common/mail.c:535
 msgid "_Filename:"
 msgstr "_Nazwa pliku:"
 
-#: ../plug-ins/common/mail.c:547
+#: ../plug-ins/common/mail.c:549
 msgctxt "email-address"
 msgid "_To:"
 msgstr "_Do:"
 
-#: ../plug-ins/common/mail.c:561
+#: ../plug-ins/common/mail.c:563
 msgctxt "email-address"
 msgid "_From:"
 msgstr "O_d:"
 
-#: ../plug-ins/common/mail.c:573
+#: ../plug-ins/common/mail.c:575
 msgid "S_ubject:"
 msgstr "_Temat:"
 
-#: ../plug-ins/common/mail.c:638
+#: ../plug-ins/common/mail.c:640
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "błędne rozszerzenie pliku lub jego brak"
 
-#: ../plug-ins/common/mail.c:822
+#: ../plug-ins/common/mail.c:824
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Nie można uruchomić programu sendmail (%s)"
@@ -6848,26 +6848,26 @@ msgstr "Nieobsługiwana lub nieprawidłowa szerokość maski warstwy: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary maski warstwy: %d×%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1346 ../plug-ins/file-psd/psd-load.c:1748
+#: ../plug-ins/file-psd/psd-load.c:1347 ../plug-ins/file-psd/psd-load.c:1751
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nieobsługiwany tryb kompresji: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1843
+#: ../plug-ins/file-psd/psd-load.c:1846
 msgid "Extra"
 msgstr "Dodatkowe"
 
-#: ../plug-ins/file-psd/psd-load.c:2031
+#: ../plug-ins/file-psd/psd-load.c:2034
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary kanału"
 
-#: ../plug-ins/file-psd/psd-load.c:2100
+#: ../plug-ins/file-psd/psd-load.c:2103
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Dekompresja danych się nie powiodła"
 
-#: ../plug-ins/file-psd/psd-save.c:253
+#: ../plug-ins/file-psd/psd-save.c:291
 #, c-format
 msgid ""
 "Unable to export layer with mode '%s'.  Either the PSD file format or the "
@@ -6877,13 +6877,13 @@ msgstr ""
 "wtyczka eksportowania nie obsługuje go. Zamiast tego zostanie użyty zwykły "
 "tryb."
 
-#: ../plug-ins/file-psd/psd-save.c:503
+#: ../plug-ins/file-psd/psd-save.c:541
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Błąd: nie można konwertować podstawowego typu obrazu programu GIMP na tryb "
 "PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1490
+#: ../plug-ins/file-psd/psd-save.c:1528
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -6892,7 +6892,7 @@ msgstr ""
 "Nie można wyeksportować „%s”. Format pliku PSD nie obsługuje obrazów "
 "większych niż 30000 pikseli wzdłuż lub wszerz."
 
-#: ../plug-ins/file-psd/psd-save.c:1505
+#: ../plug-ins/file-psd/psd-save.c:1543
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7576,7 +7576,7 @@ msgstr "Liczba kolorów:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:925
 msgid "Change the number of colors in the mapping"
-msgstr "Zmienia liczbę mapowanych kolorów"
+msgstr "Zmienia liczbę odwzorowywanych kolorów"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "Use loglog smoothing"
@@ -10163,7 +10163,7 @@ msgstr "_Powiększ do"
 
 #: ../plug-ins/imagemap/imap_menu.c:185
 msgid "_Mapping"
-msgstr "_Mapowanie"
+msgstr "_Odwzorowanie"
 
 #: ../plug-ins/imagemap/imap_menu.c:186
 msgid "Edit Map Info..."
@@ -10626,11 +10626,11 @@ msgstr "_Metaliczny"
 
 #: ../plug-ins/lighting/lighting-ui.c:815
 msgid "E_nable bump mapping"
-msgstr "Mapowanie _wypukłości"
+msgstr "Odwzorowanie _wypukłości"
 
 #: ../plug-ins/lighting/lighting-ui.c:829
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr "Włącza/wyłącza mapowanie wypukłości (głębokość obrazu)"
+msgstr "Włącza/wyłącza odwzorowanie wypukłości (głębokość obrazu)"
 
 #: ../plug-ins/lighting/lighting-ui.c:852
 msgid "Bumpm_ap image:"
@@ -10654,11 +10654,11 @@ msgstr "Maksymalna wysokość wypukłości"
 
 #: ../plug-ins/lighting/lighting-ui.c:907
 msgid "E_nable environment mapping"
-msgstr "Mapowa_nie środowiska"
+msgstr "_Odwzorowanie środowiska"
 
 #: ../plug-ins/lighting/lighting-ui.c:921
 msgid "Enable/disable environment-mapping (reflection)"
-msgstr "Uaktywnia mapowanie środowiska (odbicia)"
+msgstr "Włącza odwzorowanie środowiska (odbicia)"
 
 #: ../plug-ins/lighting/lighting-ui.c:939
 msgid "En_vironment image:"
@@ -11119,77 +11119,89 @@ msgstr "Wystąpił błąd podczas próby wydrukowania:"
 msgid "Printing"
 msgstr "Drukowanie"
 
-#: ../plug-ins/screenshot/screenshot.c:121
+#: ../plug-ins/screenshot/screenshot.c:123
 msgid "Create an image from an area of the screen"
 msgstr "Tworzy obraz z obszaru ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:142
+#: ../plug-ins/screenshot/screenshot.c:144
 msgid "_Screenshot..."
 msgstr "_Zrzut ekranu…"
 
-#: ../plug-ins/screenshot/screenshot.c:408
+#: ../plug-ins/screenshot/screenshot.c:423
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Zrzut ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:417
+#: ../plug-ins/screenshot/screenshot.c:432
 msgid "S_nap"
 msgstr "_Przechwyć"
-
-#: ../plug-ins/screenshot/screenshot.c:447
-msgid "After the delay, the screenshot is taken."
-msgstr "Po podanym czasie zostanie wykonany zrzut ekranu."
-
-#: ../plug-ins/screenshot/screenshot.c:449
-msgid ""
-"After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
-"Po podanym czasie należy przesunąć mysz, aby wybrać obszar dla zrzutu ekranu."
-
-#: ../plug-ins/screenshot/screenshot.c:453
-msgid "Click in a window to snap it after delay."
-msgstr "Należy kliknąć okno do przechwycenia po podanym czasie."
-
-#: ../plug-ins/screenshot/screenshot.c:456
-msgid "At the end of the delay, click in a window to snap it."
-msgstr "Po podanym czasie należy kliknąć okno do przechwycenia."
 
 #. Area
 #: ../plug-ins/screenshot/screenshot.c:462
 msgid "Area"
 msgstr "Obszar"
 
-#: ../plug-ins/screenshot/screenshot.c:473
+#: ../plug-ins/screenshot/screenshot.c:472
 msgid "Take a screenshot of a single _window"
-msgstr "Wykonanie zrzutu ekranu pojedynczego _okna"
+msgstr "Wykonanie zrzutu ekranu pojedynczego o_kna"
 
-#: ../plug-ins/screenshot/screenshot.c:493
+#: ../plug-ins/screenshot/screenshot.c:492
 msgid "Include window _decoration"
 msgstr "Wraz z _dekoracją okna"
 
-#: ../plug-ins/screenshot/screenshot.c:513
+#: ../plug-ins/screenshot/screenshot.c:512
 msgid "Take a screenshot of the entire _screen"
 msgstr "Wykonanie zrzutu całego _ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:533
+#: ../plug-ins/screenshot/screenshot.c:532
 msgid "Include _mouse pointer"
 msgstr "Wraz z kursorem _myszy"
 
-#: ../plug-ins/screenshot/screenshot.c:555
+#: ../plug-ins/screenshot/screenshot.c:554
 msgid "Select a _region to grab"
 msgstr "Wybór _obszaru do przechwycenia"
 
 #. Delay
-#: ../plug-ins/screenshot/screenshot.c:571
+#: ../plug-ins/screenshot/screenshot.c:570
 msgid "Delay"
 msgstr "Opóźnienie"
 
-#. this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:596
+#. translators: this is the unit label of a spinbutton
+#: ../plug-ins/screenshot/screenshot.c:595
 msgid "seconds"
 msgstr "s"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:217
+#: ../plug-ins/screenshot/screenshot.c:604
+msgid "After the delay, the screenshot is taken."
+msgstr "Po podanym czasie zostanie wykonany zrzut ekranu."
+
+#: ../plug-ins/screenshot/screenshot.c:606
+msgid ""
+"After the delay, drag your mouse to select the region for the screenshot."
+msgstr ""
+"Po podanym czasie należy przesunąć mysz, aby wybrać obszar dla zrzutu ekranu."
+
+#: ../plug-ins/screenshot/screenshot.c:610
+msgid "Click in a window to snap it after delay."
+msgstr "Należy kliknąć okno do przechwycenia po podanym czasie."
+
+#: ../plug-ins/screenshot/screenshot.c:613
+msgid "At the end of the delay, click in a window to snap it."
+msgstr "Po podanym czasie należy kliknąć okno do przechwycenia."
+
+#: ../plug-ins/screenshot/screenshot.c:620
+msgid "Color Profile"
+msgstr "Profil kolorów"
+
+#: ../plug-ins/screenshot/screenshot.c:625
+msgid "Tag image with _monitor profile"
+msgstr "O_znaczenie obrazu profilem monitora"
+
+#: ../plug-ins/screenshot/screenshot.c:629
+msgid "Convert image to sR_GB"
+msgstr "Konwersja obrazu do sR_GB"
+
+#: ../plug-ins/screenshot/screenshot-win32.c:244
 msgid "No data captured"
 msgstr "Nie pobrano danych"
 
@@ -11205,7 +11217,7 @@ msgstr "Importowanie zrzutu ekranu"
 msgid "Mouse Pointer"
 msgstr "Kursor myszy"
 
-#: ../plug-ins/screenshot/screenshot-x11.c:611
+#: ../plug-ins/screenshot/screenshot-x11.c:621
 msgid "Specified window not found"
 msgstr "Nie odnaleziono podanego okna"
 
