@@ -509,7 +509,7 @@ compfun_src_atop (gfloat *in,
       if (mask)
         layer_alpha *= *mask;
 
-      if (layer_alpha == 0.0f)
+      if (in[ALPHA] == 0.0f || layer_alpha == 0.0f)
         {
           out[RED]   = in[RED];
           out[GREEN] = in[GREEN];
@@ -609,6 +609,12 @@ compfun_dst_atop (gfloat *in,
           out[RED]   = in[RED];
           out[GREEN] = in[GREEN];
           out[BLUE]  = in[BLUE];
+        }
+      else if (in[ALPHA] == 0.0f)
+        {
+          out[RED]   = layer[RED];
+          out[GREEN] = layer[GREEN];
+          out[BLUE]  = layer[BLUE];
         }
       else
         {
@@ -713,7 +719,7 @@ compfun_src_atop_sse2 (gfloat *in,
             alpha = alpha * _mm_set1_ps (*mask++);
           }
 
-        if (_mm_ucomigt_ss (alpha, _mm_setzero_ps ()))
+        if (rgba_in[ALPHA] != 0.0f && _mm_ucomineq_ss (alpha, _mm_setzero_ps ()))
           {
             __v4sf out_pixel, out_pixel_rbaa, out_alpha;
 
