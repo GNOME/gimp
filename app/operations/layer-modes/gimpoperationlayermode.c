@@ -547,12 +547,13 @@ compfun_src_over (gfloat *in,
   while (samples--)
     {
       gfloat new_alpha;
+      gfloat in_alpha    = in[ALPHA];
       gfloat layer_alpha = layer[ALPHA] * opacity;
 
       if (mask)
         layer_alpha *= *mask;
 
-      new_alpha = layer_alpha + (1.0f - layer_alpha) * in[ALPHA];
+      new_alpha = layer_alpha + (1.0f - layer_alpha) * in_alpha;
 
       if (layer_alpha == 0.0f || new_alpha == 0.0f)
         {
@@ -560,13 +561,19 @@ compfun_src_over (gfloat *in,
           out[GREEN] = in[GREEN];
           out[BLUE]  = in[BLUE];
         }
+      else if (in_alpha == 0.0f)
+        {
+          out[RED]   = layer[RED];
+          out[GREEN] = layer[GREEN];
+          out[BLUE]  = layer[BLUE];
+        }
       else
         {
           gfloat ratio = layer_alpha / new_alpha;
           gint   b;
 
           for (b = RED; b < ALPHA; b++)
-            out[b] = ratio * (in[ALPHA] * (comp[b] - layer[b]) + layer[b] - in[b]) + in[b];
+            out[b] = ratio * (in_alpha * (comp[b] - layer[b]) + layer[b] - in[b]) + in[b];
         }
 
       out[ALPHA] = new_alpha;
