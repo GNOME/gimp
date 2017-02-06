@@ -566,12 +566,10 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   GtkWidget   *vbox;
   GtkWidget   *table;
   GtkWidget   *hbox;
-  GtkWidget   *button;
-  GtkWidget   *image;
   GtkWidget   *scale;
   GtkWidget   *vbox2;
   const gchar *label;
-  gint          x, y;
+  gint         x, y;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
@@ -583,6 +581,8 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
+
+  /* matrix */
 
   table = gtk_table_new (5, 5, TRUE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -608,93 +608,83 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
         }
     }
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  /* rotate / flip buttons */
+  {
+    typedef struct
+    {
+      const gchar *tooltip;
+      const gchar *icon_name;
+      gint         rotate;
+      gint         flip;
+    } ButtonInfo;
 
-  button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_set_tooltip_text (button,
-                               _("Rotate matrix 90° counter-clockwise"));
-  gtk_widget_set_can_focus (button, FALSE);
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_widget_show (button);
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_ROTATE_270,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+    gint       i;
+    const ButtonInfo buttons[] = {
+      {
+        .tooltip   = _("Rotate matrix 90° counter-clockwise"),
+        .icon_name = GIMP_STOCK_ROTATE_270,
+        .rotate    = 1,
+        .flip      = 0
+      },
+      {
+        .tooltip   = _("Rotate matrix 90° clockwise"),
+        .icon_name = GIMP_STOCK_ROTATE_90,
+        .rotate    = 3,
+        .flip      = 0
+      },
+      {
+        .tooltip   = _("Flip matrix horizontally"),
+        .icon_name = GIMP_STOCK_FLIP_HORIZONTAL,
+        .rotate    = 0,
+        .flip      = 1
+      },
+      {
+        .tooltip   = _("Flip matrix vertically"),
+        .icon_name = GIMP_STOCK_FLIP_VERTICAL,
+        .rotate    = 2,
+        .flip      = 1
+      }};
 
-  g_object_set_data (G_OBJECT (button),
-                     "convolution-matrix-rotate", GINT_TO_POINTER (1));
-  g_object_set_data (G_OBJECT (button),
-                     "convolution-matrix-flip",   GINT_TO_POINTER (0));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (convolution_matrix_rotate_flip),
-                    config);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+    gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbox);
 
-  button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_set_tooltip_text (button,
-                               _("Rotate matrix 90° clockwise"));
-  gtk_widget_set_can_focus (button, FALSE);
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_widget_show (button);
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_ROTATE_90,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+    for (i = 0; i < G_N_ELEMENTS (buttons); i++)
+      {
+        const ButtonInfo *info = &buttons[i];
+        GtkWidget        *button;
+        GtkWidget        *image;
 
-  g_object_set_data (G_OBJECT (button),
-                     "convolution-matrix-rotate", GINT_TO_POINTER (3));
-  g_object_set_data (G_OBJECT (button),
-                     "convolution-matrix-flip",   GINT_TO_POINTER (0));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (convolution_matrix_rotate_flip),
-                    config);
+        button = gtk_button_new ();
+        gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+        gtk_widget_set_tooltip_text (button, info->tooltip);
+        gtk_widget_set_can_focus (button, FALSE);
+        gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+        gtk_widget_show (button);
 
-  button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_set_tooltip_text (button,
-                               _("Flip matrix horizontally"));
-  gtk_widget_set_can_focus (button, FALSE);
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_widget_show (button);
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_FLIP_HORIZONTAL,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
+        image = gtk_image_new_from_icon_name (info->icon_name,
+                                              GTK_ICON_SIZE_BUTTON);
+        gtk_container_add (GTK_CONTAINER (button), image);
+        gtk_widget_show (image);
 
-  g_object_set_data (G_OBJECT (button),
-                     "convolution-matrix-rotate", GINT_TO_POINTER (0));
-  g_object_set_data (G_OBJECT (button),
-                     "convolution-matrix-flip",   GINT_TO_POINTER (1));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (convolution_matrix_rotate_flip),
-                    config);
+        g_object_set_data (G_OBJECT (button),
+                           "convolution-matrix-rotate",
+                           GINT_TO_POINTER (info->rotate));
+        g_object_set_data (G_OBJECT (button),
+                           "convolution-matrix-flip",
+                           GINT_TO_POINTER (info->flip));
 
-  button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_set_tooltip_text (button,
-                               _("Flip matrix vertically"));
-  gtk_widget_set_can_focus (button, FALSE);
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_widget_show (button);
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_FLIP_VERTICAL,
-                                        GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  g_object_set_data (G_OBJECT (button),
-                     "convolution-matrix-rotate", GINT_TO_POINTER (2));
-  g_object_set_data (G_OBJECT (button),
-                     "convolution-matrix-flip",   GINT_TO_POINTER (1));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (convolution_matrix_rotate_flip),
-                    config);
+        g_signal_connect (button, "clicked",
+                          G_CALLBACK (convolution_matrix_rotate_flip),
+                          config);
+      }
+  }
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
+
+  /* divisor / offset spin scales */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
@@ -710,6 +700,8 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
                                 area, context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
+
+  /* rest of the properties */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
