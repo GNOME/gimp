@@ -579,7 +579,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   /* matrix */
@@ -587,7 +587,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   table = gtk_table_new (5, 5, TRUE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   for (y = 0; y < 5; y++)
@@ -618,7 +618,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
       gint         flip;
     } ButtonInfo;
 
-    gint       i;
+    gint             i;
     const ButtonInfo buttons[] = {
       {
         .tooltip   = _("Rotate matrix 90° counter-clockwise"),
