@@ -144,8 +144,6 @@ gimp_layer_mode_combo_box_init (GimpLayerModeComboBox *combo)
                                              GIMP_TYPE_LAYER_MODE_COMBO_BOX,
                                              GimpLayerModeComboBoxPrivate);
 
-  gimp_layer_mode_combo_box_update_model (combo, FALSE);
-
   gtk_combo_box_set_row_separator_func (GTK_COMBO_BOX (combo),
                                         gimp_layer_mode_combo_box_separator_func,
                                         GINT_TO_POINTER (-1),
@@ -158,6 +156,8 @@ gimp_layer_mode_combo_box_constructed (GObject *object)
   GimpLayerModeComboBox *combo = GIMP_LAYER_MODE_COMBO_BOX (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_layer_mode_combo_box_update_model (combo, FALSE);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  combo->priv->layer_mode);
