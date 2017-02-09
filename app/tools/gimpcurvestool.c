@@ -125,7 +125,9 @@ static gboolean   curves_menu_sensitivity          (gint                  value,
 static void       curves_curve_type_callback       (GtkWidget            *widget,
                                                     GimpCurvesTool       *tool);
 
-static const GimpRGB * curves_get_channel_color    (GimpHistogramChannel  channel);
+static gboolean   curves_get_channel_color         (GtkWidget            *widget,
+                                                    GimpHistogramChannel  channel,
+                                                    GimpRGB              *color);
 
 
 G_DEFINE_TYPE (GimpCurvesTool, gimp_curves_tool, GIMP_TYPE_FILTER_TOOL)
@@ -751,16 +753,21 @@ gimp_curves_tool_update_channel (GimpCurvesTool *tool)
        channel <= GIMP_HISTOGRAM_ALPHA;
        channel++)
     {
+      GimpRGB  curve_color;
+      gboolean has_color;
+
+      has_color = curves_get_channel_color (tool->graph, channel, &curve_color);
+
       if (channel == config->channel)
         {
           gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph), curve,
-                                     curves_get_channel_color (channel));
+                                     has_color ? &curve_color : NULL);
         }
       else
         {
           gimp_curve_view_add_background (GIMP_CURVE_VIEW (tool->graph),
                                           config->curve[channel],
-                                          curves_get_channel_color (channel));
+                                          has_color ? &curve_color : NULL);
         }
     }
 
@@ -867,8 +874,10 @@ curves_curve_type_callback (GtkWidget      *widget,
     }
 }
 
-static const GimpRGB *
-curves_get_channel_color (GimpHistogramChannel channel)
+static gboolean
+curves_get_channel_color (GtkWidget            *widget,
+                          GimpHistogramChannel  channel,
+                          GimpRGB              *color)
 {
   static const GimpRGB channel_colors[GIMP_HISTOGRAM_RGB] =
   {
@@ -880,7 +889,20 @@ curves_get_channel_color (GimpHistogramChannel channel)
   };
 
   if (channel == GIMP_HISTOGRAM_VALUE)
-    return NULL;
+    return FALSE;
 
-  return &channel_colors[channel];
+  if (channel == GIMP_HISTOGRAM_ALPHA)
+    {
+      GtkStyle *style = gtk_widget_get_style (widget);
+
+      gimp_rgba_set (color,
+                     style->text_aa[GTK_STATE_NORMAL].red / 65535.0,
+                     style->text_aa[GTK_STATE_NORMAL].green / 65535.0,
+                     style->text_aa[GTK_STATE_NORMAL].blue / 65535.0,
+                     1.0);
+      return TRUE;
+    }
+
+  *color = channel_colors[channel];
+  return TRUE;
 }
