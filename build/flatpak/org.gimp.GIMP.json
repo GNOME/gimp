@@ -265,6 +265,11 @@
             "name": "webkitgtk",
             "config-opts": [ "--with-gtk=2.0", "--disable-webkit2", "--disable-geolocation", "--disable-video",
                              "--disable-spellcheck", "--disable-credential-storage", "--disable-web-audio" ],
+            "build-options" : {
+                "env": {
+                    "PYTHON": "/usr/bin/python3"
+                }
+            },
             "cleanup": [ "/share/doc", "/bin" ],
             "sources": [
                 {
