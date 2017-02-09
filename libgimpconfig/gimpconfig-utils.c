@@ -266,7 +266,6 @@ gimp_config_reset_properties (GObject *object)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
-  GValue         value = G_VALUE_INIT;
   guint          n_property_specs;
   guint          i;
 
@@ -283,6 +282,7 @@ gimp_config_reset_properties (GObject *object)
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec;
+      GValue      value = G_VALUE_INIT;
 
       prop_spec = property_specs[i];
 
@@ -307,12 +307,22 @@ gimp_config_reset_properties (GObject *object)
             }
           else
             {
-              g_value_init (&value, prop_spec->value_type);
-              g_param_value_set_default (prop_spec, &value);
+              GValue default_value = G_VALUE_INIT;
 
-              g_object_set_property (object, prop_spec->name, &value);
+              g_value_init (&default_value, prop_spec->value_type);
+              g_value_init (&value,         prop_spec->value_type);
+
+              g_param_value_set_default (prop_spec, &default_value);
+              g_object_get_property (object, prop_spec->name, &value);
+
+              if (g_param_values_cmp (prop_spec, &default_value, &value))
+                {
+                  g_object_set_property (object, prop_spec->name,
+                                         &default_value);
+                }
 
               g_value_unset (&value);
+              g_value_unset (&default_value);
             }
         }
     }
