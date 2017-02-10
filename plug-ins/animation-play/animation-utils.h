@@ -49,8 +49,10 @@ void         show_scrolled_child (GtkScrolledWindow *window,
                                   GtkWidget         *child);
 
 void         hide_item           (gint               item,
-                                  gboolean           recursive);
-void         show_item           (gint               item);
+                                  gboolean           recursive,
+                                  gboolean           reset_color_tag);
+void         show_item           (gint               item,
+                                  gint32             color_tag);
 
 #endif  /*  __ANIMATION_UTILS_H__  */
 

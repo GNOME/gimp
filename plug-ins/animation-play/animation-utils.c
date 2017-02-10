@@ -278,9 +278,12 @@ show_scrolled_child (GtkScrolledWindow *window,
 
 void
 hide_item (gint     item,
-           gboolean recursive)
+           gboolean recursive,
+           gboolean reset_tag)
 {
   gimp_item_set_visible (item, FALSE);
+  if (reset_tag)
+    gimp_item_set_color_tag (item, GIMP_COLOR_TAG_NONE);
 
   if (recursive && gimp_item_is_group (item))
     {
@@ -292,19 +295,23 @@ hide_item (gint     item,
 
       for (i = 0; i < n_children; i++)
         {
-          hide_item (children[i], TRUE);
+          hide_item (children[i], TRUE, reset_tag);
         }
     }
 }
 
 void
-show_item (gint item)
+show_item (gint   item,
+           gint32 color_tag)
 {
   gint32 parent;
 
   gimp_item_set_visible (item, TRUE);
-  parent = gimp_item_get_parent (item);
+  if (color_tag >= 0)
+    gimp_item_set_color_tag (item, color_tag);
 
+  /* Show the parent as well, but do not update its color tag. */
+  parent = gimp_item_get_parent (item);
   if (parent > 0)
-    show_item (parent);
+    show_item (parent, -1);
 }

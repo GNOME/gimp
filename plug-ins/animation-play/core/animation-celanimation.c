@@ -979,7 +979,7 @@ animation_cel_animation_update_paint_view (Animation *animation,
   layers = gimp_image_get_layers (image_id, &num_layers);
   for (i = 0; i < num_layers; i++)
     {
-      hide_item (layers[i], TRUE);
+      hide_item (layers[i], TRUE, TRUE);
     }
 
   /* Show layers */
@@ -998,7 +998,7 @@ animation_cel_animation_update_paint_view (Animation *animation,
 
           layer = gimp_image_get_layer_by_tattoo (image_id, tattoo);
 
-          show_item (layer);
+          show_item (layer, GIMP_COLOR_TAG_RED);
         }
     }
 }
