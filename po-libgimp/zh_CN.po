@@ -3,39 +3,41 @@
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
 # 神州散人 <kappa8086@gmail.com>, 2008.
 # YunQiang Su <wzssyqa@gmail.com>, 2011.
+# Jeff Bai <jeffbai@aosc.xyz>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-04-06 18:21+0000\n"
-"PO-Revision-Date: 2011-04-12 23:07+0800\n"
-"Last-Translator: YunQiang Su <wzssyqa@gmail.com>\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2016-08-22 21:48+0000\n"
+"PO-Revision-Date: 2015-11-11 12:44-0700\n"
+"Last-Translator: Jeff Bai <jeffbai@aosc.xyz>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1080
+#: ../libgimp/gimp.c:1141
 msgid "success"
 msgstr "成功"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1084
+#: ../libgimp/gimp.c:1145
 msgid "execution error"
 msgstr "执行错误"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1088
+#: ../libgimp/gimp.c:1149
 msgid "calling error"
 msgstr "调用错误"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1092
+#: ../libgimp/gimp.c:1153
 msgid "cancelled"
 msgstr "已取消"
 
@@ -178,7 +180,7 @@ msgstr "导出文件"
 msgid "_Ignore"
 msgstr "忽略(_I)"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:989
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
 msgid "_Export"
 msgstr "导出(_E)"
 
@@ -195,7 +197,7 @@ msgstr "您的图像在保存为 %s 之前应该先进行导出，因为："
 msgid "The export conversion won't modify your original image."
 msgstr "导出转换不会改变您原来的图像。"
 
-#: ../libgimp/gimpexport.c:725
+#: ../libgimp/gimpexport.c:729
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -204,7 +206,7 @@ msgstr ""
 "您将要把图层蒙板保存为 %s。\n"
 "这将不会保存可见的图层。"
 
-#: ../libgimp/gimpexport.c:731
+#: ../libgimp/gimpexport.c:735
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -213,7 +215,7 @@ msgstr ""
 "您将要把通道(已保存的选区)保存为 %s。\n"
 "这将不会保存可见的图层。"
 
-#: ../libgimp/gimpexport.c:980
+#: ../libgimp/gimpexport.c:1004
 msgid "Export Image as "
 msgstr "图像导出为"
 
@@ -229,7 +231,10 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "渐变选择"
 
-#: ../libgimp/gimpmenu.c:459 ../libgimpwidgets/gimpintstore.c:238
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
+#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:259
 msgid "(Empty)"
 msgstr "(空)"
 
@@ -351,7 +356,7 @@ msgstr "日期："
 msgid "Copyright:"
 msgstr "版权："
 
-#: ../libgimp/gimpunitcache.c:56
+#: ../libgimp/gimpunitcache.c:54
 msgid "percent"
 msgstr "百分点"
 
@@ -881,9 +886,9 @@ msgid "Filled"
 msgstr "填充"
 
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
-#: ../modules/color-selector-cmyk-lcms.c:424
-#: ../modules/color-selector-cmyk-lcms.c:430
-#: ../modules/display-filter-lcms.c:178
+#: ../modules/color-selector-cmyk-lcms.c:458
+#: ../modules/color-selector-cmyk-lcms.c:485
+#: ../modules/display-filter-lcms.c:230 ../modules/display-filter-lcms.c:239
 msgid "(invalid UTF-8 string)"
 msgstr "(无效的 UTF-8 字符串)"
 
@@ -894,15 +899,15 @@ msgstr "(无效的 UTF-8 字符串)"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "Mode of operation for color management."
 msgstr "颜色管理的操作模式。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile of your (primary) monitor."
 msgstr "您(主要)显示器的色彩配置文件"
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -911,35 +916,35 @@ msgstr ""
 "当启用时，GIMP 将试图使用窗口系统显示色彩配置文件。这样已设置好的配置文件将只"
 "用来作为后备。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: ../libgimpconfig/gimpcolorconfig.c:60
 msgid "The default RGB working space color profile."
 msgstr "默认 RGB 工作空间颜色配置文件。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK 颜色配置文件用来在 RGB 和 CMYK 之间转换。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:62
+#: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "用于模拟打印版本的色彩配置文件(软式打样)。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libgimpconfig/gimpcolorconfig.c:66
 msgid "Sets how colors are mapped for your display."
 msgstr "设定色彩如何映射到您的显示器。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:66
+#: ../libgimpconfig/gimpcolorconfig.c:68
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr "设定色彩如何从 RGB 工作空间转换到打印仿真设备。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:69
+#: ../libgimpconfig/gimpcolorconfig.c:71
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
 msgstr "如果启用，打印模拟将标记出不能在目标色彩空间表示的颜色。"
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:74
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "用于标记超过色域的色彩的颜色。"
 
@@ -978,40 +983,40 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "绝对色度"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:105
+#: ../libgimpconfig/gimpconfig-deserialize.c:109
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s 的值不是有效的 UTF-8 字符串"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:444
+#: ../libgimpconfig/gimpconfig-deserialize.c:451
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "期待布尔值 %s 为 “yes” 或 “no”，但得到 “%s”"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:518
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "%2$s 的值 “%1$s” 无效"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:533
+#: ../libgimpconfig/gimpconfig-deserialize.c:540
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "%2$s 的值 “%1$ld” 无效"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:602
+#: ../libgimpconfig/gimpconfig-deserialize.c:609
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "解析 “%s” 时：%s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:506
-#: ../libgimpconfig/gimpscanner.c:587
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
+#: ../libgimpconfig/gimpscanner.c:641
 #: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "严重解析错误"
 
-#: ../libgimpconfig/gimpconfig-path.c:387
+#: ../libgimpconfig/gimpconfig-path.c:389
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "无法扩展 ${%s}"
@@ -1056,12 +1061,18 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "无法创建“%s”：%s"
 
-#: ../libgimpconfig/gimpscanner.c:263
+#: ../libgimpconfig/gimpscanner.c:268
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "无效的 UTF-8 字符串"
 
-#: ../libgimpconfig/gimpscanner.c:614
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpscanner.c:431
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token, got '%s'"
+msgstr "期待布尔值为 “yes” 或 “no”，但得到 “%s”"
+
+#: ../libgimpconfig/gimpscanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "解析 “%s” 第 %d 行时出错：%s"
@@ -1089,7 +1100,7 @@ msgstr "加载失败"
 msgid "Not loaded"
 msgstr "未加载"
 
-#: ../libgimpthumb/gimpthumb-utils.c:131
+#: ../libgimpthumb/gimpthumb-utils.c:153
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1098,7 +1109,7 @@ msgstr ""
 "无法确定有效的主目录。\n"
 "将缩略图改放在临时文件的目录(%s)中。"
 
-#: ../libgimpthumb/gimpthumb-utils.c:255 ../libgimpthumb/gimpthumb-utils.c:323
+#: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "无法创建缩略图文件夹“%s”。"
@@ -1108,7 +1119,7 @@ msgstr "无法创建缩略图文件夹“%s”。"
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "缩略图没有包含 Thumb::URI 标签"
 
-#: ../libgimpthumb/gimpthumbnail.c:904
+#: ../libgimpthumb/gimpthumbnail.c:905
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "无法为 “%s” 创建缩略图：%s"
@@ -1117,19 +1128,19 @@ msgstr "无法为 “%s” 创建缩略图：%s"
 msgid "_Search:"
 msgstr "搜索(_S)："
 
-#: ../libgimpwidgets/gimpcolorbutton.c:134
+#: ../libgimpwidgets/gimpcolorbutton.c:135
 msgid "_Foreground Color"
 msgstr "前景色(_F)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:138
+#: ../libgimpwidgets/gimpcolorbutton.c:139
 msgid "_Background Color"
 msgstr "背景色(_B)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:142
+#: ../libgimpwidgets/gimpcolorbutton.c:143
 msgid "Blac_k"
 msgstr "黑(_K)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:146
+#: ../libgimpwidgets/gimpcolorbutton.c:147
 msgid "_White"
 msgstr "白(_W)"
 
@@ -1146,37 +1157,37 @@ msgstr "无"
 msgid "Scales"
 msgstr "缩放"
 
-#: ../libgimpwidgets/gimpcolorselection.c:217
+#: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
 msgstr "当前："
 
-#: ../libgimpwidgets/gimpcolorselection.c:226
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr "旧的："
 
-#: ../libgimpwidgets/gimpcolorselection.c:311
+#: ../libgimpwidgets/gimpcolorselection.c:318
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr "HTML 和 CSS 中所使用的十六进制颜色格式。此处也允许使用 CSS 色彩名。"
 
-#: ../libgimpwidgets/gimpcolorselection.c:317
+#: ../libgimpwidgets/gimpcolorselection.c:324
 msgid "HTML _notation:"
 msgstr "HTML 格式(_N)："
 
-#: ../libgimpwidgets/gimpfileentry.c:197
+#: ../libgimpwidgets/gimpfileentry.c:200
 msgid "Open a file selector to browse your folders"
 msgstr "打开一个文件选择器以浏览您的文件夹"
 
-#: ../libgimpwidgets/gimpfileentry.c:198
+#: ../libgimpwidgets/gimpfileentry.c:201
 msgid "Open a file selector to browse your files"
 msgstr "打开一个文件选择器以浏览您的文件"
 
-#: ../libgimpwidgets/gimpfileentry.c:358
+#: ../libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
 msgstr "选择文件夹"
 
-#: ../libgimpwidgets/gimpfileentry.c:360
+#: ../libgimpwidgets/gimpfileentry.c:363
 msgid "Select File"
 msgstr "选择文件"
 
@@ -1184,73 +1195,69 @@ msgstr "选择文件"
 msgid "Press F1 for more help"
 msgstr "按 F1 以获得更多帮助"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:217
+#: ../libgimpwidgets/gimpmemsizeentry.c:220
 msgid "Kilobytes"
 msgstr "KB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:218
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Megabytes"
 msgstr "MB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:219
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
 msgid "Gigabytes"
 msgstr "GB"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:278
-#: ../libgimpwidgets/gimppageselector.c:1174
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1067
 msgid "Nothing selected"
 msgstr "未选中"
 
-#: ../libgimpwidgets/gimppageselector.c:296
+#: ../libgimpwidgets/gimppageselector.c:287
 msgid "Select _All"
 msgstr "全部选中(_A)"
 
-#: ../libgimpwidgets/gimppageselector.c:316
+#: ../libgimpwidgets/gimppageselector.c:307
 msgid "Select _range:"
 msgstr "选择范围(_R)："
 
-#: ../libgimpwidgets/gimppageselector.c:328
+#: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
 msgstr "打开页面为(_P)..."
 
-#: ../libgimpwidgets/gimppageselector.c:429
-msgid "Page 000"
-msgstr "第 000 页"
-
-#: ../libgimpwidgets/gimppageselector.c:517
-#: ../libgimpwidgets/gimppageselector.c:754
+#: ../libgimpwidgets/gimppageselector.c:449
+#: ../libgimpwidgets/gimppageselector.c:647
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
 
-#: ../libgimpwidgets/gimppageselector.c:1179
+#: ../libgimpwidgets/gimppageselector.c:1072
 msgid "One page selected"
 msgstr "已选中一页"
 
-#: ../libgimpwidgets/gimppageselector.c:1186
-#: ../libgimpwidgets/gimppageselector.c:1190
+#: ../libgimpwidgets/gimppageselector.c:1079
+#: ../libgimpwidgets/gimppageselector.c:1083
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "已选中 %d 页"
 
-#: ../libgimpwidgets/gimppatheditor.c:234
+#: ../libgimpwidgets/gimppatheditor.c:239
 msgid "Writable"
 msgstr "可写"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#: ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "文件夹"
 
-#: ../libgimpwidgets/gimppickbutton.c:127
+#: ../libgimpwidgets/gimppickbutton.c:130
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr "点击滴管，然后点击您的屏幕上任何位置的颜色即可选取该颜色。"
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:287
+#: ../libgimpwidgets/gimppreview.c:290
 msgid "_Preview"
 msgstr "预览(_P)"
 
@@ -1262,7 +1269,7 @@ msgstr "方格大小"
 msgid "Check Style"
 msgstr "方格风格"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1875
+#: ../libgimpwidgets/gimppropwidgets.c:1878
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1340,37 +1347,37 @@ msgstr "旋转(_R)"
 msgid "_Shear"
 msgstr "切变(_S)"
 
-#: ../libgimpwidgets/gimpunitmenu.c:261
+#: ../libgimpwidgets/gimpunitmenu.c:264
 msgid "More..."
 msgstr "更多..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:487
+#: ../libgimpwidgets/gimpunitmenu.c:490
 msgid "Unit Selection"
 msgstr "单位选择"
 
-#: ../libgimpwidgets/gimpunitmenu.c:536
+#: ../libgimpwidgets/gimpunitmenu.c:539
 msgid "Unit"
 msgstr "单位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:540
+#: ../libgimpwidgets/gimpunitmenu.c:543
 msgid "Factor"
 msgstr "因子"
 
-#: ../libgimpwidgets/gimpwidgets.c:521
+#: ../libgimpwidgets/gimpwidgets.c:516
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr "使用这个值作为随机数生成种子 - 这将允许您重复一个指定的“随机”操作"
 
-#: ../libgimpwidgets/gimpwidgets.c:525
+#: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
 msgstr "新种子(_N)"
 
-#: ../libgimpwidgets/gimpwidgets.c:538
+#: ../libgimpwidgets/gimpwidgets.c:533
 msgid "Seed random number generator with a generated random number"
 msgstr "以生成的随机数作为随机数生成器的种子"
 
-#: ../libgimpwidgets/gimpwidgets.c:542
+#: ../libgimpwidgets/gimpwidgets.c:537
 msgid "_Randomize"
 msgstr "随机(_R)"
 
@@ -1487,64 +1494,64 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "缩小"
 
-#: ../modules/color-selector-cmyk-lcms.c:86
+#: ../modules/color-selector-cmyk-lcms.c:91
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK 颜色选择器(使用颜色配置文件)"
 
-#: ../modules/color-selector-cmyk-lcms.c:149
+#: ../modules/color-selector-cmyk-lcms.c:154
 #: ../modules/color-selector-cmyk.c:101
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:168
+#: ../modules/color-selector-cmyk-lcms.c:175
 #: ../modules/color-selector-cmyk.c:124
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:170
+#: ../modules/color-selector-cmyk-lcms.c:177
 #: ../modules/color-selector-cmyk.c:126
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:172
+#: ../modules/color-selector-cmyk-lcms.c:179
 #: ../modules/color-selector-cmyk.c:128
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:174
+#: ../modules/color-selector-cmyk-lcms.c:181
 #: ../modules/color-selector-cmyk.c:130
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:178
+#: ../modules/color-selector-cmyk-lcms.c:185
 #: ../modules/color-selector-cmyk.c:134
 msgid "Cyan"
 msgstr "青色"
 
-#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk-lcms.c:186
 #: ../modules/color-selector-cmyk.c:135
 msgid "Magenta"
 msgstr "品红"
 
-#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk-lcms.c:187
 #: ../modules/color-selector-cmyk.c:136
 msgid "Yellow"
 msgstr "黄色"
 
-#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk-lcms.c:188
 #: ../modules/color-selector-cmyk.c:137
 msgid "Black"
 msgstr "黑色"
 
-#: ../modules/color-selector-cmyk-lcms.c:412
+#: ../modules/color-selector-cmyk-lcms.c:425
 msgid "Profile: (none)"
 msgstr "配置文件：(无)"
 
-#: ../modules/color-selector-cmyk-lcms.c:433
+#: ../modules/color-selector-cmyk-lcms.c:488
 #, c-format
 msgid "Profile: %s"
 msgstr "配置文件：%s"
@@ -1573,11 +1580,11 @@ msgstr "水彩"
 msgid "Pressure"
 msgstr "压力"
 
-#: ../modules/color-selector-wheel.c:71
+#: ../modules/color-selector-wheel.c:69
 msgid "HSV color wheel"
 msgstr "HSV 色轮"
 
-#: ../modules/color-selector-wheel.c:102
+#: ../modules/color-selector-wheel.c:101
 msgid "Wheel"
 msgstr "轮"
 
@@ -1598,112 +1605,106 @@ msgstr "要读取 DirectInput 事件的设备。"
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller-dx-dinput.c:419
+#: ../modules/controller-dx-dinput.c:418
 #, c-format
 msgid "Button %d"
 msgstr "按钮 %d"
 
-#: ../modules/controller-dx-dinput.c:422
+#: ../modules/controller-dx-dinput.c:421
 #, c-format
 msgid "Button %d Press"
 msgstr "按钮 %d 按下"
 
-#: ../modules/controller-dx-dinput.c:425
+#: ../modules/controller-dx-dinput.c:424
 #, c-format
 msgid "Button %d Release"
 msgstr "按钮 %d 释放"
 
-#: ../modules/controller-dx-dinput.c:442
-#: ../modules/controller-linux-input.c:89
+#: ../modules/controller-dx-dinput.c:441 ../modules/controller-linux-input.c:89
 msgid "X Move Left"
 msgstr "X 左移"
 
-#: ../modules/controller-dx-dinput.c:445
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:444 ../modules/controller-linux-input.c:90
 msgid "X Move Right"
 msgstr "X 右移"
 
-#: ../modules/controller-dx-dinput.c:451
+#: ../modules/controller-dx-dinput.c:450
 msgid "Y Move Away"
 msgstr "Y 移开"
 
-#: ../modules/controller-dx-dinput.c:454
+#: ../modules/controller-dx-dinput.c:453
 msgid "Y Move Near"
 msgstr "Y 移近"
 
-#: ../modules/controller-dx-dinput.c:460
-#: ../modules/controller-linux-input.c:93
+#: ../modules/controller-dx-dinput.c:459 ../modules/controller-linux-input.c:93
 msgid "Z Move Up"
 msgstr "Z 上移"
 
-#: ../modules/controller-dx-dinput.c:463
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:462 ../modules/controller-linux-input.c:94
 msgid "Z Move Down"
 msgstr "Z 下移"
 
-#: ../modules/controller-dx-dinput.c:469
+#: ../modules/controller-dx-dinput.c:468
 msgid "X Axis Tilt Away"
 msgstr "X 轴推开"
 
-#: ../modules/controller-dx-dinput.c:472
+#: ../modules/controller-dx-dinput.c:471
 msgid "X Axis Tilt Near"
 msgstr "X 轴拉近"
 
-#: ../modules/controller-dx-dinput.c:478
-#: ../modules/controller-linux-input.c:98
+#: ../modules/controller-dx-dinput.c:477 ../modules/controller-linux-input.c:98
 msgid "Y Axis Tilt Right"
 msgstr "Y 轴向右摇动"
 
-#: ../modules/controller-dx-dinput.c:481
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:480 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Left"
 msgstr "Y 轴向左摇动"
 
-#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-dx-dinput.c:486
 #: ../modules/controller-linux-input.c:100
 msgid "Z Axis Turn Left"
 msgstr "Z 轴向左转"
 
-#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-dx-dinput.c:489
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Right"
 msgstr "Z 轴向右转"
 
-#: ../modules/controller-dx-dinput.c:501
+#: ../modules/controller-dx-dinput.c:500
 #, c-format
 msgid "Slider %d Increase"
 msgstr "滑块 %d 增加"
 
-#: ../modules/controller-dx-dinput.c:504
+#: ../modules/controller-dx-dinput.c:503
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "滑块 %d 减少"
 
-#: ../modules/controller-dx-dinput.c:514
+#: ../modules/controller-dx-dinput.c:513
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X 视图"
 
-#: ../modules/controller-dx-dinput.c:517
+#: ../modules/controller-dx-dinput.c:516
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y 视图"
 
-#: ../modules/controller-dx-dinput.c:520
+#: ../modules/controller-dx-dinput.c:519
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d 返回"
 
-#: ../modules/controller-dx-dinput.c:1082
+#: ../modules/controller-dx-dinput.c:1081
 msgid "DirectInput Events"
 msgstr "DirectInput 事件"
 
-#: ../modules/controller-dx-dinput.c:1093
+#: ../modules/controller-dx-dinput.c:1092
 #: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "未配置设备"
 
-#: ../modules/controller-dx-dinput.c:1118
+#: ../modules/controller-dx-dinput.c:1117
 #: ../modules/controller-linux-input.c:587
 msgid "Device not available"
 msgstr "设备不可用"
@@ -1922,116 +1923,119 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI 输入控制器"
 
-#: ../modules/display-filter-color-blind.c:66
+#: ../modules/display-filter-color-blind.c:67
 msgid "Protanopia (insensitivity to red)"
 msgstr "红色盲(对红色不敏感)"
 
-#: ../modules/display-filter-color-blind.c:68
+#: ../modules/display-filter-color-blind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "绿色盲(对绿色不敏感)"
 
-#: ../modules/display-filter-color-blind.c:70
+#: ../modules/display-filter-color-blind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "蓝色盲(对蓝色不敏感)"
 
-#: ../modules/display-filter-color-blind.c:193
+#: ../modules/display-filter-color-blind.c:194
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "色彩缺失模拟滤镜(Brettel-Vienot-Mollon 算法)"
 
-#: ../modules/display-filter-color-blind.c:256
+#: ../modules/display-filter-color-blind.c:257
 msgid "Color Deficient Vision"
 msgstr "视觉色彩缺失"
 
-#: ../modules/display-filter-color-blind.c:485
+#: ../modules/display-filter-color-blind.c:486
 msgid "Color _deficiency type:"
 msgstr "色彩缺失类型(_D)："
 
-#: ../modules/display-filter-gamma.c:85
+#: ../modules/display-filter-gamma.c:86
 msgid "Gamma color display filter"
 msgstr "Gamma 颜色显示滤镜"
 
-#: ../modules/display-filter-gamma.c:124
+#: ../modules/display-filter-gamma.c:125
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-gamma.c:236
+#: ../modules/display-filter-gamma.c:237
 msgid "_Gamma:"
 msgstr "_Gamma："
 
-#: ../modules/display-filter-high-contrast.c:85
+#: ../modules/display-filter-high-contrast.c:86
 msgid "High Contrast color display filter"
 msgstr "高对比度颜色显示滤镜"
 
-#: ../modules/display-filter-high-contrast.c:124
+#: ../modules/display-filter-high-contrast.c:125
 msgid "Contrast"
 msgstr "对比度"
 
-#: ../modules/display-filter-high-contrast.c:236
+#: ../modules/display-filter-high-contrast.c:237
 msgid "Contrast c_ycles:"
 msgstr "对比循环(_Y)："
 
-#: ../modules/display-filter-lcms.c:97
+#: ../modules/display-filter-lcms.c:104
 msgid "Color management display filter using ICC color profiles"
 msgstr "使用 ICC 颜色配置文件的颜色校对滤镜"
 
-#: ../modules/display-filter-lcms.c:129
+#: ../modules/display-filter-lcms.c:136
 msgid "Color Management"
 msgstr "颜色管理"
 
-#: ../modules/display-filter-lcms.c:186
+#: ../modules/display-filter-lcms.c:265 ../modules/display-filter-lcms.c:267
 msgid "None"
 msgstr "无"
 
-#: ../modules/display-filter-lcms.c:207
+#: ../modules/display-filter-lcms.c:289
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "此滤镜从首选项对话项中的色彩管理部分获得其配置。"
 
-#: ../modules/display-filter-lcms.c:221
+#: ../modules/display-filter-lcms.c:303
 msgid "Mode of operation:"
 msgstr "操作模式："
 
-#: ../modules/display-filter-lcms.c:228
+#: ../modules/display-filter-lcms.c:310
 msgid "Image profile:"
 msgstr "图像配置文件"
 
-#: ../modules/display-filter-lcms.c:236
+#: ../modules/display-filter-lcms.c:318
 msgid "Monitor profile:"
 msgstr "显示器配置文件："
 
-#: ../modules/display-filter-lcms.c:244
+#: ../modules/display-filter-lcms.c:326
 msgid "Print simulation profile:"
 msgstr "打印模拟配置文件："
 
-#: ../modules/display-filter-proof.c:92
+#: ../modules/display-filter-proof.c:98
 msgid "Color proof filter using ICC color profile"
 msgstr "使用 ICC 颜色配置文件的颜色校对滤镜"
 
-#: ../modules/display-filter-proof.c:140
+#: ../modules/display-filter-proof.c:146
 msgid "Color Proof"
 msgstr "颜色校对"
 
-#: ../modules/display-filter-proof.c:337
+#: ../modules/display-filter-proof.c:381
 msgid "Choose an ICC Color Profile"
 msgstr "选择 ICC 颜色配置文件"
 
-#: ../modules/display-filter-proof.c:364
+#: ../modules/display-filter-proof.c:408
 msgid "All files (*.*)"
 msgstr "所有文件(*.*)"
 
-#: ../modules/display-filter-proof.c:369
+#: ../modules/display-filter-proof.c:413
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC色彩配置文件(*.icc, *.icm)"
 
-#: ../modules/display-filter-proof.c:427
+#: ../modules/display-filter-proof.c:471
 msgid "_Profile:"
 msgstr "配置文件(_P)："
 
-#: ../modules/display-filter-proof.c:433
+#: ../modules/display-filter-proof.c:477
 msgid "_Intent:"
 msgstr "目标(_I)："
 
-#: ../modules/display-filter-proof.c:438
+#: ../modules/display-filter-proof.c:482
 msgid "_Black Point Compensation"
 msgstr "黑点补偿(_B)"
+
+#~ msgid "Page 000"
+#~ msgstr "第 000 页"
