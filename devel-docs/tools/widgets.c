@@ -391,8 +391,8 @@ create_dialog (void)
   widget = gimp_dialog_new ("Gimp Dialog",
                             "gimp-widget-dialog",
                             NULL, 0, NULL, NULL,
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            "_Cancel", GTK_RESPONSE_CANCEL,
+                            "_OK",     GTK_RESPONSE_OK,
 
                             NULL);
 
