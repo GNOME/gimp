@@ -68,6 +68,8 @@ struct _GimpDrawableFilter
   gdouble                 preview_position;
   gdouble                 opacity;
   GimpLayerMode           paint_mode;
+  GimpLayerColorSpace     blend_space;
+  GimpLayerColorSpace     composite_space;
   GimpLayerCompositeMode  composite_mode;
   gboolean                color_managed;
   gboolean                gamma_hack;
@@ -150,6 +152,8 @@ gimp_drawable_filter_init (GimpDrawableFilter *drawable_filter)
   drawable_filter->preview_position  = 1.0;
   drawable_filter->opacity           = GIMP_OPACITY_OPAQUE;
   drawable_filter->paint_mode        = GIMP_LAYER_MODE_REPLACE;
+  drawable_filter->blend_space       = GIMP_LAYER_COLOR_SPACE_AUTO;
+  drawable_filter->composite_space   = GIMP_LAYER_COLOR_SPACE_AUTO;
   drawable_filter->composite_mode    = GIMP_LAYER_COMPOSITE_AUTO;
 }
 
@@ -333,15 +337,21 @@ gimp_drawable_filter_set_opacity (GimpDrawableFilter *filter,
 void
 gimp_drawable_filter_set_mode (GimpDrawableFilter     *filter,
                                GimpLayerMode           paint_mode,
+                               GimpLayerColorSpace     blend_space,
+                               GimpLayerColorSpace     composite_space,
                                GimpLayerCompositeMode  composite_mode)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE_FILTER (filter));
 
-  if (paint_mode     != filter->paint_mode ||
-      composite_mode != filter->composite_mode)
+  if (paint_mode      != filter->paint_mode      ||
+      blend_space     != filter->blend_space     ||
+      composite_space != filter->composite_space ||
+      composite_mode  != filter->composite_mode)
     {
-      filter->paint_mode     = paint_mode;
-      filter->composite_mode = composite_mode;
+      filter->paint_mode      = paint_mode;
+      filter->blend_space     = blend_space;
+      filter->composite_space = composite_space;
+      filter->composite_mode  = composite_mode;
 
       gimp_drawable_filter_sync_mode (filter);
 
@@ -589,6 +599,8 @@ gimp_drawable_filter_sync_mode (GimpDrawableFilter *filter)
 {
   gimp_applicator_set_mode (filter->applicator,
                             filter->paint_mode,
+                            filter->blend_space,
+                            filter->composite_space,
                             filter->composite_mode);
 }
 

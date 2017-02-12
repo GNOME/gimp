@@ -13,6 +13,7 @@ gimp_layer_color_space_get_type (void)
 {
   static const GEnumValue values[] =
   {
+    { GIMP_LAYER_COLOR_SPACE_AUTO, "GIMP_LAYER_COLOR_SPACE_AUTO", "auto" },
     { GIMP_LAYER_COLOR_SPACE_RGB_LINEAR, "GIMP_LAYER_COLOR_SPACE_RGB_LINEAR", "rgb-linear" },
     { GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL, "GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL", "rgb-perceptual" },
     { GIMP_LAYER_COLOR_SPACE_LAB, "GIMP_LAYER_COLOR_SPACE_LAB", "lab" },
@@ -21,9 +22,10 @@ gimp_layer_color_space_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_LAYER_COLOR_SPACE_RGB_LINEAR, "GIMP_LAYER_COLOR_SPACE_RGB_LINEAR", NULL },
-    { GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL, "GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL", NULL },
-    { GIMP_LAYER_COLOR_SPACE_LAB, "GIMP_LAYER_COLOR_SPACE_LAB", NULL },
+    { GIMP_LAYER_COLOR_SPACE_AUTO, NC_("layer-color-space", "Auto"), NULL },
+    { GIMP_LAYER_COLOR_SPACE_RGB_LINEAR, NC_("layer-color-space", "RGB (linear)"), NULL },
+    { GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL, NC_("layer-color-space", "RGB (perceptual)"), NULL },
+    { GIMP_LAYER_COLOR_SPACE_LAB, NC_("layer-color-space", "LAB"), NULL },
     { 0, NULL, NULL }
   };
 

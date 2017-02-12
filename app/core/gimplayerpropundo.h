@@ -38,7 +38,9 @@ struct _GimpLayerPropUndo
   GimpItemUndo            parent_instance;
 
   GimpLayerMode           mode;
-  GimpLayerCompositeMode  composite;
+  GimpLayerColorSpace     blend_space;
+  GimpLayerColorSpace     composite_space;
+  GimpLayerCompositeMode  composite_mode;
   gdouble                 opacity;
   gboolean                lock_alpha;
 };

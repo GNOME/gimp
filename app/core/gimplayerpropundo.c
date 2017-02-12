@@ -72,8 +72,10 @@ gimp_layer_prop_undo_constructed (GObject *object)
   switch (GIMP_UNDO (object)->undo_type)
     {
     case GIMP_UNDO_LAYER_MODE:
-      layer_prop_undo->mode      = gimp_layer_get_mode (layer);
-      layer_prop_undo->composite = gimp_layer_get_composite (layer);
+      layer_prop_undo->mode            = gimp_layer_get_mode (layer);
+      layer_prop_undo->blend_space     = gimp_layer_get_blend_space (layer);
+      layer_prop_undo->composite_space = gimp_layer_get_composite_space (layer);
+      layer_prop_undo->composite_mode  = gimp_layer_get_composite_mode (layer);
       break;
 
     case GIMP_UNDO_LAYER_OPACITY:
@@ -104,16 +106,28 @@ gimp_layer_prop_undo_pop (GimpUndo            *undo,
     case GIMP_UNDO_LAYER_MODE:
       {
         GimpLayerMode          mode;
-        GimpLayerCompositeMode composite;
+        GimpLayerColorSpace    blend_space;
+        GimpLayerColorSpace    composite_space;
+        GimpLayerCompositeMode composite_mode;
 
-        mode      = gimp_layer_get_mode (layer);
-        composite = gimp_layer_get_composite (layer);
+        mode            = gimp_layer_get_mode (layer);
+        blend_space     = gimp_layer_get_blend_space (layer);
+        composite_space = gimp_layer_get_composite_space (layer);
+        composite_mode  = gimp_layer_get_composite_mode (layer);
 
-        gimp_layer_set_mode (layer, layer_prop_undo->mode, FALSE);
-        gimp_layer_set_composite (layer, layer_prop_undo->composite, FALSE);
+        gimp_layer_set_mode            (layer, layer_prop_undo->mode,
+                                        FALSE);
+        gimp_layer_set_blend_space     (layer, layer_prop_undo->blend_space,
+                                        FALSE);
+        gimp_layer_set_composite_space (layer, layer_prop_undo->composite_space,
+                                        FALSE);
+        gimp_layer_set_composite_mode  (layer, layer_prop_undo->composite_mode,
+                                        FALSE);
 
-        layer_prop_undo->mode      = mode;
-        layer_prop_undo->composite = composite;
+        layer_prop_undo->mode            = mode;
+        layer_prop_undo->blend_space     = blend_space;
+        layer_prop_undo->composite_space = composite_space;
+        layer_prop_undo->composite_mode  = composite_mode;
       }
       break;
 

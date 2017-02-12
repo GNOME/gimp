@@ -534,8 +534,12 @@ xcf_save_layer_props (XcfInfo    *info,
                                   offset_x, offset_y));
   xcf_check_error (xcf_save_prop (info, image, PROP_MODE, error,
                                   gimp_layer_get_mode (layer)));
-  xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE, error,
-                                  gimp_layer_get_composite (layer)));
+  xcf_check_error (xcf_save_prop (info, image, PROP_BLEND_SPACE, error,
+                                  gimp_layer_get_blend_space (layer)));
+  xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE_SPACE, error,
+                                  gimp_layer_get_composite_space (layer)));
+  xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE_MODE, error,
+                                  gimp_layer_get_composite_mode (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_item_get_tattoo (GIMP_ITEM (layer))));
 
@@ -737,16 +741,42 @@ xcf_save_prop (XcfInfo    *info,
       }
       break;
 
-    case PROP_COMPOSITE:
+    case PROP_BLEND_SPACE:
       {
-        gint32 composite;
+        gint32 blend_space;
 
-        composite = va_arg (args, gint32);
+        blend_space = va_arg (args, gint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
-        xcf_write_int32_check_error (info, (guint32 *) &composite, 1);
+        xcf_write_int32_check_error (info, (guint32 *) &blend_space, 1);
+      }
+      break;
+
+    case PROP_COMPOSITE_SPACE:
+      {
+        gint32 composite_space;
+
+        composite_space = va_arg (args, gint32);
+        size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+        xcf_write_int32_check_error (info, (guint32 *) &composite_space, 1);
+      }
+      break;
+
+    case PROP_COMPOSITE_MODE:
+      {
+        gint32 composite_mode;
+
+        composite_mode = va_arg (args, gint32);
+        size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+        xcf_write_int32_check_error (info, (guint32 *) &composite_mode, 1);
       }
       break;
 

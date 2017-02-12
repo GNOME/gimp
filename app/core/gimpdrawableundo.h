@@ -44,6 +44,8 @@ struct _GimpDrawableUndo
   /* stuff for "Fade" */
   GeglBuffer             *applied_buffer;
   GimpLayerMode           paint_mode;
+  GimpLayerColorSpace     blend_space;
+  GimpLayerColorSpace     composite_space;
   GimpLayerCompositeMode  composite_mode;
   gdouble                 opacity;
 };

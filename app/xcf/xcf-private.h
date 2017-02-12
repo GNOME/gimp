@@ -59,7 +59,9 @@ typedef enum
   PROP_LOCK_POSITION      = 32,
   PROP_FLOAT_OPACITY      = 33,
   PROP_COLOR_TAG          = 34,
-  PROP_COMPOSITE          = 35,
+  PROP_COMPOSITE_MODE     = 35,
+  PROP_COMPOSITE_SPACE    = 36,
+  PROP_BLEND_SPACE        = 37
 } PropType;
 
 typedef enum

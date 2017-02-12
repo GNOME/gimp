@@ -38,7 +38,9 @@ struct _GimpLayer
 
   gdouble                 opacity;          /*  layer opacity              */
   GimpLayerMode           mode;             /*  layer combination mode     */
-  GimpLayerCompositeMode  composite;        /*  layer composite mode       */
+  GimpLayerColorSpace     blend_space;      /*  layer blend space          */
+  GimpLayerColorSpace     composite_space;  /*  layer composite space      */
+  GimpLayerCompositeMode  composite_mode;   /*  layer composite mode       */
   gboolean                lock_alpha;       /*  lock the alpha channel     */
 
   GimpLayerMask          *mask;             /*  possible layer mask        */
@@ -63,14 +65,16 @@ struct _GimpLayerClass
 {
   GimpDrawableClass  parent_class;
 
-  void (* opacity_changed)    (GimpLayer *layer);
-  void (* mode_changed)       (GimpLayer *layer);
-  void (* composite_changed)  (GimpLayer *layer);
-  void (* lock_alpha_changed) (GimpLayer *layer);
-  void (* mask_changed)       (GimpLayer *layer);
-  void (* apply_mask_changed) (GimpLayer *layer);
-  void (* edit_mask_changed)  (GimpLayer *layer);
-  void (* show_mask_changed)  (GimpLayer *layer);
+  void (* opacity_changed)         (GimpLayer *layer);
+  void (* mode_changed)            (GimpLayer *layer);
+  void (* blend_space_changed)     (GimpLayer *layer);
+  void (* composite_space_changed) (GimpLayer *layer);
+  void (* composite_mode_changed)  (GimpLayer *layer);
+  void (* lock_alpha_changed)      (GimpLayer *layer);
+  void (* mask_changed)            (GimpLayer *layer);
+  void (* apply_mask_changed)      (GimpLayer *layer);
+  void (* edit_mask_changed)       (GimpLayer *layer);
+  void (* show_mask_changed)       (GimpLayer *layer);
 };
 
 
@@ -129,11 +133,23 @@ void            gimp_layer_set_mode            (GimpLayer            *layer,
                                                 gboolean              push_undo);
 GimpLayerMode   gimp_layer_get_mode            (GimpLayer            *layer);
 
-void            gimp_layer_set_composite       (GimpLayer            *layer,
-                                                GimpLayerCompositeMode  composite,
+void            gimp_layer_set_blend_space     (GimpLayer            *layer,
+                                                GimpLayerColorSpace   blend_space,
+                                                gboolean              push_undo);
+GimpLayerColorSpace
+                gimp_layer_get_blend_space     (GimpLayer            *layer);
+
+void            gimp_layer_set_composite_space (GimpLayer            *layer,
+                                                GimpLayerColorSpace   composite_space,
+                                                gboolean              push_undo);
+GimpLayerColorSpace
+                gimp_layer_get_composite_space (GimpLayer            *layer);
+
+void            gimp_layer_set_composite_mode  (GimpLayer            *layer,
+                                                GimpLayerCompositeMode  composite_mode,
                                                 gboolean              push_undo);
 GimpLayerCompositeMode
-                gimp_layer_get_composite       (GimpLayer            *layer);
+                gimp_layer_get_composite_mode  (GimpLayer            *layer);
 
 void            gimp_layer_set_lock_alpha      (GimpLayer            *layer,
                                                 gboolean              lock_alpha,

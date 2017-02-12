@@ -1167,7 +1167,7 @@ layer_get_composite_mode_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      composite_mode = gimp_layer_get_composite (layer);
+      composite_mode = gimp_layer_get_composite_mode (layer);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1196,7 +1196,7 @@ layer_set_composite_mode_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_layer_set_composite (layer, composite_mode, TRUE);
+      gimp_layer_set_composite_mode (layer, composite_mode, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

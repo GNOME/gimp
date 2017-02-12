@@ -180,6 +180,8 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                               TRUE, C_("undo-type", "Bucket Fill"),
                               gimp_context_get_opacity (GIMP_CONTEXT (options)),
                               gimp_context_get_paint_mode (GIMP_CONTEXT (options)),
+                              GIMP_LAYER_COLOR_SPACE_AUTO,
+                              GIMP_LAYER_COLOR_SPACE_AUTO,
                               GIMP_LAYER_COMPOSITE_AUTO,
                               NULL, x, y);
 

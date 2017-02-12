@@ -256,6 +256,8 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                               push_undo, C_("undo-type", "Render Stroke"),
                               gimp_context_get_opacity (context),
                               gimp_context_get_paint_mode (context),
+                              GIMP_LAYER_COLOR_SPACE_AUTO,
+                              GIMP_LAYER_COLOR_SPACE_AUTO,
                               GIMP_LAYER_COMPOSITE_AUTO,
                               NULL, x, y);
 

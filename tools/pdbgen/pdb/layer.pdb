@@ -1217,7 +1217,7 @@ sub layer_get_composite_mode {
     %invoke = (
 	code => <<'CODE'
 {
-  composite_mode = gimp_layer_get_composite (layer);
+  composite_mode = gimp_layer_get_composite_mode (layer);
 }
 CODE
     );
@@ -1239,7 +1239,7 @@ sub layer_set_composite_mode {
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_layer_set_composite (layer, composite_mode, TRUE);
+  gimp_layer_set_composite_mode (layer, composite_mode, TRUE);
 }
 CODE
     );

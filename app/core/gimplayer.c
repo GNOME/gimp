@@ -59,7 +59,9 @@ enum
 {
   OPACITY_CHANGED,
   MODE_CHANGED,
-  COMPOSITE_CHANGED,
+  BLEND_SPACE_CHANGED,
+  COMPOSITE_SPACE_CHANGED,
+  COMPOSITE_MODE_CHANGED,
   LOCK_ALPHA_CHANGED,
   MASK_CHANGED,
   APPLY_MASK_CHANGED,
@@ -73,7 +75,9 @@ enum
   PROP_0,
   PROP_OPACITY,
   PROP_MODE,
-  PROP_COMPOSITE,
+  PROP_BLEND_SPACE,
+  PROP_COMPOSITE_SPACE,
+  PROP_COMPOSITE_MODE,
   PROP_LOCK_ALPHA,
   PROP_MASK,
   PROP_FLOATING_SELECTION
@@ -249,11 +253,29 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  layer_signals[COMPOSITE_CHANGED] =
-    g_signal_new ("composite-changed",
+  layer_signals[BLEND_SPACE_CHANGED] =
+    g_signal_new ("blend-space-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLayerClass, composite_changed),
+                  G_STRUCT_OFFSET (GimpLayerClass, blend_space_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  layer_signals[COMPOSITE_SPACE_CHANGED] =
+    g_signal_new ("composite-space-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLayerClass, composite_space_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  layer_signals[COMPOSITE_MODE_CHANGED] =
+    g_signal_new ("composite-mode-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLayerClass, composite_mode_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -359,7 +381,9 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
-  klass->composite_changed            = NULL;
+  klass->blend_space_changed          = NULL;
+  klass->composite_space_changed      = NULL;
+  klass->composite_mode_changed       = NULL;
   klass->lock_alpha_changed           = NULL;
   klass->mask_changed                 = NULL;
   klass->apply_mask_changed           = NULL;
@@ -379,8 +403,23 @@ gimp_layer_class_init (GimpLayerClass *klass)
                                                       GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_READABLE));
 
-  g_object_class_install_property (object_class, PROP_COMPOSITE,
-                                   g_param_spec_enum ("composite", NULL, NULL,
+  g_object_class_install_property (object_class, PROP_BLEND_SPACE,
+                                   g_param_spec_enum ("blend-space",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                      GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                      GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_COMPOSITE_SPACE,
+                                   g_param_spec_enum ("composite-space",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                      GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                      GIMP_PARAM_READABLE));
+
+  g_object_class_install_property (object_class, PROP_COMPOSITE_MODE,
+                                   g_param_spec_enum ("composite-mode",
+                                                      NULL, NULL,
                                                       GIMP_TYPE_LAYER_COMPOSITE_MODE,
                                                       GIMP_LAYER_COMPOSITE_AUTO,
                                                       GIMP_PARAM_READABLE));
@@ -407,10 +446,12 @@ gimp_layer_class_init (GimpLayerClass *klass)
 static void
 gimp_layer_init (GimpLayer *layer)
 {
-  layer->opacity    = GIMP_OPACITY_OPAQUE;
-  layer->mode       = GIMP_LAYER_MODE_NORMAL;
-  layer->composite  = GIMP_LAYER_COMPOSITE_AUTO;
-  layer->lock_alpha = FALSE;
+  layer->opacity         = GIMP_OPACITY_OPAQUE;
+  layer->mode            = GIMP_LAYER_MODE_NORMAL;
+  layer->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
+  layer->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+  layer->composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
+  layer->lock_alpha      = FALSE;
 
   layer->mask       = NULL;
   layer->apply_mask = TRUE;
@@ -468,8 +509,14 @@ gimp_layer_get_property (GObject    *object,
     case PROP_MODE:
       g_value_set_enum (value, gimp_layer_get_mode (layer));
       break;
-    case PROP_COMPOSITE:
-      g_value_set_enum (value, gimp_layer_get_composite (layer));
+    case PROP_BLEND_SPACE:
+      g_value_set_enum (value, gimp_layer_get_blend_space (layer));
+      break;
+    case PROP_COMPOSITE_SPACE:
+      g_value_set_enum (value, gimp_layer_get_composite_space (layer));
+      break;
+    case PROP_COMPOSITE_MODE:
+      g_value_set_enum (value, gimp_layer_get_composite_mode (layer));
       break;
     case PROP_LOCK_ALPHA:
       g_value_set_boolean (value, gimp_layer_get_lock_alpha (layer));
@@ -532,31 +579,43 @@ gimp_layer_update_mode_node (GimpLayer *layer)
 {
   GeglNode               *mode_node;
   GimpLayerMode           visible_mode;
-  GimpLayerCompositeMode  visible_composite;
+  GimpLayerColorSpace     visible_blend_space;
+  GimpLayerColorSpace     visible_composite_space;
+  GimpLayerCompositeMode  visible_composite_mode;
 
   mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
   if (layer->mask && layer->show_mask)
     {
-      visible_mode      = GIMP_LAYER_MODE_NORMAL;
-      visible_composite = GIMP_LAYER_COMPOSITE_AUTO;
+      visible_mode            = GIMP_LAYER_MODE_NORMAL;
+      visible_blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
+      visible_composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+      visible_composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
     }
   else
     {
       if (layer->mode != GIMP_LAYER_MODE_DISSOLVE &&
           gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
         {
-          visible_mode      = GIMP_LAYER_MODE_NORMAL;
-          visible_composite = GIMP_LAYER_COMPOSITE_AUTO;
+          visible_mode            = GIMP_LAYER_MODE_NORMAL;
+          visible_blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
+          visible_composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+          visible_composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
         }
       else
         {
-          visible_mode      = layer->mode;
-          visible_composite = layer->composite;
+          visible_mode            = layer->mode;
+          visible_blend_space     = layer->blend_space;
+          visible_composite_space = layer->composite_space;
+          visible_composite_mode  = layer->composite_mode;
         }
     }
 
-  gimp_gegl_mode_node_set_mode (mode_node, visible_mode, visible_composite);
+  gimp_gegl_mode_node_set_mode (mode_node,
+                                visible_mode,
+                                visible_blend_space,
+                                visible_composite_space,
+                                visible_composite_mode);
   gimp_gegl_mode_node_set_opacity (mode_node, layer->opacity);
 }
 
@@ -773,12 +832,16 @@ gimp_layer_duplicate (GimpItem *item,
       GimpLayer *layer     = GIMP_LAYER (item);
       GimpLayer *new_layer = GIMP_LAYER (new_item);
 
-      gimp_layer_set_mode      (new_layer,
-                                gimp_layer_get_mode (layer), FALSE);
-      gimp_layer_set_composite (new_layer,
-                                gimp_layer_get_composite (layer), FALSE);
-      gimp_layer_set_opacity   (new_layer,
-                                gimp_layer_get_opacity (layer), FALSE);
+      gimp_layer_set_mode            (new_layer,
+                                      gimp_layer_get_mode (layer), FALSE);
+      gimp_layer_set_blend_space     (new_layer,
+                                      gimp_layer_get_blend_space (layer), FALSE);
+      gimp_layer_set_composite_space (new_layer,
+                                      gimp_layer_get_composite_space (layer), FALSE);
+      gimp_layer_set_composite_mode  (new_layer,
+                                      gimp_layer_get_composite_mode (layer), FALSE);
+      gimp_layer_set_opacity         (new_layer,
+                                      gimp_layer_get_opacity (layer), FALSE);
 
       if (gimp_layer_can_lock_alpha (new_layer))
         gimp_layer_set_lock_alpha (new_layer,
@@ -2088,15 +2151,31 @@ gimp_layer_set_mode (GimpLayer     *layer,
       g_signal_emit (layer, layer_signals[MODE_CHANGED], 0);
       g_object_notify (G_OBJECT (layer), "mode");
 
-      /*  when changing modes, we always switch to AUTO composite in
-       *  order to avoid confusion
+      /*  when changing modes, we always switch to AUTO blend and
+       *  composite in order to avoid confusion
        */
-      if (layer->composite != GIMP_LAYER_COMPOSITE_AUTO)
+      if (layer->blend_space != GIMP_LAYER_COLOR_SPACE_AUTO)
         {
-          layer->composite = GIMP_LAYER_COMPOSITE_AUTO;
+          layer->blend_space = GIMP_LAYER_COLOR_SPACE_AUTO;
 
-          g_signal_emit (layer, layer_signals[COMPOSITE_CHANGED], 0);
-          g_object_notify (G_OBJECT (layer), "composite");
+          g_signal_emit (layer, layer_signals[BLEND_SPACE_CHANGED], 0);
+          g_object_notify (G_OBJECT (layer), "blend-space");
+        }
+
+      if (layer->composite_space != GIMP_LAYER_COLOR_SPACE_AUTO)
+        {
+          layer->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+
+          g_signal_emit (layer, layer_signals[COMPOSITE_SPACE_CHANGED], 0);
+          g_object_notify (G_OBJECT (layer), "composite-space");
+        }
+
+      if (layer->composite_mode != GIMP_LAYER_COMPOSITE_AUTO)
+        {
+          layer->composite_mode = GIMP_LAYER_COMPOSITE_AUTO;
+
+          g_signal_emit (layer, layer_signals[COMPOSITE_MODE_CHANGED], 0);
+          g_object_notify (G_OBJECT (layer), "composite-mode");
         }
 
       g_object_thaw_notify (G_OBJECT (layer));
@@ -2117,13 +2196,13 @@ gimp_layer_get_mode (GimpLayer *layer)
 }
 
 void
-gimp_layer_set_composite (GimpLayer              *layer,
-                          GimpLayerCompositeMode  composite,
-                          gboolean                push_undo)
+gimp_layer_set_blend_space (GimpLayer           *layer,
+                            GimpLayerColorSpace  blend_space,
+                            gboolean             push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  if (layer->composite != composite)
+  if (layer->blend_space != blend_space)
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
         {
@@ -2132,10 +2211,82 @@ gimp_layer_set_composite (GimpLayer              *layer,
           gimp_image_undo_push_layer_mode (image, NULL, layer);
         }
 
-      layer->composite = composite;
+      layer->blend_space = blend_space;
 
-      g_signal_emit (layer, layer_signals[COMPOSITE_CHANGED], 0);
-      g_object_notify (G_OBJECT (layer), "composite");
+      g_signal_emit (layer, layer_signals[BLEND_SPACE_CHANGED], 0);
+      g_object_notify (G_OBJECT (layer), "blend-space");
+
+      if (gimp_filter_peek_node (GIMP_FILTER (layer)))
+        gimp_layer_update_mode_node (layer);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+    }
+}
+
+GimpLayerColorSpace
+gimp_layer_get_blend_space (GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_COLOR_SPACE_AUTO);
+
+  return layer->blend_space;
+}
+
+void
+gimp_layer_set_composite_space (GimpLayer           *layer,
+                                GimpLayerColorSpace  composite_space,
+                                gboolean             push_undo)
+{
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (layer->composite_space != composite_space)
+    {
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+          gimp_image_undo_push_layer_mode (image, NULL, layer);
+        }
+
+      layer->composite_space = composite_space;
+
+      g_signal_emit (layer, layer_signals[COMPOSITE_SPACE_CHANGED], 0);
+      g_object_notify (G_OBJECT (layer), "composite-space");
+
+      if (gimp_filter_peek_node (GIMP_FILTER (layer)))
+        gimp_layer_update_mode_node (layer);
+
+      gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+    }
+}
+
+GimpLayerColorSpace
+gimp_layer_get_composite_space (GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_COLOR_SPACE_AUTO);
+
+  return layer->composite_space;
+}
+
+void
+gimp_layer_set_composite_mode (GimpLayer              *layer,
+                               GimpLayerCompositeMode  composite_mode,
+                               gboolean                push_undo)
+{
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (layer->composite_mode != composite_mode)
+    {
+      if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
+        {
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
+
+          gimp_image_undo_push_layer_mode (image, NULL, layer);
+        }
+
+      layer->composite_mode = composite_mode;
+
+      g_signal_emit (layer, layer_signals[COMPOSITE_MODE_CHANGED], 0);
+      g_object_notify (G_OBJECT (layer), "composite-mode");
 
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
         gimp_layer_update_mode_node (layer);
@@ -2145,11 +2296,11 @@ gimp_layer_set_composite (GimpLayer              *layer,
 }
 
 GimpLayerCompositeMode
-gimp_layer_get_composite (GimpLayer *layer)
+gimp_layer_get_composite_mode (GimpLayer *layer)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_COMPOSITE_AUTO);
 
-  return layer->composite;
+  return layer->composite_mode;
 }
 
 void

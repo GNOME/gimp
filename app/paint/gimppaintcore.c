@@ -903,6 +903,8 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 
       gimp_applicator_set_opacity (core->applicator, image_opacity);
       gimp_applicator_set_mode (core->applicator, paint_mode,
+                                GIMP_LAYER_COLOR_SPACE_AUTO,
+                                GIMP_LAYER_COLOR_SPACE_AUTO,
                                 GIMP_LAYER_COMPOSITE_SRC_OVER);
 
       /*  apply the paint area to the image  */

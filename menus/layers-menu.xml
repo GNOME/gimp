@@ -5,23 +5,35 @@
   <popup action="layers-popup">
     <menuitem action="layers-text-tool" />
     <menuitem action="layers-edit-attributes" />
-    <menu action="layers-composite-menu" name="Composite">
-     <menuitem action="layers-composite-auto" />
-     <menuitem action="layers-composite-src-over" />
-     <menuitem action="layers-composite-src-atop" />
-     <menuitem action="layers-composite-src-in" />
-     <menuitem action="layers-composite-dst-atop" />
+    <menu action="layers-blend-space-menu" name="Blend Space">
+      <menuitem action="layers-blend-space-auto" />
+      <menuitem action="layers-blend-space-rgb-linear" />
+      <menuitem action="layers-blend-space-rgb-perceptual" />
+      <menuitem action="layers-blend-space-lab" />
+    </menu>
+    <menu action="layers-composite-space-menu" name="Composite Space">
+      <menuitem action="layers-composite-space-auto" />
+      <menuitem action="layers-composite-space-rgb-linear" />
+      <menuitem action="layers-composite-space-rgb-perceptual" />
+      <menuitem action="layers-composite-space-lab" />
+    </menu>
+    <menu action="layers-composite-mode-menu" name="Composite Mode">
+      <menuitem action="layers-composite-mode-auto" />
+      <menuitem action="layers-composite-mode-src-over" />
+      <menuitem action="layers-composite-mode-src-atop" />
+      <menuitem action="layers-composite-mode-src-in" />
+      <menuitem action="layers-composite-mode-dst-atop" />
     </menu>
     <menu action="layers-color-tag-menu" name="Color Tags">
-     <menuitem action="layers-color-tag-none" />
-     <menuitem action="layers-color-tag-blue" />
-     <menuitem action="layers-color-tag-green" />
-     <menuitem action="layers-color-tag-yellow" />
-     <menuitem action="layers-color-tag-orange" />
-     <menuitem action="layers-color-tag-brown" />
-     <menuitem action="layers-color-tag-red" />
-     <menuitem action="layers-color-tag-violet" />
-     <menuitem action="layers-color-tag-gray" />
+      <menuitem action="layers-color-tag-none" />
+      <menuitem action="layers-color-tag-blue" />
+      <menuitem action="layers-color-tag-green" />
+      <menuitem action="layers-color-tag-yellow" />
+      <menuitem action="layers-color-tag-orange" />
+      <menuitem action="layers-color-tag-brown" />
+      <menuitem action="layers-color-tag-red" />
+      <menuitem action="layers-color-tag-violet" />
+      <menuitem action="layers-color-tag-gray" />
     </menu>
     <separator />
     <menuitem action="layers-new" />

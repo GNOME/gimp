@@ -47,7 +47,9 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
                                  const gchar            *undo_desc,
                                  gdouble                 opacity,
                                  GimpLayerMode           mode,
-                                 GimpLayerCompositeMode  composite,
+                                 GimpLayerColorSpace     blend_space,
+                                 GimpLayerColorSpace     composite_space,
+                                 GimpLayerCompositeMode  composite_mode,
                                  GeglBuffer             *base_buffer,
                                  gint                    base_x,
                                  gint                    base_y)
@@ -103,9 +105,11 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
 
       if (undo)
         {
-          undo->paint_mode     = mode;
-          undo->composite_mode = composite;
-          undo->opacity        = opacity;
+          undo->paint_mode      = mode;
+          undo->blend_space     = blend_space;
+          undo->composite_space = composite_space;
+          undo->composite_mode  = composite_mode;
+          undo->opacity         = opacity;
 
           undo->applied_buffer =
             gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
@@ -143,7 +147,8 @@ gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
                                     base_y - buffer_region->y);
 
   gimp_applicator_set_opacity (applicator, opacity);
-  gimp_applicator_set_mode (applicator, mode, composite);
+  gimp_applicator_set_mode (applicator, mode,
+                            blend_space, composite_space, composite_mode);
   gimp_applicator_set_affect (applicator,
                               gimp_drawable_get_active_mask (drawable));
 

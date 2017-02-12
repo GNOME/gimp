@@ -57,6 +57,8 @@ struct _GimpApplicator
 
   gdouble                 opacity;
   GimpLayerMode           paint_mode;
+  GimpLayerColorSpace     blend_space;
+  GimpLayerColorSpace     composite_space;
   GimpLayerCompositeMode  composite_mode;
   GeglNode               *mode_node;
 
@@ -112,7 +114,9 @@ void         gimp_applicator_set_opacity      (GimpApplicator       *applicator,
                                                gdouble               opacity);
 void         gimp_applicator_set_mode         (GimpApplicator       *applicator,
                                                GimpLayerMode         paint_mode,
-                                               GimpLayerCompositeMode  composite_mode);
+                                               GimpLayerColorSpace   blend_space,
+                                               GimpLayerColorSpace   composite_space,
+                                               GimpLayerCompositeMode composite_mode);
 void         gimp_applicator_set_affect       (GimpApplicator       *applicator,
                                                GimpComponentMask     affect);
 

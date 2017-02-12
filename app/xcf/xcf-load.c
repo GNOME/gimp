@@ -1100,14 +1100,39 @@ xcf_load_layer_props (XcfInfo    *info,
           }
           break;
 
-        case PROP_COMPOSITE:
+        case PROP_BLEND_SPACE:
           {
-            guint32 composite;
+            guint32 blend_space;
 
-            info->cp += xcf_read_int32 (info->input, &composite, 1);
+            info->cp += xcf_read_int32 (info->input, &blend_space, 1);
 
-            gimp_layer_set_composite (*layer,
-                                      (GimpLayerCompositeMode) composite, FALSE);
+            gimp_layer_set_blend_space (*layer,
+                                        (GimpLayerColorSpace) blend_space,
+                                        FALSE);
+          }
+          break;
+
+        case PROP_COMPOSITE_SPACE:
+          {
+            guint32 composite_space;
+
+            info->cp += xcf_read_int32 (info->input, &composite_space, 1);
+
+            gimp_layer_set_composite_space (*layer,
+                                            (GimpLayerColorSpace) composite_space,
+                                            FALSE);
+          }
+          break;
+
+        case PROP_COMPOSITE_MODE:
+          {
+            guint32 composite_mode;
+
+            info->cp += xcf_read_int32 (info->input, &composite_mode, 1);
+
+            gimp_layer_set_composite_mode (*layer,
+                                           (GimpLayerCompositeMode) composite_mode,
+                                           FALSE);
           }
           break;
 
