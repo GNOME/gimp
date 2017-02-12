@@ -635,20 +635,19 @@ create_save_preset (GtkWidget *parent)
       return;
     }
 
-  window =
-    gimp_dialog_new (_("Save Current"), PLUG_IN_ROLE,
-                     gtk_widget_get_toplevel (parent), 0,
-                     gimp_standard_help_func, PLUG_IN_PROC,
+  window = gimp_dialog_new (_("Save Current"), PLUG_IN_ROLE,
+                            gtk_widget_get_toplevel (parent), 0,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
-                     NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
-                                              GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (window, "response",
                     G_CALLBACK (save_preset_response),

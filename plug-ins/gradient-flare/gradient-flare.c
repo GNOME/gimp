@@ -2357,8 +2357,8 @@ dlg_run (void)
                                         NULL, 0,
                                         gimp_standard_help_func, PLUG_IN_PROC,
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_OK"),     GTK_RESPONSE_OK,
 
                                         NULL);
 
@@ -3319,9 +3319,9 @@ ed_run (GtkWindow            *parent,
                              GTK_WIDGET (parent), 0,
                              gimp_standard_help_func, PLUG_IN_PROC,
 
-                             _("Rescan Gradients"), RESPONSE_RESCAN,
-                             GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
-                             GTK_STOCK_OK,          GTK_RESPONSE_OK,
+                             _("_Rescan Gradients"), RESPONSE_RESCAN,
+                             _("_Cancel"),           GTK_RESPONSE_CANCEL,
+                             _("_OK"),               GTK_RESPONSE_OK,
 
                              NULL);
 

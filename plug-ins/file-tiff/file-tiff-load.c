@@ -144,8 +144,8 @@ load_dialog (TIFF              *tif,
                             NULL, 0,
                             gimp_standard_help_func, help_id,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            _("_Import"),     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Import"), GTK_RESPONSE_OK,
 
                             NULL);
 

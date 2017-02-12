@@ -1146,8 +1146,8 @@ load_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Open"),   GTK_RESPONSE_OK,
 
                             NULL);
 

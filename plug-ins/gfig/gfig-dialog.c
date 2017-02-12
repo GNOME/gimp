@@ -287,8 +287,8 @@ gfig_dialog (void)
                                    NULL, 0,
                                    gimp_standard_help_func, PLUG_IN_PROC,
 
-                                   GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                   GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
+                                   _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                   _("_Close"),  GTK_RESPONSE_OK,
 
                                    NULL);
 
@@ -635,8 +635,8 @@ gfig_load_action_callback (GtkAction *action,
                                      GTK_WINDOW (data),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Open"),   GTK_RESPONSE_OK,
 
                                      NULL);
 
@@ -684,8 +684,8 @@ gfig_save_action_callback (GtkAction *action,
                                      GTK_WINDOW (data),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Save"),   GTK_RESPONSE_OK,
 
                                      NULL);
 
@@ -1242,7 +1242,7 @@ gfig_prefs_action_callback (GtkAction *widget,
       dialog = gimp_dialog_new (_("Options"), "gimp-gfig-options",
                                 GTK_WIDGET (data), 0, NULL, NULL,
 
-                                GTK_STOCK_CLOSE,  GTK_RESPONSE_CLOSE,
+                                _("_Close"),  GTK_RESPONSE_CLOSE,
 
                                 NULL);
 
@@ -1390,7 +1390,7 @@ gfig_grid_action_callback (GtkAction *action,
       dialog = gimp_dialog_new (_("Grid"), "gimp-gfig-grid",
                                 GTK_WIDGET (data), 0, NULL, NULL,
 
-                                GTK_STOCK_CLOSE,  GTK_RESPONSE_CLOSE,
+                                _("_Close"),  GTK_RESPONSE_CLOSE,
 
                                 NULL);
 

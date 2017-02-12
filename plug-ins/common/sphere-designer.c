@@ -2204,10 +2204,10 @@ fileselect (GtkFileChooserAction  action,
                                      GTK_WINDOW (parent),
                                      action,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
 
                                      action == GTK_FILE_CHOOSER_ACTION_OPEN ?
-                                     GTK_STOCK_OPEN : GTK_STOCK_SAVE,
+                                     _("_Open") : _("_Save"),
                                      GTK_RESPONSE_OK,
 
                                      NULL);
@@ -2557,9 +2557,9 @@ makewindow (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GIMP_STOCK_RESET, RESPONSE_RESET,
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Reset"),  RESPONSE_RESET,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 

@@ -757,11 +757,11 @@ ifs_compose_dialog (gint32 drawable_id)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_OPEN,   RESPONSE_OPEN,
-                            GTK_STOCK_SAVE,   RESPONSE_SAVE,
-                            GIMP_STOCK_RESET, RESPONSE_RESET,
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Open"),   RESPONSE_OPEN,
+                            _("_Save"),   RESPONSE_SAVE,
+                            _("_Reset"),  RESPONSE_RESET,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -1162,7 +1162,7 @@ ifs_options_dialog (GtkWidget *parent)
                          parent, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                         _("_Close"), GTK_RESPONSE_CLOSE,
 
                          NULL);
 
@@ -2527,8 +2527,8 @@ ifs_compose_save (GtkWidget *parent)
                                      GTK_WINDOW (parent),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Save"),   GTK_RESPONSE_OK,
 
                                      NULL);
 
@@ -2564,8 +2564,8 @@ ifs_compose_load (GtkWidget *parent)
                                      GTK_WINDOW (parent),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Open"),   GTK_RESPONSE_OK,
 
                                      NULL);
 

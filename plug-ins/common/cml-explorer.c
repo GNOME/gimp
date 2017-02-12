@@ -1186,8 +1186,8 @@ CML_explorer_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -1853,7 +1853,7 @@ function_graph_new (GtkWidget *widget,
                             gtk_widget_get_toplevel (widget), 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                            _("_Close"), GTK_RESPONSE_CLOSE,
 
                             NULL);
 
@@ -1983,8 +1983,8 @@ CML_save_to_file_callback (GtkWidget *widget,
                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Save"),   GTK_RESPONSE_OK,
 
                                      NULL);
 
@@ -2116,8 +2116,8 @@ CML_load_from_file_callback (GtkWidget *widget,
                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Open"),   GTK_RESPONSE_OK,
 
                                      NULL);
 

@@ -1086,8 +1086,8 @@ bad_bounds_dialog (void)
                                      "the actual borders of the image."));
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_CANCEL,     GTK_RESPONSE_CANCEL,
-                          GIMP_STOCK_TOOL_CROP, GTK_RESPONSE_OK,
+                          _("_Cancel"), GTK_RESPONSE_CANCEL,
+                          _("Cr_op"),   GTK_RESPONSE_OK,
                           NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),

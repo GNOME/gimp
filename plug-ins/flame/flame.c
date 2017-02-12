@@ -470,18 +470,18 @@ make_file_dialog (const gchar *title,
                                              GTK_FILE_CHOOSER_ACTION_OPEN :
                                              GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                             GTK_STOCK_CANCEL, GTK_STOCK_CANCEL,
+                                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                                              load_save ?
-                                             GTK_STOCK_OPEN : GTK_STOCK_SAVE,
+                                             _("_Open") : _("_Save"),
                                              GTK_RESPONSE_OK,
 
                                              NULL);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (file_dialog), GTK_RESPONSE_OK);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (file_dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
-  gtk_dialog_set_default_response (GTK_DIALOG (file_dialog), GTK_RESPONSE_OK);
 
   if (! load_save)
     gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_dialog),
@@ -646,8 +646,8 @@ edit_callback (GtkWidget *widget,
                                      parent, GTK_DIALOG_DESTROY_WITH_PARENT,
                                      gimp_standard_help_func, PLUG_IN_PROC,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_OK"),     GTK_RESPONSE_OK,
 
                                      NULL);
 
@@ -968,8 +968,8 @@ flame_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 

@@ -68,17 +68,16 @@ do_file_open_dialog (void)
                                      NULL,
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Open"),   GTK_RESPONSE_OK,
 
                                      NULL);
 
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
       gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       g_signal_connect (dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
@@ -118,21 +117,20 @@ do_file_save_as_dialog (void)
     {
       gchar *filename;
 
-      dialog =
-        gtk_file_chooser_dialog_new (_("Save Image Map"),
-                                     NULL,
-                                     GTK_FILE_CHOOSER_ACTION_SAVE,
+      dialog = gtk_file_chooser_dialog_new (_("Save Image Map"),
+                                            NULL,
+                                            GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                            _("_Save"),   GTK_RESPONSE_OK,
 
-                                     NULL);
+                                            NULL);
 
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
       gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                       TRUE);

@@ -129,9 +129,9 @@ script_fu_console_interface (void)
                                     NULL, 0,
                                     gimp_standard_help_func, PROC_NAME,
 
-                                    GTK_STOCK_SAVE,  RESPONSE_SAVE,
-                                    GTK_STOCK_CLEAR, RESPONSE_CLEAR,
-                                    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                    _("_Save"),  RESPONSE_SAVE,
+                                    _("C_lear"), RESPONSE_CLEAR,
+                                    _("_Close"), GTK_RESPONSE_CLOSE,
 
                                     NULL);
 
@@ -288,16 +288,18 @@ script_fu_console_save_dialog (ConsoleInterface *console)
         gtk_file_chooser_dialog_new (_("Save Script-Fu Console Output"),
                                      GTK_WINDOW (console->dialog),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Save"),   GTK_RESPONSE_OK,
+
                                      NULL);
 
+      gtk_dialog_set_default_response (GTK_DIALOG (console->save_dialog),
+                                       GTK_RESPONSE_OK);
       gtk_dialog_set_alternative_button_order (GTK_DIALOG (console->save_dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-      gtk_dialog_set_default_response (GTK_DIALOG (console->save_dialog),
-                                       GTK_RESPONSE_OK);
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (console->save_dialog),
                                                       TRUE);
@@ -365,8 +367,8 @@ script_fu_browse_callback (GtkWidget        *widget,
                                       "script-fu-procedure-browser",
                                       gimp_standard_help_func, PROC_NAME,
 
-                                      GTK_STOCK_APPLY, GTK_RESPONSE_APPLY,
-                                      GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                      _("_Apply"), GTK_RESPONSE_APPLY,
+                                      _("_Close"), GTK_RESPONSE_CLOSE,
 
                                       NULL);
 

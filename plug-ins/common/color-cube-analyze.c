@@ -361,7 +361,7 @@ doDialog (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                            _("_Close"), GTK_RESPONSE_CLOSE,
 
                             NULL);
 

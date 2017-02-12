@@ -720,8 +720,8 @@ dialog_load (GtkWidget *widget,
                                         GTK_WINDOW (parent),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Open"),   GTK_RESPONSE_OK,
 
                                         NULL);
 
@@ -762,8 +762,8 @@ dialog_save (GtkWidget *widget,
                                         GTK_WINDOW (parent),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Save"),   GTK_RESPONSE_OK,
 
                                         NULL);
 
@@ -816,8 +816,8 @@ dialog_run (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 

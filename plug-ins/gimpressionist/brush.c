@@ -253,16 +253,16 @@ savebrush (GtkWidget *wg,
                                  GTK_WINDOW (gtk_widget_get_toplevel (wg)),
                                  GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                 GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                 _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                 _("_Save"),   GTK_RESPONSE_OK,
 
                                  NULL);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                   TRUE);

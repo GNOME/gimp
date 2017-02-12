@@ -168,6 +168,7 @@ plug-ins/help/gimphelpdomain.c
 plug-ins/help/gimphelplocale.c
 plug-ins/ifs-compose/ifs-compose.c
 plug-ins/imagemap/imap_about.c
+plug-ins/imagemap/imap_browse.c
 plug-ins/imagemap/imap_circle.c
 plug-ins/imagemap/imap_cmd_clear.c
 plug-ins/imagemap/imap_cmd_copy.c
@@ -199,6 +200,7 @@ plug-ins/imagemap/imap_cmd_select_region.c
 plug-ins/imagemap/imap_cmd_send_to_back.c
 plug-ins/imagemap/imap_cmd_unselect.c
 plug-ins/imagemap/imap_cmd_unselect_all.c
+plug-ins/imagemap/imap_default_dialog.c
 plug-ins/imagemap/imap_edit_area_info.c
 plug-ins/imagemap/imap_file.c
 plug-ins/imagemap/imap_grid.c

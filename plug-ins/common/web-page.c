@@ -231,8 +231,8 @@ webpage_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            _("_Create"),     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("Cre_ate"), GTK_RESPONSE_OK,
 
                             NULL);
 

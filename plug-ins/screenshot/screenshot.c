@@ -413,7 +413,6 @@ shoot_dialog (GdkScreen **screen)
   GtkWidget     *button;
   GtkWidget     *toggle;
   GtkWidget     *spinner;
-  GdkPixbuf     *pixbuf;
   GSList        *radio_group = NULL;
   GtkAdjustment *adj;
   gboolean       run;
@@ -424,25 +423,15 @@ shoot_dialog (GdkScreen **screen)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("S_nap"),   GTK_RESPONSE_OK,
 
                             NULL);
-
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  _("S_nap"), GTK_RESPONSE_OK);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
-
-  pixbuf = gdk_pixbuf_new_from_inline (-1, screenshot_icon, FALSE, NULL);
-  if (pixbuf)
-    {
-      gtk_button_set_image (GTK_BUTTON (button),
-                            gtk_image_new_from_pixbuf (pixbuf));
-      g_object_unref (pixbuf);
-    }
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);

@@ -126,7 +126,7 @@ run (const gchar      *name,
           gimp_proc_browser_dialog_new (_("Procedure Browser"), PLUG_IN_BINARY,
                                         gimp_standard_help_func, PLUG_IN_PROC,
 
-                                        GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                        _("_Close"), GTK_RESPONSE_CLOSE,
 
                                         NULL);
 

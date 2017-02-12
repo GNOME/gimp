@@ -28,6 +28,8 @@
 #include "imap_default_dialog.h"
 #include "imap_main.h"
 
+#include "libgimp/stdplugins-intl.h"
+
 
 static void
 dialog_response (GtkWidget       *widget,
@@ -86,46 +88,46 @@ default_dialog_set_cancel_cb(DefaultDialog_t *dialog,
 DefaultDialog_t *
 make_default_dialog (const gchar *title)
 {
-   DefaultDialog_t *data = g_new0 (DefaultDialog_t, 1);
+  DefaultDialog_t *data = g_new0 (DefaultDialog_t, 1);
 
-   data->ok_cb = NULL;
-   data->apply_cb = NULL;
-   data->cancel_cb = NULL;
+  data->ok_cb = NULL;
+  data->apply_cb = NULL;
+  data->cancel_cb = NULL;
 
-   data->dialog = gimp_dialog_new (title, PLUG_IN_ROLE,
-                                   get_dialog(), 0,
-                                   gimp_standard_help_func, PLUG_IN_PROC,
-                                   NULL);
+  data->dialog = gimp_dialog_new (title, PLUG_IN_ROLE,
+                                  get_dialog(), 0,
+                                  gimp_standard_help_func, PLUG_IN_PROC,
+                                  NULL);
 
-   data->apply = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
-                                        GTK_STOCK_APPLY, GTK_RESPONSE_APPLY);
+  data->apply = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
+                                       _("_Apply"), GTK_RESPONSE_APPLY);
 
-   data->cancel = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
-                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
+  data->cancel = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL);
 
-   data->ok = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
-                                     GTK_STOCK_OK, GTK_RESPONSE_OK);
+  data->ok = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
+                                    _("_OK"), GTK_RESPONSE_OK);
 
-   gtk_dialog_set_alternative_button_order (GTK_DIALOG (data->dialog),
-                                            GTK_RESPONSE_OK,
-                                            GTK_RESPONSE_APPLY,
-                                            GTK_RESPONSE_CANCEL,
-                                            -1);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (data->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_APPLY,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
-   g_signal_connect (data->dialog, "response",
-                     G_CALLBACK (dialog_response),
-                     data);
-   g_signal_connect (data->dialog, "destroy",
-                     G_CALLBACK (gtk_widget_destroyed),
-                     &data->dialog);
+  g_signal_connect (data->dialog, "response",
+                    G_CALLBACK (dialog_response),
+                    data);
+  g_signal_connect (data->dialog, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &data->dialog);
 
-   data->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-   gtk_container_set_border_width (GTK_CONTAINER (data->vbox), 12);
-   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
-                       data->vbox, TRUE, TRUE, 0);
-   gtk_widget_show (data->vbox);
+  data->vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (data->vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (data->dialog))),
+                      data->vbox, TRUE, TRUE, 0);
+  gtk_widget_show (data->vbox);
 
-   return data;
+  return data;
 }
 
 void

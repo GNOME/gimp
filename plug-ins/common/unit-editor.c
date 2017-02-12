@@ -206,8 +206,8 @@ new_unit_dialog (GtkWidget *main_dialog,
                             main_dialog, GTK_DIALOG_MODAL,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_ADD,    GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Add"),    GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -413,8 +413,8 @@ unit_editor_dialog (void)
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
-                            GTK_STOCK_REFRESH, RESPONSE_REFRESH,
-                            GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,
+                            _("_Refresh"), RESPONSE_REFRESH,
+                            _("_Close"),   GTK_RESPONSE_CLOSE,
 
                             NULL);
 

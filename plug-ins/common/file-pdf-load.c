@@ -1086,8 +1086,8 @@ load_dialog (PopplerDocument  *doc,
                             NULL, 0,
                             gimp_standard_help_func, LOAD_PROC,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            _("_Import"),     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Import"), GTK_RESPONSE_OK,
 
                             NULL);
 

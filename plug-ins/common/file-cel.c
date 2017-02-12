@@ -931,8 +931,8 @@ palette_dialog (const gchar *title)
   dialog = gtk_file_chooser_dialog_new (title, NULL,
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Open"),   GTK_RESPONSE_OK,
 
                                         NULL);
 

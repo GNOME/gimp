@@ -393,22 +393,21 @@ create_sizemap_dialog (GtkWidget *parent)
       return;
     }
 
-  smwindow =
-    gimp_dialog_new (_("Size Map Editor"), PLUG_IN_ROLE,
-                     gtk_widget_get_toplevel (parent), 0,
-                     gimp_standard_help_func, PLUG_IN_PROC,
+  smwindow = gimp_dialog_new (_("Size Map Editor"), PLUG_IN_ROLE,
+                              gtk_widget_get_toplevel (parent), 0,
+                              gimp_standard_help_func, PLUG_IN_PROC,
 
-                     GTK_STOCK_APPLY,  RESPONSE_APPLY,
-                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                              _("_Apply"),  RESPONSE_APPLY,
+                              _("_Cancel"), GTK_RESPONSE_CANCEL,
+                              _("_OK"),     GTK_RESPONSE_OK,
 
-                     NULL);
+                              NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (smwindow),
-                                              GTK_RESPONSE_OK,
-					      RESPONSE_APPLY,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           GTK_RESPONSE_OK,
+                                           RESPONSE_APPLY,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (smwindow, "response",
                     G_CALLBACK (smresponse),
