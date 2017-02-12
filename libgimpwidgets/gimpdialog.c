@@ -131,7 +131,8 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   g_object_class_install_property (object_class, PROP_HELP_ID,
                                    g_param_spec_string ("help-id", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
   /**
    * GimpDialog:parent:
