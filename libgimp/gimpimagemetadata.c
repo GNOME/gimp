@@ -804,8 +804,8 @@ gimp_image_metadata_rotate_dialog (gint32             image_ID,
   dialog = gimp_dialog_new (title, "gimp-metadata-rotate-dialog",
                             NULL, 0, NULL, NULL,
 
-                            _("_Keep Original"),    GTK_RESPONSE_CANCEL,
-                            GIMP_STOCK_TOOL_ROTATE, GTK_RESPONSE_OK,
+                            _("_Keep Original"), GTK_RESPONSE_CANCEL,
+                            _("_Rotate"),        GTK_RESPONSE_OK,
 
                             NULL);
 

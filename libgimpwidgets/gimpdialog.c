@@ -28,6 +28,8 @@
 #include "gimpdialog.h"
 #include "gimphelpui.h"
 
+#include "libgimp/libgimp-intl.h"
+
 
 /**
  * SECTION: gimpdialog
@@ -170,7 +172,7 @@ gimp_dialog_constructed (GObject *object)
       GtkDialog *dialog      = GTK_DIALOG (object);
       GtkWidget *action_area = gtk_dialog_get_action_area (dialog);
 
-      private->help_button = gtk_button_new_from_stock (GTK_STOCK_HELP);
+      private->help_button = gtk_button_new_with_mnemonic (_("_Help"));
 
       gtk_box_pack_end (GTK_BOX (action_area), private->help_button,
                         FALSE, TRUE, 0);

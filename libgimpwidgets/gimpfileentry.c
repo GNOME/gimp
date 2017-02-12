@@ -439,8 +439,8 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
                                      GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER :
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_OK"),     GTK_RESPONSE_OK,
 
                                      NULL);
 

@@ -436,8 +436,8 @@ confirm_save_dialog (const gchar *message,
                             gimp_standard_help_func,
                             "gimp-export-confirm-dialog",
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            _("Confirm"),     GTK_RESPONSE_OK,
+                            _("_Cancel"),  GTK_RESPONSE_CANCEL,
+                            _("C_onfirm"), GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -517,9 +517,9 @@ export_dialog (GSList      *actions,
                             NULL, 0,
                             gimp_standard_help_func, "gimp-export-dialog",
 
-                            _("_Ignore"),     GTK_RESPONSE_NO,
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            _("_Export"),     GTK_RESPONSE_OK,
+                            _("_Ignore"), GTK_RESPONSE_NO,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Export"), GTK_RESPONSE_OK,
 
                             NULL);
 
@@ -1003,21 +1003,17 @@ gimp_export_dialog_new (const gchar *format_name,
                         const gchar *role,
                         const gchar *help_id)
 {
-  GtkWidget *dialog = NULL;
-  GtkWidget *button = NULL;
+  GtkWidget *dialog;
   gchar     *title  = g_strconcat (_("Export Image as "), format_name, NULL);
 
   dialog = gimp_dialog_new (title, role,
                             NULL, 0,
                             gimp_standard_help_func, help_id,
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            NULL);
 
-  button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
-                                   _("_Export"), GTK_RESPONSE_OK);
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name ("document-save",
-                                                      GTK_ICON_SIZE_BUTTON));
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Export"), GTK_RESPONSE_OK,
+
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,

@@ -149,8 +149,8 @@ gimp_color_profile_chooser_dialog_new (const gchar          *title,
       GTK_FILE_CHOOSER_ACTION_SAVE)
     {
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
+                              _("_Cancel"), GTK_RESPONSE_CANCEL,
+                              _("_Save"),   GTK_RESPONSE_ACCEPT,
                               NULL);
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
@@ -159,8 +159,8 @@ gimp_color_profile_chooser_dialog_new (const gchar          *title,
   else
     {
       gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
+                              _("_Cancel"), GTK_RESPONSE_CANCEL,
+                              _("_Open"),   GTK_RESPONSE_ACCEPT,
                               NULL);
     }
 

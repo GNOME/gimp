@@ -493,8 +493,8 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
                                      gimp_standard_help_func,
                                      "gimp-unit-dialog",
 
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_OK"),     GTK_RESPONSE_OK,
 
                                      NULL);
 

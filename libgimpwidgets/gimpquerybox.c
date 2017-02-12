@@ -271,7 +271,7 @@ gimp_query_string_box (const gchar             *title,
                                 G_CALLBACK (string_query_box_response),
                                 "dialog-question",
                                 message,
-                                GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                _("_OK"), _("_Cancel"),
                                 object, signal,
                                 G_CALLBACK (callback), data);
 
@@ -331,7 +331,7 @@ gimp_query_int_box (const gchar          *title,
                                 G_CALLBACK (int_query_box_response),
                                 "dialog-question",
                                 message,
-                                GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                _("_OK"), _("_Cancel"),
                                 object, signal,
                                 G_CALLBACK (callback), data);
 
@@ -395,7 +395,7 @@ gimp_query_double_box (const gchar             *title,
                                 G_CALLBACK (double_query_box_response),
                                 "dialog-question",
                                 message,
-                                GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                _("_OK"), _("_Cancel"),
                                 object, signal,
                                 G_CALLBACK (callback), data);
 
@@ -469,7 +469,7 @@ gimp_query_size_box (const gchar           *title,
                                 G_CALLBACK (size_query_box_response),
                                 "dialog-question",
                                 message,
-                                GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                _("_OK"), _("_Cancel"),
                                 object, signal,
                                 G_CALLBACK (callback), data);
 
