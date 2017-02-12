@@ -479,8 +479,8 @@ gradient_editor_replicate_cmd_callback (GtkAction *action,
                               gimp_standard_help_func,
                               GIMP_HELP_GRADIENT_EDITOR_REPLICATE,
 
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              _("Replicate"),   GTK_RESPONSE_OK,
+                              _("_Cancel"),    GTK_RESPONSE_CANCEL,
+                              _("_Replicate"), GTK_RESPONSE_OK,
 
                               NULL);
 
@@ -581,8 +581,8 @@ gradient_editor_split_uniformly_cmd_callback (GtkAction *action,
                               gimp_standard_help_func,
                               GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM,
 
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              _("Split"),       GTK_RESPONSE_OK,
+                              _("_Cancel"), GTK_RESPONSE_CANCEL,
+                              _("_Split"),  GTK_RESPONSE_OK,
 
                               NULL);
 

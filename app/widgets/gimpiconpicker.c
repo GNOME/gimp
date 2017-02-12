@@ -512,8 +512,10 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
   dialog = gtk_file_chooser_dialog_new (_("Load Icon Image"),
                                         NULL,
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
+
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Open"),   GTK_RESPONSE_ACCEPT,
+
                                         NULL);
 
   filter = gtk_file_filter_new ();
@@ -534,8 +536,10 @@ gimp_icon_picker_menu_from_file (GtkWidget      *widget,
           gimp_icon_picker_set_icon_pixbuf (picker, icon_pixbuf);
           g_object_unref (icon_pixbuf);
         }
+
       g_free (filename);
     }
+
   gtk_widget_destroy (dialog);
 }
 

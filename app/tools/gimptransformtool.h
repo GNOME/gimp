@@ -157,6 +157,8 @@ struct _GimpTransformToolClass
                                      GimpColorProfile **buffer_profile,
                                      gint              *new_offset_x,
                                      gint              *new_offset_y);
+
+  const gchar *ok_button_label;
 };
 
 

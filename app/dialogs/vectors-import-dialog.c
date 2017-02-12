@@ -85,24 +85,21 @@ vectors_import_dialog_new (GimpImage                 *image,
   dialog = gtk_file_chooser_dialog_new (_("Import Paths from SVG"), NULL,
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Open"),   GTK_RESPONSE_OK,
 
                                         NULL);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-                                   GTK_RESPONSE_OK);
-
-  gtk_window_set_screen (GTK_WINDOW (dialog),
-                         gtk_widget_get_screen (parent));
-
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-import");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_window_set_screen (GTK_WINDOW (dialog),
+                         gtk_widget_get_screen (parent));
 
   if (import_folder)
     gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),

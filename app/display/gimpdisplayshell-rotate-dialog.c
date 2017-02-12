@@ -118,9 +118,9 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
                               gimp_standard_help_func,
                               GIMP_HELP_VIEW_ROTATE_OTHER,
 
-                              GIMP_STOCK_RESET, RESPONSE_RESET,
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                              _("_Reset"),  RESPONSE_RESET,
+                              _("_Cancel"), GTK_RESPONSE_CANCEL,
+                              _("_OK"),     GTK_RESPONSE_OK,
 
                               NULL);
 

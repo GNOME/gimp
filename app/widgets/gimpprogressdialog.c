@@ -88,7 +88,7 @@ gimp_progress_dialog_init (GimpProgressDialog *dialog)
                     &dialog->box);
 
   gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
+                         _("_Cancel"), GTK_RESPONSE_CANCEL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
   gtk_widget_set_size_request (GTK_WIDGET (dialog), PROGRESS_DIALOG_WIDTH, -1);

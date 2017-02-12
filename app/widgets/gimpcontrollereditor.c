@@ -662,8 +662,8 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
                                   gimp_standard_help_func,
                                   GIMP_HELP_PREFS_INPUT_CONTROLLERS,
 
-                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                  _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                  _("_OK"),     GTK_RESPONSE_OK,
 
                                   NULL);
 

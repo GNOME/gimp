@@ -217,6 +217,8 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   klass->transform                = gimp_transform_tool_real_transform;
   klass->pick_function            = gimp_transform_tool_real_pick_function;
   klass->draw_gui                 = gimp_transform_tool_real_draw_gui;
+
+  klass->ok_button_label          = _("_Transform");
 }
 
 static void
@@ -1643,7 +1645,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   GimpTool         *tool      = GIMP_TOOL (tr_tool);
   GimpToolInfo     *tool_info = tool->tool_info;
   GimpDisplayShell *shell;
-  const gchar      *icon_name;
+  const gchar      *ok_button_label;
 
   if (! GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
     return;
@@ -1652,7 +1654,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   shell = gimp_display_get_shell (tool->display);
 
-  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
+  ok_button_label = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->ok_button_label;
 
   tr_tool->gui = gimp_tool_gui_new (tool_info,
                                     NULL, NULL, NULL, NULL,
@@ -1660,9 +1662,9 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                     TRUE,
 
-                                    GIMP_STOCK_RESET, RESPONSE_RESET,
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    icon_name,        GTK_RESPONSE_OK,
+                                    _("_Reset"),     RESPONSE_RESET,
+                                    _("_Cancel"),    GTK_RESPONSE_CANCEL,
+                                    ok_button_label, GTK_RESPONSE_OK,
 
                                     NULL);
 

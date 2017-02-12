@@ -85,6 +85,7 @@ app/actions/vectors-commands.c
 app/actions/view-actions.c
 app/actions/view-commands.c
 app/actions/window-actions.c
+app/actions/window-commands.c
 app/actions/windows-actions.c
 app/actions/windows-commands.c
 

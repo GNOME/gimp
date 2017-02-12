@@ -55,7 +55,7 @@ enum
   PROP_0,
   PROP_GIMP,
   PROP_HELP_ID,
-  PROP_STOCK_ID,
+  PROP_OK_BUTTON_LABEL,
   PROP_AUTOMATIC_HELP_ID,
   PROP_AUTOMATIC_LABEL,
   PROP_FILE_FILTER_LABEL,
@@ -182,9 +182,10 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_STOCK_ID,
-                                   g_param_spec_string ("stock-id", NULL, NULL,
-                                                        NULL,
+  g_object_class_install_property (object_class, PROP_OK_BUTTON_LABEL,
+                                   g_param_spec_string ("ok-button-label",
+                                                        NULL, NULL,
+                                                        _("_OK"),
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -229,7 +230,6 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
 static void
 gimp_file_dialog_init (GimpFileDialog *dialog)
 {
- dialog->stock_id = GTK_STOCK_OK;
 }
 
 static void
@@ -261,8 +261,8 @@ gimp_file_dialog_set_property (GObject      *object,
     case PROP_HELP_ID:
       dialog->help_id = g_value_dup_string (value);
       break;
-    case PROP_STOCK_ID:
-      dialog->stock_id = g_value_dup_string (value);
+    case PROP_OK_BUTTON_LABEL:
+      dialog->ok_button_label = g_value_dup_string (value);
       break;
     case PROP_AUTOMATIC_HELP_ID:
       dialog->automatic_help_id = g_value_dup_string (value);
@@ -321,9 +321,10 @@ gimp_file_dialog_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          dialog->stock_id, GTK_RESPONSE_OK,
+                          _("_Cancel"),            GTK_RESPONSE_CANCEL,
+                          dialog->ok_button_label, GTK_RESPONSE_OK,
                           NULL);
+
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -341,9 +342,12 @@ gimp_file_dialog_constructed (GObject *object)
 
       if (GIMP_GUI_CONFIG (dialog->gimp->config)->show_help_button)
         {
-          GtkWidget *action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
-          GtkWidget *button      = gtk_button_new_from_stock (GTK_STOCK_HELP);
+          GtkWidget *action_area;
+          GtkWidget *button;
 
+          action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
+
+          button = gtk_button_new_with_mnemonic (_("_Help"));
           gtk_box_pack_end (GTK_BOX (action_area), button, FALSE, TRUE, 0);
           gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_area),
                                               button, TRUE);
@@ -393,9 +397,9 @@ gimp_file_dialog_dispose (GObject *object)
     g_free (dialog->help_id);
   dialog->help_id = NULL;
 
-  if (dialog->stock_id)
-    g_free (dialog->stock_id);
-  dialog->stock_id = NULL;
+  if (dialog->ok_button_label)
+    g_free (dialog->ok_button_label);
+  dialog->ok_button_label = NULL;
 
   if (dialog->automatic_help_id)
     g_free (dialog->automatic_help_id);

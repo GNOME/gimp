@@ -133,8 +133,8 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
                                   gimp_standard_help_func,
                                   GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN,
 
-                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                  _("_Assign"),     GTK_RESPONSE_OK,
+                                  _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                  _("_Assign"), GTK_RESPONSE_OK,
 
                                   NULL);
       dest_label = _("Assign");
@@ -151,8 +151,8 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
                                   gimp_standard_help_func,
                                   GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT,
 
-                                  GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_CONVERT, GTK_RESPONSE_OK,
+                                  _("_Cancel"),  GTK_RESPONSE_CANCEL,
+                                  _("C_onvert"), GTK_RESPONSE_OK,
 
                                   NULL);
       dest_label = _("Convert to");
@@ -169,8 +169,8 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
                                   gimp_standard_help_func,
                                   GIMP_HELP_IMAGE_CONVERT_RGB,
 
-                                  GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_CONVERT, GTK_RESPONSE_OK,
+                                  _("_Cancel"),  GTK_RESPONSE_CANCEL,
+                                  _("C_onvert"), GTK_RESPONSE_OK,
 
                                   NULL);
       dest_label = _("Convert to");
@@ -187,8 +187,8 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
                                   gimp_standard_help_func,
                                   GIMP_HELP_IMAGE_CONVERT_GRAYSCALE,
 
-                                  GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
-                                  GTK_STOCK_CONVERT, GTK_RESPONSE_OK,
+                                  _("_Cancel"),  GTK_RESPONSE_CANCEL,
+                                  _("C_onvert"), GTK_RESPONSE_OK,
 
                                   NULL);
       dest_label = _("Convert to");
@@ -205,8 +205,8 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
                                   gimp_standard_help_func,
                                   GIMP_HELP_VIEW_COLOR_MANAGEMENT,
 
-                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                  _("_Select"),     GTK_RESPONSE_OK,
+                                  _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                  _("_Select"), GTK_RESPONSE_OK,
 
                                   NULL);
       dest_label = _("New Color Profile");

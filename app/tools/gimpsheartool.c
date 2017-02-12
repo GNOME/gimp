@@ -97,12 +97,14 @@ gimp_shear_tool_class_init (GimpShearToolClass *klass)
 {
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  trans_class->dialog        = gimp_shear_tool_dialog;
-  trans_class->dialog_update = gimp_shear_tool_dialog_update;
-  trans_class->prepare       = gimp_shear_tool_prepare;
-  trans_class->motion        = gimp_shear_tool_motion;
-  trans_class->recalc_matrix = gimp_shear_tool_recalc_matrix;
-  trans_class->get_undo_desc = gimp_shear_tool_get_undo_desc;
+  trans_class->dialog          = gimp_shear_tool_dialog;
+  trans_class->dialog_update   = gimp_shear_tool_dialog_update;
+  trans_class->prepare         = gimp_shear_tool_prepare;
+  trans_class->motion          = gimp_shear_tool_motion;
+  trans_class->recalc_matrix   = gimp_shear_tool_recalc_matrix;
+  trans_class->get_undo_desc   = gimp_shear_tool_get_undo_desc;
+
+  trans_class->ok_button_label = _("_Shear");
 }
 
 static void

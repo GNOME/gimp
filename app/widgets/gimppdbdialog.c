@@ -172,7 +172,7 @@ gimp_pdb_dialog_init (GimpPdbDialog      *dialog,
   klass->dialogs = g_list_prepend (klass->dialogs, dialog);
 
   gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+                         _("_Close"), GTK_RESPONSE_CLOSE);
 }
 
 static void

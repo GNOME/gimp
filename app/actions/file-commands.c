@@ -438,8 +438,8 @@ file_revert_cmd_callback (GtkAction *action,
                                  0,
                                  gimp_standard_help_func, GIMP_HELP_FILE_REVERT,
 
-                                 GTK_STOCK_CANCEL,          GTK_RESPONSE_CANCEL,
-                                 GTK_STOCK_REVERT_TO_SAVED, GTK_RESPONSE_OK,
+                                 _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                 _("_Revert"), GTK_RESPONSE_OK,
 
                                  NULL);
 

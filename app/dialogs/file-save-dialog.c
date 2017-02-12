@@ -629,7 +629,7 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
                                         GTK_DIALOG_DESTROY_WITH_PARENT,
                                         gimp_standard_help_func, NULL,
 
-                                        GTK_STOCK_OK, GTK_RESPONSE_OK,
+                                        _("_OK"), GTK_RESPONSE_OK,
 
                                         NULL);
 
@@ -705,8 +705,8 @@ file_save_dialog_use_extension (GtkWidget *save_dialog,
                                     save_dialog, GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func, NULL,
 
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                    _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                    _("_Save"),   GTK_RESPONSE_OK,
 
                                     NULL);
 

@@ -75,8 +75,8 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
       dialog = gtk_file_chooser_dialog_new (title, NULL,
                                             GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                            GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                            _("_Save"),   GTK_RESPONSE_OK,
 
                                             NULL);
 

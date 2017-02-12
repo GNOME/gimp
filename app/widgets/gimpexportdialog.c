@@ -69,7 +69,7 @@ gimp_export_dialog_new (Gimp *gimp)
                        "title",                 _("Export Image"),
                        "role",                  "gimp-file-export",
                        "help-id",               GIMP_HELP_FILE_EXPORT_AS,
-                       "stock-id",              _("_Export"),
+                       "ok-button-label",       _("_Export"),
 
                        "automatic-label",       _("By Extension"),
                        "automatic-help-id",     GIMP_HELP_FILE_SAVE_BY_EXTENSION,

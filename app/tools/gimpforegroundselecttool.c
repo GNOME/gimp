@@ -305,8 +305,10 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
                            gtk_widget_get_screen (GTK_WIDGET (shell)),
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            TRUE,
-                           GTK_STOCK_CANCEL,                  GTK_RESPONSE_CANCEL,
-                           GIMP_STOCK_TOOL_FOREGROUND_SELECT, GTK_RESPONSE_APPLY,
+
+                           _("_Cancel"), GTK_RESPONSE_CANCEL,
+                           _("_Select"), GTK_RESPONSE_APPLY,
+
                            NULL);
 
       gimp_tool_gui_set_auto_overlay (fg_select->gui, TRUE);

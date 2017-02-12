@@ -80,23 +80,21 @@ vectors_export_dialog_new (GimpImage                 *image,
   dialog = gtk_file_chooser_dialog_new (_("Export Path to SVG"), NULL,
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Save"),   GTK_RESPONSE_OK,
 
                                         NULL);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-
-  gtk_window_set_screen (GTK_WINDOW (dialog),
-                         gtk_widget_get_screen (parent));
-
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-export");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_window_set_screen (GTK_WINDOW (dialog),
+                         gtk_widget_get_screen (parent));
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                   TRUE);

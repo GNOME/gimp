@@ -188,7 +188,9 @@ gui_abort (const gchar *abort_message)
 
   dialog = gimp_dialog_new (_("GIMP Message"), "gimp-abort",
                             NULL, GTK_DIALOG_MODAL, NULL, NULL,
-                            GTK_STOCK_OK, GTK_RESPONSE_OK,
+
+                            _("_OK"), GTK_RESPONSE_OK,
+
                             NULL);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);

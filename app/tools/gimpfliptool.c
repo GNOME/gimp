@@ -97,11 +97,13 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
   GimpToolClass          *tool_class  = GIMP_TOOL_CLASS (klass);
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  tool_class->modifier_key   = gimp_flip_tool_modifier_key;
-  tool_class->cursor_update  = gimp_flip_tool_cursor_update;
+  tool_class->modifier_key     = gimp_flip_tool_modifier_key;
+  tool_class->cursor_update    = gimp_flip_tool_cursor_update;
 
-  trans_class->get_undo_desc = gimp_flip_tool_get_undo_desc;
-  trans_class->transform     = gimp_flip_tool_transform;
+  trans_class->get_undo_desc   = gimp_flip_tool_get_undo_desc;
+  trans_class->transform       = gimp_flip_tool_transform;
+
+  trans_class->ok_button_label = _("_Flip");
 }
 
 static void

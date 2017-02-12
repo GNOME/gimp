@@ -115,8 +115,8 @@ text_tool_load_cmd_callback (GtkAction *action,
                                             parent ? GTK_WINDOW (parent) : NULL,
                                             GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                            GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                            _("_Open"),   GTK_RESPONSE_OK,
 
                                             NULL);
 

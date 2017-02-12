@@ -273,8 +273,8 @@ prefs_response (GtkWidget *widget,
                                            GTK_DIALOG_DESTROY_WITH_PARENT,
                                            gimp_standard_help_func, NULL,
 
-                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                           GIMP_STOCK_RESET, GTK_RESPONSE_OK,
+                                           _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                           _("_Reset"),  GTK_RESPONSE_OK,
 
                                            NULL);
 
@@ -603,8 +603,8 @@ prefs_menus_remove_callback (GtkWidget *widget,
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func, NULL,
 
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    GTK_STOCK_CLEAR,  GTK_RESPONSE_OK,
+                                    _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                    _("Cl_ear"),  GTK_RESPONSE_OK,
 
                                     NULL);
 
@@ -995,9 +995,9 @@ prefs_dialog_new (Gimp       *gimp,
                             prefs_help_func,
                             GIMP_HELP_PREFS_DIALOG,
 
-                            GIMP_STOCK_RESET, RESPONSE_RESET,
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Reset"),  RESPONSE_RESET,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 

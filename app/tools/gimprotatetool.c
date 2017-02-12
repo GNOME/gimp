@@ -105,14 +105,16 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
   GimpToolClass          *tool_class  = GIMP_TOOL_CLASS (klass);
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  tool_class->key_press      = gimp_rotate_tool_key_press;
+  tool_class->key_press        = gimp_rotate_tool_key_press;
 
-  trans_class->dialog        = gimp_rotate_tool_dialog;
-  trans_class->dialog_update = gimp_rotate_tool_dialog_update;
-  trans_class->prepare       = gimp_rotate_tool_prepare;
-  trans_class->motion        = gimp_rotate_tool_motion;
-  trans_class->recalc_matrix = gimp_rotate_tool_recalc_matrix;
-  trans_class->get_undo_desc = gimp_rotate_tool_get_undo_desc;
+  trans_class->dialog          = gimp_rotate_tool_dialog;
+  trans_class->dialog_update   = gimp_rotate_tool_dialog_update;
+  trans_class->prepare         = gimp_rotate_tool_prepare;
+  trans_class->motion          = gimp_rotate_tool_motion;
+  trans_class->recalc_matrix   = gimp_rotate_tool_recalc_matrix;
+  trans_class->get_undo_desc   = gimp_rotate_tool_get_undo_desc;
+
+  trans_class->ok_button_label = _("R_otate");
 }
 
 static void

@@ -227,8 +227,8 @@ documents_clear_cmd_callback (GtkAction *action,
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func, NULL,
 
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    GTK_STOCK_CLEAR,  GTK_RESPONSE_OK,
+                                    _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                    _("Cl_ear"),  GTK_RESPONSE_OK,
 
                                     NULL);
 

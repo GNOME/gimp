@@ -135,15 +135,10 @@ convert_indexed_dialog_new (GimpImage                  *image,
                               gimp_standard_help_func,
                               GIMP_HELP_IMAGE_CONVERT_INDEXED,
 
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              _("_Cancel"),  GTK_RESPONSE_CANCEL,
+                              _("C_onvert"), GTK_RESPONSE_OK,
 
                               NULL);
-
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  _("C_onvert"), GTK_RESPONSE_OK);
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_STOCK_CONVERT_INDEXED,
-                                                      GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,

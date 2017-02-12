@@ -693,7 +693,7 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
                                             toplevel, 0,
                                             NULL, NULL,
 
-                                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                            _("_Close"), GTK_RESPONSE_CLOSE,
 
                                             NULL);
 
@@ -764,12 +764,13 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
                                  GTK_FILE_CHOOSER_ACTION_SAVE :
                                  GTK_FILE_CHOOSER_ACTION_OPEN,
 
-                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                 save ? GTK_STOCK_SAVE : GTK_STOCK_OPEN,
-                                 GTK_RESPONSE_OK,
+                                 _("_Cancel"),            GTK_RESPONSE_CANCEL,
+                                 save ?
+                                 _("_Save") : _("_Open"), GTK_RESPONSE_OK,
 
                                  NULL);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -779,14 +780,12 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
 
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-import-export-settings");
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
 
   g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &private->file_dialog);
   g_signal_connect (toplevel, "unmap",
                     G_CALLBACK (gimp_settings_box_toplevel_unmap),
                     dialog);
-
-  gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   if (save)
     gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),

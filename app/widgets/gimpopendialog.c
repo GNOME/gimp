@@ -66,7 +66,7 @@ gimp_open_dialog_new (Gimp *gimp)
                        "title",                 _("Open Image"),
                        "role",                  "gimp-file-open",
                        "help-id",               GIMP_HELP_FILE_OPEN,
-                       "stock-id",              GTK_STOCK_OPEN,
+                       "ok-button-label",       _("_Open"),
 
                        "automatic-label",       _("Automatically Detected"),
                        "automatic-help-id",     GIMP_HELP_FILE_OPEN_BY_EXTENSION,

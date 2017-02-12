@@ -133,9 +133,9 @@ scale_dialog_new (GimpViewable          *viewable,
                                      parent,
                                      help_func, help_id,
 
-                                     GIMP_STOCK_RESET, RESPONSE_RESET,
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GIMP_STOCK_SCALE, GTK_RESPONSE_OK,
+                                     _("_Reset"),  RESPONSE_RESET,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Scale"),  GTK_RESPONSE_OK,
 
                                      NULL);
 

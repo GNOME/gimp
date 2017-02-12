@@ -32,6 +32,8 @@
 #include "actions.h"
 #include "window-commands.h"
 
+#include "gimp-intl.h"
+
 
 /*  public functions  */
 
@@ -70,8 +72,8 @@ window_open_display_cmd_callback (GtkAction *action,
                                     widget, GTK_DIALOG_MODAL,
                                     NULL, NULL,
 
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                    _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                    _("_OK"),     GTK_RESPONSE_OK,
 
                                     NULL);
 

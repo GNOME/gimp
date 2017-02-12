@@ -100,12 +100,14 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
 {
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  trans_class->dialog        = gimp_scale_tool_dialog;
-  trans_class->dialog_update = gimp_scale_tool_dialog_update;
-  trans_class->prepare       = gimp_scale_tool_prepare;
-  trans_class->motion        = gimp_scale_tool_motion;
-  trans_class->recalc_matrix = gimp_scale_tool_recalc_matrix;
-  trans_class->get_undo_desc = gimp_scale_tool_get_undo_desc;
+  trans_class->dialog          = gimp_scale_tool_dialog;
+  trans_class->dialog_update   = gimp_scale_tool_dialog_update;
+  trans_class->prepare         = gimp_scale_tool_prepare;
+  trans_class->motion          = gimp_scale_tool_motion;
+  trans_class->recalc_matrix   = gimp_scale_tool_recalc_matrix;
+  trans_class->get_undo_desc   = gimp_scale_tool_get_undo_desc;
+
+  trans_class->ok_button_label = _("_Scale");
 }
 
 static void

@@ -1525,8 +1525,8 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                                      gimp_standard_help_func, NULL,
 
                                      _("Create _New Layer"), RESPONSE_NEW,
-                                     GTK_STOCK_CANCEL,       GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_EDIT,         GTK_RESPONSE_ACCEPT,
+                                     _("_Cancel"),           GTK_RESPONSE_CANCEL,
+                                     _("_Edit"),             GTK_RESPONSE_ACCEPT,
 
                                      NULL);
 

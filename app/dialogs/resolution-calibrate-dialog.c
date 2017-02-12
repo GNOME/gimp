@@ -73,8 +73,8 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
                             GTK_DIALOG_DESTROY_WITH_PARENT,
                             NULL, NULL,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 

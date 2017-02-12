@@ -1076,7 +1076,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            TRUE,
 
-                           GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                           _("_Close"), GTK_RESPONSE_CLOSE,
 
                            NULL);
 

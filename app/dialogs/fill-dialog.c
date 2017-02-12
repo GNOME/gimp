@@ -111,9 +111,9 @@ fill_dialog_new (GimpItem         *item,
                                      gimp_standard_help_func,
                                      help_id,
 
-                                     GIMP_STOCK_RESET, RESPONSE_RESET,
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     _("_Fill"),       GTK_RESPONSE_OK,
+                                     _("_Reset"),  RESPONSE_RESET,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_Fill"),   GTK_RESPONSE_OK,
 
                                      NULL);
 

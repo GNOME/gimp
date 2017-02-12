@@ -167,7 +167,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
                              do_quit ?
                              GIMP_HELP_FILE_QUIT : GIMP_HELP_FILE_CLOSE_ALL,
 
-                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                             _("_Cancel"), GTK_RESPONSE_CANCEL,
 
                              NULL);
 
@@ -359,7 +359,7 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
                                 accel_string);
 
       g_object_set (private->ok_button,
-                    "label",     private->do_quit ? GTK_STOCK_QUIT : GTK_STOCK_CLOSE,
+                    "label",     private->do_quit ? _("_Quit") : _("Cl_ose"),
                     "use-stock", TRUE,
                     "image",     NULL,
                     NULL);

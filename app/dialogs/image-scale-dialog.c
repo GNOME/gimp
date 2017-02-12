@@ -207,8 +207,8 @@ image_scale_confirm_dialog (ImageScaleDialog *private)
                                     gimp_standard_help_func,
                                     GIMP_HELP_IMAGE_SCALE_WARNING,
 
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    GIMP_STOCK_SCALE, GTK_RESPONSE_OK,
+                                    _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                    _("_Scale"),  GTK_RESPONSE_OK,
 
                                     NULL);
 

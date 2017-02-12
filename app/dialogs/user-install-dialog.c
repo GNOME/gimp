@@ -86,7 +86,7 @@ user_install_dialog_new (GimpUserInstall *install)
                                     GIMP_STOCK_WILBER_EEK,
                                     NULL, 0, NULL, NULL,
 
-                                    GTK_STOCK_QUIT, GTK_RESPONSE_OK,
+                                    _("_Quit"), GTK_RESPONSE_OK,
 
                                     NULL);
 

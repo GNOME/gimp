@@ -53,7 +53,7 @@ struct _GimpFileDialog
   gboolean              canceled;
 
   gchar                *help_id;
-  gchar                *stock_id;
+  gchar                *ok_button_label;
   gchar                *automatic_help_id;
   gchar                *automatic_label;
   gchar                *file_filter_label;

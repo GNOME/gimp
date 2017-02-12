@@ -135,7 +135,6 @@ palette_import_dialog_new (GimpContext *context)
   ImportDialog *private;
   GimpGradient *gradient;
   GtkWidget    *dialog;
-  GtkWidget    *button;
   GtkWidget    *main_hbox;
   GtkWidget    *frame;
   GtkWidget    *vbox;
@@ -160,15 +159,10 @@ palette_import_dialog_new (GimpContext *context)
                      gimp_standard_help_func,
                      GIMP_HELP_PALETTE_IMPORT,
 
-                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                     _("_Import"), GTK_RESPONSE_OK,
 
                      NULL);
-
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  _("_Import"), GTK_RESPONSE_OK);
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name ("gtk-convert",
-                                                      GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,

@@ -64,7 +64,9 @@ gimp_error_dialog_init (GimpErrorDialog *dialog)
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-message");
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_OK, GTK_RESPONSE_CLOSE,
+
+                          _("_OK"), GTK_RESPONSE_CLOSE,
+
                           NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);

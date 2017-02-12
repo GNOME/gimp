@@ -77,19 +77,19 @@ file_open_location_dialog_new (Gimp *gimp)
                             gimp_standard_help_func,
                             GIMP_HELP_FILE_OPEN_LOCATION,
 
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                            _("_Cancel"), GTK_RESPONSE_CANCEL,
+                            _("_Open"),   GTK_RESPONSE_OK,
 
                             NULL);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (file_open_location_response),
-                    gimp);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG(dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (file_open_location_response),
+                    gimp);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);

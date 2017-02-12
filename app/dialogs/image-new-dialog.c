@@ -102,9 +102,9 @@ image_new_dialog_new (GimpContext *context)
                      NULL, 0,
                      gimp_standard_help_func, GIMP_HELP_FILE_NEW,
 
-                     GIMP_STOCK_RESET, RESPONSE_RESET,
-                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                     _("_Reset"),  RESPONSE_RESET,
+                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                     _("_OK"),     GTK_RESPONSE_OK,
 
                      NULL);
 
@@ -322,8 +322,8 @@ image_new_confirm_dialog (ImageNewDialog *private)
                                       GTK_DIALOG_DESTROY_WITH_PARENT,
                                       gimp_standard_help_func, NULL,
 
-                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                      _("_OK"),     GTK_RESPONSE_OK,
 
                                       NULL);
 

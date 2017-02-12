@@ -65,7 +65,7 @@ image_properties_dialog_new (GimpImage   *image,
                                      gimp_standard_help_func,
                                      GIMP_HELP_IMAGE_PROPERTIES,
 
-                                     GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
+                                     _("_Close"), GTK_RESPONSE_OK,
 
                                      NULL);
 

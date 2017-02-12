@@ -105,10 +105,13 @@ static void
 gimp_color_dialog_init (GimpColorDialog *dialog)
 {
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GIMP_STOCK_RESET, RESPONSE_RESET,
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                          _("_Reset"),  RESPONSE_RESET,
+                          _("_Cancel"), GTK_RESPONSE_CANCEL,
+                          _("_OK"),     GTK_RESPONSE_OK,
+
                           NULL);
+
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),

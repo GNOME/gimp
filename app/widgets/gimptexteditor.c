@@ -162,7 +162,7 @@ gimp_text_editor_new (const gchar     *title,
                          NULL);
 
   gtk_dialog_add_button (GTK_DIALOG (editor),
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+                         _("_Close"), GTK_RESPONSE_CLOSE);
 
   g_signal_connect (editor, "response",
                     G_CALLBACK (gtk_widget_destroy),

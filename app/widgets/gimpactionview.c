@@ -671,8 +671,8 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
                              gtk_widget_get_toplevel (GTK_WIDGET (view)), 0,
                              gimp_standard_help_func, NULL,
 
-                             GTK_STOCK_CANCEL,         GTK_RESPONSE_CANCEL,
-                             _("_Reassign shortcut"),  GTK_RESPONSE_OK,
+                             _("_Cancel"),            GTK_RESPONSE_CANCEL,
+                             _("_Reassign Shortcut"), GTK_RESPONSE_OK,
 
                              NULL);
 
@@ -680,6 +680,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_action_view_conflict_response),
                     confirm_data);

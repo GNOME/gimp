@@ -83,8 +83,8 @@ data_delete_dialog_new (GimpDataFactory *factory,
                                     gtk_widget_get_toplevel (parent), 0,
                                     gimp_standard_help_func, NULL,
 
-                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    GTK_STOCK_DELETE, GTK_RESPONSE_OK,
+                                    _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                    _("_Delete"), GTK_RESPONSE_OK,
 
                                     NULL);
 

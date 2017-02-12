@@ -138,7 +138,7 @@ gimp_save_dialog_new (Gimp *gimp)
                        "title",                 _("Save Image"),
                        "role",                  "gimp-file-save",
                        "help-id",               GIMP_HELP_FILE_SAVE,
-                       "stock-id",              GTK_STOCK_SAVE,
+                       "ok-button-label",       _("_Save"),
 
                        "automatic-label",       _("By Extension"),
                        "automatic-help-id",     GIMP_HELP_FILE_SAVE_BY_EXTENSION,

@@ -564,9 +564,9 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
                                     GTK_WIDGET (list), GTK_DIALOG_MODAL,
                                     NULL, NULL,
 
-                                    _("Disable Controller"), RESPONSE_DISABLE,
-                                    GTK_STOCK_CANCEL,        GTK_RESPONSE_CANCEL,
-                                    _("Remove Controller"),  GTK_RESPONSE_OK,
+                                    _("_Disable Controller"), RESPONSE_DISABLE,
+                                    _("_Cancel"),             GTK_RESPONSE_CANCEL,
+                                    _("_Remove Controller"),  GTK_RESPONSE_OK,
 
                                     NULL);
 
@@ -641,7 +641,7 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
                             gimp_standard_help_func,
                             GIMP_HELP_PREFS_INPUT_CONTROLLERS,
 
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                            _("_Close"), GTK_RESPONSE_CLOSE,
 
                             NULL);
 

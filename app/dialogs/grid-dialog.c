@@ -98,9 +98,9 @@ grid_dialog_new (GimpImage   *image,
                                      gimp_standard_help_func,
                                      GIMP_HELP_IMAGE_GRID,
 
-                                     GIMP_STOCK_RESET, GRID_RESPONSE_RESET,
-                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     _("_Reset"),  GRID_RESPONSE_RESET,
+                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                     _("_OK"),     GTK_RESPONSE_OK,
 
                                      NULL);
 

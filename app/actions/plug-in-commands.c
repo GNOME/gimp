@@ -177,8 +177,8 @@ plug_in_reset_all_cmd_callback (GtkAction *action,
                                         NULL, 0,
                                         gimp_standard_help_func, NULL,
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GIMP_STOCK_RESET, GTK_RESPONSE_OK,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Reset"),  GTK_RESPONSE_OK,
 
                                         NULL);
 
