@@ -1,18 +1,18 @@
 # Polish translation for gimp-tips.
-# Copyright © 2002-2016 the gimp authors.
+# Copyright © 2002-2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 2002-2005.
 # Artur Polaczyński <artii@o2.pl>, 2002-2003.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2007.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 19:34+0200\n"
-"PO-Revision-Date: 2016-09-07 19:35+0200\n"
+"POT-Creation-Date: 2017-02-12 14:47+0100\n"
+"PO-Revision-Date: 2017-02-12 14:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -70,7 +70,7 @@ msgid ""
 msgstr ""
 "Większość wtyczek wykonuje działania tylko na aktywnej warstwie. Jeśli "
 "działanie dotyczyć ma wszystkich warstw, przed jej wykonaniem należy "
-"połączyć wszystkie warstwy w jedną („Obraz→Spłaszcz obraz”)."
+"połączyć wszystkie warstwy w jedną („Obraz → Spłaszcz obraz”)."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -80,7 +80,7 @@ msgid ""
 msgstr ""
 "Jeśli nazwa warstwy w oknie „Warstwy” jest <b>pogrubiona</b>, oznacza to, że "
 "nie ma ona kanału alfa (przezroczystości). Można dodać kanał alfa wybierając "
-"„Warstwa→Przezroczystość→Dodaj kanał alfa”."
+"„Warstwa → Przezroczystość → Dodaj kanał alfa”."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
@@ -91,9 +91,9 @@ msgid ""
 msgstr ""
 "Nie wszystkie efekty mogą być wykorzystywane na obrazach dowolnych typów. "
 "Efekty, których nie można użyć na bieżącym obrazie, są w menu szare. Aby ich "
-"użyć, należy zmienić tryb obrazu na RGB („Obraz→Tryb→RGB”), dodać kanał alfa "
-"(„Warstwa→Przezroczystość→Dodaj kanał alfa”) lub spłaszczyć obraz "
-"(„Obraz→Spłaszcz obraz”)."
+"użyć, należy zmienić tryb obrazu na RGB („Obraz → Tryb → RGB”), dodać kanał "
+"alfa („Warstwa → Przezroczystość → Dodaj kanał alfa”) lub spłaszczyć obraz "
+"(„Obraz → Spłaszcz obraz”)."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
@@ -187,9 +187,9 @@ msgid ""
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr ""
-"„Edycja→Rysuj wzdłuż zaznaczenia” pozwala na rysowanie bieżącym pędzlem "
+"„Edycja → Rysuj wzdłuż zaznaczenia” pozwala na rysowanie bieżącym pędzlem "
 "krzywych wzdłuż krawędzi zaznaczenia. Bardziej złożone figury można uzyskać "
-"za pomocą narzędzia „Ścieżki” lub opcji „Filtry→Renderowanie→Gfigury”."
+"za pomocą narzędzia „Ścieżki” lub opcji „Filtry → Renderowanie → Gfigury”."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -197,7 +197,7 @@ msgid ""
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr ""
-"Podczas rysowania wzdłuż ścieżki („Edycja→Rysuj wzdłuż ścieżki”) możliwe "
+"Podczas rysowania wzdłuż ścieżki („Edycja → Rysuj wzdłuż ścieżki”) możliwe "
 "jest użycie dowolnego narzędzia rysowania z jego bieżącymi ustawieniami. "
 "Można więc pociągnąć ścieżkę „pędzlem” w trybie gradientu, „gumką” lub "
 "„rozsmarowywaniem”."
@@ -232,7 +232,7 @@ msgid ""
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
 msgstr ""
-"Można zapisywać zaznaczenie do kanału („Zaznaczenie→Zapisz do kanału”) "
+"Można zapisywać zaznaczenie do kanału („Zaznaczenie → Zapisz do kanału”) "
 "i modyfikować je dowolnym narzędziem malarskim. Przyciskami w oknie „Kanały” "
 "można ustawić widoczność kanału lub konwertować go na zaznaczenie."
 
@@ -320,6 +320,6 @@ msgid ""
 "with the Curves tool (Colors→Curves)."
 msgstr ""
 "Jeśli zeskanowane zdjęcia są mało kolorowe, można poprawić ich kolorystykę "
-"korzystając z narzędzia „Poziomy” („Kolory→Poziomy”), klikając przycisk "
+"korzystając z narzędzia „Poziomy” („Kolory → Poziomy”), klikając przycisk "
 "„Automatycznie”. Zniekształcenia kolorów można skorygować za pomocą "
-"narzędzia „Krzywe” („Kolory→Krzywe”)."
+"narzędzia „Krzywe” („Kolory → Krzywe”)."

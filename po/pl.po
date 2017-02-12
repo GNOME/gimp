@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-05 18:25+0100\n"
-"PO-Revision-Date: 2017-02-05 18:27+0100\n"
+"POT-Creation-Date: 2017-02-12 14:47+0100\n"
+"PO-Revision-Date: 2017-02-12 14:48+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -2235,22 +2235,22 @@ msgstr "Ponawia ostatnie działanie, które zostało cofnięte"
 #: ../app/actions/edit-actions.c:86
 msgctxt "edit-action"
 msgid "Strong Undo"
-msgstr "Silne cofnij"
+msgstr "Silne cofnięcie"
 
 #: ../app/actions/edit-actions.c:87
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
-msgstr "Cofa ostatnie działanie, pomijając widoczne zmiany"
+msgstr "Cofa ostatnie działanie, pomijając zmiany widoczności"
 
 #: ../app/actions/edit-actions.c:92
 msgctxt "edit-action"
 msgid "Strong Redo"
-msgstr "Silne ponawianie"
+msgstr "Silne ponowienie"
 
 #: ../app/actions/edit-actions.c:94
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
-msgstr "Ponawia ostatnie, cofnięte działanie, pomijając widoczne zmiany"
+msgstr "Ponawia ostatnie cofnięte działanie, pomijając zmiany widoczności"
 
 #: ../app/actions/edit-actions.c:99
 msgctxt "edit-action"
@@ -2433,17 +2433,17 @@ msgstr "Wypełnia zaznaczenie aktywnym deseniem"
 #: ../app/actions/edit-actions.c:315 ../app/actions/edit-actions.c:317
 #, c-format
 msgid "_Undo %s"
-msgstr "Cof_nij %s"
+msgstr "Cof_nij „%s”"
 
 #: ../app/actions/edit-actions.c:321 ../app/actions/edit-actions.c:323
 #, c-format
 msgid "_Redo %s"
-msgstr "P_onów %s"
+msgstr "P_onów „%s”"
 
 #: ../app/actions/edit-actions.c:337
 #, c-format
 msgid "_Fade %s..."
-msgstr "_Zanikanie %s…"
+msgstr "_Zanikanie „%s”…"
 
 #: ../app/actions/edit-actions.c:349
 msgid "_Undo"
@@ -8093,7 +8093,7 @@ msgid ""
 "with the \"View->Show Menubar\" command."
 msgstr ""
 "Powoduje, że domyślnie pasek menu jest widoczny. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie paska menu”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie paska menu”."
 
 #: ../app/config/gimprc-blurbs.h:338
 msgid ""
@@ -8101,7 +8101,7 @@ msgid ""
 "with the \"View->Show Rulers\" command."
 msgstr ""
 "Powoduje, że domyślnie linijki są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie linijek”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie linijek”."
 
 #: ../app/config/gimprc-blurbs.h:342
 msgid ""
@@ -8109,7 +8109,7 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "Powoduje, że domyślnie paski przewijania są widoczne. Ustawienie można "
-"zmienić w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie pasków "
+"zmienić w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie pasków "
 "przewijania”."
 
 #: ../app/config/gimprc-blurbs.h:346
@@ -8118,7 +8118,7 @@ msgid ""
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 "Powoduje, że domyślnie pasek stanu jest widoczny. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie paska stanu”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie paska stanu”."
 
 #: ../app/config/gimprc-blurbs.h:350
 msgid ""
@@ -8126,7 +8126,7 @@ msgid ""
 "with the \"View->Show Selection\" command."
 msgstr ""
 "Powoduje, że domyślnie zaznaczenie jest widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie zaznaczenia”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie zaznaczenia”."
 
 #: ../app/config/gimprc-blurbs.h:354
 msgid ""
@@ -8134,7 +8134,7 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "Powoduje, że domyślnie granice warstwy są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie granic warstwy”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie granic warstwy”."
 
 #: ../app/config/gimprc-blurbs.h:358
 msgid ""
@@ -8142,7 +8142,7 @@ msgid ""
 "with the \"View->Show Guides\" command."
 msgstr ""
 "Powoduje, że domyślnie prowadnice są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie prowadnic”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie prowadnic”."
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid ""
@@ -8150,7 +8150,7 @@ msgid ""
 "the \"View->Show Grid\" command."
 msgstr ""
 "Powoduje, że domyślnie siatka jest widoczna. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie siatki”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie siatki”."
 
 #: ../app/config/gimprc-blurbs.h:366
 msgid ""
@@ -8158,7 +8158,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Powoduje, że domyślnie punkty wzorcowe są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie punktów "
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie punktów "
 "wzorcowych”."
 
 #: ../app/config/gimprc-blurbs.h:370
@@ -9973,7 +9973,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1198
+#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1199
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Gradient"
@@ -11760,7 +11760,7 @@ msgstr "Kolor pierwszoplanowy/tła"
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
 msgid "Fade %s"
-msgstr "Zanikanie %s"
+msgstr "Zanikanie „%s”"
 
 #: ../app/dialogs/fade-dialog.c:121
 msgid "_Fade"
@@ -11807,7 +11807,7 @@ msgid ""
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 "Można użyć tego okna dialogowego do eksportu plików do wielu formatów. "
-"Należy użyć polecenia „Plik→Zapisz”, aby zapisać plik w formacie XCF "
+"Należy użyć polecenia „Plik → Zapisz”, aby zapisać plik w formacie XCF "
 "programu GIMP."
 
 #: ../app/dialogs/file-save-dialog.c:616
@@ -11824,8 +11824,8 @@ msgid ""
 "export to other file formats."
 msgstr ""
 "Można użyć tego okna dialogowego do zapisu w formacie XCF programu GIMP. "
-"Należy użyć polecenia „Plik→Wyeksportuj”, aby wyeksportować obraz do innych "
-"formatów."
+"Należy użyć polecenia „Plik → Wyeksportuj”, aby wyeksportować obraz do "
+"innych formatów."
 
 #: ../app/dialogs/file-save-dialog.c:623
 msgid "Take me to the Export dialog"
@@ -14081,16 +14081,16 @@ msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362 ../app/tools/gimpblendtool.c:251
-#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpfiltertool.c:301
-#: ../app/tools/gimpselectiontool.c:427
+#: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:219
+#: ../app/tools/gimpfiltertool.c:302 ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
 #: ../app/display/gimpdisplayshell-dnd.c:370 ../app/tools/gimpblendtool.c:258
-#: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
-#: ../app/tools/gimpfiltertool.c:308 ../app/tools/gimppainttool.c:278
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1842
-#: ../app/tools/gimpwarptool.c:579
+#: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:226
+#: ../app/tools/gimpcroptool.c:325 ../app/tools/gimpfiltertool.c:309
+#: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
+#: ../app/tools/gimptransformtool.c:1842 ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
@@ -14772,7 +14772,7 @@ msgstr "Tylko jaśniejsze luminancji"
 #: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode"
 msgid "Erase"
-msgstr "Zanikanie"
+msgstr "Wycieranie"
 
 #: ../app/operations/operations-enums.c:245
 msgctxt "layer-mode"
@@ -16627,7 +16627,7 @@ msgid "Blen_d"
 msgstr "_Gradient"
 
 #: ../app/tools/gimpblendtool.c:265 ../app/tools/gimpbucketfilltool.c:151
-#: ../app/tools/gimpfiltertool.c:315
+#: ../app/tools/gimpcagetool.c:233 ../app/tools/gimpfiltertool.c:316
 #: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1850 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
@@ -16637,17 +16637,17 @@ msgstr "Aktywna warstwa jest niewidoczna."
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:972 ../app/tools/gimppainttool.c:656
+#: ../app/tools/gimpblendtool.c:973 ../app/tools/gimppainttool.c:656
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
 
-#: ../app/tools/gimpblendtool.c:973
+#: ../app/tools/gimpblendtool.c:974
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s przesuwa całą linię"
 
-#: ../app/tools/gimpblendtool.c:977
+#: ../app/tools/gimpblendtool.c:978
 msgid "Blend: "
 msgstr "Gradient: "
 
@@ -16797,28 +16797,28 @@ msgstr ""
 "Wypełnienie pierwotnego położenia\n"
 "klatki kolorem"
 
-#: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1198
+#: ../app/tools/gimpcagetool.c:157 ../app/tools/gimpcagetool.c:1238
 msgid "Cage Transform"
 msgstr "Przekształcenie za pomocą klatki"
 
-#: ../app/tools/gimpcagetool.c:161
+#: ../app/tools/gimpcagetool.c:158
 msgid "Cage Transform: Deform a selection with a cage"
 msgstr ""
 "Przekształcenie za pomocą klatki: zniekształca zaznaczenie za pomocą klatki"
 
-#: ../app/tools/gimpcagetool.c:162
+#: ../app/tools/gimpcagetool.c:159
 msgid "_Cage Transform"
 msgstr "Przekształcenie za pomocą _klatki"
 
-#: ../app/tools/gimpcagetool.c:317 ../app/tools/gimpwarptool.c:319
+#: ../app/tools/gimpcagetool.c:732 ../app/tools/gimpwarptool.c:319
 msgid "Press ENTER to commit the transform"
 msgstr "Naciśnięcie klawisza Enter zatwierdzi przekształcenie"
 
-#: ../app/tools/gimpcagetool.c:1101
+#: ../app/tools/gimpcagetool.c:1144
 msgid "Computing Cage Coefficients"
 msgstr "Obliczanie współrzędnych klatki"
 
-#: ../app/tools/gimpcagetool.c:1249
+#: ../app/tools/gimpcagetool.c:1281
 msgid "Cage transform"
 msgstr "Przekształcenie za pomocą klatki"
 
@@ -17153,70 +17153,70 @@ msgstr "Kliknięcie lub naciśnięcie klawisza Enter wykadruje"
 msgid "There is no active layer to crop."
 msgstr "Brak aktywnej warstwy do wycięcia."
 
-#: ../app/tools/gimpcurvestool.c:147
+#: ../app/tools/gimpcurvestool.c:149
 msgid "Curves"
 msgstr "Krzywe"
 
-#: ../app/tools/gimpcurvestool.c:148
+#: ../app/tools/gimpcurvestool.c:150
 msgid "Curves Tool: Adjust color curves"
 msgstr "Krzywe: modyfikacja krzywych kolorów"
 
-#: ../app/tools/gimpcurvestool.c:149
+#: ../app/tools/gimpcurvestool.c:151
 msgid "_Curves..."
 msgstr "_Krzywe…"
 
-#: ../app/tools/gimpcurvestool.c:176
+#: ../app/tools/gimpcurvestool.c:178
 msgid "Import Curves"
 msgstr "Importowanie krzywych"
 
-#: ../app/tools/gimpcurvestool.c:177
+#: ../app/tools/gimpcurvestool.c:179
 msgid "Export Curves"
 msgstr "Eksportowanie krzywych"
 
-#: ../app/tools/gimpcurvestool.c:342
+#: ../app/tools/gimpcurvestool.c:344
 msgid "Click to add a control point"
 msgstr "Kliknięcie doda punkt kontrolny"
 
-#: ../app/tools/gimpcurvestool.c:347
+#: ../app/tools/gimpcurvestool.c:349
 msgid "Click to add control points to all channels"
 msgstr "Kliknięcie doda punkty kontrolne do wszystkich kanałów"
 
-#: ../app/tools/gimpcurvestool.c:352
+#: ../app/tools/gimpcurvestool.c:354
 msgid "Click to locate on curve"
 msgstr "Kliknięcie umieszcza na krzywej"
 
-#: ../app/tools/gimpcurvestool.c:354
+#: ../app/tools/gimpcurvestool.c:356
 #, c-format
 msgid "%s: add control point"
 msgstr "%s: dodaje punkt kontrolny"
 
-#: ../app/tools/gimpcurvestool.c:355
+#: ../app/tools/gimpcurvestool.c:357
 #, c-format
 msgid "%s: add control points to all channels"
 msgstr "%s: dodaje punkty kontrolne do wszystkich kanałów"
 
-#: ../app/tools/gimpcurvestool.c:408
+#: ../app/tools/gimpcurvestool.c:410
 msgid "Adjust Color Curves"
 msgstr "Modyfikacja krzywych kolorów"
 
-#: ../app/tools/gimpcurvestool.c:453 ../app/tools/gimplevelstool.c:360
+#: ../app/tools/gimpcurvestool.c:455 ../app/tools/gimplevelstool.c:360
 #: ../app/tools/gimpthresholdtool.c:218
 msgid "Cha_nnel:"
 msgstr "Ka_nał:"
 
-#: ../app/tools/gimpcurvestool.c:482 ../app/tools/gimplevelstool.c:387
+#: ../app/tools/gimpcurvestool.c:484 ../app/tools/gimplevelstool.c:387
 msgid "R_eset Channel"
 msgstr "_Przywróć kanał"
 
-#: ../app/tools/gimpcurvestool.c:579 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:581 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Typ krzywej:"
 
-#: ../app/tools/gimpcurvestool.c:646 ../app/tools/gimplevelstool.c:663
+#: ../app/tools/gimpcurvestool.c:648 ../app/tools/gimplevelstool.c:663
 msgid "Could not read header: "
 msgstr "Nie można odczytać nagłówka: "
 
-#: ../app/tools/gimpcurvestool.c:687
+#: ../app/tools/gimpcurvestool.c:689
 msgid "Use _old curves file format"
 msgstr "_Stary format pliku krzywych"
 
@@ -17328,36 +17328,36 @@ msgid "Color _managed"
 msgstr "_Zarządzanie kolorami"
 
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:427
+#: ../app/tools/gimpfiltertool.c:428
 msgid "Advanced Color Options"
 msgstr "Zaawansowane opcje kolorów"
 
-#: ../app/tools/gimpfiltertool.c:442
+#: ../app/tools/gimpfiltertool.c:443
 msgid "Apply filter in color managed space (slow)"
 msgstr "Zastosowanie filtru w przestrzeni z zarządzaniem kolorami (wolne)"
 
-#: ../app/tools/gimpfiltertool.c:443
+#: ../app/tools/gimpfiltertool.c:444
 msgid "Apply filter to the layer's raw pixels"
 msgstr "Zastosowanie filtru do surowych pikseli warstwy"
 
-#: ../app/tools/gimpfiltertool.c:658
+#: ../app/tools/gimpfiltertool.c:659
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:662
+#: ../app/tools/gimpfiltertool.c:663
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:666
+#: ../app/tools/gimpfiltertool.c:667
 msgid "Click to move the split guide"
 msgstr "Kliknięcie przesunie prowadnicę podziału"
 
-#: ../app/tools/gimpfiltertool.c:668
+#: ../app/tools/gimpfiltertool.c:669
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:669
+#: ../app/tools/gimpfiltertool.c:670
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
@@ -17591,7 +17591,7 @@ msgid "Fuzzy Select"
 msgstr "Różdżka"
 
 #: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:484
-#: ../app/tools/gimpgegltool.c:485 ../app/tools/gimpoperationtool.c:132
+#: ../app/tools/gimpgegltool.c:485 ../app/tools/gimpoperationtool.c:131
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -17599,7 +17599,7 @@ msgstr "Działanie biblioteki GEGL"
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "GEGL: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:134
+#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:133
 msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
@@ -18142,28 +18142,28 @@ msgstr ""
 msgid "_N-Point Deformation"
 msgstr "_Zniekształcanie za pomocą wielu punktów"
 
-#: ../app/tools/gimpoperationtool.c:133
+#: ../app/tools/gimpoperationtool.c:132
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Działanie: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpoperationtool.c:343
+#: ../app/tools/gimpoperationtool.c:342
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpoperationtool.c:344
+#: ../app/tools/gimpoperationtool.c:343
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:695
+#: ../app/tools/gimpoperationtool.c:694
 #, c-format
 msgid "Aux Input"
 msgstr "Wejście Aux"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:701
+#: ../app/tools/gimpoperationtool.c:700
 #, c-format
 msgid "Aux%d Input"
 msgstr "Wejście Aux%d"
@@ -20507,8 +20507,8 @@ msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
-"Zamienia bieżący komentarz obrazu na domyślny komentarz ustawiony "
-"w Edycja→Preferencje→Domyślny obraz."
+"Zamienia bieżący komentarz obrazu na domyślny komentarz ustawiony w Edycja → "
+"Preferencje → Domyślny obraz."
 
 #: ../app/widgets/gimpimagepropview.c:110
 msgid "Size in pixels:"
@@ -20667,31 +20667,47 @@ msgstr "Zakres celu"
 msgid "Gray Handling"
 msgstr "Obsługa odcieni szarości"
 
-#: ../app/widgets/gimppropgui-constructors.c:576
+#: ../app/widgets/gimppropgui-constructors.c:624
+msgid "Rotate matrix 90° counter-clockwise"
+msgstr "Obraca macierz o 90° w lewo"
+
+#: ../app/widgets/gimppropgui-constructors.c:630
+msgid "Rotate matrix 90° clockwise"
+msgstr "Obraca macierz o 90° w prawo"
+
+#: ../app/widgets/gimppropgui-constructors.c:636
+msgid "Flip matrix horizontally"
+msgstr "Odbija macierz poziomo"
+
+#: ../app/widgets/gimppropgui-constructors.c:642
+msgid "Flip matrix vertically"
+msgstr "Odbija macierz pionowo"
+
+#: ../app/widgets/gimppropgui-constructors.c:753
 msgid "Red channel"
 msgstr "Kanał czerwony"
 
-#: ../app/widgets/gimppropgui-constructors.c:600
+#: ../app/widgets/gimppropgui-constructors.c:777
 msgid "Green channel"
 msgstr "Kanał zielony"
 
-#: ../app/widgets/gimppropgui-constructors.c:624
+#: ../app/widgets/gimppropgui-constructors.c:801
 msgid "Blue channel"
 msgstr "Kanał niebieski"
 
-#: ../app/widgets/gimppropgui-constructors.c:682
+#: ../app/widgets/gimppropgui-constructors.c:859
 msgid "Frequencies"
 msgstr "Częstotliwości"
 
-#: ../app/widgets/gimppropgui-constructors.c:691
+#: ../app/widgets/gimppropgui-constructors.c:868
 msgid "Contours"
 msgstr "Kontury"
 
-#: ../app/widgets/gimppropgui-constructors.c:700
+#: ../app/widgets/gimppropgui-constructors.c:877
 msgid "Sharp Edges"
 msgstr "Ostre krawędzie"
 
-#: ../app/widgets/gimppropgui-constructors.c:709
+#: ../app/widgets/gimppropgui-constructors.c:886
 msgid "Other Options"
 msgstr "Inne opcje"
 
