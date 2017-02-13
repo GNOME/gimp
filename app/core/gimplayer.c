@@ -31,6 +31,8 @@
 
 #include "core-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-loops.h"
@@ -2202,6 +2204,9 @@ gimp_layer_set_blend_space (GimpLayer           *layer,
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
+  if (! gimp_layer_mode_is_blend_space_mutable (layer->mode))
+    return;
+
   if (layer->blend_space != blend_space)
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
@@ -2238,6 +2243,9 @@ gimp_layer_set_composite_space (GimpLayer           *layer,
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
+  if (! gimp_layer_mode_is_composite_space_mutable (layer->mode))
+    return;
+
   if (layer->composite_space != composite_space)
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))
@@ -2273,6 +2281,9 @@ gimp_layer_set_composite_mode (GimpLayer              *layer,
                                gboolean                push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (! gimp_layer_mode_is_composite_mode_mutable (layer->mode))
+    return;
 
   if (layer->composite_mode != composite_mode)
     {

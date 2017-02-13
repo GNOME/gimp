@@ -24,6 +24,8 @@
 
 #include "actions-types.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -342,11 +344,6 @@ static const GimpRadioActionEntry layers_blend_space_actions[] =
   { "layers-blend-space-rgb-perceptual", NULL,
     NC_("layers-action", "RGB (perceptual)"), NULL, NULL,
     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
-    NULL },
-
-  { "layers-blend-space-lab", NULL,
-    NC_("layers-action", "LAB"), NULL, NULL,
-    GIMP_LAYER_COLOR_SPACE_LAB,
     NULL }
 };
 
@@ -365,11 +362,6 @@ static const GimpRadioActionEntry layers_composite_space_actions[] =
   { "layers-composite-space-rgb-perceptual", NULL,
     NC_("layers-action", "RGB (perceptual)"), NULL, NULL,
     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
-    NULL },
-
-  { "layers-composite-space-lab", NULL,
-    NC_("layers-action", "LAB"), NULL, NULL,
-    GIMP_LAYER_COLOR_SPACE_LAB,
     NULL }
 };
 
@@ -751,6 +743,9 @@ layers_actions_update (GimpActionGroup *group,
   gboolean       writable       = FALSE;
   gboolean       movable        = FALSE;
   gboolean       children       = FALSE;
+  gboolean       bs_mutable     = FALSE;
+  gboolean       cs_mutable     = FALSE;
+  gboolean       cm_mutable     = FALSE;
   GList         *next           = NULL;
   GList         *next_visible   = NULL;
   GList         *prev           = NULL;
@@ -766,9 +761,10 @@ layers_actions_update (GimpActionGroup *group,
 
       if (layer)
         {
-          const gchar *action = NULL;
-          GList       *layer_list;
-          GList       *list;
+          GimpLayerMode  mode   = gimp_layer_get_mode (layer);
+          const gchar   *action = NULL;
+          GList         *layer_list;
+          GList         *list;
 
           switch (gimp_layer_get_blend_space (layer))
             {
@@ -778,11 +774,12 @@ layers_actions_update (GimpActionGroup *group,
               action = "layers-blend-space-rgb-linear"; break;
             case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
               action = "layers-blend-space-rgb-perceptual"; break;
-            case GIMP_LAYER_COLOR_SPACE_LAB:
-              action = "layers-blend-space-lab"; break;
+            default:
+              action = NULL; break; /* can't happen */
             }
 
-          gimp_action_group_set_action_active (group, action, TRUE);
+          if (action)
+            gimp_action_group_set_action_active (group, action, TRUE);
 
           switch (gimp_layer_get_composite_space (layer))
             {
@@ -792,11 +789,12 @@ layers_actions_update (GimpActionGroup *group,
               action = "layers-composite-space-rgb-linear"; break;
             case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
               action = "layers-composite-space-rgb-perceptual"; break;
-            case GIMP_LAYER_COLOR_SPACE_LAB:
-              action = "layers-composite-space-lab"; break;
+            default:
+              action = NULL; break; /* can't happen */
             }
 
-          gimp_action_group_set_action_active (group, action, TRUE);
+          if (action)
+            gimp_action_group_set_action_active (group, action, TRUE);
 
           switch (gimp_layer_get_composite_mode (layer))
             {
@@ -813,6 +811,10 @@ layers_actions_update (GimpActionGroup *group,
             }
 
           gimp_action_group_set_action_active (group, action, TRUE);
+
+          bs_mutable = gimp_layer_mode_is_blend_space_mutable (mode);
+          cs_mutable = gimp_layer_mode_is_composite_space_mutable (mode);
+          cm_mutable = gimp_layer_mode_is_composite_mode_mutable (mode);
 
           mask           = gimp_layer_get_mask (layer);
           lock_alpha     = gimp_layer_get_lock_alpha (layer);
@@ -919,21 +921,19 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-lock-alpha", can_lock_alpha);
   SET_ACTIVE    ("layers-lock-alpha", lock_alpha);
 
-  SET_SENSITIVE ("layers-blend-space-auto",           layer);
-  SET_SENSITIVE ("layers-blend-space-rgb-linear",     layer);
-  SET_SENSITIVE ("layers-blend-space-rgb-perceptual", layer);
-  SET_SENSITIVE ("layers-blend-space-lab",            layer);
+  SET_SENSITIVE ("layers-blend-space-auto",           layer && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-rgb-linear",     layer && bs_mutable);
+  SET_SENSITIVE ("layers-blend-space-rgb-perceptual", layer && bs_mutable);
 
-  SET_SENSITIVE ("layers-composite-space-auto",           layer);
-  SET_SENSITIVE ("layers-composite-space-rgb-linear",     layer);
-  SET_SENSITIVE ("layers-composite-space-rgb-perceptual", layer);
-  SET_SENSITIVE ("layers-composite-space-lab",            layer);
+  SET_SENSITIVE ("layers-composite-space-auto",           layer && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-rgb-linear",     layer && cs_mutable);
+  SET_SENSITIVE ("layers-composite-space-rgb-perceptual", layer && cs_mutable);
 
-  SET_SENSITIVE ("layers-composite-mode-auto",     layer);
-  SET_SENSITIVE ("layers-composite-mode-src-over", layer);
-  SET_SENSITIVE ("layers-composite-mode-src-atop", layer);
-  SET_SENSITIVE ("layers-composite-mode-src-in",   layer);
-  SET_SENSITIVE ("layers-composite-mode-dst-atop", layer);
+  SET_SENSITIVE ("layers-composite-mode-auto",     layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-src-over", layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-src-atop", layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-src-in",   layer && cm_mutable);
+  SET_SENSITIVE ("layers-composite-mode-dst-atop", layer && cm_mutable);
 
   SET_SENSITIVE ("layers-mask-add",             layer && !fs && !ac && !mask && !children);
   SET_SENSITIVE ("layers-mask-add-button",      layer && !fs && !ac && !children);

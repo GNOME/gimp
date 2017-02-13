@@ -9,13 +9,11 @@
       <menuitem action="layers-blend-space-auto" />
       <menuitem action="layers-blend-space-rgb-linear" />
       <menuitem action="layers-blend-space-rgb-perceptual" />
-      <menuitem action="layers-blend-space-lab" />
     </menu>
     <menu action="layers-composite-space-menu" name="Composite Space">
       <menuitem action="layers-composite-space-auto" />
       <menuitem action="layers-composite-space-rgb-linear" />
       <menuitem action="layers-composite-space-rgb-perceptual" />
-      <menuitem action="layers-composite-space-lab" />
     </menu>
     <menu action="layers-composite-mode-menu" name="Composite Mode">
       <menuitem action="layers-composite-mode-auto" />
