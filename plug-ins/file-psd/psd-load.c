@@ -1603,6 +1603,11 @@ add_layers (gint32     image_id,
                   g_free (pixels);
                 }
             }
+
+          /* Set layer color tag */
+          gimp_item_set_color_tag(layer_id,
+                                  psd_to_gimp_layer_color_tag(lyr_a[lidx]->color_tag[0]));
+
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             if (lyr_chn[cidx])
               g_free (lyr_chn[cidx]);

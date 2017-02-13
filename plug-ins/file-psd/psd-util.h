@@ -81,4 +81,8 @@ GimpLayerMode           psd_to_gimp_blend_mode (const gchar            *psd_mode
 gchar *                 gimp_to_psd_blend_mode (GimpLayerMode           layer_mode,
                                                 GimpLayerCompositeMode  layer_composite);
 
+GimpColorTag            psd_to_gimp_layer_color_tag (guint16 layer_color_tag);
+
+guint16                 gimp_to_psd_layer_color_tag (GimpColorTag layer_color_tag);
+
 #endif /* __PSD_UTIL_H__ */

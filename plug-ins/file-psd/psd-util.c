@@ -1019,3 +1019,93 @@ gimp_layer_mode_effects_name (GimpLayerMode mode)
   err_name = g_strdup_printf ("UNKNOWN (%d)", mode);
   return err_name;
 }
+
+GimpColorTag
+psd_to_gimp_layer_color_tag (guint16 layer_color_tag)
+{
+  GimpColorTag colorTag;
+
+  switch (layer_color_tag)
+    {
+    case 1:
+      colorTag = GIMP_COLOR_TAG_RED;
+      break;
+
+    case 2:
+      colorTag = GIMP_COLOR_TAG_ORANGE;
+      break;
+
+    case 3:
+      colorTag = GIMP_COLOR_TAG_YELLOW;
+      break;
+
+    case 4:
+      colorTag = GIMP_COLOR_TAG_GREEN;
+      break;
+
+    case 5:
+      colorTag = GIMP_COLOR_TAG_BLUE;
+      break;
+
+    case 6:
+      colorTag = GIMP_COLOR_TAG_VIOLET;
+      break;
+
+    case 7:
+      colorTag = GIMP_COLOR_TAG_GRAY;
+      break;
+
+    default:
+      if (CONVERSION_WARNINGS)
+        g_message ("Unsupported Photoshop layer color tag: %i. GIMP layer color tag set to none.",
+                       layer_color_tag);
+      colorTag = GIMP_COLOR_TAG_NONE;
+    }
+
+  return colorTag;
+}
+
+guint16
+gimp_to_psd_layer_color_tag (GimpColorTag layer_color_tag)
+{
+  guint16 color_tag;
+
+  switch (layer_color_tag)
+    {
+    case GIMP_COLOR_TAG_RED:
+        color_tag = 1;
+      break;
+
+    case GIMP_COLOR_TAG_ORANGE:
+        color_tag = 2;
+      break;
+
+    case GIMP_COLOR_TAG_YELLOW:
+        color_tag = 3;
+      break;
+
+    case GIMP_COLOR_TAG_GREEN:
+        color_tag = 4;
+      break;
+
+    case GIMP_COLOR_TAG_BLUE:
+        color_tag = 5;
+      break;
+
+    case GIMP_COLOR_TAG_VIOLET:
+        color_tag = 6;
+      break;
+
+    case GIMP_COLOR_TAG_GRAY:
+        color_tag = 7;
+      break;
+
+    default:
+      if (CONVERSION_WARNINGS)
+        g_message ("Photoshop doesn't support GIMP layer color tag: %i. Photoshop layer color tag set to none.",
+                   layer_color_tag);
+        color_tag = 0;
+    }
+
+  return color_tag;
+}

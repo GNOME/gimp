@@ -73,6 +73,7 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
+#include "psd-util.h"
 #include "psd-save.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -1112,7 +1113,19 @@ save_layer_and_mask (FILE   *fd,
       write_pascalstring (fd, layerName, 4, "layer name");
       IFDBG printf ("\t\tLayer name: %s\n", layerName);
 
+      /* Additional layer information blocks */
+      /* Unicode layer name */
       write_datablock_luni(fd, layerName, "luni extra data block");
+
+      /* Layer color tag */
+      xfwrite (fd, "8BIMlclr", 8, "sheet color signature");
+      write_gint32 (fd, 8, "sheet color size");
+      write_gint16 (fd,
+                    gimp_to_psd_layer_color_tag(gimp_item_get_color_tag(PSDImageData.lLayers[i])),
+                    "sheet color code");
+      write_gint16 (fd, 0, "sheet color unused value");
+      write_gint16 (fd, 0, "sheet color unused value");
+      write_gint16 (fd, 0, "sheet color unused value");
 
       /* Write real length for: Extra data */
 

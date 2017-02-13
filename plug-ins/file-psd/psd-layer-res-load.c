@@ -169,6 +169,11 @@ static gint     load_resource_lyid    (const PSDlayerres     *res_a,
                                        FILE                  *f,
                                        GError               **error);
 
+static gint     load_resource_lclr    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       FILE                  *f,
+                                       GError               **error);
+
 static gint     load_resource_lsct    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        FILE                  *f,
@@ -266,6 +271,9 @@ load_layer_resource (PSDlayerres  *res_a,
 
       else if (memcmp (res_a->key, PSD_LPRP_ID, 4) == 0)
 	load_resource_lyid (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LPRP_COLOR, 4) == 0)
+	load_resource_lclr (res_a, lyr_a, f, error);
 
       else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0)
 	load_resource_lsct (res_a, lyr_a, f, error);
@@ -492,6 +500,30 @@ load_resource_lyid (const PSDlayerres  *res_a,
     }
   lyr_a->id = GUINT32_FROM_BE (lyr_a->id);
   IFDBG(3) g_debug ("Layer id: %i", lyr_a->id);
+
+  return 0;
+}
+
+static gint
+load_resource_lclr (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
+{
+  /* Load layer sheet color code */
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Sheet color",
+                    res_a->key);
+
+  if (fread (lyr_a->color_tag, 8, 1, f) < 1)
+    {
+      psd_set_error (feof (f), errno, error);
+      return -1;
+    }
+
+  /* Photoshop only uses color_tag[0] to store a color code */
+  lyr_a->color_tag[0] = GUINT16_FROM_BE(lyr_a->color_tag[0]);
+
+  IFDBG(3) g_debug ("Layer sheet color: %i", lyr_a->color_tag[0]);
 
   return 0;
 }
