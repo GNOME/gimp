@@ -295,7 +295,7 @@
         },
         {
             "name": "gegl",
-            "config-opts": [ "--disable-docs" ],
+            "config-opts": [ "--disable-docs", "--disable-introspection" ],
             "cleanup": [ "/bin" ],
             "sources": [
                 {
@@ -317,11 +317,25 @@
         },
         {
             "name": "gimp",
+            "build-options" : {
+                "env": {
+                    "PATH": "/run/build/gimp/tmp-bin:/app/bin:/usr/bin"
+                }
+            },
             "config-opts": [ "--disable-docs", "--disable-gtk-doc", "--disable-gtk-doc-html", "--enable-vector-icons" ],
             "sources": [
                 {
                     "type": "git",
                     "url": "git://git.gnome.org/gimp"
+                },
+                {
+                    "type": "script",
+                    "commands": [
+                        "#!/bin/sh",
+                        "python3 /usr/bin/gdbus-codegen $@"
+                    ],
+                    "dest-filename": "gdbus-codegen",
+                    "dest": "tmp-bin/"
                 }
             ]
         }
