@@ -84,11 +84,11 @@ query (void)
 
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Wavelet decompose"),
-                          "compute wavelet scales",
+                          "Compute and render wavelet scales",
                           "Miroslav Talasek <miroslav.talasek@seznam.cz>",
                           "Miroslav Talasek <miroslav.talasek@seznam.cz>",
                           "19january 2017",
-                          N_("Wavelet-decompose"),
+                          N_("_Wavelet-decompose..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
