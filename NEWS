@@ -11,6 +11,15 @@ Overview of Changes from GIMP 2.8.20 to GIMP 2.8.22
 ===================================================
 
 
+macOS DMG:
+
+ - make the launcher script also set BABL_PATH
+ - add patch for GTK+ Bug 743717 to the build which concerns crashes
+   during clipboard operations with a clipboard manager active
+ - add patch for GTK+ Bug 767091 to the build which concerns crashes
+   on some drag & drop operations
+
+
 Plug-ins:
 
  - fix for CVE-2007-3126, a bug in the ICO plug-in which allowed
