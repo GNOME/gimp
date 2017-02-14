@@ -92,7 +92,7 @@ RebootRequiredFirst=La versione precedente di GIMP è stata rimossa con successo,
 ErrorRestartingSetup=Si è verificato un errore durante il riavvio dell'installatore. (%1)
 
 ;displayed while the files are being extracted; note the capitalisation!
-Billboard1=Ricorda: GIMP è Software Libero.%n%nVisitare
+Billboard1=Ricorda: GIMP è Software Libero.%n%nVisita
 ;www.gimp.org (displayed between Billboard1 and Billboard2)
 Billboard2=per aggiornarlo in libertà.
 
