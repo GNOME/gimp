@@ -13,20 +13,22 @@ Overview of Changes from GIMP 2.8.20 to GIMP 2.8.22
 
 macOS DMG:
 
- - make the launcher script also set BABL_PATH
- - add patch for GTK+ Bug 743717 to the build which concerns crashes
+ - Make the launcher script also set BABL_PATH
+ - Add patch for GTK+ Bug 743717 to the build which concerns crashes
    during clipboard operations with a clipboard manager active
- - add patch for GTK+ Bug 767091 to the build which concerns crashes
+ - Add patch for GTK+ Bug 767091 to the build which concerns crashes
    on some drag & drop operations
 
 
 Plug-ins:
 
- - fix for CVE-2007-3126, a bug in the ICO plug-in which allowed
+ - Fix for CVE-2007-3126, a bug in the ICO plug-in which allowed
    context-dependent attackers to cause a denial of service (crash)
    via an ICO file with an InfoHeader containing a Height of zero.
    We couldn't reproduce any crash in recent version, but fixed the
-   error messages for good measure.
+   error messages for good measure
+ - Avoid creating wrong layer group structure when importing PSD
+   files (already fixed in 2.8.20, didn't make it to the NEWS)
 
 
 Updated Translations:
@@ -49,7 +51,7 @@ Core:
    and could lead to unnecessarily large files
  - Text layer created by gimp-text-fontname doesn't respect border
    when resized
- - avoid seeking when saving XCF files to prevent corruption with
+ - Avoid seeking when saving XCF files to prevent corruption with
    file network shares (fixed since 2014, but not mentioned in NEWS yet)
 
 
