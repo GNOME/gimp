@@ -35,6 +35,8 @@ gboolean          gimp_layer_mode_is_composite_mode_mutable  (GimpLayerMode     
 GimpLayerColorSpace      gimp_layer_mode_get_blend_space     (GimpLayerMode       mode);
 GimpLayerColorSpace      gimp_layer_mode_get_composite_space (GimpLayerMode       mode);
 GimpLayerCompositeMode   gimp_layer_mode_get_composite_mode  (GimpLayerMode       mode);
+GimpLayerCompositeMode   gimp_layer_mode_get_paint_composite_mode
+                                                             (GimpLayerMode       mode);
 
 const gchar            * gimp_layer_mode_get_operation       (GimpLayerMode       mode);
 

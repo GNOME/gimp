@@ -905,7 +905,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
       gimp_applicator_set_mode (core->applicator, paint_mode,
                                 GIMP_LAYER_COLOR_SPACE_AUTO,
                                 GIMP_LAYER_COLOR_SPACE_AUTO,
-                                GIMP_LAYER_COMPOSITE_SRC_OVER);
+                                gimp_layer_mode_get_paint_composite_mode (paint_mode));
 
       /*  apply the paint area to the image  */
       gimp_applicator_blit (core->applicator,
