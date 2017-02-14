@@ -7,6 +7,27 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.8.20 to GIMP 2.8.22
+===================================================
+
+
+Plug-ins:
+
+ - fix for CVE-2007-3126, a bug in the ICO plug-in which allowed
+   context-dependent attackers to cause a denial of service (crash)
+   via an ICO file with an InfoHeader containing a Height of zero.
+   We couldn't reproduce any crash in recent version, but fixed the
+   error messages for good measure.
+
+
+Updated Translations:
+
+ - Chinese (PRC)
+ - Italian
+ - Slovenian
+ - Swedish
+
+
 Overview of Changes from GIMP 2.8.18 to GIMP 2.8.20
 ===================================================
 
