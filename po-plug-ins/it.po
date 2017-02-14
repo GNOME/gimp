@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-09 19:08+0100\n"
-"PO-Revision-Date: 2016-11-09 19:09+0100\n"
+"POT-Creation-Date: 2017-02-14 12:13+0100\n"
+"PO-Revision-Date: 2017-02-14 12:36+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -3987,7 +3987,7 @@ msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Errore! Per salvare il file, deve essere aggiunta almeno un'immagine!"
 
 #: ../plug-ins/common/file-pdf-save.c:1351
-#: ../plug-ins/print/print-draw-page.c:223
+#: ../plug-ins/print/print-draw-page.c:228
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 "Impossibile gestire la dimensione (orizzontale o verticale) dell'immagine."
@@ -6520,12 +6520,12 @@ msgstr "Crea una texture casuale a effetto nuvola"
 
 #: ../plug-ins/common/noise-solid.c:182
 msgid "_Solid Noise..."
-msgstr "Disturbo tinta _unita..."
+msgstr "Di_sturbo pieno..."
 
 #. Dialog initialization
 #: ../plug-ins/common/noise-solid.c:315 ../plug-ins/common/noise-solid.c:563
 msgid "Solid Noise"
-msgstr "Disturbo in tinta unita"
+msgstr "Disturbo pieno"
 
 #: ../plug-ins/common/noise-solid.c:616
 msgid "_Detail:"
@@ -10448,7 +10448,7 @@ msgstr "Copia la trama della carta selezionata come sfondo"
 
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid colored background"
-msgstr "Sfondo con colore in tinta unita"
+msgstr "Sfondo colorato in tinta unita"
 
 #: ../plug-ins/gimpressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
