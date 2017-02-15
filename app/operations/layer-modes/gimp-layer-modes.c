@@ -25,6 +25,33 @@
 
 #include "../operations-types.h"
 
+#include "operations/layer-modes-legacy/gimpoperationadditionlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationburnlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationdarkenonlylegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationdifferencelegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationdividelegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationdodgelegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationgrainextractlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationgrainmergelegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationhardlightlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationhsvcolorlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationhsvhuelegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationhsvsaturationlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationhsvvaluelegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationlightenonlylegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationmultiplylegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationscreenlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationsoftlightlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationsubtractlegacy.h"
+
+#include "gimpoperationantierase.h"
+#include "gimpoperationbehind.h"
+#include "gimpoperationcolorerase.h"
+#include "gimpoperationdissolve.h"
+#include "gimpoperationerase.h"
+#include "gimpoperationnormal.h"
+#include "gimpoperationreplace.h"
+
 #include "gimp-layer-modes.h"
 
 
@@ -34,6 +61,7 @@ struct _GimpLayerModeInfo
 {
   GimpLayerMode          layer_mode;
   const gchar           *op_name;
+  GimpLayerModeFunc      function;
   GimpLayerModeFlags     flags;
   GimpLayerCompositeMode paint_composite_mode;
   GimpLayerCompositeMode composite_mode;
@@ -44,10 +72,11 @@ struct _GimpLayerModeInfo
 
 /*  static variables  */
 
-static const GimpLayerModeInfo layer_mode_infos[]=
+static const GimpLayerModeInfo layer_mode_infos[] =
 {
   { GIMP_LAYER_MODE_NORMAL,
     "gimp:normal",
+    gimp_operation_normal_process,
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -55,6 +84,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DISSOLVE,
     "gimp:dissolve",
+    gimp_operation_dissolve_process,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA     |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
@@ -64,6 +94,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_BEHIND,
     "gimp:behind",
+    gimp_operation_behind_process,
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_DST_ATOP,
     GIMP_LAYER_COMPOSITE_DST_ATOP
@@ -71,6 +102,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_MULTIPLY_LEGACY,
     "gimp:multiply-legacy",
+    gimp_operation_multiply_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -81,6 +113,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SCREEN_LEGACY,
     "gimp:screen-legacy",
+    gimp_operation_screen_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -90,7 +123,8 @@ static const GimpLayerModeInfo layer_mode_infos[]=
   },
 
   { GIMP_LAYER_MODE_OVERLAY_LEGACY,
-    "gimp:overlay-legacy",
+    "gimp:softlight-legacy",
+    gimp_operation_softlight_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -101,6 +135,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DIFFERENCE_LEGACY,
     "gimp:difference-legacy",
+    gimp_operation_difference_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -111,6 +146,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_ADDITION_LEGACY,
     "gimp:addition-legacy",
+    gimp_operation_addition_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -121,6 +157,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SUBTRACT_LEGACY,
     "gimp:subtract-legacy",
+    gimp_operation_subtract_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -131,6 +168,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,
     "gimp:darken-only-legacy",
+    gimp_operation_darken_only_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -141,6 +179,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
     "gimp:lighten-only-legacy",
+    gimp_operation_lighten_only_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -151,6 +190,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HSV_HUE_LEGACY,
     "gimp:hsv-hue-legacy",
+    gimp_operation_hsv_hue_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -161,6 +201,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,
     "gimp:hsv-saturation-legacy",
+    gimp_operation_hsv_saturation_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -171,6 +212,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HSV_COLOR_LEGACY,
     "gimp:hsv-color-legacy",
+    gimp_operation_hsv_color_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -181,6 +223,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HSV_VALUE_LEGACY,
     "gimp:hsv-value-legacy",
+    gimp_operation_hsv_value_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -191,6 +234,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DIVIDE_LEGACY,
     "gimp:divide-legacy",
+    gimp_operation_divide_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -201,6 +245,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DODGE_LEGACY,
     "gimp:dodge-legacy",
+    gimp_operation_dodge_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -211,6 +256,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_BURN_LEGACY,
     "gimp:burn-legacy",
+    gimp_operation_burn_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -221,6 +267,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HARDLIGHT_LEGACY,
     "gimp:hardlight-legacy",
+    gimp_operation_hardlight_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -231,6 +278,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,
     "gimp:softlight-legacy",
+    gimp_operation_softlight_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -241,6 +289,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,
     "gimp:grain-extract-legacy",
+    gimp_operation_grain_extract_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -251,6 +300,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,
     "gimp:grain-merge-legacy",
+    gimp_operation_grain_merge_legacy_process,
     GIMP_LAYER_MODE_FLAG_LEGACY                    |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -261,6 +311,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_COLOR_ERASE,
     "gimp:color-erase",
+    gimp_operation_color_erase_process,
     0,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -268,6 +319,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_OVERLAY,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -277,6 +329,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LCH_HUE,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -287,6 +340,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LCH_CHROMA,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -297,6 +351,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LCH_COLOR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -307,6 +362,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LCH_LIGHTNESS,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -317,12 +373,14 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_NORMAL_LINEAR,
     "gimp:normal",
+    gimp_operation_normal_process,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
   },
 
   { GIMP_LAYER_MODE_BEHIND_LINEAR,
     "gimp:behind",
+    gimp_operation_behind_process,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_DST_ATOP,
@@ -331,6 +389,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_MULTIPLY,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -340,6 +399,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_MULTIPLY_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -349,6 +409,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SCREEN,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -358,6 +419,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SCREEN_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -367,6 +429,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_OVERLAY_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -376,6 +439,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DIFFERENCE,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -385,6 +449,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -394,6 +459,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_ADDITION,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -403,6 +469,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_ADDITION_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -412,6 +479,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SUBTRACT,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -421,6 +489,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SUBTRACT_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -430,6 +499,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DARKEN_ONLY,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -440,6 +510,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LIGHTEN_ONLY,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -450,6 +521,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HSV_HUE,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -460,6 +532,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HSV_SATURATION,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -470,6 +543,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HSV_COLOR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -480,6 +554,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HSV_VALUE,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -490,6 +565,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DIVIDE,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -499,6 +575,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DIVIDE_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -508,6 +585,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DODGE,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -517,6 +595,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_DODGE_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -526,6 +605,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_BURN,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -535,6 +615,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_BURN_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -544,6 +625,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HARDLIGHT,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -553,6 +635,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -562,6 +645,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SOFTLIGHT,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -571,6 +655,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -580,6 +665,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_GRAIN_EXTRACT,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -589,6 +675,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -598,6 +685,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_GRAIN_MERGE,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -607,6 +695,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -616,6 +705,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_VIVID_LIGHT,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -625,6 +715,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -634,6 +725,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_PIN_LIGHT,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -643,6 +735,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -652,6 +745,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LINEAR_LIGHT,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -661,6 +755,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -670,6 +765,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HARD_MIX,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -679,6 +775,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_HARD_MIX_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -688,6 +785,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_EXCLUSION,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -697,6 +795,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_EXCLUSION_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -706,6 +805,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LINEAR_BURN,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -715,6 +815,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -724,6 +825,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -733,6 +835,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -742,6 +845,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -751,6 +855,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
     "gimp:layer-mode",
+    gimp_operation_layer_mode_process_pixels,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -760,6 +865,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_ERASE,
     "gimp:erase",
+    gimp_operation_erase_process,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -768,6 +874,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_REPLACE,
     "gimp:replace",
+    gimp_operation_replace_process,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -776,6 +883,7 @@ static const GimpLayerModeInfo layer_mode_infos[]=
 
   { GIMP_LAYER_MODE_ANTI_ERASE,
     "gimp:anti-erase",
+    gimp_operation_anti_erase_process,
     GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA     |
     GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
     GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
@@ -1248,6 +1356,15 @@ gimp_layer_mode_get_operation (GimpLayerMode  mode)
   if (!info)
     return "gimp:layer-mode";
   return info->op_name;
+}
+
+GimpLayerModeFunc
+gimp_layer_mode_get_function (GimpLayerMode  mode)
+{
+  const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
+  if (!info)
+    return gimp_operation_layer_mode_process_pixels;
+  return info->function;
 }
 
 static gboolean

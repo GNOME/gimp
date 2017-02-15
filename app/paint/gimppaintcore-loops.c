@@ -26,7 +26,6 @@
 
 #include "core/gimptempbuf.h"
 
-#include "operations/layer-modes/gimplayermodefunctions.h"
 #include "operations/layer-modes/gimpoperationlayermode.h"
 
 #include "gimppaintcore-loops.h"
@@ -316,7 +315,7 @@ do_layer_blend (GeglBuffer    *src_buffer,
   paint_data   = (gfloat *) gimp_temp_buf_get_data (paint_buf);
 
   linear          = gimp_layer_mode_wants_linear_data (paint_mode);
-  apply_func      = gimp_get_layer_mode_function (paint_mode);
+  apply_func      = gimp_layer_mode_get_function (paint_mode);
   blend_space     = gimp_layer_mode_get_blend_space (paint_mode);
   composite_space = gimp_layer_mode_get_composite_space (paint_mode);
   composite_mode  = gimp_layer_mode_get_paint_composite_mode (paint_mode);

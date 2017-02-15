@@ -52,7 +52,7 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "</node>"
 "</gegl>";
 
-GimpLayerModeFunc gimp_operation_normal_process = NULL;
+static GimpLayerModeFunc _gimp_operation_normal_process = NULL;
 
 
 static void
@@ -71,16 +71,16 @@ gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
                                  "reference-composition", reference_xml,
                                  NULL);
 
-  gimp_operation_normal_process = gimp_operation_normal_process_core;
+  _gimp_operation_normal_process = gimp_operation_normal_process_core;
 
 #if COMPILE_SSE2_INTRINISICS
   if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE2)
-    gimp_operation_normal_process = gimp_operation_normal_process_sse2;
+    _gimp_operation_normal_process = gimp_operation_normal_process_sse2;
 #endif /* COMPILE_SSE2_INTRINISICS */
 
 #if COMPILE_SSE4_1_INTRINISICS
   if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE4_1)
-    gimp_operation_normal_process = gimp_operation_normal_process_sse4;
+    _gimp_operation_normal_process = gimp_operation_normal_process_sse4;
 #endif /* COMPILE_SSE4_1_INTRINISICS */
 
   point_class->process         = gimp_operation_normal_process;
@@ -89,6 +89,20 @@ gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
 static void
 gimp_operation_normal_init (GimpOperationNormal *self)
 {
+}
+
+gboolean
+gimp_operation_normal_process (GeglOperation       *op,
+                               void                *in,
+                               void                *aux,
+                               void                *mask,
+                               void                *out,
+                               glong                samples,
+                               const GeglRectangle *roi,
+                               gint                 level)
+{
+  return _gimp_operation_normal_process (op, in, aux, mask, out,
+                                         samples, roi, level);
 }
 
 gboolean

@@ -21,10 +21,9 @@ noinst_LIBRARIES = \
 libapplayermodes_generic_a_sources = \
 	gimp-layer-modes.c		\
 	gimp-layer-modes.h		\
+	\
 	gimpoperationlayermode.c	\
 	gimpoperationlayermode.h	\
-	gimplayermodefunctions.c	\
-	gimplayermodefunctions.h	\
 	\
 	gimpoperationantierase.c	\
 	gimpoperationantierase.h	\

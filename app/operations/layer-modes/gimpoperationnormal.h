@@ -49,7 +49,14 @@ struct _GimpOperationNormalClass
 
 GType    gimp_operation_normal_get_type     (void) G_GNUC_CONST;
 
-extern GimpLayerModeFunc gimp_operation_normal_process;
+gboolean gimp_operation_normal_process      (GeglOperation       *op,
+                                             void                *in,
+                                             void                *aux,
+                                             void                *mask,
+                                             void                *out,
+                                             glong                samples,
+                                             const GeglRectangle *roi,
+                                             gint                 level);
 
 gboolean gimp_operation_normal_process_core (GeglOperation       *op,
                                              void                *in,
