@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-10 16:33+0100\n"
-"PO-Revision-Date: 2017-01-10 16:34+0100\n"
+"POT-Creation-Date: 2017-02-15 01:32+0100\n"
+"PO-Revision-Date: 2017-02-15 01:33+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1911,22 +1911,22 @@ msgstr "Ponawia ostatnie działanie, które zostało cofnięte"
 #: ../app/actions/edit-actions.c:84
 msgctxt "edit-action"
 msgid "Strong Undo"
-msgstr "Silne cofnij"
+msgstr "Silne cofnięcie"
 
 #: ../app/actions/edit-actions.c:85
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
-msgstr "Cofa ostatnie działanie, pomijając widoczne zmiany"
+msgstr "Cofa ostatnie działanie, pomijając zmiany widoczności"
 
 #: ../app/actions/edit-actions.c:90
 msgctxt "edit-action"
 msgid "Strong Redo"
-msgstr "Silne ponawianie"
+msgstr "Silne ponowienie"
 
 #: ../app/actions/edit-actions.c:92
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
-msgstr "Ponawia ostatnie, cofnięte działanie, pomijając widoczne zmiany"
+msgstr "Ponawia ostatnie cofnięte działanie, pomijając zmiany widoczności"
 
 #: ../app/actions/edit-actions.c:97
 msgctxt "edit-action"
@@ -2109,17 +2109,17 @@ msgstr "Wypełnia zaznaczenie aktywnym deseniem"
 #: ../app/actions/edit-actions.c:304
 #, c-format
 msgid "_Undo %s"
-msgstr "Cof_nij %s"
+msgstr "Cof_nij „%s”"
 
 #: ../app/actions/edit-actions.c:311
 #, c-format
 msgid "_Redo %s"
-msgstr "P_onów %s"
+msgstr "P_onów „%s”"
 
 #: ../app/actions/edit-actions.c:326
 #, c-format
 msgid "_Fade %s..."
-msgstr "_Zanikanie %s…"
+msgstr "_Zanikanie „%s”…"
 
 #: ../app/actions/edit-actions.c:338
 msgid "_Undo"
@@ -5842,7 +5842,7 @@ msgstr "Usuwanie koloru"
 #: ../app/base/base-enums.c:136
 msgctxt "layer-mode-effects"
 msgid "Erase"
-msgstr "Zanikanie"
+msgstr "Wycieranie"
 
 #: ../app/base/base-enums.c:137
 msgctxt "layer-mode-effects"
@@ -6322,7 +6322,7 @@ msgid ""
 "with the \"View->Show Menubar\" command."
 msgstr ""
 "Powoduje, że domyślnie pasek menu jest widoczny. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie paska menu”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie paska menu”."
 
 #: ../app/config/gimprc-blurbs.h:332
 msgid ""
@@ -6330,7 +6330,7 @@ msgid ""
 "with the \"View->Show Rulers\" command."
 msgstr ""
 "Powoduje, że domyślnie linijki są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie linijek”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie linijek”."
 
 #: ../app/config/gimprc-blurbs.h:336
 msgid ""
@@ -6338,7 +6338,7 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "Powoduje, że domyślnie paski przewijania są widoczne. Ustawienie można "
-"zmienić w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie pasków "
+"zmienić w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie pasków "
 "przewijania”."
 
 #: ../app/config/gimprc-blurbs.h:340
@@ -6347,7 +6347,7 @@ msgid ""
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 "Powoduje, że domyślnie pasek stanu jest widoczny. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie paska stanu”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie paska stanu”."
 
 #: ../app/config/gimprc-blurbs.h:344
 msgid ""
@@ -6355,7 +6355,7 @@ msgid ""
 "with the \"View->Show Selection\" command."
 msgstr ""
 "Powoduje, że domyślnie zaznaczenie jest widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie zaznaczenia”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie zaznaczenia”."
 
 #: ../app/config/gimprc-blurbs.h:348
 msgid ""
@@ -6363,7 +6363,7 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "Powoduje, że domyślnie granice warstwy są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie granic warstwy”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie granic warstwy”."
 
 #: ../app/config/gimprc-blurbs.h:352
 msgid ""
@@ -6371,7 +6371,7 @@ msgid ""
 "with the \"View->Show Guides\" command."
 msgstr ""
 "Powoduje, że domyślnie prowadnice są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie prowadnic”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie prowadnic”."
 
 #: ../app/config/gimprc-blurbs.h:356
 msgid ""
@@ -6379,7 +6379,7 @@ msgid ""
 "the \"View->Show Grid\" command."
 msgstr ""
 "Powoduje, że domyślnie siatka jest widoczna. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie siatki”."
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie siatki”."
 
 #: ../app/config/gimprc-blurbs.h:360
 msgid ""
@@ -6387,7 +6387,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Powoduje, że domyślnie punkty wzorcowe są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok→Wyświetlanie punktów "
+"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie punktów "
 "wzorcowych”."
 
 #: ../app/config/gimprc-blurbs.h:364
@@ -9102,7 +9102,7 @@ msgstr "Kolor pierwszoplanowy/tła"
 #: ../app/dialogs/fade-dialog.c:109
 #, c-format
 msgid "Fade %s"
-msgstr "Zanikanie %s"
+msgstr "Zanikanie „%s”"
 
 #: ../app/dialogs/fade-dialog.c:121
 msgid "_Fade"
@@ -9156,7 +9156,7 @@ msgid ""
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 "Można użyć tego okna dialogowego do eksportu plików do wielu formatów. "
-"Należy użyć polecenia „Plik→Zapisz”, aby zapisać plik w formacie XCF "
+"Należy użyć polecenia „Plik → Zapisz”, aby zapisać plik w formacie XCF "
 "programu GIMP."
 
 #: ../app/dialogs/file-save-dialog.c:605
@@ -9173,8 +9173,8 @@ msgid ""
 "export to other file formats."
 msgstr ""
 "Można użyć tego okna dialogowego do zapisu w formacie XCF programu GIMP. "
-"Należy użyć polecenia „Plik→Wyeksportuj”, aby wyeksportować obraz do innych "
-"formatów."
+"Należy użyć polecenia „Plik → Wyeksportuj”, aby wyeksportować obraz do "
+"innych formatów."
 
 #: ../app/dialogs/file-save-dialog.c:612
 msgid "Take me to the Export dialog"
@@ -15401,8 +15401,8 @@ msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
-"Zamienia bieżący komentarz obrazu na domyślny komentarz ustawiony "
-"w Edycja→Preferencje→Domyślny obraz."
+"Zamienia bieżący komentarz obrazu na domyślny komentarz ustawiony w Edycja → "
+"Preferencje → Domyślny obraz."
 
 #: ../app/widgets/gimpimageprofileview.c:202
 msgid "Querying..."

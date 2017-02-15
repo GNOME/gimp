@@ -1,18 +1,18 @@
 # Polish translation for gimp-plug-ins.
-# Copyright © 1999-2016 the gimp authors.
+# Copyright © 1999-2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 18:48+0200\n"
-"PO-Revision-Date: 2016-09-07 18:49+0200\n"
+"POT-Creation-Date: 2017-02-15 01:32+0100\n"
+"PO-Revision-Date: 2017-02-15 01:33+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -656,7 +656,7 @@ msgstr "Wybiórcze rozmycie Gaussa"
 
 #: ../plug-ins/common/blur-gauss-selective.c:211
 #: ../plug-ins/common/blur-gauss.c:448 ../plug-ins/common/cartoon.c:232
-#: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
+#: ../plug-ins/common/edge-dog.c:277 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
 #: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1691
@@ -1035,8 +1035,8 @@ msgstr "Wczytanie ustawień miksera kanałów"
 #: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:206 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:461
-#: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:651
-#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:122
+#: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:672
+#: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:122
 #: ../plug-ins/file-jpeg/jpeg-load.c:894 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
@@ -1964,7 +1964,7 @@ msgstr "Wartość maski"
 msgid "Stretch brightness values to cover the full range"
 msgstr "Rozciąga wartości jasności, aby pokryć pełny zakres"
 
-#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:370
 msgid "_Normalize"
 msgstr "_Normalizuj"
 
@@ -2210,7 +2210,7 @@ msgstr "Wygina obraz za pomocą dwóch krzywych kontrolnych"
 msgid "_Curve Bend..."
 msgstr "Wyg_inanie krzywych…"
 
-#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:178
+#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:179
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Działanie może być wykonane tylko na warstwach (użyto jej na kanale lub "
@@ -2810,23 +2810,28 @@ msgstr "Wykrywanie krawędzi za pomocą kontroli grubości krawędzi"
 msgid "_Difference of Gaussians..."
 msgstr "_Różnicowe rozmycie Gaussa…"
 
-#: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
+#: ../plug-ins/common/edge-dog.c:193 ../plug-ins/common/iwarp.c:974
+#: ../plug-ins/common/whirl-pinch.c:193
+msgid "Region affected by plug-in is empty"
+msgstr "Obszar przejęty przez wtyczkę jest pusty"
+
+#: ../plug-ins/common/edge-dog.c:253 ../plug-ins/common/edge-dog.c:310
 msgid "DoG Edge Detect"
 msgstr "Wykrywanie krawędzi DoG"
 
-#: ../plug-ins/common/edge-dog.c:332
+#: ../plug-ins/common/edge-dog.c:340
 msgid "Smoothing Parameters"
 msgstr "Parametry wygładzania"
 
-#: ../plug-ins/common/edge-dog.c:346
+#: ../plug-ins/common/edge-dog.c:354
 msgid "_Radius 1:"
 msgstr "_Promień 1:"
 
-#: ../plug-ins/common/edge-dog.c:350
+#: ../plug-ins/common/edge-dog.c:358
 msgid "R_adius 2:"
 msgstr "P_romień 2:"
 
-#: ../plug-ins/common/edge-dog.c:373 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:381 ../plug-ins/gimpressionist/paper.c:166
 msgid "_Invert"
 msgstr "_Odwrócenie"
 
@@ -3039,7 +3044,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-xbm.c:743 ../plug-ins/common/file-xmc.c:669
 #: ../plug-ins/common/file-xpm.c:353 ../plug-ins/common/file-xwd.c:534
 #: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-faxg3/faxg3.c:213
-#: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:644
+#: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:665
 #: ../plug-ins/file-jpeg/jpeg-load.c:128 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3337
 #, c-format
@@ -3982,7 +3987,7 @@ msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Błąd. Aby zapisać plik, należy dodać co najmniej jeden obraz."
 
 #: ../plug-ins/common/file-pdf-save.c:1351
-#: ../plug-ins/print/print-draw-page.c:223
+#: ../plug-ins/print/print-draw-page.c:228
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Nie można obsłużyć rozmiaru (szerokości lub wysokości) obrazu."
 
@@ -5678,10 +5683,6 @@ msgstr "Deformowanie klatki %d"
 #: ../plug-ins/common/iwarp.c:815
 msgid "Ping pong"
 msgstr "Ping pong"
-
-#: ../plug-ins/common/iwarp.c:974 ../plug-ins/common/whirl-pinch.c:193
-msgid "Region affected by plug-in is empty"
-msgstr "Obszar przejęty przez wtyczkę jest pusty"
 
 #: ../plug-ins/common/iwarp.c:1030
 msgid "A_nimate"
@@ -8895,13 +8896,23 @@ msgstr "32 bpp, 8-bitowa alfa, brak palety"
 msgid "Compressed (PNG)"
 msgstr "Skompresowane (PNG)"
 
+#: ../plug-ins/file-ico/ico-load.c:221
+#, c-format
+msgid "Could not read '%lu' bytes"
+msgstr "Nie można odczytać bajtów „%lu”"
+
+#: ../plug-ins/file-ico/ico-load.c:248
+#, c-format
+msgid "Icon #%d has zero width or height"
+msgstr "%d. ikona ma zerową szerokość lub wysokość"
+
 #. read successfully. add to image
-#: ../plug-ins/file-ico/ico-load.c:615
+#: ../plug-ins/file-ico/ico-load.c:636
 #, c-format
 msgid "Icon #%i"
-msgstr "Ikona #%i"
+msgstr "#%i. ikona"
 
-#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:696
+#: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:696
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
 #, c-format
 msgid "Opening thumbnail for '%s'"
