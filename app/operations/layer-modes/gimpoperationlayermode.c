@@ -24,9 +24,11 @@
 #include <gegl-plugin.h>
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
+
 #include "../operations-types.h"
 
 #include "gimpoperationlayermode.h"
@@ -42,6 +44,14 @@ enum
   PROP_COMPOSITE_SPACE,
   PROP_COMPOSITE_MODE
 };
+
+typedef void (* CompositeFunc) (gfloat *in,
+                                gfloat *layer,
+                                gfloat *comp,
+                                gfloat *mask,
+                                float   opacity,
+                                gfloat *out,
+                                gint    samples);
 
 
 static void     gimp_operation_layer_mode_set_property (GObject                *object,
@@ -63,71 +73,64 @@ static gboolean gimp_operation_layer_mode_process      (GeglOperation          *
 static GimpLayerModeAffectMask
         gimp_operation_layer_mode_real_get_affect_mask (GimpOperationLayerMode *layer_mode);
 
+static inline void composite_func_src_atop_core (gfloat *in,
+                                                 gfloat *layer,
+                                                 gfloat *comp,
+                                                 gfloat *mask,
+                                                 gfloat  opacity,
+                                                 gfloat *out,
+                                                 gint    samples);
+static inline void composite_func_dst_atop_core (gfloat *in,
+                                                 gfloat *layer,
+                                                 gfloat *comp,
+                                                 gfloat *mask,
+                                                 gfloat  opacity,
+                                                 gfloat *out,
+                                                 gint    samples);
+static inline void composite_func_src_in_core   (gfloat *in,
+                                                 gfloat *layer,
+                                                 gfloat *comp,
+                                                 gfloat *mask,
+                                                 gfloat  opacity,
+                                                 gfloat *out,
+                                                 gint    samples);
+static inline void composite_func_src_over_core (gfloat *in,
+                                                 gfloat *layer,
+                                                 gfloat *comp,
+                                                 gfloat *mask,
+                                                 gfloat  opacity,
+                                                 gfloat *out,
+                                                 gint    samples);
+
+#if COMPILE_SSE2_INTRINISICS
+static inline void composite_func_src_atop_sse2 (gfloat *in,
+                                                 gfloat *layer,
+                                                 gfloat *comp,
+                                                 gfloat *mask,
+                                                 gfloat  opacity,
+                                                 gfloat *out,
+                                                 gint    samples);
+#endif
+
+
 G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
                GEGL_TYPE_OPERATION_POINT_COMPOSER3)
 
 #define parent_class gimp_operation_layer_mode_parent_class
 
 
-const Babl *_gimp_fish_rgba_to_perceptual = NULL;
-const Babl *_gimp_fish_perceptual_to_rgba = NULL;
-const Babl *_gimp_fish_perceptual_to_laba = NULL;
-const Babl *_gimp_fish_rgba_to_laba = NULL;
-const Babl *_gimp_fish_laba_to_rgba = NULL;
-const Babl *_gimp_fish_laba_to_perceptual = NULL;
+static const Babl *_gimp_fish_rgba_to_perceptual = NULL;
+static const Babl *_gimp_fish_perceptual_to_rgba = NULL;
+static const Babl *_gimp_fish_perceptual_to_laba = NULL;
+static const Babl *_gimp_fish_rgba_to_laba       = NULL;
+static const Babl *_gimp_fish_laba_to_rgba       = NULL;
+static const Babl *_gimp_fish_laba_to_perceptual = NULL;
 
-typedef void (*CompFun)(gfloat *in,
-                        gfloat *layer,
-                        gfloat *comp,
-                        gfloat *mask,
-                        float opacity,
-                        gfloat *out,
-                        gint samples);
+static CompositeFunc composite_func_src_atop = composite_func_src_atop_core;
+static CompositeFunc composite_func_dst_atop = composite_func_dst_atop_core;
+static CompositeFunc composite_func_src_in   = composite_func_src_in_core;
+static CompositeFunc composite_func_src_over = composite_func_src_over_core;
 
-
-static inline void compfun_src_atop (gfloat *in,
-                                     gfloat *layer,
-                                     gfloat *comp,
-                                     gfloat *mask,
-                                     gfloat  opacity,
-                                     gfloat *out,
-                                     gint    samples);
-static inline void compfun_dst_atop (gfloat *in,
-                                     gfloat *layer,
-                                     gfloat *comp,
-                                     gfloat *mask,
-                                     gfloat  opacity,
-                                     gfloat *out,
-                                     gint    samples);
-static inline void compfun_src_in   (gfloat *in,
-                                     gfloat *layer,
-                                     gfloat *comp,
-                                     gfloat *mask,
-                                     gfloat  opacity,
-                                     gfloat *out,
-                                     gint    samples);
-static inline void compfun_src_over (gfloat *in,
-                                     gfloat *layer,
-                                     gfloat *comp,
-                                     gfloat *mask,
-                                     gfloat  opacity,
-                                     gfloat *out,
-                                     gint    samples);
-
-static CompFun compfun_src_atop_dispatch = compfun_src_atop;
-static CompFun compfun_dst_atop_dispatch = compfun_dst_atop;
-static CompFun compfun_src_in_dispatch   = compfun_src_in;
-static CompFun compfun_src_over_dispatch = compfun_src_over;
-#if COMPILE_SSE2_INTRINISICS
-
-static inline void compfun_src_atop_sse2 (gfloat *in,
-                                          gfloat *layer,
-                                          gfloat *comp,
-                                          gfloat *mask,
-                                          gfloat  opacity,
-                                          gfloat *out,
-                                          gint    samples);
-#endif
 
 static void
 gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
@@ -135,11 +138,6 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
   GObjectClass                     *object_class;
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_composer3_class;
-
-#if COMPILE_SSE2_INTRINISICS
-  if (gimp_cpu_accel_get_support () & GIMP_CPU_ACCEL_X86_SSE2)
-    compfun_src_atop_dispatch = compfun_src_atop_sse2;
-#endif
 
   object_class          = G_OBJECT_CLASS (klass);
   operation_class       = GEGL_OPERATION_CLASS (klass);
@@ -211,6 +209,11 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
   _gimp_fish_rgba_to_laba       = babl_fish ("RGBA float", "CIE Lab alpha float");
   _gimp_fish_laba_to_rgba       = babl_fish ("CIE Lab alpha float", "RGBA float");
   _gimp_fish_laba_to_perceptual = babl_fish ("CIE Lab alpha float", "R'G'B'A float");
+
+#if COMPILE_SSE2_INTRINISICS
+  if (gimp_cpu_accel_get_support () & GIMP_CPU_ACCEL_X86_SSE2)
+    composite_func_src_atop = composite_func_src_atop_sse2;
+#endif
 }
 
 static void
@@ -451,7 +454,6 @@ gimp_operation_layer_mode_real_get_affect_mask (GimpOperationLayerMode *layer_mo
 
 /* public functions */
 
-
 GimpLayerModeAffectMask
 gimp_operation_layer_mode_get_affect_mask (GimpOperationLayerMode *layer_mode)
 {
@@ -464,16 +466,17 @@ gimp_operation_layer_mode_get_affect_mask (GimpOperationLayerMode *layer_mode)
 
 /* compositing and blending functions */
 
-
 static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode);
 
-static inline void gimp_composite_blend (gpointer       op,
-                                         gfloat        *in,
-                                         gfloat        *layer,
-                                         gfloat        *mask,
-                                         gfloat        *out,
-                                         glong          samples,
-                                         GimpBlendFunc  blend_func);
+static inline void gimp_composite_blend (GimpOperationLayerMode *layer_mode,
+                                         gfloat                 *in,
+                                         gfloat                 *layer,
+                                         gfloat                 *mask,
+                                         gfloat                 *out,
+                                         glong                   samples,
+                                         GimpBlendFunc           blend_func);
+
+
 gboolean
 gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,
                                           void                *in,
@@ -484,23 +487,23 @@ gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,
                                           const GeglRectangle *roi,
                                           gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (GimpOperationLayerMode*)(operation);
-  gimp_composite_blend (operation, in, layer, mask, out, samples,
+  GimpOperationLayerMode *layer_mode = (gpointer) operation;
+
+  gimp_composite_blend (layer_mode, in, layer, mask, out, samples,
                         gimp_layer_mode_get_blend_fun (layer_mode->layer_mode));
+
   return TRUE;
 }
 
 
-
-
 static inline void
-compfun_src_atop (gfloat *in,
-                  gfloat *layer,
-                  gfloat *comp,
-                  gfloat *mask,
-                  gfloat  opacity,
-                  gfloat *out,
-                  gint    samples)
+composite_func_src_atop_core (gfloat *in,
+                              gfloat *layer,
+                              gfloat *comp,
+                              gfloat *mask,
+                              gfloat  opacity,
+                              gfloat *out,
+                              gint    samples)
 {
   while (samples--)
     {
@@ -536,13 +539,13 @@ compfun_src_atop (gfloat *in,
 
 
 static inline void
-compfun_src_over (gfloat *in,
-                  gfloat *layer,
-                  gfloat *comp,
-                  gfloat *mask,
-                  gfloat  opacity,
-                  gfloat *out,
-                  gint    samples)
+composite_func_src_over_core (gfloat *in,
+                              gfloat *layer,
+                              gfloat *comp,
+                              gfloat *mask,
+                              gfloat  opacity,
+                              gfloat *out,
+                              gint    samples)
 {
   while (samples--)
     {
@@ -589,13 +592,13 @@ compfun_src_over (gfloat *in,
 }
 
 static inline void
-compfun_dst_atop (gfloat *in,
-                  gfloat *layer,
-                  gfloat *comp,
-                  gfloat *mask,
-                  gfloat  opacity,
-                  gfloat *out,
-                  gint    samples)
+composite_func_dst_atop_core (gfloat *in,
+                              gfloat *layer,
+                              gfloat *comp,
+                              gfloat *mask,
+                              gfloat  opacity,
+                              gfloat *out,
+                              gint    samples)
 {
   while (samples--)
     {
@@ -637,13 +640,13 @@ compfun_dst_atop (gfloat *in,
 }
 
 static inline void
-compfun_src_in (gfloat *in,
-                gfloat *layer,
-                gfloat *comp,
-                gfloat *mask,
-                gfloat  opacity,
-                gfloat *out,
-                gint    samples)
+composite_func_src_in_core (gfloat *in,
+                            gfloat *layer,
+                            gfloat *comp,
+                            gfloat *mask,
+                            gfloat  opacity,
+                            gfloat *out,
+                            gint    samples)
 {
   while (samples--)
     {
@@ -681,13 +684,13 @@ compfun_src_in (gfloat *in,
 #include <emmintrin.h>
 
 static inline void
-compfun_src_atop_sse2 (gfloat *in,
-                       gfloat *layer,
-                       gfloat *comp,
-                       gfloat *mask,
-                       gfloat  opacity,
-                       gfloat *out,
-                       gint    samples)
+composite_func_src_atop_sse2 (gfloat *in,
+                              gfloat *layer,
+                              gfloat *comp,
+                              gfloat *mask,
+                              gfloat  opacity,
+                              gfloat *out,
+                              gint    samples)
 {
   if ((((uintptr_t)in)    | /* alignment check */
        ((uintptr_t)mask)  |
@@ -695,7 +698,8 @@ compfun_src_atop_sse2 (gfloat *in,
        ((uintptr_t)layer) |
        ((uintptr_t)out)    ) & 0x0F)
     {
-      return compfun_src_atop (in, layer, comp, mask, opacity, out, samples);
+      return composite_func_src_atop (in, layer, comp, mask, opacity,
+                                      out, samples);
     }
   else
     {
@@ -741,7 +745,7 @@ compfun_src_atop_sse2 (gfloat *in,
 #endif
 
 static inline void
-gimp_composite_blend (gpointer                op,
+gimp_composite_blend (GimpOperationLayerMode *layer_mode,
                       gfloat                 *in,
                       gfloat                 *layer,
                       gfloat                 *mask,
@@ -749,7 +753,6 @@ gimp_composite_blend (gpointer                op,
                       glong                   samples,
                       GimpBlendFunc           blend_func)
 {
-  GimpOperationLayerMode *layer_mode     = op;
   gfloat                  opacity        = layer_mode->opacity;
   GimpLayerColorSpace     blend_space    = layer_mode->blend_space;
   GimpLayerColorSpace     composite_space= layer_mode->composite_space;
@@ -897,19 +900,27 @@ gimp_composite_blend (gpointer                op,
     {
     case GIMP_LAYER_COMPOSITE_SRC_ATOP:
     default:
-      compfun_src_atop_dispatch (composite_in, blend_out, NULL, mask, opacity, out, samples);
+      composite_func_src_atop (composite_in, blend_out, NULL,
+                               mask, opacity,
+                               out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
-      compfun_src_over_dispatch (composite_in, composite_layer, blend_out, mask, opacity, out, samples);
+      composite_func_src_over (composite_in, composite_layer, blend_out,
+                               mask, opacity,
+                               out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_DST_ATOP:
-      compfun_dst_atop_dispatch (composite_in, composite_layer, blend_out, mask, opacity, out, samples);
+      composite_func_dst_atop (composite_in, composite_layer, blend_out,
+                               mask, opacity,
+                               out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_IN:
-      compfun_src_in_dispatch (composite_in, blend_out, NULL, mask, opacity, out, samples);
+      composite_func_src_in (composite_in, blend_out, NULL,
+                             mask, opacity,
+                             out, samples);
       break;
     }
 
@@ -966,7 +977,6 @@ blendfun_addition (const float *dest,
       dest += 4;
     }
 }
-
 
 static inline void
 blendfun_linear_burn (const float *dest,
@@ -1727,6 +1737,7 @@ blendfun_copy (const float *dest,
   while (samples--)
     {
       gint c;
+
       for (c = 0; c < 4; c++)
         out[c] = src[c];
 
@@ -1769,6 +1780,7 @@ blendfun_vivid_light (const float *dest,
               out[c] = comp;
             }
         }
+
       out[ALPHA] = src[ALPHA];
 
       out  += 4;
@@ -1795,6 +1807,7 @@ blendfun_linear_light (const float *dest,
           for (c = 0; c < 3; c++)
             {
               gfloat comp;
+
               if (src[c] <= 0.5f)
                 {
                   comp = dest[c] + 2.0 * src[c] - 1.0f;
@@ -1806,6 +1819,7 @@ blendfun_linear_light (const float *dest,
               out[c] = comp;
             }
         }
+
       out[ALPHA] = src[ALPHA];
 
       out  += 4;
@@ -1832,6 +1846,7 @@ blendfun_pin_light (const float *dest,
           for (c = 0; c < 3; c++)
             {
               gfloat comp;
+
               if (src[c] > 0.5f)
                 {
                   comp = MAX(dest[c], 2 * (src[c] - 0.5));
@@ -1843,6 +1858,7 @@ blendfun_pin_light (const float *dest,
               out[c] = comp;
             }
         }
+
       out[ALPHA] = src[ALPHA];
 
       out  += 4;
@@ -1868,6 +1884,7 @@ blendfun_hard_mix (const float *dest,
               out[c] = dest[c] + src[c] < 1.0f ? 0.0f : 1.0f;
             }
         }
+
       out[ALPHA] = src[ALPHA];
 
       out  += 4;
@@ -1893,6 +1910,7 @@ blendfun_exclusion (const float *dest,
               out[c] = 0.5f - 2.0f * (dest[c] - 0.5f) * (src[c] - 0.5f);
             }
         }
+
       out[ALPHA] = src[ALPHA];
 
       out  += 4;
@@ -1901,15 +1919,19 @@ blendfun_exclusion (const float *dest,
     }
 }
 
-
-static inline void dummy_fun(void)
+static inline void
+blendfun_dummy (const float *dest,
+                const float *src,
+                float       *out,
+                int          samples)
 {
 }
 
-static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
+static inline GimpBlendFunc
+gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
 {
   switch (mode)
-  {
+    {
     case GIMP_LAYER_MODE_SCREEN_LINEAR:
     case GIMP_LAYER_MODE_SCREEN:         return blendfun_screen;
     case GIMP_LAYER_MODE_ADDITION_LINEAR:
@@ -1953,17 +1975,17 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY:
     case GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY: return blendfun_luminance_lighten_only;
     case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
-    case GIMP_LAYER_MODE_VIVID_LIGHT:  return blendfun_vivid_light;
+    case GIMP_LAYER_MODE_VIVID_LIGHT:    return blendfun_vivid_light;
     case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
-    case GIMP_LAYER_MODE_PIN_LIGHT:    return blendfun_pin_light;
+    case GIMP_LAYER_MODE_PIN_LIGHT:      return blendfun_pin_light;
     case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
-    case GIMP_LAYER_MODE_LINEAR_LIGHT: return blendfun_linear_light;
+    case GIMP_LAYER_MODE_LINEAR_LIGHT:   return blendfun_linear_light;
     case GIMP_LAYER_MODE_HARD_MIX_LINEAR:
-    case GIMP_LAYER_MODE_HARD_MIX:  return blendfun_hard_mix;
+    case GIMP_LAYER_MODE_HARD_MIX:       return blendfun_hard_mix;
     case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
-    case GIMP_LAYER_MODE_EXCLUSION:    return blendfun_exclusion;
+    case GIMP_LAYER_MODE_EXCLUSION:      return blendfun_exclusion;
     case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
-    case GIMP_LAYER_MODE_LINEAR_BURN:  return blendfun_linear_burn;
+    case GIMP_LAYER_MODE_LINEAR_BURN:    return blendfun_linear_burn;
 
     case GIMP_LAYER_MODE_DISSOLVE:
     case GIMP_LAYER_MODE_BEHIND:
@@ -1991,8 +2013,8 @@ static inline GimpBlendFunc gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_ERASE:
     case GIMP_LAYER_MODE_REPLACE:
     case GIMP_LAYER_MODE_ANTI_ERASE:
-      return (void*)dummy_fun;
-  }
+      return blendfun_dummy;
+    }
 
-  return (void*)dummy_fun;
+  return blendfun_dummy;
 }
