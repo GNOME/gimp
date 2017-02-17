@@ -140,7 +140,10 @@ typedef enum
   /*  Internal modes, not available to the PDB, must be kept at the end  */
   GIMP_LAYER_MODE_ERASE,                 /*< pdb-skip, desc="Erase"          >*/
   GIMP_LAYER_MODE_REPLACE,               /*< pdb-skip, desc="Replace"        >*/
-  GIMP_LAYER_MODE_ANTI_ERASE             /*< pdb-skip, desc="Anti erase"     >*/
+  GIMP_LAYER_MODE_ANTI_ERASE,            /*< pdb-skip, desc="Anti erase"     >*/
+
+  /*  Layer mode menu separator  */
+  GIMP_LAYER_MODE_SEPARATOR = -1         /*< pdb-skip, skip                  >*/
 } GimpLayerMode;
 
 

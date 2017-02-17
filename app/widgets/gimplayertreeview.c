@@ -265,7 +265,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   /*  Paint mode menu  */
 
-  view->priv->layer_mode_box = gimp_layer_mode_box_new (FALSE, FALSE);
+  view->priv->layer_mode_box = gimp_layer_mode_box_new (GIMP_LAYER_MODE_CONTEXT_LAYER);
   gimp_layer_mode_box_set_label (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
                                  _("Mode"));
   gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view), NULL,
@@ -1075,6 +1075,17 @@ gimp_layer_tree_view_update_options (GimpLayerTreeView *view,
 {
   BLOCK (view->priv->layer_mode_box,
          gimp_layer_tree_view_layer_mode_box_callback);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
+    {
+      gimp_layer_mode_box_set_context (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
+                                       GIMP_LAYER_MODE_CONTEXT_LAYER);
+    }
+  else
+    {
+      gimp_layer_mode_box_set_context (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
+                                       GIMP_LAYER_MODE_CONTEXT_GROUP);
+    }
 
   gimp_layer_mode_box_set_mode (GIMP_LAYER_MODE_BOX (view->priv->layer_mode_box),
                                 gimp_layer_get_mode (layer));

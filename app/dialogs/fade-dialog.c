@@ -152,7 +152,8 @@ fade_dialog_new (GimpImage *image,
 
   /*  the paint mode menu  */
   menu = gimp_prop_layer_mode_box_new (G_OBJECT (private->context),
-                                       "paint-mode", TRUE, TRUE);
+                                       "paint-mode",
+                                       GIMP_LAYER_MODE_CONTEXT_FADE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                              _("_Mode:"), 0.0, 0.5,
                              menu, 2, FALSE);

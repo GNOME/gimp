@@ -46,18 +46,21 @@ struct _GimpLayerModeComboBoxClass
 };
 
 
-GType                gimp_layer_mode_combo_box_get_type (void) G_GNUC_CONST;
+GType                  gimp_layer_mode_combo_box_get_type    (void) G_GNUC_CONST;
 
-GtkWidget          * gimp_layer_mode_combo_box_new      (gboolean               with_behind,
-                                                         gboolean               with_replace);
+GtkWidget            * gimp_layer_mode_combo_box_new         (GimpLayerModeContext   context);
 
-void                 gimp_layer_mode_combo_box_set_mode (GimpLayerModeComboBox *combo,
-                                                         GimpLayerMode          mode);
-GimpLayerMode        gimp_layer_mode_combo_box_get_mode (GimpLayerModeComboBox *combo);
+void                   gimp_layer_mode_combo_box_set_context (GimpLayerModeComboBox *combo,
+                                                              GimpLayerModeContext   context);
+GimpLayerModeContext   gimp_layer_mode_combo_box_get_context (GimpLayerModeComboBox *combo);
 
-void                 gimp_layer_mode_combo_box_set_group (GimpLayerModeComboBox *combo,
-                                                          GimpLayerModeGroup     group);
-GimpLayerModeGroup   gimp_layer_mode_combo_box_get_group (GimpLayerModeComboBox *combo);
+void                   gimp_layer_mode_combo_box_set_mode    (GimpLayerModeComboBox *combo,
+                                                              GimpLayerMode          mode);
+GimpLayerMode          gimp_layer_mode_combo_box_get_mode    (GimpLayerModeComboBox *combo);
+
+void                   gimp_layer_mode_combo_box_set_group   (GimpLayerModeComboBox *combo,
+                                                              GimpLayerModeGroup     group);
+GimpLayerModeGroup     gimp_layer_mode_combo_box_get_group   (GimpLayerModeComboBox *combo);
 
 
 #endif  /* __GIMP_LAYER_MODE_COMBO_BOX_H__ */

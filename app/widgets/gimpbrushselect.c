@@ -189,7 +189,7 @@ gimp_brush_select_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  select->layer_mode_box = gimp_layer_mode_box_new (TRUE, FALSE);
+  select->layer_mode_box = gimp_layer_mode_box_new (GIMP_LAYER_MODE_CONTEXT_PAINT);
   gtk_box_pack_start (GTK_BOX (hbox), select->layer_mode_box, TRUE, TRUE, 0);
   gtk_widget_show (select->layer_mode_box);
 

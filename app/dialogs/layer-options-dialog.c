@@ -121,19 +121,20 @@ layer_options_dialog_new (GimpImage                *image,
                           GimpLayerOptionsCallback  callback,
                           gpointer                  user_data)
 {
-  LayerOptionsDialog *private;
-  GtkWidget          *dialog;
-  GtkWidget          *table;
-  GtkListStore       *space_model;
-  GtkWidget          *combo;
-  GtkWidget          *scale;
-  GtkWidget          *label;
-  GtkAdjustment      *adjustment;
-  GtkWidget          *spinbutton;
-  GtkWidget          *button;
-  gdouble             xres;
-  gdouble             yres;
-  gint                row = 0;
+  LayerOptionsDialog   *private;
+  GtkWidget            *dialog;
+  GtkWidget            *table;
+  GtkListStore         *space_model;
+  GtkWidget            *combo;
+  GtkWidget            *scale;
+  GtkWidget            *label;
+  GtkAdjustment        *adjustment;
+  GtkWidget            *spinbutton;
+  GtkWidget            *button;
+  GimpLayerModeContext  mode_context;
+  gdouble               xres;
+  gdouble               yres;
+  gint                  row = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
@@ -176,7 +177,12 @@ layer_options_dialog_new (GimpImage                *image,
   g_object_weak_ref (G_OBJECT (dialog),
                      (GWeakNotify) layer_options_dialog_free, private);
 
-  private->mode_box = gimp_layer_mode_box_new (FALSE, FALSE);
+  if (! layer || gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
+    mode_context = GIMP_LAYER_MODE_CONTEXT_LAYER;
+  else
+    mode_context = GIMP_LAYER_MODE_CONTEXT_GROUP;
+
+  private->mode_box = gimp_layer_mode_box_new (mode_context);
   item_options_dialog_add_widget (dialog, _("_Mode:"), private->mode_box);
   gimp_layer_mode_box_set_mode (GIMP_LAYER_MODE_BOX (private->mode_box),
                                 private->mode);

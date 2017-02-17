@@ -148,24 +148,22 @@ gimp_prop_expanding_frame_new (GObject      *config,
 
 /**
  * gimp_prop_layer_mode_box_new:
- * @config:             #GimpConfig object to which property is attached.
- * @property_name:      Name of Enum property.
- * @with_behind_mode:   Whether to include "Behind" mode in the menu.
- * @with_replace_modes: Whether to include the "Replace", "Erase" and
- *                      "Anti Erase" modes in the menu.
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of Enum property.
+ * @context:       A context mask, determining the set of modes to
+ *                 include in the menu.
  *
  * Creates a #GimpLayerModeBox widget to display and set the specified
  * Enum property, for which the enum must be #GimpLayerMode.
  *
  * Return value: The newly created #GimpLayerModeBox widget.
  *
- * Since GIMP 2.4
+ * Since GIMP 2.10
  */
 GtkWidget *
-gimp_prop_layer_mode_box_new (GObject     *config,
-                              const gchar *property_name,
-                              gboolean     with_behind_mode,
-                              gboolean     with_replace_modes)
+gimp_prop_layer_mode_box_new (GObject              *config,
+                              const gchar          *property_name,
+                              GimpLayerModeContext  context)
 {
   GParamSpec *param_spec;
   GtkWidget  *box;
@@ -175,7 +173,7 @@ gimp_prop_layer_mode_box_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
-  box = gimp_layer_mode_box_new (with_behind_mode, with_replace_modes);
+  box = gimp_layer_mode_box_new (context);
 
   g_object_bind_property (config,          property_name,
                           G_OBJECT (box), "layer-mode",

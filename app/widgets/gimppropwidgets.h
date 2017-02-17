@@ -35,8 +35,7 @@ GtkWidget * gimp_prop_expanding_frame_new   (GObject       *config,
 
 GtkWidget * gimp_prop_layer_mode_box_new    (GObject       *config,
                                              const gchar   *property_name,
-                                             gboolean       with_behind_mode,
-                                             gboolean       with_replace_modes);
+                                             GimpLayerModeContext  context);
 
 
 /*  GimpParamColor  */

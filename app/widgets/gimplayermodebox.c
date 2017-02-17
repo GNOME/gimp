@@ -48,20 +48,18 @@
 enum
 {
   PROP_0,
-  PROP_LAYER_MODE,
-  PROP_WITH_BEHIND,
-  PROP_WITH_REPLACE
+  PROP_CONTEXT,
+  PROP_LAYER_MODE
 };
 
 
 struct _GimpLayerModeBoxPrivate
 {
-  GimpLayerMode  layer_mode;
-  gboolean       with_behind;
-  gboolean       with_replace;
+  GimpLayerModeContext  context;
+  GimpLayerMode         layer_mode;
 
-  GtkWidget     *mode_combo;
-  GtkWidget     *group_combo;
+  GtkWidget            *mode_combo;
+  GtkWidget            *group_combo;
 };
 
 
@@ -91,6 +89,14 @@ gimp_layer_mode_box_class_init (GimpLayerModeBoxClass *klass)
   object_class->set_property = gimp_layer_mode_box_set_property;
   object_class->get_property = gimp_layer_mode_box_get_property;
 
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_flags ("context",
+                                                       NULL, NULL,
+                                                       GIMP_TYPE_LAYER_MODE_CONTEXT,
+                                                       GIMP_LAYER_MODE_CONTEXT_ALL,
+                                                       GIMP_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_LAYER_MODE,
                                    g_param_spec_enum ("layer-mode",
                                                       NULL, NULL,
@@ -98,20 +104,6 @@ gimp_layer_mode_box_class_init (GimpLayerModeBoxClass *klass)
                                                       GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
-
-  g_object_class_install_property (object_class, PROP_WITH_BEHIND,
-                                   g_param_spec_boolean ("with-behind",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
-
-  g_object_class_install_property (object_class, PROP_WITH_REPLACE,
-                                   g_param_spec_boolean ("with-replace",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (klass, sizeof (GimpLayerModeBoxPrivate));
 }
@@ -142,10 +134,14 @@ gimp_layer_mode_box_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   box->priv->mode_combo = mode_combo =
-    gimp_layer_mode_combo_box_new (box->priv->with_behind,
-                                   box->priv->with_replace);
+    gimp_layer_mode_combo_box_new (box->priv->context);
   gtk_box_pack_start (GTK_BOX (box), mode_combo, TRUE, TRUE, 0);
   gtk_widget_show (mode_combo);
+
+  g_object_bind_property (object,                "context",
+                          G_OBJECT (mode_combo), "context",
+                          G_BINDING_BIDIRECTIONAL |
+                          G_BINDING_SYNC_CREATE);
 
   g_object_bind_property (object,                "layer-mode",
                           G_OBJECT (mode_combo), "layer-mode",
@@ -202,16 +198,12 @@ gimp_layer_mode_box_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_CONTEXT:
+      gimp_layer_mode_box_set_context (box, g_value_get_flags (value));
+      break;
+
     case PROP_LAYER_MODE:
       gimp_layer_mode_box_set_mode (box, g_value_get_enum (value));
-      break;
-
-    case PROP_WITH_BEHIND:
-      box->priv->with_behind = g_value_get_boolean (value);
-      break;
-
-    case PROP_WITH_REPLACE:
-      box->priv->with_replace = g_value_get_boolean (value);
       break;
 
     default:
@@ -230,16 +222,12 @@ gimp_layer_mode_box_get_property (GObject    *object,
 
   switch (prop_id)
     {
+    case PROP_CONTEXT:
+      g_value_set_flags (value, box->priv->context);
+      break;
+
     case PROP_LAYER_MODE:
       g_value_set_enum (value, box->priv->layer_mode);
-      break;
-
-    case PROP_WITH_BEHIND:
-      g_value_set_boolean (value, box->priv->with_behind);
-      break;
-
-    case PROP_WITH_REPLACE:
-      g_value_set_boolean (value, box->priv->with_replace);
       break;
 
     default:
@@ -256,13 +244,34 @@ gimp_layer_mode_box_get_property (GObject    *object,
  * Return value: a new #GimpLayerModeBox.
  **/
 GtkWidget *
-gimp_layer_mode_box_new (gboolean with_behind,
-                         gboolean with_replace)
+gimp_layer_mode_box_new (GimpLayerModeContext context)
 {
   return g_object_new (GIMP_TYPE_LAYER_MODE_BOX,
-                       "with-behind",  with_behind,
-                       "with-replace", with_replace,
+                       "context", context,
                        NULL);
+}
+
+void
+gimp_layer_mode_box_set_context (GimpLayerModeBox     *box,
+                                 GimpLayerModeContext  context)
+{
+  g_return_if_fail (GIMP_IS_LAYER_MODE_BOX (box));
+
+  if (context != box->priv->context)
+    {
+      box->priv->context = context;
+
+      g_object_notify (G_OBJECT (box), "context");
+    }
+}
+
+GimpLayerModeContext
+gimp_layer_mode_box_get_context (GimpLayerModeBox *box)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER_MODE_BOX (box),
+                        GIMP_LAYER_MODE_CONTEXT_ALL);
+
+  return box->priv->context;
 }
 
 void
