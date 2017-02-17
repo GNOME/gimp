@@ -374,7 +374,8 @@ gimp_enum_store_new_from_array (GType                 enum_type,
 {
   GtkListStore *store;
   GEnumValue   *value;
-  gboolean      added_values_since_last_separator = FALSE;
+  gboolean      first_item        = TRUE;
+  gboolean      prepend_separator = FALSE;
   gint          i;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
@@ -396,20 +397,23 @@ gimp_enum_store_new_from_array (GType                 enum_type,
 
               if (value)
                 {
+                  if (prepend_separator)
+                    {
+                      gimp_enum_store_add_separator (store);
+
+                      prepend_separator = FALSE;
+                    }
+
                   gimp_enum_store_add_value (store, value);
 
-                  added_values_since_last_separator = TRUE;
+                  first_item = FALSE;
                 }
             }
         }
       else
         {
-          if (added_values_since_last_separator)
-            {
-              gimp_enum_store_add_separator (store);
-
-              added_values_since_last_separator = FALSE;
-            }
+          if (! first_item)
+            prepend_separator = TRUE;
         }
     }
 
