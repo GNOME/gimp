@@ -28,6 +28,9 @@
 #include "gimpoperationantierase.h"
 
 
+static GimpLayerModeAffectMask gimp_operation_anti_erase_get_affect_mask (GimpOperationLayerMode *layer_mode);
+
+
 G_DEFINE_TYPE (GimpOperationAntiErase, gimp_operation_anti_erase,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -37,9 +40,11 @@ gimp_operation_anti_erase_class_init (GimpOperationAntiEraseClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
+  GimpOperationLayerModeClass      *layer_mode_class;
 
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  operation_class  = GEGL_OPERATION_CLASS (klass);
+  point_class      = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:anti-erase",
@@ -47,6 +52,8 @@ gimp_operation_anti_erase_class_init (GimpOperationAntiEraseClass *klass)
                                  NULL);
 
   point_class->process = gimp_operation_anti_erase_process;
+
+  layer_mode_class->get_affect_mask = gimp_operation_anti_erase_get_affect_mask;
 }
 
 static void
@@ -72,28 +79,107 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  while (samples--)
+  switch (layer_mode->composite_mode)
     {
-      gfloat value = opacity;
-      gint   b;
-
-      if (has_mask)
-        value *= *mask;
-
-      out[ALPHA] = in[ALPHA] + (1.0 - in[ALPHA]) * layer[ALPHA] * value;
-
-      for (b = RED; b < ALPHA; b++)
+    case GIMP_LAYER_COMPOSITE_SRC_OVER:
+    case GIMP_LAYER_COMPOSITE_AUTO:
+      while (samples--)
         {
-          out[b] = in[b];
+          gfloat value = opacity;
+          gint   b;
+
+          if (has_mask)
+            value *= *mask;
+
+          out[ALPHA] = in[ALPHA] + (1.0 - in[ALPHA]) * layer[ALPHA] * value;
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask++;
         }
+      break;
 
-      in    += 4;
-      layer += 4;
-      out   += 4;
+    case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+      while (samples--)
+        {
+          gint b;
 
-      if (has_mask)
-        mask++;
+          out[ALPHA] = in[ALPHA];
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+
+          in  += 4;
+          out += 4;
+        }
+      break;
+
+    case GIMP_LAYER_COMPOSITE_DST_ATOP:
+      while (samples--)
+        {
+          gfloat value = opacity;
+          gint   b;
+
+          if (has_mask)
+            value *= *mask;
+
+          out[ALPHA] = layer[ALPHA] * value;
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask++;
+        }
+      break;
+
+    case GIMP_LAYER_COMPOSITE_SRC_IN:
+      while (samples--)
+        {
+          gfloat value = opacity;
+          gint   b;
+
+          if (has_mask)
+            value *= *mask;
+
+          out[ALPHA] = in[ALPHA] * layer[ALPHA] * value;
+
+          for (b = RED; b < ALPHA; b++)
+            {
+              out[b] = in[b];
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask++;
+        }
+      break;
     }
 
   return TRUE;
+}
+
+static GimpLayerModeAffectMask
+gimp_operation_anti_erase_get_affect_mask (GimpOperationLayerMode *layer_mode)
+{
+  return GIMP_LAYER_MODE_AFFECT_SRC;
 }
