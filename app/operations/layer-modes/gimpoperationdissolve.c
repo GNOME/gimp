@@ -117,14 +117,32 @@ gimp_operation_dissolve_process (GeglOperation       *op,
               out[0] = in[0];
               out[1] = in[1];
               out[2] = in[2];
-              out[3] = in[3];
+
+              if (layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+                  layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
+                {
+                  out[3] = in[3];
+                }
+              else
+                {
+                  out[3] = 0.0f;
+                }
             }
           else
             {
               out[0] = layer[0];
               out[1] = layer[1];
               out[2] = layer[2];
-              out[3] = 1.0;
+
+              if (layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+                  layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP)
+                {
+                  out[3] = 1.0f;
+                }
+              else
+                {
+                  out[3] = in[3];
+                }
             }
 
           in    += 4;
