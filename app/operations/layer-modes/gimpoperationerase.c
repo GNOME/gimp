@@ -119,6 +119,7 @@ gimp_operation_erase_process (GeglOperation       *op,
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+    case GIMP_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
           gfloat layer_alpha;
