@@ -123,43 +123,166 @@ gimp_operation_normal_process_core (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  while (samples--)
+  switch (layer_mode->composite_mode)
     {
-      gfloat layer_alpha;
-
-      layer_alpha = layer[ALPHA] * opacity;
-      if (has_mask)
-        layer_alpha *= *mask;
-
-      out[ALPHA] = layer_alpha + in[ALPHA] - layer_alpha * in[ALPHA];
-
-      if (out[ALPHA])
+    case GIMP_LAYER_COMPOSITE_SRC_OVER:
+    case GIMP_LAYER_COMPOSITE_AUTO:
+      while (samples--)
         {
-          gfloat layer_weight = layer_alpha / out[ALPHA];
-          gfloat in_weight    = 1.0f - layer_weight;
-          gint   b;
+          gfloat layer_alpha;
 
-          for (b = RED; b < ALPHA; b++)
+          layer_alpha = layer[ALPHA] * opacity;
+          if (has_mask)
+            layer_alpha *= *mask;
+
+          out[ALPHA] = layer_alpha + in[ALPHA] - layer_alpha * in[ALPHA];
+
+          if (out[ALPHA])
             {
-              out[b] = layer[b] * layer_weight + in[b] * in_weight;
+              gfloat layer_weight = layer_alpha / out[ALPHA];
+              gfloat in_weight    = 1.0f - layer_weight;
+              gint   b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = layer[b] * layer_weight + in[b] * in_weight;
+                }
             }
+          else
+            {
+              gint b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = in[b];
+                }
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask++;
         }
-      else
+      break;
+
+    case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+      while (samples--)
         {
-          gint b;
+          gfloat layer_alpha;
 
-          for (b = RED; b < ALPHA; b++)
+          layer_alpha = layer[ALPHA] * opacity;
+          if (has_mask)
+            layer_alpha *= *mask;
+
+          out[ALPHA] = in[ALPHA];
+
+          if (out[ALPHA])
             {
-              out[b] = in[b];
+              gint b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = in[b] + (layer[b] - in[b]) * layer_alpha;
+                }
             }
+          else
+            {
+              gint b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = in[b];
+                }
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask++;
         }
+      break;
 
-      in    += 4;
-      layer += 4;
-      out   += 4;
+    case GIMP_LAYER_COMPOSITE_DST_ATOP:
+      while (samples--)
+        {
+          gfloat layer_alpha;
 
-      if (has_mask)
-        mask++;
+          layer_alpha = layer[ALPHA] * opacity;
+          if (has_mask)
+            layer_alpha *= *mask;
+
+          out[ALPHA] = layer_alpha;
+
+          if (out[ALPHA])
+            {
+              gint b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = layer[b];
+                }
+            }
+          else
+            {
+              gint b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = in[b];
+                }
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask++;
+        }
+      break;
+
+    case GIMP_LAYER_COMPOSITE_SRC_IN:
+      while (samples--)
+        {
+          gfloat layer_alpha;
+
+          layer_alpha = layer[ALPHA] * opacity;
+          if (has_mask)
+            layer_alpha *= *mask;
+
+          out[ALPHA] = in[ALPHA] * layer_alpha;
+
+          if (out[ALPHA])
+            {
+              gint b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = layer[b];
+                }
+            }
+          else
+            {
+              gint b;
+
+              for (b = RED; b < ALPHA; b++)
+                {
+                  out[b] = in[b];
+                }
+            }
+
+          in    += 4;
+          layer += 4;
+          out   += 4;
+
+          if (has_mask)
+            mask++;
+        }
+      break;
     }
 
   return TRUE;
