@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Plug-Ins 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-13 04:07+0300\n"
-"PO-Revision-Date: 2017-02-13 04:09+0300\n"
+"POT-Creation-Date: 2017-02-18 01:26+0300\n"
+"PO-Revision-Date: 2017-02-18 01:24+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -449,7 +449,7 @@ msgstr "По _вертикали"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1776 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1781 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:923
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:139
@@ -1013,7 +1013,7 @@ msgstr "_Сохранить"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1079
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1561
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1574
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -2259,7 +2259,7 @@ msgstr ""
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1073
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1554
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1567
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2332,9 +2332,9 @@ msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Нет подходящего расширения, сохраняется как сжатый XCF."
 
 #: ../plug-ins/common/file-compressor.c:444
-#, fuzzy, c-format
+#, c-format
 msgid "Compressing '%s'"
-msgstr "Cжатие"
+msgstr "Выполняется сжатие '%s'"
 
 #: ../plug-ins/common/file-compressor.c:481
 msgid "No sensible file extension, attempting to load with file magic."
@@ -5989,9 +5989,8 @@ msgid "Add a New Unit"
 msgstr "Создать новую единицу"
 
 #: ../plug-ins/common/unit-editor.c:210
-#, fuzzy
 msgid "_Add"
-msgstr "Допол_няющий"
+msgstr "_Добавить"
 
 #: ../plug-ins/common/unit-editor.c:234
 msgid "_ID:"
@@ -7023,26 +7022,26 @@ msgstr "Неподдерживаемая или некорректная шир�
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Неподдерживаемый или некорректный размер маски слоя: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1347 ../plug-ins/file-psd/psd-load.c:1751
+#: ../plug-ins/file-psd/psd-load.c:1347 ../plug-ins/file-psd/psd-load.c:1756
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Неподдерживаемый режим сжатия: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1846
+#: ../plug-ins/file-psd/psd-load.c:1851
 msgid "Extra"
 msgstr "Дополнительно"
 
-#: ../plug-ins/file-psd/psd-load.c:2034
+#: ../plug-ins/file-psd/psd-load.c:2039
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Неподдерживаемый или некорректный размер канала"
 
-#: ../plug-ins/file-psd/psd-load.c:2103
+#: ../plug-ins/file-psd/psd-load.c:2108
 #, fuzzy, c-format
 msgid "Failed to decompress data"
 msgstr "Не удалось открыть '%s': %s"
 
-#: ../plug-ins/file-psd/psd-save.c:291
+#: ../plug-ins/file-psd/psd-save.c:292
 #, fuzzy, c-format
 msgid ""
 "Unable to export layer with mode '%s'.  Either the PSD file format or the "
@@ -7052,12 +7051,12 @@ msgstr ""
 "его, либо расширение для сохранения данных в него. Используйте вместо него "
 "режим «Обычный»."
 
-#: ../plug-ins/file-psd/psd-save.c:541
+#: ../plug-ins/file-psd/psd-save.c:542
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Ошибка: Невозможно преобразовать основный тип изображения GIMP в режим PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1528
+#: ../plug-ins/file-psd/psd-save.c:1541
 #, fuzzy, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7066,7 +7065,7 @@ msgstr ""
 "Невозможно сохранить '%s'. Формат PSD не поддерживает изображения больше 30 "
 "000 пикселов в длину или ширину."
 
-#: ../plug-ins/file-psd/psd-save.c:1543
+#: ../plug-ins/file-psd/psd-save.c:1556
 #, fuzzy, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7258,9 +7257,8 @@ msgid "Alpha channel quality"
 msgstr "Альфа-каналы"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:168
-#, fuzzy
 msgid "Source type:"
-msgstr "Источник 1:"
+msgstr "Тип источника:"
 
 #: ../plug-ins/file-webp/file-webp-dialog.c:171
 msgid "WebP encoder \"preset\""
@@ -11385,18 +11383,16 @@ msgid "At the end of the delay, click in a window to snap it."
 msgstr "После задержки щёлкните по окну для получения его снимка"
 
 #: ../plug-ins/screenshot/screenshot.c:609
-#, fuzzy
 msgid "Color Profile"
-msgstr "Цвет"
+msgstr "Цветовой профиль"
 
 #: ../plug-ins/screenshot/screenshot.c:614
 msgid "Tag image with _monitor profile"
-msgstr ""
+msgstr "_Разметить снимок профилем монитора"
 
 #: ../plug-ins/screenshot/screenshot.c:618
-#, fuzzy
 msgid "Convert image to sR_GB"
-msgstr "Используемое изображение окружения"
+msgstr "_Конвертировать снимок в sRGB"
 
 #: ../plug-ins/screenshot/screenshot-win32.c:244
 msgid "No data captured"
