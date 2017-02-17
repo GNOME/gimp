@@ -75,820 +75,945 @@ struct _GimpLayerModeInfo
 static const GimpLayerModeInfo layer_mode_infos[] =
 {
   { GIMP_LAYER_MODE_NORMAL,
-    "gimp:normal",
-    gimp_operation_normal_process,
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
+
+    .op_name              = "gimp:normal",
+    .function             = gimp_operation_normal_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DISSOLVE,
-    "gimp:dissolve",
-    gimp_operation_dissolve_process,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA     |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
+
+    .op_name              = "gimp:dissolve",
+    .function             = gimp_operation_dissolve_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA     |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER
   },
 
   { GIMP_LAYER_MODE_BEHIND,
-    "gimp:behind",
-    gimp_operation_behind_process,
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_DST_ATOP,
-    GIMP_LAYER_COMPOSITE_DST_ATOP
+
+    .op_name              = "gimp:behind",
+    .function             = gimp_operation_behind_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_MULTIPLY_LEGACY,
-    "gimp:multiply-legacy",
-    gimp_operation_multiply_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:multiply-legacy",
+    .function             = gimp_operation_multiply_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_SCREEN_LEGACY,
-    "gimp:screen-legacy",
-    gimp_operation_screen_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:screen-legacy",
+    .function             = gimp_operation_screen_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_OVERLAY_LEGACY,
-    "gimp:softlight-legacy",
-    gimp_operation_softlight_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:softlight-legacy",
+    .function             = gimp_operation_softlight_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DIFFERENCE_LEGACY,
-    "gimp:difference-legacy",
-    gimp_operation_difference_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:difference-legacy",
+    .function             = gimp_operation_difference_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_ADDITION_LEGACY,
-    "gimp:addition-legacy",
-    gimp_operation_addition_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:addition-legacy",
+    .function             = gimp_operation_addition_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_SUBTRACT_LEGACY,
-    "gimp:subtract-legacy",
-    gimp_operation_subtract_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:subtract-legacy",
+    .function             = gimp_operation_subtract_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,
-    "gimp:darken-only-legacy",
-    gimp_operation_darken_only_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:darken-only-legacy",
+    .function             = gimp_operation_darken_only_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
-    "gimp:lighten-only-legacy",
-    gimp_operation_lighten_only_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:lighten-only-legacy",
+    .function             = gimp_operation_lighten_only_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HSV_HUE_LEGACY,
-    "gimp:hsv-hue-legacy",
-    gimp_operation_hsv_hue_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:hsv-hue-legacy",
+    .function             = gimp_operation_hsv_hue_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,
-    "gimp:hsv-saturation-legacy",
-    gimp_operation_hsv_saturation_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:hsv-saturation-legacy",
+    .function             = gimp_operation_hsv_saturation_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HSV_COLOR_LEGACY,
-    "gimp:hsv-color-legacy",
-    gimp_operation_hsv_color_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:hsv-color-legacy",
+    .function             = gimp_operation_hsv_color_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HSV_VALUE_LEGACY,
-    "gimp:hsv-value-legacy",
-    gimp_operation_hsv_value_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:hsv-value-legacy",
+    .function             = gimp_operation_hsv_value_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DIVIDE_LEGACY,
-    "gimp:divide-legacy",
-    gimp_operation_divide_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:divide-legacy",
+    .function             = gimp_operation_divide_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DODGE_LEGACY,
-    "gimp:dodge-legacy",
-    gimp_operation_dodge_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:dodge-legacy",
+    .function             = gimp_operation_dodge_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_BURN_LEGACY,
-    "gimp:burn-legacy",
-    gimp_operation_burn_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:burn-legacy",
+    .function             = gimp_operation_burn_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HARDLIGHT_LEGACY,
-    "gimp:hardlight-legacy",
-    gimp_operation_hardlight_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:hardlight-legacy",
+    .function             = gimp_operation_hardlight_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,
-    "gimp:softlight-legacy",
-    gimp_operation_softlight_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:softlight-legacy",
+    .function             = gimp_operation_softlight_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,
-    "gimp:grain-extract-legacy",
-    gimp_operation_grain_extract_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:grain-extract-legacy",
+    .function             = gimp_operation_grain_extract_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,
-    "gimp:grain-merge-legacy",
-    gimp_operation_grain_merge_legacy_process,
-    GIMP_LAYER_MODE_FLAG_LEGACY                    |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:grain-merge-legacy",
+    .function             = gimp_operation_grain_merge_legacy_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_COLOR_ERASE,
-    "gimp:color-erase",
-    gimp_operation_color_erase_process,
-    0,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
+
+    .op_name              = "gimp:color-erase",
+    .function             = gimp_operation_color_erase_process,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_OVERLAY,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_LCH_HUE,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_LAB
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_LAB
   },
 
   { GIMP_LAYER_MODE_LCH_CHROMA,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_LAB
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_LAB
   },
 
   { GIMP_LAYER_MODE_LCH_COLOR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_LAB
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_LAB
   },
 
   { GIMP_LAYER_MODE_LCH_LIGHTNESS,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_LAB
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_LAB
   },
 
   { GIMP_LAYER_MODE_NORMAL_LINEAR,
-    "gimp:normal",
-    gimp_operation_normal_process,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+
+    .op_name              = "gimp:normal",
+    .function             = gimp_operation_normal_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_BEHIND_LINEAR,
-    "gimp:behind",
-    gimp_operation_behind_process,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_DST_ATOP,
-    GIMP_LAYER_COMPOSITE_DST_ATOP,
+
+    .op_name              = "gimp:behind",
+    .function             = gimp_operation_behind_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_MULTIPLY,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_MULTIPLY_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_SCREEN,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_SCREEN_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_OVERLAY_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_DIFFERENCE,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_ADDITION,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_ADDITION_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_SUBTRACT,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_SUBTRACT_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_DARKEN_ONLY,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_LIGHTEN_ONLY,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_HSV_HUE,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HSV_SATURATION,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HSV_COLOR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HSV_VALUE,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DIVIDE,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DIVIDE_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_DODGE,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_DODGE_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_BURN,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_BURN_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_HARDLIGHT,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_SOFTLIGHT,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_GRAIN_EXTRACT,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_GRAIN_MERGE,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_VIVID_LIGHT,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_PIN_LIGHT,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_LINEAR_LIGHT,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_HARD_MIX,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_HARD_MIX_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_EXCLUSION,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_EXCLUSION_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_LINEAR_BURN,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
   { GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-    "gimp:layer-mode",
-    gimp_operation_layer_mode_process_pixels,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_ERASE,
-    "gimp:erase",
-    gimp_operation_erase_process,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP
+
+    .op_name              = "gimp:erase",
+    .function             = gimp_operation_erase_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_REPLACE,
-    "gimp:replace",
-    gimp_operation_replace_process,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
-    GIMP_LAYER_COMPOSITE_SRC_OVER,
+
+    .op_name              = "gimp:replace",
+    .function             = gimp_operation_replace_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_ANTI_ERASE,
-    "gimp:anti-erase",
-    gimp_operation_anti_erase_process,
-    GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA     |
-    GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
-    GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    GIMP_LAYER_COMPOSITE_SRC_ATOP
+
+    .op_name              = "gimp:anti-erase",
+    .function             = gimp_operation_anti_erase_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA     |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER
   }
 };
 
@@ -1040,208 +1165,208 @@ static const GimpLayerMode layer_mode_group_legacy[] =
 
 static const GimpLayerMode layer_mode_groups[][4] =
 {
-  { GIMP_LAYER_MODE_NORMAL,
-    GIMP_LAYER_MODE_NORMAL_LINEAR,
-    GIMP_LAYER_MODE_NORMAL,
-    GIMP_LAYER_MODE_NORMAL
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_NORMAL,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_NORMAL_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_NORMAL,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_NORMAL
   },
 
-  { GIMP_LAYER_MODE_DISSOLVE,
-    GIMP_LAYER_MODE_DISSOLVE,
-    GIMP_LAYER_MODE_DISSOLVE,
-    GIMP_LAYER_MODE_DISSOLVE
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DISSOLVE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DISSOLVE,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DISSOLVE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DISSOLVE
   },
 
-  { GIMP_LAYER_MODE_BEHIND,
-    GIMP_LAYER_MODE_BEHIND_LINEAR,
-    GIMP_LAYER_MODE_BEHIND,
-    GIMP_LAYER_MODE_BEHIND
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_BEHIND,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_BEHIND_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_BEHIND,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_BEHIND
   },
 
-  { GIMP_LAYER_MODE_MULTIPLY,
-    GIMP_LAYER_MODE_MULTIPLY_LINEAR,
-    GIMP_LAYER_MODE_MULTIPLY,
-    GIMP_LAYER_MODE_MULTIPLY_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_MULTIPLY,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_MULTIPLY_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_MULTIPLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_MULTIPLY_LEGACY
   },
 
-  { GIMP_LAYER_MODE_SCREEN,
-    GIMP_LAYER_MODE_SCREEN_LINEAR,
-    GIMP_LAYER_MODE_SCREEN,
-    GIMP_LAYER_MODE_SCREEN_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SCREEN,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_SCREEN_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_SCREEN,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SCREEN_LEGACY
   },
 
-  { GIMP_LAYER_MODE_OVERLAY,
-    GIMP_LAYER_MODE_OVERLAY_LINEAR,
-    GIMP_LAYER_MODE_OVERLAY,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_OVERLAY,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_OVERLAY_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_OVERLAY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_DIFFERENCE,
-    GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
-    GIMP_LAYER_MODE_DIFFERENCE,
-    GIMP_LAYER_MODE_DIFFERENCE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DIFFERENCE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DIFFERENCE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DIFFERENCE_LEGACY
   },
 
-  { GIMP_LAYER_MODE_ADDITION,
-    GIMP_LAYER_MODE_ADDITION_LINEAR,
-    GIMP_LAYER_MODE_ADDITION,
-    GIMP_LAYER_MODE_ADDITION_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ADDITION,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_ADDITION_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_ADDITION,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_ADDITION_LEGACY
   },
 
-  { GIMP_LAYER_MODE_SUBTRACT,
-    GIMP_LAYER_MODE_SUBTRACT_LINEAR,
-    GIMP_LAYER_MODE_SUBTRACT,
-    GIMP_LAYER_MODE_SUBTRACT_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SUBTRACT,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_SUBTRACT_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_SUBTRACT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SUBTRACT_LEGACY
   },
 
-  { GIMP_LAYER_MODE_DARKEN_ONLY,
-    GIMP_LAYER_MODE_DARKEN_ONLY,
-    GIMP_LAYER_MODE_DARKEN_ONLY,
-    GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DARKEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DARKEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DARKEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY
   },
 
-  { GIMP_LAYER_MODE_LIGHTEN_ONLY,
-    GIMP_LAYER_MODE_LIGHTEN_ONLY,
-    GIMP_LAYER_MODE_LIGHTEN_ONLY,
-    GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LIGHTEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LIGHTEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LIGHTEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY
   },
 
-  { -1,
-    -1,
-    GIMP_LAYER_MODE_HSV_HUE,
-    GIMP_LAYER_MODE_HSV_HUE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = -1,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HSV_HUE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_HUE_LEGACY
   },
 
-  { -1,
-    -1,
-    GIMP_LAYER_MODE_HSV_SATURATION,
-    GIMP_LAYER_MODE_HSV_SATURATION_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = -1,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HSV_SATURATION,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_SATURATION_LEGACY
   },
 
-  { -1,
-    -1,
-    GIMP_LAYER_MODE_HSV_COLOR,
-    GIMP_LAYER_MODE_HSV_COLOR_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = -1,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HSV_COLOR,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_COLOR_LEGACY
   },
 
-  { -1,
-    -1,
-    GIMP_LAYER_MODE_HSV_VALUE,
-    GIMP_LAYER_MODE_HSV_VALUE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = -1,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HSV_VALUE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_VALUE_LEGACY
   },
 
-  { GIMP_LAYER_MODE_DIVIDE,
-    GIMP_LAYER_MODE_DIVIDE_LINEAR,
-    GIMP_LAYER_MODE_DIVIDE,
-    GIMP_LAYER_MODE_DIVIDE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DIVIDE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DIVIDE_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DIVIDE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DIVIDE_LEGACY
   },
 
-  { GIMP_LAYER_MODE_DODGE,
-    GIMP_LAYER_MODE_DODGE_LINEAR,
-    GIMP_LAYER_MODE_DODGE,
-    GIMP_LAYER_MODE_DODGE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DODGE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DODGE_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DODGE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DODGE_LEGACY
   },
 
-  { GIMP_LAYER_MODE_BURN,
-    GIMP_LAYER_MODE_BURN_LINEAR,
-    GIMP_LAYER_MODE_BURN,
-    GIMP_LAYER_MODE_BURN_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_BURN,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_BURN_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_BURN,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_BURN_LEGACY
   },
 
-  { GIMP_LAYER_MODE_HARDLIGHT,
-    GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
-    GIMP_LAYER_MODE_HARDLIGHT,
-    GIMP_LAYER_MODE_HARDLIGHT_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HARDLIGHT,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HARDLIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HARDLIGHT_LEGACY
   },
 
-  { GIMP_LAYER_MODE_SOFTLIGHT,
-    GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
-    GIMP_LAYER_MODE_SOFTLIGHT,
-    GIMP_LAYER_MODE_SOFTLIGHT_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SOFTLIGHT,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_SOFTLIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY
   },
 
-  { GIMP_LAYER_MODE_GRAIN_EXTRACT,
-    GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
-    GIMP_LAYER_MODE_GRAIN_EXTRACT,
-    GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_GRAIN_EXTRACT,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_GRAIN_EXTRACT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY
   },
 
-  { GIMP_LAYER_MODE_GRAIN_MERGE,
-    GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
-    GIMP_LAYER_MODE_GRAIN_MERGE,
-    GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_GRAIN_MERGE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_GRAIN_MERGE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY
   },
 
-  { GIMP_LAYER_MODE_COLOR_ERASE,
-    -1,
-    GIMP_LAYER_MODE_COLOR_ERASE,
-    -1,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_COLOR_ERASE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_COLOR_ERASE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1,
   },
 
-  { GIMP_LAYER_MODE_VIVID_LIGHT,
-    GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
-    GIMP_LAYER_MODE_VIVID_LIGHT,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_VIVID_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_VIVID_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_PIN_LIGHT,
-    GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
-    GIMP_LAYER_MODE_PIN_LIGHT,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_PIN_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_PIN_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_LINEAR_LIGHT,
-    GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
-    GIMP_LAYER_MODE_LINEAR_LIGHT,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LINEAR_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LINEAR_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_HARD_MIX,
-    GIMP_LAYER_MODE_HARD_MIX_LINEAR,
-    GIMP_LAYER_MODE_HARD_MIX,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HARD_MIX,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_HARD_MIX_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HARD_MIX,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_EXCLUSION,
-    GIMP_LAYER_MODE_EXCLUSION_LINEAR,
-    GIMP_LAYER_MODE_EXCLUSION,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_EXCLUSION,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_EXCLUSION_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_EXCLUSION,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_LINEAR_BURN,
-    GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,
-    GIMP_LAYER_MODE_LINEAR_BURN,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LINEAR_BURN,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LINEAR_BURN,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-    GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-    GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-    GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-    GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_ERASE,
-    GIMP_LAYER_MODE_ERASE,
-    -1,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ERASE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_ERASE,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = -1,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_REPLACE,
-    GIMP_LAYER_MODE_REPLACE,
-    -1,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_REPLACE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_REPLACE,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = -1,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { GIMP_LAYER_MODE_ANTI_ERASE,
-    GIMP_LAYER_MODE_ANTI_ERASE,
-    -1,
-    -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ANTI_ERASE,
+    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_ANTI_ERASE,
+    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = -1,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   }
 };
 
