@@ -24,11 +24,8 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
-
-#include "config/gimpcoreconfig.h"
 
 #include "gegl/gimp-babl.h"
 
@@ -36,8 +33,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdocumentlist.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
-#include "core/gimpimage-convert-precision.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
@@ -50,6 +45,7 @@
 #include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginprocedure.h"
 
+#include "file-import.h"
 #include "file-open.h"
 #include "file-remote.h"
 #include "gimp-file.h"
@@ -279,40 +275,11 @@ file_open_image (Gimp                *gimp,
     {
       gimp_image_undo_disable (image);
 
-      if (run_mode == GIMP_RUN_INTERACTIVE                 &&
-          gimp_image_get_base_type (image) != GIMP_INDEXED &&
-          gimp->config->import_promote_float               &&
-          file_open_file_proc_is_import (file_proc))
-        {
-          GimpPrecision old_precision = gimp_image_get_precision (image);
-
-          if (old_precision != GIMP_PRECISION_FLOAT_LINEAR)
-            {
-              gimp_image_convert_precision (image, GIMP_PRECISION_FLOAT_LINEAR,
-                                            GEGL_DITHER_NONE,
-                                            GEGL_DITHER_NONE,
-                                            GEGL_DITHER_NONE,
-                                            progress);
-
-              if (gimp->config->import_promote_dither &&
-                  old_precision == GIMP_PRECISION_U8_GAMMA)
-                {
-                  gimp_image_convert_dither_u8 (image, progress);
-                }
-            }
-        }
-
-      gimp_image_import_color_profile (image, context, progress,
-                                       run_mode == GIMP_RUN_INTERACTIVE ?
-                                       TRUE : FALSE);
-
       if (file_open_file_proc_is_import (file_proc))
         {
-          /* Remember the import source */
-          gimp_image_set_imported_file (image, file);
-
-          /* We shall treat this file as an Untitled file */
-          gimp_image_set_file (image, NULL);
+          file_import_image (image, context, file,
+                             run_mode == GIMP_RUN_INTERACTIVE,
+                             progress);
         }
 
       /* Enables undo again */

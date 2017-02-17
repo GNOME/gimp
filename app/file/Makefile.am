@@ -13,6 +13,8 @@ AM_CPPFLAGS = \
 noinst_LIBRARIES = libappfile.a
 
 libappfile_a_SOURCES = \
+	file-import.c	\
+	file-import.h	\
 	file-open.c	\
 	file-open.h	\
 	file-remote.c	\
