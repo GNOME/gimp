@@ -2137,6 +2137,17 @@ gimp_layer_set_mode (GimpLayer     *layer,
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
+    {
+      g_return_if_fail (gimp_layer_mode_get_context (mode) &
+                        GIMP_LAYER_MODE_CONTEXT_LAYER);
+    }
+  else
+    {
+      g_return_if_fail (gimp_layer_mode_get_context (mode) &
+                        GIMP_LAYER_MODE_CONTEXT_GROUP);
+    }
+
   if (layer->mode != mode)
     {
       if (push_undo && gimp_item_is_attached (GIMP_ITEM (layer)))

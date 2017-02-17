@@ -45,6 +45,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable.h"
 #include "core/gimpprogress.h"
+#include "operations/layer-modes/gimp-layer-modes.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
@@ -1143,7 +1144,19 @@ layer_set_mode_invoker (GimpProcedure         *procedure,
       if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
         mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
 
-      gimp_layer_set_mode (layer, mode, TRUE);
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
+        {
+          if (! (gimp_layer_mode_get_context (mode) & GIMP_LAYER_MODE_CONTEXT_LAYER))
+            success = FALSE;
+        }
+      else
+        {
+          if (! (gimp_layer_mode_get_context (mode) & GIMP_LAYER_MODE_CONTEXT_GROUP))
+            success = FALSE;
+        }
+
+      if (success)
+        gimp_layer_set_mode (layer, mode, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

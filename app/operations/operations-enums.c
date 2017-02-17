@@ -294,6 +294,41 @@ gimp_layer_mode_group_get_type (void)
   return type;
 }
 
+GType
+gimp_layer_mode_context_get_type (void)
+{
+  static const GFlagsValue values[] =
+  {
+    { GIMP_LAYER_MODE_CONTEXT_LAYER, "GIMP_LAYER_MODE_CONTEXT_LAYER", "layer" },
+    { GIMP_LAYER_MODE_CONTEXT_GROUP, "GIMP_LAYER_MODE_CONTEXT_GROUP", "group" },
+    { GIMP_LAYER_MODE_CONTEXT_PAINT, "GIMP_LAYER_MODE_CONTEXT_PAINT", "paint" },
+    { GIMP_LAYER_MODE_CONTEXT_FADE, "GIMP_LAYER_MODE_CONTEXT_FADE", "fade" },
+    { GIMP_LAYER_MODE_CONTEXT_ALL, "GIMP_LAYER_MODE_CONTEXT_ALL", "all" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpFlagsDesc descs[] =
+  {
+    { GIMP_LAYER_MODE_CONTEXT_LAYER, "GIMP_LAYER_MODE_CONTEXT_LAYER", NULL },
+    { GIMP_LAYER_MODE_CONTEXT_GROUP, "GIMP_LAYER_MODE_CONTEXT_GROUP", NULL },
+    { GIMP_LAYER_MODE_CONTEXT_PAINT, "GIMP_LAYER_MODE_CONTEXT_PAINT", NULL },
+    { GIMP_LAYER_MODE_CONTEXT_FADE, "GIMP_LAYER_MODE_CONTEXT_FADE", NULL },
+    { GIMP_LAYER_MODE_CONTEXT_ALL, "GIMP_LAYER_MODE_CONTEXT_ALL", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_flags_register_static ("GimpLayerModeContext", values);
+      gimp_type_set_translation_context (type, "layer-mode-context");
+      gimp_flags_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

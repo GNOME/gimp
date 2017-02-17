@@ -63,6 +63,7 @@ struct _GimpLayerModeInfo
   const gchar           *op_name;
   GimpLayerModeFunc      function;
   GimpLayerModeFlags     flags;
+  GimpLayerModeContext   context;
   GimpLayerCompositeMode paint_composite_mode;
   GimpLayerCompositeMode composite_mode;
   GimpLayerColorSpace    composite_space;
@@ -79,6 +80,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:normal",
     .function             = gimp_operation_normal_process,
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
@@ -91,6 +93,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA     |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER
   },
@@ -100,6 +103,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:behind",
     .function             = gimp_operation_behind_process,
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
+                            GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
@@ -113,6 +118,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -127,6 +133,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -141,6 +148,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -155,6 +163,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -169,6 +178,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -183,6 +193,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -197,6 +208,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -211,6 +223,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -225,6 +238,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -239,6 +253,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -253,6 +268,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -267,6 +283,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -281,6 +298,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -295,6 +313,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -309,6 +328,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -323,6 +343,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -337,6 +358,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -351,6 +373,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -365,6 +388,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -375,6 +399,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
     .op_name              = "gimp:color-erase",
     .function             = gimp_operation_color_erase_process,
+    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
+                            GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -386,6 +412,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -398,6 +425,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -410,6 +438,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -422,6 +451,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -434,6 +464,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -446,6 +477,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_normal_process,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -457,6 +489,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_behind_process,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
+                            GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -467,6 +501,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -478,6 +513,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -489,6 +525,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -500,6 +537,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -511,6 +549,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -522,6 +561,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -533,6 +573,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -544,6 +585,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -555,6 +597,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -566,6 +609,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -577,6 +621,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -589,6 +634,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -600,6 +646,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -611,6 +658,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -623,6 +671,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -635,6 +684,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -647,6 +697,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -658,6 +709,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -669,6 +721,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -680,6 +733,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -691,6 +745,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -702,6 +757,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -713,6 +769,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -724,6 +781,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -735,6 +793,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -746,6 +805,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -757,6 +817,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -768,6 +829,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -779,6 +841,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -790,6 +853,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -801,6 +865,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -812,6 +877,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -823,6 +889,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -834,6 +901,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -845,6 +913,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -856,6 +925,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -867,6 +937,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -878,6 +949,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -889,6 +961,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -900,6 +973,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -911,6 +985,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -922,6 +997,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -933,6 +1009,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -944,6 +1021,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -955,6 +1033,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -966,6 +1045,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -977,6 +1057,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
@@ -989,6 +1070,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_erase_process,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -1000,6 +1082,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_replace_process,
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
@@ -1012,6 +1095,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .flags                = GIMP_LAYER_MODE_FLAG_WANTS_LINEAR_DATA     |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER
   }
@@ -1490,6 +1574,15 @@ gimp_layer_mode_get_function (GimpLayerMode  mode)
   if (!info)
     return gimp_operation_layer_mode_process_pixels;
   return info->function;
+}
+
+GimpLayerModeContext
+gimp_layer_mode_get_context (GimpLayerMode mode)
+{
+  const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
+  if (!info)
+    return 0;
+  return info->context;
 }
 
 static gboolean
