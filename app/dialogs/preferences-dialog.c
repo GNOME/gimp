@@ -1300,6 +1300,10 @@ prefs_dialog_new (Gimp       *gimp,
                                      "floating point"),
                                    GTK_BOX (vbox2));
 
+  button = prefs_check_button_add (object, "import-add-alpha",
+                                   _("Add an alpha channel to imported images"),
+                                   GTK_BOX (vbox2));
+
 
   /****************/
   /*  Playground  */

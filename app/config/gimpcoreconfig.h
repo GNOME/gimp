@@ -93,6 +93,7 @@ struct _GimpCoreConfig
   GimpRGB                 quick_mask_color;
   gboolean                import_promote_float;
   gboolean                import_promote_dither;
+  gboolean                import_add_alpha;
 };
 
 struct _GimpCoreConfigClass

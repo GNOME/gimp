@@ -31,10 +31,15 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-convert-precision.h"
+#include "core/gimplayer.h"
 #include "core/gimpprogress.h"
+
+#include "text/gimptextlayer.h"
 
 #include "file-import.h"
 
+
+/*  public functions  */
 
 void
 file_import_image (GimpImage    *image,
@@ -52,25 +57,45 @@ file_import_image (GimpImage    *image,
 
   config = image->gimp->config;
 
-  if (interactive                  &&
-      config->import_promote_float &&
-      gimp_image_get_base_type (image) != GIMP_INDEXED)
+  if (interactive && gimp_image_get_base_type (image) != GIMP_INDEXED)
     {
-      GimpPrecision old_precision = gimp_image_get_precision (image);
-
-      if (old_precision != GIMP_PRECISION_FLOAT_LINEAR)
+      if (config->import_promote_float)
         {
-          gimp_image_convert_precision (image, GIMP_PRECISION_FLOAT_LINEAR,
-                                        GEGL_DITHER_NONE,
-                                        GEGL_DITHER_NONE,
-                                        GEGL_DITHER_NONE,
-                                        progress);
+          GimpPrecision old_precision = gimp_image_get_precision (image);
 
-          if (config->import_promote_dither &&
-              old_precision == GIMP_PRECISION_U8_GAMMA)
+          if (old_precision != GIMP_PRECISION_FLOAT_LINEAR)
             {
-              gimp_image_convert_dither_u8 (image, progress);
+              gimp_image_convert_precision (image,
+                                            GIMP_PRECISION_FLOAT_LINEAR,
+                                            GEGL_DITHER_NONE,
+                                            GEGL_DITHER_NONE,
+                                            GEGL_DITHER_NONE,
+                                            progress);
+
+              if (config->import_promote_dither &&
+                  old_precision == GIMP_PRECISION_U8_GAMMA)
+                {
+                  gimp_image_convert_dither_u8 (image, progress);
+                }
             }
+        }
+
+      if (config->import_add_alpha)
+        {
+          GList *layers = gimp_image_get_layer_list (image);
+          GList *list;
+
+          for (list = layers; list; list = g_list_next (list))
+            {
+              if (! gimp_viewable_get_children (list->data) &&
+                  ! gimp_item_is_text_layer (list->data)    &&
+                  ! gimp_drawable_has_alpha (list->data))
+                {
+                  gimp_layer_add_alpha (list->data);
+                }
+            }
+
+          g_list_free (layers);
         }
     }
 

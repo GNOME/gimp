@@ -189,6 +189,9 @@ _("Promote imported images to floating point precision. Does not apply " \
 _("When promoting imported images to floating point precision, also add " \
   "minimal noise in order do distribute color values a bit.")
 
+#define IMPORT_ADD_ALPHA_BLURB \
+_("Add an alpha channel to all layers of imported images.")
+
 #define INITIAL_ZOOM_TO_FIT_BLURB \
 _("When enabled, this will ensure that the full image is visible after a " \
   "file is opened, otherwise it will be displayed with a scale of 1:1.")
