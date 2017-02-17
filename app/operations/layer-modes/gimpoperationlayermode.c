@@ -31,6 +31,7 @@
 
 #include "../operations-types.h"
 
+#include "gimp-layer-modes.h"
 #include "gimpoperationlayermode.h"
 
 
@@ -38,7 +39,6 @@ enum
 {
   PROP_0,
   PROP_LAYER_MODE,
-  PROP_LINEAR,
   PROP_OPACITY,
   PROP_BLEND_SPACE,
   PROP_COMPOSITE_SPACE,
@@ -119,12 +119,7 @@ G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
 #define parent_class gimp_operation_layer_mode_parent_class
 
 
-static const Babl *_gimp_fish_rgba_to_perceptual = NULL;
-static const Babl *_gimp_fish_perceptual_to_rgba = NULL;
-static const Babl *_gimp_fish_perceptual_to_laba = NULL;
-static const Babl *_gimp_fish_rgba_to_laba       = NULL;
-static const Babl *_gimp_fish_laba_to_rgba       = NULL;
-static const Babl *_gimp_fish_laba_to_perceptual = NULL;
+static const Babl *gimp_layer_color_space_fish[3 /* from */][3 /* to */];
 
 static CompositeFunc composite_func_src_atop = composite_func_src_atop_core;
 static CompositeFunc composite_func_dst_atop = composite_func_dst_atop_core;
@@ -163,13 +158,6 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, PROP_LINEAR,
-                                   g_param_spec_boolean ("linear",
-                                                         NULL, NULL,
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
-
   g_object_class_install_property (object_class, PROP_OPACITY,
                                    g_param_spec_double ("opacity",
                                                         NULL, NULL,
@@ -202,13 +190,32 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
-  _gimp_fish_rgba_to_perceptual = babl_fish ("RGBA float", "R'G'B'A float");
-  _gimp_fish_perceptual_to_rgba = babl_fish ("R'G'B'A float", "RGBA float");
-  _gimp_fish_perceptual_to_laba = babl_fish ("R'G'B'A float", "CIE Lab alpha float");
+  gimp_layer_color_space_fish
+    /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
+    /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
+      babl_fish ("RGBA float", "R'G'B'A float");
+  gimp_layer_color_space_fish
+    /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1]
+    /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
+      babl_fish ("RGBA float", "CIE Lab alpha float");
 
-  _gimp_fish_rgba_to_laba       = babl_fish ("RGBA float", "CIE Lab alpha float");
-  _gimp_fish_laba_to_rgba       = babl_fish ("CIE Lab alpha float", "RGBA float");
-  _gimp_fish_laba_to_perceptual = babl_fish ("CIE Lab alpha float", "R'G'B'A float");
+  gimp_layer_color_space_fish
+    /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
+    /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
+      babl_fish ("R'G'B'A float", "RGBA float");
+  gimp_layer_color_space_fish
+    /* from */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1]
+    /* to   */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1] =
+      babl_fish ("R'G'B'A float", "CIE Lab alpha float");
+
+  gimp_layer_color_space_fish
+    /* from */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1]
+    /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_LINEAR     - 1] =
+      babl_fish ("CIE Lab alpha float", "RGBA float");
+  gimp_layer_color_space_fish
+    /* from */ [GIMP_LAYER_COLOR_SPACE_LAB            - 1]
+    /* to   */ [GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL - 1] =
+      babl_fish ("CIE Lab alpha float", "R'G'B'A float");
 
 #if COMPILE_SSE2_INTRINISICS
   if (gimp_cpu_accel_get_support () & GIMP_CPU_ACCEL_X86_SSE2)
@@ -233,10 +240,6 @@ gimp_operation_layer_mode_set_property (GObject      *object,
     {
     case PROP_LAYER_MODE:
       self->layer_mode = g_value_get_enum (value);
-      break;
-
-    case PROP_LINEAR:
-      self->linear = g_value_get_boolean (value);
       break;
 
     case PROP_OPACITY:
@@ -275,10 +278,6 @@ gimp_operation_layer_mode_get_property (GObject    *object,
       g_value_set_enum (value, self->layer_mode);
       break;
 
-    case PROP_LINEAR:
-      g_value_set_boolean (value, self->linear);
-      break;
-
     case PROP_OPACITY:
       g_value_set_double (value, self->opacity);
       break;
@@ -305,12 +304,15 @@ static void
 gimp_operation_layer_mode_prepare (GeglOperation *operation)
 {
   GimpOperationLayerMode *self = GIMP_OPERATION_LAYER_MODE (operation);
+  const Babl             *in_format;
   const Babl             *format;
 
-  if (self->linear)
-    format = babl_format ("RGBA float");
-  else
-    format = babl_format ("R'G'B'A float");
+  in_format = gegl_operation_get_source_format (operation, "input");
+
+  format    = gimp_layer_mode_get_format (self->layer_mode,
+                                          self->composite_space,
+                                          self->blend_space,
+                                          in_format);
 
   gegl_operation_set_format (operation, "input",  format);
   gegl_operation_set_format (operation, "output", format);
@@ -753,101 +755,41 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
                       glong                   samples,
                       GimpBlendFunc           blend_func)
 {
-  gfloat                  opacity        = layer_mode->opacity;
-  GimpLayerColorSpace     blend_space    = layer_mode->blend_space;
-  GimpLayerColorSpace     composite_space= layer_mode->composite_space;
-  GimpLayerCompositeMode  composite_mode = layer_mode->composite_mode;
+  gfloat                 opacity         = layer_mode->opacity;
+  GimpLayerColorSpace    blend_space     = layer_mode->blend_space;
+  GimpLayerColorSpace    composite_space = layer_mode->composite_space;
+  GimpLayerCompositeMode composite_mode  = layer_mode->composite_mode;
 
   gfloat *blend_in    = in;
   gfloat *blend_layer = layer;
   gfloat *blend_out   = out;
 
-  gfloat *composite_in    = NULL;
-  gfloat *composite_layer = NULL;
-
   gboolean composite_needs_in_color =
     composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
     composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP;
-  gboolean composite_needs_layer_color =
-    composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-    composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP;
 
-  const Babl *fish_to_blend       = NULL;
-  const Babl *fish_to_composite   = NULL;
-  const Babl *fish_from_composite = NULL;
+  const Babl *composite_to_blend_fish = NULL;
+  const Babl *blend_to_composite_fish = NULL;
 
-  switch (blend_space)
+  if (blend_space != GIMP_LAYER_COLOR_SPACE_AUTO)
     {
-    default:
-    case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
-      fish_to_blend   =  NULL;
-      switch (composite_space)
-        {
-        case GIMP_LAYER_COLOR_SPACE_LAB:
-          fish_to_composite   = _gimp_fish_rgba_to_laba;
-          fish_from_composite = _gimp_fish_laba_to_rgba;
-          break;
-        default:
-        case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
-          fish_to_composite   = NULL;
-          fish_from_composite = NULL;
-          break;
-        case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
-          fish_to_composite   = _gimp_fish_rgba_to_perceptual;
-          fish_from_composite = _gimp_fish_perceptual_to_rgba;
-          break;
-        }
-      break;
+      g_assert (composite_space >= 1 && composite_space < 4);
+      g_assert (blend_space     >= 1 && blend_space     < 4);
 
-    case GIMP_LAYER_COLOR_SPACE_LAB:
-      fish_to_blend   = _gimp_fish_rgba_to_laba;
-      switch (composite_space)
-        {
-        case GIMP_LAYER_COLOR_SPACE_LAB:
-        default:
-          fish_to_composite = NULL;
-          fish_from_composite = _gimp_fish_laba_to_rgba;
-          break;
-        case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
-          fish_to_composite = _gimp_fish_laba_to_rgba;
-          fish_from_composite = NULL;
-          break;
-        case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
-          fish_to_composite = _gimp_fish_laba_to_perceptual;
-          fish_from_composite = _gimp_fish_perceptual_to_rgba;
-          break;
-        }
-      break;
+      composite_to_blend_fish = gimp_layer_color_space_fish [composite_space - 1]
+                                                            [blend_space     - 1];
 
-    case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
-      fish_to_blend = _gimp_fish_rgba_to_perceptual;
-      switch (composite_space)
-        {
-        case GIMP_LAYER_COLOR_SPACE_LAB:
-        default:
-          fish_to_composite = _gimp_fish_perceptual_to_laba;
-          fish_from_composite = NULL;
-          break;
-        case GIMP_LAYER_COLOR_SPACE_RGB_LINEAR:
-          fish_to_composite = _gimp_fish_perceptual_to_rgba;
-          fish_from_composite = NULL;
-          break;
-        case GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL:
-          fish_to_composite = NULL;
-          fish_from_composite = _gimp_fish_perceptual_to_rgba;
-          break;
-        }
-      break;
+      blend_to_composite_fish = gimp_layer_color_space_fish [blend_space     - 1]
+                                                            [composite_space - 1];
     }
 
   if (in == out) /* in-place detected, avoid clobbering since we need to
                     read it for the compositing stage  */
     blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
 
-  if (fish_to_blend)
+  if (composite_to_blend_fish)
     {
-      if (in != out || (composite_needs_in_color &&
-                        composite_space == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR))
+      if (in != out || composite_needs_in_color)
         {
           /* don't convert input in-place if we're not doing in-place output,
            * or if we're going to need the original input for compositing.
@@ -856,77 +798,43 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
         }
       blend_layer  = g_alloca (sizeof (gfloat) * 4 * samples);
 
-      babl_process (fish_to_blend, in,    blend_in,    samples);
-      babl_process (fish_to_blend, layer, blend_layer, samples);
+      babl_process (composite_to_blend_fish, in,    blend_in,    samples);
+      babl_process (composite_to_blend_fish, layer, blend_layer, samples);
     }
 
   blend_func (blend_in, blend_layer, blend_out, samples);
 
-  composite_in    = blend_in;
-  composite_layer = blend_layer;
-
-  if (fish_to_composite)
+  if (blend_to_composite_fish)
     {
-      if (composite_space == GIMP_LAYER_COLOR_SPACE_RGB_LINEAR)
-        {
-          composite_in    = in;
-          composite_layer = layer;
-        }
-      else
-        {
-          if (composite_needs_in_color)
-            {
-              if (composite_in == in && in != out)
-                composite_in = g_alloca (sizeof (gfloat) * 4 * samples);
-
-              babl_process (fish_to_composite,
-                            blend_in, composite_in, samples);
-            }
-
-          if (composite_needs_layer_color)
-            {
-              if (composite_layer == layer)
-                composite_layer = g_alloca (sizeof (gfloat) * 4 * samples);
-
-              babl_process (fish_to_composite,
-                            blend_layer, composite_layer, samples);
-            }
-        }
-
-      babl_process (fish_to_composite, blend_out, blend_out, samples);
+      babl_process (blend_to_composite_fish, blend_out, blend_out, samples);
     }
 
   switch (composite_mode)
     {
     case GIMP_LAYER_COMPOSITE_SRC_ATOP:
     default:
-      composite_func_src_atop (composite_in, blend_out, NULL,
+      composite_func_src_atop (in, blend_out, NULL,
                                mask, opacity,
                                out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
-      composite_func_src_over (composite_in, composite_layer, blend_out,
+      composite_func_src_over (in, layer, blend_out,
                                mask, opacity,
                                out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_DST_ATOP:
-      composite_func_dst_atop (composite_in, composite_layer, blend_out,
+      composite_func_dst_atop (in, layer, blend_out,
                                mask, opacity,
                                out, samples);
       break;
 
     case GIMP_LAYER_COMPOSITE_SRC_IN:
-      composite_func_src_in (composite_in, blend_out, NULL,
+      composite_func_src_in (in, blend_out, NULL,
                              mask, opacity,
                              out, samples);
       break;
-    }
-
-  if (fish_from_composite)
-    {
-      babl_process (fish_from_composite, out, out, samples);
     }
 }
 
