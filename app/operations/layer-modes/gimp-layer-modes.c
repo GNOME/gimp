@@ -398,6 +398,9 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
     .op_name              = "gimp:color-erase",
     .function             = gimp_operation_color_erase_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
                             GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
