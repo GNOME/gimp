@@ -969,6 +969,7 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *vbox;
   GtkWidget         *hbox;
   GtkWidget         *vbox2;
+  GtkWidget         *vbox3;
   GtkWidget         *button;
   GtkWidget         *button2;
   GtkWidget         *table;
@@ -1295,14 +1296,21 @@ prefs_dialog_new (Gimp       *gimp,
                                    _("Promote imported images to "
                                      "_floating point precision"),
                                    GTK_BOX (vbox2));
+
+  vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
   button = prefs_check_button_add (object, "import-promote-dither",
                                    _("Dither images when promoting to "
                                      "floating point"),
-                                   GTK_BOX (vbox2));
+                                   GTK_BOX (vbox3));
 
   button = prefs_check_button_add (object, "import-add-alpha",
                                    _("Add an alpha channel to imported images"),
                                    GTK_BOX (vbox2));
+
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+  button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
+                                     _("Color profile policy:"),
+                                     GTK_TABLE (table), 0, NULL);
 
 
   /****************/
