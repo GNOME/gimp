@@ -200,6 +200,39 @@ get_parasite_list_invoker (GimpProcedure         *procedure,
   return return_vals;
 }
 
+static GimpValueArray *
+temp_name_invoker (GimpProcedure         *procedure,
+                   Gimp                  *gimp,
+                   GimpContext           *context,
+                   GimpProgress          *progress,
+                   const GimpValueArray  *args,
+                   GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *extension;
+  gchar *name = NULL;
+
+  extension = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GFile *file = gimp_get_temp_file (gimp, extension);
+
+      name = g_file_get_path (file);
+
+      g_object_unref (file);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), name);
+
+  return return_vals;
+}
+
 void
 register_gimp_procs (GimpPDB *pdb)
 {
@@ -375,6 +408,37 @@ register_gimp_procs (GimpPDB *pdb)
                                                                  "parasites",
                                                                  "The names of currently attached parasites",
                                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-temp-name
+   */
+  procedure = gimp_procedure_new (temp_name_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-temp-name");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-temp-name",
+                                     "Generates a unique filename.",
+                                     "Generates a unique filename using the temp path supplied in the user's gimprc.",
+                                     "Josh MacDonald",
+                                     "Josh MacDonald",
+                                     "1997",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("extension",
+                                                       "extension",
+                                                       "The extension the file will have",
+                                                       TRUE, TRUE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("name",
+                                                           "name",
+                                                           "The new temp filename",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

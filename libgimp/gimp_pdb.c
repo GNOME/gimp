@@ -230,3 +230,34 @@ gimp_get_parasite_list (gint *num_parasites)
 
   return parasites;
 }
+
+/**
+ * gimp_temp_name:
+ * @extension: The extension the file will have.
+ *
+ * Generates a unique filename.
+ *
+ * Generates a unique filename using the temp path supplied in the
+ * user's gimprc.
+ *
+ * Returns: The new temp filename.
+ **/
+gchar *
+gimp_temp_name (const gchar *extension)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-temp-name",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, extension,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}

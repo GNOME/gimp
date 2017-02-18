@@ -442,39 +442,6 @@ CODE
     );
 }
 
-sub temp_name {
-    $blurb = 'Generates a unique filename.';
-
-    $help = <<'HELP';
-Generates a unique filename using the temp path supplied in the user's gimprc.
-HELP
-
-    &josh_pdb_misc('1997');
-
-    @inargs = (
-        { name => 'extension', type => 'string',
-	  allow_non_utf8 => 1, null_ok => 1,
-          desc => 'The extension the file will have' }
-    );
-
-    @outargs = (
-        { name => 'name', type => 'string',
-          desc => 'The new temp filename' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  GFile *file = gimp_get_temp_file (gimp, extension);
-
-  name = g_file_get_path (file);
-
-  g_object_unref (file);
-}
-CODE
-    );
-}
-
 sub register_magic_load_handler {
     $blurb = 'Registers a file load handler procedure.';
 
@@ -703,7 +670,6 @@ CODE
             file_save
             file_load_thumbnail
             file_save_thumbnail
-            temp_name
             register_magic_load_handler
             register_load_handler
             register_save_handler
@@ -711,11 +677,11 @@ CODE
             register_file_handler_uri
             register_thumbnail_loader);
 
-%exports = (app => [@procs], lib => [@procs[0..3,5..12]]);
+%exports = (app => [@procs], lib => [@procs[0..3,5..11]]);
 
 $desc = 'File Operations';
 $doc_title = 'gimpfileops';
-$doc_short_desc = 'File operations (load, save, etc.)';
-$doc_long_desc = 'File operations (load, save, etc.)';
+$doc_short_desc = 'Image file operations (load, save, etc.)';
+$doc_long_desc = 'Image file operations (load, save, etc.)';
 
 1;
