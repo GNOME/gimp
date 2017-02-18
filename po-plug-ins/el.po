@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
 "ywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-02-01 13:30+0000\n"
-"PO-Revision-Date: 2017-02-03 09:04+0300\n"
+"POT-Creation-Date: 2017-02-18 01:02+0000\n"
+"PO-Revision-Date: 2017-02-18 09:20+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -37,6 +37,109 @@ msgstr "Δεν υπάρχουν αρκετές στρώσεις για στοί�
 #: ../plug-ins/common/align-layers.c:626
 msgid "Align Visible Layers"
 msgstr "Στοίχιση ορατών στρώσεων"
+
+#
+#: ../plug-ins/common/align-layers.c:630 ../plug-ins/common/blinds.c:225
+#: ../plug-ins/common/border-average.c:362 ../plug-ins/common/cartoon.c:813
+#: ../plug-ins/common/checkerboard.c:350 ../plug-ins/common/cml-explorer.c:1189
+#: ../plug-ins/common/cml-explorer.c:1986
+#: ../plug-ins/common/cml-explorer.c:2119 ../plug-ins/common/colorify.c:257
+#: ../plug-ins/common/colormap-remap.c:621 ../plug-ins/common/compose.c:1075
+#: ../plug-ins/common/contrast-retinex.c:289
+#: ../plug-ins/common/curve-bend.c:1227 ../plug-ins/common/curve-bend.c:2065
+#: ../plug-ins/common/curve-bend.c:2100 ../plug-ins/common/decompose.c:821
+#: ../plug-ins/common/depth-merge.c:655 ../plug-ins/common/despeckle.c:445
+#: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
+#: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
+#: ../plug-ins/common/file-cel.c:934 ../plug-ins/common/file-gif-save.c:1089
+#: ../plug-ins/common/file-pdf-load.c:1089 ../plug-ins/common/file-ps.c:3421
+#: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/file-svg.c:726
+#: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
+#: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
+#: ../plug-ins/common/grid.c:646 ../plug-ins/common/hot.c:593
+#: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:502
+#: ../plug-ins/common/max-rgb.c:261 ../plug-ins/common/newsprint.c:1183
+#: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
+#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:723
+#: ../plug-ins/common/qbist.c:765 ../plug-ins/common/qbist.c:819
+#: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
+#: ../plug-ins/common/smooth-palette.c:433 ../plug-ins/common/softglow.c:632
+#: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
+#: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:437
+#: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
+#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:271
+#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1149
+#: ../plug-ins/file-fli/fli-gimp.c:869
+#: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
+#: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1679
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1116
+#: ../plug-ins/gfig/gfig-dialog.c:290 ../plug-ins/gfig/gfig-dialog.c:638
+#: ../plug-ins/gfig/gfig-dialog.c:687 ../plug-ins/gimpressionist/brush.c:256
+#: ../plug-ins/gimpressionist/gimpressionist.c:142
+#: ../plug-ins/gimpressionist/orientmap.c:528
+#: ../plug-ins/gimpressionist/presets.c:642
+#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/gradient-flare/gradient-flare.c:2360
+#: ../plug-ins/gradient-flare/gradient-flare.c:3323
+#: ../plug-ins/ifs-compose/ifs-compose.c:763
+#: ../plug-ins/ifs-compose/ifs-compose.c:2530
+#: ../plug-ins/ifs-compose/ifs-compose.c:2567
+#: ../plug-ins/imagemap/imap_browse.c:80
+#: ../plug-ins/imagemap/imap_default_dialog.c:106
+#: ../plug-ins/imagemap/imap_file.c:71 ../plug-ins/imagemap/imap_file.c:124
+#: ../plug-ins/lighting/lighting-ui.c:1037
+#: ../plug-ins/lighting/lighting-ui.c:1162
+#: ../plug-ins/lighting/lighting-ui.c:1306
+#: ../plug-ins/map-object/map-object-ui.c:1333
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:426
+#: ../plug-ins/selection-to-path/selection-to-path.c:309
+#| msgid "_Advanced"
+msgid "_Cancel"
+msgstr "Α_κύρωση"
+
+#: ../plug-ins/common/align-layers.c:631 ../plug-ins/common/blinds.c:226
+#: ../plug-ins/common/border-average.c:363 ../plug-ins/common/cartoon.c:814
+#: ../plug-ins/common/checkerboard.c:351 ../plug-ins/common/cml-explorer.c:1190
+#: ../plug-ins/common/colorify.c:258 ../plug-ins/common/colormap-remap.c:622
+#: ../plug-ins/common/compose.c:1076 ../plug-ins/common/contrast-retinex.c:290
+#: ../plug-ins/common/curve-bend.c:1228 ../plug-ins/common/decompose.c:822
+#: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
+#: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
+#: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
+#: ../plug-ins/common/file-svg.c:727 ../plug-ins/common/file-wmf.c:506
+#: ../plug-ins/common/film.c:1263 ../plug-ins/common/filter-pack.c:1207
+#: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:647
+#: ../plug-ins/common/hot.c:594 ../plug-ins/common/jigsaw.c:2398
+#: ../plug-ins/common/max-rgb.c:262 ../plug-ins/common/newsprint.c:1184
+#: ../plug-ins/common/nl-filter.c:1022 ../plug-ins/common/oilify.c:786
+#: ../plug-ins/common/photocopy.c:841 ../plug-ins/common/qbist.c:820
+#: ../plug-ins/common/ripple.c:488 ../plug-ins/common/sharpen.c:477
+#: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:633
+#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
+#: ../plug-ins/common/tile.c:438 ../plug-ins/common/tile-small.c:374
+#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:272
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
+#: ../plug-ins/gimpressionist/gimpressionist.c:143
+#: ../plug-ins/gimpressionist/orientmap.c:529
+#: ../plug-ins/gimpressionist/presets.c:643
+#: ../plug-ins/gimpressionist/sizemap.c:402
+#: ../plug-ins/gradient-flare/gradient-flare.c:2361
+#: ../plug-ins/gradient-flare/gradient-flare.c:3324
+#: ../plug-ins/ifs-compose/ifs-compose.c:764
+#: ../plug-ins/imagemap/imap_default_dialog.c:109
+#: ../plug-ins/lighting/lighting-ui.c:1038
+#: ../plug-ins/map-object/map-object-ui.c:1334
+#: ../plug-ins/pagecurl/pagecurl.c:440
+#: ../plug-ins/selection-to-path/selection-to-path.c:310
+msgid "_OK"
+msgstr "Ε_ντάξει"
 
 #
 #: ../plug-ins/common/align-layers.c:650 ../plug-ins/common/align-layers.c:681
@@ -350,12 +453,12 @@ msgstr "Κά_θετος"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1773 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1781 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:923
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252
-#: ../plug-ins/screenshot/screenshot-win32.c:253 ../plug-ins/twain/twain.c:567
+#: ../plug-ins/screenshot/screenshot-win32.c:257 ../plug-ins/twain/twain.c:567
 msgid "Background"
 msgstr "Παρασκήνιο"
 
@@ -467,7 +570,7 @@ msgstr "Σκακιέρα"
 
 #
 #: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1161
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/gimpressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "_Μέγεθος:"
 
@@ -887,6 +990,19 @@ msgstr "Απόσταση αλλαγής:"
 msgid "Graph of the Current Settings"
 msgstr "Γράφημα των τρεχουσών ρυθμίσεων"
 
+#
+#: ../plug-ins/common/cml-explorer.c:1856
+#: ../plug-ins/common/color-cube-analyze.c:364
+#: ../plug-ins/common/metadata.c:251 ../plug-ins/common/plugin-browser.c:550
+#: ../plug-ins/common/procedure-browser.c:129
+#: ../plug-ins/common/sample-colorize.c:1331
+#: ../plug-ins/common/unit-editor.c:417 ../plug-ins/gfig/gfig-dialog.c:291
+#: ../plug-ins/gfig/gfig-dialog.c:1245 ../plug-ins/gfig/gfig-dialog.c:1393
+#: ../plug-ins/ifs-compose/ifs-compose.c:1165
+#| msgid "Closed"
+msgid "_Close"
+msgstr "_Κλείσιμο"
+
 #: ../plug-ins/common/cml-explorer.c:1923
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Προειδοποίηση: η πηγή και ο προορισμός είναι το ίδιο κανάλι."
@@ -894,6 +1010,19 @@ msgstr "Προειδοποίηση: η πηγή και ο προορισμός �
 #: ../plug-ins/common/cml-explorer.c:1982
 msgid "Save CML Explorer Parameters"
 msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
+
+#
+#: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:2101
+#: ../plug-ins/common/qbist.c:766 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/flame/flame.c:475
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1680
+#: ../plug-ins/gfig/gfig-dialog.c:688 ../plug-ins/gimpressionist/brush.c:257
+#: ../plug-ins/ifs-compose/ifs-compose.c:761
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
+#: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:1163
+#| msgid "Save"
+msgid "_Save"
+msgstr "Απο_θήκευση"
 
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
@@ -905,7 +1034,7 @@ msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1079
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1523
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1574
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -922,6 +1051,21 @@ msgstr "Οι παράμετροι αποθηκεύτηκαν σε '%s'"
 #: ../plug-ins/common/cml-explorer.c:2115
 msgid "Load CML Explorer Parameters"
 msgstr "Φόρτωση παραμέτρων περιηγητή CML"
+
+#
+#: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:2066
+#: ../plug-ins/common/file-cel.c:935 ../plug-ins/common/file-raw-data.c:1555
+#: ../plug-ins/common/qbist.c:724 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/flame/flame.c:475
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1642
+#: ../plug-ins/gfig/gfig-dialog.c:639 ../plug-ins/ifs-compose/ifs-compose.c:760
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
+#: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
+#: ../plug-ins/lighting/lighting-ui.c:1307
+#| msgid "Open"
+msgid "_Open"
+msgstr "Ά_νοιγμα"
 
 #: ../plug-ins/common/cml-explorer.c:2211 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
@@ -1095,6 +1239,17 @@ msgstr "Επαναφορά διάταξης"
 #: ../plug-ins/common/colormap-remap.c:616
 msgid "Rearrange Colormap"
 msgstr "Αναδιάταξη του χρωματολογίου"
+
+#
+#: ../plug-ins/common/colormap-remap.c:620
+#: ../plug-ins/common/filter-pack.c:1205
+#: ../plug-ins/common/sample-colorize.c:1329
+#: ../plug-ins/common/sphere-designer.c:2560
+#: ../plug-ins/ifs-compose/ifs-compose.c:762
+#: ../plug-ins/selection-to-path/selection-to-path.c:308
+#| msgid "_Presets"
+msgid "_Reset"
+msgstr "Επανα_φορά"
 
 #: ../plug-ins/common/colormap-remap.c:720
 msgid ""
@@ -1467,7 +1622,7 @@ msgstr "Καμπύλωση"
 #. preview
 #: ../plug-ins/common/curve-bend.c:1260
 #: ../plug-ins/gimpressionist/orientmap.c:590
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/gimpressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:176
 msgid "Preview"
 msgstr "Προεπισκόπηση"
@@ -2169,7 +2324,7 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1073
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1516
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1567
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2324,7 +2479,7 @@ msgstr "Πινέλο"
 
 #
 #: ../plug-ins/common/file-gbr.c:808 ../plug-ins/common/file-gih.c:923
-#: ../plug-ins/common/file-pat.c:623 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-pat.c:623 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Περιγραφή:"
 
@@ -2429,6 +2584,10 @@ msgid ""
 msgstr ""
 "Η εικόνα που προσπαθείτε να εξάγετε ως GIF περιέχει στρώσεις που "
 "επεκτείνονται πέρα από τα τρέχοντα περιγράμματα της εικόνας."
+
+#: ../plug-ins/common/file-gif-save.c:1090
+msgid "Cr_op"
+msgstr "Πε_ρικοπή"
 
 #: ../plug-ins/common/file-gif-save.c:1101
 msgid ""
@@ -4867,47 +5026,47 @@ msgstr "Κάθε κομμάτι έχει ευθείες πλευρές"
 msgid "Each piece has curved sides"
 msgstr "Κάθε κομμάτι έχει καμπύλες πλευρές"
 
-#: ../plug-ins/common/mail.c:156
+#: ../plug-ins/common/mail.c:158
 msgid "Send the image by email"
 msgstr "Αποστολή της εικόνας ηλεκτρονικά"
 
-#: ../plug-ins/common/mail.c:166
+#: ../plug-ins/common/mail.c:168
 msgid "Send by E_mail..."
 msgstr "Αποστολή _μηνύματος..."
 
-#: ../plug-ins/common/mail.c:496
+#: ../plug-ins/common/mail.c:498
 msgid "Send by Email"
 msgstr "Αποστολή μηνύματος"
 
-#: ../plug-ins/common/mail.c:501
+#: ../plug-ins/common/mail.c:503
 msgid "_Send"
 msgstr "Απο_στολή"
 
-#: ../plug-ins/common/mail.c:533
+#: ../plug-ins/common/mail.c:535
 msgid "_Filename:"
 msgstr "Όνομα _Αρχείου:"
 
-#: ../plug-ins/common/mail.c:547
+#: ../plug-ins/common/mail.c:549
 msgctxt "email-address"
 msgid "_To:"
 msgstr "Πρ_ος:"
 
 #
-#: ../plug-ins/common/mail.c:561
+#: ../plug-ins/common/mail.c:563
 msgctxt "email-address"
 msgid "_From:"
 msgstr "Α_πό:"
 
 #
-#: ../plug-ins/common/mail.c:573
+#: ../plug-ins/common/mail.c:575
 msgid "S_ubject:"
 msgstr "_Θέμα:"
 
-#: ../plug-ins/common/mail.c:638
+#: ../plug-ins/common/mail.c:640
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "κάποιο είδος σφάλματος με την επέκταση αρχείου ή έλλειψη του"
 
-#: ../plug-ins/common/mail.c:822
+#: ../plug-ins/common/mail.c:824
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Αδυναμία εκκίνησης αποστολής μηνύματος (%s)"
@@ -5386,6 +5545,15 @@ msgstr "Χρωματισμός δείγματος"
 #: ../plug-ins/common/sample-colorize.c:1330
 msgid "Get _Sample Colors"
 msgstr "Λή_ψη χρωμάτων δείγματος"
+
+#
+#: ../plug-ins/common/sample-colorize.c:1332
+#: ../plug-ins/gimpressionist/orientmap.c:527
+#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/imagemap/imap_default_dialog.c:103
+#| msgid "Apply"
+msgid "_Apply"
+msgstr "Ε_φαρμογή"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample-colorize.c:1359
@@ -6021,6 +6189,11 @@ msgstr "Μο_νάδες"
 msgid "Add a New Unit"
 msgstr "Προσθήκη νέας μονάδας"
 
+#: ../plug-ins/common/unit-editor.c:210
+#| msgid "_Additive"
+msgid "_Add"
+msgstr "_Πρόσθεση"
+
 #
 #: ../plug-ins/common/unit-editor.c:234
 msgid "_ID:"
@@ -6061,6 +6234,10 @@ msgstr "Παρακαλώ συμπληρώστε όλα τα πεδία κειμ�
 #: ../plug-ins/common/unit-editor.c:412
 msgid "Unit Editor"
 msgstr "Επεξεργαστής Μονάδων"
+
+#: ../plug-ins/common/unit-editor.c:416
+msgid "_Refresh"
+msgstr "Ανανέ_ωση"
 
 #: ../plug-ins/common/unsharp-mask.c:132
 msgid "The most widely useful method for sharpening an image"
@@ -6287,25 +6464,22 @@ msgstr "Βήμα ροής %d"
 #
 #: ../plug-ins/common/wavelet-decompose.c:86
 #: ../plug-ins/common/wavelet-decompose.c:267
-#| msgid "Decompose"
 msgid "Wavelet decompose"
 msgstr "Αποσύνθεση κυματίδιου"
 
 #
 #: ../plug-ins/common/wavelet-decompose.c:91
-#| msgid "Decompose"
-msgid "Wavelet-decompose"
-msgstr "Αποσύνθεση κυματίδιου"
+#| msgid "Wavelet-decompose"
+msgid "_Wavelet-decompose..."
+msgstr "Αποσύνθεση _κυματίδιου..."
 
 #
 #: ../plug-ins/common/wavelet-decompose.c:161
-#| msgid "Decompose"
 msgid "Wavelet-Decompose"
 msgstr "Αποσύνθεση κυματίδιου"
 
 #
 #: ../plug-ins/common/wavelet-decompose.c:296
-#| msgid "Scale:"
 msgid "Scales:"
 msgstr "Κλίμακες:"
 
@@ -6386,9 +6560,8 @@ msgstr "Από _ιστοσελίδα..."
 msgid "Create from webpage"
 msgstr "Δημιουργία από ιστοσελίδα"
 
-#
 #: ../plug-ins/common/web-page.c:235
-msgid "_Create"
+msgid "Cre_ate"
 msgstr "_Δημιουργία"
 
 #: ../plug-ins/common/web-page.c:263
@@ -7069,26 +7242,26 @@ msgstr "Μη υποστηριζόμενο ή άκυρο πλάτος μάσκα�
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος μάσκας στρώσης: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1346 ../plug-ins/file-psd/psd-load.c:1748
+#: ../plug-ins/file-psd/psd-load.c:1347 ../plug-ins/file-psd/psd-load.c:1756
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Μη υποστηριζόμενη κατάσταση συμπίεσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1843
+#: ../plug-ins/file-psd/psd-load.c:1851
 msgid "Extra"
 msgstr "Πρόσθετο"
 
-#: ../plug-ins/file-psd/psd-load.c:2031
+#: ../plug-ins/file-psd/psd-load.c:2039
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος καναλιού"
 
-#: ../plug-ins/file-psd/psd-load.c:2100
+#: ../plug-ins/file-psd/psd-load.c:2108
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Αποτυχία αποσυμπίεσης δεδομένων"
 
-#: ../plug-ins/file-psd/psd-save.c:253
+#: ../plug-ins/file-psd/psd-save.c:292
 #, c-format
 msgid ""
 "Unable to export layer with mode '%s'.  Either the PSD file format or the "
@@ -7098,11 +7271,11 @@ msgstr ""
 "το πρόσθετο εξαγωγής δεν το υποστηρίζουν, θα χρησιμοποιηθεί η κανονική "
 "κατάσταση."
 
-#: ../plug-ins/file-psd/psd-save.c:503
+#: ../plug-ins/file-psd/psd-save.c:542
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Σφάλμα: Αδυναμία μετατροπής τύπου εικόνας βάσης GIMP σε κατάσταση PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1490
+#: ../plug-ins/file-psd/psd-save.c:1541
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7111,7 +7284,7 @@ msgstr ""
 "Αδυναμία εξαγωγής του '%s'. Η μορφή αρχείου PSD δεν υποστηρίζει εικόνες που "
 "είναι πιο πλατιές ή πιο ψηλές από 30.000 εικονοστοιχεία."
 
-#: ../plug-ins/file-psd/psd-save.c:1505
+#: ../plug-ins/file-psd/psd-save.c:1556
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -8712,7 +8885,7 @@ msgstr ""
 "διανύσματος."
 
 #: ../plug-ins/gimpressionist/orientmap.c:588
-#: ../plug-ins/gimpressionist/sizemap.c:457
+#: ../plug-ins/gimpressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "Ρύθμιση της φωτεινότητας προεπισκόπησης"
 
@@ -8726,7 +8899,7 @@ msgstr "Επιλογή επόμενου διανύσματος"
 
 #
 #: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:489
+#: ../plug-ins/gimpressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "Π_ροσθήκη"
 
@@ -8736,7 +8909,7 @@ msgid "Add new vector"
 msgstr "Προσθήκη νέου διανύσματος"
 
 #: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:496
+#: ../plug-ins/gimpressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "Σ_κότωμα"
 
@@ -8767,7 +8940,7 @@ msgid "Vortex_3"
 msgstr "Στρόβιλος_3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:541
+#: ../plug-ins/gimpressionist/sizemap.c:540
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
@@ -8811,7 +8984,7 @@ msgstr "_Δύναμη εκθέτη:"
 
 #
 #: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:536
+#: ../plug-ins/gimpressionist/sizemap.c:535
 msgid "Change the exponent of the strength"
 msgstr "Αλλαγή του εκθέτη της δύναμης"
 
@@ -8886,37 +9059,37 @@ msgid "Failed to save PPM file '%s': %s"
 msgstr "Αποτυχία αποθήκευσης αρχείου PPM '%s': %s"
 
 #
-#: ../plug-ins/gimpressionist/presets.c:639
+#: ../plug-ins/gimpressionist/presets.c:638
 msgid "Save Current"
 msgstr "Αποθήκευση τρέχοντος"
 
-#: ../plug-ins/gimpressionist/presets.c:894
+#: ../plug-ins/gimpressionist/presets.c:893
 msgid "Gimpressionist Defaults"
 msgstr "Προεπιλογές ιμπρεσιονιστή Gimp"
 
 #
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/gimpressionist/presets.c:1014
 msgid "_Presets"
 msgstr "_Προρρυθμίσεις"
 
 #
-#: ../plug-ins/gimpressionist/presets.c:1030
+#: ../plug-ins/gimpressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "Αποθήκευση τρέχοντος..."
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/gimpressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "Αποθήκευση των τρεχουσών ρυθμίσεων για το καθορισμένο αρχείο"
 
-#: ../plug-ins/gimpressionist/presets.c:1066
+#: ../plug-ins/gimpressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "Ανάγνωση της επιλεγμένης προρρύθμισης στη μνήμη"
 
-#: ../plug-ins/gimpressionist/presets.c:1072
+#: ../plug-ins/gimpressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "Διαγραφή της επιλεγμένης προρρύθμισης"
 
-#: ../plug-ins/gimpressionist/presets.c:1078
+#: ../plug-ins/gimpressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "Νέα ανάγνωση του φακέλου των προεπιλογών"
 
@@ -9006,15 +9179,15 @@ msgstr "Χειροκίνητος καθορισμός του μεγέθους π
 msgid "Opens up the Size Map Editor"
 msgstr "Άνοιγμα του επεξεργαστή χάρτη μεγέθους"
 
-#: ../plug-ins/gimpressionist/sizemap.c:397
+#: ../plug-ins/gimpressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "Επεξεργαστής χάρτη μεγέθους"
 
-#: ../plug-ins/gimpressionist/sizemap.c:426
+#: ../plug-ins/gimpressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "Διανύσματα Sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:436
+#: ../plug-ins/gimpressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -9023,42 +9196,42 @@ msgstr ""
 "διανύσματος sm, δεξί κλικ για κατεύθυνση του προς το ποντίκι, μεσαίο κλικ "
 "για προσθήκη νέου διανύσματος sm."
 
-#: ../plug-ins/gimpressionist/sizemap.c:480
+#: ../plug-ins/gimpressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "Επιλογή προηγούμενου διανύσματος sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:487
+#: ../plug-ins/gimpressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "Επιλογή επόμενου διανύσματος sm"
 
 #
-#: ../plug-ins/gimpressionist/sizemap.c:494
+#: ../plug-ins/gimpressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "Προσθήκη νέου διανύσματος sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:501
+#: ../plug-ins/gimpressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Διαγραφή επιλεγμένου διανύσματος sm"
 
 #
-#: ../plug-ins/gimpressionist/sizemap.c:514
+#: ../plug-ins/gimpressionist/sizemap.c:513
 msgid "Change the angle of the selected smvector"
 msgstr "Αλλαγή της γωνίας του επιλεγμένου διανύσματος sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/gimpressionist/sizemap.c:520
 msgid "S_trength:"
 msgstr "_Δύναμη:"
 
 #
-#: ../plug-ins/gimpressionist/sizemap.c:525
+#: ../plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the strength of the selected smvector"
 msgstr "Αλλαγή της δύναμης του επιλεγμένου διανύσματος sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/gimpressionist/sizemap.c:531
 msgid "St_rength exp.:"
 msgstr "Εκ_θέτης δύναμης:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:548
+#: ../plug-ins/gimpressionist/sizemap.c:547
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -9173,7 +9346,6 @@ msgid "Co_mpression level:"
 msgstr "Επίπεδο συ_μπίεσης:"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:18
-#| msgid "Automatic pre_view"
 msgid "automatic pixelformat"
 msgstr "αυτόματη μορφή εικονοστοιχείων"
 
@@ -9186,7 +9358,6 @@ msgid "8bpc GRAY"
 msgstr "8bpc ΓΚΡΙΖΟ"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:21
-#| msgid "RGBA"
 msgid "8bpc RGBA"
 msgstr "8bpc RGBA"
 
@@ -9538,8 +9709,9 @@ msgid "Gradient Flare Editor"
 msgstr "Επεξεργαστής λάμψης διαβάθμισης"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
-msgid "Rescan Gradients"
-msgstr "Νέο σάρωμα διαβαθμίσεων"
+#| msgid "Rescan Gradients"
+msgid "_Rescan Gradients"
+msgstr "Ε_πανασάρωση διαβαθμίσεων"
 
 #
 #. Glow
@@ -10302,7 +10474,7 @@ msgstr "Σφάλμα ανοίγματος αρχείου"
 msgid "Load Image Map"
 msgstr "Φόρτωση χάρτη εικόνας"
 
-#: ../plug-ins/imagemap/imap_file.c:122
+#: ../plug-ins/imagemap/imap_file.c:120
 msgid "Save Image Map"
 msgstr "Αποθήκευση χάρτη εικόνας"
 
@@ -11524,85 +11696,83 @@ msgstr "Δημιουργία εικόνας από μια περιοχή της 
 msgid "_Screenshot..."
 msgstr "_Στιγμιότυπο..."
 
-#: ../plug-ins/screenshot/screenshot.c:423
+#: ../plug-ins/screenshot/screenshot.c:422
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Στιγμιότυπο"
 
-#: ../plug-ins/screenshot/screenshot.c:432
+#: ../plug-ins/screenshot/screenshot.c:427
 msgid "S_nap"
 msgstr "Πρό_σδεση"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:462
+#: ../plug-ins/screenshot/screenshot.c:451
 msgid "Area"
 msgstr "Περιοχή"
 
-#: ../plug-ins/screenshot/screenshot.c:472
+#: ../plug-ins/screenshot/screenshot.c:461
 msgid "Take a screenshot of a single _window"
 msgstr "Λή_ψη στιγμιότυπου ενός μονού παραθύρου"
 
-#: ../plug-ins/screenshot/screenshot.c:492
+#: ../plug-ins/screenshot/screenshot.c:481
 msgid "Include window _decoration"
 msgstr "Συμπερίληψη _διακόσμησης παραθύρου"
 
-#: ../plug-ins/screenshot/screenshot.c:512
+#: ../plug-ins/screenshot/screenshot.c:501
 msgid "Take a screenshot of the entire _screen"
 msgstr "Λήψη _στιγμιότυπου της συνολικής οθόνης"
 
-#: ../plug-ins/screenshot/screenshot.c:532
+#: ../plug-ins/screenshot/screenshot.c:521
 msgid "Include _mouse pointer"
 msgstr "Συ_μπερίληψη δείκτη ποντικιού"
 
-#: ../plug-ins/screenshot/screenshot.c:554
+#: ../plug-ins/screenshot/screenshot.c:543
 msgid "Select a _region to grab"
 msgstr "Επιλογή πε_ριοχή σύλληψης"
 
 #. Delay
-#: ../plug-ins/screenshot/screenshot.c:570
+#: ../plug-ins/screenshot/screenshot.c:559
 msgid "Delay"
 msgstr "Καθυστέρηση"
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:595
+#: ../plug-ins/screenshot/screenshot.c:584
 msgid "seconds"
 msgstr "δευτερόλεπτα"
 
-#: ../plug-ins/screenshot/screenshot.c:604
+#: ../plug-ins/screenshot/screenshot.c:593
 msgid "After the delay, the screenshot is taken."
 msgstr "Μετά την καθυστέρηση, το στιγμιότυπο ελήφθη."
 
-#: ../plug-ins/screenshot/screenshot.c:606
+#: ../plug-ins/screenshot/screenshot.c:595
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Μετά την καθυστέρηση, σύρσιμο του ποντικιού σας για επιλογή της περιοχής "
 "στιγμιότυπου."
 
-#: ../plug-ins/screenshot/screenshot.c:610
+#: ../plug-ins/screenshot/screenshot.c:599
 msgid "Click in a window to snap it after delay."
 msgstr "Πατήστε σε ένα παράθυρο για το φωτογραφίσετε μετά την καθυστέρηση."
 
-#: ../plug-ins/screenshot/screenshot.c:613
+#: ../plug-ins/screenshot/screenshot.c:602
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Στο τέλος της καθυστέρησης, κλικ σε παράθυρο για λήψη του."
 
 #
-#: ../plug-ins/screenshot/screenshot.c:620
-#| msgid "Color fill"
+#: ../plug-ins/screenshot/screenshot.c:609
 msgid "Color Profile"
 msgstr "Κατατομή (προφίλ) χρώματος"
 
-#: ../plug-ins/screenshot/screenshot.c:625
+#: ../plug-ins/screenshot/screenshot.c:614
 msgid "Tag image with _monitor profile"
 msgstr "Εικόνα ετικέτας με κατατομή (προφίλ) ο_θόνης"
 
-#: ../plug-ins/screenshot/screenshot.c:629
-#| msgid "Environment image to use"
+#: ../plug-ins/screenshot/screenshot.c:618
 msgid "Convert image to sR_GB"
 msgstr "Μετατροπή εικόνας σε sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:240
+#: ../plug-ins/screenshot/screenshot-win32.c:244
 msgid "No data captured"
 msgstr "Χωρίς λήψη δεδομένων"
 
@@ -11903,6 +12073,10 @@ msgstr "_Σαρωτής/κάμερα..."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
+
+#
+#~ msgid "_Create"
+#~ msgstr "_Δημιουργία"
 
 #~ msgid "Indexed Palette Type"
 #~ msgstr "Τύπος παλέτας από ευρετήριο"
@@ -12861,9 +13035,6 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 
 #~ msgid "Video Pattern"
 #~ msgstr "Υπόδειγμα βίντεο"
-
-#~ msgid "_Additive"
-#~ msgstr "_Προσθετικό"
 
 #~ msgid "_Rotated"
 #~ msgstr "Πε_ριστροφή"
@@ -14516,10 +14687,6 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 #, fuzzy
 #~ msgid "Rotating..."
 #~ msgstr "εκκίνηση..."
-
-#
-#~ msgid "Apply"
-#~ msgstr "Εφαρμογή"
 
 #, fuzzy
 #~ msgid "S_catter HSV..."

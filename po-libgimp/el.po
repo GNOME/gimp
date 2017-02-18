@@ -4,15 +4,15 @@
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
 # Nikos Charonitakis <charosn@her.forthnet.gr>,2003, 2004.
 # Βασίλης Κοντογιάνης <vasilisk@ics.forth.gr>, 2011.
-# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012, 2014, 2015, 2016.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012, 2014, 2015, 2016, 2017.
 # Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master.el.po\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
 "ywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-11-19 23:26+0000\n"
-"PO-Revision-Date: 2016-11-26 15:06+0300\n"
+"POT-Creation-Date: 2017-02-18 01:02+0000\n"
+"PO-Revision-Date: 2017-02-18 09:15+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -158,7 +158,6 @@ msgstr "Το πρόσθετο %s υποστηρίζει μόνο εικόνες 
 
 #: ../libgimp/gimpexport.c:353
 #, c-format
-#| msgid "%s plug-in  can only handle RGB or indexed images"
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Το πρόσθετο %s μπορεί να επεξεργαστεί μόνο εικόνες RGB ή από ευρετήριο"
 
@@ -181,10 +180,21 @@ msgstr "Προσθήκη καναλιού άλφα"
 msgid "Confirm Save"
 msgstr "Επιβεβαίωση αποθήκευσης"
 
+#: ../libgimp/gimpexport.c:439 ../libgimp/gimpexport.c:521
+#: ../libgimp/gimpexport.c:1013 ../libgimpwidgets/gimpcolorbutton.c:540
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:152
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:162
+#: ../libgimpwidgets/gimpfileentry.c:442 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:496
+msgid "_Cancel"
+msgstr "Ά_κυρο"
+
 #
 #: ../libgimp/gimpexport.c:440
-msgid "Confirm"
-msgstr "Επιβεβαίωση"
+#| msgid "Confirm"
+msgid "C_onfirm"
+msgstr "Επι_βεβαίωση"
 
 #: ../libgimp/gimpexport.c:516
 msgid "Export File"
@@ -195,7 +205,7 @@ msgid "_Ignore"
 msgstr "_Παράβλεψη"
 
 #
-#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1017
+#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1014
 msgid "_Export"
 msgstr "_Εξαγωγή"
 
@@ -232,7 +242,7 @@ msgstr ""
 "Πρόκειται να αποθηκεύσετε ένα κανάλι (αποθηκευμένη επιλογή) ως %s.\n"
 "Προσοχή, δεν θα αποθηκευτούν οι ορατές στρώσεις."
 
-#: ../libgimp/gimpexport.c:1008
+#: ../libgimp/gimpexport.c:1007
 msgid "Export Image as "
 msgstr "Εξαγωγή εικόνας ως "
 
@@ -246,36 +256,40 @@ msgstr "Επιλογή γραμματοσειράς"
 msgid "Gradient Selection"
 msgstr "Επιλογή διαβάθμισης"
 
-#: ../libgimp/gimpimagemetadata.c:605
+#: ../libgimp/gimpimagemetadata.c:610
 msgid "Background"
 msgstr "Παρασκήνιο"
 
-#: ../libgimp/gimpimagemetadata.c:796
+#: ../libgimp/gimpimagemetadata.c:801
 #, c-format
 msgid "Rotate %s?"
 msgstr "Περιστροφή %s;"
 
-#: ../libgimp/gimpimagemetadata.c:802
+#: ../libgimp/gimpimagemetadata.c:807
 msgid "_Keep Original"
 msgstr "_Διατήρηση αρχικού"
 
-#: ../libgimp/gimpimagemetadata.c:844
+#: ../libgimp/gimpimagemetadata.c:808 ../libgimpwidgets/gimpicons.c:285
+msgid "_Rotate"
+msgstr "_Περιστροφή"
+
+#: ../libgimp/gimpimagemetadata.c:849
 msgid "Original"
 msgstr "Αρχικό"
 
-#: ../libgimp/gimpimagemetadata.c:860
+#: ../libgimp/gimpimagemetadata.c:865
 msgid "Rotated"
 msgstr "Περιεστραμμένο"
 
-#: ../libgimp/gimpimagemetadata.c:878
+#: ../libgimp/gimpimagemetadata.c:883
 msgid "This image contains Exif orientation metadata."
 msgstr "Αυτή η εικόνα περιέχει μεταδεδομένα προσανατολισμού Exif."
 
-#: ../libgimp/gimpimagemetadata.c:896
+#: ../libgimp/gimpimagemetadata.c:901
 msgid "Would you like to rotate the image?"
 msgstr "Θα θέλατε να περιστρέψετε την εικόνα;"
 
-#: ../libgimp/gimpimagemetadata.c:908
+#: ../libgimp/gimpimagemetadata.c:913
 msgid "_Don't ask me again"
 msgstr "_Να μην ερωτηθώ ξανά"
 
@@ -623,25 +637,21 @@ msgid "Pattern"
 msgstr "Μοτίβο"
 
 #: ../libgimpbase/gimpbaseenums.c:372
-#| msgid "None"
 msgctxt "color-tag"
 msgid "None"
 msgstr "Καμία"
 
 #: ../libgimpbase/gimpbaseenums.c:373
-#| msgid "Blue"
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Γαλάζιο"
 
 #: ../libgimpbase/gimpbaseenums.c:374
-#| msgid "Green"
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Πράσινο"
 
 #: ../libgimpbase/gimpbaseenums.c:375
-#| msgid "Yellow"
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Κίτρινο"
@@ -657,7 +667,6 @@ msgid "Brown"
 msgstr "Καφέ"
 
 #: ../libgimpbase/gimpbaseenums.c:378
-#| msgid "Red"
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Κόκκινο"
@@ -668,8 +677,6 @@ msgid "Violet"
 msgstr "Βιολετί"
 
 #: ../libgimpbase/gimpbaseenums.c:380
-#| msgctxt "channel-type"
-#| msgid "Gray"
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Γκρίζο"
@@ -989,8 +996,6 @@ msgid "Bevel"
 msgstr "Λοξό"
 
 #: ../libgimpbase/gimpbaseenums.c:1067
-#| msgctxt "merge-type"
-#| msgid "Expanded as neccessary"
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr "Να επεκταθεί όσο χρειάζεται"
@@ -1307,22 +1312,22 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Περικοπή με ίδιες αναλογίες"
 
-#: ../libgimpbase/gimpmetadata.c:523
+#: ../libgimpbase/gimpmetadata.c:575
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Μπορούν να φορτωθούν μεταδεδομένα μόνο από τοπικά αρχεία"
 
-#: ../libgimpbase/gimpmetadata.c:583
+#: ../libgimpbase/gimpmetadata.c:635
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Μπορούν να αποθηκευτούν μεταδεδομένα μόνο σε τοπικά αρχεία"
 
-#: ../libgimpbase/gimpmetadata.c:658
+#: ../libgimpbase/gimpmetadata.c:711
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Αποτυχία ανάλυσης δεδομένων Exif."
 
-#: ../libgimpbase/gimpmetadata.c:709
+#: ../libgimpbase/gimpmetadata.c:762
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Αποτυχία ανάλυσης δεδομένων XMP."
@@ -1633,17 +1638,17 @@ msgstr "η τιμή για κουπόνι %s δεν είναι έγκυρη συ
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "ενώ αναμενόταν 'yes' ή 'no' για το κουπόνι Μπουλ %s, ελήφθη '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:540
+#: ../libgimpconfig/gimpconfig-deserialize.c:568
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "άκυρη τιμή '%s' για το κουπόνι %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:555
+#: ../libgimpconfig/gimpconfig-deserialize.c:583
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "άκυρη τιμή '%ld' για το κουπόνι %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:624
+#: ../libgimpconfig/gimpconfig-deserialize.c:652
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "κατά την ανάλυση του κουπονιού '%s': %s"
@@ -1764,6 +1769,18 @@ msgstr "_Μαύρο"
 msgid "_White"
 msgstr "_Λευκό"
 
+#: ../libgimpwidgets/gimpcolorbutton.c:539 ../libgimpwidgets/gimpicons.c:67
+msgid "_Reset"
+msgstr "_Επαναφορά"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:541
+#: ../libgimpwidgets/gimpfileentry.c:443 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:497
+#| msgid "_K"
+msgid "_OK"
+msgstr "Ε_ντάξει"
+
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
 msgid "All files (*.*)"
 msgstr "Όλα τα αρχεία (*.*)"
@@ -1771,6 +1788,14 @@ msgstr "Όλα τα αρχεία (*.*)"
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Κατατομή χρωμάτων ICC (*.icc, *.icm)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:153
+msgid "_Save"
+msgstr "_Αποθήκευση"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
+msgid "_Open"
+msgstr "Ά_νοιγμα"
 
 #
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
@@ -1822,6 +1847,10 @@ msgstr ""
 #: ../libgimpwidgets/gimpcolorselection.c:321
 msgid "HTML _notation:"
 msgstr "_Σημειογραφία HTML:"
+
+#: ../libgimpwidgets/gimpdialog.c:176
+msgid "_Help"
+msgstr "_Βοήθεια"
 
 #: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
@@ -1886,10 +1915,6 @@ msgstr "Επικόλληση ως νέο"
 msgid "Paste Into"
 msgstr "Επικόλληση σε"
 
-#: ../libgimpwidgets/gimpicons.c:67
-msgid "_Reset"
-msgstr "_Επαναφορά"
-
 #: ../libgimpwidgets/gimpicons.c:68
 msgid "Visible"
 msgstr "Ορατό"
@@ -1928,10 +1953,6 @@ msgstr "_Επιλογή"
 #: ../libgimpwidgets/gimpicons.c:292
 msgid "_Transform"
 msgstr "_Μετασχηματισμός"
-
-#: ../libgimpwidgets/gimpicons.c:285
-msgid "_Rotate"
-msgstr "_Περιστροφή"
 
 #: ../libgimpwidgets/gimpicons.c:288
 msgid "_Shear"
@@ -2735,18 +2756,8 @@ msgstr "_Αντιστάθμιση μαύρου σημείου"
 #~ msgid "Pre_vious"
 #~ msgstr "Προ_ηγούμενο"
 
-#~ msgid "_Open"
-#~ msgstr "Ά_νοιγμα"
-
-#~ msgid "_Save"
-#~ msgstr "_Αποθήκευση"
-
 #~ msgid "Save as"
 #~ msgstr "Αποθήκευση ως"
-
-#~| msgid "cancelled"
-#~ msgid "_Cancel"
-#~ msgstr "Ά_κυρο"
 
 #~ msgid "_Quit"
 #~ msgstr "Έ_ξοδος"
