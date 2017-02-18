@@ -1,19 +1,19 @@
 # Swedish messages for GIMP plugins.
-# Copyright © 1999-2012, 2014 Free Software Foundation, Inc.
+# Copyright © 1999-2012, 2014, 2017 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002.
 # Jan Morén <jan.moren@lucs.lu.se>, 2002, 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
-# Påvel Nicklasson <pavel@frimix.se>, 2014
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014
+# Påvel Nicklasson <pavel@frimix.se>, 2014.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-06-08 09:01+0000\n"
-"PO-Revision-Date: 2016-06-11 10:49+0200\n"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-02-14 23:50+0000\n"
+"PO-Revision-Date: 2017-02-18 01:12+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:120
 msgid "Original"
@@ -656,7 +656,7 @@ msgstr "Selektiv gaussisk oskärpa"
 
 #: ../plug-ins/common/blur-gauss-selective.c:211
 #: ../plug-ins/common/blur-gauss.c:448 ../plug-ins/common/cartoon.c:232
-#: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
+#: ../plug-ins/common/edge-dog.c:277 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
 #: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1691
@@ -1036,8 +1036,8 @@ msgstr "Läs in kanalblandarinställningar"
 #: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:206 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:461
-#: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:651
-#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:122
+#: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:672
+#: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:122
 #: ../plug-ins/file-jpeg/jpeg-load.c:894 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
@@ -1962,7 +1962,7 @@ msgstr "Maskvärde"
 msgid "Stretch brightness values to cover the full range"
 msgstr "Dra ut värden för ljusstyrka för att täcka in hela intervallet"
 
-#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:370
 msgid "_Normalize"
 msgstr "_Normalisera"
 
@@ -2208,7 +2208,7 @@ msgstr "Böj bilden med två styrkurvor"
 msgid "_Curve Bend..."
 msgstr "Böj efter _kurva..."
 
-#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:178
+#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:179
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Kan arbeta endast med lager (men aktiverades på en kanal eller mask)."
 
@@ -2807,23 +2807,28 @@ msgstr "Kantidentifiering med kontroll av kanttjocklek"
 msgid "_Difference of Gaussians..."
 msgstr "Gaussisk _differens..."
 
-#: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
+#: ../plug-ins/common/edge-dog.c:193 ../plug-ins/common/iwarp.c:974
+#: ../plug-ins/common/whirl-pinch.c:193
+msgid "Region affected by plug-in is empty"
+msgstr "Region påverkad av insticksmodul är tom"
+
+#: ../plug-ins/common/edge-dog.c:253 ../plug-ins/common/edge-dog.c:310
 msgid "DoG Edge Detect"
 msgstr "DoG kantidentifiering"
 
-#: ../plug-ins/common/edge-dog.c:332
+#: ../plug-ins/common/edge-dog.c:340
 msgid "Smoothing Parameters"
 msgstr "Utjämningsparametrar"
 
-#: ../plug-ins/common/edge-dog.c:346
+#: ../plug-ins/common/edge-dog.c:354
 msgid "_Radius 1:"
 msgstr "_Radie 1:"
 
-#: ../plug-ins/common/edge-dog.c:350
+#: ../plug-ins/common/edge-dog.c:358
 msgid "R_adius 2:"
 msgstr "R_adie 2:"
 
-#: ../plug-ins/common/edge-dog.c:373 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:381 ../plug-ins/gimpressionist/paper.c:166
 msgid "_Invert"
 msgstr "_Invertera"
 
@@ -3038,7 +3043,7 @@ msgstr "EOF eller fel vid läsning av bildhuvud"
 #: ../plug-ins/common/file-xbm.c:743 ../plug-ins/common/file-xmc.c:669
 #: ../plug-ins/common/file-xpm.c:353 ../plug-ins/common/file-xwd.c:534
 #: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-faxg3/faxg3.c:213
-#: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:644
+#: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:665
 #: ../plug-ins/file-jpeg/jpeg-load.c:128 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3337
 #, c-format
@@ -3976,7 +3981,7 @@ msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Fel! För att spara filen bör åtminstone en bild läggas till!"
 
 #: ../plug-ins/common/file-pdf-save.c:1351
-#: ../plug-ins/print/print-draw-page.c:223
+#: ../plug-ins/print/print-draw-page.c:228
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Kan inte hantera storleken (antingen bredd eller höjd) på bilden."
 
@@ -5663,10 +5668,6 @@ msgstr "Förvrider bildruta %d"
 #: ../plug-ins/common/iwarp.c:815
 msgid "Ping pong"
 msgstr "Ping pong"
-
-#: ../plug-ins/common/iwarp.c:974 ../plug-ins/common/whirl-pinch.c:193
-msgid "Region affected by plug-in is empty"
-msgstr "Region påverkad av insticksmodul är tom"
 
 #: ../plug-ins/common/iwarp.c:1030
 msgid "A_nimate"
@@ -8419,65 +8420,65 @@ msgstr "Våg_längd:"
 msgid "Waving"
 msgstr "Vågor"
 
-#: ../plug-ins/common/web-browser.c:135
+#: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
 msgstr "Operativsystemet har slut på minne eller resurser."
 
-#: ../plug-ins/common/web-browser.c:138
+#: ../plug-ins/common/web-browser.c:144
 msgid "The specified file was not found."
 msgstr "Den angivna filen hittades inte."
 
-#: ../plug-ins/common/web-browser.c:141
+#: ../plug-ins/common/web-browser.c:147
 msgid "The specified path was not found."
 msgstr "Den angivna sökvägen hittades inte."
 
-#: ../plug-ins/common/web-browser.c:144
+#: ../plug-ins/common/web-browser.c:150
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 ".exe-filen är ogiltig (inte en Microsoft WIN32 .exe eller fel i .exe-bild)."
 
-#: ../plug-ins/common/web-browser.c:147
+#: ../plug-ins/common/web-browser.c:153
 msgid "The operating system denied access to the specified file."
 msgstr "Operativsystemet spärrade åtkomst till angiven fil."
 
-#: ../plug-ins/common/web-browser.c:150
+#: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
 msgstr "Filnamnsändelsen är ofullständig eller ogiltig."
 
-#: ../plug-ins/common/web-browser.c:153
+#: ../plug-ins/common/web-browser.c:159
 msgid "DDE transaction busy"
 msgstr "DDE-transaktion upptagen"
 
-#: ../plug-ins/common/web-browser.c:156
+#: ../plug-ins/common/web-browser.c:162
 msgid "The DDE transaction failed."
 msgstr "DDE-transaktionen misslyckades."
 
-#: ../plug-ins/common/web-browser.c:159
+#: ../plug-ins/common/web-browser.c:165
 msgid "The DDE transaction timed out."
 msgstr "DDE-transaktionen avbröts."
 
-#: ../plug-ins/common/web-browser.c:162
+#: ../plug-ins/common/web-browser.c:168
 msgid "The specified DLL was not found."
 msgstr "Angiven DLL hittades inte."
 
-#: ../plug-ins/common/web-browser.c:165
+#: ../plug-ins/common/web-browser.c:171
 msgid "There is no application associated with the given file name extension."
 msgstr "Det finns inget program associerat med det angivna filnamnstillägget."
 
-#: ../plug-ins/common/web-browser.c:168
+#: ../plug-ins/common/web-browser.c:174
 msgid "There was not enough memory to complete the operation."
 msgstr "Det fanns inte tillräckligt minne för att slutföra operationen."
 
-#: ../plug-ins/common/web-browser.c:171
+#: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
 msgstr "Ett delningsfel inträffade."
 
-#: ../plug-ins/common/web-browser.c:174
+#: ../plug-ins/common/web-browser.c:180
 msgid "Unknown Microsoft Windows error."
 msgstr "Okänt fel i Microsoft Windows."
 
-#: ../plug-ins/common/web-browser.c:177
+#: ../plug-ins/common/web-browser.c:183
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Misslyckades med att öppna \"%s\": %s"
@@ -8884,13 +8885,23 @@ msgstr "32 bpp, 8-bit alfa, ingen palett"
 msgid "Compressed (PNG)"
 msgstr "Komprimerad (PNG)"
 
+#: ../plug-ins/file-ico/ico-load.c:221
+#, c-format
+msgid "Could not read '%lu' bytes"
+msgstr "Kunde inte läsa ”%lu” byte"
+
+#: ../plug-ins/file-ico/ico-load.c:248
+#, c-format
+msgid "Icon #%d has zero width or height"
+msgstr "Ikon #%d har noll bredd eller höjd"
+
 #. read successfully. add to image
-#: ../plug-ins/file-ico/ico-load.c:615
+#: ../plug-ins/file-ico/ico-load.c:636
 #, c-format
 msgid "Icon #%i"
 msgstr "Ikon #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:696
+#: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:696
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
 #, c-format
 msgid "Opening thumbnail for '%s'"
