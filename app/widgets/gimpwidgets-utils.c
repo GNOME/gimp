@@ -1171,15 +1171,15 @@ gimp_get_color_tag_color (GimpColorTag  color_tag,
   }
   colors[] =
   {
-    {   0,   0,   0  }, /* none   */
-    {  84, 182, 231  }, /* blue   */
-    { 154, 202,  66  }, /* green  */
-    { 250, 228,  57  }, /* yellow */
-    { 255, 168,  63  }, /* orange */
-    { 179, 101,  65  }, /* brown  */
-    { 245,  44,  52  }, /* red    */
-    { 196, 107, 217  }, /* violet */
-    { 121, 122, 116  }  /* gray   */
+    {    0,   0,   0  }, /* none   */
+    {   84, 102, 159  }, /* blue   */
+    {  111, 143,  48  }, /* green  */
+    {  210, 182,  45  }, /* yellow */
+    {  217, 122,  38  }, /* orange */
+    {   87,  53,  25  }, /* brown  */
+    {  170,  42,  47  }, /* red    */
+    {   99,  66, 174  }, /* violet */
+    {   87,  87,  87  }  /* gray   */
   };
 
   g_return_val_if_fail (color != NULL, FALSE);
