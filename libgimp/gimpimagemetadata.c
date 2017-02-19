@@ -775,11 +775,7 @@ gimp_image_metadata_rotate_query (gint32        image_ID,
   g_free (parasite_name);
 
   gimp_image_metadata_rotate (image_ID, orientation);
-
-  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                  "Exif.Image.Orientation", "1");
-  gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
-                                  "Xmp.tiff.Orientation", "1");
+  gexiv2_metadata_set_orientation (metadata, GEXIV2_ORIENTATION_NORMAL);
 }
 
 static gboolean
