@@ -108,14 +108,14 @@ gimp_grid_class_init (GimpGridClass *klass)
                            "xspacing",
                            _("Spacing X"),
                            _("Horizontal spacing of grid lines."),
-                           1.0, GIMP_MAX_IMAGE_SIZE, 10.0,
+                           0.0, GIMP_MAX_IMAGE_SIZE, 10.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_YSPACING,
                            "yspacing",
                            _("Spacing Y"),
                            _("Vertical spacing of grid lines."),
-                           1.0, GIMP_MAX_IMAGE_SIZE, 10.0,
+                           0.0, GIMP_MAX_IMAGE_SIZE, 10.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_UNIT (object_class, PROP_SPACING_UNIT,
@@ -283,9 +283,8 @@ gimp_grid_get_spacing (GimpGrid *grid,
 {
   g_return_if_fail (GIMP_IS_GRID (grid));
 
-  /* FIXME subpixel grid */
-  if (xspacing) *xspacing = RINT (grid->xspacing);
-  if (yspacing) *yspacing = RINT (grid->yspacing);
+  if (xspacing) *xspacing = grid->xspacing;
+  if (yspacing) *yspacing = grid->yspacing;
 }
 
 void
@@ -295,9 +294,8 @@ gimp_grid_get_offset (GimpGrid *grid,
 {
   g_return_if_fail (GIMP_IS_GRID (grid));
 
-  /* FIXME subpixel grid */
-  if (xoffset) *xoffset = RINT (grid->xoffset);
-  if (yoffset) *yoffset = RINT (grid->yoffset);
+  if (xoffset) *xoffset = grid->xoffset;
+  if (yoffset) *yoffset = grid->yoffset;
 }
 
 const gchar *

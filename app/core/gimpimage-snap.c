@@ -100,21 +100,17 @@ gimp_image_snap_x (GimpImage *image,
       GimpGrid *grid = gimp_image_get_grid (image);
       gdouble   xspacing;
       gdouble   xoffset;
-      gdouble   i;
 
       gimp_grid_get_spacing (grid, &xspacing, NULL);
       gimp_grid_get_offset  (grid, &xoffset,  NULL);
 
-      /* the snap-to-grid part could probably be rewritten */
-      while (xoffset > xspacing)
-        xoffset -= xspacing;
-
-      for (i = xoffset; i <= gimp_image_get_width (image); i += xspacing)
+      if (xspacing > 0.0)
         {
-          if (i < 0)
-            continue;
+          gdouble nearest;
 
-          snapped |= gimp_image_snap_distance (x, i,
+          nearest = xoffset + RINT ((x - xoffset) / xspacing) * xspacing;
+
+          snapped |= gimp_image_snap_distance (x, nearest,
                                                epsilon_x,
                                                &mindist, tx);
         }
@@ -183,22 +179,19 @@ gimp_image_snap_y (GimpImage *image,
   if (snap_to_grid)
     {
       GimpGrid *grid = gimp_image_get_grid (image);
-      gdouble    yspacing;
-      gdouble    yoffset;
-      gdouble    i;
+      gdouble   yspacing;
+      gdouble   yoffset;
 
       gimp_grid_get_spacing (grid, NULL, &yspacing);
       gimp_grid_get_offset  (grid, NULL, &yoffset);
 
-      while (yoffset > yspacing)
-        yoffset -= yspacing;
-
-      for (i = yoffset; i <= gimp_image_get_height (image); i += yspacing)
+      if (yspacing > 0.0)
         {
-          if (i < 0)
-            continue;
+          gdouble nearest;
 
-          snapped |= gimp_image_snap_distance (y, i,
+          nearest = yoffset + RINT ((y - yoffset) / yspacing) * yspacing;
+
+          snapped |= gimp_image_snap_distance (y, nearest,
                                                epsilon_y,
                                                &mindist, ty);
         }
@@ -291,33 +284,28 @@ gimp_image_snap_point (GimpImage *image,
       GimpGrid *grid = gimp_image_get_grid (image);
       gdouble   xspacing, yspacing;
       gdouble   xoffset, yoffset;
-      gdouble   i;
 
       gimp_grid_get_spacing (grid, &xspacing, &yspacing);
       gimp_grid_get_offset  (grid, &xoffset,  &yoffset);
 
-      while (xoffset > xspacing)
-        xoffset -= xspacing;
-
-      while (yoffset > yspacing)
-        yoffset -= yspacing;
-
-      for (i = xoffset; i <= gimp_image_get_width (image); i += xspacing)
+      if (xspacing > 0.0)
         {
-          if (i < 0)
-            continue;
+          gdouble nearest;
 
-          snapped |= gimp_image_snap_distance (x, i,
+          nearest = xoffset + RINT ((x - xoffset) / xspacing) * xspacing;
+
+          snapped |= gimp_image_snap_distance (x, nearest,
                                                epsilon_x,
                                                &mindist_x, tx);
         }
 
-      for (i = yoffset; i <= gimp_image_get_height (image); i += yspacing)
+      if (yspacing > 0.0)
         {
-          if (i < 0)
-            continue;
+          gdouble nearest;
 
-          snapped |= gimp_image_snap_distance (y, i,
+          nearest = yoffset + RINT ((y - yoffset) / yspacing) * yspacing;
+
+          snapped |= gimp_image_snap_distance (y, nearest,
                                                epsilon_y,
                                                &mindist_y, ty);
         }

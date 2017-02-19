@@ -192,11 +192,14 @@ gimp_grid_editor_constructed (GObject *object)
   gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
-                                _("Width"), 0, 1, 0.0);
+                                _("Horizontal"), 0, 1, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
-                                _("Height"), 0, 2, 0.0);
+                                _("Vertical"), 0, 2, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
                                 _("Pixels"), 1, 4, 0.0);
+
+  gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 0, 2);
+  gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 1, 2);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
@@ -224,11 +227,14 @@ gimp_grid_editor_constructed (GObject *object)
   gtk_table_set_row_spacings (GTK_TABLE (sizeentry), 2);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
-                                _("Width"), 0, 1, 0.0);
+                                _("Horizontal"), 0, 1, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
-                                _("Height"), 0, 2, 0.0);
+                                _("Vertical"), 0, 2, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
                                 _("Pixels"), 1, 4, 0.0);
+
+  gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 0, 2);
+  gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (sizeentry), 1, 2);
 
   gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);

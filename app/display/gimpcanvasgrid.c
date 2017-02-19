@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -191,6 +193,7 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
   GimpImage             *image   = gimp_canvas_item_get_image (item);
   gdouble                xspacing, yspacing;
   gdouble                xoffset, yoffset;
+  gboolean               vert, horz;
   gdouble                x, y;
   gdouble                dx1, dy1, dx2, dy2;
   gint                   x0, x1, x2, x3;
@@ -203,14 +206,16 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
   gimp_grid_get_spacing (private->grid, &xspacing, &yspacing);
   gimp_grid_get_offset  (private->grid, &xoffset,  &yoffset);
 
-  g_return_if_fail (xspacing > 0.0 &&
-                    yspacing > 0.0);
+  g_return_if_fail (xspacing >= 0.0 &&
+                    yspacing >= 0.0);
 
   /*  skip grid drawing when the space between grid lines starts
    *  disappearing, see bug #599267.
    */
-  if (xspacing * shell->scale_x < 2.0 ||
-      yspacing * shell->scale_y < 2.0)
+  vert = (xspacing * shell->scale_x >= 2.0);
+  horz = (yspacing * shell->scale_y >= 2.0);
+
+  if (! vert && ! horz)
     return;
 
   cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
@@ -223,84 +228,87 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
   width  = gimp_image_get_width  (image);
   height = gimp_image_get_height (image);
 
-  while (xoffset > 0)
-    xoffset -= xspacing;
-
-  while (yoffset > 0)
-    yoffset -= yspacing;
+  xoffset = fmod (xoffset, xspacing);
+  yoffset = fmod (yoffset, yspacing);
 
   switch (gimp_grid_get_style (private->grid))
     {
     case GIMP_GRID_DOTS:
-      for (x = xoffset; x <= width; x += xspacing)
+      if (vert && horz)
         {
-          if (x < 0)
-            continue;
-
-          gimp_canvas_item_transform_xy (item, x, 0, &x_real, &y_real);
-
-          if (x_real < x1 || x_real >= x2)
-            continue;
-
-          for (y = yoffset; y <= height; y += yspacing)
+          for (x = xoffset; x <= width; x += xspacing)
             {
-              if (y < 0)
+              if (x < 0)
                 continue;
 
-              gimp_canvas_item_transform_xy (item, x, y, &x_real, &y_real);
+              gimp_canvas_item_transform_xy (item, x, 0, &x_real, &y_real);
 
-              if (y_real >= y1 && y_real < y2)
+              if (x_real < x1 || x_real >= x2)
+                continue;
+
+              for (y = yoffset; y <= height; y += yspacing)
                 {
-                  cairo_move_to (cr, x_real,     y_real + 0.5);
-                  cairo_line_to (cr, x_real + 1, y_real + 0.5);
+                  if (y < 0)
+                    continue;
+
+                  gimp_canvas_item_transform_xy (item, x, y, &x_real, &y_real);
+
+                  if (y_real >= y1 && y_real < y2)
+                    {
+                      cairo_move_to (cr, x_real,     y_real + 0.5);
+                      cairo_line_to (cr, x_real + 1, y_real + 0.5);
+                    }
                 }
             }
         }
       break;
 
     case GIMP_GRID_INTERSECTIONS:
-      for (x = xoffset; x <= width; x += xspacing)
+      if (vert && horz)
         {
-          if (x < 0)
-            continue;
-
-          gimp_canvas_item_transform_xy (item, x, 0, &x_real, &y_real);
-
-          if (x_real + CROSSHAIR < x1 || x_real - CROSSHAIR >= x2)
-            continue;
-
-          for (y = yoffset; y <= height; y += yspacing)
+          for (x = xoffset; x <= width; x += xspacing)
             {
-              if (y < 0)
+              if (x < 0)
                 continue;
 
-              gimp_canvas_item_transform_xy (item, x, y, &x_real, &y_real);
+              gimp_canvas_item_transform_xy (item, x, 0, &x_real, &y_real);
 
-              if (y_real + CROSSHAIR < y1 || y_real - CROSSHAIR >= y2)
+              if (x_real + CROSSHAIR < x1 || x_real - CROSSHAIR >= x2)
                 continue;
 
-              if (x_real >= x1 && x_real < x2)
+              for (y = yoffset; y <= height; y += yspacing)
                 {
-                  cairo_move_to (cr,
-                                 x_real + 0.5,
-                                 CLAMP (y_real - CROSSHAIR,
-                                        y1, y2 - 1));
-                  cairo_line_to (cr,
-                                 x_real + 0.5,
-                                 CLAMP (y_real + CROSSHAIR,
-                                        y1, y2 - 1) + 1);
-                }
+                  if (y < 0)
+                    continue;
 
-              if (y_real >= y1 && y_real < y2)
-                {
-                  cairo_move_to (cr,
-                                 CLAMP (x_real - CROSSHAIR,
-                                        x1, x2 - 1),
-                                 y_real + 0.5);
-                  cairo_line_to (cr,
-                                 CLAMP (x_real + CROSSHAIR,
-                                        x1, x2 - 1) + 1,
-                                 y_real + 0.5);
+                  gimp_canvas_item_transform_xy (item, x, y, &x_real, &y_real);
+
+                  if (y_real + CROSSHAIR < y1 || y_real - CROSSHAIR >= y2)
+                    continue;
+
+                  if (x_real >= x1 && x_real < x2)
+                    {
+                      cairo_move_to (cr,
+                                     x_real + 0.5,
+                                     CLAMP (y_real - CROSSHAIR,
+                                            y1, y2 - 1));
+                      cairo_line_to (cr,
+                                     x_real + 0.5,
+                                     CLAMP (y_real + CROSSHAIR,
+                                            y1, y2 - 1) + 1);
+                    }
+
+                  if (y_real >= y1 && y_real < y2)
+                    {
+                      cairo_move_to (cr,
+                                     CLAMP (x_real - CROSSHAIR,
+                                            x1, x2 - 1),
+                                     y_real + 0.5);
+                      cairo_line_to (cr,
+                                     CLAMP (x_real + CROSSHAIR,
+                                            x1, x2 - 1) + 1,
+                                     y_real + 0.5);
+                    }
                 }
             }
         }
@@ -312,31 +320,37 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
       gimp_canvas_item_transform_xy (item, 0, 0, &x0, &y0);
       gimp_canvas_item_transform_xy (item, width, height, &x3, &y3);
 
-      for (x = xoffset; x < width; x += xspacing)
+      if (vert)
         {
-          if (x < 0)
-            continue;
-
-          gimp_canvas_item_transform_xy (item, x, 0, &x_real, &y_real);
-
-          if (x_real >= x1 && x_real < x2)
+          for (x = xoffset; x < width; x += xspacing)
             {
-              cairo_move_to (cr, x_real + 0.5, y0);
-              cairo_line_to (cr, x_real + 0.5, y3 + 1);
+              if (x < 0)
+                continue;
+
+              gimp_canvas_item_transform_xy (item, x, 0, &x_real, &y_real);
+
+              if (x_real >= x1 && x_real < x2)
+                {
+                  cairo_move_to (cr, x_real + 0.5, y0);
+                  cairo_line_to (cr, x_real + 0.5, y3 + 1);
+                }
             }
         }
 
-      for (y = yoffset; y < height; y += yspacing)
+      if (horz)
         {
-          if (y < 0)
-            continue;
-
-          gimp_canvas_item_transform_xy (item, 0, y, &x_real, &y_real);
-
-          if (y_real >= y1 && y_real < y2)
+          for (y = yoffset; y < height; y += yspacing)
             {
-              cairo_move_to (cr, x0,     y_real + 0.5);
-              cairo_line_to (cr, x3 + 1, y_real + 0.5);
+              if (y < 0)
+                continue;
+
+              gimp_canvas_item_transform_xy (item, 0, y, &x_real, &y_real);
+
+              if (y_real >= y1 && y_real < y2)
+                {
+                  cairo_move_to (cr, x0,     y_real + 0.5);
+                  cairo_line_to (cr, x3 + 1, y_real + 0.5);
+                }
             }
         }
       break;
