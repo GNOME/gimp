@@ -299,7 +299,7 @@ gimp_layer_new_from_surface (gint32                image_ID,
       GimpPixelRgn    rgn;
       const guchar   *pixels;
       gpointer        pr;
-      gint            rowstride;
+      gsize           rowstride;
       guint           count = 0;
       guint           done  = 0;
 
