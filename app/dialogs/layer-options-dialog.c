@@ -228,6 +228,9 @@ layer_options_dialog_new (GimpImage                *image,
                               G_CALLBACK (gimp_int_combo_box_get_active),
                               &private->composite_mode);
 
+  /*  set the sensitivity of above 3 menus  */
+  layer_options_dialog_mode_notify (private->mode_box, NULL, private);
+
   adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (private->opacity, 0.0, 100.0,
                                                    1.0, 10.0, 0.0));
   scale = gimp_spin_scale_new (adjustment, NULL, 1);
