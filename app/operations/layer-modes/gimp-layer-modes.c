@@ -97,11 +97,14 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER
   },
 
-  { GIMP_LAYER_MODE_BEHIND,
+  { GIMP_LAYER_MODE_BEHIND_LEGACY,
 
     .op_name              = "gimp:behind",
     .function             = gimp_operation_behind_process,
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
                             GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -479,7 +482,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
-  { GIMP_LAYER_MODE_BEHIND_LINEAR,
+  { GIMP_LAYER_MODE_BEHIND,
 
     .op_name              = "gimp:behind",
     .function             = gimp_operation_behind_process,
@@ -502,17 +505,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_MULTIPLY_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_SCREEN,
 
     .op_name              = "gimp:layer-mode",
@@ -522,28 +514,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_SCREEN_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
-  { GIMP_LAYER_MODE_OVERLAY_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_DIFFERENCE,
@@ -557,17 +527,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_ADDITION,
 
     .op_name              = "gimp:layer-mode",
@@ -579,17 +538,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_ADDITION_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_SUBTRACT,
 
     .op_name              = "gimp:layer-mode",
@@ -599,17 +547,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_SUBTRACT_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_DARKEN_ONLY,
@@ -693,17 +630,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_DIVIDE_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_DODGE,
 
     .op_name              = "gimp:layer-mode",
@@ -713,17 +639,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_DODGE_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_BURN,
@@ -737,17 +652,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_BURN_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_HARDLIGHT,
 
     .op_name              = "gimp:layer-mode",
@@ -757,17 +661,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_SOFTLIGHT,
@@ -781,17 +674,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_GRAIN_EXTRACT,
 
     .op_name              = "gimp:layer-mode",
@@ -801,17 +683,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_GRAIN_MERGE,
@@ -825,17 +696,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_VIVID_LIGHT,
 
     .op_name              = "gimp:layer-mode",
@@ -845,17 +705,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_PIN_LIGHT,
@@ -869,17 +718,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_LINEAR_LIGHT,
 
     .op_name              = "gimp:layer-mode",
@@ -889,17 +727,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_HARD_MIX,
@@ -913,17 +740,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_HARD_MIX_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_EXCLUSION,
 
     .op_name              = "gimp:layer-mode",
@@ -933,17 +749,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_EXCLUSION_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_LINEAR_BURN,
@@ -957,17 +762,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
 
     .op_name              = "gimp:layer-mode",
@@ -979,17 +773,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
 
     .op_name              = "gimp:layer-mode",
@@ -999,17 +782,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
-  },
-
-  { GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_ERASE,
@@ -1055,107 +827,6 @@ static const GimpLayerMode layer_mode_group_default[] =
   GIMP_LAYER_MODE_COLOR_ERASE,
   GIMP_LAYER_MODE_ERASE,
   GIMP_LAYER_MODE_ANTI_ERASE,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_LIGHTEN_ONLY,
-  GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-  GIMP_LAYER_MODE_SCREEN,
-  GIMP_LAYER_MODE_DODGE,
-  GIMP_LAYER_MODE_ADDITION,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_DARKEN_ONLY,
-  GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-  GIMP_LAYER_MODE_MULTIPLY,
-  GIMP_LAYER_MODE_BURN,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_OVERLAY,
-  GIMP_LAYER_MODE_SOFTLIGHT,
-  GIMP_LAYER_MODE_HARDLIGHT,
-  GIMP_LAYER_MODE_VIVID_LIGHT,
-  GIMP_LAYER_MODE_PIN_LIGHT,
-  GIMP_LAYER_MODE_LINEAR_LIGHT,
-  GIMP_LAYER_MODE_HARD_MIX,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_DIFFERENCE,
-  GIMP_LAYER_MODE_SUBTRACT,
-  GIMP_LAYER_MODE_GRAIN_EXTRACT,
-  GIMP_LAYER_MODE_GRAIN_MERGE,
-  GIMP_LAYER_MODE_DIVIDE,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_LCH_HUE,
-  GIMP_LAYER_MODE_LCH_CHROMA,
-  GIMP_LAYER_MODE_LCH_COLOR,
-  GIMP_LAYER_MODE_LCH_LIGHTNESS,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_EXCLUSION,
-  GIMP_LAYER_MODE_LINEAR_BURN
-};
-
-static const GimpLayerMode layer_mode_group_linear[] =
-{
-  GIMP_LAYER_MODE_NORMAL_LINEAR,
-  GIMP_LAYER_MODE_REPLACE,
-  GIMP_LAYER_MODE_DISSOLVE,
-  GIMP_LAYER_MODE_BEHIND_LINEAR,
-  GIMP_LAYER_MODE_ERASE,
-  GIMP_LAYER_MODE_ANTI_ERASE,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_LIGHTEN_ONLY,
-  GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-  GIMP_LAYER_MODE_SCREEN_LINEAR,
-  GIMP_LAYER_MODE_DODGE_LINEAR,
-  GIMP_LAYER_MODE_ADDITION_LINEAR,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_DARKEN_ONLY,
-  GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-  GIMP_LAYER_MODE_MULTIPLY_LINEAR,
-  GIMP_LAYER_MODE_BURN_LINEAR,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_OVERLAY_LINEAR,
-  GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
-  GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
-  GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
-  GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
-  GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
-  GIMP_LAYER_MODE_HARD_MIX_LINEAR,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
-  GIMP_LAYER_MODE_SUBTRACT_LINEAR,
-  GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
-  GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
-  GIMP_LAYER_MODE_DIVIDE_LINEAR,
-
-  GIMP_LAYER_MODE_SEPARATOR,
-
-  GIMP_LAYER_MODE_EXCLUSION_LINEAR,
-  GIMP_LAYER_MODE_LINEAR_BURN_LINEAR
-};
-
-static const GimpLayerMode layer_mode_group_perceptual[] =
-{
-  GIMP_LAYER_MODE_NORMAL,
-  GIMP_LAYER_MODE_DISSOLVE,
-  GIMP_LAYER_MODE_BEHIND,
-  GIMP_LAYER_MODE_COLOR_ERASE,
 
   GIMP_LAYER_MODE_SEPARATOR,
 
@@ -1214,6 +885,7 @@ static const GimpLayerMode layer_mode_group_legacy[] =
 {
   GIMP_LAYER_MODE_NORMAL,
   GIMP_LAYER_MODE_DISSOLVE,
+  GIMP_LAYER_MODE_BEHIND_LEGACY,
 
   GIMP_LAYER_MODE_SEPARATOR,
 
@@ -1249,209 +921,141 @@ static const GimpLayerMode layer_mode_group_legacy[] =
   GIMP_LAYER_MODE_HSV_VALUE_LEGACY
 };
 
-static const GimpLayerMode layer_mode_groups[][4] =
+static const GimpLayerMode layer_mode_groups[][2] =
 {
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_NORMAL,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_NORMAL_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_NORMAL,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_NORMAL
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT ] = GIMP_LAYER_MODE_NORMAL,
+    [GIMP_LAYER_MODE_GROUP_LEGACY  ] = GIMP_LAYER_MODE_NORMAL
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DISSOLVE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DISSOLVE,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DISSOLVE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DISSOLVE
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_BEHIND,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_BEHIND_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_BEHIND,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_BEHIND
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_BEHIND_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_MULTIPLY,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_MULTIPLY_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_MULTIPLY,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_MULTIPLY_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SCREEN,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_SCREEN_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_SCREEN,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SCREEN_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_OVERLAY,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_OVERLAY_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_OVERLAY,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DIFFERENCE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DIFFERENCE_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DIFFERENCE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DIFFERENCE_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ADDITION,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_ADDITION_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_ADDITION,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_ADDITION_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SUBTRACT,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_SUBTRACT_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_SUBTRACT,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SUBTRACT_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DARKEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DARKEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DARKEN_ONLY,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LIGHTEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LIGHTEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LIGHTEN_ONLY,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = -1,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HSV_HUE,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HSV_HUE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_HUE_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = -1,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HSV_SATURATION,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HSV_SATURATION,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_SATURATION_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = -1,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HSV_COLOR,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HSV_COLOR,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_COLOR_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = -1,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HSV_VALUE,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HSV_VALUE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_VALUE_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DIVIDE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DIVIDE_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DIVIDE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DIVIDE_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DODGE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_DODGE_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_DODGE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DODGE_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_BURN,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_BURN_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_BURN,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_BURN_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HARDLIGHT,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_HARDLIGHT_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HARDLIGHT,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HARDLIGHT_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SOFTLIGHT,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_SOFTLIGHT_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_SOFTLIGHT,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_GRAIN_EXTRACT,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_GRAIN_EXTRACT,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_GRAIN_MERGE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_GRAIN_MERGE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_COLOR_ERASE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = -1,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_COLOR_ERASE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1,
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_VIVID_LIGHT,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_VIVID_LIGHT,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_PIN_LIGHT,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_PIN_LIGHT_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_PIN_LIGHT,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LINEAR_LIGHT,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LINEAR_LIGHT,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HARD_MIX,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_HARD_MIX_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_HARD_MIX,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_EXCLUSION,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_EXCLUSION_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_EXCLUSION,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LINEAR_BURN,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LINEAR_BURN_LINEAR,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LINEAR_BURN,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ERASE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_ERASE,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = -1,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_REPLACE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_REPLACE,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = -1,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ANTI_ERASE,
-    [GIMP_LAYER_MODE_GROUP_LINEAR    ] = GIMP_LAYER_MODE_ANTI_ERASE,
-    [GIMP_LAYER_MODE_GROUP_PERCEPTUAL] = -1,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   }
 };
@@ -1600,16 +1204,6 @@ gimp_layer_mode_get_group (GimpLayerMode  mode)
     {
       return GIMP_LAYER_MODE_GROUP_DEFAULT;
     }
-  else if (is_mode_in_array (layer_mode_group_linear,
-                             G_N_ELEMENTS (layer_mode_group_linear), mode))
-    {
-      return GIMP_LAYER_MODE_GROUP_LINEAR;
-    }
-  else if (is_mode_in_array (layer_mode_group_perceptual,
-                             G_N_ELEMENTS (layer_mode_group_perceptual), mode))
-    {
-      return GIMP_LAYER_MODE_GROUP_PERCEPTUAL;
-    }
   else if (is_mode_in_array (layer_mode_group_legacy,
                              G_N_ELEMENTS (layer_mode_group_legacy), mode))
     {
@@ -1631,14 +1225,6 @@ gimp_layer_mode_get_group_array (GimpLayerModeGroup  group,
       *n_modes = G_N_ELEMENTS (layer_mode_group_default);
       return layer_mode_group_default;
 
-    case GIMP_LAYER_MODE_GROUP_LINEAR:
-      *n_modes = G_N_ELEMENTS (layer_mode_group_linear);
-      return layer_mode_group_linear;
-
-    case GIMP_LAYER_MODE_GROUP_PERCEPTUAL:
-      *n_modes = G_N_ELEMENTS (layer_mode_group_perceptual);
-      return layer_mode_group_perceptual;
-
     case GIMP_LAYER_MODE_GROUP_LEGACY:
       *n_modes = G_N_ELEMENTS (layer_mode_group_legacy);
       return layer_mode_group_legacy;
@@ -1659,7 +1245,7 @@ gimp_layer_mode_get_for_group (GimpLayerMode       old_mode,
 
   for (i = 0; i < G_N_ELEMENTS (layer_mode_groups); i++)
     {
-      if (is_mode_in_array (layer_mode_groups[i], 4, old_mode))
+      if (is_mode_in_array (layer_mode_groups[i], 2, old_mode))
         {
           *new_mode = layer_mode_groups[i][new_group];
 

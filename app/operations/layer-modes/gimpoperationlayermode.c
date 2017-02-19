@@ -1839,25 +1839,16 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
 {
   switch (mode)
     {
-    case GIMP_LAYER_MODE_SCREEN_LINEAR:
     case GIMP_LAYER_MODE_SCREEN:         return blendfun_screen;
-    case GIMP_LAYER_MODE_ADDITION_LINEAR:
     case GIMP_LAYER_MODE_ADDITION:       return blendfun_addition;
-    case GIMP_LAYER_MODE_SUBTRACT_LINEAR:
     case GIMP_LAYER_MODE_SUBTRACT:       return blendfun_subtract;
-    case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
     case GIMP_LAYER_MODE_MULTIPLY:       return blendfun_multiply;
     case GIMP_LAYER_MODE_NORMAL_LINEAR:
     case GIMP_LAYER_MODE_NORMAL:         return blendfun_normal;
-    case GIMP_LAYER_MODE_BURN_LINEAR:
     case GIMP_LAYER_MODE_BURN:           return blendfun_burn;
-    case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_MERGE:    return blendfun_grain_merge;
-    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:  return blendfun_grain_extract;
-    case GIMP_LAYER_MODE_DODGE_LINEAR:
     case GIMP_LAYER_MODE_DODGE:          return blendfun_dodge;
-    case GIMP_LAYER_MODE_OVERLAY_LINEAR:
     case GIMP_LAYER_MODE_OVERLAY:        return blendfun_overlay;
     case GIMP_LAYER_MODE_HSV_COLOR:      return blendfun_hsv_color;
     case GIMP_LAYER_MODE_HSV_HUE:        return blendfun_hsv_hue;
@@ -1867,36 +1858,24 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_LCH_COLOR:      return blendfun_lch_color;
     case GIMP_LAYER_MODE_LCH_HUE:        return blendfun_lch_hue;
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:  return blendfun_lch_lightness;
-    case GIMP_LAYER_MODE_HARDLIGHT_LINEAR:
     case GIMP_LAYER_MODE_HARDLIGHT:      return blendfun_hardlight;
-    case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
     case GIMP_LAYER_MODE_SOFTLIGHT:      return blendfun_softlight;
-    case GIMP_LAYER_MODE_DIVIDE:
-    case GIMP_LAYER_MODE_DIVIDE_LINEAR:  return blendfun_divide;
-    case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
+    case GIMP_LAYER_MODE_DIVIDE:         return blendfun_divide;
     case GIMP_LAYER_MODE_DIFFERENCE:     return blendfun_difference;
     case GIMP_LAYER_MODE_DARKEN_ONLY:    return blendfun_darken_only;
     case GIMP_LAYER_MODE_LIGHTEN_ONLY:   return blendfun_lighten_only;
-    case GIMP_LAYER_MODE_LUMINANCE_DARKEN_ONLY:
     case GIMP_LAYER_MODE_LUMA_DARKEN_ONLY:  return blendfun_luminance_darken_only;
-    case GIMP_LAYER_MODE_LUMINANCE_LIGHTEN_ONLY:
     case GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY: return blendfun_luminance_lighten_only;
-    case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_VIVID_LIGHT:    return blendfun_vivid_light;
-    case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_PIN_LIGHT:      return blendfun_pin_light;
-    case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
     case GIMP_LAYER_MODE_LINEAR_LIGHT:   return blendfun_linear_light;
-    case GIMP_LAYER_MODE_HARD_MIX_LINEAR:
     case GIMP_LAYER_MODE_HARD_MIX:       return blendfun_hard_mix;
-    case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
     case GIMP_LAYER_MODE_EXCLUSION:      return blendfun_exclusion;
-    case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
     case GIMP_LAYER_MODE_LINEAR_BURN:    return blendfun_linear_burn;
 
     case GIMP_LAYER_MODE_DISSOLVE:
+    case GIMP_LAYER_MODE_BEHIND_LEGACY:
     case GIMP_LAYER_MODE_BEHIND:
-    case GIMP_LAYER_MODE_BEHIND_LINEAR:
     case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
     case GIMP_LAYER_MODE_SCREEN_LEGACY:
     case GIMP_LAYER_MODE_OVERLAY_LEGACY:

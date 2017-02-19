@@ -939,33 +939,6 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       psd_mode = g_strndup ("norm", 4);
       break;
 
-    case GIMP_LAYER_MODE_SCREEN_LINEAR:
-    case GIMP_LAYER_MODE_ADDITION_LINEAR:
-    case GIMP_LAYER_MODE_SUBTRACT_LINEAR:
-    case GIMP_LAYER_MODE_MULTIPLY_LINEAR:
-    case GIMP_LAYER_MODE_NORMAL_LINEAR:
-    case GIMP_LAYER_MODE_BURN_LINEAR:
-    case GIMP_LAYER_MODE_GRAIN_MERGE_LINEAR:
-    case GIMP_LAYER_MODE_GRAIN_EXTRACT_LINEAR:
-    case GIMP_LAYER_MODE_DODGE_LINEAR:
-    case GIMP_LAYER_MODE_OVERLAY_LINEAR:
-    case GIMP_LAYER_MODE_HARDLIGHT_LINEAR:
-    case GIMP_LAYER_MODE_SOFTLIGHT_LINEAR:
-    case GIMP_LAYER_MODE_DIVIDE_LINEAR:
-    case GIMP_LAYER_MODE_DIFFERENCE_LINEAR:
-    case GIMP_LAYER_MODE_VIVID_LIGHT_LINEAR:
-    case GIMP_LAYER_MODE_PIN_LIGHT_LINEAR:
-    case GIMP_LAYER_MODE_LINEAR_LIGHT_LINEAR:
-    case GIMP_LAYER_MODE_EXCLUSION_LINEAR:
-    case GIMP_LAYER_MODE_LINEAR_BURN_LINEAR:
-    case GIMP_LAYER_MODE_HARD_MIX_LINEAR:
-      if (CONVERSION_WARNINGS)
-        g_message ("GIMP cannot export linear pixel data in blend mode: %s."
-                   "Mode reverts to normal",
-                   gimp_layer_mode_effects_name (layer_mode));
-      psd_mode = g_strndup ("norm", 4);
-      break;
-
     default:
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported blend mode: %s. Mode reverts to normal",

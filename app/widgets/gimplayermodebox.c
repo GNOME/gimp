@@ -163,13 +163,11 @@ gimp_layer_mode_box_constructed (GObject *object)
 
   group_model = gtk_combo_box_get_model (GTK_COMBO_BOX (group_combo));
 
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < 2; i++)
     {
       static const gchar *icons[] =
       {
         "gimp-reset",
-        "gimp-histogram-linear",
-        "gimp-visible",
         "gimp-wilber-eek"
       };
 
