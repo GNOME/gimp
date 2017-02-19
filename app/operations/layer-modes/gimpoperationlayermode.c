@@ -700,8 +700,8 @@ composite_func_src_atop_sse2 (gfloat *in,
        ((uintptr_t)layer) |
        ((uintptr_t)out)    ) & 0x0F)
     {
-      return composite_func_src_atop (in, layer, comp, mask, opacity,
-                                      out, samples);
+      return composite_func_src_atop_core (in, layer, comp, mask, opacity,
+                                           out, samples);
     }
   else
     {
