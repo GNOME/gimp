@@ -695,7 +695,6 @@ composite_func_src_atop_sse2 (gfloat *in,
                               gint    samples)
 {
   if ((((uintptr_t)in)    | /* alignment check */
-       ((uintptr_t)mask)  |
        ((uintptr_t)comp)  |
        ((uintptr_t)layer) |
        ((uintptr_t)out)    ) & 0x0F)
