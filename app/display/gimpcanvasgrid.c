@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <math.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
