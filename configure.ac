@@ -72,6 +72,7 @@ m4_define([lcms_required_version], [2.8])
 m4_define([libpng_required_version], [1.6.25])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
+m4_define([openjpeg_required_version], [2.1.0])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([intltool_required_version], [0.40.1])
 m4_define([perl_required_version], [5.10.0])
@@ -1783,30 +1784,27 @@ AC_SUBST(WMF_LIBS)
 AC_SUBST(WMF_CFLAGS)
 
 
-#####################
-# Check for libjasper
-#####################
+####################
+# Check for OpenJPEG
+####################
 
-AC_ARG_WITH(libjasper,  [  --without-libjasper     build without JPEG-2000 support])
+AC_ARG_WITH(jpeg2000, [  --without-jpeg2000      build without JPEG 2000 support])
 
-have_jp2=no
-if test "x$with_libjasper" != xno && test -z "$JASPER_LIBS"; then
-  have_jp2=yes
-  AC_CHECK_LIB(jasper, jas_init,
-    FILE_JP2_LOAD='file-jp2-load$(EXEEXT)' ; JP2_LIBS=-ljasper,
-    [have_jp2="no (JasPer library not found)"
-    AC_MSG_WARN(*** JP2 plug-in will not be built (JasPer library not found) ***)])
-else
-   have_jp2="no (JasPer support disabled)"
+have_openjpeg=no
+if test "x$with_jpeg2000" != xno; then
+  have_openjpeg=yes
+  PKG_CHECK_MODULES(OPENJPEG, libopenjp2 >= openjpeg_required_version,
+    FILE_JP2_LOAD='file-jp2-load$(EXEEXT)'
+    have_openjpeg=yes,
+    have_openjpeg="no (OpenJPEG not found)")
 fi
 
-if test "x$have_jp2" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/jp2;image/jpeg2000;image/jpx"
+if test "x$have_openjpeg" = xyes; then
+  MIME_TYPES="$MIME_TYPES;image/jp2"
 fi
 
-AM_CONDITIONAL(BUILD_JP2, test "x$have_jp2" = xyes)
+AM_CONDITIONAL(HAVE_OPENJPEG, test "x$have_openjpeg" = xyes)
 AC_SUBST(FILE_JP2_LOAD)
-AC_SUBST(JP2_LIBS)
 
 
 ################
@@ -2732,7 +2730,7 @@ Optional Plug-Ins:
   Ascii Art:           $have_libaa
   Ghostscript:         $have_gs
   Help Browser:        $have_webkit
-  JPEG 2000:           $have_jp2
+  JPEG 2000:           $have_openjpeg
   MNG:                 $have_libmng
   OpenEXR:             $have_openexr
   WebP:                $have_webp
