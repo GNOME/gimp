@@ -59,15 +59,15 @@ typedef struct _GimpLayerModeInfo GimpLayerModeInfo;
 
 struct _GimpLayerModeInfo
 {
-  GimpLayerMode          layer_mode;
-  const gchar           *op_name;
-  GimpLayerModeFunc      function;
-  GimpLayerModeFlags     flags;
-  GimpLayerModeContext   context;
-  GimpLayerCompositeMode paint_composite_mode;
-  GimpLayerCompositeMode composite_mode;
-  GimpLayerColorSpace    composite_space;
-  GimpLayerColorSpace    blend_space;
+  GimpLayerMode           layer_mode;
+  const gchar            *op_name;
+  GimpLayerModeFunc       function;
+  GimpLayerModeFlags      flags;
+  GimpLayerModeContext    context;
+  GimpLayerCompositeMode  paint_composite_mode;
+  GimpLayerCompositeMode  composite_mode;
+  GimpLayerColorSpace     composite_space;
+  GimpLayerColorSpace     blend_space;
 };
 
 
@@ -938,144 +938,144 @@ static const GimpLayerMode layer_mode_group_legacy[] =
 
 static const GimpLayerMode layer_mode_groups[][2] =
 {
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT ] = GIMP_LAYER_MODE_NORMAL,
-    [GIMP_LAYER_MODE_GROUP_LEGACY  ] = GIMP_LAYER_MODE_NORMAL
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_NORMAL,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_NORMAL
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DISSOLVE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DISSOLVE
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_DISSOLVE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_DISSOLVE
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_BEHIND,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_BEHIND_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_BEHIND,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_BEHIND_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_MULTIPLY,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_MULTIPLY_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_MULTIPLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_MULTIPLY_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SCREEN,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SCREEN_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_SCREEN,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_SCREEN_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_OVERLAY,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_OVERLAY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DIFFERENCE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DIFFERENCE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_DIFFERENCE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_DIFFERENCE_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ADDITION,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_ADDITION_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_ADDITION,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_ADDITION_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SUBTRACT,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SUBTRACT_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_SUBTRACT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_SUBTRACT_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DARKEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_DARKEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LIGHTEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_LIGHTEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HSV_HUE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_HUE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSV_HUE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HSV_HUE_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HSV_SATURATION,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_SATURATION_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSV_SATURATION,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HSV_SATURATION_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HSV_COLOR,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_COLOR_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSV_COLOR,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HSV_COLOR_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HSV_VALUE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HSV_VALUE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSV_VALUE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HSV_VALUE_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DIVIDE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DIVIDE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_DIVIDE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_DIVIDE_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_DODGE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_DODGE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_DODGE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_DODGE_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_BURN,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_BURN_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_BURN,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_BURN_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HARDLIGHT,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_HARDLIGHT_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HARDLIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HARDLIGHT_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_SOFTLIGHT,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_SOFTLIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_GRAIN_EXTRACT,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_GRAIN_EXTRACT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_GRAIN_MERGE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_GRAIN_MERGE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_COLOR_ERASE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_COLOR_ERASE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1,
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_VIVID_LIGHT,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_VIVID_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_PIN_LIGHT,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_PIN_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LINEAR_LIGHT,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_LINEAR_LIGHT,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_HARD_MIX,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HARD_MIX,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_EXCLUSION,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_EXCLUSION,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LINEAR_BURN,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_LINEAR_BURN,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMINANCE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_LUMINANCE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ERASE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_ERASE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_REPLACE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_REPLACE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ANTI_ERASE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_ANTI_ERASE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   }
 };
 
@@ -1103,92 +1103,112 @@ gimp_layer_mode_info (GimpLayerMode mode)
 }
 
 gboolean
-gimp_layer_mode_is_legacy (GimpLayerMode  mode)
+gimp_layer_mode_is_legacy (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return FALSE;
+
   return (info->flags & GIMP_LAYER_MODE_FLAG_LEGACY) != 0;
 }
 
 gboolean
-gimp_layer_mode_is_blend_space_mutable (GimpLayerMode  mode)
+gimp_layer_mode_is_blend_space_mutable (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return FALSE;
+
   return (info->flags & GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE) == 0;
 }
 
 gboolean
-gimp_layer_mode_is_composite_space_mutable (GimpLayerMode  mode)
+gimp_layer_mode_is_composite_space_mutable (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return FALSE;
+
   return (info->flags & GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE) == 0;
 }
 
 gboolean
-gimp_layer_mode_is_composite_mode_mutable (GimpLayerMode  mode)
+gimp_layer_mode_is_composite_mode_mutable (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return FALSE;
+
   return (info->flags & GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE) == 0;
 }
 
 GimpLayerColorSpace
-gimp_layer_mode_get_blend_space (GimpLayerMode  mode)
+gimp_layer_mode_get_blend_space (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
+
   return info->blend_space;
 }
 
 GimpLayerColorSpace
-gimp_layer_mode_get_composite_space (GimpLayerMode  mode)
+gimp_layer_mode_get_composite_space (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return GIMP_LAYER_COLOR_SPACE_RGB_LINEAR;
+
   return info->composite_space;
 }
 
 GimpLayerCompositeMode
-gimp_layer_mode_get_composite_mode (GimpLayerMode  mode)
+gimp_layer_mode_get_composite_mode (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return GIMP_LAYER_COMPOSITE_SRC_OVER;
+
   return info->composite_mode;
 }
 
 GimpLayerCompositeMode
-gimp_layer_mode_get_paint_composite_mode (GimpLayerMode  mode)
+gimp_layer_mode_get_paint_composite_mode (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return GIMP_LAYER_COMPOSITE_SRC_OVER;
+
   return info->paint_composite_mode;
 }
 
 const gchar *
-gimp_layer_mode_get_operation (GimpLayerMode  mode)
+gimp_layer_mode_get_operation (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return "gimp:layer-mode";
+
   return info->op_name;
 }
 
 GimpLayerModeFunc
-gimp_layer_mode_get_function (GimpLayerMode  mode)
+gimp_layer_mode_get_function (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return gimp_operation_layer_mode_process_pixels;
+
   return info->function;
 }
 
@@ -1196,8 +1216,10 @@ GimpLayerModeContext
 gimp_layer_mode_get_context (GimpLayerMode mode)
 {
   const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-  if (!info)
+
+  if (! info)
     return 0;
+
   return info->context;
 }
 
@@ -1209,14 +1231,16 @@ is_mode_in_array (const GimpLayerMode *modes,
   gint i;
 
   for (i = 0; i < n_modes; i++)
-    if (modes[i] == mode)
-      return TRUE;
+    {
+      if (modes[i] == mode)
+        return TRUE;
+    }
 
   return FALSE;
 }
 
 GimpLayerModeGroup
-gimp_layer_mode_get_group (GimpLayerMode  mode)
+gimp_layer_mode_get_group (GimpLayerMode mode)
 {
   if (is_mode_in_array (layer_mode_group_default,
                         G_N_ELEMENTS (layer_mode_group_default), mode))
