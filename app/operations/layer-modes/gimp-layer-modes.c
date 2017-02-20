@@ -1223,6 +1223,37 @@ gimp_layer_mode_get_context (GimpLayerMode mode)
   return info->context;
 }
 
+GimpLayerMode *
+gimp_layer_mode_get_context_array (GimpLayerMode         mode,
+                                   GimpLayerModeContext  context,
+                                   gint                 *n_modes)
+{
+  GimpLayerModeGroup   group;
+  const GimpLayerMode *group_modes;
+  gint                 n_group_modes;
+  GimpLayerMode       *array;
+  gint                 i;
+
+  group = gimp_layer_mode_get_group (mode);
+
+  group_modes = gimp_layer_mode_get_group_array (group, &n_group_modes);
+
+  array = g_new0 (GimpLayerMode, n_group_modes);
+  *n_modes = 0;
+
+  for (i = 0; i < n_group_modes; i++)
+    {
+      if (group_modes[i] != GIMP_LAYER_MODE_SEPARATOR &&
+          (gimp_layer_mode_get_context (group_modes[i]) & context))
+        {
+          array[*n_modes] = group_modes[i];
+          (*n_modes)++;
+        }
+    }
+
+  return array;
+}
+
 static gboolean
 is_mode_in_array (const GimpLayerMode *modes,
                   gint                 n_modes,

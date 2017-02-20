@@ -31,6 +31,8 @@
 
 #include "config/gimpdialogconfig.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
@@ -80,37 +82,6 @@
 #include "layers-commands.h"
 
 #include "gimp-intl.h"
-
-
-static const GimpLayerMode layer_modes[] =
-{
-  GIMP_LAYER_MODE_NORMAL,
-  GIMP_LAYER_MODE_DISSOLVE,
-  GIMP_LAYER_MODE_MULTIPLY_LEGACY,
-  GIMP_LAYER_MODE_DIVIDE_LEGACY,
-  GIMP_LAYER_MODE_SCREEN_LEGACY,
-  GIMP_LAYER_MODE_OVERLAY,
-  GIMP_LAYER_MODE_DODGE_LEGACY,
-  GIMP_LAYER_MODE_BURN_LEGACY,
-  GIMP_LAYER_MODE_HARDLIGHT_LEGACY,
-  GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,
-  GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,
-  GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,
-  GIMP_LAYER_MODE_DIFFERENCE_LEGACY,
-  GIMP_LAYER_MODE_ADDITION_LEGACY,
-  GIMP_LAYER_MODE_SUBTRACT_LEGACY,
-  GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,
-  GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,
-  GIMP_LAYER_MODE_HSV_HUE_LEGACY,
-  GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,
-  GIMP_LAYER_MODE_HSV_COLOR_LEGACY,
-  GIMP_LAYER_MODE_HSV_VALUE_LEGACY,
-  GIMP_LAYER_MODE_LCH_HUE,
-  GIMP_LAYER_MODE_LCH_CHROMA,
-  GIMP_LAYER_MODE_LCH_COLOR,
-  GIMP_LAYER_MODE_LCH_LIGHTNESS,
-  GIMP_LAYER_MODE_LUMINANCE
-};
 
 
 /*  local function prototypes  */
@@ -190,7 +161,9 @@ static void   layers_resize_callback          (GtkWidget             *dialog,
                                                gboolean               unused2,
                                                gpointer               data);
 
-static gint   layers_mode_index               (GimpLayerMode          layer_mode);
+static gint   layers_mode_index               (GimpLayerMode          layer_mode,
+                                               const GimpLayerMode   *modes,
+                                               gint                   n_modes);
 
 
 /*  private variables  */
@@ -1125,6 +1098,8 @@ layers_mode_cmd_callback (GtkAction *action,
 {
   GimpImage     *image;
   GimpLayer     *layer;
+  GimpLayerMode *modes;
+  gint           n_modes;
   GimpLayerMode  layer_mode;
   gint           index;
   GimpUndo      *undo;
@@ -1139,11 +1114,17 @@ layers_mode_cmd_callback (GtkAction *action,
 
   layer_mode = gimp_layer_get_mode (layer);
 
+  modes = gimp_layer_mode_get_context_array (layer_mode,
+                                             GIMP_LAYER_MODE_CONTEXT_LAYER,
+                                             &n_modes);
+  index = layers_mode_index (layer_mode, modes, n_modes);
   index = action_select_value ((GimpActionSelectType) value,
-                               layers_mode_index (layer_mode),
-                               0, G_N_ELEMENTS (layer_modes) - 1, 0,
+                               index, 0, n_modes - 1, 0,
                                0.0, 1.0, 1.0, 0.0, FALSE);
-  gimp_layer_set_mode (layer, layer_modes[index], push_undo);
+  layer_mode = modes[index];
+  g_free (modes);
+
+  gimp_layer_set_mode (layer, layer_mode, push_undo);
   gimp_image_flush (image);
 }
 
@@ -1650,11 +1631,13 @@ layers_resize_callback (GtkWidget    *dialog,
 }
 
 static gint
-layers_mode_index (GimpLayerMode layer_mode)
+layers_mode_index (GimpLayerMode         layer_mode,
+                   const GimpLayerMode  *modes,
+                   gint                  n_modes)
 {
   gint i = 0;
 
-  while (i < (G_N_ELEMENTS (layer_modes) - 1) && layer_modes[i] != layer_mode)
+  while (i < (n_modes - 1) && modes[i] != layer_mode)
     i++;
 
   return i;

@@ -43,6 +43,10 @@ GimpLayerModeFunc        gimp_layer_mode_get_function        (GimpLayerMode     
 
 GimpLayerModeContext     gimp_layer_mode_get_context         (GimpLayerMode        mode);
 
+GimpLayerMode          * gimp_layer_mode_get_context_array   (GimpLayerMode        mode,
+                                                              GimpLayerModeContext context,
+                                                              gint                *n_modes);
+
 GimpLayerModeGroup       gimp_layer_mode_get_group           (GimpLayerMode        mode);
 
 const GimpLayerMode    * gimp_layer_mode_get_group_array     (GimpLayerModeGroup   group,
