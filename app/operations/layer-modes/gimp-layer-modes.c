@@ -557,8 +557,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+    /* no blend_space: reuse composite space, no conversion thus fewer copies */
   },
 
   { GIMP_LAYER_MODE_LIGHTEN_ONLY,
@@ -569,8 +569,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+    /* no blend_space: reuse composite space, no conversion thus fewer copies */
   },
 
   { GIMP_LAYER_MODE_HSV_HUE,
