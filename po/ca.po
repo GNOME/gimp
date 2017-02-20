@@ -3341,7 +3341,7 @@ msgstr "Menú de la capa"
 #: ../app/actions/layers-actions.c:53
 msgctxt "layers-action"
 msgid "_Layer"
-msgstr "_Capes"
+msgstr "_Capa"
 
 #: ../app/actions/layers-actions.c:55
 msgctxt "layers-action"
