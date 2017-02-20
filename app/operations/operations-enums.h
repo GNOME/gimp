@@ -85,7 +85,6 @@ typedef enum
   GIMP_LAYER_MODE_LCH_CHROMA,            /*< desc="Chroma (LCH)"             >*/
   GIMP_LAYER_MODE_LCH_COLOR,             /*< desc="Color (LCH)"              >*/
   GIMP_LAYER_MODE_LCH_LIGHTNESS,         /*< desc="Lightness (LCH)"          >*/
-  GIMP_LAYER_MODE_LUMINANCE,             /*< desc="Luminance"                >*/
 
   /*  Since 2.10  */
   GIMP_LAYER_MODE_NORMAL_LINEAR,         /*< desc="Normal (linear)"          >*/
@@ -116,6 +115,7 @@ typedef enum
   GIMP_LAYER_MODE_LINEAR_BURN,           /*< desc="Linear burn"              >*/
   GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,   /*< desc="Luma/Luminance darken only"  >*/
   GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,  /*< desc="Luma/Luminance lighten only" >*/
+  GIMP_LAYER_MODE_LUMINANCE,             /*< desc="Luminance"                >*/
 
   /*  Internal modes, not available to the PDB, must be kept at the end  */
   GIMP_LAYER_MODE_ERASE,                 /*< pdb-skip, desc="Erase"          >*/
