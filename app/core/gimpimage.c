@@ -2393,7 +2393,29 @@ gimp_image_get_xcf_version (GimpImage    *image,
 
       switch (gimp_layer_get_mode (layer))
         {
-          /* new layer modes not supported by gimp-1.2 */
+          /*  Modes that exist since ancient times  */
+        case GIMP_LAYER_MODE_NORMAL:
+        case GIMP_LAYER_MODE_DISSOLVE:
+        case GIMP_LAYER_MODE_BEHIND_LEGACY:
+        case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
+        case GIMP_LAYER_MODE_SCREEN_LEGACY:
+        case GIMP_LAYER_MODE_OVERLAY_LEGACY:
+        case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
+        case GIMP_LAYER_MODE_ADDITION_LEGACY:
+        case GIMP_LAYER_MODE_SUBTRACT_LEGACY:
+        case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
+        case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
+        case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
+        case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
+        case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
+        case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:
+        case GIMP_LAYER_MODE_DIVIDE_LEGACY:
+        case GIMP_LAYER_MODE_DODGE_LEGACY:
+        case GIMP_LAYER_MODE_BURN_LEGACY:
+        case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
+          break;
+
+          /*  Since 2.8  */
         case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
         case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
         case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
@@ -2401,7 +2423,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
           version = MAX (2, version);
           break;
 
-          /* new layer modes not supported by gimp-2.8 */
+          /*  Since 2.10  */
         case GIMP_LAYER_MODE_OVERLAY:
         case GIMP_LAYER_MODE_LCH_HUE:
         case GIMP_LAYER_MODE_LCH_CHROMA:
@@ -2410,7 +2432,44 @@ gimp_image_get_xcf_version (GimpImage    *image,
           version = MAX (9, version);
           break;
 
-        default:
+          /*  Since 2.10  */
+        case GIMP_LAYER_MODE_NORMAL_LINEAR:
+        case GIMP_LAYER_MODE_BEHIND:
+        case GIMP_LAYER_MODE_MULTIPLY:
+        case GIMP_LAYER_MODE_SCREEN:
+        case GIMP_LAYER_MODE_DIFFERENCE:
+        case GIMP_LAYER_MODE_ADDITION:
+        case GIMP_LAYER_MODE_SUBTRACT:
+        case GIMP_LAYER_MODE_DARKEN_ONLY:
+        case GIMP_LAYER_MODE_LIGHTEN_ONLY:
+        case GIMP_LAYER_MODE_HSV_HUE:
+        case GIMP_LAYER_MODE_HSV_SATURATION:
+        case GIMP_LAYER_MODE_HSV_COLOR:
+        case GIMP_LAYER_MODE_HSV_VALUE:
+        case GIMP_LAYER_MODE_DIVIDE:
+        case GIMP_LAYER_MODE_DODGE:
+        case GIMP_LAYER_MODE_BURN:
+        case GIMP_LAYER_MODE_HARDLIGHT:
+        case GIMP_LAYER_MODE_SOFTLIGHT:
+        case GIMP_LAYER_MODE_GRAIN_EXTRACT:
+        case GIMP_LAYER_MODE_GRAIN_MERGE:
+        case GIMP_LAYER_MODE_VIVID_LIGHT:
+        case GIMP_LAYER_MODE_PIN_LIGHT:
+        case GIMP_LAYER_MODE_LINEAR_LIGHT:
+        case GIMP_LAYER_MODE_HARD_MIX:
+        case GIMP_LAYER_MODE_EXCLUSION:
+        case GIMP_LAYER_MODE_LINEAR_BURN:
+        case GIMP_LAYER_MODE_LUMA_DARKEN_ONLY:
+        case GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY:
+        case GIMP_LAYER_MODE_LUMINANCE:
+          version = MAX (10, version);
+          break;
+
+          /*  Just here instead of default so we get compiler warnings  */
+        case GIMP_LAYER_MODE_ERASE:
+        case GIMP_LAYER_MODE_REPLACE:
+        case GIMP_LAYER_MODE_ANTI_ERASE:
+        case GIMP_LAYER_MODE_SEPARATOR:
           break;
         }
 
@@ -2453,6 +2512,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 7:
     case 8:
     case 9:
+    case 10:
       if (gimp_version)   *gimp_version   = 210;
       if (version_string) *version_string = "GIMP 2.10";
       break;
