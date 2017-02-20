@@ -1,16 +1,16 @@
 # Polish translation for gimp-libgimp.
-# Copyright © 2005-2016 the gimp authors.
+# Copyright © 2005-2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-06 18:55+0100\n"
-"PO-Revision-Date: 2016-11-06 18:57+0100\n"
+"POT-Creation-Date: 2017-02-20 01:17+0100\n"
+"PO-Revision-Date: 2017-02-20 01:18+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -168,9 +168,19 @@ msgstr "Dodaj kanał alfa"
 msgid "Confirm Save"
 msgstr "Potwierdzenie zapisu"
 
+#: ../libgimp/gimpexport.c:439 ../libgimp/gimpexport.c:521
+#: ../libgimp/gimpexport.c:1013 ../libgimpwidgets/gimpcolorbutton.c:540
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:152
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:162
+#: ../libgimpwidgets/gimpfileentry.c:442 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:496
+msgid "_Cancel"
+msgstr "_Anuluj"
+
 #: ../libgimp/gimpexport.c:440
-msgid "Confirm"
-msgstr "Potwierdź"
+msgid "C_onfirm"
+msgstr "P_otwierdź"
 
 #: ../libgimp/gimpexport.c:516
 msgid "Export File"
@@ -180,7 +190,7 @@ msgstr "Eksport pliku"
 msgid "_Ignore"
 msgstr "Z_ignoruj"
 
-#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1017
+#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1014
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
@@ -217,7 +227,7 @@ msgstr ""
 "Próba zapisania kanału (zapisanego zaznaczenia) jako %s.\n"
 "Widoczne warstwy nie zostaną zapisane."
 
-#: ../libgimp/gimpexport.c:1008
+#: ../libgimp/gimpexport.c:1007
 msgid "Export Image as "
 msgstr "Eksport obrazu jako "
 
@@ -229,36 +239,40 @@ msgstr "Wybór czcionki"
 msgid "Gradient Selection"
 msgstr "Wybór gradientu"
 
-#: ../libgimp/gimpimagemetadata.c:605
+#: ../libgimp/gimpimagemetadata.c:610
 msgid "Background"
 msgstr "Tło"
 
-#: ../libgimp/gimpimagemetadata.c:796
+#: ../libgimp/gimpimagemetadata.c:797
 #, c-format
 msgid "Rotate %s?"
 msgstr "Obrócić %s?"
 
-#: ../libgimp/gimpimagemetadata.c:802
+#: ../libgimp/gimpimagemetadata.c:803
 msgid "_Keep Original"
 msgstr "_Zachowaj oryginał"
 
-#: ../libgimp/gimpimagemetadata.c:844
+#: ../libgimp/gimpimagemetadata.c:804 ../libgimpwidgets/gimpicons.c:285
+msgid "_Rotate"
+msgstr "O_bróć"
+
+#: ../libgimp/gimpimagemetadata.c:845
 msgid "Original"
 msgstr "Oryginał"
 
-#: ../libgimp/gimpimagemetadata.c:860
+#: ../libgimp/gimpimagemetadata.c:861
 msgid "Rotated"
 msgstr "Obrócono"
 
-#: ../libgimp/gimpimagemetadata.c:878
+#: ../libgimp/gimpimagemetadata.c:879
 msgid "This image contains Exif orientation metadata."
 msgstr "Ten obraz zawiera metadane ułożenia Exif."
 
-#: ../libgimp/gimpimagemetadata.c:896
+#: ../libgimp/gimpimagemetadata.c:897
 msgid "Would you like to rotate the image?"
 msgstr "Obrócić obraz?"
 
-#: ../libgimp/gimpimagemetadata.c:908
+#: ../libgimp/gimpimagemetadata.c:909
 msgid "_Don't ask me again"
 msgstr "_Bez pytania ponownie"
 
@@ -1270,22 +1284,22 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Kadrowanie z proporcjami"
 
-#: ../libgimpbase/gimpmetadata.c:523
+#: ../libgimpbase/gimpmetadata.c:575
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Można wczytywać metadane tylko z plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:583
+#: ../libgimpbase/gimpmetadata.c:635
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Można zapisywać metadane tylko do plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:658
+#: ../libgimpbase/gimpmetadata.c:711
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Przetworzenie danych Exif się nie powiodło."
 
-#: ../libgimpbase/gimpmetadata.c:709
+#: ../libgimpbase/gimpmetadata.c:762
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Przetworzenie danych XMP się nie powiodło."
@@ -1593,17 +1607,17 @@ msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "oczekiwano wartości „yes” lub „no” tokenu logicznego %s, otrzymano „%s”"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:540
+#: ../libgimpconfig/gimpconfig-deserialize.c:568
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "nieprawidłowa wartość „%s” tokenu %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:555
+#: ../libgimpconfig/gimpconfig-deserialize.c:583
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "nieprawidłowa wartość „%ld” tokenu %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:624
+#: ../libgimpconfig/gimpconfig-deserialize.c:652
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "podczas przetwarzania tokenu „%s”: %s"
@@ -1723,6 +1737,17 @@ msgstr "_Czarny"
 msgid "_White"
 msgstr "_Biały"
 
+#: ../libgimpwidgets/gimpcolorbutton.c:539 ../libgimpwidgets/gimpicons.c:67
+msgid "_Reset"
+msgstr "_Przywróć"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:541
+#: ../libgimpwidgets/gimpfileentry.c:443 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:497
+msgid "_OK"
+msgstr "_OK"
+
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
 msgid "All files (*.*)"
 msgstr "Wszystkie pliki (*.*)"
@@ -1730,6 +1755,14 @@ msgstr "Wszystkie pliki (*.*)"
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil kolorów ICC (*.icc, *.icm)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:153
+msgid "_Save"
+msgstr "_Zapisz"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
+msgid "_Open"
+msgstr "_Otwórz"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
 #: ../libgimpwidgets/gimppatheditor.c:266
@@ -1780,6 +1813,10 @@ msgstr ""
 #: ../libgimpwidgets/gimpcolorselection.c:321
 msgid "HTML _notation:"
 msgstr "_Zapis języka HTML:"
+
+#: ../libgimpwidgets/gimpdialog.c:176
+msgid "_Help"
+msgstr "Pomo_c"
 
 #: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
@@ -1842,10 +1879,6 @@ msgstr "Wklej jako nowy"
 msgid "Paste Into"
 msgstr "Wklej do"
 
-#: ../libgimpwidgets/gimpicons.c:67
-msgid "_Reset"
-msgstr "_Przywróć"
-
 #: ../libgimpwidgets/gimpicons.c:68
 msgid "Visible"
 msgstr "Widoczny"
@@ -1882,10 +1915,6 @@ msgstr "_Zaznacz"
 #: ../libgimpwidgets/gimpicons.c:292
 msgid "_Transform"
 msgstr "_Przekształć"
-
-#: ../libgimpwidgets/gimpicons.c:285
-msgid "_Rotate"
-msgstr "O_bróć"
 
 #: ../libgimpwidgets/gimpicons.c:288
 msgid "_Shear"
