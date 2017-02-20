@@ -119,6 +119,18 @@ sub parse_entries {
 	    } else {
 		push @entries, [ $name ];
 	    }
+
+            # skip remaining lines of multiline values
+            do {
+                if (m/}/) {
+                    redo;
+                } elsif (m@,\s*(/\*.*?\*/\s*)*$@) {
+                    next;
+                }
+            } while (<$file>);
+
+            # failed to find end of value. bail
+            die "$0: $file_name:$.: Unterminated enum, while processing `$name'\n";
 	} elsif (m@^\s*\#@) {
 	    # ignore preprocessor directives
 	} else {
