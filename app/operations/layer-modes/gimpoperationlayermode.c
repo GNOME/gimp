@@ -1640,33 +1640,32 @@ blendfun_luminance (const float *dest,//*in,
                     float       *out,
                     int          samples)
 {
+  gfloat layer_Y[samples], *layer;
+  gfloat in_Y[samples], *in;
+
+  babl_process (babl_fish ("RGBA float", "Y float"), src, layer_Y, samples);
+  babl_process (babl_fish ("RGBA float", "Y float"), dest, in_Y, samples);
+
+  layer = &layer_Y[0];
+  in = &in_Y[0];
+
   while (samples--)
     {
       if (src[ALPHA] != 0.0f && dest[ALPHA] != 0.0f)
         {
-  gfloat tmp1[2 * samples], *layer_Y = tmp1;
-  gfloat tmp2[2 * samples], *in_Y = tmp2;
-  gint i;
-  babl_process (babl_fish ("RGBA float", "RGBA float"), dest, out, samples);
-  babl_process (babl_fish ("RGBA float", "YA float"), src, layer_Y, samples);
-  babl_process (babl_fish ("RGBA float", "YA float"), dest, in_Y, samples);
-
-  for (i = 0; i < samples; ++i)
-    {
-        gfloat ratio = layer_Y[2 * i] / MAX(in_Y[2 * i], 0.0000000000000000001);
-        out[4 * i] *= ratio;
-        out[4 * i + 1] *= ratio;
-        out[4 * i + 2] *= ratio;
-    }
-
-  babl_process (babl_fish ("RGBA float", "RGBA float"), out, out, samples);
+          gfloat ratio = layer[0] / MAX(in[0], 0.0000000000000000001);
+          int c;
+          for (c = 0; c < 3; c ++)
+            out[c] = dest[c] * ratio;
         }
 
-      out[ALPHA] = dest[ALPHA];
+      out[ALPHA] = src[ALPHA];
 
-      out  += 4;
+      out   += 4;
       dest  += 4;
-      src += 4;
+      src   += 4;
+      in    ++;
+      layer ++;
     }
 }
 
