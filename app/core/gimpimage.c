@@ -2407,7 +2407,6 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_LCH_CHROMA:
         case GIMP_LAYER_MODE_LCH_COLOR:
         case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-        case GIMP_LAYER_MODE_LUMINANCE:
           version = MAX (9, version);
           break;
 

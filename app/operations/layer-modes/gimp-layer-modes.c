@@ -471,18 +471,6 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_LAB
   },
 
-  { GIMP_LAYER_MODE_LUMINANCE,
-
-    .op_name              = "gimp:layer-mode",
-    .function             = gimp_operation_layer_mode_process_pixels,
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
-    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
-    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
-    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
-  },
-
   { GIMP_LAYER_MODE_NORMAL_LINEAR,
 
     .op_name              = "gimp:normal",
@@ -794,6 +782,18 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+  },
+
+  { GIMP_LAYER_MODE_LUMINANCE,
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
   { GIMP_LAYER_MODE_ERASE,
