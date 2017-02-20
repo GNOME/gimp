@@ -85,6 +85,7 @@ typedef enum
   GIMP_LAYER_MODE_LCH_CHROMA,            /*< desc="Chroma (LCH)"             >*/
   GIMP_LAYER_MODE_LCH_COLOR,             /*< desc="Color (LCH)"              >*/
   GIMP_LAYER_MODE_LCH_LIGHTNESS,         /*< desc="Lightness (LCH)"          >*/
+  GIMP_LAYER_MODE_LUMINANCE,             /*< desc="Luminance"                >*/
 
   /*  Since 2.10  */
   GIMP_LAYER_MODE_NORMAL_LINEAR,         /*< desc="Normal (linear)"          >*/

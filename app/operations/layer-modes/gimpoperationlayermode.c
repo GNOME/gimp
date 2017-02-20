@@ -1634,6 +1634,41 @@ blendfun_lch_lightness (const float *dest,
     }
 }
 
+static inline void
+blendfun_luminance (const float *dest,//*in,
+                    const float *src,//*layer,
+                    float       *out,
+                    int          samples)
+{
+  while (samples--)
+    {
+      if (src[ALPHA] != 0.0f && dest[ALPHA] != 0.0f)
+        {
+  gfloat tmp1[2 * samples], *layer_Y = tmp1;
+  gfloat tmp2[2 * samples], *in_Y = tmp2;
+  gint i;
+  babl_process (babl_fish ("RGBA float", "RGBA float"), dest, out, samples);
+  babl_process (babl_fish ("RGBA float", "YA float"), src, layer_Y, samples);
+  babl_process (babl_fish ("RGBA float", "YA float"), dest, in_Y, samples);
+
+  for (i = 0; i < samples; ++i)
+    {
+        gfloat ratio = layer_Y[2 * i] / MAX(in_Y[2 * i], 0.0000000000000000001);
+        out[4 * i] *= ratio;
+        out[4 * i + 1] *= ratio;
+        out[4 * i + 2] *= ratio;
+    }
+
+  babl_process (babl_fish ("RGBA float", "RGBA float"), out, out, samples);
+        }
+
+      out[ALPHA] = dest[ALPHA];
+
+      out  += 4;
+      dest  += 4;
+      src += 4;
+    }
+}
 
 static inline void
 blendfun_copy (const float *dest,
@@ -1858,6 +1893,7 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_LCH_COLOR:      return blendfun_lch_color;
     case GIMP_LAYER_MODE_LCH_HUE:        return blendfun_lch_hue;
     case GIMP_LAYER_MODE_LCH_LIGHTNESS:  return blendfun_lch_lightness;
+    case GIMP_LAYER_MODE_LUMINANCE:      return blendfun_luminance;
     case GIMP_LAYER_MODE_HARDLIGHT:      return blendfun_hardlight;
     case GIMP_LAYER_MODE_SOFTLIGHT:      return blendfun_softlight;
     case GIMP_LAYER_MODE_DIVIDE:         return blendfun_divide;

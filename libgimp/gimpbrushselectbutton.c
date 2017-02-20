@@ -233,7 +233,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
                                    g_param_spec_int ("brush-paint-mode",
                                                      "Brush paint mode",
                                                      "The paint mode of the currently selected brush",
-                                                     -1, GIMP_LAYER_MODE_LCH_LIGHTNESS,
+                                                     -1, GIMP_LAYER_MODE_LUMINANCE,
                                                      -1,
                                                      GIMP_PARAM_READWRITE));
 
