@@ -669,6 +669,16 @@ package Gimp::CodeGen::enums;
 		       GIMP_COLOR_RENDERING_INTENT_SATURATION => '2',
 		       GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC => '3' }
 	},
+    GimpLayerColorSpace =>
+	{ contig => 1,
+	  header => 'operations/operations-enums.h',
+	  symbols => [ qw(GIMP_LAYER_COLOR_SPACE_AUTO
+			  GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+			  GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL) ],
+	  mapping => { GIMP_LAYER_COLOR_SPACE_AUTO => '0',
+		       GIMP_LAYER_COLOR_SPACE_RGB_LINEAR => '1',
+		       GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL => '2' }
+	},
     GimpLayerCompositeMode =>
 	{ contig => 1,
 	  header => 'operations/operations-enums.h',

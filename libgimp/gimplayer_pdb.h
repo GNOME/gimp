@@ -98,6 +98,12 @@ gboolean               gimp_layer_set_opacity          (gint32                  
 GimpLayerMode          gimp_layer_get_mode             (gint32                  layer_ID);
 gboolean               gimp_layer_set_mode             (gint32                  layer_ID,
                                                         GimpLayerMode           mode);
+GimpLayerColorSpace    gimp_layer_get_blend_space      (gint32                  layer_ID);
+gboolean               gimp_layer_set_blend_space      (gint32                  layer_ID,
+                                                        GimpLayerColorSpace     blend_space);
+GimpLayerColorSpace    gimp_layer_get_composite_space  (gint32                  layer_ID);
+gboolean               gimp_layer_set_composite_space  (gint32                  layer_ID,
+                                                        GimpLayerColorSpace     composite_space);
 GimpLayerCompositeMode gimp_layer_get_composite_mode   (gint32                  layer_ID);
 gboolean               gimp_layer_set_composite_mode   (gint32                  layer_ID,
                                                         GimpLayerCompositeMode  composite_mode);

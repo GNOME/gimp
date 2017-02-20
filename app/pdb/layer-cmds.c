@@ -1164,6 +1164,112 @@ layer_set_mode_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+layer_get_blend_space_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpLayer *layer;
+  gint32 blend_space = 0;
+
+  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      blend_space = gimp_layer_get_blend_space (layer);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), blend_space);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+layer_set_blend_space_invoker (GimpProcedure         *procedure,
+                               Gimp                  *gimp,
+                               GimpContext           *context,
+                               GimpProgress          *progress,
+                               const GimpValueArray  *args,
+                               GError               **error)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 blend_space;
+
+  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
+  blend_space = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_layer_set_blend_space (layer, blend_space, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+layer_get_composite_space_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpLayer *layer;
+  gint32 composite_space = 0;
+
+  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      composite_space = gimp_layer_get_composite_space (layer);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), composite_space);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+layer_set_composite_space_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+  gint32 composite_space;
+
+  layer = gimp_value_get_layer (gimp_value_array_index (args, 0), gimp);
+  composite_space = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_layer_set_composite_space (layer, composite_space, TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 layer_get_composite_mode_invoker (GimpProcedure         *procedure,
                                   Gimp                  *gimp,
                                   GimpContext           *context,
@@ -2245,6 +2351,126 @@ register_layer_procs (GimpPDB *pdb)
                                                   "The new layer combination mode",
                                                   GIMP_TYPE_LAYER_MODE,
                                                   GIMP_LAYER_MODE_NORMAL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-get-blend-space
+   */
+  procedure = gimp_procedure_new (layer_get_blend_space_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-blend-space");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-blend-space",
+                                     "Get the blend space of the specified layer.",
+                                     "This procedure returns the specified layer's blend space.",
+                                     "Ell",
+                                     "Ell",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("blend-space",
+                                                      "blend space",
+                                                      "The layer blend space",
+                                                      GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                      GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-set-blend-space
+   */
+  procedure = gimp_procedure_new (layer_set_blend_space_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-blend-space");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-blend-space",
+                                     "Set the blend space of the specified layer.",
+                                     "This procedure sets the specified layer's blend space.",
+                                     "Ell",
+                                     "Ell",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("blend-space",
+                                                  "blend space",
+                                                  "The new layer blend space",
+                                                  GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                  GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-get-composite-space
+   */
+  procedure = gimp_procedure_new (layer_get_composite_space_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-get-composite-space");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-get-composite-space",
+                                     "Get the composite space of the specified layer.",
+                                     "This procedure returns the specified layer's composite space.",
+                                     "Ell",
+                                     "Ell",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("composite-space",
+                                                      "composite space",
+                                                      "The layer composite space",
+                                                      GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                      GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-set-composite-space
+   */
+  procedure = gimp_procedure_new (layer_set_composite_space_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-set-composite-space");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-set-composite-space",
+                                     "Set the composite space of the specified layer.",
+                                     "This procedure sets the specified layer's composite space.",
+                                     "Ell",
+                                     "Ell",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("composite-space",
+                                                  "composite space",
+                                                  "The new layer composite space",
+                                                  GIMP_TYPE_LAYER_COLOR_SPACE,
+                                                  GIMP_LAYER_COLOR_SPACE_AUTO,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

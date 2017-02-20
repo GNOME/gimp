@@ -1154,6 +1154,138 @@ gimp_layer_set_mode (gint32        layer_ID,
 }
 
 /**
+ * gimp_layer_get_blend_space:
+ * @layer_ID: The layer.
+ *
+ * Get the blend space of the specified layer.
+ *
+ * This procedure returns the specified layer's blend space.
+ *
+ * Returns: The layer blend space.
+ *
+ * Since: 2.10
+ **/
+GimpLayerColorSpace
+gimp_layer_get_blend_space (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpLayerColorSpace blend_space = 0;
+
+  return_vals = gimp_run_procedure ("gimp-layer-get-blend-space",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    blend_space = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return blend_space;
+}
+
+/**
+ * gimp_layer_set_blend_space:
+ * @layer_ID: The layer.
+ * @blend_space: The new layer blend space.
+ *
+ * Set the blend space of the specified layer.
+ *
+ * This procedure sets the specified layer's blend space.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_layer_set_blend_space (gint32              layer_ID,
+                            GimpLayerColorSpace blend_space)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-layer-set-blend-space",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_INT32, blend_space,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_layer_get_composite_space:
+ * @layer_ID: The layer.
+ *
+ * Get the composite space of the specified layer.
+ *
+ * This procedure returns the specified layer's composite space.
+ *
+ * Returns: The layer composite space.
+ *
+ * Since: 2.10
+ **/
+GimpLayerColorSpace
+gimp_layer_get_composite_space (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpLayerColorSpace composite_space = 0;
+
+  return_vals = gimp_run_procedure ("gimp-layer-get-composite-space",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    composite_space = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return composite_space;
+}
+
+/**
+ * gimp_layer_set_composite_space:
+ * @layer_ID: The layer.
+ * @composite_space: The new layer composite space.
+ *
+ * Set the composite space of the specified layer.
+ *
+ * This procedure sets the specified layer's composite space.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_layer_set_composite_space (gint32              layer_ID,
+                                GimpLayerColorSpace composite_space)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-layer-set-composite-space",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_INT32, composite_space,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_layer_get_composite_mode:
  * @layer_ID: The layer.
  *

@@ -1210,6 +1210,100 @@ CODE
     );
 }
 
+sub layer_get_blend_space {
+    $blurb = 'Get the blend space of the specified layer.';
+    $help  = "This procedure returns the specified layer's blend space.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'blend_space', type => 'enum GimpLayerColorSpace',
+	  desc => 'The layer blend space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  blend_space = gimp_layer_get_blend_space (layer);
+}
+CODE
+    );
+}
+
+sub layer_set_blend_space {
+    $blurb = 'Set the blend space of the specified layer.';
+    $help  = "This procedure sets the specified layer's blend space.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'blend_space', type => 'enum GimpLayerColorSpace',
+	  desc => 'The new layer blend space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_layer_set_blend_space (layer, blend_space, TRUE);
+}
+CODE
+    );
+}
+
+sub layer_get_composite_space {
+    $blurb = 'Get the composite space of the specified layer.';
+    $help  = "This procedure returns the specified layer's composite space.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' }
+    );
+
+    @outargs = (
+	{ name => 'composite_space', type => 'enum GimpLayerColorSpace',
+	  desc => 'The layer composite space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  composite_space = gimp_layer_get_composite_space (layer);
+}
+CODE
+    );
+}
+
+sub layer_set_composite_space {
+    $blurb = 'Set the composite space of the specified layer.';
+    $help  = "This procedure sets the specified layer's composite space.";
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'composite_space', type => 'enum GimpLayerColorSpace',
+	  desc => 'The new layer composite space' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_layer_set_composite_space (layer, composite_space, TRUE);
+}
+CODE
+    );
+}
+
 sub layer_get_composite_mode {
     $blurb = 'Get the composite mode of the specified layer.';
     $help  = "This procedure returns the specified layer's composite mode.";
@@ -1295,6 +1389,8 @@ CODE
             layer_get_edit_mask layer_set_edit_mask
             layer_get_opacity layer_set_opacity
             layer_get_mode layer_set_mode
+            layer_get_blend_space layer_set_blend_space
+            layer_get_composite_space layer_set_composite_space
             layer_get_composite_mode layer_set_composite_mode);
 
 %exports = (app => [@procs], lib => [@procs]);

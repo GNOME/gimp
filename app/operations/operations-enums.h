@@ -25,12 +25,12 @@
 
 GType gimp_layer_color_space_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< pdb-skip >*/
+typedef enum
 {
   GIMP_LAYER_COLOR_SPACE_AUTO,           /*< desc="Auto"             >*/
   GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,     /*< desc="RGB (linear)"     >*/
   GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL, /*< desc="RGB (perceptual)" >*/
-  GIMP_LAYER_COLOR_SPACE_LAB,            /*< desc="LAB"              >*/
+  GIMP_LAYER_COLOR_SPACE_LAB,            /*< desc="LAB", pdb-skip    >*/
 } GimpLayerColorSpace;
 
 

@@ -590,13 +590,16 @@ EXPORTS
 	gimp_item_transform_shear
 	gimp_layer_add_alpha
 	gimp_layer_add_mask
+	gimp_layer_color_space_get_type
 	gimp_layer_composite_mode_get_type
 	gimp_layer_copy
 	gimp_layer_create_mask
 	gimp_layer_flatten
 	gimp_layer_from_mask
 	gimp_layer_get_apply_mask
+	gimp_layer_get_blend_space
 	gimp_layer_get_composite_mode
+	gimp_layer_get_composite_space
 	gimp_layer_get_edit_mask
 	gimp_layer_get_lock_alpha
 	gimp_layer_get_mask
@@ -618,7 +621,9 @@ EXPORTS
 	gimp_layer_scale
 	gimp_layer_scale_full
 	gimp_layer_set_apply_mask
+	gimp_layer_set_blend_space
 	gimp_layer_set_composite_mode
+	gimp_layer_set_composite_space
 	gimp_layer_set_edit_mask
 	gimp_layer_set_lock_alpha
 	gimp_layer_set_mode

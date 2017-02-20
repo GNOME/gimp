@@ -63,6 +63,18 @@ typedef enum
 } GimpHistogramChannel;
 
 
+#define GIMP_TYPE_LAYER_COLOR_SPACE (gimp_layer_color_space_get_type ())
+
+GType gimp_layer_color_space_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_LAYER_COLOR_SPACE_AUTO,
+  GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+  GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
+} GimpLayerColorSpace;
+
+
 #define GIMP_TYPE_LAYER_COMPOSITE_MODE (gimp_layer_composite_mode_get_type ())
 
 GType gimp_layer_composite_mode_get_type (void) G_GNUC_CONST;
