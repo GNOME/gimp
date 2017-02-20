@@ -78,7 +78,7 @@ struct _PNMInfo
 {
   gint          xres, yres;     /* The size of the image */
   gboolean      float_format;   /* Whether it is a floating point format */
-  gint          maxval;         /* For ascii image files, the max value
+  gint          maxval;         /* For integer format image files, the max value
                                  * which we need to normalize to */
   gfloat        scale_factor;   /* PFM files have a scale factor */
   gint          np;             /* Number of image planes (0 for pbm) */
@@ -560,6 +560,7 @@ load_image (GFile   *file,
   PNMInfo         *pnminfo;
   PNMScanner      *volatile scan;
   int             ctr;
+  GimpPrecision   precision;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
@@ -646,6 +647,7 @@ load_image (GFile   *file,
                        pnminfo->jmpbuf, _("Bogus scale factor."));
       CHECK_FOR_ERROR (!isnormal (pnminfo->scale_factor),
                        pnminfo->jmpbuf, _("Unsupported scale factor."));
+      precision = GIMP_PRECISION_FLOAT_LINEAR;
     }
   else if (pnminfo->np != 0)         /* pbm's don't have a maxval field */
     {
@@ -656,6 +658,18 @@ load_image (GFile   *file,
       pnminfo->maxval = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
       CHECK_FOR_ERROR (((pnminfo->maxval<=0) || (pnminfo->maxval>65535)),
                        pnminfo->jmpbuf, _("Unsupported maximum value."));
+      if (pnminfo->maxval < 256)
+        {
+          precision = GIMP_PRECISION_U8_GAMMA;
+        }
+      else
+        {
+          precision = GIMP_PRECISION_U16_GAMMA;
+        }
+    }
+  else
+    {
+      precision = GIMP_PRECISION_U8_GAMMA;
     }
 
   /* Create a new image of the proper size and associate the filename
@@ -663,8 +677,7 @@ load_image (GFile   *file,
   image_ID = gimp_image_new_with_precision
     (pnminfo->xres, pnminfo->yres,
      (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
-     (pnminfo->float_format ?
-      GIMP_PRECISION_FLOAT_LINEAR : GIMP_PRECISION_U8_GAMMA));
+     precision);
 
   gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
@@ -694,7 +707,9 @@ pnm_load_ascii (PNMScanner *scan,
                 PNMInfo    *info,
                 GeglBuffer *buffer)
 {
+  gint      bpc;
   guchar   *data, *d;
+  gushort  *s;
   gint      x, y, i, b;
   gint      start, end, scanlines;
   gint      np;
@@ -702,8 +717,14 @@ pnm_load_ascii (PNMScanner *scan,
   gboolean  aborted = FALSE;
 
   np = (info->np) ? (info->np) : 1;
-  /* No overflow as long as gimp_tile_height() < 2730 = 2^(31 - 18) / 3 */
-  data = g_new (guchar, gimp_tile_height () * info->xres * np);
+
+  if (info->maxval > 255)
+    bpc = 2;
+  else
+    bpc = 1;
+
+  /* No overflow as long as gimp_tile_height() < 1365 = 2^(31 - 18) / 6 */
+  data = g_new (guchar, gimp_tile_height () * info->xres * np * bpc);
 
   /* Buffer reads to increase performance */
   pnmscanner_createbuffer (scan, 4096);
@@ -717,6 +738,7 @@ pnm_load_ascii (PNMScanner *scan,
       scanlines = end - start;
 
       d = data;
+      s = (gushort *)d;
 
       for (i = 0; i < scanlines; i++)
         for (x = 0; x < info->xres; x++)
@@ -745,27 +767,35 @@ pnm_load_ascii (PNMScanner *scan,
                 else
                   pnmscanner_getsmalltoken (scan, buf);
 
-                switch (info->maxval)
+                if (info->maxval == 1)
                   {
-                  case 255:
-                    d[b] = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
-                    break;
-
-                  case 1:
                     if (info->np)
                       d[b] = (*buf == '0') ? 0x00 : 0xff;
                     else
                       d[b] = (*buf == '0') ? 0xff : 0x00; /* invert for PBM */
-                    break;
-
-                  default:
+                  }
+                else if (bpc > 1)
+                  {
+                    s[b] = (65535.0 * (((gdouble) (g_ascii_isdigit (*buf) ?
+                                                   atoi (buf) : 0))
+                                       / (gdouble) (info->maxval)));
+                  }
+                else
+                  {
                     d[b] = (255.0 * (((gdouble) (g_ascii_isdigit (*buf) ?
                                                  atoi (buf) : 0))
                                      / (gdouble) (info->maxval)));
                   }
               }
 
-            d += np;
+            if (bpc > 1)
+              {
+                s += np;
+              }
+            else
+              {
+                d += np;
+              }
           }
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
@@ -786,7 +816,8 @@ pnm_load_raw (PNMScanner *scan,
 {
   GInputStream *input;
   gint          bpc;
-  guchar       *data, *bdata, *d, *b;
+  guchar       *data, *d;
+  gushort      *s;
   gint          x, y, i;
   gint          start, end, scanlines;
 
@@ -795,11 +826,8 @@ pnm_load_raw (PNMScanner *scan,
   else
     bpc = 1;
 
+  /* No overflow as long as gimp_tile_height() < 1365 = 2^(31 - 18) / 6 */
   data = g_new (guchar, gimp_tile_height () * info->xres * info->np * bpc);
-
-  bdata = NULL;
-  if (bpc > 1)
-    bdata = g_new (guchar, gimp_tile_height () * info->xres * info->np);
 
   input = pnmscanner_input (scan);
 
@@ -810,7 +838,7 @@ pnm_load_raw (PNMScanner *scan,
       end = MIN (end, info->yres);
       scanlines = end - start;
       d = data;
-      b = bdata;
+      s = (gushort *)data;
 
       for (i = 0; i < scanlines; i++)
         {
@@ -838,10 +866,10 @@ pnm_load_raw (PNMScanner *scan,
                   v = *d++ << 8;
                   v += *d++;
 
-                  b[x] = MIN (v, info->maxval); /* guard against overflow */
-                  b[x] = 255.0 * (gdouble) v / (gdouble) info->maxval;
+                  s[x] = MIN (v, info->maxval); /* guard against overflow */
+                  s[x] = 65535.0 * (gdouble) v / (gdouble) info->maxval;
                 }
-              b += info->xres * info->np;
+              s += info->xres * info->np;
             }
           else
             {
@@ -858,24 +886,14 @@ pnm_load_raw (PNMScanner *scan,
             }
         }
 
-      if (bpc > 1)
-        {
-          gegl_buffer_set (buffer,
-                           GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
-                           NULL, bdata, GEGL_AUTO_ROWSTRIDE);
-        }
-      else
-        {
-          gegl_buffer_set (buffer,
-                           GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
-                           NULL, data, GEGL_AUTO_ROWSTRIDE);
-        }
+      gegl_buffer_set (buffer,
+                       GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
+                       NULL, data, GEGL_AUTO_ROWSTRIDE);
 
       gimp_progress_update ((double) y / (double) info->yres);
     }
 
   g_free (data);
-  g_free (bdata);
 
   gimp_progress_update (1.0);
 }
