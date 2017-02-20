@@ -1060,6 +1060,10 @@ static const GimpLayerMode layer_mode_groups[][2] =
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
 
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_LUMINANCE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
+  },
+
   { [GIMP_LAYER_MODE_GROUP_DEFAULT   ] = GIMP_LAYER_MODE_ERASE,
     [GIMP_LAYER_MODE_GROUP_LEGACY    ] = -1
   },
