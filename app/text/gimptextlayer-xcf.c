@@ -198,12 +198,18 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   drawable->private->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   GIMP_DRAWABLE (layer)->private->buffer = NULL;
 
-  gimp_layer_set_opacity    (GIMP_LAYER (text_layer),
-                             gimp_layer_get_opacity (layer), FALSE);
-  gimp_layer_set_mode       (GIMP_LAYER (text_layer),
-                             gimp_layer_get_mode (layer), FALSE);
-  gimp_layer_set_lock_alpha (GIMP_LAYER (text_layer),
-                             gimp_layer_get_lock_alpha (layer), FALSE);
+  gimp_layer_set_opacity         (GIMP_LAYER (text_layer),
+                                  gimp_layer_get_opacity (layer), FALSE);
+  gimp_layer_set_mode            (GIMP_LAYER (text_layer),
+                                  gimp_layer_get_mode (layer), FALSE);
+  gimp_layer_set_blend_space     (GIMP_LAYER (text_layer),
+                                  gimp_layer_get_blend_space (layer), FALSE);
+  gimp_layer_set_composite_space (GIMP_LAYER (text_layer),
+                                  gimp_layer_get_composite_space (layer), FALSE);
+  gimp_layer_set_composite_mode  (GIMP_LAYER (text_layer),
+                                  gimp_layer_get_composite_mode (layer), FALSE);
+  gimp_layer_set_lock_alpha      (GIMP_LAYER (text_layer),
+                                  gimp_layer_get_lock_alpha (layer), FALSE);
 
   gimp_text_layer_set_text (text_layer, text);
 
