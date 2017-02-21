@@ -902,7 +902,7 @@ msgstr "Tipus de _lletra"
 #: ../app/actions/context-actions.c:67
 msgctxt "context-action"
 msgid "_Shape"
-msgstr "_Ombra"
+msgstr "_Forma"
 
 #: ../app/actions/context-actions.c:69
 msgctxt "context-action"
@@ -5170,7 +5170,7 @@ msgstr "Camí"
 
 #: ../app/actions/vectors-commands.c:165
 msgid "New Path"
-msgstr "Nou camí"
+msgstr "Camí nou"
 
 #: ../app/actions/vectors-commands.c:168
 msgid "New Path Options"
@@ -7218,7 +7218,7 @@ msgstr "Mostra la màscara de la capa"
 #: ../app/core/core-enums.c:900
 msgctxt "undo-type"
 msgid "New channel"
-msgstr "Nou canal"
+msgstr "Canal nou"
 
 #: ../app/core/core-enums.c:901
 msgctxt "undo-type"
@@ -7233,7 +7233,7 @@ msgstr "Color del canal"
 #: ../app/core/core-enums.c:903
 msgctxt "undo-type"
 msgid "New path"
-msgstr "Nou camí"
+msgstr "Camí nou"
 
 #: ../app/core/core-enums.c:904
 msgctxt "undo-type"
