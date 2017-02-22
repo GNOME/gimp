@@ -659,18 +659,31 @@ gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
 
   if (filter->color_managed)
     {
-      const Babl       *filter_format;
-      GimpColorProfile *filter_profile;
+      const Babl       *input_format;
+      const Babl       *output_format;
+      GimpColorProfile *input_profile;
+      GimpColorProfile *output_profile;
       GimpColorProfile *drawable_profile;
 
-      filter_format = gimp_gegl_node_get_format (filter->operation, "output");
+      input_format  = gimp_gegl_node_get_format (filter->operation, "input");
+      output_format = gimp_gegl_node_get_format (filter->operation, "output");
 
-      g_printerr ("filter format: %s\n", babl_get_name (filter_format));
+      g_printerr ("format before filter: %s\n",
+                  babl_get_name (gimp_gegl_node_get_format (filter->cast_before,
+                                                            "output")));
+      g_printerr ("filter input format: %s\n", babl_get_name (input_format));
+      g_printerr ("filter output format: %s\n", babl_get_name (output_format));
+      g_printerr ("format after filter: %s\n",
+                  babl_get_name (gimp_gegl_node_get_format (filter->cast_after,
+                                                            "input")));
 
-      filter_profile   = gimp_babl_format_get_color_profile (filter_format);
+      input_profile    = gimp_babl_format_get_color_profile (input_format);
+      output_profile   = gimp_babl_format_get_color_profile (output_format);
       drawable_profile = gimp_color_managed_get_color_profile (managed);
 
-      if (! gimp_color_transform_can_gegl_copy (filter_profile,
+      if (! gimp_color_transform_can_gegl_copy (drawable_profile,
+                                                input_profile) ||
+          ! gimp_color_transform_can_gegl_copy (output_profile,
                                                 drawable_profile))
         {
           g_printerr ("using gimp:profile-transform\n");
@@ -678,12 +691,12 @@ gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
           gegl_node_set (filter->transform_before,
                          "operation",    "gimp:profile-transform",
                          "src-profile",  drawable_profile,
-                         "dest-profile", filter_profile,
+                         "dest-profile", input_profile,
                          NULL);
 
           gegl_node_set (filter->transform_after,
                          "operation",    "gimp:profile-transform",
-                         "src-profile",  filter_profile,
+                         "src-profile",  output_profile,
                          "dest-profile", drawable_profile,
                          NULL);
 
