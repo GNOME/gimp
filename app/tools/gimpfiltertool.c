@@ -133,7 +133,7 @@ static void      gimp_filter_tool_dialog         (GimpFilterTool      *filter_to
 static void      gimp_filter_tool_dialog_unmap   (GtkWidget           *dialog,
                                                   GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_tool);
-static void      gimp_filter_tool_create_map     (GimpFilterTool      *filter_tool);
+static void      gimp_filter_tool_create_filter  (GimpFilterTool      *filter_tool);
 
 static void      gimp_filter_tool_flush          (GimpDrawableFilter  *filter,
                                                   GimpFilterTool      *filter_tool);
@@ -488,7 +488,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   filter_tool->drawable = drawable;
   gimp_tool_gui_show (filter_tool->gui);
 
-  gimp_filter_tool_create_map (filter_tool);
+  gimp_filter_tool_create_filter (filter_tool);
 
   return TRUE;
 }
@@ -978,7 +978,7 @@ gimp_filter_tool_reset (GimpFilterTool *filter_tool)
 }
 
 static void
-gimp_filter_tool_create_map (GimpFilterTool *filter_tool)
+gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 {
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
 
@@ -995,7 +995,12 @@ gimp_filter_tool_create_map (GimpFilterTool *filter_tool)
                                                   filter_tool->operation,
                                                   filter_tool->icon_name);
 
-  gimp_drawable_filter_set_region (filter_tool->filter, options->region);
+  gimp_drawable_filter_set_region        (filter_tool->filter,
+                                          options->region);
+  gimp_drawable_filter_set_color_managed (filter_tool->filter,
+                                          options->color_managed);
+  gimp_drawable_filter_set_gamma_hack    (filter_tool->filter,
+                                          options->gamma_hack);
 
   g_signal_connect (filter_tool->filter, "flush",
                     G_CALLBACK (gimp_filter_tool_flush),
@@ -1353,7 +1358,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                              G_OBJECT (filter_tool), 0);
 
   if (GIMP_TOOL (filter_tool)->drawable)
-    gimp_filter_tool_create_map (filter_tool);
+    gimp_filter_tool_create_filter (filter_tool);
 }
 
 void
