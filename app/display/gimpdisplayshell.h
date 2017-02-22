@@ -47,7 +47,7 @@ typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
 
 struct _GimpDisplayShell
 {
-  GtkBox             parent_instance;
+  GtkEventBox        parent_instance;
 
   GimpDisplay       *display;
 
@@ -216,7 +216,7 @@ struct _GimpDisplayShell
 
 struct _GimpDisplayShellClass
 {
-  GtkBoxClass  parent_class;
+  GtkEventBoxClass  parent_class;
 
   void (* scaled)    (GimpDisplayShell *shell);
   void (* scrolled)  (GimpDisplayShell *shell);

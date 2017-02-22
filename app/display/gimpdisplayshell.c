@@ -175,7 +175,7 @@ static void   gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
-                         GTK_TYPE_BOX,
+                         GTK_TYPE_EVENT_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_shell_progress_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
@@ -315,9 +315,6 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
-  gtk_orientable_set_orientation (GTK_ORIENTABLE (shell),
-                                  GTK_ORIENTATION_VERTICAL);
-
   shell->options            = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
   shell->no_image_options   = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
@@ -386,6 +383,7 @@ gimp_display_shell_constructed (GObject *object)
   GimpDisplayConfig     *config;
   GimpImage             *image;
   GimpColorDisplayStack *filter;
+  GtkWidget             *main_vbox;
   GtkWidget             *upper_hbox;
   GtkWidget             *right_vbox;
   GtkWidget             *lower_hbox;
@@ -460,34 +458,47 @@ gimp_display_shell_constructed (GObject *object)
    *
    *  shell
    *     |
-   *     +-- upper_hbox
-   *     |      |
-   *     |      +-- inner_table
-   *     |      |      |
-   *     |      |      +-- origin
-   *     |      |      +-- hruler
-   *     |      |      +-- vruler
-   *     |      |      +-- canvas
-   *     |      |
-   *     |      +-- right_vbox
-   *     |             |
-   *     |             +-- zoom_on_resize_button
-   *     |             +-- vscrollbar
-   *     |
-   *     +-- lower_hbox
-   *     |      |
-   *     |      +-- quick_mask
-   *     |      +-- hscrollbar
-   *     |      +-- navbutton
-   *     |
-   *     +-- statusbar
+   *     +-- main_vbox
+   *            |
+   *            +-- upper_hbox
+   *            |      |
+   *            |      +-- inner_table
+   *            |      |      |
+   *            |      |      +-- origin
+   *            |      |      +-- hruler
+   *            |      |      +-- vruler
+   *            |      |      +-- canvas
+   *            |      |
+   *            |      +-- right_vbox
+   *            |             |
+   *            |             +-- zoom_on_resize_button
+   *            |             +-- vscrollbar
+   *            |
+   *            +-- lower_hbox
+   *            |      |
+   *            |      +-- quick_mask
+   *            |      +-- hscrollbar
+   *            |      +-- navbutton
+   *            |
+   *            +-- statusbard
+   *
+   *  Note that we separate "shell" and "main_vbox", so that we can make
+   *  "shell" a GtkEventBox, giving it its own window.  This isolates our
+   *  events from those of our ancestors, avoiding some potential slowdowns,
+   *  and making things generally smoother.  See bug #778966.
    */
 
   /*  first, set up the container hierarchy  *********************************/
 
+  /*  the root vbox  */
+
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (shell), main_vbox);
+  gtk_widget_show (main_vbox);
+
   /*  a hbox for the inner_table and the vertical scrollbar  */
   upper_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  gtk_box_pack_start (GTK_BOX (shell), upper_hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), upper_hbox, TRUE, TRUE, 0);
   gtk_widget_show (upper_hbox);
 
   /*  the table containing origin, rulers and the canvas  */
@@ -506,7 +517,7 @@ gimp_display_shell_constructed (GObject *object)
    *  the navigation button
    */
   lower_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
-  gtk_box_pack_start (GTK_BOX (shell), lower_hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), lower_hbox, FALSE, FALSE, 0);
   gtk_widget_show (lower_hbox);
 
   /*  create the scrollbars  *************************************************/
@@ -714,7 +725,7 @@ gimp_display_shell_constructed (GObject *object)
   gimp_statusbar_set_shell (GIMP_STATUSBAR (shell->statusbar), shell);
   gimp_help_set_help_data (shell->statusbar, NULL,
                            GIMP_HELP_IMAGE_WINDOW_STATUS_BAR);
-  gtk_box_pack_end (GTK_BOX (shell), shell->statusbar, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_vbox), shell->statusbar, FALSE, FALSE, 0);
 
   /*  pack all the widgets  **************************************************/
 
