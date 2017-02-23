@@ -1091,7 +1091,7 @@ animation_xsheet_move_tracks (AnimationXSheet *xsheet,
       gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
                             frame);
       gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        frame, j * 9 + 1, j * 9 + 10, 1, 2,
+                        frame, j * 9 + 2, j * 9 + 11, 1, 2,
                         GTK_FILL, GTK_FILL, 0, 0);
       g_object_unref (frame);
     }
@@ -1107,7 +1107,7 @@ animation_xsheet_move_tracks (AnimationXSheet *xsheet,
       gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
                             frame);
       gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
-                        frame, n_tracks * 9 + 1, n_tracks * 9 + 6, i + 2, i + 3,
+                        frame, n_tracks * 9 + 2, n_tracks * 9 + 7, i + 2, i + 3,
                         GTK_FILL, GTK_FILL, 0, 0);
       g_object_unref (frame);
     }
@@ -1118,7 +1118,7 @@ animation_xsheet_move_tracks (AnimationXSheet *xsheet,
                         xsheet->priv->comments_title);
   gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
                     xsheet->priv->comments_title,
-                    n_tracks * 9 + 1, n_tracks * 9 + 6, 1, 2,
+                    n_tracks * 9 + 2, n_tracks * 9 + 7, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   g_object_unref (xsheet->priv->comments_title);
 
@@ -1759,7 +1759,7 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
       /* Finalize */
       gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
                         xsheet->priv->suite_box,
-                        level * 9 + 1, level * 9 + 10,
+                        level * 9 + 2, level * 9 + 11,
                         pos + 2, pos + 3,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_hide (button);
