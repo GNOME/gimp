@@ -480,7 +480,7 @@ gimp_display_shell_constructed (GObject *object)
    *            |      +-- hscrollbar
    *            |      +-- navbutton
    *            |
-   *            +-- statusbard
+   *            +-- statusbar
    *
    *  Note that we separate "shell" and "main_vbox", so that we can make
    *  "shell" a GtkEventBox, giving it its own window.  This isolates our
