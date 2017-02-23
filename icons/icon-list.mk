@@ -201,6 +201,7 @@ scalable_images = \
 	scalable/gimp-prefs-image-windows.svg		\
 	scalable/gimp-prefs-image-windows-appearance.svg	\
 	scalable/gimp-prefs-image-windows-snapping.svg		\
+	scalable/gimp-prefs-import-export.svg		\
 	scalable/gimp-prefs-input-devices.svg		\
 	scalable/gimp-prefs-interface.svg		\
 	scalable/gimp-prefs-new-image.svg		\
@@ -395,6 +396,7 @@ vector24_images = \
 	24/gimp-prefs-image-windows.svg			\
 	24/gimp-prefs-image-windows-appearance.svg	\
 	24/gimp-prefs-image-windows-snapping.svg	\
+	24/gimp-prefs-import-export.svg		\
 	24/gimp-prefs-input-devices.svg			\
 	24/gimp-prefs-interface.svg			\
 	24/gimp-prefs-new-image.svg			\
@@ -650,6 +652,7 @@ icons16_images = \
 	16/gimp-prefs-folders-tools.png				\
 	16/gimp-prefs-icon-theme.png				\
 	16/gimp-prefs-image-windows.png				\
+	16/gimp-prefs-import-export.png				\
 	16/gimp-prefs-interface.png					\
 	16/gimp-prefs-theme.png						\
 	16/gimp-prefs-toolbox.png					\
@@ -800,6 +803,7 @@ icons22_images = \
 	22/gimp-prefs-image-windows.png		\
 	22/gimp-prefs-image-windows-appearance.png	\
 	22/gimp-prefs-image-windows-snapping.png	\
+	22/gimp-prefs-import-export.png				\
 	22/gimp-prefs-input-devices.png		\
 	22/gimp-prefs-interface.png		\
 	22/gimp-prefs-new-image.png		\
@@ -1001,6 +1005,7 @@ icons48_images = \
 	48/gimp-prefs-image-windows.png		\
 	48/gimp-prefs-image-windows-appearance.png	\
 	48/gimp-prefs-image-windows-snapping.png	\
+	48/gimp-prefs-import-export.png				\
 	48/gimp-prefs-input-devices.png		\
 	48/gimp-prefs-interface.png		\
 	48/gimp-prefs-new-image.png		\
