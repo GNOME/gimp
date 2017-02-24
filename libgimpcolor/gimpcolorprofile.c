@@ -1472,7 +1472,7 @@ gimp_color_profile_new_d50_gray_lab_trc (void)
  * R'G'B'A, Y, YA, Y', Y'A and the cairo-RGB24 and cairo-ARGB32 formats.
  *
  * Return value: the #Babl format to be used instead of @format, or %NULL
- *               is the passed @format is not supported at all.
+ *               if the passed @format is not supported at all.
  *
  * Since: 2.10
  **/
@@ -1545,6 +1545,22 @@ gimp_color_profile_get_format (const Babl *format,
 #endif
     {
       cmyk = TRUE;
+    }
+  else if (model == babl_model ("CIE Lab") ||
+           model == babl_model ("CIE Lab alpha"))
+    {
+      if (has_alpha)
+        {
+          *lcms_format = TYPE_RGBA_FLT;
+
+          return babl_format ("RGBA float");
+        }
+      else
+        {
+          *lcms_format = TYPE_RGB_FLT;
+
+          return babl_format ("RGB float");
+        }
     }
   else if (babl_format_is_palette (format))
     {
