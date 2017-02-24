@@ -36,7 +36,9 @@ enum
 {
   PROP_0,
   PROP_SRC_PROFILE,
+  PROP_SRC_FORMAT,
   PROP_DEST_PROFILE,
+  PROP_DEST_FORMAT,
   PROP_RENDERING_INTENT,
   PROP_BLACK_POINT_COMPENSATION
 };
@@ -98,6 +100,13 @@ gimp_operation_profile_transform_class_init (GimpOperationProfileTransformClass 
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_SRC_FORMAT,
+                                   g_param_spec_pointer ("src-format",
+                                                         "Source Format",
+                                                         "Source Format",
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_DEST_PROFILE,
                                    g_param_spec_object ("dest-profile",
                                                         "Destination Profile",
@@ -105,6 +114,13 @@ gimp_operation_profile_transform_class_init (GimpOperationProfileTransformClass 
                                                         GIMP_TYPE_COLOR_PROFILE,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_DEST_FORMAT,
+                                   g_param_spec_pointer ("dest-format",
+                                                         "Destination Format",
+                                                         "Destination Format",
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_RENDERING_INTENT,
                                    g_param_spec_enum ("rendering-intent",
@@ -169,8 +185,16 @@ gimp_operation_profile_transform_get_property (GObject    *object,
       g_value_set_object (value, self->src_profile);
       break;
 
+    case PROP_SRC_FORMAT:
+      g_value_set_pointer (value, (gpointer) self->src_format);
+      break;
+
     case PROP_DEST_PROFILE:
       g_value_set_object (value, self->dest_profile);
+      break;
+
+    case PROP_DEST_FORMAT:
+      g_value_set_pointer (value, (gpointer) self->dest_format);
       break;
 
     case PROP_RENDERING_INTENT:
@@ -203,10 +227,18 @@ gimp_operation_profile_transform_set_property (GObject      *object,
       self->src_profile = g_value_dup_object (value);
       break;
 
+    case PROP_SRC_FORMAT:
+      self->src_format = g_value_get_pointer (value);
+      break;
+
     case PROP_DEST_PROFILE:
       if (self->dest_profile)
         g_object_unref (self->dest_profile);
       self->dest_profile = g_value_dup_object (value);
+      break;
+
+    case PROP_DEST_FORMAT:
+      self->dest_format = g_value_get_pointer (value);
       break;
 
     case PROP_RENDERING_INTENT:
@@ -227,12 +259,6 @@ static void
 gimp_operation_profile_transform_prepare (GeglOperation *operation)
 {
   GimpOperationProfileTransform *self = GIMP_OPERATION_PROFILE_TRANSFORM (operation);
-  const Babl                    *format;
-
-  format = gegl_operation_get_source_format (operation, "input");
-
-  if (! format)
-    format = babl_format ("RGBA float");
 
   if (self->transform)
     {
@@ -240,8 +266,11 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
       self->transform = NULL;
     }
 
-  self->src_format  = format;
-  self->dest_format = format;
+  if (! self->src_format)
+    self->src_format = babl_format ("RGBA float");
+
+  if (! self->dest_format)
+    self->dest_format = babl_format ("RGBA float");
 
   if (self->src_profile && self->dest_profile)
     {
