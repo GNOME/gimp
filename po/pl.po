@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-20 01:14+0100\n"
-"PO-Revision-Date: 2017-02-20 01:15+0100\n"
+"POT-Creation-Date: 2017-02-26 17:39+0100\n"
+"PO-Revision-Date: 2017-02-26 17:40+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1157,22 +1157,22 @@ msgctxt "context-action"
 msgid "Exchange foreground and background colors"
 msgstr "Zamienia kolor pierwszoplanowy z kolorem tła"
 
-#: ../app/actions/context-commands.c:431
+#: ../app/actions/context-commands.c:411
 #, c-format
 msgid "Paint Mode: %s"
 msgstr "Tryb rysowania: %s"
 
-#: ../app/actions/context-commands.c:557
+#: ../app/actions/context-commands.c:537
 #, c-format
 msgid "Brush Shape: %s"
 msgstr "Kształt pędzla: %s"
 
-#: ../app/actions/context-commands.c:617
+#: ../app/actions/context-commands.c:597
 #, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "Promień pędzla: %2.2f"
 
-#: ../app/actions/context-commands.c:725
+#: ../app/actions/context-commands.c:705
 #, c-format
 msgid "Brush Angle: %2.2f"
 msgstr "Kąt pędzla: %2.2f"
@@ -4522,7 +4522,7 @@ msgstr "Odbijanie"
 msgid "Rotating"
 msgstr "Obracanie"
 
-#: ../app/actions/image-commands.c:846 ../app/actions/layers-commands.c:805
+#: ../app/actions/image-commands.c:846 ../app/actions/layers-commands.c:779
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie można wykadrować, ponieważ bieżące zaznaczenie jest puste."
 
@@ -4572,7 +4572,7 @@ msgid "Scale Image"
 msgstr "Skalowanie obrazu"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1449 ../app/actions/layers-commands.c:1587
+#: ../app/actions/image-commands.c:1449 ../app/actions/layers-commands.c:1569
 #: ../app/dialogs/preferences-dialog.c:1382
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -5316,49 +5316,49 @@ msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Do _nowej warstwy"
 
-#: ../app/actions/layers-commands.c:262 ../app/actions/layers-commands.c:1436
+#: ../app/actions/layers-commands.c:236 ../app/actions/layers-commands.c:1418
 msgid "Layer Attributes"
 msgstr "Atrybuty warstwy"
 
-#: ../app/actions/layers-commands.c:265
+#: ../app/actions/layers-commands.c:239
 msgid "Edit Layer Attributes"
 msgstr "Modyfikacja atrybutów warstwy"
 
-#: ../app/actions/layers-commands.c:331 ../app/actions/layers-commands.c:406
+#: ../app/actions/layers-commands.c:305 ../app/actions/layers-commands.c:380
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:846
 msgid "New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:334
+#: ../app/actions/layers-commands.c:308
 msgid "Create a New Layer"
 msgstr "Nowa warstwa"
 
-#: ../app/actions/layers-commands.c:446 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:420 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Widoczny"
 
-#: ../app/actions/layers-commands.c:711
+#: ../app/actions/layers-commands.c:685
 msgid "Set Layer Boundary Size"
 msgstr "Ustawienie wymiarów granic warstwy"
 
-#: ../app/actions/layers-commands.c:773
+#: ../app/actions/layers-commands.c:747
 msgid "Scale Layer"
 msgstr "Skaluj warstwę"
 
-#: ../app/actions/layers-commands.c:815
+#: ../app/actions/layers-commands.c:789
 msgid "Crop Layer to Selection"
 msgstr "Kadruj warstwę według zaznaczenia"
 
-#: ../app/actions/layers-commands.c:845
+#: ../app/actions/layers-commands.c:819
 msgid "Crop Layer to Content"
 msgstr "Kadruj warstwę do zawartości"
 
-#: ../app/actions/layers-commands.c:858
+#: ../app/actions/layers-commands.c:832
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nie można wykadrować, ponieważ aktywna warstwa nie ma zawartości."
 
-#: ../app/actions/layers-commands.c:865
+#: ../app/actions/layers-commands.c:839
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Nie można wykadrować, ponieważ aktywna warstwa jest już wykadrowana do "
@@ -10105,7 +10105,7 @@ msgstr "Błąd podczas wczytywania „%s”: "
 msgid "Error loading '%s'"
 msgstr "Błąd podczas wczytywania „%s”"
 
-#: ../app/core/gimpdatafactory.c:935 ../app/xcf/xcf.c:426
+#: ../app/core/gimpdatafactory.c:935 ../app/xcf/xcf.c:427
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Nie można otworzyć „%s” do odczytania: "
@@ -10396,17 +10396,17 @@ msgstr " (zastąpiony)"
 msgid " (imported)"
 msgstr " (zaimportowany)"
 
-#: ../app/core/gimpimage.c:2501
+#: ../app/core/gimpimage.c:2561
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:2553
+#: ../app/core/gimpimage.c:2613
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:3433
+#: ../app/core/gimpimage.c:3493
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -10414,47 +10414,47 @@ msgstr ""
 "Sprawdzenie poprawności danych pasożytniczych „gimp-comment” się nie "
 "powiodło: komentarz zawiera nieprawidłowe UTF-8"
 
-#: ../app/core/gimpimage.c:3485
+#: ../app/core/gimpimage.c:3545
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:3526
+#: ../app/core/gimpimage.c:3586
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:4235
+#: ../app/core/gimpimage.c:4295
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:4285 ../app/core/gimpimage.c:4305
+#: ../app/core/gimpimage.c:4345 ../app/core/gimpimage.c:4365
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:4299
+#: ../app/core/gimpimage.c:4359
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Usunięcie oderwanego zaznaczenia"
 
-#: ../app/core/gimpimage.c:4464
+#: ../app/core/gimpimage.c:4524
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:4502 ../app/core/gimpimage.c:4515
+#: ../app/core/gimpimage.c:4562 ../app/core/gimpimage.c:4575
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:4569
+#: ../app/core/gimpimage.c:4629
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:4600
+#: ../app/core/gimpimage.c:4660
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
@@ -11610,12 +11610,12 @@ msgid "Channel _name:"
 msgstr "_Nazwa kanału:"
 
 #: ../app/dialogs/channel-options-dialog.c:128
-#: ../app/dialogs/layer-options-dialog.c:166
+#: ../app/dialogs/layer-options-dialog.c:168
 msgid "Lock _pixels"
 msgstr "_Blokuje piksele"
 
 #: ../app/dialogs/channel-options-dialog.c:129
-#: ../app/dialogs/layer-options-dialog.c:167
+#: ../app/dialogs/layer-options-dialog.c:169
 msgid "Lock position and _size"
 msgstr "Blokuje położenie i _rozmiar"
 
@@ -11921,12 +11921,12 @@ msgstr "Zanikanie „%s”"
 msgid "_Fade"
 msgstr "_Zanikanie"
 
-#: ../app/dialogs/fade-dialog.c:158 ../app/dialogs/layer-options-dialog.c:186
+#: ../app/dialogs/fade-dialog.c:158 ../app/dialogs/layer-options-dialog.c:188
 #: ../app/widgets/gimpdeviceinfoeditor.c:346
 msgid "_Mode:"
 msgstr "_Tryb:"
 
-#: ../app/dialogs/fade-dialog.c:164 ../app/dialogs/layer-options-dialog.c:234
+#: ../app/dialogs/fade-dialog.c:164 ../app/dialogs/layer-options-dialog.c:239
 msgid "_Opacity:"
 msgstr "K_rycie:"
 
@@ -12213,59 +12213,59 @@ msgstr "_Odwrócenie maski"
 msgid "Please select a channel first"
 msgstr "Proszę najpierw zaznaczyć kanał"
 
-#: ../app/dialogs/layer-options-dialog.c:164
+#: ../app/dialogs/layer-options-dialog.c:166
 msgid "Layer _name:"
 msgstr "_Nazwa warstwy:"
 
-#: ../app/dialogs/layer-options-dialog.c:201
+#: ../app/dialogs/layer-options-dialog.c:203
 msgid "Blend space:"
 msgstr "Przestrzeń gradientu:"
 
-#: ../app/dialogs/layer-options-dialog.c:211
+#: ../app/dialogs/layer-options-dialog.c:213
 msgid "Composite space:"
 msgstr "Przestrzeń mieszania:"
 
-#: ../app/dialogs/layer-options-dialog.c:223
+#: ../app/dialogs/layer-options-dialog.c:225
 msgid "Composite mode:"
 msgstr "Tryb mieszania:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:247
+#: ../app/dialogs/layer-options-dialog.c:252
 #: ../app/tools/gimpmeasuretool.c:1154
 msgid "Width:"
 msgstr "Szerokość:"
 
-#: ../app/dialogs/layer-options-dialog.c:253
+#: ../app/dialogs/layer-options-dialog.c:258
 #: ../app/tools/gimpmeasuretool.c:1182
 msgid "Height:"
 msgstr "Wysokość:"
 
 #. The offset labels
-#: ../app/dialogs/layer-options-dialog.c:311
+#: ../app/dialogs/layer-options-dialog.c:316
 #: ../app/tools/gimpalignoptions.c:380
 msgid "Offset X:"
 msgstr "Przesunięcie na osi X:"
 
-#: ../app/dialogs/layer-options-dialog.c:317
+#: ../app/dialogs/layer-options-dialog.c:322
 #: ../app/tools/gimpalignoptions.c:393
 msgid "Offset Y:"
 msgstr "Przesunięcie na osi Y:"
 
-#: ../app/dialogs/layer-options-dialog.c:391 ../app/dialogs/resize-dialog.c:369
+#: ../app/dialogs/layer-options-dialog.c:396 ../app/dialogs/resize-dialog.c:369
 #: ../app/widgets/gimptemplateeditor.c:450
 msgid "_Fill with:"
 msgstr "Wypeł_nienie:"
 
-#: ../app/dialogs/layer-options-dialog.c:406
+#: ../app/dialogs/layer-options-dialog.c:411
 #: ../app/widgets/gimpcolordisplayeditor.c:277
 msgid "Active Filters"
 msgstr "Aktywne filtry"
 
-#: ../app/dialogs/layer-options-dialog.c:433
+#: ../app/dialogs/layer-options-dialog.c:438
 msgid "Lock _alpha"
 msgstr "Blokuje _alfę"
 
-#: ../app/dialogs/layer-options-dialog.c:445
+#: ../app/dialogs/layer-options-dialog.c:450
 msgid "Set name from _text"
 msgstr "Ustawienie nazwy na podstawie _tekstu"
 
@@ -14176,23 +14176,23 @@ msgstr "W"
 msgid "_Sample Merged"
 msgstr "Próbkowanie w_szystkich warstw"
 
-#: ../app/display/gimpdisplayshell.c:541
+#: ../app/display/gimpdisplayshell.c:552
 msgid "Access the image menu"
 msgstr "Dostęp do menu obrazu"
 
-#: ../app/display/gimpdisplayshell.c:656
+#: ../app/display/gimpdisplayshell.c:667
 msgid "Zoom image when window size changes"
 msgstr "Zmiana powiększenia przy zmianie wymiarów okna"
 
-#: ../app/display/gimpdisplayshell.c:685
+#: ../app/display/gimpdisplayshell.c:696
 msgid "Toggle Quick Mask"
 msgstr "Przełącz szybką maskę"
 
-#: ../app/display/gimpdisplayshell.c:708
+#: ../app/display/gimpdisplayshell.c:719
 msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
-#: ../app/display/gimpdisplayshell.c:778 ../app/display/gimpdisplayshell.c:1477
+#: ../app/display/gimpdisplayshell.c:789 ../app/display/gimpdisplayshell.c:1488
 #: ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
@@ -14621,307 +14621,312 @@ msgctxt "layer-composite-mode"
 msgid "Destination atop"
 msgstr "Cel na"
 
-#: ../app/operations/operations-enums.c:148
-msgctxt "layer-mode"
-msgid "Normal"
-msgstr "Zwykłe"
-
 #: ../app/operations/operations-enums.c:149
+msgctxt "layer-mode"
+msgid "Normal (legacy)"
+msgstr "Zwykłe (poprzednia wersja)"
+
+#: ../app/operations/operations-enums.c:150
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "Przenikanie"
 
-#: ../app/operations/operations-enums.c:150
+#: ../app/operations/operations-enums.c:151
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
 msgstr "Z tyłu (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:151
+#: ../app/operations/operations-enums.c:152
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
 msgstr "Mnożenie (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:152
+#: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
 msgstr "Przesiewanie (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:153
+#: ../app/operations/operations-enums.c:154
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
 msgstr "Poprzednie, uszkodzone pokrywanie"
 
-#: ../app/operations/operations-enums.c:154
+#: ../app/operations/operations-enums.c:155
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
 msgstr "Różnica (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:155
+#: ../app/operations/operations-enums.c:156
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
 msgstr "Suma (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:156
+#: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
 msgstr "Odejmowanie (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:157
+#: ../app/operations/operations-enums.c:158
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
 msgstr "Tylko ciemniejsze (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:158
+#: ../app/operations/operations-enums.c:159
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
 msgstr "Tylko jaśniejsze (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:159
+#: ../app/operations/operations-enums.c:160
 msgctxt "layer-mode"
 msgid "Hue (HSV) (legacy)"
 msgstr "Barwa (HSV, poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:160
+#: ../app/operations/operations-enums.c:161
 msgctxt "layer-mode"
 msgid "Saturation (HSV) (legacy)"
 msgstr "Nasycenie (HSV, poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:161
+#: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
 msgid "Color (HSV) (legacy)"
 msgstr "Kolor (HSV, poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:162
+#: ../app/operations/operations-enums.c:163
 msgctxt "layer-mode"
 msgid "Value (HSV) (legacy)"
 msgstr "Wartość (HSV, poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:163
+#: ../app/operations/operations-enums.c:164
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
 msgstr "Dzielenie (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:164
+#: ../app/operations/operations-enums.c:165
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
 msgstr "Rozjaśnianie (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:165
+#: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
 msgstr "Przyciemnianie (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:166
+#: ../app/operations/operations-enums.c:167
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
 msgstr "Twarde światło (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:167
+#: ../app/operations/operations-enums.c:168
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
 msgstr "Miękkie światło (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:168
+#: ../app/operations/operations-enums.c:169
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
 msgstr "Wydobycie ziarna (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:169
+#: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
 msgstr "Połączenie ziarna (poprzednia wersja)"
 
-#: ../app/operations/operations-enums.c:170
+#: ../app/operations/operations-enums.c:171
 msgctxt "layer-mode"
 msgid "Color erase"
 msgstr "Usuwanie koloru"
 
-#: ../app/operations/operations-enums.c:171
+#: ../app/operations/operations-enums.c:172
 msgctxt "layer-mode"
 msgid "Overlay"
 msgstr "Pokrywanie"
 
-#: ../app/operations/operations-enums.c:172
+#: ../app/operations/operations-enums.c:173
 msgctxt "layer-mode"
 msgid "Hue (LCH)"
 msgstr "Barwa (LCH)"
 
-#: ../app/operations/operations-enums.c:173
+#: ../app/operations/operations-enums.c:174
 msgctxt "layer-mode"
 msgid "Chroma (LCH)"
 msgstr "Nasycenie (LCH)"
 
-#: ../app/operations/operations-enums.c:174
+#: ../app/operations/operations-enums.c:175
 msgctxt "layer-mode"
 msgid "Color (LCH)"
 msgstr "Kolor (LCH)"
 
-#: ../app/operations/operations-enums.c:175
+#: ../app/operations/operations-enums.c:176
 msgctxt "layer-mode"
 msgid "Lightness (LCH)"
 msgstr "Jasność (LCH)"
 
-#: ../app/operations/operations-enums.c:176
-msgctxt "layer-mode"
-msgid "Normal (linear)"
-msgstr "Zwykłe (liniowe)"
-
 #: ../app/operations/operations-enums.c:177
+msgctxt "layer-mode"
+msgid "Normal"
+msgstr "Zwykłe"
+
+#: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
 msgid "Behind"
 msgstr "Z tyłu"
 
-#: ../app/operations/operations-enums.c:178
+#: ../app/operations/operations-enums.c:179
 msgctxt "layer-mode"
 msgid "Multiply"
 msgstr "Mnożenie"
 
-#: ../app/operations/operations-enums.c:179
+#: ../app/operations/operations-enums.c:180
 msgctxt "layer-mode"
 msgid "Screen"
 msgstr "Przesiewanie"
 
-#: ../app/operations/operations-enums.c:180
+#: ../app/operations/operations-enums.c:181
 msgctxt "layer-mode"
 msgid "Difference"
 msgstr "Różnica"
 
-#: ../app/operations/operations-enums.c:181
+#: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
 msgid "Addition"
 msgstr "Suma"
 
-#: ../app/operations/operations-enums.c:182
+#: ../app/operations/operations-enums.c:183
 msgctxt "layer-mode"
 msgid "Subtract"
 msgstr "Odejmowanie"
 
-#: ../app/operations/operations-enums.c:183
+#: ../app/operations/operations-enums.c:184
 msgctxt "layer-mode"
 msgid "Darken only"
 msgstr "Tylko ciemniejsze"
 
-#: ../app/operations/operations-enums.c:184
+#: ../app/operations/operations-enums.c:185
 msgctxt "layer-mode"
 msgid "Lighten only"
 msgstr "Tylko jaśniejsze"
 
-#: ../app/operations/operations-enums.c:185
+#: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
 msgid "Hue (HSV)"
 msgstr "Barwa (HSV)"
 
-#: ../app/operations/operations-enums.c:186
+#: ../app/operations/operations-enums.c:187
 msgctxt "layer-mode"
 msgid "Saturation (HSV)"
 msgstr "Nasycenie (HSV)"
 
-#: ../app/operations/operations-enums.c:187
+#: ../app/operations/operations-enums.c:188
 msgctxt "layer-mode"
 msgid "Color (HSV)"
 msgstr "Kolor (HSV)"
 
-#: ../app/operations/operations-enums.c:188
+#: ../app/operations/operations-enums.c:189
 msgctxt "layer-mode"
 msgid "Value (HSV)"
 msgstr "Wartość (HSV)"
 
-#: ../app/operations/operations-enums.c:189
+#: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
 msgid "Divide"
 msgstr "Dzielenie"
 
-#: ../app/operations/operations-enums.c:190
+#: ../app/operations/operations-enums.c:191
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "Rozjaśnianie"
 
-#: ../app/operations/operations-enums.c:191
+#: ../app/operations/operations-enums.c:192
 msgctxt "layer-mode"
 msgid "Burn"
 msgstr "Przyciemnianie"
 
-#: ../app/operations/operations-enums.c:192
+#: ../app/operations/operations-enums.c:193
 msgctxt "layer-mode"
 msgid "Hard light"
 msgstr "Twarde światło"
 
-#: ../app/operations/operations-enums.c:193
+#: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
 msgid "Soft light"
 msgstr "Miękkie światło"
 
-#: ../app/operations/operations-enums.c:194
+#: ../app/operations/operations-enums.c:195
 msgctxt "layer-mode"
 msgid "Grain extract"
 msgstr "Wydobycie ziarna"
 
-#: ../app/operations/operations-enums.c:195
+#: ../app/operations/operations-enums.c:196
 msgctxt "layer-mode"
 msgid "Grain merge"
 msgstr "Połączenie ziarna"
 
-#: ../app/operations/operations-enums.c:196
+#: ../app/operations/operations-enums.c:197
 msgctxt "layer-mode"
 msgid "Vivid light"
 msgstr "Żywe światło"
 
-#: ../app/operations/operations-enums.c:197
+#: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
 msgid "Pin light"
 msgstr "Światło punktowe"
 
-#: ../app/operations/operations-enums.c:198
+#: ../app/operations/operations-enums.c:199
 msgctxt "layer-mode"
 msgid "Linear light"
 msgstr "Światło liniowe"
 
-#: ../app/operations/operations-enums.c:199
+#: ../app/operations/operations-enums.c:200
 msgctxt "layer-mode"
 msgid "Hard mix"
 msgstr "Twarda mieszanka"
 
-#: ../app/operations/operations-enums.c:200
+#: ../app/operations/operations-enums.c:201
 msgctxt "layer-mode"
 msgid "Exclusion"
 msgstr "Wykluczenie"
 
-#: ../app/operations/operations-enums.c:201
+#: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
 msgid "Linear burn"
 msgstr "Liniowe przyciemnianie"
 
-#: ../app/operations/operations-enums.c:202
+#: ../app/operations/operations-enums.c:203
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
 msgstr "Tylko ciemniejsze lumy/luminancji"
 
-#: ../app/operations/operations-enums.c:203
+#: ../app/operations/operations-enums.c:204
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
 msgstr "Tylko jaśniejsze lumy/luminancji"
 
-#: ../app/operations/operations-enums.c:204
+#: ../app/operations/operations-enums.c:205
+msgctxt "layer-mode"
+msgid "Luminance"
+msgstr "Luminancja"
+
+#: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
 msgid "Erase"
 msgstr "Wycieranie"
 
-#: ../app/operations/operations-enums.c:205
+#: ../app/operations/operations-enums.c:207
 msgctxt "layer-mode"
 msgid "Replace"
 msgstr "Zastąpienie"
 
-#: ../app/operations/operations-enums.c:206
+#: ../app/operations/operations-enums.c:208
 msgctxt "layer-mode"
 msgid "Anti erase"
 msgstr "Cofanie wycierania"
 
-#: ../app/operations/operations-enums.c:234
+#: ../app/operations/operations-enums.c:236
 msgctxt "layer-mode-group"
 msgid "Default"
 msgstr "Domyślne"
 
-#: ../app/operations/operations-enums.c:235
+#: ../app/operations/operations-enums.c:237
 msgctxt "layer-mode-group"
 msgid "Legacy"
 msgstr "Poprzednia wersja"
@@ -21529,40 +21534,40 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Nieokreślone"
 
-#: ../app/xcf/xcf.c:110 ../app/xcf/xcf.c:181
+#: ../app/xcf/xcf.c:111 ../app/xcf/xcf.c:182
 msgid "GIMP XCF image"
 msgstr "Obraz XCF programu GIMP"
 
-#: ../app/xcf/xcf.c:268 ../app/xcf/xcf.c:351
+#: ../app/xcf/xcf.c:269 ../app/xcf/xcf.c:352
 msgid "Memory Stream"
 msgstr "Strumień pamięci"
 
-#: ../app/xcf/xcf.c:278
+#: ../app/xcf/xcf.c:279
 #, c-format
 msgid "Opening '%s'"
 msgstr "Otwieranie „%s”"
 
-#: ../app/xcf/xcf.c:316
+#: ../app/xcf/xcf.c:317
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Błąd XCF: nieobsługiwana wersja pliku XCF %d"
 
-#: ../app/xcf/xcf.c:370
+#: ../app/xcf/xcf.c:371
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
 
-#: ../app/xcf/xcf.c:377
+#: ../app/xcf/xcf.c:378
 #, c-format
 msgid "Closing '%s'"
 msgstr "Zamykanie „%s”"
 
-#: ../app/xcf/xcf.c:384
+#: ../app/xcf/xcf.c:385
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/xcf/xcf.c:478
+#: ../app/xcf/xcf.c:479
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Błąd podczas tworzenia „%s”: "
