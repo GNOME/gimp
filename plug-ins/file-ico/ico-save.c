@@ -647,7 +647,8 @@ ico_image_get_reduced_buf (guint32   layer,
       if (bpp <= 8)
         {
           gimp_image_convert_indexed (tmp_image,
-                                      GIMP_FS_DITHER, GIMP_MAKE_PALETTE,
+                                      GIMP_CONVERT_DITHER_FS,
+                                      GIMP_MAKE_PALETTE,
                                       1 << bpp, TRUE, FALSE, "dummy");
 
           cmap = gimp_image_get_colormap (tmp_image, num_colors);
@@ -685,7 +686,8 @@ ico_image_get_reduced_buf (guint32   layer,
                 gimp_image_convert_rgb (tmp_image);
 
               gimp_image_convert_indexed (tmp_image,
-                                          GIMP_FS_DITHER, GIMP_MAKE_PALETTE,
+                                          GIMP_CONVERT_DITHER_FS,
+                                          GIMP_MAKE_PALETTE,
                                           (1<<bpp) - 1, TRUE, FALSE, "dummy");
               g_free (cmap);
               cmap = gimp_image_get_colormap (tmp_image, num_colors);

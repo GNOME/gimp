@@ -807,12 +807,13 @@ package Gimp::CodeGen::enums;
     GimpConvertDitherType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_NO_DITHER GIMP_FS_DITHER
-			  GIMP_FSLOWBLEED_DITHER GIMP_FIXED_DITHER) ],
-	  mapping => { GIMP_NO_DITHER => '0',
-		       GIMP_FS_DITHER => '1',
-		       GIMP_FSLOWBLEED_DITHER => '2',
-		       GIMP_FIXED_DITHER => '3' }
+	  symbols => [ qw(GIMP_CONVERT_DITHER_NONE GIMP_CONVERT_DITHER_FS
+			  GIMP_CONVERT_DITHER_FS_LOWBLEED
+			  GIMP_CONVERT_DITHER_FIXED) ],
+	  mapping => { GIMP_CONVERT_DITHER_NONE => '0',
+		       GIMP_CONVERT_DITHER_FS => '1',
+		       GIMP_CONVERT_DITHER_FS_LOWBLEED => '2',
+		       GIMP_CONVERT_DITHER_FIXED => '3' }
 	},
     GimpHistogramChannel =>
 	{ contig => 1,

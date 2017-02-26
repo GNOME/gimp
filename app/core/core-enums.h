@@ -71,11 +71,11 @@ GType gimp_convert_dither_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_NO_DITHER,         /*< desc="None"                                     >*/
-  GIMP_FS_DITHER,         /*< desc="Floyd-Steinberg (normal)"                 >*/
-  GIMP_FSLOWBLEED_DITHER, /*< desc="Floyd-Steinberg (reduced color bleeding)" >*/
-  GIMP_FIXED_DITHER,      /*< desc="Positioned"                               >*/
-  GIMP_NODESTRUCT_DITHER  /*< pdb-skip, skip >*/
+  GIMP_CONVERT_DITHER_NONE,        /*< desc="None"                                     >*/
+  GIMP_CONVERT_DITHER_FS,          /*< desc="Floyd-Steinberg (normal)"                 >*/
+  GIMP_CONVERT_DITHER_FS_LOWBLEED, /*< desc="Floyd-Steinberg (reduced color bleeding)" >*/
+  GIMP_CONVERT_DITHER_FIXED,       /*< desc="Positioned"                               >*/
+  GIMP_CONVERT_DITHER_NODESTRUCT   /*< pdb-skip, skip >*/
 } GimpConvertDitherType;
 
 
@@ -157,8 +157,8 @@ GType gimp_matting_engine_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
- GIMP_MATTING_ENGINE_GLOBAL,  /*< desc="Matting Global" >*/
- GIMP_MATTING_ENGINE_LEVIN,   /*< desc="Matting Levin" >*/
+  GIMP_MATTING_ENGINE_GLOBAL,  /*< desc="Matting Global" >*/
+  GIMP_MATTING_ENGINE_LEVIN,   /*< desc="Matting Levin" >*/
 } GimpMattingEngine;
 
 

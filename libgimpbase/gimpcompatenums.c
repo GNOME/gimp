@@ -183,6 +183,40 @@ gimp_clone_type_compat_get_type (void)
 }
 
 GType
+gimp_convert_dither_type_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_NO_DITHER, "GIMP_NO_DITHER", "no-dither" },
+    { GIMP_FS_DITHER, "GIMP_FS_DITHER", "fs-dither" },
+    { GIMP_FSLOWBLEED_DITHER, "GIMP_FSLOWBLEED_DITHER", "fslowbleed-dither" },
+    { GIMP_FIXED_DITHER, "GIMP_FIXED_DITHER", "fixed-dither" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_NO_DITHER, "GIMP_NO_DITHER", NULL },
+    { GIMP_FS_DITHER, "GIMP_FS_DITHER", NULL },
+    { GIMP_FSLOWBLEED_DITHER, "GIMP_FSLOWBLEED_DITHER", NULL },
+    { GIMP_FIXED_DITHER, "GIMP_FIXED_DITHER", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpConvertDitherTypeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "convert-dither-type-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_convolve_type_compat_get_type (void)
 {
   static const GEnumValue values[] =

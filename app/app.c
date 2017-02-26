@@ -80,7 +80,8 @@ static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
                                               GMainLoop         **loop);
 
-GType gimp_layer_mode_effects_get_type (void); /* compat cruft */
+GType gimp_convert_dither_type_compat_get_type (void); /* compat cruft */
+GType gimp_layer_mode_effects_get_type         (void); /* compat cruft */
 
 
 /*  local variables  */
@@ -118,6 +119,8 @@ app_libs_init (GOptionContext *context,
   /*  keep compat enum code in sync with tools/pdbgen/enumcode.pl  */
   quark = g_quark_from_static_string ("gimp-compat-enum");
 
+  g_type_set_qdata (GIMP_TYPE_CONVERT_DITHER_TYPE, quark,
+		    (gpointer) gimp_convert_dither_type_compat_get_type ());
   g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
 		    (gpointer) gimp_layer_mode_effects_get_type ());
 }

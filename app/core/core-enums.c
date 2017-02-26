@@ -77,19 +77,19 @@ gimp_convert_dither_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_NO_DITHER, "GIMP_NO_DITHER", "no-dither" },
-    { GIMP_FS_DITHER, "GIMP_FS_DITHER", "fs-dither" },
-    { GIMP_FSLOWBLEED_DITHER, "GIMP_FSLOWBLEED_DITHER", "fslowbleed-dither" },
-    { GIMP_FIXED_DITHER, "GIMP_FIXED_DITHER", "fixed-dither" },
+    { GIMP_CONVERT_DITHER_NONE, "GIMP_CONVERT_DITHER_NONE", "none" },
+    { GIMP_CONVERT_DITHER_FS, "GIMP_CONVERT_DITHER_FS", "fs" },
+    { GIMP_CONVERT_DITHER_FS_LOWBLEED, "GIMP_CONVERT_DITHER_FS_LOWBLEED", "fs-lowbleed" },
+    { GIMP_CONVERT_DITHER_FIXED, "GIMP_CONVERT_DITHER_FIXED", "fixed" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_NO_DITHER, NC_("convert-dither-type", "None"), NULL },
-    { GIMP_FS_DITHER, NC_("convert-dither-type", "Floyd-Steinberg (normal)"), NULL },
-    { GIMP_FSLOWBLEED_DITHER, NC_("convert-dither-type", "Floyd-Steinberg (reduced color bleeding)"), NULL },
-    { GIMP_FIXED_DITHER, NC_("convert-dither-type", "Positioned"), NULL },
+    { GIMP_CONVERT_DITHER_NONE, NC_("convert-dither-type", "None"), NULL },
+    { GIMP_CONVERT_DITHER_FS, NC_("convert-dither-type", "Floyd-Steinberg (normal)"), NULL },
+    { GIMP_CONVERT_DITHER_FS_LOWBLEED, NC_("convert-dither-type", "Floyd-Steinberg (reduced color bleeding)"), NULL },
+    { GIMP_CONVERT_DITHER_FIXED, NC_("convert-dither-type", "Positioned"), NULL },
     { 0, NULL, NULL }
   };
 

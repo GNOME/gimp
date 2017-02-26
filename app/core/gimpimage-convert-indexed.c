@@ -832,7 +832,7 @@ gimp_image_convert_indexed (GimpImage               *image,
       max_colors   == 256       &&
       palette_type == GIMP_MAKE_PALETTE)
     {
-      dither_type = GIMP_NO_DITHER;
+      dither_type = GIMP_CONVERT_DITHER_NONE;
     }
 
   quantobj = initialize_median_cut (old_type, max_colors, dither_type,
@@ -902,7 +902,7 @@ gimp_image_convert_indexed (GimpImage               *image,
 
       quantobj->delete_func (quantobj);
       quantobj = initialize_median_cut (old_type, max_colors,
-                                        GIMP_NODESTRUCT_DITHER,
+                                        GIMP_CONVERT_DITHER_NODESTRUCT,
                                         palette_type,
                                         custom_palette,
                                         dither_alpha,
@@ -4369,24 +4369,24 @@ initialize_median_cut (GimpImageBaseType       type,
         {
           switch (dither_type)
             {
-            case GIMP_NODESTRUCT_DITHER:
+            case GIMP_CONVERT_DITHER_NODESTRUCT:
             default:
               g_warning("Uh-oh, bad dither type, W1");
-            case GIMP_NO_DITHER:
+            case GIMP_CONVERT_DITHER_NONE:
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_no_dither_rgb;
               break;
-            case GIMP_FS_DITHER:
+            case GIMP_CONVERT_DITHER_FS:
               quantobj->error_freedom = 0;
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
               break;
-            case GIMP_FSLOWBLEED_DITHER:
+            case GIMP_CONVERT_DITHER_FS_LOWBLEED:
               quantobj->error_freedom = 1;
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
               break;
-            case GIMP_FIXED_DITHER:
+            case GIMP_CONVERT_DITHER_FIXED:
               quantobj->second_pass_init = median_cut_pass2_rgb_init;
               quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
               break;
@@ -4396,24 +4396,24 @@ initialize_median_cut (GimpImageBaseType       type,
         {
           switch (dither_type)
             {
-            case GIMP_NODESTRUCT_DITHER:
+            case GIMP_CONVERT_DITHER_NODESTRUCT:
             default:
               g_warning("Uh-oh, bad dither type, W2");
-            case GIMP_NO_DITHER:
+            case GIMP_CONVERT_DITHER_NONE:
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_no_dither_gray;
               break;
-            case GIMP_FS_DITHER:
+            case GIMP_CONVERT_DITHER_FS:
               quantobj->error_freedom = 0;
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_fs_dither_gray;
               break;
-            case GIMP_FSLOWBLEED_DITHER:
+            case GIMP_CONVERT_DITHER_FS_LOWBLEED:
               quantobj->error_freedom = 1;
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_fs_dither_gray;
               break;
-            case GIMP_FIXED_DITHER:
+            case GIMP_CONVERT_DITHER_FIXED:
               quantobj->second_pass_init = median_cut_pass2_gray_init;
               quantobj->second_pass = median_cut_pass2_fixed_dither_gray;
               break;
@@ -4442,25 +4442,25 @@ initialize_median_cut (GimpImageBaseType       type,
 
       switch (dither_type)
         {
-        case GIMP_NO_DITHER:
+        case GIMP_CONVERT_DITHER_NONE:
           quantobj->second_pass_init = median_cut_pass2_rgb_init;
           quantobj->second_pass = median_cut_pass2_no_dither_rgb;
           break;
-        case GIMP_FS_DITHER:
+        case GIMP_CONVERT_DITHER_FS:
           quantobj->error_freedom = 0;
           quantobj->second_pass_init = median_cut_pass2_rgb_init;
           quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
           break;
-        case GIMP_FSLOWBLEED_DITHER:
+        case GIMP_CONVERT_DITHER_FS_LOWBLEED:
           quantobj->error_freedom = 1;
           quantobj->second_pass_init = median_cut_pass2_rgb_init;
           quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
           break;
-        case GIMP_NODESTRUCT_DITHER:
+        case GIMP_CONVERT_DITHER_NODESTRUCT:
           quantobj->second_pass_init = NULL;
           quantobj->second_pass = median_cut_pass2_nodestruct_dither_rgb;
           break;
-        case GIMP_FIXED_DITHER:
+        case GIMP_CONVERT_DITHER_FIXED:
           quantobj->second_pass_init = median_cut_pass2_rgb_init;
           quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
           break;

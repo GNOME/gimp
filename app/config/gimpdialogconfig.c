@@ -248,7 +248,7 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          "Default dither type for indexed conversion",
                          IMAGE_CONVERT_INDEXED_DITHER_TYPE_BLURB,
                          GIMP_TYPE_CONVERT_DITHER_TYPE,
-                         GIMP_NO_DITHER,
+                         GIMP_CONVERT_DITHER_NONE,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class,
