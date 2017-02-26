@@ -241,11 +241,19 @@ GType gimp_convert_palette_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_MAKE_PALETTE,    /*< desc="Generate optimum palette"            >*/
-  GIMP_REUSE_PALETTE,   /*< skip >*/
-  GIMP_WEB_PALETTE,     /*< desc="Use web-optimized palette"           >*/
-  GIMP_MONO_PALETTE,    /*< desc="Use black and white (1-bit) palette" >*/
-  GIMP_CUSTOM_PALETTE   /*< desc="Use custom palette"                  >*/
+  GIMP_CONVERT_PALETTE_GENERATE, /*< desc="Generate optimum palette"          >*/
+  GIMP_CONVERT_PALETTE_REUSE,    /*< skip >*/
+  GIMP_CONVERT_PALETTE_WEB,      /*< desc="Use web-optimized palette"         >*/
+  GIMP_CONVERT_PALETTE_MONO,     /*< desc="Use black and white (1-bit) palette" >*/
+  GIMP_CONVERT_PALETTE_CUSTOM,   /*< desc="Use custom palette"                >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_MAKE_PALETTE   = GIMP_CONVERT_PALETTE_GENERATE, /*< skip, pdb-skip >*/
+  GIMP_REUSE_PALETTE  = GIMP_CONVERT_PALETTE_REUSE,    /*< skip, pdb-skip >*/
+  GIMP_WEB_PALETTE    = GIMP_CONVERT_PALETTE_WEB,      /*< skip, pdb-skip >*/
+  GIMP_MONO_PALETTE   = GIMP_CONVERT_PALETTE_MONO,     /*< skip, pdb-skip >*/
+  GIMP_CUSTOM_PALETTE = GIMP_CONVERT_PALETTE_CUSTOM    /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpConvertPaletteType;
 
 

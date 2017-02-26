@@ -191,11 +191,15 @@ export_convert_indexed (gint32  image_ID,
   /* check alpha */
   g_free (gimp_image_get_layers (image_ID, &nlayers));
   if (nlayers > 1 || gimp_drawable_has_alpha (*drawable_ID))
-    gimp_image_convert_indexed (image_ID, GIMP_CONVERT_DITHER_NONE,
-                                GIMP_MAKE_PALETTE, 255, FALSE, FALSE, "");
+    gimp_image_convert_indexed (image_ID,
+                                GIMP_CONVERT_DITHER_NONE,
+                                GIMP_CONVERT_PALETTE_GENERATE,
+                                255, FALSE, FALSE, "");
   else
-    gimp_image_convert_indexed (image_ID, GIMP_CONVERT_DITHER_NONE,
-                                GIMP_MAKE_PALETTE, 256, FALSE, FALSE, "");
+    gimp_image_convert_indexed (image_ID,
+                                GIMP_CONVERT_DITHER_NONE,
+                                GIMP_CONVERT_PALETTE_GENERATE,
+                                256, FALSE, FALSE, "");
 }
 
 static void
@@ -205,8 +209,10 @@ export_convert_bitmap (gint32  image_ID,
   if (gimp_image_base_type (image_ID) == GIMP_INDEXED)
     gimp_image_convert_rgb (image_ID);
 
-  gimp_image_convert_indexed (image_ID, GIMP_CONVERT_DITHER_FS,
-                              GIMP_MAKE_PALETTE, 2, FALSE, FALSE, "");
+  gimp_image_convert_indexed (image_ID,
+                              GIMP_CONVERT_DITHER_FS,
+                              GIMP_CONVERT_PALETTE_GENERATE,
+                              2, FALSE, FALSE, "");
 }
 
 static void

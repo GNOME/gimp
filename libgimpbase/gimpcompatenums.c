@@ -217,6 +217,42 @@ gimp_convert_dither_type_compat_get_type (void)
 }
 
 GType
+gimp_convert_palette_type_compat_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MAKE_PALETTE, "GIMP_MAKE_PALETTE", "make-palette" },
+    { GIMP_REUSE_PALETTE, "GIMP_REUSE_PALETTE", "reuse-palette" },
+    { GIMP_WEB_PALETTE, "GIMP_WEB_PALETTE", "web-palette" },
+    { GIMP_MONO_PALETTE, "GIMP_MONO_PALETTE", "mono-palette" },
+    { GIMP_CUSTOM_PALETTE, "GIMP_CUSTOM_PALETTE", "custom-palette" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_MAKE_PALETTE, "GIMP_MAKE_PALETTE", NULL },
+    { GIMP_REUSE_PALETTE, "GIMP_REUSE_PALETTE", NULL },
+    { GIMP_WEB_PALETTE, "GIMP_WEB_PALETTE", NULL },
+    { GIMP_MONO_PALETTE, "GIMP_MONO_PALETTE", NULL },
+    { GIMP_CUSTOM_PALETTE, "GIMP_CUSTOM_PALETTE", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpConvertPaletteTypeCompat", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "convert-palette-type-compat");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_convolve_type_compat_get_type (void)
 {
   static const GEnumValue values[] =

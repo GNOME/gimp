@@ -57,6 +57,8 @@ gimp_base_init (GimpUnitVtable *vtable)
 		    (gpointer) GIMP_TYPE_CHANNEL_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_CLONE_TYPE, quark,
 		    (gpointer) GIMP_TYPE_CLONE_TYPE_COMPAT);
+  g_type_set_qdata (GIMP_TYPE_CONVERT_PALETTE_TYPE, quark,
+		    (gpointer) GIMP_TYPE_CONVERT_PALETTE_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_CONVOLVE_TYPE, quark,
 		    (gpointer) GIMP_TYPE_CONVOLVE_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_DESATURATE_MODE, quark,

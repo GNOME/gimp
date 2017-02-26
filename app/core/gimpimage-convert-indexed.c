@@ -778,10 +778,10 @@ gimp_image_convert_indexed (GimpImage               *image,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (palette_type == GIMP_CUSTOM_PALETTE)
+  if (palette_type == GIMP_CONVERT_PALETTE_CUSTOM)
     {
       if (! custom_palette)
-        palette_type = GIMP_MONO_PALETTE;
+        palette_type = GIMP_CONVERT_PALETTE_MONO;
 
       if (gimp_palette_get_n_colors (custom_palette) == 0)
         {
@@ -830,7 +830,7 @@ gimp_image_convert_indexed (GimpImage               *image,
    */
   if (old_type     == GIMP_GRAY &&
       max_colors   == 256       &&
-      palette_type == GIMP_MAKE_PALETTE)
+      palette_type == GIMP_CONVERT_PALETTE_GENERATE)
     {
       dither_type = GIMP_CONVERT_DITHER_NONE;
     }
@@ -840,7 +840,7 @@ gimp_image_convert_indexed (GimpImage               *image,
                                     dither_alpha,
                                     progress);
 
-  if (palette_type == GIMP_MAKE_PALETTE)
+  if (palette_type == GIMP_CONVERT_PALETTE_GENERATE)
     {
       if (old_type == GIMP_GRAY)
         zero_histogram_gray (quantobj->histogram);
@@ -885,7 +885,7 @@ gimp_image_convert_indexed (GimpImage               *image,
 
   if (old_type == GIMP_RGB &&
       ! needs_quantize     &&
-      palette_type == GIMP_MAKE_PALETTE)
+      palette_type == GIMP_CONVERT_PALETTE_GENERATE)
     {
       gint i;
 
@@ -922,7 +922,7 @@ gimp_image_convert_indexed (GimpImage               *image,
       quantobj->first_pass (quantobj);
     }
 
-  if (palette_type == GIMP_MAKE_PALETTE)
+  if (palette_type == GIMP_CONVERT_PALETTE_GENERATE)
     qsort (quantobj->cmap,
            quantobj->actual_number_of_colors, sizeof (Color),
            color_quicksort);
@@ -1004,7 +1004,7 @@ gimp_image_convert_indexed (GimpImage               *image,
     }
 
   /*  Set the final palette on the image  */
-  if (remove_duplicates && (palette_type != GIMP_MAKE_PALETTE))
+  if (remove_duplicates && (palette_type != GIMP_CONVERT_PALETTE_GENERATE))
     {
       guchar colormap[GIMP_IMAGE_COLORMAP_SIZE];
       gint   i, j;
@@ -4333,7 +4333,7 @@ initialize_median_cut (GimpImageBaseType       type,
   /* Initialize the data structures */
   quantobj = g_new (QuantizeObj, 1);
 
-  if (type == GIMP_GRAY && palette_type == GIMP_MAKE_PALETTE)
+  if (type == GIMP_GRAY && palette_type == GIMP_CONVERT_PALETTE_GENERATE)
     quantobj->histogram = g_new (ColorFreq, 256);
   else
     quantobj->histogram = g_new (ColorFreq,
@@ -4349,23 +4349,23 @@ initialize_median_cut (GimpImageBaseType       type,
     case GIMP_GRAY:
       switch (palette_type)
         {
-        case GIMP_MAKE_PALETTE:
+        case GIMP_CONVERT_PALETTE_GENERATE:
           quantobj->first_pass = median_cut_pass1_gray;
           break;
-        case GIMP_WEB_PALETTE:
+        case GIMP_CONVERT_PALETTE_WEB:
           quantobj->first_pass = webpal_pass1;
           break;
-        case GIMP_CUSTOM_PALETTE:
+        case GIMP_CONVERT_PALETTE_CUSTOM:
           quantobj->first_pass = custompal_pass1;
           needs_quantize = TRUE;
           break;
-        case GIMP_MONO_PALETTE:
+        case GIMP_CONVERT_PALETTE_MONO:
         default:
           quantobj->first_pass = monopal_pass1;
         }
 
-      if (palette_type == GIMP_WEB_PALETTE  ||
-          palette_type == GIMP_CUSTOM_PALETTE)
+      if (palette_type == GIMP_CONVERT_PALETTE_WEB ||
+          palette_type == GIMP_CONVERT_PALETTE_CUSTOM)
         {
           switch (dither_type)
             {
@@ -4424,18 +4424,18 @@ initialize_median_cut (GimpImageBaseType       type,
     case GIMP_RGB:
       switch (palette_type)
         {
-        case GIMP_MAKE_PALETTE:
+        case GIMP_CONVERT_PALETTE_GENERATE:
           quantobj->first_pass = median_cut_pass1_rgb;
           break;
-        case GIMP_WEB_PALETTE:
+        case GIMP_CONVERT_PALETTE_WEB:
           quantobj->first_pass = webpal_pass1;
           needs_quantize = TRUE;
           break;
-        case GIMP_CUSTOM_PALETTE:
+        case GIMP_CONVERT_PALETTE_CUSTOM:
           quantobj->first_pass = custompal_pass1;
           needs_quantize = TRUE;
           break;
-        case GIMP_MONO_PALETTE:
+        case GIMP_CONVERT_PALETTE_MONO:
         default:
           quantobj->first_pass = monopal_pass1;
         }

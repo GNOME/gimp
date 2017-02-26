@@ -140,12 +140,12 @@ image_convert_indexed_invoker (GimpProcedure         *procedure,
         {
           switch (palette_type)
             {
-            case GIMP_MAKE_PALETTE:
+            case GIMP_CONVERT_PALETTE_GENERATE:
               if (num_cols < 1 || num_cols > MAXNUMCOLORS)
                 success = FALSE;
               break;
 
-            case GIMP_CUSTOM_PALETTE:
+            case GIMP_CONVERT_PALETTE_CUSTOM:
               pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
               if (! pal)
                 {
@@ -343,12 +343,12 @@ register_image_convert_procs (GimpPDB *pdb)
                                                   "palette type",
                                                   "The type of palette to use",
                                                   GIMP_TYPE_CONVERT_PALETTE_TYPE,
-                                                  GIMP_MAKE_PALETTE,
+                                                  GIMP_CONVERT_PALETTE_GENERATE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-cols",
                                                       "num cols",
-                                                      "The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)",
+                                                      "The number of colors to quantize to, ignored unless (palette_type == GIMP_CONVERT_PALETTE_GENERATE)",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -360,13 +360,13 @@ register_image_convert_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("remove-unused",
                                                      "remove unused",
-                                                     "Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)",
+                                                     "Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_CONVERT_PALETTE_GENERATE)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("palette",
                                                        "palette",
-                                                       "The name of the custom palette to use, ignored unless (palette_type == GIMP_CUSTOM_PALETTE)",
+                                                       "The name of the custom palette to use, ignored unless (palette_type == GIMP_CONVERT_PALETTE_CUSTOM)",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

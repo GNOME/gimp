@@ -109,15 +109,16 @@ HELP
 	  desc => 'The type of palette to use' },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'The number of colors to quantize to, ignored unless
-		   (palette_type == GIMP_MAKE_PALETTE)' },
+		   (palette_type == GIMP_CONVERT_PALETTE_GENERATE)' },
 	{ name => 'alpha_dither', type => 'boolean',
 	  desc => 'Dither transparency to fake partial opacity' },
 	{ name => 'remove_unused', type => 'boolean',
 	  desc => 'Remove unused or duplicate color entries from final
-		   palette, ignored if (palette_type == GIMP_MAKE_PALETTE)' },
+		   palette, ignored if (palette_type ==
+		   GIMP_CONVERT_PALETTE_GENERATE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
-		   (palette_type == GIMP_CUSTOM_PALETTE)' }
+		   (palette_type == GIMP_CONVERT_PALETTE_CUSTOM)' }
     );
 
     %invoke = (
@@ -131,12 +132,12 @@ HELP
     {
       switch (palette_type)
 	{
-	case GIMP_MAKE_PALETTE:
+	case GIMP_CONVERT_PALETTE_GENERATE:
 	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 	    success = FALSE;
 	  break;
 
-	case GIMP_CUSTOM_PALETTE:
+	case GIMP_CONVERT_PALETTE_CUSTOM:
           pal = gimp_pdb_get_palette (gimp, palette, FALSE, error);
 	  if (! pal)
             {

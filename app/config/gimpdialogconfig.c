@@ -223,7 +223,7 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
                          "Default palette type for indexed conversion",
                          IMAGE_CONVERT_INDEXED_PALETTE_TYPE_BLURB,
                          GIMP_TYPE_CONVERT_PALETTE_TYPE,
-                         GIMP_MAKE_PALETTE,
+                         GIMP_CONVERT_PALETTE_GENERATE,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class,

@@ -101,10 +101,10 @@ gimp_image_convert_grayscale (gint32 image_ID)
  * @image_ID: The image.
  * @dither_type: The dither type to use.
  * @palette_type: The type of palette to use.
- * @num_cols: The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE).
+ * @num_cols: The number of colors to quantize to, ignored unless (palette_type == GIMP_CONVERT_PALETTE_GENERATE).
  * @alpha_dither: Dither transparency to fake partial opacity.
- * @remove_unused: Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE).
- * @palette: The name of the custom palette to use, ignored unless (palette_type == GIMP_CUSTOM_PALETTE).
+ * @remove_unused: Remove unused or duplicate color entries from final palette, ignored if (palette_type == GIMP_CONVERT_PALETTE_GENERATE).
+ * @palette: The name of the custom palette to use, ignored unless (palette_type == GIMP_CONVERT_PALETTE_CUSTOM).
  *
  * Convert specified image to and Indexed image
  *

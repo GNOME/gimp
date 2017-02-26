@@ -437,19 +437,19 @@ gimp_convert_palette_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_MAKE_PALETTE, "GIMP_MAKE_PALETTE", "make-palette" },
-    { GIMP_WEB_PALETTE, "GIMP_WEB_PALETTE", "web-palette" },
-    { GIMP_MONO_PALETTE, "GIMP_MONO_PALETTE", "mono-palette" },
-    { GIMP_CUSTOM_PALETTE, "GIMP_CUSTOM_PALETTE", "custom-palette" },
+    { GIMP_CONVERT_PALETTE_GENERATE, "GIMP_CONVERT_PALETTE_GENERATE", "generate" },
+    { GIMP_CONVERT_PALETTE_WEB, "GIMP_CONVERT_PALETTE_WEB", "web" },
+    { GIMP_CONVERT_PALETTE_MONO, "GIMP_CONVERT_PALETTE_MONO", "mono" },
+    { GIMP_CONVERT_PALETTE_CUSTOM, "GIMP_CONVERT_PALETTE_CUSTOM", "custom" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_MAKE_PALETTE, NC_("convert-palette-type", "Generate optimum palette"), NULL },
-    { GIMP_WEB_PALETTE, NC_("convert-palette-type", "Use web-optimized palette"), NULL },
-    { GIMP_MONO_PALETTE, NC_("convert-palette-type", "Use black and white (1-bit) palette"), NULL },
-    { GIMP_CUSTOM_PALETTE, NC_("convert-palette-type", "Use custom palette"), NULL },
+    { GIMP_CONVERT_PALETTE_GENERATE, NC_("convert-palette-type", "Generate optimum palette"), NULL },
+    { GIMP_CONVERT_PALETTE_WEB, NC_("convert-palette-type", "Use web-optimized palette"), NULL },
+    { GIMP_CONVERT_PALETTE_MONO, NC_("convert-palette-type", "Use black and white (1-bit) palette"), NULL },
+    { GIMP_CONVERT_PALETTE_CUSTOM, NC_("convert-palette-type", "Use custom palette"), NULL },
     { 0, NULL, NULL }
   };
 

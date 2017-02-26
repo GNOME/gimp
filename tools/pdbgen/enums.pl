@@ -136,14 +136,15 @@ package Gimp::CodeGen::enums;
     GimpConvertPaletteType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_MAKE_PALETTE GIMP_REUSE_PALETTE
-			  GIMP_WEB_PALETTE GIMP_MONO_PALETTE
-			  GIMP_CUSTOM_PALETTE) ],
-	  mapping => { GIMP_MAKE_PALETTE => '0',
-		       GIMP_REUSE_PALETTE => '1',
-		       GIMP_WEB_PALETTE => '2',
-		       GIMP_MONO_PALETTE => '3',
-		       GIMP_CUSTOM_PALETTE => '4' }
+	  symbols => [ qw(GIMP_CONVERT_PALETTE_GENERATE
+			  GIMP_CONVERT_PALETTE_REUSE
+			  GIMP_CONVERT_PALETTE_WEB GIMP_CONVERT_PALETTE_MONO
+			  GIMP_CONVERT_PALETTE_CUSTOM) ],
+	  mapping => { GIMP_CONVERT_PALETTE_GENERATE => '0',
+		       GIMP_CONVERT_PALETTE_REUSE => '1',
+		       GIMP_CONVERT_PALETTE_WEB => '2',
+		       GIMP_CONVERT_PALETTE_MONO => '3',
+		       GIMP_CONVERT_PALETTE_CUSTOM => '4' }
 	},
     GimpConvolveType =>
 	{ contig => 1,
