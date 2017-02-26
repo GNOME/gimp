@@ -1561,7 +1561,7 @@ xcf_load_layer (XcfInfo    *info,
 
   /* create a new layer */
   layer = gimp_layer_new (image, width, height,
-                          format, name, 255, GIMP_LAYER_MODE_NORMAL);
+                          format, name, 255, GIMP_LAYER_MODE_NORMAL_LEGACY);
   g_free (name);
   if (! layer)
     return NULL;

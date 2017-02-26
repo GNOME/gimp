@@ -151,7 +151,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
       paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
-                                                       GIMP_LAYER_MODE_NORMAL,
+                                                       GIMP_LAYER_MODE_NORMAL_LEGACY,
                                                        coords,
                                                        &paint_buffer_x,
                                                        &paint_buffer_y,

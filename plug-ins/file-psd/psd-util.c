@@ -618,7 +618,7 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
   if (g_ascii_strncasecmp (psd_mode, "norm", 4) == 0)           /* Normal (ps3) */
     {
       if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
+      return GIMP_LAYER_MODE_NORMAL_LEGACY;
     }
 
   if (g_ascii_strncasecmp (psd_mode, "dark", 4) == 0)           /* Darken (ps3) */
@@ -729,7 +729,7 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
                      mode_name);
         }
       if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
+      return GIMP_LAYER_MODE_NORMAL_LEGACY;
     }
 
   if (g_ascii_strncasecmp (psd_mode, "lgCl", 4) == 0)           /* Lighter Color */
@@ -741,7 +741,7 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
                      mode_name);
         }
       if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL;
+      return GIMP_LAYER_MODE_NORMAL_LEGACY;
     }
 
   if (CONVERSION_WARNINGS)
@@ -754,7 +754,7 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
 
   if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
 
-  return GIMP_LAYER_MODE_NORMAL;
+  return GIMP_LAYER_MODE_NORMAL_LEGACY;
 }
 
 gchar *
@@ -763,7 +763,7 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
 {
   gchar *psd_mode;
 
-  if (((layer_mode == GIMP_LAYER_MODE_NORMAL ||
+  if (((layer_mode == GIMP_LAYER_MODE_NORMAL_LEGACY ||
         layer_mode == GIMP_LAYER_MODE_DISSOLVE) &&
        (layer_composite != GIMP_LAYER_COMPOSITE_AUTO &&
         layer_composite != GIMP_LAYER_COMPOSITE_SRC_OVER)) ||
@@ -774,7 +774,7 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
 
   switch (layer_mode)
     {
-    case GIMP_LAYER_MODE_NORMAL:
+    case GIMP_LAYER_MODE_NORMAL_LEGACY:
       psd_mode = g_strndup ("norm", 4);                       /* Normal (ps3) */
       break;
 

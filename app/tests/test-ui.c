@@ -236,7 +236,7 @@ create_new_image_via_dialog (gconstpointer data)
                           gimp_image_get_layer_format (image, TRUE),
                           "Layer for testing",
                           GIMP_OPACITY_OPAQUE,
-                          GIMP_LAYER_MODE_NORMAL);
+                          GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   gimp_image_add_layer (image, layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

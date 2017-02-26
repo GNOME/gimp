@@ -891,7 +891,7 @@ gimp_selection_float (GimpSelection *selection,
                                            gimp_drawable_get_format_with_alpha (drawable),
                                            _("Floated Layer"),
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_LAYER_MODE_NORMAL,
+                                           GIMP_LAYER_MODE_NORMAL_LEGACY,
                                            profile);
 
   /*  Set the offsets  */

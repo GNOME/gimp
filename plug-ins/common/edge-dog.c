@@ -993,7 +993,7 @@ preview_update_preview (GimpPreview  *preview,
   preview_id = gimp_layer_new (image_id, "preview", width, height,
                                gimp_drawable_type (drawable->drawable_id),
                                100,
-                               GIMP_LAYER_MODE_NORMAL);
+                               GIMP_LAYER_MODE_NORMAL_LEGACY);
   preview_drawable = gimp_drawable_get (preview_id);
   gimp_image_insert_layer (image_id, preview_id, -1, 0);
   gimp_layer_set_offsets (preview_id, 0, 0);

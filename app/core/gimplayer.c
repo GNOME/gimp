@@ -402,7 +402,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode", NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL,
+                                                      GIMP_LAYER_MODE_NORMAL_LEGACY,
                                                       GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_BLEND_SPACE,
@@ -449,7 +449,7 @@ static void
 gimp_layer_init (GimpLayer *layer)
 {
   layer->opacity         = GIMP_OPACITY_OPAQUE;
-  layer->mode            = GIMP_LAYER_MODE_NORMAL;
+  layer->mode            = GIMP_LAYER_MODE_NORMAL_LEGACY;
   layer->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
   layer->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
   layer->composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
@@ -589,7 +589,7 @@ gimp_layer_update_mode_node (GimpLayer *layer)
 
   if (layer->mask && layer->show_mask)
     {
-      visible_mode            = GIMP_LAYER_MODE_NORMAL;
+      visible_mode            = GIMP_LAYER_MODE_NORMAL_LEGACY;
       visible_blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
       visible_composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
       visible_composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
@@ -599,7 +599,7 @@ gimp_layer_update_mode_node (GimpLayer *layer)
       if (layer->mode != GIMP_LAYER_MODE_DISSOLVE &&
           gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
         {
-          visible_mode            = GIMP_LAYER_MODE_NORMAL;
+          visible_mode            = GIMP_LAYER_MODE_NORMAL_LEGACY;
           visible_blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
           visible_composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
           visible_composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
@@ -2203,7 +2203,7 @@ gimp_layer_set_mode (GimpLayer     *layer,
 GimpLayerMode
 gimp_layer_get_mode (GimpLayer *layer)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_MODE_NORMAL);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   return layer->mode;
 }

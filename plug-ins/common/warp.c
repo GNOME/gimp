@@ -941,12 +941,12 @@ diff (GimpDrawable *drawable,
   xlayer_id = gimp_layer_new (new_image_id, "Warp_X_Vectors",
                               width, height,
                               GIMP_RGB_IMAGE,
-                              100.0, GIMP_LAYER_MODE_NORMAL);
+                              100.0, GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   ylayer_id = gimp_layer_new (new_image_id, "Warp_Y_Vectors",
                               width, height,
                               GIMP_RGB_IMAGE,
-                              100.0, GIMP_LAYER_MODE_NORMAL);
+                              100.0, GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   draw_yd = gimp_drawable_get (ylayer_id);
   draw_xd = gimp_drawable_get (xlayer_id);

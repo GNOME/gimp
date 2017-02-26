@@ -155,7 +155,7 @@ HELP
                                                                         TRUE),
                                            name,
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_LAYER_MODE_NORMAL,
+                                           GIMP_LAYER_MODE_NORMAL_LEGACY,
                                            profile);
 }
 CODE

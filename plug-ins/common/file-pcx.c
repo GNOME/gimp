@@ -436,14 +436,14 @@ load_image (const gchar  *filename,
       image= gimp_image_new (width, height, GIMP_RGB);
       layer= gimp_layer_new (image, _("Background"), width, height,
                              GIMP_RGB_IMAGE,
-                             100, GIMP_LAYER_MODE_NORMAL);
+                             100, GIMP_LAYER_MODE_NORMAL_LEGACY);
     }
   else
     {
       image= gimp_image_new (width, height, GIMP_INDEXED);
       layer= gimp_layer_new (image, _("Background"), width, height,
                              GIMP_INDEXED_IMAGE,
-                             100, GIMP_LAYER_MODE_NORMAL);
+                             100, GIMP_LAYER_MODE_NORMAL_LEGACY);
     }
 
   gimp_image_set_filename (image, filename);

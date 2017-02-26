@@ -164,7 +164,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   else if (gimp_drawable_has_alpha (drawable))
     paint_mode = GIMP_LAYER_MODE_ERASE;
   else
-    paint_mode = GIMP_LAYER_MODE_NORMAL;
+    paint_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
 
   gimp_brush_core_eval_transform_dynamics (GIMP_BRUSH_CORE (paint_core),
                                            drawable,

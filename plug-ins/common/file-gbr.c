@@ -622,7 +622,7 @@ load_image (GFile   *file,
 
   layer_ID = gimp_layer_new (image_ID, name, bh.width, bh.height,
                              image_type,
-                             100, GIMP_LAYER_MODE_NORMAL);
+                             100, GIMP_LAYER_MODE_NORMAL_LEGACY);
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
   g_free (name);

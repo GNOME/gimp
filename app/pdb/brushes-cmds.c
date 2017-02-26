@@ -440,7 +440,7 @@ register_brushes_procs (GimpPDB *pdb)
                                                       "paint mode",
                                                       "The paint mode",
                                                       GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL,
+                                                      GIMP_LAYER_MODE_NORMAL_LEGACY,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_int32 ("width",

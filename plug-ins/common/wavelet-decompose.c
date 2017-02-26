@@ -192,7 +192,7 @@ run (const gchar      *name,
                                    gimp_image_get_item_position (image_id,
                                                                  blur_id) );
           gimp_layer_set_mode (scale_ids[id], GIMP_LAYER_MODE_GRAIN_MERGE);
-          gimp_layer_set_mode (blur_id, GIMP_LAYER_MODE_NORMAL);
+          gimp_layer_set_mode (blur_id, GIMP_LAYER_MODE_NORMAL_LEGACY);
           gimp_item_set_visible (scale_ids[id], FALSE);
 
           gimp_image_remove_layer (image_id, original_id);

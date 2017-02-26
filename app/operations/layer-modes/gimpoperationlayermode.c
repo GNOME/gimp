@@ -154,7 +154,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
                                    g_param_spec_enum ("layer-mode",
                                                       NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL,
+                                                      GIMP_LAYER_MODE_NORMAL_LEGACY,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -1877,7 +1877,7 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_ADDITION:       return blendfun_addition;
     case GIMP_LAYER_MODE_SUBTRACT:       return blendfun_subtract;
     case GIMP_LAYER_MODE_MULTIPLY:       return blendfun_multiply;
-    case GIMP_LAYER_MODE_NORMAL_LINEAR:
+    case GIMP_LAYER_MODE_NORMAL_LEGACY:
     case GIMP_LAYER_MODE_NORMAL:         return blendfun_normal;
     case GIMP_LAYER_MODE_BURN:           return blendfun_burn;
     case GIMP_LAYER_MODE_GRAIN_MERGE:    return blendfun_grain_merge;

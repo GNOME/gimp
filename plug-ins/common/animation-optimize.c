@@ -637,12 +637,12 @@ do_optimizations (GimpRunMode run_mode,
 
   if (opmode == OPBACKGROUND)
     {
-      new_layer_id = gimp_layer_new(new_image_id,
-                                    "Backgroundx",
-                                    width, height,
-                                    drawabletype_alpha,
-                                    100.0,
-                                    GIMP_LAYER_MODE_NORMAL);
+      new_layer_id = gimp_layer_new (new_image_id,
+                                     "Backgroundx",
+                                     width, height,
+                                     drawabletype_alpha,
+                                     100.0,
+                                     GIMP_LAYER_MODE_NORMAL_LEGACY);
 
       gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
 
@@ -1065,7 +1065,7 @@ do_optimizations (GimpRunMode run_mode,
                                                bbox_bottom-bbox_top,
                                                drawabletype_alpha,
                                                100.0,
-                                               GIMP_LAYER_MODE_NORMAL);
+                                               GIMP_LAYER_MODE_NORMAL_LEGACY);
               g_free (newlayer_name);
 
               gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);

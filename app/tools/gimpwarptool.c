@@ -918,7 +918,7 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
 
   gimp_item_set_offset (GIMP_ITEM (layer), 0, 0);
   gimp_item_set_visible (GIMP_ITEM (layer), TRUE, FALSE);
-  gimp_layer_set_mode (layer, GIMP_LAYER_MODE_NORMAL, FALSE);
+  gimp_layer_set_mode (layer, GIMP_LAYER_MODE_NORMAL_LEGACY, FALSE);
   gimp_layer_set_opacity (layer, GIMP_OPACITY_OPAQUE, FALSE);
   gimp_image_add_layer (image, layer, NULL, 0, FALSE);
 

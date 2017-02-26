@@ -127,7 +127,7 @@ rotate_non_overlapping (GimpTestFixture *fixture,
                           babl_format ("R'G'B'A u8"),
                           "Test Layer",
                           GIMP_OPACITY_OPAQUE,
-                          GIMP_LAYER_MODE_NORMAL);
+                          GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
 
@@ -167,7 +167,7 @@ add_layer (GimpTestFixture *fixture,
                           babl_format ("R'G'B'A u8"),
                           "Test Layer",
                           GIMP_OPACITY_OPAQUE,
-                          GIMP_LAYER_MODE_NORMAL);
+                          GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
 
@@ -204,7 +204,7 @@ remove_layer (GimpTestFixture *fixture,
                           babl_format ("R'G'B'A u8"),
                           "Test Layer",
                           GIMP_OPACITY_OPAQUE,
-                          GIMP_LAYER_MODE_NORMAL);
+                          GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   g_assert_cmpint (GIMP_IS_LAYER (layer), ==, TRUE);
 

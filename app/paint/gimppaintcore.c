@@ -1040,7 +1040,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
                              drawable,
                              paint_opacity,
                              image_opacity,
-                             GIMP_LAYER_MODE_NORMAL,
+                             GIMP_LAYER_MODE_NORMAL_LEGACY,
                              mode);
       return;
     }

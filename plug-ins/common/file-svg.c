@@ -347,7 +347,7 @@ load_image (const gchar  *filename,
                              load_vals.resolution, load_vals.resolution);
 
   layer = gimp_layer_new_from_pixbuf (image, _("Rendered SVG"), pixbuf,
-                                      100, GIMP_LAYER_MODE_NORMAL,
+                                      100, GIMP_LAYER_MODE_NORMAL_LEGACY,
                                       0.0, 1.0);
   gimp_image_insert_layer (image, layer, -1, 0);
 

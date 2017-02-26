@@ -101,7 +101,7 @@ gimp_layer_mode_box_class_init (GimpLayerModeBoxClass *klass)
                                    g_param_spec_enum ("layer-mode",
                                                       NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL,
+                                                      GIMP_LAYER_MODE_NORMAL_LEGACY,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -290,7 +290,7 @@ GimpLayerMode
 gimp_layer_mode_box_get_mode (GimpLayerModeBox *box)
 {
   g_return_val_if_fail (GIMP_IS_LAYER_MODE_BOX (box),
-                        GIMP_LAYER_MODE_NORMAL);
+                        GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   return box->priv->layer_mode;
 }

@@ -55,7 +55,7 @@ create_layer (gint32   image_ID,
                              width, height,
                              GIMP_RGBA_IMAGE,
                              100,
-                             GIMP_LAYER_MODE_NORMAL);
+                             GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, position);
 

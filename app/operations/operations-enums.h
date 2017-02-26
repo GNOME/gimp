@@ -55,7 +55,7 @@ GType gimp_layer_mode_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   /*  Modes that exist since ancient times  */
-  GIMP_LAYER_MODE_NORMAL,                /*< desc="Normal"                   >*/
+  GIMP_LAYER_MODE_NORMAL_LEGACY,         /*< desc="Normal (legacy)"          >*/
   GIMP_LAYER_MODE_DISSOLVE,              /*< desc="Dissolve"                 >*/
   GIMP_LAYER_MODE_BEHIND_LEGACY,         /*< desc="Behind (legacy)"          >*/
   GIMP_LAYER_MODE_MULTIPLY_LEGACY,       /*< desc="Multiply (legacy)"        >*/
@@ -87,7 +87,7 @@ typedef enum
   GIMP_LAYER_MODE_LCH_LIGHTNESS,         /*< desc="Lightness (LCH)"          >*/
 
   /*  Since 2.10  */
-  GIMP_LAYER_MODE_NORMAL_LINEAR,         /*< desc="Normal (linear)"          >*/
+  GIMP_LAYER_MODE_NORMAL,                /*< desc="Normal"                   >*/
   GIMP_LAYER_MODE_BEHIND,                /*< desc="Behind"                   >*/
   GIMP_LAYER_MODE_MULTIPLY,              /*< desc="Multiply"                 >*/
   GIMP_LAYER_MODE_SCREEN,                /*< desc="Screen"                   >*/

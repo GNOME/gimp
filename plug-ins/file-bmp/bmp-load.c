@@ -733,7 +733,7 @@ ReadImage (FILE                 *fd,
   image = gimp_image_new (width, height, base_type);
   layer = gimp_layer_new (image, _("Background"),
                           width, height,
-                          image_type, 100, GIMP_LAYER_MODE_NORMAL);
+                          image_type, 100, GIMP_LAYER_MODE_NORMAL_LEGACY);
 
   gimp_image_set_filename (image, filename);
 

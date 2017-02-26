@@ -197,7 +197,7 @@ psd_lmode_layer (gint32  idLayer,
 {
   switch (gimp_layer_get_mode (idLayer))
     {
-    case GIMP_LAYER_MODE_NORMAL:
+    case GIMP_LAYER_MODE_NORMAL_LEGACY:
       strcpy (psdMode, "norm");
       break;
     case GIMP_LAYER_MODE_DARKEN_ONLY:

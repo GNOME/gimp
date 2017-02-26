@@ -81,7 +81,7 @@ gimp_layer_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_LAYER_MODE_NORMAL, "GIMP_LAYER_MODE_NORMAL", "normal" },
+    { GIMP_LAYER_MODE_NORMAL_LEGACY, "GIMP_LAYER_MODE_NORMAL_LEGACY", "normal-legacy" },
     { GIMP_LAYER_MODE_DISSOLVE, "GIMP_LAYER_MODE_DISSOLVE", "dissolve" },
     { GIMP_LAYER_MODE_BEHIND_LEGACY, "GIMP_LAYER_MODE_BEHIND_LEGACY", "behind-legacy" },
     { GIMP_LAYER_MODE_MULTIPLY_LEGACY, "GIMP_LAYER_MODE_MULTIPLY_LEGACY", "multiply-legacy" },
@@ -109,7 +109,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_LCH_CHROMA, "GIMP_LAYER_MODE_LCH_CHROMA", "lch-chroma" },
     { GIMP_LAYER_MODE_LCH_COLOR, "GIMP_LAYER_MODE_LCH_COLOR", "lch-color" },
     { GIMP_LAYER_MODE_LCH_LIGHTNESS, "GIMP_LAYER_MODE_LCH_LIGHTNESS", "lch-lightness" },
-    { GIMP_LAYER_MODE_NORMAL_LINEAR, "GIMP_LAYER_MODE_NORMAL_LINEAR", "normal-linear" },
+    { GIMP_LAYER_MODE_NORMAL, "GIMP_LAYER_MODE_NORMAL", "normal" },
     { GIMP_LAYER_MODE_BEHIND, "GIMP_LAYER_MODE_BEHIND", "behind" },
     { GIMP_LAYER_MODE_MULTIPLY, "GIMP_LAYER_MODE_MULTIPLY", "multiply" },
     { GIMP_LAYER_MODE_SCREEN, "GIMP_LAYER_MODE_SCREEN", "screen" },
@@ -146,7 +146,7 @@ gimp_layer_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_LAYER_MODE_NORMAL, NC_("layer-mode", "Normal"), NULL },
+    { GIMP_LAYER_MODE_NORMAL_LEGACY, NC_("layer-mode", "Normal (legacy)"), NULL },
     { GIMP_LAYER_MODE_DISSOLVE, NC_("layer-mode", "Dissolve"), NULL },
     { GIMP_LAYER_MODE_BEHIND_LEGACY, NC_("layer-mode", "Behind (legacy)"), NULL },
     { GIMP_LAYER_MODE_MULTIPLY_LEGACY, NC_("layer-mode", "Multiply (legacy)"), NULL },
@@ -174,7 +174,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_LCH_CHROMA, NC_("layer-mode", "Chroma (LCH)"), NULL },
     { GIMP_LAYER_MODE_LCH_COLOR, NC_("layer-mode", "Color (LCH)"), NULL },
     { GIMP_LAYER_MODE_LCH_LIGHTNESS, NC_("layer-mode", "Lightness (LCH)"), NULL },
-    { GIMP_LAYER_MODE_NORMAL_LINEAR, NC_("layer-mode", "Normal (linear)"), NULL },
+    { GIMP_LAYER_MODE_NORMAL, NC_("layer-mode", "Normal"), NULL },
     { GIMP_LAYER_MODE_BEHIND, NC_("layer-mode", "Behind"), NULL },
     { GIMP_LAYER_MODE_MULTIPLY, NC_("layer-mode", "Multiply"), NULL },
     { GIMP_LAYER_MODE_SCREEN, NC_("layer-mode", "Screen"), NULL },

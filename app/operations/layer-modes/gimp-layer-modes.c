@@ -75,11 +75,13 @@ struct _GimpLayerModeInfo
 
 static const GimpLayerModeInfo layer_mode_infos[] =
 {
-  { GIMP_LAYER_MODE_NORMAL,
+  { GIMP_LAYER_MODE_NORMAL_LEGACY,
 
     .op_name              = "gimp:normal",
     .function             = gimp_operation_normal_process,
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -471,11 +473,10 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_LAB
   },
 
-  { GIMP_LAYER_MODE_NORMAL_LINEAR,
+  { GIMP_LAYER_MODE_NORMAL,
 
     .op_name              = "gimp:normal",
     .function             = gimp_operation_normal_process,
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
@@ -898,7 +899,7 @@ static const GimpLayerMode layer_mode_group_default[] =
 
 static const GimpLayerMode layer_mode_group_legacy[] =
 {
-  GIMP_LAYER_MODE_NORMAL,
+  GIMP_LAYER_MODE_NORMAL_LEGACY,
   GIMP_LAYER_MODE_DISSOLVE,
   GIMP_LAYER_MODE_BEHIND_LEGACY,
 
@@ -939,7 +940,7 @@ static const GimpLayerMode layer_mode_group_legacy[] =
 static const GimpLayerMode layer_mode_groups[][2] =
 {
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_NORMAL,
-    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_NORMAL
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_NORMAL_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_DISSOLVE,

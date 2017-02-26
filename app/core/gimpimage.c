@@ -2394,7 +2394,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
       switch (gimp_layer_get_mode (layer))
         {
           /*  Modes that exist since ancient times  */
-        case GIMP_LAYER_MODE_NORMAL:
+        case GIMP_LAYER_MODE_NORMAL_LEGACY:
         case GIMP_LAYER_MODE_DISSOLVE:
         case GIMP_LAYER_MODE_BEHIND_LEGACY:
         case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
@@ -2433,7 +2433,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
           break;
 
           /*  Since 2.10  */
-        case GIMP_LAYER_MODE_NORMAL_LINEAR:
+        case GIMP_LAYER_MODE_NORMAL:
         case GIMP_LAYER_MODE_BEHIND:
         case GIMP_LAYER_MODE_MULTIPLY:
         case GIMP_LAYER_MODE_SCREEN:

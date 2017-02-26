@@ -992,7 +992,7 @@ gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
   switch (mode)
     {
     case PSP_BLEND_NORMAL:
-      return GIMP_LAYER_MODE_NORMAL;
+      return GIMP_LAYER_MODE_NORMAL_LEGACY;
 
     case PSP_BLEND_DARKEN:
       return GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY;
@@ -1422,7 +1422,7 @@ read_layer_block (FILE     *f,
           g_message ("Unsupported PSP layer blend mode %s "
                      "for layer %s, setting layer invisible",
                      blend_mode_name (blend_mode), name);
-          layer_mode = GIMP_LAYER_MODE_NORMAL;
+          layer_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
           visibility = FALSE;
         }
 

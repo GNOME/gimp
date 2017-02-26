@@ -608,7 +608,7 @@ create_new_layer (gint32             image_ID,
 
   layer_ID = gimp_layer_new (image_ID, layername, width, height,
                              gdtype,
-                             100, GIMP_LAYER_MODE_NORMAL);
+                             100, GIMP_LAYER_MODE_NORMAL_LEGACY);
   gimp_image_insert_layer (image_ID, layer_ID, -1, position);
 
   return layer_ID;

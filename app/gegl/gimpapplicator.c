@@ -58,7 +58,7 @@ static void
 gimp_applicator_init (GimpApplicator *applicator)
 {
   applicator->opacity         = 1.0;
-  applicator->paint_mode      = GIMP_LAYER_MODE_NORMAL;
+  applicator->paint_mode      = GIMP_LAYER_MODE_NORMAL_LEGACY;
   applicator->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
   applicator->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
   applicator->composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
