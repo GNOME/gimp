@@ -1116,7 +1116,7 @@ msgstr "_Valor:"
 
 #: ../plug-ins/common/compose.c:164
 msgid "_Lightness:"
-msgstr "_Brillantor:"
+msgstr "_Lluminositat:"
 
 #: ../plug-ins/common/compose.c:166 ../plug-ins/common/compose.c:171
 msgid "_Cyan:"
@@ -1580,7 +1580,7 @@ msgstr "valor"
 
 #: ../plug-ins/common/decompose.c:145
 msgid "lightness"
-msgstr "brillantor"
+msgstr "lluminositat"
 
 #: ../plug-ins/common/decompose.c:147
 msgid "cyan-k"
@@ -1686,7 +1686,7 @@ msgstr "Saturació (HSL)"
 
 #: ../plug-ins/common/decompose.c:191
 msgid "Lightness"
-msgstr "Brillantor"
+msgstr "Lluminositat"
 
 #: ../plug-ins/common/decompose.c:194
 msgid "Cyan"

@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
-msgstr "Consola interactiva per al desenvolupament de funcions"
+msgstr "Consola interactiva per al desenvolupament de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
@@ -33,7 +33,7 @@ msgstr "_Consola"
 
 #: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
-msgstr "Servidor per a l'execució remota de funcions"
+msgstr "Servidor per a l'execució remota de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
@@ -91,7 +91,7 @@ msgstr "Canal alfa a _logotip"
 
 #: ../plug-ins/script-fu/script-fu.c:334
 msgid "Re-read all available Script-Fu scripts"
-msgstr "Torna a carregar totes les funcions disponibles"
+msgstr "Torna a carregar tots els Script-Fu disponibles"
 
 #: ../plug-ins/script-fu/script-fu.c:339
 msgid "_Refresh Scripts"
@@ -102,14 +102,14 @@ msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"No podeu utilitzar «Actualitza les funcions» si teniu obert un diàleg "
-"d'alguna funció. Tanqueu totes les finestres de funcions i filtres, i torneu-"
+"No podeu utilitzar «Actualitza els scripts» si teniu obert un diàleg "
+"d'algun script. Tanqueu totes les finestres dels scripts i filtres, i torneu-"
 "ho a provar."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
 #: ../plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
-msgstr "Consola de les funcions"
+msgstr "Consola del Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
@@ -125,7 +125,7 @@ msgstr "_Cerca..."
 
 #: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
-msgstr "Desa la sortida de la consola de funcions"
+msgstr "Desa la sortida de la consola de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:335
 #, c-format
@@ -134,27 +134,27 @@ msgstr "No s'ha pogut obrir «%s» per escriure: %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:364
 msgid "Script-Fu Procedure Browser"
-msgstr "Gestor de funcions"
+msgstr "Navegador de procediments de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
-"Si s'activa l'avaluador de funcions només es permetrà la invocació no "
-"interactiva de les funcions"
+"El mode de només avaluació de Script-Fu  permet només la invocació no "
+"interactiva"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:198
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Una funció no pot processar dues seqüències al mateix temps."
+msgstr "Script-Fu no pot processar dues seqüències al mateix temps."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:200
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "Ja esteu executant la funció «%s» ."
+msgstr "Ja esteu executant l'script «%s» ."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:226
 #, c-format
 msgid "Script-Fu: %s"
-msgstr "Funció: %s"
+msgstr "Script-Fu: %s"
 
 #  we add a colon after the label;
 #  some languages want an extra space here
@@ -168,35 +168,35 @@ msgstr "%s:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:336
 msgid "Script-Fu Color Selection"
-msgstr "Funció de selecció del color"
+msgstr "Selecció del color de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:446
 msgid "Script-Fu File Selection"
-msgstr "Funció de selecció del fitxer"
+msgstr "Selecció del fitxer de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:449
 msgid "Script-Fu Folder Selection"
-msgstr "Funció de selecció de la carpeta"
+msgstr "Selecció de la carpeta de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
-msgstr "Funció de selecció del tipus de lletra"
+msgstr "Selecció del tipus de lletra de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
-msgstr "Funció de selecció de la paleta"
+msgstr "Selecció de la paleta de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
-msgstr "Funció de selecció del patró"
+msgstr "Selecció del patró de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Gradient Selection"
-msgstr "Funció de selecció del degradat"
+msgstr "Selecció del degradat de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:497
 msgid "Script-Fu Brush Selection"
-msgstr "Funció de selecció del pinzell"
+msgstr "Selecció del pinzell de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:857
 #, c-format

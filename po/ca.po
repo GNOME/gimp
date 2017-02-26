@@ -14238,7 +14238,7 @@ msgstr "Nombre de línies"
 #: ../app/display/display-enums.c:67
 msgctxt "guides-type"
 msgid "Line spacing"
-msgstr "Espaiat de la línia"
+msgstr "Interlineat"
 
 #: ../app/display/gimpcursorview.c:220 ../app/display/gimpcursorview.c:226
 #: ../app/display/gimpcursorview.c:245 ../app/display/gimpcursorview.c:251
@@ -16792,23 +16792,23 @@ msgstr "Conserva la _lluminositat"
 
 #: ../app/tools/gimpcolorizetool.c:82
 msgid "Colorize"
-msgstr "To-Saturació bàsic"
+msgstr "Acoloreix"
 
 #: ../app/tools/gimpcolorizetool.c:83
 msgid "Colorize Tool: Colorize the image"
-msgstr "Eina To-Saturació bàsic: ajusta el to i la saturació de la imatge"
+msgstr "Eina d'acoloriment: ajusta el to i la saturació de la imatge"
 
 #: ../app/tools/gimpcolorizetool.c:84
 msgid "Colori_ze..."
-msgstr "To-Saturació _bàsic..."
+msgstr "_Acoloreix..."
 
 #: ../app/tools/gimpcolorizetool.c:99
 msgid "Import Colorize Settings"
-msgstr "Importa la configuració de to-saturació bàsic"
+msgstr "Importa la configuració de l'acoloriment"
 
 #: ../app/tools/gimpcolorizetool.c:100
 msgid "Export Colorize Settings"
-msgstr "Exporta la configuració de to-saturació bàsic"
+msgstr "Exporta la configuració de l'acoloriment"
 
 #: ../app/tools/gimpcolorizetool.c:126
 msgid "Colorize does not operate on grayscale layers."
@@ -16816,7 +16816,7 @@ msgstr "L'acoloriment no funciona en capes d'escala de grisos."
 
 #: ../app/tools/gimpcolorizetool.c:141
 msgid "Colorize the Image"
-msgstr "Ajusta el to i la saturació generals de la imatge"
+msgstr "Acoloreix la imatge"
 
 #: ../app/tools/gimpcolorizetool.c:164
 msgid "Select Color"
@@ -18577,11 +18577,11 @@ msgstr "Indexació de la primera línia"
 
 #: ../app/tools/gimptextoptions.c:198
 msgid "Line spacing"
-msgstr "Espaiat de la línia"
+msgstr "Interlineat"
 
 #: ../app/tools/gimptextoptions.c:199
 msgid "Adjust line spacing"
-msgstr "Ajusta l'espai entre línies"
+msgstr "Ajusta l'interlineat"
 
 #: ../app/tools/gimptextoptions.c:206
 msgid "Letter spacing"

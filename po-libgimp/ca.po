@@ -1875,7 +1875,7 @@ msgstr "_Espaiat de les lletres"
 
 #: ../libgimpwidgets/gimpicons.c:133
 msgid "L_ine Spacing"
-msgstr "Espa_iat de les línies"
+msgstr "_Interlineat"
 
 #: ../libgimpwidgets/gimpicons.c:150
 msgid "Re_size"
