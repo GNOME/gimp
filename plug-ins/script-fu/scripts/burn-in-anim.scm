@@ -190,7 +190,7 @@
 
           (if (= optimize TRUE)
               (begin
-                (gimp-image-convert-indexed img 1 WEB-PALETTE 250 FALSE TRUE "")
+                (gimp-image-convert-indexed img CONVERT-DITHER-FS CONVERT-PALETTE-WEB 250 FALSE TRUE "")
                 (set! img-out (car (plug-in-animationoptimize RUN-NONINTERACTIVE
                                                               img
                                                               bl-layer)))

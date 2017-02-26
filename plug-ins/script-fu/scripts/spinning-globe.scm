@@ -75,7 +75,7 @@
 
   (if (= inIndex 0)
       ()
-      (gimp-image-convert-indexed theImage FS-DITHER MAKE-PALETTE inIndex
+      (gimp-image-convert-indexed theImage CONVERT-DITHER-FS CONVERT-PALETTE-GENERATE inIndex
                                   FALSE FALSE ""))
 
   (if (= inCopy TRUE)
