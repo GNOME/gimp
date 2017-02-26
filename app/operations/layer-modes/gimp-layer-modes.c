@@ -477,6 +477,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
     .op_name              = "gimp:normal",
     .function             = gimp_operation_normal_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
