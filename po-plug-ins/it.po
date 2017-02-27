@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-08 22:30+0100\n"
-"PO-Revision-Date: 2017-02-08 22:40+0100\n"
+"POT-Creation-Date: 2017-02-27 12:14+0100\n"
+"PO-Revision-Date: 2017-02-27 12:17+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -32,6 +32,107 @@ msgstr "Non ci sono abbastanza livelli da allineare."
 #: ../plug-ins/common/align-layers.c:626
 msgid "Align Visible Layers"
 msgstr "Allinea livelli visibili"
+
+#: ../plug-ins/common/align-layers.c:630 ../plug-ins/common/blinds.c:225
+#: ../plug-ins/common/border-average.c:362 ../plug-ins/common/cartoon.c:813
+#: ../plug-ins/common/checkerboard.c:350 ../plug-ins/common/cml-explorer.c:1189
+#: ../plug-ins/common/cml-explorer.c:1986
+#: ../plug-ins/common/cml-explorer.c:2119 ../plug-ins/common/colorify.c:257
+#: ../plug-ins/common/colormap-remap.c:621 ../plug-ins/common/compose.c:1075
+#: ../plug-ins/common/contrast-retinex.c:289
+#: ../plug-ins/common/curve-bend.c:1227 ../plug-ins/common/curve-bend.c:2065
+#: ../plug-ins/common/curve-bend.c:2100 ../plug-ins/common/decompose.c:821
+#: ../plug-ins/common/depth-merge.c:655 ../plug-ins/common/despeckle.c:445
+#: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
+#: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
+#: ../plug-ins/common/file-cel.c:934 ../plug-ins/common/file-gif-save.c:1089
+#: ../plug-ins/common/file-pdf-load.c:1089 ../plug-ins/common/file-ps.c:3421
+#: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/file-svg.c:726
+#: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
+#: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
+#: ../plug-ins/common/grid.c:646 ../plug-ins/common/hot.c:593
+#: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:502
+#: ../plug-ins/common/max-rgb.c:261 ../plug-ins/common/newsprint.c:1183
+#: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
+#: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:723
+#: ../plug-ins/common/qbist.c:765 ../plug-ins/common/qbist.c:819
+#: ../plug-ins/common/ripple.c:487 ../plug-ins/common/sharpen.c:476
+#: ../plug-ins/common/smooth-palette.c:433 ../plug-ins/common/softglow.c:632
+#: ../plug-ins/common/sparkle.c:341 ../plug-ins/common/sphere-designer.c:2207
+#: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:437
+#: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
+#: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:271
+#: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1149
+#: ../plug-ins/file-fli/fli-gimp.c:869
+#: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
+#: ../plug-ins/flame/flame.c:649 ../plug-ins/flame/flame.c:971
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1679
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1116
+#: ../plug-ins/gfig/gfig-dialog.c:290 ../plug-ins/gfig/gfig-dialog.c:638
+#: ../plug-ins/gfig/gfig-dialog.c:687 ../plug-ins/gimpressionist/brush.c:256
+#: ../plug-ins/gimpressionist/gimpressionist.c:142
+#: ../plug-ins/gimpressionist/orientmap.c:528
+#: ../plug-ins/gimpressionist/presets.c:642
+#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/gradient-flare/gradient-flare.c:2360
+#: ../plug-ins/gradient-flare/gradient-flare.c:3323
+#: ../plug-ins/ifs-compose/ifs-compose.c:763
+#: ../plug-ins/ifs-compose/ifs-compose.c:2530
+#: ../plug-ins/ifs-compose/ifs-compose.c:2567
+#: ../plug-ins/imagemap/imap_browse.c:80
+#: ../plug-ins/imagemap/imap_default_dialog.c:106
+#: ../plug-ins/imagemap/imap_file.c:71 ../plug-ins/imagemap/imap_file.c:124
+#: ../plug-ins/lighting/lighting-ui.c:1037
+#: ../plug-ins/lighting/lighting-ui.c:1162
+#: ../plug-ins/lighting/lighting-ui.c:1306
+#: ../plug-ins/map-object/map-object-ui.c:1333
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:426
+#: ../plug-ins/selection-to-path/selection-to-path.c:309
+msgid "_Cancel"
+msgstr "_Annulla"
+
+#: ../plug-ins/common/align-layers.c:631 ../plug-ins/common/blinds.c:226
+#: ../plug-ins/common/border-average.c:363 ../plug-ins/common/cartoon.c:814
+#: ../plug-ins/common/checkerboard.c:351 ../plug-ins/common/cml-explorer.c:1190
+#: ../plug-ins/common/colorify.c:258 ../plug-ins/common/colormap-remap.c:622
+#: ../plug-ins/common/compose.c:1076 ../plug-ins/common/contrast-retinex.c:290
+#: ../plug-ins/common/curve-bend.c:1228 ../plug-ins/common/decompose.c:822
+#: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
+#: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
+#: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
+#: ../plug-ins/common/file-svg.c:727 ../plug-ins/common/file-wmf.c:506
+#: ../plug-ins/common/film.c:1263 ../plug-ins/common/filter-pack.c:1207
+#: ../plug-ins/common/fractal-trace.c:712 ../plug-ins/common/grid.c:647
+#: ../plug-ins/common/hot.c:594 ../plug-ins/common/jigsaw.c:2398
+#: ../plug-ins/common/max-rgb.c:262 ../plug-ins/common/newsprint.c:1184
+#: ../plug-ins/common/nl-filter.c:1022 ../plug-ins/common/oilify.c:786
+#: ../plug-ins/common/photocopy.c:841 ../plug-ins/common/qbist.c:820
+#: ../plug-ins/common/ripple.c:488 ../plug-ins/common/sharpen.c:477
+#: ../plug-ins/common/smooth-palette.c:434 ../plug-ins/common/softglow.c:633
+#: ../plug-ins/common/sparkle.c:342 ../plug-ins/common/sphere-designer.c:2562
+#: ../plug-ins/common/tile.c:438 ../plug-ins/common/tile-small.c:374
+#: ../plug-ins/common/unsharp-mask.c:843 ../plug-ins/common/van-gogh-lic.c:648
+#: ../plug-ins/common/warp.c:379 ../plug-ins/common/wavelet-decompose.c:272
+#: ../plug-ins/flame/flame.c:650 ../plug-ins/flame/flame.c:972
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
+#: ../plug-ins/gimpressionist/gimpressionist.c:143
+#: ../plug-ins/gimpressionist/orientmap.c:529
+#: ../plug-ins/gimpressionist/presets.c:643
+#: ../plug-ins/gimpressionist/sizemap.c:402
+#: ../plug-ins/gradient-flare/gradient-flare.c:2361
+#: ../plug-ins/gradient-flare/gradient-flare.c:3324
+#: ../plug-ins/ifs-compose/ifs-compose.c:764
+#: ../plug-ins/imagemap/imap_default_dialog.c:109
+#: ../plug-ins/lighting/lighting-ui.c:1038
+#: ../plug-ins/map-object/map-object-ui.c:1334
+#: ../plug-ins/pagecurl/pagecurl.c:440
+#: ../plug-ins/selection-to-path/selection-to-path.c:310
+msgid "_OK"
+msgstr "_OK"
 
 #: ../plug-ins/common/align-layers.c:650 ../plug-ins/common/align-layers.c:681
 msgctxt "align-style"
@@ -331,7 +432,7 @@ msgstr "_Verticale"
 #: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:444 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:671
+#: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1162
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -340,7 +441,7 @@ msgstr "_Verticale"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1776 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1781 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:923
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:139
@@ -452,7 +553,7 @@ msgid "Checkerboard"
 msgstr "Scacchiera"
 
 #: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1161
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/gimpressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "Dimen_sione:"
 
@@ -863,6 +964,17 @@ msgstr "Distribuzione della mutazione:"
 msgid "Graph of the Current Settings"
 msgstr "Grafico delle impostazioni correnti"
 
+#: ../plug-ins/common/cml-explorer.c:1856
+#: ../plug-ins/common/color-cube-analyze.c:364
+#: ../plug-ins/common/metadata.c:251 ../plug-ins/common/plugin-browser.c:550
+#: ../plug-ins/common/procedure-browser.c:129
+#: ../plug-ins/common/sample-colorize.c:1331
+#: ../plug-ins/common/unit-editor.c:417 ../plug-ins/gfig/gfig-dialog.c:291
+#: ../plug-ins/gfig/gfig-dialog.c:1245 ../plug-ins/gfig/gfig-dialog.c:1393
+#: ../plug-ins/ifs-compose/ifs-compose.c:1165
+msgid "_Close"
+msgstr "_Chiudi"
+
 #: ../plug-ins/common/cml-explorer.c:1923
 msgid "Warning: the source and the destination are the same channel."
 msgstr "Attenzione: la sorgente e la destinazione sono lo stesso canale."
@@ -870,6 +982,17 @@ msgstr "Attenzione: la sorgente e la destinazione sono lo stesso canale."
 #: ../plug-ins/common/cml-explorer.c:1982
 msgid "Save CML Explorer Parameters"
 msgstr "Salva parametri Esploratore CML"
+
+#: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:2101
+#: ../plug-ins/common/qbist.c:766 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/flame/flame.c:475
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1680
+#: ../plug-ins/gfig/gfig-dialog.c:688 ../plug-ins/gimpressionist/brush.c:257
+#: ../plug-ins/ifs-compose/ifs-compose.c:761
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
+#: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:1163
+msgid "_Save"
+msgstr "_Salva"
 
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
@@ -881,7 +1004,7 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1079
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1561
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1574
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -898,6 +1021,19 @@ msgstr "I parametri sono stati salvati in '%s'"
 #: ../plug-ins/common/cml-explorer.c:2115
 msgid "Load CML Explorer Parameters"
 msgstr "Carica parametri Esploratore CML"
+
+#: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:2066
+#: ../plug-ins/common/file-cel.c:935 ../plug-ins/common/file-raw-data.c:1555
+#: ../plug-ins/common/qbist.c:724 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
+#: ../plug-ins/flame/flame.c:475
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1642
+#: ../plug-ins/gfig/gfig-dialog.c:639 ../plug-ins/ifs-compose/ifs-compose.c:760
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
+#: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
+#: ../plug-ins/lighting/lighting-ui.c:1307
+msgid "_Open"
+msgstr "A_pri"
 
 #: ../plug-ins/common/cml-explorer.c:2211 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
@@ -1066,6 +1202,15 @@ msgstr "Annulla l'ordinamento"
 #: ../plug-ins/common/colormap-remap.c:616
 msgid "Rearrange Colormap"
 msgstr "Reimposta la mappa colori"
+
+#: ../plug-ins/common/colormap-remap.c:620
+#: ../plug-ins/common/filter-pack.c:1205
+#: ../plug-ins/common/sample-colorize.c:1329
+#: ../plug-ins/common/sphere-designer.c:2560
+#: ../plug-ins/ifs-compose/ifs-compose.c:762
+#: ../plug-ins/selection-to-path/selection-to-path.c:308
+msgid "_Reset"
+msgstr "_Preimposta"
 
 #: ../plug-ins/common/colormap-remap.c:720
 msgid ""
@@ -1423,7 +1568,7 @@ msgstr "Piega curva"
 #. preview
 #: ../plug-ins/common/curve-bend.c:1260
 #: ../plug-ins/gimpressionist/orientmap.c:590
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/gimpressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:176
 msgid "Preview"
 msgstr "Anteprima"
@@ -2014,7 +2159,7 @@ msgstr ""
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
-#: ../plug-ins/common/file-pnm.c:564 ../plug-ins/common/file-ps.c:1092
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:1079 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
@@ -2105,13 +2250,13 @@ msgstr ""
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1295
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:534
 #: ../plug-ins/common/file-pcx.c:662 ../plug-ins/common/file-pix.c:536
-#: ../plug-ins/common/file-png.c:1553 ../plug-ins/common/file-pnm.c:1208
+#: ../plug-ins/common/file-png.c:1553 ../plug-ins/common/file-pnm.c:1245
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1073
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1554
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1567
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2261,7 +2406,7 @@ msgid "Brush"
 msgstr "Pennello"
 
 #: ../plug-ins/common/file-gbr.c:808 ../plug-ins/common/file-gih.c:923
-#: ../plug-ins/common/file-pat.c:623 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-pat.c:623 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Descrizione:"
 
@@ -2363,6 +2508,10 @@ msgid ""
 msgstr ""
 "L'immagine che si sta tentando di esportare in formato GIF contiene livelli "
 "che si estendono oltre i limiti dell'immagine."
+
+#: ../plug-ins/common/file-gif-save.c:1090
+msgid "Cr_op"
+msgstr "Rita_glia"
 
 #: ../plug-ins/common/file-gif-save.c:1101
 msgid ""
@@ -2852,7 +3001,7 @@ msgstr "Dimensioni immagine troppo ampie: larghezza %d × altezza %d"
 msgid "Unusual PCX flavour, giving up"
 msgstr "Tipo PCX strano, abbandono"
 
-#: ../plug-ins/common/file-pcx.c:697 ../plug-ins/common/file-pnm.c:1204
+#: ../plug-ins/common/file-pcx.c:697 ../plug-ins/common/file-pnm.c:1241
 msgid "Cannot export images with alpha channel."
 msgstr "Impossibile esportare immagini con canali alfa."
 
@@ -3107,88 +3256,88 @@ msgstr "Errore di caricamento file IU \"%s\": %s"
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
 
-#: ../plug-ins/common/file-pnm.c:264
+#: ../plug-ins/common/file-pnm.c:265
 msgid "PNM Image"
 msgstr "Immagine PNM"
 
-#: ../plug-ins/common/file-pnm.c:286
+#: ../plug-ins/common/file-pnm.c:287
 msgid "PNM image"
 msgstr "Immagine PNM"
 
-#: ../plug-ins/common/file-pnm.c:298
+#: ../plug-ins/common/file-pnm.c:299
 msgid "PBM image"
 msgstr "Immagine PBM"
 
-#: ../plug-ins/common/file-pnm.c:310
+#: ../plug-ins/common/file-pnm.c:311
 msgid "PGM image"
 msgstr "Immagine PGM"
 
-#: ../plug-ins/common/file-pnm.c:322
+#: ../plug-ins/common/file-pnm.c:323
 msgid "PPM image"
 msgstr "Immagine PPM"
 
-#: ../plug-ins/common/file-pnm.c:334
+#: ../plug-ins/common/file-pnm.c:335
 msgid "PFM image"
 msgstr "Immagine PFM"
 
-#: ../plug-ins/common/file-pnm.c:597 ../plug-ins/common/file-pnm.c:620
-#: ../plug-ins/common/file-pnm.c:629 ../plug-ins/common/file-pnm.c:642
-#: ../plug-ins/common/file-pnm.c:654 ../plug-ins/common/file-pnm.c:736
-#: ../plug-ins/common/file-pnm.c:825 ../plug-ins/common/file-pnm.c:920
-#: ../plug-ins/common/file-pnm.c:981
+#: ../plug-ins/common/file-pnm.c:599 ../plug-ins/common/file-pnm.c:622
+#: ../plug-ins/common/file-pnm.c:631 ../plug-ins/common/file-pnm.c:644
+#: ../plug-ins/common/file-pnm.c:657 ../plug-ins/common/file-pnm.c:759
+#: ../plug-ins/common/file-pnm.c:854 ../plug-ins/common/file-pnm.c:939
+#: ../plug-ins/common/file-pnm.c:1000
 msgid "Premature end of file."
 msgstr "Fine del file prematura."
 
-#: ../plug-ins/common/file-pnm.c:599
+#: ../plug-ins/common/file-pnm.c:601
 msgid "Invalid file."
 msgstr "File non valido."
 
-#: ../plug-ins/common/file-pnm.c:614
+#: ../plug-ins/common/file-pnm.c:616
 msgid "File not in a supported format."
 msgstr "File in formato non supportato."
 
-#: ../plug-ins/common/file-pnm.c:623
+#: ../plug-ins/common/file-pnm.c:625
 msgid "Invalid X resolution."
 msgstr "Risoluzione X non valida."
 
-#: ../plug-ins/common/file-pnm.c:625
+#: ../plug-ins/common/file-pnm.c:627
 msgid "Image width is larger than GIMP can handle."
 msgstr "La larghezza immagine è maggiore di quanto GIMP possa gestire."
 
-#: ../plug-ins/common/file-pnm.c:632
+#: ../plug-ins/common/file-pnm.c:634
 msgid "Invalid Y resolution."
 msgstr "Risoluzione Y non valida."
 
-#: ../plug-ins/common/file-pnm.c:634
+#: ../plug-ins/common/file-pnm.c:636
 msgid "Image height is larger than GIMP can handle."
 msgstr "L'altezza immagine è maggiore di quanto GIMP possa gestire."
 
-#: ../plug-ins/common/file-pnm.c:646
+#: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
 msgstr "Fattore di scala fasullo."
 
-#: ../plug-ins/common/file-pnm.c:648
+#: ../plug-ins/common/file-pnm.c:650
 msgid "Unsupported scale factor."
 msgstr "Fattore di scala non supportato."
 
-#: ../plug-ins/common/file-pnm.c:658
+#: ../plug-ins/common/file-pnm.c:661
 msgid "Unsupported maximum value."
 msgstr "Valore massimo non supportato"
 
-#: ../plug-ins/common/file-pnm.c:1520
+#: ../plug-ins/common/file-pnm.c:1601
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1523
+#: ../plug-ins/common/file-pnm.c:1604
 msgid "Data formatting"
 msgstr "Formattazione dati"
 
-#: ../plug-ins/common/file-pnm.c:1527
+#: ../plug-ins/common/file-pnm.c:1608
 msgid "Raw"
 msgstr "Raw"
 
-#: ../plug-ins/common/file-pnm.c:1528
+#: ../plug-ins/common/file-pnm.c:1609
 msgid "ASCII"
 msgstr "ASCII"
 
@@ -5231,6 +5380,13 @@ msgstr "Colorazione a campione"
 msgid "Get _Sample Colors"
 msgstr "_Preleva campioni di colore"
 
+#: ../plug-ins/common/sample-colorize.c:1332
+#: ../plug-ins/gimpressionist/orientmap.c:527
+#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/imagemap/imap_default_dialog.c:103
+msgid "_Apply"
+msgstr "_Applica"
+
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample-colorize.c:1359
 msgid "Destination:"
@@ -5847,6 +6003,10 @@ msgstr "U_nità"
 msgid "Add a New Unit"
 msgstr "Aggiungi nuova unità"
 
+#: ../plug-ins/common/unit-editor.c:210
+msgid "_Add"
+msgstr "_Aggiungi"
+
 #: ../plug-ins/common/unit-editor.c:234
 msgid "_ID:"
 msgstr "_ID:"
@@ -5886,6 +6046,10 @@ msgstr "Riempire tutti i campi testo."
 #: ../plug-ins/common/unit-editor.c:412
 msgid "Unit Editor"
 msgstr "Editor unità"
+
+#: ../plug-ins/common/unit-editor.c:416
+msgid "_Refresh"
+msgstr "_Ricarica"
 
 #: ../plug-ins/common/unsharp-mask.c:132
 msgid "The most widely useful method for sharpening an image"
@@ -6110,12 +6274,12 @@ msgid "Wavelet decompose"
 msgstr "Scomposizione Wavelet"
 
 #: ../plug-ins/common/wavelet-decompose.c:91
-msgid "Wavelet-decompose"
-msgstr "Scomponi-Wavelet"
+msgid "_Wavelet-decompose..."
+msgstr "Scomposizione-_Wavelet..."
 
 #: ../plug-ins/common/wavelet-decompose.c:161
 msgid "Wavelet-Decompose"
-msgstr "Scomponi-Wavelet"
+msgstr "Scomposizione-Wavelet"
 
 #: ../plug-ins/common/wavelet-decompose.c:296
 msgid "Scales:"
@@ -6198,8 +6362,8 @@ msgid "Create from webpage"
 msgstr "Crea da una pagina Web"
 
 #: ../plug-ins/common/web-page.c:235
-msgid "_Create"
-msgstr "_Crea"
+msgid "Cre_ate"
+msgstr "Cre_a"
 
 #: ../plug-ins/common/web-page.c:263
 msgid "Enter location (URI):"
@@ -6867,26 +7031,26 @@ msgstr "Larghezza maschera di livello non supportata o non valida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensioni maschera di livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1347 ../plug-ins/file-psd/psd-load.c:1751
+#: ../plug-ins/file-psd/psd-load.c:1347 ../plug-ins/file-psd/psd-load.c:1756
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modalità di compressione non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1846
+#: ../plug-ins/file-psd/psd-load.c:1851
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2034
+#: ../plug-ins/file-psd/psd-load.c:2039
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensione canale non supportata o non valida."
 
-#: ../plug-ins/file-psd/psd-load.c:2103
+#: ../plug-ins/file-psd/psd-load.c:2108
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Fallita la decompressione dati"
 
-#: ../plug-ins/file-psd/psd-save.c:291
+#: ../plug-ins/file-psd/psd-save.c:292
 #, c-format
 msgid ""
 "Unable to export layer with mode '%s'.  Either the PSD file format or the "
@@ -6896,12 +7060,12 @@ msgstr ""
 "psd o il plug-in di salvataggio non lo supportano; in alternativa si fa uso "
 "della modalità normale."
 
-#: ../plug-ins/file-psd/psd-save.c:541
+#: ../plug-ins/file-psd/psd-save.c:542
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Errore: impossibile convertire l'immagine di tipo base GIMP in modalità PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1528
+#: ../plug-ins/file-psd/psd-save.c:1541
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -6910,7 +7074,7 @@ msgstr ""
 "Impossibile esportare \"%s\". Il formato del file PSD non supporta immagini "
 "più larghe o alte di 30.000 pixel."
 
-#: ../plug-ins/file-psd/psd-save.c:1543
+#: ../plug-ins/file-psd/psd-save.c:1556
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -8459,7 +8623,7 @@ msgstr ""
 "aggiungere un nuovo vettore."
 
 #: ../plug-ins/gimpressionist/orientmap.c:588
-#: ../plug-ins/gimpressionist/sizemap.c:457
+#: ../plug-ins/gimpressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "Imposta la luminosità dell'anteprima"
 
@@ -8472,7 +8636,7 @@ msgid "Select next vector"
 msgstr "Seleziona vettore successivo"
 
 #: ../plug-ins/gimpressionist/orientmap.c:619
-#: ../plug-ins/gimpressionist/sizemap.c:489
+#: ../plug-ins/gimpressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "A_ggiungi"
 
@@ -8481,7 +8645,7 @@ msgid "Add new vector"
 msgstr "Aggiungi nuovo vettore"
 
 #: ../plug-ins/gimpressionist/orientmap.c:625
-#: ../plug-ins/gimpressionist/sizemap.c:496
+#: ../plug-ins/gimpressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "_Rimuovi"
 
@@ -8510,7 +8674,7 @@ msgid "Vortex_3"
 msgstr "Vortice_3"
 
 #: ../plug-ins/gimpressionist/orientmap.c:653
-#: ../plug-ins/gimpressionist/sizemap.c:541
+#: ../plug-ins/gimpressionist/sizemap.c:540
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
@@ -8551,7 +8715,7 @@ msgid "S_trength exp.:"
 msgstr "Esponente forza:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:708
-#: ../plug-ins/gimpressionist/sizemap.c:536
+#: ../plug-ins/gimpressionist/sizemap.c:535
 msgid "Change the exponent of the strength"
 msgstr "Cambia l'esponente della forza"
 
@@ -8624,35 +8788,35 @@ msgstr "La densità relativa dei tratti di pennello"
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Fallito il salvataggio del file PPM '%s': %s"
 
-#: ../plug-ins/gimpressionist/presets.c:639
+#: ../plug-ins/gimpressionist/presets.c:638
 msgid "Save Current"
 msgstr "Salva corrente"
 
-#: ../plug-ins/gimpressionist/presets.c:894
+#: ../plug-ins/gimpressionist/presets.c:893
 msgid "Gimpressionist Defaults"
 msgstr "Preimpostazioni di GIMPressionista"
 
-#: ../plug-ins/gimpressionist/presets.c:1015
+#: ../plug-ins/gimpressionist/presets.c:1014
 msgid "_Presets"
 msgstr "_Preimpostazioni"
 
-#: ../plug-ins/gimpressionist/presets.c:1030
+#: ../plug-ins/gimpressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "Salva attuale..."
 
-#: ../plug-ins/gimpressionist/presets.c:1038
+#: ../plug-ins/gimpressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "Salva le impostazioni correnti sul file specificato"
 
-#: ../plug-ins/gimpressionist/presets.c:1066
+#: ../plug-ins/gimpressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "Leggi le preimpostazioni selezionate in memoria"
 
-#: ../plug-ins/gimpressionist/presets.c:1072
+#: ../plug-ins/gimpressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "Cancella le impostazioni selezionate"
 
-#: ../plug-ins/gimpressionist/presets.c:1078
+#: ../plug-ins/gimpressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "Rileggi la cartella delle preimpostazioni"
 
@@ -8739,15 +8903,15 @@ msgstr "Imposta manualmente l'ampiezza del tratto"
 msgid "Opens up the Size Map Editor"
 msgstr "Apre l'editor della mappa dimensione"
 
-#: ../plug-ins/gimpressionist/sizemap.c:397
+#: ../plug-ins/gimpressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "Modifica la mappa della dimensione"
 
-#: ../plug-ins/gimpressionist/sizemap.c:426
+#: ../plug-ins/gimpressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "Vettori sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:436
+#: ../plug-ins/gimpressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -8756,39 +8920,39 @@ msgstr ""
 "sm selezionati, con il destro per puntarli verso il mouse, medio per "
 "aggiungere un nuovo vettore."
 
-#: ../plug-ins/gimpressionist/sizemap.c:480
+#: ../plug-ins/gimpressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "Selezione vettore sm precedente "
 
-#: ../plug-ins/gimpressionist/sizemap.c:487
+#: ../plug-ins/gimpressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "Seleziona vettore sm successivo"
 
-#: ../plug-ins/gimpressionist/sizemap.c:494
+#: ../plug-ins/gimpressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "Aggiungi nuovo vettore sm"
 
-#: ../plug-ins/gimpressionist/sizemap.c:501
+#: ../plug-ins/gimpressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Cancella vettore sm selezionato"
 
-#: ../plug-ins/gimpressionist/sizemap.c:514
+#: ../plug-ins/gimpressionist/sizemap.c:513
 msgid "Change the angle of the selected smvector"
 msgstr "Cambia l'angolo dei vettori sm selezionati"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/gimpressionist/sizemap.c:520
 msgid "S_trength:"
 msgstr "For_za:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:525
+#: ../plug-ins/gimpressionist/sizemap.c:524
 msgid "Change the strength of the selected smvector"
 msgstr "Cambia la forza del vettore sm selezionato"
 
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/gimpressionist/sizemap.c:531
 msgid "St_rength exp.:"
 msgstr "Esponente fo_rza:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:548
+#: ../plug-ins/gimpressionist/sizemap.c:547
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -9252,8 +9416,8 @@ msgid "Gradient Flare Editor"
 msgstr "Editor c. a gradiente"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
-msgid "Rescan Gradients"
-msgstr "Aggiorna gradienti"
+msgid "_Rescan Gradients"
+msgstr "Aggio_rna gradienti"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3447
@@ -9988,7 +10152,7 @@ msgstr "Errore di apertura file"
 msgid "Load Image Map"
 msgstr "Carica mappa immagine"
 
-#: ../plug-ins/imagemap/imap_file.c:122
+#: ../plug-ins/imagemap/imap_file.c:120
 msgid "Save Image Map"
 msgstr "Salva mappa immagine"
 
@@ -11146,77 +11310,77 @@ msgstr "Crea un'immagine da un'area dello schermo"
 msgid "_Screenshot..."
 msgstr "_Schermata..."
 
-#: ../plug-ins/screenshot/screenshot.c:423
+#: ../plug-ins/screenshot/screenshot.c:422
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Schermata"
 
-#: ../plug-ins/screenshot/screenshot.c:432
+#: ../plug-ins/screenshot/screenshot.c:427
 msgid "S_nap"
 msgstr "Cat_tura"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:462
+#: ../plug-ins/screenshot/screenshot.c:451
 msgid "Area"
 msgstr "Area"
 
-#: ../plug-ins/screenshot/screenshot.c:472
+#: ../plug-ins/screenshot/screenshot.c:461
 msgid "Take a screenshot of a single _window"
 msgstr "Cattura l'immagine di una _finestra singola"
 
-#: ../plug-ins/screenshot/screenshot.c:492
+#: ../plug-ins/screenshot/screenshot.c:481
 msgid "Include window _decoration"
 msgstr "Includi _decorazioni della finestra"
 
-#: ../plug-ins/screenshot/screenshot.c:512
+#: ../plug-ins/screenshot/screenshot.c:501
 msgid "Take a screenshot of the entire _screen"
 msgstr "Cattura l'immagine di tutto lo _schermo"
 
-#: ../plug-ins/screenshot/screenshot.c:532
+#: ../plug-ins/screenshot/screenshot.c:521
 msgid "Include _mouse pointer"
 msgstr "Includi il puntatore del _mouse"
 
-#: ../plug-ins/screenshot/screenshot.c:554
+#: ../plug-ins/screenshot/screenshot.c:543
 msgid "Select a _region to grab"
 msgstr "Seleziona la _regione da catturare"
 
 #. Delay
-#: ../plug-ins/screenshot/screenshot.c:570
+#: ../plug-ins/screenshot/screenshot.c:559
 msgid "Delay"
 msgstr "Ritardo"
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:595
+#: ../plug-ins/screenshot/screenshot.c:584
 msgid "seconds"
 msgstr "secondi"
 
-#: ../plug-ins/screenshot/screenshot.c:604
+#: ../plug-ins/screenshot/screenshot.c:593
 msgid "After the delay, the screenshot is taken."
 msgstr "Dopo il ritardo verrà catturata la schermata."
 
-#: ../plug-ins/screenshot/screenshot.c:606
+#: ../plug-ins/screenshot/screenshot.c:595
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Dopo il ritardo, usare il mouse per selezionare la regione da catturare."
 
-#: ../plug-ins/screenshot/screenshot.c:610
+#: ../plug-ins/screenshot/screenshot.c:599
 msgid "Click in a window to snap it after delay."
 msgstr "Fare clic in una finestra per fotografarla dopo un ritardo."
 
-#: ../plug-ins/screenshot/screenshot.c:613
+#: ../plug-ins/screenshot/screenshot.c:602
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Alla fine del ritardo, fare clic in una finestra per catturarla."
 
-#: ../plug-ins/screenshot/screenshot.c:620
+#: ../plug-ins/screenshot/screenshot.c:609
 msgid "Color Profile"
 msgstr "Profilo colore"
 
-#: ../plug-ins/screenshot/screenshot.c:625
+#: ../plug-ins/screenshot/screenshot.c:614
 msgid "Tag image with _monitor profile"
 msgstr "Marca immagine con il profilo del _monitor"
 
-#: ../plug-ins/screenshot/screenshot.c:629
+#: ../plug-ins/screenshot/screenshot.c:618
 msgid "Convert image to sR_GB"
 msgstr "Converti immagine a sR_GB"
 
@@ -11511,270 +11675,3 @@ msgstr "_Scanner/M. fotografica...."
 #: ../plug-ins/twain/twain.c:485
 msgid "Transferring data from scanner/camera"
 msgstr "Trasferimento dati da scanner/m. fotografica"
-
-#~ msgid "Indexed Palette Type"
-#~ msgstr "Tipo tavolozza indicizzata"
-
-#~ msgid "Use the options below to customize the image."
-#~ msgstr "Usa le opzioni sottostanti per personalizzare l'immagine."
-
-#~ msgid "Preset:"
-#~ msgstr "Preimpostazioni:"
-
-#~ msgid "Use animation"
-#~ msgstr "Usa l'animazione"
-
-#~ msgid "Loop infinitely"
-#~ msgstr "Ciclo infinito"
-
-#~ msgid "NEF image"
-#~ msgstr "Immagine NEF"
-
-#~ msgid "Error writing output file."
-#~ msgstr "Errore durante la scrittura del file di uscita."
-
-#~ msgid "Grab"
-#~ msgstr "Cattura"
-
-#~ msgid "Grab a single window"
-#~ msgstr "Cattura una finestra singola"
-
-#~ msgid "Grab the whole screen"
-#~ msgstr "Cattura lo schermo intero"
-
-#~ msgid "after"
-#~ msgstr "dopo"
-
-#~ msgid "Seconds delay"
-#~ msgstr "secondi di ritardo"
-
-#~ msgid "Include decorations"
-#~ msgstr "Includi decorazioni"
-
-#~ msgid "Capture a window or desktop image"
-#~ msgstr "Cattura l'immagine di una finestra o dello schermo"
-
-#~ msgid "_Screen Shot..."
-#~ msgstr "Immagine _schermo..."
-
-#~ msgid "Blur neighboring pixels, but only in low-contrast areas"
-#~ msgstr "Sfuma i pixel vicini ma solo in aree a basso contrasto"
-
-#~ msgid "_Selective Gaussian Blur..."
-#~ msgstr "Se_lettiva Gaussiana..."
-
-#~ msgid "Selective Gaussian Blur"
-#~ msgstr "Sfocatura selettiva Gaussiana"
-
-#~ msgid "_Blur radius:"
-#~ msgstr "Raggio di s_focatura:"
-
-#~ msgid "_Max. delta:"
-#~ msgstr "_Massimo delta:"
-
-#~ msgid "Create an embossing effect using a bump map"
-#~ msgstr "Crea un effetto rilievo usando una mappa a sbalzo"
-
-#~ msgid "_Bump Map..."
-#~ msgstr "Mappa a s_balzo..."
-
-#~ msgid "Bump-mapping"
-#~ msgstr "Mappa a sbalzo in corso"
-
-#~ msgid "Bump Map"
-#~ msgstr "Mappa a sbalzo"
-
-#~ msgid "_Bump map:"
-#~ msgstr "Mappa a s_balzo:"
-
-#~ msgid "_Map type:"
-#~ msgstr "Tipo _mappa:"
-
-#~ msgid "Co_mpensate for darkening"
-#~ msgstr "Co_mpensazione per toni scuri"
-
-#~ msgid "I_nvert bumpmap"
-#~ msgstr "I_nverti mappa a sbalzo"
-
-#~ msgid "_Tile bumpmap"
-#~ msgstr "Af_fianca mappa a sbalzo"
-
-#~ msgid "_Elevation:"
-#~ msgstr "_Elevazione:"
-
-#~ msgid ""
-#~ "The offset can be adjusted by dragging the preview using the middle mouse "
-#~ "button."
-#~ msgstr ""
-#~ "Lo spostamento può essere impostato trascinando l'anteprima con il tasto "
-#~ "centrale del mouse."
-
-#~ msgid "_Waterlevel:"
-#~ msgstr "Livello ac_qua:"
-
-#~ msgid "A_mbient:"
-#~ msgstr "A_mbiente:"
-
-#~ msgid "_X displacement"
-#~ msgstr "Spostamento _X"
-
-#~ msgid "_Pinch"
-#~ msgstr "C_uscino"
-
-#~ msgid "_Y displacement"
-#~ msgstr "Spostamento _Y"
-
-#~ msgid "_Whirl"
-#~ msgstr "Rota_zione"
-
-#~ msgid "Displace pixels as indicated by displacement maps"
-#~ msgstr "Dispone i pixel secondo le mappe di disposizione"
-
-#~ msgid "_Displace..."
-#~ msgstr "S_posta..."
-
-#~ msgid "Displacing"
-#~ msgstr "Spostamento"
-
-#~ msgid "Displace"
-#~ msgstr "Sposta"
-
-#~ msgid "_X displacement:"
-#~ msgstr "Spostamento _X:"
-
-#~ msgid "_Y displacement:"
-#~ msgstr "Spostamento _Y:"
-
-#~ msgid "Displacement Mode"
-#~ msgstr "Modalità spostamento"
-
-#~ msgid "_Cartesian"
-#~ msgstr "_Cartesiano"
-
-#~ msgid "_Polar"
-#~ msgstr "_Polare"
-
-#~ msgid "Edge Behavior"
-#~ msgstr "Comportamento contorni"
-
-#~ msgid "Error during writing indexed/gray image"
-#~ msgstr ""
-#~ "Errore durante la scrittura dell'immagine indicizzata/in scala di grigi"
-
-#~ msgid "Error during writing rgb image"
-#~ msgstr "Errore durante la scrittura dell'immagine rgb"
-
-#~ msgid "Set a color profile on the image"
-#~ msgstr "Imposta un profilo di colore sull'immagine"
-
-#~ msgid "_Assign Color Profile..."
-#~ msgstr "_Assegna il profilo di colore..."
-
-#~ msgid "Assign default RGB Profile"
-#~ msgstr "Assegna il profilo di colore RGB predefinito"
-
-#~ msgid "Apply a color profile on the image"
-#~ msgstr "Applica un profilo di colore sull'immagine"
-
-#~ msgid "_Convert to Color Profile..."
-#~ msgstr "_Converti il profilo di colore..."
-
-#~ msgid "Convert to default RGB Profile"
-#~ msgstr "Converti il profilo RGB predefinito"
-
-#~ msgid "Color profile '%s' is not for RGB color space."
-#~ msgstr "Il profilo di colore \"%s\" non è adatto allo spazio colore RGB."
-
-#~ msgid "The image '%s' has an embedded color profile:"
-#~ msgstr "L'immagine \"%s\" possiede un profilo di colore incorporato:"
-
-#~ msgid "Convert the image to the RGB working space (%s)?"
-#~ msgstr "Convertire l'immagine allo spazio di lavoro RGB (%s)?"
-
-#~ msgid "Convert to RGB working space?"
-#~ msgstr "Conversione nello spazio di lavoro RGB?"
-
-#~ msgid "_Keep"
-#~ msgstr "_Mantieni"
-
-#~ msgid "_Convert"
-#~ msgstr "_Converti"
-
-#~ msgid "_Don't ask me again"
-#~ msgstr "_Non chiedermelo più"
-
-#~ msgid "Select destination profile"
-#~ msgstr "Seleziona profilo di destinazione"
-
-#~ msgid "RGB workspace (%s)"
-#~ msgstr "Spazio di lavoro RGB (%s)"
-
-#~ msgid "Convert to ICC Color Profile"
-#~ msgstr "Converti il profilo di colore ICC"
-
-#~ msgid "Assign ICC Color Profile"
-#~ msgstr "Assegna il profilo di colore ICC"
-
-#~ msgid "_Assign"
-#~ msgstr "_Assegna"
-
-#~ msgid "Current Color Profile"
-#~ msgstr "Profilo di colore corrente"
-
-#~ msgid "Convert to"
-#~ msgstr "Converti a"
-
-#~ msgid "Assign"
-#~ msgstr "Assegna"
-
-#~ msgid "_Rendering Intent:"
-#~ msgstr "Scopo del _rendering:"
-
-#~ msgid "_Black Point Compensation"
-#~ msgstr "Compensazione del punto _nero"
-
-#~ msgid "Destination profile is not for RGB color space."
-#~ msgstr "Il profilo di destinazione non è adatto allo spazio colore RGB."
-
-#~ msgid "Constructing maze using Prim's Algorithm"
-#~ msgstr "Creazione labirinto con l'algoritmo di Prim"
-
-#~ msgid "Constructing tileable maze using Prim's Algorithm"
-#~ msgstr "Creazione labirinto affiancabile con l'algoritmo di Prim"
-
-#~ msgid "Maze"
-#~ msgstr "Labirinto"
-
-#~ msgid "Maze Size"
-#~ msgstr "Dimensione labirinto"
-
-#~ msgid "Pieces:"
-#~ msgstr "Pezzi:"
-
-#~ msgid "Height (pixels):"
-#~ msgstr "Altezza (punti):"
-
-#~ msgid "Algorithm"
-#~ msgstr "Algoritmo"
-
-#~ msgid "Depth first"
-#~ msgstr "In profondità"
-
-#~ msgid "Prim's algorithm"
-#~ msgstr "Algoritmo di Prim"
-
-#~ msgid ""
-#~ "Selection size is not even.\n"
-#~ "Tileable maze won't work perfectly."
-#~ msgstr ""
-#~ "L'ampiezza della selezione non è pari.\n"
-#~ "Il labirinto sovrapponibile non sarà perfetto."
-
-#~ msgid "Draw a labyrinth"
-#~ msgstr "Disegna un labirinto"
-
-#~ msgid "_Maze..."
-#~ msgstr "_Labirinto..."
-
-#~ msgid "Drawing maze"
-#~ msgstr "Disegno labirinto"
