@@ -921,6 +921,8 @@ gimp_ruler_style_set (GtkWidget *widget,
                         "font-scale", &priv->font_scale,
                         NULL);
 
+  priv->backing_store_valid = FALSE;
+
   if (priv->layout)
     {
       g_object_unref (priv->layout);
