@@ -782,10 +782,6 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
                                                             [composite_space - 1];
     }
 
-  if (in == out) /* in-place detected, avoid clobbering since we need to
-                    read it for the compositing stage  */
-    blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
-
   if (composite_to_blend_fish)
     {
       if (in != out || composite_needs_in_color)
@@ -799,6 +795,15 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
 
       babl_process (composite_to_blend_fish, in,    blend_in,    samples);
       babl_process (composite_to_blend_fish, layer, blend_layer, samples);
+    }
+
+  if (in == out) /* in-place detected, avoid clobbering since we need to
+                    read 'in' for the compositing stage  */
+    {
+      if (blend_layer != layer)
+        blend_out = blend_layer;
+      else
+        blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
     }
 
   blend_func (blend_in, blend_layer, blend_out, samples);
