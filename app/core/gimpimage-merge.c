@@ -619,9 +619,11 @@ gimp_image_merge_layers (GimpImage     *image,
       composite_space = gimp_layer_get_composite_space (layer);
       composite_mode  = gimp_layer_get_composite_mode (layer);
 
-      if (layer == bottom_layer && mode != GIMP_LAYER_MODE_DISSOLVE)
+      if (layer == bottom_layer)
         {
-          mode            = GIMP_LAYER_MODE_NORMAL_LEGACY;
+          if (mode != GIMP_LAYER_MODE_DISSOLVE)
+            mode          = GIMP_LAYER_MODE_NORMAL_LEGACY;
+
           blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
           composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
           composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
