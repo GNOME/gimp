@@ -33,7 +33,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-27 09:04+0100\n"
-"PO-Revision-Date: 2017-02-27 12:11+0100\n"
+"PO-Revision-Date: 2017-02-28 13:19+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -14666,7 +14666,7 @@ msgstr "Moltiplica (tradizionale)"
 #: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
-msgstr "Schermo (tradizionale)"
+msgstr "Scolora (tradizionale)"
 
 #: ../app/operations/operations-enums.c:154
 msgctxt "layer-mode"
@@ -14801,7 +14801,7 @@ msgstr "Moltiplica"
 #: ../app/operations/operations-enums.c:180
 msgctxt "layer-mode"
 msgid "Screen"
-msgstr "Schermo"
+msgstr "Scolora"
 
 #: ../app/operations/operations-enums.c:181
 msgctxt "layer-mode"
