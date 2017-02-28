@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-30 07:55+0200\n"
-"PO-Revision-Date: 2016-09-30 07:57+0200\n"
+"PO-Revision-Date: 2017-02-28 15:06+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -5760,7 +5760,7 @@ msgstr "Moltiplicatore"
 #: ../app/base/base-enums.c:117
 msgctxt "layer-mode-effects"
 msgid "Screen"
-msgstr "Schermo"
+msgstr "Scolora"
 
 #: ../app/base/base-enums.c:118
 msgctxt "layer-mode-effects"
