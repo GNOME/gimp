@@ -74,7 +74,7 @@ gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
                 _("MyPaint Brush Tool: Use MyPaint brushes in GIMP"),
                 N_("M_yPaint Brush"), "Y",
                 NULL, GIMP_HELP_TOOL_MYPAINT_BRUSH,
-                GIMP_STOCK_TOOL_MYPAINT_BRUSH,
+                GIMP_ICON_TOOL_MYPAINT_BRUSH,
                 data);
 }
 

@@ -106,7 +106,7 @@ gimp_unified_transform_tool_register (GimpToolRegisterCallback  callback,
                   "Transform the layer, selection or path"),
                 N_("_Unified Transform"), "<shift>L",
                 NULL, GIMP_HELP_TOOL_UNIFIED_TRANSFORM,
-                GIMP_STOCK_TOOL_UNIFIED_TRANSFORM,
+                GIMP_ICON_TOOL_UNIFIED_TRANSFORM,
                 data);
 }
 

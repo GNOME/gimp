@@ -39,7 +39,7 @@
 
 static const GimpActionEntry mypaint_brushes_actions[] =
 {
-  { "mypaint-brushes-popup", GIMP_STOCK_MYPAINT_BRUSH,
+  { "mypaint-brushes-popup", GIMP_ICON_MYPAINT_BRUSH,
     NC_("mypaint-brushes-action", "MyPaint Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_MYPAINT_BRUSH_DIALOG },
 
@@ -61,7 +61,7 @@ static const GimpActionEntry mypaint_brushes_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_MYPAINT_BRUSH_COPY_LOCATION },
 
-  { "mypaint-brushes-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
+  { "mypaint-brushes-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("mypaint-brushes-action", "Show in _File Manager"), NULL,
     NC_("mypaint-brushes-action", "Show MyPaint brush file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),

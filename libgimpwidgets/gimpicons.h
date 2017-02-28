@@ -31,6 +31,31 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#define GIMP_ICON_IMAGE_OPEN               "gimp-image-open"
+#define GIMP_ICON_IMAGE_RELOAD             "gimp-image-reload"
+#define GIMP_ICON_CLOSE_ALL                "gimp-close-all"
+#define GIMP_ICON_FILE_MANAGER             "gimp-file-manager"
+#define GIMP_ICON_SHRED                    "gimp-shred"
+
+#define GIMP_ICON_HFILL                    "gimp-hfill"
+#define GIMP_ICON_VFILL                    "gimp-vfill"
+
+#define GIMP_ICON_COLOR_CMYK               "gimp-color-cmyk"
+#define GIMP_ICON_COLOR_WATER              "gimp-color-water"
+
+#define GIMP_ICON_TOOL_HANDLE_TRANSFORM    "gimp-tool-handle-transform"
+#define GIMP_ICON_TOOL_MYPAINT_BRUSH       "gimp-tool-mypaint-brush"
+#define GIMP_ICON_TOOL_N_POINT_DEFORMATION "gimp-tool-n-point-deformation"
+#define GIMP_ICON_TOOL_SEAMLESS_CLONE      "gimp-tool-seamless-clone"
+#define GIMP_ICON_TOOL_UNIFIED_TRANSFORM   "gimp-tool-unified-transform"
+#define GIMP_ICON_TOOL_WARP                "gimp-tool-warp"
+
+#define GIMP_ICON_SYMMETRY                 "gimp-symmetry"
+
+#define GIMP_ICON_MYPAINT_BRUSH            GIMP_ICON_TOOL_MYPAINT_BRUSH
+#define GIMP_ICON_CONVERT_PRECISION        GIMP_STOCK_CONVERT_RGB
+
+
 /*  in button size:  */
 
 #define GIMP_STOCK_ANCHOR                   "gimp-anchor"
@@ -41,13 +66,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PASTE_INTO               "gimp-paste-into"
 #define GIMP_STOCK_RESET                    "gimp-reset"
 #define GIMP_STOCK_VISIBLE                  "gimp-visible"
-
-#define GIMP_STOCK_IMAGE_OPEN               "gimp-image-open"
-#define GIMP_STOCK_IMAGE_RELOAD             "gimp-image-reload"
-#define GIMP_STOCK_CLOSE_ALL                "gimp-close-all"
-#define GIMP_STOCK_CLIPBOARD                "gimp-clipboard"
-#define GIMP_STOCK_FILE_MANAGER             "gimp-file-manager"
-#define GIMP_STOCK_SHRED                    "gimp-shred"
 
 #define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
 #define GIMP_STOCK_GRADIENT_BILINEAR             "gimp-gradient-bilinear"
@@ -73,9 +91,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_HCENTER                  "gimp-hcenter"
 #define GIMP_STOCK_VCENTER                  "gimp-vcenter"
 
-#define GIMP_STOCK_HFILL                    "gimp-hfill"
-#define GIMP_STOCK_VFILL                    "gimp-vfill"
-
 #define GIMP_STOCK_HCHAIN                   "gimp-hchain"
 #define GIMP_STOCK_HCHAIN_BROKEN            "gimp-hchain-broken"
 #define GIMP_STOCK_VCHAIN                   "gimp-vchain"
@@ -99,8 +114,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_COLOR_PICKER_GRAY        "gimp-color-picker-gray"
 #define GIMP_STOCK_COLOR_PICKER_WHITE       "gimp-color-picker-white"
 #define GIMP_STOCK_COLOR_TRIANGLE           "gimp-color-triangle"
-#define GIMP_STOCK_COLOR_CMYK               "gimp-color-cmyk"
-#define GIMP_STOCK_COLOR_WATER              "gimp-color-water"
 #define GIMP_STOCK_COLOR_PICK_FROM_SCREEN   "gimp-color-pick-from-screen"
 
 #define GIMP_STOCK_CHAR_PICKER              "gimp-char-picker"
@@ -133,7 +146,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_FREE_SELECT         "gimp-tool-free-select"
 #define GIMP_STOCK_TOOL_FOREGROUND_SELECT   "gimp-tool-foreground-select"
 #define GIMP_STOCK_TOOL_FUZZY_SELECT        "gimp-tool-fuzzy-select"
-#define GIMP_STOCK_TOOL_HANDLE_TRANSFORM    "gimp-tool-handle-transform"
 #define GIMP_STOCK_TOOL_HEAL                "gimp-tool-heal"
 #define GIMP_STOCK_TOOL_HUE_SATURATION      "gimp-tool-hue-saturation"
 #define GIMP_STOCK_TOOL_INK                 "gimp-tool-ink"
@@ -141,8 +153,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_LEVELS              "gimp-tool-levels"
 #define GIMP_STOCK_TOOL_MEASURE             "gimp-tool-measure"
 #define GIMP_STOCK_TOOL_MOVE                "gimp-tool-move"
-#define GIMP_STOCK_TOOL_MYPAINT_BRUSH       "gimp-tool-mypaint-brush"
-#define GIMP_STOCK_TOOL_N_POINT_DEFORMATION "gimp-tool-n-point-deformation"
 #define GIMP_STOCK_TOOL_PAINTBRUSH          "gimp-tool-paintbrush"
 #define GIMP_STOCK_TOOL_PATH                "gimp-tool-path"
 #define GIMP_STOCK_TOOL_PENCIL              "gimp-tool-pencil"
@@ -152,13 +162,10 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_RECT_SELECT         "gimp-tool-rect-select"
 #define GIMP_STOCK_TOOL_ROTATE              "gimp-tool-rotate"
 #define GIMP_STOCK_TOOL_SCALE               "gimp-tool-scale"
-#define GIMP_STOCK_TOOL_SEAMLESS_CLONE      "gimp-tool-seamless-clone"
 #define GIMP_STOCK_TOOL_SHEAR               "gimp-tool-shear"
 #define GIMP_STOCK_TOOL_SMUDGE              "gimp-tool-smudge"
 #define GIMP_STOCK_TOOL_TEXT                "gimp-tool-text"
 #define GIMP_STOCK_TOOL_THRESHOLD           "gimp-tool-threshold"
-#define GIMP_STOCK_TOOL_UNIFIED_TRANSFORM   "gimp-tool-unified-transform"
-#define GIMP_STOCK_TOOL_WARP                "gimp-tool-warp"
 #define GIMP_STOCK_TOOL_ZOOM                "gimp-tool-zoom"
 
 
@@ -200,7 +207,7 @@ G_BEGIN_DECLS
 
 #ifndef GIMP_DISABLE_DEPRECATED
 #define GIMP_STOCK_INDEXED_PALETTE          "gimp-colormap"
-#endif
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 #define GIMP_STOCK_IMAGES                   "gimp-images"
 #define GIMP_STOCK_LAYERS                   "gimp-layers"
@@ -220,7 +227,7 @@ G_BEGIN_DECLS
 #ifndef GIMP_DISABLE_DEPRECATED
 #define GIMP_STOCK_QMASK_OFF                "gimp-quick-mask-off"
 #define GIMP_STOCK_QMASK_ON                 "gimp-quick-mask-on"
-#endif
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 #define GIMP_STOCK_HISTOGRAM                "gimp-histogram"
 #define GIMP_STOCK_HISTOGRAM_LINEAR         "gimp-histogram-linear"
@@ -240,7 +247,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_INPUT_DEVICE             "gimp-input-device"
 #define GIMP_STOCK_CURSOR                   "gimp-cursor"
 #define GIMP_STOCK_SAMPLE_POINT             "gimp-sample-point"
-#define GIMP_STOCK_SYMMETRY                 "gimp-symmetry"
 #define GIMP_STOCK_DYNAMICS                 "gimp-dynamics"
 #define GIMP_STOCK_TOOL_PRESET              "gimp-tool-preset"
 
@@ -297,11 +303,10 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_BRUSH                    GIMP_STOCK_TOOL_PAINTBRUSH
 #define GIMP_STOCK_BUFFER                   "edit-paste"
 #define GIMP_STOCK_DETACH                   GTK_STOCK_CONVERT
+#define GIMP_STOCK_FONT                     GTK_STOCK_SELECT_FONT
 #define GIMP_STOCK_GRADIENT                 GIMP_STOCK_TOOL_BLEND
-#define GIMP_STOCK_MYPAINT_BRUSH            GIMP_STOCK_TOOL_MYPAINT_BRUSH
 #define GIMP_STOCK_PALETTE                  GTK_STOCK_SELECT_COLOR
 #define GIMP_STOCK_CONTROLLER_MOUSE         GIMP_STOCK_CURSOR
-#define GIMP_STOCK_CONVERT_PRECISION        GIMP_STOCK_CONVERT_RGB
 #define GIMP_STOCK_PRINT_RESOLUTION         "document-print"
 
 /* Deprecated icons: */

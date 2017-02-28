@@ -166,7 +166,7 @@ gimp_handle_transform_tool_register (GimpToolRegisterCallback  callback,
                     "Deform the layer, selection or path with handles"),
                   N_("_Handle Transform"), "<ctrl><shift>H",
                   NULL, GIMP_HELP_TOOL_HANDLE_TRANSFORM,
-                  GIMP_STOCK_TOOL_HANDLE_TRANSFORM,
+                  GIMP_ICON_TOOL_HANDLE_TRANSFORM,
                   data);
 }
 

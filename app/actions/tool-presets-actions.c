@@ -64,7 +64,7 @@ static const GimpActionEntry tool_presets_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_TOOL_PRESET_COPY_LOCATION },
 
-  { "tool-presets-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
+  { "tool-presets-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("tool-presets-action", "Show in _File Manager"), NULL,
     NC_("tool-presets-action", "Show tool preset file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),

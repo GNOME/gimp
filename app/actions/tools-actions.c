@@ -211,7 +211,7 @@ static const GimpEnumActionEntry tools_airbrush_flow_actions[] =
 
 static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
 {
-  { "tools-mypaint-brush-radius-set", GIMP_STOCK_TOOL_MYPAINT_BRUSH,
+  { "tools-mypaint-brush-radius-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
     "Set MyPaint Brush Radius", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
@@ -219,7 +219,7 @@ static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
 
 static const GimpEnumActionEntry tools_mybrush_hardness_actions[] =
 {
-  { "tools-mypaint-brush-hardness-set", GIMP_STOCK_TOOL_MYPAINT_BRUSH,
+  { "tools-mypaint-brush-hardness-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
     "Set MyPaint Brush Hardness", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
@@ -244,8 +244,7 @@ static const GimpEnumActionEntry tools_transform_preview_opacity_actions[] =
 
 static const GimpEnumActionEntry tools_warp_effect_size_actions[] =
 {
-  { "tools-warp-effect-size-set",
-    GIMP_STOCK_TOOL_WARP,
+  { "tools-warp-effect-size-set", GIMP_ICON_TOOL_WARP,
     "Set Warp Effect Size", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
@@ -253,8 +252,7 @@ static const GimpEnumActionEntry tools_warp_effect_size_actions[] =
 
 static const GimpEnumActionEntry tools_warp_effect_hardness_actions[] =
 {
-  { "tools-warp-effect-hardness-set",
-    GIMP_STOCK_TOOL_WARP,
+  { "tools-warp-effect-hardness-set", GIMP_ICON_TOOL_WARP,
     "Set Warp Effect Hardness", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }

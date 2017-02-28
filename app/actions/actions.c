@@ -191,7 +191,7 @@ static const GimpActionFactoryEntry action_groups[] =
   { "layers", N_("Layers"), GIMP_STOCK_LAYER,
     layers_actions_setup,
     layers_actions_update },
-  { "mypaint-brushes", N_("MyPaint Brushes"), GIMP_STOCK_MYPAINT_BRUSH,
+  { "mypaint-brushes", N_("MyPaint Brushes"), GIMP_ICON_MYPAINT_BRUSH,
     mypaint_brushes_actions_setup,
     mypaint_brushes_actions_update },
   { "palette-editor", N_("Palette Editor"), GIMP_STOCK_PALETTE,

@@ -61,7 +61,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-device-status",
     GIMP_HELP_DEVICE_STATUS_DIALOG },
 
-  { "dialogs-symmetry", GIMP_STOCK_SYMMETRY,
+  { "dialogs-symmetry", GIMP_ICON_SYMMETRY,
     NC_("dialogs-action", "_Symmetry Painting"), NULL,
     NC_("dialogs-action", "Open the symmetry dialog"),
     "gimp-symmetry-editor",
@@ -157,7 +157,7 @@ const GimpStringActionEntry dialogs_dockable_actions[] =
     "gimp-dynamics-editor",
     GIMP_HELP_DYNAMICS_EDITOR_DIALOG },
 
-  { "dialogs-mypaint-brushes", GIMP_STOCK_MYPAINT_BRUSH,
+  { "dialogs-mypaint-brushes", GIMP_ICON_MYPAINT_BRUSH,
     NC_("dialogs-action", "_MyPaint Brushes"), NULL,
     NC_("dialogs-action", "Open the mypaint brushes dialog"),
     "gimp-mypaint-brush-grid|gimp-mapyint-brush-list",

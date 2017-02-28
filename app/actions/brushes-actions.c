@@ -67,7 +67,7 @@ static const GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_BRUSH_COPY_LOCATION },
 
-  { "brushes-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
+  { "brushes-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("brushes-action", "Show in _File Manager"), NULL,
     NC_("brushes-action", "Show brush file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),

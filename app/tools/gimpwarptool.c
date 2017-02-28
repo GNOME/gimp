@@ -143,7 +143,7 @@ gimp_warp_tool_register (GimpToolRegisterCallback  callback,
                 _("Warp Transform: Deform with different tools"),
                 N_("_Warp Transform"), "W",
                 NULL, GIMP_HELP_TOOL_WARP,
-                GIMP_STOCK_TOOL_WARP,
+                GIMP_ICON_TOOL_WARP,
                 data);
 }
 
@@ -751,7 +751,7 @@ gimp_warp_tool_create_filter (GimpWarpTool *wt,
   wt->filter = gimp_drawable_filter_new (drawable,
                                          _("Warp transform"),
                                          wt->graph,
-                                         GIMP_STOCK_TOOL_WARP);
+                                         GIMP_ICON_TOOL_WARP);
 
   gimp_drawable_filter_set_region (wt->filter, GIMP_FILTER_REGION_DRAWABLE);
 

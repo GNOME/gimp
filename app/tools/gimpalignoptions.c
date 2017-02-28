@@ -233,10 +233,10 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
       icon_name = GIMP_STOCK_GRAVITY_SOUTH;
       break;
     case GIMP_ARRANGE_HFILL:
-        icon_name = GIMP_STOCK_HFILL;
+        icon_name = GIMP_ICON_HFILL;
         break;
     case GIMP_ARRANGE_VFILL:
-        icon_name = GIMP_STOCK_VFILL;
+        icon_name = GIMP_ICON_VFILL;
         break;
     default:
       g_return_val_if_reached (NULL);

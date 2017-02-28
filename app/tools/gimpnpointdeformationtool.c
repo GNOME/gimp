@@ -160,7 +160,7 @@ gimp_n_point_deformation_tool_register (GimpToolRegisterCallback  callback,
                     "image using points"),
                   N_("_N-Point Deformation"), "<shift>N",
                   NULL, GIMP_HELP_TOOL_N_POINT_DEFORMATION,
-                  GIMP_STOCK_TOOL_N_POINT_DEFORMATION,
+                  GIMP_ICON_TOOL_N_POINT_DEFORMATION,
                   data);
 }
 

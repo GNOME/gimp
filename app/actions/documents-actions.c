@@ -66,7 +66,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_copy_location_cmd_callback),
     GIMP_HELP_DOCUMENT_COPY_LOCATION },
 
-  { "documents-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
+  { "documents-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("documents-action", "Show in _File Manager"), NULL,
     NC_("documents-action", "Show image location in the file manager"),
     G_CALLBACK (documents_show_in_file_manager_cmd_callback),
@@ -78,7 +78,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_remove_cmd_callback),
     GIMP_HELP_DOCUMENT_REMOVE },
 
-  { "documents-clear", GIMP_STOCK_SHRED,
+  { "documents-clear", GIMP_ICON_SHRED,
     NC_("documents-action", "_Clear History"), NULL,
     NC_("documents-action", "Clear the entire document history"),
     G_CALLBACK (documents_clear_cmd_callback),

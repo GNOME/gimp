@@ -191,7 +191,7 @@ gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
                   _("Seamless Clone: Seamlessly paste one image into another"),
                   N_("_Seamless Clone"), NULL,
                   NULL, GIMP_HELP_TOOL_SEAMLESS_CLONE,
-                  GIMP_STOCK_TOOL_SEAMLESS_CLONE,
+                  GIMP_ICON_TOOL_SEAMLESS_CLONE,
                   data);
 }
 
@@ -762,7 +762,7 @@ gimp_seamless_clone_tool_create_filter (GimpSeamlessCloneTool *sc,
   sc->filter = gimp_drawable_filter_new (drawable,
                                          _("Seamless Clone"),
                                          sc->render_node,
-                                         GIMP_STOCK_TOOL_SEAMLESS_CLONE);
+                                         GIMP_ICON_TOOL_SEAMLESS_CLONE);
 
   gimp_drawable_filter_set_region (sc->filter, GIMP_FILTER_REGION_DRAWABLE);
 

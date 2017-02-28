@@ -67,13 +67,6 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_RESET,          N_("_Reset"),          0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VISIBLE,        N_("Visible"),         0, 0, LIBGIMP_DOMAIN },
 
-  { GIMP_STOCK_IMAGE_OPEN,                    NULL,   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_IMAGE_RELOAD,                  NULL,   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_CLOSE_ALL,                     NULL,   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_CLIPBOARD,                     NULL,   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_FILE_MANAGER,                  NULL,   0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_SHRED,                         NULL,   0, 0, LIBGIMP_DOMAIN },
-
   { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRADIENT_RADIAL,               NULL,   0, 0, LIBGIMP_DOMAIN },
@@ -98,9 +91,6 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_HCENTER,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VCENTER,                  NULL,        0, 0, LIBGIMP_DOMAIN },
 
-  { GIMP_STOCK_HFILL,                    NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_VFILL,                    NULL,        0, 0, LIBGIMP_DOMAIN },
-
   { GIMP_STOCK_HCHAIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_HCHAIN_BROKEN,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VCHAIN,                   NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -124,8 +114,6 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_COLOR_PICKER_GRAY,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_PICKER_WHITE,       NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_TRIANGLE,           NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_COLOR_CMYK,               NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_COLOR_WATER,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_COLOR_PICK_FROM_SCREEN,   NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CHAR_PICKER,              NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -266,15 +254,12 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOL_FOREGROUND_SELECT, N_("_Select"), 0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_FUZZY_SELECT,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_HUE_SATURATION,      NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_HANDLE_TRANSFORM,N_("_Transform"),0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_HEAL,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_INK,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_ISCISSORS,           NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_LEVELS,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_MEASURE,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_MOVE,                NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_MYPAINT_BRUSH,       NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_N_POINT_DEFORMATION, NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_PAINTBRUSH,          NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_PATH,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_PENCIL,              NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -284,13 +269,10 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TOOL_RECT_SELECT,         NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_ROTATE,       N_("_Rotate"),      0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_SCALE,        N_("_Scale"),       0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_SEAMLESS_CLONE,      NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_SHEAR,        N_("_Shear"),       0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_SMUDGE,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_TEXT,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_THRESHOLD,           NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_UNIFIED_TRANSFORM, N_("_Transform"), 0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TOOL_WARP,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_ZOOM,                NULL,        0, 0, LIBGIMP_DOMAIN }
 };
 

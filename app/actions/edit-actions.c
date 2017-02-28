@@ -95,7 +95,7 @@ static const GimpActionEntry edit_actions[] =
     G_CALLBACK (edit_strong_redo_cmd_callback),
     GIMP_HELP_EDIT_STRONG_REDO },
 
-  { "edit-undo-clear", GIMP_STOCK_SHRED,
+  { "edit-undo-clear", GIMP_ICON_SHRED,
     NC_("edit-action", "_Clear Undo History"), NULL,
     NC_("edit-action", "Remove all operations from the undo history"),
     G_CALLBACK (edit_undo_clear_cmd_callback),

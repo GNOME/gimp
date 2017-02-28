@@ -72,7 +72,7 @@ static const GimpActionEntry file_actions[] =
   { "file-create-menu",      NULL, NC_("file-action", "Crea_te")      },
   { "file-open-recent-menu", NULL, NC_("file-action", "Open _Recent") },
 
-  { "file-open", GIMP_STOCK_IMAGE_OPEN,
+  { "file-open", GIMP_ICON_IMAGE_OPEN,
     NC_("file-action", "_Open..."), "<primary>O",
     NC_("file-action", "Open an image file"),
     G_CALLBACK (file_open_cmd_callback),
@@ -96,13 +96,13 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_create_template_cmd_callback),
     GIMP_HELP_FILE_CREATE_TEMPLATE },
 
-  { "file-revert", GIMP_STOCK_IMAGE_RELOAD,
+  { "file-revert", GIMP_ICON_IMAGE_RELOAD,
     NC_("file-action", "Re_vert"), NULL,
     NC_("file-action", "Reload the image file from disk"),
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
-  { "file-close-all", GIMP_STOCK_CLOSE_ALL,
+  { "file-close-all", GIMP_ICON_CLOSE_ALL,
     NC_("file-action", "Close all"), "<primary><shift>W",
     NC_("file-action", "Close all opened images"),
     G_CALLBACK (file_close_all_cmd_callback),
@@ -114,7 +114,7 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_copy_location_cmd_callback),
     GIMP_HELP_FILE_COPY_LOCATION },
 
-  { "file-show-in-file-manager", GIMP_STOCK_FILE_MANAGER,
+  { "file-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
     NC_("file-action", "Show in _File Manager"), "<primary><alt>F",
     NC_("file-action", "Show image file location in the file manager"),
     G_CALLBACK (file_show_in_file_manager_cmd_callback),
