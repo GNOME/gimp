@@ -20,6 +20,8 @@ EXPORTS
 	gimp_clone_type_get_type
 	gimp_color_tag_get_type
 	gimp_component_type_get_type
+	gimp_convert_dither_type_compat_get_type
+	gimp_convert_palette_type_compat_get_type
 	gimp_convert_palette_type_get_type
 	gimp_convolve_type_compat_get_type
 	gimp_convolve_type_get_type
