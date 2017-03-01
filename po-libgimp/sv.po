@@ -1,19 +1,20 @@
 # Swedish messages for libgimp.
-# Copyright © 1999-2016 Free Software Foundation, Inc.
+# Copyright © 1999-2017 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se> 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
 # Sebastian Rasmussen <sebras@gmail.com>, 2016.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-11-06 16:51+0000\n"
-"PO-Revision-Date: 2016-11-10 22:39+0100\n"
-"Last-Translator: Sebastian Rasmussen <sebras@gmail.com>\n"
+"POT-Creation-Date: 2017-02-28 18:42+0000\n"
+"PO-Revision-Date: 2017-03-01 19:09+0100\n"
+"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -51,79 +52,79 @@ msgstr "Penselval"
 msgid "_Browse..."
 msgstr "_Bläddra..."
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:249 ../libgimp/gimpexport.c:285
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Insticksmodulen %s kan inte hantera lager"
 
-#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
-#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:250 ../libgimp/gimpexport.c:259
+#: ../libgimp/gimpexport.c:268 ../libgimp/gimpexport.c:286
 msgid "Merge Visible Layers"
 msgstr "Sammanfoga synliga lager"
 
-#: ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:258
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Insticksmodulen %s kan inte hantera lageravstånd, lagerstorlek eller "
 "lageropacitet"
 
-#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:267 ../libgimp/gimpexport.c:276
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "Insticksmodulen %s kan endast hantera lager som bildrutor i en animation"
 
-#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
+#: ../libgimp/gimpexport.c:268 ../libgimp/gimpexport.c:277
 msgid "Save as Animation"
 msgstr "Spara som animation"
 
-#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
-#: ../libgimp/gimpexport.c:289
+#: ../libgimp/gimpexport.c:277 ../libgimp/gimpexport.c:286
+#: ../libgimp/gimpexport.c:295
 msgid "Flatten Image"
 msgstr "Platta till bild"
 
-#: ../libgimp/gimpexport.c:288
+#: ../libgimp/gimpexport.c:294
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Insticksmodulen %s kan inte hantera transparens"
 
-#: ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:303
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Insticksmodulen %s kan inte hantera lagermasker"
 
-#: ../libgimp/gimpexport.c:298
+#: ../libgimp/gimpexport.c:304
 msgid "Apply Layer Masks"
 msgstr "Applicera lagermask"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:312
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder"
 
-#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
-#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:351
+#: ../libgimp/gimpexport.c:360
 msgid "Convert to RGB"
 msgstr "Konvertera till RGB"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:321
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera gråskalebilder"
 
-#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
-#: ../libgimp/gimpexport.c:366
+#: ../libgimp/gimpexport.c:322 ../libgimp/gimpexport.c:351
+#: ../libgimp/gimpexport.c:372
 msgid "Convert to Grayscale"
 msgstr "Konvertera till gråskala"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libgimp/gimpexport.c:330
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Insticksmodulen %s kan endast hantera indexerade bilder"
 
-#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
-#: ../libgimp/gimpexport.c:364
+#: ../libgimp/gimpexport.c:331 ../libgimp/gimpexport.c:360
+#: ../libgimp/gimpexport.c:370
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -131,14 +132,14 @@ msgstr ""
 "Konvertera till Indexerat med standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera bitmappindexerade (tvåfärgsindexerade) "
 "bilder"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:341
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -146,54 +147,64 @@ msgstr ""
 "Konvertera till Indexerat med bitmapp-standardinställningar\n"
 "(Gör det manuellt om du vill finjustera)"
 
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:350
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Insticksmodulen %s kan endast hantera RGB-bilder eller gråskalebilder"
 
-#: ../libgimp/gimpexport.c:353
+#: ../libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera RGB-bilder eller indexerade bilder"
 
-#: ../libgimp/gimpexport.c:363
+#: ../libgimp/gimpexport.c:369
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Insticksmodulen %s kan endast hantera gråskalebilder eller indexerade bilder"
 
-#: ../libgimp/gimpexport.c:374
+#: ../libgimp/gimpexport.c:380
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Insticksmodulen %s behöver en alfakanal"
 
-#: ../libgimp/gimpexport.c:375
+#: ../libgimp/gimpexport.c:381
 msgid "Add Alpha Channel"
 msgstr "Lägg till alfakanal"
 
-#: ../libgimp/gimpexport.c:434
+#: ../libgimp/gimpexport.c:440
 msgid "Confirm Save"
 msgstr "Bekräfta sparande"
 
-#: ../libgimp/gimpexport.c:440
-msgid "Confirm"
-msgstr "Bekräfta"
+#: ../libgimp/gimpexport.c:445 ../libgimp/gimpexport.c:527
+#: ../libgimp/gimpexport.c:1019 ../libgimpwidgets/gimpcolorbutton.c:540
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:152
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:162
+#: ../libgimpwidgets/gimpfileentry.c:442 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:496
+msgid "_Cancel"
+msgstr "_Avbryt"
 
-#: ../libgimp/gimpexport.c:516
+#: ../libgimp/gimpexport.c:446
+msgid "C_onfirm"
+msgstr "_Bekräfta"
+
+#: ../libgimp/gimpexport.c:522
 msgid "Export File"
 msgstr "Exportera fil"
 
-#: ../libgimp/gimpexport.c:520
+#: ../libgimp/gimpexport.c:526
 msgid "_Ignore"
 msgstr "_Ignorera"
 
-#: ../libgimp/gimpexport.c:522 ../libgimp/gimpexport.c:1017
+#: ../libgimp/gimpexport.c:528 ../libgimp/gimpexport.c:1020
 msgid "_Export"
-msgstr "_Export"
+msgstr "_Exportera"
 
 #. the headline
-#: ../libgimp/gimpexport.c:552
+#: ../libgimp/gimpexport.c:558
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -202,11 +213,11 @@ msgstr ""
 "Din bild bör exporteras innan den kan sparas som %s av följande anledningar:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:626
+#: ../libgimp/gimpexport.c:632
 msgid "The export conversion won't modify your original image."
 msgstr "Konverteringen vid export modifierar inte originalbilden."
 
-#: ../libgimp/gimpexport.c:733
+#: ../libgimp/gimpexport.c:739
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -215,7 +226,7 @@ msgstr ""
 "Du kommer att spara en lagermask som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: ../libgimp/gimpexport.c:739
+#: ../libgimp/gimpexport.c:745
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -224,7 +235,7 @@ msgstr ""
 "Du kommer att spara en kanal (sparad markering) som %s.\n"
 "Detta kommer inte att spara de synliga lagren."
 
-#: ../libgimp/gimpexport.c:1008
+#: ../libgimp/gimpexport.c:1013
 msgid "Export Image as "
 msgstr "Exportera bild som "
 
@@ -236,36 +247,40 @@ msgstr "Typsnittsval"
 msgid "Gradient Selection"
 msgstr "Gradientval"
 
-#: ../libgimp/gimpimagemetadata.c:605
+#: ../libgimp/gimpimagemetadata.c:610
 msgid "Background"
 msgstr "Bakgrund"
 
-#: ../libgimp/gimpimagemetadata.c:796
+#: ../libgimp/gimpimagemetadata.c:799
 #, c-format
 msgid "Rotate %s?"
 msgstr "Rotera %s?"
 
-#: ../libgimp/gimpimagemetadata.c:802
+#: ../libgimp/gimpimagemetadata.c:805
 msgid "_Keep Original"
 msgstr "_Behåll original"
 
-#: ../libgimp/gimpimagemetadata.c:844
+#: ../libgimp/gimpimagemetadata.c:806 ../libgimpwidgets/gimpicons.c:270
+msgid "_Rotate"
+msgstr "_Rotera"
+
+#: ../libgimp/gimpimagemetadata.c:847
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:860
+#: ../libgimp/gimpimagemetadata.c:863
 msgid "Rotated"
 msgstr "Roterad"
 
-#: ../libgimp/gimpimagemetadata.c:878
+#: ../libgimp/gimpimagemetadata.c:881
 msgid "This image contains Exif orientation metadata."
 msgstr "Denna bild innehåller Exif-orienteringsmetadata."
 
-#: ../libgimp/gimpimagemetadata.c:896
+#: ../libgimp/gimpimagemetadata.c:899
 msgid "Would you like to rotate the image?"
 msgstr "Vill du rotera bilden?"
 
-#: ../libgimp/gimpimagemetadata.c:908
+#: ../libgimp/gimpimagemetadata.c:911
 msgid "_Don't ask me again"
 msgstr "_Fråga mig inte igen"
 
@@ -828,7 +843,7 @@ msgstr "Snitt (punkter)"
 #: ../libgimpbase/gimpbaseenums.c:761
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
-msgstr "Snitt (korshår)"
+msgstr "Snitt (hårkors)"
 
 #: ../libgimpbase/gimpbaseenums.c:762
 msgctxt "grid-style"
@@ -1275,22 +1290,22 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskär med förhållande"
 
-#: ../libgimpbase/gimpmetadata.c:523
+#: ../libgimpbase/gimpmetadata.c:575
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan endast läsa in metadata från lokala filer"
 
-#: ../libgimpbase/gimpmetadata.c:583
+#: ../libgimpbase/gimpmetadata.c:635
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan endast spara metadata till lokala filer"
 
-#: ../libgimpbase/gimpmetadata.c:658
+#: ../libgimpbase/gimpmetadata.c:711
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Misslyckades med tolkning av Exif-data."
 
-#: ../libgimpbase/gimpmetadata.c:709
+#: ../libgimpbase/gimpmetadata.c:762
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Misslyckades med tolkning av XMP-data."
@@ -1596,17 +1611,17 @@ msgstr "värde för elementet %s är inte en giltig UTF-8-sträng"
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "”yes” eller ”no” för booleskt element %s förväntades, fick ”%s”"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:540
+#: ../libgimpconfig/gimpconfig-deserialize.c:568
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ogiltigt värde ”%s” för element %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:555
+#: ../libgimpconfig/gimpconfig-deserialize.c:583
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ogiltigt värde ”%ld” för element %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:624
+#: ../libgimpconfig/gimpconfig-deserialize.c:652
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "vid tolkning av elementet ”%s”: %s"
@@ -1726,6 +1741,17 @@ msgstr "_Svart"
 msgid "_White"
 msgstr "_Vit"
 
+#: ../libgimpwidgets/gimpcolorbutton.c:539 ../libgimpwidgets/gimpicons.c:67
+msgid "_Reset"
+msgstr "_Återställ"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:541
+#: ../libgimpwidgets/gimpfileentry.c:443 ../libgimpwidgets/gimpquerybox.c:274
+#: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
+#: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:497
+msgid "_OK"
+msgstr "_OK"
+
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:94
 msgid "All files (*.*)"
 msgstr "Alla filer (*.*)"
@@ -1733,6 +1759,14 @@ msgstr "Alla filer (*.*)"
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:99
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-färgprofil (*.icc, *.icm)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:153
+msgid "_Save"
+msgstr "_Spara"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:163
+msgid "_Open"
+msgstr "_Öppna"
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:325
 #: ../libgimpwidgets/gimppatheditor.c:266
@@ -1783,6 +1817,10 @@ msgstr ""
 #: ../libgimpwidgets/gimpcolorselection.c:321
 msgid "HTML _notation:"
 msgstr "HTML-_notation:"
+
+#: ../libgimpwidgets/gimpdialog.c:176
+msgid "_Help"
+msgstr "_Hjälp"
 
 #: ../libgimpwidgets/gimpfileentry.c:152
 msgid "Show file location in the file manager"
@@ -1845,52 +1883,43 @@ msgstr "Klistra in som ny"
 msgid "Paste Into"
 msgstr "Klistra in i"
 
-#: ../libgimpwidgets/gimpicons.c:67
-msgid "_Reset"
-msgstr "_Återställ"
-
 #: ../libgimpwidgets/gimpicons.c:68
 msgid "Visible"
 msgstr "Synlig"
 
-#: ../libgimpwidgets/gimpicons.c:114 ../libgimpwidgets/gimpicons.c:118
+#: ../libgimpwidgets/gimpicons.c:104 ../libgimpwidgets/gimpicons.c:108
 msgid "_Stroke"
 msgstr "_Stryk"
 
-#: ../libgimpwidgets/gimpicons.c:132
+#: ../libgimpwidgets/gimpicons.c:120
 msgid "L_etter Spacing"
 msgstr "_Teckenmellanrum"
 
-#: ../libgimpwidgets/gimpicons.c:133
+#: ../libgimpwidgets/gimpicons.c:121
 msgid "L_ine Spacing"
 msgstr "_Radmellanrum"
 
-#: ../libgimpwidgets/gimpicons.c:150
+#: ../libgimpwidgets/gimpicons.c:138
 msgid "Re_size"
 msgstr "_Ändra storlek"
 
-#: ../libgimpwidgets/gimpicons.c:151 ../libgimpwidgets/gimpicons.c:286
+#: ../libgimpwidgets/gimpicons.c:139 ../libgimpwidgets/gimpicons.c:271
 msgid "_Scale"
 msgstr "_Skala"
 
-#: ../libgimpwidgets/gimpicons.c:258
+#: ../libgimpwidgets/gimpicons.c:246
 msgid "Cr_op"
 msgstr "B_eskär"
 
-#: ../libgimpwidgets/gimpicons.c:266
+#: ../libgimpwidgets/gimpicons.c:254
 msgid "_Select"
 msgstr "_Markera"
 
-#: ../libgimpwidgets/gimpicons.c:269 ../libgimpwidgets/gimpicons.c:281
-#: ../libgimpwidgets/gimpicons.c:292
+#: ../libgimpwidgets/gimpicons.c:266
 msgid "_Transform"
 msgstr "_Transformera"
 
-#: ../libgimpwidgets/gimpicons.c:285
-msgid "_Rotate"
-msgstr "_Rotera"
-
-#: ../libgimpwidgets/gimpicons.c:288
+#: ../libgimpwidgets/gimpicons.c:272
 msgid "_Shear"
 msgstr "_Luta"
 
@@ -2685,17 +2714,8 @@ msgstr "_Svartpunktskompensering"
 #~ msgid "Pre_vious"
 #~ msgstr "_Föregående"
 
-#~ msgid "_Open"
-#~ msgstr "_Öppna"
-
-#~ msgid "_Save"
-#~ msgstr "_Spara"
-
 #~ msgid "Save as"
 #~ msgstr "S_para som"
-
-#~ msgid "_Cancel"
-#~ msgstr "_Avbryten"
 
 #~ msgid "_Quit"
 #~ msgstr "_Avsluta"
