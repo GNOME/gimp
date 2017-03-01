@@ -133,6 +133,8 @@ struct _GimpImageWindowPrivate
   gint               initial_monitor;
 
   gint               suspend_keep_pos;
+
+  gint               update_ui_manager_idle_id;
 };
 
 typedef struct
@@ -221,6 +223,8 @@ static void      gimp_image_window_show_tooltip        (GimpUIManager       *man
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_hide_tooltip        (GimpUIManager       *manager,
                                                         GimpImageWindow     *window);
+static gboolean  gimp_image_window_update_ui_manager_idle
+                                                       (GimpImageWindow     *window);
 static void      gimp_image_window_update_ui_manager   (GimpImageWindow     *window);
 
 static void      gimp_image_window_shell_size_allocate (GimpDisplayShell    *shell,
@@ -528,6 +532,12 @@ gimp_image_window_dispose (GObject *object)
     {
       g_object_unref (private->menubar_manager);
       private->menubar_manager = NULL;
+    }
+
+  if (private->update_ui_manager_idle_id)
+    {
+      g_source_remove (private->update_ui_manager_idle_id);
+      private->update_ui_manager_idle_id = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -1893,13 +1903,32 @@ gimp_image_window_hide_tooltip (GimpUIManager   *manager,
   gimp_statusbar_pop (statusbar, "menu-tooltip");
 }
 
+static gboolean
+gimp_image_window_update_ui_manager_idle (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  g_assert (private->active_shell != NULL);
+
+  gimp_ui_manager_update (private->menubar_manager,
+                          private->active_shell->display);
+
+  private->update_ui_manager_idle_id = 0;
+
+  return G_SOURCE_REMOVE;
+}
+
 static void
 gimp_image_window_update_ui_manager (GimpImageWindow *window)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  gimp_ui_manager_update (private->menubar_manager,
-                          private->active_shell->display);
+  if (! private->update_ui_manager_idle_id)
+    {
+      private->update_ui_manager_idle_id =
+        g_idle_add ((GSourceFunc) gimp_image_window_update_ui_manager_idle,
+                    window);
+    }
 }
 
 static void
@@ -2015,7 +2044,7 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
   gimp_context_set_display (gimp_get_user_context (private->gimp),
                             active_display);
 
-  gimp_ui_manager_update (private->menubar_manager, active_display);
+  gimp_image_window_update_ui_manager (window);
 
   gimp_image_window_update_tab_labels (window);
 }
@@ -2094,6 +2123,12 @@ gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
 
   if (private->menubar_manager)
     gimp_image_window_hide_tooltip (private->menubar_manager, window);
+
+  if (private->update_ui_manager_idle_id)
+    {
+      g_source_remove (private->update_ui_manager_idle_id);
+      private->update_ui_manager_idle_id = 0;
+    }
 }
 
 static void
@@ -2121,7 +2156,7 @@ gimp_image_window_image_notify (GimpDisplay      *display,
   gimp_view_set_viewable (GIMP_VIEW (view),
                           GIMP_VIEWABLE (gimp_display_get_image (display)));
 
-  gimp_ui_manager_update (private->menubar_manager, display);
+  gimp_image_window_update_ui_manager (window);
 }
 
 static void
@@ -2278,22 +2313,16 @@ static void
 gimp_image_window_shell_scaled (GimpDisplayShell *shell,
                                 GimpImageWindow  *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-
   /* update the <Image>/View/Zoom menu */
-  gimp_ui_manager_update (private->menubar_manager,
-                          shell->display);
+  gimp_image_window_update_ui_manager (window);
 }
 
 static void
 gimp_image_window_shell_rotated (GimpDisplayShell *shell,
                                  GimpImageWindow  *window)
 {
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-
   /* update the <Image>/View/Rotate menu */
-  gimp_ui_manager_update (private->menubar_manager,
-                          shell->display);
+  gimp_image_window_update_ui_manager (window);
 }
 
 static void
