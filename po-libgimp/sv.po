@@ -1,18 +1,18 @@
 # Swedish messages for libgimp.
-# Copyright © 1999-2016 Free Software Foundation, Inc.
+# Copyright © 1999-2017 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén (jan.moren@lucs.lu.se> 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2016.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-19 15:38+0000\n"
-"PO-Revision-Date: 2016-03-07 22:45+0100\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-02-28 14:14+0000\n"
+"PO-Revision-Date: 2017-03-01 18:48+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -20,25 +20,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.11\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1136
+#: ../libgimp/gimp.c:1141
 msgid "success"
 msgstr "lyckades"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1140
+#: ../libgimp/gimp.c:1145
 msgid "execution error"
 msgstr "exekveringsfel"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1144
+#: ../libgimp/gimp.c:1149
 msgid "calling error"
 msgstr "anropsfel"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1148
+#: ../libgimp/gimp.c:1153
 msgid "cancelled"
 msgstr "avbruten"
 
@@ -633,7 +633,7 @@ msgstr "Snitt (punkter)"
 #: ../libgimpbase/gimpbaseenums.c:443
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
-msgstr "Snitt (korshår)"
+msgstr "Snitt (hårkors)"
 
 #: ../libgimpbase/gimpbaseenums.c:444
 msgctxt "grid-style"
@@ -1174,15 +1174,15 @@ msgstr "Ingen"
 msgid "Scales"
 msgstr "Skalor"
 
-#: ../libgimpwidgets/gimpcolorselection.c:220
+#: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
 msgstr "Nuvarande:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:229
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr "Gammal:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:314
+#: ../libgimpwidgets/gimpcolorselection.c:318
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1190,7 +1190,7 @@ msgstr ""
 "Hexadecimal färgnotation som används i HTML och CSS. Den här posten "
 "accepterar även CSS-färgnamn."
 
-#: ../libgimpwidgets/gimpcolorselection.c:320
+#: ../libgimpwidgets/gimpcolorselection.c:324
 msgid "HTML _notation:"
 msgstr "HTML-_notation:"
 
