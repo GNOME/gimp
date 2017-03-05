@@ -267,7 +267,7 @@ prefs_response (GtkWidget *widget,
         GtkWidget *confirm;
 
         confirm = gimp_message_dialog_new (_("Reset All Preferences"),
-                                           GIMP_STOCK_QUESTION,
+                                           GIMP_ICON_DIALOG_QUESTION,
                                            dialog,
                                            GTK_DIALOG_MODAL |
                                            GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -597,7 +597,7 @@ prefs_menus_remove_callback (GtkWidget *widget,
   GtkWidget *dialog;
 
   dialog = gimp_message_dialog_new (_("Remove all Keyboard Shortcuts"),
-                                    GIMP_STOCK_QUESTION,
+                                    GIMP_ICON_DIALOG_QUESTION,
                                     gtk_widget_get_toplevel (widget),
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1361,14 +1361,14 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Save tool options on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add ("document-save",
+  button = prefs_button_add (GIMP_ICON_DOCUMENT_SAVE,
                              _("Save Tool Options _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_tool_options_save_callback),
                     gimp);
 
-  button2 = prefs_button_add (GIMP_STOCK_RESET,
+  button2 = prefs_button_add (GIMP_ICON_RESET,
                               _("_Reset Saved Tool Options to "
                                 "Default Values"),
                               GTK_BOX (vbox2));
@@ -1394,16 +1394,16 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add_with_icon (object, "global-brush",
-                                    _("_Brush"),    GIMP_STOCK_BRUSH,
+                                    _("_Brush"),    GIMP_ICON_BRUSH,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "global-dynamics",
-                                    _("_Dynamics"), GIMP_STOCK_DYNAMICS,
+                                    _("_Dynamics"), GIMP_ICON_DYNAMICS,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "global-pattern",
-                                    _("_Pattern"),  GIMP_STOCK_PATTERN,
+                                    _("_Pattern"),  GIMP_ICON_PATTERN,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "global-gradient",
-                                    _("_Gradient"), GIMP_STOCK_GRADIENT,
+                                    _("_Gradient"), GIMP_ICON_GRADIENT,
                                     GTK_BOX (vbox2), size_group);
 
   /*  Move Tool */
@@ -1412,7 +1412,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add_with_icon (object, "move-tool-changes-active",
                                     _("Set layer or path as active"),
-                                    GIMP_STOCK_TOOL_MOVE,
+                                    GIMP_ICON_TOOL_MOVE,
                                     GTK_BOX (vbox2), size_group);
 
   g_object_unref (size_group);
@@ -1534,7 +1534,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Use dynamic keyboard shortcuts"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add ("preferences-system",
+  button = prefs_button_add (GIMP_ICON_PREFERENCES_SYSTEM,
                              _("Configure _Keyboard Shortcuts..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -1545,14 +1545,14 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Save keyboard shortcuts on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add ("document-save",
+  button = prefs_button_add (GIMP_ICON_DOCUMENT_SAVE,
                              _("Save Keyboard Shortcuts _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_menus_save_callback),
                     gimp);
 
-  button2 = prefs_button_add (GIMP_STOCK_RESET,
+  button2 = prefs_button_add (GIMP_ICON_RESET,
                               _("_Reset Keyboard Shortcuts to Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
@@ -1561,7 +1561,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
-  button = prefs_button_add ("edit-clear",
+  button = prefs_button_add (GIMP_ICON_EDIT_CLEAR,
                              _("Remove _All Keyboard Shortcuts"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -1661,7 +1661,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = prefs_button_add ("view-refresh",
+  button = prefs_button_add (GIMP_ICON_VIEW_REFRESH,
                              _("Reload C_urrent Theme"),
                              GTK_BOX (hbox));
   g_signal_connect (button, "clicked",
@@ -1805,15 +1805,15 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add_with_icon (object, "toolbox-color-area",
                                     _("Show _foreground & background color"),
-                                    GIMP_STOCK_DEFAULT_COLORS,
+                                    GIMP_ICON_COLORS_DEFAULT,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "toolbox-foo-area",
                                     _("Show active _brush, pattern & gradient"),
-                                    GIMP_STOCK_BRUSH,
+                                    GIMP_ICON_BRUSH,
                                     GTK_BOX (vbox2), size_group);
   prefs_check_button_add_with_icon (object, "toolbox-image-area",
                                     _("Show active _image"),
-                                    GIMP_STOCK_IMAGE,
+                                    GIMP_ICON_IMAGE,
                                     GTK_BOX (vbox2), size_group);
 
   g_object_unref (size_group);
@@ -2151,13 +2151,13 @@ prefs_dialog_new (Gimp       *gimp,
 
   if (gimp_help_user_manual_is_installed (gimp))
     {
-      hbox = prefs_hint_box_new (GIMP_STOCK_INFO,
+      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_INFORMATION,
                                  _("There's a local installation "
                                    "of the user manual."));
     }
   else
     {
-      hbox = prefs_hint_box_new (GIMP_STOCK_WARNING,
+      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
                                  _("The user manual is not installed "
                                    "locally."));
     }
@@ -2183,7 +2183,7 @@ prefs_dialog_new (Gimp       *gimp,
     }
   else
     {
-      hbox = prefs_hint_box_new (GIMP_STOCK_WARNING,
+      hbox = prefs_hint_box_new (GIMP_ICON_DIALOG_WARNING,
                                  _("The GIMP help browser doesn't seem to "
                                    "be installed. Using the web browser "
                                    "instead."));
@@ -2383,14 +2383,14 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Open windows on the same _monitor they were open before"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add ("document-save",
+  button = prefs_button_add (GIMP_ICON_DOCUMENT_SAVE,
                              _("Save Window Positions _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_session_save_callback),
                     gimp);
 
-  button2 = prefs_button_add (GIMP_STOCK_RESET,
+  button2 = prefs_button_add (GIMP_ICON_RESET,
                               _("_Reset Saved Window Positions to "
                                 "Default Values"),
                               GTK_BOX (vbox2));
@@ -2674,7 +2674,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("S_hare tool and tool options between input devices"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add ("preferences-system",
+  button = prefs_button_add (GIMP_ICON_PREFERENCES_SYSTEM,
                              _("Configure E_xtended Input Devices..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -2685,14 +2685,14 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Save input device settings on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add ("document-save",
+  button = prefs_button_add (GIMP_ICON_DOCUMENT_SAVE,
                              _("Save Input Device Settings _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_devices_save_callback),
                     gimp);
 
-  button2 = prefs_button_add (GIMP_STOCK_RESET,
+  button2 = prefs_button_add (GIMP_ICON_RESET,
                               _("_Reset Saved Input Device Settings to "
                                 "Default Values"),
                               GTK_BOX (vbox2));

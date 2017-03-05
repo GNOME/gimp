@@ -225,7 +225,7 @@ controller_midi_class_init (ControllerMidiClass *klass)
 
   controller_class->name            = _("MIDI");
   controller_class->help_id         = "gimp-controller-midi";
-  controller_class->icon_name       = GIMP_STOCK_CONTROLLER_MIDI;
+  controller_class->icon_name       = GIMP_ICON_CONTROLLER_MIDI;
 
   controller_class->get_n_events    = midi_get_n_events;
   controller_class->get_event_name  = midi_get_event_name;

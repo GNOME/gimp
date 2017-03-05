@@ -379,7 +379,7 @@ gimp_help_browser_error (Gimp         *gimp,
 {
   GtkWidget *dialog;
 
-  dialog = gimp_message_dialog_new (title, GIMP_STOCK_USER_MANUAL,
+  dialog = gimp_message_dialog_new (title, GIMP_ICON_HELP_USER_MANUAL,
                                     NULL, 0,
                                     NULL, NULL,
 
@@ -715,7 +715,7 @@ gimp_help_query_user_manual_online (GimpIdleHelp *idle_help)
   GtkWidget *dialog;
 
   dialog = gimp_message_dialog_new (_("GIMP user manual is missing"),
-                                    GIMP_STOCK_USER_MANUAL,
+                                    GIMP_ICON_HELP_USER_MANUAL,
                                     NULL, 0, NULL, NULL,
 
                                     _("_Cancel"),      GTK_RESPONSE_CANCEL,

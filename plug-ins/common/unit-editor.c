@@ -116,13 +116,13 @@ static GtkActionEntry actions[] =
     "Unit Editor Toolbar", NULL, NULL, NULL
   },
 
-  { "unit-editor-new", "document-new",
+  { "unit-editor-new", GIMP_ICON_DOCUMENT_NEW,
     NULL, "<control>N",
     N_("Create a new unit from scratch"),
     G_CALLBACK (new_callback)
   },
 
-  { "unit-editor-duplicate", GIMP_STOCK_DUPLICATE,
+  { "unit-editor-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NULL,  "<control>D",
     N_("Create a new unit using the currently selected unit as template"),
     G_CALLBACK (duplicate_callback)
@@ -155,7 +155,7 @@ query (void)
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Edit/Preferences");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_STOCK_TOOL_MEASURE);
+                             (const guint8 *) GIMP_ICON_TOOL_MEASURE);
 }
 
 static void

@@ -47,19 +47,19 @@ static const GimpActionEntry drawable_actions[] =
     G_CALLBACK (drawable_equalize_cmd_callback),
     GIMP_HELP_LAYER_EQUALIZE },
 
-  { "drawable-invert", GIMP_STOCK_INVERT,
+  { "drawable-invert", GIMP_ICON_INVERT,
     NC_("drawable-action", "In_vert"), NULL,
     NC_("drawable-action", "Invert the colors perceptually"),
     G_CALLBACK (drawable_invert_cmd_callback),
     GIMP_HELP_LAYER_INVERT },
 
-  { "drawable-linear-invert", GIMP_STOCK_INVERT,
+  { "drawable-linear-invert", GIMP_ICON_INVERT,
     NC_("drawable-action", "_Linear Invert"), NULL,
     NC_("drawable-action", "Invert the colors in linear light"),
     G_CALLBACK (drawable_linear_invert_cmd_callback),
     GIMP_HELP_LAYER_INVERT },
 
-  { "drawable-value-invert", GIMP_STOCK_GEGL,
+  { "drawable-value-invert", GIMP_ICON_GEGL,
     NC_("drawable-action", "_Value Invert"), NULL,
     NC_("drawable-action",
         "Invert the brightness of each pixel, keeping the color"),
@@ -72,13 +72,13 @@ static const GimpActionEntry drawable_actions[] =
     G_CALLBACK (drawable_levels_stretch_cmd_callback),
     GIMP_HELP_LAYER_WHITE_BALANCE },
 
-  { "drawable-dilate", GIMP_STOCK_GEGL,
+  { "drawable-dilate", GIMP_ICON_GEGL,
     NC_("drawable-action", "_Dilate"), NULL,
     NC_("drawable-action", "Grow lighter areas of the image"),
     G_CALLBACK (drawable_dilate_cmd_callback),
     GIMP_HELP_LAYER_DILATE },
 
-  { "drawable-erode", GIMP_STOCK_GEGL,
+  { "drawable-erode", GIMP_ICON_GEGL,
     NC_("drawable-action", "E_rode"), NULL,
     NC_("drawable-action", "Grow darker areas of the image"),
     G_CALLBACK (drawable_erode_cmd_callback),
@@ -94,21 +94,21 @@ static const GimpActionEntry drawable_actions[] =
 
 static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
-  { "drawable-visible", GIMP_STOCK_VISIBLE,
+  { "drawable-visible", GIMP_ICON_VISIBLE,
     NC_("drawable-action", "_Visible"), NULL,
     NC_("drawable-action", "Toggle visibility"),
     G_CALLBACK (drawable_visible_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
 
-  { "drawable-linked", GIMP_STOCK_LINKED,
+  { "drawable-linked", GIMP_ICON_LINKED,
     NC_("drawable-action", "_Linked"), NULL,
     NC_("drawable-action", "Toggle the linked state"),
     G_CALLBACK (drawable_linked_cmd_callback),
     FALSE,
     GIMP_HELP_LAYER_LINKED },
 
-  { "drawable-lock-content", NULL /* GIMP_STOCK_LOCK */,
+  { "drawable-lock-content", NULL /* GIMP_ICON_LOCK */,
     NC_("drawable-action", "L_ock pixels"), NULL,
     NC_("drawable-action",
         "Keep the pixels on this drawable from being modified"),
@@ -116,7 +116,7 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
     FALSE,
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
-  { "drawable-lock-position", GIMP_STOCK_TOOL_MOVE,
+  { "drawable-lock-position", GIMP_ICON_TOOL_MOVE,
     NC_("drawable-action", "L_ock position of channel"), NULL,
     NC_("drawable-action",
         "Keep the position on this drawable from being modified"),
@@ -127,13 +127,13 @@ static const GimpToggleActionEntry drawable_toggle_actions[] =
 
 static const GimpEnumActionEntry drawable_flip_actions[] =
 {
-  { "drawable-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
+  { "drawable-flip-horizontal", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
     NC_("drawable-action", "Flip _Horizontally"), NULL,
     NC_("drawable-action", "Flip horizontally"),
     GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_LAYER_FLIP_HORIZONTAL },
 
-  { "drawable-flip-vertical", GIMP_STOCK_FLIP_VERTICAL,
+  { "drawable-flip-vertical", GIMP_ICON_OBJECT_FLIP_VERTICAL,
     NC_("drawable-action", "Flip _Vertically"), NULL,
     NC_("drawable-action", "Flip vertically"),
     GIMP_ORIENTATION_VERTICAL, FALSE,
@@ -142,19 +142,19 @@ static const GimpEnumActionEntry drawable_flip_actions[] =
 
 static const GimpEnumActionEntry drawable_rotate_actions[] =
 {
-  { "drawable-rotate-90", GIMP_STOCK_ROTATE_90,
+  { "drawable-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("drawable-action", "Rotate 90° _clockwise"), NULL,
     NC_("drawable-action", "Rotate 90 degrees to the right"),
     GIMP_ROTATE_90, FALSE,
     GIMP_HELP_LAYER_ROTATE_90 },
 
-  { "drawable-rotate-180", GIMP_STOCK_ROTATE_180,
+  { "drawable-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
     NC_("drawable-action", "Rotate _180°"), NULL,
     NC_("drawable-action", "Turn upside-down"),
     GIMP_ROTATE_180, FALSE,
     GIMP_HELP_LAYER_ROTATE_180 },
 
-  { "drawable-rotate-270", GIMP_STOCK_ROTATE_270,
+  { "drawable-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("drawable-action", "Rotate 90° counter-clock_wise"), NULL,
     NC_("drawable-action", "Rotate 90 degrees to the left"),
     GIMP_ROTATE_270, FALSE,

@@ -38,11 +38,11 @@
 
 static const GimpActionEntry documents_actions[] =
 {
-  { "documents-popup", "document-open-recent",
+  { "documents-popup", GIMP_ICON_DOCUMENT_OPEN_RECENT,
     NC_("documents-action", "Documents Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCUMENT_DIALOG },
 
-  { "documents-open", "document-open",
+  { "documents-open", GIMP_ICON_DOCUMENT_OPEN,
     NC_("documents-action", "_Open Image"), NULL,
     NC_("documents-action", "Open the selected entry"),
     G_CALLBACK (documents_open_cmd_callback),
@@ -60,7 +60,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_file_open_dialog_cmd_callback),
     GIMP_HELP_DOCUMENT_OPEN },
 
-  { "documents-copy-location", "edit-copy",
+  { "documents-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("documents-action", "Copy Image _Location"), NULL,
     NC_("documents-action", "Copy image location to clipboard"),
     G_CALLBACK (documents_copy_location_cmd_callback),
@@ -72,7 +72,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_show_in_file_manager_cmd_callback),
     GIMP_HELP_DOCUMENT_SHOW_IN_FILE_MANAGER },
 
-  { "documents-remove", "list-remove",
+  { "documents-remove", GIMP_ICON_LIST_REMOVE,
     NC_("documents-action", "Remove _Entry"), NULL,
     NC_("documents-action", "Remove the selected entry"),
     G_CALLBACK (documents_remove_cmd_callback),
@@ -84,7 +84,7 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_clear_cmd_callback),
     GIMP_HELP_DOCUMENT_CLEAR },
 
-  { "documents-recreate-preview", "view-refresh",
+  { "documents-recreate-preview", GIMP_ICON_VIEW_REFRESH,
     NC_("documents-action", "Recreate _Preview"), NULL,
     NC_("documents-action", "Recreate preview"),
     G_CALLBACK (documents_recreate_preview_cmd_callback),

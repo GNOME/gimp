@@ -158,7 +158,7 @@ gimp_cage_tool_register (GimpToolRegisterCallback  callback,
                 _("Cage Transform: Deform a selection with a cage"),
                 N_("_Cage Transform"), "<shift>G",
                 NULL, GIMP_HELP_TOOL_CAGE,
-                GIMP_STOCK_TOOL_CAGE,
+                GIMP_ICON_TOOL_CAGE,
                 data);
 }
 
@@ -1280,7 +1280,7 @@ gimp_cage_tool_create_filter (GimpCageTool *ct)
   ct->filter = gimp_drawable_filter_new (GIMP_TOOL (ct)->drawable,
                                          _("Cage transform"),
                                          ct->render_node,
-                                         GIMP_STOCK_TOOL_CAGE);
+                                         GIMP_ICON_TOOL_CAGE);
 
   g_signal_connect (ct->filter, "flush",
                     G_CALLBACK (gimp_cage_tool_filter_flush),

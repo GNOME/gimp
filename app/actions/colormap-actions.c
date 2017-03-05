@@ -41,11 +41,11 @@
 
 static const GimpActionEntry colormap_actions[] =
 {
-  { "colormap-popup", GIMP_STOCK_COLORMAP,
+  { "colormap-popup", GIMP_ICON_COLORMAP,
     NC_("colormap-action", "Colormap Menu"), NULL, NULL, NULL,
     GIMP_HELP_INDEXED_PALETTE_DIALOG },
 
-  { "colormap-edit-color", "gtk-edit",
+  { "colormap-edit-color", GIMP_ICON_EDIT,
     NC_("colormap-action", "_Edit Color..."), NULL,
     NC_("colormap-action", "Edit this color"),
     G_CALLBACK (colormap_edit_color_cmd_callback),
@@ -54,13 +54,13 @@ static const GimpActionEntry colormap_actions[] =
 
 static const GimpEnumActionEntry colormap_add_color_actions[] =
 {
-  { "colormap-add-color-from-fg", "list-add",
+  { "colormap-add-color-from-fg", GIMP_ICON_LIST_ADD,
     NC_("colormap-action", "_Add Color from FG"), "",
     NC_("colormap-action", "Add current foreground color"),
     FALSE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_ADD },
 
-  { "colormap-add-color-from-bg", "list-add",
+  { "colormap-add-color-from-bg", GIMP_ICON_LIST_ADD,
     NC_("colormap-action", "_Add Color from BG"), "",
     NC_("colormap-action", "Add current background color"),
     TRUE, FALSE,
@@ -69,25 +69,25 @@ static const GimpEnumActionEntry colormap_add_color_actions[] =
 
 static const GimpEnumActionEntry colormap_to_selection_actions[] =
 {
-  { "colormap-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
+  { "colormap-selection-replace", GIMP_ICON_SELECTION_REPLACE,
     NC_("colormap-action", "_Select this Color"), NULL,
     NC_("colormap-action", "Select all pixels with this color"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_SELECTION_REPLACE },
 
-  { "colormap-selection-add", GIMP_STOCK_SELECTION_ADD,
+  { "colormap-selection-add", GIMP_ICON_SELECTION_ADD,
     NC_("colormap-action", "_Add to Selection"), NULL,
     NC_("colormap-action", "Add all pixels with this color to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_INDEXED_PALETTE_SELECTION_ADD },
 
-  { "colormap-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
+  { "colormap-selection-subtract", GIMP_ICON_SELECTION_SUBTRACT,
     NC_("colormap-action", "_Subtract from Selection"), NULL,
     NC_("colormap-action", "Subtract all pixels with this color from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_INDEXED_PALETTE_SELECTION_SUBTRACT },
 
-  { "colormap-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
+  { "colormap-selection-intersect", GIMP_ICON_SELECTION_INTERSECT,
     NC_("colormap-action", "_Intersect with Selection"), NULL,
     NC_("colormap-action", "Intersect all pixels with this color with the current selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,

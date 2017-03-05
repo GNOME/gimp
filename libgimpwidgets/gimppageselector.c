@@ -1300,7 +1300,7 @@ gimp_page_selector_add_frame (GtkWidget *widget,
   if (! frame)
     {
       frame = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                        GIMP_STOCK_FRAME, 64, 0, NULL);
+                                        GIMP_ICON_FRAME, 64, 0, NULL);
       g_object_set_data_full (G_OBJECT (widget), "frame", frame,
                               (GDestroyNotify) g_object_unref);
     }

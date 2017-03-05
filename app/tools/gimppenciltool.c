@@ -52,7 +52,7 @@ gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
                 _("Pencil Tool: Hard edge painting using a brush"),
                 N_("Pe_ncil"), "N",
                 NULL, GIMP_HELP_TOOL_PENCIL,
-                GIMP_STOCK_TOOL_PENCIL,
+                GIMP_ICON_TOOL_PENCIL,
                 data);
 }
 

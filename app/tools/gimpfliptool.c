@@ -87,7 +87,7 @@ gimp_flip_tool_register (GimpToolRegisterCallback  callback,
                   "Reverse the layer, selection or path horizontally or vertically"),
                 N_("_Flip"), "<shift>F",
                 NULL, GIMP_HELP_TOOL_FLIP,
-                GIMP_STOCK_TOOL_FLIP,
+                GIMP_ICON_TOOL_FLIP,
                 data);
 }
 

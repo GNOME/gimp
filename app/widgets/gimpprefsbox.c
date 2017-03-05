@@ -415,7 +415,7 @@ gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
   gtk_box_reorder_child (GTK_BOX (page_vbox), hbox, 0);
   gtk_widget_show (hbox);
 
-  button = gimp_icon_button_new (GIMP_STOCK_RESET, label);
+  button = gimp_icon_button_new (GIMP_ICON_RESET, label);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

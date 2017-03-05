@@ -102,7 +102,7 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
                 _("Brightness/Contrast Tool: Adjust brightness and contrast"),
                 N_("B_rightness-Contrast..."), NULL,
                 NULL, GIMP_HELP_TOOL_BRIGHTNESS_CONTRAST,
-                GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST,
+                GIMP_ICON_TOOL_BRIGHTNESS_CONTRAST,
                 data);
 }
 
@@ -299,7 +299,7 @@ gimp_brightness_contrast_tool_dialog (GimpFilterTool *filter_tool)
 
   bc_tool->contrast_scale = scale;
 
-  button = gimp_icon_button_new (GIMP_STOCK_TOOL_LEVELS,
+  button = gimp_icon_button_new (GIMP_ICON_TOOL_LEVELS,
                                  _("Edit these Settings as Levels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

@@ -242,7 +242,7 @@ item_options_dialog_new (GimpImage               *image,
             }
           else
             {
-              image = gtk_image_new_from_icon_name (GIMP_STOCK_CLOSE,
+              image = gtk_image_new_from_icon_name (GIMP_ICON_CLOSE,
                                                     GTK_ICON_SIZE_MENU);
             }
 
@@ -266,7 +266,7 @@ item_options_dialog_new (GimpImage               *image,
   gtk_widget_show (private->right_vbox);
 
   button = check_button_with_icon_new (_("_Visible"),
-                                       GIMP_STOCK_VISIBLE,
+                                       GIMP_ICON_VISIBLE,
                                        GTK_BOX (private->right_vbox));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->visible);
@@ -275,7 +275,7 @@ item_options_dialog_new (GimpImage               *image,
                     &private->visible);
 
   button = check_button_with_icon_new (_("_Linked"),
-                                       GIMP_STOCK_LINKED,
+                                       GIMP_ICON_LINKED,
                                        GTK_BOX (private->right_vbox));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->linked);
@@ -293,7 +293,7 @@ item_options_dialog_new (GimpImage               *image,
                     &private->lock_content);
 
   button = check_button_with_icon_new (lock_position_label,
-                                       GIMP_STOCK_TOOL_MOVE,
+                                       GIMP_ICON_TOOL_MOVE,
                                        GTK_BOX (private->right_vbox));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->lock_position);

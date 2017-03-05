@@ -81,35 +81,35 @@ static const GimpActionEntry view_actions[] =
   { "view-softproof-intent-menu", NULL,
     NC_("view-action", "Soft-Proofing Re_ndering Intent") },
 
-  { "view-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
+  { "view-move-to-screen-menu", GIMP_ICON_WINDOW_MOVE_TO_SCREEN,
     NC_("view-action", "Move to Screen"), NULL, NULL, NULL,
     GIMP_HELP_VIEW_CHANGE_SCREEN },
 
-  { "view-new", "window-new",
+  { "view-new", GIMP_ICON_WINDOW_NEW,
     NC_("view-action", "_New View"), NULL,
     NC_("view-action", "Create another view on this image"),
     G_CALLBACK (view_new_cmd_callback),
     GIMP_HELP_VIEW_NEW },
 
-  { "view-close", "window-close",
+  { "view-close", GIMP_ICON_WINDOW_CLOSE,
     NC_("view-action",  "_Close View"), "<primary>W",
     NC_("view-action", "Close the active image view"),
     G_CALLBACK (view_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
-  { "view-zoom-fit-in", "zoom-fit-best",
+  { "view-zoom-fit-in", GIMP_ICON_ZOOM_FIT_BEST,
     NC_("view-action", "_Fit Image in Window"), "<primary><shift>J",
     NC_("view-action", "Adjust the zoom ratio so that the image becomes fully visible"),
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
-  { "view-zoom-fill", "zoom-fit-best",
+  { "view-zoom-fill", GIMP_ICON_ZOOM_FIT_BEST,
     NC_("view-action", "Fi_ll Window"), NULL,
     NC_("view-action", "Adjust the zoom ratio so that the entire window is used"),
     G_CALLBACK (view_zoom_fill_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FILL },
 
-  { "view-zoom-selection", "gimp-selection",
+  { "view-zoom-selection", GIMP_ICON_SELECTION,
     NC_("view-action", "Zoom to _Selection"), NULL,
     NC_("view-action", "Adjust the zoom ratio so that the selection fills the window"),
     G_CALLBACK (view_zoom_selection_cmd_callback),
@@ -127,19 +127,19 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_rotate_other_cmd_callback),
     GIMP_HELP_VIEW_ROTATE_OTHER },
 
-  { "view-navigation-window", GIMP_STOCK_NAVIGATION,
+  { "view-navigation-window", GIMP_ICON_DIALOG_NAVIGATION,
     NC_("view-action", "Na_vigation Window"), NULL,
     NC_("view-action", "Show an overview window for this image"),
     G_CALLBACK (view_navigation_window_cmd_callback),
     GIMP_HELP_NAVIGATION_DIALOG },
 
-  { "view-display-filters", GIMP_STOCK_DISPLAY_FILTER,
+  { "view-display-filters", GIMP_ICON_DISPLAY_FILTER,
     NC_("view-action", "Display _Filters..."), NULL,
     NC_("view-action", "Configure filters applied to this view"),
     G_CALLBACK (view_display_filters_cmd_callback),
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
 
-  { "view-color-management-reset", GIMP_STOCK_RESET,
+  { "view-color-management-reset", GIMP_ICON_RESET,
     NC_("view-action", "As in _Preferences"), NULL,
     NC_("view-action",
         "Reset color management to what's configured in preferences"),
@@ -152,7 +152,7 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_softproof_profile_cmd_callback),
     GIMP_HELP_VIEW_COLOR_MANAGEMENT },
 
-  { "view-shrink-wrap", "zoom-fit-best",
+  { "view-shrink-wrap", GIMP_ICON_ZOOM_FIT_BEST,
     NC_("view-action", "Shrink _Wrap"), "<primary>J",
     NC_("view-action", "Reduce the image window to the size of the image display"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
@@ -301,7 +301,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_STATUSBAR },
 
-  { "view-fullscreen", "view-fullscreen",
+  { "view-fullscreen", GIMP_ICON_VIEW_FULLSCREEN,
     NC_("view-action", "Fullscr_een"), "F11",
     NC_("view-action", "Toggle fullscreen view"),
     G_CALLBACK (view_fullscreen_cmd_callback),
@@ -316,46 +316,46 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
-  { "view-zoom-minimum", "zoom-out",
+  { "view-zoom-minimum", GIMP_ICON_ZOOM_OUT,
     "Zoom out as far as possible", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-maximum", "zoom-in",
+  { "view-zoom-maximum", GIMP_ICON_ZOOM_IN,
     "Zoom in as far as possible", NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-out", "zoom-out",
+  { "view-zoom-out", GIMP_ICON_ZOOM_OUT,
     NC_("view-zoom-action", "Zoom _Out"), "minus",
     NC_("view-zoom-action", "Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-in", "zoom-in",
+  { "view-zoom-in", GIMP_ICON_ZOOM_IN,
     NC_("view-zoom-action", "Zoom _In"), "plus",
     NC_("view-zoom-action", "Zoom in"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-out-accel", GIMP_STOCK_CHAR_PICKER,
+  { "view-zoom-out-accel", GIMP_ICON_CHAR_PICKER,
     NC_("view-zoom-action", "Zoom Out"), "KP_Subtract",
     NC_("view-zoom-action", "Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-in-accel", GIMP_STOCK_CHAR_PICKER,
+  { "view-zoom-in-accel", GIMP_ICON_CHAR_PICKER,
     NC_("view-zoom-action", "Zoom In"), "KP_Add",
     NC_("view-zoom-action", "Zoom in"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-out-skip", "zoom-out",
+  { "view-zoom-out-skip", GIMP_ICON_ZOOM_OUT,
     "Zoom out a lot", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-in-skip", "zoom-in",
+  { "view-zoom-in-skip", GIMP_ICON_ZOOM_IN,
     "Zoom in a lot", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN }
@@ -411,13 +411,13 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     20000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-1-1", "zoom-original",
+  { "view-zoom-1-1", GIMP_ICON_ZOOM_ORIGINAL,
     NC_("view-zoom-action", "_1:1  (100%)"), "1",
     NC_("view-zoom-action", "Zoom 1:1"),
     10000,
     GIMP_HELP_VIEW_ZOOM_100 },
 
-  { "view-zoom-1-1-accel", "zoom-original",
+  { "view-zoom-1-1-accel", GIMP_ICON_ZOOM_ORIGINAL,
     NC_("view-zoom-action", "_1:1  (100%)"), "KP_1",
     NC_("view-zoom-action", "Zoom 1:1"),
     10000,
@@ -456,13 +456,13 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
 
 static const GimpToggleActionEntry view_flip_actions[] =
 {
-  { "view-flip-horizontally", GIMP_STOCK_FLIP_HORIZONTAL,
+  { "view-flip-horizontally", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
     NC_("view-action", "Flip Horizontally"), NULL, NULL,
     G_CALLBACK (view_flip_horizontally_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_FLIP },
 
-  { "view-flip-vertically", GIMP_STOCK_FLIP_VERTICAL,
+  { "view-flip-vertically", GIMP_ICON_OBJECT_FLIP_VERTICAL,
     NC_("view-action", "Flip Vertically"), NULL, NULL,
     G_CALLBACK (view_flip_vertically_cmd_callback),
     FALSE,
@@ -476,7 +476,7 @@ static const GimpEnumActionEntry view_rotate_absolute_actions[] =
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
-  { "view-rotate-reset", GIMP_STOCK_RESET,
+  { "view-rotate-reset", GIMP_ICON_RESET,
     NC_("view-action", "_Reset Flip & Rotate"), "exclam",
     NC_("view-action",
         "Reset flipping to unflipped and the angle of rotation to 0°"),
@@ -486,31 +486,31 @@ static const GimpEnumActionEntry view_rotate_absolute_actions[] =
 
 static const GimpEnumActionEntry view_rotate_relative_actions[] =
 {
-  { "view-rotate-15", GIMP_STOCK_ROTATE_90,
+  { "view-rotate-15", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("view-action", "Rotate 15° _clockwise"), NULL,
     NC_("view-action", "Rotate 15 degrees to the right"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ROTATE_15 },
 
-  { "view-rotate-90", GIMP_STOCK_ROTATE_90,
+  { "view-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("view-action", "Rotate 90° _clockwise"), NULL,
     NC_("view-action", "Rotate 90 degrees to the right"),
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ROTATE_90 },
 
-  { "view-rotate-180", GIMP_STOCK_ROTATE_180,
+  { "view-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
     NC_("view-action", "Rotate _180°"), NULL,
     NC_("view-action", "Turn upside-down"),
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ROTATE_180 },
 
-  { "view-rotate-270", GIMP_STOCK_ROTATE_270,
+  { "view-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("view-action", "Rotate 90° counter-clock_wise"), NULL,
     NC_("view-action", "Rotate 90 degrees to the left"),
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ROTATE_270 },
 
-  { "view-rotate-345", GIMP_STOCK_ROTATE_270,
+  { "view-rotate-345", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("view-action", "Rotate 15° counter-clock_wise"), NULL,
     NC_("view-action", "Rotate 15 degrees to the left"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
@@ -591,13 +591,13 @@ static const GimpEnumActionEntry view_padding_color_actions[] =
     GIMP_CANVAS_PADDING_MODE_DARK_CHECK, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
 
-  { "view-padding-color-custom", "gtk-select-color",
+  { "view-padding-color-custom", GIMP_ICON_PALETTE,
     NC_("view-padding-color", "_Custom Color..."), NULL,
     NC_("view-padding-color", "Use an arbitrary color"),
     GIMP_CANVAS_PADDING_MODE_CUSTOM, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
 
-  { "view-padding-color-prefs", GIMP_STOCK_RESET,
+  { "view-padding-color-prefs", GIMP_ICON_RESET,
     NC_("view-padding-color", "As in _Preferences"), NULL,
     NC_("view-padding-color",
         "Reset padding color to what's configured in preferences"),

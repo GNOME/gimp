@@ -590,14 +590,14 @@ create_light_page (void)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 2, 6, 7);
   gtk_widget_show (label);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 4, 6, 7);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (save_lighting_preset),
                     NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  button = gtk_button_new_with_mnemonic (_("_Open"));
   gtk_table_attach_defaults (GTK_TABLE (table), button, 4, 6, 6, 7);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (load_lighting_preset),

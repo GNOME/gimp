@@ -40,17 +40,17 @@
 
 static const GimpActionEntry palette_editor_actions[] =
 {
-  { "palette-editor-popup", GIMP_STOCK_PALETTE,
+  { "palette-editor-popup", GIMP_ICON_PALETTE,
     NC_("palette-editor-action", "Palette Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_EDITOR_DIALOG },
 
-  { "palette-editor-edit-color", "gtk-edit",
+  { "palette-editor-edit-color", GIMP_ICON_EDIT,
     NC_("palette-editor-action", "_Edit Color..."), NULL,
     NC_("palette-editor-action", "Edit this entry"),
     G_CALLBACK (palette_editor_edit_color_cmd_callback),
     GIMP_HELP_PALETTE_EDITOR_EDIT },
 
-  { "palette-editor-delete-color", "edit-delete",
+  { "palette-editor-delete-color", GIMP_ICON_EDIT_DELETE,
     NC_("palette-editor-action", "_Delete Color"), NULL,
     NC_("palette-editor-action", "Delete this entry"),
     G_CALLBACK (palette_editor_delete_color_cmd_callback),
@@ -59,7 +59,7 @@ static const GimpActionEntry palette_editor_actions[] =
 
 static const GimpToggleActionEntry palette_editor_toggle_actions[] =
 {
-  { "palette-editor-edit-active", GIMP_STOCK_LINKED,
+  { "palette-editor-edit-active", GIMP_ICON_LINKED,
     NC_("palette-editor-action", "Edit Active Palette"), NULL, NULL,
     G_CALLBACK (data_editor_edit_active_cmd_callback),
     FALSE,
@@ -68,14 +68,14 @@ static const GimpToggleActionEntry palette_editor_toggle_actions[] =
 
 static const GimpEnumActionEntry palette_editor_new_actions[] =
 {
-  { "palette-editor-new-color-fg", "document-new",
+  { "palette-editor-new-color-fg", GIMP_ICON_DOCUMENT_NEW,
     NC_("palette-editor-action", "New Color from _FG"), NULL,
     NC_("palette-editor-action",
         "Create a new entry from the foreground color"),
     FALSE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW },
 
-  { "palette-editor-new-color-bg", "document-new",
+  { "palette-editor-new-color-bg", GIMP_ICON_DOCUMENT_NEW,
     NC_("palette-editor-action", "New Color from _BG"), NULL,
     NC_("palette-editor-action",
         "Create a new entry from the background color"),
@@ -85,19 +85,19 @@ static const GimpEnumActionEntry palette_editor_new_actions[] =
 
 static const GimpEnumActionEntry palette_editor_zoom_actions[] =
 {
-  { "palette-editor-zoom-in", "zoom-in",
+  { "palette-editor-zoom-in", GIMP_ICON_ZOOM_IN,
     N_("Zoom _In"), NULL,
     N_("Zoom in"),
     GIMP_ZOOM_IN, FALSE,
     GIMP_HELP_PALETTE_EDITOR_ZOOM_IN },
 
-  { "palette-editor-zoom-out", "zoom-out",
+  { "palette-editor-zoom-out", GIMP_ICON_ZOOM_OUT,
     N_("Zoom _Out"), NULL,
     N_("Zoom out"),
     GIMP_ZOOM_OUT, FALSE,
     GIMP_HELP_PALETTE_EDITOR_ZOOM_OUT },
 
-  { "palette-editor-zoom-all", "zoom-fit-best",
+  { "palette-editor-zoom-all", GIMP_ICON_ZOOM_FIT_BEST,
     N_("Zoom _All"), NULL,
     N_("Zoom all"),
     GIMP_ZOOM_OUT_MAX, FALSE,

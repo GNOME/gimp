@@ -88,7 +88,7 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
                 _("Shear Tool: Shear the layer, selection or path"),
                 N_("S_hear"), "<shift>S",
                 NULL, GIMP_HELP_TOOL_SHEAR,
-                GIMP_STOCK_TOOL_SHEAR,
+                GIMP_ICON_TOOL_SHEAR,
                 data);
 }
 

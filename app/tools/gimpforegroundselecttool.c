@@ -188,7 +188,7 @@ gimp_foreground_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Foreground Select Tool: Select a region containing foreground objects"),
                 N_("F_oreground Select"), NULL,
                 NULL, GIMP_HELP_TOOL_FOREGROUND_SELECT,
-                GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+                GIMP_ICON_TOOL_FOREGROUND_SELECT,
                 data);
 }
 

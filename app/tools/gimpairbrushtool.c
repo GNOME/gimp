@@ -56,7 +56,7 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
                 _("Airbrush Tool: Paint using a brush, with variable pressure"),
                 N_("_Airbrush"), "A",
                 NULL, GIMP_HELP_TOOL_AIRBRUSH,
-                GIMP_STOCK_TOOL_AIRBRUSH,
+                GIMP_ICON_TOOL_AIRBRUSH,
                 data);
 }
 

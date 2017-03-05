@@ -284,7 +284,8 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_LIST_ADD,
+                                        GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -300,7 +301,8 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  arrow = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
+  arrow = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
+                                        GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), arrow);
   gtk_widget_show (arrow);
 
@@ -315,20 +317,20 @@ gimp_settings_box_constructed (GObject *object)
 
   private->import_item =
     gimp_settings_box_menu_item_add (box,
-                                     "document-open",
+                                     GIMP_ICON_DOCUMENT_OPEN,
                                      _("_Import Settings from File..."),
                                      G_CALLBACK (gimp_settings_box_import_activate));
 
   private->export_item =
     gimp_settings_box_menu_item_add (box,
-                                     "document-save",
+                                     GIMP_ICON_DOCUMENT_SAVE,
                                      _("_Export Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 
   gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
 
   gimp_settings_box_menu_item_add (box,
-                                   "gtk-edit",
+                                   GIMP_ICON_EDIT,
                                    _("_Manage Settings..."),
                                    G_CALLBACK (gimp_settings_box_manage_activate));
 }

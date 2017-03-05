@@ -38,35 +38,35 @@
 
 static const GimpActionEntry buffers_actions[] =
 {
-  { "buffers-popup", GIMP_STOCK_BUFFER,
+  { "buffers-popup", GIMP_ICON_BUFFER,
     NC_("buffers-action", "Buffers Menu"), NULL, NULL, NULL,
     GIMP_HELP_BUFFER_DIALOG },
 
-  { "buffers-paste", "edit-paste",
+  { "buffers-paste", GIMP_ICON_EDIT_PASTE,
     NC_("buffers-action", "_Paste Buffer"), NULL,
     NC_("buffers-action", "Paste the selected buffer"),
     G_CALLBACK (buffers_paste_cmd_callback),
     GIMP_HELP_BUFFER_PASTE },
 
-  { "buffers-paste-into", GIMP_STOCK_PASTE_INTO,
+  { "buffers-paste-into", GIMP_ICON_EDIT_PASTE_INTO,
     NC_("buffers-action", "Paste Buffer _Into"), NULL,
     NC_("buffers-action", "Paste the selected buffer into the selection"),
     G_CALLBACK (buffers_paste_into_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_INTO },
 
-  { "buffers-paste-as-new-layer", GIMP_STOCK_PASTE_AS_NEW,
+  { "buffers-paste-as-new-layer", GIMP_ICON_EDIT_PASTE_AS_NEW,
     NC_("buffers-action", "Paste Buffer as New _Layer"), NULL,
     NC_("buffers-action", "Paste the selected buffer as a new layer"),
     G_CALLBACK (buffers_paste_as_new_layer_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_AS_NEW_LAYER },
 
-  { "buffers-paste-as-new-image", GIMP_STOCK_PASTE_AS_NEW,
+  { "buffers-paste-as-new-image", GIMP_ICON_EDIT_PASTE_AS_NEW,
     NC_("buffers-action", "Paste Buffer as _New Image"), NULL,
     NC_("buffers-action", "Paste the selected buffer as a new image"),
     G_CALLBACK (buffers_paste_as_new_image_cmd_callback),
     GIMP_HELP_BUFFER_PASTE_AS_NEW_IMAGE },
 
-  { "buffers-delete", "edit-delete",
+  { "buffers-delete", GIMP_ICON_EDIT_DELETE,
     NC_("buffers-action", "_Delete Buffer"), NULL,
     NC_("buffers-action", "Delete the selected buffer"),
     G_CALLBACK (buffers_delete_cmd_callback),

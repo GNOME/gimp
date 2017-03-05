@@ -927,8 +927,8 @@ add_image_list (gboolean   add_box_flag,
       g_free (name);
     }
 
-  button = gtk_button_new_from_stock (add_box_flag ?
-                                      GTK_STOCK_ADD : GTK_STOCK_REMOVE);
+  button = gtk_button_new_with_mnemonic (add_box_flag ?
+                                         _("_Add") : _("_Remove"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -1236,7 +1236,7 @@ create_advanced_tab (GtkWidget *notebook)
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  button = gtk_button_new_with_mnemonic (_("Re_set"));
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

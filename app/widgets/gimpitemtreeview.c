@@ -369,7 +369,7 @@ gimp_item_tree_view_constructed (GObject *object)
   column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, column, 0);
 
-  item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
+  item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_VISIBLE);
   g_object_set (item_view->priv->eye_cell,
                 "xpad",                0,
                 "ypad",                0,
@@ -395,7 +395,7 @@ gimp_item_tree_view_constructed (GObject *object)
   column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, column, 1);
 
-  item_view->priv->chain_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_LINKED);
+  item_view->priv->chain_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_LINKED);
   g_object_set (item_view->priv->chain_cell,
                 "xpad", 0,
                 "ypad", 0,
@@ -601,10 +601,10 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
 
   /* force the toggle cells to recreate their icon */
   g_object_set (view->priv->eye_cell,
-                "icon-name", GIMP_STOCK_VISIBLE,
+                "icon-name", GIMP_ICON_VISIBLE,
                 NULL);
   g_object_set (view->priv->chain_cell,
-                "icon-name", GIMP_STOCK_LINKED,
+                "icon-name", GIMP_ICON_LINKED,
                 NULL);
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);

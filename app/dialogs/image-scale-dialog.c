@@ -201,7 +201,7 @@ image_scale_confirm_dialog (ImageScaleDialog *private)
   GtkWidget *widget;
 
   widget = gimp_message_dialog_new (_("Confirm Scaling"),
-                                    GIMP_STOCK_WARNING,
+                                    GIMP_ICON_DIALOG_WARNING,
                                     private->dialog,
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func,

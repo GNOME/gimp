@@ -177,7 +177,7 @@ gimp_controller_keyboard_class_init (GimpControllerKeyboardClass *klass)
 
   controller_class->name            = _("Keyboard");
   controller_class->help_id         = GIMP_HELP_CONTROLLER_KEYBOARD;
-  controller_class->icon_name       = GIMP_STOCK_CONTROLLER_KEYBOARD;
+  controller_class->icon_name       = GIMP_ICON_CONTROLLER_KEYBOARD;
 
   controller_class->get_n_events    = gimp_controller_keyboard_get_n_events;
   controller_class->get_event_name  = gimp_controller_keyboard_get_event_name;

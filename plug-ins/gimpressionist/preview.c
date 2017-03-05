@@ -179,7 +179,7 @@ create_preview (void)
   gimp_help_set_help_data (button,
                            _("Refresh the Preview window"), NULL);
 
-  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  button = gtk_button_new_with_mnemonic (_("_Reset"));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (updatepreview), (gpointer) 2);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);

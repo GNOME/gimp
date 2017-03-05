@@ -101,7 +101,7 @@ layer_add_mask_dialog_new (GimpLayer           *layer,
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (layer), context,
                                      _("Add Layer Mask"), "gimp-layer-add-mask",
-                                     GIMP_STOCK_LAYER_MASK,
+                                     GIMP_ICON_LAYER_MASK,
                                      _("Add a Mask to the Layer"),
                                      parent,
                                      gimp_standard_help_func,

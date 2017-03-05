@@ -193,7 +193,7 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
                 _("Text Tool: Create or edit text layers"),
                 N_("Te_xt"), "T",
                 NULL, GIMP_HELP_TOOL_TEXT,
-                GIMP_STOCK_TOOL_TEXT,
+                GIMP_ICON_TOOL_TEXT,
                 data);
 }
 
@@ -1519,7 +1519,7 @@ gimp_text_tool_confirm_dialog (GimpTextTool *text_tool)
                                      GIMP_CONTEXT (gimp_tool_get_options (tool)),
                                      _("Confirm Text Editing"),
                                      "gimp-text-tool-confirm",
-                                     GIMP_STOCK_TEXT_LAYER,
+                                     GIMP_ICON_LAYER_TEXT_LAYER,
                                      _("Confirm Text Editing"),
                                      GTK_WIDGET (shell),
                                      gimp_standard_help_func, NULL,

@@ -539,7 +539,7 @@ gimp_display_shell_constructed (GObject *object)
   /*  the menu popup button  */
   shell->origin = gtk_event_box_new ();
 
-  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_RIGHT,
+  gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_RIGHT,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->origin), gtk_image);
   gtk_widget_show (gtk_image);
@@ -658,7 +658,7 @@ gimp_display_shell_constructed (GObject *object)
                                      NULL);
   gtk_widget_set_can_focus (shell->zoom_button, FALSE);
 
-  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_ZOOM_FOLLOW_WINDOW,
+  gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_ZOOM_FOLLOW_WINDOW,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->zoom_button), gtk_image);
   gtk_widget_show (gtk_image);
@@ -682,7 +682,7 @@ gimp_display_shell_constructed (GObject *object)
                                            NULL);
   gtk_widget_set_can_focus (shell->quick_mask_button, FALSE);
 
-  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_QUICK_MASK_OFF,
+  gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_QUICK_MASK_OFF,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), gtk_image);
   gtk_widget_show (gtk_image);
@@ -706,7 +706,7 @@ gimp_display_shell_constructed (GObject *object)
   /*  the navigation window button  */
   shell->nav_ebox = gtk_event_box_new ();
 
-  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_NAVIGATION,
+  gtk_image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_NAVIGATION,
                                             GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->nav_ebox), gtk_image);
   gtk_widget_show (gtk_image);

@@ -39,7 +39,7 @@
 
 static const GimpActionEntry dynamics_editor_actions[] =
 {
-  { "dynamics-editor-popup", GIMP_STOCK_DYNAMICS,
+  { "dynamics-editor-popup", GIMP_ICON_DYNAMICS,
     NC_("dynamics-editor-action", "Paint Dynamics Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_EDITOR_DIALOG }
 };
@@ -47,7 +47,7 @@ static const GimpActionEntry dynamics_editor_actions[] =
 
 static const GimpToggleActionEntry dynamics_editor_toggle_actions[] =
 {
-  { "dynamics-editor-edit-active", GIMP_STOCK_LINKED,
+  { "dynamics-editor-edit-active", GIMP_ICON_LINKED,
     NC_("dynamics-editor-action", "Edit Active Dynamics"), NULL, NULL,
     G_CALLBACK (data_editor_edit_active_cmd_callback),
     FALSE,

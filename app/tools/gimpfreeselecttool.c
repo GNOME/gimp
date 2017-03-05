@@ -198,7 +198,7 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                   "and polygonal segments"),
                 N_("_Free Select"), "F",
                 NULL, GIMP_HELP_TOOL_FREE_SELECT,
-                GIMP_STOCK_TOOL_FREE_SELECT,
+                GIMP_ICON_TOOL_FREE_SELECT,
                 data);
 }
 

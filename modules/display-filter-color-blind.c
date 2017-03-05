@@ -259,7 +259,7 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
 
   display_class->name            = _("Color Deficient Vision");
   display_class->help_id         = "gimp-colordisplay-colorblind";
-  display_class->icon_name       = GIMP_STOCK_DISPLAY_FILTER_COLORBLIND;
+  display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_COLORBLIND;
 
   display_class->convert_buffer  = cdisplay_colorblind_convert_buffer;
   display_class->configure       = cdisplay_colorblind_configure;

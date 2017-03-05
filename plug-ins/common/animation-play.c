@@ -600,7 +600,7 @@ ui_manager_new (GtkWidget *window)
       NULL, NULL, N_("Rewind the animation"),
       G_CALLBACK (rewind_callback) },
 
-    { "refresh", "view-refresh",
+    { "refresh", GIMP_ICON_VIEW_REFRESH,
       NULL, "<control>R", N_("Reload the image"),
       G_CALLBACK (refresh_callback) },
 
@@ -640,7 +640,7 @@ ui_manager_new (GtkWidget *window)
       NULL, "space", N_("Start playback"),
       G_CALLBACK (play_callback), FALSE },
 
-    { "detach", GIMP_STOCK_DETACH,
+    { "detach", GIMP_ICON_DETACH,
       N_("Detach"), NULL,
       N_("Detach the animation from the dialog window"),
       G_CALLBACK (detach_callback), FALSE }

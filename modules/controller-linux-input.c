@@ -229,7 +229,7 @@ controller_linux_input_class_init (ControllerLinuxInputClass *klass)
 
   controller_class->name            = _("Linux Input");
   controller_class->help_id         = "gimp-controller-linux-input";
-  controller_class->icon_name       = GIMP_STOCK_CONTROLLER_LINUX_INPUT;
+  controller_class->icon_name       = GIMP_ICON_CONTROLLER_LINUX_INPUT;
 
   controller_class->get_n_events    = linux_input_get_n_events;
   controller_class->get_event_name  = linux_input_get_event_name;

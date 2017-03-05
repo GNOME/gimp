@@ -288,7 +288,7 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
         {
           GtkWidget *l;
 
-          widget = gimp_message_box_new (GIMP_STOCK_WILBER_EEK);
+          widget = gimp_message_box_new (GIMP_ICON_WILBER_EEK);
           gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (widget), "%s",
                                              *label);
           gimp_message_box_set_text (GIMP_MESSAGE_BOX (widget), "%s", "");
@@ -342,7 +342,7 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
         {
           button = create_picker_func (picker_creator,
                                        pspec->name,
-                                       GIMP_STOCK_COLOR_PICKER_GRAY,
+                                       GIMP_ICON_COLOR_PICKER_GRAY,
                                        _("Pick color from the image"));
           gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
           gtk_widget_show (button);
@@ -548,7 +548,7 @@ gimp_prop_kelvin_presets_new (GObject     *config,
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_STOCK_MENU_LEFT,
+                        gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
                                                       GTK_ICON_SIZE_MENU));
 
   menu = gtk_menu_new ();

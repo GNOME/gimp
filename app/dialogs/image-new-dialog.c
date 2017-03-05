@@ -317,7 +317,7 @@ image_new_confirm_dialog (ImageNewDialog *private)
 
   private->confirm_dialog =
     dialog = gimp_message_dialog_new (_("Confirm Image Size"),
-                                      GIMP_STOCK_WARNING,
+                                      GIMP_ICON_DIALOG_WARNING,
                                       private->dialog,
                                       GTK_DIALOG_DESTROY_WITH_PARENT,
                                       gimp_standard_help_func, NULL,

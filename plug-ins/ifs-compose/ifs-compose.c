@@ -1023,43 +1023,43 @@ design_op_menu_create (GtkWidget *window)
   {
     { "ifs-compose-menu", NULL, "IFS Fractal Menu" },
 
-    { "new", "document-new",
-      NULL, "<control>N", NULL,
+    { "new", GIMP_ICON_DOCUMENT_NEW,
+      N_("_New"), "<primary>N", NULL,
       G_CALLBACK (ifs_compose_new_callback) },
 
-    { "delete", "edit-delete",
-      NULL, "<control>D", NULL,
+    { "delete", GIMP_ICON_EDIT_DELETE,
+      N_("_Delete"), "<primary>D", NULL,
       G_CALLBACK (ifs_compose_delete_callback) },
 
-    { "undo", "edit-undo",
-      NULL, "<control>Z", NULL,
+    { "undo", GIMP_ICON_EDIT_UNDO,
+      N_("_Undo"), "<primary>Z", NULL,
       G_CALLBACK (undo) },
 
-    { "redo", "edit-redo",
-      NULL, "<control>Y", NULL,
+    { "redo", GIMP_ICON_EDIT_REDO,
+      N_("_Redo"), "<primary>Y", NULL,
       G_CALLBACK (redo) },
 
-    { "select-all", GIMP_STOCK_SELECTION_ALL,
-      N_("Select _All"), "<control>A", NULL,
+    { "select-all", GIMP_ICON_SELECTION_ALL,
+      N_("Select _All"), "<primary>A", NULL,
       G_CALLBACK (design_area_select_all_callback) },
 
-    { "center", GIMP_STOCK_CENTER,
-      N_("Re_center"), "<control>C", N_("Recompute Center"),
+    { "center", GIMP_ICON_CENTER,
+      N_("Re_center"), "<primary>C", N_("Recompute Center"),
       G_CALLBACK (recompute_center_cb) },
 
-    { "options", "preferences-system",
+    { "options", GIMP_ICON_PREFERENCES_SYSTEM,
       N_("Render Options"), NULL, NULL,
       G_CALLBACK (ifs_compose_options_callback) }
   };
   static GtkRadioActionEntry radio_actions[] =
   {
-    { "move", GIMP_STOCK_TOOL_MOVE,
+    { "move", GIMP_ICON_TOOL_MOVE,
       N_("Move"), "M", NULL, OP_TRANSLATE },
 
-    { "rotate", GIMP_STOCK_TOOL_ROTATE,
+    { "rotate", GIMP_ICON_TOOL_ROTATE,
       N_("Rotate"), "R", N_("Rotate / Scale"), OP_ROTATE },
 
-    { "stretch", GIMP_STOCK_TOOL_PERSPECTIVE,
+    { "stretch", GIMP_ICON_TOOL_PERSPECTIVE,
       N_("Stretch"), "S", NULL, OP_STRETCH }
   };
 

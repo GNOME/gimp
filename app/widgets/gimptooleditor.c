@@ -262,9 +262,9 @@ gimp_tool_editor_new (GimpContainer *container,
 
     column    = gtk_tree_view_column_new ();
     gtk_tree_view_insert_column (tree_view->view, column, 0);
-    eye_cell  = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
+    eye_cell  = gimp_cell_renderer_toggle_new (GIMP_ICON_VISIBLE);
     icon_size = gimp_get_icon_size (GTK_WIDGET (tool_editor),
-                                    GIMP_STOCK_VISIBLE,
+                                    GIMP_ICON_VISIBLE,
                                     GTK_ICON_SIZE_BUTTON,
                                     view_size -
                                     2 * tree_style->xthickness,
@@ -291,7 +291,7 @@ gimp_tool_editor_new (GimpContainer *container,
 
   /* buttons */
   priv->raise_button =
-    gimp_editor_add_button (GIMP_EDITOR (tree_view), "go-up",
+    gimp_editor_add_button (GIMP_EDITOR (tree_view), GIMP_ICON_GO_UP,
                             _("Raise this tool"),
                             _("Raise this tool to the top"),
                             G_CALLBACK (gimp_tool_editor_raise_clicked),
@@ -299,7 +299,7 @@ gimp_tool_editor_new (GimpContainer *container,
                             tool_editor);
 
   priv->lower_button =
-    gimp_editor_add_button (GIMP_EDITOR (tree_view), "go-down",
+    gimp_editor_add_button (GIMP_EDITOR (tree_view), GIMP_ICON_GO_DOWN,
                             _("Lower this tool"),
                             _("Lower this tool to the bottom"),
                             G_CALLBACK (gimp_tool_editor_lower_clicked),
@@ -307,7 +307,7 @@ gimp_tool_editor_new (GimpContainer *container,
                             tool_editor);
 
   priv->reset_button =
-    gimp_editor_add_button (GIMP_EDITOR (tree_view), GIMP_STOCK_RESET,
+    gimp_editor_add_button (GIMP_EDITOR (tree_view), GIMP_ICON_RESET,
                             _("Reset tool order and visibility"), NULL,
                             G_CALLBACK (gimp_tool_editor_reset_clicked), NULL,
                             tool_editor);

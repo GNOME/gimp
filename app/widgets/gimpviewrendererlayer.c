@@ -65,7 +65,7 @@ gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
 
   if (gimp_layer_is_floating_sel (GIMP_LAYER (renderer->viewable)))
     {
-      icon_name = GIMP_STOCK_FLOATING_SELECTION;
+      icon_name = GIMP_ICON_LAYER_FLOATING_SELECTION;
     }
   else if (gimp_item_is_text_layer (GIMP_ITEM (renderer->viewable)))
     {

@@ -281,7 +281,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    label = create_label_in_table(table, 9, 0, _("ALT te_xt: (optional)"));
    dialog->comment = create_entry_in_table(table, label, 10, 0);
 
-   append_page (notebook, table, GIMP_STOCK_WEB, _("_Link"));
+   append_page (notebook, table, GIMP_ICON_WEB, _("_Link"));
 }
 
 static void

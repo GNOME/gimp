@@ -132,7 +132,7 @@ gimp_operation_tool_register (GimpToolRegisterCallback  callback,
                 _("Operation Tool: Use an arbitrary GEGL operation"),
                 N_("_GEGL Operation..."), NULL,
                 NULL, GIMP_HELP_TOOL_GEGL,
-                GIMP_STOCK_GEGL,
+                GIMP_ICON_GEGL,
                 data);
 }
 

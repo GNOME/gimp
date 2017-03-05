@@ -55,7 +55,7 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                 _("Smudge Tool: Smudge selectively using a brush"),
                 N_("_Smudge"), "S",
                 NULL, GIMP_HELP_TOOL_SMUDGE,
-                GIMP_STOCK_TOOL_SMUDGE,
+                GIMP_ICON_TOOL_SMUDGE,
                 data);
 }
 

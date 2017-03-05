@@ -82,7 +82,7 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
                 _("Color Balance Tool: Adjust color distribution"),
                 N_("Color _Balance..."), NULL,
                 NULL, GIMP_HELP_TOOL_COLOR_BALANCE,
-                GIMP_STOCK_TOOL_COLOR_BALANCE,
+                GIMP_ICON_TOOL_COLOR_BALANCE,
                 data);
 }
 

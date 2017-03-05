@@ -103,7 +103,7 @@ gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
                 _("Color Picker Tool: Set colors from image pixels"),
                 N_("C_olor Picker"), "O",
                 NULL, GIMP_HELP_TOOL_COLOR_PICKER,
-                GIMP_STOCK_TOOL_COLOR_PICKER,
+                GIMP_ICON_TOOL_COLOR_PICKER,
                 data);
 }
 

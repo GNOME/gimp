@@ -886,7 +886,7 @@ server_interface (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_WARNING,
+  image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_WARNING,
                                         GTK_ICON_SIZE_DIALOG);
   gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
   gtk_widget_show (image);

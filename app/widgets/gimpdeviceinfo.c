@@ -109,7 +109,7 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
   object_class->set_property        = gimp_device_info_set_property;
   object_class->get_property        = gimp_device_info_get_property;
 
-  viewable_class->default_icon_name = GIMP_STOCK_INPUT_DEVICE;
+  viewable_class->default_icon_name = GIMP_ICON_INPUT_DEVICE;
 
   g_object_class_install_property (object_class, PROP_DEVICE,
                                    g_param_spec_object ("device",
@@ -503,15 +503,15 @@ gimp_device_info_guess_icon (GimpDeviceInfo *info)
 
       if (strstr (down, "eraser"))
         {
-          icon_name = GIMP_STOCK_TOOL_ERASER;
+          icon_name = GIMP_ICON_TOOL_ERASER;
         }
       else if (strstr (down, "pen"))
         {
-          icon_name = GIMP_STOCK_TOOL_PAINTBRUSH;
+          icon_name = GIMP_ICON_TOOL_PAINTBRUSH;
         }
       else if (strstr (down, "airbrush"))
         {
-          icon_name = GIMP_STOCK_TOOL_AIRBRUSH;
+          icon_name = GIMP_ICON_TOOL_AIRBRUSH;
         }
       else if (strstr (down, "cursor")   ||
                strstr (down, "mouse")    ||
@@ -519,7 +519,7 @@ gimp_device_info_guess_icon (GimpDeviceInfo *info)
                strstr (down, "touchpad") ||
                strstr (down, "trackpoint"))
         {
-          icon_name = GIMP_STOCK_CURSOR;
+          icon_name = GIMP_ICON_CURSOR;
         }
 
       g_free (down);

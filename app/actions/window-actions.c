@@ -166,7 +166,7 @@ window_actions_display_opened (GdkDisplayManager *manager,
 
       entries[i].name        = g_strdup_printf ("%s-move-to-screen-%s",
                                                 group_name, screen_name);
-      entries[i].icon_name   = GIMP_STOCK_MOVE_TO_SCREEN;
+      entries[i].icon_name   = GIMP_ICON_WINDOW_MOVE_TO_SCREEN;
       entries[i].label       = g_strdup_printf (_("Screen %s"), screen_name);
       entries[i].accelerator = NULL;
       entries[i].tooltip     = g_strdup_printf (_("Move this window to "

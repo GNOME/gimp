@@ -168,7 +168,8 @@ gimp_path_editor_init (GimpPathEditor *editor)
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name ("document-new", GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_DOCUMENT_NEW,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -185,7 +186,8 @@ gimp_path_editor_init (GimpPathEditor *editor)
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name ("go-up", GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_UP,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -202,7 +204,8 @@ gimp_path_editor_init (GimpPathEditor *editor)
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name ("go-down", GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_DOWN,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -219,7 +222,8 @@ gimp_path_editor_init (GimpPathEditor *editor)
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name ("edit-delete", GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT_DELETE,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 

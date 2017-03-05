@@ -68,7 +68,7 @@ window_open_display_cmd_callback (GtkAction *action,
   GtkWidget *entry;
   return_if_no_widget (widget, data);
 
-  dialog = gimp_message_dialog_new ("Open Display", GIMP_STOCK_WILBER_EEK,
+  dialog = gimp_message_dialog_new ("Open Display", GIMP_ICON_WILBER_EEK,
                                     widget, GTK_DIALOG_MODAL,
                                     NULL, NULL,
 

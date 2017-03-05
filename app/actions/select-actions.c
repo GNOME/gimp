@@ -40,31 +40,31 @@
 
 static const GimpActionEntry select_actions[] =
 {
-  { "selection-popup", GIMP_STOCK_SELECTION,
+  { "selection-popup", GIMP_ICON_SELECTION,
     NC_("select-action", "Selection Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_SELECTION_DIALOG },
 
   { "select-menu", NULL, NC_("select-action", "_Select") },
 
-  { "select-all", GIMP_STOCK_SELECTION_ALL,
+  { "select-all", GIMP_ICON_SELECTION_ALL,
     NC_("select-action", "_All"), "<primary>A",
     NC_("select-action", "Select everything"),
     G_CALLBACK (select_all_cmd_callback),
     GIMP_HELP_SELECTION_ALL },
 
-  { "select-none", GIMP_STOCK_SELECTION_NONE,
+  { "select-none", GIMP_ICON_SELECTION_NONE,
     NC_("select-action", "_None"), "<primary><shift>A",
     NC_("select-action", "Dismiss the selection"),
     G_CALLBACK (select_none_cmd_callback),
     GIMP_HELP_SELECTION_NONE },
 
-  { "select-invert", GIMP_STOCK_INVERT,
+  { "select-invert", GIMP_ICON_INVERT,
     NC_("select-action", "_Invert"), "<primary>I",
     NC_("select-action", "Invert the selection"),
     G_CALLBACK (select_invert_cmd_callback),
     GIMP_HELP_SELECTION_INVERT },
 
-  { "select-float", GIMP_STOCK_FLOATING_SELECTION,
+  { "select-float", GIMP_ICON_LAYER_FLOATING_SELECTION,
     NC_("select-action", "_Float"), "<primary><shift>L",
     NC_("select-action", "Create a floating selection"),
     G_CALLBACK (select_float_cmd_callback),
@@ -83,19 +83,19 @@ static const GimpActionEntry select_actions[] =
     G_CALLBACK (select_sharpen_cmd_callback),
     GIMP_HELP_SELECTION_SHARPEN },
 
-  { "select-shrink", GIMP_STOCK_SELECTION_SHRINK,
+  { "select-shrink", GIMP_ICON_SELECTION_SHRINK,
     NC_("select-action", "S_hrink..."), NULL,
     NC_("select-action", "Contract the selection"),
     G_CALLBACK (select_shrink_cmd_callback),
     GIMP_HELP_SELECTION_SHRINK },
 
-  { "select-grow", GIMP_STOCK_SELECTION_GROW,
+  { "select-grow", GIMP_ICON_SELECTION_GROW,
     NC_("select-action", "_Grow..."), NULL,
     NC_("select-action", "Enlarge the selection"),
     G_CALLBACK (select_grow_cmd_callback),
     GIMP_HELP_SELECTION_GROW },
 
-  { "select-border", GIMP_STOCK_SELECTION_BORDER,
+  { "select-border", GIMP_ICON_SELECTION_BORDER,
     NC_("select-action", "Bo_rder..."), NULL,
     NC_("select-action", "Replace the selection by its border"),
     G_CALLBACK (select_border_cmd_callback),
@@ -107,31 +107,31 @@ static const GimpActionEntry select_actions[] =
     G_CALLBACK (select_flood_cmd_callback),
     GIMP_HELP_SELECTION_FLOOD },
 
-  { "select-save", GIMP_STOCK_SELECTION_TO_CHANNEL,
+  { "select-save", GIMP_ICON_SELECTION_TO_CHANNEL,
     NC_("select-action", "Save to _Channel"), NULL,
     NC_("select-action", "Save the selection to a channel"),
     G_CALLBACK (select_save_cmd_callback),
     GIMP_HELP_SELECTION_TO_CHANNEL },
 
-  { "select-fill", GIMP_STOCK_TOOL_BUCKET_FILL,
+  { "select-fill", GIMP_ICON_TOOL_BUCKET_FILL,
     NC_("select-action", "_Fill Selection Outline..."), NULL,
     NC_("select-action", "Fill the selection outline"),
     G_CALLBACK (select_fill_cmd_callback),
     GIMP_HELP_SELECTION_FILL },
 
-  { "select-fill-last-values", GIMP_STOCK_TOOL_BUCKET_FILL,
+  { "select-fill-last-values", GIMP_ICON_TOOL_BUCKET_FILL,
     NC_("select-action", "_Fill Selection Outline"), NULL,
     NC_("select-action", "Fill the selection outline with last used values"),
     G_CALLBACK (select_fill_last_vals_cmd_callback),
     GIMP_HELP_SELECTION_FILL },
 
-  { "select-stroke", GIMP_STOCK_SELECTION_STROKE,
+  { "select-stroke", GIMP_ICON_SELECTION_STROKE,
     NC_("select-action", "_Stroke Selection..."), NULL,
     NC_("select-action", "Paint along the selection outline"),
     G_CALLBACK (select_stroke_cmd_callback),
     GIMP_HELP_SELECTION_STROKE },
 
-  { "select-stroke-last-values", GIMP_STOCK_SELECTION_STROKE,
+  { "select-stroke-last-values", GIMP_ICON_SELECTION_STROKE,
     NC_("select-action", "_Stroke Selection"), NULL,
     NC_("select-action", "Stroke the selection with last used values"),
     G_CALLBACK (select_stroke_last_vals_cmd_callback),

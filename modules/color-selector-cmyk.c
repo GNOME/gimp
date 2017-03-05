@@ -115,7 +115,7 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
 
   selector_class->name       = _("CMYK");
   selector_class->help_id    = "gimp-colorselector-cmyk";
-  selector_class->icon_name  = GIMP_ICON_COLOR_CMYK;
+  selector_class->icon_name  = GIMP_ICON_COLOR_SELECTOR_CMYK;
   selector_class->set_color  = colorsel_cmyk_set_color;
   selector_class->set_config = colorsel_cmyk_set_config;
 }

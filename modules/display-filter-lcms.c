@@ -123,7 +123,7 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
 
   display_class->name            = _("Color Management");
   display_class->help_id         = "gimp-colordisplay-lcms";
-  display_class->icon_name       = GIMP_STOCK_DISPLAY_FILTER_LCMS;
+  display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_LCMS;
 
   display_class->configure       = cdisplay_lcms_configure;
   display_class->convert_buffer  = cdisplay_lcms_convert_buffer;

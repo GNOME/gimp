@@ -167,7 +167,7 @@ _gimp_prop_gui_new_generic (GObject              *config,
 
               button = create_picker_func (picker_creator,
                                            pspec_name,
-                                           GIMP_STOCK_CURSOR,
+                                           GIMP_ICON_CURSOR,
                                            _("Pick coordinates from the image"));
               gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
               gtk_widget_show (button);
@@ -622,25 +622,25 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
     const ButtonInfo buttons[] = {
       {
         .tooltip   = _("Rotate matrix 90° counter-clockwise"),
-        .icon_name = GIMP_STOCK_ROTATE_270,
+        .icon_name = GIMP_ICON_OBJECT_ROTATE_270,
         .rotate    = 1,
         .flip      = 0
       },
       {
         .tooltip   = _("Rotate matrix 90° clockwise"),
-        .icon_name = GIMP_STOCK_ROTATE_90,
+        .icon_name = GIMP_ICON_OBJECT_ROTATE_90,
         .rotate    = 3,
         .flip      = 0
       },
       {
         .tooltip   = _("Flip matrix horizontally"),
-        .icon_name = GIMP_STOCK_FLIP_HORIZONTAL,
+        .icon_name = GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
         .rotate    = 0,
         .flip      = 1
       },
       {
         .tooltip   = _("Flip matrix vertically"),
-        .icon_name = GIMP_STOCK_FLIP_VERTICAL,
+        .icon_name = GIMP_ICON_OBJECT_FLIP_VERTICAL,
         .rotate    = 2,
         .flip      = 1
       }};

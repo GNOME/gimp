@@ -442,7 +442,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
     }
 
   gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
-                                     GIMP_STOCK_TEXTURE);
+                                     GIMP_ICON_TEXTURE);
 
   return GTK_WIDGET (editor);
 }

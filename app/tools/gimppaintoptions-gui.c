@@ -574,10 +574,10 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
 
-  button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
+  button = gimp_icon_button_new (GIMP_ICON_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
+                                GIMP_ICON_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -595,7 +595,7 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
       button = gtk_toggle_button_new ();
       gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
-      image = gtk_image_new_from_icon_name (GIMP_STOCK_LINKED,
+      image = gtk_image_new_from_icon_name (GIMP_ICON_LINKED,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);

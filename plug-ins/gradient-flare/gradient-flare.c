@@ -2923,10 +2923,10 @@ dlg_make_page_selector (GFlareDialog *dlg,
   }
   buttons[] =
   {
-    { GTK_STOCK_NEW,    G_CALLBACK (dlg_selector_new_callback)    },
-    { GTK_STOCK_EDIT,   G_CALLBACK (dlg_selector_edit_callback)   },
-    { GTK_STOCK_COPY,   G_CALLBACK (dlg_selector_copy_callback)   },
-    { GTK_STOCK_DELETE, G_CALLBACK (dlg_selector_delete_callback) }
+    { N_("_New"),    G_CALLBACK (dlg_selector_new_callback)    },
+    { N_("_Edit"),   G_CALLBACK (dlg_selector_edit_callback)   },
+    { N_("_Copy"),   G_CALLBACK (dlg_selector_copy_callback)   },
+    { N_("_Delete"), G_CALLBACK (dlg_selector_delete_callback) }
   };
 
   DEBUG_PRINT (("dlg_make_page_selector\n"));
@@ -2981,7 +2981,7 @@ dlg_make_page_selector (GFlareDialog *dlg,
 
   for (i = 0; i < G_N_ELEMENTS (buttons); i++)
     {
-      button = gtk_button_new_from_stock (buttons[i].label);
+      button = gtk_button_new_with_mnemonic (gettext (buttons[i].label));
       gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
@@ -3205,9 +3205,9 @@ dlg_selector_delete_callback (GtkWidget *widget,
   dialog = gimp_query_boolean_box (_("Delete Gradient Flare"),
                                    dlg->shell,
                                    gimp_standard_help_func, PLUG_IN_PROC,
-                                   GTK_STOCK_DIALOG_QUESTION,
+                                   GIMP_ICON_DIALOG_QUESTION,
                                    str,
-                                   GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
+                                   _("_Delete"), _("_Cancel"),
                                    NULL, NULL,
                                    dlg_selector_do_delete_callback,
                                    NULL);

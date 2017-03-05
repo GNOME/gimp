@@ -141,7 +141,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
   gtk_widget_show (status->vbox);
 
   status->save_button =
-    gimp_editor_add_button (GIMP_EDITOR (status), "document-save",
+    gimp_editor_add_button (GIMP_EDITOR (status), GIMP_ICON_DOCUMENT_SAVE,
                             _("Save device status"), NULL,
                             G_CALLBACK (gimp_device_status_save_clicked),
                             NULL,

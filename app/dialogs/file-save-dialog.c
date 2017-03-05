@@ -624,7 +624,7 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
         }
 
       dialog = gimp_message_dialog_new (_("Extension Mismatch"),
-                                        GIMP_STOCK_WARNING,
+                                        GIMP_ICON_DIALOG_WARNING,
                                         GTK_WIDGET (file_dialog),
                                         GTK_DIALOG_DESTROY_WITH_PARENT,
                                         gimp_standard_help_func, NULL,
@@ -701,7 +701,7 @@ file_save_dialog_use_extension (GtkWidget *save_dialog,
   gboolean   use_name = FALSE;
 
   dialog = gimp_message_dialog_new (_("Extension Mismatch"),
-                                    GIMP_STOCK_QUESTION,
+                                    GIMP_ICON_DIALOG_QUESTION,
                                     save_dialog, GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func, NULL,
 

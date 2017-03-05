@@ -54,45 +54,45 @@ static const GimpActionEntry text_tool_actions[] =
     NC_("text-tool-action", "Input _Methods"), NULL, NULL, NULL,
     NULL },
 
-  { "text-tool-cut", "edit-cut",
+  { "text-tool-cut", GIMP_ICON_EDIT_CUT,
     NC_("text-tool-action", "Cu_t"), NULL, "<primary>X",
     G_CALLBACK (text_tool_cut_cmd_callback),
     NULL },
 
-  { "text-tool-copy", "edit-copy",
+  { "text-tool-copy", GIMP_ICON_EDIT_COPY,
     NC_("text-tool-action", "_Copy"), NULL, "<primary>C",
     G_CALLBACK (text_tool_copy_cmd_callback),
     NULL },
 
-  { "text-tool-paste", "edit-paste",
+  { "text-tool-paste", GIMP_ICON_EDIT_PASTE,
     NC_("text-tool-action", "_Paste"), NULL, "<primary>V",
     G_CALLBACK (text_tool_paste_cmd_callback),
     NULL },
 
-  { "text-tool-delete", "edit-delete",
+  { "text-tool-delete", GIMP_ICON_EDIT_DELETE,
     NC_("text-tool-action", "_Delete"), NULL, NULL,
     G_CALLBACK (text_tool_delete_cmd_callback),
     NULL },
 
-  { "text-tool-load", "document-open",
+  { "text-tool-load", GIMP_ICON_DOCUMENT_OPEN,
     NC_("text-tool-action", "_Open text file..."), NULL, NULL,
     G_CALLBACK (text_tool_load_cmd_callback),
     NULL },
 
-  { "text-tool-clear", "edit-clear",
+  { "text-tool-clear", GIMP_ICON_EDIT_CLEAR,
     NC_("text-tool-action", "Cl_ear"), NULL,
     NC_("text-tool-action", "Clear all text"),
     G_CALLBACK (text_tool_clear_cmd_callback),
     NULL },
 
-  { "text-tool-text-to-path", GIMP_STOCK_PATH,
+  { "text-tool-text-to-path", GIMP_ICON_PATH,
     NC_("text-tool-action", "_Path from Text"), "",
     NC_("text-tool-action",
         "Create a path from the outlines of the current text"),
     G_CALLBACK (text_tool_text_to_path_cmd_callback),
     NULL },
 
-  { "text-tool-text-along-path", GIMP_STOCK_PATH,
+  { "text-tool-text-along-path", GIMP_ICON_PATH,
     NC_("text-tool-action", "Text _along Path"), "",
     NC_("text-tool-action",
         "Bend the text along the currently active path"),
@@ -102,12 +102,12 @@ static const GimpActionEntry text_tool_actions[] =
 
 static const GimpRadioActionEntry text_tool_direction_actions[] =
 {
-  { "text-tool-direction-ltr", GIMP_STOCK_TEXT_DIR_LTR,
+  { "text-tool-direction-ltr", GIMP_ICON_FORMAT_TEXT_DIRECTION_LTR,
     NC_("text-tool-action", "From left to right"), NULL, NULL,
     GIMP_TEXT_DIRECTION_LTR,
     NULL },
 
-  { "text-tool-direction-rtl", GIMP_STOCK_TEXT_DIR_RTL,
+  { "text-tool-direction-rtl", GIMP_ICON_FORMAT_TEXT_DIRECTION_RTL,
     NC_("text-tool-action", "From right to left"), NULL, NULL,
     GIMP_TEXT_DIRECTION_RTL,
     NULL }

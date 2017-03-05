@@ -205,7 +205,7 @@ controller_dx_dinput_class_init (ControllerDXDInputClass *klass)
 
   controller_class->name            = _("DirectX DirectInput");
   controller_class->help_id         = "gimp-controller-directx-directinput";
-  controller_class->icon_name       = GIMP_STOCK_CONTROLLER_LINUX_INPUT;
+  controller_class->icon_name       = GIMP_ICON_CONTROLLER_LINUX_INPUT;
 
   controller_class->get_n_events    = dx_dinput_get_n_events;
   controller_class->get_event_name  = dx_dinput_get_event_name;

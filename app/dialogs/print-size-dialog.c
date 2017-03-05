@@ -116,7 +116,7 @@ print_size_dialog_new (GimpImage              *image,
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                                      title, role,
-                                     GIMP_STOCK_PRINT_RESOLUTION, title,
+                                     GIMP_ICON_DOCUMENT_PRINT_RESOLUTION, title,
                                      parent,
                                      help_func, help_id,
 

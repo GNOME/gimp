@@ -173,7 +173,7 @@ query (void)
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/File/Send");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GTK_STOCK_EDIT);
+                             (const guint8 *) GIMP_ICON_EDIT);
 
   g_free (email_bin);
 }

@@ -314,7 +314,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
                         "button-icon-size", &icon_size,
                         NULL);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_TRANSPARENCY, icon_size);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_TRANSPARENCY, icon_size);
   gtk_container_add (GTK_CONTAINER (view->priv->lock_alpha_toggle), image);
   gtk_widget_show (image);
 

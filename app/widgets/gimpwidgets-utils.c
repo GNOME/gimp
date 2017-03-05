@@ -387,7 +387,7 @@ gimp_widget_load_icon (GtkWidget   *widget,
       g_printerr ("gimp_widget_load_icon(): icon theme has no icon '%s'.\n",
                   icon_name);
 
-      return gtk_icon_theme_load_icon (icon_theme, GIMP_STOCK_WILBER_EEK,
+      return gtk_icon_theme_load_icon (icon_theme, GIMP_ICON_WILBER_EEK,
                                        size, 0, NULL);
     }
 
@@ -1147,16 +1147,16 @@ gimp_get_message_icon_name (GimpMessageSeverity severity)
   switch (severity)
     {
     case GIMP_MESSAGE_INFO:
-      return GIMP_STOCK_INFO;
+      return GIMP_ICON_DIALOG_INFORMATION;
 
     case GIMP_MESSAGE_WARNING:
-      return GIMP_STOCK_WARNING;
+      return GIMP_ICON_DIALOG_WARNING;
 
     case GIMP_MESSAGE_ERROR:
-      return GIMP_STOCK_ERROR;
+      return GIMP_ICON_DIALOG_ERROR;
     }
 
-  g_return_val_if_reached (GIMP_STOCK_WARNING);
+  g_return_val_if_reached (GIMP_ICON_DIALOG_WARNING);
 }
 
 gboolean

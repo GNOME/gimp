@@ -867,62 +867,62 @@ create_ui_manager (GtkWidget *window)
 
     { "gfig-file-menu", NULL, "_File" },
 
-    { "open", GTK_STOCK_OPEN,
-      NULL, "<control>O", NULL,
+    { "open", GIMP_ICON_DOCUMENT_OPEN,
+      N_("_Open..."), "<control>O", NULL,
       G_CALLBACK (gfig_load_action_callback) },
 
-    { "save", GTK_STOCK_SAVE,
-      NULL, "<control>S", NULL,
+    { "save", GIMP_ICON_DOCUMENT_SAVE,
+      N_("_Save..."), "<control>S", NULL,
       G_CALLBACK (gfig_save_action_callback) },
 
-    { "close", GTK_STOCK_CLOSE,
-      NULL, "<control>C", NULL,
+    { "close", GIMP_ICON_CLOSE,
+      N_("_Close"), "<control>C", NULL,
       G_CALLBACK (gfig_close_action_callback) },
 
     { "gfig-edit-menu", NULL, "_Edit" },
 
-    { "undo", GTK_STOCK_UNDO,
+    { "undo", GIMP_ICON_EDIT_UNDO,
       N_("_Undo"), "<control>Z", NULL,
       G_CALLBACK (gfig_undo_action_callback) },
 
-    { "clear", GTK_STOCK_CLEAR,
+    { "clear", GIMP_ICON_EDIT_CLEAR,
       N_("_Clear"), NULL, NULL,
       G_CALLBACK (gfig_clear_action_callback) },
 
-    { "grid", GIMP_STOCK_GRID,
+    { "grid", GIMP_ICON_GRID,
       N_("_Grid"), "<control>G", NULL,
       G_CALLBACK (gfig_grid_action_callback) },
 
-    { "prefs", GTK_STOCK_PREFERENCES,
-      NULL, "<control>P", NULL,
+    { "prefs", GIMP_ICON_PREFERENCES_SYSTEM,
+      N_("_Preferences..."), "<control>P", NULL,
       G_CALLBACK (gfig_prefs_action_callback) },
 
-    { "raise", GTK_STOCK_GO_UP,
-      NULL, "<control>U", N_("Raise selected object"),
+    { "raise", GIMP_ICON_GO_UP,
+      N_("_Raise"), "<control>U", N_("Raise selected object"),
       G_CALLBACK (raise_selected_obj) },
 
-    { "lower", GTK_STOCK_GO_DOWN,
-      NULL, "<control>D", N_("Lower selected object"),
+    { "lower", GIMP_ICON_GO_DOWN,
+      N_("_Lower"), "<control>D", N_("Lower selected object"),
       G_CALLBACK (lower_selected_obj) },
 
-    { "top", GTK_STOCK_GOTO_TOP,
-      NULL, "<control>T", N_("Raise selected object to top"),
+    { "top", GIMP_ICON_GO_TOP,
+      N_("Raise to _top"), "<control>T", N_("Raise selected object to top"),
       G_CALLBACK (raise_selected_obj_to_top) },
 
-    { "bottom", GTK_STOCK_GOTO_BOTTOM,
-      NULL, "<control>B", N_("Lower selected object to bottom"),
+    { "bottom", GIMP_ICON_GO_BOTTOM,
+      N_("Lower to _bottom"), "<control>B", N_("Lower selected object to bottom"),
       G_CALLBACK (lower_selected_obj_to_bottom) },
 
-    { "show_previous", GTK_STOCK_GO_BACK,
-      NULL, "<control>H", N_("Show previous object"),
+    { "show_previous", GIMP_ICON_GO_PREVIOUS,
+      N_("_Previous"), "<control>H", N_("Show previous object"),
       G_CALLBACK (select_button_clicked_lt) },
 
-    { "show_next", GTK_STOCK_GO_FORWARD,
-      NULL, "<control>L", N_("Show next object"),
+    { "show_next", GIMP_ICON_GO_NEXT,
+      N_("_Next"), "<control>L", N_("Show next object"),
       G_CALLBACK (select_button_clicked_gt) },
 
     { "show_all", GFIG_STOCK_SHOW_ALL,
-      NULL, "<control>A", N_("Show all objects"),
+      N_("Show _all"), "<control>A", N_("Show all objects"),
       G_CALLBACK (select_button_clicked_eq) }
   };
   static GtkRadioActionEntry radio_actions[] =

@@ -240,7 +240,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
 
   selector_class->name                  = "GIMP";
   selector_class->help_id               = "gimp-colorselector-gimp";
-  selector_class->icon_name             = GIMP_STOCK_WILBER;
+  selector_class->icon_name             = GIMP_ICON_WILBER;
   selector_class->set_toggles_visible   = gimp_color_select_togg_visible;
   selector_class->set_toggles_sensitive = gimp_color_select_togg_sensitive;
   selector_class->set_color             = gimp_color_select_set_color;

@@ -127,7 +127,7 @@ offset_dialog_new (GimpDrawable       *drawable,
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (drawable), context,
                                      _("Offset"), "gimp-drawable-offset",
-                                     GIMP_STOCK_TOOL_MOVE,
+                                     GIMP_ICON_TOOL_MOVE,
                                      title,
                                      parent,
                                      gimp_standard_help_func,

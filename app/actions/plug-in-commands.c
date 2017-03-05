@@ -173,7 +173,7 @@ plug_in_reset_all_cmd_callback (GtkAction *action,
   if (! dialog)
     {
       dialog = gimp_message_dialog_new (_("Reset all Filters"),
-                                        GIMP_STOCK_QUESTION,
+                                        GIMP_ICON_DIALOG_QUESTION,
                                         NULL, 0,
                                         gimp_standard_help_func, NULL,
 

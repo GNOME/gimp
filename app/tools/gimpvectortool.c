@@ -170,7 +170,7 @@ gimp_vector_tool_register (GimpToolRegisterCallback callback,
                 _("Paths Tool: Create and edit paths"),
                 N_("Pat_hs"), "b",
                 NULL, GIMP_HELP_TOOL_PATH,
-                GIMP_STOCK_TOOL_PATH,
+                GIMP_ICON_TOOL_PATH,
                 data);
 }
 
@@ -1988,7 +1988,7 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
                               drawable,
                               GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
                               _("Stroke Path"),
-                              GIMP_STOCK_PATH_STROKE,
+                              GIMP_ICON_PATH_STROKE,
                               GIMP_HELP_PATH_STROKE,
                               button,
                               config->stroke_options,

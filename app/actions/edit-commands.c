@@ -151,7 +151,8 @@ edit_undo_clear_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = gimp_message_dialog_new (_("Clear Undo History"), GIMP_STOCK_WARNING,
+  dialog = gimp_message_dialog_new (_("Clear Undo History"),
+                                    GIMP_ICON_DIALOG_WARNING,
                                     widget,
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,

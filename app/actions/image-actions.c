@@ -71,13 +71,13 @@ static const GimpActionEntry image_actions[] =
   { "colors-components-menu",   NULL, NC_("image-action", "C_omponents")   },
   { "colors-desaturate-menu",   NULL, NC_("image-action", "D_esaturate")   },
 
-  { "image-new", "document-new",
+  { "image-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("image-action", "_New..."), "<primary>N",
     NC_("image-action", "Create a new image"),
     G_CALLBACK (image_new_cmd_callback),
     GIMP_HELP_FILE_NEW },
 
-  { "image-duplicate", GIMP_STOCK_DUPLICATE,
+  { "image-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("image-action", "_Duplicate"), "<primary>D",
     NC_("image-action", "Create a duplicate of this image"),
     G_CALLBACK (image_duplicate_cmd_callback),
@@ -107,7 +107,7 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_color_profile_save_cmd_callback),
     GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE },
 
-  { "image-resize", GIMP_STOCK_RESIZE,
+  { "image-resize", GIMP_ICON_OBJECT_RESIZE,
     NC_("image-action", "Can_vas Size..."), NULL,
     NC_("image-action", "Adjust the image dimensions"),
     G_CALLBACK (image_resize_cmd_callback),
@@ -125,25 +125,25 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_resize_to_selection_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE_TO_SELECTION },
 
-  { "image-print-size", GIMP_STOCK_PRINT_RESOLUTION,
+  { "image-print-size", GIMP_ICON_DOCUMENT_PRINT_RESOLUTION,
     NC_("image-action", "_Print Size..."), NULL,
     NC_("image-action", "Adjust the print resolution"),
     G_CALLBACK (image_print_size_cmd_callback),
     GIMP_HELP_IMAGE_PRINT_SIZE },
 
-  { "image-scale", GIMP_STOCK_SCALE,
+  { "image-scale", GIMP_ICON_OBJECT_SCALE,
     NC_("image-action", "_Scale Image..."), NULL,
     NC_("image-action", "Change the size of the image content"),
     G_CALLBACK (image_scale_cmd_callback),
     GIMP_HELP_IMAGE_SCALE },
 
-  { "image-crop-to-selection", GIMP_STOCK_TOOL_CROP,
+  { "image-crop-to-selection", GIMP_ICON_TOOL_CROP,
     NC_("image-action", "_Crop to Selection"), NULL,
     NC_("image-action", "Crop the image to the extents of the selection"),
     G_CALLBACK (image_crop_to_selection_cmd_callback),
     GIMP_HELP_IMAGE_CROP },
 
-  { "image-crop-to-content", GIMP_STOCK_TOOL_CROP,
+  { "image-crop-to-content", GIMP_ICON_TOOL_CROP,
     NC_("image-action", "Crop to C_ontent"), NULL,
     NC_("image-action", "Crop the image to the extents of its content (remove empty borders from the image)"),
     G_CALLBACK (image_crop_to_content_cmd_callback),
@@ -161,7 +161,7 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_flatten_image_cmd_callback),
     GIMP_HELP_IMAGE_FLATTEN },
 
-  { "image-configure-grid", GIMP_STOCK_GRID,
+  { "image-configure-grid", GIMP_ICON_GRID,
     NC_("image-action", "Configure G_rid..."), NULL,
     NC_("image-action", "Configure the grid for this image"),
     G_CALLBACK (image_configure_grid_cmd_callback),
@@ -188,17 +188,17 @@ static const GimpToggleActionEntry image_toggle_actions[] =
 
 static const GimpRadioActionEntry image_convert_base_type_actions[] =
 {
-  { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
+  { "image-convert-rgb", GIMP_ICON_CONVERT_RGB,
     NC_("image-convert-action", "_RGB"), NULL,
     NC_("image-convert-action", "Convert the image to the RGB colorspace"),
     GIMP_RGB, GIMP_HELP_IMAGE_CONVERT_RGB },
 
-  { "image-convert-grayscale", GIMP_STOCK_CONVERT_GRAYSCALE,
+  { "image-convert-grayscale", GIMP_ICON_CONVERT_GRAYSCALE,
     NC_("image-convert-action", "_Grayscale"), NULL,
     NC_("image-convert-action", "Convert the image to grayscale"),
     GIMP_GRAY, GIMP_HELP_IMAGE_CONVERT_GRAYSCALE },
 
-  { "image-convert-indexed", GIMP_STOCK_CONVERT_INDEXED,
+  { "image-convert-indexed", GIMP_ICON_CONVERT_INDEXED,
     NC_("image-convert-action", "_Indexed..."), NULL,
     NC_("image-convert-action", "Convert the image to indexed colors"),
     GIMP_INDEXED, GIMP_HELP_IMAGE_CONVERT_INDEXED }
@@ -260,13 +260,13 @@ static const GimpRadioActionEntry image_convert_gamma_actions[] =
 
 static const GimpEnumActionEntry image_flip_actions[] =
 {
-  { "image-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
+  { "image-flip-horizontal", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
     NC_("image-action", "Flip _Horizontally"), NULL,
     NC_("image-action", "Flip image horizontally"),
     GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_IMAGE_FLIP_HORIZONTAL },
 
-  { "image-flip-vertical", GIMP_STOCK_FLIP_VERTICAL,
+  { "image-flip-vertical", GIMP_ICON_OBJECT_FLIP_VERTICAL,
     NC_("image-action", "Flip _Vertically"), NULL,
     NC_("image-action", "Flip image vertically"),
     GIMP_ORIENTATION_VERTICAL, FALSE,
@@ -275,19 +275,19 @@ static const GimpEnumActionEntry image_flip_actions[] =
 
 static const GimpEnumActionEntry image_rotate_actions[] =
 {
-  { "image-rotate-90", GIMP_STOCK_ROTATE_90,
+  { "image-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("image-action", "Rotate 90° _clockwise"), NULL,
     NC_("image-action", "Rotate the image 90 degrees to the right"),
     GIMP_ROTATE_90, FALSE,
     GIMP_HELP_IMAGE_ROTATE_90 },
 
-  { "image-rotate-180", GIMP_STOCK_ROTATE_180,
+  { "image-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
     NC_("image-action", "Rotate _180°"), NULL,
     NC_("image-action", "Turn the image upside-down"),
     GIMP_ROTATE_180, FALSE,
     GIMP_HELP_IMAGE_ROTATE_180 },
 
-  { "image-rotate-270", GIMP_STOCK_ROTATE_270,
+  { "image-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("image-action", "Rotate 90° counter-clock_wise"), NULL,
     NC_("image-action", "Rotate the image 90 degrees to the left"),
     GIMP_ROTATE_270, FALSE,

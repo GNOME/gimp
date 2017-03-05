@@ -667,7 +667,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
 
   dialog =
     gimp_message_dialog_new (_("Conflicting Shortcuts"),
-                             GIMP_STOCK_WARNING,
+                             GIMP_ICON_DIALOG_WARNING,
                              gtk_widget_get_toplevel (GTK_WIDGET (view)), 0,
                              gimp_standard_help_func, NULL,
 

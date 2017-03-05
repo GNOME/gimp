@@ -666,7 +666,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_IN);
+  button = gtk_button_new_with_mnemonic (_("Zoom _In"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -674,7 +674,7 @@ explorer_dialog (void)
                     G_CALLBACK (dialog_step_in_callback),
                     dialog);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_ZOOM_OUT);
+  button = gtk_button_new_with_mnemonic (_("Zoom _Out"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -687,7 +687,7 @@ explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
+  button = gtk_button_new_with_mnemonic (_("_Undo"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -697,7 +697,7 @@ explorer_dialog (void)
                     G_CALLBACK (dialog_undo_zoom_callback),
                     dialog);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_REDO);
+  button = gtk_button_new_with_mnemonic (_("_Redo"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -802,7 +802,7 @@ explorer_dialog (void)
   gtk_table_attach_defaults (GTK_TABLE (table), bbox, 0, 3, 7, 8);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  button = gtk_button_new_with_mnemonic (_("_Open"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (create_load_file_chooser),
@@ -810,7 +810,7 @@ explorer_dialog (void)
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Load a fractal from file"), NULL);
 
-  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  button = gtk_button_new_with_mnemonic (_("_Reset"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (dialog_reset_callback),
@@ -819,7 +819,7 @@ explorer_dialog (void)
   gimp_help_set_help_data (button, _("Reset parameters to default values"),
                            NULL);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_box_pack_start (GTK_BOX (bbox), button, TRUE, TRUE, 0);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (create_save_file_chooser),

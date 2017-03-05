@@ -164,7 +164,7 @@ layer_options_dialog_new (GimpImage                *image,
                                     parent, title, role,
                                     icon_name, desc, help_id,
                                     _("Layer _name:"),
-                                    GIMP_STOCK_TOOL_PAINTBRUSH,
+                                    GIMP_ICON_TOOL_PAINTBRUSH,
                                     _("Lock _pixels"),
                                     _("Lock position and _size"),
                                     layer_name,
@@ -434,7 +434,7 @@ layer_options_dialog_new (GimpImage                *image,
                           G_BINDING_INVERT_BOOLEAN);
 
   button = item_options_dialog_add_switch (dialog,
-                                           GIMP_STOCK_TRANSPARENCY,
+                                           GIMP_ICON_TRANSPARENCY,
                                            _("Lock _alpha"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 private->lock_alpha);
@@ -446,7 +446,7 @@ layer_options_dialog_new (GimpImage                *image,
   if (layer && gimp_item_is_text_layer (GIMP_ITEM (layer)))
     {
       button = item_options_dialog_add_switch (dialog,
-                                               GIMP_STOCK_TOOL_TEXT,
+                                               GIMP_ICON_TOOL_TEXT,
                                                _("Set name from _text"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                     private->rename_text_layers);

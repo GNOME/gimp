@@ -433,7 +433,7 @@ file_revert_cmd_callback (GtkAction *action,
   if (! dialog)
     {
       dialog =
-        gimp_message_dialog_new (_("Revert Image"), "document-revert",
+        gimp_message_dialog_new (_("Revert Image"), GIMP_ICON_DOCUMENT_REVERT,
                                  GTK_WIDGET (gimp_display_get_shell (display)),
                                  0,
                                  gimp_standard_help_func, GIMP_HELP_FILE_REVERT,

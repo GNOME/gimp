@@ -877,7 +877,7 @@ dialog_run (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
+  button = gtk_button_new_with_mnemonic (_("_Undo"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -885,7 +885,7 @@ dialog_run (void)
                     G_CALLBACK (dialog_undo),
                     NULL);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  button = gtk_button_new_with_mnemonic (_("_Open"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -893,7 +893,7 @@ dialog_run (void)
                     G_CALLBACK (dialog_load),
                     NULL);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 

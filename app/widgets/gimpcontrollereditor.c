@@ -371,7 +371,7 @@ gimp_controller_editor_constructed (GObject *object)
                              "the controller"),
                            NULL);
 
-  editor->edit_button = gtk_button_new_from_stock (GTK_STOCK_EDIT);
+  editor->edit_button = gtk_button_new_with_mnemonic (_("_Edit event"));
   gtk_box_pack_start (GTK_BOX (hbox), editor->edit_button, TRUE, TRUE, 0);
   gtk_widget_show (editor->edit_button);
 
@@ -379,7 +379,7 @@ gimp_controller_editor_constructed (GObject *object)
                     G_CALLBACK (gimp_controller_editor_edit_clicked),
                     editor);
 
-  editor->delete_button = gtk_button_new_from_stock (GTK_STOCK_CLEAR);
+  editor->delete_button = gtk_button_new_with_mnemonic (_("_Clear event"));
   gtk_box_pack_start (GTK_BOX (hbox), editor->delete_button, TRUE, TRUE, 0);
   gtk_widget_show (editor->delete_button);
 
@@ -656,7 +656,7 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
         gimp_viewable_dialog_new (GIMP_VIEWABLE (editor->info), editor->context,
                                   _("Select Controller Event Action"),
                                   "gimp-controller-action-dialog",
-                                  "gtk-edit",
+                                  GIMP_ICON_EDIT,
                                   title,
                                   gtk_widget_get_toplevel (GTK_WIDGET (editor)),
                                   gimp_standard_help_func,

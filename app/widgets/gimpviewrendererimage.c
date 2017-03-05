@@ -158,12 +158,12 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
   switch (rendererimage->channel)
     {
-    case GIMP_CHANNEL_RED:     icon_name = GIMP_STOCK_CHANNEL_RED;     break;
-    case GIMP_CHANNEL_GREEN:   icon_name = GIMP_STOCK_CHANNEL_GREEN;   break;
-    case GIMP_CHANNEL_BLUE:    icon_name = GIMP_STOCK_CHANNEL_BLUE;    break;
-    case GIMP_CHANNEL_GRAY:    icon_name = GIMP_STOCK_CHANNEL_GRAY;    break;
-    case GIMP_CHANNEL_INDEXED: icon_name = GIMP_STOCK_CHANNEL_INDEXED; break;
-    case GIMP_CHANNEL_ALPHA:   icon_name = GIMP_STOCK_CHANNEL_ALPHA;   break;
+    case GIMP_CHANNEL_RED:     icon_name = GIMP_ICON_CHANNEL_RED;     break;
+    case GIMP_CHANNEL_GREEN:   icon_name = GIMP_ICON_CHANNEL_GREEN;   break;
+    case GIMP_CHANNEL_BLUE:    icon_name = GIMP_ICON_CHANNEL_BLUE;    break;
+    case GIMP_CHANNEL_GRAY:    icon_name = GIMP_ICON_CHANNEL_GRAY;    break;
+    case GIMP_CHANNEL_INDEXED: icon_name = GIMP_ICON_CHANNEL_INDEXED; break;
+    case GIMP_CHANNEL_ALPHA:   icon_name = GIMP_ICON_CHANNEL_ALPHA;   break;
 
     default:
       icon_name = gimp_viewable_get_icon_name (renderer->viewable);

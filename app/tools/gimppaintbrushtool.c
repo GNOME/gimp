@@ -52,7 +52,7 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                 _("Paintbrush Tool: Paint smooth strokes using a brush"),
                 N_("_Paintbrush"), "P",
                 NULL, GIMP_HELP_TOOL_PAINTBRUSH,
-                GIMP_STOCK_TOOL_PAINTBRUSH,
+                GIMP_ICON_TOOL_PAINTBRUSH,
                 data);
 }
 

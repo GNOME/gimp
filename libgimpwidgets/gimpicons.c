@@ -25,6 +25,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimpicons.h"
 
 #include "icons/Color/gimp-icon-pixbufs.c"

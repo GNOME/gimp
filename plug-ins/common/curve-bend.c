@@ -1468,7 +1468,7 @@ bender_new_dialog (GimpDrawable *drawable)
                     cd);
 
   /*  The Reset button  */
-  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  button = gtk_button_new_with_mnemonic (_("_Reset"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -1485,7 +1485,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_widget_show (hbox);
 
   /*  The Load button  */
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  button = gtk_button_new_with_mnemonic (_("_Open"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -1497,7 +1497,7 @@ bender_new_dialog (GimpDrawable *drawable)
                     cd);
 
   /*  The Save button  */
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 

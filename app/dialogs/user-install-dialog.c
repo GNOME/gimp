@@ -83,7 +83,7 @@ user_install_dialog_new (GimpUserInstall *install)
   gimp_icons_init ();
 
   dialog = gimp_message_dialog_new (_("GIMP User Installation"),
-                                    GIMP_STOCK_WILBER_EEK,
+                                    GIMP_ICON_WILBER_EEK,
                                     NULL, 0, NULL, NULL,
 
                                     _("_Quit"), GTK_RESPONSE_OK,

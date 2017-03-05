@@ -37,7 +37,7 @@
 
 static const GimpActionEntry cursor_info_actions[] =
 {
-  { "cursor-info-popup", GIMP_STOCK_CURSOR,
+  { "cursor-info-popup", GIMP_ICON_CURSOR,
     NC_("cursor-info-action", "Pointer Information Menu"), NULL, NULL, NULL,
     GIMP_HELP_POINTER_INFO_DIALOG }
 };

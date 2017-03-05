@@ -128,7 +128,7 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
 
   display_class->name            = _("Contrast");
   display_class->help_id         = "gimp-colordisplay-contrast";
-  display_class->icon_name       = GIMP_STOCK_DISPLAY_FILTER_CONTRAST;
+  display_class->icon_name       = GIMP_ICON_DISPLAY_FILTER_CONTRAST;
 
   display_class->convert_buffer  = cdisplay_contrast_convert_buffer;
   display_class->configure       = cdisplay_contrast_configure;

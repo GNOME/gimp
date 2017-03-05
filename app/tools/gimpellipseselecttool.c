@@ -67,7 +67,7 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Ellipse Select Tool: Select an elliptical region"),
                 N_("_Ellipse Select"), "E",
                 NULL, GIMP_HELP_TOOL_ELLIPSE_SELECT,
-                GIMP_STOCK_TOOL_ELLIPSE_SELECT,
+                GIMP_ICON_TOOL_ELLIPSE_SELECT,
                 data);
 }
 

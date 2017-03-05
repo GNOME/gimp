@@ -136,22 +136,22 @@ static const GimpToggleActionEntry windows_toggle_actions[] =
 
 static const GimpRadioActionEntry windows_tabs_position_actions[] =
 {
-  { "windows-tabs-position-top", "to-top",
+  { "windows-tabs-position-top", GIMP_ICON_GO_TOP,
     NC_("windows-tabs-position-action", "_Top"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the top"),
     GIMP_POSITION_TOP, GIMP_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-bottom", "go-bottom",
+  { "windows-tabs-position-bottom", GIMP_ICON_GO_BOTTOM,
     NC_("windows-tabs-position-action", "_Bottom"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the bottom"),
     GIMP_POSITION_BOTTOM, GIMP_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-left", "go-first",
+  { "windows-tabs-position-left", GIMP_ICON_GO_FIRST,
     NC_("windows-tabs-position-action", "_Left"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the left"),
     GIMP_POSITION_LEFT, GIMP_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-right", "go-last",
+  { "windows-tabs-position-right", GIMP_ICON_GO_LAST,
     NC_("windows-tabs-position-action", "_Right"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the right"),
     GIMP_POSITION_RIGHT, GIMP_HELP_WINDOWS_TABS_POSITION },
@@ -345,7 +345,7 @@ windows_actions_image_notify (GimpDisplay      *display,
           GimpActionEntry entry;
 
           entry.name        = action_name;
-          entry.icon_name   = GIMP_STOCK_IMAGE;
+          entry.icon_name   = GIMP_ICON_IMAGE;
           entry.label       = "";
           entry.accelerator = NULL;
           entry.tooltip     = NULL;

@@ -40,23 +40,23 @@
 
 static const GimpActionEntry gradients_actions[] =
 {
-  { "gradients-popup", GIMP_STOCK_GRADIENT,
+  { "gradients-popup", GIMP_ICON_GRADIENT,
     NC_("gradients-action", "Gradients Menu"), NULL, NULL, NULL,
     GIMP_HELP_GRADIENT_DIALOG },
 
-  { "gradients-new", "document-new",
+  { "gradients-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("gradients-action", "_New Gradient"), NULL,
     NC_("gradients-action", "Create a new gradient"),
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_GRADIENT_NEW },
 
-  { "gradients-duplicate", GIMP_STOCK_DUPLICATE,
+  { "gradients-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("gradients-action", "D_uplicate Gradient"), NULL,
     NC_("gradients-action", "Duplicate this gradient"),
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_GRADIENT_DUPLICATE },
 
-  { "gradients-copy-location", "edit-copy",
+  { "gradients-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("gradients-action", "Copy Gradient _Location"), NULL,
     NC_("gradients-action", "Copy gradient file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
@@ -68,19 +68,19 @@ static const GimpActionEntry gradients_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_GRADIENT_SHOW_IN_FILE_MANAGER },
 
-  { "gradients-save-as-pov", "document-save-as",
+  { "gradients-save-as-pov", GIMP_ICON_DOCUMENT_SAVE_AS,
     NC_("gradients-action", "Save as _POV-Ray..."), NULL,
     NC_("gradients-action", "Save gradient as POV-Ray"),
     G_CALLBACK (gradients_save_as_pov_ray_cmd_callback),
     GIMP_HELP_GRADIENT_SAVE_AS_POV },
 
-  { "gradients-delete", "edit-delete",
+  { "gradients-delete", GIMP_ICON_EDIT_DELETE,
     NC_("gradients-action", "_Delete Gradient"), NULL,
     NC_("gradients-action", "Delete this gradient"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_GRADIENT_DELETE },
 
-  { "gradients-refresh", "view-refresh",
+  { "gradients-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("gradients-action", "_Refresh Gradients"), NULL,
     NC_("gradients-action", "Refresh gradients"),
     G_CALLBACK (data_refresh_cmd_callback),
@@ -89,7 +89,7 @@ static const GimpActionEntry gradients_actions[] =
 
 static const GimpStringActionEntry gradients_edit_actions[] =
 {
-  { "gradients-edit", "gtk-edit",
+  { "gradients-edit", GIMP_ICON_EDIT,
     NC_("gradients-action", "_Edit Gradient..."), NULL,
     NC_("gradients-action", "Edit this gradient"),
     "gimp-gradient-editor",

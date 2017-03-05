@@ -413,7 +413,7 @@ select_fill_cmd_callback (GtkAction *action,
                            image, GIMP_ITEM (gimp_image_get_mask (image)),
                            "gimp-selection-fill-dialog",
                            _("Fill Selection Outline"),
-                           GIMP_STOCK_TOOL_BUCKET_FILL,
+                           GIMP_ICON_TOOL_BUCKET_FILL,
                            GIMP_HELP_SELECTION_FILL,
                            data);
 }
@@ -442,7 +442,7 @@ select_stroke_cmd_callback (GtkAction *action,
                              image, GIMP_ITEM (gimp_image_get_mask (image)),
                              "gimp-selection-stroke-dialog",
                              _("Stroke Selection"),
-                             GIMP_STOCK_SELECTION_STROKE,
+                             GIMP_ICON_SELECTION_STROKE,
                              GIMP_HELP_SELECTION_STROKE,
                              data);
 }

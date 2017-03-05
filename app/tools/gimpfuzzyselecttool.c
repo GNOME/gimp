@@ -67,7 +67,7 @@ gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Fuzzy Select Tool: Select a contiguous region on the basis of color"),
                 N_("Fu_zzy Select"), "U",
                 NULL, GIMP_HELP_TOOL_FUZZY_SELECT,
-                GIMP_STOCK_TOOL_FUZZY_SELECT,
+                GIMP_ICON_TOOL_FUZZY_SELECT,
                 data);
 }
 

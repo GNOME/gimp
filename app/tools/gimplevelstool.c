@@ -138,7 +138,7 @@ gimp_levels_tool_register (GimpToolRegisterCallback  callback,
                 _("Levels Tool: Adjust color levels"),
                 N_("_Levels..."), NULL,
                 NULL, GIMP_HELP_TOOL_LEVELS,
-                GIMP_STOCK_TOOL_LEVELS,
+                GIMP_ICON_TOOL_LEVELS,
                 data);
 }
 
@@ -282,7 +282,7 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
   switch (value & 0xF)
     {
     case PICK_LOW_INPUT:
-      icon_name = GIMP_STOCK_COLOR_PICKER_BLACK;
+      icon_name = GIMP_ICON_COLOR_PICKER_BLACK;
 
       if (all_channels)
         help = _("Pick black point for all channels");
@@ -291,7 +291,7 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
       break;
 
     case PICK_GAMMA:
-      icon_name = GIMP_STOCK_COLOR_PICKER_GRAY;
+      icon_name = GIMP_ICON_COLOR_PICKER_GRAY;
 
       if (all_channels)
         help = _("Pick gray point for all channels");
@@ -300,7 +300,7 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
       break;
 
     case PICK_HIGH_INPUT:
-      icon_name = GIMP_STOCK_COLOR_PICKER_WHITE;
+      icon_name = GIMP_ICON_COLOR_PICKER_WHITE;
 
       if (all_channels)
         help = _("Pick white point for all channels");
@@ -618,7 +618,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_icon_button_new (GIMP_STOCK_TOOL_CURVES,
+  button = gimp_icon_button_new (GIMP_ICON_TOOL_CURVES,
                                  _("Edit these Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

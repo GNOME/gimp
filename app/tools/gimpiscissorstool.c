@@ -294,7 +294,7 @@ gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
                 N_("Intelligent _Scissors"),
                 "I",
                 NULL, GIMP_HELP_TOOL_ISCISSORS,
-                GIMP_STOCK_TOOL_ISCISSORS,
+                GIMP_ICON_TOOL_ISCISSORS,
                 data);
 }
 

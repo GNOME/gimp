@@ -196,7 +196,7 @@ gui_abort (const gchar *abort_message)
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                      "icon-name",    GIMP_STOCK_WILBER_EEK,
+                      "icon-name",    GIMP_ICON_WILBER_EEK,
                       "border-width", 12,
                       NULL);
 

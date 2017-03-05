@@ -42,44 +42,44 @@
 
 static const GimpActionEntry vectors_actions[] =
 {
-  { "vectors-popup", GIMP_STOCK_PATHS,
+  { "vectors-popup", GIMP_ICON_DIALOG_PATHS,
     NC_("vectors-action", "Paths Menu"), NULL, NULL, NULL,
     GIMP_HELP_PATH_DIALOG },
 
-  { "vectors-color-tag-menu", GIMP_STOCK_CLOSE /* abused */,
+  { "vectors-color-tag-menu", GIMP_ICON_CLOSE /* abused */,
     NC_("vectors-action", "Color Tag"), NULL, NULL, NULL,
     GIMP_HELP_PATH_COLOR_TAG },
 
-  { "vectors-path-tool", GIMP_STOCK_TOOL_PATH,
+  { "vectors-path-tool", GIMP_ICON_TOOL_PATH,
     NC_("vectors-action", "Path _Tool"), NULL, NULL,
     G_CALLBACK (vectors_vectors_tool_cmd_callback),
     GIMP_HELP_TOOL_VECTORS },
 
-  { "vectors-edit-attributes", "gtk-edit",
+  { "vectors-edit-attributes", GIMP_ICON_EDIT,
     NC_("vectors-action", "_Edit Path Attributes..."), NULL,
     NC_("vectors-action", "Edit path attributes"),
     G_CALLBACK (vectors_edit_attributes_cmd_callback),
     GIMP_HELP_PATH_EDIT },
 
-  { "vectors-new", "document-new",
+  { "vectors-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("vectors-action", "_New Path..."), NULL,
     NC_("vectors-action", "Create a new path..."),
     G_CALLBACK (vectors_new_cmd_callback),
     GIMP_HELP_PATH_NEW },
 
-  { "vectors-new-last-values", "document-new",
+  { "vectors-new-last-values", GIMP_ICON_DOCUMENT_NEW,
     NC_("vectors-action", "_New Path with last values"), NULL,
     NC_("vectors-action", "Create a new path with last used values"),
     G_CALLBACK (vectors_new_last_vals_cmd_callback),
     GIMP_HELP_PATH_NEW },
 
-  { "vectors-duplicate", GIMP_STOCK_DUPLICATE,
+  { "vectors-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("vectors-action", "D_uplicate Path"), NULL,
     NC_("vectors-action", "Duplicate this path"),
     G_CALLBACK (vectors_duplicate_cmd_callback),
     GIMP_HELP_PATH_DUPLICATE },
 
-  { "vectors-delete", "edit-delete",
+  { "vectors-delete", GIMP_ICON_EDIT_DELETE,
     NC_("vectors-action", "_Delete Path"), NULL,
     NC_("vectors-action", "Delete this path"),
     G_CALLBACK (vectors_delete_cmd_callback),
@@ -90,70 +90,70 @@ static const GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_merge_visible_cmd_callback),
     GIMP_HELP_PATH_MERGE_VISIBLE },
 
-  { "vectors-raise", "go-up",
+  { "vectors-raise", GIMP_ICON_GO_UP,
     NC_("vectors-action", "_Raise Path"), NULL,
     NC_("vectors-action", "Raise this path"),
     G_CALLBACK (vectors_raise_cmd_callback),
     GIMP_HELP_PATH_RAISE },
 
-  { "vectors-raise-to-top", "go-top",
+  { "vectors-raise-to-top", GIMP_ICON_GO_TOP,
     NC_("vectors-action", "Raise Path to _Top"), NULL,
     NC_("vectors-action", "Raise this path to the top"),
     G_CALLBACK (vectors_raise_to_top_cmd_callback),
     GIMP_HELP_PATH_RAISE_TO_TOP },
 
-  { "vectors-lower", "go-down",
+  { "vectors-lower", GIMP_ICON_GO_DOWN,
     NC_("vectors-action", "_Lower Path"), NULL,
     NC_("vectors-action", "Lower this path"),
     G_CALLBACK (vectors_lower_cmd_callback),
     GIMP_HELP_PATH_LOWER },
 
-  { "vectors-lower-to-bottom", "go-bottom",
+  { "vectors-lower-to-bottom", GIMP_ICON_GO_BOTTOM,
     NC_("vectors-action", "Lower Path to _Bottom"), NULL,
     NC_("vectors-action", "Lower this path to the bottom"),
     G_CALLBACK (vectors_lower_to_bottom_cmd_callback),
     GIMP_HELP_PATH_LOWER_TO_BOTTOM },
 
-  { "vectors-fill", GIMP_STOCK_TOOL_BUCKET_FILL,
+  { "vectors-fill", GIMP_ICON_TOOL_BUCKET_FILL,
     NC_("vectors-action", "Fill Path..."), NULL,
     NC_("vectors-action", "Fill the path"),
     G_CALLBACK (vectors_fill_cmd_callback),
     GIMP_HELP_PATH_FILL },
 
-  { "vectors-fill-last-values", GIMP_STOCK_TOOL_BUCKET_FILL,
+  { "vectors-fill-last-values", GIMP_ICON_TOOL_BUCKET_FILL,
     NC_("vectors-action", "Fill Path"), NULL,
     NC_("vectors-action", "Fill the path with last values"),
     G_CALLBACK (vectors_fill_last_vals_cmd_callback),
     GIMP_HELP_PATH_FILL },
 
-  { "vectors-stroke", GIMP_STOCK_PATH_STROKE,
+  { "vectors-stroke", GIMP_ICON_PATH_STROKE,
     NC_("vectors-action", "Stro_ke Path..."), NULL,
     NC_("vectors-action", "Paint along the path"),
     G_CALLBACK (vectors_stroke_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
-  { "vectors-stroke-last-values", GIMP_STOCK_PATH_STROKE,
+  { "vectors-stroke-last-values", GIMP_ICON_PATH_STROKE,
     NC_("vectors-action", "Stro_ke Path"), NULL,
     NC_("vectors-action", "Paint along the path with last values"),
     G_CALLBACK (vectors_stroke_last_vals_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
-  { "vectors-copy", "edit-copy",
+  { "vectors-copy", GIMP_ICON_EDIT_COPY,
     NC_("vectors-action", "Co_py Path"), "", NULL,
     G_CALLBACK (vectors_copy_cmd_callback),
     GIMP_HELP_PATH_COPY },
 
-  { "vectors-paste", "edit-paste",
+  { "vectors-paste", GIMP_ICON_EDIT_PASTE,
     NC_("vectors-action", "Paste Pat_h"), "", NULL,
     G_CALLBACK (vectors_paste_cmd_callback),
     GIMP_HELP_PATH_PASTE },
 
-  { "vectors-export", "document-save",
+  { "vectors-export", GIMP_ICON_DOCUMENT_SAVE,
     NC_("vectors-action", "E_xport Path..."), "", NULL,
     G_CALLBACK (vectors_export_cmd_callback),
     GIMP_HELP_PATH_EXPORT },
 
-  { "vectors-import", "document-open",
+  { "vectors-import", GIMP_ICON_DOCUMENT_OPEN,
     NC_("vectors-action", "I_mport Path..."), "", NULL,
     G_CALLBACK (vectors_import_cmd_callback),
     GIMP_HELP_PATH_IMPORT }
@@ -161,25 +161,25 @@ static const GimpActionEntry vectors_actions[] =
 
 static const GimpToggleActionEntry vectors_toggle_actions[] =
 {
-  { "vectors-visible", GIMP_STOCK_VISIBLE,
+  { "vectors-visible", GIMP_ICON_VISIBLE,
     NC_("vectors-action", "_Visible"), NULL, NULL,
     G_CALLBACK (vectors_visible_cmd_callback),
     FALSE,
     GIMP_HELP_PATH_VISIBLE },
 
-  { "vectors-linked", GIMP_STOCK_LINKED,
+  { "vectors-linked", GIMP_ICON_LINKED,
     NC_("vectors-action", "_Linked"), NULL, NULL,
     G_CALLBACK (vectors_linked_cmd_callback),
     FALSE,
     GIMP_HELP_PATH_LINKED },
 
-  { "vectors-lock-content", NULL /* GIMP_STOCK_LOCK */,
+  { "vectors-lock-content", NULL /* GIMP_ICON_LOCK */,
     NC_("vectors-action", "L_ock strokes"), NULL, NULL,
     G_CALLBACK (vectors_lock_content_cmd_callback),
     FALSE,
     GIMP_HELP_PATH_LOCK_STROKES },
 
-  { "vectors-lock-position", GIMP_STOCK_TOOL_MOVE,
+  { "vectors-lock-position", GIMP_ICON_TOOL_MOVE,
     NC_("vectors-action", "L_ock position"), NULL, NULL,
     G_CALLBACK (vectors_lock_position_cmd_callback),
     FALSE,
@@ -188,7 +188,7 @@ static const GimpToggleActionEntry vectors_toggle_actions[] =
 
 static const GimpEnumActionEntry vectors_color_tag_actions[] =
 {
-  { "vectors-color-tag-none", GIMP_STOCK_CLOSE /* abused */,
+  { "vectors-color-tag-none", GIMP_ICON_CLOSE /* abused */,
     NC_("vectors-action", "None"), NULL,
     NC_("vectors-action", "Clear color tag"),
     GIMP_COLOR_TAG_NONE, FALSE,
@@ -245,31 +245,31 @@ static const GimpEnumActionEntry vectors_color_tag_actions[] =
 
 static const GimpEnumActionEntry vectors_to_selection_actions[] =
 {
-  { "vectors-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
+  { "vectors-selection-replace", GIMP_ICON_SELECTION_REPLACE,
     NC_("vectors-action", "Path to Sele_ction"), NULL,
     NC_("vectors-action", "Path to selection"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_PATH_SELECTION_REPLACE },
 
-  { "vectors-selection-from-vectors", GIMP_STOCK_SELECTION_REPLACE,
+  { "vectors-selection-from-vectors", GIMP_ICON_SELECTION_REPLACE,
     NC_("vectors-action", "Fr_om Path"), "<shift>V",
     NC_("vectors-action", "Replace selection with path"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_PATH_SELECTION_REPLACE },
 
-  { "vectors-selection-add", GIMP_STOCK_SELECTION_ADD,
+  { "vectors-selection-add", GIMP_ICON_SELECTION_ADD,
     NC_("vectors-action", "_Add to Selection"), NULL,
     NC_("vectors-action", "Add path to selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_PATH_SELECTION_ADD },
 
-  { "vectors-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
+  { "vectors-selection-subtract", GIMP_ICON_SELECTION_SUBTRACT,
     NC_("vectors-action", "_Subtract from Selection"), NULL,
     NC_("vectors-action", "Subtract path from selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_PATH_SELECTION_SUBTRACT },
 
-  { "vectors-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
+  { "vectors-selection-intersect", GIMP_ICON_SELECTION_INTERSECT,
     NC_("vectors-action", "_Intersect with Selection"), NULL,
     NC_("vectors-action", "Intersect path with selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
@@ -278,19 +278,19 @@ static const GimpEnumActionEntry vectors_to_selection_actions[] =
 
 static const GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
 {
-  { "vectors-selection-to-vectors", GIMP_STOCK_SELECTION_TO_PATH,
+  { "vectors-selection-to-vectors", GIMP_ICON_SELECTION_TO_PATH,
     NC_("vectors-action", "Selecti_on to Path"), NULL,
     NC_("vectors-action", "Selection to path"),
     FALSE, FALSE,
     GIMP_HELP_SELECTION_TO_PATH },
 
-  { "vectors-selection-to-vectors-short", GIMP_STOCK_SELECTION_TO_PATH,
+  { "vectors-selection-to-vectors-short", GIMP_ICON_SELECTION_TO_PATH,
     NC_("vectors-action", "To _Path"), NULL,
     NC_("vectors-action", "Selection to path"),
     FALSE, FALSE,
     GIMP_HELP_SELECTION_TO_PATH },
 
-  { "vectors-selection-to-vectors-advanced", GIMP_STOCK_SELECTION_TO_PATH,
+  { "vectors-selection-to-vectors-advanced", GIMP_ICON_SELECTION_TO_PATH,
     NC_("vectors-action", "Selection to Path (_Advanced)"), NULL,
     NC_("vectors-action", "Advanced options"),
     TRUE, FALSE,

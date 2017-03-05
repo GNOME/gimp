@@ -95,7 +95,7 @@ gimp_rotate_tool_register (GimpToolRegisterCallback  callback,
                 _("Rotate Tool: Rotate the layer, selection or path"),
                 N_("_Rotate"), "<shift>R",
                 NULL, GIMP_HELP_TOOL_ROTATE,
-                GIMP_STOCK_TOOL_ROTATE,
+                GIMP_ICON_TOOL_ROTATE,
                 data);
 }
 

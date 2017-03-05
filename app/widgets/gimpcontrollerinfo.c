@@ -105,7 +105,7 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
   object_class->set_property        = gimp_controller_info_set_property;
   object_class->get_property        = gimp_controller_info_get_property;
 
-  viewable_class->default_icon_name = GIMP_STOCK_CONTROLLER;
+  viewable_class->default_icon_name = GIMP_ICON_CONTROLLER;
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ENABLED,
                             "enabled",

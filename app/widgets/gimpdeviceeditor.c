@@ -500,7 +500,7 @@ gimp_device_editor_delete_clicked (GtkWidget        *button,
     return;
 
   dialog = gimp_message_dialog_new (_("Delete Device Settings"),
-                                    GIMP_STOCK_QUESTION,
+                                    GIMP_ICON_DIALOG_QUESTION,
                                     gtk_widget_get_toplevel (GTK_WIDGET (editor)),
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                     gimp_standard_help_func, NULL,

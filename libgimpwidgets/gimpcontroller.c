@@ -90,7 +90,7 @@ gimp_controller_class_init (GimpControllerClass *klass)
   klass->name                = "Unnamed";
   klass->help_domain         = NULL;
   klass->help_id             = NULL;
-  klass->icon_name           = GIMP_STOCK_CONTROLLER;
+  klass->icon_name           = GIMP_ICON_CONTROLLER;
 
   klass->get_n_events        = NULL;
   klass->get_event_name      = NULL;

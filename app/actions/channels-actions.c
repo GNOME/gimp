@@ -41,65 +41,65 @@
 
 static const GimpActionEntry channels_actions[] =
 {
-  { "channels-popup", GIMP_STOCK_CHANNELS,
+  { "channels-popup", GIMP_ICON_DIALOG_CHANNELS,
     NC_("channels-action", "Channels Menu"), NULL, NULL, NULL,
     GIMP_HELP_CHANNEL_DIALOG },
 
-  { "channels-color-tag-menu", GIMP_STOCK_CLOSE /* abused */,
+  { "channels-color-tag-menu", GIMP_ICON_CLOSE /* abused */,
     NC_("channels-action", "Color Tag"), NULL, NULL, NULL,
     GIMP_HELP_CHANNEL_COLOR_TAG },
 
-  { "channels-edit-attributes", "gtk-edit",
+  { "channels-edit-attributes", GIMP_ICON_EDIT,
     NC_("channels-action", "_Edit Channel Attributes..."), NULL,
     NC_("channels-action", "Edit the channel's name, color and opacity"),
     G_CALLBACK (channels_edit_attributes_cmd_callback),
     GIMP_HELP_CHANNEL_EDIT },
 
-  { "channels-new", "document-new",
+  { "channels-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("channels-action", "_New Channel..."), NULL,
     NC_("channels-action", "Create a new channel"),
     G_CALLBACK (channels_new_cmd_callback),
     GIMP_HELP_CHANNEL_NEW },
 
-  { "channels-new-last-values", "document-new",
+  { "channels-new-last-values", GIMP_ICON_DOCUMENT_NEW,
     NC_("channels-action", "_New Channel"), NULL,
     NC_("channels-action", "Create a new channel with last used values"),
     G_CALLBACK (channels_new_last_vals_cmd_callback),
     GIMP_HELP_CHANNEL_NEW },
 
-  { "channels-duplicate", GIMP_STOCK_DUPLICATE,
+  { "channels-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("channels-action", "D_uplicate Channel"), NULL,
     NC_("channels-action",
         "Create a duplicate of this channel and add it to the image"),
     G_CALLBACK (channels_duplicate_cmd_callback),
     GIMP_HELP_CHANNEL_DUPLICATE },
 
-  { "channels-delete", "edit-delete",
+  { "channels-delete", GIMP_ICON_EDIT_DELETE,
     NC_("channels-action", "_Delete Channel"), NULL,
     NC_("channels-action", "Delete this channel"),
     G_CALLBACK (channels_delete_cmd_callback),
     GIMP_HELP_CHANNEL_DELETE },
 
-  { "channels-raise", "go-up",
+  { "channels-raise", GIMP_ICON_GO_UP,
     NC_("channels-action", "_Raise Channel"), NULL,
     NC_("channels-action", "Raise this channel one step in the channel stack"),
     G_CALLBACK (channels_raise_cmd_callback),
     GIMP_HELP_CHANNEL_RAISE },
 
-  { "channels-raise-to-top", "go-top",
+  { "channels-raise-to-top", GIMP_ICON_GO_TOP,
     NC_("channels-action", "Raise Channel to _Top"), NULL,
     NC_("channels-action",
         "Raise this channel to the top of the channel stack"),
     G_CALLBACK (channels_raise_to_top_cmd_callback),
     GIMP_HELP_CHANNEL_RAISE_TO_TOP },
 
-  { "channels-lower", "go-down",
+  { "channels-lower", GIMP_ICON_GO_DOWN,
     NC_("channels-action", "_Lower Channel"), NULL,
     NC_("channels-action", "Lower this channel one step in the channel stack"),
     G_CALLBACK (channels_lower_cmd_callback),
     GIMP_HELP_CHANNEL_LOWER },
 
-  { "channels-lower-to-bottom", "go-bottom",
+  { "channels-lower-to-bottom", GIMP_ICON_GO_BOTTOM,
     NC_("channels-action", "Lower Channel to _Bottom"), NULL,
     NC_("channels-action",
         "Lower this channel to the bottom of the channel stack"),
@@ -109,25 +109,25 @@ static const GimpActionEntry channels_actions[] =
 
 static const GimpToggleActionEntry channels_toggle_actions[] =
 {
-  { "channels-visible", GIMP_STOCK_VISIBLE,
+  { "channels-visible", GIMP_ICON_VISIBLE,
     NC_("channels-action", "_Visible"), NULL, NULL,
     G_CALLBACK (channels_visible_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_VISIBLE },
 
-  { "channels-linked", GIMP_STOCK_LINKED,
+  { "channels-linked", GIMP_ICON_LINKED,
     NC_("channels-action", "_Linked"), NULL, NULL,
     G_CALLBACK (channels_linked_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_LINKED },
 
-  { "channels-lock-content", NULL /* GIMP_STOCK_LOCK */,
+  { "channels-lock-content", NULL /* GIMP_ICON_LOCK */,
     NC_("channels-action", "L_ock pixels"), NULL, NULL,
     G_CALLBACK (channels_lock_content_cmd_callback),
     FALSE,
     GIMP_HELP_CHANNEL_LOCK_PIXELS },
 
-  { "channels-lock-position", GIMP_STOCK_TOOL_MOVE,
+  { "channels-lock-position", GIMP_ICON_TOOL_MOVE,
     NC_("channels-action", "L_ock position"), NULL, NULL,
     G_CALLBACK (channels_lock_position_cmd_callback),
     FALSE,
@@ -136,7 +136,7 @@ static const GimpToggleActionEntry channels_toggle_actions[] =
 
 static const GimpEnumActionEntry channels_color_tag_actions[] =
 {
-  { "channels-color-tag-none", GIMP_STOCK_CLOSE /* abused */,
+  { "channels-color-tag-none", GIMP_ICON_CLOSE /* abused */,
     NC_("channels-action", "None"), NULL,
     NC_("channels-action", "Clear color tag"),
     GIMP_COLOR_TAG_NONE, FALSE,
@@ -193,25 +193,25 @@ static const GimpEnumActionEntry channels_color_tag_actions[] =
 
 static const GimpEnumActionEntry channels_to_selection_actions[] =
 {
-  { "channels-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
+  { "channels-selection-replace", GIMP_ICON_SELECTION_REPLACE,
     NC_("channels-action", "Channel to Sele_ction"), NULL,
     NC_("channels-action", "Replace the selection with this channel"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_REPLACE },
 
-  { "channels-selection-add", GIMP_STOCK_SELECTION_ADD,
+  { "channels-selection-add", GIMP_ICON_SELECTION_ADD,
     NC_("channels-action", "_Add to Selection"), NULL,
     NC_("channels-action", "Add this channel to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_ADD },
 
-  { "channels-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
+  { "channels-selection-subtract", GIMP_ICON_SELECTION_SUBTRACT,
     NC_("channels-action", "_Subtract from Selection"), NULL,
     NC_("channels-action", "Subtract this channel from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_SUBTRACT },
 
-  { "channels-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
+  { "channels-selection-intersect", GIMP_ICON_SELECTION_INTERSECT,
     NC_("channels-action", "_Intersect with Selection"), NULL,
     NC_("channels-action", "Intersect this channel with the current selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,

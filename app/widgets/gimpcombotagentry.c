@@ -25,6 +25,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "core/gimpcontainer.h"
@@ -92,7 +94,7 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
 
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (entry),
                                      GTK_ENTRY_ICON_SECONDARY,
-                                     "go-down");
+                                     GIMP_ICON_GO_DOWN);
 
   g_signal_connect (entry, "icon-press",
                     G_CALLBACK (gimp_combo_tag_entry_icon_press),

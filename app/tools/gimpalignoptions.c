@@ -197,46 +197,46 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
   switch (action)
     {
     case GIMP_ALIGN_LEFT:
-      icon_name = GIMP_STOCK_GRAVITY_WEST;
+      icon_name = GIMP_ICON_GRAVITY_WEST;
       break;
     case GIMP_ALIGN_HCENTER:
-      icon_name = GIMP_STOCK_HCENTER;
+      icon_name = GIMP_ICON_CENTER_HORIZONTAL;
       break;
     case GIMP_ALIGN_RIGHT:
-      icon_name = GIMP_STOCK_GRAVITY_EAST;
+      icon_name = GIMP_ICON_GRAVITY_EAST;
       break;
     case GIMP_ALIGN_TOP:
-      icon_name = GIMP_STOCK_GRAVITY_NORTH;
+      icon_name = GIMP_ICON_GRAVITY_NORTH;
       break;
     case GIMP_ALIGN_VCENTER:
-      icon_name = GIMP_STOCK_VCENTER;
+      icon_name = GIMP_ICON_CENTER_VERTICAL;
       break;
     case GIMP_ALIGN_BOTTOM:
-      icon_name = GIMP_STOCK_GRAVITY_SOUTH;
+      icon_name = GIMP_ICON_GRAVITY_SOUTH;
       break;
     case GIMP_ARRANGE_LEFT:
-      icon_name = GIMP_STOCK_GRAVITY_WEST;
+      icon_name = GIMP_ICON_GRAVITY_WEST;
       break;
     case GIMP_ARRANGE_HCENTER:
-      icon_name = GIMP_STOCK_HCENTER;
+      icon_name = GIMP_ICON_CENTER_HORIZONTAL;
       break;
     case GIMP_ARRANGE_RIGHT:
-      icon_name = GIMP_STOCK_GRAVITY_EAST;
+      icon_name = GIMP_ICON_GRAVITY_EAST;
       break;
     case GIMP_ARRANGE_TOP:
-      icon_name = GIMP_STOCK_GRAVITY_NORTH;
+      icon_name = GIMP_ICON_GRAVITY_NORTH;
       break;
     case GIMP_ARRANGE_VCENTER:
-      icon_name = GIMP_STOCK_VCENTER;
+      icon_name = GIMP_ICON_CENTER_VERTICAL;
       break;
     case GIMP_ARRANGE_BOTTOM:
-      icon_name = GIMP_STOCK_GRAVITY_SOUTH;
+      icon_name = GIMP_ICON_GRAVITY_SOUTH;
       break;
     case GIMP_ARRANGE_HFILL:
-        icon_name = GIMP_ICON_HFILL;
+        icon_name = GIMP_ICON_FILL_HORIZONTAL;
         break;
     case GIMP_ARRANGE_VFILL:
-        icon_name = GIMP_ICON_VFILL;
+        icon_name = GIMP_ICON_FILL_VERTICAL;
         break;
     default:
       g_return_val_if_reached (NULL);

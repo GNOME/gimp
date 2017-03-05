@@ -73,7 +73,7 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
                 _("GEGL Tool: Use an arbitrary GEGL operation"),
                 N_("_GEGL Operation..."), NULL,
                 NULL, GIMP_HELP_TOOL_GEGL,
-                GIMP_STOCK_GEGL,
+                GIMP_ICON_GEGL,
                 data);
 }
 
@@ -380,7 +380,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
       gchar              *label;
 
       if (g_str_has_prefix (opclass->name, "gegl:"))
-        icon_name = GIMP_STOCK_GEGL;
+        icon_name = GIMP_ICON_GEGL;
 
       if (g_str_has_prefix (op_name, "gegl:"))
         op_name += strlen ("gegl:");
@@ -484,7 +484,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
                                          _("GEGL Operation"),
                                          _("GEGL Operation"),
                                          NULL,
-                                         GIMP_STOCK_GEGL,
+                                         GIMP_ICON_GEGL,
                                          GIMP_HELP_TOOL_GEGL);
       g_free (operation);
     }

@@ -1266,7 +1266,7 @@ CML_explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  button = gtk_button_new_with_mnemonic (_("_Open"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -1274,7 +1274,7 @@ CML_explorer_dialog (void)
                     G_CALLBACK (CML_load_from_file_callback),
                     &VALS);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 

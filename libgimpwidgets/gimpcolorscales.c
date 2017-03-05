@@ -110,7 +110,7 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
 
   selector_class->name                  = _("Scales");
   selector_class->help_id               = "gimp-colorselector-scales";
-  selector_class->icon_name             = GIMP_STOCK_TOOL_OPTIONS;
+  selector_class->icon_name             = GIMP_ICON_DIALOG_TOOL_OPTIONS;
   selector_class->set_toggles_visible   = gimp_color_scales_togg_visible;
   selector_class->set_toggles_sensitive = gimp_color_scales_togg_sensitive;
   selector_class->set_show_alpha        = gimp_color_scales_set_show_alpha;

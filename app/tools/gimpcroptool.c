@@ -118,7 +118,7 @@ gimp_crop_tool_register (GimpToolRegisterCallback  callback,
                 _("Crop Tool: Remove edge areas from image or layer"),
                 N_("_Crop"), "<shift>C",
                 NULL, GIMP_HELP_TOOL_CROP,
-                GIMP_STOCK_TOOL_CROP,
+                GIMP_ICON_TOOL_CROP,
                 data);
 }
 

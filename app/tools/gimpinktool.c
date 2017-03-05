@@ -62,7 +62,7 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                 _("Ink Tool: Calligraphy-style painting"),
                 N_("In_k"), "K",
                 NULL, GIMP_HELP_TOOL_INK,
-                GIMP_STOCK_TOOL_INK,
+                GIMP_ICON_TOOL_INK,
                 data);
 }
 

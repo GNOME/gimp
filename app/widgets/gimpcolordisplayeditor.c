@@ -188,7 +188,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_sensitive (editor->add_button, FALSE);
   gtk_widget_show (editor->add_button);
 
-  image = gtk_image_new_from_icon_name ("go-next",
+  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->add_button), image);
   gtk_widget_show (image);
@@ -202,7 +202,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_sensitive (editor->remove_button, FALSE);
   gtk_widget_show (editor->remove_button);
 
-  image = gtk_image_new_from_icon_name ("go-previous",
+  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->remove_button), image);
   gtk_widget_show (image);
@@ -217,7 +217,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   editor->up_button =
     gimp_editor_add_button (GIMP_EDITOR (ed),
-                            "go-up",
+                            GIMP_ICON_GO_UP,
                             _("Move the selected filter up"),
                             NULL,
                             G_CALLBACK (gimp_color_display_editor_up_clicked),
@@ -226,7 +226,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   editor->down_button =
     gimp_editor_add_button (GIMP_EDITOR (ed),
-                            "go-down",
+                            GIMP_ICON_GO_DOWN,
                             _("Move the selected filter down"),
                             NULL,
                             G_CALLBACK (gimp_color_display_editor_down_clicked),
@@ -268,7 +268,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                                                      NULL);
   gtk_tree_view_insert_column (GTK_TREE_VIEW (tv), column, 0);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_VISIBLE,
+  image = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE,
                                         GTK_ICON_SIZE_MENU);
   gtk_tree_view_column_set_widget (column, image);
   gtk_widget_show (image);
@@ -320,7 +320,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_box_pack_end (GTK_BOX (editor->config_box), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  editor->reset_button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  editor->reset_button = gtk_button_new_from_stock (GIMP_ICON_RESET);
   gtk_box_pack_end (GTK_BOX (hbox), editor->reset_button, FALSE, FALSE, 0);
   gtk_widget_show (editor->reset_button);
 

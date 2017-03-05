@@ -93,7 +93,7 @@ grid_dialog_new (GimpImage   *image,
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
                                      _("Configure Grid"), "gimp-grid-configure",
-                                     GIMP_STOCK_GRID, _("Configure Image Grid"),
+                                     GIMP_ICON_GRID, _("Configure Image Grid"),
                                      parent,
                                      gimp_standard_help_func,
                                      GIMP_HELP_IMAGE_GRID,

@@ -122,7 +122,7 @@ gimp_selection_editor_init (GimpSelectionEditor *editor)
                                          GIMP_VIEW_SIZE_HUGE,
                                          0, TRUE);
   gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
-                                     GIMP_STOCK_TEXTURE);
+                                     GIMP_ICON_TEXTURE);
   gtk_widget_set_size_request (editor->view,
                                GIMP_VIEW_SIZE_HUGE, GIMP_VIEW_SIZE_HUGE);
   gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);

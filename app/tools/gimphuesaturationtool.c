@@ -97,7 +97,7 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                 _("Hue-Saturation Tool: Adjust hue, saturation, and lightness"),
                 N_("Hue-_Saturation..."), NULL,
                 NULL, GIMP_HELP_TOOL_HUE_SATURATION,
-                GIMP_STOCK_TOOL_HUE_SATURATION,
+                GIMP_ICON_TOOL_HUE_SATURATION,
                 data);
 }
 

@@ -88,7 +88,7 @@ gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
                 _("Bucket Fill Tool: Fill selected area with a color or pattern"),
                 N_("_Bucket Fill"), "<shift>B",
                 NULL, GIMP_HELP_TOOL_BUCKET_FILL,
-                GIMP_STOCK_TOOL_BUCKET_FILL,
+                GIMP_ICON_TOOL_BUCKET_FILL,
                 data);
 }
 

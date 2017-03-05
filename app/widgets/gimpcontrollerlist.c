@@ -243,7 +243,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->add_button, FALSE);
   gtk_widget_show (list->add_button);
 
-  image = gtk_image_new_from_icon_name ("go-next",
+  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->add_button), image);
   gtk_widget_show (image);
@@ -260,7 +260,7 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->remove_button, FALSE);
   gtk_widget_show (list->remove_button);
 
-  image = gtk_image_new_from_icon_name ("go-previous",
+  image = gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->remove_button), image);
   gtk_widget_show (image);
@@ -292,7 +292,7 @@ gimp_controller_list_init (GimpControllerList *list)
 
   list->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            "document-properties",
+                            GIMP_ICON_DOCUMENT_PROPERTIES,
                             _("Configure the selected controller"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_edit_clicked),
@@ -300,7 +300,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             list);
   list->up_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            "go-up",
+                            GIMP_ICON_GO_UP,
                             _("Move the selected controller up"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_up_clicked),
@@ -308,7 +308,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             list);
   list->down_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            "go-down",
+                            GIMP_ICON_GO_DOWN,
                             _("Move the selected controller down"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_down_clicked),
@@ -560,7 +560,7 @@ gimp_controller_list_remove_clicked (GtkWidget          *button,
 #define RESPONSE_DISABLE 1
 
   dialog = gimp_message_dialog_new (_("Remove Controller?"),
-                                    GIMP_STOCK_WARNING,
+                                    GIMP_ICON_DIALOG_WARNING,
                                     GTK_WIDGET (list), GTK_DIALOG_MODAL,
                                     NULL, NULL,
 

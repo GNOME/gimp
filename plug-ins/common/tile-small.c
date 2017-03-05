@@ -449,7 +449,7 @@ tileit_dialog (void)
 
   res_call.vtoggle = toggle;
 
-  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  button = gtk_button_new_with_mnemonic (_("_Reset"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -558,7 +558,7 @@ tileit_dialog (void)
                     G_CALLBACK (tileit_radio_update),
                     &exp_call.type);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+  button = gtk_button_new_with_mnemonic (_("_Apply"));
   gtk_table_attach (GTK_TABLE (table), button, 3, 4, 2, 4, 0, 0, 0, 0);
   gtk_widget_show (button);
 

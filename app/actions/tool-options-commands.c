@@ -186,7 +186,7 @@ tool_options_reset_all_cmd_callback (GtkAction *action,
   GtkWidget  *dialog;
 
   dialog = gimp_message_dialog_new (_("Reset All Tool Options"),
-                                    GIMP_STOCK_QUESTION,
+                                    GIMP_ICON_DIALOG_QUESTION,
                                     GTK_WIDGET (editor),
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,

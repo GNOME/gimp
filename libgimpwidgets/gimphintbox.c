@@ -88,12 +88,12 @@ gimp_hint_box_class_init (GimpHintBoxClass *klass)
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name", NULL, NULL,
-                                                        GIMP_STOCK_INFO,
+                                                        GIMP_ICON_DIALOG_INFORMATION,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
-                                                        GIMP_STOCK_INFO,
+                                                        GIMP_ICON_DIALOG_INFORMATION,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_HINT,

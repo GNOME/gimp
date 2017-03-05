@@ -108,7 +108,7 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_plugin_icon_register (LOAD_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_STOCK_PATTERN);
+                             (const guint8 *) GIMP_ICON_PATTERN);
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-gimp-pat");
   gimp_register_file_handler_uri (LOAD_PROC);
   gimp_register_magic_load_handler (LOAD_PROC,
@@ -130,7 +130,7 @@ query (void)
                           save_args, NULL);
 
   gimp_plugin_icon_register (SAVE_PROC, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_STOCK_PATTERN);
+                             (const guint8 *) GIMP_ICON_PATTERN);
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-gimp-pat");
   gimp_register_file_handler_uri (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "pat", "");

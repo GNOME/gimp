@@ -2607,7 +2607,7 @@ makewindow (void)
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  button = gtk_button_new_with_mnemonic (_("_Open"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -2615,7 +2615,7 @@ makewindow (void)
                     G_CALLBACK (loadpreset),
                     window);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  button = gtk_button_new_with_mnemonic (_("_Save"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -2665,19 +2665,19 @@ makewindow (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_NEW);
+  button = gtk_button_new_with_mnemonic (_("_New"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (addtexture), NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_from_stock (GIMP_STOCK_DUPLICATE);
+  button = gtk_button_new_with_mnemonic (_("D_uplicate"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (duptexture), NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+  button = gtk_button_new_with_mnemonic (_("_Delete"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   g_signal_connect_swapped (button, "clicked",
                             G_CALLBACK (deltexture), NULL);

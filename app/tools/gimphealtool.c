@@ -56,7 +56,7 @@ gimp_heal_tool_register (GimpToolRegisterCallback  callback,
                 "H",
                 NULL,
                 GIMP_HELP_TOOL_HEAL,
-                GIMP_STOCK_TOOL_HEAL,
+                GIMP_ICON_TOOL_HEAL,
                 data);
 }
 

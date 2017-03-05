@@ -112,7 +112,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
                               gimp_get_user_context (shell->display->gimp),
                               _("Rotate View"), "display-rotate",
-                              GIMP_STOCK_ROTATE_180,
+                              GIMP_ICON_OBJECT_ROTATE_180,
                               _("Select Rotation Angle"),
                               GTK_WIDGET (shell),
                               gimp_standard_help_func,

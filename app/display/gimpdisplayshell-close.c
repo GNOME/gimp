@@ -168,7 +168,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   title = g_strdup_printf (_("Close %s"), gimp_image_get_display_name (image));
 
   shell->close_dialog =
-    dialog = gimp_message_dialog_new (title, "document-save",
+    dialog = gimp_message_dialog_new (title, GIMP_ICON_DOCUMENT_SAVE,
                                       GTK_WIDGET (shell),
                                       GTK_DIALOG_DESTROY_WITH_PARENT,
                                       gimp_standard_help_func, NULL,

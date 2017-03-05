@@ -83,7 +83,7 @@ gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
                 _("Colorize Tool: Colorize the image"),
                 N_("Colori_ze..."), NULL,
                 NULL, GIMP_HELP_TOOL_COLORIZE,
-                GIMP_STOCK_TOOL_COLORIZE,
+                GIMP_ICON_TOOL_COLORIZE,
                 data);
 }
 
@@ -207,7 +207,7 @@ gimp_colorize_tool_dialog (GimpFilterTool *filter_tool)
 
   button = gimp_filter_tool_add_color_picker (filter_tool,
                                               "colorize",
-                                              GIMP_STOCK_COLOR_PICKER_GRAY,
+                                              GIMP_ICON_COLOR_PICKER_GRAY,
                                               _("Pick color from image"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

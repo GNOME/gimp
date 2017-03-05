@@ -216,7 +216,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                     preview->nav_icon, 1,2, 1,2,
                     GTK_SHRINK, GTK_SHRINK, 0, 0);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_NAVIGATION,
+  image = gtk_image_new_from_icon_name (GIMP_ICON_DIALOG_NAVIGATION,
                                         GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (preview->nav_icon), image);
   gtk_widget_show (image);

@@ -43,19 +43,19 @@ static const GimpActionEntry mypaint_brushes_actions[] =
     NC_("mypaint-brushes-action", "MyPaint Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_MYPAINT_BRUSH_DIALOG },
 
-  { "mypaint-brushes-new", "document-new",
+  { "mypaint-brushes-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("mypaint-brushes-action", "_New MyPaint Brush"), NULL,
     NC_("mypaint-brushes-action", "Create a new MyPaint brush"),
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_MYPAINT_BRUSH_NEW },
 
-  { "mypaint-brushes-duplicate", GIMP_STOCK_DUPLICATE,
+  { "mypaint-brushes-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("mypaint-brushes-action", "D_uplicate MyPaint Brush"), NULL,
     NC_("mypaint-brushes-action", "Duplicate this MyPaint brush"),
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_MYPAINT_BRUSH_DUPLICATE },
 
-  { "mypaint-brushes-copy-location", "edit-copy",
+  { "mypaint-brushes-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("mypaint-brushes-action", "Copy MyPaint Brush _Location"), NULL,
     NC_("mypaint-brushes-action", "Copy MyPaint brush file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
@@ -67,13 +67,13 @@ static const GimpActionEntry mypaint_brushes_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_MYPAINT_BRUSH_SHOW_IN_FILE_MANAGER },
 
-  { "mypaint-brushes-delete", "edit-delete",
+  { "mypaint-brushes-delete", GIMP_ICON_EDIT_DELETE,
     NC_("mypaint-brushes-action", "_Delete MyPaint Brush"), NULL,
     NC_("mypaint-brushes-action", "Delete this MyPaint brush"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_MYPAINT_BRUSH_DELETE },
 
-  { "mypaint-brushes-refresh", "view-refresh",
+  { "mypaint-brushes-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("mypaint-brushes-action", "_Refresh MyPaint Brushes"), NULL,
     NC_("mypaint-brushes-action", "Refresh MyPaint brushes"),
     G_CALLBACK (data_refresh_cmd_callback),
@@ -82,7 +82,7 @@ static const GimpActionEntry mypaint_brushes_actions[] =
 
 static const GimpStringActionEntry mypaint_brushes_edit_actions[] =
 {
-  { "mypaint-brushes-edit", "gtk-edit",
+  { "mypaint-brushes-edit", GIMP_ICON_EDIT,
     NC_("mypaint-brushes-action", "_Edit MyPaint Brush..."), NULL,
     NC_("mypaint-brushes-action", "Edit MyPaint brush"),
     "gimp-mybrush-editor",

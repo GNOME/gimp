@@ -75,7 +75,7 @@ gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
                 _("Blur / Sharpen Tool: Selective blurring or unblurring using a brush"),
                 N_("Bl_ur / Sharpen"), "<shift>U",
                 NULL, GIMP_HELP_TOOL_CONVOLVE,
-                GIMP_STOCK_TOOL_BLUR,
+                GIMP_ICON_TOOL_BLUR,
                 data);
 }
 

@@ -1034,7 +1034,7 @@ flame_dialog (void)
     gtk_box_pack_start (GTK_BOX (vbox), vbbox, FALSE, FALSE, 0);
     gtk_widget_show (vbbox);
 
-    button = gtk_button_new_from_stock (GTK_STOCK_EDIT);
+    button = gtk_button_new_with_mnemonic (_("_Edit"));
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
@@ -1042,7 +1042,7 @@ flame_dialog (void)
                       G_CALLBACK (edit_callback),
                       dialog);
 
-    load_button = button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+    load_button = button = gtk_button_new_with_mnemonic (_("_Open"));
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
@@ -1050,7 +1050,7 @@ flame_dialog (void)
                       G_CALLBACK (load_callback),
                       NULL);
 
-    save_button = button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+    save_button = button = gtk_button_new_with_mnemonic (_("_Save"));
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
@@ -1201,9 +1201,9 @@ flame_dialog (void)
     }
 
     gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                                GIMP_INT_STORE_VALUE,    GRADIENT_DRAWABLE,
-                                GIMP_INT_STORE_LABEL,    _("Custom gradient"),
-                                GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
+                                GIMP_INT_STORE_VALUE,     GRADIENT_DRAWABLE,
+                                GIMP_INT_STORE_LABEL,     _("Custom gradient"),
+                                GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
                                 -1);
 
     gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),

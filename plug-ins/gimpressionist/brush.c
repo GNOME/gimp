@@ -583,7 +583,7 @@ create_brushpage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box3), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
-  tmpw = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
+  tmpw = gtk_button_new_with_mnemonic (_("Save _as"));
   gtk_box_pack_start (GTK_BOX (box3),tmpw, FALSE, FALSE, 0);
   g_signal_connect (tmpw, "clicked", G_CALLBACK (savebrush), NULL);
   gtk_widget_show (tmpw);

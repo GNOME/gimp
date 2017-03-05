@@ -78,7 +78,7 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
                                           gimp_get_user_context (shell->display->gimp),
                                           _("Color Display Filters"),
                                           "gimp-display-filters",
-                                          GIMP_STOCK_DISPLAY_FILTER,
+                                          GIMP_ICON_DISPLAY_FILTER,
                                           _("Configure Color Display Filters"),
                                           GTK_WIDGET (cdd->shell),
                                           gimp_standard_help_func,

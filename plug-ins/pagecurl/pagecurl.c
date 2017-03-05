@@ -573,19 +573,19 @@ dialog (void)
   combo = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_INT_STORE_VALUE,    CURL_COLORS_GRADIENT_REVERSE,
-                              GIMP_INT_STORE_LABEL,    _("Current gradient (reversed)"),
-                              GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
+                              GIMP_INT_STORE_VALUE,     CURL_COLORS_GRADIENT_REVERSE,
+                              GIMP_INT_STORE_LABEL,     _("Current gradient (reversed)"),
+                              GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
                               -1);
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_INT_STORE_VALUE,    CURL_COLORS_GRADIENT,
-                              GIMP_INT_STORE_LABEL,    _("Current gradient"),
-                              GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
+                              GIMP_INT_STORE_VALUE,     CURL_COLORS_GRADIENT,
+                              GIMP_INT_STORE_LABEL,     _("Current gradient"),
+                              GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
                               -1);
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_INT_STORE_VALUE,    CURL_COLORS_FG_BG,
-                              GIMP_INT_STORE_LABEL,    _("Foreground / background colors"),
-                              GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_DEFAULT_COLORS,
+                              GIMP_INT_STORE_VALUE,     CURL_COLORS_FG_BG,
+                              GIMP_INT_STORE_LABEL,     _("Foreground / background colors"),
+                              GIMP_INT_STORE_ICON_NAME, GIMP_ICON_COLORS_DEFAULT,
                               -1);
 
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);

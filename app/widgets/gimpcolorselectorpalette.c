@@ -58,7 +58,7 @@ gimp_color_selector_palette_class_init (GimpColorSelectorPaletteClass *klass)
 
   selector_class->name       = _("Palette");
   selector_class->help_id    = "gimp-colorselector-palette";
-  selector_class->icon_name  = GIMP_STOCK_PALETTE;
+  selector_class->icon_name  = GIMP_ICON_PALETTE;
   selector_class->set_color  = gimp_color_selector_palette_set_color;
   selector_class->set_config = gimp_color_selector_palette_set_config;
 }

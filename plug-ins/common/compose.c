@@ -150,10 +150,10 @@ static void      type_combo_callback    (GimpIntComboBox *combo,
  * All the following values have to be kept in sync with those of decompose.c
  */
 
-#define CPN_RGBA_R { "R", N_("_Red:"),   GIMP_STOCK_CHANNEL_RED, 0.0, 1.0, FALSE}
-#define CPN_RGBA_G { "G", N_("_Green:"), GIMP_STOCK_CHANNEL_GREEN, 0.0, 1.0, FALSE}
-#define CPN_RGBA_B { "B", N_("_Blue:"),  GIMP_STOCK_CHANNEL_BLUE, 0.0, 1.0, FALSE}
-#define CPN_RGBA_A { "A", N_("_Alpha:"), GIMP_STOCK_CHANNEL_ALPHA, 0.0, 1.0, TRUE}
+#define CPN_RGBA_R { "R", N_("_Red:"),   GIMP_ICON_CHANNEL_RED, 0.0, 1.0, FALSE}
+#define CPN_RGBA_G { "G", N_("_Green:"), GIMP_ICON_CHANNEL_GREEN, 0.0, 1.0, FALSE}
+#define CPN_RGBA_B { "B", N_("_Blue:"),  GIMP_ICON_CHANNEL_BLUE, 0.0, 1.0, FALSE}
+#define CPN_RGBA_A { "A", N_("_Alpha:"), GIMP_ICON_CHANNEL_ALPHA, 0.0, 1.0, TRUE}
 
 #define CPN_HSV_H  { "hue",        N_("_Hue:"),        NULL, 0.0, 1.0, TRUE}
 #define CPN_HSV_S  { "saturation", N_("_Saturation:"), NULL, 0.0, 1.0, TRUE}
@@ -1195,7 +1195,7 @@ compose_dialog (const gchar *compose_type,
       composeint.channel_menu[j] = combo;
 
       ico = gtk_widget_render_icon (dialog,
-                                    GIMP_STOCK_CHANNEL_GRAY,
+                                    GIMP_ICON_CHANNEL_GRAY,
                                     GTK_ICON_SIZE_BUTTON, NULL);
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
       gtk_list_store_append (GTK_LIST_STORE (model), &iter);
@@ -1390,8 +1390,8 @@ type_combo_callback (GimpIntComboBox *combo,
 
           if (icon)
             {
-              gtk_image_set_from_stock (GTK_IMAGE (image),
-                                        icon, GTK_ICON_SIZE_BUTTON);
+              gtk_image_set_from_icon_name (GTK_IMAGE (image),
+                                            icon, GTK_ICON_SIZE_BUTTON);
               gtk_widget_show (image);
             }
           else

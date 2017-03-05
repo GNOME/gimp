@@ -639,10 +639,10 @@ gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                 quick_mask_state);
 
   if (quick_mask_state)
-    gtk_image_set_from_icon_name (gtk_image, GIMP_STOCK_QUICK_MASK_ON,
+    gtk_image_set_from_icon_name (gtk_image, GIMP_ICON_QUICK_MASK_ON,
                                   GTK_ICON_SIZE_MENU);
   else
-    gtk_image_set_from_icon_name (gtk_image, GIMP_STOCK_QUICK_MASK_OFF,
+    gtk_image_set_from_icon_name (gtk_image, GIMP_ICON_QUICK_MASK_OFF,
                                   GTK_ICON_SIZE_MENU);
 
   g_signal_handlers_unblock_by_func (shell->quick_mask_button,
@@ -866,7 +866,8 @@ gimp_display_shell_saved_handler (GimpImage        *image,
   GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
 
   gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                            "document-save", _("Image saved to '%s'"),
+                            GIMP_ICON_DOCUMENT_SAVE,
+                            _("Image saved to '%s'"),
                             gimp_file_get_utf8_name (file));
 }
 
@@ -878,7 +879,8 @@ gimp_display_shell_exported_handler (GimpImage        *image,
   GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
 
   gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                            "document-save", _("Image exported to '%s'"),
+                            GIMP_ICON_DOCUMENT_SAVE,
+                            _("Image exported to '%s'"),
                             gimp_file_get_utf8_name (file));
 }
 

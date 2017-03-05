@@ -135,7 +135,7 @@ gimp_perspective_clone_tool_register (GimpToolRegisterCallback  callback,
                   "after applying a perspective transformation"),
                 N_("_Perspective Clone"), NULL,
                 NULL, GIMP_HELP_TOOL_PERSPECTIVE_CLONE,
-                GIMP_STOCK_TOOL_PERSPECTIVE_CLONE,
+                GIMP_ICON_TOOL_PERSPECTIVE_CLONE,
                 data);
 }
 

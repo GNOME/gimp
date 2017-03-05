@@ -756,9 +756,9 @@ delete_fractal_callback (GtkWidget *widget,
       delete_dialog = gimp_query_boolean_box (_("Delete Fractal"),
                                               gtk_widget_get_toplevel (view),
                                               gimp_standard_help_func, NULL,
-                                              GTK_STOCK_DIALOG_QUESTION,
+                                              GIMP_ICON_DIALOG_QUESTION,
                                               str,
-                                              GTK_STOCK_DELETE, GTK_STOCK_CANCEL,
+                                              _("_Delete"), _("_Cancel"),
                                               G_OBJECT (widget), "destroy",
                                               delete_dialog_callback,
                                               data);
@@ -1055,7 +1055,7 @@ add_objects_list (void)
   g_object_unref (list_store); /* destroy model automatically with view */
 
   /* Put buttons in */
-  button = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
+  button = gtk_button_new_with_mnemonic (_("_Refresh"));
   gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
@@ -1067,7 +1067,7 @@ add_objects_list (void)
                     G_CALLBACK (fractalexplorer_rescan_list),
                     view);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+  button = gtk_button_new_with_mnemonic (_("_Apply"));
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
@@ -1079,7 +1079,7 @@ add_objects_list (void)
                     G_CALLBACK (apply_fractal_callback),
                     view);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+  button = gtk_button_new_with_mnemonic (_("_Delete"));
   gtk_table_attach (GTK_TABLE (table), button, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);

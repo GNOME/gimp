@@ -57,7 +57,7 @@ gimp_clone_tool_register (GimpToolRegisterCallback  callback,
                 _("Clone Tool: Selectively copy from an image or pattern, using a brush"),
                 N_("_Clone"), "C",
                 NULL, GIMP_HELP_TOOL_CLONE,
-                GIMP_STOCK_TOOL_CLONE,
+                GIMP_ICON_TOOL_CLONE,
                 data);
 }
 

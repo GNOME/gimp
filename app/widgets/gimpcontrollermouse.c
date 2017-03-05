@@ -202,7 +202,7 @@ gimp_controller_mouse_class_init (GimpControllerMouseClass *klass)
 
   controller_class->name            = _("Mouse Buttons");
   controller_class->help_id         = GIMP_HELP_CONTROLLER_MOUSE;
-  controller_class->icon_name       = GIMP_STOCK_CONTROLLER_MOUSE;
+  controller_class->icon_name       = GIMP_ICON_CONTROLLER_MOUSE;
 
   controller_class->get_n_events    = gimp_controller_mouse_get_n_events;
   controller_class->get_event_name  = gimp_controller_mouse_get_event_name;

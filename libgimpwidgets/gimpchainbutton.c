@@ -89,10 +89,10 @@ static guint gimp_chain_button_signals[LAST_SIGNAL] = { 0 };
 
 static const gchar * const gimp_chain_icon_names[] =
 {
-  GIMP_STOCK_HCHAIN,
-  GIMP_STOCK_HCHAIN_BROKEN,
-  GIMP_STOCK_VCHAIN,
-  GIMP_STOCK_VCHAIN_BROKEN
+  GIMP_ICON_CHAIN_HORIZONTAL,
+  GIMP_ICON_CHAIN_HORIZONTAL_BROKEN,
+  GIMP_ICON_CHAIN_VERTICAL,
+  GIMP_ICON_CHAIN_VERTICAL_BROKEN
 };
 
 

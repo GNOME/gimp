@@ -110,7 +110,7 @@ query (void)
   gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<Image>/Colors/Map/Colormap");
   gimp_plugin_menu_register (PLUG_IN_PROC_REMAP, "<Colormap>");
   gimp_plugin_icon_register (PLUG_IN_PROC_REMAP, GIMP_ICON_TYPE_ICON_NAME,
-                             (const guint8 *) GIMP_STOCK_COLORMAP);
+                             (const guint8 *) GIMP_ICON_COLORMAP);
 
   gimp_install_procedure (PLUG_IN_PROC_SWAP,
                           N_("Swap two colors in the colormap"),
@@ -514,7 +514,7 @@ remap_ui_manager_new (GtkWidget    *window,
       G_CALLBACK (remap_reverse_callback)
     },
     {
-      "reset", GIMP_STOCK_RESET, N_("Reset Order"), NULL, NULL,
+      "reset", GIMP_ICON_RESET, N_("Reset Order"), NULL, NULL,
       G_CALLBACK (remap_reset_callback)
     },
   };

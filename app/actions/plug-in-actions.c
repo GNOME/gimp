@@ -78,7 +78,7 @@ static void     plug_in_actions_build_path           (GimpActionGroup     *group
 
 static const GimpActionEntry plug_in_actions[] =
 {
-  { "plug-in-reset-all", GIMP_STOCK_RESET,
+  { "plug-in-reset-all", GIMP_ICON_RESET,
     NC_("plug-in-action", "Reset all _Filters"), NULL,
     NC_("plug-in-action", "Reset all plug-ins to their default settings"),
     G_CALLBACK (plug_in_reset_all_cmd_callback),

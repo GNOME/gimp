@@ -92,7 +92,7 @@ ico_dialog_new (IcoSaveInfo *info)
   gtk_widget_show (vbox);
 
   warning = g_object_new (GIMP_TYPE_HINT_BOX,
-                          "stock-id", GIMP_STOCK_WARNING,
+                          "icon-name", GIMP_ICON_DIALOG_WARNING,
                           "hint",
                           _("Large icons and compression are not supported "
                             "by all programs. Older applications may not "

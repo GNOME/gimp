@@ -190,7 +190,7 @@ gimp_settings_editor_constructed (GObject *object)
 
   private->import_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            "document-open",
+                            GIMP_ICON_DOCUMENT_OPEN,
                             _("Import settings from a file"),
                             NULL,
                             G_CALLBACK (gimp_settings_editor_import_clicked),
@@ -199,7 +199,7 @@ gimp_settings_editor_constructed (GObject *object)
 
   private->export_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            "document-save",
+                            GIMP_ICON_DOCUMENT_SAVE,
                             _("Export the selected settings to a file"),
                             NULL,
                             G_CALLBACK (gimp_settings_editor_export_clicked),
@@ -208,7 +208,7 @@ gimp_settings_editor_constructed (GObject *object)
 
   private->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
-                            "edit-delete",
+                            GIMP_ICON_EDIT_DELETE,
                             _("Delete the selected settings"),
                             NULL,
                             G_CALLBACK (gimp_settings_editor_delete_clicked),

@@ -1381,14 +1381,14 @@ smp_dialog (void)
   combo = gimp_layer_combo_box_new (smp_constrain, NULL);
 
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_INT_STORE_VALUE,    SMP_INV_GRADIENT,
-                              GIMP_INT_STORE_LABEL,    _("From reverse gradient"),
-                              GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
+                              GIMP_INT_STORE_VALUE,     SMP_INV_GRADIENT,
+                              GIMP_INT_STORE_LABEL,     _("From reverse gradient"),
+                              GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
                               -1);
   gimp_int_combo_box_prepend (GIMP_INT_COMBO_BOX (combo),
-                              GIMP_INT_STORE_VALUE,    SMP_GRADIENT,
-                              GIMP_INT_STORE_LABEL,    _("From gradient"),
-                              GIMP_INT_STORE_STOCK_ID, GIMP_STOCK_GRADIENT,
+                              GIMP_INT_STORE_VALUE,     SMP_GRADIENT,
+                              GIMP_INT_STORE_LABEL,     _("From gradient"),
+                              GIMP_INT_STORE_ICON_NAME, GIMP_ICON_GRADIENT,
                               -1);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), g_values.sample_id,

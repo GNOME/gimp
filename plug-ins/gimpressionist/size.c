@@ -199,7 +199,7 @@ create_sizepage (GtkNotebook *notebook)
 
   size_type_restore ();
 
-  tmpw = gtk_button_new_from_stock (GTK_STOCK_EDIT);
+  tmpw = gtk_button_new_with_mnemonic (_("_Edit"));
   gtk_box_pack_start (GTK_BOX (box4), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",

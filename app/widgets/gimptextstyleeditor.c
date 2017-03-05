@@ -325,16 +325,16 @@ gimp_text_style_editor_constructed (GObject *object)
                                    editor->context);
 
   gimp_text_style_editor_create_toggle (editor, editor->buffer->bold_tag,
-                                        "format-text-bold",
+                                        GIMP_ICON_FORMAT_TEXT_BOLD,
                                         _("Bold"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->italic_tag,
-                                        "format-text-italic",
+                                        GIMP_ICON_FORMAT_TEXT_ITALIC,
                                         _("Italic"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->underline_tag,
-                                        "format-text-underline",
+                                        GIMP_ICON_FORMAT_TEXT_UNDERLINE,
                                         _("Underline"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->strikethrough_tag,
-                                        "format-text-strikethrough",
+                                        GIMP_ICON_FORMAT_TEXT_STRIKETHROUGH,
                                         _("Strikethrough"));
 
   g_signal_connect_swapped (editor->text, "notify::font",

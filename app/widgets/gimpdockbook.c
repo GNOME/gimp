@@ -285,9 +285,11 @@ gimp_dockbook_init (GimpDockbook *dockbook)
                                   GTK_PACK_END);
   gtk_widget_show (dockbook->p->menu_button);
 
-  image = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
+                                        GTK_ICON_SIZE_MENU);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
-  gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
+  gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_MENU_LEFT,
+                                GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (dockbook->p->menu_button), image);
   gtk_widget_show (image);
 

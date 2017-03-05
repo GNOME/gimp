@@ -87,7 +87,7 @@ brush_box_new (GimpContainer *container,
   return gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
                                 "gimp-brush-grid|gimp-brush-list",
-                                GIMP_STOCK_BRUSH,
+                                GIMP_ICON_BRUSH,
                                 _("Open the brush selection dialog"),
                                 editor_id, editor_tooltip);
 }
@@ -155,7 +155,7 @@ dynamics_box_new (GimpContainer *container,
   return gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
                                 "gimp-dynamics-list|gimp-dynamics-grid",
-                                GIMP_STOCK_DYNAMICS,
+                                GIMP_ICON_DYNAMICS,
                                 _("Open the dynamics selection dialog"),
                                 editor_id, editor_tooltip);
 }
@@ -222,7 +222,7 @@ mybrush_box_new (GimpContainer *container,
   return gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_LARGE, view_size,
                                 "gimp-mypaint-brush-grid|gimp-mypaint-brush-list",
-                                GIMP_STOCK_BRUSH,
+                                GIMP_ICON_BRUSH,
                                 _("Open the MyPaint brush selection dialog"),
                                 NULL, NULL);
 }
@@ -285,7 +285,7 @@ pattern_box_new (GimpContainer *container,
   return gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
                                 "gimp-pattern-grid|gimp-pattern-list",
-                                GIMP_STOCK_PATTERN,
+                                GIMP_ICON_PATTERN,
                                 _("Open the pattern selection dialog"),
                                 NULL, NULL);
 }
@@ -354,7 +354,7 @@ gradient_box_new (GimpContainer *container,
   hbox = gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
                                 "gimp-gradient-list|gimp-gradient-grid",
-                                GIMP_STOCK_GRADIENT,
+                                GIMP_ICON_GRADIENT,
                                 _("Open the gradient selection dialog"),
                                 editor_id, editor_tooltip);
 
@@ -380,7 +380,7 @@ gradient_box_new (GimpContainer *container,
 
       gimp_help_set_help_data (toggle, _("Reverse"), NULL);
 
-      image = gtk_image_new_from_icon_name (GIMP_STOCK_FLIP_HORIZONTAL,
+      image = gtk_image_new_from_icon_name (GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
                                             GTK_ICON_SIZE_MENU);
       /* gimp_prop_check_button_new() adds the property nick as label of
        * the button by default. */
@@ -472,7 +472,7 @@ palette_box_new (GimpContainer *container,
   return gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_MEDIUM, view_size,
                                 "gimp-palette-list|gimp-palette-grid",
-                                GIMP_STOCK_PALETTE,
+                                GIMP_ICON_PALETTE,
                                 _("Open the palette selection dialog"),
                                 editor_id, editor_tooltip);
 }
@@ -538,7 +538,7 @@ font_box_new (GimpContainer *container,
   return gimp_viewable_box_new (container, context, label, spacing,
                                 view_type, GIMP_VIEW_SIZE_SMALL, view_size,
                                 "gimp-font-list|gimp-font-grid",
-                                "gtk-select-font",
+                                GIMP_ICON_FONT,
                                 _("Open the font selection dialog"),
                                 NULL, NULL);
 }
@@ -670,7 +670,7 @@ gimp_viewable_box_new (GimpContainer *container,
       if (editor_tooltip)
         gimp_help_set_help_data (edit_button, editor_tooltip, NULL);
 
-      image = gtk_image_new_from_icon_name (GTK_STOCK_EDIT,
+      image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT,
                                             GTK_ICON_SIZE_BUTTON);
       gtk_misc_set_alignment (GTK_MISC (image), 0.5, 1.0);
       gtk_container_add (GTK_CONTAINER (edit_button), image);

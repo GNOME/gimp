@@ -40,11 +40,11 @@
 
 static const GimpActionEntry palettes_actions[] =
 {
-  { "palettes-popup", GIMP_STOCK_PALETTE,
+  { "palettes-popup", GIMP_ICON_PALETTE,
     NC_("palettes-action", "Palettes Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_DIALOG },
 
-  { "palettes-new", "document-new",
+  { "palettes-new", GIMP_ICON_DOCUMENT_NEW,
     NC_("palettes-action", "_New Palette"), NULL,
     NC_("palettes-action", "Create a new palette"),
     G_CALLBACK (data_new_cmd_callback),
@@ -56,7 +56,7 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (palettes_import_cmd_callback),
     GIMP_HELP_PALETTE_IMPORT },
 
-  { "palettes-duplicate", GIMP_STOCK_DUPLICATE,
+  { "palettes-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
     NC_("palettes-action", "D_uplicate Palette"), NULL,
     NC_("palettes-action", "Duplicate this palette"),
     G_CALLBACK (data_duplicate_cmd_callback),
@@ -68,7 +68,7 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (palettes_merge_cmd_callback),
     GIMP_HELP_PALETTE_MERGE },
 
-  { "palettes-copy-location", "edit-copy",
+  { "palettes-copy-location", GIMP_ICON_EDIT_COPY,
     NC_("palettes-action", "Copy Palette _Location"), NULL,
     NC_("palettes-action", "Copy palette file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
@@ -80,13 +80,13 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_PALETTE_SHOW_IN_FILE_MANAGER },
 
-  { "palettes-delete", "edit-delete",
+  { "palettes-delete", GIMP_ICON_EDIT_DELETE,
     NC_("palettes-action", "_Delete Palette"), NULL,
     NC_("palettes-action", "Delete this palette"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PALETTE_DELETE },
 
-  { "palettes-refresh", "view-refresh",
+  { "palettes-refresh", GIMP_ICON_VIEW_REFRESH,
     NC_("palettes-action", "_Refresh Palettes"), NULL,
     NC_("palettes-action", "Refresh palettes"),
     G_CALLBACK (data_refresh_cmd_callback),
@@ -95,7 +95,7 @@ static const GimpActionEntry palettes_actions[] =
 
 static const GimpStringActionEntry palettes_edit_actions[] =
 {
-  { "palettes-edit", "gtk-edit",
+  { "palettes-edit", GIMP_ICON_EDIT,
     NC_("palettes-action", "_Edit Palette..."), NULL,
     NC_("palettes-action", "Edit this palette"),
     "gimp-palette-editor",

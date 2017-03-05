@@ -68,7 +68,7 @@ gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Select by Color Tool: Select regions with similar colors"),
                 N_("_By Color Select"), "<shift>O",
                 NULL, GIMP_HELP_TOOL_BY_COLOR_SELECT,
-                GIMP_STOCK_TOOL_BY_COLOR_SELECT,
+                GIMP_ICON_TOOL_BY_COLOR_SELECT,
                 data);
 }
 
