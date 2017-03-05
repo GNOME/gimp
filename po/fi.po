@@ -15,15 +15,15 @@
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008, 2012.
 # Janne Peltonen <peltzi@gimp-suomi.org>, 2012.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2014.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2014, 2015, 2016.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2014, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-10-08 21:06+0000\n"
-"PO-Revision-Date: 2016-10-09 10:37+0300\n"
+"POT-Creation-Date: 2017-03-01 17:51+0000\n"
+"PO-Revision-Date: 2017-03-05 13:57+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -460,7 +460,7 @@ msgid "Text Editor"
 msgstr "Tekstimuokkain"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:441
+#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:464
 msgid "Tool Options"
 msgstr "Työkaluasetukset"
 
@@ -5440,7 +5440,7 @@ msgstr "Suurenna"
 #: ../app/actions/view-actions.c:300 ../app/actions/view-actions.c:306
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
-msgstr "1_6:1  (1600%)"
+msgstr "1_6:1  (1600 %)"
 
 #: ../app/actions/view-actions.c:301 ../app/actions/view-actions.c:307
 msgctxt "view-zoom-action"
@@ -5450,7 +5450,7 @@ msgstr "Suhde 16:1"
 #: ../app/actions/view-actions.c:312 ../app/actions/view-actions.c:318
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
-msgstr "_8:1  (800%)"
+msgstr "_8:1  (800 %)"
 
 #: ../app/actions/view-actions.c:313 ../app/actions/view-actions.c:319
 msgctxt "view-zoom-action"
@@ -5460,7 +5460,7 @@ msgstr "Suhde 8:1"
 #: ../app/actions/view-actions.c:324 ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
-msgstr "_4:1  (400%)"
+msgstr "_4:1  (400 %)"
 
 #: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:331
 msgctxt "view-zoom-action"
@@ -5470,7 +5470,7 @@ msgstr "Suhde 4:1"
 #: ../app/actions/view-actions.c:336 ../app/actions/view-actions.c:342
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
-msgstr "_2:1  (200%)"
+msgstr "_2:1  (200 %)"
 
 #: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
@@ -5480,7 +5480,7 @@ msgstr "Suhde 2:1"
 #: ../app/actions/view-actions.c:348 ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
-msgstr "_1:1  (100%)"
+msgstr "_1:1  (100 %)"
 
 #: ../app/actions/view-actions.c:349 ../app/actions/view-actions.c:355
 msgctxt "view-zoom-action"
@@ -5490,7 +5490,7 @@ msgstr "Suhde 1:1"
 #: ../app/actions/view-actions.c:360
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
-msgstr "1:_2  (50%)"
+msgstr "1:_2  (50 %)"
 
 #: ../app/actions/view-actions.c:361
 msgctxt "view-zoom-action"
@@ -5500,7 +5500,7 @@ msgstr "Suhde 1:2"
 #: ../app/actions/view-actions.c:366
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
-msgstr "1:_4  (25%)"
+msgstr "1:_4  (25 %)"
 
 #: ../app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
@@ -5510,7 +5510,7 @@ msgstr "Suhde 1:4"
 #: ../app/actions/view-actions.c:372
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
-msgstr "1:_8  (12.5%)"
+msgstr "1:_8  (12.5 %)"
 
 #: ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
@@ -5520,7 +5520,7 @@ msgstr "Suhde 1:8"
 #: ../app/actions/view-actions.c:378
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
-msgstr "1:1_6  (6.25%)"
+msgstr "1:1_6  (6.25 %)"
 
 #: ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
@@ -7105,12 +7105,12 @@ msgstr "Lukitse/vapauta alfakanava"
 #: ../app/core/core-enums.c:891
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
-msgstr ""
+msgstr "Keskeytä tasoryhmän koon muutos"
 
 #: ../app/core/core-enums.c:892
 msgctxt "undo-type"
 msgid "Resume group layer resize"
-msgstr ""
+msgstr "Palauta tasoryhmän koon muutos"
 
 #: ../app/core/core-enums.c:893
 msgctxt "undo-type"
@@ -7992,7 +7992,7 @@ msgstr "Jäsennysvirhe: Liukuväritiedosto '%s' ei ole GIMPin tiedosto."
 #: ../app/core/gimpgradient-load.c:110
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Epäkelpo UTF-8 merkkijono liukuväritiedostossa '%s'."
+msgstr "Epäkelpo UTF-8-merkkijono liukuväritiedostossa '%s'."
 
 #: ../app/core/gimpgradient-load.c:137
 #, c-format
@@ -8960,7 +8960,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Haluatko varmasti poistaa '%s':n luettelosta ja myös levyltä?"
 
-#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:162
+#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:174
 #: ../app/gui/gui-message.c:149
 msgid "GIMP Message"
 msgstr "GIMPin ilmoitus"
@@ -9086,16 +9086,13 @@ msgstr ""
 "Tiedosto→Tallenna."
 
 #: ../app/dialogs/file-save-dialog.c:605
-#| msgctxt "dialogs-action"
-#| msgid "Open the layers dialog"
 msgid "Take me to the Save dialog"
 msgstr "Avaa tallennusikkuna"
 
 #: ../app/dialogs/file-save-dialog.c:609
-#, fuzzy
 #| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for saving"
-msgstr "Annetussa tiedostonimessä ei ole mitään tunnettua pääteosaa."
+msgstr "Annettua tiedostonimeä ei voi käyttää tallennukseen"
 
 #: ../app/dialogs/file-save-dialog.c:610
 msgid ""
@@ -9106,8 +9103,6 @@ msgstr ""
 "haluat tallentaa jossain muussa muodossa, käytä toimintoa Tiedosto→Vie."
 
 #: ../app/dialogs/file-save-dialog.c:612
-#| msgctxt "dialogs-action"
-#| msgid "Open the paths dialog"
 msgid "Take me to the Export dialog"
 msgstr "Avaa vienti-ikkuna"
 
@@ -9549,7 +9544,7 @@ msgstr "Näytä _valikkopalkki"
 
 #: ../app/dialogs/preferences-dialog.c:1307
 msgid "Show _rulers"
-msgstr "Näytä _viivaimet"
+msgstr "Näytä viivai_met"
 
 #: ../app/dialogs/preferences-dialog.c:1310
 msgid "Show scroll_bars"
@@ -9565,7 +9560,7 @@ msgstr "Näytä v_alinta"
 
 #: ../app/dialogs/preferences-dialog.c:1324
 msgid "Show _layer boundary"
-msgstr "Näytä tason rajat"
+msgstr "Näytä tason _rajat"
 
 #: ../app/dialogs/preferences-dialog.c:1327
 msgid "Show _guides"
@@ -9577,11 +9572,11 @@ msgstr "Näytä _ruudukko"
 
 #: ../app/dialogs/preferences-dialog.c:1336
 msgid "Canvas _padding mode:"
-msgstr "Kankaan täyttömuoto:"
+msgstr "Kankaan tä_yttömuoto:"
 
 #: ../app/dialogs/preferences-dialog.c:1341
 msgid "Custom p_adding color:"
-msgstr "Oma täyttöväri:"
+msgstr "Oma täytt_öväri:"
 
 #: ../app/dialogs/preferences-dialog.c:1342
 msgid "Select Custom Canvas Padding Color"
@@ -9602,19 +9597,19 @@ msgstr "Resurssikulutus"
 
 #: ../app/dialogs/preferences-dialog.c:1577
 msgid "Minimal number of _undo levels:"
-msgstr "Kumoamistoiminnolle varatut säätöarvot:"
+msgstr "Kumoamistasojen vä_himmäismäärä:"
 
 #: ../app/dialogs/preferences-dialog.c:1580
 msgid "Maximum undo _memory:"
-msgstr "Maksimi kumoamismuisti:"
+msgstr "Kumoamistoiminnon _enimmäismuisti:"
 
 #: ../app/dialogs/preferences-dialog.c:1583
 msgid "Tile cache _size:"
-msgstr "Kuvavälimuistin koko:"
+msgstr "Kuvav_älimuistin koko:"
 
 #: ../app/dialogs/preferences-dialog.c:1586
 msgid "Maximum _new image size:"
-msgstr "Uuden kuvan enimmäiskoko:"
+msgstr "Uuden ku_van enimmäiskoko:"
 
 #: ../app/dialogs/preferences-dialog.c:1591
 msgid "Number of _processors to use:"
@@ -9627,7 +9622,7 @@ msgstr "Kuvien esikatselut"
 
 #: ../app/dialogs/preferences-dialog.c:1601
 msgid "Size of _thumbnails:"
-msgstr "Esikatselukuvan koko:"
+msgstr "_Esikatselukuvan koko:"
 
 #: ../app/dialogs/preferences-dialog.c:1605
 msgid "Maximum _filesize for thumbnailing:"
@@ -10042,19 +10037,19 @@ msgstr "Värin hallinta"
 
 #: ../app/dialogs/preferences-dialog.c:2491
 msgid "_RGB profile:"
-msgstr "_RGB profiili:"
+msgstr "_RGB-profiili:"
 
 #: ../app/dialogs/preferences-dialog.c:2492
 msgid "Select RGB Color Profile"
-msgstr "Valitse RGB väriprofiili"
+msgstr "Valitse RGB-väriprofiili"
 
 #: ../app/dialogs/preferences-dialog.c:2493
 msgid "_CMYK profile:"
-msgstr "_CMYK profiili:"
+msgstr "_CMYK-profiili:"
 
 #: ../app/dialogs/preferences-dialog.c:2494
 msgid "Select CMYK Color Profile"
-msgstr "Valitse CMYK väriprofiili"
+msgstr "Valitse CMYK-väriprofiili"
 
 #: ../app/dialogs/preferences-dialog.c:2495
 msgid "_Monitor profile:"
@@ -10086,7 +10081,7 @@ msgstr "_Näytä muunnosalgoritmi:"
 
 #: ../app/dialogs/preferences-dialog.c:2558
 msgid "_Softproof rendering intent:"
-msgstr "_Softproof muunnosalgoritmi:"
+msgstr "_Softproof-muunnosalgoritmi:"
 
 #: ../app/dialogs/preferences-dialog.c:2571
 msgid "Mark out of gamut colors"
@@ -10636,23 +10631,23 @@ msgstr "K"
 msgid "_Sample Merged"
 msgstr "_Yhdistetty valinta"
 
-#: ../app/display/gimpdisplayshell.c:508
+#: ../app/display/gimpdisplayshell.c:519
 msgid "Access the image menu"
 msgstr "Avaa kuvavalikko"
 
-#: ../app/display/gimpdisplayshell.c:622
+#: ../app/display/gimpdisplayshell.c:633
 msgid "Zoom image when window size changes"
 msgstr "Suurenna kuvaa kun ikkunan koko muuttuu"
 
-#: ../app/display/gimpdisplayshell.c:651
+#: ../app/display/gimpdisplayshell.c:662
 msgid "Toggle Quick Mask"
 msgstr "Vaihda pikamaski"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:685
 msgid "Navigate the image display"
 msgstr "Selaa kuvanäkymää"
 
-#: ../app/display/gimpdisplayshell.c:746 ../app/display/gimpdisplayshell.c:1331
+#: ../app/display/gimpdisplayshell.c:757 ../app/display/gimpdisplayshell.c:1342
 #: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Avaa kuvatiedostot pudottamalla ne tähän"
@@ -10895,12 +10890,12 @@ msgstr "Täytä häkin alkuperäinen sijainti värillä"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:207
+#: ../app/gui/gui.c:219
 msgid "default:LTR"
 msgstr ""
 
 #. initialize the document history
-#: ../app/gui/gui.c:438
+#: ../app/gui/gui.c:461
 msgid "Documents"
 msgstr "Asiakirjat"
 
@@ -11687,7 +11682,7 @@ msgstr ""
 "Tekstin muoto voi olla väärä. Jos et muokkaa tekstitasoa, ilmoituksesta ei "
 "tarvitse välittää."
 
-#: ../app/text/gimptextlayout.c:577
+#: ../app/text/gimptextlayout.c:578
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -11888,7 +11883,7 @@ msgstr "Sekoitus ei toimi indeksoiduilla tasoilla."
 msgid "No gradient available for use with this tool."
 msgstr "Ei liukuvärejä käytettävissä tälle työkalulle."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:625
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s rajoitetut kulmat"
@@ -13146,7 +13141,7 @@ msgstr "Siirrä kaikkia pisteitä napsauttamalla ja vetämällä"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:633
+#: ../app/tools/gimppainttool.c:634
 msgid "pixels"
 msgstr "pikseliä"
 
@@ -13316,7 +13311,7 @@ msgstr "%s valitsee värin"
 msgid "Cannot paint on layer groups."
 msgstr "Tasoryhmille ei voi maalata"
 
-#: ../app/tools/gimppainttool.c:679
+#: ../app/tools/gimppainttool.c:680
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s suora viiva"
@@ -13916,10 +13911,10 @@ msgid "Transforming"
 msgstr "Käännetään"
 
 #: ../app/tools/gimptransformtool.c:269
-#, fuzzy, c-format
+#, c-format
 #| msgid "The given file extension does not match the chosen file type."
 msgid "The selection does not intersect with the layer."
-msgstr "Annettu tiedoston pääteosa ei vastaa valittua tiedostotyyppiä."
+msgstr "Valinta ei leikkaa tasoa."
 
 #: ../app/tools/gimptransformtool.c:1480
 msgid "There is no layer to transform."
@@ -15184,10 +15179,6 @@ msgid "Could not start the GIMP help browser plug-in."
 msgstr "GIMPin ohjeselainta ei voitu käynnistää."
 
 #: ../app/widgets/gimphelp.c:354
-#| msgid ""
-#| "The GIMP help browser plug-in appears to be missing from your "
-#| "installation. You may instead use the web browser for reading the help "
-#| "pages."
 msgid "You may instead use the web browser for reading the help pages."
 msgstr "Voit sen sijaan käyttää verkkoselainta ohjesivujen lukemiseen."
 
@@ -15385,7 +15376,7 @@ msgstr ""
 
 #: ../app/widgets/gimpselectiondata.c:253
 msgid "Invalid UTF-8"
-msgstr "Epäkelpo UTF-8 -merkkijono"
+msgstr "Virheellinen UTF-8-merkkijono"
 
 #: ../app/widgets/gimpsettingsbox.c:269
 msgid "Pick a setting from the list"
@@ -15541,7 +15532,7 @@ msgstr "Tekstin uloimman elementin on oltava <markup>, ei <%s>"
 #: ../app/widgets/gimptextbuffer.c:1460
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Virheellisiä UTF-8 merkkejä tiedostossa '%s'."
+msgstr "Virheellisiä UTF-8-tietoa tiedostossa '%s'."
 
 #: ../app/widgets/gimptexteditor.c:222
 msgid "_Use selected font"
@@ -15946,7 +15937,7 @@ msgstr ""
 
 #: ../app/xcf/xcf-read.c:174
 msgid "Invalid UTF-8 string in XCF file"
-msgstr "Epäkelpo UTF-8 merkkijono XCF-tiedostossa"
+msgstr "Epäkelpo UTF-8-merkkijono XCF-tiedostossa"
 
 #: ../app/xcf/xcf-write.c:155
 #, c-format
@@ -15960,7 +15951,7 @@ msgstr "XCF-tiedoston hakuvirhe: %s"
 
 #: ../app/xcf/xcf.c:113 ../app/xcf/xcf.c:181
 msgid "GIMP XCF image"
-msgstr "GIMP XCF-kuva"
+msgstr "GIMPin XCF-kuva"
 
 #: ../app/xcf/xcf.c:301
 #, c-format
