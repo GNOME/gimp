@@ -1055,18 +1055,21 @@ lcms_layers_transform_rgb (gint                     *layers,
       gint            *children;
       gint             num_children;
 
-      children = gimp_item_get_children (layers[i], &num_children);
+      if (gimp_item_is_group (layers[i]))
+	{
+	  children = gimp_item_get_children (layers[i], &num_children);
 
-      if (children)
-        {
-          lcms_layers_transform_rgb (children, num_children,
-                                     src_profile, dest_profile,
-                                     intent, bpc);
+	  if (children)
+	    {
+	      lcms_layers_transform_rgb (children, num_children,
+					 src_profile, dest_profile,
+					 intent, bpc);
 
-          g_free (children);
+	      g_free (children);
+	    }
 
-          continue;
-        }
+	  continue;
+	}
 
       switch (drawable->bpp)
         {
