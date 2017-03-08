@@ -35,6 +35,14 @@
 #include "gimpoperationlayermode.h"
 
 
+/* the maximum number of samples to process in one go.  used to limit
+ * the size of the buffers we allocate on the stack.
+ */
+#define GIMP_COMPOSITE_BLEND_MAX_SAMPLES ((1 << 19) /* 0.5 MiB */  /      \
+                                          16 /* bytes per pixel */ /      \
+                                          2  /* max number of buffers */)
+
+
 enum
 {
   PROP_0,
@@ -1009,9 +1017,9 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
   GimpLayerColorSpace    composite_space = layer_mode->composite_space;
   GimpLayerCompositeMode composite_mode  = layer_mode->composite_mode;
 
-  gfloat *blend_in    = in;
-  gfloat *blend_layer = layer;
-  gfloat *blend_out   = out;
+  gfloat *blend_in;
+  gfloat *blend_layer;
+  gfloat *blend_out;
 
   gboolean composite_needs_in_color =
     composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
@@ -1019,6 +1027,30 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
 
   const Babl *composite_to_blend_fish = NULL;
   const Babl *blend_to_composite_fish = NULL;
+
+  /* make sure we don't process more than GIMP_COMPOSITE_BLEND_MAX_SAMPLES
+   * at a time, so that we don't overflow the stack if we allocate buffers
+   * on it.  note that this has to be done with a nested function call,
+   * because alloca'd buffers remain for the duration of the stack frame.
+   */
+  while (samples > GIMP_COMPOSITE_BLEND_MAX_SAMPLES)
+    {
+      gimp_composite_blend (layer_mode,
+                            in, layer, mask, out,
+                            GIMP_COMPOSITE_BLEND_MAX_SAMPLES,
+                            blend_func);
+
+      in      += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+      layer   += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+      mask    +=     GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+      out     += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+
+      samples -= GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+    }
+
+  blend_in    = in;
+  blend_layer = layer;
+  blend_out   = out;
 
   if (blend_space != GIMP_LAYER_COLOR_SPACE_AUTO)
     {
