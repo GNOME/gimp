@@ -63,6 +63,9 @@
 
      [ ] Run 'make' to do a complete build of the source tree.
 
+     [ ] Close all running GIMP instances, we don't want any unique
+         code called during 'make distcheck'.
+
      [ ] Run 'make distcheck'. Avoid passing make -j since that can
          cause mysterious fails.
 
