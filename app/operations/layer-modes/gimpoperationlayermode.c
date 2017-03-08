@@ -116,7 +116,7 @@ static inline void composite_func_dst_atop_sub_core (gfloat *in,
                                                      gfloat  opacity,
                                                      gfloat *out,
                                                      gint    samples);
-static inline void composite_func_src_sub_in_core   (gfloat *in,
+static inline void composite_func_src_in_sub_core   (gfloat *in,
                                                      gfloat *layer,
                                                      gfloat *comp,
                                                      gfloat *mask,
@@ -965,7 +965,7 @@ composite_func_src_atop_sse2 (gfloat *in,
         __v4sf alpha, rgba_in, rgba_comp;
 
         rgba_in   = *v_in ++;
-        rgba_cimp = *v_comp++;
+        rgba_comp = *v_comp++;
 
         alpha = (__v4sf)_mm_shuffle_epi32((__m128i)rgba_comp,_MM_SHUFFLE(3,3,3,3)) * v_opacity;
 
