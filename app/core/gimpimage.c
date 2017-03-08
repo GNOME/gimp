@@ -2419,7 +2419,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
         case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
         case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
-        case GIMP_LAYER_MODE_COLOR_ERASE:
+        case GIMP_LAYER_MODE_COLOR_ERASE_LEGACY:
           version = MAX (2, version);
           break;
 
@@ -2462,6 +2462,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_LUMA_DARKEN_ONLY:
         case GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY:
         case GIMP_LAYER_MODE_LUMINANCE:
+        case GIMP_LAYER_MODE_COLOR_ERASE:
           version = MAX (10, version);
           break;
 

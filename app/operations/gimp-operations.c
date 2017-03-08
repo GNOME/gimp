@@ -87,7 +87,6 @@
 #include "layer-modes/gimpoperationantierase.h"
 #include "layer-modes/gimpoperationbehind.h"
 #include "layer-modes/gimpoperationerase.h"
-#include "layer-modes/gimpoperationcolorerase.h"
 #include "layer-modes/gimpoperationdissolve.h"
 #include "layer-modes/gimpoperationnormal.h"
 #include "layer-modes/gimpoperationreplace.h"
@@ -147,7 +146,6 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_SOFTLIGHT_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_EXTRACT_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_ERASE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ERASE);
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);

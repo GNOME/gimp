@@ -2149,6 +2149,64 @@ blendfun_exclusion (const float *dest,
 }
 
 static inline void
+blendfun_color_erase (const float *dest,
+                      const float *src,
+                      float       *out,
+                      int          samples)
+{
+  while (samples--)
+    {
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
+        {
+          const float *color   = dest;
+          const float *bgcolor = src;
+          gfloat       alpha;
+          gint         c;
+
+          alpha = 0.0f;
+
+          for (c = 0; c < 3; c++)
+            {
+              gfloat col   = CLAMP (color[c],   0.0f, 1.0f);
+              gfloat bgcol = CLAMP (bgcolor[c], 0.0f, 1.0f);
+
+              if (col != bgcol)
+                {
+                  gfloat a;
+
+                  if (col > bgcol)
+                    a = (col - bgcol) / (1.0f - bgcol);
+                  else
+                    a = (bgcol - col) / bgcol;
+
+                  alpha = MAX (alpha, a);
+                }
+            }
+
+          if (alpha > 0.0f)
+            {
+              gfloat alpha_inv = 1.0f / alpha;
+
+              for (c = 0; c < 3; c++)
+                out[c] = (color[c] - bgcolor[c]) * alpha_inv + bgcolor[c];
+            }
+          else
+            {
+              out[RED] = out[GREEN] = out[BLUE] = 0.0f;
+            }
+
+          out[ALPHA] = alpha;
+        }
+      else
+        out[ALPHA] = 0.0f;
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+static inline void
 blendfun_dummy (const float *dest,
                 const float *src,
                 float       *out,
@@ -2195,6 +2253,8 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_HARD_MIX:       return blendfun_hard_mix;
     case GIMP_LAYER_MODE_EXCLUSION:      return blendfun_exclusion;
     case GIMP_LAYER_MODE_LINEAR_BURN:    return blendfun_linear_burn;
+    case GIMP_LAYER_MODE_COLOR_ERASE_LEGACY:
+    case GIMP_LAYER_MODE_COLOR_ERASE:    return blendfun_color_erase;
 
     case GIMP_LAYER_MODE_DISSOLVE:
     case GIMP_LAYER_MODE_BEHIND_LEGACY:
@@ -2218,7 +2278,6 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
     case GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY:
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
-    case GIMP_LAYER_MODE_COLOR_ERASE:
     case GIMP_LAYER_MODE_ERASE:
     case GIMP_LAYER_MODE_REPLACE:
     case GIMP_LAYER_MODE_ANTI_ERASE:

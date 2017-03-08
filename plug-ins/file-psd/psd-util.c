@@ -933,6 +933,7 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       break;
 
     case GIMP_LAYER_MODE_COLOR_ERASE:
+    case GIMP_LAYER_MODE_COLOR_ERASE_LEGACY:
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported blend mode: %s. Mode reverts to normal",
                    gimp_layer_mode_effects_name (layer_mode));
@@ -985,7 +986,7 @@ gimp_layer_mode_effects_name (GimpLayerMode mode)
     "COLOR ERASE"
   };
   static gchar *err_name = NULL;
-  if (mode >= 0 && mode <= GIMP_LAYER_MODE_COLOR_ERASE)
+  if (mode >= 0 && mode <= GIMP_LAYER_MODE_COLOR_ERASE_LEGACY)
     return layer_mode_effects_names[mode];
   g_free (err_name);
 

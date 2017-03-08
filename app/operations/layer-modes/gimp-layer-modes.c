@@ -46,7 +46,6 @@
 
 #include "gimpoperationantierase.h"
 #include "gimpoperationbehind.h"
-#include "gimpoperationcolorerase.h"
 #include "gimpoperationdissolve.h"
 #include "gimpoperationerase.h"
 #include "gimpoperationnormal.h"
@@ -399,11 +398,12 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_COLOR_ERASE,
+  { GIMP_LAYER_MODE_COLOR_ERASE_LEGACY,
 
-    .op_name              = "gimp:color-erase",
-    .function             = gimp_operation_color_erase_process,
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE  |
                             GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
@@ -801,6 +801,19 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
+  { GIMP_LAYER_MODE_COLOR_ERASE,
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .flags                = GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
+                            GIMP_LAYER_MODE_CONTEXT_FADE,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+  },
+
   { GIMP_LAYER_MODE_ERASE,
 
     .op_name              = "gimp:erase",
@@ -905,6 +918,7 @@ static const GimpLayerMode layer_mode_group_legacy[] =
   GIMP_LAYER_MODE_NORMAL_LEGACY,
   GIMP_LAYER_MODE_DISSOLVE,
   GIMP_LAYER_MODE_BEHIND_LEGACY,
+  GIMP_LAYER_MODE_COLOR_ERASE_LEGACY,
 
   GIMP_LAYER_MODE_SEPARATOR,
 
@@ -1032,7 +1046,7 @@ static const GimpLayerMode layer_mode_groups[][2] =
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_COLOR_ERASE,
-    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_COLOR_ERASE_LEGACY,
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_VIVID_LIGHT,

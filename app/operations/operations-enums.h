@@ -77,7 +77,7 @@ typedef enum
   GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,      /*< desc="Soft light (legacy)"      >*/
   GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,  /*< desc="Grain extract (legacy)"   >*/
   GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,    /*< desc="Grain merge (legacy)"     >*/
-  GIMP_LAYER_MODE_COLOR_ERASE,           /*< desc="Color erase"              >*/
+  GIMP_LAYER_MODE_COLOR_ERASE_LEGACY,    /*< desc="Color erase (legacy)"     >*/
 
   /*  Since 2.8  */
   GIMP_LAYER_MODE_OVERLAY,               /*< desc="Overlay"                  >*/
@@ -116,6 +116,7 @@ typedef enum
   GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,   /*< desc="Luma/Luminance darken only"  >*/
   GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,  /*< desc="Luma/Luminance lighten only" >*/
   GIMP_LAYER_MODE_LUMINANCE,             /*< desc="Luminance"                >*/
+  GIMP_LAYER_MODE_COLOR_ERASE,           /*< desc="Color erase"              >*/
 
   /*  Internal modes, not available to the PDB, must be kept at the end  */
   GIMP_LAYER_MODE_ERASE,                 /*< pdb-skip, desc="Erase"          >*/
