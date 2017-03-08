@@ -1042,7 +1042,8 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
 
       in      += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
       layer   += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
-      mask    +=     GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
+      if (mask)
+        mask  +=     GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
       out     += 4 * GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
 
       samples -= GIMP_COMPOSITE_BLEND_MAX_SAMPLES;
