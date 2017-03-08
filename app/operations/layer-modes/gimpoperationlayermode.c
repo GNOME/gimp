@@ -73,43 +73,72 @@ static gboolean gimp_operation_layer_mode_process      (GeglOperation          *
 static GimpLayerModeAffectMask
         gimp_operation_layer_mode_real_get_affect_mask (GimpOperationLayerMode *layer_mode);
 
-static inline void composite_func_src_atop_core (gfloat *in,
-                                                 gfloat *layer,
-                                                 gfloat *comp,
-                                                 gfloat *mask,
-                                                 gfloat  opacity,
-                                                 gfloat *out,
-                                                 gint    samples);
-static inline void composite_func_dst_atop_core (gfloat *in,
-                                                 gfloat *layer,
-                                                 gfloat *comp,
-                                                 gfloat *mask,
-                                                 gfloat  opacity,
-                                                 gfloat *out,
-                                                 gint    samples);
-static inline void composite_func_src_in_core   (gfloat *in,
-                                                 gfloat *layer,
-                                                 gfloat *comp,
-                                                 gfloat *mask,
-                                                 gfloat  opacity,
-                                                 gfloat *out,
-                                                 gint    samples);
-static inline void composite_func_src_over_core (gfloat *in,
-                                                 gfloat *layer,
-                                                 gfloat *comp,
-                                                 gfloat *mask,
-                                                 gfloat  opacity,
-                                                 gfloat *out,
-                                                 gint    samples);
+static inline void composite_func_src_atop_core     (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
+static inline void composite_func_dst_atop_core     (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
+static inline void composite_func_src_in_core       (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
+static inline void composite_func_src_over_core     (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
+
+static inline void composite_func_src_atop_sub_core (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
+static inline void composite_func_dst_atop_sub_core (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
+static inline void composite_func_src_sub_in_core   (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
+static inline void composite_func_src_over_sub_core (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
 
 #if COMPILE_SSE2_INTRINISICS
-static inline void composite_func_src_atop_sse2 (gfloat *in,
-                                                 gfloat *layer,
-                                                 gfloat *comp,
-                                                 gfloat *mask,
-                                                 gfloat  opacity,
-                                                 gfloat *out,
-                                                 gint    samples);
+static inline void composite_func_src_atop_sse2     (gfloat *in,
+                                                     gfloat *layer,
+                                                     gfloat *comp,
+                                                     gfloat *mask,
+                                                     gfloat  opacity,
+                                                     gfloat *out,
+                                                     gint    samples);
 #endif
 
 
@@ -121,10 +150,15 @@ G_DEFINE_TYPE (GimpOperationLayerMode, gimp_operation_layer_mode,
 
 static const Babl *gimp_layer_color_space_fish[3 /* from */][3 /* to */];
 
-static CompositeFunc composite_func_src_atop = composite_func_src_atop_core;
-static CompositeFunc composite_func_dst_atop = composite_func_dst_atop_core;
-static CompositeFunc composite_func_src_in   = composite_func_src_in_core;
-static CompositeFunc composite_func_src_over = composite_func_src_over_core;
+static CompositeFunc composite_func_src_atop     = composite_func_src_atop_core;
+static CompositeFunc composite_func_dst_atop     = composite_func_dst_atop_core;
+static CompositeFunc composite_func_src_in       = composite_func_src_in_core;
+static CompositeFunc composite_func_src_over     = composite_func_src_over_core;
+
+static CompositeFunc composite_func_src_atop_sub = composite_func_src_atop_sub_core;
+static CompositeFunc composite_func_dst_atop_sub = composite_func_dst_atop_sub_core;
+static CompositeFunc composite_func_src_in_sub   = composite_func_src_in_sub_core;
+static CompositeFunc composite_func_src_over_sub = composite_func_src_over_sub_core;
 
 
 static void
@@ -498,6 +532,12 @@ gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,
 }
 
 
+/*  non-subtractive compositing functions.  these functions expect comp[ALPHA]
+ *  to be the same as layer[ALPHA].  when in[ALPHA] or layer[ALPHA] are zero,
+ *  the value of comp[RED..BLUE] is unconstrained (in particular, it may be
+ *  NaN).
+ */
+
 static inline void
 composite_func_src_atop_core (gfloat *in,
                               gfloat *layer,
@@ -680,6 +720,218 @@ composite_func_src_in_core (gfloat *in,
     }
 }
 
+/*  subtractive compositing functions.  these functions expect comp[ALPHA] to
+ *  specify the modified alpha of the overlapping content, as a fraction of the
+ *  original overlapping content (i.e., an alpha of 1.0 specifies that no
+ *  content is subtracted.)  when in[ALPHA] or layer[ALPHA] are zero, the value
+ *  of comp[RED..BLUE] is unconstrained (in particular, it may be NaN).
+ */
+
+static inline void
+composite_func_src_atop_sub_core (gfloat *in,
+                                  gfloat *layer,
+                                  gfloat *comp,
+                                  gfloat *mask,
+                                  gfloat  opacity,
+                                  gfloat *out,
+                                  gint    samples)
+{
+  while (samples--)
+    {
+      gfloat layer_alpha = layer[ALPHA] * opacity;
+      gfloat comp_alpha  = comp[ALPHA];
+      gfloat new_alpha;
+
+      if (mask)
+        layer_alpha *= *mask;
+
+      comp_alpha *= layer_alpha;
+
+      new_alpha = 1.0f - layer_alpha + comp_alpha;
+
+      if (in[ALPHA] == 0.0f || comp_alpha == 0.0f)
+        {
+          out[RED]   = in[RED];
+          out[GREEN] = in[GREEN];
+          out[BLUE]  = in[BLUE];
+        }
+      else
+        {
+          gfloat ratio = comp_alpha / new_alpha;
+          gint   b;
+
+          for (b = RED; b < ALPHA; b++)
+            out[b] = comp[b] * ratio + in[b] * (1.0f - ratio);
+        }
+
+      new_alpha *= in[ALPHA];
+
+      out[ALPHA] = new_alpha;
+
+      in    += 4;
+      layer += 4;
+      comp  += 4;
+      out   += 4;
+
+      if (mask)
+        mask++;
+    }
+}
+
+static inline void
+composite_func_src_over_sub_core (gfloat *in,
+                                  gfloat *layer,
+                                  gfloat *comp,
+                                  gfloat *mask,
+                                  gfloat  opacity,
+                                  gfloat *out,
+                                  gint    samples)
+{
+  while (samples--)
+    {
+      gfloat in_alpha    = in[ALPHA];
+      gfloat layer_alpha = layer[ALPHA] * opacity;
+      gfloat comp_alpha  = comp[ALPHA];
+      gfloat new_alpha;
+
+      if (mask)
+        layer_alpha *= *mask;
+
+      new_alpha = in_alpha + layer_alpha -
+                  (2.0f - comp_alpha) * in_alpha * layer_alpha;
+
+      if (layer_alpha == 0.0f || new_alpha == 0.0f)
+        {
+          out[RED]   = in[RED];
+          out[GREEN] = in[GREEN];
+          out[BLUE]  = in[BLUE];
+        }
+      else if (in[ALPHA] == 0.0f)
+        {
+          out[RED]   = layer[RED];
+          out[GREEN] = layer[GREEN];
+          out[BLUE]  = layer[BLUE];
+        }
+      else
+        {
+          gfloat recip = 1.0f / new_alpha;
+          gint   b;
+
+          for (b = RED; b < ALPHA; b++)
+            out[b] = (layer_alpha * (in_alpha * (comp_alpha * comp[b] - layer[b]) + layer[b] - in[b]) + in[b]) * recip;
+        }
+
+      out[ALPHA] = new_alpha;
+
+      in    += 4;
+      layer += 4;
+      comp  += 4;
+      out   += 4;
+
+      if (mask)
+        mask++;
+    }
+}
+
+static inline void
+composite_func_dst_atop_sub_core (gfloat *in,
+                                  gfloat *layer,
+                                  gfloat *comp,
+                                  gfloat *mask,
+                                  gfloat  opacity,
+                                  gfloat *out,
+                                  gint    samples)
+{
+  while (samples--)
+    {
+      gfloat in_alpha    = in[ALPHA];
+      gfloat layer_alpha = layer[ALPHA] * opacity;
+      gfloat comp_alpha  = comp[ALPHA];
+      gfloat new_alpha;
+
+      if (mask)
+        layer_alpha *= *mask;
+
+      comp_alpha *= in_alpha;
+
+      new_alpha = 1.0f - in_alpha + comp_alpha;
+
+      if (layer_alpha == 0.0f)
+        {
+          out[RED]   = in[RED];
+          out[GREEN] = in[GREEN];
+          out[BLUE]  = in[BLUE];
+        }
+      else if (in_alpha == 0.0f)
+        {
+          out[RED]   = layer[RED];
+          out[GREEN] = layer[GREEN];
+          out[BLUE]  = layer[BLUE];
+        }
+      else
+        {
+          gfloat ratio = comp_alpha / new_alpha;
+          gint   b;
+
+          for (b = RED; b < ALPHA; b++)
+            out[b] = comp[b] * ratio + layer[b] * (1.0f - ratio);
+        }
+
+      new_alpha *= layer_alpha;
+
+      out[ALPHA] = new_alpha;
+
+      in    += 4;
+      layer += 4;
+      comp  += 4;
+      out   += 4;
+
+      if (mask)
+        mask++;
+    }
+}
+
+static inline void
+composite_func_src_in_sub_core (gfloat *in,
+                                gfloat *layer,
+                                gfloat *comp,
+                                gfloat *mask,
+                                gfloat  opacity,
+                                gfloat *out,
+                                gint    samples)
+{
+  while (samples--)
+    {
+      gfloat new_alpha = in[ALPHA] * layer[ALPHA] * comp[ALPHA] * opacity;
+
+      if (mask)
+        new_alpha *= *mask;
+
+      if (new_alpha == 0.0f)
+        {
+          out[RED]   = in[RED];
+          out[GREEN] = in[GREEN];
+          out[BLUE]  = in[BLUE];
+        }
+      else
+        {
+          out[RED]   = comp[RED];
+          out[GREEN] = comp[GREEN];
+          out[BLUE]  = comp[BLUE];
+        }
+
+      out[ALPHA] = new_alpha;
+
+      in    += 4;
+      layer += 4;
+      comp  += 4;
+      out   += 4;
+
+      if (mask)
+        mask++;
+    }
+}
+
 #if COMPILE_SSE2_INTRINISICS
 
 #include <emmintrin.h>
@@ -811,32 +1063,65 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
       babl_process (blend_to_composite_fish, blend_out, blend_out, samples);
     }
 
-  switch (composite_mode)
+  if (! gimp_layer_mode_is_subtractive (layer_mode->layer_mode))
     {
-    case GIMP_LAYER_COMPOSITE_SRC_ATOP:
-    default:
-      composite_func_src_atop (in, layer, blend_out,
-                               mask, opacity,
-                               out, samples);
-      break;
+      switch (composite_mode)
+        {
+        case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+        default:
+          composite_func_src_atop (in, layer, blend_out,
+                                   mask, opacity,
+                                   out, samples);
+          break;
 
-    case GIMP_LAYER_COMPOSITE_SRC_OVER:
-      composite_func_src_over (in, layer, blend_out,
-                               mask, opacity,
-                               out, samples);
-      break;
+        case GIMP_LAYER_COMPOSITE_SRC_OVER:
+          composite_func_src_over (in, layer, blend_out,
+                                   mask, opacity,
+                                   out, samples);
+          break;
 
-    case GIMP_LAYER_COMPOSITE_DST_ATOP:
-      composite_func_dst_atop (in, layer, blend_out,
-                               mask, opacity,
-                               out, samples);
-      break;
+        case GIMP_LAYER_COMPOSITE_DST_ATOP:
+          composite_func_dst_atop (in, layer, blend_out,
+                                   mask, opacity,
+                                   out, samples);
+          break;
 
-    case GIMP_LAYER_COMPOSITE_SRC_IN:
-      composite_func_src_in (in, layer, blend_out,
-                             mask, opacity,
-                             out, samples);
-      break;
+        case GIMP_LAYER_COMPOSITE_SRC_IN:
+          composite_func_src_in (in, layer, blend_out,
+                                 mask, opacity,
+                                 out, samples);
+          break;
+        }
+    }
+  else
+    {
+      switch (composite_mode)
+        {
+        case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+        default:
+          composite_func_src_atop_sub (in, layer, blend_out,
+                                       mask, opacity,
+                                       out, samples);
+          break;
+
+        case GIMP_LAYER_COMPOSITE_SRC_OVER:
+          composite_func_src_over_sub (in, layer, blend_out,
+                                       mask, opacity,
+                                       out, samples);
+          break;
+
+        case GIMP_LAYER_COMPOSITE_DST_ATOP:
+          composite_func_dst_atop_sub (in, layer, blend_out,
+                                       mask, opacity,
+                                       out, samples);
+          break;
+
+        case GIMP_LAYER_COMPOSITE_SRC_IN:
+          composite_func_src_in_sub (in, layer, blend_out,
+                                     mask, opacity,
+                                     out, samples);
+          break;
+        }
     }
 }
 
