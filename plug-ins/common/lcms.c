@@ -1052,11 +1052,12 @@ lcms_layers_transform_rgb (gint                     *layers,
     {
       GimpDrawable    *drawable = gimp_drawable_get (layers[i]);
       cmsUInt32Number  format;
-      gint            *children;
-      gint             num_children;
 
       if (gimp_item_is_group (layers[i]))
 	{
+	  gint *children;
+	  gint  num_children;
+
 	  children = gimp_item_get_children (layers[i], &num_children);
 
 	  if (children)
