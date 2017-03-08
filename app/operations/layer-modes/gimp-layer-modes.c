@@ -78,7 +78,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
     .op_name              = "gimp:normal",
     .function             = gimp_operation_normal_process,
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+    .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
+                            GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
