@@ -405,7 +405,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_color_erase_process,
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
-                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE  |
+                            GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
     .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
                             GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -804,7 +805,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
     .op_name              = "gimp:erase",
     .function             = gimp_operation_erase_process,
-    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
     .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
@@ -1147,6 +1149,17 @@ gimp_layer_mode_is_composite_mode_mutable (GimpLayerMode mode)
     return FALSE;
 
   return (info->flags & GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE) == 0;
+}
+
+gboolean
+gimp_layer_mode_is_subtractive (GimpLayerMode mode)
+{
+  const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
+
+  if (! info)
+    return FALSE;
+
+  return (info->flags & GIMP_LAYER_MODE_FLAG_SUBTRACTIVE) != 0;
 }
 
 GimpLayerColorSpace

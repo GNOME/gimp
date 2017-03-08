@@ -31,6 +31,8 @@ gboolean          gimp_layer_mode_is_blend_space_mutable     (GimpLayerMode     
 gboolean          gimp_layer_mode_is_composite_space_mutable (GimpLayerMode        mode);
 gboolean          gimp_layer_mode_is_composite_mode_mutable  (GimpLayerMode        mode);
 
+gboolean                 gimp_layer_mode_is_subtractive      (GimpLayerMode        mode);
+
 GimpLayerColorSpace      gimp_layer_mode_get_blend_space     (GimpLayerMode        mode);
 GimpLayerColorSpace      gimp_layer_mode_get_composite_space (GimpLayerMode        mode);
 GimpLayerCompositeMode   gimp_layer_mode_get_composite_mode  (GimpLayerMode        mode);
