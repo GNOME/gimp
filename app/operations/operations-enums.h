@@ -119,6 +119,7 @@ typedef enum
   GIMP_LAYER_MODE_COLOR_ERASE,           /*< desc="Color erase"              >*/
   GIMP_LAYER_MODE_ERASE,                 /*< desc="Erase"                    >*/
   GIMP_LAYER_MODE_MONO_MIX,              /*< desc="Mono mix"                 >*/
+  GIMP_LAYER_MODE_MERGE,                 /*< desc="Merge"                    >*/
 
   /*  Internal modes, not available to the PDB, must be kept at the end  */
   GIMP_LAYER_MODE_REPLACE,               /*< pdb-skip, desc="Replace"        >*/

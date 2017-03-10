@@ -2465,6 +2465,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_COLOR_ERASE:
         case GIMP_LAYER_MODE_ERASE:
         case GIMP_LAYER_MODE_MONO_MIX:
+        case GIMP_LAYER_MODE_MERGE:
           version = MAX (10, version);
           break;
 
