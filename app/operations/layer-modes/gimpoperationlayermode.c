@@ -814,7 +814,7 @@ composite_func_src_over_sub_core (gfloat *in,
           out[GREEN] = in[GREEN];
           out[BLUE]  = in[BLUE];
         }
-      else if (in[ALPHA] == 0.0f)
+      else if (in_alpha == 0.0f)
         {
           out[RED]   = layer[RED];
           out[GREEN] = layer[GREEN];
@@ -822,11 +822,12 @@ composite_func_src_over_sub_core (gfloat *in,
         }
       else
         {
-          gfloat recip = 1.0f / new_alpha;
+          gfloat ratio       = in_alpha / new_alpha;
+          gfloat layer_coeff = 1.0f / in_alpha - 1.0f;
           gint   b;
 
           for (b = RED; b < ALPHA; b++)
-            out[b] = (layer_alpha * (in_alpha * (comp_alpha * comp[b] - layer[b]) + layer[b] - in[b]) + in[b]) * recip;
+            out[b] = ratio * (layer_alpha * (comp_alpha * comp[b] + layer_coeff * layer[b] - in[b]) + in[b]);
         }
 
       out[ALPHA] = new_alpha;
