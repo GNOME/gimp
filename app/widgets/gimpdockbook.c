@@ -29,6 +29,9 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpmarshal.h"
 
@@ -177,6 +180,10 @@ static void         gimp_dockbook_tab_locked_notify           (GimpDockable   *d
 static void         gimp_dockbook_help_func                   (const gchar    *help_id,
                                                                gpointer        help_data);
 static const gchar *gimp_dockbook_get_tab_style_name          (GimpTabStyle    tab_style);
+
+static void         gimp_dockbook_tab_icon_size_notify        (GimpGuiConfig   *config,
+                                                               GParamSpec      *pspec,
+                                                               GimpDockbook    *dockbook);
 
 
 G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
@@ -937,6 +944,10 @@ gimp_dockbook_add (GimpDockbook *dockbook,
                                           position);
 
   gimp_dockbook_update_auto_tab_style (dockbook);
+  g_signal_connect (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
+                    "notify::icon-size",
+                    G_CALLBACK (gimp_dockbook_tab_icon_size_notify),
+                    dockbook);
 
   /* Create the new tab widget, it will get the correct tab style now */
   tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
@@ -1588,11 +1599,36 @@ gimp_dockable_create_event_box_tab_widget (GimpDockable *dockable,
 static GtkIconSize
 gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
 {
-  GtkIconSize tab_size = DEFAULT_TAB_ICON_SIZE;
+  Gimp        *gimp;
+  GimpIconSize size;
+  GtkIconSize  tab_size = DEFAULT_TAB_ICON_SIZE;
 
-  gtk_widget_style_get (GTK_WIDGET (dockbook),
-                        "tab-icon-size", &tab_size,
-                        NULL);
+  gimp = gimp_dock_get_context (dockbook->p->dock)->gimp;
+
+  g_object_get (GIMP_GUI_CONFIG (gimp->config),
+                "icon-size", &size, NULL);
+
+  /* Match GimpIconSize with GtkIconSize. */
+  switch (size)
+    {
+    case GIMP_ICON_SIZE_SMALL:
+    case GIMP_ICON_SIZE_MEDIUM:
+      tab_size = GTK_ICON_SIZE_MENU;
+      break;
+    case GIMP_ICON_SIZE_LARGE:
+      tab_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+      break;
+    case GIMP_ICON_SIZE_HUGE:
+      tab_size = GTK_ICON_SIZE_DND;
+      break;
+    default:
+      /* GIMP_ICON_SIZE_DEFAULT:
+       * let's use the size set by the theme. */
+      gtk_widget_style_get (GTK_WIDGET (dockbook),
+                            "tab-icon-size", &tab_size,
+                            NULL);
+      break;
+    }
 
   return tab_size;
 }
@@ -1676,4 +1712,12 @@ gimp_dockbook_get_tab_style_name (GimpTabStyle tab_style)
 {
   return g_enum_get_value (g_type_class_peek (GIMP_TYPE_TAB_STYLE),
                            tab_style)->value_name;
+}
+
+static void
+gimp_dockbook_tab_icon_size_notify (GimpGuiConfig *config,
+                                    GParamSpec    *pspec,
+                                    GimpDockbook  *dockbook)
+{
+  gimp_dockbook_recreate_tab_widgets (dockbook, TRUE);
 }
