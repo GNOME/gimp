@@ -320,11 +320,11 @@ gimp_tiling_update_strokes (GimpSymmetry *sym,
   height = gimp_item_get_height (GIMP_ITEM (drawable));
 
   if (origin->x > 0 && tiling->max_x == 0)
-    startx = origin->x - tiling->interval_x * (gint) (origin->x / tiling->interval_x + 1);
+    startx -= tiling->interval_x * (gint) (origin->x / tiling->interval_x + 1);
 
   if (origin->y > 0 && tiling->max_y == 0)
     {
-      starty = origin->y - tiling->interval_y * (gint) (origin->y / tiling->interval_y + 1);
+      starty -= tiling->interval_y * (gint) (origin->y / tiling->interval_y + 1);
 
       if (tiling->shift > 0.0)
         startx -= tiling->shift * (gint) (origin->y / tiling->interval_y + 1);
