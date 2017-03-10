@@ -747,7 +747,7 @@ package Gimp::CodeGen::enums;
 			  GIMP_LAYER_MODE_LUMA_DARKEN_ONLY
 			  GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY
 			  GIMP_LAYER_MODE_LUMINANCE
-			  GIMP_LAYER_MODE_COLOR_ERASE) ],
+			  GIMP_LAYER_MODE_COLOR_ERASE GIMP_LAYER_MODE_ERASE) ],
 	  mapping => { GIMP_LAYER_MODE_NORMAL_LEGACY => '0',
 		       GIMP_LAYER_MODE_DISSOLVE => '1',
 		       GIMP_LAYER_MODE_BEHIND_LEGACY => '2',
@@ -805,7 +805,8 @@ package Gimp::CodeGen::enums;
 		       GIMP_LAYER_MODE_LUMA_DARKEN_ONLY => '54',
 		       GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY => '55',
 		       GIMP_LAYER_MODE_LUMINANCE => '56',
-		       GIMP_LAYER_MODE_COLOR_ERASE => '57' }
+		       GIMP_LAYER_MODE_COLOR_ERASE => '57',
+		       GIMP_LAYER_MODE_ERASE => '58' }
 	},
     GimpConvertDitherType =>
 	{ contig => 1,

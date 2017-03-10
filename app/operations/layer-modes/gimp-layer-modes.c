@@ -821,7 +821,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .function             = gimp_operation_erase_process,
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
-    .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR

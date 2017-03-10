@@ -117,9 +117,9 @@ typedef enum
   GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,  /*< desc="Luma/Luminance lighten only" >*/
   GIMP_LAYER_MODE_LUMINANCE,             /*< desc="Luminance"                >*/
   GIMP_LAYER_MODE_COLOR_ERASE,           /*< desc="Color erase"              >*/
+  GIMP_LAYER_MODE_ERASE,                 /*< desc="Erase"                    >*/
 
   /*  Internal modes, not available to the PDB, must be kept at the end  */
-  GIMP_LAYER_MODE_ERASE,                 /*< pdb-skip, desc="Erase"          >*/
   GIMP_LAYER_MODE_REPLACE,               /*< pdb-skip, desc="Replace"        >*/
   GIMP_LAYER_MODE_ANTI_ERASE,            /*< pdb-skip, desc="Anti erase"     >*/
 

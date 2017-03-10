@@ -2463,11 +2463,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY:
         case GIMP_LAYER_MODE_LUMINANCE:
         case GIMP_LAYER_MODE_COLOR_ERASE:
+        case GIMP_LAYER_MODE_ERASE:
           version = MAX (10, version);
           break;
 
           /*  Just here instead of default so we get compiler warnings  */
-        case GIMP_LAYER_MODE_ERASE:
         case GIMP_LAYER_MODE_REPLACE:
         case GIMP_LAYER_MODE_ANTI_ERASE:
         case GIMP_LAYER_MODE_SEPARATOR:
