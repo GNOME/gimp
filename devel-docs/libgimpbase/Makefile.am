@@ -29,6 +29,7 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 IGNORE_HFILES = \
 	gimpbase.h		\
 	gimpbase-private.h	\
+	gimpcompatenums.h	\
 	gimpprotocol.h		\
 	gimpreloc.h		\
 	gimpwire.h		\

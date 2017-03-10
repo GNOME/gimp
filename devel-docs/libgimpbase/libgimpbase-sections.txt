@@ -27,6 +27,7 @@ GimpChannelType
 GimpCheckSize
 GimpCheckType
 GimpCloneType
+GimpColorTag
 GimpComponentType
 GimpConvertPaletteType
 GimpConvolveType
@@ -83,6 +84,7 @@ GIMP_TYPE_CHANNEL_TYPE
 GIMP_TYPE_CHECK_SIZE
 GIMP_TYPE_CHECK_TYPE
 GIMP_TYPE_CLONE_TYPE
+GIMP_TYPE_COLOR_TAG
 GIMP_TYPE_COMPONENT_TYPE
 GIMP_TYPE_CONVERT_PALETTE_TYPE
 GIMP_TYPE_CONVOLVE_TYPE
@@ -154,6 +156,7 @@ gimp_channel_type_get_type
 gimp_check_size_get_type
 gimp_check_type_get_type
 gimp_clone_type_get_type
+gimp_color_tag_get_type
 gimp_desaturate_mode_get_type
 gimp_dodge_burn_type_get_type
 gimp_foreground_extract_mode_get_type
@@ -269,6 +272,14 @@ gimp_metadata_set_resolution
 gimp_metadata_get_colorspace
 gimp_metadata_set_colorspace
 gimp_metadata_is_tag_supported
+<SUBSECTION Standard>
+GIMP_IS_METADATA
+GIMP_IS_METADATA_CLASS
+GIMP_METADATA
+GIMP_METADATA_CLASS
+GIMP_METADATA_GET_CLASS
+GIMP_TYPE_METADATA
+gimp_metadata_get_type
 </SECTION>
 
 <SECTION>
@@ -343,6 +354,7 @@ gimp_unit_get_deletion_flag
 gimp_unit_set_deletion_flag
 gimp_unit_get_factor
 gimp_unit_get_digits
+gimp_unit_get_scaled_digits
 gimp_unit_get_identifier
 gimp_unit_get_symbol
 gimp_unit_get_abbreviation

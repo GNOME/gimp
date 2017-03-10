@@ -40,6 +40,7 @@ gimp_matrix3_is_identity
 gimp_matrix3_is_diagonal
 gimp_matrix3_is_affine
 gimp_matrix3_is_simple
+gimp_matrix3_will_explode
 gimp_matrix4_to_deg
 GIMP_TYPE_MATRIX2
 GIMP_TYPE_PARAM_MATRIX2
