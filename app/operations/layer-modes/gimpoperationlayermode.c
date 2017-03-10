@@ -2241,6 +2241,35 @@ blendfun_color_erase (const float *dest,
 }
 
 static inline void
+blendfun_mono_mix (const float *dest,
+                   const float *src,
+                   float       *out,
+                   int          samples)
+{
+  while (samples--)
+    {
+      if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
+        {
+          gfloat value = 0.0f;
+          gint   c;
+
+          for (c = 0; c < 3; c++)
+            {
+              value += dest[c] * src[c];
+            }
+
+          out[RED] = out[GREEN] = out[BLUE] = value;
+        }
+
+      out[ALPHA] = src[ALPHA];
+
+      out  += 4;
+      src  += 4;
+      dest += 4;
+    }
+}
+
+static inline void
 blendfun_dummy (const float *dest,
                 const float *src,
                 float       *out,
@@ -2289,6 +2318,7 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_LINEAR_BURN:    return blendfun_linear_burn;
     case GIMP_LAYER_MODE_COLOR_ERASE_LEGACY:
     case GIMP_LAYER_MODE_COLOR_ERASE:    return blendfun_color_erase;
+    case GIMP_LAYER_MODE_MONO_MIX:       return blendfun_mono_mix;
 
     case GIMP_LAYER_MODE_DISSOLVE:
     case GIMP_LAYER_MODE_BEHIND_LEGACY:

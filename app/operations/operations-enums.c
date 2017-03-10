@@ -140,6 +140,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_LUMINANCE, "GIMP_LAYER_MODE_LUMINANCE", "luminance" },
     { GIMP_LAYER_MODE_COLOR_ERASE, "GIMP_LAYER_MODE_COLOR_ERASE", "color-erase" },
     { GIMP_LAYER_MODE_ERASE, "GIMP_LAYER_MODE_ERASE", "erase" },
+    { GIMP_LAYER_MODE_MONO_MIX, "GIMP_LAYER_MODE_MONO_MIX", "mono-mix" },
     { GIMP_LAYER_MODE_REPLACE, "GIMP_LAYER_MODE_REPLACE", "replace" },
     { GIMP_LAYER_MODE_ANTI_ERASE, "GIMP_LAYER_MODE_ANTI_ERASE", "anti-erase" },
     { 0, NULL, NULL }
@@ -206,6 +207,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_LUMINANCE, NC_("layer-mode", "Luminance"), NULL },
     { GIMP_LAYER_MODE_COLOR_ERASE, NC_("layer-mode", "Color erase"), NULL },
     { GIMP_LAYER_MODE_ERASE, NC_("layer-mode", "Erase"), NULL },
+    { GIMP_LAYER_MODE_MONO_MIX, NC_("layer-mode", "Mono mix"), NULL },
     { GIMP_LAYER_MODE_REPLACE, NC_("layer-mode", "Replace"), NULL },
     { GIMP_LAYER_MODE_ANTI_ERASE, NC_("layer-mode", "Anti erase"), NULL },
     { 0, NULL, NULL }

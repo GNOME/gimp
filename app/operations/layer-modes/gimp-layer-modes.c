@@ -825,6 +825,17 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
+  { GIMP_LAYER_MODE_MONO_MIX,
+
+    .op_name              = "gimp:layer-mode",
+    .function             = gimp_operation_layer_mode_process_pixels,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+  },
+
   { GIMP_LAYER_MODE_REPLACE,
 
     .op_name              = "gimp:replace",
@@ -909,7 +920,8 @@ static const GimpLayerMode layer_mode_group_default[] =
   GIMP_LAYER_MODE_SEPARATOR,
 
   GIMP_LAYER_MODE_EXCLUSION,
-  GIMP_LAYER_MODE_LINEAR_BURN
+  GIMP_LAYER_MODE_LINEAR_BURN,
+  GIMP_LAYER_MODE_MONO_MIX
 };
 
 static const GimpLayerMode layer_mode_group_legacy[] =
@@ -1085,6 +1097,10 @@ static const GimpLayerMode layer_mode_groups[][2] =
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_ERASE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
+  },
+
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_MONO_MIX,
     [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 
