@@ -150,6 +150,7 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
                             "has-number",     TRUE,
                             "number",         i + 1,
                             "has-color-area", TRUE,
+                            "has-coords",     TRUE,
                             "sensitive",      FALSE,
                             NULL);
 
@@ -506,7 +507,8 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
                                      &color))
             {
               gimp_color_frame_set_color (color_frame, FALSE,
-                                          format, pixel, &color);
+                                          format, pixel, &color,
+                                          x, y);
             }
           else
             {

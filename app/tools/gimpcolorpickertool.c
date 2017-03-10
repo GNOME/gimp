@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -80,7 +81,9 @@ static void   gimp_color_picker_tool_info_update   (GimpColorPickerTool *picker_
                                                     gboolean             sample_average,
                                                     const Babl          *sample_format,
                                                     gpointer             pixel,
-                                                    const GimpRGB       *color);
+                                                    const GimpRGB       *color,
+                                                    gint                 x,
+                                                    gint                 y);
 
 
 G_DEFINE_TYPE (GimpColorPickerTool, gimp_color_picker_tool,
@@ -313,7 +316,9 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
     {
       gimp_color_picker_tool_info_update (picker_tool,
                                           GIMP_COLOR_OPTIONS (options)->sample_average,
-                                          sample_format, pixel, color);
+                                          sample_format, pixel, color,
+                                          (gint) floor (x),
+                                          (gint) floor (y));
     }
 
   GIMP_COLOR_TOOL_CLASS (parent_class)->picked (color_tool, pick_state,
@@ -368,6 +373,8 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
                                      context->gimp->config->color_management);
   gimp_color_frame_set_mode (GIMP_COLOR_FRAME (picker_tool->color_frame1),
                              GIMP_COLOR_FRAME_MODE_PIXEL);
+  gimp_color_frame_set_has_coords (GIMP_COLOR_FRAME (picker_tool->color_frame1),
+                                   TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), picker_tool->color_frame1,
                       FALSE, FALSE, 0);
   gtk_widget_show (picker_tool->color_frame1);
@@ -417,7 +424,9 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
                                     gboolean             sample_average,
                                     const Babl          *sample_format,
                                     gpointer             pixel,
-                                    const GimpRGB       *color)
+                                    const GimpRGB       *color,
+                                    gint                 x,
+                                    gint                 y)
 {
   GimpTool *tool = GIMP_TOOL (picker_tool);
 
@@ -430,9 +439,11 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
                              color);
 
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame1),
-                              sample_average, sample_format, pixel, color);
+                              sample_average, sample_format, pixel, color,
+                              x, y);
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame2),
-                              sample_average, sample_format, pixel, color);
+                              sample_average, sample_format, pixel, color,
+                              x, y);
 
   gimp_tool_gui_show (picker_tool->gui);
 }

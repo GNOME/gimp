@@ -754,6 +754,8 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
   GimpRGB       color;
   gdouble       xres;
   gdouble       yres;
+  gint          int_x;
+  gint          int_y;
 
   g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -782,17 +784,21 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
   gtk_label_set_text (GTK_LABEL (view->priv->unit_y_label), buf);
   gimp_cursor_view_set_label_italic (view->priv->unit_y_label, ! in_image);
 
+  int_x = (gint) floor (x);
+  int_y = (gint) floor (y);
+
   if (gimp_image_pick_color (image, NULL,
-                             (gint) floor (x),
-                             (gint) floor (y),
+                             int_x, int_y,
                              view->priv->sample_merged,
                              FALSE, 0.0,
                              &sample_format, pixel, &color))
     {
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                                  FALSE, sample_format, pixel, &color);
+                                  FALSE, sample_format, pixel, &color,
+                                  int_x, int_y);
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                                  FALSE, sample_format, pixel, &color);
+                                  FALSE, sample_format, pixel, &color,
+                                  int_x, int_y);
     }
   else
     {

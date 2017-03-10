@@ -41,6 +41,8 @@ struct _GimpColorFrame
   const Babl         *sample_format;
   guchar              pixel[32];
   GimpRGB             color;
+  gint                x;
+  gint                y;
 
   GimpColorFrameMode  frame_mode;
 
@@ -48,9 +50,12 @@ struct _GimpColorFrame
   gint                number;
 
   gboolean            has_color_area;
+  gboolean            has_coords;
 
   GtkWidget          *menu;
   GtkWidget          *color_area;
+  GtkWidget          *coords_box;
+  GtkWidget          *coords_label;
   GtkWidget          *name_labels[GIMP_COLOR_FRAME_ROWS];
   GtkWidget          *value_labels[GIMP_COLOR_FRAME_ROWS];
 
@@ -72,20 +77,24 @@ GtkWidget * gimp_color_frame_new                (void);
 
 void        gimp_color_frame_set_mode           (GimpColorFrame     *frame,
                                                  GimpColorFrameMode  mode);
+
 void        gimp_color_frame_set_has_number     (GimpColorFrame     *frame,
                                                  gboolean            has_number);
 void        gimp_color_frame_set_number         (GimpColorFrame     *frame,
                                                  gint                number);
 
-
 void        gimp_color_frame_set_has_color_area (GimpColorFrame     *frame,
                                                  gboolean            has_color_area);
+void        gimp_color_frame_set_has_coords     (GimpColorFrame     *frame,
+                                                 gboolean            has_coords);
 
 void        gimp_color_frame_set_color          (GimpColorFrame     *frame,
                                                  gboolean            sample_average,
                                                  const Babl         *format,
                                                  gpointer            pixel,
-                                                 const GimpRGB      *color);
+                                                 const GimpRGB      *color,
+                                                 gint                x,
+                                                 gint                y);
 void        gimp_color_frame_set_invalid        (GimpColorFrame     *frame);
 
 void        gimp_color_frame_set_color_config   (GimpColorFrame     *frame,
