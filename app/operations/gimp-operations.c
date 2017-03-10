@@ -91,6 +91,7 @@
 #include "layer-modes/gimpoperationmerge.h"
 #include "layer-modes/gimpoperationnormal.h"
 #include "layer-modes/gimpoperationreplace.h"
+#include "layer-modes/gimpoperationsplit.h"
 
 
 void
@@ -149,6 +150,7 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_GRAIN_MERGE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_ERASE);
   g_type_class_ref (GIMP_TYPE_OPERATION_MERGE);
+  g_type_class_ref (GIMP_TYPE_OPERATION_SPLIT);
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);
 

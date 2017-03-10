@@ -2344,6 +2344,7 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY:
     case GIMP_LAYER_MODE_ERASE:
     case GIMP_LAYER_MODE_MERGE:
+    case GIMP_LAYER_MODE_SPLIT:
     case GIMP_LAYER_MODE_REPLACE:
     case GIMP_LAYER_MODE_ANTI_ERASE:
     case GIMP_LAYER_MODE_SEPARATOR: /* to stop GCC from complaining :P */

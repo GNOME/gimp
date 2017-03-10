@@ -51,6 +51,7 @@
 #include "gimpoperationmerge.h"
 #include "gimpoperationnormal.h"
 #include "gimpoperationreplace.h"
+#include "gimpoperationsplit.h"
 
 #include "gimp-layer-modes.h"
 
@@ -848,6 +849,18 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
   },
 
+  { GIMP_LAYER_MODE_SPLIT,
+
+    .op_name              = "gimp:split",
+    .function             = gimp_operation_split_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
+    .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP
+  },
+
   { GIMP_LAYER_MODE_REPLACE,
 
     .op_name              = "gimp:replace",
@@ -881,6 +894,7 @@ static const GimpLayerMode layer_mode_group_default[] =
   GIMP_LAYER_MODE_ERASE,
   GIMP_LAYER_MODE_ANTI_ERASE,
   GIMP_LAYER_MODE_MERGE,
+  GIMP_LAYER_MODE_SPLIT,
 
   GIMP_LAYER_MODE_SEPARATOR,
 
@@ -1118,6 +1132,10 @@ static const GimpLayerMode layer_mode_groups[][2] =
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_MERGE,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
+  },
+
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_SPLIT,
     [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
   },
 

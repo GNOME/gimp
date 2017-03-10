@@ -142,6 +142,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_ERASE, "GIMP_LAYER_MODE_ERASE", "erase" },
     { GIMP_LAYER_MODE_MONO_MIX, "GIMP_LAYER_MODE_MONO_MIX", "mono-mix" },
     { GIMP_LAYER_MODE_MERGE, "GIMP_LAYER_MODE_MERGE", "merge" },
+    { GIMP_LAYER_MODE_SPLIT, "GIMP_LAYER_MODE_SPLIT", "split" },
     { GIMP_LAYER_MODE_REPLACE, "GIMP_LAYER_MODE_REPLACE", "replace" },
     { GIMP_LAYER_MODE_ANTI_ERASE, "GIMP_LAYER_MODE_ANTI_ERASE", "anti-erase" },
     { 0, NULL, NULL }
@@ -210,6 +211,7 @@ gimp_layer_mode_get_type (void)
     { GIMP_LAYER_MODE_ERASE, NC_("layer-mode", "Erase"), NULL },
     { GIMP_LAYER_MODE_MONO_MIX, NC_("layer-mode", "Mono mix"), NULL },
     { GIMP_LAYER_MODE_MERGE, NC_("layer-mode", "Merge"), NULL },
+    { GIMP_LAYER_MODE_SPLIT, NC_("layer-mode", "Split"), NULL },
     { GIMP_LAYER_MODE_REPLACE, NC_("layer-mode", "Replace"), NULL },
     { GIMP_LAYER_MODE_ANTI_ERASE, NC_("layer-mode", "Anti erase"), NULL },
     { 0, NULL, NULL }
