@@ -408,8 +408,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE  |
                             GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
-    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
-                            GIMP_LAYER_MODE_CONTEXT_FADE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
@@ -807,8 +806,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
     .flags                = GIMP_LAYER_MODE_FLAG_SUBTRACTIVE,
-    .context              = GIMP_LAYER_MODE_CONTEXT_PAINT |
-                            GIMP_LAYER_MODE_CONTEXT_FADE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP,
     .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
