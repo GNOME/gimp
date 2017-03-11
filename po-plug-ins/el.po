@@ -8,10 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
-"ywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-02-18 01:02+0000\n"
-"PO-Revision-Date: 2017-02-18 09:20+0300\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
+"eywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-03-10 03:36+0000\n"
+"PO-Revision-Date: 2017-03-11 11:45+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -52,7 +52,8 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:934 ../plug-ins/common/file-gif-save.c:1089
-#: ../plug-ins/common/file-pdf-load.c:1089 ../plug-ins/common/file-ps.c:3421
+#: ../plug-ins/common/file-pdf-load.c:1089
+#: ../plug-ins/common/file-pdf-save.c:930 ../plug-ins/common/file-ps.c:3421
 #: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/file-svg.c:726
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
@@ -76,6 +77,7 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1679
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:761
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1116
 #: ../plug-ins/gfig/gfig-dialog.c:290 ../plug-ins/gfig/gfig-dialog.c:638
 #: ../plug-ins/gfig/gfig-dialog.c:687 ../plug-ins/gimpressionist/brush.c:256
@@ -84,6 +86,7 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/gimpressionist/presets.c:642
 #: ../plug-ins/gimpressionist/sizemap.c:401
 #: ../plug-ins/gradient-flare/gradient-flare.c:2360
+#: ../plug-ins/gradient-flare/gradient-flare.c:3210
 #: ../plug-ins/gradient-flare/gradient-flare.c:3323
 #: ../plug-ins/ifs-compose/ifs-compose.c:763
 #: ../plug-ins/ifs-compose/ifs-compose.c:2530
@@ -97,7 +100,6 @@ msgstr "Στοίχιση ορατών στρώσεων"
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:426
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
-#| msgid "_Advanced"
 msgid "_Cancel"
 msgstr "Α_κύρωση"
 
@@ -444,7 +446,7 @@ msgstr "Κά_θετος"
 #: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:444 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:671
+#: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1162
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -829,6 +831,45 @@ msgid "Random Seed"
 msgstr "Τυχαίος σπόρος"
 
 #
+#. The Load button
+#: ../plug-ins/common/cml-explorer.c:1269
+#: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
+#: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:935
+#: ../plug-ins/common/file-raw-data.c:1555 ../plug-ins/common/qbist.c:724
+#: ../plug-ins/common/qbist.c:888 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1150
+#: ../plug-ins/file-fli/fli-gimp.c:870 ../plug-ins/flame/flame.c:475
+#: ../plug-ins/flame/flame.c:1045
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:805
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1642
+#: ../plug-ins/gfig/gfig-dialog.c:639 ../plug-ins/ifs-compose/ifs-compose.c:760
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
+#: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
+#: ../plug-ins/lighting/lighting-ui.c:600
+#: ../plug-ins/lighting/lighting-ui.c:1307
+msgid "_Open"
+msgstr "Ά_νοιγμα"
+
+#
+#. The Save button
+#: ../plug-ins/common/cml-explorer.c:1277
+#: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:1500
+#: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:929
+#: ../plug-ins/common/qbist.c:766 ../plug-ins/common/qbist.c:896
+#: ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:475
+#: ../plug-ins/flame/flame.c:1053
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:822
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1680
+#: ../plug-ins/gfig/gfig-dialog.c:688 ../plug-ins/gimpressionist/brush.c:257
+#: ../plug-ins/ifs-compose/ifs-compose.c:761
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
+#: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:593
+#: ../plug-ins/lighting/lighting-ui.c:1163
+msgid "_Save"
+msgstr "Απο_θήκευση"
+
+#
 #: ../plug-ins/common/cml-explorer.c:1296 ../plug-ins/common/filter-pack.c:700
 #: ../plug-ins/common/van-gogh-lic.c:674
 msgid "_Hue"
@@ -997,9 +1038,9 @@ msgstr "Γράφημα των τρεχουσών ρυθμίσεων"
 #: ../plug-ins/common/procedure-browser.c:129
 #: ../plug-ins/common/sample-colorize.c:1331
 #: ../plug-ins/common/unit-editor.c:417 ../plug-ins/gfig/gfig-dialog.c:291
-#: ../plug-ins/gfig/gfig-dialog.c:1245 ../plug-ins/gfig/gfig-dialog.c:1393
+#: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/gfig/gfig-dialog.c:1245
+#: ../plug-ins/gfig/gfig-dialog.c:1393
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
-#| msgid "Closed"
 msgid "_Close"
 msgstr "_Κλείσιμο"
 
@@ -1011,19 +1052,6 @@ msgstr "Προειδοποίηση: η πηγή και ο προορισμός �
 msgid "Save CML Explorer Parameters"
 msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 
-#
-#: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:2101
-#: ../plug-ins/common/qbist.c:766 ../plug-ins/common/sphere-designer.c:2210
-#: ../plug-ins/flame/flame.c:475
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1680
-#: ../plug-ins/gfig/gfig-dialog.c:688 ../plug-ins/gimpressionist/brush.c:257
-#: ../plug-ins/ifs-compose/ifs-compose.c:761
-#: ../plug-ins/ifs-compose/ifs-compose.c:2531
-#: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:1163
-#| msgid "Save"
-msgid "_Save"
-msgstr "Απο_θήκευση"
-
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:736
@@ -1033,7 +1061,7 @@ msgstr "Απο_θήκευση"
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1475
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1079
+#: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1574
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
@@ -1051,21 +1079,6 @@ msgstr "Οι παράμετροι αποθηκεύτηκαν σε '%s'"
 #: ../plug-ins/common/cml-explorer.c:2115
 msgid "Load CML Explorer Parameters"
 msgstr "Φόρτωση παραμέτρων περιηγητή CML"
-
-#
-#: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:2066
-#: ../plug-ins/common/file-cel.c:935 ../plug-ins/common/file-raw-data.c:1555
-#: ../plug-ins/common/qbist.c:724 ../plug-ins/common/sphere-designer.c:2210
-#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
-#: ../plug-ins/flame/flame.c:475
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1642
-#: ../plug-ins/gfig/gfig-dialog.c:639 ../plug-ins/ifs-compose/ifs-compose.c:760
-#: ../plug-ins/ifs-compose/ifs-compose.c:2568
-#: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
-#: ../plug-ins/lighting/lighting-ui.c:1307
-#| msgid "Open"
-msgid "_Open"
-msgstr "Ά_νοιγμα"
 
 #: ../plug-ins/common/cml-explorer.c:2211 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
@@ -1241,13 +1254,16 @@ msgid "Rearrange Colormap"
 msgstr "Αναδιάταξη του χρωματολογίου"
 
 #
-#: ../plug-ins/common/colormap-remap.c:620
+#. The Reset button
+#: ../plug-ins/common/colormap-remap.c:620 ../plug-ins/common/curve-bend.c:1471
 #: ../plug-ins/common/filter-pack.c:1205
 #: ../plug-ins/common/sample-colorize.c:1329
 #: ../plug-ins/common/sphere-designer.c:2560
+#: ../plug-ins/common/tile-small.c:452
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:813
+#: ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:762
 #: ../plug-ins/selection-to-path/selection-to-path.c:308
-#| msgid "_Presets"
 msgid "_Reset"
 msgstr "Επανα_φορά"
 
@@ -1681,7 +1697,7 @@ msgstr "Όριο καμπύλης"
 msgid "_Upper"
 msgstr "_Πάνω"
 
-#: ../plug-ins/common/curve-bend.c:1404
+#: ../plug-ins/common/curve-bend.c:1404 ../plug-ins/gfig/gfig-dialog.c:905
 msgid "_Lower"
 msgstr "_Κατω"
 
@@ -1701,6 +1717,7 @@ msgstr "_Ελεύθερη"
 #
 #. The Copy button
 #: ../plug-ins/common/curve-bend.c:1434
+#: ../plug-ins/gradient-flare/gradient-flare.c:2928
 msgid "_Copy"
 msgstr "_Αντιγραφή"
 
@@ -2230,7 +2247,7 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
-#: ../plug-ins/common/file-pnm.c:564 ../plug-ins/common/file-ps.c:1092
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:1079 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
@@ -2318,12 +2335,12 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1295
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:534
 #: ../plug-ins/common/file-pcx.c:662 ../plug-ins/common/file-pix.c:536
-#: ../plug-ins/common/file-png.c:1553 ../plug-ins/common/file-pnm.c:1208
+#: ../plug-ins/common/file-png.c:1553 ../plug-ins/common/file-pnm.c:1245
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1073
+#: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1075
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1567
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
@@ -3093,7 +3110,7 @@ msgstr "Διαστάσεις εικόνας υπερβολικά μεγάλες:
 msgid "Unusual PCX flavour, giving up"
 msgstr "Ασυνήθιστη παραλλαγή PCX, εγκατάλειψη"
 
-#: ../plug-ins/common/file-pcx.c:697 ../plug-ins/common/file-pnm.c:1204
+#: ../plug-ins/common/file-pcx.c:697 ../plug-ins/common/file-pnm.c:1241
 msgid "Cannot export images with alpha channel."
 msgstr "Αδυναμία εξαγωγής εικόνων με άλφα κανάλι."
 
@@ -3203,22 +3220,22 @@ msgstr ""
 "τοποθεσία δεν είναι μόνο για ανάγνωση!"
 
 #: ../plug-ins/common/file-pdf-save.c:854
-#: ../plug-ins/common/file-pdf-save.c:976
+#: ../plug-ins/common/file-pdf-save.c:977
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Παράλειψη κρυφών στρώσεων και στρώσεων με μηδενική αδιαφάνεια"
 
 #: ../plug-ins/common/file-pdf-save.c:859
-#: ../plug-ins/common/file-pdf-save.c:981
+#: ../plug-ins/common/file-pdf-save.c:982
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Μετατροπή ψηφιογραφιών σε διανυσματικό γραφικά όπου είναι δυνατό"
 
 #: ../plug-ins/common/file-pdf-save.c:864
-#: ../plug-ins/common/file-pdf-save.c:986
+#: ../plug-ins/common/file-pdf-save.c:987
 msgid "Apply layer masks before saving"
 msgstr "Εφαρμογή μασκών στρώσης πριν την αποθήκευση"
 
 #: ../plug-ins/common/file-pdf-save.c:868
-#: ../plug-ins/common/file-pdf-save.c:990
+#: ../plug-ins/common/file-pdf-save.c:991
 msgid "Keeping the masks will not change the output"
 msgstr "Η διατήρηση των μασκών δεν θα αλλάξει την έξοδο"
 
@@ -3235,29 +3252,29 @@ msgstr "Περιήγηση..."
 msgid "Multipage PDF export"
 msgstr "Εξαγωγή πολλαπλής σελίδας PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:961
+#: ../plug-ins/common/file-pdf-save.c:962
 msgid "Remove the selected pages"
 msgstr "Αφαίρεση των επιλεγμένων σελίδων"
 
-#: ../plug-ins/common/file-pdf-save.c:971
+#: ../plug-ins/common/file-pdf-save.c:972
 msgid "Add this image"
 msgstr "Προσθήκη αυτής της εικόνας"
 
-#: ../plug-ins/common/file-pdf-save.c:1079
-#: ../plug-ins/common/file-pdf-save.c:1147
-#: ../plug-ins/common/file-pdf-save.c:1245 ../plug-ins/common/file-ps.c:1915
+#: ../plug-ins/common/file-pdf-save.c:1080
+#: ../plug-ins/common/file-pdf-save.c:1148
+#: ../plug-ins/common/file-pdf-save.c:1246 ../plug-ins/common/file-ps.c:1915
 #: ../plug-ins/file-tiff/file-tiff-load.c:925
 #, c-format
 msgid "Page %d"
 msgstr "Σελίδα %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1116
+#: ../plug-ins/common/file-pdf-save.c:1117
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 "Σφάλμα! Για να αποθηκευτεί το αρχείο, τουλάχιστον μια εικόνα πρέπει να "
 "προστεθεί!"
 
-#: ../plug-ins/common/file-pdf-save.c:1289
+#: ../plug-ins/common/file-pdf-save.c:1290
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
@@ -3349,95 +3366,95 @@ msgid "Unknown error"
 msgstr "Άγνωστο σφάλμα"
 
 #
-#: ../plug-ins/common/file-pnm.c:264
+#: ../plug-ins/common/file-pnm.c:265
 msgid "PNM Image"
 msgstr "Εικόνα PNM"
 
-#: ../plug-ins/common/file-pnm.c:286
+#: ../plug-ins/common/file-pnm.c:287
 msgid "PNM image"
 msgstr "Εικόνα PNM"
 
 #
-#: ../plug-ins/common/file-pnm.c:298
+#: ../plug-ins/common/file-pnm.c:299
 msgid "PBM image"
 msgstr "Εικόνα PBM"
 
 #
-#: ../plug-ins/common/file-pnm.c:310
+#: ../plug-ins/common/file-pnm.c:311
 msgid "PGM image"
 msgstr "Εικόνα PGM"
 
 #
-#: ../plug-ins/common/file-pnm.c:322
+#: ../plug-ins/common/file-pnm.c:323
 msgid "PPM image"
 msgstr "Εικόνα PPM"
 
-#: ../plug-ins/common/file-pnm.c:334
+#: ../plug-ins/common/file-pnm.c:335
 msgid "PFM image"
 msgstr "Εικόνα PFM"
 
-#: ../plug-ins/common/file-pnm.c:597 ../plug-ins/common/file-pnm.c:620
-#: ../plug-ins/common/file-pnm.c:629 ../plug-ins/common/file-pnm.c:642
-#: ../plug-ins/common/file-pnm.c:654 ../plug-ins/common/file-pnm.c:736
-#: ../plug-ins/common/file-pnm.c:825 ../plug-ins/common/file-pnm.c:920
-#: ../plug-ins/common/file-pnm.c:981
+#: ../plug-ins/common/file-pnm.c:599 ../plug-ins/common/file-pnm.c:622
+#: ../plug-ins/common/file-pnm.c:631 ../plug-ins/common/file-pnm.c:644
+#: ../plug-ins/common/file-pnm.c:657 ../plug-ins/common/file-pnm.c:759
+#: ../plug-ins/common/file-pnm.c:854 ../plug-ins/common/file-pnm.c:939
+#: ../plug-ins/common/file-pnm.c:1000
 msgid "Premature end of file."
 msgstr "Πρόωρο τέλος αρχείου."
 
-#: ../plug-ins/common/file-pnm.c:599
+#: ../plug-ins/common/file-pnm.c:601
 msgid "Invalid file."
 msgstr "Άκυρο αρχείο."
 
-#: ../plug-ins/common/file-pnm.c:614
+#: ../plug-ins/common/file-pnm.c:616
 msgid "File not in a supported format."
 msgstr "Το αρχείο δεν είναι σε υποστηριζόμενη μορφή."
 
-#: ../plug-ins/common/file-pnm.c:623
+#: ../plug-ins/common/file-pnm.c:625
 msgid "Invalid X resolution."
 msgstr "Άκυρη ανάλυση Χ."
 
-#: ../plug-ins/common/file-pnm.c:625
+#: ../plug-ins/common/file-pnm.c:627
 msgid "Image width is larger than GIMP can handle."
 msgstr ""
 "Το πλάτος της εικόνας είναι μεγαλύτερο από αυτό που το GIMP μπορεί να "
 "χειριστεί."
 
-#: ../plug-ins/common/file-pnm.c:632
+#: ../plug-ins/common/file-pnm.c:634
 msgid "Invalid Y resolution."
 msgstr "Άκυρη ανάλυση Υ."
 
-#: ../plug-ins/common/file-pnm.c:634
+#: ../plug-ins/common/file-pnm.c:636
 msgid "Image height is larger than GIMP can handle."
 msgstr ""
 "Το ύψος της εικόνας είναι μεγαλύτερο από αυτό που το GIMP μπορεί να "
 "χειριστεί."
 
-#: ../plug-ins/common/file-pnm.c:646
+#: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
 msgstr "Συντελεστής κλίμακας ανυπόστατος."
 
-#: ../plug-ins/common/file-pnm.c:648
+#: ../plug-ins/common/file-pnm.c:650
 msgid "Unsupported scale factor."
 msgstr "Μη υποστηριζόμενος συντελεστής κλίμακας."
 
-#: ../plug-ins/common/file-pnm.c:658
+#: ../plug-ins/common/file-pnm.c:661
 msgid "Unsupported maximum value."
 msgstr "Μη υποστηριζόμενη μέγιστη τιμή."
 
-#: ../plug-ins/common/file-pnm.c:1520
+#: ../plug-ins/common/file-pnm.c:1601
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1523
+#: ../plug-ins/common/file-pnm.c:1604
 msgid "Data formatting"
 msgstr "Μορφοποίηση δεδομένων"
 
-#: ../plug-ins/common/file-pnm.c:1527
+#: ../plug-ins/common/file-pnm.c:1608
 msgid "Raw"
 msgstr "Ακατέργαστο"
 
-#: ../plug-ins/common/file-pnm.c:1528
+#: ../plug-ins/common/file-pnm.c:1609
 msgid "ASCII"
 msgstr "ASCII"
 
@@ -3517,7 +3534,7 @@ msgstr "Χρωματισμός"
 msgid "B/W"
 msgstr "Ασπρόμαυρο"
 
-#: ../plug-ins/common/file-ps.c:3562 ../plug-ins/imagemap/imap_menu.c:212
+#: ../plug-ins/common/file-ps.c:3562 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Γκρι"
 
@@ -3525,7 +3542,7 @@ msgstr "Γκρι"
 #: ../plug-ins/common/file-ps.c:3563 ../plug-ins/common/file-xpm.c:480
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
-#: ../plug-ins/imagemap/imap_menu.c:211
+#: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Χρώμα"
 
@@ -4473,6 +4490,15 @@ msgstr "Διαθέσιμες εικόνες:"
 msgid "On film:"
 msgstr "Σε ταινία:"
 
+#: ../plug-ins/common/film.c:931 ../plug-ins/common/unit-editor.c:210
+msgid "_Add"
+msgstr "_Πρόσθεση"
+
+#
+#: ../plug-ins/common/film.c:931 ../plug-ins/imagemap/imap_polygon.c:530
+msgid "_Remove"
+msgstr "Αφαί_ρεση"
+
 #. Create selection
 #: ../plug-ins/common/film.c:966 ../plug-ins/imagemap/imap_selection.c:338
 #: ../plug-ins/selection-to-path/selection-to-path.c:437
@@ -4572,6 +4598,10 @@ msgstr "Διάκε_νο οπής:"
 #: ../plug-ins/common/film.c:1226
 msgid "_Number height:"
 msgstr "Ύψος _αριθμού:"
+
+#: ../plug-ins/common/film.c:1239
+msgid "Re_set"
+msgstr "Επανα_φορά"
 
 #
 #. These values are translated for the GUI but also used internally
@@ -4855,7 +4885,7 @@ msgid "Drawing grid"
 msgstr "Πλέγμα σχεδίασης"
 
 #: ../plug-ins/common/grid.c:642 ../plug-ins/gfig/gfig-dialog.c:1390
-#: ../plug-ins/imagemap/imap_menu.c:207
+#: ../plug-ins/imagemap/imap_menu.c:223
 msgid "Grid"
 msgstr "Πλέγμα"
 
@@ -5468,6 +5498,14 @@ msgstr "Αποθήκευση ως αρχείου QBE"
 msgid "G-Qbist"
 msgstr "G-Qbist"
 
+#
+#: ../plug-ins/common/qbist.c:880
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:690
+#: ../plug-ins/gfig/gfig-dialog.c:885
+#: ../plug-ins/ifs-compose/ifs-compose.c:1035
+msgid "_Undo"
+msgstr "Αναί_ρεση"
+
 #: ../plug-ins/common/ripple.c:126
 msgid "Displace pixels in a ripple pattern"
 msgstr "Μετατόπιση εικονοστοιχείων σε ένα μοτίβο κυματισμών"
@@ -5548,10 +5586,12 @@ msgstr "Λή_ψη χρωμάτων δείγματος"
 
 #
 #: ../plug-ins/common/sample-colorize.c:1332
+#: ../plug-ins/common/tile-small.c:561
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1070
 #: ../plug-ins/gimpressionist/orientmap.c:527
+#: ../plug-ins/gimpressionist/presets.c:1060
 #: ../plug-ins/gimpressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
-#| msgid "Apply"
 msgid "_Apply"
 msgstr "Ε_φαρμογή"
 
@@ -5895,6 +5935,28 @@ msgstr "Αποθήκευση αρχείου"
 msgid "Sphere Designer"
 msgstr "Σχεδιαστής σφαίρας"
 
+#: ../plug-ins/common/sphere-designer.c:2668
+#: ../plug-ins/gradient-flare/gradient-flare.c:2926
+#: ../plug-ins/ifs-compose/ifs-compose.c:1027
+msgid "_New"
+msgstr "_Νέο"
+
+#: ../plug-ins/common/sphere-designer.c:2674
+msgid "D_uplicate"
+msgstr "Διπ_λότυπο"
+
+#
+#: ../plug-ins/common/sphere-designer.c:2680
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:761
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1082
+#: ../plug-ins/gimpressionist/presets.c:1067
+#: ../plug-ins/gradient-flare/gradient-flare.c:2929
+#: ../plug-ins/gradient-flare/gradient-flare.c:3210
+#: ../plug-ins/ifs-compose/ifs-compose.c:1031
+#| msgid "Delete"
+msgid "_Delete"
+msgstr "_Διαγραφή"
+
 #: ../plug-ins/common/sphere-designer.c:2690
 msgid "Properties"
 msgstr "Ιδιότητες"
@@ -6189,11 +6251,6 @@ msgstr "Μο_νάδες"
 msgid "Add a New Unit"
 msgstr "Προσθήκη νέας μονάδας"
 
-#: ../plug-ins/common/unit-editor.c:210
-#| msgid "_Additive"
-msgid "_Add"
-msgstr "_Πρόσθεση"
-
 #
 #: ../plug-ins/common/unit-editor.c:234
 msgid "_ID:"
@@ -6235,7 +6292,11 @@ msgstr "Παρακαλώ συμπληρώστε όλα τα πεδία κειμ�
 msgid "Unit Editor"
 msgstr "Επεξεργαστής Μονάδων"
 
+#. destroy model automatically with view
+#. Put buttons in
 #: ../plug-ins/common/unit-editor.c:416
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1058
+#: ../plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "Ανανέ_ωση"
 
@@ -6469,7 +6530,6 @@ msgstr "Αποσύνθεση κυματίδιου"
 
 #
 #: ../plug-ins/common/wavelet-decompose.c:91
-#| msgid "Wavelet-decompose"
 msgid "_Wavelet-decompose..."
 msgstr "Αποσύνθεση _κυματίδιου..."
 
@@ -6564,56 +6624,56 @@ msgstr "Δημιουργία από ιστοσελίδα"
 msgid "Cre_ate"
 msgstr "_Δημιουργία"
 
-#: ../plug-ins/common/web-page.c:263
+#: ../plug-ins/common/web-page.c:264
 msgid "Enter location (URI):"
 msgstr "Εισαγωγή τοποθεσίας (URI):"
 
-#: ../plug-ins/common/web-page.c:286
+#: ../plug-ins/common/web-page.c:287
 msgid "Width (pixels):"
 msgstr "Πλάτος (εικονοστοιχεία):"
 
-#: ../plug-ins/common/web-page.c:307
+#: ../plug-ins/common/web-page.c:308
 msgid "Font size:"
 msgstr "Μέγεθος γραμματοσειράς:"
 
 #
-#: ../plug-ins/common/web-page.c:314
+#: ../plug-ins/common/web-page.c:315
 msgid "Huge"
 msgstr "Τεράστιο"
 
-#: ../plug-ins/common/web-page.c:315
+#: ../plug-ins/common/web-page.c:316
 msgid "Large"
 msgstr "Μεγάλο"
 
-#: ../plug-ins/common/web-page.c:316
+#: ../plug-ins/common/web-page.c:317
 msgctxt "web-page"
 msgid "Default"
 msgstr "Προεπιλογή"
 
-#: ../plug-ins/common/web-page.c:317
+#: ../plug-ins/common/web-page.c:318
 msgid "Small"
 msgstr "Μικρό"
 
-#: ../plug-ins/common/web-page.c:318
+#: ../plug-ins/common/web-page.c:319
 msgid "Tiny"
 msgstr "Μικροσκοπικό"
 
-#: ../plug-ins/common/web-page.c:442
+#: ../plug-ins/common/web-page.c:443
 #, c-format
 msgid "No URL was specified"
 msgstr "Δεν προσδιορίστηκε URL"
 
-#: ../plug-ins/common/web-page.c:509
+#: ../plug-ins/common/web-page.c:510
 #, c-format
 msgid "Downloading webpage '%s'"
 msgstr "Φόρτωση ιστοσελίδας '%s'"
 
-#: ../plug-ins/common/web-page.c:526
+#: ../plug-ins/common/web-page.c:527
 #, c-format
 msgid "Transferring webpage image for '%s'"
 msgstr "Μεταφορά εικόνας ιστοσελίδας για '%s'"
 
-#: ../plug-ins/common/web-page.c:535
+#: ../plug-ins/common/web-page.c:536
 msgid "Webpage"
 msgstr "Ιστοσελίδα"
 
@@ -7779,6 +7839,14 @@ msgstr "Αποθήκευση φλόγας"
 msgid "Flame"
 msgstr "Φλόγα"
 
+#
+#: ../plug-ins/flame/flame.c:1037 ../plug-ins/gimpressionist/orientation.c:197
+#: ../plug-ins/gimpressionist/size.c:202
+#: ../plug-ins/gradient-flare/gradient-flare.c:2927
+#: ../plug-ins/imagemap/imap_menu.c:160
+msgid "_Edit"
+msgstr "_Επεξεργασία"
+
 #: ../plug-ins/flame/flame.c:1068
 msgid "_Rendering"
 msgstr "Α_πόδοση"
@@ -7863,9 +7931,26 @@ msgstr "Εάν ενεργοποιηθεί η προεπισκόπηση θα ξ�
 msgid "R_edraw preview"
 msgstr "Προ_επισκόπηση επανασχεδίασης"
 
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
+#| msgid "Zoom in"
+msgid "Zoom _In"
+msgstr "_Μεγέθυνση"
+
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
+#| msgid "Zoom out"
+msgid "Zoom _Out"
+msgstr "_Σμίκρυνση"
+
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
 msgid "Undo last zoom change"
 msgstr "Αναίρεση αλλαγής τελευταίας εστίασης"
+
+#
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
+#: ../plug-ins/ifs-compose/ifs-compose.c:1039
+#| msgid "Redo"
+msgid "_Redo"
+msgstr "Α_κύρωση αναίρεσης"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:704
 msgid "Redo last zoom change"
@@ -8287,19 +8372,33 @@ msgstr "Αποθήκευση σχεδίου γεωμετρικών σχημάτ�
 msgid "First Gfig"
 msgstr "Πρώτα γεωμετρικά σχήματα"
 
+#: ../plug-ins/gfig/gfig-dialog.c:871 ../plug-ins/imagemap/imap_menu.c:148
+msgid "_Open..."
+msgstr "Άν_οιγμα..."
+
 #
-#: ../plug-ins/gfig/gfig-dialog.c:885
-msgid "_Undo"
-msgstr "Αναί_ρεση"
+#: ../plug-ins/gfig/gfig-dialog.c:875 ../plug-ins/imagemap/imap_menu.c:151
+msgid "_Save..."
+msgstr "Αποθήκευ_ση..."
 
 #
 #: ../plug-ins/gfig/gfig-dialog.c:889
 msgid "_Clear"
 msgstr "Κα_θαρισμός"
 
-#: ../plug-ins/gfig/gfig-dialog.c:893 ../plug-ins/imagemap/imap_menu.c:207
+#: ../plug-ins/gfig/gfig-dialog.c:893 ../plug-ins/imagemap/imap_menu.c:223
 msgid "_Grid"
 msgstr "Πλέ_γμα"
+
+#
+#: ../plug-ins/gfig/gfig-dialog.c:897
+#| msgid "Preferences"
+msgid "_Preferences..."
+msgstr "_Προτιμήσεις..."
+
+#: ../plug-ins/gfig/gfig-dialog.c:901
+msgid "_Raise"
+msgstr "Ανύψ_ωση"
 
 #
 #: ../plug-ins/gfig/gfig-dialog.c:901
@@ -8312,21 +8411,50 @@ msgid "Lower selected object"
 msgstr "Βύθιση επιλεγμένου αντικειμένου"
 
 #: ../plug-ins/gfig/gfig-dialog.c:909
+#| msgid "pixels from _top"
+msgid "Raise to _top"
+msgstr "Ανύψωση στην κορ_υφή"
+
+#: ../plug-ins/gfig/gfig-dialog.c:909
 msgid "Raise selected object to top"
 msgstr "Ανύψωση επιλεγμένου αντικειμένου στην κορυφή"
+
+#
+#: ../plug-ins/gfig/gfig-dialog.c:913
+#| msgid "To _bottom"
+msgid "Lower to _bottom"
+msgstr "Βύθιση στον _πυθμένα"
 
 #
 #: ../plug-ins/gfig/gfig-dialog.c:913
 msgid "Lower selected object to bottom"
 msgstr "Βύθιση επιλεγμένου αντικειμένου στον πυθμένα"
 
+#
+#: ../plug-ins/gfig/gfig-dialog.c:917
+#| msgctxt "search"
+#| msgid "_Previous"
+msgid "_Previous"
+msgstr "_Προηγούμενο"
+
 #: ../plug-ins/gfig/gfig-dialog.c:917
 msgid "Show previous object"
-msgstr "Προβολή προηγούμενου αντικειμένου"
+msgstr "Εμφάνιση προηγούμενου αντικειμένου"
+
+#: ../plug-ins/gfig/gfig-dialog.c:921
+#| msgctxt "search"
+#| msgid "_Next"
+msgid "_Next"
+msgstr "Επόμε_νο"
 
 #: ../plug-ins/gfig/gfig-dialog.c:921
 msgid "Show next object"
-msgstr "Προβολή επόμενου αντικειμένου"
+msgstr "Εμφάνιση επόμενου αντικειμένου"
+
+#: ../plug-ins/gfig/gfig-dialog.c:925
+#| msgid "Show all objects"
+msgid "Show _all"
+msgstr "Εμφάνιση ό_λων"
 
 #: ../plug-ins/gfig/gfig-dialog.c:925 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
@@ -8421,7 +8549,7 @@ msgstr "Προσκήνιο"
 #
 #: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: ../plug-ins/imagemap/imap_menu.c:158
+#: ../plug-ins/imagemap/imap_menu.c:168
 msgid "Copy"
 msgstr "Αντιγραφή"
 
@@ -8458,7 +8586,7 @@ msgstr "Επιθυμητοί τομείς πολικού πλέγματος:"
 msgid "Polar grid radius interval:"
 msgstr "Μεσοδιαστήματα ακτίνας πολικού πλέγματος:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1477 ../plug-ins/imagemap/imap_menu.c:218
+#: ../plug-ins/gfig/gfig-dialog.c:1477 ../plug-ins/imagemap/imap_menu.c:234
 msgid "Rectangle"
 msgstr "Ορθογώνιο"
 
@@ -8601,6 +8729,12 @@ msgstr "Αλλαγή του γάμα (φωτεινότητας) του επιλ�
 #: ../plug-ins/gimpressionist/brush.c:570
 msgid "Select:"
 msgstr "Επιλογή:"
+
+#
+#: ../plug-ins/gimpressionist/brush.c:586
+#| msgid "Save _As..."
+msgid "Save _as"
+msgstr "Αποθήκευση _ως"
 
 #: ../plug-ins/gimpressionist/brush.c:599
 msgid "Aspect ratio:"
@@ -9709,7 +9843,6 @@ msgid "Gradient Flare Editor"
 msgstr "Επεξεργαστής λάμψης διαβάθμισης"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
-#| msgid "Rescan Gradients"
 msgid "_Rescan Gradients"
 msgstr "Ε_πανασάρωση διαβαθμίσεων"
 
@@ -9817,12 +9950,12 @@ msgid "Shape of Second Flares"
 msgstr "Σχήμα των δεύτερων λάμψεων"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3887
-#: ../plug-ins/imagemap/imap_menu.c:220
+#: ../plug-ins/imagemap/imap_menu.c:236
 msgid "Circle"
 msgstr "Κύκλος"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3904
-#: ../plug-ins/imagemap/imap_menu.c:222
+#: ../plug-ins/imagemap/imap_menu.c:238
 msgid "Polygon"
 msgstr "Πολύγωνο"
 
@@ -9897,20 +10030,27 @@ msgstr "Εναλλαγή ορατότητας της πλευρικής γραμ
 msgid "Visit the GIMP documentation website"
 msgstr "Επίσκεψη της ιστοσελίδας τεκμηρίωσης του GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:1148
+#: ../plug-ins/help-browser/dialog.c:1147
 msgid "Find:"
 msgstr "Εύρεση:"
 
 #
-#: ../plug-ins/help-browser/dialog.c:1165
+#: ../plug-ins/help-browser/dialog.c:1164
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Προηγούμενο"
 
-#: ../plug-ins/help-browser/dialog.c:1177
+#: ../plug-ins/help-browser/dialog.c:1176
 msgctxt "search"
 msgid "_Next"
 msgstr "Επόμε_νο"
+
+#
+#: ../plug-ins/help-browser/dialog.c:1188
+#| msgid "_Close"
+msgctxt "search"
+msgid "_Close"
+msgstr "_Κλείσιμο"
 
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -10054,7 +10194,7 @@ msgid "Relative probability:"
 msgstr "Σχετική πιθανότητα:"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1043
-#: ../plug-ins/imagemap/imap_menu.c:161
+#: ../plug-ins/imagemap/imap_menu.c:174
 msgid "Select _All"
 msgstr "Επιλ_ογή Όλων"
 
@@ -10189,18 +10329,18 @@ msgstr "Δημιουργία"
 #
 #: ../plug-ins/imagemap/imap_cmd_cut.c:54
 #: ../plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: ../plug-ins/imagemap/imap_menu.c:157
+#: ../plug-ins/imagemap/imap_menu.c:166
 msgid "Cut"
 msgstr "Αποκοπή"
 
 #
 #: ../plug-ins/imagemap/imap_cmd_delete.c:56
-#: ../plug-ins/imagemap/imap_menu.c:160
+#: ../plug-ins/imagemap/imap_menu.c:172
 msgid "Delete"
 msgstr "Διαγραφή"
 
 #: ../plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: ../plug-ins/imagemap/imap_menu.c:177
+#: ../plug-ins/imagemap/imap_menu.c:193
 msgid "Delete Point"
 msgstr "Διαγραφή σημείου"
 
@@ -10308,14 +10448,14 @@ msgid "Guides"
 msgstr "Οδηγοί"
 
 #: ../plug-ins/imagemap/imap_cmd_insert_point.c:61
-#: ../plug-ins/imagemap/imap_menu.c:176
+#: ../plug-ins/imagemap/imap_menu.c:192
 msgid "Insert Point"
 msgstr "Εισαγωγή σημείου"
 
 #
 #: ../plug-ins/imagemap/imap_cmd_move_down.c:52
 #: ../plug-ins/imagemap/imap_cmd_object_down.c:54
-#: ../plug-ins/imagemap/imap_menu.c:174
+#: ../plug-ins/imagemap/imap_menu.c:190
 msgid "Move Down"
 msgstr "Μετακίνηση Κάτω"
 
@@ -10334,13 +10474,13 @@ msgstr "Μετακίνηση προς τα μπρος"
 
 #: ../plug-ins/imagemap/imap_cmd_move_up.c:52
 #: ../plug-ins/imagemap/imap_cmd_object_up.c:54
-#: ../plug-ins/imagemap/imap_menu.c:173
+#: ../plug-ins/imagemap/imap_menu.c:189
 msgid "Move Up"
 msgstr "Μετακίνηση Επάνω"
 
 #
 #: ../plug-ins/imagemap/imap_cmd_paste.c:50
-#: ../plug-ins/imagemap/imap_menu.c:159
+#: ../plug-ins/imagemap/imap_menu.c:170
 msgid "Paste"
 msgstr "Επικόλληση"
 
@@ -10595,168 +10735,154 @@ msgid "_Redo %s"
 msgstr "Επανεκ_τέλεση %s"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:144
+#: ../plug-ins/imagemap/imap_menu.c:146
 msgid "_File"
 msgstr "_Αρχείο"
 
-#: ../plug-ins/imagemap/imap_menu.c:145
-msgid "_Open..."
-msgstr "Άν_οιγμα..."
-
 #
-#: ../plug-ins/imagemap/imap_menu.c:145
+#: ../plug-ins/imagemap/imap_menu.c:148
 msgid "Open"
 msgstr "Άνοιγμα"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:147
-msgid "_Save..."
-msgstr "Αποθήκευ_ση..."
-
-#
-#: ../plug-ins/imagemap/imap_menu.c:147
+#: ../plug-ins/imagemap/imap_menu.c:151
 msgid "Save"
 msgstr "Αποθήκευση"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:149
+#: ../plug-ins/imagemap/imap_menu.c:154
 msgid "Save _As..."
 msgstr "Αποθήκευση _ως..."
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:154
-msgid "_Edit"
-msgstr "_Επεξεργασία"
-
-#
-#: ../plug-ins/imagemap/imap_menu.c:155
+#: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Undo"
 msgstr "Ακύρωση"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:156
+#: ../plug-ins/imagemap/imap_menu.c:164
 msgid "Redo"
 msgstr "Εκτέλεση Ξανά"
 
-#: ../plug-ins/imagemap/imap_menu.c:162
+#: ../plug-ins/imagemap/imap_menu.c:176
 msgid "D_eselect All"
 msgstr "Απο_επιλογή Όλων"
 
-#: ../plug-ins/imagemap/imap_menu.c:164
+#: ../plug-ins/imagemap/imap_menu.c:179
 msgid "Edit Area _Info..."
 msgstr "Επεξεργασία πληροφορ_ιών περιοχής..."
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:165
+#: ../plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Επεξεργασία πληροφοριών επιλεγμένης περιοχής"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:166
+#: ../plug-ins/imagemap/imap_menu.c:182
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
-#: ../plug-ins/imagemap/imap_menu.c:168
+#: ../plug-ins/imagemap/imap_menu.c:184
 msgid "Move Area to Front"
 msgstr "Μετακίνηση περιοχής προς τα μπρος"
 
-#: ../plug-ins/imagemap/imap_menu.c:170
+#: ../plug-ins/imagemap/imap_menu.c:186
 msgid "Move Area to Bottom"
 msgstr "Μετακίνηση περιοχής στον πυθμένα"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:172
+#: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Delete Area"
 msgstr "Διαγραφή περιοχής"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:179
+#: ../plug-ins/imagemap/imap_menu.c:195
 msgid "_View"
 msgstr "_Προβολή"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:180
+#: ../plug-ins/imagemap/imap_menu.c:196
 msgid "Source..."
 msgstr "Πηγή..."
 
-#: ../plug-ins/imagemap/imap_menu.c:181
+#: ../plug-ins/imagemap/imap_menu.c:197
 msgid "Zoom in"
 msgstr "Μεγέθυνση"
 
-#: ../plug-ins/imagemap/imap_menu.c:182
+#: ../plug-ins/imagemap/imap_menu.c:198
 msgid "Zoom out"
 msgstr "Σμίκρυνση"
 
-#: ../plug-ins/imagemap/imap_menu.c:183
+#: ../plug-ins/imagemap/imap_menu.c:199
 msgid "_Zoom To"
 msgstr "Ε_στίαση σε"
 
-#: ../plug-ins/imagemap/imap_menu.c:185
+#: ../plug-ins/imagemap/imap_menu.c:201
 msgid "_Mapping"
 msgstr "_Χάρτης"
 
-#: ../plug-ins/imagemap/imap_menu.c:186
+#: ../plug-ins/imagemap/imap_menu.c:202
 msgid "Edit Map Info..."
 msgstr "Επεξεργασία πληροφοριών χάρτη..."
 
-#: ../plug-ins/imagemap/imap_menu.c:187
+#: ../plug-ins/imagemap/imap_menu.c:203
 msgid "Edit Map Info"
 msgstr "Επεξεργασία πληροφοριών χάρτη"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:189
+#: ../plug-ins/imagemap/imap_menu.c:205
 msgid "_Tools"
 msgstr "Ε_ργαλεία"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:190
+#: ../plug-ins/imagemap/imap_menu.c:206
 msgid "Grid Settings..."
 msgstr "Ρυθμίσεις πλέγματος..."
 
-#: ../plug-ins/imagemap/imap_menu.c:192
+#: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Use GIMP Guides..."
 msgstr "Χρήση οδηγών GIMP..."
 
-#: ../plug-ins/imagemap/imap_menu.c:194
+#: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
 msgstr "Δημιουργία οδηγών..."
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:197
+#: ../plug-ins/imagemap/imap_menu.c:213
 msgid "_Help"
 msgstr "_Βοήθεια"
 
-#: ../plug-ins/imagemap/imap_menu.c:198
+#: ../plug-ins/imagemap/imap_menu.c:214
 msgid "_Contents"
 msgstr "Περιε_χόμενα"
 
-#: ../plug-ins/imagemap/imap_menu.c:201
+#: ../plug-ins/imagemap/imap_menu.c:217
 msgid "_Zoom"
 msgstr "Ε_στίαση"
 
-#: ../plug-ins/imagemap/imap_menu.c:206
+#: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Area List"
 msgstr "Λίστα περιοχής"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:216
+#: ../plug-ins/imagemap/imap_menu.c:232
 msgid "Arrow"
 msgstr "Βέλος"
 
 #
-#: ../plug-ins/imagemap/imap_menu.c:217
+#: ../plug-ins/imagemap/imap_menu.c:233
 msgid "Select existing area"
 msgstr "Επιλογή υπάρχουσας περιοχής"
 
-#: ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/imagemap/imap_menu.c:235
 msgid "Define Rectangle area"
 msgstr "Καθορισμός περιοχής ορθογωνίου"
 
-#: ../plug-ins/imagemap/imap_menu.c:221
+#: ../plug-ins/imagemap/imap_menu.c:237
 msgid "Define Circle/Oval area"
 msgstr "Ορισμός περιοχής κύκλου/ωοειδούς"
 
-#: ../plug-ins/imagemap/imap_menu.c:223
+#: ../plug-ins/imagemap/imap_menu.c:239
 msgid "Define Polygon area"
 msgstr "Καθορισμός περιοχής πολυγώνου"
 
@@ -10780,11 +10906,6 @@ msgstr "Ε_ισαγωγή"
 #: ../plug-ins/imagemap/imap_polygon.c:524
 msgid "A_ppend"
 msgstr "_Προσάρτηση"
-
-#
-#: ../plug-ins/imagemap/imap_polygon.c:530
-msgid "_Remove"
-msgstr "Αφαί_ρεση"
 
 #: ../plug-ins/imagemap/imap_preferences.c:247
 msgid "Couldn't save resource file:"
@@ -12984,10 +13105,6 @@ msgstr "Μεταφορά δεδομένων από σαρωτή/κάμερα"
 
 #~ msgid "To _top"
 #~ msgstr "Σ_την κορυφή"
-
-#
-#~ msgid "To _bottom"
-#~ msgstr "Στον _πυθμένα"
 
 #~ msgid "Propagating _alpha channel"
 #~ msgstr "Διάδοση καν_αλιού άλφα"
