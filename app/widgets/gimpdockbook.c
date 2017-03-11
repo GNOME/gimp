@@ -170,6 +170,7 @@ static GtkWidget *  gimp_dockable_create_event_box_tab_widget (GimpDockable   *d
                                                                GimpTabStyle    tab_style,
                                                                GtkIconSize     size);
 static GtkIconSize  gimp_dockbook_get_tab_icon_size           (GimpDockbook   *dockbook);
+static gint         gimp_dockbook_get_tab_border              (GimpDockbook   *dockbook);
 static void         gimp_dockbook_add_tab_timeout             (GimpDockbook   *dockbook,
                                                                GimpDockable   *dockable);
 static void         gimp_dockbook_remove_tab_timeout          (GimpDockbook   *dockbook);
@@ -358,8 +359,6 @@ static void
 gimp_dockbook_style_set (GtkWidget *widget,
                          GtkStyle  *prev_style)
 {
-  gint tab_border;
-
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   /* Don't attempt to construct widgets that require a GimpContext if
@@ -370,14 +369,6 @@ gimp_dockbook_style_set (GtkWidget *widget,
    */
   if (! gtk_widget_is_toplevel (gtk_widget_get_toplevel (widget)))
     return;
-
-  gtk_widget_style_get (widget,
-                        "tab-border", &tab_border,
-                        NULL);
-
-  g_object_set (widget,
-                "tab-border", tab_border,
-                NULL);
 
   gimp_dockbook_recreate_tab_widgets (GIMP_DOCKBOOK (widget),
                                       FALSE /*only_auto*/);
@@ -1314,6 +1305,10 @@ gimp_dockbook_recreate_tab_widgets (GimpDockbook *dockbook,
   GList *dockables = gtk_container_get_children (GTK_CONTAINER (dockbook));
   GList *iter      = NULL;
 
+  g_object_set (dockbook,
+                "tab-border", gimp_dockbook_get_tab_border (dockbook),
+                NULL);
+
   for (iter = dockables; iter; iter = g_list_next (iter))
     {
       GimpDockable *dockable = GIMP_DOCKABLE (iter->data);
@@ -1631,6 +1626,43 @@ gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
     }
 
   return tab_size;
+}
+
+static gint
+gimp_dockbook_get_tab_border (GimpDockbook *dockbook)
+{
+  Gimp         *gimp;
+  GimpIconSize  size;
+  gint          tab_border = DEFAULT_TAB_BORDER;
+
+  gimp = gimp_dock_get_context (dockbook->p->dock)->gimp;
+
+  gtk_widget_style_get (GTK_WIDGET (dockbook),
+                        "tab-border", &tab_border,
+                        NULL);
+
+  g_object_get (GIMP_GUI_CONFIG (gimp->config),
+                "icon-size", &size, NULL);
+
+  /* Match GimpIconSize with GtkIconSize. */
+  switch (size)
+    {
+    case GIMP_ICON_SIZE_SMALL:
+      tab_border /= 2;
+      break;
+    case GIMP_ICON_SIZE_LARGE:
+      tab_border *= 10;
+      break;
+    case GIMP_ICON_SIZE_HUGE:
+      tab_border *= 30;
+      break;
+    default:
+      /* GIMP_ICON_SIZE_MEDIUM and GIMP_ICON_SIZE_DEFAULT:
+       * let's use the size set by the theme. */
+      break;
+    }
+
+  return tab_border;
 }
 
 static void
