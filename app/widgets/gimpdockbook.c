@@ -1651,10 +1651,10 @@ gimp_dockbook_get_tab_border (GimpDockbook *dockbook)
       tab_border /= 2;
       break;
     case GIMP_ICON_SIZE_LARGE:
-      tab_border *= 10;
+      tab_border *= 2;
       break;
     case GIMP_ICON_SIZE_HUGE:
-      tab_border *= 30;
+      tab_border *= 3;
       break;
     default:
       /* GIMP_ICON_SIZE_MEDIUM and GIMP_ICON_SIZE_DEFAULT:
