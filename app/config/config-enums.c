@@ -9,6 +9,68 @@
 
 /* enumerations from "./config-enums.h" */
 GType
+gimp_canvas_padding_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_CANVAS_PADDING_MODE_DEFAULT, "GIMP_CANVAS_PADDING_MODE_DEFAULT", "default" },
+    { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, "GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK", "light-check" },
+    { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, "GIMP_CANVAS_PADDING_MODE_DARK_CHECK", "dark-check" },
+    { GIMP_CANVAS_PADDING_MODE_CUSTOM, "GIMP_CANVAS_PADDING_MODE_CUSTOM", "custom" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_CANVAS_PADDING_MODE_DEFAULT, NC_("canvas-padding-mode", "From theme"), NULL },
+    { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, NC_("canvas-padding-mode", "Light check color"), NULL },
+    { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, NC_("canvas-padding-mode", "Dark check color"), NULL },
+    { GIMP_CANVAS_PADDING_MODE_CUSTOM, NC_("canvas-padding-mode", "Custom color"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpCanvasPaddingMode", values);
+      gimp_type_set_translation_context (type, "canvas-padding-mode");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_cursor_format_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_CURSOR_FORMAT_BITMAP, "GIMP_CURSOR_FORMAT_BITMAP", "bitmap" },
+    { GIMP_CURSOR_FORMAT_PIXBUF, "GIMP_CURSOR_FORMAT_PIXBUF", "pixbuf" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_CURSOR_FORMAT_BITMAP, NC_("cursor-format", "Black & white"), NULL },
+    { GIMP_CURSOR_FORMAT_PIXBUF, NC_("cursor-format", "Fancy"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpCursorFormat", values);
+      gimp_type_set_translation_context (type, "cursor-format");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_cursor_mode_get_type (void)
 {
   static const GEnumValue values[] =
@@ -40,23 +102,19 @@ gimp_cursor_mode_get_type (void)
 }
 
 GType
-gimp_canvas_padding_mode_get_type (void)
+gimp_handedness_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_CANVAS_PADDING_MODE_DEFAULT, "GIMP_CANVAS_PADDING_MODE_DEFAULT", "default" },
-    { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, "GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK", "light-check" },
-    { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, "GIMP_CANVAS_PADDING_MODE_DARK_CHECK", "dark-check" },
-    { GIMP_CANVAS_PADDING_MODE_CUSTOM, "GIMP_CANVAS_PADDING_MODE_CUSTOM", "custom" },
+    { GIMP_HANDEDNESS_LEFT, "GIMP_HANDEDNESS_LEFT", "left" },
+    { GIMP_HANDEDNESS_RIGHT, "GIMP_HANDEDNESS_RIGHT", "right" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CANVAS_PADDING_MODE_DEFAULT, NC_("canvas-padding-mode", "From theme"), NULL },
-    { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, NC_("canvas-padding-mode", "Light check color"), NULL },
-    { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, NC_("canvas-padding-mode", "Dark check color"), NULL },
-    { GIMP_CANVAS_PADDING_MODE_CUSTOM, NC_("canvas-padding-mode", "Custom color"), NULL },
+    { GIMP_HANDEDNESS_LEFT, NC_("handedness", "Left-handed"), NULL },
+    { GIMP_HANDEDNESS_RIGHT, NC_("handedness", "Right-handed"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -64,8 +122,105 @@ gimp_canvas_padding_mode_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpCanvasPaddingMode", values);
-      gimp_type_set_translation_context (type, "canvas-padding-mode");
+      type = g_enum_register_static ("GimpHandedness", values);
+      gimp_type_set_translation_context (type, "handedness");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_help_browser_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_HELP_BROWSER_GIMP, "GIMP_HELP_BROWSER_GIMP", "gimp" },
+    { GIMP_HELP_BROWSER_WEB_BROWSER, "GIMP_HELP_BROWSER_WEB_BROWSER", "web-browser" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_HELP_BROWSER_GIMP, NC_("help-browser-type", "GIMP help browser"), NULL },
+    { GIMP_HELP_BROWSER_WEB_BROWSER, NC_("help-browser-type", "Web browser"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpHelpBrowserType", values);
+      gimp_type_set_translation_context (type, "help-browser-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_icon_size_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ICON_SIZE_DEFAULT, "GIMP_ICON_SIZE_DEFAULT", "default" },
+    { GIMP_ICON_SIZE_SMALL, "GIMP_ICON_SIZE_SMALL", "small" },
+    { GIMP_ICON_SIZE_MEDIUM, "GIMP_ICON_SIZE_MEDIUM", "medium" },
+    { GIMP_ICON_SIZE_LARGE, "GIMP_ICON_SIZE_LARGE", "large" },
+    { GIMP_ICON_SIZE_HUGE, "GIMP_ICON_SIZE_HUGE", "huge" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ICON_SIZE_DEFAULT, NC_("icon-size", "Default size"), NULL },
+    { GIMP_ICON_SIZE_SMALL, NC_("icon-size", "Small size"), NULL },
+    { GIMP_ICON_SIZE_MEDIUM, NC_("icon-size", "Medium size"), NULL },
+    { GIMP_ICON_SIZE_LARGE, NC_("icon-size", "Large size"), NULL },
+    { GIMP_ICON_SIZE_HUGE, NC_("icon-size", "Huge size"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpIconSize", values);
+      gimp_type_set_translation_context (type, "icon-size");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_position_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_POSITION_TOP, "GIMP_POSITION_TOP", "top" },
+    { GIMP_POSITION_BOTTOM, "GIMP_POSITION_BOTTOM", "bottom" },
+    { GIMP_POSITION_LEFT, "GIMP_POSITION_LEFT", "left" },
+    { GIMP_POSITION_RIGHT, "GIMP_POSITION_RIGHT", "right" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_POSITION_TOP, NC_("position", "Top"), NULL },
+    { GIMP_POSITION_BOTTOM, NC_("position", "Bottom"), NULL },
+    { GIMP_POSITION_LEFT, NC_("position", "Left"), NULL },
+    { GIMP_POSITION_RIGHT, NC_("position", "Right"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpPosition", values);
+      gimp_type_set_translation_context (type, "position");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
@@ -104,64 +259,6 @@ gimp_space_bar_action_get_type (void)
 }
 
 GType
-gimp_zoom_quality_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ZOOM_QUALITY_LOW, "GIMP_ZOOM_QUALITY_LOW", "low" },
-    { GIMP_ZOOM_QUALITY_HIGH, "GIMP_ZOOM_QUALITY_HIGH", "high" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ZOOM_QUALITY_LOW, NC_("zoom-quality", "Low"), NULL },
-    { GIMP_ZOOM_QUALITY_HIGH, NC_("zoom-quality", "High"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpZoomQuality", values);
-      gimp_type_set_translation_context (type, "zoom-quality");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_help_browser_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_HELP_BROWSER_GIMP, "GIMP_HELP_BROWSER_GIMP", "gimp" },
-    { GIMP_HELP_BROWSER_WEB_BROWSER, "GIMP_HELP_BROWSER_WEB_BROWSER", "web-browser" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_HELP_BROWSER_GIMP, NC_("help-browser-type", "GIMP help browser"), NULL },
-    { GIMP_HELP_BROWSER_WEB_BROWSER, NC_("help-browser-type", "Web browser"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpHelpBrowserType", values);
-      gimp_type_set_translation_context (type, "help-browser-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_window_hint_get_type (void)
 {
   static const GEnumValue values[] =
@@ -193,19 +290,19 @@ gimp_window_hint_get_type (void)
 }
 
 GType
-gimp_cursor_format_get_type (void)
+gimp_zoom_quality_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_CURSOR_FORMAT_BITMAP, "GIMP_CURSOR_FORMAT_BITMAP", "bitmap" },
-    { GIMP_CURSOR_FORMAT_PIXBUF, "GIMP_CURSOR_FORMAT_PIXBUF", "pixbuf" },
+    { GIMP_ZOOM_QUALITY_LOW, "GIMP_ZOOM_QUALITY_LOW", "low" },
+    { GIMP_ZOOM_QUALITY_HIGH, "GIMP_ZOOM_QUALITY_HIGH", "high" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_CURSOR_FORMAT_BITMAP, NC_("cursor-format", "Black & white"), NULL },
-    { GIMP_CURSOR_FORMAT_PIXBUF, NC_("cursor-format", "Fancy"), NULL },
+    { GIMP_ZOOM_QUALITY_LOW, NC_("zoom-quality", "Low"), NULL },
+    { GIMP_ZOOM_QUALITY_HIGH, NC_("zoom-quality", "High"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -213,70 +310,8 @@ gimp_cursor_format_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpCursorFormat", values);
-      gimp_type_set_translation_context (type, "cursor-format");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_handedness_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_HANDEDNESS_LEFT, "GIMP_HANDEDNESS_LEFT", "left" },
-    { GIMP_HANDEDNESS_RIGHT, "GIMP_HANDEDNESS_RIGHT", "right" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_HANDEDNESS_LEFT, NC_("handedness", "Left-handed"), NULL },
-    { GIMP_HANDEDNESS_RIGHT, NC_("handedness", "Right-handed"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpHandedness", values);
-      gimp_type_set_translation_context (type, "handedness");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_position_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_POSITION_TOP, "GIMP_POSITION_TOP", "top" },
-    { GIMP_POSITION_BOTTOM, "GIMP_POSITION_BOTTOM", "bottom" },
-    { GIMP_POSITION_LEFT, "GIMP_POSITION_LEFT", "left" },
-    { GIMP_POSITION_RIGHT, "GIMP_POSITION_RIGHT", "right" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_POSITION_TOP, NC_("position", "Top"), NULL },
-    { GIMP_POSITION_BOTTOM, NC_("position", "Bottom"), NULL },
-    { GIMP_POSITION_LEFT, NC_("position", "Left"), NULL },
-    { GIMP_POSITION_RIGHT, NC_("position", "Right"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpPosition", values);
-      gimp_type_set_translation_context (type, "position");
+      type = g_enum_register_static ("GimpZoomQuality", values);
+      gimp_type_set_translation_context (type, "zoom-quality");
       gimp_enum_set_value_descriptions (type, descs);
     }
 
