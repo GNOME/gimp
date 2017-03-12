@@ -1786,8 +1786,7 @@ prefs_dialog_new (Gimp       *gimp,
                       gimp);
 
     icon_size_scale = gimp_icon_size_scale_new (gimp);
-
-    gtk_box_pack_start (GTK_BOX (vbox2), icon_size_scale, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), icon_size_scale, FALSE, FALSE, 0);
     gtk_widget_show (icon_size_scale);
   }
 
