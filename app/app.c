@@ -120,9 +120,9 @@ app_libs_init (GOptionContext *context,
   quark = g_quark_from_static_string ("gimp-compat-enum");
 
   g_type_set_qdata (GIMP_TYPE_CONVERT_DITHER_TYPE, quark,
-		    (gpointer) gimp_convert_dither_type_compat_get_type ());
+                    (gpointer) gimp_convert_dither_type_compat_get_type ());
   g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
-		    (gpointer) gimp_layer_mode_effects_get_type ());
+                    (gpointer) gimp_layer_mode_effects_get_type ());
 }
 
 void
