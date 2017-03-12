@@ -2069,10 +2069,10 @@ AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 # Check for vector icons
 ########################
 
-AC_ARG_ENABLE(vector-icons, [  --enable-vector-icons   generate vector icons], ,
-              enable_vector_icons=no)
+AC_ARG_ENABLE(vector-icons, [  --disable-vector-icons  use raster icons rather than vector ones (default=auto)], ,
+              enable_vector_icons=auto)
 
-if test "x$enable_vector_icons" = "xyes"; then
+if test "x$enable_vector_icons" != "xno"; then
   # Check if librsvg was built with --disable-pixbuf-loader.
   gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
   # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
@@ -2081,30 +2081,24 @@ if test "x$enable_vector_icons" = "xyes"; then
   if (test "x$platform_win32" = "xyes" &&
       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
      test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
-    enable_vector_icons="yes"
+    # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
+    # to make sure we use the native pkg-config (in case we cross-compile).
+    if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+       pkg-config gio-2.0; then
+      NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
+      NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+      enable_vector_icons="yes"
+    else
+      enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
+    fi
   else
     enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
   fi
 fi
 
-if test "x$enable_vector_icons" = "xyes"; then
-  # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
-  # to make sure we use the native pkg-config (in case we cross-compile).
-  if pkg-config --atleast-version=glib_required_version glib-2.0 &&
-     pkg-config gio-2.0; then
-    NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
-    NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
-  else
-    enable_vector_icons="no (missing native glib > glib_required_version or gio)"
-  fi
-fi
 AC_SUBST(NATIVE_GLIB_LIBS)
 AC_SUBST(NATIVE_GLIB_CFLAGS)
 AM_CONDITIONAL(ENABLE_VECTOR_ICONS, test "x$enable_vector_icons" = "xyes")
-
-if test "x$enable_vector_icons" = "xyes"; then
-  enable_vector_icons="yes (experimental)"
-fi
 
 ####################
 # Check for xvfb-run
