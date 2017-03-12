@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 01:32+0100\n"
-"PO-Revision-Date: 2017-02-15 01:33+0100\n"
+"POT-Creation-Date: 2017-03-12 12:24+0100\n"
+"PO-Revision-Date: 2017-03-12 12:25+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -5899,87 +5899,87 @@ msgstr "„%s” nie jest profilem kolorów ICC"
 msgid "Converting from '%s' to '%s'"
 msgstr "Konwertowanie z „%s” do „%s”"
 
-#: ../plug-ins/common/lcms.c:1248
+#: ../plug-ins/common/lcms.c:1252
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Nie można wczytać profilu kolorów ICC z „%s”"
 
-#: ../plug-ins/common/lcms.c:1270
+#: ../plug-ins/common/lcms.c:1274
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Obraz „%s” ma osadzony profil kolorów:"
 
-#: ../plug-ins/common/lcms.c:1314
+#: ../plug-ins/common/lcms.c:1318
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Konwertować obraz do przestrzeni roboczej RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:1345
+#: ../plug-ins/common/lcms.c:1349
 msgid "Convert to RGB working space?"
 msgstr "Konwertować obraz do przestrzeni roboczej?"
 
-#: ../plug-ins/common/lcms.c:1350
+#: ../plug-ins/common/lcms.c:1354
 msgid "_Keep"
 msgstr "_Zachowaj"
 
-#: ../plug-ins/common/lcms.c:1355
+#: ../plug-ins/common/lcms.c:1359
 msgid "_Convert"
 msgstr "_Konwertuj"
 
-#: ../plug-ins/common/lcms.c:1383 ../plug-ins/file-jpeg/jpeg-exif.c:436
+#: ../plug-ins/common/lcms.c:1387 ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
 msgstr "_Bez pytania ponownie"
 
-#: ../plug-ins/common/lcms.c:1450
+#: ../plug-ins/common/lcms.c:1454
 msgid "Select destination profile"
 msgstr "Wybór profilu docelowego"
 
-#: ../plug-ins/common/lcms.c:1477
+#: ../plug-ins/common/lcms.c:1481
 msgid "All files (*.*)"
 msgstr "Wszystkie pliki (*.*)"
 
-#: ../plug-ins/common/lcms.c:1482
+#: ../plug-ins/common/lcms.c:1486
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profile kolorów ICC (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1526
+#: ../plug-ins/common/lcms.c:1530
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Obszar roboczy RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1576
+#: ../plug-ins/common/lcms.c:1580
 msgid "Convert to ICC Color Profile"
 msgstr "Konwersja do profilu kolorów ICC"
 
-#: ../plug-ins/common/lcms.c:1577
+#: ../plug-ins/common/lcms.c:1581
 msgid "Assign ICC Color Profile"
 msgstr "Przydzielenie profilu kolorów ICC"
 
-#: ../plug-ins/common/lcms.c:1585
+#: ../plug-ins/common/lcms.c:1589
 msgid "_Assign"
 msgstr "_Przydziel"
 
-#: ../plug-ins/common/lcms.c:1603
+#: ../plug-ins/common/lcms.c:1607
 msgid "Current Color Profile"
 msgstr "Bieżący profil kolorów"
 
-#: ../plug-ins/common/lcms.c:1618
+#: ../plug-ins/common/lcms.c:1622
 msgid "Convert to"
 msgstr "Konwersja do"
 
-#: ../plug-ins/common/lcms.c:1618
+#: ../plug-ins/common/lcms.c:1622
 msgid "Assign"
 msgstr "Przydziel"
 
-#: ../plug-ins/common/lcms.c:1642
+#: ../plug-ins/common/lcms.c:1646
 msgid "_Rendering Intent:"
 msgstr "_Sposób odwzorowania barw:"
 
-#: ../plug-ins/common/lcms.c:1658
+#: ../plug-ins/common/lcms.c:1662
 msgid "_Black Point Compensation"
 msgstr "_Kompensacja czarnego punktu"
 
-#: ../plug-ins/common/lcms.c:1700
+#: ../plug-ins/common/lcms.c:1704
 msgid "Destination profile is not for RGB color space."
 msgstr "Profil docelowy nie jest dla przestrzeni kolorów RGB."
 
@@ -8910,7 +8910,7 @@ msgstr "%d. ikona ma zerową szerokość lub wysokość"
 #: ../plug-ins/file-ico/ico-load.c:636
 #, c-format
 msgid "Icon #%i"
-msgstr "#%i. ikona"
+msgstr "%i. ikona"
 
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:696
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
