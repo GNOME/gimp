@@ -34,12 +34,12 @@ typedef struct _GimpIconSizeScaleClass GimpIconSizeScaleClass;
 
 struct _GimpIconSizeScale
 {
-  GtkFrame      parent_instance;
+  GimpFrame      parent_instance;
 };
 
 struct _GimpIconSizeScaleClass
 {
-  GtkFrameClass parent_class;
+  GimpFrameClass parent_class;
 };
 
 

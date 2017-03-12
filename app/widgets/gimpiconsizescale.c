@@ -20,11 +20,13 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "widgets-types.h"
-
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "widgets-types.h"
 
 #include "config/gimpguiconfig.h"
 
@@ -33,6 +35,7 @@
 #include "gimpiconsizescale.h"
 
 #include "gimp-intl.h"
+
 
 enum
 {
@@ -86,9 +89,11 @@ static gboolean gimp_icon_size_scale_change_value    (GtkRange        *range,
                                                       gdouble          value,
                                                       GimpGuiConfig   *config);
 
-G_DEFINE_TYPE (GimpIconSizeScale, gimp_icon_size_scale, GTK_TYPE_FRAME)
+
+G_DEFINE_TYPE (GimpIconSizeScale, gimp_icon_size_scale, GIMP_TYPE_FRAME)
 
 #define parent_class gimp_icon_size_scale_parent_class
+
 
 static void
 gimp_icon_size_scale_class_init (GimpIconSizeScaleClass *klass)
