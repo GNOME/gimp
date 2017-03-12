@@ -30,6 +30,7 @@
 #include "gimphelpui.h"
 #include "gimpicons.h"
 #include "gimppickbutton.h"
+#include "gimpwidgetsutils.h"
 
 #include "cursors/gimp-color-picker-cursors.c"
 
@@ -198,12 +199,14 @@ gimp_pick_button_pick (GdkScreen      *screen,
                        gint            y_root,
                        GimpPickButton *button)
 {
-  GdkWindow       *root_window = gdk_screen_get_root_window (screen);
-  cairo_surface_t *image;
-  cairo_t         *cr;
-  guchar          *data;
-  guchar           color[3];
-  GimpRGB          rgb;
+  GdkWindow        *root_window = gdk_screen_get_root_window (screen);
+  cairo_surface_t  *image;
+  cairo_t          *cr;
+  guchar           *data;
+  guchar            color[3];
+  GimpRGB           rgb;
+  GimpColorProfile *monitor_profile;
+  gint              monitor;
 
   image = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 1, 1);
 
@@ -220,6 +223,33 @@ gimp_pick_button_pick (GdkScreen      *screen,
   cairo_surface_destroy (image);
 
   gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 255);
+
+  monitor = gdk_screen_get_monitor_at_point (screen, x_root, y_root);
+  monitor_profile = gimp_screen_get_color_profile (screen, monitor);
+
+  if (monitor_profile)
+    {
+      GimpColorProfile   *srgb_profile;
+      GimpColorTransform *transform;
+      const Babl         *format;
+
+      format = babl_format ("R'G'B'A double");
+
+      srgb_profile = gimp_color_profile_new_rgb_srgb ();
+      transform = gimp_color_transform_new (monitor_profile, format,
+                                            srgb_profile,    format,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            0);
+      g_object_unref (srgb_profile);
+
+      gimp_color_transform_process_pixels (transform,
+                                           format, &rgb,
+                                           format, &rgb,
+                                           1);
+      gimp_rgb_clamp (&rgb);
+
+      g_object_unref (transform);
+    }
 
   g_signal_emit_by_name (button, "color-picked", &rgb);
 }
