@@ -64,6 +64,8 @@ struct _GimpToolPalettePrivate
                                                     GimpToolPalettePrivate)
 
 
+static void     gimp_tool_palette_finalize            (GObject        *object);
+
 static void     gimp_tool_palette_size_allocate       (GtkWidget       *widget,
                                                        GtkAllocation   *allocation);
 static void     gimp_tool_palette_style_set           (GtkWidget       *widget,
@@ -96,7 +98,10 @@ G_DEFINE_TYPE (GimpToolPalette, gimp_tool_palette, GTK_TYPE_TOOL_PALETTE)
 static void
 gimp_tool_palette_class_init (GimpToolPaletteClass *klass)
 {
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->finalize          = gimp_tool_palette_finalize;
 
   widget_class->size_allocate     = gimp_tool_palette_size_allocate;
   widget_class->style_set         = gimp_tool_palette_style_set;
@@ -124,6 +129,26 @@ gimp_tool_palette_init (GimpToolPalette *palette)
 {
   gtk_tool_palette_set_style (GTK_TOOL_PALETTE (palette), GTK_TOOLBAR_ICONS);
 }
+
+static void
+gimp_tool_palette_finalize (GObject *object)
+{
+  GimpToolPalette        *palette = GIMP_TOOL_PALETTE (object);
+  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+
+  if (private->toolbox)
+    {
+      GimpContext *context = gimp_toolbox_get_context (private->toolbox);
+
+      if (context)
+        g_signal_handlers_disconnect_by_func (context->gimp->config,
+                                              G_CALLBACK (gimp_tool_palette_icon_size_notify),
+                                              palette);
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
 
 static void
 gimp_tool_palette_size_allocate (GtkWidget     *widget,
@@ -292,6 +317,13 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
 
   private = GET_PRIVATE (palette);
 
+  if (private->toolbox)
+    {
+      context = gimp_toolbox_get_context (private->toolbox);
+      g_signal_handlers_disconnect_by_func (GIMP_GUI_CONFIG (context->gimp->config),
+                                            G_CALLBACK (gimp_tool_palette_icon_size_notify),
+                                            palette);
+    }
   private->toolbox = toolbox;
 
   context = gimp_toolbox_get_context (toolbox);

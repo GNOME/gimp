@@ -339,6 +339,13 @@ gimp_dockbook_finalize (GObject *object)
       g_object_unref (dockbook->p->ui_manager);
       dockbook->p->ui_manager = NULL;
     }
+  if (dockbook->p->dock)
+    {
+      g_signal_handlers_disconnect_by_func (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
+                                            G_CALLBACK (gimp_dockbook_tab_icon_size_notify),
+                                            dockbook);
+      dockbook->p->dock = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -901,7 +908,16 @@ gimp_dockbook_set_dock (GimpDockbook *dockbook,
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
   g_return_if_fail (dock == NULL || GIMP_IS_DOCK (dock));
 
+  if (dockbook->p->dock && gimp_dock_get_context (dockbook->p->dock))
+    g_signal_handlers_disconnect_by_func (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
+                                          G_CALLBACK (gimp_dockbook_tab_icon_size_notify),
+                                          dockbook);
   dockbook->p->dock = dock;
+  if (dock)
+    g_signal_connect (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
+                      "notify::icon-size",
+                      G_CALLBACK (gimp_dockbook_tab_icon_size_notify),
+                      dockbook);
 }
 
 GimpUIManager *
@@ -935,10 +951,6 @@ gimp_dockbook_add (GimpDockbook *dockbook,
                                           position);
 
   gimp_dockbook_update_auto_tab_style (dockbook);
-  g_signal_connect (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
-                    "notify::icon-size",
-                    G_CALLBACK (gimp_dockbook_tab_icon_size_notify),
-                    dockbook);
 
   /* Create the new tab widget, it will get the correct tab style now */
   tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
