@@ -217,7 +217,7 @@ gimp_tool_palette_style_set (GtkWidget *widget,
 
 static void
 gimp_tool_palette_hierarchy_changed (GtkWidget *widget,
-                                     GtkWidget *previous_tolevel)
+                                     GtkWidget *previous_toplevel)
 {
   GimpToolPalettePrivate *private = GET_PRIVATE (widget);
   GimpUIManager          *ui_manager;
