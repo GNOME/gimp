@@ -114,13 +114,13 @@ gimp_filter_stack_add (GimpContainer *container,
 
   GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
 
-  gimp_filter_stack_update_last_node (stack);
-
   if (stack->graph)
     {
       gegl_node_add_child (stack->graph, gimp_filter_get_node (filter));
       gimp_filter_stack_add_node (stack, filter);
     }
+
+  gimp_filter_stack_update_last_node (stack);
 }
 
 static void
