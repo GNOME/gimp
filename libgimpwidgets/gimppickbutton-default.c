@@ -229,26 +229,33 @@ gimp_pick_button_pick (GdkScreen      *screen,
 
   if (monitor_profile)
     {
-      GimpColorProfile   *srgb_profile;
-      GimpColorTransform *transform;
-      const Babl         *format;
+      GimpColorProfile        *srgb_profile;
+      GimpColorTransform      *transform;
+      const Babl              *format;
+      GimpColorTransformFlags  flags = 0;
 
       format = babl_format ("R'G'B'A double");
+
+      flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+      flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
       srgb_profile = gimp_color_profile_new_rgb_srgb ();
       transform = gimp_color_transform_new (monitor_profile, format,
                                             srgb_profile,    format,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                            0);
+                                            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                            flags);
       g_object_unref (srgb_profile);
 
-      gimp_color_transform_process_pixels (transform,
-                                           format, &rgb,
-                                           format, &rgb,
-                                           1);
-      gimp_rgb_clamp (&rgb);
+      if (transform)
+        {
+          gimp_color_transform_process_pixels (transform,
+                                               format, &rgb,
+                                               format, &rgb,
+                                               1);
+          gimp_rgb_clamp (&rgb);
 
-      g_object_unref (transform);
+          g_object_unref (transform);
+        }
     }
 
   g_signal_emit_by_name (button, "color-picked", &rgb);
