@@ -33,7 +33,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-13 08:23+0100\n"
-"PO-Revision-Date: 2017-03-13 08:30+0100\n"
+"PO-Revision-Date: 2017-03-13 08:56+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -5935,22 +5935,22 @@ msgstr "Salva la selezione in un canale"
 #: ../app/actions/select-actions.c:117
 msgctxt "select-action"
 msgid "_Fill Selection Outline..."
-msgstr "_Riempi il bordo della selezione..."
+msgstr "_Riempi contorno selezione..."
 
 #: ../app/actions/select-actions.c:118
 msgctxt "select-action"
 msgid "Fill the selection outline"
-msgstr "Riempi il bordo della selezione"
+msgstr "Riempi il contorno della selezione"
 
 #: ../app/actions/select-actions.c:123
 msgctxt "select-action"
 msgid "_Fill Selection Outline"
-msgstr "_Riempi il bordo della selezione"
+msgstr "_Riempi contorno selezione"
 
 #: ../app/actions/select-actions.c:124
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
-msgstr "Riempi il bordo della selezione con gli ultimi valori utilizzati"
+msgstr "Riempi il contorno della selezione con gli ultimi valori usati"
 
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
@@ -6027,7 +6027,7 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:415
 msgid "Fill Selection Outline"
-msgstr "Riempi il contorno della selezione"
+msgstr "Riempi contorno selezione"
 
 #: ../app/actions/select-commands.c:444
 msgid "Stroke Selection"
@@ -6608,7 +6608,7 @@ msgstr "Abbassa questo tracciato fino in fondo"
 #: ../app/actions/vectors-actions.c:118
 msgctxt "vectors-action"
 msgid "Fill Path..."
-msgstr "Riempi tracciato..."
+msgstr "Riempi il tracciato..."
 
 #: ../app/actions/vectors-actions.c:119
 msgctxt "vectors-action"
@@ -6870,7 +6870,7 @@ msgstr "Crea un nuovo tracciato"
 
 #: ../app/actions/vectors-commands.c:425
 msgid "Fill Path"
-msgstr "Riempi tracciato"
+msgstr "Riempi il tracciato"
 
 #: ../app/actions/vectors-commands.c:455 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:1990
@@ -13344,8 +13344,7 @@ msgstr "Stile bordo:"
 #. Fill Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2105
 msgid "Fill Selection Outline & Fill Path Dialogs"
-msgstr ""
-"Finestre di dialogo \"Riempi bordo della selezione\" e \"Riempi tracciati\""
+msgstr "Finestre di dialogo \"Riempi contorno selezione\" e \"Riempi tracciato\""
 
 #. Stroke Options Dialog
 #: ../app/dialogs/preferences-dialog.c:2114
