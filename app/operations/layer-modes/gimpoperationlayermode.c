@@ -42,6 +42,12 @@
                                           16 /* bytes per pixel */ /      \
                                           2  /* max number of buffers */)
 
+/* number of consecutive unblended samples (whose source or destination alpha
+ * is zero) above which to split the blending process, in order to avoid
+ * performing too many unnecessary conversions.
+ */
+#define GIMP_COMPOSITE_BLEND_SPLIT_THRESHOLD 32
+
 
 enum
 {
@@ -1066,8 +1072,14 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
                                                             [composite_space - 1];
     }
 
+  /* if we need to convert the samples between the composite and blend
+   * spaces...
+   */
   if (composite_to_blend_fish)
     {
+      gint i;
+      gint end;
+
       if (in != out || composite_needs_in_color)
         {
           /* don't convert input in-place if we're not doing in-place output,
@@ -1077,24 +1089,118 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
         }
       blend_layer  = g_alloca (sizeof (gfloat) * 4 * samples);
 
-      babl_process (composite_to_blend_fish, in,    blend_in,    samples);
-      babl_process (composite_to_blend_fish, layer, blend_layer, samples);
+      if (in == out) /* in-place detected, avoid clobbering since we need to
+                        read 'in' for the compositing stage  */
+        {
+          if (blend_layer != layer)
+            blend_out = blend_layer;
+          else
+            blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
+        }
+
+      /* samples whose the source or destination alpha is zero are not blended,
+       * and therefore do not need to be converted.  while it's generally
+       * desirable to perform conversion and blending in bulk, when we have
+       * more than a certain number of consecutive unblended samples, the cost
+       * of converting them outweighs the cost of splitting the process around
+       * them to avoid the conversion.
+       */
+
+      i   = ALPHA;
+      end = 4 * samples + ALPHA;
+
+      while (TRUE)
+        {
+          gint first;
+          gint last;
+          gint count;
+
+          /* skip any unblended samples.  the color values of `blend_out` for
+           * these samples are unconstrained, in particular, they may be NaN,
+           * but the alpha values should generally be finite, and specifically
+           * 0 when the source alpha is 0.  when `blend_out == blend_layer`,
+           * this is the case anyway, but otherwise, we need to manually set
+           * the unblended samples' alpha to zero.
+           */
+          if (blend_out == blend_layer)
+            {
+              while (i < end && (in[i] == 0.0f || layer[i] == 0.0f))
+                {
+                  i += 4;
+                }
+            }
+          else
+            {
+              while (i < end && (in[i] == 0.0f || layer[i] == 0.0f))
+                {
+                  blend_out[i] = 0.0f;
+                  i += 4;
+                }
+            }
+
+          /* stop if there are no more samples */
+          if (i == end)
+            break;
+
+          /* otherwise, keep scanning the samples until we find
+           * GIMP_COMPOSITE_BLEND_SPLIT_THRESHOLD consecutive unblended
+           * samples.
+           */
+
+          first  = i;
+          i     += 4;
+          last   = i;
+
+          while (i < end && i - last < 4 * GIMP_COMPOSITE_BLEND_SPLIT_THRESHOLD)
+            {
+              gboolean blended;
+
+              blended = (in[i] != 0.0f && layer[i] != 0.0f);
+
+              i += 4;
+              if (blended)
+                last = i;
+            }
+
+          /* convert and blend the samples in the range [first, last) */
+
+          count  = (last - first) / 4;
+          first -= ALPHA;
+
+          babl_process (composite_to_blend_fish,
+                        in + first, blend_in + first, count);
+          babl_process (composite_to_blend_fish,
+                        layer + first, blend_layer + first, count);
+
+          blend_func (blend_in + first, blend_layer + first,
+                      blend_out + first, count);
+
+          babl_process (blend_to_composite_fish,
+                        blend_out + first, blend_out + first, count);
+
+          /* make sure the alpha values of `blend_out` are valid for the
+           * trailing unblended samples.
+           */
+          if (blend_out != blend_layer)
+            {
+              for (; last < i; last += 4)
+                blend_out[last] = 0.0f;
+            }
+        }
     }
-
-  if (in == out) /* in-place detected, avoid clobbering since we need to
-                    read 'in' for the compositing stage  */
+  else
     {
-      if (blend_layer != layer)
-        blend_out = blend_layer;
-      else
-        blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
-    }
+      /* if both blending and compositing use the same color space, things are
+       * much simpler.
+       */
 
-  blend_func (blend_in, blend_layer, blend_out, samples);
+      if (in == out) /* in-place detected, avoid clobbering since we need to
+                        read 'in' for the compositing stage  */
+        {
+          blend_out = g_alloca (sizeof (gfloat) * 4 * samples);
+        }
 
-  if (blend_to_composite_fish)
-    {
-      babl_process (blend_to_composite_fish, blend_out, blend_out, samples);
+      blend_func (blend_in, blend_layer, blend_out, samples);
     }
 
   if (! gimp_layer_mode_is_subtractive (layer_mode->layer_mode))
