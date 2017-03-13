@@ -33,7 +33,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-13 08:23+0100\n"
-"PO-Revision-Date: 2017-03-13 08:56+0100\n"
+"PO-Revision-Date: 2017-03-13 12:14+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -590,7 +590,7 @@ msgstr "Copia la posizione file pennello negli appunti"
 #: ../app/actions/brushes-actions.c:71
 msgctxt "brushes-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione _file"
+msgstr "Mostra nel gestore _file"
 
 #: ../app/actions/brushes-actions.c:72
 msgctxt "brushes-action"
@@ -1842,7 +1842,7 @@ msgstr "Copia la posizione dell'immagine negli appunti"
 #: ../app/actions/documents-actions.c:70
 msgctxt "documents-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione _file"
+msgstr "Mostra nel gestore _file"
 
 #: ../app/actions/documents-actions.c:71
 msgctxt "documents-action"
@@ -2210,7 +2210,7 @@ msgstr "Copia la posizione delle dinamiche negli appunti"
 #: ../app/actions/dynamics-actions.c:65
 msgctxt "dynamics-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione _file"
+msgstr "Mostra nel gestore _file"
 
 #: ../app/actions/dynamics-actions.c:66
 msgctxt "dynamics-action"
@@ -2760,7 +2760,7 @@ msgstr "Copia la posizione del file immagine negli appunti"
 #: ../app/actions/file-actions.c:118
 msgctxt "file-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione _file"
+msgstr "Mostra nel gestore _file"
 
 #: ../app/actions/file-actions.c:119
 msgctxt "file-action"
@@ -3997,7 +3997,7 @@ msgstr "Copia la posizione del file gradiente negli appunti"
 #: ../app/actions/gradients-actions.c:66
 msgctxt "gradients-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione file"
+msgstr "Mostra nel gestore file"
 
 #: ../app/actions/gradients-actions.c:67
 msgctxt "gradients-action"
@@ -5421,7 +5421,7 @@ msgstr "Copia la posizione file pennello MyPaint negli appunti"
 #: ../app/actions/mypaint-brushes-actions.c:65
 msgctxt "mypaint-brushes-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione _file"
+msgstr "Mostra nel gestore _file"
 
 #: ../app/actions/mypaint-brushes-actions.c:66
 msgctxt "mypaint-brushes-action"
@@ -5586,7 +5586,7 @@ msgstr "Copia la posizione del file tavolozza negli appunti"
 #: ../app/actions/palettes-actions.c:78
 msgctxt "palettes-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione _file"
+msgstr "Mostra nel gestore _file"
 
 #: ../app/actions/palettes-actions.c:79
 msgctxt "palettes-action"
@@ -5683,7 +5683,7 @@ msgstr "Copia la posizione del file motivo negli appunti"
 #: ../app/actions/patterns-actions.c:71
 msgctxt "patterns-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione _file"
+msgstr "Mostra nel gestore _file"
 
 #: ../app/actions/patterns-actions.c:72
 msgctxt "patterns-action"
@@ -6390,7 +6390,7 @@ msgstr "Copia la posizione delle preimpostazioni strumento negli appunti"
 #: ../app/actions/tool-presets-actions.c:68
 msgctxt "tool-presets-action"
 msgid "Show in _File Manager"
-msgstr "Mostra nella gestione _file"
+msgstr "Mostra nel gestore _file"
 
 #: ../app/actions/tool-presets-actions.c:69
 msgctxt "tool-presets-action"
