@@ -1808,21 +1808,63 @@ blendfun_hsv_color (const float *dest,
     {
       if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
-          GimpRGB dest_rgb = { dest[0], dest[1], dest[2] };
-          GimpRGB src_rgb  = { src[0], src[1], src[2] };
-          GimpHSL src_hsl, dest_hsl;
+          gfloat dest_min, dest_max, dest_l;
+          gfloat src_min,  src_max,  src_l;
 
-          gimp_rgb_to_hsl (&dest_rgb, &dest_hsl);
-          gimp_rgb_to_hsl (&src_rgb, &src_hsl);
+          dest_min = MIN (dest[0],  dest[1]);
+          dest_min = MIN (dest_min, dest[2]);
+          dest_max = MAX (dest[0],  dest[1]);
+          dest_max = MAX (dest_max, dest[2]);
+          dest_l   = (dest_min + dest_max) / 2.0f;
 
-          dest_hsl.h = src_hsl.h;
-          dest_hsl.s = src_hsl.s;
+          src_min  = MIN (src[0],  src[1]);
+          src_min  = MIN (src_min, src[2]);
+          src_max  = MAX (src[0],  src[1]);
+          src_max  = MAX (src_max, src[2]);
+          src_l    = (src_min + src_max) / 2.0f;
 
-          gimp_hsl_to_rgb (&dest_hsl, &dest_rgb);
+          if (src_l != 0.0f && src_l != 1.0f)
+            {
+              gfloat factor;
+              gfloat offset;
+              gint   c;
 
-          out[RED]   = dest_rgb.r;
-          out[GREEN] = dest_rgb.g;
-          out[BLUE]  = dest_rgb.b;
+              if (src_l < 0.5f)
+                {
+                  if (dest_l < 0.5f)
+                    {
+                      factor = dest_l / src_l;
+                      offset = 0.0f;
+                    }
+                  else
+                    {
+                      factor = 1.0f - dest_l / src_l;
+                      offset = 2.0f * dest_l - 1.0f;
+                    }
+                }
+              else
+                {
+                  if (dest_l < 0.5f)
+                    {
+                      factor = dest_l / (1.0f - src_l);
+                      offset = 2.0f * dest_l - factor;
+                    }
+                  else
+                    {
+                      factor = (1.0f - dest_l) / (1.0f - src_l);
+                      offset = 1.0f - factor;
+                    }
+                }
+
+              for (c = 0; c < 3; c++)
+                out[c] = src[c] * factor + offset;
+            }
+          else
+            {
+              out[RED]   = dest_l;
+              out[GREEN] = dest_l;
+              out[BLUE]  = dest_l;
+            }
         }
 
       out[ALPHA] = src[ALPHA];
