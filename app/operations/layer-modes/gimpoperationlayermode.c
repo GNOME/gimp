@@ -1909,19 +1909,29 @@ blendfun_hsv_value (const float *dest,
     {
       if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
-          GimpRGB dest_rgb = { dest[0], dest[1], dest[2] };
-          GimpRGB src_rgb  = { src[0], src[1], src[2] };
-          GimpHSV src_hsv, dest_hsv;
+          gfloat dest_v;
+          gfloat src_v;
 
-          gimp_rgb_to_hsv (&dest_rgb, &dest_hsv);
-          gimp_rgb_to_hsv (&src_rgb, &src_hsv);
+          dest_v = MAX (dest[0], dest[1]);
+          dest_v = MAX (dest_v, dest[2]);
 
-          dest_hsv.v = src_hsv.v;
-          gimp_hsv_to_rgb (&dest_hsv, &dest_rgb);
+          src_v  = MAX (src[0], src[1]);
+          src_v  = MAX (src_v, src[2]);
 
-          out[RED]   = dest_rgb.r;
-          out[GREEN] = dest_rgb.g;
-          out[BLUE]  = dest_rgb.b;
+          if (dest_v != 0.0f)
+            {
+              gfloat ratio = src_v / dest_v;
+              gint   c;
+
+              for (c = 0; c < 3; c++)
+                out[c] = dest[c] * ratio;
+            }
+          else
+            {
+              out[RED]   = src_v;
+              out[GREEN] = src_v;
+              out[BLUE]  = src_v;
+            }
         }
 
       out[ALPHA] = src[ALPHA];
