@@ -1876,19 +1876,38 @@ blendfun_hsv_saturation (const float *dest,
     {
       if (dest[ALPHA] != 0.0f && src[ALPHA] != 0.0f)
         {
-          GimpRGB dest_rgb = { dest[0], dest[1], dest[2] };
-          GimpRGB src_rgb  = { src[0], src[1], src[2] };
-          GimpHSV src_hsv, dest_hsv;
+          gfloat src_min,  src_max,  src_delta, src_s;
+          gfloat dest_min, dest_max, dest_delta;
 
-          gimp_rgb_to_hsv (&dest_rgb, &dest_hsv);
-          gimp_rgb_to_hsv (&src_rgb, &src_hsv);
+          dest_min   = MIN (dest[0], dest[1]);
+          dest_min   = MIN (dest_min, dest[2]);
+          dest_max   = MAX (dest[0], dest[1]);
+          dest_max   = MAX (dest_max, dest[2]);
+          dest_delta = dest_max - dest_min;
 
-          dest_hsv.s = src_hsv.s;
-          gimp_hsv_to_rgb (&dest_hsv, &dest_rgb);
+          if (dest_delta != 0.0f)
+            {
+              gfloat ratio;
+              gint   c;
 
-          out[RED]   = dest_rgb.r;
-          out[GREEN] = dest_rgb.g;
-          out[BLUE]  = dest_rgb.b;
+              src_min   = MIN (src[0], src[1]);
+              src_min   = MIN (src_min, src[2]);
+              src_max   = MAX (src[0], src[1]);
+              src_max   = MAX (src_max, src[2]);
+              src_delta = src_max - src_min;
+              src_s     = src_max ? src_delta / src_max : 0.0f;
+
+              ratio = src_s * dest_max / dest_delta;
+
+              for (c = 0; c < 3; c++)
+                out[c] = (dest[c] - dest_max) * ratio + dest_max;
+            }
+          else
+            {
+              out[RED]   = dest_max;
+              out[GREEN] = dest_max;
+              out[BLUE]  = dest_max;
+            }
         }
 
       out[ALPHA] = src[ALPHA];
