@@ -602,7 +602,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_HSV_COLOR,
+  { GIMP_LAYER_MODE_HSL_COLOR,
 
     .op_name              = "gimp:layer-mode",
     .function             = gimp_operation_layer_mode_process_pixels,
@@ -922,7 +922,7 @@ static const GimpLayerMode layer_mode_group_default[] =
 
   GIMP_LAYER_MODE_HSV_HUE,
   GIMP_LAYER_MODE_HSV_SATURATION,
-  GIMP_LAYER_MODE_HSV_COLOR,
+  GIMP_LAYER_MODE_HSL_COLOR,
   GIMP_LAYER_MODE_HSV_VALUE,
 
   GIMP_LAYER_MODE_SEPARATOR,
@@ -1035,8 +1035,9 @@ static const GimpLayerMode layer_mode_groups[][2] =
     [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HSV_SATURATION_LEGACY
   },
 
-  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSV_COLOR,
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSL_COLOR,
     [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HSV_COLOR_LEGACY
+                                      /* HSV_COLOR_LEGACY actually uses HSL */
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSV_VALUE,

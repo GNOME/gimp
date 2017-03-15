@@ -1799,7 +1799,7 @@ blendfun_overlay (const float *dest,
 }
 
 static inline void
-blendfun_hsv_color (const float *dest,
+blendfun_hsl_color (const float *dest,
                     const float *src,
                     float       *out,
                     int          samples)
@@ -2441,7 +2441,7 @@ gimp_layer_mode_get_blend_fun (GimpLayerMode mode)
     case GIMP_LAYER_MODE_GRAIN_EXTRACT:  return blendfun_grain_extract;
     case GIMP_LAYER_MODE_DODGE:          return blendfun_dodge;
     case GIMP_LAYER_MODE_OVERLAY:        return blendfun_overlay;
-    case GIMP_LAYER_MODE_HSV_COLOR:      return blendfun_hsv_color;
+    case GIMP_LAYER_MODE_HSL_COLOR:      return blendfun_hsl_color;
     case GIMP_LAYER_MODE_HSV_HUE:        return blendfun_hsv_hue;
     case GIMP_LAYER_MODE_HSV_SATURATION: return blendfun_hsv_saturation;
     case GIMP_LAYER_MODE_HSV_VALUE:      return blendfun_hsv_value;

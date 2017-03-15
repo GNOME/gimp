@@ -2444,7 +2444,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
         case GIMP_LAYER_MODE_LIGHTEN_ONLY:
         case GIMP_LAYER_MODE_HSV_HUE:
         case GIMP_LAYER_MODE_HSV_SATURATION:
-        case GIMP_LAYER_MODE_HSV_COLOR:
+        case GIMP_LAYER_MODE_HSL_COLOR:
         case GIMP_LAYER_MODE_HSV_VALUE:
         case GIMP_LAYER_MODE_DIVIDE:
         case GIMP_LAYER_MODE_DODGE:
