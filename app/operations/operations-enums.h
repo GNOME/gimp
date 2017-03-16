@@ -74,19 +74,21 @@ typedef enum
   GIMP_LAYER_MODE_DODGE_LEGACY,          /*< desc="Dodge (legacy)"           >*/
   GIMP_LAYER_MODE_BURN_LEGACY,           /*< desc="Burn (legacy)"            >*/
   GIMP_LAYER_MODE_HARDLIGHT_LEGACY,      /*< desc="Hard light (legacy)"      >*/
+
+  /*  Since 2.8 (XCF version 2)  */
   GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,      /*< desc="Soft light (legacy)"      >*/
   GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY,  /*< desc="Grain extract (legacy)"   >*/
   GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY,    /*< desc="Grain merge (legacy)"     >*/
   GIMP_LAYER_MODE_COLOR_ERASE_LEGACY,    /*< desc="Color erase (legacy)"     >*/
 
-  /*  Since 2.8  */
+  /*  Since 2.10 (XCF version 9) */
   GIMP_LAYER_MODE_OVERLAY,               /*< desc="Overlay"                  >*/
   GIMP_LAYER_MODE_LCH_HUE,               /*< desc="Hue (LCH)"                >*/
   GIMP_LAYER_MODE_LCH_CHROMA,            /*< desc="Chroma (LCH)"             >*/
   GIMP_LAYER_MODE_LCH_COLOR,             /*< desc="Color (LCH)"              >*/
   GIMP_LAYER_MODE_LCH_LIGHTNESS,         /*< desc="Lightness (LCH)"          >*/
 
-  /*  Since 2.10  */
+  /*  Since 2.10 (XCF version 10)  */
   GIMP_LAYER_MODE_NORMAL,                /*< desc="Normal"                   >*/
   GIMP_LAYER_MODE_BEHIND,                /*< desc="Behind"                   >*/
   GIMP_LAYER_MODE_MULTIPLY,              /*< desc="Multiply"                 >*/
