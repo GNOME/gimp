@@ -1007,7 +1007,7 @@ gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
       return GIMP_LAYER_MODE_HSV_SATURATION_LEGACY;
 
     case PSP_BLEND_COLOR:
-      return GIMP_LAYER_MODE_HSV_COLOR_LEGACY;
+      return GIMP_LAYER_MODE_HSL_COLOR_LEGACY;
 
     case PSP_BLEND_LUMINOSITY:
       return GIMP_LAYER_MODE_HSV_VALUE_LEGACY;   /* ??? */

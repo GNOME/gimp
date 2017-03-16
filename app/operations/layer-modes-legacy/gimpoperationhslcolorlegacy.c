@@ -29,15 +29,15 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationhsvcolorlegacy.h"
+#include "gimpoperationhslcolorlegacy.h"
 
 
-G_DEFINE_TYPE (GimpOperationHsvColorLegacy, gimp_operation_hsv_color_legacy,
+G_DEFINE_TYPE (GimpOperationHslColorLegacy, gimp_operation_hsl_color_legacy,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
-gimp_operation_hsv_color_legacy_class_init (GimpOperationHsvColorLegacyClass *klass)
+gimp_operation_hsl_color_legacy_class_init (GimpOperationHslColorLegacyClass *klass)
 {
   GeglOperationClass               *operation_class;
   GeglOperationPointComposer3Class *point_class;
@@ -46,20 +46,20 @@ gimp_operation_hsv_color_legacy_class_init (GimpOperationHsvColorLegacyClass *kl
   point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:hsv-color-legacy",
+                                 "name",        "gimp:hsl-color-legacy",
                                  "description", "GIMP color mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_hsv_color_legacy_process;
+  point_class->process = gimp_operation_hsl_color_legacy_process;
 }
 
 static void
-gimp_operation_hsv_color_legacy_init (GimpOperationHsvColorLegacy *self)
+gimp_operation_hsl_color_legacy_init (GimpOperationHslColorLegacy *self)
 {
 }
 
 gboolean
-gimp_operation_hsv_color_legacy_process (GeglOperation       *op,
+gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
                                          void                *in_p,
                                          void                *layer_p,
                                          void                *mask_p,

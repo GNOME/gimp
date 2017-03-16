@@ -68,7 +68,7 @@ typedef enum
   GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,   /*< desc="Lighten only (legacy)"    >*/
   GIMP_LAYER_MODE_HSV_HUE_LEGACY,        /*< desc="Hue (HSV) (legacy)"       >*/
   GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, /*< desc="Saturation (HSV) (legacy)">*/
-  GIMP_LAYER_MODE_HSV_COLOR_LEGACY,      /*< desc="Color (HSV) (legacy)"     >*/
+  GIMP_LAYER_MODE_HSL_COLOR_LEGACY,      /*< desc="Color (HSL) (legacy)"     >*/
   GIMP_LAYER_MODE_HSV_VALUE_LEGACY,      /*< desc="Value (HSV) (legacy)"     >*/
   GIMP_LAYER_MODE_DIVIDE_LEGACY,         /*< desc="Divide (legacy)"          >*/
   GIMP_LAYER_MODE_DODGE_LEGACY,          /*< desc="Dodge (legacy)"           >*/

@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationhsvcolorlegacy.h
+ * gimpoperationhslcolorlegacy.h
  * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_HSV_COLOR_LEGACY_H__
-#define __GIMP_OPERATION_HSV_COLOR_LEGACY_H__
+#ifndef __GIMP_OPERATION_HSL_COLOR_LEGACY_H__
+#define __GIMP_OPERATION_HSL_COLOR_LEGACY_H__
 
 
 #include "operations/layer-modes/gimpoperationlayermode.h"
 
 
-#define GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY            (gimp_operation_hsv_color_legacy_get_type ())
-#define GIMP_OPERATION_HSV_COLOR_LEGACY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY, GimpOperationHsvColorLegacy))
-#define GIMP_OPERATION_HSV_COLOR_LEGACY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY, GimpOperationHsvColorLegacyClass))
-#define GIMP_IS_OPERATION_HSV_COLOR_LEGACY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY))
-#define GIMP_IS_OPERATION_HSV_COLOR_LEGACY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY))
-#define GIMP_OPERATION_HSV_COLOR_LEGACY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY, GimpOperationHsvColorLegacyClass))
+#define GIMP_TYPE_OPERATION_HSL_COLOR_LEGACY            (gimp_operation_hsl_color_legacy_get_type ())
+#define GIMP_OPERATION_HSL_COLOR_LEGACY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_HSL_COLOR_LEGACY, GimpOperationHslColorLegacy))
+#define GIMP_OPERATION_HSL_COLOR_LEGACY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_HSL_COLOR_LEGACY, GimpOperationHslColorLegacyClass))
+#define GIMP_IS_OPERATION_HSL_COLOR_LEGACY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_HSL_COLOR_LEGACY))
+#define GIMP_IS_OPERATION_HSL_COLOR_LEGACY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_HSL_COLOR_LEGACY))
+#define GIMP_OPERATION_HSL_COLOR_LEGACY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_HSL_COLOR_LEGACY, GimpOperationHslColorLegacyClass))
 
 
-typedef struct _GimpOperationHsvColorLegacy      GimpOperationHsvColorLegacy;
-typedef struct _GimpOperationHsvColorLegacyClass GimpOperationHsvColorLegacyClass;
+typedef struct _GimpOperationHslColorLegacy      GimpOperationHslColorLegacy;
+typedef struct _GimpOperationHslColorLegacyClass GimpOperationHslColorLegacyClass;
 
-struct _GimpOperationHsvColorLegacy
+struct _GimpOperationHslColorLegacy
 {
   GimpOperationLayerMode  parent_instance;
 };
 
-struct _GimpOperationHsvColorLegacyClass
+struct _GimpOperationHslColorLegacyClass
 {
   GimpOperationLayerModeClass  parent_class;
 };
 
 
-GType    gimp_operation_hsv_color_legacy_get_type (void) G_GNUC_CONST;
+GType    gimp_operation_hsl_color_legacy_get_type (void) G_GNUC_CONST;
 
-gboolean gimp_operation_hsv_color_legacy_process  (GeglOperation       *op,
+gboolean gimp_operation_hsl_color_legacy_process  (GeglOperation       *op,
                                                    void                *in,
                                                    void                *layer,
                                                    void                *mask,
@@ -59,4 +59,4 @@ gboolean gimp_operation_hsv_color_legacy_process  (GeglOperation       *op,
                                                    gint                 level);
 
 
-#endif /* __GIMP_OPERATION_HSV_COLOR_LEGACY_H__ */
+#endif /* __GIMP_OPERATION_HSL_COLOR_LEGACY_H__ */

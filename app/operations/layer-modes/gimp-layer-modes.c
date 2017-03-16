@@ -34,7 +34,7 @@
 #include "operations/layer-modes-legacy/gimpoperationgrainextractlegacy.h"
 #include "operations/layer-modes-legacy/gimpoperationgrainmergelegacy.h"
 #include "operations/layer-modes-legacy/gimpoperationhardlightlegacy.h"
-#include "operations/layer-modes-legacy/gimpoperationhsvcolorlegacy.h"
+#include "operations/layer-modes-legacy/gimpoperationhslcolorlegacy.h"
 #include "operations/layer-modes-legacy/gimpoperationhsvhuelegacy.h"
 #include "operations/layer-modes-legacy/gimpoperationhsvsaturationlegacy.h"
 #include "operations/layer-modes-legacy/gimpoperationhsvvaluelegacy.h"
@@ -266,10 +266,10 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .blend_space          = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL
   },
 
-  { GIMP_LAYER_MODE_HSV_COLOR_LEGACY,
+  { GIMP_LAYER_MODE_HSL_COLOR_LEGACY,
 
-    .op_name              = "gimp:hsv-color-legacy",
-    .function             = gimp_operation_hsv_color_legacy_process,
+    .op_name              = "gimp:hsl-color-legacy",
+    .function             = gimp_operation_hsl_color_legacy_process,
     .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
@@ -977,7 +977,7 @@ static const GimpLayerMode layer_mode_group_legacy[] =
 
   GIMP_LAYER_MODE_HSV_HUE_LEGACY,
   GIMP_LAYER_MODE_HSV_SATURATION_LEGACY,
-  GIMP_LAYER_MODE_HSV_COLOR_LEGACY,
+  GIMP_LAYER_MODE_HSL_COLOR_LEGACY,
   GIMP_LAYER_MODE_HSV_VALUE_LEGACY
 };
 
@@ -1036,8 +1036,7 @@ static const GimpLayerMode layer_mode_groups[][2] =
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSL_COLOR,
-    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HSV_COLOR_LEGACY
-                                      /* HSV_COLOR_LEGACY actually uses HSL */
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = GIMP_LAYER_MODE_HSL_COLOR_LEGACY
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_HSV_VALUE,

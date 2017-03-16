@@ -73,7 +73,7 @@
 #include "layer-modes-legacy/gimpoperationgrainextractlegacy.h"
 #include "layer-modes-legacy/gimpoperationgrainmergelegacy.h"
 #include "layer-modes-legacy/gimpoperationhardlightlegacy.h"
-#include "layer-modes-legacy/gimpoperationhsvcolorlegacy.h"
+#include "layer-modes-legacy/gimpoperationhslcolorlegacy.h"
 #include "layer-modes-legacy/gimpoperationhsvhuelegacy.h"
 #include "layer-modes-legacy/gimpoperationhsvsaturationlegacy.h"
 #include "layer-modes-legacy/gimpoperationhsvvaluelegacy.h"
@@ -139,7 +139,7 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_LIGHTEN_ONLY_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_HUE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_SATURATION_LEGACY);
-  g_type_class_ref (GIMP_TYPE_OPERATION_HSV_COLOR_LEGACY);
+  g_type_class_ref (GIMP_TYPE_OPERATION_HSL_COLOR_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_HSV_VALUE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_DIVIDE_LEGACY);
   g_type_class_ref (GIMP_TYPE_OPERATION_DODGE_LEGACY);

@@ -845,7 +845,7 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
       break;
 
     case GIMP_LAYER_MODE_LCH_COLOR:
-    case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
+    case GIMP_LAYER_MODE_HSL_COLOR_LEGACY:
       psd_mode = g_strndup ("colr", 4);                       /* Color (ps3) */
       break;
 

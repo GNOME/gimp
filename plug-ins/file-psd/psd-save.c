@@ -217,7 +217,7 @@ psd_lmode_layer (gint32  idLayer,
       strcpy (psdMode, "sat ");
       break;
     case GIMP_LAYER_MODE_LCH_COLOR:
-    case GIMP_LAYER_MODE_HSV_COLOR_LEGACY:
+    case GIMP_LAYER_MODE_HSL_COLOR_LEGACY:
       strcpy (psdMode, "colr");
       break;
     case GIMP_LAYER_MODE_ADDITION:
