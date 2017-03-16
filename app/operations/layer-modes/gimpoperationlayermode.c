@@ -1825,39 +1825,26 @@ blendfun_hsl_color (const float *dest,
 
           if (src_l != 0.0f && src_l != 1.0f)
             {
-              gfloat factor;
-              gfloat offset;
-              gint   c;
+              gboolean dest_high;
+              gboolean src_high;
+              gfloat   ratio;
+              gfloat   offset;
+              gint     c;
 
-              if (src_l < 0.5f)
-                {
-                  if (dest_l < 0.5f)
-                    {
-                      factor = dest_l / src_l;
-                      offset = 0.0f;
-                    }
-                  else
-                    {
-                      factor = 1.0f - dest_l / src_l;
-                      offset = 2.0f * dest_l - 1.0f;
-                    }
-                }
-              else
-                {
-                  if (dest_l < 0.5f)
-                    {
-                      factor = dest_l / (1.0f - src_l);
-                      offset = 2.0f * dest_l - factor;
-                    }
-                  else
-                    {
-                      factor = (1.0f - dest_l) / (1.0f - src_l);
-                      offset = 1.0f - factor;
-                    }
-                }
+              dest_high = dest_l > 0.5f;
+              src_high  = src_l  > 0.5f;
+
+              dest_l = MIN (dest_l, 1.0f - dest_l);
+              src_l  = MIN (src_l,  1.0f - src_l);
+
+              ratio                  = dest_l / src_l;
+
+              offset                 = 0.0f;
+              if (dest_high) offset += 1.0f - 2.0f * dest_l;
+              if (src_high)  offset += 2.0f * dest_l - ratio;
 
               for (c = 0; c < 3; c++)
-                out[c] = src[c] * factor + offset;
+                out[c] = src[c] * ratio + offset;
             }
           else
             {
@@ -1887,7 +1874,6 @@ blendfun_hsv_hue (const float *dest,
         {
           gfloat src_min,  src_max,  src_delta;
           gfloat dest_min, dest_max, dest_delta, dest_s;
-          gint   c;
 
           src_min   = MIN (src[0], src[1]);
           src_min   = MIN (src_min, src[2]);
@@ -1899,6 +1885,7 @@ blendfun_hsv_hue (const float *dest,
             {
               gfloat ratio;
               gfloat offset;
+              gint   c;
 
               dest_min   = MIN (dest[0], dest[1]);
               dest_min   = MIN (dest_min, dest[2]);
@@ -1915,6 +1902,8 @@ blendfun_hsv_hue (const float *dest,
             }
           else
             {
+              gint c;
+
               for (c = 0; c < 3; c++)
                 out[c] = dest[c];
             }
@@ -1950,6 +1939,7 @@ blendfun_hsv_saturation (const float *dest,
           if (dest_delta != 0.0f)
             {
               gfloat ratio;
+              gfloat offset;
               gint   c;
 
               src_min   = MIN (src[0], src[1]);
@@ -1959,10 +1949,11 @@ blendfun_hsv_saturation (const float *dest,
               src_delta = src_max - src_min;
               src_s     = src_max ? src_delta / src_max : 0.0f;
 
-              ratio = src_s * dest_max / dest_delta;
+              ratio  = src_s * dest_max / dest_delta;
+              offset = (1.0f - ratio) * dest_max;
 
               for (c = 0; c < 3; c++)
-                out[c] = (dest[c] - dest_max) * ratio + dest_max;
+                out[c] = dest[c] * ratio + offset;
             }
           else
             {
