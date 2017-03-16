@@ -34,7 +34,7 @@ layermodes_map = {
     "svg:hard-light": LAYER_MODE_HARDLIGHT_LEGACY,
     "svg:soft-light": LAYER_MODE_SOFTLIGHT_LEGACY,
     "svg:difference": LAYER_MODE_DIFFERENCE_LEGACY,
-    "svg:color": LAYER_MODE_HSV_COLOR_LEGACY,
+    "svg:color": LAYER_MODE_HSL_COLOR_LEGACY,
     "svg:luminosity": LAYER_MODE_HSV_VALUE_LEGACY,
     "svg:hue": LAYER_MODE_HSV_HUE_LEGACY,
     "svg:saturation": LAYER_MODE_HSV_SATURATION_LEGACY,
