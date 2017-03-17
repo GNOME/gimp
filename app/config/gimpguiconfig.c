@@ -27,6 +27,8 @@
 
 #include "config-types.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimprc-blurbs.h"
 #include "gimpguiconfig.h"
 
@@ -42,6 +44,12 @@
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
   "http://docs.gimp.org/" GIMP_APP_VERSION_STRING
 
+
+enum
+{
+  SIZE_CHANGED,
+  LAST_SIGNAL
+};
 
 enum
 {
@@ -114,17 +122,30 @@ static void   gimp_gui_config_get_property (GObject      *object,
                                             GValue       *value,
                                             GParamSpec   *pspec);
 
+static void   monitor_resolution_changed   (GimpDisplayConfig *display_config,
+                                            GParamSpec        *pspec,
+                                            GimpGuiConfig     *gui_config);
 
 G_DEFINE_TYPE (GimpGuiConfig, gimp_gui_config, GIMP_TYPE_DISPLAY_CONFIG)
 
 #define parent_class gimp_gui_config_parent_class
 
+static guint signals[LAST_SIGNAL] = { 0, };
 
 static void
 gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
+
+  signals[SIZE_CHANGED] =
+    g_signal_new ("size-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpGuiConfigClass, size_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   object_class->finalize     = gimp_gui_config_finalize;
   object_class->set_property = gimp_gui_config_set_property;
@@ -310,7 +331,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                          "icon-size",
                          ICON_SIZE_BLURB,
                          GIMP_TYPE_ICON_SIZE,
-                         GIMP_ICON_SIZE_DEFAULT,
+                         GIMP_ICON_SIZE_AUTO,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_HELP,
@@ -619,7 +640,26 @@ gimp_gui_config_set_property (GObject      *object,
       gui_config->icon_theme = g_value_dup_string (value);
       break;
     case PROP_ICON_SIZE:
-      gui_config->icon_size = g_value_get_enum (value);
+        {
+          GimpIconSize size = g_value_get_enum (value);
+
+          g_signal_handlers_disconnect_by_func (GIMP_DISPLAY_CONFIG (gui_config),
+                                                G_CALLBACK (monitor_resolution_changed),
+                                                gui_config);
+          if (size == GIMP_ICON_SIZE_AUTO)
+            {
+              g_signal_connect (GIMP_DISPLAY_CONFIG (gui_config),
+                                "notify::monitor-xresolution",
+                                G_CALLBACK (monitor_resolution_changed),
+                                gui_config);
+              g_signal_connect (GIMP_DISPLAY_CONFIG (gui_config),
+                                "notify::monitor-yresolution",
+                                G_CALLBACK (monitor_resolution_changed),
+                                gui_config);
+            }
+          gui_config->icon_size = size;
+          g_signal_emit (gui_config, signals[SIZE_CHANGED], 0);
+        }
       break;
     case PROP_USE_HELP:
       gui_config->use_help = g_value_get_boolean (value);
@@ -849,4 +889,42 @@ gimp_gui_config_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+monitor_resolution_changed (GimpDisplayConfig *display_config,
+                            GParamSpec        *pspec,
+                            GimpGuiConfig     *gui_config)
+{
+  if (gui_config->icon_size == GIMP_ICON_SIZE_AUTO)
+    {
+      g_signal_emit (gui_config, signals[SIZE_CHANGED], 0);
+    }
+}
+
+GimpIconSize
+gimp_gui_config_detect_icon_size (GimpGuiConfig *gui_config)
+{
+  GimpIconSize size = gui_config->icon_size;
+
+  if (size == GIMP_ICON_SIZE_AUTO)
+    {
+      GimpDisplayConfig *display_config;
+
+      display_config = GIMP_DISPLAY_CONFIG (gui_config);
+
+      if (display_config->monitor_xres < 100.0 ||
+          display_config->monitor_yres < 100.0)
+        size = GIMP_ICON_SIZE_SMALL;
+      else if (display_config->monitor_xres < 192.0 ||
+               display_config->monitor_yres < 192.0)
+        size = GIMP_ICON_SIZE_MEDIUM;
+      else if (display_config->monitor_xres < 300.0 ||
+               display_config->monitor_yres < 300.0)
+        size = GIMP_ICON_SIZE_LARGE;
+      else
+        size = GIMP_ICON_SIZE_HUGE;
+    }
+
+  return size;
 }

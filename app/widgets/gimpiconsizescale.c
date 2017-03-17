@@ -50,7 +50,7 @@ struct _GimpIconSizeScalePrivate
   Gimp      *gimp;
 
   GtkWidget *scale;
-  GtkWidget *checkbox;
+  GtkWidget *combo;
 };
 
 #define GET_PRIVATE(scale) \
@@ -78,8 +78,8 @@ static void   gimp_icon_size_scale_icon_size_notify  (GimpGuiConfig   *config,
                                                       GParamSpec      *pspec,
                                                       GtkWidget       *size_scale);
 
-/* Signals on the checkbox. */
-static void   gimp_icon_size_scale_checkbox_toggled  (GtkToggleButton *checkbox,
+/* Signals on the combo. */
+static void   gimp_icon_size_scale_combo_changed     (GtkComboBox     *combo,
                                                       GimpGuiConfig   *config);
 /* Signals on the GtkScale. */
 static void   gimp_icon_size_scale_value_changed     (GtkRange        *range,
@@ -119,9 +119,15 @@ static void
 gimp_icon_size_scale_init (GimpIconSizeScale *object)
 {
   GimpIconSizeScalePrivate *private = GET_PRIVATE (object);
+  GtkWidget                *box;
 
-  private->checkbox = gtk_check_button_new_with_label (_("Override theme icon sizes"));
-  gtk_frame_set_label_widget (GTK_FRAME (object), private->checkbox);
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (object), box);
+  private->combo = gimp_int_combo_box_new (_("Guess icon size from resolution"), 0,
+                                           _("Use icon size from the theme"), 1,
+                                           _("Custom icon size"), 2, NULL);
+  gtk_box_pack_start (GTK_BOX (box), private->combo, FALSE, FALSE, 0);
+  gtk_widget_show (box);
 
   private->scale = gtk_hscale_new_with_range (0.0, 3.0, 1.0);
   /* 'draw_value' updates round_digits. So set it first. */
@@ -138,8 +144,8 @@ gimp_icon_size_scale_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_signal_connect (private->checkbox, "toggled",
-                    G_CALLBACK (gimp_icon_size_scale_checkbox_toggled),
+  g_signal_connect (private->combo, "changed",
+                    G_CALLBACK (gimp_icon_size_scale_combo_changed),
                     private->gimp->config);
 
   g_signal_connect (private->gimp->config, "notify::icon-theme",
@@ -161,7 +167,7 @@ gimp_icon_size_scale_constructed (GObject *object)
   gimp_icon_size_scale_icon_size_notify (GIMP_GUI_CONFIG (private->gimp->config),
                                          NULL, private->scale);
 
-  gtk_widget_show (private->checkbox);
+  gtk_widget_show (private->combo);
   gtk_widget_show (private->scale);
 }
 
@@ -309,25 +315,25 @@ gimp_icon_size_scale_icon_theme_notify (GimpGuiConfig *config,
                       markup);
   if (update_value)
     {
-      GimpIconSize *size;
+      GimpIconSize size;
 
       g_object_get (config, "icon-size", &size, NULL);
 
-      if (size == GIMP_ICON_SIZE_DEFAULT)
+      if (size == GIMP_ICON_SIZE_THEME || size == GIMP_ICON_SIZE_AUTO)
         {
           g_signal_handlers_block_by_func (scale,
                                            G_CALLBACK (gimp_icon_size_scale_value_changed),
                                            config);
         }
-      if (has_dialog)
-        gtk_range_set_value (scale, 3.0);
-      else if (has_dnd)
-        gtk_range_set_value (scale, 2.0);
+      if (has_small_toolbar)
+        gtk_range_set_value (scale, 0.0);
       else if (has_large_toolbar)
         gtk_range_set_value (scale, 1.0);
+      else if (has_dnd)
+        gtk_range_set_value (scale, 2.0);
       else
-        gtk_range_set_value (scale, 0.0);
-      if (size == GIMP_ICON_SIZE_DEFAULT)
+        gtk_range_set_value (scale, 3.0);
+      if (size == GIMP_ICON_SIZE_THEME || size == GIMP_ICON_SIZE_AUTO)
         {
           g_signal_handlers_unblock_by_func (scale,
                                              G_CALLBACK (gimp_icon_size_scale_value_changed),
@@ -341,10 +347,14 @@ gimp_icon_size_scale_icon_size_notify (GimpGuiConfig *config,
                                        GParamSpec    *pspec,
                                        GtkWidget     *size_scale)
 {
-  GtkWidget    *frame    = gtk_widget_get_parent (size_scale);
-  GtkWidget    *checkbox = gtk_frame_get_label_widget (GTK_FRAME (frame));
-  GimpIconSize  size;
-  gdouble       value    = 1.0;
+  GimpIconSizeScalePrivate *private;
+  GtkWidget                *frame = gtk_widget_get_parent (size_scale);
+  GtkWidget                *combo;
+  GimpIconSize              size;
+  gdouble                   value = 1.0;
+
+  private = GET_PRIVATE (frame);
+  combo   = private->combo;
 
   g_object_get (config, "icon-size", &size, NULL);
 
@@ -362,22 +372,24 @@ gimp_icon_size_scale_icon_size_notify (GimpGuiConfig *config,
     case GIMP_ICON_SIZE_HUGE:
       value = 3.0;
       break;
-    default: /* GIMP_ICON_SIZE_DEFAULT */
+    default: /* GIMP_ICON_SIZE_THEME */
       break;
     }
-  g_signal_handlers_block_by_func (checkbox,
-                                   G_CALLBACK (gimp_icon_size_scale_checkbox_toggled),
+  g_signal_handlers_block_by_func (combo,
+                                   G_CALLBACK (gimp_icon_size_scale_combo_changed),
                                    config);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox),
-                                size != GIMP_ICON_SIZE_DEFAULT);
-  g_signal_handlers_unblock_by_func (checkbox,
-                                     G_CALLBACK (gimp_icon_size_scale_checkbox_toggled),
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 (size == GIMP_ICON_SIZE_AUTO)? 0 :
+                                 (size == GIMP_ICON_SIZE_THEME)? 1 : 2);
+  g_signal_handlers_unblock_by_func (combo,
+                                     G_CALLBACK (gimp_icon_size_scale_combo_changed),
                                      config);
   gtk_widget_set_sensitive (GTK_WIDGET (size_scale),
-                            size != GIMP_ICON_SIZE_DEFAULT);
+                            size != GIMP_ICON_SIZE_THEME &&
+                            size != GIMP_ICON_SIZE_AUTO);
 
 
-  if (size != GIMP_ICON_SIZE_DEFAULT)
+  if (size != GIMP_ICON_SIZE_THEME && size != GIMP_ICON_SIZE_AUTO)
     {
       g_signal_handlers_block_by_func (size_scale,
                                        G_CALLBACK (gimp_icon_size_scale_value_changed),
@@ -390,14 +402,17 @@ gimp_icon_size_scale_icon_size_notify (GimpGuiConfig *config,
 }
 
 static void
-gimp_icon_size_scale_checkbox_toggled (GtkToggleButton *checkbox,
-                                       GimpGuiConfig   *config)
+gimp_icon_size_scale_combo_changed (GtkComboBox   *combo,
+                                    GimpGuiConfig *config)
 {
-  GtkWidget    *frame = gtk_widget_get_parent (GTK_WIDGET (checkbox));
-  GtkWidget    *scale = gtk_bin_get_child (GTK_BIN (frame));
+  GtkWidget    *frame;
+  GtkWidget    *scale;
   GimpIconSize  size;
 
-  if (gtk_toggle_button_get_active (checkbox))
+  frame = gtk_widget_get_parent (gtk_widget_get_parent (GTK_WIDGET (combo)));
+  scale = gtk_bin_get_child (GTK_BIN (frame));
+
+  if (gtk_combo_box_get_active (combo) == 2)
     {
       gdouble value = gtk_range_get_value (GTK_RANGE (scale));
 
@@ -412,10 +427,11 @@ gimp_icon_size_scale_checkbox_toggled (GtkToggleButton *checkbox,
     }
   else
     {
-      size = GIMP_ICON_SIZE_DEFAULT;
+      size = (gtk_combo_box_get_active (combo) == 0) ?
+        GIMP_ICON_SIZE_AUTO : GIMP_ICON_SIZE_THEME;
     }
   gtk_widget_set_sensitive (GTK_WIDGET (scale),
-                            gtk_toggle_button_get_active (checkbox));
+                            gtk_combo_box_get_active (combo) == 2);
 
   g_signal_handlers_block_by_func (config,
                                    G_CALLBACK (gimp_icon_size_scale_icon_size_notify),

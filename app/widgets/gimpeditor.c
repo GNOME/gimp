@@ -106,8 +106,7 @@ static void            gimp_editor_get_styling         (GimpEditor     *editor,
                                                         GtkIconSize    *button_icon_size,
                                                         gint           *button_spacing,
                                                         GtkReliefStyle *button_relief);
-static void            gimp_editor_icon_size_notify    (GimpGuiConfig   *config,
-                                                        GParamSpec      *pspec,
+static void            gimp_editor_config_size_changed (GimpGuiConfig   *config,
                                                         GimpEditor      *editor);
 
 
@@ -255,8 +254,8 @@ gimp_editor_constructed (GObject *object)
                                        editor->priv->popup_data,
                                        FALSE);
       g_signal_connect (editor->priv->ui_manager->gimp->config,
-                        "notify::icon-size",
-                        G_CALLBACK (gimp_editor_icon_size_notify),
+                        "size-changed",
+                        G_CALLBACK (gimp_editor_config_size_changed),
                         editor);
     }
 }
@@ -281,7 +280,7 @@ gimp_editor_dispose (GObject *object)
   if (editor->priv->ui_manager)
     {
       g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
-                                            G_CALLBACK (gimp_editor_icon_size_notify),
+                                            G_CALLBACK (gimp_editor_config_size_changed),
                                             editor);
       g_object_unref (editor->priv->ui_manager);
       editor->priv->ui_manager = NULL;
@@ -385,7 +384,7 @@ gimp_editor_style_set (GtkWidget *widget,
 
   if (editor->priv->ui_manager)
     config = GIMP_GUI_CONFIG (editor->priv->ui_manager->gimp->config);
-  gimp_editor_icon_size_notify (config, NULL, editor);
+  gimp_editor_config_size_changed (config, editor);
 }
 
 static GimpUIManager *
@@ -459,7 +458,7 @@ gimp_editor_create_menu (GimpEditor      *editor,
   if (editor->priv->ui_manager)
     {
       g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
-                                            G_CALLBACK (gimp_editor_icon_size_notify),
+                                            G_CALLBACK (gimp_editor_config_size_changed),
                                             editor);
       g_object_unref (editor->priv->ui_manager);
     }
@@ -469,8 +468,8 @@ gimp_editor_create_menu (GimpEditor      *editor,
                                                             popup_data,
                                                             FALSE);
   g_signal_connect (editor->priv->ui_manager->gimp->config,
-                    "notify::icon-size",
-                    G_CALLBACK (gimp_editor_icon_size_notify),
+                    "size-changed",
+                    G_CALLBACK (gimp_editor_config_size_changed),
                     editor);
 
   if (editor->priv->ui_path)
@@ -928,7 +927,7 @@ gimp_editor_get_styling (GimpEditor     *editor,
   /* Check if we should override theme styling. */
   if (config)
     {
-      g_object_get (config, "icon-size", &size, NULL);
+      size = gimp_gui_config_detect_icon_size (config);
       switch (size)
         {
         case GIMP_ICON_SIZE_SMALL:
@@ -956,9 +955,8 @@ gimp_editor_get_styling (GimpEditor     *editor,
 }
 
 static void
-gimp_editor_icon_size_notify (GimpGuiConfig *config,
-                              GParamSpec    *pspec,
-                              GimpEditor    *editor)
+gimp_editor_config_size_changed (GimpGuiConfig *config,
+                                 GimpEditor    *editor)
 {
   gint            content_spacing;
   GtkIconSize     button_icon_size;

@@ -182,8 +182,7 @@ static void         gimp_dockbook_help_func                   (const gchar    *h
                                                                gpointer        help_data);
 static const gchar *gimp_dockbook_get_tab_style_name          (GimpTabStyle    tab_style);
 
-static void         gimp_dockbook_tab_icon_size_notify        (GimpGuiConfig   *config,
-                                                               GParamSpec      *pspec,
+static void         gimp_dockbook_config_size_changed         (GimpGuiConfig   *config,
                                                                GimpDockbook    *dockbook);
 
 
@@ -342,7 +341,7 @@ gimp_dockbook_finalize (GObject *object)
   if (dockbook->p->dock)
     {
       g_signal_handlers_disconnect_by_func (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
-                                            G_CALLBACK (gimp_dockbook_tab_icon_size_notify),
+                                            G_CALLBACK (gimp_dockbook_config_size_changed),
                                             dockbook);
       dockbook->p->dock = NULL;
     }
@@ -910,13 +909,13 @@ gimp_dockbook_set_dock (GimpDockbook *dockbook,
 
   if (dockbook->p->dock && gimp_dock_get_context (dockbook->p->dock))
     g_signal_handlers_disconnect_by_func (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
-                                          G_CALLBACK (gimp_dockbook_tab_icon_size_notify),
+                                          G_CALLBACK (gimp_dockbook_config_size_changed),
                                           dockbook);
   dockbook->p->dock = dock;
   if (dock)
     g_signal_connect (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
-                      "notify::icon-size",
-                      G_CALLBACK (gimp_dockbook_tab_icon_size_notify),
+                      "size-changed",
+                      G_CALLBACK (gimp_dockbook_config_size_changed),
                       dockbook);
 }
 
@@ -1612,9 +1611,7 @@ gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
 
   gimp = gimp_dock_get_context (dockbook->p->dock)->gimp;
 
-  g_object_get (GIMP_GUI_CONFIG (gimp->config),
-                "icon-size", &size, NULL);
-
+  size = gimp_gui_config_detect_icon_size (GIMP_GUI_CONFIG (gimp->config));
   /* Match GimpIconSize with GtkIconSize. */
   switch (size)
     {
@@ -1653,9 +1650,7 @@ gimp_dockbook_get_tab_border (GimpDockbook *dockbook)
                         "tab-border", &tab_border,
                         NULL);
 
-  g_object_get (GIMP_GUI_CONFIG (gimp->config),
-                "icon-size", &size, NULL);
-
+  size = gimp_gui_config_detect_icon_size (GIMP_GUI_CONFIG (gimp->config));
   /* Match GimpIconSize with GtkIconSize. */
   switch (size)
     {
@@ -1759,9 +1754,8 @@ gimp_dockbook_get_tab_style_name (GimpTabStyle tab_style)
 }
 
 static void
-gimp_dockbook_tab_icon_size_notify (GimpGuiConfig *config,
-                                    GParamSpec    *pspec,
-                                    GimpDockbook  *dockbook)
+gimp_dockbook_config_size_changed (GimpGuiConfig *config,
+                                   GimpDockbook  *dockbook)
 {
   gimp_dockbook_recreate_tab_widgets (dockbook, TRUE);
 }

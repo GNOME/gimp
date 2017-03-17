@@ -86,8 +86,7 @@ static gboolean gimp_tool_palette_tool_button_press   (GtkWidget       *widget,
                                                        GdkEventButton  *bevent,
                                                        GimpToolPalette *palette);
 
-static void     gimp_tool_palette_icon_size_notify    (GimpGuiConfig   *config,
-                                                       GParamSpec      *pspec,
+static void     gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
                                                        GimpToolPalette *palette);
 
 G_DEFINE_TYPE (GimpToolPalette, gimp_tool_palette, GTK_TYPE_TOOL_PALETTE)
@@ -142,7 +141,7 @@ gimp_tool_palette_finalize (GObject *object)
 
       if (context)
         g_signal_handlers_disconnect_by_func (context->gimp->config,
-                                              G_CALLBACK (gimp_tool_palette_icon_size_notify),
+                                              G_CALLBACK (gimp_tool_palette_config_size_changed),
                                               palette);
     }
 
@@ -217,8 +216,8 @@ gimp_tool_palette_style_set (GtkWidget *widget,
                         "button-relief",  &relief,
                         NULL);
 
-  gimp_tool_palette_icon_size_notify (GIMP_GUI_CONFIG (gimp->config),
-                                      NULL, GIMP_TOOL_PALETTE (widget));
+  gimp_tool_palette_config_size_changed (GIMP_GUI_CONFIG (gimp->config),
+                                         GIMP_TOOL_PALETTE (widget));
   for (list = gimp_get_tool_info_iter (gimp);
        list;
        list = g_list_next (list))
@@ -321,7 +320,7 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
     {
       context = gimp_toolbox_get_context (private->toolbox);
       g_signal_handlers_disconnect_by_func (GIMP_GUI_CONFIG (context->gimp->config),
-                                            G_CALLBACK (gimp_tool_palette_icon_size_notify),
+                                            G_CALLBACK (gimp_tool_palette_config_size_changed),
                                             palette);
     }
   private->toolbox = toolbox;
@@ -382,11 +381,11 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
 
   /* Update the toolbox icon size on config change. */
   g_signal_connect (GIMP_GUI_CONFIG (context->gimp->config),
-                    "notify::icon-size",
-                    G_CALLBACK (gimp_tool_palette_icon_size_notify),
+                    "size-changed",
+                    G_CALLBACK (gimp_tool_palette_config_size_changed),
                     palette);
-  gimp_tool_palette_icon_size_notify (GIMP_GUI_CONFIG (context->gimp->config),
-                                      NULL, palette);
+  gimp_tool_palette_config_size_changed (GIMP_GUI_CONFIG (context->gimp->config),
+                                         palette);
 }
 
 gboolean
@@ -507,14 +506,13 @@ gimp_tool_palette_tool_button_press (GtkWidget       *widget,
 }
 
 static void
-gimp_tool_palette_icon_size_notify (GimpGuiConfig   *config,
-                                    GParamSpec      *pspec,
-                                    GimpToolPalette *palette)
+gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
+                                       GimpToolPalette *palette)
 {
   GimpIconSize size;
   GtkIconSize  tool_icon_size;
 
-  g_object_get (config, "icon-size", &size, NULL);
+  size = gimp_gui_config_detect_icon_size (config);
   /* Match GimpIconSize with GtkIconSize for the toolbox icons. */
   switch (size)
     {
