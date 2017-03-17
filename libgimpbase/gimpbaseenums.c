@@ -505,15 +505,17 @@ gimp_desaturate_mode_get_type (void)
     { GIMP_DESATURATE_LUMA, "GIMP_DESATURATE_LUMA", "luma" },
     { GIMP_DESATURATE_AVERAGE, "GIMP_DESATURATE_AVERAGE", "average" },
     { GIMP_DESATURATE_LUMINANCE, "GIMP_DESATURATE_LUMINANCE", "luminance" },
+    { GIMP_DESATURATE_VALUE, "GIMP_DESATURATE_VALUE", "value" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_DESATURATE_LIGHTNESS, NC_("desaturate-mode", "Lightness"), NULL },
+    { GIMP_DESATURATE_LIGHTNESS, NC_("desaturate-mode", "Lightness (HSL)"), NULL },
     { GIMP_DESATURATE_LUMA, NC_("desaturate-mode", "Luma"), NULL },
-    { GIMP_DESATURATE_AVERAGE, NC_("desaturate-mode", "Average"), NULL },
+    { GIMP_DESATURATE_AVERAGE, NC_("desaturate-mode", "Average (HSI Intensity)"), NULL },
     { GIMP_DESATURATE_LUMINANCE, NC_("desaturate-mode", "Luminance"), NULL },
+    { GIMP_DESATURATE_VALUE, NC_("desaturate-mode", "Value (HSV)"), NULL },
     { 0, NULL, NULL }
   };
 
