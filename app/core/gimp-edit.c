@@ -433,7 +433,7 @@ gimp_edit_paste (GimpImage     *image,
                               viewport_height,
                               &offset_x,
                               &offset_y);
-  gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
+  gimp_item_translate (GIMP_ITEM (layer), offset_x, offset_y, FALSE);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                C_("undo-type", "Paste"));
