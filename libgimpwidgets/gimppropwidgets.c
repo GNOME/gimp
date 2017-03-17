@@ -528,7 +528,26 @@ gimp_prop_enum_combo_box_new (GObject     *config,
       combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
                                 "model", store,
                                 NULL);
+      g_object_unref (store);
+    }
+  else if (param_spec->value_type == GIMP_TYPE_DESATURATE_MODE)
+    {
+      /* this is a bad hack, if we get more of those, we should probably
+       * think of something less ugly
+       */
+      GtkListStore *store;
 
+      store = gimp_enum_store_new_with_values (param_spec->value_type,
+                                               5,
+                                               GIMP_DESATURATE_LUMINANCE,
+                                               GIMP_DESATURATE_LUMA,
+                                               GIMP_DESATURATE_LIGHTNESS,
+                                               GIMP_DESATURATE_AVERAGE,
+                                               GIMP_DESATURATE_VALUE);
+
+      combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
+                                "model", store,
+                                NULL);
       g_object_unref (store);
     }
   else
