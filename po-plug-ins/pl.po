@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-12 12:22+0100\n"
-"PO-Revision-Date: 2017-03-12 12:23+0100\n"
+"POT-Creation-Date: 2017-03-19 16:58+0100\n"
+"PO-Revision-Date: 2017-03-19 17:00+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -5098,7 +5098,7 @@ msgstr "C_MYK"
 
 #: ../plug-ins/common/newsprint.c:1370
 msgid "I_ntensity"
-msgstr "_Intensywność"
+msgstr "_Natężenie"
 
 #: ../plug-ins/common/newsprint.c:1395
 msgid "_Lock channels"
@@ -5192,7 +5192,7 @@ msgstr "Użycie mapy wy_kładnika:"
 #.
 #: ../plug-ins/common/oilify.c:925
 msgid "_Use intensity algorithm"
-msgstr "_Intensywny algorytm"
+msgstr "_Algorytm natężenia"
 
 #: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
@@ -5454,12 +5454,12 @@ msgstr "Poziomy wyjściowe:"
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1654
 msgid "Hold intensity"
-msgstr "Utrzymanie Intensywności"
+msgstr "Utrzymanie natężenia"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1665
 msgid "Original intensity"
-msgstr "Pierwotna intensywność"
+msgstr "Pierwotne natężenie"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1683
@@ -5568,11 +5568,11 @@ msgstr "Dostosowuje próg luminancji"
 
 #: ../plug-ins/common/sparkle.c:387
 msgid "F_lare intensity:"
-msgstr "Intensywność f_lary:"
+msgstr "Natężenie f_lary:"
 
 #: ../plug-ins/common/sparkle.c:390
 msgid "Adjust the flare intensity"
-msgstr "Dostosowuje intensywność błysku"
+msgstr "Dostosowuje natężenie błysku"
 
 #: ../plug-ins/common/sparkle.c:400
 msgid "_Spike length:"
@@ -7842,15 +7842,15 @@ msgstr "Gęstość kolorów"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:958
 msgid "Change the intensity of the red channel"
-msgstr "Zmienia intensywność kanału czerwonego"
+msgstr "Zmienia natężenie kanału czerwonego"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:968
 msgid "Change the intensity of the green channel"
-msgstr "Zmienia intensywność kanału zielonego"
+msgstr "Zmienia natężenie kanału zielonego"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:978
 msgid "Change the intensity of the blue channel"
-msgstr "Zmienia intensywność kanału niebieskiego"
+msgstr "Zmienia natężenie kanału niebieskiego"
 
 #. Color Function frame
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:984
@@ -10783,11 +10783,11 @@ msgstr "Ustawia kolor źródła światła"
 
 #: ../plug-ins/lighting/lighting-ui.c:468
 msgid "_Intensity:"
-msgstr "_Intensywność:"
+msgstr "_Natężenie:"
 
 #: ../plug-ins/lighting/lighting-ui.c:476
 msgid "Light intensity"
-msgstr "Intensywność światła"
+msgstr "Natężenie światła"
 
 #: ../plug-ins/lighting/lighting-ui.c:479
 #: ../plug-ins/map-object/map-object-ui.c:640
@@ -10872,7 +10872,7 @@ msgstr "_Jasność:"
 #: ../plug-ins/lighting/lighting-ui.c:703
 #: ../plug-ins/map-object/map-object-ui.c:834
 msgid "Intensity of original color when lit by a light source"
-msgstr "Intensywność pierwotnego koloru przy oświetlony przez źródło światła"
+msgstr "Natężenie pierwotnego koloru przy oświetlony przez źródło światła"
 
 #: ../plug-ins/lighting/lighting-ui.c:717
 msgid "_Shiny:"
@@ -11119,7 +11119,7 @@ msgstr "Wektor kierunku"
 
 #: ../plug-ins/map-object/map-object-ui.c:771
 msgid "Intensity Levels"
-msgstr "Poziomy intensywności"
+msgstr "Poziomy natężenia"
 
 #: ../plug-ins/map-object/map-object-ui.c:790
 msgid "Ambient:"
