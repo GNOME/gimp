@@ -457,13 +457,15 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
 static const GimpToggleActionEntry view_flip_actions[] =
 {
   { "view-flip-horizontally", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
-    NC_("view-action", "Flip Horizontally"), NULL, NULL,
+    NC_("view-action", "Flip Horizontally"), NULL,
+    NC_("view-action", "Flip the view Horizontally"),
     G_CALLBACK (view_flip_horizontally_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_FLIP },
 
   { "view-flip-vertically", GIMP_ICON_OBJECT_FLIP_VERTICAL,
-    NC_("view-action", "Flip Vertically"), NULL, NULL,
+    NC_("view-action", "Flip Vertically"), NULL,
+    NC_("view-action", "Flip the view Vertically"),
     G_CALLBACK (view_flip_vertically_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_FLIP }
@@ -488,31 +490,31 @@ static const GimpEnumActionEntry view_rotate_relative_actions[] =
 {
   { "view-rotate-15", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("view-action", "Rotate 15° _clockwise"), NULL,
-    NC_("view-action", "Rotate 15 degrees to the right"),
+    NC_("view-action", "Rotate the view 15 degrees to the right"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ROTATE_15 },
 
   { "view-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("view-action", "Rotate 90° _clockwise"), NULL,
-    NC_("view-action", "Rotate 90 degrees to the right"),
+    NC_("view-action", "Rotate the view 90 degrees to the right"),
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ROTATE_90 },
 
   { "view-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
     NC_("view-action", "Rotate _180°"), NULL,
-    NC_("view-action", "Turn upside-down"),
+    NC_("view-action", "Turn the view upside-down"),
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ROTATE_180 },
 
   { "view-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("view-action", "Rotate 90° counter-clock_wise"), NULL,
-    NC_("view-action", "Rotate 90 degrees to the left"),
+    NC_("view-action", "Rotate the view 90 degrees to the left"),
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ROTATE_270 },
 
   { "view-rotate-345", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("view-action", "Rotate 15° counter-clock_wise"), NULL,
-    NC_("view-action", "Rotate 15 degrees to the left"),
+    NC_("view-action", "Rotate the view 15 degrees to the left"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ROTATE_345 }
 };
