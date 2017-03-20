@@ -129,13 +129,13 @@ static const GimpEnumActionEntry drawable_flip_actions[] =
 {
   { "drawable-flip-horizontal", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
     NC_("drawable-action", "Flip _Horizontally"), NULL,
-    NC_("drawable-action", "Flip horizontally"),
+    NC_("drawable-action", "Flip drawable horizontally"),
     GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_LAYER_FLIP_HORIZONTAL },
 
   { "drawable-flip-vertical", GIMP_ICON_OBJECT_FLIP_VERTICAL,
     NC_("drawable-action", "Flip _Vertically"), NULL,
-    NC_("drawable-action", "Flip vertically"),
+    NC_("drawable-action", "Flip drawable vertically"),
     GIMP_ORIENTATION_VERTICAL, FALSE,
     GIMP_HELP_LAYER_FLIP_VERTICAL }
 };
@@ -144,19 +144,19 @@ static const GimpEnumActionEntry drawable_rotate_actions[] =
 {
   { "drawable-rotate-90", GIMP_ICON_OBJECT_ROTATE_90,
     NC_("drawable-action", "Rotate 90° _clockwise"), NULL,
-    NC_("drawable-action", "Rotate 90 degrees to the right"),
+    NC_("drawable-action", "Rotate drawable 90 degrees to the right"),
     GIMP_ROTATE_90, FALSE,
     GIMP_HELP_LAYER_ROTATE_90 },
 
   { "drawable-rotate-180", GIMP_ICON_OBJECT_ROTATE_180,
     NC_("drawable-action", "Rotate _180°"), NULL,
-    NC_("drawable-action", "Turn upside-down"),
+    NC_("drawable-action", "Turn drawable upside-down"),
     GIMP_ROTATE_180, FALSE,
     GIMP_HELP_LAYER_ROTATE_180 },
 
   { "drawable-rotate-270", GIMP_ICON_OBJECT_ROTATE_270,
     NC_("drawable-action", "Rotate 90° counter-clock_wise"), NULL,
-    NC_("drawable-action", "Rotate 90 degrees to the left"),
+    NC_("drawable-action", "Rotate drawable 90 degrees to the left"),
     GIMP_ROTATE_270, FALSE,
     GIMP_HELP_LAYER_ROTATE_270 }
 };
