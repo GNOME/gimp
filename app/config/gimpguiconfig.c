@@ -27,8 +27,6 @@
 
 #include "config-types.h"
 
-#include "core/gimpmarshal.h"
-
 #include "gimprc-blurbs.h"
 #include "gimpguiconfig.h"
 
@@ -144,7 +142,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpGuiConfigClass, size_changed),
                   NULL, NULL,
-                  gimp_marshal_VOID__VOID,
+                  g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
   object_class->finalize     = gimp_gui_config_finalize;
