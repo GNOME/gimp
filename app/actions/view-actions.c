@@ -458,14 +458,14 @@ static const GimpToggleActionEntry view_flip_actions[] =
 {
   { "view-flip-horizontally", GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
     NC_("view-action", "Flip Horizontally"), NULL,
-    NC_("view-action", "Flip the view Horizontally"),
+    NC_("view-action", "Flip the view horizontally"),
     G_CALLBACK (view_flip_horizontally_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_FLIP },
 
   { "view-flip-vertically", GIMP_ICON_OBJECT_FLIP_VERTICAL,
     NC_("view-action", "Flip Vertically"), NULL,
-    NC_("view-action", "Flip the view Vertically"),
+    NC_("view-action", "Flip the view vertically"),
     G_CALLBACK (view_flip_vertically_cmd_callback),
     FALSE,
     GIMP_HELP_VIEW_FLIP }
