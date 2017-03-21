@@ -1883,7 +1883,7 @@ static struct _PyGimp_Functions pygimp_api_functions = {
 /* Initialization function for the module (*must* be called initgimp) */
 
 static char gimp_module_documentation[] =
-"This module provides interfaces to allow you to write gimp plugins"
+"This module provides interfaces to allow you to write gimp plug-ins"
 ;
 
 void initgimp(void);

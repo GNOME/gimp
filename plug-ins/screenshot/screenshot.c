@@ -130,7 +130,7 @@ query (void)
                           "are optional and can be used to specify the corners "
                           "of the region to be grabbed."
                           "On Mac OS X or on gnome-shell, "
-                          "when called non-interactively, the plugin"
+                          "when called non-interactively, the plug-in"
                           "only can take screenshots of the entire root window."
                           "Grabbing a window or a region is not supported"
                           "non-interactively. To grab a region or a particular"

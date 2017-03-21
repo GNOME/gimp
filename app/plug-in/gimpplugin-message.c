@@ -95,7 +95,7 @@ gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
 
     case GP_CONFIG:
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "sent a CONFIG message.  This should not happen.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
@@ -108,7 +108,7 @@ gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
 
     case GP_TILE_ACK:
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "sent a TILE_ACK message.  This should not happen.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
@@ -117,7 +117,7 @@ gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
 
     case GP_TILE_DATA:
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "sent a TILE_DATA message.  This should not happen.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
@@ -134,7 +134,7 @@ gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
 
     case GP_TEMP_PROC_RUN:
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "sent a TEMP_PROC_RUN message.  This should not happen.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
@@ -237,7 +237,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   if (! GIMP_IS_DRAWABLE (drawable))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "tried writing to invalid drawable %d (killing)",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
@@ -248,7 +248,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
   else if (gimp_item_is_removed (GIMP_ITEM (drawable)))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "tried writing to drawable %d which was removed "
                     "from the image (killing)",
                     gimp_object_get_name (plug_in),
@@ -275,7 +275,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
       if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
+                        "Plug-in \"%s\"\n(%s)\n\n"
                         "tried writing to a locked drawable %d (killing)",
                         gimp_object_get_name (plug_in),
                         gimp_file_get_utf8_name (plug_in->file),
@@ -286,7 +286,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
       else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
+                        "Plug-in \"%s\"\n(%s)\n\n"
                         "tried writing to a group layer %d (killing)",
                         gimp_object_get_name (plug_in),
                         gimp_file_get_utf8_name (plug_in->file),
@@ -305,7 +305,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
                                         &tile_rect))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "requested invalid tile (killing)",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
@@ -362,7 +362,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
   if (! GIMP_IS_DRAWABLE (drawable))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "tried reading from invalid drawable %d (killing)",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file),
@@ -373,7 +373,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
   else if (gimp_item_is_removed (GIMP_ITEM (drawable)))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "tried reading from drawable %d which was removed "
                     "from the image (killing)",
                     gimp_object_get_name (plug_in),
@@ -401,7 +401,7 @@ gimp_plug_in_handle_tile_get (GimpPlugIn *plug_in,
                                         &tile_rect))
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "requested invalid tile (killing)",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
@@ -539,7 +539,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
           if (plug_in->manager->gimp->pdb_compat_mode == GIMP_PDB_COMPAT_WARN)
             {
               gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_WARNING,
-                            "Plug-In \"%s\"\n(%s)\n"
+                            "Plug-in \"%s\"\n(%s)\n"
                             "called deprecated procedure '%s'.\n"
                             "It should call '%s' instead!",
                             gimp_object_get_name (plug_in),
@@ -555,7 +555,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
           if (! strcmp (procedure->deprecated, "NONE"))
             {
               gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_WARNING,
-                            "Plug-In \"%s\"\n(%s)\n"
+                            "Plug-in \"%s\"\n(%s)\n"
                             "called deprecated procedure '%s'.",
                             gimp_object_get_name (plug_in),
                             gimp_file_get_utf8_name (plug_in->file),
@@ -564,7 +564,7 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
           else
             {
               gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_WARNING,
-                            "WARNING: Plug-In \"%s\"\n(%s)\n"
+                            "WARNING: Plug-in \"%s\"\n(%s)\n"
                             "called deprecated procedure '%s'.\n"
                             "It should call '%s' instead!",
                             gimp_object_get_name (plug_in),
@@ -692,7 +692,7 @@ gimp_plug_in_handle_temp_proc_return (GimpPlugIn   *plug_in,
   else
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "sent a TEMP_PROC_RETURN message while not running "
                     "a temporary procedure.  This should not happen.",
                     gimp_object_get_name (plug_in),
@@ -730,7 +730,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
           proc_install->params[i - 1].type != GIMP_PDB_INT32)
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                        "Plug-In \"%s\"\n(%s)\n\n"
+                        "Plug-in \"%s\"\n(%s)\n\n"
                         "attempted to install procedure \"%s\" "
                         "which fails to comply with the array parameter "
                         "passing standard.  Argument %d is noncompliant.",
@@ -791,7 +791,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   if (null_name)
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "attempted to install a procedure NULL parameter name.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
@@ -802,7 +802,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
   if (! valid_utf8)
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "attempted to install a procedure with invalid UTF-8 strings.",
                     gimp_object_get_name (plug_in),
                     gimp_file_get_utf8_name (plug_in->file));
@@ -935,7 +935,7 @@ gimp_plug_in_handle_extension_ack (GimpPlugIn *plug_in)
   else
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "sent an EXTENSION_ACK message while not being started "
                     "as an extension.  This should not happen.",
                     gimp_object_get_name (plug_in),
@@ -954,7 +954,7 @@ gimp_plug_in_handle_has_init (GimpPlugIn *plug_in)
   else
     {
       gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
-                    "Plug-In \"%s\"\n(%s)\n\n"
+                    "Plug-in \"%s\"\n(%s)\n\n"
                     "sent an HAS_INIT message while not in query().  "
                     "This should not happen.",
                     gimp_object_get_name (plug_in),

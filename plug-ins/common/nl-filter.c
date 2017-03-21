@@ -119,7 +119,7 @@ query (void)
                           N_("Nonlinear swiss army knife filter"),
                           "This is the pnmnlfilt, in gimp's clothing.  "
                           "See the pnmnlfilt manpage for details.",
-                          "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
+                          "Graeme W. Gill, gimp 0.99 plug-in by Eric L. Hernes",
                           "Graeme W. Gill, Eric L. Hernes",
                           "1997",
                           N_("_NL Filter..."),

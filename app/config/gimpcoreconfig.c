@@ -183,7 +183,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   path = gimp_config_build_plug_in_path ("plug-ins");
   GIMP_CONFIG_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
                          "plug-in-path",
-                         "Plug-In path",
+                         "Plug-in path",
                          PLUG_IN_PATH_BLURB,
                          GIMP_CONFIG_PATH_DIR_LIST, path,
                          GIMP_PARAM_STATIC_STRINGS |

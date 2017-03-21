@@ -141,7 +141,7 @@ query (void)
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",
-                          N_("_Plug-In Browser"),
+                          N_("_Plug-in Browser"),
                           "",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -543,7 +543,7 @@ browser_dialog_new (void)
 
   browser = g_new0 (PluginBrowser, 1);
 
-  browser->dialog = gimp_dialog_new (_("Plug-In Browser"), PLUG_IN_ROLE,
+  browser->dialog = gimp_dialog_new (_("Plug-in Browser"), PLUG_IN_ROLE,
                                      NULL, 0,
                                      gimp_standard_help_func, PLUG_IN_PROC,
 

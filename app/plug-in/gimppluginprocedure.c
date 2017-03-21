@@ -614,7 +614,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 
       g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
-                   "Plug-In \"%s\"\n(%s)\n"
+                   "Plug-in \"%s\"\n(%s)\n"
                    "attempted to install procedure \"%s\"\n"
                    "in the invalid menu location \"%s\".\n"
                    "The menu path must look like either \"<Prefix>\" "
@@ -737,7 +737,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 
       g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
-                   "Plug-In \"%s\"\n(%s)\n"
+                   "Plug-in \"%s\"\n(%s)\n"
                    "attempted to install procedure \"%s\" "
                    "in the invalid menu location \"%s\".\n"
                    "Use either \"<Image>\", "
@@ -774,9 +774,9 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 
       g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
-                   "Plug-In \"%s\"\n(%s)\n\n"
+                   "Plug-in \"%s\"\n(%s)\n\n"
                    "attempted to install %s procedure \"%s\" "
-                   "which does not take the standard %s Plug-In "
+                   "which does not take the standard %s plug-in's "
                    "arguments: (%s).",
                    basename, gimp_file_get_utf8_name (proc->file),
                    prefix, gimp_object_get_name (proc), prefix,

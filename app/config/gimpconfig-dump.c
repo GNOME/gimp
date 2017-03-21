@@ -230,7 +230,7 @@ static const gchar *man_page_path =
 "@gimpdatadir@.\n"
 ".TP\n"
 ".I gimp_plug_in_dir\n"
-"Base to paths for architecture-specific plugins and modules, which is set\n"
+"Base to paths for architecture-specific plug-ins and modules, which is set\n"
 "to the value of the environment variable GIMP2_PLUGINDIR or to the\n"
 "compiled-in default value @gimpplugindir@.\n"
 ".TP\n"

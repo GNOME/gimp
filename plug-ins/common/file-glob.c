@@ -72,7 +72,7 @@ query (void)
 
   gimp_install_procedure (PLUG_IN_PROC,
                           "Returns a list of matching filenames",
-                          "This can be useful in scripts and other plugins "
+                          "This can be useful in scripts and other plug-ins "
                           "(e.g., batch-conversion). See the glob(7) manpage "
                           "for more info. Note however that this isn't a "
                           "full-featured glob implementation. It only handles "

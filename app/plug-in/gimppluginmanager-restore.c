@@ -234,7 +234,7 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
     }
 #endif /* G_OS_WIN32 */
 
-  status_callback (_("Searching Plug-Ins"), "", 0.0);
+  status_callback (_("Searching plug-ins"), "", 0.0);
 
   /* Give automatic tests a chance to use plug-ins from the build
    * dir

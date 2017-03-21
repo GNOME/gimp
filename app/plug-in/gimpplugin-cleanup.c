@@ -279,7 +279,7 @@ gimp_plug_in_cleanup_image (GimpPlugInProcFrame    *proc_frame,
 
   if (cleanup->undo_group_count != gimp_image_get_undo_group_count (image))
     {
-      g_message ("Plug-In '%s' left image undo in inconsistent state, "
+      g_message ("Plug-in '%s' left image undo in inconsistent state, "
                  "closing open undo groups.",
                  gimp_procedure_get_label (proc_frame->procedure));
 

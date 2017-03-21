@@ -202,7 +202,7 @@ static const GOptionEntry main_entries[] =
   {
     "no-shm", 0, G_OPTION_FLAG_REVERSE,
     G_OPTION_ARG_NONE, &use_shm,
-    N_("Do not use shared memory between GIMP and plugins"), NULL
+    N_("Do not use shared memory between GIMP and plug-ins"), NULL
   },
   {
     "no-cpu-accel", 0, G_OPTION_FLAG_REVERSE,

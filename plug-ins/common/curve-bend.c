@@ -538,7 +538,7 @@ query (void)
                           "before and rotated back after the bend operation. "
                           "This enables bending in other directions than "
                           "vertical. bending usually changes the size of "
-                          "the handled layer. this plugin sets the offsets "
+                          "the handled layer. this plug-in sets the offsets "
                           "of the handled layer to keep its center at the "
                           "same position",
                           PLUG_IN_AUTHOR,

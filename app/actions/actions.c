@@ -203,7 +203,7 @@ static const GimpActionFactoryEntry action_groups[] =
   { "patterns", N_("Patterns"), GIMP_ICON_PATTERN,
     patterns_actions_setup,
     patterns_actions_update },
-  { "plug-in", N_("Plug-Ins"), GIMP_ICON_PLUGIN,
+  { "plug-in", N_("Plug-ins"), GIMP_ICON_PLUGIN,
     plug_in_actions_setup,
     plug_in_actions_update },
   { "quick-mask", N_("Quick Mask"), GIMP_ICON_QUICK_MASK_ON,

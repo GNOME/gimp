@@ -521,7 +521,7 @@ drawable_merge_shadow_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          const gchar *undo_desc = _("Plug-In");
+          const gchar *undo_desc = _("Plug-in");
 
           if (gimp->plug_in_manager->current_plug_in)
             undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);

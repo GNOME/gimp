@@ -255,13 +255,13 @@ gimp_plug_in_manager_initialize (GimpPlugInManager  *manager,
 
   config = manager->gimp->config;
 
-  status_callback (NULL, _("Plug-In Interpreters"), 0.8);
+  status_callback (NULL, _("Plug-in Interpreters"), 0.8);
 
   path = gimp_config_path_expand_to_files (config->interpreter_path, NULL);
   gimp_interpreter_db_load (manager->interpreter_db, path);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
-  status_callback (NULL, _("Plug-In Environment"), 0.9);
+  status_callback (NULL, _("Plug-in Environment"), 0.9);
 
   path = gimp_config_path_expand_to_files (config->environ_path, NULL);
   gimp_environ_table_load (manager->environ_table, path);

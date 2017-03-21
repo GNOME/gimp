@@ -145,7 +145,7 @@ add_registered_enums(PyObject *m)
 /* Initialization function for the module (*must* be called initgimpenums) */
 
 static char gimpenums_doc[] =
-"This module provides interfaces to allow you to write gimp plugins"
+"This module provides interfaces to allow you to write gimp plug-ins"
 ;
 
 void init_gimpenums(void);

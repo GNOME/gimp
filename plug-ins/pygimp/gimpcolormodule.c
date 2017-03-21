@@ -387,7 +387,7 @@ static struct _PyGimpColor_Functions pygimpcolor_api_functions = {
 /* Initialization function for the module (*must* be called initgimpcolor) */
 
 static char gimpcolor_doc[] =
-"This module provides interfaces to allow you to write gimp plugins"
+"This module provides interfaces to allow you to write gimp plug-ins"
 ;
 
 void initgimpcolor(void);

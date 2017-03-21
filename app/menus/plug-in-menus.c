@@ -105,7 +105,7 @@ plug_in_menus_setup (GimpUIManager *manager,
       gchar *action_path;
 
       action_name = g_strdup_printf ("filter-recent-%02d", i + 1);
-      action_path = g_strdup_printf ("%s/Filters/Recently Used/Plug-Ins",
+      action_path = g_strdup_printf ("%s/Filters/Recently Used/Plug-ins",
                                      ui_path);
 
       gtk_ui_manager_add_ui (GTK_UI_MANAGER (manager), merge_id,

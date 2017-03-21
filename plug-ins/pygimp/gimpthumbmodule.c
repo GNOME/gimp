@@ -37,7 +37,7 @@ extern PyMethodDef gimpthumb_functions[];
 
 
 static char gimpthumb_doc[] =
-"This module provides interfaces to allow you to write gimp plugins"
+"This module provides interfaces to allow you to write gimp plug-ins"
 ;
 
 void initgimpthumb(void);

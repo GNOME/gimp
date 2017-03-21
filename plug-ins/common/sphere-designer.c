@@ -3028,7 +3028,7 @@ query (void)
 
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Create an image of a textured sphere"),
-                          "This plugin can be used to create textured and/or "
+                          "This plug-in can be used to create textured and/or "
                           "bumpmapped spheres, and uses a small lightweight "
                           "raytracer to perform the task with good quality",
                           "Vidar Madsen",

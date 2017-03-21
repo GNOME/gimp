@@ -39,7 +39,7 @@ do_about_dialog(void)
 
        dialog = g_object_new (GTK_TYPE_ABOUT_DIALOG,
                               "transient-for", get_dialog(),
-                              "program-name",  _("Image Map Plug-In"),
+                              "program-name",  _("Image Map Plug-in"),
                               "version", "2.3",
                               "authors", authors,
                               "copyright",

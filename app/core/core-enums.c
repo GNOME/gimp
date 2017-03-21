@@ -853,7 +853,7 @@ gimp_undo_type_get_type (void)
     { GIMP_UNDO_GROUP_PARASITE_ATTACH, NC_("undo-type", "Attach parasite"), NULL },
     { GIMP_UNDO_GROUP_PARASITE_REMOVE, NC_("undo-type", "Remove parasite"), NULL },
     { GIMP_UNDO_GROUP_VECTORS_IMPORT, NC_("undo-type", "Import paths"), NULL },
-    { GIMP_UNDO_GROUP_MISC, NC_("undo-type", "Plug-In"), NULL },
+    { GIMP_UNDO_GROUP_MISC, NC_("undo-type", "Plug-in"), NULL },
     { GIMP_UNDO_IMAGE_TYPE, NC_("undo-type", "Image type"), NULL },
     { GIMP_UNDO_IMAGE_PRECISION, NC_("undo-type", "Image precision"), NULL },
     { GIMP_UNDO_IMAGE_SIZE, NC_("undo-type", "Image size"), NULL },

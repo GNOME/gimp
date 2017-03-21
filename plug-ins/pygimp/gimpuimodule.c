@@ -42,7 +42,7 @@ extern PyMethodDef gimpui_functions[];
 
 
 static char gimpui_doc[] =
-"This module provides interfaces to allow you to write gimp plugins"
+"This module provides interfaces to allow you to write gimp plug-ins"
 ;
 
 void init_gimpui(void);

@@ -740,7 +740,7 @@ sendmail_create_headers (FILE *mailpipe)
   if (strlen (mail_info.from) > 0)
     fprintf (mailpipe, "From: %s \n", mail_info.from);
 
-  fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Plug-In %s\n", GIMP_VERSION);
+  fprintf (mailpipe, "X-Mailer: GIMP Useless Mail plug-in %s\n", GIMP_VERSION);
 
   fprintf (mailpipe, "MIME-Version: 1.0\n");
   fprintf (mailpipe, "Content-type: multipart/mixed; "

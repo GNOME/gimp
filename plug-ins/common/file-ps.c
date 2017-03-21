@@ -2154,7 +2154,7 @@ save_ps_header (GOutputStream  *output,
     goto fail;
 
   if (! print (output, error,
-               "%%%%Creator: GIMP PostScript file plugin V %4.2f "
+               "%%%%Creator: GIMP PostScript file plug-in V %4.2f "
                "by Peter Kirchgessner\n", VERSIO))
     goto fail;
 
