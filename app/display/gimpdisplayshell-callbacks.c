@@ -525,8 +525,6 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
 #ifdef GIMP_UNSTABLE
   {
     PangoLayout   *layout;
-    const gchar   *version;
-    gchar         *short_hash;
     gchar         *msg;
     GtkAllocation  allocation;
     gint           width;
@@ -535,17 +533,14 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
 
     layout = gtk_widget_create_pango_layout (shell->canvas, NULL);
 
-    version = GIMP_GIT_VERSION;
-    short_hash = g_strdup (version + strlen (version) - 7);
     msg = g_strdup_printf (_("<big>Unstable Development Version</big>\n\n"
                              "<small>commit <tt>%s</tt></small>\n\n"
                              "<small>Please test bugs against "
                              "latest git master branch\n"
                              "before reporting them.</small>"),
-                             short_hash);
+                             GIMP_GIT_VERSION_ABBREV);
     pango_layout_set_markup (layout, msg, -1);
     g_free (msg);
-    g_free (short_hash);
     pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
 
     pango_layout_get_pixel_size (layout, &width, &height);

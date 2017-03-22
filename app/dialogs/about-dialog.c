@@ -601,18 +601,13 @@ about_dialog_timer (gpointer data)
 static void
 about_dialog_add_unstable_message (GtkWidget *vbox)
 {
-  GtkWidget   *label;
-  const gchar *version;
-  gchar       *short_hash;
-  gchar       *text;
+  GtkWidget *label;
+  gchar     *text;
 
-  version = GIMP_GIT_VERSION;
-  short_hash = g_strdup (version + strlen (version) - 7);
   text = g_strdup_printf (_("This is an unstable development release\n"
-                            "commit %s"), short_hash);
+                            "commit %s"), GIMP_GIT_VERSION_ABBREV);
   label = gtk_label_new (text);
   g_free (text);
-  g_free (short_hash);
 
   gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
