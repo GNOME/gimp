@@ -2854,7 +2854,8 @@ gimp_prop_size_entry_new (GObject                   *config,
 
   entry = gimp_size_entry_new (1, unit_value, unit_format,
                                show_pixels, show_percent, FALSE,
-                               gimp_prop_size_entry_num_chars (lower, upper),
+                               gimp_prop_size_entry_num_chars (lower, upper) + 1 +
+                               gimp_unit_get_scaled_digits (unit_value, resolution),
                                update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 2);
 
