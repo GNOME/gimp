@@ -647,10 +647,9 @@ xcf_save_prop (XcfInfo    *info,
                GError    **error,
                ...)
 {
-  guint32 size;
-  va_list args;
-
-  GError *tmp_error = NULL;
+  guint32  size;
+  va_list  args;
+  GError  *tmp_error = NULL;
 
   va_start (args, error);
 
@@ -665,17 +664,16 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COLORMAP:
       {
-        guint32  n_colors;
-        guchar  *colors;
+        guint32  n_colors = va_arg (args, guint32);
+        guchar  *colors   = va_arg (args, guchar *);
 
-        n_colors = va_arg (args, guint32);
-        colors = va_arg (args, guchar *);
         size = 4 + n_colors * 3;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &n_colors, 1);
-        xcf_write_int8_check_error  (info, colors, n_colors * 3);
+        xcf_write_int8_check_error  (info, colors,    n_colors * 3);
       }
       break;
 
@@ -690,54 +688,46 @@ xcf_save_prop (XcfInfo    *info,
       break;
 
     case PROP_FLOATING_SELECTION:
-      {
-        goffset dummy;
+      size = info->bytes_per_offset;
 
-        dummy = 0;
-        size = info->bytes_per_offset;
+      xcf_write_prop_type_check_error (info, prop_type);
+      xcf_write_int32_check_error (info, &size, 1);
 
-        xcf_write_prop_type_check_error (info, prop_type);
-        xcf_write_int32_check_error (info, &size, 1);
-        info->floating_sel_offset = info->cp;
-        xcf_write_offset_check_error (info, &dummy, 1);
-      }
+      info->floating_sel_offset = info->cp;
+      xcf_write_zero_offset_check_error (info, 1);
       break;
 
     case PROP_OPACITY:
       {
-        gdouble opacity;
-        guint32 uint_opacity;
-
-        opacity = va_arg (args, gdouble);
-
-        uint_opacity = opacity * 255.999;
+        gdouble opacity      = va_arg (args, gdouble);
+        guint32 uint_opacity = opacity * 255.999;
 
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &uint_opacity, 1);
       }
       break;
 
     case PROP_FLOAT_OPACITY:
       {
-        gfloat opacity;
+        gfloat opacity = va_arg (args, gdouble);
 
-        opacity = va_arg (args, gdouble);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_float_check_error (info, &opacity, 1);
       }
       break;
 
     case PROP_MODE:
       {
-        gint32 mode;
+        gint32 mode = va_arg (args, gint32);
 
-        mode = va_arg (args, gint32);
         size = 4;
 
         if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
@@ -745,175 +735,176 @@ xcf_save_prop (XcfInfo    *info,
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, (guint32 *) &mode, 1);
       }
       break;
 
     case PROP_BLEND_SPACE:
       {
-        gint32 blend_space;
+        gint32 blend_space = va_arg (args, gint32);
 
-        blend_space = va_arg (args, gint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, (guint32 *) &blend_space, 1);
       }
       break;
 
     case PROP_COMPOSITE_SPACE:
       {
-        gint32 composite_space;
+        gint32 composite_space = va_arg (args, gint32);
 
-        composite_space = va_arg (args, gint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, (guint32 *) &composite_space, 1);
       }
       break;
 
     case PROP_COMPOSITE_MODE:
       {
-        gint32 composite_mode;
+        gint32 composite_mode = va_arg (args, gint32);
 
-        composite_mode = va_arg (args, gint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, (guint32 *) &composite_mode, 1);
       }
       break;
 
     case PROP_VISIBLE:
       {
-        guint32 visible;
+        guint32 visible = va_arg (args, guint32);
 
-        visible = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &visible, 1);
       }
       break;
 
     case PROP_LINKED:
       {
-        guint32 linked;
+        guint32 linked = va_arg (args, guint32);
 
-        linked = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &linked, 1);
       }
       break;
 
     case PROP_COLOR_TAG:
       {
-        guint32 color_tag;
+        guint32 color_tag = va_arg (args, gint32);
 
-        color_tag = va_arg (args, gint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &color_tag, 1);
       }
       break;
 
     case PROP_LOCK_CONTENT:
       {
-        guint32 lock_content;
+        guint32 lock_content = va_arg (args, guint32);
 
-        lock_content = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &lock_content, 1);
       }
       break;
 
     case PROP_LOCK_ALPHA:
       {
-        guint32 lock_alpha;
+        guint32 lock_alpha = va_arg (args, guint32);
 
-        lock_alpha = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &lock_alpha, 1);
       }
       break;
 
     case PROP_LOCK_POSITION:
       {
-        guint32 lock_position;
+        guint32 lock_position = va_arg (args, guint32);
 
-        lock_position = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &lock_position, 1);
       }
       break;
 
     case PROP_APPLY_MASK:
       {
-        guint32 apply_mask;
+        guint32 apply_mask = va_arg (args, guint32);
 
-        apply_mask = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &apply_mask, 1);
       }
       break;
 
     case PROP_EDIT_MASK:
       {
-        guint32 edit_mask;
+        guint32 edit_mask = va_arg (args, guint32);
 
-        edit_mask = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &edit_mask, 1);
       }
       break;
 
     case PROP_SHOW_MASK:
       {
-        guint32 show_mask;
+        guint32 show_mask = va_arg (args, guint32);
 
-        show_mask = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &show_mask, 1);
       }
       break;
 
     case PROP_SHOW_MASKED:
       {
-        guint32 show_masked;
+        guint32 show_masked = va_arg (args, guint32);
 
-        show_masked = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &show_masked, 1);
       }
       break;
@@ -924,48 +915,47 @@ xcf_save_prop (XcfInfo    *info,
 
         offsets[0] = va_arg (args, gint32);
         offsets[1] = va_arg (args, gint32);
+
         size = 8;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, (guint32 *) offsets, 2);
       }
       break;
 
     case PROP_COLOR:
       {
-        guchar *color;
+        guchar *color = va_arg (args, guchar *);
 
-        color = va_arg (args, guchar*);
         size = 3;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
-        xcf_write_int8_check_error  (info, color, 3);
+
+        xcf_write_int8_check_error (info, color, 3);
       }
       break;
 
     case PROP_COMPRESSION:
       {
-        guint8 compression;
+        guint8 compression = (guint8) va_arg (args, guint32);
 
-        compression = (guint8) va_arg (args, guint32);
         size = 1;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
-        xcf_write_int8_check_error  (info, &compression, 1);
+
+        xcf_write_int8_check_error (info, &compression, 1);
       }
       break;
 
     case PROP_GUIDES:
       {
+        GList *guides   = va_arg (args, GList *);
+        gint   n_guides = g_list_length (guides);
         GList *iter;
-        GList *guides;
-        gint   n_guides;
-
-        guides = va_arg (args, GList *);
-        n_guides = g_list_length (guides);
 
         for (iter = guides; iter; iter = g_list_next (iter))
           {
@@ -973,49 +963,50 @@ xcf_save_prop (XcfInfo    *info,
             if (gimp_guide_is_custom (GIMP_GUIDE (iter->data)))
               n_guides--;
           }
-        size = n_guides * (4 + 1);
 
-        xcf_write_prop_type_check_error (info, prop_type);
-        xcf_write_int32_check_error (info, &size, 1);
-
-        for (; guides; guides = g_list_next (guides))
+        if (n_guides > 0)
           {
-            GimpGuide *guide    = guides->data;
-            gint32     position = gimp_guide_get_position (guide);
-            gint8      orientation;
+            size = n_guides * (4 + 1);
 
-            if (gimp_guide_is_custom (guide))
-              continue;
+            xcf_write_prop_type_check_error (info, prop_type);
+            xcf_write_int32_check_error (info, &size, 1);
 
-            switch (gimp_guide_get_orientation (guide))
+            for (; guides; guides = g_list_next (guides))
               {
-              case GIMP_ORIENTATION_HORIZONTAL:
-                orientation = XCF_ORIENTATION_HORIZONTAL;
-                break;
+                GimpGuide *guide    = guides->data;
+                gint32     position = gimp_guide_get_position (guide);
+                gint8      orientation;
 
-              case GIMP_ORIENTATION_VERTICAL:
-                orientation = XCF_ORIENTATION_VERTICAL;
-                break;
+                if (gimp_guide_is_custom (guide))
+                  continue;
 
-              default:
-                g_warning ("%s: skipping guide with bad orientation",
-                           G_STRFUNC);
-                continue;
+                switch (gimp_guide_get_orientation (guide))
+                  {
+                  case GIMP_ORIENTATION_HORIZONTAL:
+                    orientation = XCF_ORIENTATION_HORIZONTAL;
+                    break;
+
+                  case GIMP_ORIENTATION_VERTICAL:
+                    orientation = XCF_ORIENTATION_VERTICAL;
+                    break;
+
+                  default:
+                    g_warning ("%s: skipping guide with bad orientation",
+                               G_STRFUNC);
+                    continue;
+                  }
+
+                xcf_write_int32_check_error (info, (guint32 *) &position,    1);
+                xcf_write_int8_check_error  (info, (guint8 *)  &orientation, 1);
               }
-
-            xcf_write_int32_check_error (info, (guint32 *) &position,    1);
-            xcf_write_int8_check_error  (info, (guint8 *)  &orientation, 1);
           }
       }
       break;
 
     case PROP_SAMPLE_POINTS:
       {
-        GList *sample_points;
-        gint   n_sample_points;
-
-        sample_points = va_arg (args, GList *);
-        n_sample_points = g_list_length (sample_points);
+        GList *sample_points   = va_arg (args, GList *);
+        gint   n_sample_points = g_list_length (sample_points);
 
         size = n_sample_points * (4 + 4);
 
@@ -1037,47 +1028,43 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_RESOLUTION:
       {
-        gfloat xresolution, yresolution;
+        gfloat resolution[2];
 
-        /* we pass in floats,
-           but they are promoted to double by the compiler */
-        xresolution =  va_arg (args, double);
-        yresolution =  va_arg (args, double);
+        resolution[0] = va_arg (args, double);
+        resolution[1] = va_arg (args, double);
 
-        size = 4*2;
+        size = 2 * 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
 
-        xcf_write_float_check_error (info, &xresolution, 1);
-        xcf_write_float_check_error (info, &yresolution, 1);
+        xcf_write_float_check_error (info, resolution, 2);
       }
       break;
 
     case PROP_TATTOO:
       {
-        guint32 tattoo;
+        guint32 tattoo = va_arg (args, guint32);
 
-        tattoo =  va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &tattoo, 1);
       }
       break;
 
     case PROP_PARASITES:
       {
-        GimpParasiteList *list;
-
-        list = va_arg (args, GimpParasiteList *);
+        GimpParasiteList *list = va_arg (args, GimpParasiteList *);
 
         if (gimp_parasite_list_persistent_length (list) > 0)
           {
             goffset base;
             goffset pos;
-            guint32 length = 0;
+
+            size = 0;
 
             xcf_write_prop_type_check_error (info, prop_type);
 
@@ -1086,33 +1073,32 @@ xcf_save_prop (XcfInfo    *info,
              * length later
              */
             pos = info->cp;
-            xcf_write_int32_check_error (info, &length, 1);
+            xcf_write_int32_check_error (info, &size, 1);
 
             base = info->cp;
 
             xcf_check_error (xcf_save_parasite_list (info, list, error));
 
-            length = info->cp - base;
+            size = info->cp - base;
 
             /* go back to the saved position and write the length */
             xcf_check_error (xcf_seek_pos (info, pos, error));
-            xcf_write_int32_check_error (info, &length, 1);
+            xcf_write_int32_check_error (info, &size, 1);
 
-            xcf_check_error (xcf_seek_pos (info, base + length, error));
+            xcf_check_error (xcf_seek_pos (info, base + size, error));
           }
       }
       break;
 
     case PROP_UNIT:
       {
-        guint32 unit;
-
-        unit = va_arg (args, guint32);
+        guint32 unit = va_arg (args, guint32);
 
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &unit, 1);
       }
       break;
@@ -1121,7 +1107,8 @@ xcf_save_prop (XcfInfo    *info,
       {
         goffset base;
         goffset pos;
-        guint32 length = 0;
+
+        size = 0;
 
         xcf_write_prop_type_check_error (info, prop_type);
 
@@ -1129,30 +1116,28 @@ xcf_save_prop (XcfInfo    *info,
          * take we save the file position and write the length later
          */
         pos = info->cp;
-        xcf_write_int32_check_error (info, &length, 1);
+        xcf_write_int32_check_error (info, &size, 1);
 
         base = info->cp;
 
         xcf_check_error (xcf_save_old_paths (info, image, error));
 
-        length = info->cp - base;
+        size = info->cp - base;
 
         /* go back to the saved position and write the length */
         xcf_check_error (xcf_seek_pos (info, pos, error));
-        xcf_write_int32_check_error (info, &length, 1);
+        xcf_write_int32_check_error (info, &size, 1);
 
-        xcf_check_error (xcf_seek_pos (info, base + length, error));
+        xcf_check_error (xcf_seek_pos (info, base + size, error));
       }
       break;
 
     case PROP_USER_UNIT:
       {
-        GimpUnit     unit;
+        GimpUnit     unit = va_arg (args, guint32);
         const gchar *unit_strings[5];
         gfloat       factor;
         guint32      digits;
-
-        unit = va_arg (args, guint32);
 
         /* write the entire unit definition */
         unit_strings[0] = gimp_unit_get_identifier (unit);
@@ -1173,8 +1158,9 @@ xcf_save_prop (XcfInfo    *info,
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
-        xcf_write_float_check_error (info, &factor, 1);
-        xcf_write_int32_check_error (info, &digits, 1);
+
+        xcf_write_float_check_error  (info, &factor,                 1);
+        xcf_write_int32_check_error  (info, &digits,                 1);
         xcf_write_string_check_error (info, (gchar **) unit_strings, 5);
       }
       break;
@@ -1183,7 +1169,8 @@ xcf_save_prop (XcfInfo    *info,
       {
         goffset base;
         goffset pos;
-        guint32 length = 0;
+
+        size = 0;
 
         xcf_write_prop_type_check_error (info, prop_type);
 
@@ -1191,40 +1178,39 @@ xcf_save_prop (XcfInfo    *info,
          * take we save the file position and write the length later
          */
         pos = info->cp;
-        xcf_write_int32_check_error (info, &length, 1);
+        xcf_write_int32_check_error (info, &size, 1);
 
         base = info->cp;
 
         xcf_check_error (xcf_save_vectors (info, image, error));
 
-        length = info->cp - base;
+        size = info->cp - base;
 
         /* go back to the saved position and write the length */
         xcf_check_error (xcf_seek_pos (info, pos, error));
-        xcf_write_int32_check_error (info, &length, 1);
+        xcf_write_int32_check_error (info, &size, 1);
 
-        xcf_check_error (xcf_seek_pos (info, base + length, error));
+        xcf_check_error (xcf_seek_pos (info, base + size, error));
       }
       break;
 
     case PROP_TEXT_LAYER_FLAGS:
       {
-        guint32 flags;
+        guint32 flags = va_arg (args, guint32);
 
-        flags = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
+
         xcf_write_int32_check_error (info, &flags, 1);
       }
       break;
 
     case PROP_ITEM_PATH:
       {
-        GList *path;
+        GList *path = va_arg (args, GList *);
 
-        path = va_arg (args, GList *);
         size = 4 * g_list_length (path);
 
         xcf_write_prop_type_check_error (info, prop_type);
@@ -1243,9 +1229,8 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_GROUP_ITEM_FLAGS:
       {
-        guint32 flags;
+        guint32 flags = va_arg (args, guint32);
 
-        flags = va_arg (args, guint32);
         size = 4;
 
         xcf_write_prop_type_check_error (info, prop_type);
