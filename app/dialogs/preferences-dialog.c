@@ -978,8 +978,6 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *calibrate_button;
   GSList            *group;
   GtkWidget         *editor;
-  gdouble            xres;
-  gdouble            yres;
   gint               i;
 
   GObject           *object;
@@ -992,10 +990,6 @@ prefs_dialog_new (Gimp       *gimp,
   object         = G_OBJECT (config);
   core_config    = GIMP_CORE_CONFIG (config);
   display_config = GIMP_DISPLAY_CONFIG (config);
-
-  gimp_get_monitor_resolution (gdk_screen_get_default (), /* FIXME monitor */
-                               0, /* FIXME monitor */
-                               &xres, &yres);
 
   dialog = gimp_dialog_new (_("Preferences"), "gimp-preferences",
                             NULL, 0,
@@ -2300,7 +2294,13 @@ prefs_dialog_new (Gimp       *gimp,
   group = NULL;
 
   {
+    gdouble  xres;
+    gdouble  yres;
     gchar   *str;
+
+    gimp_get_monitor_resolution (gdk_screen_get_default (), /* FIXME monitor */
+                                 0, /* FIXME monitor */
+                                 &xres, &yres);
 
     str = g_strdup_printf (_("_Detect automatically (currently %d × %d ppi)"),
                            ROUND (xres), ROUND (yres));
