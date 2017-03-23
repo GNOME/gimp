@@ -19,25 +19,29 @@
 #define __XCF_WRITE_H__
 
 
-guint   xcf_write_int32      (GOutputStream  *output,
-                              const guint32  *data,
-                              gint            count,
-                              GError        **error);
-guint   xcf_write_zero_int32 (GOutputStream  *output,
-                              gint            count,
-                              GError        **error);
-guint   xcf_write_float      (GOutputStream  *output,
-                              const gfloat   *data,
-                              gint            count,
-                              GError        **error);
-guint   xcf_write_int8       (GOutputStream  *output,
-                              const guint8   *data,
-                              gint            count,
-                              GError        **error);
-guint   xcf_write_string     (GOutputStream  *output,
-                              gchar         **data,
-                              gint            count,
-                              GError        **error);
+guint   xcf_write_int32       (GOutputStream  *output,
+                               const guint32  *data,
+                               gint            count,
+                               GError        **error);
+guint   xcf_write_offset      (GOutputStream  *output,
+                               const goffset  *data,
+                               gint            count,
+                               GError        **error);
+guint   xcf_write_zero_offset (GOutputStream  *output,
+                               gint            count,
+                               GError        **error);
+guint   xcf_write_float       (GOutputStream  *output,
+                               const gfloat   *data,
+                               gint            count,
+                               GError        **error);
+guint   xcf_write_int8        (GOutputStream  *output,
+                               const guint8   *data,
+                               gint            count,
+                               GError        **error);
+guint   xcf_write_string      (GOutputStream  *output,
+                               gchar         **data,
+                               gint            count,
+                               GError        **error);
 
 
 #endif  /* __XCF_WRITE_H__ */

@@ -56,9 +56,38 @@ xcf_write_int32 (GOutputStream  *output,
 }
 
 guint
-xcf_write_zero_int32 (GOutputStream  *output,
-                      gint            count,
-                      GError        **error)
+xcf_write_offset (GOutputStream  *output,
+                  const goffset  *data,
+                  gint            count,
+                  GError        **error)
+{
+  GError *tmp_error = NULL;
+  gint    i;
+
+  if (count > 0)
+    {
+      for (i = 0; i < count; i++)
+        {
+          guint32 tmp = g_htonl (data[i]);
+
+          xcf_write_int8 (output, (const guint8 *) &tmp, 4, &tmp_error);
+
+          if (tmp_error)
+            {
+              g_propagate_error (error, tmp_error);
+
+              return i * 4;
+            }
+        }
+    }
+
+  return count * 4;
+}
+
+guint
+xcf_write_zero_offset (GOutputStream  *output,
+                       gint            count,
+                       GError        **error)
 {
   if (count > 0)
     {

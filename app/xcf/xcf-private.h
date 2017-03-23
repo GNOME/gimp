@@ -98,14 +98,15 @@ struct _XcfInfo
   GInputStream       *input;
   GOutputStream      *output;
   GSeekable          *seekable;
-  guint               cp;
+  goffset             cp;
+  gint                bytes_per_offset;
   GFile              *file;
   GimpTattoo          tattoo_state;
   GimpLayer          *active_layer;
   GimpChannel        *active_channel;
   GimpDrawable       *floating_sel_drawable;
   GimpLayer          *floating_sel;
-  guint               floating_sel_offset;
+  goffset             floating_sel_offset;
   XcfCompressionType  compression;
   gint                file_version;
 };

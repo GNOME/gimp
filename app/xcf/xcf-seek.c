@@ -29,7 +29,7 @@
 
 gboolean
 xcf_seek_pos (XcfInfo  *info,
-              guint     pos,
+              goffset   pos,
               GError  **error)
 {
   if (info->cp != pos)

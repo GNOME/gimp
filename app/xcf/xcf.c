@@ -280,6 +280,8 @@ xcf_load_stream (Gimp          *gimp,
 
   success = TRUE;
 
+  info.bytes_per_offset = 4;
+
   info.cp += xcf_read_int8 (info.input, (guint8 *) id, 14);
 
   if (! g_str_has_prefix (id, "gimp xcf "))
@@ -366,6 +368,8 @@ xcf_save_stream (Gimp           *gimp,
                                                   info.compression ==
                                                   COMPRESS_ZLIB,
                                                   NULL, NULL);
+
+  info.bytes_per_offset = 4;
 
   if (progress)
     gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);

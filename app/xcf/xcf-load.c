@@ -150,8 +150,8 @@ xcf_load_image (Gimp     *gimp,
   GimpImage          *image = NULL;
   const GimpParasite *parasite;
   gboolean            has_metadata = FALSE;
-  guint32             saved_pos;
-  guint32             offset;
+  goffset             saved_pos;
+  goffset             offset;
   gint                width;
   gint                height;
   gint                image_type;
@@ -393,7 +393,7 @@ xcf_load_image (Gimp     *gimp,
       GList     *item_path = NULL;
 
       /* read in the offset of the next layer */
-      info->cp += xcf_read_int32 (info->input, &offset, 1);
+      info->cp += xcf_read_offset (info->input, &offset, 1);
 
       /* if the offset is 0 then we are at the end
        *  of the layer list.
@@ -477,7 +477,7 @@ xcf_load_image (Gimp     *gimp,
       GimpChannel *channel;
 
       /* read in the offset of the next channel */
-      info->cp += xcf_read_int32 (info->input, &offset, 1);
+      info->cp += xcf_read_offset (info->input, &offset, 1);
 
       /* if the offset is 0 then we are at the end
        *  of the channel list.
@@ -801,7 +801,7 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_PARASITES:
           {
-            glong base = info->cp;
+            goffset base = info->cp;
 
             while (info->cp - base < prop_size)
               {
@@ -912,14 +912,14 @@ xcf_load_image_props (XcfInfo   *info,
 
         case PROP_VECTORS:
           {
-            guint32 base = info->cp;
+            goffset base = info->cp;
 
             if (xcf_load_vectors (info, image))
               {
                 if (base + prop_size != info->cp)
                   {
                     g_printerr ("Mismatch in PROP_VECTORS size: "
-                                "skipping %d bytes.\n",
+                                "skipping " G_GOFFSET_FORMAT " bytes.\n",
                                 base + prop_size - info->cp);
                     xcf_seek_pos (info, base + prop_size, NULL);
                   }
@@ -978,9 +978,8 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_FLOATING_SELECTION:
           info->floating_sel = *layer;
-          info->cp +=
-            xcf_read_int32 (info->input,
-                            (guint32 *) &info->floating_sel_offset, 1);
+          info->cp += xcf_read_offset (info->input,
+                                       &info->floating_sel_offset, 1);
           break;
 
         case PROP_OPACITY:
@@ -1147,7 +1146,7 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_PARASITES:
           {
-            glong base = info->cp;
+            goffset base = info->cp;
 
             while (info->cp - base < prop_size)
               {
@@ -1220,8 +1219,8 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_ITEM_PATH:
           {
-            glong  base = info->cp;
-            GList *path = NULL;
+            goffset  base = info->cp;
+            GList   *path = NULL;
 
             while (info->cp - base < prop_size)
               {
@@ -1408,7 +1407,7 @@ xcf_load_channel_props (XcfInfo      *info,
 
         case PROP_PARASITES:
           {
-            glong base = info->cp;
+            goffset base = info->cp;
 
             while ((info->cp - base) < prop_size)
               {
@@ -1481,8 +1480,8 @@ xcf_load_layer (XcfInfo    *info,
 {
   GimpLayer         *layer;
   GimpLayerMask     *layer_mask;
-  guint32            hierarchy_offset;
-  guint32            layer_mask_offset;
+  goffset            hierarchy_offset;
+  goffset            layer_mask_offset;
   gboolean           apply_mask = TRUE;
   gboolean           edit_mask  = FALSE;
   gboolean           show_mask  = FALSE;
@@ -1592,8 +1591,8 @@ xcf_load_layer (XcfInfo    *info,
     }
 
   /* read the hierarchy and layer mask offsets */
-  info->cp += xcf_read_int32 (info->input, &hierarchy_offset, 1);
-  info->cp += xcf_read_int32 (info->input, &layer_mask_offset, 1);
+  info->cp += xcf_read_offset (info->input, &hierarchy_offset, 1);
+  info->cp += xcf_read_offset (info->input, &layer_mask_offset, 1);
 
   /* read in the hierarchy (ignore it for group layers, both as an
    * optimization and because the hierarchy's extents don't match
@@ -1664,7 +1663,7 @@ xcf_load_channel (XcfInfo   *info,
                   GimpImage *image)
 {
   GimpChannel *channel;
-  guint32      hierarchy_offset;
+  goffset      hierarchy_offset;
   gint         width;
   gint         height;
   gboolean     is_fs_drawable;
@@ -1697,7 +1696,7 @@ xcf_load_channel (XcfInfo   *info,
   xcf_progress_update (info);
 
   /* read the hierarchy and layer mask offsets */
-  info->cp += xcf_read_int32 (info->input, &hierarchy_offset, 1);
+  info->cp += xcf_read_offset (info->input, &hierarchy_offset, 1);
 
   /* read in the hierarchy */
   if (!xcf_seek_pos (info, hierarchy_offset, NULL))
@@ -1725,7 +1724,7 @@ xcf_load_layer_mask (XcfInfo   *info,
 {
   GimpLayerMask *layer_mask;
   GimpChannel   *channel;
-  guint32        hierarchy_offset;
+  goffset        hierarchy_offset;
   gint           width;
   gint           height;
   gboolean       is_fs_drawable;
@@ -1759,7 +1758,7 @@ xcf_load_layer_mask (XcfInfo   *info,
   xcf_progress_update (info);
 
   /* read the hierarchy and layer mask offsets */
-  info->cp += xcf_read_int32 (info->input, &hierarchy_offset, 1);
+  info->cp += xcf_read_offset (info->input, &hierarchy_offset, 1);
 
   /* read in the hierarchy */
   if (! xcf_seek_pos (info, hierarchy_offset, NULL))
@@ -1787,7 +1786,7 @@ xcf_load_buffer (XcfInfo    *info,
                  GeglBuffer *buffer)
 {
   const Babl *format;
-  guint32     offset;
+  goffset     offset;
   gint        width;
   gint        height;
   gint        bpp;
@@ -1806,7 +1805,7 @@ xcf_load_buffer (XcfInfo    *info,
       bpp    != babl_format_get_bytes_per_pixel (format))
     return FALSE;
 
-  info->cp += xcf_read_int32 (info->input, &offset, 1); /* top level */
+  info->cp += xcf_read_offset (info->input, &offset, 1); /* top level */
 
   /* seek to the level offset */
   if (!xcf_seek_pos (info, offset, NULL))
@@ -1829,8 +1828,9 @@ xcf_load_level (XcfInfo    *info,
 {
   const Babl *format;
   gint        bpp;
-  guint32     saved_pos;
-  guint32     offset, offset2;
+  goffset     saved_pos;
+  goffset     offset;
+  goffset     offset2;
   gint        n_tile_rows;
   gint        n_tile_cols;
   guint       ntiles;
@@ -1853,7 +1853,7 @@ xcf_load_level (XcfInfo    *info,
    *  if it is '0', then this tile level is empty
    *  and we can simply return.
    */
-  info->cp += xcf_read_int32 (info->input, &offset, 1);
+  info->cp += xcf_read_offset (info->input, &offset, 1);
   if (offset == 0)
     return TRUE;
 
@@ -1881,11 +1881,13 @@ xcf_load_level (XcfInfo    *info,
       saved_pos = info->cp;
 
       /* read in the offset of the next tile so we can calculate the amount
-         of data needed for this tile*/
-      info->cp += xcf_read_int32 (info->input, &offset2, 1);
+       * of data needed for this tile
+       */
+      info->cp += xcf_read_offset (info->input, &offset2, 1);
 
       /* if the offset is 0 then we need to read in the maximum possible
-         allowing for negative compression */
+       * allowing for negative compression
+       */
       if (offset2 == 0)
         offset2 = offset + XCF_TILE_WIDTH * XCF_TILE_WIDTH * bpp * 1.5;
                                         /* 1.5 is probably more
@@ -1943,13 +1945,14 @@ xcf_load_level (XcfInfo    *info,
         return FALSE;
 
       /* read in the offset of the next tile */
-      info->cp += xcf_read_int32 (info->input, &offset, 1);
+      info->cp += xcf_read_offset (info->input, &offset, 1);
     }
 
   if (offset != 0)
     {
       gimp_message (info->gimp, G_OBJECT (info->progress), GIMP_MESSAGE_ERROR,
-                    "encountered garbage after reading level: %d", offset);
+                    "encountered garbage after reading level: " G_GOFFSET_FORMAT,
+                    offset);
       return FALSE;
     }
 

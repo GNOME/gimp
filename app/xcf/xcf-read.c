@@ -51,6 +51,29 @@ xcf_read_int32 (GInputStream *input,
 }
 
 guint
+xcf_read_offset (GInputStream *input,
+                 goffset      *data,
+                 gint          count)
+{
+  guint   total = 0;
+  gint32 *int_offsets = g_alloca (count * sizeof (gint32));
+
+  if (count > 0)
+    {
+      total += xcf_read_int8 (input, (guint8 *) int_offsets, count * 4);
+
+      while (count--)
+        {
+          *data = g_ntohl (*int_offsets);
+          int_offsets++;
+          data++;
+        }
+    }
+
+  return total;
+}
+
+guint
 xcf_read_float (GInputStream *input,
                 gfloat       *data,
                 gint          count)

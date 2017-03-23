@@ -22,6 +22,9 @@
 guint   xcf_read_int32  (GInputStream  *input,
                          guint32       *data,
                          gint           count);
+guint   xcf_read_offset (GInputStream  *input,
+                         goffset       *data,
+                         gint           count);
 guint   xcf_read_float  (GInputStream  *input,
                          gfloat        *data,
                          gint           count);
