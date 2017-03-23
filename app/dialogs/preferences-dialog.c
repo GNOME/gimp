@@ -2122,10 +2122,13 @@ prefs_dialog_new (Gimp       *gimp,
 
   /* The stroke line width physical values could be based on either the
    * x or y resolution, some average, or whatever which makes a bit of
-   * sense. There is no perfect answer. So let's just use whatever.
+   * sense. There is no perfect answer. The actual stroke dialog though
+   * uses the y resolution on the opened image. So using the y resolution
+   * of the default image seems like the best compromise in the preferences.
    */
   table = gimp_stroke_editor_new (GIMP_DIALOG_CONFIG (object)->stroke_options,
-                                  yres, FALSE);
+                                  gimp_template_get_resolution_y (core_config->default_image),
+                                  FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
