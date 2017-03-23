@@ -282,7 +282,7 @@ xcf_load_stream (Gimp          *gimp,
 
   info.bytes_per_offset = 4;
 
-  info.cp += xcf_read_int8 (info.input, (guint8 *) id, 14);
+  xcf_read_int8 (&info, (guint8 *) id, 14);
 
   if (! g_str_has_prefix (id, "gimp xcf "))
     {
