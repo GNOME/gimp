@@ -77,7 +77,8 @@ static GimpXcfLoaderFunc * const xcf_loaders[] =
   xcf_load_image,   /* version  7 */
   xcf_load_image,   /* version  8 */
   xcf_load_image,   /* version  9 */
-  xcf_load_image    /* version 10 */
+  xcf_load_image,   /* version 10 */
+  xcf_load_image    /* version 11 */
 };
 
 
@@ -268,19 +269,18 @@ xcf_load_stream (Gimp          *gimp,
   else
     filename = _("Memory Stream");
 
-  info.gimp        = gimp;
-  info.input       = input;
-  info.seekable    = G_SEEKABLE (input);
-  info.progress    = progress;
-  info.file        = input_file;
-  info.compression = COMPRESS_NONE;
+  info.gimp             = gimp;
+  info.input            = input;
+  info.seekable         = G_SEEKABLE (input);
+  info.bytes_per_offset = 4;
+  info.progress         = progress;
+  info.file             = input_file;
+  info.compression      = COMPRESS_NONE;
 
   if (progress)
     gimp_progress_start (progress, FALSE, _("Opening '%s'"), filename);
 
   success = TRUE;
-
-  info.bytes_per_offset = 4;
 
   xcf_read_int8 (&info, (guint8 *) id, 14);
 
@@ -300,6 +300,9 @@ xcf_load_stream (Gimp          *gimp,
     {
       success = FALSE;
     }
+
+  if (info.file_version >= 11)
+    info.bytes_per_offset = 8;
 
   if (success)
     {
@@ -353,11 +356,12 @@ xcf_save_stream (Gimp           *gimp,
   else
     filename = _("Memory Stream");
 
-  info.gimp     = gimp;
-  info.output   = output;
-  info.seekable = G_SEEKABLE (output);
-  info.progress = progress;
-  info.file     = output_file;
+  info.gimp             = gimp;
+  info.output           = output;
+  info.seekable         = G_SEEKABLE (output);
+  info.bytes_per_offset = 4;
+  info.progress         = progress;
+  info.file             = output_file;
 
   if (gimp_image_get_xcf_compat_mode (image))
     info.compression = COMPRESS_RLE;
@@ -369,7 +373,8 @@ xcf_save_stream (Gimp           *gimp,
                                                   COMPRESS_ZLIB,
                                                   NULL, NULL);
 
-  info.bytes_per_offset = 4;
+  if (info.file_version >= 11)
+    info.bytes_per_offset = 8;
 
   if (progress)
     gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);

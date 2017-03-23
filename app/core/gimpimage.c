@@ -2495,6 +2495,19 @@ gimp_image_get_xcf_version (GimpImage    *image,
   if (zlib_compression)
     version = MAX (8, version);
 
+  /* if version is 10 (lots of new layer modes), go to version 11 with
+   * 64 bit offsets right away
+   */
+  if (version == 10)
+    version = 11;
+
+  /* use the image's in-memory size as an upper bound to estimate the
+   * need for 64 bit file offsets inside the XCF, this is a *very*
+   * conservative estimate and should never fail
+   */
+  if (gimp_object_get_memsize (GIMP_OBJECT (image), NULL) >= ((gint64) 1 << 32))
+    version = MAX (11, version);
+
   switch (version)
     {
     case 0:
@@ -2516,6 +2529,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 8:
     case 9:
     case 10:
+    case 11:
       if (gimp_version)   *gimp_version   = 210;
       if (version_string) *version_string = "GIMP 2.10";
       break;
