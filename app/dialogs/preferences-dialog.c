@@ -978,6 +978,8 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *calibrate_button;
   GSList            *group;
   GtkWidget         *editor;
+  gdouble            xres;
+  gdouble            yres;
   gint               i;
 
   GObject           *object;
@@ -990,6 +992,10 @@ prefs_dialog_new (Gimp       *gimp,
   object         = G_OBJECT (config);
   core_config    = GIMP_CORE_CONFIG (config);
   display_config = GIMP_DISPLAY_CONFIG (config);
+
+  gimp_get_monitor_resolution (gdk_screen_get_default (), /* FIXME monitor */
+                               0, /* FIXME monitor */
+                               &xres, &yres);
 
   dialog = gimp_dialog_new (_("Preferences"), "gimp-preferences",
                             NULL, 0,
@@ -2114,8 +2120,12 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Stroke Selection & Stroke Path Dialogs"),
                            GTK_CONTAINER (vbox), FALSE);
 
+  /* The stroke line width physical values could be based on either the
+   * x or y resolution, some average, or whatever which makes a bit of
+   * sense. There is no perfect answer. So let's just use whatever.
+   */
   table = gimp_stroke_editor_new (GIMP_DIALOG_CONFIG (object)->stroke_options,
-                                  96.0 /* FIXME */, FALSE);
+                                  yres, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -2287,12 +2297,7 @@ prefs_dialog_new (Gimp       *gimp,
   group = NULL;
 
   {
-    gdouble  xres, yres;
     gchar   *str;
-
-    gimp_get_monitor_resolution (gdk_screen_get_default (), /* FIXME monitor */
-                                 0, /* FIXME monitor */
-                                 &xres, &yres);
 
     str = g_strdup_printf (_("_Detect automatically (currently %d × %d ppi)"),
                            ROUND (xres), ROUND (yres));
