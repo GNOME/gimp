@@ -130,35 +130,8 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
 
 
 /* private convenience macros */
-#define xcf_write_int32_check_error(info, data, count) G_STMT_START {  \
-  info->cp += xcf_write_int32 (info->output, data, count, &tmp_error); \
-  if (tmp_error)                                                       \
-    {                                                                  \
-      g_propagate_error (error, tmp_error);                            \
-      return FALSE;                                                    \
-    }                                                                  \
-  } G_STMT_END
-
-#define xcf_write_offset_check_error(info, data, count) G_STMT_START {  \
-  info->cp += xcf_write_offset (info->output, data, count, &tmp_error); \
-  if (tmp_error)                                                        \
-    {                                                                   \
-      g_propagate_error (error, tmp_error);                             \
-      return FALSE;                                                     \
-    }                                                                   \
-  } G_STMT_END
-
-#define xcf_write_zero_offset_check_error(info, count) G_STMT_START {  \
-  info->cp += xcf_write_zero_offset (info->output, count, &tmp_error); \
-  if (tmp_error)                                                       \
-    {                                                                  \
-      g_propagate_error (error, tmp_error);                            \
-      return FALSE;                                                    \
-    }                                                                  \
-  } G_STMT_END
-
-#define xcf_write_int8_check_error(info, data, count) G_STMT_START {  \
-  info->cp += xcf_write_int8 (info->output, data, count, &tmp_error); \
+#define xcf_write_int32_check_error(info, data, count) G_STMT_START { \
+  xcf_write_int32 (info, data, count, &tmp_error);                    \
   if (tmp_error)                                                      \
     {                                                                 \
       g_propagate_error (error, tmp_error);                           \
@@ -166,8 +139,8 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
     }                                                                 \
   } G_STMT_END
 
-#define xcf_write_float_check_error(info, data, count) G_STMT_START {  \
-  info->cp += xcf_write_float (info->output, data, count, &tmp_error); \
+#define xcf_write_offset_check_error(info, data, count) G_STMT_START { \
+  xcf_write_offset (info, data, count, &tmp_error);                    \
   if (tmp_error)                                                       \
     {                                                                  \
       g_propagate_error (error, tmp_error);                            \
@@ -175,23 +148,50 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
     }                                                                  \
   } G_STMT_END
 
-#define xcf_write_string_check_error(info, data, count) G_STMT_START {  \
-  info->cp += xcf_write_string (info->output, data, count, &tmp_error); \
-  if (tmp_error)                                                        \
-    {                                                                   \
-      g_propagate_error (error, tmp_error);                             \
-      return FALSE;                                                     \
-    }                                                                   \
+#define xcf_write_zero_offset_check_error(info, count) G_STMT_START { \
+  xcf_write_zero_offset (info, count, &tmp_error);                    \
+  if (tmp_error)                                                      \
+    {                                                                 \
+      g_propagate_error (error, tmp_error);                           \
+      return FALSE;                                                   \
+    }                                                                 \
+  } G_STMT_END
+
+#define xcf_write_int8_check_error(info, data, count) G_STMT_START { \
+  xcf_write_int8 (info, data, count, &tmp_error);                    \
+  if (tmp_error)                                                     \
+    {                                                                \
+      g_propagate_error (error, tmp_error);                          \
+      return FALSE;                                                  \
+    }                                                                \
+  } G_STMT_END
+
+#define xcf_write_float_check_error(info, data, count) G_STMT_START { \
+  xcf_write_float (info, data, count, &tmp_error);                    \
+  if (tmp_error)                                                      \
+    {                                                                 \
+      g_propagate_error (error, tmp_error);                           \
+      return FALSE;                                                   \
+    }                                                                 \
+  } G_STMT_END
+
+#define xcf_write_string_check_error(info, data, count) G_STMT_START { \
+  xcf_write_string (info, data, count, &tmp_error);                    \
+  if (tmp_error)                                                       \
+    {                                                                  \
+      g_propagate_error (error, tmp_error);                            \
+      return FALSE;                                                    \
+    }                                                                  \
   } G_STMT_END
 
 #define xcf_write_prop_type_check_error(info, prop_type) G_STMT_START { \
-  guint32 _prop_int32 = prop_type;                     \
-  xcf_write_int32_check_error (info, &_prop_int32, 1); \
+  guint32 _prop_int32 = prop_type;                                      \
+  xcf_write_int32_check_error (info, &_prop_int32, 1);                  \
   } G_STMT_END
 
 #define xcf_check_error(x) G_STMT_START { \
-  if (! (x))                                                  \
-    return FALSE;                                             \
+  if (! (x))                              \
+    return FALSE;                         \
   } G_STMT_END
 
 #define xcf_progress_update(info) G_STMT_START  \
@@ -1418,9 +1418,9 @@ xcf_save_buffer (XcfInfo     *info,
   height = gegl_buffer_get_height (buffer);
   bpp    = babl_format_get_bytes_per_pixel (format);
 
-  xcf_write_int32_check_error (info, (guint32 *) &width, 1);
+  xcf_write_int32_check_error (info, (guint32 *) &width,  1);
   xcf_write_int32_check_error (info, (guint32 *) &height, 1);
-  xcf_write_int32_check_error (info, (guint32 *) &bpp, 1);
+  xcf_write_int32_check_error (info, (guint32 *) &bpp,    1);
 
   tmp1 = xcf_calc_levels (width,  XCF_TILE_WIDTH);
   tmp2 = xcf_calc_levels (height, XCF_TILE_HEIGHT);
@@ -1502,7 +1502,7 @@ xcf_save_level (XcfInfo     *info,
   height = gegl_buffer_get_height (buffer);
   bpp    = babl_format_get_bytes_per_pixel (format);
 
-  xcf_write_int32_check_error (info, (guint32 *) &width, 1);
+  xcf_write_int32_check_error (info, (guint32 *) &width,  1);
   xcf_write_int32_check_error (info, (guint32 *) &height, 1);
 
   saved_pos = info->cp;
@@ -2103,7 +2103,7 @@ xcf_save_vectors (XcfInfo    *info,
                * [5] wheel (gfloat)
                */
 
-              xcf_write_int32_check_error (info, &type, 1);
+              xcf_write_int32_check_error (info, &type,  1);
               xcf_write_float_check_error (info, coords, num_axes);
             }
 

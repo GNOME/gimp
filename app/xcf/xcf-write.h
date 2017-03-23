@@ -19,26 +19,26 @@
 #define __XCF_WRITE_H__
 
 
-guint   xcf_write_int32       (GOutputStream  *output,
+guint   xcf_write_int32       (XcfInfo        *info,
                                const guint32  *data,
                                gint            count,
                                GError        **error);
-guint   xcf_write_offset      (GOutputStream  *output,
+guint   xcf_write_offset      (XcfInfo        *info,
                                const goffset  *data,
                                gint            count,
                                GError        **error);
-guint   xcf_write_zero_offset (GOutputStream  *output,
+guint   xcf_write_zero_offset (XcfInfo        *info,
                                gint            count,
                                GError        **error);
-guint   xcf_write_float       (GOutputStream  *output,
+guint   xcf_write_float       (XcfInfo        *info,
                                const gfloat   *data,
                                gint            count,
                                GError        **error);
-guint   xcf_write_int8        (GOutputStream  *output,
+guint   xcf_write_int8        (XcfInfo        *info,
                                const guint8   *data,
                                gint            count,
                                GError        **error);
-guint   xcf_write_string      (GOutputStream  *output,
+guint   xcf_write_string      (XcfInfo        *info,
                                gchar         **data,
                                gint            count,
                                GError        **error);
