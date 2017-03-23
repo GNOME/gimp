@@ -58,18 +58,32 @@ xcf_read_offset (XcfInfo *info,
                  goffset *data,
                  gint     count)
 {
-  guint   total = 0;
-  gint32 *int_offsets = g_alloca (count * sizeof (gint32));
+  guint total = 0;
 
   if (count > 0)
     {
-      total += xcf_read_int8 (info, (guint8 *) int_offsets, count * 4);
-
-      while (count--)
+      if (info->bytes_per_offset == 4)
         {
-          *data = g_ntohl (*int_offsets);
-          int_offsets++;
-          data++;
+          gint32 *int_offsets = g_alloca (count * sizeof (gint32));
+
+          total += xcf_read_int8 (info, (guint8 *) int_offsets, count * 4);
+
+          while (count--)
+            {
+              *data = g_ntohl (*int_offsets);
+              int_offsets++;
+              data++;
+            }
+        }
+      else
+        {
+          total += xcf_read_int8 (info, (guint8 *) data, count * 8);
+
+          while (count--)
+            {
+              *data = GINT64_FROM_BE (*data);
+              data++;
+            }
         }
     }
 
