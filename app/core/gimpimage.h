@@ -171,9 +171,9 @@ gint            gimp_image_get_xcf_version       (GimpImage          *image,
                                                   gint               *gimp_version,
                                                   const gchar       **version_string);
 
-void            gimp_image_set_xcf_compat_mode   (GimpImage          *image,
-                                                  gboolean            compat_mode);
-gboolean        gimp_image_get_xcf_compat_mode   (GimpImage          *image);
+void            gimp_image_set_xcf_compression   (GimpImage          *image,
+                                                  gboolean            compression);
+gboolean        gimp_image_get_xcf_compression   (GimpImage          *image);
 
 void            gimp_image_set_resolution        (GimpImage          *image,
                                                   gdouble             xres,

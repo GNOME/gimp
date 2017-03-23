@@ -179,17 +179,15 @@ file_save_dialog_response (GtkWidget *dialog,
 
     case CHECK_URI_OK:
       {
-        gboolean xcf_compat = FALSE;
+        gboolean xcf_compression = FALSE;
 
         gimp_file_dialog_set_sensitive (file_dialog, FALSE);
 
         if (GIMP_IS_SAVE_DIALOG (dialog))
           {
-            GimpSaveDialog* save_dialog = GIMP_SAVE_DIALOG (dialog);
-
-            xcf_compat = save_dialog->compat &&
-              gtk_widget_get_sensitive (save_dialog->compat_toggle);
+            xcf_compression = GIMP_SAVE_DIALOG (dialog)->compression;
           }
+
         if (file_save_dialog_save_image (GIMP_PROGRESS (dialog),
                                          gimp,
                                          file_dialog->image,
@@ -200,7 +198,7 @@ file_save_dialog_response (GtkWidget *dialog,
                                          ! GIMP_SAVE_DIALOG (dialog)->save_a_copy,
                                          FALSE,
                                          GIMP_IS_EXPORT_DIALOG (dialog),
-                                         xcf_compat,
+                                         xcf_compression,
                                          FALSE))
           {
             /* Save was successful, now store the URI in a couple of
@@ -753,7 +751,7 @@ file_save_dialog_save_image (GimpProgress        *progress,
                              gboolean             change_saved_state,
                              gboolean             export_backward,
                              gboolean             export_forward,
-                             gboolean             xcf_compat,
+                             gboolean             xcf_compression,
                              gboolean             verbose_cancel)
 {
   GimpPDBStatusType  status;
@@ -768,7 +766,7 @@ file_save_dialog_save_image (GimpProgress        *progress,
       gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
     }
 
-  gimp_image_set_xcf_compat_mode (image, xcf_compat);
+  gimp_image_set_xcf_compression (image, xcf_compression);
 
   status = file_save (gimp, image, progress, file,
                       save_proc, run_mode,

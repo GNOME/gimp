@@ -46,7 +46,7 @@ typedef struct _GimpSaveDialogState GimpSaveDialogState;
 struct _GimpSaveDialogState
 {
   gchar    *filter_name;
-  gboolean  compat;
+  gboolean  compression;
 };
 
 
@@ -57,8 +57,10 @@ static void     gimp_save_dialog_save_state        (GimpFileDialog      *dialog,
 static void     gimp_save_dialog_load_state        (GimpFileDialog      *dialog,
                                                     const gchar         *state_name);
 
-static void     gimp_save_dialog_add_compat_toggle (GimpSaveDialog      *dialog);
-static void     gimp_save_dialog_compat_toggled    (GtkToggleButton     *button,
+static void     gimp_save_dialog_add_compression_toggle
+                                                   (GimpSaveDialog      *dialog);
+static void     gimp_save_dialog_compression_toggled
+                                                   (GtkToggleButton     *button,
                                                     GimpSaveDialog      *dialog);
 
 static GimpSaveDialogState
@@ -101,7 +103,7 @@ gimp_save_dialog_constructed (GObject *object)
    */
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_save_dialog_add_compat_toggle (dialog);
+  gimp_save_dialog_add_compression_toggle (dialog);
 }
 
 static void
@@ -254,49 +256,37 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 
   if (rle_version == zlib_version)
     {
-      gtk_widget_set_sensitive (dialog->compat_toggle, FALSE);
-      gtk_widget_set_sensitive (dialog->compat_info, FALSE);
-
-      tooltip = g_strdup_printf (_("The image uses features from %s and "
-                                   "cannot be saved for older GIMP "
-                                   "versions."),
+      tooltip = g_strdup_printf (_("The image uses features from %s, disabling "
+                                   "compression won't make the XCF file "
+                                   "readable by older GIMP versions."),
                                  version_string);
     }
   else
     {
-      gtk_widget_set_sensitive (dialog->compat_toggle, TRUE);
-      gtk_widget_set_sensitive (dialog->compat_info, TRUE);
-
-      tooltip = g_strdup_printf (_("Disables compression to make the XCF "
+      tooltip = g_strdup_printf (_("Keep compression disabled to make the XCF "
                                    "file readable by %s and later."),
                                  version_string);
-      if (gimp_image_get_metadata (image))
-        {
-          gchar *temp_tooltip;
+    }
 
-          temp_tooltip = g_strconcat (tooltip, "\n",
-                                      _("Metadata won't be visible in GIMP "
-                                        "older than version 2.10."), NULL);
-          g_free (tooltip);
-          tooltip = temp_tooltip;
-        }
+  if (gimp_image_get_metadata (image))
+    {
+      gchar *temp_tooltip;
+
+      temp_tooltip = g_strconcat (tooltip, "\n",
+                                  _("Metadata won't be visible in GIMP "
+                                    "older than version 2.10."), NULL);
+      g_free (tooltip);
+      tooltip = temp_tooltip;
     }
 
   gtk_label_set_text (GTK_LABEL (dialog->compat_info), tooltip);
   g_free (tooltip);
 
-  gtk_widget_show (dialog->compat_toggle);
+  gtk_widget_show (dialog->compression_toggle);
   gtk_widget_show (dialog->compat_info);
 
-  /* We set the compatibility mode by default either if the image was
-   * previously saved with the compatibility mode, or if it has never
-   * been saved and the last GimpSaveDialogState had compatibility
-   * mode ON.
-   */
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compat_toggle),
-                                gtk_widget_get_sensitive (dialog->compat_toggle) &&
-                                (gimp_image_get_xcf_compat_mode (image) ||
-                                 (! gimp_image_get_file (image) && dialog->compat)));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compression_toggle),
+                                gimp_image_get_xcf_compression (image));
 
   if (ext_file)
     {
@@ -331,41 +321,37 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 /*  private functions  */
 
 static void
-gimp_save_dialog_add_compat_toggle (GimpSaveDialog *dialog)
+gimp_save_dialog_add_compression_toggle (GimpSaveDialog *dialog)
 {
-  GtkWidget *compat_frame;
+  GtkWidget *frame;
 
-  compat_frame = gimp_frame_new (NULL);
+  dialog->compression_toggle =
+    gtk_check_button_new_with_label (_("Save this XCF file with better but slower compression"));
 
-  /* The checkbox. */
-  dialog->compat_toggle =
-    gtk_check_button_new_with_label (_("Save this XCF file with maximum compatibility"));
-  gtk_frame_set_label_widget (GTK_FRAME (compat_frame),
-                              dialog->compat_toggle);
+  frame = gimp_frame_new (NULL);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), dialog->compression_toggle);
+  gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog), frame,
+                                     FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  /* Additional information explaining what this mode does. */
+  /* Additional information explaining file compatibility things */
   dialog->compat_info = gtk_label_new ("");
   gtk_label_set_xalign (GTK_LABEL (dialog->compat_info), 0.0);
   gimp_label_set_attributes (GTK_LABEL (dialog->compat_info),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_container_add (GTK_CONTAINER (compat_frame), dialog->compat_info);
+  gtk_container_add (GTK_CONTAINER (frame), dialog->compat_info);
 
-  gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog),
-                                     compat_frame,
-                                     FALSE, FALSE, 0);
-  gtk_widget_show (compat_frame);
-
-  g_signal_connect (dialog->compat_toggle, "toggled",
-                    G_CALLBACK (gimp_save_dialog_compat_toggled),
+  g_signal_connect (dialog->compression_toggle, "toggled",
+                    G_CALLBACK (gimp_save_dialog_compression_toggled),
                     dialog);
 }
 
 static void
-gimp_save_dialog_compat_toggled (GtkToggleButton *button,
-                                 GimpSaveDialog  *dialog)
+gimp_save_dialog_compression_toggled (GtkToggleButton *button,
+                                      GimpSaveDialog  *dialog)
 {
-  dialog->compat = gtk_toggle_button_get_active (button);
+  dialog->compression = gtk_toggle_button_get_active (button);
 }
 
 static GimpSaveDialogState *
@@ -381,7 +367,7 @@ gimp_save_dialog_get_state (GimpSaveDialog *dialog)
   if (filter)
     state->filter_name = g_strdup (gtk_file_filter_get_name (filter));
 
-  state->compat = dialog->compat;
+  state->compression = dialog->compression;
 
   return state;
 }
@@ -412,7 +398,7 @@ gimp_save_dialog_set_state (GimpSaveDialog      *dialog,
       g_slist_free (filters);
     }
 
-  dialog->compat = state->compat;
+  dialog->compression = state->compression;
 }
 
 static void

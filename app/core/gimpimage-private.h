@@ -74,7 +74,7 @@ struct _GimpImagePrivate
   GFile             *save_a_copy_file;      /*  the image's save-a-copy file */
   GFile             *untitled_file;         /*  a file saying "Untitled"     */
 
-  gboolean           xcf_compat_mode;       /*  if possible, save compat XCF */
+  gboolean           xcf_compression;       /*  XCF compression enabled?     */
 
   gint               dirty;                 /*  dirty flag -- # of ops       */
   gint64             dirty_time;            /*  time when image became dirty */

@@ -2539,20 +2539,20 @@ gimp_image_get_xcf_version (GimpImage    *image,
 }
 
 void
-gimp_image_set_xcf_compat_mode (GimpImage *image,
-                                gboolean   compat_mode)
+gimp_image_set_xcf_compression (GimpImage *image,
+                                gboolean   compression)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  GIMP_IMAGE_GET_PRIVATE (image)->xcf_compat_mode = compat_mode;
+  GIMP_IMAGE_GET_PRIVATE (image)->xcf_compression = compression;
 }
 
 gboolean
-gimp_image_get_xcf_compat_mode (GimpImage *image)
+gimp_image_get_xcf_compression (GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  return GIMP_IMAGE_GET_PRIVATE (image)->xcf_compat_mode;
+  return GIMP_IMAGE_GET_PRIVATE (image)->xcf_compression;
 }
 
 void

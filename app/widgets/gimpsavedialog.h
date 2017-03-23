@@ -43,9 +43,9 @@ struct _GimpSaveDialog
   gboolean             close_after_saving;
   GimpObject          *display_to_close;
 
-  GtkWidget           *compat_toggle;
+  GtkWidget           *compression_toggle;
   GtkWidget           *compat_info;
-  gboolean             compat;
+  gboolean             compression;
 };
 
 struct _GimpSaveDialogClass

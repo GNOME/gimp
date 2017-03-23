@@ -363,10 +363,10 @@ xcf_save_stream (Gimp           *gimp,
   info.progress         = progress;
   info.file             = output_file;
 
-  if (gimp_image_get_xcf_compat_mode (image))
-    info.compression = COMPRESS_RLE;
-  else
+  if (gimp_image_get_xcf_compression (image))
     info.compression = COMPRESS_ZLIB;
+  else
+    info.compression = COMPRESS_RLE;
 
   info.file_version = gimp_image_get_xcf_version (image,
                                                   info.compression ==

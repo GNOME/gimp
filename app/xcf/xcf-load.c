@@ -380,7 +380,7 @@ xcf_load_image (Gimp     *gimp,
     {
       GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-      gimp_image_set_xcf_compat_mode (image, TRUE);
+      /* just ditch it, it's unused but shouldn't be re-saved */
       gimp_parasite_list_remove (private->parasites,
                                  gimp_parasite_name (parasite));
     }
@@ -695,6 +695,9 @@ xcf_load_image_props (XcfInfo   *info,
               }
 
             info->compression = compression;
+
+            gimp_image_set_xcf_compression (image,
+                                            compression >= COMPRESS_ZLIB);
 
             GIMP_LOG (XCF, "prop compression=%d", compression);
           }
