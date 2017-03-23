@@ -32,13 +32,13 @@ scalable/gimp-color-picker-white.svg: $(top_builddir)/icons/Symbolic/scalable/gi
 	mkdir -p scalable && $(top_builddir)/tools/invert-svg $< $@
 
 # Rule for all other scalable icons.
-scalable/%.svg: ../Symbolic/scalable/%.svg $(top_builddir)/tools/invert-svg$(EXEEXT)
+scalable/%.svg: ../Symbolic/scalable/%.svg $(top_builddir)/tools/invert-svg$(BUILD_EXEEXT)
 	mkdir -p scalable && \
-	$(top_builddir)/tools/invert-svg$(EXEEXT) $< $@
+	$(top_builddir)/tools/invert-svg$(BUILD_EXEEXT) $< $@
 
-24/%.svg: $(top_srcdir)/icons/Symbolic/24/%.svg $(top_builddir)/tools/invert-svg$(EXEEXT)
+24/%.svg: $(top_srcdir)/icons/Symbolic/24/%.svg $(top_builddir)/tools/invert-svg$(BUILD_EXEEXT)
 	mkdir -p 24 && \
-	$(top_builddir)/tools/invert-svg$(EXEEXT) $< $@
+	$(top_builddir)/tools/invert-svg$(BUILD_EXEEXT) $< $@
 
 # We are basically repeating the same rule for every subdirectory, which
 # is very dirty. But this is the only way we found to have a rule
