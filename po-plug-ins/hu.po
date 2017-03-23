@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-03-05 15:16+0000\n"
-"PO-Revision-Date: 2017-03-06 22:20+0100\n"
-"Last-Translator: Gabor Kelemen <kelemeng at ubuntu dot com>\n"
+"POT-Creation-Date: 2017-03-21 16:55+0000\n"
+"PO-Revision-Date: 2017-03-22 16:42+0100\n"
+"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -102,7 +102,6 @@ msgstr "Látható rétegek igazítása"
 #: ../plug-ins/map-object/map-object-ui.c:1333
 #: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:426
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
-#| msgid "_Advanced"
 msgid "_Cancel"
 msgstr "Mé_gse"
 
@@ -832,7 +831,6 @@ msgstr "Véletlenszerű kiindulóérték"
 #: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
 #: ../plug-ins/lighting/lighting-ui.c:600
 #: ../plug-ins/lighting/lighting-ui.c:1307
-#| msgid "Open"
 msgid "_Open"
 msgstr "_Megnyitás"
 
@@ -851,7 +849,6 @@ msgstr "_Megnyitás"
 #: ../plug-ins/ifs-compose/ifs-compose.c:2531
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:593
 #: ../plug-ins/lighting/lighting-ui.c:1163
-#| msgid "Save"
 msgid "_Save"
 msgstr "M_entés"
 
@@ -1023,7 +1020,6 @@ msgstr "A jelenlegi beállítások grafikonja"
 #: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/gfig/gfig-dialog.c:1245
 #: ../plug-ins/gfig/gfig-dialog.c:1393
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
-#| msgid "Closed"
 msgid "_Close"
 msgstr "_Bezárás"
 
@@ -1244,7 +1240,6 @@ msgstr "Színtérkép újrarendezése"
 #: ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:762
 #: ../plug-ins/selection-to-path/selection-to-path.c:308
-#| msgid "_Presets"
 msgid "_Reset"
 msgstr "_Visszaállítás"
 
@@ -4363,7 +4358,6 @@ msgid "On film:"
 msgstr "A filmen:"
 
 #: ../plug-ins/common/film.c:931 ../plug-ins/common/unit-editor.c:210
-#| msgid "_Additive"
 msgid "_Add"
 msgstr "Hozzá_adás"
 
@@ -5237,7 +5231,7 @@ msgid "Display information about plug-ins"
 msgstr "Információ megjelenítése a bővítményekről"
 
 #: ../plug-ins/common/plugin-browser.c:144
-msgid "_Plug-In Browser"
+msgid "_Plug-in Browser"
 msgstr "_Bővítményböngésző"
 
 #: ../plug-ins/common/plugin-browser.c:363
@@ -5267,7 +5261,7 @@ msgid "No matches"
 msgstr "Nincs találat"
 
 #: ../plug-ins/common/plugin-browser.c:546
-msgid "Plug-In Browser"
+msgid "Plug-in Browser"
 msgstr "Bővítményböngésző"
 
 #: ../plug-ins/common/plugin-browser.c:589
@@ -5778,7 +5772,6 @@ msgstr "Kettő_zés"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2929
 #: ../plug-ins/gradient-flare/gradient-flare.c:3210
 #: ../plug-ins/ifs-compose/ifs-compose.c:1031
-#| msgid "Delete"
 msgid "_Delete"
 msgstr "_Törlés"
 
@@ -6333,22 +6326,18 @@ msgstr "%d. iterációs lépés"
 
 #: ../plug-ins/common/wavelet-decompose.c:86
 #: ../plug-ins/common/wavelet-decompose.c:267
-#| msgid "Decompose"
 msgid "Wavelet decompose"
 msgstr "Wavelet szétbontás"
 
 #: ../plug-ins/common/wavelet-decompose.c:91
-#| msgid "_Decompose..."
 msgid "_Wavelet-decompose..."
 msgstr "Wavelet szét_bontás…"
 
 #: ../plug-ins/common/wavelet-decompose.c:161
-#| msgid "Decompose"
 msgid "Wavelet-Decompose"
 msgstr "Wavelet szétbontás"
 
 #: ../plug-ins/common/wavelet-decompose.c:296
-#| msgid "Scale:"
 msgid "Scales:"
 msgstr "Színskálák:"
 
@@ -7716,12 +7705,10 @@ msgid "R_edraw preview"
 msgstr "Előnézet ú_jrarajzolása"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
-#| msgid "Zoom in"
 msgid "Zoom _In"
 msgstr "_Nagyítás"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
-#| msgid "Zoom out"
 msgid "Zoom _Out"
 msgstr "_Kicsinyítés"
 
@@ -7731,7 +7718,6 @@ msgstr "A nagyítási mérték legutóbbi módosításának visszavonása"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
 #: ../plug-ins/ifs-compose/ifs-compose.c:1039
-#| msgid "Redo"
 msgid "_Redo"
 msgstr "Új_ra"
 
@@ -8150,7 +8136,6 @@ msgid "_Grid"
 msgstr "Rá_cs"
 
 #: ../plug-ins/gfig/gfig-dialog.c:897
-#| msgid "Preferences"
 msgid "_Preferences..."
 msgstr "B_eállítások…"
 
@@ -8167,7 +8152,6 @@ msgid "Lower selected object"
 msgstr "A kijelölt objektum lejjebb helyezése"
 
 #: ../plug-ins/gfig/gfig-dialog.c:909
-#| msgid "pixels from _top"
 msgid "Raise to _top"
 msgstr "F_elülre helyezés"
 
@@ -8176,7 +8160,6 @@ msgid "Raise selected object to top"
 msgstr "A kijelölt objektum legfelülre való helyezése"
 
 #: ../plug-ins/gfig/gfig-dialog.c:913
-#| msgid "To _bottom"
 msgid "Lower to _bottom"
 msgstr "Al_ulra helyezés"
 
@@ -8185,8 +8168,6 @@ msgid "Lower selected object to bottom"
 msgstr "A kijelölt objektum legalulra való helyezése"
 
 #: ../plug-ins/gfig/gfig-dialog.c:917
-#| msgctxt "search"
-#| msgid "_Previous"
 msgid "_Previous"
 msgstr "_Előző"
 
@@ -8195,8 +8176,6 @@ msgid "Show previous object"
 msgstr "Előző objektum megjelenítése"
 
 #: ../plug-ins/gfig/gfig-dialog.c:921
-#| msgctxt "search"
-#| msgid "_Next"
 msgid "_Next"
 msgstr "_Következő"
 
@@ -8205,7 +8184,6 @@ msgid "Show next object"
 msgstr "Következő objektum megjelenítése"
 
 #: ../plug-ins/gfig/gfig-dialog.c:925
-#| msgid "Show all objects"
 msgid "Show _all"
 msgstr "Öss_zes megjelenítése"
 
@@ -8471,7 +8449,6 @@ msgid "Select:"
 msgstr "Kijelölés:"
 
 #: ../plug-ins/gimpressionist/brush.c:586
-#| msgid "Save _As..."
 msgid "Save _as"
 msgstr "Mentés más_ként"
 
@@ -9186,7 +9163,6 @@ msgid "Co_mpression level:"
 msgstr "_Tömörítés mértéke:"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:18
-#| msgid "Automatic pre_view"
 msgid "automatic pixelformat"
 msgstr "automatikus képpontformátum"
 
@@ -9199,7 +9175,6 @@ msgid "8bpc GRAY"
 msgstr "8bpc GRAY"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:21
-#| msgid "RGBA"
 msgid "8bpc RGBA"
 msgstr "8bpc RGBA"
 
@@ -9228,12 +9203,10 @@ msgid "RGB Save Type"
 msgstr "RGB mentési típusa"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:2
-#| msgid "Standard (RGB RGB RGB ...)"
 msgid "Standard (R,G,B)"
 msgstr "Szabványos (R,G,B)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:3
-#| msgid "Planar (RRR... GGG... BBB...)"
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Sík (RRR,GGG,BBB)"
 
@@ -9545,7 +9518,6 @@ msgid "Gradient Flare Editor"
 msgstr "Színátmenetes csillogás szerkesztője"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3322
-#| msgid "Rescan Gradients"
 msgid "_Rescan Gradients"
 msgstr "Színátmenetek új_rakeresése"
 
@@ -9743,7 +9715,6 @@ msgid "_Next"
 msgstr "_Következő"
 
 #: ../plug-ins/help-browser/dialog.c:1188
-#| msgid "Closed"
 msgctxt "search"
 msgid "_Close"
 msgstr "_Bezárás"
@@ -9974,7 +9945,7 @@ msgid "Open IFS Fractal file"
 msgstr "IFS fraktálkészítő-fájl megnyitása"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-msgid "Image Map Plug-In"
+msgid "Image Map Plug-in"
 msgstr "„Image map” (kép-térkép) bővítmény"
 
 #: ../plug-ins/imagemap/imap_about.c:46
@@ -11496,7 +11467,6 @@ msgid "At the end of the delay, click in a window to snap it."
 msgstr "A késleltetés lejárta után kattintson egy ablakra a képkészítéshez."
 
 #: ../plug-ins/screenshot/screenshot.c:609
-#| msgid "Color fill"
 msgid "Color Profile"
 msgstr "Színprofil"
 
@@ -11505,7 +11475,6 @@ msgid "Tag image with _monitor profile"
 msgstr "Kép címkézése a _monitor profiljával"
 
 #: ../plug-ins/screenshot/screenshot.c:618
-#| msgid "Environment image to use"
 msgid "Convert image to sR_GB"
 msgstr "Kép átalakítása sR_GB-vé"
 
