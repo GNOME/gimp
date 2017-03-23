@@ -22,10 +22,7 @@ bin_PROGRAMS = gimptool-2.0
 
 endif
 
-noinst_PROGRAMS = \
-	test-clipboard	\
-	invert-svg	\
-	compute-svg-viewbox
+noinst_PROGRAMS = test-clipboard
 
 EXTRA_PROGRAMS = \
 	kernelgen
@@ -46,18 +43,19 @@ test_clipboard_SOURCES = test-clipboard.c
 test_clipboard_LDADD = $(GTK_LIBS)
 
 
-invert_svg_SOURCES = invert-svg.c
-
-invert_svg_CFLAGS = $(SVG_CFLAGS) $(GLIB_CFLAGS) $(GIO_CFLAGS)
-
-invert_svg_LDADD = $(SVG_LIBS) $(GLIB_LIBS) $(GIO_LIBS)
+invert-svg$(BUILD_EXEEXT): invert-svg.c
+	$(CC_FOR_BUILD) -o $@ $< $(NATIVE_GLIB_LIBS) $(NATIVE_GLIB_CFLAGS)
 
 
-compute_svg_viewbox_SOURCES = compute-svg-viewbox.c
+# compute_svg_viewbox is not built or used because librsvg is just too buggy
+# right now. But we keep the code around. The goal of this build tool will be
+# to be able to extract SVG icons from a single SVG file at build time, rather
+# than having to export and commit them manually.
+#compute_svg_viewbox_SOURCES = compute-svg-viewbox.c
 
-compute_svg_viewbox_CFLAGS = $(SVG_CFLAGS)
+#compute_svg_viewbox_CFLAGS = $(SVG_CFLAGS)
 
-compute_svg_viewbox_LDADD = $(SVG_LIBS)
+#compute_svg_viewbox_LDADD = $(SVG_LIBS)
 
 
 AM_CPPFLAGS = \
@@ -89,3 +87,6 @@ EXTRA_DIST = \
 	defcheck.py	\
 	gimp-mkenums	\
 	gimppath2svg.py
+
+# Build tools which must be built for the host platform.
+all: invert-svg$(BUILD_EXEEXT)
