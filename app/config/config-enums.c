@@ -164,7 +164,8 @@ gimp_icon_size_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_ICON_SIZE_DEFAULT, "GIMP_ICON_SIZE_DEFAULT", "default" },
+    { GIMP_ICON_SIZE_AUTO, "GIMP_ICON_SIZE_AUTO", "auto" },
+    { GIMP_ICON_SIZE_THEME, "GIMP_ICON_SIZE_THEME", "theme" },
     { GIMP_ICON_SIZE_SMALL, "GIMP_ICON_SIZE_SMALL", "small" },
     { GIMP_ICON_SIZE_MEDIUM, "GIMP_ICON_SIZE_MEDIUM", "medium" },
     { GIMP_ICON_SIZE_LARGE, "GIMP_ICON_SIZE_LARGE", "large" },
@@ -174,7 +175,8 @@ gimp_icon_size_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_ICON_SIZE_DEFAULT, NC_("icon-size", "Default size"), NULL },
+    { GIMP_ICON_SIZE_AUTO, NC_("icon-size", "Guess ideal size"), NULL },
+    { GIMP_ICON_SIZE_THEME, NC_("icon-size", "Theme-set size"), NULL },
     { GIMP_ICON_SIZE_SMALL, NC_("icon-size", "Small size"), NULL },
     { GIMP_ICON_SIZE_MEDIUM, NC_("icon-size", "Medium size"), NULL },
     { GIMP_ICON_SIZE_LARGE, NC_("icon-size", "Large size"), NULL },
