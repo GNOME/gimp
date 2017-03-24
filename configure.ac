@@ -2470,7 +2470,6 @@ icons/Symbolic/Makefile
 icons/Symbolic-Inverted/Makefile
 themes/Makefile
 themes/System/Makefile
-themes/Small/Makefile
 themes/Darker/Makefile
 themes/Dark/Makefile
 themes/Gray/Makefile
