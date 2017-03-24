@@ -42,18 +42,19 @@
 
 /*  local function prototypes  */
 
-static void   gimp_operation_config_config_sync   (GObject          *config,
-                                                   const GParamSpec *gimp_pspec,
-                                                   GeglNode         *node);
-static void   gimp_operation_config_config_notify (GObject          *config,
-                                                   const GParamSpec *gimp_pspec,
-                                                   GeglNode         *node);
-static void   gimp_operation_config_node_notify   (GeglNode         *node,
-                                                   const GParamSpec *gegl_pspec,
-                                                   GObject          *config);
+static void    gimp_operation_config_config_sync   (GObject          *config,
+                                                    const GParamSpec *gimp_pspec,
+                                                    GeglNode         *node);
+static void    gimp_operation_config_config_notify (GObject          *config,
+                                                    const GParamSpec *gimp_pspec,
+                                                    GeglNode         *node);
+static void    gimp_operation_config_node_notify   (GeglNode         *node,
+                                                    const GParamSpec *gegl_pspec,
+                                                    GObject          *config);
 
-static void   gimp_operation_config_add_sep       (GimpContainer    *container);
-static void   gimp_operation_config_remove_sep    (GimpContainer    *container);
+static GFile * gimp_operation_config_get_file      (GType             config_type);
+static void    gimp_operation_config_add_sep       (GimpContainer    *container);
+static void    gimp_operation_config_remove_sep    (GimpContainer    *container);
 
 
 /*  public functions  */
@@ -359,12 +360,7 @@ gimp_operation_config_get_container (Gimp         *gimp,
 
       if (gimp_container_get_n_children (container) == 0)
         {
-          gchar *basename;
-          GFile *file;
-
-          basename = g_strconcat (g_type_name (config_type), ".settings", NULL);
-          file = gimp_directory_file ("filters", basename, NULL);
-          g_free (basename);
+          GFile *file = gimp_operation_config_get_file (config_type);
 
           if (! g_file_query_exists (file, NULL))
             {
@@ -410,12 +406,9 @@ gimp_operation_config_serialize (Gimp          *gimp,
 
   if (! file)
     {
-      GType  config_type = gimp_container_get_children_type (container);
-      gchar *basename;
+      GType config_type = gimp_container_get_children_type (container);
 
-      basename = g_strconcat (g_type_name (config_type), ".settings", NULL);
-      file = gimp_directory_file ("filters", basename, NULL);
-      g_free (basename);
+      file = gimp_operation_config_get_file (config_type);
     }
 
   if (gimp->be_verbose)
@@ -452,12 +445,9 @@ gimp_operation_config_deserialize (Gimp          *gimp,
 
   if (! file)
     {
-      GType  config_type = gimp_container_get_children_type (container);
-      gchar *basename;
+      GType config_type = gimp_container_get_children_type (container);
 
-      basename = g_strconcat (g_type_name (config_type), ".settings", NULL);
-      file = gimp_directory_file ("filters", basename, NULL);
-      g_free (basename);
+      file = gimp_operation_config_get_file (config_type);
     }
 
   if (gimp->be_verbose)
@@ -742,6 +732,19 @@ gimp_operation_config_node_notify (GeglNode         *node,
       if (handler)
         g_signal_handler_unblock (config, handler);
     }
+}
+
+static GFile *
+gimp_operation_config_get_file (GType config_type)
+{
+  GFile *file;
+  gchar *basename;
+
+  basename = g_strconcat (g_type_name (config_type), ".settings", NULL);
+  file = gimp_directory_file ("filters", basename, NULL);
+  g_free (basename);
+
+  return file;
 }
 
 static void
