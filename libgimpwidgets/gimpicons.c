@@ -287,7 +287,7 @@ static const GtkStockItem gimp_compat_stock_items[] =
 
 static void
 register_stock_icon (GtkIconFactory *factory,
-		     const gchar    *stock_id,
+                     const gchar    *stock_id,
                      const gchar    *icon_name)
 {
   GtkIconSet    *set    = gtk_icon_set_new ();
