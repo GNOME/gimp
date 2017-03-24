@@ -368,17 +368,23 @@ gimp_operation_config_get_container (Gimp         *gimp,
 
           if (! g_file_query_exists (file, NULL))
             {
-              GQuark quark = g_quark_from_static_string ("compat-file");
+              GQuark  quark = g_quark_from_static_string ("compat-file");
+              GFile  *compat_file;
 
-              g_object_unref (file);
+              compat_file = g_type_get_qdata (config_type, quark);
 
-              file = g_type_get_qdata (config_type, quark);
-
-              if (file)
+              if (compat_file)
                 {
-                  g_object_ref (file);
-
-                  gimp_operation_config_deserialize (gimp, container, file);
+                  if (! g_file_move (compat_file, file, 0,
+                                     NULL, NULL, NULL, NULL))
+                    {
+                      gimp_operation_config_deserialize (gimp, container,
+                                                         compat_file);
+                    }
+                  else
+                    {
+                      gimp_operation_config_deserialize (gimp, container, NULL);
+                    }
                 }
             }
 
