@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpsettingseditor.c
- * Copyright (C) 2008-2011 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2008-2017 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,10 @@
 
 #include "widgets-types.h"
 
+#include "operations/gimp-operation-config.h"
+
 #include "core/gimp.h"
-#include "core/gimplist.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcontainertreestore.h"
@@ -360,6 +362,8 @@ gimp_settings_editor_delete_clicked (GtkWidget          *widget,
 
       gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->view),
                                        GIMP_VIEWABLE (new));
+
+      gimp_operation_config_serialize (private->gimp, private->container, NULL);
     }
 }
 
@@ -409,6 +413,9 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
 
           /*  set name after time so the object is reordered correctly  */
           gimp_object_take_name (object, name);
+
+          gimp_operation_config_serialize (private->gimp, private->container,
+                                           NULL);
         }
       else
         {

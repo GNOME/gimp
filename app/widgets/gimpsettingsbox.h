@@ -57,7 +57,6 @@ GType       gimp_settings_box_get_type    (void) G_GNUC_CONST;
 GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
                                            GObject         *config,
                                            GimpContainer   *container,
-                                           GFile           *file,
                                            const gchar     *import_dialog_title,
                                            const gchar     *export_dialog_title,
                                            const gchar     *file_dialog_help_id,

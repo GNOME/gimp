@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpsettingsbox.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2008-2017 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,12 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
+
+#include "operations/gimp-operation-config.h"
 
 #include "core/gimp.h"
 #include "core/gimplist.h"
@@ -56,8 +57,7 @@ enum
   PROP_0,
   PROP_GIMP,
   PROP_CONFIG,
-  PROP_CONTAINER,
-  PROP_FILE
+  PROP_CONTAINER
 };
 
 
@@ -75,7 +75,6 @@ struct _GimpSettingsBoxPrivate
   Gimp          *gimp;
   GObject       *config;
   GimpContainer *container;
-  GFile         *file;
 
   gchar         *import_dialog_title;
   gchar         *export_dialog_title;
@@ -100,8 +99,6 @@ static void      gimp_settings_box_get_property  (GObject           *object,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
 
-static void      gimp_settings_box_deserialize   (GimpSettingsBox   *box);
-static void      gimp_settings_box_serialize     (GimpSettingsBox   *box);
 static GtkWidget *
                  gimp_settings_box_menu_item_add (GimpSettingsBox   *box,
                                                   const gchar       *icon_name,
@@ -218,13 +215,6 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_FILE,
-                                   g_param_spec_object ("file",
-                                                        NULL, NULL,
-                                                        G_TYPE_FILE,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
-
   g_type_class_add_private (klass, sizeof (GimpSettingsBoxPrivate));
 }
 
@@ -252,10 +242,6 @@ gimp_settings_box_constructed (GObject *object)
   g_assert (GIMP_IS_GIMP (private->gimp));
   g_assert (GIMP_IS_CONFIG (private->config));
   g_assert (GIMP_IS_CONTAINER (private->container));
-  g_assert (G_IS_FILE (private->file));
-
-  if (gimp_container_get_n_children (private->container) == 0)
-    gimp_settings_box_deserialize (box);
 
   private->combo = gimp_container_combo_box_new (private->container,
                                                  gimp_get_user_context (private->gimp),
@@ -352,12 +338,6 @@ gimp_settings_box_finalize (GObject *object)
       private->container = NULL;
     }
 
-  if (private->file)
-    {
-      g_object_unref (private->file);
-      private->file = NULL;
-    }
-
   if (private->last_file)
     {
       g_object_unref (private->last_file);
@@ -423,10 +403,6 @@ gimp_settings_box_set_property (GObject      *object,
       private->container = g_value_dup_object (value);
       break;
 
-    case PROP_FILE:
-      private->file = g_value_dup_object (value);
-      break;
-
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -455,84 +431,10 @@ gimp_settings_box_get_property (GObject    *object,
       g_value_set_object (value, private->container);
       break;
 
-    case PROP_FILE:
-      g_value_set_object (value, private->file);
-      break;
-
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_settings_box_separator_add (GimpContainer *container)
-{
-  GimpObject *sep = g_object_new (gimp_container_get_children_type (container),
-                                  NULL);
-
-  gimp_container_add (container, sep);
-  g_object_unref (sep);
-
-  g_object_set_data (G_OBJECT (container), "separator", sep);
-}
-
-static void
-gimp_settings_box_separator_remove (GimpContainer *container)
-{
-  GimpObject *sep = g_object_get_data (G_OBJECT (container), "separator");
-
-  gimp_container_remove (container, sep);
-
-  g_object_set_data (G_OBJECT (container), "separator", NULL);
-}
-
-static void
-gimp_settings_box_deserialize (GimpSettingsBox *box)
-{
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
-  GError                 *error   = NULL;
-
-  if (private->gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (private->file));
-
-  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (private->container),
-                                       private->file,
-                                       NULL, &error))
-    {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        gimp_message_literal (private->gimp, NULL, GIMP_MESSAGE_ERROR,
-                              error->message);
-
-      g_clear_error (&error);
-    }
-
-  gimp_settings_box_separator_add (private->container);
-}
-
-static void
-gimp_settings_box_serialize (GimpSettingsBox *box)
-{
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
-  GError                 *error   = NULL;
-
-  gimp_settings_box_separator_remove (private->container);
-
-  if (private->gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (private->file));
-
-  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (private->container),
-                                        private->file,
-                                        "settings",
-                                        "end of settings",
-                                        NULL, &error))
-    {
-      gimp_message_literal (private->gimp, NULL, GIMP_MESSAGE_ERROR,
-                            error->message);
-      g_clear_error (&error);
-    }
-
-  gimp_settings_box_separator_add (private->container);
 }
 
 static GtkWidget *
@@ -735,7 +637,7 @@ gimp_settings_box_favorite_callback (GtkWidget   *query_box,
   gimp_container_add (private->container, GIMP_OBJECT (config));
   g_object_unref (config);
 
-  gimp_settings_box_serialize (box);
+  gimp_operation_config_serialize (private->gimp, private->container, NULL);
 }
 
 static void
@@ -950,7 +852,6 @@ GtkWidget *
 gimp_settings_box_new (Gimp          *gimp,
                        GObject       *config,
                        GimpContainer *container,
-                       GFile         *file,
                        const gchar   *import_dialog_title,
                        const gchar   *export_dialog_title,
                        const gchar   *file_dialog_help_id,
@@ -963,7 +864,6 @@ gimp_settings_box_new (Gimp          *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (default_folder == NULL || G_IS_FILE (default_folder),
                         NULL);
   g_return_val_if_fail (last_file == NULL || G_IS_FILE (last_file), NULL);
@@ -972,7 +872,6 @@ gimp_settings_box_new (Gimp          *gimp,
                       "gimp",      gimp,
                       "config",    config,
                       "container", container,
-                      "file",      file,
                       NULL);
 
   private = GET_PRIVATE (box);
@@ -1037,7 +936,7 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
 
   gimp_settings_box_truncate_list (box, max_recent);
 
-  gimp_settings_box_serialize (box);
+  gimp_operation_config_serialize (private->gimp, private->container, NULL);
 }
 
 GtkWidget *

@@ -21,7 +21,7 @@
 #define __GIMP_OPERATIONS_H__
 
 
-void   gimp_operations_init (void);
+void   gimp_operations_init (Gimp *gimp);
 
 
 #endif /* __GIMP_OPERATIONS_H__ */

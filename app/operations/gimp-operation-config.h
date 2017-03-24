@@ -19,18 +19,30 @@
 #define __GIMP_OPERATION_CONFIG_H__
 
 
-void            gimp_operation_config_register      (const gchar *operation,
-                                                     GType        config_type);
+void            gimp_operation_config_register      (Gimp          *gimp,
+                                                     const gchar   *operation,
+                                                     GType          config_type);
 
-GimpObject    * gimp_operation_config_new           (const gchar *operation,
-                                                     const gchar *icon_name,
-                                                     GType        parent_type);
-GimpContainer * gimp_operation_config_get_container (GType        config_type);
+GimpObject    * gimp_operation_config_new           (Gimp          *gimp,
+                                                     const gchar   *operation,
+                                                     const gchar   *icon_name,
+                                                     GType          parent_type);
 
-void            gimp_operation_config_sync_node     (GimpObject  *config,
-                                                     GeglNode    *node);
-void            gimp_operation_config_connect_node  (GimpObject  *config,
-                                                     GeglNode    *node);
+GimpContainer * gimp_operation_config_get_container (Gimp          *gimp,
+                                                     GType          config_type,
+                                                     GCompareFunc   sort_func);
+
+void            gimp_operation_config_serialize     (Gimp          *gimp,
+                                                     GimpContainer *container,
+                                                     GFile         *file);
+void            gimp_operation_config_deserialize   (Gimp          *gimp,
+                                                     GimpContainer *container,
+                                                     GFile         *file);
+
+void            gimp_operation_config_sync_node     (GimpObject    *config,
+                                                     GeglNode      *node);
+void            gimp_operation_config_connect_node  (GimpObject    *config,
+                                                     GeglNode      *node);
 
 
 #endif /* __GIMP_OPERATION_CONFIG_H__ */

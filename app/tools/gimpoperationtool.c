@@ -88,7 +88,6 @@ static void        gimp_operation_tool_dialog          (GimpFilterTool    *filte
 static void        gimp_operation_tool_reset           (GimpFilterTool    *filter_tool);
 static GtkWidget * gimp_operation_tool_get_settings_ui (GimpFilterTool    *filter_tool,
                                                         GimpContainer     *settings,
-                                                        GFile             *settings_file,
                                                         const gchar       *import_dialog_title,
                                                         const gchar       *export_dialog_title,
                                                         const gchar       *file_dialog_help_id,
@@ -320,7 +319,6 @@ gimp_operation_tool_reset (GimpFilterTool *filter_tool)
 static GtkWidget *
 gimp_operation_tool_get_settings_ui (GimpFilterTool  *filter_tool,
                                      GimpContainer   *settings,
-                                     GFile           *settings_file,
                                      const gchar     *import_dialog_title,
                                      const gchar     *export_dialog_title,
                                      const gchar     *file_dialog_help_id,
@@ -329,15 +327,8 @@ gimp_operation_tool_get_settings_ui (GimpFilterTool  *filter_tool,
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (filter_tool);
   GtkWidget         *widget;
-  gchar             *basename;
-  GFile             *file;
   gchar             *import_title;
   gchar             *export_title;
-
-  basename = g_strconcat (G_OBJECT_TYPE_NAME (filter_tool->config),
-                          ".settings", NULL);
-  file = gimp_directory_file ("filters", basename, NULL);
-  g_free (basename);
 
   import_title = g_strdup_printf (_("Import '%s' Settings"), tool->title);
   export_title = g_strdup_printf (_("Export '%s' Settings"), tool->title);
@@ -345,7 +336,6 @@ gimp_operation_tool_get_settings_ui (GimpFilterTool  *filter_tool,
   widget =
     GIMP_FILTER_TOOL_CLASS (parent_class)->get_settings_ui (filter_tool,
                                                             settings,
-                                                            file,
                                                             import_title,
                                                             export_title,
                                                             file_dialog_help_id,
@@ -354,8 +344,6 @@ gimp_operation_tool_get_settings_ui (GimpFilterTool  *filter_tool,
 
   g_free (import_title);
   g_free (export_title);
-
-  g_object_unref (file);
 
   return widget;
 }

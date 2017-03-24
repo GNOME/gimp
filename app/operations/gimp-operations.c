@@ -22,6 +22,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "operations-types.h"
 
 #include "core/gimp.h"
@@ -94,9 +96,21 @@
 #include "layer-modes/gimpoperationsplit.h"
 
 
-void
-gimp_operations_init (void)
+static void
+set_compat_file (GType        type,
+                 const gchar *basename)
 {
+  GFile *file  = gimp_directory_file ("tool-options", basename, NULL);
+  GQuark quark = g_quark_from_static_string ("compat-file");
+
+  g_type_set_qdata (type, quark, file);
+}
+
+void
+gimp_operations_init (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   gimp_layer_modes_init ();
 
   g_type_class_ref (GIMP_TYPE_OPERATION_BLEND);
@@ -154,16 +168,39 @@ gimp_operations_init (void)
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);
 
-  gimp_operation_config_register ("gimp:brightness-contrast",
+  gimp_operation_config_register (gimp,
+                                  "gimp:brightness-contrast",
                                   GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG);
-  gimp_operation_config_register ("gimp:color-balance",
+  set_compat_file (GIMP_TYPE_BRIGHTNESS_CONTRAST_CONFIG,
+                   "gimp-brightness-contrast-tool.settings");
+
+  gimp_operation_config_register (gimp,
+                                  "gimp:color-balance",
                                   GIMP_TYPE_COLOR_BALANCE_CONFIG);
-  gimp_operation_config_register ("gimp:colorize",
+  set_compat_file (GIMP_TYPE_COLOR_BALANCE_CONFIG,
+                   "gimp-color-balance-tool.settings");
+
+  gimp_operation_config_register (gimp,
+                                  "gimp:colorize",
                                   GIMP_TYPE_COLORIZE_CONFIG);
-  gimp_operation_config_register ("gimp:curves",
+  set_compat_file (GIMP_TYPE_COLORIZE_CONFIG,
+                   "gimp-colorize-tool.settings");
+
+  gimp_operation_config_register (gimp,
+                                  "gimp:curves",
                                   GIMP_TYPE_CURVES_CONFIG);
-  gimp_operation_config_register ("gimp:hue-saturation",
+  set_compat_file (GIMP_TYPE_CURVES_CONFIG,
+                   "gimp-curves-tool.settings");
+
+  gimp_operation_config_register (gimp,
+                                  "gimp:hue-saturation",
                                   GIMP_TYPE_HUE_SATURATION_CONFIG);
-  gimp_operation_config_register ("gimp:levels",
+  set_compat_file (GIMP_TYPE_HUE_SATURATION_CONFIG,
+                   "gimp-hue-saturation-tool.settings");
+
+  gimp_operation_config_register (gimp,
+                                  "gimp:levels",
                                   GIMP_TYPE_LEVELS_CONFIG);
+  set_compat_file (GIMP_TYPE_LEVELS_CONFIG,
+                   "gimp-levels-tool.settings");
 }

@@ -23,7 +23,6 @@
 
 GtkWidget * gimp_filter_tool_real_get_settings_ui (GimpFilterTool  *filter_tool,
                                                    GimpContainer   *settings,
-                                                   GFile           *settings_file,
                                                    const gchar     *import_dialog_title,
                                                    const gchar     *export_dialog_title,
                                                    const gchar     *file_dialog_help_id,

@@ -133,6 +133,9 @@ static void      gimp_filter_tool_dialog         (GimpFilterTool      *filter_to
 static void      gimp_filter_tool_dialog_unmap   (GtkWidget           *dialog,
                                                   GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_tool);
+static GtkWidget * gimp_filter_tool_get_settings_ui
+                                                 (GimpFilterTool      *filter_tool);
+
 static void      gimp_filter_tool_create_filter  (GimpFilterTool      *filter_tool);
 
 static void      gimp_filter_tool_flush          (GimpDrawableFilter  *filter,
@@ -374,33 +377,9 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
       if (filter_tool->config && klass->settings_name)
         {
-          GType          type = G_TYPE_FROM_INSTANCE (filter_tool->config);
-          GimpContainer *settings;
-          GFile         *settings_file;
-          GFile         *default_folder;
-          GtkWidget     *settings_ui;
+          GtkWidget *settings_ui;
 
-          settings = gimp_operation_config_get_container (type);
-          if (! gimp_list_get_sort_func (GIMP_LIST (settings)))
-            gimp_list_set_sort_func (GIMP_LIST (settings),
-                                     (GCompareFunc) gimp_settings_compare);
-
-          settings_file = gimp_tool_info_get_options_file (tool_info,
-                                                           ".settings");
-          default_folder = gimp_directory_file (klass->settings_name, NULL);
-
-          settings_ui = klass->get_settings_ui (filter_tool,
-                                                settings,
-                                                settings_file,
-                                                klass->import_dialog_title,
-                                                klass->export_dialog_title,
-                                                filter_tool->help_id,
-                                                default_folder,
-                                                &filter_tool->settings_box);
-
-          g_object_unref (default_folder);
-          g_object_unref (settings_file);
-
+          settings_ui = gimp_filter_tool_get_settings_ui (filter_tool);
           gtk_box_pack_start (GTK_BOX (vbox), settings_ui, FALSE, FALSE, 0);
           gtk_widget_show (settings_ui);
         }
@@ -977,6 +956,36 @@ gimp_filter_tool_reset (GimpFilterTool *filter_tool)
     g_object_thaw_notify (filter_tool->config);
 }
 
+static GtkWidget *
+gimp_filter_tool_get_settings_ui (GimpFilterTool *filter_tool)
+{
+  GimpTool            *tool  = GIMP_TOOL (filter_tool);
+  GimpFilterToolClass *klass = GIMP_FILTER_TOOL_GET_CLASS (filter_tool);
+  GType                type  = G_TYPE_FROM_INSTANCE (filter_tool->config);
+  GimpContainer       *settings;
+  GFile               *default_folder;
+  GtkWidget           *settings_ui;
+
+  settings =
+    gimp_operation_config_get_container (tool->tool_info->gimp,
+                                         type,
+                                         (GCompareFunc) gimp_settings_compare);
+
+  default_folder = gimp_directory_file (klass->settings_name, NULL);
+
+  settings_ui = klass->get_settings_ui (filter_tool,
+                                        settings,
+                                        klass->import_dialog_title,
+                                        klass->export_dialog_title,
+                                        filter_tool->help_id,
+                                        default_folder,
+                                        &filter_tool->settings_box);
+
+  g_object_unref (default_folder);
+
+  return settings_ui;
+}
+
 static void
 gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 {
@@ -1313,7 +1322,8 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                                 "operation", operation_name,
                                                 NULL);
   filter_tool->config =
-    G_OBJECT (gimp_operation_config_new (operation_name,
+    G_OBJECT (gimp_operation_config_new (tool_info->gimp,
+                                         operation_name,
                                          filter_tool->icon_name,
                                          GIMP_TYPE_SETTINGS));
 

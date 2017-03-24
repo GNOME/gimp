@@ -23,10 +23,13 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "operations-types.h"
+
+#include "core/gimp.h"
 
 #include "core/gimplist.h"
 #include "core/gimpparamspecs-duplicate.h"
@@ -49,11 +52,14 @@ static void   gimp_operation_config_node_notify   (GeglNode         *node,
                                                    const GParamSpec *gegl_pspec,
                                                    GObject          *config);
 
+static void   gimp_operation_config_add_sep       (GimpContainer    *container);
+static void   gimp_operation_config_remove_sep    (GimpContainer    *container);
+
 
 /*  public functions  */
 
 static GHashTable *
-gimp_operation_config_get_type_table (void)
+gimp_operation_config_get_type_table (Gimp *gimp)
 {
   static GHashTable *config_types = NULL;
 
@@ -67,7 +73,7 @@ gimp_operation_config_get_type_table (void)
 }
 
 static GHashTable *
-gimp_operation_config_get_container_table (void)
+gimp_operation_config_get_container_table (Gimp *gimp)
 {
   static GHashTable *config_containers = NULL;
 
@@ -235,15 +241,17 @@ gimp_operation_config_config_iface_init (GimpConfigInterface *iface)
 /*  public functions  */
 
 void
-gimp_operation_config_register (const gchar *operation,
+gimp_operation_config_register (Gimp        *gimp,
+                                const gchar *operation,
                                 GType        config_type)
 {
   GHashTable *config_types;
 
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (operation != NULL);
   g_return_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT));
 
-  config_types = gimp_operation_config_get_type_table ();
+  config_types = gimp_operation_config_get_type_table (gimp);
 
   g_hash_table_insert (config_types,
                        g_strdup (operation),
@@ -251,17 +259,19 @@ gimp_operation_config_register (const gchar *operation,
  }
 
 GimpObject *
-gimp_operation_config_new (const gchar *operation,
+gimp_operation_config_new (Gimp        *gimp,
+                           const gchar *operation,
                            const gchar *icon_name,
                            GType        parent_type)
 {
   GHashTable *config_types;
   GType       config_type;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (operation != NULL, NULL);
   g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), NULL);
 
-  config_types = gimp_operation_config_get_type_table ();
+  config_types = gimp_operation_config_get_type_table (gimp);
 
   config_type = (GType) g_hash_table_lookup (config_types, operation);
 
@@ -315,7 +325,7 @@ gimp_operation_config_new (const gchar *operation,
             g_type_class_unref (viewable_class);
           }
 
-        gimp_operation_config_register (operation, config_type);
+        gimp_operation_config_register (gimp, operation, config_type);
       }
     }
 
@@ -323,26 +333,142 @@ gimp_operation_config_new (const gchar *operation,
 }
 
 GimpContainer *
-gimp_operation_config_get_container (GType config_type)
+gimp_operation_config_get_container (Gimp         *gimp,
+                                     GType         config_type,
+                                     GCompareFunc  sort_func)
 {
   GHashTable    *config_containers;
   GimpContainer *container;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (g_type_is_a (config_type, GIMP_TYPE_OBJECT), NULL);
 
-  config_containers = gimp_operation_config_get_container_table ();
+  config_containers = gimp_operation_config_get_container_table (gimp);
 
   container = g_hash_table_lookup (config_containers, (gpointer) config_type);
 
   if (! container)
     {
       container = gimp_list_new (config_type, TRUE);
+      gimp_list_set_sort_func (GIMP_LIST (container), sort_func);
 
       g_hash_table_insert (config_containers,
                            (gpointer) config_type, container);
+
+      gimp_operation_config_deserialize (gimp, container, NULL);
+
+      if (gimp_container_get_n_children (container) == 0)
+        {
+          gchar *basename;
+          GFile *file;
+
+          basename = g_strconcat (g_type_name (config_type), ".settings", NULL);
+          file = gimp_directory_file ("filters", basename, NULL);
+          g_free (basename);
+
+          if (! g_file_query_exists (file, NULL))
+            {
+              GQuark quark = g_quark_from_static_string ("compat-file");
+
+              g_object_unref (file);
+
+              file = g_type_get_qdata (config_type, quark);
+
+              if (file)
+                {
+                  g_object_ref (file);
+
+                  gimp_operation_config_deserialize (gimp, container, file);
+                }
+            }
+
+          g_object_unref (file);
+        }
+
+      gimp_operation_config_add_sep (container);
     }
 
   return container;
+}
+
+void
+gimp_operation_config_serialize (Gimp          *gimp,
+                                 GimpContainer *container,
+                                 GFile         *file)
+{
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CONTAINER (container));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
+
+  if (! file)
+    {
+      GType  config_type = gimp_container_get_children_type (container);
+      gchar *basename;
+
+      basename = g_strconcat (g_type_name (config_type), ".settings", NULL);
+      file = gimp_directory_file ("filters", basename, NULL);
+      g_free (basename);
+    }
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+
+  gimp_operation_config_remove_sep (container);
+
+  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (container),
+                                        file,
+                                        "settings",
+                                        "end of settings",
+                                        NULL, &error))
+    {
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
+                            error->message);
+      g_clear_error (&error);
+    }
+
+  gimp_operation_config_add_sep (container);
+
+  g_object_unref (file);
+}
+
+void
+gimp_operation_config_deserialize (Gimp          *gimp,
+                                   GimpContainer *container,
+                                   GFile         *file)
+{
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CONTAINER (container));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
+
+  if (! file)
+    {
+      GType  config_type = gimp_container_get_children_type (container);
+      gchar *basename;
+
+      basename = g_strconcat (g_type_name (config_type), ".settings", NULL);
+      file = gimp_directory_file ("filters", basename, NULL);
+      g_free (basename);
+    }
+
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (container),
+                                       file,
+                                       NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+        gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
+                              error->message);
+
+      g_clear_error (&error);
+    }
+
+  g_object_unref (file);
 }
 
 void
@@ -609,5 +735,35 @@ gimp_operation_config_node_notify (GeglNode         *node,
 
       if (handler)
         g_signal_handler_unblock (config, handler);
+    }
+}
+
+static void
+gimp_operation_config_add_sep (GimpContainer *container)
+{
+  GimpObject *sep = g_object_get_data (G_OBJECT (container), "separator");
+
+  if (! sep)
+    {
+      sep = g_object_new (gimp_container_get_children_type (container),
+                          NULL);
+
+      gimp_container_add (container, sep);
+      g_object_unref (sep);
+
+      g_object_set_data (G_OBJECT (container), "separator", sep);
+    }
+}
+
+static void
+gimp_operation_config_remove_sep (GimpContainer *container)
+{
+  GimpObject *sep = g_object_get_data (G_OBJECT (container), "separator");
+
+  if (sep)
+    {
+      gimp_container_remove (container, sep);
+
+      g_object_set_data (G_OBJECT (container), "separator", NULL);
     }
 }
