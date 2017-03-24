@@ -1404,6 +1404,16 @@ xcf_load_channel_props (XcfInfo      *info,
           }
           break;
 
+        case PROP_FLOAT_COLOR:
+          {
+            gfloat col[3];
+
+            xcf_read_float (info, col, 3);
+
+            gimp_rgb_set (&(*channel)->color, col[0], col[1], col[2]);
+          }
+          break;
+
         case PROP_TATTOO:
           {
             GimpTattoo tattoo;

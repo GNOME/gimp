@@ -571,7 +571,6 @@ xcf_save_channel_props (XcfInfo      *info,
                         GError      **error)
 {
   GimpParasiteList *parasites;
-  guchar            col[3];
 
   if (channel == gimp_image_get_active_channel (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_CHANNEL, error));
@@ -595,10 +594,10 @@ xcf_save_channel_props (XcfInfo      *info,
                                   gimp_item_get_lock_position (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_SHOW_MASKED, error,
                                   gimp_channel_get_show_masked (channel)));
-
-  gimp_rgb_get_uchar (&channel->color, &col[0], &col[1], &col[2]);
-  xcf_check_error (xcf_save_prop (info, image, PROP_COLOR, error, col));
-
+  xcf_check_error (xcf_save_prop (info, image, PROP_COLOR, error,
+                                  &channel->color));
+  xcf_check_error (xcf_save_prop (info, image, PROP_FLOAT_COLOR, error,
+                                  &channel->color));
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_item_get_tattoo (GIMP_ITEM (channel))));
 
@@ -902,14 +901,35 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COLOR:
       {
-        guchar *color = va_arg (args, guchar *);
+        GimpRGB *color = va_arg (args, GimpRGB *);
+        guchar   col[3];
+
+        gimp_rgb_get_uchar (color, &col[0], &col[1], &col[2]);
 
         size = 3;
 
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
 
-        xcf_write_int8_check_error (info, color, 3);
+        xcf_write_int8_check_error (info, col, 3);
+      }
+      break;
+
+    case PROP_FLOAT_COLOR:
+      {
+        GimpRGB *color = va_arg (args, GimpRGB *);
+        gfloat   col[3];
+
+        col[0] = color->r;
+        col[1] = color->g;
+        col[2] = color->b;
+
+        size = 3 * 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+
+        xcf_write_float_check_error (info, col, 3);
       }
       break;
 

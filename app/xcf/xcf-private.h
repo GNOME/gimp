@@ -61,7 +61,8 @@ typedef enum
   PROP_COLOR_TAG          = 34,
   PROP_COMPOSITE_MODE     = 35,
   PROP_COMPOSITE_SPACE    = 36,
-  PROP_BLEND_SPACE        = 37
+  PROP_BLEND_SPACE        = 37,
+  PROP_FLOAT_COLOR        = 38
 } PropType;
 
 typedef enum
