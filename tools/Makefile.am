@@ -86,7 +86,8 @@ AM_CPPFLAGS = \
 EXTRA_DIST = \
 	defcheck.py	\
 	gimp-mkenums	\
-	gimppath2svg.py
+	gimppath2svg.py	\
+	invert-svg.c
 
 # Build tools which must be built for the host platform.
 all: invert-svg$(BUILD_EXEEXT)
