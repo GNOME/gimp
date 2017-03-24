@@ -36,6 +36,10 @@ style "gimp-default-style"
       { "../../icons/Color/64x64/apps/gimp-warning.png", *, *, "gtk-dialog" }
     }
 
+# Uncommenting this line allows to set a different font for GIMP.
+#
+# font_name = "sans 10"
+
   GtkPaned::handle-size             = 6
   GimpDockWindow::default-height    = 300
   GimpDock::font-scale              = 0.8333
