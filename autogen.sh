@@ -9,10 +9,10 @@
 # tools and you shouldn't use this script.  Just call ./configure
 # directly.
 
-ACLOCAL=${ACLOCAL-aclocal-1.11}
+ACLOCAL=${ACLOCAL-aclocal-1.13}
 AUTOCONF=${AUTOCONF-autoconf}
 AUTOHEADER=${AUTOHEADER-autoheader}
-AUTOMAKE=${AUTOMAKE-automake-1.11}
+AUTOMAKE=${AUTOMAKE-automake-1.13}
 LIBTOOLIZE=${LIBTOOLIZE-libtoolize}
 
 AUTOCONF_REQUIRED_VERSION=2.54
@@ -166,6 +166,9 @@ elif (automake-1.14 --version) < /dev/null > /dev/null 2>&1; then
 elif (automake-1.13 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.13
    ACLOCAL=aclocal-1.13
+elif (automake --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake
+   ACLOCAL=aclocal
 else
     echo
     echo "  You must have automake $AUTOMAKE_REQUIRED_VERSION or newer installed to compile $PROJECT."
