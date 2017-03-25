@@ -21,13 +21,11 @@
 #define __GIMP_FILTER_TOOL_SETTINGS_H__
 
 
-GtkWidget * gimp_filter_tool_real_get_settings_ui (GimpFilterTool  *filter_tool,
-                                                   GimpContainer   *settings,
-                                                   const gchar     *import_dialog_title,
-                                                   const gchar     *export_dialog_title,
-                                                   const gchar     *file_dialog_help_id,
-                                                   GFile           *default_folder,
-                                                   GtkWidget      **settings_box);
+GtkWidget * gimp_filter_tool_get_settings_box     (GimpFilterTool  *filter_tool);
+
+
+/*  virtual functions of GimpSettingsTool, don't call directly  */
+
 gboolean    gimp_filter_tool_real_settings_import (GimpFilterTool  *filter_tool,
                                                    GInputStream    *input,
                                                    GError         **error);

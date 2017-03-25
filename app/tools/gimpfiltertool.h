@@ -57,7 +57,7 @@ struct _GimpFilterTool
 
   GimpDrawableFilter    *filter;
 
-  GimpGuide             *percent_guide;
+  GimpGuide             *preview_guide;
 
   /* dialog */
   gboolean               overlay;
@@ -84,14 +84,6 @@ struct _GimpFilterToolClass
                                    gchar            **export_dialog_title);
   void        (* dialog)          (GimpFilterTool    *filter_tool);
   void        (* reset)           (GimpFilterTool    *filter_tool);
-
-  GtkWidget * (* get_settings_ui) (GimpFilterTool    *filter_tool,
-                                   GimpContainer     *settings,
-                                   const gchar       *import_dialog_title,
-                                   const gchar       *export_dialog_title,
-                                   const gchar       *help_id,
-                                   GFile             *default_folder,
-                                   GtkWidget        **settings_box);
 
   gboolean    (* settings_import) (GimpFilterTool    *filter_tool,
                                    GInputStream      *input,

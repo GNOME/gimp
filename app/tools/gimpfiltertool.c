@@ -24,8 +24,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -133,8 +131,6 @@ static void      gimp_filter_tool_dialog         (GimpFilterTool      *filter_to
 static void      gimp_filter_tool_dialog_unmap   (GtkWidget           *dialog,
                                                   GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_reset          (GimpFilterTool      *filter_tool);
-static GtkWidget * gimp_filter_tool_get_settings_ui
-                                                 (GimpFilterTool      *filter_tool);
 
 static void      gimp_filter_tool_create_filter  (GimpFilterTool      *filter_tool);
 
@@ -187,7 +183,6 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   klass->get_operation       = NULL;
   klass->dialog              = NULL;
   klass->reset               = gimp_filter_tool_real_reset;
-  klass->get_settings_ui     = gimp_filter_tool_real_get_settings_ui;
   klass->settings_import     = gimp_filter_tool_real_settings_import;
   klass->settings_export     = gimp_filter_tool_real_settings_export;
 }
@@ -292,6 +287,7 @@ gimp_filter_tool_finalize (GObject *object)
       g_object_unref (filter_tool->gui);
       filter_tool->gui          = NULL;
       filter_tool->settings_box = NULL;
+      filter_tool->region_combo = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -390,11 +386,25 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
       if (filter_tool->config && filter_tool->has_settings)
         {
-          GtkWidget *settings_ui;
+          GtkWidget *label;
+          GtkWidget *combo;
 
-          settings_ui = gimp_filter_tool_get_settings_ui (filter_tool);
-          gtk_box_pack_start (GTK_BOX (vbox), settings_ui, FALSE, FALSE, 0);
-          gtk_widget_show (settings_ui);
+          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+          gtk_widget_show (hbox);
+
+          label = gtk_label_new_with_mnemonic (_("Pre_sets:"));
+          gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+          gtk_widget_show (label);
+
+          filter_tool->settings_box =
+            gimp_filter_tool_get_settings_box (filter_tool);
+          gtk_box_pack_start (GTK_BOX (hbox), filter_tool->settings_box,
+                              TRUE, TRUE, 0);
+          gtk_widget_show (filter_tool->settings_box);
+
+          combo = gimp_settings_box_get_combo (GIMP_SETTINGS_BOX (filter_tool->settings_box));
+          gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
         }
 
       /*  The preview and split view toggles  */
@@ -531,59 +541,26 @@ gimp_filter_tool_button_press (GimpTool            *tool,
 
       if (state & gimp_get_extend_selection_mask ())
         {
-          GimpAlignmentType alignment;
-
-          /* switch side */
-          switch (options->preview_alignment)
-            {
-            case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_RIGHT;  break;
-            case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_LEFT;   break;
-            case GIMP_ALIGN_TOP:    alignment = GIMP_ALIGN_BOTTOM; break;
-            case GIMP_ALIGN_BOTTOM: alignment = GIMP_ALIGN_TOP;    break;
-            default:
-              g_return_if_reached ();
-            }
-
-          g_object_set (options, "preview-alignment", alignment, NULL);
+          gimp_filter_options_switch_preview_side (options);
         }
       else if (state & gimp_get_toggle_behavior_mask ())
         {
-          GimpItem          *item = GIMP_ITEM (filter_tool->drawable);
-          GimpAlignmentType  alignment;
-          gdouble            position;
+          GimpItem *item = GIMP_ITEM (filter_tool->drawable);
+          gdouble   pos_x;
+          gdouble   pos_y;
 
-          /* switch orientation */
-          switch (options->preview_alignment)
-            {
-            case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_TOP;    break;
-            case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_BOTTOM; break;
-            case GIMP_ALIGN_TOP:    alignment = GIMP_ALIGN_LEFT;   break;
-            case GIMP_ALIGN_BOTTOM: alignment = GIMP_ALIGN_RIGHT;  break;
-            default:
-              g_return_if_reached ();
-            }
+          pos_x = ((coords->x - gimp_item_get_offset_x (item)) /
+                   gimp_item_get_width (item));
+          pos_y = ((coords->y - gimp_item_get_offset_y (item)) /
+                   gimp_item_get_height (item));
 
-          if (alignment == GIMP_ALIGN_LEFT ||
-              alignment == GIMP_ALIGN_RIGHT)
-            {
-              position = ((coords->x - gimp_item_get_offset_x (item)) /
-                          gimp_item_get_width (item));
-            }
-          else
-            {
-              position = ((coords->y - gimp_item_get_offset_y (item)) /
-                          gimp_item_get_height (item));
-            }
-
-          g_object_set (options,
-                        "preview-alignment", alignment,
-                        "preview-position",  CLAMP (position, 0.0, 1.0),
-                        NULL);
+          gimp_filter_options_switch_preview_orientation (options,
+                                                          pos_x, pos_y);
         }
       else
         {
           gimp_guide_tool_start_edit (tool, display,
-                                      filter_tool->percent_guide);
+                                      filter_tool->preview_guide);
         }
     }
 }
@@ -969,39 +946,6 @@ gimp_filter_tool_reset (GimpFilterTool *filter_tool)
     g_object_thaw_notify (filter_tool->config);
 }
 
-static GtkWidget *
-gimp_filter_tool_get_settings_ui (GimpFilterTool *filter_tool)
-{
-  GimpTool            *tool  = GIMP_TOOL (filter_tool);
-  GimpFilterToolClass *klass = GIMP_FILTER_TOOL_GET_CLASS (filter_tool);
-  GType                type  = G_TYPE_FROM_INSTANCE (filter_tool->config);
-  GimpContainer       *settings;
-  GFile               *default_folder;
-  GtkWidget           *settings_ui;
-
-  settings =
-    gimp_operation_config_get_container (tool->tool_info->gimp,
-                                         type,
-                                         (GCompareFunc) gimp_settings_compare);
-
-  if (filter_tool->settings_folder)
-    default_folder = gimp_directory_file (filter_tool->settings_folder, NULL);
-  else
-    default_folder = NULL;
-
-  settings_ui = klass->get_settings_ui (filter_tool,
-                                        settings,
-                                        filter_tool->import_dialog_title,
-                                        filter_tool->export_dialog_title,
-                                        filter_tool->help_id,
-                                        default_folder,
-                                        &filter_tool->settings_box);
-
-  g_object_unref (default_folder);
-
-  return settings_ui;
-}
-
 static void
 gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 {
@@ -1069,7 +1013,7 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
   GimpOrientationType  orientation;
   gint                 position;
 
-  if (filter_tool->percent_guide)
+  if (filter_tool->preview_guide)
     return;
 
   item = GIMP_ITEM (filter_tool->drawable);
@@ -1093,17 +1037,17 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
                   options->preview_position);
     }
 
-  filter_tool->percent_guide =
+  filter_tool->preview_guide =
     gimp_guide_custom_new (orientation,
                            image->gimp->next_guide_ID++,
                            GIMP_GUIDE_STYLE_SPLIT_VIEW);
 
-  gimp_image_add_guide (image, filter_tool->percent_guide, position);
+  gimp_image_add_guide (image, filter_tool->preview_guide, position);
 
-  g_signal_connect (filter_tool->percent_guide, "removed",
+  g_signal_connect (filter_tool->preview_guide, "removed",
                     G_CALLBACK (gimp_filter_tool_guide_removed),
                     filter_tool);
-  g_signal_connect (filter_tool->percent_guide, "notify::position",
+  g_signal_connect (filter_tool->preview_guide, "notify::position",
                     G_CALLBACK (gimp_filter_tool_guide_moved),
                     filter_tool);
 }
@@ -1113,12 +1057,12 @@ gimp_filter_tool_remove_guide (GimpFilterTool *filter_tool)
 {
   GimpImage *image;
 
-  if (! filter_tool->percent_guide)
+  if (! filter_tool->preview_guide)
     return;
 
   image = gimp_item_get_image (GIMP_ITEM (filter_tool->drawable));
 
-  gimp_image_remove_guide (image, filter_tool->percent_guide, FALSE);
+  gimp_image_remove_guide (image, filter_tool->preview_guide, FALSE);
 }
 
 static void
@@ -1129,7 +1073,7 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
   GimpOrientationType  orientation;
   gint                 position;
 
-  if (! filter_tool->percent_guide)
+  if (! filter_tool->preview_guide)
     return;
 
   item = GIMP_ITEM (filter_tool->drawable);
@@ -1152,12 +1096,12 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
                   options->preview_position);
     }
 
-  if (orientation != gimp_guide_get_orientation (filter_tool->percent_guide) ||
-      position    != gimp_guide_get_position (filter_tool->percent_guide))
+  if (orientation != gimp_guide_get_orientation (filter_tool->preview_guide) ||
+      position    != gimp_guide_get_position (filter_tool->preview_guide))
     {
-      gimp_guide_set_orientation (filter_tool->percent_guide, orientation);
+      gimp_guide_set_orientation (filter_tool->preview_guide, orientation);
       gimp_image_move_guide (gimp_item_get_image (item),
-                             filter_tool->percent_guide, position, FALSE);
+                             filter_tool->preview_guide, position, FALSE);
     }
 }
 
@@ -1167,15 +1111,15 @@ gimp_filter_tool_guide_removed (GimpGuide      *guide,
 {
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
 
-  g_signal_handlers_disconnect_by_func (G_OBJECT (filter_tool->percent_guide),
+  g_signal_handlers_disconnect_by_func (G_OBJECT (filter_tool->preview_guide),
                                         gimp_filter_tool_guide_removed,
                                         filter_tool);
-  g_signal_handlers_disconnect_by_func (G_OBJECT (filter_tool->percent_guide),
+  g_signal_handlers_disconnect_by_func (G_OBJECT (filter_tool->preview_guide),
                                         gimp_filter_tool_guide_moved,
                                         filter_tool);
 
-  g_object_unref (filter_tool->percent_guide);
-  filter_tool->percent_guide = NULL;
+  g_object_unref (filter_tool->preview_guide);
+  filter_tool->preview_guide = NULL;
 
   g_object_set (options,
                 "preview-split", FALSE,
@@ -1400,10 +1344,9 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                 "preview-position", 0.5,
                 NULL);
 
-  if (filter_tool->config)
-    g_signal_connect_object (filter_tool->config, "notify",
-                             G_CALLBACK (gimp_filter_tool_config_notify),
-                             G_OBJECT (filter_tool), 0);
+  g_signal_connect_object (filter_tool->config, "notify",
+                           G_CALLBACK (gimp_filter_tool_config_notify),
+                           G_OBJECT (filter_tool), 0);
 
   if (GIMP_TOOL (filter_tool)->drawable)
     gimp_filter_tool_create_filter (filter_tool);
@@ -1456,15 +1399,15 @@ gimp_filter_tool_on_guide (GimpFilterTool   *filter_tool,
   shell = gimp_display_get_shell (display);
 
   if (filter_tool->filter        &&
-      filter_tool->percent_guide &&
+      filter_tool->preview_guide &&
       gimp_display_shell_get_show_guides (shell))
     {
       const gint          snap_distance = display->config->snap_distance;
       GimpOrientationType orientation;
       gint                position;
 
-      orientation = gimp_guide_get_orientation (filter_tool->percent_guide);
-      position    = gimp_guide_get_position (filter_tool->percent_guide);
+      orientation = gimp_guide_get_orientation (filter_tool->preview_guide);
+      position    = gimp_guide_get_position (filter_tool->preview_guide);
 
       if (orientation == GIMP_ORIENTATION_HORIZONTAL)
         {
