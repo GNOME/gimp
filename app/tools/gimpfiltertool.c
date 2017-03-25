@@ -439,8 +439,9 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       /*  The color managed combo  */
       combo = gimp_prop_boolean_combo_box_new
         (G_OBJECT (tool_info->tool_options), "color-managed",
-         _("Apply filter in color managed space (slow)"),
-         _("Apply filter to the layer's raw pixels"));
+         _("Convert pixels to built-in sRGB to apply filter (slow)"),
+         _("Assume pixels are built-in sRGB (ignore actual image color space)"));
+      g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
       gtk_box_pack_start (GTK_BOX (vbox2), combo, FALSE, FALSE, 0);
       gtk_widget_show (combo);
 
