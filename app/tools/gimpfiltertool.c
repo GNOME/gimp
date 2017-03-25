@@ -184,10 +184,6 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   color_tool_class->pick     = gimp_filter_tool_pick_color;
   color_tool_class->picked   = gimp_filter_tool_color_picked;
 
-  klass->settings_name       = NULL;
-  klass->import_dialog_title = NULL;
-  klass->export_dialog_title = NULL;
-
   klass->get_operation       = NULL;
   klass->dialog              = NULL;
   klass->reset               = gimp_filter_tool_real_reset;
@@ -273,6 +269,24 @@ gimp_filter_tool_finalize (GObject *object)
       filter_tool->help_id = NULL;
     }
 
+  if (filter_tool->settings_folder)
+    {
+      g_free (filter_tool->settings_folder);
+      filter_tool->settings_folder = NULL;
+    }
+
+  if (filter_tool->import_dialog_title)
+    {
+      g_free (filter_tool->import_dialog_title);
+      filter_tool->import_dialog_title = NULL;
+    }
+
+  if (filter_tool->export_dialog_title)
+    {
+      g_free (filter_tool->export_dialog_title);
+      filter_tool->export_dialog_title = NULL;
+    }
+
   if (filter_tool->gui)
     {
       g_object_unref (filter_tool->gui);
@@ -332,15 +346,14 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
   if (! filter_tool->gui)
     {
-      GimpFilterToolClass *klass = GIMP_FILTER_TOOL_GET_CLASS (filter_tool);
-      GtkWidget           *vbox;
-      GtkWidget           *hbox;
-      GtkWidget           *toggle;
-      GtkWidget           *expander;
-      GtkWidget           *frame;
-      GtkWidget           *vbox2;
-      GtkWidget           *combo;
-      gchar               *operation_name;
+      GtkWidget *vbox;
+      GtkWidget *hbox;
+      GtkWidget *toggle;
+      GtkWidget *expander;
+      GtkWidget *frame;
+      GtkWidget *vbox2;
+      GtkWidget *combo;
+      gchar     *operation_name;
 
       /*  disabled for at least GIMP 2.8  */
       filter_tool->overlay = FALSE;
@@ -375,7 +388,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                                G_CALLBACK (gimp_filter_tool_response),
                                G_OBJECT (filter_tool), 0);
 
-      if (filter_tool->config && klass->settings_name)
+      if (filter_tool->config && filter_tool->has_settings)
         {
           GtkWidget *settings_ui;
 
@@ -971,12 +984,15 @@ gimp_filter_tool_get_settings_ui (GimpFilterTool *filter_tool)
                                          type,
                                          (GCompareFunc) gimp_settings_compare);
 
-  default_folder = gimp_directory_file (klass->settings_name, NULL);
+  if (filter_tool->settings_folder)
+    default_folder = gimp_directory_file (filter_tool->settings_folder, NULL);
+  else
+    default_folder = NULL;
 
   settings_ui = klass->get_settings_ui (filter_tool,
                                         settings,
-                                        klass->import_dialog_title,
-                                        klass->export_dialog_title,
+                                        filter_tool->import_dialog_title,
+                                        filter_tool->export_dialog_title,
                                         filter_tool->help_id,
                                         default_folder,
                                         &filter_tool->settings_box);
@@ -1292,12 +1308,34 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
       filter_tool->help_id = NULL;
     }
 
+  if (filter_tool->settings_folder)
+    {
+      g_free (filter_tool->settings_folder);
+      filter_tool->settings_folder = NULL;
+    }
+
+  if (filter_tool->import_dialog_title)
+    {
+      g_free (filter_tool->import_dialog_title);
+      filter_tool->import_dialog_title = NULL;
+    }
+
+  if (filter_tool->export_dialog_title)
+    {
+      g_free (filter_tool->export_dialog_title);
+      filter_tool->export_dialog_title = NULL;
+    }
+
   operation_name = klass->get_operation (filter_tool,
                                          &filter_tool->title,
                                          &filter_tool->description,
                                          &filter_tool->undo_desc,
                                          &filter_tool->icon_name,
-                                         &filter_tool->help_id);
+                                         &filter_tool->help_id,
+                                         &filter_tool->has_settings,
+                                         &filter_tool->settings_folder,
+                                         &filter_tool->import_dialog_title,
+                                         &filter_tool->export_dialog_title);
 
   if (! operation_name)
     operation_name = g_strdup ("gegl:nop");

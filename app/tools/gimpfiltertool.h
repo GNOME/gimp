@@ -50,6 +50,11 @@ struct _GimpFilterTool
   gchar                 *icon_name;
   gchar                 *help_id;
 
+  gboolean               has_settings;
+  gchar                 *settings_folder;
+  gchar                 *import_dialog_title;
+  gchar                 *export_dialog_title;
+
   GimpDrawableFilter    *filter;
 
   GimpGuide             *percent_guide;
@@ -66,17 +71,17 @@ struct _GimpFilterToolClass
 {
   GimpColorToolClass  parent_class;
 
-  const gchar        *settings_name;
-  const gchar        *import_dialog_title;
-  const gchar        *export_dialog_title;
-
   /* virtual functions */
   gchar     * (* get_operation)   (GimpFilterTool    *filter_tool,
                                    gchar            **title,
                                    gchar            **description,
                                    gchar            **undo_desc,
                                    gchar            **icon_name,
-                                   gchar            **help_id);
+                                   gchar            **help_id,
+                                   gboolean          *has_settings,
+                                   gchar            **settings_folder,
+                                   gchar            **import_dialog_title,
+                                   gchar            **export_dialog_title);
   void        (* dialog)          (GimpFilterTool    *filter_tool);
   void        (* reset)           (GimpFilterTool    *filter_tool);
 
@@ -84,7 +89,7 @@ struct _GimpFilterToolClass
                                    GimpContainer     *settings,
                                    const gchar       *import_dialog_title,
                                    const gchar       *export_dialog_title,
-                                   const gchar       *file_dialog_help_id,
+                                   const gchar       *help_id,
                                    GFile             *default_folder,
                                    GtkWidget        **settings_box);
 

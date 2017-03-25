@@ -121,13 +121,12 @@ gimp_filter_tool_real_settings_export (GimpFilterTool  *filter_tool,
                                        GOutputStream   *output,
                                        GError         **error)
 {
-  GimpFilterToolClass *klass = GIMP_FILTER_TOOL_GET_CLASS (filter_tool);
-  gchar               *header;
-  gchar               *footer;
-  gboolean             success;
+  gchar    *header;
+  gchar    *footer;
+  gboolean  success;
 
-  header = g_strdup_printf ("GIMP %s tool settings",   klass->settings_name);
-  footer = g_strdup_printf ("end of %s tool settings", klass->settings_name);
+  header = g_strdup_printf ("GIMP '%s' settings",   filter_tool->title);
+  footer = g_strdup_printf ("end of '%s' settings", filter_tool->title);
 
   success = gimp_config_serialize_to_stream (GIMP_CONFIG (filter_tool->config),
                                              output,

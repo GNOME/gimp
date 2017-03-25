@@ -57,7 +57,11 @@ static gchar    * gimp_threshold_tool_get_operation   (GimpFilterTool    *filter
                                                        gchar            **description,
                                                        gchar            **undo_desc,
                                                        gchar            **icon_name,
-                                                       gchar            **help_id);
+                                                       gchar            **help_id,
+                                                       gboolean          *has_settings,
+                                                       gchar            **settings_folder,
+                                                       gchar            **import_dialog_title,
+                                                       gchar            **export_dialog_title);
 static void       gimp_threshold_tool_dialog          (GimpFilterTool    *filter_tool);
 
 static void       gimp_threshold_tool_config_notify   (GObject           *object,
@@ -105,17 +109,13 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->constructed              = gimp_threshold_tool_constructed;
-  object_class->finalize                 = gimp_threshold_tool_finalize;
+  object_class->constructed        = gimp_threshold_tool_constructed;
+  object_class->finalize           = gimp_threshold_tool_finalize;
 
-  tool_class->initialize                 = gimp_threshold_tool_initialize;
+  tool_class->initialize           = gimp_threshold_tool_initialize;
 
-  filter_tool_class->settings_name       = "threshold";
-  filter_tool_class->import_dialog_title = _("Import Threshold Settings");
-  filter_tool_class->export_dialog_title = _("Export Threshold Settings");
-
-  filter_tool_class->get_operation       = gimp_threshold_tool_get_operation;
-  filter_tool_class->dialog              = gimp_threshold_tool_dialog;
+  filter_tool_class->get_operation = gimp_threshold_tool_get_operation;
+  filter_tool_class->dialog        = gimp_threshold_tool_dialog;
 }
 
 static void
@@ -175,9 +175,17 @@ gimp_threshold_tool_get_operation (GimpFilterTool  *filter_tool,
                                    gchar          **description,
                                    gchar          **undo_desc,
                                    gchar          **icon_name,
-                                   gchar          **help_id)
+                                   gchar          **help_id,
+                                   gboolean        *has_settings,
+                                   gchar          **settings_folder,
+                                   gchar          **import_dialog_title,
+                                   gchar          **export_dialog_title)
 {
-  *description = g_strdup (_("Apply Threshold"));
+  *description         = g_strdup (_("Apply Threshold"));
+  *has_settings        = TRUE;
+  *settings_folder     = g_strdup ("threshold");
+  *import_dialog_title = g_strdup (_("Import Threshold Settings"));
+  *export_dialog_title = g_strdup (_("Export Threshold Settings"));
 
   return g_strdup ("gimp:threshold");
 }

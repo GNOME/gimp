@@ -77,7 +77,11 @@ static gchar *
                                                             gchar                **description,
                                                             gchar                **undo_desc,
                                                             gchar                **icon_name,
-                                                            gchar                **help_id);
+                                                            gchar                **help_id,
+                                                            gboolean              *has_settings,
+                                                            gchar                **settings_folder,
+                                                            gchar                **import_dialog_title,
+                                                            gchar                **export_dialog_title);
 static void   gimp_brightness_contrast_tool_dialog         (GimpFilterTool        *filter_tool);
 
 static void   brightness_contrast_to_levels_callback       (GtkWidget             *widget,
@@ -112,17 +116,13 @@ gimp_brightness_contrast_tool_class_init (GimpBrightnessContrastToolClass *klass
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  tool_class->initialize                 = gimp_brightness_contrast_tool_initialize;
-  tool_class->button_press               = gimp_brightness_contrast_tool_button_press;
-  tool_class->button_release             = gimp_brightness_contrast_tool_button_release;
-  tool_class->motion                     = gimp_brightness_contrast_tool_motion;
+  tool_class->initialize           = gimp_brightness_contrast_tool_initialize;
+  tool_class->button_press         = gimp_brightness_contrast_tool_button_press;
+  tool_class->button_release       = gimp_brightness_contrast_tool_button_release;
+  tool_class->motion               = gimp_brightness_contrast_tool_motion;
 
-  filter_tool_class->settings_name       = "brightness-contrast";
-  filter_tool_class->import_dialog_title = _("Import Brightness-Contrast settings");
-  filter_tool_class->export_dialog_title = _("Export Brightness-Contrast settings");
-
-  filter_tool_class->get_operation       = gimp_brightness_contrast_tool_get_operation;
-  filter_tool_class->dialog              = gimp_brightness_contrast_tool_dialog;
+  filter_tool_class->get_operation = gimp_brightness_contrast_tool_get_operation;
+  filter_tool_class->dialog        = gimp_brightness_contrast_tool_dialog;
 }
 
 static void
@@ -168,9 +168,17 @@ gimp_brightness_contrast_tool_get_operation (GimpFilterTool  *filter_tool,
                                              gchar          **description,
                                              gchar          **undo_desc,
                                              gchar          **icon_name,
-                                             gchar          **help_id)
+                                             gchar          **help_id,
+                                             gboolean        *has_settings,
+                                             gchar          **settings_folder,
+                                             gchar          **import_dialog_title,
+                                             gchar          **export_dialog_title)
 {
-  *description = g_strdup (_("Adjust Brightness and Contrast"));
+  *description         = g_strdup (_("Adjust Brightness and Contrast"));
+  *has_settings        = TRUE;
+  *settings_folder     = g_strdup ("brightness-contrast");
+  *import_dialog_title = g_strdup (_("Import Brightness-Contrast settings"));
+  *export_dialog_title = g_strdup (_("Export Brightness-Contrast settings"));
 
   return g_strdup ("gimp:brightness-contrast");
 }

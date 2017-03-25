@@ -55,7 +55,11 @@ static gchar    * gimp_colorize_tool_get_operation (GimpFilterTool  *filter_tool
                                                     gchar          **description,
                                                     gchar          **undo_desc,
                                                     gchar          **icon_name,
-                                                    gchar          **help_id);
+                                                    gchar          **help_id,
+                                                    gboolean        *has_settings,
+                                                    gchar          **settings_folder,
+                                                    gchar          **import_dialog_title,
+                                                    gchar          **export_dialog_title);
 static void       gimp_colorize_tool_dialog        (GimpFilterTool  *filter_tool);
 static void       gimp_colorize_tool_color_picked  (GimpFilterTool  *filter_tool,
                                                     gpointer         identifier,
@@ -93,15 +97,11 @@ gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
   GimpToolClass         *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass   *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  tool_class->initialize                 = gimp_colorize_tool_initialize;
+  tool_class->initialize           = gimp_colorize_tool_initialize;
 
-  filter_tool_class->settings_name       = "colorize";
-  filter_tool_class->import_dialog_title = _("Import Colorize Settings");
-  filter_tool_class->export_dialog_title = _("Export Colorize Settings");
-
-  filter_tool_class->get_operation       = gimp_colorize_tool_get_operation;
-  filter_tool_class->dialog              = gimp_colorize_tool_dialog;
-  filter_tool_class->color_picked        = gimp_colorize_tool_color_picked;
+  filter_tool_class->get_operation = gimp_colorize_tool_get_operation;
+  filter_tool_class->dialog        = gimp_colorize_tool_dialog;
+  filter_tool_class->color_picked  = gimp_colorize_tool_color_picked;
 }
 
 static void
@@ -136,9 +136,17 @@ gimp_colorize_tool_get_operation (GimpFilterTool  *filter_tool,
                                   gchar          **description,
                                   gchar          **undo_desc,
                                   gchar          **icon_name,
-                                  gchar          **help_id)
+                                  gchar          **help_id,
+                                  gboolean        *has_settings,
+                                  gchar          **settings_folder,
+                                  gchar          **import_dialog_title,
+                                  gchar          **export_dialog_title)
 {
-  *description = g_strdup (_("Colorize the Image"));
+  *description         = g_strdup (_("Colorize the Image"));
+  *has_settings        = TRUE;
+  *settings_folder     = g_strdup ("colorize");
+  *import_dialog_title = g_strdup (_("Import Colorize Settings"));
+  *export_dialog_title = g_strdup (_("Export Colorize Settings"));
 
   return g_strdup ("gimp:colorize");
 }

@@ -77,7 +77,11 @@ static gchar    * gimp_levels_tool_get_operation  (GimpFilterTool   *filter_tool
                                                    gchar           **description,
                                                    gchar           **undo_desc,
                                                    gchar           **icon_name,
-                                                   gchar           **help_id);
+                                                   gchar           **help_id,
+                                                   gboolean         *has_settings,
+                                                   gchar           **settings_folder,
+                                                   gchar           **import_dialog_title,
+                                                   gchar           **export_dialog_title);
 static void       gimp_levels_tool_dialog         (GimpFilterTool   *filter_tool);
 static void       gimp_levels_tool_reset          (GimpFilterTool   *filter_tool);
 static gboolean   gimp_levels_tool_settings_import(GimpFilterTool   *filter_tool,
@@ -149,21 +153,17 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->constructed              = gimp_levels_tool_constructed;
-  object_class->finalize                 = gimp_levels_tool_finalize;
+  object_class->constructed          = gimp_levels_tool_constructed;
+  object_class->finalize             = gimp_levels_tool_finalize;
 
-  tool_class->initialize                 = gimp_levels_tool_initialize;
+  tool_class->initialize             = gimp_levels_tool_initialize;
 
-  filter_tool_class->settings_name       = "levels";
-  filter_tool_class->import_dialog_title = _("Import Levels");
-  filter_tool_class->export_dialog_title = _("Export Levels");
-
-  filter_tool_class->get_operation       = gimp_levels_tool_get_operation;
-  filter_tool_class->dialog              = gimp_levels_tool_dialog;
-  filter_tool_class->reset               = gimp_levels_tool_reset;
-  filter_tool_class->settings_import     = gimp_levels_tool_settings_import;
-  filter_tool_class->settings_export     = gimp_levels_tool_settings_export;
-  filter_tool_class->color_picked        = gimp_levels_tool_color_picked;
+  filter_tool_class->get_operation   = gimp_levels_tool_get_operation;
+  filter_tool_class->dialog          = gimp_levels_tool_dialog;
+  filter_tool_class->reset           = gimp_levels_tool_reset;
+  filter_tool_class->settings_import = gimp_levels_tool_settings_import;
+  filter_tool_class->settings_export = gimp_levels_tool_settings_export;
+  filter_tool_class->color_picked    = gimp_levels_tool_color_picked;
 }
 
 static void
@@ -259,9 +259,17 @@ gimp_levels_tool_get_operation (GimpFilterTool  *filter_tool,
                                 gchar          **description,
                                 gchar          **undo_desc,
                                 gchar          **icon_name,
-                                gchar          **help_id)
+                                gchar          **help_id,
+                                gboolean        *has_settings,
+                                gchar          **settings_folder,
+                                gchar          **import_dialog_title,
+                                gchar          **export_dialog_title)
 {
-  *description = g_strdup (_("Adjust Color Levels"));
+  *description         = g_strdup (_("Adjust Color Levels"));
+  *has_settings        = TRUE;
+  *settings_folder     = g_strdup ("levels");
+  *import_dialog_title = g_strdup (_("Import Levels"));
+  *export_dialog_title = g_strdup (_("Export Levels"));
 
   return g_strdup ("gimp:levels");
 }

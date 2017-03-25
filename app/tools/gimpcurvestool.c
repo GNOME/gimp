@@ -95,7 +95,11 @@ static gchar    * gimp_curves_tool_get_operation   (GimpFilterTool       *filter
                                                     gchar               **description,
                                                     gchar               **undo_desc,
                                                     gchar               **icon_name,
-                                                    gchar               **help_id);
+                                                    gchar               **help_id,
+                                                    gboolean             *has_settings,
+                                                    gchar               **settings_folder,
+                                                    gchar               **import_dialog_title,
+                                                    gchar               **export_dialog_title);
 static void       gimp_curves_tool_dialog          (GimpFilterTool       *filter_tool);
 static void       gimp_curves_tool_reset           (GimpFilterTool       *filter_tool);
 static gboolean   gimp_curves_tool_settings_import (GimpFilterTool       *filter_tool,
@@ -165,24 +169,20 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
   GimpColorToolClass  *color_tool_class  = GIMP_COLOR_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->constructed              = gimp_curves_tool_constructed;
+  object_class->constructed          = gimp_curves_tool_constructed;
 
-  tool_class->initialize                 = gimp_curves_tool_initialize;
-  tool_class->button_release             = gimp_curves_tool_button_release;
-  tool_class->key_press                  = gimp_curves_tool_key_press;
-  tool_class->oper_update                = gimp_curves_tool_oper_update;
+  tool_class->initialize             = gimp_curves_tool_initialize;
+  tool_class->button_release         = gimp_curves_tool_button_release;
+  tool_class->key_press              = gimp_curves_tool_key_press;
+  tool_class->oper_update            = gimp_curves_tool_oper_update;
 
-  color_tool_class->picked               = gimp_curves_tool_color_picked;
+  color_tool_class->picked           = gimp_curves_tool_color_picked;
 
-  filter_tool_class->settings_name       = "curves";
-  filter_tool_class->import_dialog_title = _("Import Curves");
-  filter_tool_class->export_dialog_title = _("Export Curves");
-
-  filter_tool_class->get_operation       = gimp_curves_tool_get_operation;
-  filter_tool_class->dialog              = gimp_curves_tool_dialog;
-  filter_tool_class->reset               = gimp_curves_tool_reset;
-  filter_tool_class->settings_import     = gimp_curves_tool_settings_import;
-  filter_tool_class->settings_export     = gimp_curves_tool_settings_export;
+  filter_tool_class->get_operation   = gimp_curves_tool_get_operation;
+  filter_tool_class->dialog          = gimp_curves_tool_dialog;
+  filter_tool_class->reset           = gimp_curves_tool_reset;
+  filter_tool_class->settings_import = gimp_curves_tool_settings_import;
+  filter_tool_class->settings_export = gimp_curves_tool_settings_export;
 }
 
 static void
@@ -405,9 +405,17 @@ gimp_curves_tool_get_operation (GimpFilterTool  *filter_tool,
                                 gchar          **description,
                                 gchar          **undo_desc,
                                 gchar          **icon_name,
-                                gchar          **help_id)
+                                gchar          **help_id,
+                                gboolean        *has_settings,
+                                gchar          **settings_folder,
+                                gchar          **import_dialog_title,
+                                gchar          **export_dialog_title)
 {
-  *description = g_strdup (_("Adjust Color Curves"));
+  *description         = g_strdup (_("Adjust Color Curves"));
+  *has_settings        = TRUE;
+  *settings_folder     = g_strdup ("curves");
+  *import_dialog_title = g_strdup (_("Import Curves"));
+  *export_dialog_title = g_strdup (_("Export Curves"));
 
   return g_strdup ("gimp:curves");
 }

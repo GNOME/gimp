@@ -83,16 +83,13 @@ static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filte
                                                         gchar            **description,
                                                         gchar            **undo_desc,
                                                         gchar            **icon_name,
-                                                        gchar            **help_id);
+                                                        gchar            **help_id,
+                                                        gboolean          *has_settings,
+                                                        gchar            **settings_folder,
+                                                        gchar            **import_dialog_title,
+                                                        gchar            **export_dialog_title);
 static void        gimp_operation_tool_dialog          (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_reset           (GimpFilterTool    *filter_tool);
-static GtkWidget * gimp_operation_tool_get_settings_ui (GimpFilterTool    *filter_tool,
-                                                        GimpContainer     *settings,
-                                                        const gchar       *import_dialog_title,
-                                                        const gchar       *export_dialog_title,
-                                                        const gchar       *file_dialog_help_id,
-                                                        GFile             *default_folder,
-                                                        GtkWidget        **settings_box);
 static void        gimp_operation_tool_color_picked    (GimpFilterTool    *filter_tool,
                                                         gpointer           identifier,
                                                         gdouble            x,
@@ -142,22 +139,20 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->finalize             = gimp_operation_tool_finalize;
+  object_class->finalize           = gimp_operation_tool_finalize;
 
-  tool_class->initialize             = gimp_operation_tool_initialize;
-  tool_class->control                = gimp_operation_tool_control;
+  tool_class->initialize           = gimp_operation_tool_initialize;
+  tool_class->control              = gimp_operation_tool_control;
 
-  filter_tool_class->get_operation   = gimp_operation_tool_get_operation;
-  filter_tool_class->dialog          = gimp_operation_tool_dialog;
-  filter_tool_class->reset           = gimp_operation_tool_reset;
-  filter_tool_class->get_settings_ui = gimp_operation_tool_get_settings_ui;
-  filter_tool_class->color_picked    = gimp_operation_tool_color_picked;
+  filter_tool_class->get_operation = gimp_operation_tool_get_operation;
+  filter_tool_class->dialog        = gimp_operation_tool_dialog;
+  filter_tool_class->reset         = gimp_operation_tool_reset;
+  filter_tool_class->color_picked  = gimp_operation_tool_color_picked;
 }
 
 static void
 gimp_operation_tool_init (GimpOperationTool *tool)
 {
-  GIMP_FILTER_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
 }
 
 static void
@@ -260,15 +255,24 @@ gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
                                    gchar          **description,
                                    gchar          **undo_desc,
                                    gchar          **icon_name,
-                                   gchar          **help_id)
+                                   gchar          **help_id,
+                                   gboolean        *has_settings,
+                                   gchar          **settings_folder,
+                                   gchar          **import_dialog_title,
+                                   gchar          **export_dialog_title)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (filter_tool);
 
-  *title       = g_strdup (tool->title);
-  *description = g_strdup (tool->description);
-  *undo_desc   = g_strdup (tool->undo_desc);
-  *icon_name   = g_strdup (tool->icon_name);
-  *help_id     = g_strdup (tool->help_id);
+  *title               = g_strdup (tool->title);
+  *description         = g_strdup (tool->description);
+  *undo_desc           = g_strdup (tool->undo_desc);
+  *icon_name           = g_strdup (tool->icon_name);
+  *help_id             = g_strdup (tool->help_id);
+  *has_settings        = FALSE;
+  *import_dialog_title = g_strdup_printf (_("Import '%s' Settings"),
+                                          tool->title);
+  *export_dialog_title = g_strdup_printf (_("Export '%s' Settings"),
+                                          tool->title);
 
   return g_strdup (tool->operation);
 }
@@ -314,38 +318,6 @@ gimp_operation_tool_reset (GimpFilterTool *filter_tool)
 
   if (filter_tool->config && GIMP_TOOL (tool)->drawable)
     gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable);
-}
-
-static GtkWidget *
-gimp_operation_tool_get_settings_ui (GimpFilterTool  *filter_tool,
-                                     GimpContainer   *settings,
-                                     const gchar     *import_dialog_title,
-                                     const gchar     *export_dialog_title,
-                                     const gchar     *file_dialog_help_id,
-                                     GFile           *default_folder,
-                                     GtkWidget      **settings_box)
-{
-  GimpOperationTool *tool = GIMP_OPERATION_TOOL (filter_tool);
-  GtkWidget         *widget;
-  gchar             *import_title;
-  gchar             *export_title;
-
-  import_title = g_strdup_printf (_("Import '%s' Settings"), tool->title);
-  export_title = g_strdup_printf (_("Export '%s' Settings"), tool->title);
-
-  widget =
-    GIMP_FILTER_TOOL_CLASS (parent_class)->get_settings_ui (filter_tool,
-                                                            settings,
-                                                            import_title,
-                                                            export_title,
-                                                            file_dialog_help_id,
-                                                            NULL, /* sic */
-                                                            settings_box);
-
-  g_free (import_title);
-  g_free (export_title);
-
-  return widget;
 }
 
 static void
@@ -653,11 +625,6 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   gimp_filter_tool_get_operation (filter_tool);
 
-  if (undo_desc)
-    GIMP_FILTER_TOOL_GET_CLASS (tool)->settings_name = "yes"; /* XXX hack */
-  else
-    GIMP_FILTER_TOOL_GET_CLASS (tool)->settings_name = NULL; /* XXX hack */
-
   if (tool->options_gui)
     {
       gtk_widget_destroy (tool->options_gui);
@@ -743,6 +710,8 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                            GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)),
                            (GimpCreatePickerFunc) gimp_filter_tool_add_color_picker,
                            tool);
+
+      filter_tool->has_settings = ! GTK_IS_LABEL (tool->options_gui); /* HACK */
 
       if (tool->options_box)
         {

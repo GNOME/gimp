@@ -63,7 +63,11 @@ static gchar    * gimp_hue_saturation_tool_get_operation (GimpFilterTool  *filte
                                                           gchar          **description,
                                                           gchar          **undo_desc,
                                                           gchar          **icon_name,
-                                                          gchar          **help_id);
+                                                          gchar          **help_id,
+                                                          gboolean        *has_settings,
+                                                          gchar          **settings_folder,
+                                                          gchar          **import_dialog_title,
+                                                          gchar          **export_dialog_title);
 static void       gimp_hue_saturation_tool_dialog        (GimpFilterTool  *filter_tool);
 static void       gimp_hue_saturation_tool_reset         (GimpFilterTool  *filter_tool);
 
@@ -108,17 +112,13 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->constructed              = gimp_hue_saturation_tool_constructed;
+  object_class->constructed        = gimp_hue_saturation_tool_constructed;
 
-  tool_class->initialize                 = gimp_hue_saturation_tool_initialize;
+  tool_class->initialize           = gimp_hue_saturation_tool_initialize;
 
-  filter_tool_class->settings_name       = "hue-saturation";
-  filter_tool_class->import_dialog_title = _("Import Hue-Saturation Settings");
-  filter_tool_class->export_dialog_title = _("Export Hue-Saturation Settings");
-
-  filter_tool_class->get_operation       = gimp_hue_saturation_tool_get_operation;
-  filter_tool_class->dialog              = gimp_hue_saturation_tool_dialog;
-  filter_tool_class->reset               = gimp_hue_saturation_tool_reset;
+  filter_tool_class->get_operation = gimp_hue_saturation_tool_get_operation;
+  filter_tool_class->dialog        = gimp_hue_saturation_tool_dialog;
+  filter_tool_class->reset         = gimp_hue_saturation_tool_reset;
 }
 
 static void
@@ -163,9 +163,17 @@ gimp_hue_saturation_tool_get_operation (GimpFilterTool  *filter_tool,
                                         gchar          **description,
                                         gchar          **undo_desc,
                                         gchar          **icon_name,
-                                        gchar          **help_id)
+                                        gchar          **help_id,
+                                        gboolean        *has_settings,
+                                        gchar          **settings_folder,
+                                        gchar          **import_dialog_title,
+                                        gchar          **export_dialog_title)
 {
-  *description = g_strdup (_("Adjust Hue / Lightness / Saturation"));
+  *description         = g_strdup (_("Adjust Hue / Lightness / Saturation"));
+  *has_settings        = TRUE;
+  *settings_folder     = g_strdup ("hue-saturation");
+  *import_dialog_title = g_strdup (_("Import Hue-Saturation Settings"));
+  *export_dialog_title = g_strdup (_("Export Hue-Saturation Settings"));
 
   return g_strdup ("gimp:hue-saturation");
 }
