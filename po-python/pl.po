@@ -1,19 +1,19 @@
 # Polish translation for gimp-python.
-# Copyright © 1999-2016 the gimp authors.
+# Copyright © 1999-2017 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999, 2000.
 # Hubert Stachurski <hubi@forest.sggw.waw.pl>, 2008.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2016.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2016.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2017.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-07 19:34+0200\n"
-"PO-Revision-Date: 2016-09-07 19:35+0200\n"
+"POT-Creation-Date: 2017-03-26 21:21+0200\n"
+"PO-Revision-Date: 2017-03-26 21:22+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -442,12 +442,10 @@ msgstr "_Krawędź"
 msgid "_Drop shadow"
 msgstr "_Rzuć cień"
 
-# "drop shadow" pominięte ze względu na zgodność z obecnym tłumaczeniem (filtr→rzucanie cienia)
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
-msgstr "Przesunięcie _X cienia"
+msgstr "_Poziome przesunięcie cienia"
 
-# "drop shadow" pominięte ze względu na zgodność z obecnym tłumaczeniem (filtr→rzucanie cienia)
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
-msgstr "Przesunięcie _Y cienia"
+msgstr "Pi_onowe przesunięcie cienia"

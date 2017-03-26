@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-19 16:58+0100\n"
-"PO-Revision-Date: 2017-03-19 17:00+0100\n"
+"POT-Creation-Date: 2017-03-26 21:21+0200\n"
+"PO-Revision-Date: 2017-03-26 21:22+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -362,7 +362,7 @@ msgstr "Powiększenie"
 #: ../plug-ins/common/animation-play.c:890
 #, c-format
 msgid "%d fps"
-msgstr "%d kl./s"
+msgstr "%d kl./s"
 
 #: ../plug-ins/common/animation-play.c:901
 msgid "Default framerate"
@@ -394,7 +394,7 @@ msgstr "Nieprawidłowy obraz. Zamknięto go?"
 #: ../plug-ins/common/animation-play.c:1224
 #, c-format
 msgid "Frame %d of %d"
-msgstr "Klatka %d z %d"
+msgstr "%d. klatka z %d"
 
 #: ../plug-ins/common/animation-play.c:1363
 msgid "Stop playback"
@@ -884,7 +884,7 @@ msgstr "Przesunięcie początkowe:"
 
 #: ../plug-ins/common/cml-explorer.c:1369
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Ziarno losowości (tylko dla trybów „Z ziarna”)"
+msgstr "Ziarno losowości (tylko dla trybów „Z ziarna”)"
 
 #: ../plug-ins/common/cml-explorer.c:1380
 msgid "Seed:"
@@ -892,7 +892,7 @@ msgstr "Ziarno:"
 
 #: ../plug-ins/common/cml-explorer.c:1393
 msgid "Switch to \"From seed\" With the Last Seed"
-msgstr "Przełącza na „Z ziarna” z ostatnim ziarnem"
+msgstr "Przełącza na „Z ziarna” z ostatnim ziarnem"
 
 #: ../plug-ins/common/cml-explorer.c:1405
 msgid ""
@@ -1931,7 +1931,7 @@ msgstr "Łączenie głębi"
 
 #: ../plug-ins/common/depth-merge.c:703
 msgid "Source 1:"
-msgstr "Źródło 1:"
+msgstr "1. źródło:"
 
 #: ../plug-ins/common/depth-merge.c:718 ../plug-ins/common/depth-merge.c:748
 msgid "Depth map:"
@@ -1939,7 +1939,7 @@ msgstr "Mapa głębi:"
 
 #: ../plug-ins/common/depth-merge.c:733
 msgid "Source 2:"
-msgstr "Źródło 2:"
+msgstr "2. źródło:"
 
 #: ../plug-ins/common/depth-merge.c:765
 msgid "O_verlap:"
@@ -1951,11 +1951,11 @@ msgstr "Prz_esunięcie:"
 
 #: ../plug-ins/common/depth-merge.c:785
 msgid "Sc_ale 1:"
-msgstr "Sk_ala 1:"
+msgstr "1. sk_ala:"
 
 #: ../plug-ins/common/depth-merge.c:795
 msgid "Sca_le 2:"
-msgstr "Ska_la 2:"
+msgstr "2. ska_la:"
 
 #: ../plug-ins/common/despeckle.c:160
 msgid "Remove speckle noise from the image"
@@ -2044,11 +2044,11 @@ msgstr "Parametry wygładzania"
 
 #: ../plug-ins/common/edge-dog.c:346
 msgid "_Radius 1:"
-msgstr "_Promień 1:"
+msgstr "1. p_romień:"
 
 #: ../plug-ins/common/edge-dog.c:350
 msgid "R_adius 2:"
-msgstr "P_romień 2:"
+msgstr "2. pro_mień:"
 
 #: ../plug-ins/common/edge-dog.c:373 ../plug-ins/gimpressionist/paper.c:166
 msgid "_Invert"
@@ -2464,17 +2464,17 @@ msgstr "Tło (%d%s)"
 #: ../plug-ins/common/file-gif-load.c:1007
 #, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "Otwieranie „%s” (klatka %d)"
+msgstr "Otwieranie „%s” (%d. klatka)"
 
 #: ../plug-ins/common/file-gif-load.c:1036
 #, c-format
 msgid "Frame %d"
-msgstr "Klatka %d"
+msgstr "%d. klatka"
 
 #: ../plug-ins/common/file-gif-load.c:1038
 #, c-format
 msgid "Frame %d (%d%s)"
-msgstr "Klatka %d (%d%s)"
+msgstr "%d. klatka (%d%s)"
 
 #: ../plug-ins/common/file-gif-load.c:1069
 #, c-format
@@ -2892,11 +2892,11 @@ msgstr "JNG + Delta PNG"
 
 #: ../plug-ins/common/file-mng.c:1419
 msgid "All PNG"
-msgstr "Same PNG"
+msgstr "Wszystkie PNG"
 
 #: ../plug-ins/common/file-mng.c:1420
 msgid "All JNG"
-msgstr "Same JNG"
+msgstr "Wszystkie JNG"
 
 #: ../plug-ins/common/file-mng.c:1432
 msgid "Default chunks type:"
@@ -3024,12 +3024,12 @@ msgstr "Nie można eksportować obrazów z kanałem alfa."
 #: ../plug-ins/common/file-pcx.c:709
 #, c-format
 msgid "Invalid X offset: %d"
-msgstr "Nieprawidłowe przesunięcie X: %d"
+msgstr "Nieprawidłowe poziome przesunięcie: %d"
 
 #: ../plug-ins/common/file-pcx.c:715
 #, c-format
 msgid "Invalid Y offset: %d"
-msgstr "Nieprawidłowe przesunięcie Y: %d"
+msgstr "Nieprawidłowe pionowe przesunięcie: %d"
 
 #: ../plug-ins/common/file-pcx.c:721
 #, c-format
@@ -3049,7 +3049,7 @@ msgstr "Zapisanie do pliku „%s” się nie powiodło: %s"
 #: ../plug-ins/common/file-pdf-load.c:300
 #: ../plug-ins/common/file-pdf-save.c:319
 msgid "Portable Document Format"
-msgstr "PDF (Portable Document Format)"
+msgstr "PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:545
 #: ../plug-ins/common/file-pdf-load.c:564
@@ -3171,7 +3171,7 @@ msgstr "Dodanie tego obrazu"
 #: ../plug-ins/file-tiff/file-tiff-load.c:925
 #, c-format
 msgid "Page %d"
-msgstr "Strona %d"
+msgstr "%d. strona"
 
 #: ../plug-ins/common/file-pdf-save.c:1117
 msgid "Error! In order to save the file, at least one image should be added!"
@@ -3309,7 +3309,7 @@ msgstr "Plik jest w nieobsługiwanym formacie."
 
 #: ../plug-ins/common/file-pnm.c:625
 msgid "Invalid X resolution."
-msgstr "Nieprawidłowa rozdzielczość X."
+msgstr "Nieprawidłowa pozioma rozdzielczość."
 
 #: ../plug-ins/common/file-pnm.c:627
 msgid "Image width is larger than GIMP can handle."
@@ -3317,7 +3317,7 @@ msgstr "Szerokość obrazu jest większa, niż program GIMP może obsłużyć."
 
 #: ../plug-ins/common/file-pnm.c:634
 msgid "Invalid Y resolution."
-msgstr "Nieprawidłowa rozdzielczość Y."
+msgstr "Nieprawidłowa pionowa rozdzielczość."
 
 #: ../plug-ins/common/file-pnm.c:636
 msgid "Image height is larger than GIMP can handle."
@@ -3469,11 +3469,11 @@ msgstr "Wymiary obrazu"
 
 #: ../plug-ins/common/file-ps.c:3725
 msgid "_X offset:"
-msgstr "Przesunięcie _X:"
+msgstr "_Poziome przesunięcie:"
 
 #: ../plug-ins/common/file-ps.c:3737
 msgid "_Y offset:"
-msgstr "Przesunięcie _Y:"
+msgstr "Pi_onowe przesunięcie:"
 
 #: ../plug-ins/common/file-ps.c:3743
 msgid "_Keep aspect ratio"
@@ -3513,7 +3513,7 @@ msgstr "Wyjście"
 
 #: ../plug-ins/common/file-ps.c:3796
 msgid "_PostScript level 2"
-msgstr "_PostScript poziom 2"
+msgstr "_PostScript 2. poziomu"
 
 #: ../plug-ins/common/file-ps.c:3805
 msgid "_Encapsulated PostScript"
@@ -3693,7 +3693,7 @@ msgid ""
 "'%s':\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
-"'%s':\n"
+"„%s”:\n"
 "Szerokość obrazu jest większa, niż program GIMP może obsłużyć"
 
 #: ../plug-ins/common/file-sunras.c:518 ../plug-ins/common/file-xbm.c:848
@@ -3713,7 +3713,7 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
-"'%s':\n"
+"„%s”:\n"
 "Wysokość obrazu jest większa, niż program GIMP może obsłużyć"
 
 #: ../plug-ins/common/file-sunras.c:562
@@ -3802,11 +3802,11 @@ msgstr "Wysokość:"
 
 #: ../plug-ins/common/file-svg.c:868 ../plug-ins/common/file-wmf.c:653
 msgid "_X ratio:"
-msgstr "Współczynnik _X:"
+msgstr "_Poziomy współczynnik:"
 
 #: ../plug-ins/common/file-svg.c:890 ../plug-ins/common/file-wmf.c:675
 msgid "_Y ratio:"
-msgstr "Współczynnik _Y:"
+msgstr "Pi_onowy współczynnik:"
 
 #: ../plug-ins/common/file-svg.c:904 ../plug-ins/common/file-wmf.c:689
 msgid "Constrain aspect ratio"
@@ -3965,11 +3965,11 @@ msgstr "_Zapisywanie wartości gorącego punktu"
 
 #: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1073
 msgid "Hot spot _X:"
-msgstr "Gorący punkt _X:"
+msgstr "_Poziomy gorący punkt:"
 
 #: ../plug-ins/common/file-xbm.c:1333
 msgid "Hot spot _Y:"
-msgstr "Gorący punkt _Y:"
+msgstr "Pi_onowy gorący punkt:"
 
 #. mask file
 #: ../plug-ins/common/file-xbm.c:1341
@@ -4327,7 +4327,7 @@ msgstr "Plik XWD %s jest uszkodzony."
 
 #: ../plug-ins/common/film.c:217
 msgid "Combine several images on a film strip"
-msgstr "Łączy kilka obrazów w jeden odcinek filmowy"
+msgstr "Łączy kilka obrazów w jeden odcinek filmu"
 
 #: ../plug-ins/common/film.c:222
 msgid "_Filmstrip..."
@@ -4781,7 +4781,7 @@ msgstr "Gilotyna"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
-msgstr "Wyszukuje o naprawia niebezpiecznie jasne piksele"
+msgstr "Wyszukuje i naprawia niebezpiecznie jasne piksele"
 
 #: ../plug-ins/common/hot.c:217
 msgid "_Hot..."
@@ -4801,7 +4801,7 @@ msgstr "Utwórz _nową warstwę"
 
 #: ../plug-ins/common/hot.c:636
 msgid "Action"
-msgstr "Czynność"
+msgstr "Działanie"
 
 #: ../plug-ins/common/hot.c:640
 msgid "Reduce _Luminance"
@@ -5224,7 +5224,7 @@ msgid "Display information about plug-ins"
 msgstr "Wyświetla informacje o wtyczkach"
 
 #: ../plug-ins/common/plugin-browser.c:144
-msgid "_Plug-In Browser"
+msgid "_Plug-in Browser"
 msgstr "_Przeglądarka wtyczek"
 
 #: ../plug-ins/common/plugin-browser.c:363
@@ -5256,7 +5256,7 @@ msgid "No matches"
 msgstr "Brak wyników"
 
 #: ../plug-ins/common/plugin-browser.c:546
-msgid "Plug-In Browser"
+msgid "Plug-in Browser"
 msgstr "Przeglądarka wtyczek"
 
 #: ../plug-ins/common/plugin-browser.c:589
@@ -5819,39 +5819,39 @@ msgstr "Przekształcenia"
 #: ../plug-ins/common/sphere-designer.c:2808
 #: ../plug-ins/map-object/map-object-ui.c:1131
 msgid "Scale X:"
-msgstr "Skala X:"
+msgstr "Pozioma skala:"
 
 #: ../plug-ins/common/sphere-designer.c:2815
 msgid "Scale Y:"
-msgstr "Skala Y:"
+msgstr "Pionowa skala:"
 
 #: ../plug-ins/common/sphere-designer.c:2821
 msgid "Scale Z:"
-msgstr "Skala Z:"
+msgstr "Skala na osi Z:"
 
 #: ../plug-ins/common/sphere-designer.c:2828
 msgid "Rotate X:"
-msgstr "Obrót X:"
+msgstr "Poziomy obrót:"
 
 #: ../plug-ins/common/sphere-designer.c:2835
 msgid "Rotate Y:"
-msgstr "Obrót Y:"
+msgstr "Pionowy obrót:"
 
 #: ../plug-ins/common/sphere-designer.c:2842
 msgid "Rotate Z:"
-msgstr "Obrót Z:"
+msgstr "Obrót na osi Z:"
 
 #: ../plug-ins/common/sphere-designer.c:2849
 msgid "Position X:"
-msgstr "Położenie X:"
+msgstr "Poziome położenie:"
 
 #: ../plug-ins/common/sphere-designer.c:2856
 msgid "Position Y:"
-msgstr "Położenie Y:"
+msgstr "Pionowe położenie:"
 
 #: ../plug-ins/common/sphere-designer.c:2863
 msgid "Position Z:"
-msgstr "Położenie Z:"
+msgstr "Położenie na osi Z:"
 
 #: ../plug-ins/common/sphere-designer.c:2979
 msgid "Rendering sphere"
@@ -5859,7 +5859,7 @@ msgstr "Renderowanie sfery"
 
 #: ../plug-ins/common/sphere-designer.c:3030
 msgid "Create an image of a textured sphere"
-msgstr "Tworzy obraz oteksturowanej sfrey"
+msgstr "Tworzy obraz oteksturowanej sfery"
 
 #: ../plug-ins/common/sphere-designer.c:3037
 msgid "Sphere _Designer..."
@@ -6298,21 +6298,21 @@ msgstr "Menu wyboru mapy wektorów o stałym kierunku"
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1180
 msgid "Smoothing X gradient"
-msgstr "Wygładzanie gradientu X"
+msgstr "Wygładzanie poziomego gradientu"
 
 #: ../plug-ins/common/warp.c:1183
 msgid "Smoothing Y gradient"
-msgstr "Wygładzanie gradientu Y"
+msgstr "Wygładzanie pionowego gradientu"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1230
 msgid "Finding XY gradient"
-msgstr "Wyszukiwanie gradientu XY"
+msgstr "Wyszukiwanie poziomego i pionowego gradientu"
 
 #: ../plug-ins/common/warp.c:1251
 #, c-format
 msgid "Flow step %d"
-msgstr "Płynący krok %d"
+msgstr "%d. płynący krok"
 
 #: ../plug-ins/common/wavelet-decompose.c:86
 #: ../plug-ins/common/wavelet-decompose.c:267
@@ -6794,23 +6794,23 @@ msgstr ""
 
 #: ../plug-ins/file-ico/ico-dialog.c:169
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr "1 bpp, 1-bitowa alfa, 2-kolorowa paleta"
+msgstr "1 bpp, 1-bitowa alfa, 2-kolorowa paleta"
 
 #: ../plug-ins/file-ico/ico-dialog.c:170
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr "4 bpp, 1-bitowa alfa, 16-kolorowa paleta"
+msgstr "4 bpp, 1-bitowa alfa, 16-kolorowa paleta"
 
 #: ../plug-ins/file-ico/ico-dialog.c:171
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr "8 bpp, 1-bitowa alfa, 256-kolorowa paleta"
+msgstr "8 bpp, 1-bitowa alfa, 256-kolorowa paleta"
 
 #: ../plug-ins/file-ico/ico-dialog.c:172
 msgid "24 bpp, 1-bit alpha, no palette"
-msgstr "24 bpp, 1-bitowa alfa, brak palety"
+msgstr "24 bpp, 1-bitowa alfa, brak palety"
 
 #: ../plug-ins/file-ico/ico-dialog.c:173
 msgid "32 bpp, 8-bit alpha, no palette"
-msgstr "32 bpp, 8-bitowa alfa, brak palety"
+msgstr "32 bpp, 8-bitowa alfa, brak palety"
 
 #: ../plug-ins/file-ico/ico-dialog.c:187
 msgid "Compressed (PNG)"
@@ -7266,7 +7266,7 @@ msgstr "_Kompresowanie bitów"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:981
 msgid "_Deflate"
-msgstr "_Deflacja"
+msgstr "_Deflate"
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:982
 msgid "_JPEG"
@@ -7371,7 +7371,7 @@ msgstr "Dekodowanie klatki animowanego pliku WebP z „%s” się nie powiodło
 #: ../plug-ins/file-webp/file-webp-load.c:216
 #, c-format
 msgid "Frame %d (%dms)"
-msgstr "Klatka %d (%d ms)"
+msgstr "%d. klatka (%d ms)"
 
 #: ../plug-ins/file-webp/file-webp-save.c:112
 msgid "out of memory"
@@ -7395,11 +7395,11 @@ msgstr "błędne wymiary obrazu"
 
 #: ../plug-ins/file-webp/file-webp-save.c:122
 msgid "partition is bigger than 512K"
-msgstr "partycja jest większa niż 512 K"
+msgstr "partycja jest większa niż 512 K"
 
 #: ../plug-ins/file-webp/file-webp-save.c:124
 msgid "partition is bigger than 16M"
-msgstr "partycja jest większa niż 16 M"
+msgstr "partycja jest większa niż 16 M"
 
 #: ../plug-ins/file-webp/file-webp-save.c:126
 msgid "unable to flush bytes"
@@ -7407,7 +7407,7 @@ msgstr "nie można wyczyścić bajtów"
 
 #: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "file is larger than 4GiB"
-msgstr "plik jest większy niż 4 GiB"
+msgstr "plik jest większy niż 4 GiB"
 
 #: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "user aborted encoding"
@@ -7657,13 +7657,13 @@ msgstr "Po_większenie:"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2724
 #: ../plug-ins/lighting/lighting-ui.c:489
 msgid "_X:"
-msgstr "Oś _X:"
+msgstr "_Poziomo:"
 
 #: ../plug-ins/flame/flame.c:1264
 #: ../plug-ins/gradient-flare/gradient-flare.c:2728
 #: ../plug-ins/lighting/lighting-ui.c:504
 msgid "_Y:"
-msgstr "Oś _Y:"
+msgstr "Pi_onowo:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gimpressionist/utils.c:139
@@ -8217,7 +8217,7 @@ msgstr "Tworzy spiralę"
 
 #: ../plug-ins/gfig/gfig-dialog.c:955
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "Tworzy krzywą Beziera. Shift + przycisk kończy tworzenie."
+msgstr "Tworzy krzywą Béziera. Shift + przycisk kończy tworzenie."
 
 #: ../plug-ins/gfig/gfig-dialog.c:959 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
@@ -8379,7 +8379,7 @@ msgstr "Szczegóły obiektu"
 #. Position labels
 #: ../plug-ins/gfig/gfig-preview.c:379
 msgid "XY position:"
-msgstr "Współrzędne XY:"
+msgstr "Poziome i pionowe położenie:"
 
 #: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
@@ -8391,7 +8391,7 @@ msgstr "Liczba punktów gwiazdy"
 
 #: ../plug-ins/gfig/gfig-stock.c:40
 msgid "Create bezier curve"
-msgstr "Tworzy krzywą Beziera"
+msgstr "Tworzy krzywą Béziera"
 
 #: ../plug-ins/gfig/gfig.c:121
 msgid "Create geometric shapes"
@@ -9419,7 +9419,7 @@ msgstr "„Domyślny” został utworzony."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2465
 msgid "Default"
-msgstr "Domyślne"
+msgstr "Domyślny"
 
 #.
 #. *  Scales
@@ -9774,7 +9774,7 @@ msgstr "Fraktal _IFS…"
 #: ../plug-ins/map-object/map-object-ui.c:979
 #: ../plug-ins/map-object/map-object-ui.c:1031
 msgid "X:"
-msgstr "X:"
+msgstr "Poziomo:"
 
 #. Y
 #: ../plug-ins/ifs-compose/ifs-compose.c:526
@@ -9785,7 +9785,7 @@ msgstr "X:"
 #: ../plug-ins/map-object/map-object-ui.c:1043
 #: ../plug-ins/map-object/map-object-ui.c:1144
 msgid "Y:"
-msgstr "Y:"
+msgstr "Pionowo:"
 
 #. Asym
 #: ../plug-ins/ifs-compose/ifs-compose.c:568
@@ -9935,7 +9935,7 @@ msgid "Open IFS Fractal file"
 msgstr "Otwarcie pliku fraktala IFS"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-msgid "Image Map Plug-In"
+msgid "Image Map Plug-in"
 msgstr "Wtyczka mapy obrazu"
 
 #: ../plug-ins/imagemap/imap_about.c:46
@@ -9952,7 +9952,7 @@ msgstr "O_krąg"
 
 #: ../plug-ins/imagemap/imap_circle.c:261
 msgid "Center _x:"
-msgstr "_X środka:"
+msgstr "_Poziomy środek:"
 
 #: ../plug-ins/imagemap/imap_circle.c:266
 #: ../plug-ins/imagemap/imap_circle.c:273
@@ -9968,7 +9968,7 @@ msgstr "piksele"
 
 #: ../plug-ins/imagemap/imap_circle.c:268
 msgid "Center _y:"
-msgstr "_Y środka:"
+msgstr "Pi_onowy środek:"
 
 #: ../plug-ins/imagemap/imap_cmd_clear.c:50
 msgid "Clear"
@@ -10046,7 +10046,7 @@ msgstr "Utworzenie prowadnic"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr "Wynikowe granice prowadnic: %d,%d do %d,%d (%d obszarów)"
+msgstr "Wynikowe granice prowadnic: %d,%d do %d,%d (obszary: %d)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:142
 msgid ""
@@ -10168,11 +10168,11 @@ msgstr "Typ odnośnika"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:213
 msgid "_Web Site"
-msgstr "Witryna _WWW"
+msgstr "Strona _WWW"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:219
 msgid "_Ftp Site"
-msgstr "Witryna _FTP"
+msgstr "Strona _FTP"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:225
 msgid "_Gopher"
@@ -10243,7 +10243,7 @@ msgstr "Ustawienia obszaru"
 #: ../plug-ins/imagemap/imap_edit_area_info.c:501
 #, c-format
 msgid "Area #%d Settings"
-msgstr "Ustawienia obszaru numer %d"
+msgstr "Ustawienia %d. obszaru"
 
 #: ../plug-ins/imagemap/imap_file.c:47 ../plug-ins/imagemap/imap_menu.c:69
 msgid "Error opening file"
@@ -10508,11 +10508,11 @@ msgstr "Wi_elokąt"
 
 #: ../plug-ins/imagemap/imap_polygon.c:471
 msgid "x (pixels)"
-msgstr "X (piksele)"
+msgstr "Poziomo (piksele)"
 
 #: ../plug-ins/imagemap/imap_polygon.c:480
 msgid "y (pixels)"
-msgstr "Y (piksele)"
+msgstr "Pionowo (piksele)"
 
 #: ../plug-ins/imagemap/imap_polygon.c:518
 msgid "_Insert"
@@ -10608,11 +10608,11 @@ msgstr "_Prostokąt"
 
 #: ../plug-ins/imagemap/imap_rectangle.c:385
 msgid "Upper left _x:"
-msgstr "Górny lewy _X:"
+msgstr "Górna lewa oś _X:"
 
 #: ../plug-ins/imagemap/imap_rectangle.c:392
 msgid "Upper left _y:"
-msgstr "Górny l_ewy Y:"
+msgstr "Górna l_ewa oś Y:"
 
 #: ../plug-ins/imagemap/imap_selection.c:348
 msgid "#"
@@ -10727,27 +10727,27 @@ msgstr "Ustawienia światła"
 
 #: ../plug-ins/lighting/lighting-ui.c:403
 msgid "Light 1"
-msgstr "Światło 1"
+msgstr "1. światło"
 
 #: ../plug-ins/lighting/lighting-ui.c:404
 msgid "Light 2"
-msgstr "Światło 2"
+msgstr "2. światło"
 
 #: ../plug-ins/lighting/lighting-ui.c:405
 msgid "Light 3"
-msgstr "Światło 3"
+msgstr "3. światło"
 
 #: ../plug-ins/lighting/lighting-ui.c:406
 msgid "Light 4"
-msgstr "Światło 4"
+msgstr "4. światło"
 
 #: ../plug-ins/lighting/lighting-ui.c:407
 msgid "Light 5"
-msgstr "Światło 5"
+msgstr "5. światło"
 
 #: ../plug-ins/lighting/lighting-ui.c:408
 msgid "Light 6"
-msgstr "Światło 6"
+msgstr "6. światło"
 
 #: ../plug-ins/lighting/lighting-ui.c:422
 msgid "Color:"
@@ -10799,21 +10799,21 @@ msgstr "Położenie"
 #: ../plug-ins/lighting/lighting-ui.c:497
 #: ../plug-ins/map-object/map-object-ui.c:664
 msgid "Light source X position in XYZ space"
-msgstr "Położenie X źródła światła w przestrzeni XYZ"
+msgstr "Poziome położenie źródła światła w przestrzeni XYZ"
 
 #: ../plug-ins/lighting/lighting-ui.c:512
 #: ../plug-ins/map-object/map-object-ui.c:678
 msgid "Light source Y position in XYZ space"
-msgstr "Pozycja Y źródła światła w przestrzeni XYZ"
+msgstr "Pionowe położenie źródła światła w przestrzeni XYZ"
 
 #: ../plug-ins/lighting/lighting-ui.c:519
 msgid "_Z:"
-msgstr "_Z:"
+msgstr "Oś _Z:"
 
 #: ../plug-ins/lighting/lighting-ui.c:527
 #: ../plug-ins/map-object/map-object-ui.c:692
 msgid "Light source Z position in XYZ space"
-msgstr "Pozycja Z źródła światła w przestrzeni XYZ"
+msgstr "Położenie źródła światła na osi Z w przestrzeni XYZ"
 
 #: ../plug-ins/lighting/lighting-ui.c:530
 msgid "Direction"
@@ -10822,12 +10822,12 @@ msgstr "Kierunek"
 #: ../plug-ins/lighting/lighting-ui.c:547
 #: ../plug-ins/map-object/map-object-ui.c:718
 msgid "Light source X direction in XYZ space"
-msgstr "Kierunek X źródła światła w przestrzeni XYZ"
+msgstr "Poziomy kierunek źródła światła w przestrzeni XYZ"
 
 #: ../plug-ins/lighting/lighting-ui.c:561
 #: ../plug-ins/map-object/map-object-ui.c:731
 msgid "Light source Y direction in XYZ space"
-msgstr "Kierunek Y źródła światła w przestrzeni XYZ"
+msgstr "Pionowy kierunek źródła światła w przestrzeni XYZ"
 
 #: ../plug-ins/lighting/lighting-ui.c:567
 #: ../plug-ins/map-object/map-object-ui.c:684
@@ -10836,12 +10836,12 @@ msgstr "Kierunek Y źródła światła w przestrzeni XYZ"
 #: ../plug-ins/map-object/map-object-ui.c:1055
 #: ../plug-ins/map-object/map-object-ui.c:1157
 msgid "Z:"
-msgstr "Z:"
+msgstr "Oś Z:"
 
 #: ../plug-ins/lighting/lighting-ui.c:575
 #: ../plug-ins/map-object/map-object-ui.c:744
 msgid "Light source Z direction in XYZ space"
-msgstr "Kierunek Z źródła światła w przestrzeni XYZ"
+msgstr "Kierunek źródła światła na osi Z w przestrzeni XYZ"
 
 #: ../plug-ins/lighting/lighting-ui.c:578
 msgid "I_solate"
@@ -11148,15 +11148,15 @@ msgstr "Podświetlenie:"
 
 #: ../plug-ins/map-object/map-object-ui.c:982
 msgid "Object X position in XYZ space"
-msgstr "Współrzędna X obiektu w przestrzeni XYZ"
+msgstr "Poziome położenie obiektu w przestrzeni XYZ"
 
 #: ../plug-ins/map-object/map-object-ui.c:996
 msgid "Object Y position in XYZ space"
-msgstr "Współrzędna Y obiektu w przestrzeni XYZ"
+msgstr "Pionowe położenie obiektu w przestrzeni XYZ"
 
 #: ../plug-ins/map-object/map-object-ui.c:1010
 msgid "Object Z position in XYZ space"
-msgstr "Współrzędna Z obiektu w przestrzeni XYZ"
+msgstr "Położenie obiektu na osi Z w przestrzeni XYZ"
 
 #: ../plug-ins/map-object/map-object-ui.c:1034
 msgid "Rotation angle about X axis"
@@ -11184,15 +11184,15 @@ msgstr "Obrazy na płaszczyznach prostopadłościanu"
 
 #: ../plug-ins/map-object/map-object-ui.c:1134
 msgid "X scale (size)"
-msgstr "Skala X (rozmiar)"
+msgstr "Pozioma skala (rozmiar)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
 msgid "Y scale (size)"
-msgstr "Skala Y (rozmiar)"
+msgstr "Pionowa skala (rozmiar)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1160
 msgid "Z scale (size)"
-msgstr "Skala Z (rozmiar)"
+msgstr "Skala na osi Z (rozmiar)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1183
 #: ../plug-ins/print/print-page-layout.c:450
@@ -11328,11 +11328,11 @@ msgstr "_Rysuj znaki kadrowania"
 
 #: ../plug-ins/print/print-page-layout.c:328
 msgid "_X resolution:"
-msgstr "Rozdzielczość _X:"
+msgstr "_Pozioma rozdzielczość:"
 
 #: ../plug-ins/print/print-page-layout.c:332
 msgid "_Y resolution:"
-msgstr "Rozdzielczość _Y:"
+msgstr "Pi_onowa rozdzielczość:"
 
 #: ../plug-ins/print/print-page-layout.c:413
 msgid "_Left:"

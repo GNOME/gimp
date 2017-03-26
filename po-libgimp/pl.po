@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-19 16:58+0100\n"
-"PO-Revision-Date: 2017-03-19 17:00+0100\n"
+"POT-Creation-Date: 2017-03-26 21:21+0200\n"
+"PO-Revision-Date: 2017-03-26 21:22+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1026,7 +1026,7 @@ msgstr "Wewnętrzna procedura programu GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:1330
 msgctxt "pdb-proc-type"
-msgid "GIMP Plug-In"
+msgid "GIMP Plug-in"
 msgstr "Wtyczka programu GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:1331
@@ -1926,15 +1926,15 @@ msgstr "_Zetnij"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:223
 msgid "Kilobytes"
-msgstr "Kilobajty"
+msgstr "KB"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:224
 msgid "Megabytes"
-msgstr "Megabajty"
+msgstr "MB"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:225
 msgid "Gigabytes"
-msgstr "Gigabajty"
+msgstr "GB"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
@@ -1944,7 +1944,7 @@ msgstr "Nic nie zaznaczono"
 
 #: ../libgimpwidgets/gimppageselector.c:288
 msgid "Select _All"
-msgstr "Z_aznacz wszystkie"
+msgstr "Z_aznacz wszystko"
 
 #: ../libgimpwidgets/gimppageselector.c:308
 msgid "Select _range:"
@@ -1958,7 +1958,7 @@ msgstr "Otwórz _strony jako"
 #: ../libgimpwidgets/gimppageselector.c:647
 #, c-format
 msgid "Page %d"
-msgstr "Strona %d"
+msgstr "%d. strona"
 
 #: ../libgimpwidgets/gimppageselector.c:1072
 msgid "One page selected"
@@ -1969,9 +1969,9 @@ msgstr "Zaznaczono jedną stronę"
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
-msgstr[0] "%d stronę zaznaczono"
-msgstr[1] "%d strony zaznaczono"
-msgstr[2] "%d stron zaznaczono"
+msgstr[0] "Zaznaczono %d stronę"
+msgstr[1] "Zaznaczono %d strony"
+msgstr[2] "Zaznaczono %d stron"
 
 #: ../libgimpwidgets/gimppatheditor.c:181
 msgid "Add a new folder"
@@ -2266,93 +2266,93 @@ msgstr "DirectX DirectInput"
 #: ../modules/controller-dx-dinput.c:419
 #, c-format
 msgid "Button %d"
-msgstr "Przycisk %d"
+msgstr "%d. przycisk"
 
 #: ../modules/controller-dx-dinput.c:422
 #, c-format
 msgid "Button %d Press"
-msgstr "Naciśnięcie przycisku %d"
+msgstr "Naciśnięcie %d. przycisku"
 
 #: ../modules/controller-dx-dinput.c:425
 #, c-format
 msgid "Button %d Release"
-msgstr "Zwolnienie przycisku %d"
+msgstr "Zwolnienie %d. przycisku"
 
 #: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
 msgid "X Move Left"
-msgstr "Ruch w lewo X"
+msgstr "Poziomy ruch w lewo"
 
 #: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
 msgid "X Move Right"
-msgstr "Ruch w prawo X"
+msgstr "Poziomy ruch w prawo"
 
 #: ../modules/controller-dx-dinput.c:451
 msgid "Y Move Away"
-msgstr "Duży ruch Y"
+msgstr "Pionowy ruch od"
 
 #: ../modules/controller-dx-dinput.c:454
 msgid "Y Move Near"
-msgstr "Mały ruch Y"
+msgstr "Pionowy ruch do"
 
 #: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
-msgstr "Ruch do góry Z"
+msgstr "Ruch do góry na osi Z"
 
 #: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
 msgid "Z Move Down"
-msgstr "Ruch do dołu Z"
+msgstr "Ruch do dołu na osi Z"
 
 #: ../modules/controller-dx-dinput.c:469
 msgid "X Axis Tilt Away"
-msgstr "Wychylenie Y duże"
+msgstr "Poziome wychylenie od"
 
 #: ../modules/controller-dx-dinput.c:472
 msgid "X Axis Tilt Near"
-msgstr "Wychylenie Y małe"
+msgstr "Poziome wychylenie do"
 
 #: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
-msgstr "Wychylenie Y w prawo"
+msgstr "Pionowe wychylenie w prawo"
 
 #: ../modules/controller-dx-dinput.c:481
 #: ../modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
-msgstr "Wychylenie Y w lewo"
+msgstr "Pionowe wychylenie w lewo"
 
 #: ../modules/controller-dx-dinput.c:487
 #: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
-msgstr "Wychylenie Z skręt w lewo"
+msgstr "Skręt wychylenia na osi Z w lewo"
 
 #: ../modules/controller-dx-dinput.c:490
 #: ../modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
-msgstr "Wychylenie Z skręt w prawo"
+msgstr "Skręt wychylenia na osi Z w prawo"
 
 #: ../modules/controller-dx-dinput.c:501
 #, c-format
 msgid "Slider %d Increase"
-msgstr "Zwiększenie suwaka %d"
+msgstr "Zwiększenie %d. suwaka"
 
 #: ../modules/controller-dx-dinput.c:504
 #, c-format
 msgid "Slider %d Decrease"
-msgstr "Zmniejszenie suwaka %d"
+msgstr "Zmniejszenie %d. suwaka"
 
 #: ../modules/controller-dx-dinput.c:514
 #, c-format
 msgid "POV %d X View"
-msgstr "POV %d widok X"
+msgstr "Poziomy widok POV %d"
 
 #: ../modules/controller-dx-dinput.c:517
 #, c-format
 msgid "POV %d Y View"
-msgstr "POV %d widok Y"
+msgstr "Pionowy widok POV %d"
 
 #: ../modules/controller-dx-dinput.c:520
 #, c-format
 msgid "POV %d Return"
-msgstr "POV %d powrót"
+msgstr "Powrót POV %d"
 
 #: ../modules/controller-dx-dinput.c:1081
 msgid "DirectInput Events"
@@ -2370,43 +2370,43 @@ msgstr "Urządzenie jest niedostępne"
 
 #: ../modules/controller-linux-input.c:58
 msgid "Button 0"
-msgstr "Przycisk 0"
+msgstr "0. przycisk"
 
 #: ../modules/controller-linux-input.c:59
 msgid "Button 1"
-msgstr "Przycisk 1"
+msgstr "1. przycisk"
 
 #: ../modules/controller-linux-input.c:60
 msgid "Button 2"
-msgstr "Przycisk 2"
+msgstr "2. przycisk"
 
 #: ../modules/controller-linux-input.c:61
 msgid "Button 3"
-msgstr "Przycisk 3"
+msgstr "3. przycisk"
 
 #: ../modules/controller-linux-input.c:62
 msgid "Button 4"
-msgstr "Przycisk 4"
+msgstr "4. przycisk"
 
 #: ../modules/controller-linux-input.c:63
 msgid "Button 5"
-msgstr "Przycisk 5"
+msgstr "5. przycisk"
 
 #: ../modules/controller-linux-input.c:64
 msgid "Button 6"
-msgstr "Przycisk 6"
+msgstr "6. przycisk"
 
 #: ../modules/controller-linux-input.c:65
 msgid "Button 7"
-msgstr "Przycisk 7"
+msgstr "7. przycisk"
 
 #: ../modules/controller-linux-input.c:66
 msgid "Button 8"
-msgstr "Przycisk 8"
+msgstr "8. przycisk"
 
 #: ../modules/controller-linux-input.c:67
 msgid "Button 9"
-msgstr "Przycisk 9"
+msgstr "9. przycisk"
 
 #: ../modules/controller-linux-input.c:68
 msgid "Button Mouse"
@@ -2458,19 +2458,19 @@ msgstr "Przycisk biegu następnego"
 
 #: ../modules/controller-linux-input.c:92
 msgid "Y Move Forward"
-msgstr "Ruch naprzód Y"
+msgstr "Pionowy ruch naprzód"
 
 #: ../modules/controller-linux-input.c:93
 msgid "Y Move Back"
-msgstr "Ruch w tył Y"
+msgstr "Pionowy ruch w tył"
 
 #: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
-msgstr "Wychylenie X do przodu"
+msgstr "Poziome wychylenie do przodu"
 
 #: ../modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
-msgstr "Wychylenie X do tyłu"
+msgstr "Poziome wychylenie do tyłu"
 
 #: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
