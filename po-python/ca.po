@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-01 17:58+0200\n"
-"PO-Revision-Date: 2011-06-14 17:48+0100\n"
+"PO-Revision-Date: 2017-03-27 17:36+0200\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -139,7 +139,7 @@ msgstr "Op_acitat"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
-msgstr "Desplaça els colors de la paleta"
+msgstr " Desplaça els colors de la paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
@@ -210,7 +210,7 @@ msgstr "Crea un degradat emprant els colors de la paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
-msgstr "De_gradat de la paleta"
+msgstr "Paleta a de_gradat"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
@@ -219,9 +219,7 @@ msgstr "Divideix"
 #. table snippet means a small piece of HTML code here
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Retalla una imatge per les seves guies, creant un conjunt d'imatges "
-"separades i una taula HTML formada per les imatges resultants"
+msgstr "Retalla una imatge per les seves guies, creant un conjunt d'imatges separades i una taula HTML formada per les imatges resultants"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
@@ -274,7 +272,7 @@ msgstr "_Navega..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
-msgstr "Navegador de funcions Python-Fu"
+msgstr "Navegador de procediments Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
@@ -336,7 +334,7 @@ msgstr "Crea un pinzell nou a partir de _text..."
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:84
 msgid "Font"
-msgstr "Tipus de lletra"
+msgstr "Estil de lletra"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:85
 msgid "Pixel Size"

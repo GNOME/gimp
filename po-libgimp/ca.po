@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-20 21:05+0100\n"
-"PO-Revision-Date: 2016-12-20 10:42+0100\n"
+"PO-Revision-Date: 2017-03-27 17:36+0200\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -69,14 +69,12 @@ msgstr "Fusiona les capes visibles"
 #: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr ""
-"El connector %s no pot gestionar desplaçaments de capa, mida o opacitat"
+msgstr "El connector %s no pot gestionar desplaçaments de capa, mida o opacitat"
 
 #: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr ""
-"El connector %s només pot gestionar les capes com a fotogrames d'una animació"
+msgstr "El connector %s només pot gestionar les capes com a fotogrames d'una animació"
 
 #: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
@@ -131,24 +129,18 @@ msgstr "El connector %s només pot gestionar imatges indexades"
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
-msgstr ""
-"Converteix a indexades amb els paràmetres per defecte\n"
-"(Feu-ho de forma manual per a ajustar el resultat)"
+msgstr "Converteix a indexades amb la configuració predeterminada\n(Feu-ho de forma manual per a ajustar el resultat)"
 
 #: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"El connector %s només pot gestionar els mapes de bits (dos colors) o les "
-"imatges indexades"
+msgstr "El connector %s només pot gestionar els mapes de bits (dos colors) o les imatges indexades"
 
 #: ../libgimp/gimpexport.c:335
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
-msgstr ""
-"Converteix a indexat amb els paràmetres per defecte\n"
-"(feu-ho de forma manual per a ajustar el resultat)"
+msgstr "Converteix a indexat amb la configuració predeterminada\n(feu-ho de forma manual per a ajustar el resultat)"
 
 #: ../libgimp/gimpexport.c:344
 #, c-format
@@ -163,9 +155,7 @@ msgstr "El connector %s només pot gestionar les imatges RGB o indexades"
 #: ../libgimp/gimpexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr ""
-"El connector %s només pot gestionar les imatges en escala de grisos o les "
-"indexades"
+msgstr "El connector %s només pot gestionar les imatges en escala de grisos o les indexades"
 
 #: ../libgimp/gimpexport.c:374
 #, c-format
@@ -202,9 +192,7 @@ msgstr "_Exporta"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr ""
-"Pels motius següents, heu d'exportar la imatge abans de poder-la desar com a "
-"%s:"
+msgstr "Pels motius següents, heu d'exportar la imatge abans de poder-la desar com a %s:"
 
 #. the footline
 #: ../libgimp/gimpexport.c:626
@@ -216,18 +204,14 @@ msgstr "La conversió de l'exportació no modificarà la imatge original."
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
-msgstr ""
-"Ara desareu una màscara de capa com a %s.\n"
-"No es desaran les capes visibles."
+msgstr "Ara desareu una màscara de capa com a %s.\nNo es desaran les capes visibles."
 
 #: ../libgimp/gimpexport.c:739
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
-msgstr ""
-"Ara desareu un canal (selecció desada) com a %s.\n"
-"No es desaran les capes visibles."
+msgstr "Ara desareu un canal (selecció desada) com a %s.\nNo es desaran les capes visibles."
 
 #: ../libgimp/gimpexport.c:1008
 msgid "Export Image as "
@@ -235,7 +219,7 @@ msgstr "Exporta la imatge com a "
 
 #: ../libgimp/gimpfontselectbutton.c:139
 msgid "Font Selection"
-msgstr "Selecció de tipus de lletra"
+msgstr "Selecció de lletra"
 
 #: ../libgimp/gimpgradientselectbutton.c:157
 msgid "Gradient Selection"
@@ -433,7 +417,7 @@ msgstr "_Selecció"
 #: ../libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
-msgstr "Còpia de la capa en _gris"
+msgstr "Còpia de la capa en escala de _grisos"
 
 #: ../libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
@@ -488,7 +472,7 @@ msgstr "Omple amb el color de fons"
 #: ../libgimpbase/gimpbaseenums.c:132
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Omple amb el patró"
+msgstr "Omple amb patró"
 
 #: ../libgimpbase/gimpbaseenums.c:162
 msgctxt "cap-style"
@@ -718,7 +702,7 @@ msgstr "Nítida"
 #: ../libgimpbase/gimpbaseenums.c:513
 msgctxt "desaturate-mode"
 msgid "Lightness"
-msgstr "Claredat"
+msgstr "Lluminositat"
 
 #: ../libgimpbase/gimpbaseenums.c:514
 msgctxt "desaturate-mode"
@@ -1310,9 +1294,7 @@ msgstr "El camí dels fitxers és nul"
 
 #: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
 msgid "Error converting UTF-8 filename to wide char"
-msgstr ""
-"S'ha produït un error en convertir un nom de fitxer UTF-8 a un de caràcter "
-"ample"
+msgstr "S'ha produït un error en convertir un nom de fitxer UTF-8 a un de caràcter ample"
 
 #: ../libgimpbase/gimputils.c:395
 msgid "ILCreateFromPath() failed"
@@ -1376,7 +1358,7 @@ msgstr "Pantalla amb gestió del color"
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr "Proves de programari"
+msgstr "Proves en pantalla"
 
 #: ../libgimpconfig/gimpconfigenums.c:57
 msgctxt "color-rendering-intent"
@@ -1418,27 +1400,19 @@ msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
-msgstr ""
-"Si es marca l'opció, el GIMP intentarà fer servir el perfil de color del "
-"sistema. El perfil configurat del monitor només es faria servir com a última "
-"opció."
+msgstr "Si es marca l'opció, el GIMP intentarà fer servir el perfil de color del sistema. El perfil configurat del monitor només es faria servir com a última opció."
 
 #: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
-msgstr ""
-"El perfil preferit del color del lloc de treball RGB. Estarà al costat del "
-"perfil RGB creat, quan un perfil del color pugui ser elegit."
+msgstr "El perfil preferit del color del lloc de treball RGB. Estarà al costat del perfil RGB creat, quan un perfil del color pugui ser elegit."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
 "The preferred grayscale working space color profile. It will be offered next "
 "to the built-in grayscale profile when a color profile can be chosen."
-msgstr ""
-"El perfil preferit del color del lloc de treball en escala de grisos. Estarà "
-"al costat del perfil en escala de grisos creat, quan un perfil del color "
-"pugui ser elegit."
+msgstr "El perfil preferit del color del lloc de treball en escala de grisos. Estarà al costat del perfil en escala de grisos creat, quan un perfil del color pugui ser elegit."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1449,11 +1423,7 @@ msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
-msgstr ""
-"El perfil del color que s'utilitza per a les proves de programari va des de "
-"l'espai del color de la imatge a algun altre espai del color, incloent-hi "
-"les proves de programari per a una impressora o un altre perfil de "
-"dispositiu de sortida."
+msgstr "El perfil del color que s'utilitza per a les proves en pantalla va des de l'espai del color de la imatge a algun altre espai del color, incloent-hi les proves per a una impressora o un altre perfil de dispositiu de sortida."
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1461,58 +1431,40 @@ msgid ""
 "device. Relative colorimetric is usually the best choice. Unless you use a "
 "LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
 "intent really gives you relative colorimetric."
-msgstr ""
-"Com es converteixen els colors des de l'espai del color de la imatge pel "
-"dispositiu de visualització. El colorimètric relatiu és generalment la "
-"millor opció. A menys que s'utilitzi un perfil de monitor LUT (la majoria "
-"dels perfils de monitor són de matriu), l'elecció de la intenció perceptiva "
-"dóna un colorimètric relatiu."
+msgstr "Com es converteixen els colors des de l'espai del color de la imatge pel dispositiu de visualització. El colorimètric relatiu és generalment la millor opció. Llavet que feu servir un perfil de monitor LUT (la majoria dels perfils de monitor són de matriu), l'elecció de la intenció perceptiva dóna un colorimètric relatiu."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to)."
-msgstr ""
-"No utilitzeu la compensació del punt negre (a menys que tingueu algun motiu "
-"per no fer-ho)."
+msgstr "No utilitzeu la compensació del punt negre (a menys que tingueu algun motiu per no fer-ho)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:90
 msgid ""
 "When disabled, image display might be of better quality at the cost of speed."
-msgstr ""
-"Quan es desactiva, la visualització de la imatge podria ser de millor "
-"qualitat a costa de la velocitat."
+msgstr "Quan es desactiva, la visualització de la imatge podria ser de millor qualitat a costa de la velocitat."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
-msgstr ""
-"Com es converteixen els colors des de l'espai del color de la imatge pel "
-"dispositiu de simulació de sortida (en general el monitor). Proveu-los tots "
-"i trieu el que es vegi millor."
+msgstr "Com es converteixen els colors des de l'espai del color de la imatge pel dispositiu de simulació de sortida (en general el monitor). Proveu-los tots i trieu el que es vegi millor."
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
-msgstr ""
-"Proveu-ho amb i sense compensació del punt negre i trieu el que es vegi "
-"millor."
+msgstr "Proveu-ho amb i sense compensació del punt negre i trieu el que es vegi millor."
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
-msgstr ""
-"Quan es desactiva, les proves de programari podrien ser de millor qualitat a "
-"costa de la velocitat."
+msgstr "Quan es desactiva, les proves en pantalla podrien ser de millor qualitat a costa de la velocitat."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
-msgstr ""
-"Si es marca l'opció, la simulació d'impressió mostrarà els colors que no es "
-"poden representar correctament en el lloc dels colors de destinació."
+msgstr "Si es marca l'opció, la prova en pantalla mostrarà els colors que no es poden representar correctament en el lloc dels colors de destinació."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1544,11 +1496,11 @@ msgstr "Utilitzeu el perfil del monitor del sistema"
 
 #: ../libgimpconfig/gimpcolorconfig.c:243
 msgid "Simulation profile for soft-proofing"
-msgstr "Perfil de simulació per a les proves de programari"
+msgstr "Perfil de simulació per a les proves en pantalla"
 
 #: ../libgimpconfig/gimpcolorconfig.c:250
 msgid "Display rendering intent"
-msgstr "Propòsit de renderització de la visualització"
+msgstr "Propòsit de la renderització en pantalla"
 
 #: ../libgimpconfig/gimpcolorconfig.c:258
 msgid "Use black point compensation for the display"
@@ -1560,15 +1512,15 @@ msgstr "Optimitzar les transformacions del color de pantalla"
 
 #: ../libgimpconfig/gimpcolorconfig.c:272
 msgid "Soft-proofing rendering intent"
-msgstr "Intenció de renderització de les proves de programari"
+msgstr "Intenció de renderització de les proves en pantalla"
 
 #: ../libgimpconfig/gimpcolorconfig.c:280
 msgid "Use black point compensation for soft-proofing"
-msgstr "Utilitza la compensació del punt negre per a les proves de programari"
+msgstr "Utilitza la compensació del punt negre per a les proves en pantalla"
 
 #: ../libgimpconfig/gimpcolorconfig.c:287
 msgid "Optimize soft-proofing color transformations"
-msgstr "Optimitza les transformacions del color per a les proves de programari"
+msgstr "Optimitza les transformacions del color per a les proves en pantalla"
 
 #: ../libgimpconfig/gimpcolorconfig.c:294
 msgid "Mark out of gamut colors"
@@ -1605,8 +1557,7 @@ msgstr "el valor per a l'element %s no és una cadena de text UTF-8 vàlida"
 #: ../libgimpconfig/gimpconfig-deserialize.c:466
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr ""
-"S'esperava «yes» o «no» per a l'element booleà %s. Però s'ha trobat «%s»"
+msgstr "S'esperava «yes» o «no» per a l'element booleà %s. Però s'ha trobat «%s»"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:540
 #, c-format
@@ -1699,9 +1650,7 @@ msgstr "No s'ha carregat"
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
-msgstr ""
-"No es pot determinar un directori de miniatures vàlid.\n"
-"Les miniatures s'emmagatzemaran en la carpeta per a fitxers temporals (%s)."
+msgstr "No es pot determinar un directori de miniatures vàlid.\nLes miniatures s'emmagatzemaran en la carpeta per a fitxers temporals (%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
@@ -1770,7 +1719,7 @@ msgstr "Fabricant:"
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:186
 msgid "Copyright: "
-msgstr "Drets d’autor:"
+msgstr "Copyright:"
 
 #: ../libgimpwidgets/gimpcolorscales.c:111
 msgid "Scales"
@@ -1788,9 +1737,7 @@ msgstr "Antic:"
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
-msgstr ""
-"Notació hexadecimal utilitzada en l'HTML i el CSS. També permet utilitzar "
-"els noms de colors del CSS."
+msgstr "Notació hexadecimal utilitzada en l'HTML i el CSS. També permet utilitzar els noms de colors del CSS."
 
 #: ../libgimpwidgets/gimpcolorselection.c:321
 msgid "HTML _notation:"
@@ -1802,7 +1749,7 @@ msgstr "Mostra la localització del fitxer al gestor de fitxers"
 
 #: ../libgimpwidgets/gimpfileentry.c:230
 msgid "Open a file selector to browse your folders"
-msgstr "Obre un gestor de fitxers per trobar les teves carpetes"
+msgstr "Obre un gestor de fitxers per a navegar per les vostres carpetes"
 
 #: ../libgimpwidgets/gimpfileentry.c:231
 msgid "Open a file selector to browse your files"
@@ -1859,7 +1806,7 @@ msgstr "Enganxa-ho a dins"
 
 #: ../libgimpwidgets/gimpicons.c:67
 msgid "_Reset"
-msgstr "_Recupera"
+msgstr "_Restableix"
 
 #: ../libgimpwidgets/gimpicons.c:68
 msgid "Visible"
@@ -1883,7 +1830,7 @@ msgstr "Canvia la _mida"
 
 #: ../libgimpwidgets/gimpicons.c:151 ../libgimpwidgets/gimpicons.c:286
 msgid "_Scale"
-msgstr "E_scala"
+msgstr "Aju_sta la mida"
 
 #: ../libgimpwidgets/gimpicons.c:258
 msgid "Cr_op"
@@ -1904,7 +1851,7 @@ msgstr "Gi_ra"
 
 #: ../libgimpwidgets/gimpicons.c:288
 msgid "_Shear"
-msgstr "Re_talla"
+msgstr "I_nclina"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:223
 msgid "Kilobytes"
@@ -1978,9 +1925,7 @@ msgstr "Desable"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr ""
-"Feu clic en el comptagotes, després feu clic en un color a la pantalla per "
-"seleccionar-lo."
+msgstr "Feu clic en el comptagotes, després feu clic en un color a la pantalla per seleccionar-lo."
 
 #  toggle button to (des)activate the instant preview
 #. toggle button to (de)activate the instant preview
@@ -2023,9 +1968,7 @@ msgstr "Factor"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr ""
-"Utilitzeu aquest valor com a generador de nombres aleatoris. Això us "
-"permetrà repetir una operació «aleatòria» ja feta"
+msgstr "Utilitzeu aquest valor com a generador de nombres aleatoris. Això us permetrà repetir una operació «aleatòria» ja feta"
 
 #: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
@@ -2033,8 +1976,7 @@ msgstr "_Nova llavor"
 
 #: ../libgimpwidgets/gimpwidgets.c:538
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Configura el generador de nombres aleatoris amb el nombre aleatori generat"
+msgstr "Configura el generador de nombres aleatoris amb el nombre aleatori generat"
 
 #: ../libgimpwidgets/gimpwidgets.c:542
 msgid "_Randomize"
@@ -2068,7 +2010,7 @@ msgstr "Vertical"
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"
-msgstr "Apaïsat"
+msgstr "Horitzontal"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgctxt "color-selector-channel"
@@ -2312,12 +2254,12 @@ msgstr "Eix Z cap a la dreta"
 #: ../modules/controller-dx-dinput.c:501
 #, c-format
 msgid "Slider %d Increase"
-msgstr "Nivell %d apuja"
+msgstr "Lliscador apuja %d"
 
 #: ../modules/controller-dx-dinput.c:504
 #, c-format
 msgid "Slider %d Decrease"
-msgstr "Nivell %d abaixa"
+msgstr "Lliscador abaixa %d"
 
 #: ../modules/controller-dx-dinput.c:514
 #, c-format
@@ -2426,7 +2368,7 @@ msgstr "Botó tasca"
 
 #: ../modules/controller-linux-input.c:78
 msgid "Button Wheel"
-msgstr "Botó rodeta"
+msgstr "Botó roda"
 
 #: ../modules/controller-linux-input.c:81
 msgid "Button Gear Down"
@@ -2470,11 +2412,11 @@ msgstr "Dial cap a la dreta"
 
 #: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
-msgstr "Volant cap a l'esquerra"
+msgstr "Roda gir a l'esquerra"
 
 #: ../modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
-msgstr "Volant cap a la dreta"
+msgstr "Roda gir a la dreta"
 
 #: ../modules/controller-linux-input.c:178
 msgid "Linux input event controller"
@@ -2529,9 +2471,7 @@ msgstr "Canal:"
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
-msgstr ""
-"Canal MIDI d'on es rebran els senyals. Poseu-ho a -1 per rebre senyal de "
-"tots els canals MIDI."
+msgstr "Canal MIDI d'on es rebran els senyals. Poseu-ho a -1 per rebre senyal de tots els canals MIDI."
 
 #: ../modules/controller-midi.c:226
 msgid "MIDI"
@@ -2578,8 +2518,7 @@ msgstr "Tritanopia (insensible al blau)"
 
 #: ../modules/display-filter-color-blind.c:195
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-"Filtre de simulació de dèficit de color (algorisme de Brettel-Vienot-Mollon)"
+msgstr "Filtre de simulació de dèficit de color (algorisme de Brettel-Vienot-Mollon)"
 
 #: ../modules/display-filter-color-blind.c:254
 msgid "Deficiency"
@@ -2591,7 +2530,7 @@ msgstr "Visió amb dèficit de color"
 
 #: ../modules/display-filter-color-blind.c:421
 msgid "Color _deficiency type:"
-msgstr "Tipus _de dèficit de color:"
+msgstr "Tipus de _deficiència de color:"
 
 #: ../modules/display-filter-gamma.c:87
 msgid "Gamma color display filter"
@@ -2620,8 +2559,7 @@ msgstr "C_icles de contrast:"
 
 #: ../modules/display-filter-lcms.c:92
 msgid "Color management display filter using ICC color profiles"
-msgstr ""
-"Filtre de gestió de color de pantalles que fa servir perfils de color ICC"
+msgstr "Filtre de gestió del color de pantalles que fa servir perfils de color ICC"
 
 #: ../modules/display-filter-lcms.c:124
 msgid "Color Management"
@@ -2631,9 +2569,7 @@ msgstr "Gestió del color"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"Aquest filtre pren la seva configuració de la secció de «Gestió de color» en "
-"el diàleg de «Preferències»."
+msgstr "Aquest filtre pren la seva configuració de la secció de «Gestió del color» en el diàleg de «Preferències»."
 
 #: ../modules/display-filter-lcms.c:187
 msgid "Mode of operation:"

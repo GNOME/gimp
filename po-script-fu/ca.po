@@ -10,10 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-05-24 05:35+0000\n"
-"PO-Revision-Date: 2015-05-24 08:40+0100\n"
+"PO-Revision-Date: 2017-03-27 17:36+0200\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
 "Language: ca\n"
@@ -41,7 +40,7 @@ msgstr "_Inicia el servidor..."
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_GIMP Online"
-msgstr "El _GIMP a la xarxa "
+msgstr "El _GIMP en línia "
 
 #: ../plug-ins/script-fu/script-fu.c:307
 msgid "_User Manual"
@@ -95,16 +94,13 @@ msgstr "Torna a carregar tots els Script-Fu disponibles"
 
 #: ../plug-ins/script-fu/script-fu.c:339
 msgid "_Refresh Scripts"
-msgstr "_Actualitza les funcions"
+msgstr "_Actualitza els scripts"
 
 #: ../plug-ins/script-fu/script-fu.c:362
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr ""
-"No podeu utilitzar «Actualitza els scripts» si teniu obert un diàleg "
-"d'algun script. Tanqueu totes les finestres dels scripts i filtres, i torneu-"
-"ho a provar."
+msgstr "No podeu utilitzar «Actualitza els scripts» si teniu obert una caixa de diàleg d'un Script-Fu. Tanqueu totes les finestres dels Script-Fu, i torneu-ho a provar."
 
 #: ../plug-ins/script-fu/script-fu-console.c:127
 #: ../plug-ins/script-fu/script-fu-console.c:194
@@ -121,7 +117,7 @@ msgstr "Consola interactiva de l'Scheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
-msgstr "_Cerca..."
+msgstr "_Navega..."
 
 #: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
@@ -138,13 +134,11 @@ msgstr "Navegador de procediments de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr ""
-"El mode de només avaluació de Script-Fu  permet només la invocació no "
-"interactiva"
+msgstr "El mode de només avaluació de Script-Fu  permet només la invocació no interactiva"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:198
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Script-Fu no pot processar dues seqüències al mateix temps."
+msgstr "Script-Fu no pot processar dos scripts al mateix temps."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:200
 #, c-format
@@ -180,7 +174,7 @@ msgstr "Selecció de la carpeta de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
-msgstr "Selecció del tipus de lletra de l'Script-Fu"
+msgstr "Selecció de l'estil de lletra de l'Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
@@ -214,7 +208,7 @@ msgstr "S'ha produït un error en carregar %s:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:827
 msgid "Script-Fu Server Options"
-msgstr "Opcions de servidor de funcions"
+msgstr "Opcions de servidor Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-server.c:832
 msgid "_Start Server"
@@ -236,9 +230,7 @@ msgstr "Fitxer de registre del servidor:"
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
-msgstr ""
-"L'escolta en una IP diferent de 127.0.0.1 (especialment 0.0.0.0) permet a "
-"possibles atacants l'execució remota de codi arbitrari en aquesta màquina."
+msgstr "L'escolta en una IP diferent de 127.0.0.1 (especialment 0.0.0.0) permet a possibles atacants l'execució remota de codi arbitrari en aquesta màquina."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
