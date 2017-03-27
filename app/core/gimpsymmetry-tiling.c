@@ -134,6 +134,10 @@ gimp_tiling_class_init (GimpTilingClass *klass)
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_SYMMETRY_PARAM_GUI);
 
+  pspec = g_object_class_find_property (object_class, "shift");
+  gegl_param_spec_set_property_key (pspec, "unit", "pixel-distance");
+  gegl_param_spec_set_property_key (pspec, "axis", "x");
+
   GIMP_CONFIG_PROP_INT (object_class, PROP_MAX_X,
                         "max-x",
                         _("Max strokes X"),
