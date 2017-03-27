@@ -113,6 +113,7 @@ static gboolean    quit_close_all_dialog_query_tooltip     (GtkWidget         *w
                                                             gboolean           keyboard_tip,
                                                             GtkTooltip        *tooltip,
                                                             QuitDialog        *private);
+static gboolean    quit_close_all_idle                     (QuitDialog        *private);
 
 
 /*  public functions  */
@@ -285,6 +286,7 @@ quit_close_all_dialog_new (Gimp     *gimp,
 static void
 quit_close_all_dialog_free (QuitDialog *private)
 {
+  g_idle_remove_by_data (private);
   g_object_unref (private->images);
   g_object_unref (private->context);
 
@@ -365,6 +367,18 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
                     NULL);
 
       gtk_widget_grab_default (private->ok_button);
+
+      /* When no image requires saving anymore, there is no harm in
+       * assuming completing the original quit or close-all action is
+       * the expected end-result.
+       * I don't immediately exit though because of some unfinished
+       * actions provoking warnings. Let's just close as soon as
+       * possible with an idle source.
+       * Also the idle source has another benefit: allowing to change
+       * one's mind and not exist after the last save, for instance by
+       * hitting Esc quickly while the last save is in progress.
+       */
+      g_idle_add (quit_close_all_idle, private);
     }
   else
     {
@@ -589,4 +603,12 @@ quit_close_all_dialog_query_tooltip (GtkWidget  *widget,
     }
 
   return show_tip;
+}
+
+static gboolean
+quit_close_all_idle (QuitDialog *private)
+{
+  gtk_dialog_response (private->dialog, GTK_RESPONSE_OK);
+
+  return FALSE;
 }
