@@ -63,10 +63,10 @@ GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
                                            GFile           *default_folder,
                                            GFile           *last_file);
 
+GtkWidget * gimp_settings_box_get_combo   (GimpSettingsBox *box);
+
 void        gimp_settings_box_add_current (GimpSettingsBox *box,
                                            gint             max_recent);
-
-GtkWidget * gimp_settings_box_get_combo   (GimpSettingsBox *box);
 
 
 #endif  /*  __GIMP_SETTINGS_BOX_H__  */
