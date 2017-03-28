@@ -78,7 +78,7 @@ gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
 
   g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT,
                                    g_param_spec_boolean ("preview-split",
-                                                         _("_Split view"),
+                                                         _("Split _view"),
                                                          NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |

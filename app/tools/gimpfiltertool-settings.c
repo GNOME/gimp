@@ -65,33 +65,19 @@ static gboolean gimp_filter_tool_settings_export (GimpSettingsBox *box,
 GtkWidget *
 gimp_filter_tool_get_settings_box (GimpFilterTool *filter_tool)
 {
-  GimpToolInfo  *tool_info = GIMP_TOOL (filter_tool)->tool_info;
-  GType          type      = G_TYPE_FROM_INSTANCE (filter_tool->config);
-  GimpContainer *settings;
-  GFile         *default_folder;
-  GtkWidget     *box;
-
-  settings =
-    gimp_operation_config_get_container (tool_info->gimp,
-                                         type,
-                                         (GCompareFunc) gimp_settings_compare);
-
-  if (filter_tool->settings_folder)
-    default_folder = gimp_directory_file (filter_tool->settings_folder, NULL);
-  else
-    default_folder = NULL;
+  GimpToolInfo *tool_info = GIMP_TOOL (filter_tool)->tool_info;
+  GtkWidget    *box;
+  GtkWidget    *label;
+  GtkWidget    *combo;
 
   box = gimp_settings_box_new (tool_info->gimp,
                                filter_tool->config,
-                               settings,
+                               filter_tool->settings,
                                filter_tool->import_dialog_title,
                                filter_tool->export_dialog_title,
                                filter_tool->help_id,
-                               default_folder,
+                               filter_tool->settings_folder,
                                NULL);
-
-  if (default_folder)
-    g_object_unref (default_folder);
 
   g_signal_connect (box, "import",
                     G_CALLBACK (gimp_filter_tool_settings_import),
@@ -100,6 +86,14 @@ gimp_filter_tool_get_settings_box (GimpFilterTool *filter_tool)
   g_signal_connect (box, "export",
                     G_CALLBACK (gimp_filter_tool_settings_export),
                     filter_tool);
+
+  label = gtk_label_new_with_mnemonic (_("Pre_sets:"));
+  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (box), label, 0);
+  gtk_widget_show (label);
+
+  combo = gimp_settings_box_get_combo (GIMP_SETTINGS_BOX (box));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
   return box;
 }

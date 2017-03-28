@@ -43,6 +43,7 @@ struct _GimpFilterTool
   GeglNode              *operation;
   GObject               *config;
   GObject               *default_config;
+  GimpContainer         *settings;
 
   gchar                 *title;
   gchar                 *description;
@@ -51,7 +52,7 @@ struct _GimpFilterTool
   gchar                 *help_id;
 
   gboolean               has_settings;
-  gchar                 *settings_folder;
+  GFile                 *settings_folder;
   gchar                 *import_dialog_title;
   gchar                 *export_dialog_title;
 
@@ -104,6 +105,9 @@ struct _GimpFilterToolClass
 GType       gimp_filter_tool_get_type         (void) G_GNUC_CONST;
 
 void        gimp_filter_tool_get_operation    (GimpFilterTool   *filter_tool);
+
+void        gimp_filter_tool_set_has_settings (GimpFilterTool   *filter_tool,
+                                               gboolean          has_settings);
 
 void        gimp_filter_tool_edit_as          (GimpFilterTool   *filter_tool,
                                                const gchar      *new_tool_id,

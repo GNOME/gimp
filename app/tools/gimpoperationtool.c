@@ -711,7 +711,9 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                            (GimpCreatePickerFunc) gimp_filter_tool_add_color_picker,
                            tool);
 
-      filter_tool->has_settings = ! GTK_IS_LABEL (tool->options_gui); /* HACK */
+      /*  ugly, see comment in the function  */
+      gimp_filter_tool_set_has_settings (filter_tool,
+                                         ! GTK_IS_LABEL (tool->options_gui));
 
       if (tool->options_box)
         {

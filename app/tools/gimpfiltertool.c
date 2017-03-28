@@ -234,6 +234,12 @@ gimp_filter_tool_finalize (GObject *object)
       filter_tool->default_config = NULL;
     }
 
+  if (filter_tool->settings)
+    {
+      g_object_unref (filter_tool->settings);
+      filter_tool->settings = NULL;
+    }
+
   if (filter_tool->title)
     {
       g_free (filter_tool->title);
@@ -266,7 +272,7 @@ gimp_filter_tool_finalize (GObject *object)
 
   if (filter_tool->settings_folder)
     {
-      g_free (filter_tool->settings_folder);
+      g_object_unref (filter_tool->settings_folder);
       filter_tool->settings_folder = NULL;
     }
 
@@ -384,27 +390,15 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                                G_CALLBACK (gimp_filter_tool_response),
                                G_OBJECT (filter_tool), 0);
 
-      if (filter_tool->config && filter_tool->has_settings)
+      if (filter_tool->config)
         {
-          GtkWidget *label;
-          GtkWidget *combo;
-
-          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-          gtk_widget_show (hbox);
-
-          label = gtk_label_new_with_mnemonic (_("Pre_sets:"));
-          gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-          gtk_widget_show (label);
-
           filter_tool->settings_box =
             gimp_filter_tool_get_settings_box (filter_tool);
-          gtk_box_pack_start (GTK_BOX (hbox), filter_tool->settings_box,
-                              TRUE, TRUE, 0);
-          gtk_widget_show (filter_tool->settings_box);
+          gtk_box_pack_start (GTK_BOX (vbox), filter_tool->settings_box,
+                              FALSE, FALSE, 0);
 
-          combo = gimp_settings_box_get_combo (GIMP_SETTINGS_BOX (filter_tool->settings_box));
-          gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+          if (filter_tool->has_settings)
+            gtk_widget_show (filter_tool->settings_box);
         }
 
       /*  The preview and split view toggles  */
@@ -902,7 +896,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool)
 
       gimp_image_flush (gimp_display_get_image (tool->display));
 
-      if (filter_tool->config && filter_tool->settings_box)
+      if (filter_tool->config && filter_tool->has_settings)
         {
           GimpGuiConfig *config = GIMP_GUI_CONFIG (tool->tool_info->gimp->config);
 
@@ -1186,6 +1180,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   GimpFilterToolClass *klass;
   GimpToolInfo        *tool_info;
   gchar               *operation_name;
+  gchar               *settings_folder = NULL;
 
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
 
@@ -1222,6 +1217,12 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
       filter_tool->default_config = NULL;
     }
 
+  if (filter_tool->settings)
+    {
+      g_object_unref (filter_tool->settings);
+      filter_tool->settings = NULL;
+    }
+
   if (filter_tool->title)
     {
       g_free (filter_tool->title);
@@ -1254,7 +1255,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
 
   if (filter_tool->settings_folder)
     {
-      g_free (filter_tool->settings_folder);
+      g_object_unref (filter_tool->settings_folder);
       filter_tool->settings_folder = NULL;
     }
 
@@ -1277,7 +1278,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                          &filter_tool->icon_name,
                                          &filter_tool->help_id,
                                          &filter_tool->has_settings,
-                                         &filter_tool->settings_folder,
+                                         &settings_folder,
                                          &filter_tool->import_dialog_title,
                                          &filter_tool->export_dialog_title);
 
@@ -1300,9 +1301,17 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   if (! filter_tool->help_id)
     filter_tool->help_id = g_strdup (tool_info->help_id);
 
+  if (settings_folder)
+    {
+      filter_tool->settings_folder = gimp_directory_file (settings_folder,
+                                                          NULL);
+      g_free (settings_folder);
+    }
+
   filter_tool->operation = gegl_node_new_child (NULL,
                                                 "operation", operation_name,
                                                 NULL);
+
   filter_tool->config =
     G_OBJECT (gimp_operation_config_new (tool_info->gimp,
                                          operation_name,
@@ -1314,6 +1323,12 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   gimp_operation_config_connect_node (GIMP_OBJECT (filter_tool->config),
                                       filter_tool->operation);
 
+  filter_tool->settings =
+    gimp_operation_config_get_container (tool_info->gimp,
+                                         G_TYPE_FROM_INSTANCE (filter_tool->config),
+                                         (GCompareFunc) gimp_settings_compare);
+  g_object_ref (filter_tool->settings);
+
   if (filter_tool->gui)
     {
       gimp_tool_gui_set_title       (filter_tool->gui, filter_tool->title);
@@ -1321,6 +1336,9 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
       gimp_tool_gui_set_icon_name   (filter_tool->gui, filter_tool->icon_name);
       gimp_tool_gui_set_help_id     (filter_tool->gui, filter_tool->help_id);
     }
+
+  gimp_filter_tool_set_has_settings (filter_tool,
+                                     filter_tool->has_settings);
 
   if (gegl_operation_get_key (operation_name, "position-dependent"))
     {
@@ -1350,6 +1368,49 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
 
   if (GIMP_TOOL (filter_tool)->drawable)
     gimp_filter_tool_create_filter (filter_tool);
+}
+
+/*  this function should better not exist, but we determine whether an
+ *  op has settings by checking if gimp_prop_gui_new() returns a
+ *  GtkLabel, which happens after get_operation() is called.
+ */
+void
+gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
+                                   gboolean        has_settings)
+{
+  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
+
+  filter_tool->has_settings = has_settings;
+
+  if (filter_tool->settings_box)
+    {
+      if (filter_tool->has_settings)
+        {
+          g_object_set (filter_tool->settings_box,
+                        "visible",        TRUE,
+                        "config",         filter_tool->config,
+                        "container",      filter_tool->settings,
+                        "help-id",        filter_tool->help_id,
+                        "import-title",   filter_tool->import_dialog_title,
+                        "export-title",   filter_tool->export_dialog_title,
+                        "default-folder", filter_tool->settings_folder,
+                        "last-file",      NULL,
+                        NULL);
+        }
+      else
+        {
+          g_object_set (filter_tool->settings_box,
+                        "visible",        FALSE,
+                        "config",         NULL,
+                        "container",      NULL,
+                        "help-id",        NULL,
+                        "import-title",   NULL,
+                        "export-title",   NULL,
+                        "default-folder", NULL,
+                        "last-file",      NULL,
+                        NULL);
+        }
+    }
 }
 
 void
