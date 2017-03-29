@@ -48,6 +48,7 @@ m4_define([gegl_required_version], [0.3.14])
 m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
+m4_define([gtk_win32_recommended_version], [2.24.32])
 m4_define([gdk_pixbuf_required_version], [2.30.8])
 m4_define([cairo_required_version], [1.12.2])
 m4_define([cairo_pdf_required_version], [1.12.2])
@@ -138,6 +139,7 @@ AC_SUBST(GIMP_FULL_NAME)
 GLIB_REQUIRED_VERSION=glib_required_version
 GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
+GTK_WIN32_RECOMMENDED_VERSION=gtk_win32_recommended_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
 CAIRO_PDF_REQUIRED_VERSION=cairo_pdf_required_version
 GEGL_REQUIRED_VERSION=gegl_required_version
@@ -168,6 +170,7 @@ XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
+AC_SUBST(GTK_WIN32_RECOMMENDED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
 AC_SUBST(CAIRO_PDF_REQUIRED_VERSION)
 AC_SUBST(GEGL_REQUIRED_VERSION)
@@ -720,6 +723,24 @@ else
   have_gtk_2_26=no
 fi
 AC_MSG_RESULT($have_gtk_2_26)
+
+# Windows platform have broken shortcuts on non-latin locales.
+# Display a warning when compiling with gtk+ < 2.24.32.
+# See bug 769550.
+have_recommended_gtk=""
+if test "x$platform_win32" = "xyes"; then
+    PKG_CHECK_MODULES(RECOMMENDED_WIN32_GTK, gtk+2.0 >= gtk_win32_recommended_version,
+                      have_recommended_gtk="yes", have_recommended_gtk="no")
+
+    if test "x$have_recommended_gtk" = xno; then
+        have_recommended_gtk="
+WARNING: Your GTK+ version is `$PKG_CONFIG --modversion gtk+-2.0`.
+         The recommended GTK+ version under Windows is $GTK_WIN32_RECOMMENDED_VERSION or over.
+         If you continue without updating GTK+, shortcuts won't work with non-latin locales."
+    else
+        have_recommended_gtk=""
+    fi
+fi
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version,,
                   [add_deps_error([gdk-pixbuf-2.0 >= gdk_pixbuf_required_version])])
@@ -2578,7 +2599,7 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
-$have_recommended_xgettext $have_recommended_fontconfig"
+$have_recommended_xgettext $have_recommended_fontconfig $have_recommended_gtk"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
