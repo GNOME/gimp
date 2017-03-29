@@ -91,3 +91,5 @@ EXTRA_DIST = \
 
 # Build tools which must be built for the host platform.
 all: invert-svg$(BUILD_EXEEXT)
+
+DISTCLEANFILES = invert-svg$(BUILD_EXEEXT)
