@@ -233,6 +233,11 @@ AS_IF([test "x$0" != "x./configure"], [
 # Determine a C compiler to use
 AC_PROG_CC
 AX_PROG_CC_FOR_BUILD
+# Works around a bug in AX_PROG_CC_FOR_BUILD for build with MinGW on
+# Windows. See bug 780270, comment 18.
+case "$build_os" in
+  cygwin*|mingw32*|mingw64*)	BUILD_EXEEXT=.exe ;;
+esac
 AM_PROG_CC_C_O
 
 # Determine a C++ compiler to use
