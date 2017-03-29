@@ -378,7 +378,7 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
        * one's mind and not exist after the last save, for instance by
        * hitting Esc quickly while the last save is in progress.
        */
-      g_idle_add (quit_close_all_idle, private);
+      g_idle_add ((GSourceFunc) quit_close_all_idle, private);
     }
   else
     {
@@ -608,7 +608,7 @@ quit_close_all_dialog_query_tooltip (GtkWidget  *widget,
 static gboolean
 quit_close_all_idle (QuitDialog *private)
 {
-  gtk_dialog_response (private->dialog, GTK_RESPONSE_OK);
+  gtk_dialog_response (GTK_DIALOG (private->dialog), GTK_RESPONSE_OK);
 
   return FALSE;
 }
