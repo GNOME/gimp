@@ -93,6 +93,7 @@ gimp_operation_config_value_new (GParamSpec *pspec)
   GValue *value = g_slice_new0 (GValue);
 
   g_value_init (value, pspec->value_type);
+  g_param_value_set_default (pspec, value);
 
   return value;
 }
