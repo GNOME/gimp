@@ -356,15 +356,8 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
       tool_manager_initialize_active (gimp, GIMP_DISPLAY (display));
 
       if (settings)
-        {
-          GObject *tool_config = GIMP_FILTER_TOOL (active_tool)->config;
-
-          gimp_config_copy (GIMP_CONFIG (settings),
-                            GIMP_CONFIG (tool_config), 0);
-
-          /* see comment in gimp_settings_box_setting_selected() */
-          g_object_set (tool_config, "time", 0, NULL);
-        }
+        gimp_filter_tool_set_config (GIMP_FILTER_TOOL (active_tool),
+                                     GIMP_CONFIG (settings));
     }
 }
 

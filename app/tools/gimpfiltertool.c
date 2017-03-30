@@ -123,6 +123,8 @@ static void      gimp_filter_tool_color_picked   (GimpColorTool       *color_too
                                                   const GimpRGB       *color);
 
 static void      gimp_filter_tool_real_reset     (GimpFilterTool      *filter_tool);
+static void     gimp_filter_tool_real_set_config (GimpFilterTool      *filter_tool,
+                                                  GimpConfig          *config);
 
 static void      gimp_filter_tool_halt           (GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_commit         (GimpFilterTool      *filter_tool);
@@ -183,6 +185,7 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   klass->get_operation       = NULL;
   klass->dialog              = NULL;
   klass->reset               = gimp_filter_tool_real_reset;
+  klass->set_config          = gimp_filter_tool_real_set_config;
   klass->settings_import     = gimp_filter_tool_real_settings_import;
   klass->settings_export     = gimp_filter_tool_real_settings_export;
 }
@@ -849,6 +852,21 @@ gimp_filter_tool_real_reset (GimpFilterTool *filter_tool)
 }
 
 static void
+gimp_filter_tool_real_set_config (GimpFilterTool *filter_tool,
+                                  GimpConfig     *config)
+{
+  gimp_config_copy (GIMP_CONFIG (config),
+                    GIMP_CONFIG (filter_tool->config), 0);
+
+  /*  reset the "time" property, otherwise explicitly storing the
+   *  config as setting will also copy the time, and the stored object
+   *  will be considered to be among the automatically stored recently
+   *  used settings
+   */
+  g_object_set (filter_tool->config, "time", 0, NULL);
+}
+
+static void
 gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 {
   GimpTool *tool = GIMP_TOOL (filter_tool);
@@ -1411,6 +1429,16 @@ gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
                         NULL);
         }
     }
+}
+
+void
+gimp_filter_tool_set_config (GimpFilterTool *filter_tool,
+                             GimpConfig     *config)
+{
+  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
+  g_return_if_fail (GIMP_IS_SETTINGS (config));
+
+  GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->set_config (filter_tool, config);
 }
 
 void

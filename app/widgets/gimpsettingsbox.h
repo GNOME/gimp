@@ -49,6 +49,8 @@ struct _GimpSettingsBoxClass
                               GFile                *file);
   void (* export)            (GimpSettingsBox      *box,
                               GFile                *file);
+  void (* selected)          (GimpSettingsBox      *box,
+                              GObject              *config);
 };
 
 

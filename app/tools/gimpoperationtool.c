@@ -90,6 +90,8 @@ static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filte
                                                         gchar            **export_dialog_title);
 static void        gimp_operation_tool_dialog          (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_reset           (GimpFilterTool    *filter_tool);
+static void        gimp_operation_tool_set_config      (GimpFilterTool    *filter_tool,
+                                                        GimpConfig        *config);
 static void        gimp_operation_tool_color_picked    (GimpFilterTool    *filter_tool,
                                                         gpointer           identifier,
                                                         gdouble            x,
@@ -98,7 +100,8 @@ static void        gimp_operation_tool_color_picked    (GimpFilterTool    *filte
                                                         const GimpRGB     *color);
 
 static void        gimp_operation_tool_sync_op         (GimpOperationTool *op_tool,
-                                                        GimpDrawable      *drawable);
+                                                        GimpDrawable      *drawable,
+                                                        gboolean           sync_colors);
 
 static AuxInput *  gimp_operation_tool_aux_input_new   (GimpOperationTool *tool,
                                                         GeglNode          *operation,
@@ -147,6 +150,7 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
   filter_tool_class->get_operation = gimp_operation_tool_get_operation;
   filter_tool_class->dialog        = gimp_operation_tool_dialog;
   filter_tool_class->reset         = gimp_operation_tool_reset;
+  filter_tool_class->set_config    = gimp_operation_tool_set_config;
   filter_tool_class->color_picked  = gimp_operation_tool_color_picked;
 }
 
@@ -216,7 +220,7 @@ gimp_operation_tool_initialize (GimpTool     *tool,
       GimpDrawable      *drawable    = gimp_image_get_active_drawable (image);
 
       if (filter_tool->config)
-        gimp_operation_tool_sync_op (op_tool, drawable);
+        gimp_operation_tool_sync_op (op_tool, drawable, TRUE);
 
       return TRUE;
     }
@@ -317,7 +321,19 @@ gimp_operation_tool_reset (GimpFilterTool *filter_tool)
   GIMP_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
 
   if (filter_tool->config && GIMP_TOOL (tool)->drawable)
-    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable);
+    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable, TRUE);
+}
+
+static void
+gimp_operation_tool_set_config (GimpFilterTool *filter_tool,
+                                GimpConfig     *config)
+{
+  GimpOperationTool *tool = GIMP_OPERATION_TOOL (filter_tool);
+
+  GIMP_FILTER_TOOL_CLASS (parent_class)->set_config (filter_tool, config);
+
+  if (filter_tool->config && GIMP_TOOL (tool)->drawable)
+    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable, FALSE);
 }
 
 static void
@@ -439,7 +455,8 @@ gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
 
 static void
 gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
-                             GimpDrawable      *drawable)
+                             GimpDrawable      *drawable,
+                             gboolean           sync_colors)
 {
   GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (op_tool);
   GimpToolOptions  *options     = GIMP_TOOL_GET_OPTIONS (op_tool);
@@ -487,19 +504,22 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
               g_object_set (filter_tool->config, pspec->name, bounds_height, NULL);
             }
         }
-      else if (HAS_KEY (pspec, "role", "color-primary"))
+      else if (sync_colors)
         {
-          GimpRGB color;
+          if (HAS_KEY (pspec, "role", "color-primary"))
+            {
+              GimpRGB color;
 
-          gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-          g_object_set (filter_tool->config, pspec->name, &color, NULL);
-        }
-      else if (HAS_KEY (pspec, "role", "color-secondary"))
-        {
-          GimpRGB color;
+              gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+              g_object_set (filter_tool->config, pspec->name, &color, NULL);
+            }
+          else if (sync_colors && HAS_KEY (pspec, "role", "color-secondary"))
+            {
+              GimpRGB color;
 
-          gimp_context_get_background (GIMP_CONTEXT (options), &color);
-          g_object_set (filter_tool->config, pspec->name, &color, NULL);
+              gimp_context_get_background (GIMP_CONTEXT (options), &color);
+              g_object_set (filter_tool->config, pspec->name, &color, NULL);
+            }
         }
     }
 
@@ -724,5 +744,5 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     }
 
   if (GIMP_TOOL (tool)->drawable)
-    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable);
+    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable, TRUE);
 }

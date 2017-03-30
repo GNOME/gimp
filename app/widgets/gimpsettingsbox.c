@@ -49,6 +49,7 @@ enum
   FILE_DIALOG_SETUP,
   IMPORT,
   EXPORT,
+  SELECTED,
   LAST_SIGNAL
 };
 
@@ -187,6 +188,16 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_FILE);
 
+  settings_box_signals[SELECTED] =
+    g_signal_new ("selected",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpSettingsBoxClass, selected),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_CONFIG);
+
   object_class->constructed  = gimp_settings_box_constructed;
   object_class->finalize     = gimp_settings_box_finalize;
   object_class->set_property = gimp_settings_box_set_property;
@@ -195,6 +206,7 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
   klass->file_dialog_setup   = NULL;
   klass->import              = NULL;
   klass->export              = NULL;
+  klass->selected            = NULL;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -569,23 +581,10 @@ gimp_settings_box_setting_selected (GimpContainerView *view,
                                     gpointer           insert_data,
                                     GimpSettingsBox   *box)
 {
-  GimpSettingsBoxPrivate *private = GET_PRIVATE (box);
-
   if (object)
     {
-      gimp_config_copy (GIMP_CONFIG (object),
-                        GIMP_CONFIG (private->config), 0);
-
-      /*  reset the "time" property, otherwise explicitly storing the
-       *  config as setting will also copy the time, and the stored
-       *  object will be considered to be among the automatically
-       *  stored recently used settings
-       */
-      if (g_object_class_find_property (G_OBJECT_GET_CLASS (private->config),
-                                        "time"))
-        {
-          g_object_set (private->config, "time", 0, NULL);
-        }
+      g_signal_emit (box, settings_box_signals[SELECTED], 0,
+                     object);
 
       gimp_container_view_select_item (view, NULL);
     }

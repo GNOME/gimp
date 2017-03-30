@@ -87,6 +87,10 @@ gimp_filter_tool_get_settings_box (GimpFilterTool *filter_tool)
                     G_CALLBACK (gimp_filter_tool_settings_export),
                     filter_tool);
 
+  g_signal_connect_swapped (box, "selected",
+                            G_CALLBACK (gimp_filter_tool_set_config),
+                            filter_tool);
+
   label = gtk_label_new_with_mnemonic (_("Pre_sets:"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (box), label, 0);
