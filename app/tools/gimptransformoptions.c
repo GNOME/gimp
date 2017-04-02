@@ -154,7 +154,7 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                          _("Guides"),
                          _("Composition guides such as rule of thirds"),
                          GIMP_TYPE_GUIDES_TYPE,
-                         GIMP_GUIDES_N_LINES,
+                         GIMP_GUIDES_NONE,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_GRID_SIZE,
