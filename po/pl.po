@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 21:21+0200\n"
-"PO-Revision-Date: 2017-03-26 21:22+0200\n"
+"POT-Creation-Date: 2017-04-02 10:04+0200\n"
+"PO-Revision-Date: 2017-04-02 10:05+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1933,7 +1933,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/dialogs/preferences-dialog.c:276
 #: ../app/dialogs/preferences-dialog.c:606
 #: ../app/dialogs/preferences-dialog.c:1000
-#: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:170
+#: ../app/dialogs/print-size-dialog.c:124 ../app/dialogs/quit-dialog.c:171
 #: ../app/dialogs/resize-dialog.c:186
 #: ../app/dialogs/resolution-calibrate-dialog.c:76
 #: ../app/dialogs/scale-dialog.c:137 ../app/dialogs/stroke-dialog.c:128
@@ -1944,7 +1944,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:87
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:122
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
-#: ../app/tools/gimpfiltertool.c:368
+#: ../app/tools/gimpfiltertool.c:377
 #: ../app/tools/gimpforegroundselecttool.c:309 ../app/tools/gimptexttool.c:1528
 #: ../app/tools/gimptransformtool.c:1666 ../app/widgets/gimpactionview.c:674
 #: ../app/widgets/gimpcolordialog.c:110
@@ -1953,7 +1953,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/widgets/gimpdeviceeditor.c:508 ../app/widgets/gimpdnd-xds.c:228
 #: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:386
 #: ../app/widgets/gimphelp.c:721 ../app/widgets/gimpiconpicker.c:516
-#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:671
+#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:749
 msgid "_Cancel"
 msgstr "_Anuluj"
 
@@ -2648,7 +2648,7 @@ msgstr "Zapis dziennika błędów do pliku"
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
-#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:673
+#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:751
 msgid "_Save"
 msgstr "_Zapisz"
 
@@ -5716,7 +5716,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:367 ../app/tools/gimptransformtool.c:1665
+#: ../app/tools/gimpfiltertool.c:376 ../app/tools/gimptransformtool.c:1665
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "_Przywróć"
@@ -6140,7 +6140,7 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 #: ../app/dialogs/file-open-location-dialog.c:81
 #: ../app/dialogs/vectors-import-dialog.c:89
 #: ../app/widgets/gimpiconpicker.c:517 ../app/widgets/gimpopendialog.c:69
-#: ../app/widgets/gimpsettingsbox.c:673
+#: ../app/widgets/gimpsettingsbox.c:751
 msgid "_Open"
 msgstr "_Otwórz"
 
@@ -6148,7 +6148,7 @@ msgstr "_Otwórz"
 #: ../app/actions/text-tool-commands.c:209 ../app/config/gimpconfig-file.c:71
 #: ../app/core/gimppalette-import.c:510 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:233
-#: ../app/tools/gimpfiltertool-settings.c:163
+#: ../app/tools/gimpfiltertool-settings.c:161
 #: ../app/widgets/gimptextbuffer.c:1647
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -7608,7 +7608,7 @@ msgstr "Przenieś to okno na ekran %s"
 #: ../app/display/gimpdisplayshell-filter-dialog.c:88
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:123
 #: ../app/display/gimpdisplayshell-scale-dialog.c:123 ../app/gui/gui.c:192
-#: ../app/tools/gimpfiltertool.c:369 ../app/widgets/gimpcolordialog.c:111
+#: ../app/tools/gimpfiltertool.c:378 ../app/widgets/gimpcolordialog.c:111
 #: ../app/widgets/gimpcontrollereditor.c:666
 #: ../app/widgets/gimperrordialog.c:68 ../app/widgets/gimpfiledialog.c:188
 msgid "_OK"
@@ -7891,14 +7891,14 @@ msgstr "Błąd podczas przetwarzania „%%s”: wiersz jest dłuższy niż %s zn
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
 #: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:324
-#: ../app/tools/gimpfiltertool-settings.c:224
+#: ../app/tools/gimpfiltertool-settings.c:222
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Błąd podczas zapisywania „%s”: %s"
 
 #: ../app/config/gimpconfig-file.c:182 ../app/plug-in/gimpenvirontable.c:369
 #: ../app/plug-in/gimpinterpreterdb.c:267
-#: ../app/tools/gimpfiltertool-settings.c:175
+#: ../app/tools/gimpfiltertool-settings.c:173
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Błąd podczas odczytywania „%s”: %s"
@@ -11405,19 +11405,19 @@ msgstr "Przesunięcie"
 msgid "X-shift between lines (pixels)"
 msgstr "Poziome przesunięcie między liniami (w pikselach)"
 
-#: ../app/core/gimpsymmetry-tiling.c:139
+#: ../app/core/gimpsymmetry-tiling.c:143
 msgid "Max strokes X"
 msgstr "Maksymalna liczba poziomych krzywych"
 
-#: ../app/core/gimpsymmetry-tiling.c:140
+#: ../app/core/gimpsymmetry-tiling.c:144
 msgid "Maximum number of strokes on the X axis"
 msgstr "Maksymalna liczba krzywych na osi X"
 
-#: ../app/core/gimpsymmetry-tiling.c:147
+#: ../app/core/gimpsymmetry-tiling.c:151
 msgid "Max strokes Y"
 msgstr "Maksymalna liczba pionowych krzywych"
 
-#: ../app/core/gimpsymmetry-tiling.c:148
+#: ../app/core/gimpsymmetry-tiling.c:152
 msgid "Maximum number of strokes on the Y axis"
 msgstr "Maksymalna liczba krzywych na osi Y"
 
@@ -12132,7 +12132,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:353
 #: ../app/tools/gimpmeasuretool.c:1079 ../app/widgets/gimpcontrollerlist.c:644
-#: ../app/widgets/gimppdbdialog.c:175 ../app/widgets/gimpsettingsbox.c:600
+#: ../app/widgets/gimppdbdialog.c:175 ../app/widgets/gimpsettingsbox.c:678
 #: ../app/widgets/gimptexteditor.c:165
 msgid "_Close"
 msgstr "Za_mknij"
@@ -13852,26 +13852,26 @@ msgstr "Pi_onowa rozdzielczość:"
 msgid "pixels/%a"
 msgstr "pikseli/%a"
 
-#: ../app/dialogs/quit-dialog.c:163
+#: ../app/dialogs/quit-dialog.c:164
 msgid "Quit GIMP"
 msgstr "Zakończenie działania programu GIMP"
 
-#: ../app/dialogs/quit-dialog.c:163
+#: ../app/dialogs/quit-dialog.c:164
 msgid "Close All Images"
 msgstr "Zamknij wszystkie obrazy"
 
-#: ../app/dialogs/quit-dialog.c:255
+#: ../app/dialogs/quit-dialog.c:256
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Zakończenie działania programu GIMP spowoduje utracenie tych zmian."
 
-#: ../app/dialogs/quit-dialog.c:258
+#: ../app/dialogs/quit-dialog.c:259
 msgid "If you close these images now, changes will be lost."
 msgstr "Jeśli obrazy zostaną teraz zamknięte, to zostaną utracone zmiany."
 
 #. TRANSLATORS: unless your language
 #. msgstr[0] applies to 1 only (as
 #. in English), replace "one" with %d.
-#: ../app/dialogs/quit-dialog.c:344
+#: ../app/dialogs/quit-dialog.c:346
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
@@ -13879,48 +13879,48 @@ msgstr[0] "Nie zapisano zmian w jednym obrazie:"
 msgstr[1] "Nie zapisano zmian w %d obrazach:"
 msgstr[2] "Nie zapisano zmian w %d obrazach:"
 
-#: ../app/dialogs/quit-dialog.c:355
+#: ../app/dialogs/quit-dialog.c:357
 #, c-format
 msgid "Press %s to quit."
 msgstr "Naciśnięcie %s zakończy działanie."
 
-#: ../app/dialogs/quit-dialog.c:358
+#: ../app/dialogs/quit-dialog.c:360
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Naciśnięcie %s zamknie wszystkie obrazy."
 
-#: ../app/dialogs/quit-dialog.c:362 ../app/dialogs/user-install-dialog.c:89
+#: ../app/dialogs/quit-dialog.c:364 ../app/dialogs/user-install-dialog.c:89
 msgid "_Quit"
 msgstr "Za_kończ"
 
-#: ../app/dialogs/quit-dialog.c:362
+#: ../app/dialogs/quit-dialog.c:364
 msgid "Cl_ose"
 msgstr "Za_mknij"
 
-#: ../app/dialogs/quit-dialog.c:374
+#: ../app/dialogs/quit-dialog.c:388
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "Naciśnięcie %s odrzuci wszystkie zmiany i zakończy działanie."
 
-#: ../app/dialogs/quit-dialog.c:377
+#: ../app/dialogs/quit-dialog.c:391
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr "Naciśnięcie %s odrzuci wszystkie zmiany i zamknie wszystkie obrazy."
 
-#: ../app/dialogs/quit-dialog.c:385 ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:399 ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "_Odrzuć zmiany"
 
-#: ../app/dialogs/quit-dialog.c:472
+#: ../app/dialogs/quit-dialog.c:486
 #, c-format
 msgid "Exported to %s"
 msgstr "Wyeksportowano do %s"
 
-#: ../app/dialogs/quit-dialog.c:575
+#: ../app/dialogs/quit-dialog.c:589
 msgid "Save this image"
 msgstr "Zapisz ten obraz"
 
-#: ../app/dialogs/quit-dialog.c:577
+#: ../app/dialogs/quit-dialog.c:591
 msgid "Save as"
 msgstr "Zapisz jako"
 
@@ -14328,13 +14328,13 @@ msgstr "Upuszczenie nowej ścieżki"
 
 #: ../app/display/gimpdisplayshell-dnd.c:362 ../app/tools/gimpblendtool.c:251
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:219
-#: ../app/tools/gimpfiltertool.c:315 ../app/tools/gimpselectiontool.c:427
+#: ../app/tools/gimpfiltertool.c:324 ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
 #: ../app/display/gimpdisplayshell-dnd.c:370 ../app/tools/gimpblendtool.c:258
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:226
-#: ../app/tools/gimpcroptool.c:325 ../app/tools/gimpfiltertool.c:322
+#: ../app/tools/gimpcroptool.c:325 ../app/tools/gimpfiltertool.c:331
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
 #: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
@@ -16797,7 +16797,7 @@ msgid "Blen_d"
 msgstr "_Gradient"
 
 #: ../app/tools/gimpblendtool.c:265 ../app/tools/gimpbucketfilltool.c:151
-#: ../app/tools/gimpcagetool.c:233 ../app/tools/gimpfiltertool.c:329
+#: ../app/tools/gimpcagetool.c:233 ../app/tools/gimpfiltertool.c:338
 #: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1852 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
@@ -17490,53 +17490,53 @@ msgid "_Preview"
 msgstr "_Podgląd"
 
 #: ../app/tools/gimpfilteroptions.c:81
-msgid "_Split view"
+msgid "Split _view"
 msgstr "Po_dzielony widok"
 
 #: ../app/tools/gimpfilteroptions.c:112
 msgid "Color _managed"
 msgstr "_Zarządzanie kolorami"
 
-#: ../app/tools/gimpfiltertool.c:396
-msgid "Pre_sets:"
-msgstr "_Ustawienia:"
-
 #. The Color Options expander
-#: ../app/tools/gimpfiltertool.c:430
+#: ../app/tools/gimpfiltertool.c:427
 msgid "Advanced Color Options"
 msgstr "Zaawansowane opcje kolorów"
 
-#: ../app/tools/gimpfiltertool.c:445
+#: ../app/tools/gimpfiltertool.c:442
 msgid "Apply filter in color managed space (slow)"
 msgstr "Zastosowanie filtru w przestrzeni z zarządzaniem kolorami (wolne)"
 
-#: ../app/tools/gimpfiltertool.c:446
+#: ../app/tools/gimpfiltertool.c:443
 msgid "Apply filter to the layer's raw pixels"
 msgstr "Zastosowanie filtru do surowych pikseli warstwy"
 
-#: ../app/tools/gimpfiltertool.c:628
+#: ../app/tools/gimpfiltertool.c:625
 msgid "Click to switch the original and filtered sides"
 msgstr "Kliknięcie przełączy oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:632
+#: ../app/tools/gimpfiltertool.c:629
 msgid "Click to switch between vertical and horizontal"
 msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:636
+#: ../app/tools/gimpfiltertool.c:633
 msgid "Click to move the split guide"
 msgstr "Kliknięcie przesunie prowadnicę podziału"
 
-#: ../app/tools/gimpfiltertool.c:638
+#: ../app/tools/gimpfiltertool.c:635
 #, c-format
 msgid "%s: switch original and filtered"
 msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 
-#: ../app/tools/gimpfiltertool.c:639
+#: ../app/tools/gimpfiltertool.c:636
 #, c-format
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
 
-#: ../app/tools/gimpfiltertool-settings.c:237
+#: ../app/tools/gimpfiltertool-settings.c:94
+msgid "Pre_sets:"
+msgstr "_Ustawienia:"
+
+#: ../app/tools/gimpfiltertool-settings.c:235
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Zapisano ustawienia do „%s”"
@@ -17761,7 +17761,7 @@ msgid "Fuzzy Select"
 msgstr "Różdżka"
 
 #: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:484
-#: ../app/tools/gimpgegltool.c:485 ../app/tools/gimpoperationtool.c:127
+#: ../app/tools/gimpgegltool.c:485 ../app/tools/gimpoperationtool.c:130
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -17769,7 +17769,7 @@ msgstr "Działanie biblioteki GEGL"
 msgid "GEGL Tool: Use an arbitrary GEGL operation"
 msgstr "GEGL: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:129
+#: ../app/tools/gimpgegltool.c:74 ../app/tools/gimpoperationtool.c:132
 msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
@@ -18312,28 +18312,28 @@ msgstr ""
 msgid "_N-Point Deformation"
 msgstr "_Zniekształcanie za pomocą wielu punktów"
 
-#: ../app/tools/gimpoperationtool.c:128
+#: ../app/tools/gimpoperationtool.c:131
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Działanie: wykonuje wybrane działanie biblioteki GEGL"
 
-#: ../app/tools/gimpoperationtool.c:272
+#: ../app/tools/gimpoperationtool.c:276
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpoperationtool.c:274
+#: ../app/tools/gimpoperationtool.c:278
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:649
+#: ../app/tools/gimpoperationtool.c:669
 #, c-format
 msgid "Aux Input"
 msgstr "Wejście Aux"
 
 #. don't translate "Aux"
-#: ../app/tools/gimpoperationtool.c:655
+#: ../app/tools/gimpoperationtool.c:675
 #, c-format
 msgid "Aux%d Input"
 msgstr "Wejście Aux%d"
@@ -21045,39 +21045,39 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Nieprawidłowe UTF-8"
 
-#: ../app/widgets/gimpsettingsbox.c:255
+#: ../app/widgets/gimpsettingsbox.c:304
 msgid "Pick a setting from the list"
 msgstr "Pobierz ustawienia z listy"
 
-#: ../app/widgets/gimpsettingsbox.c:278
+#: ../app/widgets/gimpsettingsbox.c:327
 msgid "Add settings to favorites"
 msgstr "Dodaj ustawienia do ulubionych"
 
-#: ../app/widgets/gimpsettingsbox.c:307
+#: ../app/widgets/gimpsettingsbox.c:356
 msgid "_Import Settings from File..."
 msgstr "Za_importuj ustawienia z pliku…"
 
-#: ../app/widgets/gimpsettingsbox.c:313
+#: ../app/widgets/gimpsettingsbox.c:362
 msgid "_Export Settings to File..."
 msgstr "Wy_eksportuj ustawienia do pliku…"
 
-#: ../app/widgets/gimpsettingsbox.c:320
+#: ../app/widgets/gimpsettingsbox.c:369
 msgid "_Manage Settings..."
 msgstr "_Zarządzaj ustawieniami…"
 
-#: ../app/widgets/gimpsettingsbox.c:550
+#: ../app/widgets/gimpsettingsbox.c:628
 msgid "Add Settings to Favorites"
 msgstr "Dodaj ustawienia do ulubionych"
 
-#: ../app/widgets/gimpsettingsbox.c:553
+#: ../app/widgets/gimpsettingsbox.c:631
 msgid "Enter a name for the settings"
 msgstr "Nazwa ustawień"
 
-#: ../app/widgets/gimpsettingsbox.c:554
+#: ../app/widgets/gimpsettingsbox.c:632
 msgid "Saved Settings"
 msgstr "Zapisane ustawienia"
 
-#: ../app/widgets/gimpsettingsbox.c:595
+#: ../app/widgets/gimpsettingsbox.c:673
 msgid "Manage Saved Settings"
 msgstr "Zarządzanie zapisanymi ustawieniami"
 
