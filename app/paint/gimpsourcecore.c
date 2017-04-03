@@ -454,8 +454,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
       if (gimp_source_core_use_source (source_core, options))
         {
           /* When using a source, use the same for every stroke. */
-          src_offset_x = src_offset_x - coords->x + origin->x;
-          src_offset_y = src_offset_y - coords->y + origin->y;
+          src_offset_x += floor (origin->x) - floor (coords->x);
+          src_offset_y += floor (origin->y) - floor (coords->y);
           src_buffer =
             GIMP_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
                                                                   drawable,
