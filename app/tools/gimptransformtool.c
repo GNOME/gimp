@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <gegl.h>
 #include <gtk/gtk.h>
@@ -166,7 +167,6 @@ static void      gimp_transform_tool_response               (GimpToolGui        
                                                              gint                   response_id,
                                                              GimpTransformTool     *tr_tool);
 
-static void      gimp_transform_tool_free_trans             (gpointer               data);
 static void      gimp_transform_tool_update_sensitivity     (GimpTransformTool     *tr_tool);
 static GimpItem *gimp_transform_tool_get_active_item        (GimpTransformTool     *tr_tool,
                                                              GimpImage             *image);
@@ -174,6 +174,9 @@ static GimpItem *gimp_transform_tool_check_active_item      (GimpTransformTool  
                                                              GimpImage             *display,
                                                              gboolean               invisible_layer_ok,
                                                              GError               **error);
+
+static TransInfo * trans_info_new  (void);
+static void        trans_info_free (TransInfo *info);
 
 
 G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
@@ -281,8 +284,6 @@ gimp_transform_tool_initialize (GimpTool     *tool,
 
   if (display != tool->display)
     {
-      gint i;
-
       gimp_transform_tool_halt (tr_tool);
 
       /*  Find the transform bounds for some tools (like scale,
@@ -317,17 +318,15 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       tr_tool->function = TRANSFORM_CREATING;
 
       /* Initialize undo and redo lists */
-      tr_tool->undo_list = g_list_prepend (NULL, g_slice_new (TransInfo));
+      tr_tool->undo_list = g_list_prepend (NULL, trans_info_new ());
       tr_tool->redo_list = NULL;
       tr_tool->old_trans_info = g_list_last (tr_tool->undo_list)->data;
       tr_tool->prev_trans_info = g_list_first (tr_tool->undo_list)->data;
       gimp_transform_tool_update_sensitivity (tr_tool);
 
       /*  Save the current transformation info  */
-      for (i = 0; i < TRANS_INFO_SIZE; i++)
-        {
-          (*tr_tool->prev_trans_info)[i] = tr_tool->trans_info[i];
-        }
+      memcpy (tr_tool->prev_trans_info, tr_tool->trans_info,
+              sizeof (TransInfo));
     }
 
   return TRUE;
@@ -401,30 +400,26 @@ gimp_transform_tool_button_press (GimpTool            *tool,
 void
 gimp_transform_tool_push_internal_undo (GimpTransformTool *tr_tool)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
   g_return_if_fail (tr_tool->prev_trans_info != NULL);
 
   /* push current state on the undo list and set this state as the
    * current state, but avoid doing this if there were no changes
    */
-  for (i = 0; i < TRANS_INFO_SIZE; i++)
-    if ((*tr_tool->prev_trans_info)[i] != tr_tool->trans_info[i])
-      break;
-
-  if (i < TRANS_INFO_SIZE)
+  if (memcmp (tr_tool->prev_trans_info, tr_tool->trans_info,
+              sizeof (TransInfo)) != 0)
     {
-      tr_tool->prev_trans_info = g_slice_new (TransInfo);
-      for (i = 0; i < TRANS_INFO_SIZE; i++)
-        (*tr_tool->prev_trans_info)[i] = tr_tool->trans_info[i];
+      tr_tool->prev_trans_info = trans_info_new ();
+      memcpy (tr_tool->prev_trans_info, tr_tool->trans_info,
+              sizeof (TransInfo));
+
       tr_tool->undo_list = g_list_prepend (tr_tool->undo_list,
                                            tr_tool->prev_trans_info);
 
       /* If we undid anything and started interacting, we have to
        * discard the redo history
        */
-      g_list_free_full (tr_tool->redo_list, gimp_transform_tool_free_trans);
+      g_list_free_full (tr_tool->redo_list, (GDestroyNotify) trans_info_free);
       tr_tool->redo_list = NULL;
 
       gimp_transform_tool_update_sensitivity (tr_tool);
@@ -443,7 +438,6 @@ gimp_transform_tool_button_release (GimpTool              *tool,
                                     GimpDisplay           *display)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  gint               i;
 
   gimp_tool_control_halt (tool->control);
 
@@ -468,8 +462,8 @@ gimp_transform_tool_button_release (GimpTool              *tool,
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
       /*  Restore the last saved state  */
-      for (i = 0; i < TRANS_INFO_SIZE; i++)
-        tr_tool->trans_info[i] = (*tr_tool->prev_trans_info)[i];
+      memcpy (tr_tool->trans_info, tr_tool->prev_trans_info,
+              sizeof (TransInfo));
 
       /*  reget the selection bounds  */
       gimp_transform_tool_bounds (tr_tool, display);
@@ -817,7 +811,6 @@ gimp_transform_tool_undo (GimpTool    *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GList             *item;
-  gint               i;
 
   if (! gimp_transform_tool_get_undo_desc (tool, display))
     return FALSE;
@@ -835,10 +828,8 @@ gimp_transform_tool_undo (GimpTool    *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  Restore the previous transformation info  */
-  for (i = 0; i < TRANS_INFO_SIZE; i++)
-    {
-      tr_tool->trans_info[i] = (*tr_tool->prev_trans_info)[i];
-    }
+  memcpy (tr_tool->trans_info, tr_tool->prev_trans_info,
+          sizeof (TransInfo));
 
   /*  reget the selection bounds  */
   gimp_transform_tool_bounds (tr_tool, tool->display);
@@ -857,7 +848,6 @@ gimp_transform_tool_redo (GimpTool    *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GList             *item;
-  gint               i;
 
   if (! gimp_transform_tool_get_redo_desc (tool, display))
     return FALSE;
@@ -875,10 +865,8 @@ gimp_transform_tool_redo (GimpTool    *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  Restore the previous transformation info  */
-  for (i = 0; i < TRANS_INFO_SIZE; i++)
-    {
-      tr_tool->trans_info[i] = (*tr_tool->prev_trans_info)[i];
-    }
+  memcpy (tr_tool->trans_info, tr_tool->prev_trans_info,
+          sizeof (TransInfo));
 
   /*  reget the selection bounds  */
   gimp_transform_tool_bounds (tr_tool, tool->display);
@@ -1078,10 +1066,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpImage            *image   = gimp_display_get_image (tool->display);
   gint                  handle_w;
   gint                  handle_h;
-  gint                  i;
 
-  for (i = 0; i < G_N_ELEMENTS (tr_tool->handles); i++)
-    tr_tool->handles[i] = NULL;
+  memset (tr_tool->handles, 0, sizeof (tr_tool->handles));
 
   if (tr_tool->use_grid)
     {
@@ -1133,6 +1119,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       GimpBoundSeg       *segs_out;
       gint                num_segs_in;
       gint                num_segs_out;
+      gint                i;
 
       if (options->direction == GIMP_TRANSFORM_BACKWARD)
         gimp_matrix3_invert (&matrix);
@@ -1481,13 +1468,13 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 
   if (tr_tool->redo_list)
     {
-      g_list_free_full (tr_tool->redo_list, gimp_transform_tool_free_trans);
+      g_list_free_full (tr_tool->redo_list, (GDestroyNotify) trans_info_free);
       tr_tool->redo_list = NULL;
     }
 
   if (tr_tool->undo_list)
     {
-      g_list_free_full (tr_tool->undo_list, gimp_transform_tool_free_trans);
+      g_list_free_full (tr_tool->undo_list, (GDestroyNotify) trans_info_free);
       tr_tool->undo_list = NULL;
       tr_tool->prev_trans_info = NULL;
     }
@@ -1724,7 +1711,6 @@ gimp_transform_tool_response (GimpToolGui       *gui,
 {
   GimpTool    *tool    = GIMP_TOOL (tr_tool);
   GimpDisplay *display = tool->display;
-  gint         i;
 
   switch (response_id)
     {
@@ -1746,10 +1732,8 @@ gimp_transform_tool_response (GimpToolGui       *gui,
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
       /*  Restore the previous transformation info  */
-      for (i = 0; i < TRANS_INFO_SIZE; i++)
-        {
-          tr_tool->trans_info[i] = (*tr_tool->prev_trans_info)[i];
-        }
+      memcpy (tr_tool->trans_info, tr_tool->prev_trans_info,
+              sizeof (TransInfo));
 
       /*  reget the selection bounds  */
       gimp_transform_tool_bounds (tr_tool, display);
@@ -1780,12 +1764,6 @@ gimp_transform_tool_response (GimpToolGui       *gui,
 }
 
 static void
-gimp_transform_tool_free_trans (gpointer data)
-{
-  g_slice_free (TransInfo, data);
-}
-
-static void
 gimp_transform_tool_update_sensitivity (GimpTransformTool *tr_tool)
 {
   if (! tr_tool->gui)
@@ -1808,11 +1786,12 @@ gimp_transform_tool_get_active_item (GimpTransformTool *tr_tool,
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       {
-        GimpChannel *selection_mask = gimp_image_get_mask (image);
-        if (selection_mask && gimp_channel_is_empty (selection_mask))
+        GimpChannel *selection = gimp_image_get_mask (image);
+
+        if (gimp_channel_is_empty (selection))
           return NULL;
         else
-          return GIMP_ITEM (selection_mask);
+          return GIMP_ITEM (selection);
       }
 
     case GIMP_TRANSFORM_TYPE_PATH:
@@ -1840,37 +1819,46 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
     case GIMP_TRANSFORM_TYPE_LAYER:
       null_message = _("There is no layer to transform.");
 
-      if (item && gimp_item_is_content_locked (item))
-        locked_message = _("The active layer's pixels are locked.");
-      else
-        locked_message = _("The active layer's position and size are locked.");
-
-      /*  invisible_layer_ok is such a hack, see bug #759194 */
-      if (item && ! invisible_layer_ok && ! gimp_item_is_visible (item))
+      if (item)
         {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                               _("The active layer is not visible."));
-          return NULL;
+          if (gimp_item_is_content_locked (item))
+            locked_message = _("The active layer's pixels are locked.");
+          else if (gimp_item_is_position_locked (item))
+            locked_message = _("The active layer's position and size are locked.");
+
+          /*  invisible_layer_ok is such a hack, see bug #759194 */
+          if (! invisible_layer_ok && ! gimp_item_is_visible (item))
+            {
+              g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                                   _("The active layer is not visible."));
+              return NULL;
+            }
         }
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
       null_message = _("There is no selection to transform.");
 
-      /* cannot happen, so don't translate these messages */
-      if (item && gimp_item_is_content_locked (item))
-        locked_message = "The selection's pixels are locked.";
-      else
-        locked_message = "The selection's position and size are locked.";
+      if (item)
+        {
+          /* cannot happen, so don't translate these messages */
+          if (gimp_item_is_content_locked (item))
+            locked_message = "The selection's pixels are locked.";
+          else if (gimp_item_is_position_locked (item))
+            locked_message = "The selection's position and size are locked.";
+        }
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
       null_message = _("There is no path to transform.");
 
-      if (item && gimp_item_is_content_locked (item))
-        locked_message = _("The active path's strokes are locked.");
-      else
-        locked_message = _("The active path's position is locked.");
+      if (item)
+        {
+          if (gimp_item_is_content_locked (item))
+            locked_message = _("The active path's strokes are locked.");
+          else if (gimp_item_is_position_locked (item))
+            locked_message = _("The active path's position is locked.");
+        }
       break;
     }
 
@@ -1880,12 +1868,23 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
       return NULL;
     }
 
-  if (gimp_item_is_content_locked (item) ||
-      gimp_item_is_position_locked (item))
+  if (locked_message)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, locked_message);
       return NULL;
     }
 
   return item;
+}
+
+static TransInfo *
+trans_info_new (void)
+{
+  return g_slice_new0 (TransInfo);
+}
+
+static void
+trans_info_free (TransInfo *info)
+{
+  g_slice_free (TransInfo, info);
 }
