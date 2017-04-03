@@ -21,6 +21,7 @@
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "paint-types.h"
 
@@ -130,16 +131,16 @@ gimp_source_core_class_init (GimpSourceCoreClass *klass)
                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SRC_X,
-                                   g_param_spec_double ("src-x", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("src-x", NULL, NULL,
+                                                     0, GIMP_MAX_IMAGE_SIZE,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SRC_Y,
-                                   g_param_spec_double ("src-y", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE,
-                                                        0.0,
-                                                        GIMP_PARAM_READWRITE));
+                                   g_param_spec_int ("src-y", NULL, NULL,
+                                                     0, GIMP_MAX_IMAGE_SIZE,
+                                                     0,
+                                                     GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -148,14 +149,14 @@ gimp_source_core_init (GimpSourceCore *source_core)
   source_core->set_source   = FALSE;
 
   source_core->src_drawable = NULL;
-  source_core->src_x        = 0.0;
-  source_core->src_y        = 0.0;
+  source_core->src_x        = 0;
+  source_core->src_y        = 0;
 
-  source_core->orig_src_x   = 0.0;
-  source_core->orig_src_y   = 0.0;
+  source_core->orig_src_x   = 0;
+  source_core->orig_src_y   = 0;
 
-  source_core->offset_x     = 0.0;
-  source_core->offset_y     = 0.0;
+  source_core->offset_x     = 0;
+  source_core->offset_y     = 0;
   source_core->first_stroke = TRUE;
 }
 
@@ -174,10 +175,10 @@ gimp_source_core_set_property (GObject      *object,
                                          g_value_get_object (value));
       break;
     case PROP_SRC_X:
-      source_core->src_x = g_value_get_double (value);
+      source_core->src_x = g_value_get_int (value);
       break;
     case PROP_SRC_Y:
-      source_core->src_y = g_value_get_double (value);
+      source_core->src_y = g_value_get_int (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -272,8 +273,9 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
         {
           gimp_source_core_set_src_drawable (source_core, drawable);
 
-          source_core->src_x = coords->x;
-          source_core->src_y = coords->y;
+          /* FIXME(?): subpixel source sampling */
+          source_core->src_x = floor (coords->x);
+          source_core->src_y = floor (coords->y);
 
           source_core->first_stroke = TRUE;
         }
@@ -291,8 +293,8 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
         {
           /*  If the control key is down, move the src target and return */
 
-          source_core->src_x = coords->x;
-          source_core->src_y = coords->y;
+          source_core->src_x = floor (coords->x);
+          source_core->src_y = floor (coords->y);
 
           source_core->first_stroke = TRUE;
         }
@@ -303,8 +305,8 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
           gint dest_x;
           gint dest_y;
 
-          dest_x = coords->x;
-          dest_y = coords->y;
+          dest_x = floor (coords->x);
+          dest_y = floor (coords->y);
 
           if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED)
             {

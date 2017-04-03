@@ -20,6 +20,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "tools-types.h"
 
 #include "core/gimpchannel.h"
@@ -350,13 +352,13 @@ gimp_source_tool_oper_update (GimpTool         *tool,
               switch (options->align_mode)
                 {
                 case GIMP_SOURCE_ALIGN_YES:
-                  source_tool->src_x = coords->x + source->offset_x;
-                  source_tool->src_y = coords->y + source->offset_y;
+                  source_tool->src_x = floor (coords->x) + source->offset_x;
+                  source_tool->src_y = floor (coords->y) + source->offset_y;
                   break;
 
                 case GIMP_SOURCE_ALIGN_REGISTERED:
-                  source_tool->src_x = coords->x;
-                  source_tool->src_y = coords->y;
+                  source_tool->src_x = floor (coords->x);
+                  source_tool->src_y = floor (coords->y);
                   break;
 
                 default:

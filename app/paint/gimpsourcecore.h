@@ -39,14 +39,14 @@ struct _GimpSourceCore
   gboolean       set_source;
 
   GimpDrawable  *src_drawable;
-  gdouble        src_x;
-  gdouble        src_y;
+  gint           src_x;
+  gint           src_y;
 
-  gdouble        orig_src_x;
-  gdouble        orig_src_y;
+  gint           orig_src_x;
+  gint           orig_src_y;
 
-  gdouble        offset_x;
-  gdouble        offset_y;
+  gint           offset_x;
+  gint           offset_y;
   gboolean       first_stroke;
 };
 

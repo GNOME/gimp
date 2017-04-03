@@ -238,8 +238,8 @@ clone_invoker (GimpProcedure         *procedure,
                                         num_strokes, strokes, error,
                                         "undo-desc",    options->paint_info->blurb,
                                         "src-drawable", src_drawable,
-                                        "src-x",        src_x,
-                                        "src-y",        src_y,
+                                        "src-x",        (gint) floor (src_x),
+                                        "src-y",        (gint) floor (src_y),
                                         NULL);
         }
       else
@@ -621,8 +621,8 @@ heal_invoker (GimpProcedure         *procedure,
                                         num_strokes, strokes, error,
                                         "undo-desc",    options->paint_info->blurb,
                                         "src-drawable", src_drawable,
-                                        "src-x",        src_x,
-                                        "src-y",        src_y,
+                                        "src-x",        (gint) floor (src_x),
+                                        "src-y",        (gint) floor (src_y),
                                         NULL);
         }
       else
