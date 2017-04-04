@@ -413,7 +413,7 @@ animation_storyboard_load (Animation           *animation,
       gtk_button_set_relief (GTK_BUTTON (disposal), GTK_RELIEF_NONE);
       g_object_set_data (G_OBJECT (disposal), "panel-num",
                          GINT_TO_POINTER (panel_num));
-      image = gtk_image_new_from_icon_name (GIMP_STOCK_TRANSPARENCY,
+      image = gtk_image_new_from_icon_name (GIMP_ICON_TRANSPARENCY,
                                             GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (disposal), image);
       gtk_widget_show (image);
