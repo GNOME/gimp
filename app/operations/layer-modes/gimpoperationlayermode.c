@@ -1118,24 +1118,12 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
           /* skip any unblended samples.  the color values of `blend_out` for
            * these samples are unconstrained, in particular, they may be NaN,
            * but the alpha values should generally be finite, and specifically
-           * 0 when the source alpha is 0.  when `blend_out == blend_layer`,
-           * this is the case anyway, but otherwise, we need to manually set
-           * the unblended samples' alpha to zero.
+           * 0 when the source alpha is 0.
            */
-          if (blend_out == blend_layer)
+          while (i < end && (in[i] == 0.0f || layer[i] == 0.0f))
             {
-              while (i < end && (in[i] == 0.0f || layer[i] == 0.0f))
-                {
-                  i += 4;
-                }
-            }
-          else
-            {
-              while (i < end && (in[i] == 0.0f || layer[i] == 0.0f))
-                {
-                  blend_out[i] = 0.0f;
-                  i += 4;
-                }
+              blend_out[i] = 0.0f;
+              i += 4;
             }
 
           /* stop if there are no more samples */
@@ -1181,11 +1169,8 @@ gimp_composite_blend (GimpOperationLayerMode *layer_mode,
           /* make sure the alpha values of `blend_out` are valid for the
            * trailing unblended samples.
            */
-          if (blend_out != blend_layer)
-            {
-              for (; last < i; last += 4)
-                blend_out[last] = 0.0f;
-            }
+          for (; last < i; last += 4)
+            blend_out[last] = 0.0f;
         }
     }
   else
