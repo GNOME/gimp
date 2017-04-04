@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-15 01:32+0100\n"
-"PO-Revision-Date: 2017-02-15 01:33+0100\n"
+"POT-Creation-Date: 2017-04-04 13:29+0200\n"
+"PO-Revision-Date: 2017-04-04 13:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -836,7 +836,7 @@ msgstr "Dodaje bieżący kolor tła"
 #: ../app/actions/colormap-commands.c:73
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Modyfikacja elementu palety #%d"
+msgstr "Modyfikacja %d. elementu palety"
 
 #: ../app/actions/colormap-commands.c:80
 msgid "Edit Colormap Entry"
@@ -1413,12 +1413,12 @@ msgstr "Łączy z innym ekranem"
 #: ../app/actions/dock-actions.c:63
 msgctxt "dock-action"
 msgid "_Show Image Selection"
-msgstr "_Wyświetlanie elementów wyboru obrazu"
+msgstr "_Elementy wyboru obrazu"
 
 #: ../app/actions/dock-actions.c:69
 msgctxt "dock-action"
 msgid "Auto _Follow Active Image"
-msgstr "Podążaj za _aktywnym obrazem"
+msgstr "Podążanie za _aktywnym obrazem"
 
 #: ../app/actions/dockable-actions.c:48
 msgctxt "dockable-action"
@@ -1483,7 +1483,7 @@ msgstr "B_ardzo duży"
 #: ../app/actions/dockable-actions.c:96
 msgctxt "preview-size"
 msgid "_Huge"
-msgstr "_Potężny"
+msgstr "_Wielki"
 
 #: ../app/actions/dockable-actions.c:98
 msgctxt "preview-size"
@@ -1538,17 +1538,17 @@ msgstr "Uniemożliwia przesuwanie karty za pomocą myszy"
 #: ../app/actions/dockable-actions.c:134
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
-msgstr "Wyświetlanie p_aska przycisków"
+msgstr "P_asek przycisków"
 
 #: ../app/actions/dockable-actions.c:143
 msgctxt "dockable-action"
 msgid "View as _List"
-msgstr "Wyświetlanie jako _lista"
+msgstr "_Lista"
 
 #: ../app/actions/dockable-actions.c:148
 msgctxt "dockable-action"
 msgid "View as _Grid"
-msgstr "Wyświetlanie jako _siatka"
+msgstr "_Siatka"
 
 #: ../app/actions/documents-actions.c:41
 msgctxt "documents-action"
@@ -1759,7 +1759,7 @@ msgstr "Obróć o 90° w _prawo"
 #: ../app/actions/drawable-actions.c:114
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the right"
-msgstr "Obraca o 90 stopni, zgodnie z ruchem wskazówek zegara"
+msgstr "Obraca o 90 stopni w prawo"
 
 #: ../app/actions/drawable-actions.c:119
 msgctxt "drawable-action"
@@ -1779,7 +1779,7 @@ msgstr "Obróć o 90° w _lewo"
 #: ../app/actions/drawable-actions.c:126
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the left"
-msgstr "Obraca o 90 stopni, przeciwnie do ruchu wskazówek zegara"
+msgstr "Obraca o 90 stopni w lewo"
 
 #: ../app/actions/drawable-commands.c:63
 msgid "Equalize does not operate on indexed layers."
@@ -3232,7 +3232,7 @@ msgstr "Zmienianie wymiarów"
 
 #: ../app/actions/image-commands.c:317
 msgid "Set Image Print Resolution"
-msgstr "Ustaw rozdzielczość drukowania"
+msgstr "Ustawienie rozdzielczości drukowania"
 
 #: ../app/actions/image-commands.c:379 ../app/pdb/drawable-transform-cmds.c:159
 #: ../app/pdb/drawable-transform-cmds.c:247
@@ -3493,7 +3493,7 @@ msgstr "Łączy bieżącą warstwę z warstwą znajdującą się poniżej"
 #: ../app/actions/layers-actions.c:156
 msgctxt "layers-action"
 msgid "Merge Layer Group"
-msgstr "Połączenie grupy warstw"
+msgstr "Połącz grupę warstw"
 
 #: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
@@ -3836,7 +3836,7 @@ msgstr "Ustawienie wymiarów granic warstwy"
 
 #: ../app/actions/layers-commands.c:663
 msgid "Scale Layer"
-msgstr "Skaluj warstwę"
+msgstr "Skalowanie warstwy"
 
 #: ../app/actions/layers-commands.c:701
 msgid "Crop Layer"
@@ -4222,7 +4222,7 @@ msgstr "_Powtórz „%s”"
 #: ../app/actions/plug-in-actions.c:552
 #, c-format
 msgid "R_e-Show \"%s\""
-msgstr "_Wyświetl ponownie „%s”"
+msgstr "_Wyświetl „%s” ponownie"
 
 #: ../app/actions/plug-in-actions.c:568
 msgid "Repeat Last"
@@ -5262,7 +5262,7 @@ msgstr "Piksel na ekranie reprezentuje piksel na obrazie"
 #: ../app/actions/view-actions.c:140
 msgctxt "view-action"
 msgid "Show _Selection"
-msgstr "Wyświetlanie _zaznaczenia"
+msgstr "_Zaznaczenie"
 
 #: ../app/actions/view-actions.c:141
 msgctxt "view-action"
@@ -5272,7 +5272,7 @@ msgstr "Wyświetla krawędź zaznaczenia"
 #: ../app/actions/view-actions.c:147
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
-msgstr "Wyświetlanie g_ranic warstwy"
+msgstr "G_ranice warstwy"
 
 #: ../app/actions/view-actions.c:148
 msgctxt "view-action"
@@ -5282,7 +5282,7 @@ msgstr "Wyświetla ramkę wokół aktywnej warstwy"
 #: ../app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Show _Guides"
-msgstr "Wyświetlanie pr_owadnic"
+msgstr "Pr_owadnice"
 
 #: ../app/actions/view-actions.c:155
 msgctxt "view-action"
@@ -5292,7 +5292,7 @@ msgstr "Wyświetla prowadnice obrazu"
 #: ../app/actions/view-actions.c:161
 msgctxt "view-action"
 msgid "S_how Grid"
-msgstr "Wyświetlanie _siatki"
+msgstr "_Siatka"
 
 #: ../app/actions/view-actions.c:162
 msgctxt "view-action"
@@ -5302,7 +5302,7 @@ msgstr "Wyświetla siatkę obrazu"
 #: ../app/actions/view-actions.c:168
 msgctxt "view-action"
 msgid "Show Sample Points"
-msgstr "Wyświetlanie punktów wzorcowych"
+msgstr "Punkty wzorcowe"
 
 #: ../app/actions/view-actions.c:169
 msgctxt "view-action"
@@ -5352,7 +5352,7 @@ msgstr "Przyciąga wybrane narzędzie do aktywnej ścieżki"
 #: ../app/actions/view-actions.c:203
 msgctxt "view-action"
 msgid "Show _Menubar"
-msgstr "Wyświetlanie paska _menu"
+msgstr "Pasek _menu"
 
 #: ../app/actions/view-actions.c:204
 msgctxt "view-action"
@@ -5362,7 +5362,7 @@ msgstr "Wyświetla pasek menu tego okna"
 #: ../app/actions/view-actions.c:210
 msgctxt "view-action"
 msgid "Show R_ulers"
-msgstr "Wyświetlanie _linijek"
+msgstr "_Linijki"
 
 #: ../app/actions/view-actions.c:211
 msgctxt "view-action"
@@ -5372,7 +5372,7 @@ msgstr "Wyświetla linijki tego okna"
 #: ../app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "Show Scroll_bars"
-msgstr "Wyświetlanie pas_ków przewijania"
+msgstr "Pas_ki przewijania"
 
 #: ../app/actions/view-actions.c:218
 msgctxt "view-action"
@@ -5382,7 +5382,7 @@ msgstr "Wyświetla paski przewijania tego okna"
 #: ../app/actions/view-actions.c:224
 msgctxt "view-action"
 msgid "Show S_tatusbar"
-msgstr "Wyświetlanie paska _stanu"
+msgstr "Pasek _stanu"
 
 #: ../app/actions/view-actions.c:225
 msgctxt "view-action"
@@ -5909,7 +5909,7 @@ msgstr "Dowolny kolor"
 #: ../app/config/config-enums.c:88
 msgctxt "space-bar-action"
 msgid "No action"
-msgstr "Brak czynności"
+msgstr "Brak działania"
 
 #: ../app/config/config-enums.c:89
 msgctxt "space-bar-action"
@@ -6322,7 +6322,7 @@ msgid ""
 "with the \"View->Show Menubar\" command."
 msgstr ""
 "Powoduje, że domyślnie pasek menu jest widoczny. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie paska menu”."
+"w dowolnej chwili za pomocą polecenia „Widok → Pasek menu”."
 
 #: ../app/config/gimprc-blurbs.h:332
 msgid ""
@@ -6330,7 +6330,7 @@ msgid ""
 "with the \"View->Show Rulers\" command."
 msgstr ""
 "Powoduje, że domyślnie linijki są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie linijek”."
+"w dowolnej chwili za pomocą polecenia „Widok → Linijki”."
 
 #: ../app/config/gimprc-blurbs.h:336
 msgid ""
@@ -6338,8 +6338,7 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "Powoduje, że domyślnie paski przewijania są widoczne. Ustawienie można "
-"zmienić w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie pasków "
-"przewijania”."
+"zmienić w dowolnej chwili za pomocą polecenia „Widok → Paski przewijania”."
 
 #: ../app/config/gimprc-blurbs.h:340
 msgid ""
@@ -6347,7 +6346,7 @@ msgid ""
 "with the \"View->Show Statusbar\" command."
 msgstr ""
 "Powoduje, że domyślnie pasek stanu jest widoczny. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie paska stanu”."
+"w dowolnej chwili za pomocą polecenia „Widok → Pasek stanu”."
 
 #: ../app/config/gimprc-blurbs.h:344
 msgid ""
@@ -6355,7 +6354,7 @@ msgid ""
 "with the \"View->Show Selection\" command."
 msgstr ""
 "Powoduje, że domyślnie zaznaczenie jest widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie zaznaczenia”."
+"w dowolnej chwili za pomocą polecenia „Widok → Zaznaczenie”."
 
 #: ../app/config/gimprc-blurbs.h:348
 msgid ""
@@ -6363,7 +6362,7 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "Powoduje, że domyślnie granice warstwy są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie granic warstwy”."
+"w dowolnej chwili za pomocą polecenia „Widok → Granice warstwy”."
 
 #: ../app/config/gimprc-blurbs.h:352
 msgid ""
@@ -6371,7 +6370,7 @@ msgid ""
 "with the \"View->Show Guides\" command."
 msgstr ""
 "Powoduje, że domyślnie prowadnice są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie prowadnic”."
+"w dowolnej chwili za pomocą polecenia „Widok → Prowadnice”."
 
 #: ../app/config/gimprc-blurbs.h:356
 msgid ""
@@ -6379,7 +6378,7 @@ msgid ""
 "the \"View->Show Grid\" command."
 msgstr ""
 "Powoduje, że domyślnie siatka jest widoczna. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie siatki”."
+"w dowolnej chwili za pomocą polecenia „Widok → Siatka”."
 
 #: ../app/config/gimprc-blurbs.h:360
 msgid ""
@@ -6387,8 +6386,7 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Powoduje, że domyślnie punkty wzorcowe są widoczne. Ustawienie można zmienić "
-"w dowolnej chwili za pomocą polecenia „Widok → Wyświetlanie punktów "
-"wzorcowych”."
+"w dowolnej chwili za pomocą polecenia „Widok → Punkty wzorcowe”."
 
 #: ../app/config/gimprc-blurbs.h:364
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -6848,7 +6846,7 @@ msgstr "Bardzo duży"
 #: ../app/core/core-enums.c:594
 msgctxt "view-size"
 msgid "Huge"
-msgstr "Potężny"
+msgstr "Wielki"
 
 #: ../app/core/core-enums.c:595
 msgctxt "view-size"
@@ -6863,7 +6861,7 @@ msgstr "Gigantyczny"
 #: ../app/core/core-enums.c:624
 msgctxt "view-type"
 msgid "View as list"
-msgstr "Wyświetlaj jako listy"
+msgstr "Wyświetlaj jako listę"
 
 #: ../app/core/core-enums.c:625
 msgctxt "view-type"
@@ -8162,7 +8160,7 @@ msgstr "Ułożenie obiektów"
 #: ../app/core/gimpimage-colormap.c:64
 #, c-format
 msgid "Colormap of Image #%d (%s)"
-msgstr "Paleta kolorów obrazu #%d (%s)"
+msgstr "%d. paleta kolorów obrazu (%s)"
 
 #: ../app/core/gimpimage-colormap.c:162
 msgctxt "undo-type"
@@ -8205,11 +8203,11 @@ msgstr "Konwersja obrazu do trybu indeksowanego"
 
 #: ../app/core/gimpimage-convert.c:896
 msgid "Converting to indexed colors (stage 2)"
-msgstr "Konwertowanie do kolorów indeksowanych (poziom 2)"
+msgstr "Konwertowanie do kolorów indeksowanych (2. poziom)"
 
 #: ../app/core/gimpimage-convert.c:941
 msgid "Converting to indexed colors (stage 3)"
-msgstr "Konwertowanie do kolorów indeksowanych (poziom 3)"
+msgstr "Konwertowanie do kolorów indeksowanych (3. poziom)"
 
 #: ../app/core/gimpimage-crop.c:129
 msgctxt "undo-type"
@@ -8241,7 +8239,6 @@ msgctxt "undo-type"
 msgid "Move Guide"
 msgstr "Przesunięcie prowadnicy"
 
-# TO NIE JEST MIEJSCE NA WPISYWANIE TŁUMACZY!
 #: ../app/core/gimpimage-item-list.c:51
 msgctxt "undo-type"
 msgid "Translate Items"
@@ -8346,7 +8343,7 @@ msgstr "Skalowanie obrazu"
 #: ../app/core/gimpimage-undo-push.c:862
 #, c-format
 msgid "Can't undo %s"
-msgstr "Nie można cofnąć działania %s"
+msgstr "Nie można cofnąć działania „%s”"
 
 #: ../app/core/gimpimage.c:1784
 msgid " (exported)"
@@ -8578,7 +8575,7 @@ msgstr "Nie można bardziej obniżyć warstwy."
 #: ../app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
-msgstr "maska %s"
+msgstr "Maska %s"
 
 #: ../app/core/gimplayer.c:489
 #, c-format
@@ -8665,7 +8662,7 @@ msgstr "Wyświetlenie maski warstwy"
 #: ../app/core/gimppalette-import.c:439
 #, c-format
 msgid "Index %d"
-msgstr "Indeks %d"
+msgstr "%d. indeks"
 
 #: ../app/core/gimppalette-import.c:549
 #, c-format
@@ -8964,7 +8961,7 @@ msgstr ""
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"
-msgstr "GIMP został dostarczony przez"
+msgstr "GIMP jest tworzony przez"
 
 #: ../app/dialogs/about-dialog.c:596
 msgid "This is an unstable development release."
@@ -9237,7 +9234,7 @@ msgstr "Opcje łączenia kanałów"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:76
 msgid "_Merge"
-msgstr "Łą_czenie"
+msgstr "Połą_cz"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:96
 msgid "Final, Merged Layer should be:"
@@ -9456,15 +9453,15 @@ msgstr "Przesunięcie"
 #. offset, used as a verb
 #: ../app/dialogs/offset-dialog.c:127
 msgid "_Offset"
-msgstr "_Przesunięcie"
+msgstr "_Przesuń"
 
 #: ../app/dialogs/offset-dialog.c:184 ../app/dialogs/resize-dialog.c:227
 msgid "_X:"
-msgstr "_X:"
+msgstr "P_oziomo:"
 
 #: ../app/dialogs/offset-dialog.c:186 ../app/dialogs/resize-dialog.c:228
 msgid "_Y:"
-msgstr "_Y:"
+msgstr "Pio_nowo:"
 
 #: ../app/dialogs/offset-dialog.c:213
 msgid "Offset by  x/_2, y/2"
@@ -9672,7 +9669,7 @@ msgstr "Wykorzystywanie zasobów"
 
 #: ../app/dialogs/preferences-dialog.c:1577
 msgid "Minimal number of _undo levels:"
-msgstr "Mi_nimalna liczba poziomów cofnięć:"
+msgstr "Mi_nimalna liczba poziomów cofania:"
 
 #: ../app/dialogs/preferences-dialog.c:1580
 msgid "Maximum undo _memory:"
@@ -9726,7 +9723,7 @@ msgstr "Podglądy"
 
 #: ../app/dialogs/preferences-dialog.c:1646
 msgid "_Enable layer & channel previews"
-msgstr "_Podglądy kanałów i warstw"
+msgstr "_Kanały i warstwy"
 
 #: ../app/dialogs/preferences-dialog.c:1652
 msgid "_Default layer & channel preview size:"
@@ -9743,27 +9740,27 @@ msgstr "Skróty klawiszowe"
 
 #: ../app/dialogs/preferences-dialog.c:1663
 msgid "_Use dynamic keyboard shortcuts"
-msgstr "Dynamiczne skróty k_lawiszowe"
+msgstr "_Dynamiczne"
 
 #: ../app/dialogs/preferences-dialog.c:1667
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "_Konfiguruj skróty klawiszowe…"
+msgstr "S_konfiguruj…"
 
 #: ../app/dialogs/preferences-dialog.c:1674
 msgid "_Save keyboard shortcuts on exit"
-msgstr "Zap_isywanie skrótów klawiszowych przed zakończeniem"
+msgstr "Zap_isywanie skrótów przed zakończeniem"
 
 #: ../app/dialogs/preferences-dialog.c:1678
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "_Zapisz skróty klawiszowe"
+msgstr "_Zapisz skróty"
 
 #: ../app/dialogs/preferences-dialog.c:1685
 msgid "_Reset Keyboard Shortcuts to Default Values"
-msgstr "_Ustaw domyślne wartości skrótów klawiszowych"
+msgstr "_Ustaw domyślne wartości skrótów"
 
 #: ../app/dialogs/preferences-dialog.c:1694
 msgid "Remove _All Keyboard Shortcuts"
-msgstr "Usuń wszystkie skróty _klawiszowe"
+msgstr "U_suń wszystkie skróty"
 
 #: ../app/dialogs/preferences-dialog.c:1706
 #: ../app/dialogs/preferences-dialog.c:1745
@@ -9800,7 +9797,7 @@ msgstr "Przyciski po_mocy"
 
 #: ../app/dialogs/preferences-dialog.c:1832
 msgid "Use the online version"
-msgstr "Wersja sieciowa"
+msgstr "Wersja internetowa"
 
 #: ../app/dialogs/preferences-dialog.c:1833
 msgid "Use a locally installed copy"
@@ -9897,15 +9894,15 @@ msgstr "Wygląd"
 
 #: ../app/dialogs/preferences-dialog.c:2004
 msgid "Show _foreground & background color"
-msgstr "Wyświetlanie _koloru pierwszoplanowego i tła"
+msgstr "_Kolor pierwszoplanowy i tła"
 
 #: ../app/dialogs/preferences-dialog.c:2008
 msgid "Show active _brush, pattern & gradient"
-msgstr "Wyświetlanie ak_tywnego pędzla, desenia i gradientu"
+msgstr "Ak_tywny pędzel, deseń i gradient"
 
 #: ../app/dialogs/preferences-dialog.c:2012
 msgid "Show active _image"
-msgstr "Wyświetlanie aktywnego o_brazu"
+msgstr "Aktywny o_braz"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:2020
@@ -9981,15 +9978,15 @@ msgstr "_Po naciśnięciu klawisza spacji:"
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:2165
 msgid "Mouse Pointers"
-msgstr "kursory myszy"
+msgstr "Kursory myszy"
 
 #: ../app/dialogs/preferences-dialog.c:2169
 msgid "Show _brush outline"
-msgstr "Wyświetlanie o_bwódki pędzla"
+msgstr "O_bwódka pędzla"
 
 #: ../app/dialogs/preferences-dialog.c:2172
 msgid "Show pointer for paint _tools"
-msgstr "Wyświetlanie kursora dla narzędzi _rysowania"
+msgstr "Kursor dla narzędzi _rysowania"
 
 #: ../app/dialogs/preferences-dialog.c:2178
 msgid "Pointer _mode:"
@@ -10058,7 +10055,7 @@ msgstr "Wyświetlanie"
 #. Transparency
 #: ../app/dialogs/preferences-dialog.c:2358
 msgid "Transparency"
-msgstr "Przezroczysta"
+msgstr "Przezroczystość"
 
 #: ../app/dialogs/preferences-dialog.c:2362
 msgid "_Check style:"
@@ -10076,7 +10073,7 @@ msgstr "Rozdzielczość monitora"
 #: ../app/dialogs/preferences-dialog.c:2372 ../app/display/gimpcursorview.c:208
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
-msgstr "Piksele"
+msgstr "piksele"
 
 #: ../app/dialogs/preferences-dialog.c:2390
 msgid "Horizontal"
@@ -10094,7 +10091,7 @@ msgstr "ppi"
 #: ../app/dialogs/preferences-dialog.c:2410
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
-msgstr "_Wykrywanie automatycznie (obecnie %d×%d ppi)"
+msgstr "_Wykrywanie automatycznie (obecnie %d×%d ppi)"
 
 #: ../app/dialogs/preferences-dialog.c:2428
 msgid "_Enter manually"
@@ -10393,12 +10390,12 @@ msgstr "_Wysokość:"
 #: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:309
 msgid "_X resolution:"
-msgstr "Rozdzielczość _X:"
+msgstr "_Pozioma rozdzielczość:"
 
 #: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:316
 msgid "_Y resolution:"
-msgstr "Rozdzielczość _Y:"
+msgstr "Pi_onowa rozdzielczość:"
 
 #: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:256
 #, c-format
@@ -10543,11 +10540,11 @@ msgstr "Porada dnia programu GIMP"
 
 #: ../app/dialogs/tips-dialog.c:134
 msgid "_Previous Tip"
-msgstr "_Poprzednia porada"
+msgstr "_Poprzednia"
 
 #: ../app/dialogs/tips-dialog.c:140
 msgid "_Next Tip"
-msgstr "_Następna porada"
+msgstr "_Następna"
 
 #. a link to the related section in the user manual
 #: ../app/dialogs/tips-dialog.c:193
@@ -10565,11 +10562,11 @@ msgstr "tips-locale:pl"
 
 #: ../app/dialogs/user-install-dialog.c:84
 msgid "GIMP User Installation"
-msgstr "Spersonalizowana instalacja programu GIMP"
+msgstr "Instalacja programu GIMP"
 
 #: ../app/dialogs/user-install-dialog.c:93
 msgid "User installation failed!"
-msgstr "Spersonalizowana instalacja się nie powiodła."
+msgstr "Instalacja się nie powiodła."
 
 #: ../app/dialogs/user-install-dialog.c:95
 msgid "The GIMP user installation failed; see the log for details."
@@ -10674,13 +10671,13 @@ msgstr "Nie dotyczy"
 #: ../app/display/gimpcursorview.c:271
 #: ../app/widgets/gimpdeviceinfoeditor.c:138
 msgid "X"
-msgstr "X"
+msgstr "Poziomo"
 
 #: ../app/display/gimpcursorview.c:227 ../app/display/gimpcursorview.c:252
 #: ../app/display/gimpcursorview.c:277
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "Y"
-msgstr "Y"
+msgstr "Pionowo"
 
 #. Units
 #: ../app/display/gimpcursorview.c:233
@@ -10695,34 +10692,34 @@ msgstr "Pole ograniczające zaznaczenie"
 #. Width
 #: ../app/display/gimpcursorview.c:294
 msgid "W"
-msgstr "Sz"
+msgstr "Szer."
 
 #. Height
 #: ../app/display/gimpcursorview.c:301
 msgid "H"
-msgstr "W"
+msgstr "Wys."
 
 #: ../app/display/gimpcursorview.c:330
 msgid "_Sample Merged"
 msgstr "Próbkowanie w_szystkich warstw"
 
-#: ../app/display/gimpdisplayshell.c:508
+#: ../app/display/gimpdisplayshell.c:519
 msgid "Access the image menu"
 msgstr "Dostęp do menu obrazu"
 
-#: ../app/display/gimpdisplayshell.c:622
+#: ../app/display/gimpdisplayshell.c:633
 msgid "Zoom image when window size changes"
 msgstr "Zmiana powiększenia przy zmianie wymiarów okna"
 
-#: ../app/display/gimpdisplayshell.c:651
+#: ../app/display/gimpdisplayshell.c:662
 msgid "Toggle Quick Mask"
 msgstr "Przełącz szybką maskę"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:685
 msgid "Navigate the image display"
 msgstr "Kontroluje wyświetlanie obrazu"
 
-#: ../app/display/gimpdisplayshell.c:746 ../app/display/gimpdisplayshell.c:1331
+#: ../app/display/gimpdisplayshell.c:757 ../app/display/gimpdisplayshell.c:1342
 #: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
@@ -10731,7 +10728,7 @@ msgstr "Upuszczenie plików obrazów w tym miejscu otworzy je"
 #: ../app/display/gimpdisplayshell-close.c:269
 #, c-format
 msgid "Close %s"
-msgstr "Zamknięcie %s"
+msgstr "Zamknięcie „%s”"
 
 #: ../app/display/gimpdisplayshell-close.c:217
 #, c-format
@@ -11436,7 +11433,7 @@ msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
 "%s, got %s."
 msgstr ""
-"Procedura „%s” została wywołana z błędnym typem parametru #%d. Oczekiwano "
+"Procedura „%s” została wywołana z błędnym typem %d. parametru. Oczekiwano "
 "%s, otrzymano %s."
 
 #: ../app/pdb/gimppdbcontext.c:89 ../app/tools/gimpforegroundselectoptions.c:79
@@ -11557,7 +11554,6 @@ msgstr "Usunięcie rysowania wzdłuż ścieżki"
 msgid "Close path stroke"
 msgstr "Zamknięcie rysowania wzdłuż ścieżki"
 
-# TO NIE JEST MIEJSCE NA WPISYWANIE TŁUMACZY!
 #: ../app/pdb/vectors-cmds.c:401
 msgid "Translate path stroke"
 msgstr "Przemieszczenie rysowania wzdłuż ścieżki"
@@ -11671,7 +11667,7 @@ msgstr "Uruchamianie rozszerzeń"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
-msgstr "Interpreter wtyczek"
+msgstr "Interpretery wtyczek"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
@@ -13540,11 +13536,11 @@ msgstr "Prowadnice kompozycji, takie jak jedna trzecia"
 
 #: ../app/tools/gimprectangleoptions.c:131
 msgid "X coordinate of top left corner"
-msgstr "Współrzędna górnego lewego rogu na osi X"
+msgstr "Pozioma współrzędna górnego lewego rogu"
 
 #: ../app/tools/gimprectangleoptions.c:141
 msgid "Y coordinate of top left corner"
-msgstr "Współrzędna górnego lewego rogu na osi Y"
+msgstr "Pionowa współrzędna górnego lewego rogu"
 
 #: ../app/tools/gimprectangleoptions.c:151
 msgid "Width of selection"
@@ -13572,11 +13568,11 @@ msgstr "Proszę wybrać, co zablokować"
 
 #: ../app/tools/gimprectangleoptions.c:205
 msgid "Custom fixed width"
-msgstr "Własna stała szerokość"
+msgstr "Niestandardowa stała szerokość"
 
 #: ../app/tools/gimprectangleoptions.c:214
 msgid "Custom fixed height"
-msgstr "Własna stała wysokość"
+msgstr "Niestandardowa stała wysokość"
 
 #: ../app/tools/gimprectangleoptions.c:308
 msgid "Unit of fixed width, height or size"
@@ -13690,11 +13686,11 @@ msgstr "_Kąt:"
 
 #: ../app/tools/gimprotatetool.c:207
 msgid "Center _X:"
-msgstr "Środek _X:"
+msgstr "_Poziomy środek:"
 
 #: ../app/tools/gimprotatetool.c:216
 msgid "Center _Y:"
-msgstr "Środek _Y:"
+msgstr "Pi_onowy środek:"
 
 #: ../app/tools/gimprotatetool.c:373
 #, c-format
@@ -13786,11 +13782,11 @@ msgstr "Nac_hylenie"
 
 #: ../app/tools/gimpsheartool.c:135
 msgid "Shear magnitude _X:"
-msgstr "Nachylenie X:"
+msgstr "_Poziome nachylenie:"
 
 #: ../app/tools/gimpsheartool.c:145
 msgid "Shear magnitude _Y:"
-msgstr "Nachylenie Y:"
+msgstr "Pi_onowe nachylenie:"
 
 #: ../app/tools/gimpsheartool.c:255
 #, c-format
@@ -14448,7 +14444,7 @@ msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 #: ../app/widgets/gimpactionview.c:338
 #: ../app/widgets/gimpcontrollereditor.c:341
 msgid "Action"
-msgstr "Czynność"
+msgstr "Działanie"
 
 #: ../app/widgets/gimpactionview.c:367
 msgid "Shortcut"
@@ -14474,13 +14470,13 @@ msgstr "_Zmień przypisanie skrótu"
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
-"Skrót „%s” został już powiązany z czynnością „%s” z grupy o nazwie „%s”."
+"Skrót „%s” został już powiązany z działaniem „%s” z grupy o nazwie „%s”."
 
 #: ../app/widgets/gimpactionview.c:695
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr ""
-"Zmiana przypisania skrótu spowoduje, że jego skojarzenie z czynnością „%s” "
+"Zmiana przypisania skrótu spowoduje, że jego skojarzenie z działaniem „%s” "
 "zostanie usunięte."
 
 #: ../app/widgets/gimpactionview.c:778
@@ -14586,7 +14582,7 @@ msgstr "Wartość:"
 
 #: ../app/widgets/gimpcolorframe.c:563
 msgid "Hex:"
-msgstr "Heks:"
+msgstr "Szesnastkowo:"
 
 #: ../app/widgets/gimpcolorframe.c:570
 msgid "Hue:"
@@ -14671,21 +14667,21 @@ msgstr "Wybieranie następnego zdarzenia pochodzącego od urządzenia"
 #: ../app/widgets/gimpcontrollereditor.c:525
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr "Usunięcie czynności ze zdarzenia „%s”"
+msgstr "Usunięcie działania ze zdarzenia „%s”"
 
 #: ../app/widgets/gimpcontrollereditor.c:530
 #, c-format
 msgid "Assign an action to '%s'"
-msgstr "Przydzielenie czynności do zdarzenia „%s”"
+msgstr "Przydzielenie działania do zdarzenia „%s”"
 
 #: ../app/widgets/gimpcontrollereditor.c:651
 #, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Wybieranie czynności dla zdarzenia „%s”"
+msgstr "Wybieranie działania dla zdarzenia „%s”"
 
 #: ../app/widgets/gimpcontrollereditor.c:656
 msgid "Select Controller Event Action"
-msgstr "Wybór czynności dla zdarzenia z urządzenia sterującego"
+msgstr "Wybór działania dla zdarzenia z urządzenia sterującego"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:67
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
@@ -14996,11 +14992,11 @@ msgstr "Nacisk"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:141
 msgid "X tilt"
-msgstr "Nachylenie X"
+msgstr "Poziome nachylenie"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
 msgid "Y tilt"
-msgstr "Nachylenie Y"
+msgstr "Pionowe nachylenie"
 
 #. Wheel as in mouse or input device wheel
 #: ../app/widgets/gimpdeviceinfoeditor.c:144
@@ -15030,17 +15026,17 @@ msgstr "brak"
 #: ../app/widgets/gimpdeviceinfoeditor.c:415
 #, c-format
 msgid "%s Curve"
-msgstr "%s krzywe"
+msgstr "Krzywa %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:474
 #: ../app/widgets/gimpdynamicsoutputeditor.c:209
 msgid "_Reset Curve"
-msgstr "_Przywróć krzywe"
+msgstr "_Przywróć krzywą"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:487
 #, c-format
 msgid "The axis '%s' has no curve"
-msgstr "Oś „%s” nie ma krzywych"
+msgstr "Oś „%s” nie ma krzywej"
 
 #: ../app/widgets/gimpdevicestatus.c:137
 msgid "Save device status"
@@ -15152,7 +15148,7 @@ msgstr "Komunikaty zostaną przekierowane na standardowe wyjście błędów."
 #: ../app/widgets/gimperrordialog.c:174
 #, c-format
 msgid "%s Message"
-msgstr "Komunikat: %s"
+msgstr "%s: komunikat"
 
 #: ../app/widgets/gimpfiledialog.c:330
 msgid "Automatically Detected"
@@ -15347,7 +15343,7 @@ msgstr "Brak podręcznika użytkownika programu GIMP"
 
 #: ../app/widgets/gimphelp.c:731
 msgid "_Read Online"
-msgstr "Pod_ręcznik w sieci"
+msgstr "Pod_ręcznik w Internecie"
 
 #: ../app/widgets/gimphelp.c:755
 msgid "The GIMP user manual is not installed on your computer."
@@ -15361,7 +15357,7 @@ msgid ""
 "preferences to use the online version."
 msgstr ""
 "Można zainstalować dodatkowe pakiety pomocy lub zmienić ustawienia, aby użyć "
-"wersji sieciowej."
+"wersji internetowej."
 
 #: ../app/widgets/gimphistogrameditor.c:99
 msgid "Mean:"
@@ -15587,12 +15583,12 @@ msgstr "Usunięcie wybranego ustawienia"
 #: ../app/widgets/gimpsizebox.c:458
 #, c-format
 msgid "%d × %d ppi"
-msgstr "%d×%d ppi"
+msgstr "%d×%d ppi"
 
 #: ../app/widgets/gimpsizebox.c:460
 #, c-format
 msgid "%d ppi"
-msgstr "%d ppi"
+msgstr "%d ppi"
 
 #: ../app/widgets/gimpstrokeeditor.c:129
 msgid "Line width:"
@@ -15670,12 +15666,12 @@ msgstr "_Ikona:"
 #: ../app/widgets/gimptemplateeditor.c:699
 #, c-format
 msgid "%d × %d ppi, %s"
-msgstr "%d×%d ppi, %s"
+msgstr "%d×%d ppi, %s"
 
 #: ../app/widgets/gimptemplateeditor.c:701
 #, c-format
 msgid "%d ppi, %s"
-msgstr "%d ppi, %s"
+msgstr "%d ppi, %s"
 
 #: ../app/widgets/gimptextbuffer-serialize.c:269
 #, c-format
@@ -15757,7 +15753,7 @@ msgstr "Brak zaznaczenia"
 #: ../app/widgets/gimpthumbbox.c:612 ../app/widgets/gimpthumbbox.c:633
 #, c-format
 msgid "Thumbnail %d of %d"
-msgstr "Miniatura %d z %d"
+msgstr "%d. miniatura z %d"
 
 #: ../app/widgets/gimpthumbbox.c:746 ../app/widgets/gimpthumbbox.c:756
 msgid "Creating preview..."
