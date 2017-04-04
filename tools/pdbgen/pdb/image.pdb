@@ -2377,7 +2377,7 @@ sub image_get_tattoo_state {
 
     $help = <<'HELP';
 This procedure returns the tattoo state of the image. Use only by
-save/load plugins that wish to preserve an images tattoo state. Using this
+save/load plug-ins that wish to preserve an images tattoo state. Using this
 function at other times will produce unexpected results.
 HELP
 
@@ -2407,7 +2407,7 @@ sub image_set_tattoo_state {
 
     $help = <<'HELP';
 This procedure sets the tattoo state of the image. Use only by
-save/load plugins that wish to preserve an images tattoo state. Using
+save/load plug-ins that wish to preserve an images tattoo state. Using
 this function at other times will produce unexpected results. A full
 check of uniqueness of states in layers, channels and paths will be
 performed by this procedure and a execution failure will be returned

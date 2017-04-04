@@ -2504,7 +2504,7 @@ gimp_image_set_unit (gint32   image_ID,
  * Returns the tattoo state associated with the image.
  *
  * This procedure returns the tattoo state of the image. Use only by
- * save/load plugins that wish to preserve an images tattoo state.
+ * save/load plug-ins that wish to preserve an images tattoo state.
  * Using this function at other times will produce unexpected results.
  *
  * Returns: The tattoo state.
@@ -2537,7 +2537,7 @@ gimp_image_get_tattoo_state (gint32 image_ID)
  * Set the tattoo state associated with the image.
  *
  * This procedure sets the tattoo state of the image. Use only by
- * save/load plugins that wish to preserve an images tattoo state.
+ * save/load plug-ins that wish to preserve an images tattoo state.
  * Using this function at other times will produce unexpected results.
  * A full check of uniqueness of states in layers, channels and paths
  * will be performed by this procedure and a execution failure will be

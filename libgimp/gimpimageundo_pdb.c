@@ -103,7 +103,7 @@ gimp_image_undo_group_end (gint32 image_ID)
  * Check if the image's undo stack is enabled.
  *
  * This procedure checks if the image's undo stack is currently enabled
- * or disabled. This is useful when several plugins or scripts call
+ * or disabled. This is useful when several plug-ins or scripts call
  * each other and want to check if their caller has already used
  * gimp_image_undo_disable() or gimp_image_undo_freeze().
  *
@@ -249,7 +249,7 @@ gimp_image_undo_freeze (gint32 image_ID)
  * stack as gimp_image_undo_enable() does, so is suited for situations
  * where one wishes to leave the undo stack in the same state in which
  * one found it despite non-destructively playing with the image in the
- * meantime. An example would be in-situ plugin previews. Balancing
+ * meantime. An example would be in-situ plug-in previews. Balancing
  * freezes and thaws and ensuring image consistency is the
  * responsibility of the caller.
  *

@@ -28,9 +28,9 @@
 /**
  * SECTION: gimpplugin
  * @title: gimpplugin
- * @short_description: Functions useful for plugins, e.g. registration and progress indicators.
+ * @short_description: Functions useful for plug-ins, e.g. registration and progress indicators.
  *
- * Functions useful for plugins, e.g. registration and progress
+ * Functions useful for plug-ins, e.g. registration and progress
  * indicators.
  **/
 

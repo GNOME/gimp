@@ -17,8 +17,8 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub plugins_query {
-    $blurb = 'Queries the plugin database for its contents.';
-    $help  = 'This procedure queries the contents of the plugin database.';
+    $blurb = 'Queries the plug-in database for its contents.';
+    $help  = 'This procedure queries the contents of the plug-in database.';
 
     &andy_pdb_misc('1998');
 
@@ -29,30 +29,30 @@ sub plugins_query {
 
     @outargs = (
 	{ name => 'menu_path', type => 'stringarray',
-	  desc => 'The menu path of the plugin',
+	  desc => 'The menu path of the plug-in',
 	  array => { name => 'num_plugins',
-		     desc => 'The number of plugins' } },
+		     desc => 'The number of plug-ins' } },
 	{ name => 'plugin_accelerator', type => 'stringarray',
 	  desc => 'String representing keyboard accelerator (could be empty
 		   string)',
 	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plugins' } },
+		     desc => 'The number of plug-ins' } },
 	{ name => 'plugin_location', type => 'stringarray',
-	  desc => 'Location of the plugin program',
+	  desc => 'Location of the plug-in program',
 	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plugins' } },
+		     desc => 'The number of plug-ins' } },
 	{ name => 'plugin_image_type', type => 'stringarray',
-	  desc => 'Type of image that this plugin will work on',
+	  desc => 'Type of image that this plug-in will work on',
 	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plugins' } },
+		     desc => 'The number of plug-ins' } },
 	{ name => 'plugin_install_time', type => 'int32array',
-	  desc => 'Time that the plugin was installed',
+	  desc => 'Time that the plug-in was installed',
 	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plugins' } },
+		     desc => 'The number of plug-ins' } },
 	{ name => 'plugin_real_name', type => 'stringarray',
-	  desc => 'The internal name of the plugin',
+	  desc => 'The internal name of the plug-in',
 	  array => { name => 'num_plugins', no_declare => 1,
-		     desc => 'The number of plugins' } }
+		     desc => 'The number of plug-ins' } }
     );
 
     %invoke = (
@@ -443,7 +443,7 @@ CODE
 
 $desc = 'Plug-in';
 $doc_title = 'gimpplugin';
-$doc_short_desc = 'Functions useful for plugins, e.g. registration and progress indicators.';
-$doc_long_desc = 'Functions useful for plugins, e.g. registration and progress indicators.';
+$doc_short_desc = 'Functions useful for plug-ins, e.g. registration and progress indicators.';
+$doc_long_desc = 'Functions useful for plug-ins, e.g. registration and progress indicators.';
 
 1;

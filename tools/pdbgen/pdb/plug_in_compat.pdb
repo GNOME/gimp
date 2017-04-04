@@ -2172,7 +2172,7 @@ sub plug_in_laplace {
     $blurb = 'High-resolution edge detection';
 
     $help = <<'HELP';
-This plugin creates one-pixel wide edges from the 
+This plug-in creates one-pixel wide edges from the
 image, with the value proportional to the gradient. 
 It uses the Laplace operator (a 3x3 kernel with -8 
 in the middle). The image has to be laplacered to 
@@ -2303,7 +2303,7 @@ sub plug_in_make_seamless {
     $blurb = 'Alters edges to make the image seamlessly tileable';
 
     $help = <<'HELP';
-This plugin creates a seamless tileable from the input drawable.
+This plug-in creates a seamless tileable from the input drawable.
 HELP
 
     &std_pdb_compat('gegl:tile-seamless');
@@ -3607,7 +3607,7 @@ sub plug_in_semiflatten {
     $blurb = 'Replace partial transparency with the current background color';
 
     $help = <<'HELP';
-This plugin flattens pixels in an RGBA image that aren't completely
+This plug-in flattens pixels in an RGBA image that aren't completely
 transparent against the current GIMP background color.
 HELP
 
@@ -3814,7 +3814,7 @@ sub plug_in_sobel {
     $blurb = 'Specialized direction-dependent edge detection';
 
     $help = <<'HELP';
-This plugin calculates the gradient with a sobel operator. The user
+This plug-in calculates the gradient with a sobel operator. The user
 can specify which direction to use. When both directions are used, the
 result is the RMS of the two gradients; if only one direction is used,
 the result either the absolute value of the gradient, or 127 +
@@ -4954,7 +4954,7 @@ CODE
 
 %exports = (app => [@procs], lib => []);
 
-$desc = 'Plug-In Compat';
+$desc = 'Plug-in Compat';
 $doc_title = 'gimpplugincompat';
 $doc_short_desc = 'Compatibility for removed plug-ins.';
 $doc_long_desc = 'Functions that perform the operation of removed plug-ins using GEGL operations or other GIMP internal functions.';
