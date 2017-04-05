@@ -42,6 +42,7 @@
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimpprogress.h"
+#include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimp-transform-utils.h"
 #include "core/gimp-utils.h"
@@ -174,6 +175,9 @@ static GimpItem *gimp_transform_tool_check_active_item      (GimpTransformTool  
                                                              GimpImage             *display,
                                                              gboolean               invisible_layer_ok,
                                                              GError               **error);
+static void      gimp_transform_tool_hide_active_item       (GimpTransformTool     *tr_tool,
+                                                             GimpItem              *item);
+static void      gimp_transform_tool_show_active_item       (GimpTransformTool     *tr_tool);
 
 static TransInfo * trans_info_new  (void);
 static void        trans_info_free (TransInfo *info);
@@ -299,6 +303,8 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       /*  Set the pointer to the active display  */
       tool->display  = display;
       tool->drawable = drawable;
+
+      gimp_transform_tool_hide_active_item (tr_tool, item);
 
       /*  Initialize the transform tool dialog */
       if (! tr_tool->gui)
@@ -1479,6 +1485,8 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
       tr_tool->prev_trans_info = NULL;
     }
 
+  gimp_transform_tool_show_active_item (tr_tool);
+
   tool->display  = NULL;
   tool->drawable = NULL;
  }
@@ -1875,6 +1883,41 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
     }
 
   return item;
+}
+
+static void
+gimp_transform_tool_hide_active_item (GimpTransformTool *tr_tool,
+                                      GimpItem          *item)
+{
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpDisplay          *display = GIMP_TOOL (tr_tool)->display;
+  GimpImage            *image   = gimp_display_get_image (display);
+
+  if (options->type == GIMP_TRANSFORM_TYPE_LAYER &&
+      GIMP_IS_LAYER (item)                       &&
+      gimp_item_get_visible (item)               &&
+      gimp_channel_is_empty (gimp_image_get_mask (image)))
+    {
+      tr_tool->hidden_item = item;
+      gimp_item_set_visible (item, FALSE, FALSE);
+
+      gimp_projection_flush (gimp_image_get_projection (image));
+    }
+}
+
+static void
+gimp_transform_tool_show_active_item (GimpTransformTool *tr_tool)
+{
+  if (tr_tool->hidden_item)
+    {
+      GimpDisplay *display = GIMP_TOOL (tr_tool)->display;
+      GimpImage   *image   = gimp_display_get_image (display);
+
+      gimp_item_set_visible (tr_tool->hidden_item, TRUE, FALSE);
+      tr_tool->hidden_item = NULL;
+
+      gimp_image_flush (image);
+    }
 }
 
 static TransInfo *

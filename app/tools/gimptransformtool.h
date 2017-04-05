@@ -110,6 +110,9 @@ struct _GimpTransformTool
   GList          *redo_list;          /*  list of all undone states,
                                           NULL when nothing undone */
 
+  GimpItem       *hidden_item;        /*  the item that was hidden during
+                                          the transform                      */
+
   TransformAction function;           /*  current tool activity              */
 
   gboolean        use_grid;           /*  does the tool use the grid         */
