@@ -214,22 +214,22 @@ static gboolean    popup_menu                (GtkWidget        *widget,
                                               AnimationDialog  *dialog);
 
 /* Animation Signals */
-static void        show_loading_progress     (Animation        *animation,
-                                              gdouble           load_rate,
-                                              AnimationDialog  *dialog);
+static void        show_loading_progress     (Animation         *animation,
+                                              gdouble            load_rate,
+                                              AnimationDialog   *dialog);
 static void        playback_range_changed    (AnimationPlayback *playback,
-                                              gint              playback_start,
-                                              gint              playback_stop,
-                                              AnimationDialog  *dialog);
-static void        proxy_changed             (Animation        *animation,
-                                              gdouble           fps,
-                                              AnimationDialog  *dialog);
-static void        framerate_changed         (Animation        *animation,
-                                              gdouble           fps,
-                                              AnimationDialog  *dialog);
+                                              gint               playback_start,
+                                              gint               playback_stop,
+                                              AnimationDialog   *dialog);
+static void        proxy_changed             (Animation         *animation,
+                                              gdouble            fps,
+                                              AnimationDialog   *dialog);
+static void        framerate_changed         (Animation         *animation,
+                                              gdouble            fps,
+                                              AnimationDialog   *dialog);
 static void        low_framerate_cb          (AnimationPlayback *playback,
-                                              gdouble           real_framerate,
-                                              AnimationDialog  *dialog);
+                                              gdouble            real_framerate,
+                                              AnimationDialog   *dialog);
 
 /* Rendering/Playing Functions */
 static gboolean    repaint_da                (GtkWidget        *darea,
