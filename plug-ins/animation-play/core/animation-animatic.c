@@ -30,6 +30,7 @@ typedef enum
 {
   START_STATE,
   ANIMATION_STATE,
+  PLAYBACK_STATE,
   SEQUENCE_STATE,
   PANEL_STATE,
   LAYER_STATE,
@@ -658,15 +659,22 @@ animation_animatic_start_element (GMarkupParseContext *context,
       status->state = ANIMATION_STATE;
       break;
     case ANIMATION_STATE:
-      if (g_strcmp0 (element_name, "sequence") != 0)
+      if (g_strcmp0 (element_name, "sequence") == 0)
+        {
+          status->state = SEQUENCE_STATE;
+          status->panel = -1;
+        }
+      else if (g_strcmp0 (element_name, "playback") == 0)
+        {
+          status->state = PLAYBACK_STATE;
+        }
+      else
         {
           g_set_error (error, 0, 0,
                        _("Unknown sequence tag: \"%s\"."),
                        element_name);
           return;
         }
-      status->state = SEQUENCE_STATE;
-      status->panel = -1;
       break;
     case SEQUENCE_STATE:
       if (g_strcmp0 (element_name, "panel") != 0)
@@ -700,6 +708,9 @@ animation_animatic_start_element (GMarkupParseContext *context,
       if (priv->combine[status->panel] != combine)
         priv->combine[status->panel] = combine;
       status->state = PANEL_STATE;
+      break;
+    case PLAYBACK_STATE:
+      /* Leave processing to the playback. */
       break;
     case PANEL_STATE:
       if (g_strcmp0 (element_name, "layer") != 0)
@@ -789,6 +800,9 @@ animation_animatic_end_element (GMarkupParseContext *context,
     case END_SEQUENCE_STATE:
     case ANIMATION_STATE:
       status->state = END_STATE;
+      break;
+    case PLAYBACK_STATE:
+      status->state = ANIMATION_STATE;
       break;
     case COMMENT_STATE:
       status->state = COMMENTS_STATE;
