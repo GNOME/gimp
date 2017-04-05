@@ -33,7 +33,6 @@
 #include "core/gimp.h"
 #include "core/gimpboundary.h"
 #include "core/gimpcontext.h"
-#include "core/gimpchannel.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
@@ -41,6 +40,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
+#include "core/gimplayermask.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
@@ -1893,8 +1893,10 @@ gimp_transform_tool_hide_active_item (GimpTransformTool *tr_tool,
   GimpDisplay          *display = GIMP_TOOL (tr_tool)->display;
   GimpImage            *image   = gimp_display_get_image (display);
 
+  /*  hide only complete layers and channels, not layer masks  */
   if (options->type == GIMP_TRANSFORM_TYPE_LAYER &&
-      GIMP_IS_LAYER (item)                       &&
+      GIMP_IS_DRAWABLE (item)                    &&
+      ! GIMP_IS_LAYER_MASK (item)                &&
       gimp_item_get_visible (item)               &&
       gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
