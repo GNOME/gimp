@@ -393,13 +393,13 @@ load_image (const gchar  *filename,
   height       = GUINT16_FROM_LE (pcx_header.y2) - offset_y + 1;
   bytesperline = GUINT16_FROM_LE (pcx_header.bytesperline);
 
-  if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
+  if ((width <= 0) || (width > GIMP_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image width: %d"), width);
       fclose (fd);
       return -1;
     }
-  if ((height < 0) || (height > GIMP_MAX_IMAGE_SIZE))
+  if ((height <= 0) || (height > GIMP_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image height: %d"), height);
       fclose (fd);
