@@ -409,7 +409,7 @@ load_image (const gchar  *filename,
       fclose (fd);
       return -1;
     }
-  if (bytesperline < (width * pcx_header.bpp) / 8)
+  if (bytesperline < ((width * pcx_header.bpp + 7) / 8))
     {
       g_message (_("Invalid number of bytes per line in PCX header"));
       fclose (fd);
