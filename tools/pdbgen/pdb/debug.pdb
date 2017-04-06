@@ -92,8 +92,7 @@ static gint    gimp_debug_timer_counter = 0;
 CODE
 
 
-@procs = qw(debug_timer_start
-            debug_timer_end);
+@procs = qw(debug_timer_start debug_timer_end);
 
 %exports = (app => [@procs], lib => [@procs]);
 
