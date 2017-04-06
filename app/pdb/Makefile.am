@@ -41,6 +41,7 @@ libappinternal_procs_a_SOURCES = \
 	channel-cmds.c			\
 	color-cmds.c			\
 	context-cmds.c			\
+	debug-cmds.c			\
 	display-cmds.c			\
 	drawable-cmds.c			\
 	drawable-color-cmds.c		\

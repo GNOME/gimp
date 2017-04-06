@@ -89,6 +89,7 @@ PDB_WRAPPERS_C = \
 	gimpchannel_pdb.c		\
 	gimpcolor_pdb.c			\
 	gimpcontext_pdb.c		\
+	gimpdebug_pdb.c			\
 	gimpdisplay_pdb.c		\
 	gimpdrawable_pdb.c		\
 	gimpdrawablecolor_pdb.c		\
@@ -146,6 +147,7 @@ PDB_WRAPPERS_H = \
 	gimpchannel_pdb.h		\
 	gimpcolor_pdb.h			\
 	gimpcontext_pdb.h		\
+	gimpdebug_pdb.h			\
 	gimpdisplay_pdb.h		\
 	gimpdrawable_pdb.h		\
 	gimpdrawablecolor_pdb.h		\

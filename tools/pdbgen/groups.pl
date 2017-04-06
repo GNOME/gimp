@@ -7,6 +7,7 @@
     channel
     color
     context
+    debug
     display
     drawable
     drawable_color

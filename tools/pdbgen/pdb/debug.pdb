@@ -1,0 +1,105 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub debug_timer_start {
+    $blurb = 'Starts measuring elapsed time.';
+
+    $help = <<'HELP';
+This procedure starts a timer, measuring the elapsed time since the call.
+Each call to this procedure should be matched by a call to
+gimp_debug_timer_end(), which returns the elapsed time.
+
+If there is already an active timer, it is not affected by the call, however, a
+matching gimp_debug_timer_end() call is still required.
+HELP
+
+    &ell_pdb_misc('2017');
+
+    &std_pdb_debug();
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_debug_timer_counter++ == 0)
+    gimp_debug_timer = g_timer_new ();
+}
+CODE
+    );
+}
+
+sub debug_timer_end {
+    $blurb = 'Finishes measuring elapsed time.';
+
+    $help = <<'HELP';
+This procedure stops the timer started by a previous gimp_debug_timer_start()
+call, and prints and returns the elapsed time.
+
+If there was already an active timer at the time of corresponding call to
+gimp_debug_timer_start(), a dummy value is returned.
+HELP
+
+    &ell_pdb_misc('2017');
+
+    &std_pdb_debug();
+
+    @outargs = (
+        { name => 'elapsed', type => 'float',
+          desc => 'The elapsed time, in seconds' }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  elapsed = 0.0;
+
+  if (gimp_debug_timer_counter == 0)
+    success = FALSE;
+  else if (--gimp_debug_timer_counter == 0)
+    {
+      elapsed = g_timer_elapsed (gimp_debug_timer, NULL);
+
+      g_printerr ("GIMP debug timer: %g seconds\n", elapsed);
+
+      g_timer_destroy (gimp_debug_timer);
+
+      gimp_debug_timer = NULL;
+    }
+}
+CODE
+    );
+}
+
+
+$extra{app}->{code} = <<'CODE';
+static GTimer *gimp_debug_timer         = NULL;
+static gint    gimp_debug_timer_counter = 0;
+CODE
+
+
+@procs = qw(debug_timer_start
+            debug_timer_end);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Debug';
+$doc_title = 'gimpdebug';
+$doc_short_desc = 'Debug utility functions';
+$doc_long_desc = 'Miscellaneous debug utility functions. Not part of the stable library interface.';
+
+1;

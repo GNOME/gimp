@@ -9,6 +9,7 @@ pdb_sources = \
 	pdb/channel.pdb			\
 	pdb/color.pdb			\
 	pdb/context.pdb			\
+	pdb/debug.pdb			\
 	pdb/display.pdb			\
 	pdb/drawable.pdb		\
 	pdb/drawable_color.pdb		\

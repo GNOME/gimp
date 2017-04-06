@@ -176,5 +176,14 @@ sub std_pdb_compat {
     $author = $copyright = "Compatibility procedure. Please see '@_' for credits.";
 }
 
+sub std_pdb_debug {
+    $help .= <<'HELP';
+
+
+This is a debug utility procedure. It is subject to change at any point,
+and should not be used in production.
+HELP
+}
+
 
 1;
