@@ -19,6 +19,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
@@ -45,10 +47,8 @@ static void    gimp_brush_transform_bounding_box     (GimpBrush         *brush,
                                                       gint              *width,
                                                       gint              *height);
 
-static gdouble gimp_brush_transform_array_sum        (gfloat            *arr,
-                                                      gint               len);
-static void    gimp_brush_transform_fill_blur_kernel (gfloat            *arr,
-                                                      gint               len);
+static void    gimp_brush_transform_blur             (GimpTempBuf       *buf,
+                                                      gint               r);
 static gint    gimp_brush_transform_blur_kernel_size (gint               height,
                                                       gint               width,
                                                       gdouble            hardness);
@@ -347,36 +347,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   if (hardness < 1.0)
     {
-      GimpTempBuf *blur_src;
-      GeglBuffer  *src_buffer;
-      GeglBuffer  *dest_buffer;
-      gint         kernel_len  = kernel_size * kernel_size;
-      gfloat       blur_kernel[kernel_len];
-
-      gimp_brush_transform_fill_blur_kernel (blur_kernel, kernel_len);
-
-      blur_src = gimp_temp_buf_copy (result);
-
-      src_buffer  = gimp_temp_buf_create_buffer (blur_src);
-      dest_buffer = gimp_temp_buf_create_buffer (result);
-
-      gimp_temp_buf_unref (blur_src);
-
-      gimp_gegl_convolve (src_buffer,
-                          GEGL_RECTANGLE (0, 0,
-                                          gimp_temp_buf_get_width  (blur_src),
-                                          gimp_temp_buf_get_height (blur_src)),
-                          dest_buffer,
-                          GEGL_RECTANGLE (0, 0,
-                                          gimp_temp_buf_get_width  (result),
-                                          gimp_temp_buf_get_height (result)),
-                          blur_kernel, kernel_size,
-                          gimp_brush_transform_array_sum (blur_kernel,
-                                                          kernel_len),
-                          GIMP_NORMAL_CONVOL, FALSE);
-
-      g_object_unref (src_buffer);
-      g_object_unref (dest_buffer);
+      gimp_brush_transform_blur (result, kernel_size / 2);
     }
 
   return result;
@@ -658,36 +629,7 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
   if (hardness < 1.0)
     {
-      GimpTempBuf *blur_src;
-      GeglBuffer  *src_buffer;
-      GeglBuffer  *dest_buffer;
-      gint         kernel_len  = kernel_size * kernel_size;
-      gfloat       blur_kernel[kernel_len];
-
-      gimp_brush_transform_fill_blur_kernel (blur_kernel, kernel_len);
-
-      blur_src = gimp_temp_buf_copy (result);
-
-      src_buffer  = gimp_temp_buf_create_buffer (blur_src);
-      dest_buffer = gimp_temp_buf_create_buffer (result);
-
-      gimp_temp_buf_unref (blur_src);
-
-      gimp_gegl_convolve (src_buffer,
-                          GEGL_RECTANGLE (0, 0,
-                                          gimp_temp_buf_get_width  (blur_src),
-                                          gimp_temp_buf_get_height (blur_src)),
-                          dest_buffer,
-                          GEGL_RECTANGLE (0, 0,
-                                          gimp_temp_buf_get_width  (result),
-                                          gimp_temp_buf_get_height (result)),
-                          blur_kernel, kernel_size,
-                          gimp_brush_transform_array_sum (blur_kernel,
-                                                          kernel_len),
-                          GIMP_NORMAL_CONVOL, FALSE);
-
-      g_object_unref (src_buffer);
-      g_object_unref (dest_buffer);
+      gimp_brush_transform_blur (result, kernel_size / 2);
     }
 
   return result;
@@ -775,35 +717,178 @@ gimp_brush_transform_bounding_box (GimpBrush         *brush,
   *height = MAX (1, *height);
 }
 
-static gdouble
-gimp_brush_transform_array_sum (gfloat *arr,
-                                gint    len)
-{
-  gfloat total = 0;
-  gint   i;
-
-  for (i = 0; i < len; i++)
-    {
-      total += arr [i];
-    }
-
-  return total;
-}
-
+/* Blurs the brush mask/pixmap using a convolution of the form:
+ *
+ *   12  11  10   9   8
+ *    7   6   5   4   3
+ *    2   1   0   1   2
+ *    3   4   5   6   7
+ *    8   9  10  11  12
+ *
+ * (i.e., an array, wrapped into a matrix, whose i-th element is
+ * `abs (i - a / 2)`, where `a` is the length of the array.)  `r` specifies the
+ * convolution kernel's radius.
+ */
 static void
-gimp_brush_transform_fill_blur_kernel (gfloat *arr,
-                                       gint    len)
+gimp_brush_transform_blur (GimpTempBuf *buf,
+                           gint         r)
 {
-  gint half_point = ((gint) len / 2) + 1;
-  gint i;
+  typedef struct
+  {
+    gint sum;
+    gint weighted_sum;
+    gint middle_sum;
+  } Sums;
 
-  for (i = 0; i < len; i++)
+  const Babl *format     = gimp_temp_buf_get_format (buf);
+  gint        components = babl_format_get_n_components (format);
+  gint        width      = gimp_temp_buf_get_width (buf);
+  gint        height     = gimp_temp_buf_get_height (buf);
+  gint        stride     = components * width;
+  guchar     *data       = gimp_temp_buf_get_data (buf);
+  gint        rw         = MIN (r, width - 1);
+  gint        rh         = MIN (r, height - 1);
+  gint        n          = 2 * r + 1;
+  gint        weight     = (n * n / 2) * (n * n / 2 + 1);
+  gint        x;
+  gint        y;
+  gint        c;
+  Sums       *sums;
+  guchar     *d;
+  Sums       *s;
+
+  if (rw <= 0 || rh <= 0)
+    return;
+
+  sums = g_new (Sums, width * height * components);
+
+  d = data;
+  s = sums;
+
+  for (y = 0; y < height; y++)
     {
-      if (i < half_point)
-        arr [i] = half_point - i;
-      else
-        arr [i] = i - half_point;
+      struct
+      {
+        gint sum;
+        gint weighted_sum;
+        gint leading_sum;
+        gint leading_weighted_sum;
+      } acc[components];
+
+      memset (acc, 0, sizeof (acc));
+
+      for (x = 0; x <= rw; x++)
+        {
+          for (c = 0; c < components; c++)
+            {
+              acc[c].sum          +=      d[components * x + c];
+              acc[c].weighted_sum += -x * d[components * x + c];
+            }
+        }
+
+      for (x = 0; x < width; x++)
+        {
+          for (c = 0; c < components; c++)
+            {
+              if (x > 0)
+                {
+                  acc[c].weighted_sum         += acc[c].sum;
+                  acc[c].leading_weighted_sum += acc[c].leading_sum;
+
+                  if (x < width - r)
+                    {
+                      acc[c].sum              +=      d[components * r];
+                      acc[c].weighted_sum     += -r * d[components * r];
+                    }
+                }
+
+              acc[c].leading_sum += d[0];
+
+              s->sum          = acc[c].sum;
+              s->weighted_sum = acc[c].weighted_sum;
+              s->middle_sum   = 2 * acc[c].leading_weighted_sum -
+                                acc[c].weighted_sum;
+
+              if (x >= r)
+                {
+                  acc[c].sum                  -=     d[components * -r];
+                  acc[c].weighted_sum         -= r * d[components * -r];
+                  acc[c].leading_sum          -=     d[components * -r];
+                  acc[c].leading_weighted_sum -= r * d[components * -r];
+                }
+
+              d++;
+              s++;
+            }
+        }
     }
+
+  for (x = 0; x < width; x++)
+    {
+      struct
+      {
+        gint weighted_sum;
+        gint leading_sum;
+        gint trailing_sum;
+      } acc[components];
+
+      memset (acc, 0, sizeof (acc));
+
+      d = data + components * x;
+      s = sums + components * x;
+
+      for (y = 1; y <= rh; y++)
+        {
+          for (c = 0; c < components; c++)
+            {
+              acc[c].weighted_sum += n * y * s[stride * y + c].sum -
+                                     s[stride * y + c].weighted_sum;
+              acc[c].trailing_sum += s[stride * y + c].sum;
+            }
+        }
+
+      for (y = 0; y < height; y++)
+        {
+          for (c = 0; c < components; c++)
+            {
+              if (y > 0)
+                {
+                  acc[c].weighted_sum += s->weighted_sum          +
+                                         n * (acc[c].leading_sum  -
+                                              acc[c].trailing_sum);
+                  acc[c].trailing_sum -= s->sum;
+
+                  if (y < height - r)
+                    {
+                      acc[c].weighted_sum += n * r * s[stride * r].sum -
+                                             s[stride * r].weighted_sum;
+                      acc[c].trailing_sum += s[stride * r].sum;
+                    }
+                }
+
+              acc[c].leading_sum  += s->sum;
+
+              *d = (acc[c].weighted_sum + s->middle_sum + weight / 2) / weight;
+
+              acc[c].weighted_sum += s->weighted_sum;
+
+              if (y >= r)
+                {
+                  acc[c].weighted_sum -= n * r * s[stride * -r].sum +
+                                         s[stride * -r].weighted_sum;
+                  acc[c].leading_sum  -= s[stride * -r].sum;
+                }
+
+              d++;
+              s++;
+            }
+
+          d += stride - components;
+          s += stride - components;
+        }
+    }
+
+  g_free (sums);
 }
 
 static gint
