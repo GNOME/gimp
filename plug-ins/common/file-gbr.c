@@ -478,7 +478,7 @@ load_image (GFile   *file,
 
   /* Now there's just raw data left. */
 
-  size = bh.width * bh.height * bh.bytes;
+  size = (gsize) bh.width * bh.height * bh.bytes;
   brush_buf = g_malloc (size);
 
   if (! g_input_stream_read_all (input, brush_buf, size,
@@ -528,7 +528,7 @@ load_image (GFile   *file,
                 gint    i;
 
                 bh.bytes = 4;
-                brush_buf = g_malloc (4 * bh.width * bh.height);
+                brush_buf = g_malloc ((gsize) bh.width * bh.height * 4);
 
                 for (i = 0; i < ph.width * ph.height; i++)
                   {
