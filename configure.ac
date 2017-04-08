@@ -736,7 +736,7 @@ AC_MSG_RESULT($have_gtk_2_26)
 # See bugs 769550 and 781020.
 have_recommended_gtk=""
 if test "x$platform_win32" = "xyes"; then
-    PKG_CHECK_MODULES(RECOMMENDED_WIN32_GTK, gtk+2.0 >= gtk_win32_recommended_version,
+    PKG_CHECK_MODULES(RECOMMENDED_WIN32_GTK, gtk+-2.0 >= gtk_win32_recommended_version,
                       have_recommended_gtk="yes", have_recommended_gtk="no")
 
     if test "x$have_recommended_gtk" = xno; then
