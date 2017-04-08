@@ -685,6 +685,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
         }
       else
         {
+#if 0
           /* This code makes sure that brushes using blur for hardness
            * (all of them but generated) are blurred once and no more.
            * It also makes hardnes dynamics not work for these brushes.
@@ -706,6 +707,7 @@ gimp_brush_transform_mask (GimpBrush *brush,
             {
               effective_hardness = 1.0; /*Hardness has already been applied*/
             }
+#endif
 
           mask = GIMP_BRUSH_GET_CLASS (brush)->transform_mask (brush,
                                                                scale,
@@ -787,6 +789,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
         }
       else
         {
+#if 0
          if (! brush->priv->blured_pixmap &&
              ! GIMP_IS_BRUSH_GENERATED(brush) &&
              ! GIMP_IS_BRUSH_PIPE(brush) /*Cant cache pipes. Sanely anway*/
@@ -803,6 +806,7 @@ gimp_brush_transform_pixmap (GimpBrush *brush,
           if (brush->priv->blured_pixmap) {
             effective_hardness = 1.0; /*Hardness has already been applied*/
           }
+#endif
 
           pixmap = GIMP_BRUSH_GET_CLASS (brush)->transform_pixmap (brush,
                                                                    scale,
@@ -926,6 +930,7 @@ gimp_brush_get_pixmap (GimpBrush *brush)
 void
 gimp_brush_flush_blur_caches (GimpBrush *brush)
 {
+#if 0
   if (brush->priv->blured_mask)
     {
       gimp_temp_buf_unref (brush->priv->blured_mask);
@@ -946,7 +951,7 @@ gimp_brush_flush_blur_caches (GimpBrush *brush)
 
   if (brush->priv->boundary_cache)
     gimp_brush_cache_clear (brush->priv->boundary_cache);
-
+#endif
 }
 
 gdouble
