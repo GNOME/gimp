@@ -932,7 +932,6 @@ gimp_brush_transform_adjust_hardness_matrix (gdouble      width,
                                              gdouble      blur_radius,
                                              GimpMatrix3 *matrix)
 {
-
   gdouble scale;
 
   if (blur_radius == 0.0)
@@ -941,5 +940,7 @@ gimp_brush_transform_adjust_hardness_matrix (gdouble      width,
   scale = (MIN (width, height) - 2.0 * blur_radius) / MIN (width, height);
 
   gimp_matrix3_scale (matrix, scale, scale);
-  gimp_matrix3_translate (matrix, blur_radius, blur_radius);
+  gimp_matrix3_translate (matrix,
+                          (1.0 - scale) * width  / 2.0,
+                          (1.0 - scale) * height / 2.0);
 }
