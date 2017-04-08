@@ -729,9 +729,11 @@ else
 fi
 AC_MSG_RESULT($have_gtk_2_26)
 
-# Windows platform have broken shortcuts on non-latin locales.
-# Display a warning when compiling with gtk+ < 2.24.32.
-# See bug 769550.
+# Windows platform have a few bugs with GTK+ < 2.24.32.
+# In particular: broken shortcuts on non-latin locales.
+# Also SVG icons will be broken, hence --enable-vector-icons cannot be used.
+# Display a warning when necessary.
+# See bugs 769550 and 781020.
 have_recommended_gtk=""
 if test "x$platform_win32" = "xyes"; then
     PKG_CHECK_MODULES(RECOMMENDED_WIN32_GTK, gtk+2.0 >= gtk_win32_recommended_version,
@@ -741,7 +743,8 @@ if test "x$platform_win32" = "xyes"; then
         have_recommended_gtk="
 WARNING: Your GTK+ version is `$PKG_CONFIG --modversion gtk+-2.0`.
          The recommended GTK+ version under Windows is $GTK_WIN32_RECOMMENDED_VERSION or over.
-         If you continue without updating GTK+, shortcuts won't work with non-latin locales."
+         If you continue without updating GTK+, shortcuts won't work with
+         non-latin locales, and vector icons will be disabled."
     else
         have_recommended_gtk=""
     fi
@@ -2099,26 +2102,30 @@ AC_ARG_ENABLE(vector-icons, [  --disable-vector-icons  use raster icons rather t
               enable_vector_icons=auto)
 
 if test "x$enable_vector_icons" != "xno"; then
-  # Check if librsvg was built with --disable-pixbuf-loader.
-  gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
-  # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
-  # error: cannot check for file existence when cross compiling
-  # So let's test files the shell way.
-  if (test "x$platform_win32" = "xyes" &&
-      test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
-     test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
-    # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
-    # to make sure we use the native pkg-config (in case we cross-compile).
-    if pkg-config --atleast-version=glib_required_version glib-2.0 &&
-       pkg-config gio-2.0; then
-      NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
-      NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
-      enable_vector_icons="yes"
-    else
-      enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
-    fi
+  if test "x$have_recommended_gtk" != "x"; then
+      enable_vector_icons="no (gtk+-2-0 < gtk_win32_recommended_version)"
   else
-    enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
+    # Check if librsvg was built with --disable-pixbuf-loader.
+    gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
+    # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
+    # error: cannot check for file existence when cross compiling
+    # So let's test files the shell way.
+    if (test "x$platform_win32" = "xyes" &&
+        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
+       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
+      # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
+      # to make sure we use the native pkg-config (in case we cross-compile).
+      if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+         pkg-config gio-2.0; then
+        NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
+        NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+        enable_vector_icons="yes"
+      else
+        enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
+      fi
+    else
+      enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
+    fi
   fi
 fi
 
