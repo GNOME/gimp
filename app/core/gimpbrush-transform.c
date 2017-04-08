@@ -761,7 +761,7 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
   gint        rh           = MIN (r, height - 1);
   gfloat      n            = 2 * r + 1;
   gfloat      n_r          = n * r;
-  gfloat      weight       = (n * n / 2) * (n * n / 2 + 1);
+  gfloat      weight       = floor (n * n / 2) * (floor (n * n / 2) + 1);
   gfloat      weight_inv   = 1 / weight;
   gint        x;
   gint        y;
