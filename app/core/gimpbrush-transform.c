@@ -717,7 +717,7 @@ gimp_brush_transform_bounding_box (GimpBrush         *brush,
   *height = MAX (1, *height);
 }
 
-/* Blurs the brush mask/pixmap using a convolution of the form:
+/* Blurs the brush mask/pixmap, in place, using a convolution of the form:
  *
  *   12  11  10   9   8
  *    7   6   5   4   3
@@ -740,16 +740,20 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
     gint middle_sum;
   } Sums;
 
-  const Babl *format     = gimp_temp_buf_get_format (buf);
-  gint        components = babl_format_get_n_components (format);
-  gint        width      = gimp_temp_buf_get_width (buf);
-  gint        height     = gimp_temp_buf_get_height (buf);
-  gint        stride     = components * width;
-  guchar     *data       = gimp_temp_buf_get_data (buf);
-  gint        rw         = MIN (r, width - 1);
-  gint        rh         = MIN (r, height - 1);
-  gint        n          = 2 * r + 1;
-  gint        weight     = (n * n / 2) * (n * n / 2 + 1);
+  const Babl *format       = gimp_temp_buf_get_format (buf);
+  gint        components   = babl_format_get_n_components (format);
+  gint        components_r = components * r;
+  gint        width        = gimp_temp_buf_get_width (buf);
+  gint        height       = gimp_temp_buf_get_height (buf);
+  gint        stride       = components * width;
+  gint        stride_r     = stride * r;
+  guchar     *data         = gimp_temp_buf_get_data (buf);
+  gint        rw           = MIN (r, width - 1);
+  gint        rh           = MIN (r, height - 1);
+  gfloat      n            = 2 * r + 1;
+  gfloat      n_r          = n * r;
+  gfloat      weight       = (n * n / 2) * (n * n / 2 + 1);
+  gfloat      weight_inv   = 1 / weight;
   gint        x;
   gint        y;
   gint        c;
@@ -767,6 +771,8 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
 
   for (y = 0; y < height; y++)
     {
+      const guchar *p;
+
       struct
       {
         gint sum;
@@ -777,12 +783,16 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
 
       memset (acc, 0, sizeof (acc));
 
+      p = d;
+
       for (x = 0; x <= rw; x++)
         {
           for (c = 0; c < components; c++)
             {
-              acc[c].sum          +=      d[components * x + c];
-              acc[c].weighted_sum += -x * d[components * x + c];
+              acc[c].sum          +=      *p;
+              acc[c].weighted_sum += -x * *p;
+
+              p++;
             }
         }
 
@@ -797,8 +807,8 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
 
                   if (x < width - r)
                     {
-                      acc[c].sum              +=      d[components * r];
-                      acc[c].weighted_sum     += -r * d[components * r];
+                      acc[c].sum              +=      d[components_r];
+                      acc[c].weighted_sum     += -r * d[components_r];
                     }
                 }
 
@@ -811,10 +821,10 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
 
               if (x >= r)
                 {
-                  acc[c].sum                  -=     d[components * -r];
-                  acc[c].weighted_sum         -= r * d[components * -r];
-                  acc[c].leading_sum          -=     d[components * -r];
-                  acc[c].leading_weighted_sum -= r * d[components * -r];
+                  acc[c].sum                  -=     d[-components_r];
+                  acc[c].weighted_sum         -= r * d[-components_r];
+                  acc[c].leading_sum          -=     d[-components_r];
+                  acc[c].leading_weighted_sum -= r * d[-components_r];
                 }
 
               d++;
@@ -825,11 +835,14 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
 
   for (x = 0; x < width; x++)
     {
+      const Sums *p;
+      gfloat      n_y;
+
       struct
       {
-        gint weighted_sum;
-        gint leading_sum;
-        gint trailing_sum;
+        gfloat weighted_sum;
+        gint   leading_sum;
+        gint   trailing_sum;
       } acc[components];
 
       memset (acc, 0, sizeof (acc));
@@ -837,14 +850,19 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
       d = data + components * x;
       s = sums + components * x;
 
-      for (y = 1; y <= rh; y++)
+      p = s + stride;
+
+      for (y = 1, n_y = n; y <= rh; y++, n_y += n)
         {
           for (c = 0; c < components; c++)
             {
-              acc[c].weighted_sum += n * y * s[stride * y + c].sum -
-                                     s[stride * y + c].weighted_sum;
-              acc[c].trailing_sum += s[stride * y + c].sum;
+              acc[c].weighted_sum += n_y * p->sum - p->weighted_sum;
+              acc[c].trailing_sum += p->sum;
+
+              p++;
             }
+
+          p += stride - components;
         }
 
       for (y = 0; y < height; y++)
@@ -860,23 +878,23 @@ gimp_brush_transform_blur (GimpTempBuf *buf,
 
                   if (y < height - r)
                     {
-                      acc[c].weighted_sum += n * r * s[stride * r].sum -
-                                             s[stride * r].weighted_sum;
-                      acc[c].trailing_sum += s[stride * r].sum;
+                      acc[c].weighted_sum += n_r * s[stride_r].sum -
+                                             s[stride_r].weighted_sum;
+                      acc[c].trailing_sum += s[stride_r].sum;
                     }
                 }
 
               acc[c].leading_sum  += s->sum;
 
-              *d = (acc[c].weighted_sum + s->middle_sum + weight / 2) / weight;
+              *d = (acc[c].weighted_sum + s->middle_sum) * weight_inv + 0.5f;
 
               acc[c].weighted_sum += s->weighted_sum;
 
               if (y >= r)
                 {
-                  acc[c].weighted_sum -= n * r * s[stride * -r].sum +
-                                         s[stride * -r].weighted_sum;
-                  acc[c].leading_sum  -= s[stride * -r].sum;
+                  acc[c].weighted_sum -= n_r * s[-stride_r].sum +
+                                         s[-stride_r].weighted_sum;
+                  acc[c].leading_sum  -= s[-stride_r].sum;
                 }
 
               d++;
