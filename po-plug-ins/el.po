@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-03-10 03:36+0000\n"
-"PO-Revision-Date: 2017-03-11 11:45+0300\n"
+"POT-Creation-Date: 2017-04-04 21:00+0000\n"
+"PO-Revision-Date: 2017-04-09 21:23+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: team@lists.gnome.gr\n"
 "Language: el\n"
@@ -5400,8 +5400,9 @@ msgstr "Εμφάνιση πληροφοριών για τα πρόσθετα"
 
 #
 #: ../plug-ins/common/plugin-browser.c:144
-msgid "_Plug-In Browser"
-msgstr "Εξερευνητής _προσθέτου"
+#| msgid "_Plug-In Browser"
+msgid "_Plug-in Browser"
+msgstr "Περιηγητής _προσθέτου"
 
 #: ../plug-ins/common/plugin-browser.c:363
 msgid "Searching by name"
@@ -5431,7 +5432,8 @@ msgstr "Χωρίς ταυτοποίηση"
 
 #
 #: ../plug-ins/common/plugin-browser.c:546
-msgid "Plug-In Browser"
+#| msgid "Plug-In Browser"
+msgid "Plug-in Browser"
 msgstr "Περιηγητής πρόσθετου"
 
 #
@@ -5953,7 +5955,6 @@ msgstr "Διπ_λότυπο"
 #: ../plug-ins/gradient-flare/gradient-flare.c:2929
 #: ../plug-ins/gradient-flare/gradient-flare.c:3210
 #: ../plug-ins/ifs-compose/ifs-compose.c:1031
-#| msgid "Delete"
 msgid "_Delete"
 msgstr "_Διαγραφή"
 
@@ -7932,12 +7933,10 @@ msgid "R_edraw preview"
 msgstr "Προ_επισκόπηση επανασχεδίασης"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
-#| msgid "Zoom in"
 msgid "Zoom _In"
 msgstr "_Μεγέθυνση"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
-#| msgid "Zoom out"
 msgid "Zoom _Out"
 msgstr "_Σμίκρυνση"
 
@@ -7948,7 +7947,6 @@ msgstr "Αναίρεση αλλαγής τελευταίας εστίασης"
 #
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
 #: ../plug-ins/ifs-compose/ifs-compose.c:1039
-#| msgid "Redo"
 msgid "_Redo"
 msgstr "Α_κύρωση αναίρεσης"
 
@@ -8392,7 +8390,6 @@ msgstr "Πλέ_γμα"
 
 #
 #: ../plug-ins/gfig/gfig-dialog.c:897
-#| msgid "Preferences"
 msgid "_Preferences..."
 msgstr "_Προτιμήσεις..."
 
@@ -8411,7 +8408,6 @@ msgid "Lower selected object"
 msgstr "Βύθιση επιλεγμένου αντικειμένου"
 
 #: ../plug-ins/gfig/gfig-dialog.c:909
-#| msgid "pixels from _top"
 msgid "Raise to _top"
 msgstr "Ανύψωση στην κορ_υφή"
 
@@ -8421,7 +8417,6 @@ msgstr "Ανύψωση επιλεγμένου αντικειμένου στην 
 
 #
 #: ../plug-ins/gfig/gfig-dialog.c:913
-#| msgid "To _bottom"
 msgid "Lower to _bottom"
 msgstr "Βύθιση στον _πυθμένα"
 
@@ -8432,8 +8427,6 @@ msgstr "Βύθιση επιλεγμένου αντικειμένου στον π
 
 #
 #: ../plug-ins/gfig/gfig-dialog.c:917
-#| msgctxt "search"
-#| msgid "_Previous"
 msgid "_Previous"
 msgstr "_Προηγούμενο"
 
@@ -8442,8 +8435,6 @@ msgid "Show previous object"
 msgstr "Εμφάνιση προηγούμενου αντικειμένου"
 
 #: ../plug-ins/gfig/gfig-dialog.c:921
-#| msgctxt "search"
-#| msgid "_Next"
 msgid "_Next"
 msgstr "Επόμε_νο"
 
@@ -8452,7 +8443,6 @@ msgid "Show next object"
 msgstr "Εμφάνιση επόμενου αντικειμένου"
 
 #: ../plug-ins/gfig/gfig-dialog.c:925
-#| msgid "Show all objects"
 msgid "Show _all"
 msgstr "Εμφάνιση ό_λων"
 
@@ -8732,7 +8722,6 @@ msgstr "Επιλογή:"
 
 #
 #: ../plug-ins/gimpressionist/brush.c:586
-#| msgid "Save _As..."
 msgid "Save _as"
 msgstr "Αποθήκευση _ως"
 
@@ -10047,7 +10036,6 @@ msgstr "Επόμε_νο"
 
 #
 #: ../plug-ins/help-browser/dialog.c:1188
-#| msgid "_Close"
 msgctxt "search"
 msgid "_Close"
 msgstr "_Κλείσιμο"
@@ -10279,7 +10267,8 @@ msgid "Open IFS Fractal file"
 msgstr "Άνοιγμα αρχείου κλαστικού IFS"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-msgid "Image Map Plug-In"
+#| msgid "Image Map Plug-In"
+msgid "Image Map Plug-in"
 msgstr "Πρόσθετο απεικόνισης εικόνας"
 
 #: ../plug-ins/imagemap/imap_about.c:46
