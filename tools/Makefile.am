@@ -43,6 +43,7 @@ test_clipboard_SOURCES = test-clipboard.c
 test_clipboard_LDADD = $(GTK_LIBS)
 
 
+if ENABLE_VECTOR_ICONS
 invert-svg$(BUILD_EXEEXT): invert-svg.c
 	$(CC_FOR_BUILD) -o $@ $< $(NATIVE_GLIB_LIBS) $(NATIVE_GLIB_CFLAGS)
 
@@ -57,6 +58,11 @@ invert-svg$(BUILD_EXEEXT): invert-svg.c
 
 #compute_svg_viewbox_LDADD = $(SVG_LIBS)
 
+# Build tools which must be built for the host platform.
+all: invert-svg$(BUILD_EXEEXT)
+
+DISTCLEANFILES = invert-svg$(BUILD_EXEEXT)
+endif
 
 AM_CPPFLAGS = \
 	-DGIMP_APP_VERSION=\"@GIMP_APP_VERSION@\"		\
@@ -89,7 +95,3 @@ EXTRA_DIST = \
 	gimppath2svg.py	\
 	invert-svg.c
 
-# Build tools which must be built for the host platform.
-all: invert-svg$(BUILD_EXEEXT)
-
-DISTCLEANFILES = invert-svg$(BUILD_EXEEXT)
