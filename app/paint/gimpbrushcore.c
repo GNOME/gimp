@@ -1483,6 +1483,9 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
 {
   const GimpTempBuf *mask;
 
+  if (dynamic_force <= 0.0)
+    return NULL;
+
   mask = gimp_brush_core_transform_mask (core, core->brush, op);
 
   if (! mask)

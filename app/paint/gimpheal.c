@@ -506,6 +506,9 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                                              GIMP_BRUSH_HARD,
                                              force);
 
+  if (! mask_buf)
+    return;
+
   /* check that all buffers are of the same size */
   if (src_rect->width  != gegl_buffer_get_width  (paint_buffer) ||
       src_rect->height != gegl_buffer_get_height (paint_buffer))

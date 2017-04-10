@@ -951,7 +951,7 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
   dynamic_force = gimp_dynamics_is_output_enabled (dynamics,
                                                    GIMP_DYNAMICS_OUTPUT_FORCE);
 
-  if (dynamic_force || (paint_options->brush_force > 0.0))
+  if (dynamic_force || (paint_options->brush_force != 0.5))
     return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
