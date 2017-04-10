@@ -1016,7 +1016,7 @@ sub context_set_brush_size {
     &ejs_pdb_misc('2012', '2.8');
 
     @inargs = (
-        { name => "size", type => "0 < float",
+        { name => "size", type => "1 <= float <= 10000",
           desc => "Brush size in pixels" }
     );
 

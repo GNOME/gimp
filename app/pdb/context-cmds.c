@@ -3606,7 +3606,7 @@ register_context_procs (GimpPDB *pdb)
                                g_param_spec_double ("size",
                                                     "size",
                                                     "Brush size in pixels",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    1, 10000, 1,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
