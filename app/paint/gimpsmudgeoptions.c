@@ -30,12 +30,15 @@
 
 
 #define SMUDGE_DEFAULT_RATE 50.0
-
+#define SMUDGE_DEFAULT_FLOW 0.0
+#define SMUDGE_DEFAULT_NO_ERASING_EFFECT FALSE
 
 enum
 {
   PROP_0,
-  PROP_RATE
+  PROP_RATE,
+  PROP_FLOW,
+  PROP_NO_ERASING_EFFECT,
 };
 
 
@@ -61,11 +64,23 @@ gimp_smudge_options_class_init (GimpSmudgeOptionsClass *klass)
   object_class->set_property = gimp_smudge_options_set_property;
   object_class->get_property = gimp_smudge_options_get_property;
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_NO_ERASING_EFFECT,
+                            "no-erasing-effect",
+                            C_("smudge-tool", "No erasing effect"),
+                            _("Never decrease alpha of existing pixels"),
+                            SMUDGE_DEFAULT_NO_ERASING_EFFECT,
+                            GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_RATE,
                            "rate",
-                           C_("smudge-tool", "Rate"),
-                           NULL,
+                           _("Rate"),
+                           _("The strength of smudging"),
                            0.0, 100.0, SMUDGE_DEFAULT_RATE,
+                           GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FLOW,
+                           "flow",
+                           _("Flow"),
+                           _("The amount of brush color to blend"),
+                           0.0, 100.0, SMUDGE_DEFAULT_FLOW,
                            GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -84,8 +99,14 @@ gimp_smudge_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_NO_ERASING_EFFECT:
+      options->no_erasing_effect = g_value_get_boolean(value);
+      break;
     case PROP_RATE:
       options->rate = g_value_get_double (value);
+      break;
+    case PROP_FLOW:
+      options->flow = g_value_get_double (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -103,8 +124,14 @@ gimp_smudge_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_NO_ERASING_EFFECT:
+      g_value_set_boolean (value, options->no_erasing_effect);
+      break;
     case PROP_RATE:
       g_value_set_double (value, options->rate);
+      break;
+    case PROP_FLOW:
+      g_value_set_double (value, options->flow);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

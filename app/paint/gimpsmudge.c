@@ -94,12 +94,8 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
   object_class->finalize  = gimp_smudge_finalize;
-
   paint_core_class->paint = gimp_smudge_paint;
-
   brush_core_class->handles_changing_brush = TRUE;
-  brush_core_class->handles_transforming_brush = TRUE;
-  brush_core_class->handles_dynamic_transforming_brush = TRUE;
 }
 
 static void
@@ -285,6 +281,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   gdouble             opacity;
   gdouble             rate;
   gdouble             dynamic_rate;
+  gdouble             flow;
+  gdouble             dynamic_flow;
   gint                x, y;
   gdouble             force;
   GeglBuffer         *accum_buffer;
@@ -311,6 +309,34 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                                            paint_options,
                                            coords);
 
+  /* Enable dynamic rate */
+  dynamic_rate = gimp_dynamics_get_linear_value (dynamics,
+                                                 GIMP_DYNAMICS_OUTPUT_RATE,
+                                                 coords,
+                                                 paint_options,
+                                                 fade_point);
+  rate = (options->rate / 100.0) * dynamic_rate;
+
+  /* Get flow value */
+  dynamic_flow = gimp_dynamics_get_linear_value (dynamics,
+                                                 GIMP_DYNAMICS_OUTPUT_FLOW,
+                                                 coords,
+                                                 paint_options,
+                                                 fade_point);
+  flow = (options->flow / 100.0) * dynamic_flow;
+
+  /* Get current foreground color
+   * TODO: support color from gradient and color brush
+   */
+  GimpRGB foreground;
+  gimp_context_get_foreground (context, &foreground);
+  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable), &foreground, &foreground);
+  //convert from gamma to linear RGBA
+  //may call babl function directly, but not sure whether internal of gimp_gegl_color_new() will change
+  GeglColor *gegl_color = gimp_gegl_color_new (&foreground);
+  gegl_color_get_pixel(gegl_color, babl_format ("RGBA double"), &foreground);
+  g_object_unref (gegl_color);
+
   n_strokes = gimp_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
@@ -336,17 +362,10 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 
       /*  Get the unclipped acumulator coordinates  */
       gimp_smudge_accumulator_coords (paint_core, coords, i, &x, &y);
+      accum_buffer = g_list_nth_data (smudge->accum_buffers, i);
 
-      /* Enable dynamic rate */
-      dynamic_rate = gimp_dynamics_get_linear_value (dynamics,
-                                                     GIMP_DYNAMICS_OUTPUT_RATE,
-                                                     coords,
-                                                     paint_options,
-                                                     fade_point);
-
-      rate = (options->rate / 100.0) * dynamic_rate;
-
-      /*  Smudge uses the buffer Accum.
+      /* Origional smudge tool:
+       *  Smudge uses the buffer Accum.
        *  For each successive painthit Accum is built like this
        *    Accum =  rate*Accum  + (1-rate)*I.
        *  where I is the pixels under the current painthit.
@@ -354,32 +373,26 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
        *    (Accum,1) (if no alpha),
        */
 
-      accum_buffer = g_list_nth_data (smudge->accum_buffers, i);
-      gimp_gegl_smudge_blend (accum_buffer,
-                              GEGL_RECTANGLE (paint_buffer_x - x,
-                                              paint_buffer_y - y,
-                                              paint_buffer_width,
-                                              paint_buffer_height),
-                              gimp_drawable_get_buffer (drawable),
-                              GEGL_RECTANGLE (paint_buffer_x,
-                                              paint_buffer_y,
-                                              paint_buffer_width,
-                                              paint_buffer_height),
-                              accum_buffer,
-                              GEGL_RECTANGLE (paint_buffer_x - x,
-                                              paint_buffer_y - y,
-                                              paint_buffer_width,
-                                              paint_buffer_height),
-                              rate);
+      /* Customized smudge tool:
+       * Accum=rate*Accum + (1-rate)*I
+       * Paint=(1-flow)*Accum + flow*BrushColor
+      */
 
-      gegl_buffer_copy (accum_buffer,
-                        GEGL_RECTANGLE (paint_buffer_x - x,
-                                        paint_buffer_y - y,
-                                        paint_buffer_width,
-                                        paint_buffer_height),
-                        GEGL_ABYSS_NONE,
-                        paint_buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      gimp_gegl_smudge_with_paint (accum_buffer,
+                                   GEGL_RECTANGLE (paint_buffer_x - x,
+                                                   paint_buffer_y - y,
+                                                   paint_buffer_width,
+                                                   paint_buffer_height),
+                                   gimp_drawable_get_buffer (drawable),
+                                   GEGL_RECTANGLE (paint_buffer_x,
+                                                   paint_buffer_y,
+                                                   paint_buffer_width,
+                                                   paint_buffer_height),
+                                   &foreground,
+                                   paint_buffer,
+                                   options->no_erasing_effect,
+                                   flow,
+                                   rate);
 
       if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
         force = gimp_dynamics_get_linear_value (dynamics,
