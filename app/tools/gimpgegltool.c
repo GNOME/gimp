@@ -247,6 +247,10 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
   if (! name)
     return TRUE;
 
+  /* use this flag to include all ops for testing */
+  if (g_getenv ("GIMP_TESTING_NO_GEGL_BLACKLIST"))
+    return FALSE;
+
   if (g_str_has_prefix (name, "gimp"))
     return TRUE;
 
