@@ -173,7 +173,8 @@ def slice(image, drawable, image_path, image_basename, image_extension,
     temp_image.disable_undo()
     temp_image.crop(right - left, bottom - top, left, top)
     if image_extension == "gif" and image.base_type == RGB:
-        pdb.gimp_image_convert_indexed (temp_image,NO_DITHER, MAKE_PALETTE, 255,
+        pdb.gimp_image_convert_indexed (temp_image, CONVERT_DITHER_NONE,
+                                        CONVERT_PALETTE_GENERATE, 255,
                                         True, False, False)
     if image_extension == "jpg" and image.base_type == INDEXED:
         pdb.gimp_image_convert_rgb (temp_image)
