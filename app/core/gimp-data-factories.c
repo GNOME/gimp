@@ -187,8 +187,7 @@ gimp_data_factories_init (Gimp *gimp)
 void
 gimp_data_factories_add_builtin (Gimp *gimp)
 {
-  GimpData *clipboard_brush;
-  GimpData *clipboard_pattern;
+  GimpData *data;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -198,21 +197,25 @@ gimp_data_factories_add_builtin (Gimp *gimp)
   /*  add the color history palette  */
   gimp_palettes_init (gimp);
 
-  /*  add the clipboard brush  */
-  clipboard_brush = gimp_brush_clipboard_new (gimp);
-  gimp_data_make_internal (GIMP_DATA (clipboard_brush),
-                           "gimp-brush-clipboard");
+  /*  add the clipboard brushes  */
+  data = gimp_brush_clipboard_new (gimp, FALSE);
+  gimp_data_make_internal (data, "gimp-brush-clipboard-image");
   gimp_container_add (gimp_data_factory_get_container (gimp->brush_factory),
-                      GIMP_OBJECT (clipboard_brush));
-  g_object_unref (clipboard_brush);
+                      GIMP_OBJECT (data));
+  g_object_unref (data);
+
+  data = gimp_brush_clipboard_new (gimp, TRUE);
+  gimp_data_make_internal (data, "gimp-brush-clipboard-mask");
+  gimp_container_add (gimp_data_factory_get_container (gimp->brush_factory),
+                      GIMP_OBJECT (data));
+  g_object_unref (data);
 
   /*  add the clipboard pattern  */
-  clipboard_pattern = gimp_pattern_clipboard_new (gimp);
-  gimp_data_make_internal (GIMP_DATA (clipboard_pattern),
-                           "gimp-pattern-clipboard");
+  data = gimp_pattern_clipboard_new (gimp);
+  gimp_data_make_internal (data, "gimp-pattern-clipboard-image");
   gimp_container_add (gimp_data_factory_get_container (gimp->pattern_factory),
-                      GIMP_OBJECT (clipboard_pattern));
-  g_object_unref (clipboard_pattern);
+                      GIMP_OBJECT (data));
+  g_object_unref (data);
 }
 
 void

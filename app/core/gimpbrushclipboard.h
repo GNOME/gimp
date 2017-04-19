@@ -40,6 +40,7 @@ struct _GimpBrushClipboard
   GimpBrush  parent_instance;
 
   Gimp      *gimp;
+  gboolean   mask_only;
 };
 
 struct _GimpBrushClipboardClass
@@ -50,7 +51,8 @@ struct _GimpBrushClipboardClass
 
 GType      gimp_brush_clipboard_get_type (void) G_GNUC_CONST;
 
-GimpData * gimp_brush_clipboard_new      (Gimp *gimp);
+GimpData * gimp_brush_clipboard_new      (Gimp     *gimp,
+                                          gboolean  mask_only);
 
 
 #endif  /*  __GIMP_BRUSH_CLIPBOARD_H__  */

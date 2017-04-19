@@ -166,7 +166,7 @@ gimp_pattern_clipboard_new (Gimp *gimp)
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   return g_object_new (GIMP_TYPE_PATTERN_CLIPBOARD,
-                       "name", _("Clipboard"),
+                       "name", _("Clipboard Image"),
                        "gimp", gimp,
                        NULL);
 }
