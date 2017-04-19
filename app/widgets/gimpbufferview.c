@@ -155,6 +155,7 @@ gimp_buffer_view_new (GimpViewType     view_type,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
+  /* FIXME: enable preview of a clipboard image, not just buffer */
   buffer_view->clipboard_view =
     gimp_view_new_full_by_types (NULL,
                                  GIMP_TYPE_VIEW,
