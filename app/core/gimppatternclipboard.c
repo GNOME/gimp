@@ -35,6 +35,8 @@
 #include "gimp-intl.h"
 
 
+#define PATTERN_MAX_SIZE 1024
+
 enum
 {
   PROP_0,
@@ -92,7 +94,6 @@ gimp_pattern_clipboard_class_init (GimpPatternClipboardClass *klass)
 static void
 gimp_pattern_clipboard_init (GimpPatternClipboard *pattern)
 {
-  pattern->gimp = NULL;
 }
 
 static void
@@ -177,7 +178,8 @@ static void
 gimp_pattern_clipboard_changed (Gimp        *gimp,
                                 GimpPattern *pattern)
 {
-  GimpBuffer *gimp_buffer;
+  GimpObject *paste;
+  GeglBuffer *buffer = NULL;
 
   if (pattern->mask)
     {
@@ -185,20 +187,27 @@ gimp_pattern_clipboard_changed (Gimp        *gimp,
       pattern->mask = NULL;
     }
 
-  gimp_buffer = gimp_get_clipboard_buffer (gimp);
+  paste = gimp_get_clipboard_object (gimp);
 
-  if (gimp_buffer)
+  if (GIMP_IS_IMAGE (paste))
     {
-      gint width;
-      gint height;
+      gimp_pickable_flush (GIMP_PICKABLE (paste));
+      buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (paste));
+    }
+  else if (GIMP_IS_BUFFER (paste))
+    {
+      buffer = gimp_buffer_get_buffer (GIMP_BUFFER (paste));
+    }
 
-      width  = MIN (gimp_buffer_get_width  (gimp_buffer), 1024);
-      height = MIN (gimp_buffer_get_height (gimp_buffer), 1024);
+  if (buffer)
+    {
+      gint width  = MIN (gegl_buffer_get_width  (buffer), PATTERN_MAX_SIZE);
+      gint height = MIN (gegl_buffer_get_height (buffer), PATTERN_MAX_SIZE);
 
       pattern->mask = gimp_temp_buf_new (width, height,
-                                         gimp_buffer_get_format (gimp_buffer));
+                                         gegl_buffer_get_format (buffer));
 
-      gegl_buffer_get (gimp_buffer_get_buffer (gimp_buffer),
+      gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (0, 0, width, height), 1.0,
                        NULL,
                        gimp_temp_buf_get_data (pattern->mask),

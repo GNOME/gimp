@@ -30,10 +30,13 @@
 #include "gimpbrush-private.h"
 #include "gimpbrushclipboard.h"
 #include "gimpimage.h"
+#include "gimppickable.h"
 #include "gimptempbuf.h"
 
 #include "gimp-intl.h"
 
+
+#define BRUSH_MAX_SIZE 1024
 
 enum
 {
@@ -92,7 +95,6 @@ gimp_brush_clipboard_class_init (GimpBrushClipboardClass *klass)
 static void
 gimp_brush_clipboard_init (GimpBrushClipboard *brush)
 {
-  brush->gimp = NULL;
 }
 
 static void
@@ -177,7 +179,8 @@ static void
 gimp_brush_clipboard_changed (Gimp      *gimp,
                               GimpBrush *brush)
 {
-  GimpBuffer *gimp_buffer;
+  GimpObject *paste;
+  GeglBuffer *buffer = NULL;
   gint        width;
   gint        height;
 
@@ -193,16 +196,25 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
       brush->priv->pixmap = NULL;
     }
 
-  gimp_buffer = gimp_get_clipboard_buffer (gimp);
+  paste = gimp_get_clipboard_object (gimp);
 
-  if (gimp_buffer)
+  if (GIMP_IS_IMAGE (paste))
     {
-      GeglBuffer *buffer = gimp_buffer_get_buffer (gimp_buffer);
+      gimp_pickable_flush (GIMP_PICKABLE (paste));
+      buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (paste));
+    }
+  else if (GIMP_IS_BUFFER (paste))
+    {
+      buffer = gimp_buffer_get_buffer (GIMP_BUFFER (paste));
+    }
+
+  if (buffer)
+    {
       const Babl *format = gegl_buffer_get_format (buffer);
       GeglBuffer *dest_buffer;
 
-      width  = MIN (gimp_buffer_get_width  (gimp_buffer), 1024);
-      height = MIN (gimp_buffer_get_height (gimp_buffer), 1024);
+      width  = MIN (gegl_buffer_get_width  (buffer), BRUSH_MAX_SIZE);
+      height = MIN (gegl_buffer_get_height (buffer), BRUSH_MAX_SIZE);
 
       brush->priv->mask   = gimp_temp_buf_new (width, height,
                                                babl_format ("Y u8"));
