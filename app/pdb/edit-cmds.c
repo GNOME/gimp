@@ -32,10 +32,12 @@
 #include "core/gimp-edit.h"
 #include "core/gimp-gradients.h"
 #include "core/gimp.h"
+#include "core/gimpbuffer.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-new.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -203,15 +205,15 @@ edit_paste_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
+      GimpObject *paste = gimp_get_clipboard_object (gimp);
 
-      if (buffer &&
+      if (paste &&
           gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           floating_sel = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                          drawable, GIMP_OBJECT (buffer),
+                                          drawable, paste,
                                           paste_into ?
                                           GIMP_PASTE_TYPE_FLOATING_INTO :
                                           GIMP_PASTE_TYPE_FLOATING,
@@ -245,11 +247,18 @@ edit_paste_as_new_image_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage *image = NULL;
 
-  GimpBuffer *buffer = gimp_get_clipboard_buffer (gimp);
+  GimpObject *paste = gimp_get_clipboard_object (gimp);
 
-  if (buffer)
+  if (paste)
     {
-      image = gimp_image_new_from_buffer (gimp, NULL, buffer);
+      if (GIMP_IS_IMAGE (paste))
+        {
+          image = gimp_image_duplicate (GIMP_IMAGE (paste));
+        }
+      else if (GIMP_IS_BUFFER (paste))
+        {
+          image = gimp_image_new_from_buffer (gimp, NULL, GIMP_BUFFER (paste));
+        }
 
       if (! image)
         success = FALSE;
