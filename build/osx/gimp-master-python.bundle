@@ -166,7 +166,7 @@
 	<!-- Copy in mime data -->
 	<!-- Used for opening up help in browser -->
 	<!--<data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop"> 
-		${project}/custom/gimp.desktop </data> -->
+		${project}/gimp.desktop </data> -->
 	<data>${prefix}/share/applications/gimp.desktop</data>
 	<data dest="${bundle}/Contents/Resources/share/applications/open.desktop">
 		${project}/custom/open.desktop

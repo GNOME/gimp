@@ -120,12 +120,14 @@ $ curl -o $HOME/gimp/directory/gimp-2.8-python.bundle https://git.gnome.org/brow
   curl -o $HOME/gimp/directory/gimp.icns https://git.gnome.org/browse/gimp/plain/build/osx/gimp.icns?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/xcf.icns https://git.gnome.org/browse/gimp/plain/build/osx/xcf.icns?h=gimp-2-8 &&
   curl --create-dirs -o $HOME/gimp/directory/custom/fonts.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/fonts.conf?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/custom/gimp.desktop https://git.gnome.org/browse/gimp/plain/build/osx/custom/gimp.desktop?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/custom/gimprc https://git.gnome.org/browse/gimp/plain/build/osx/custom/gimprc?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/custom/gtkrc https://git.gnome.org/browse/gimp/plain/build/osx/custom/gtkrc?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/custom/mimeinfo.cache https://git.gnome.org/browse/gimp/plain/build/osx/custom/mimeinfo.cache?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/custom/open.desktop https://git.gnome.org/browse/gimp/plain/build/osx/custom/open.desktop?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/custom/session.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/session.conf?h=gimp-2-8
+
+$ cp -p $HOME/gimp/10.6/source/gimp-2.8/desktop/gimp.desktop $HOME/gimp/directory/gimp.desktop
+
 
 for GIMP master:
 $ curl -o $HOME/gimp/directory/gimp-master-python.bundle https://git.gnome.org/browse/gimp/plain/build/osx/gimp-master-python.bundle?h=gimp-2-8 &&
@@ -141,7 +143,10 @@ $ curl -o $HOME/gimp/directory/gimp-master-python.bundle https://git.gnome.org/b
   curl -o $HOME/gimp/directory/custom/mimeinfo.cache https://git.gnome.org/browse/gimp/plain/build/osx/custom/mimeinfo.cache?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/custom/open.desktop https://git.gnome.org/browse/gimp/plain/build/osx/custom/open.desktop?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/custom/session.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/session.conf?h=gimp-2-8
-  
+
+$ cp -p $HOME/gimp/10.6/source/gimp-2.8/desktop/gimp.desktop $HOME/gimp/directory/gimp.desktop
+
+
 2. We also need to fix a few outstanding issues:
 $ cp $HOME/gimp/10.6/source/gettext-0.18.1.1/gettext-tools/intl/charset.alias ~/gimp/10.6/inst/lib
 $ chmod +w $HOME/gimp/10.6/inst/lib/libpython2.7.dylib
