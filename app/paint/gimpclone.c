@@ -202,6 +202,9 @@ gimp_clone_motion (GimpSourceCore   *source_core,
       GimpPattern *pattern    = gimp_context_get_pattern (context);
       GeglBuffer  *src_buffer = gimp_pattern_create_buffer (pattern);
 
+      src_offset_x += gegl_buffer_get_width (src_buffer) / 2;
+      src_offset_y += gegl_buffer_get_height (src_buffer) / 2;
+
       gegl_buffer_set_pattern (paint_buffer,
                                GEGL_RECTANGLE (paint_area_offset_x,
                                                paint_area_offset_y,
