@@ -110,10 +110,10 @@ III. Create a GIMP installer
 1. To create a bundle, we need some more files:
 
 for GIMP 2.8:
-$ curl -o $HOME/gimp/directory/gimp-2.8-python.bundle https://git.gnome.org/browse/gimp/plain/build/osx/gimp-2.8-python.bundle?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/launcher-2.8-python.sh https://git.gnome.org/browse/gimp/plain/build/osx/launcher-2.8-python.sh?h=gimp-2-8 &&
-  chmod +x $HOME/gimp/directory/launcher-2.8-python.sh &&
-  curl -o $HOME/gimp/directory/info-2.8-python.plist https://git.gnome.org/browse/gimp/plain/build/osx/info-2.8-python.plist?h=gimp-2-8 &&
+$ curl -o $HOME/gimp/directory/gimp.bundle https://git.gnome.org/browse/gimp/plain/build/osx/gimp.bundle?h=gimp-2-8 &&
+  curl -o $HOME/gimp/directory/launcher.sh https://git.gnome.org/browse/gimp/plain/build/osx/launcher.sh?h=gimp-2-8 &&
+  chmod +x $HOME/gimp/directory/launcher.sh &&
+  curl -o $HOME/gimp/directory/info.plist https://git.gnome.org/browse/gimp/plain/build/osx/info.plist?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/gimp.icns https://git.gnome.org/browse/gimp/plain/build/osx/gimp.icns?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/xcf.icns https://git.gnome.org/browse/gimp/plain/build/osx/xcf.icns?h=gimp-2-8 &&
   curl --create-dirs -o $HOME/gimp/directory/custom/fonts.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/fonts.conf?h=gimp-2-8 &&
@@ -137,7 +137,7 @@ $ JHB=gimp GIMP_SDK=10.6 jhbuild shell
 $ cd $HOME/gimp/directory
 
 for GIMP 2.8:
-$ gtk-mac-bundler gimp-2.8-python.bundle
+$ gtk-mac-bundler gimp.bundle
 
 4. Create DMG image. Create a directory "bundle/" that contains only the .app
 image. Run the following command in the directory above "bundle/".
@@ -154,9 +154,9 @@ custom                      default application data
 README                      this file
 gimp.icns                   application icon
 gimp.svg                    application icon
-gimp.modules                configuration for jhbuild 
-gimp-2.8-python-bundle      configuration for gtk-mac-bundler (GIMP 2.8)
-info-2.8-python.plist       OS X application metadata (GIMP 2.8)
-launcher-python.sh          GIMP starter in the OS X application package
+gimp.modules                configuration for jhbuild
+gimp.bundle                 configuration for gtk-mac-bundler
+info.plist                  OS X application metadata
+launcher.sh                 GIMP starter in the OS X application package
 patches                     Patches as long as they are not accepted upstream
 xcf.icns                    application icon
