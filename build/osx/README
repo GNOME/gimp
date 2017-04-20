@@ -98,9 +98,6 @@ to initially create the patches directory.
 For GIMP 2.8 enter
 $ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-2.8
 
-For GIMP master enter
-$ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-master
-
 5. In order to run GIMP with D-Bus support (required for GVFS and GIO)
 $ dbus-launch gimp-2.8
 
@@ -129,24 +126,6 @@ $ curl -o $HOME/gimp/directory/gimp-2.8-python.bundle https://git.gnome.org/brow
 $ cp -p $HOME/gimp/10.6/source/gimp-2.8/desktop/gimp.desktop $HOME/gimp/directory/gimp.desktop
 
 
-for GIMP master:
-$ curl -o $HOME/gimp/directory/gimp-master-python.bundle https://git.gnome.org/browse/gimp/plain/build/osx/gimp-master-python.bundle?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/launcher-master-python.sh https://git.gnome.org/browse/gimp/plain/build/osx/launcher-master-python.sh?h=gimp-2-8 &&
-  chmod +x $HOME/gimp/directory/launcher-master-python.sh &&
-  curl -o $HOME/gimp/directory/info-master-python.plist https://git.gnome.org/browse/gimp/plain/build/osx/info-master-python.plist?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/gimp.icns https://git.gnome.org/browse/gimp/plain/build/osx/gimp.icns?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/xcf.icns https://git.gnome.org/browse/gimp/plain/build/osx/xcf.icns?h=gimp-2-8 &&
-  curl --create-dirs -o $HOME/gimp/directory/custom/fonts.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/fonts.conf?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/custom/gimp.desktop https://git.gnome.org/browse/gimp/plain/build/osx/custom/gimp.desktop?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/custom/gimprc https://git.gnome.org/browse/gimp/plain/build/osx/custom/gimprc?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/custom/gtkrc https://git.gnome.org/browse/gimp/plain/build/osx/custom/gtkrc?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/custom/mimeinfo.cache https://git.gnome.org/browse/gimp/plain/build/osx/custom/mimeinfo.cache?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/custom/open.desktop https://git.gnome.org/browse/gimp/plain/build/osx/custom/open.desktop?h=gimp-2-8 &&
-  curl -o $HOME/gimp/directory/custom/session.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/session.conf?h=gimp-2-8
-
-$ cp -p $HOME/gimp/10.6/source/gimp-2.8/desktop/gimp.desktop $HOME/gimp/directory/gimp.desktop
-
-
 2. We also need to fix a few outstanding issues:
 $ cp $HOME/gimp/10.6/source/gettext-0.18.1.1/gettext-tools/intl/charset.alias ~/gimp/10.6/inst/lib
 $ chmod +w $HOME/gimp/10.6/inst/lib/libpython2.7.dylib
@@ -159,9 +138,6 @@ $ cd $HOME/gimp/directory
 
 for GIMP 2.8:
 $ gtk-mac-bundler gimp-2.8-python.bundle
-
-for GIMP master:
-$ gtk-mac-bundler gimp-master-python.bundle
 
 4. Create DMG image. Create a directory "bundle/" that contains only the .app
 image. Run the following command in the directory above "bundle/".
@@ -180,9 +156,7 @@ gimp.icns                   application icon
 gimp.svg                    application icon
 gimp.modules                configuration for jhbuild 
 gimp-2.8-python-bundle      configuration for gtk-mac-bundler (GIMP 2.8)
-gimp-master-python-bundle   configuration for gtk-mac-bundler (GIMP master)
 info-2.8-python.plist       OS X application metadata (GIMP 2.8)
-info-master-python.plist    OS X application metadata (GIMP master)
 launcher-python.sh          GIMP starter in the OS X application package
 patches                     Patches as long as they are not accepted upstream
 xcf.icns                    application icon
