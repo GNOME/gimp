@@ -60,15 +60,16 @@ typedef struct _GimpLayerModeInfo GimpLayerModeInfo;
 
 struct _GimpLayerModeInfo
 {
-  GimpLayerMode           layer_mode;
-  const gchar            *op_name;
-  GimpLayerModeFunc       function;
-  GimpLayerModeFlags      flags;
-  GimpLayerModeContext    context;
-  GimpLayerCompositeMode  paint_composite_mode;
-  GimpLayerCompositeMode  composite_mode;
-  GimpLayerColorSpace     composite_space;
-  GimpLayerColorSpace     blend_space;
+  GimpLayerMode             layer_mode;
+  const gchar              *op_name;
+  GimpLayerModeFunc         function;
+  GimpLayerModeFlags        flags;
+  GimpLayerModeContext      context;
+  GimpLayerCompositeMode    paint_composite_mode;
+  GimpLayerCompositeMode    composite_mode;
+  GimpLayerColorSpace       composite_space;
+  GimpLayerColorSpace       blend_space;
+  GimpLayerCompositeRegion  affected_region;
 };
 
 
@@ -98,7 +99,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_ALL,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .affected_region      = GIMP_LAYER_COMPOSITE_REGION_SOURCE
   },
 
   { GIMP_LAYER_MODE_BEHIND_LEGACY,
@@ -869,7 +871,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
+    .affected_region      = GIMP_LAYER_COMPOSITE_REGION_DESTINATION
   },
 
   { GIMP_LAYER_MODE_ANTI_ERASE,
@@ -880,7 +883,8 @@ static const GimpLayerModeInfo layer_mode_infos[] =
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_FADE,
     .paint_composite_mode = GIMP_LAYER_COMPOSITE_SRC_OVER,
-    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .affected_region      = GIMP_LAYER_COMPOSITE_REGION_SOURCE
   }
 };
 
@@ -1276,12 +1280,7 @@ gimp_layer_mode_get_paint_composite_mode (GimpLayerMode mode)
 const gchar *
 gimp_layer_mode_get_operation (GimpLayerMode mode)
 {
-  const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
-
-  if (! info)
-    return "gimp:layer-mode";
-
-  return info->op_name;
+  return "gimp:layer-mode";
 }
 
 GimpLayerModeFunc
@@ -1458,6 +1457,17 @@ gimp_layer_mode_get_format (GimpLayerMode        mode,
     }
 
   g_return_val_if_reached (babl_format ("RGBA float"));
+}
+
+GimpLayerCompositeRegion
+gimp_layer_mode_get_affected_region (GimpLayerMode mode)
+{
+  const GimpLayerModeInfo *info = gimp_layer_mode_info (mode);
+
+  if (! info)
+    return GIMP_LAYER_COMPOSITE_REGION_INTERSECTION;
+
+  return info->affected_region;
 }
 
 GimpLayerCompositeRegion

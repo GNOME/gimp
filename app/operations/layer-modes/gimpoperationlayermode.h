@@ -58,7 +58,8 @@ struct _GimpOperationLayerMode
   GimpLayerColorSpace          blend_space;
   GimpLayerColorSpace          composite_space;
   GimpLayerCompositeMode       composite_mode;
-  GimpBlendFunc                blend_func;
+  GimpLayerModeFunc            func;
+  gboolean                     is_last_node;
 };
 
 

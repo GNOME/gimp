@@ -62,6 +62,8 @@ const Babl               * gimp_layer_mode_get_format                 (GimpLayer
                                                                        GimpLayerColorSpace     blend_space,
                                                                        const Babl             *preferred_format);
 
+GimpLayerCompositeRegion   gimp_layer_mode_get_affected_region        (GimpLayerMode           mode);
+
 GimpLayerCompositeRegion   gimp_layer_mode_get_included_region        (GimpLayerMode           mode,
                                                                        GimpLayerCompositeMode  composite_mode);
 
