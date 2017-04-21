@@ -612,10 +612,12 @@ gimp_help_get_locales (Gimp *gimp)
       c = strchr (locale, '.');
       if (c)
         *c = '\0';
-      /* We don't care about variants as well. */
+
+      /* We don't care about variants either. */
       c = strchr (locale, '@');
       if (c)
         *c = '\0';
+
       /* Apparently some systems (i.e. Windows) would return a value as
        * IETF language tag, which is a different format from POSIX
        * locale; especially it would separate the lang and the region
@@ -631,6 +633,7 @@ gimp_help_get_locales (Gimp *gimp)
       c = strchr (locale, '-');
       if (c)
         *c = '_';
+
       if (locale && *locale &&
           ! g_list_find_custom (locales_list, locale,
                                 (GCompareFunc) g_strcmp0))
@@ -645,6 +648,7 @@ gimp_help_get_locales (Gimp *gimp)
           c = strchr (base, '_');
           if (c)
             *c = '\0';
+
           if (base && *base &&
               ! g_list_find_custom (locales_list, base,
                                     (GCompareFunc) g_strcmp0))
@@ -658,10 +662,10 @@ gimp_help_get_locales (Gimp *gimp)
         }
       else
         {
-          /* Avoid duplicates. */
           g_free (locale);
         }
     }
+
   locales_list = g_list_reverse (locales_list);
 
   /* Finally generate the colon-separated value. */
@@ -675,6 +679,7 @@ gimp_help_get_locales (Gimp *gimp)
           g_free (temp);
         }
     }
+
   g_list_free_full (locales_list, g_free);
 
   return locales;
@@ -685,7 +690,6 @@ gimp_help_get_user_manual_basedir (void)
 {
   return gimp_data_directory_file ("help", NULL);
 }
-
 
 static void
 gimp_help_query_online_response (GtkWidget    *dialog,
