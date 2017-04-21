@@ -110,6 +110,7 @@ struct _GimpDrawableClass
                                            GeglBuffer           *buffer,
                                            gint                  x,
                                            gint                  y);
+  GeglNode    * (* get_source_node)       (GimpDrawable         *drawable);
 };
 
 
