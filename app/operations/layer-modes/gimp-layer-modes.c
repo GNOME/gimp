@@ -850,6 +850,17 @@ static const GimpLayerModeInfo layer_mode_infos[] =
     .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_ATOP
   },
 
+  { GIMP_LAYER_MODE_PASS_THROUGH,
+
+    .op_name              = "gimp:replace",
+    .function             = gimp_operation_replace_process,
+    .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
+                            GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
+    .context              = GIMP_LAYER_MODE_CONTEXT_GROUP,
+    .composite_mode       = GIMP_LAYER_COMPOSITE_SRC_OVER,
+    .composite_space      = GIMP_LAYER_COLOR_SPACE_RGB_LINEAR
+  },
+
   { GIMP_LAYER_MODE_REPLACE,
 
     .op_name              = "gimp:replace",
@@ -875,6 +886,10 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
 static const GimpLayerMode layer_mode_group_default[] =
 {
+  GIMP_LAYER_MODE_PASS_THROUGH,
+
+  GIMP_LAYER_MODE_SEPARATOR,
+
   GIMP_LAYER_MODE_NORMAL,
   GIMP_LAYER_MODE_REPLACE,
   GIMP_LAYER_MODE_DISSOLVE,
@@ -1121,6 +1136,10 @@ static const GimpLayerMode layer_mode_groups[][2] =
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_SPLIT,
     [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1
+  },
+
+  { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_PASS_THROUGH,
+    [GIMP_LAYER_MODE_GROUP_LEGACY ] = -1,
   },
 
   { [GIMP_LAYER_MODE_GROUP_DEFAULT] = GIMP_LAYER_MODE_REPLACE,

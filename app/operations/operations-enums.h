@@ -122,6 +122,7 @@ typedef enum
   GIMP_LAYER_MODE_ERASE,                 /*< desc="Erase"                    >*/
   GIMP_LAYER_MODE_MERGE,                 /*< desc="Merge"                    >*/
   GIMP_LAYER_MODE_SPLIT,                 /*< desc="Split"                    >*/
+  GIMP_LAYER_MODE_PASS_THROUGH,          /*< desc="Pass through"             >*/
 
   /*  Internal modes, not available to the PDB, must be kept at the end  */
   GIMP_LAYER_MODE_REPLACE,               /*< pdb-skip, desc="Replace"        >*/
