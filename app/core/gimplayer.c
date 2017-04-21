@@ -772,11 +772,14 @@ gimp_layer_get_node (GimpFilter *filter)
   GimpDrawable *drawable = GIMP_DRAWABLE (filter);
   GimpLayer    *layer    = GIMP_LAYER (filter);
   GeglNode     *node;
+  GeglNode     *input;
   GeglNode     *source;
   GeglNode     *mode_node;
   gboolean      source_node_hijacked = FALSE;
 
   node = GIMP_FILTER_CLASS (parent_class)->get_node (filter);
+
+  input = gegl_node_get_input_proxy (node, "input");
 
   source = gimp_drawable_get_source_node (drawable);
 
@@ -789,6 +792,9 @@ gimp_layer_get_node (GimpFilter *filter)
 
   if (! source_node_hijacked)
     gegl_node_add_child (node, source);
+
+  gegl_node_connect_to (input,  "output",
+                        source, "input");
 
   g_warn_if_fail (layer->layer_offset_node == NULL);
   g_warn_if_fail (layer->mask_offset_node == NULL);
