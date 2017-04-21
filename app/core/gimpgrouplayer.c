@@ -49,6 +49,8 @@ struct _GimpGroupLayerPrivate
 {
   GimpContainer  *children;
   GimpProjection *projection;
+  GeglNode       *source_node;
+  GeglNode       *parent_source_node;
   GeglNode       *graph;
   GeglNode       *offset_node;
   gint            suspend_resize;
@@ -145,6 +147,9 @@ static void            gimp_group_layer_convert_type (GimpLayer         *layer,
                                                       GeglDitherMethod   mask_dither_type,
                                                       gboolean           push_undo,
                                                       GimpProgress      *progress);
+static GeglNode   * gimp_group_layer_get_source_node (GimpDrawable      *drawable);
+
+static void            gimp_group_layer_mode_changed (GimpLayer         *layer);
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
@@ -167,6 +172,7 @@ static void            gimp_group_layer_child_resize (GimpLayer       *child,
 
 static void            gimp_group_layer_update       (GimpGroupLayer  *group);
 static void            gimp_group_layer_update_size  (GimpGroupLayer  *group);
+static void      gimp_group_layer_update_source_node (GimpGroupLayer  *group);
 
 static void            gimp_group_layer_stack_update (GimpDrawableStack *stack,
                                                       gint               x,
@@ -229,7 +235,9 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->transform_desc        = C_("undo-type", "Transform Layer Group");
 
   drawable_class->estimate_memsize  = gimp_group_layer_estimate_memsize;
+  drawable_class->get_source_node   = gimp_group_layer_get_source_node;
 
+  layer_class->mode_changed         = gimp_group_layer_mode_changed;
   layer_class->translate            = gimp_group_layer_translate;
   layer_class->scale                = gimp_group_layer_scale;
   layer_class->resize               = gimp_group_layer_resize;
@@ -315,6 +323,7 @@ gimp_group_layer_finalize (GObject *object)
     }
 
   g_clear_object (&private->projection);
+  g_clear_object (&private->source_node);
   g_clear_object (&private->graph);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -866,6 +875,52 @@ gimp_group_layer_convert_type (GimpLayer        *layer,
   private->convert_format = NULL;
 }
 
+static GeglNode *
+gimp_group_layer_get_source_node (GimpDrawable *drawable)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
+  GeglNode              *input;
+
+  g_warn_if_fail (private->source_node == NULL);
+
+  private->source_node = gegl_node_new ();
+
+  input = gegl_node_get_input_proxy (private->source_node, "input");
+
+  private->parent_source_node =
+    GIMP_DRAWABLE_CLASS (parent_class)->get_source_node (drawable);
+
+  gegl_node_add_child (private->source_node, private->parent_source_node);
+
+  g_object_unref (private->parent_source_node);
+
+  if (gegl_node_has_pad (private->parent_source_node, "input"))
+    {
+      gegl_node_connect_to (input,                       "output",
+                            private->parent_source_node, "input");
+    }
+
+  /* make sure we have a graph */
+  (void) gimp_group_layer_get_graph (GIMP_PROJECTABLE (drawable));
+
+  gegl_node_add_child (private->source_node, private->graph);
+
+  gimp_group_layer_update_source_node (GIMP_GROUP_LAYER (drawable));
+
+  return g_object_ref (private->source_node);
+}
+
+static void
+gimp_group_layer_mode_changed (GimpLayer *layer)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (layer);
+
+  gimp_group_layer_update_source_node (group);
+
+  if (GIMP_LAYER_CLASS (parent_class)->mode_changed)
+    GIMP_LAYER_CLASS (parent_class)->mode_changed (layer);
+}
+
 static const Babl *
 gimp_group_layer_get_format (GimpProjectable *projectable)
 {
@@ -887,6 +942,7 @@ gimp_group_layer_get_graph (GimpProjectable *projectable)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (projectable);
   GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
+  GeglNode              *input;
   GeglNode              *layers_node;
   GeglNode              *output;
   gint                   off_x;
@@ -897,10 +953,15 @@ gimp_group_layer_get_graph (GimpProjectable *projectable)
 
   private->graph = gegl_node_new ();
 
+  input = gegl_node_get_input_proxy (private->graph, "input");
+
   layers_node =
     gimp_filter_stack_get_graph (GIMP_FILTER_STACK (private->children));
 
   gegl_node_add_child (private->graph, layers_node);
+
+  gegl_node_connect_to (input,       "output",
+                        layers_node, "input");
 
   gimp_item_get_offset (GIMP_ITEM (group), &off_x, &off_y);
 
@@ -1168,6 +1229,35 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
 }
 
 static void
+gimp_group_layer_update_source_node (GimpGroupLayer *group)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (group);
+  GeglNode              *input;
+  GeglNode              *output;
+
+  if (private->source_node == NULL)
+    return;
+
+  input  = gegl_node_get_input_proxy  (private->source_node, "input");
+  output = gegl_node_get_output_proxy (private->source_node, "output");
+
+  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      gegl_node_connect_to (input,          "output",
+                            private->graph, "input");
+      gegl_node_connect_to (private->graph, "output",
+                            output,         "input");
+    }
+  else
+    {
+      gegl_node_disconnect (private->graph, "input");
+
+      gegl_node_connect_to (private->parent_source_node, "output",
+                            output,                      "input");
+    }
+}
+
+static void
 gimp_group_layer_stack_update (GimpDrawableStack *stack,
                                gint               x,
                                gint               y,
@@ -1180,6 +1270,17 @@ gimp_group_layer_stack_update (GimpDrawableStack *stack,
               G_STRFUNC, gimp_object_get_name (group),
               x, y, width, height);
 #endif
+
+  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      /*  the layer stack's update signal speaks in image coordinates,
+       *  transform to layer coordinates when emitting our own update signal.
+       */
+      gimp_drawable_update (GIMP_DRAWABLE (group),
+                            x - gimp_item_get_offset_x (GIMP_ITEM (group)),
+                            y - gimp_item_get_offset_y (GIMP_ITEM (group)),
+                            width, height);
+    }
 
   /*  the layer stack's update signal speaks in image coordinates,
    *  pass to the projection as-is.
@@ -1211,11 +1312,14 @@ gimp_group_layer_proj_update (GimpProjection *proj,
               x, y, width, height);
 #endif
 
-  /*  the projection speaks in image coordinates, transform to layer
-   *  coordinates when emitting our own update signal.
-   */
-  gimp_drawable_update (GIMP_DRAWABLE (group),
-                        x - gimp_item_get_offset_x (GIMP_ITEM (group)),
-                        y - gimp_item_get_offset_y (GIMP_ITEM (group)),
-                        width, height);
+  if (gimp_layer_get_mode (GIMP_LAYER (group)) != GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      /*  the projection speaks in image coordinates, transform to layer
+       *  coordinates when emitting our own update signal.
+       */
+      gimp_drawable_update (GIMP_DRAWABLE (group),
+                            x - gimp_item_get_offset_x (GIMP_ITEM (group)),
+                            y - gimp_item_get_offset_y (GIMP_ITEM (group)),
+                            width, height);
+    }
 }
