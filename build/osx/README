@@ -113,7 +113,6 @@ for GIMP 2.8:
 $ curl -o $HOME/gimp/directory/gimp.bundle https://git.gnome.org/browse/gimp/plain/build/osx/gimp.bundle?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/launcher.sh https://git.gnome.org/browse/gimp/plain/build/osx/launcher.sh?h=gimp-2-8 &&
   chmod +x $HOME/gimp/directory/launcher.sh &&
-  curl -o $HOME/gimp/directory/info.plist https://git.gnome.org/browse/gimp/plain/build/osx/info.plist?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/gimp.icns https://git.gnome.org/browse/gimp/plain/build/osx/gimp.icns?h=gimp-2-8 &&
   curl -o $HOME/gimp/directory/xcf.icns https://git.gnome.org/browse/gimp/plain/build/osx/xcf.icns?h=gimp-2-8 &&
   curl --create-dirs -o $HOME/gimp/directory/custom/fonts.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/fonts.conf?h=gimp-2-8 &&
@@ -124,6 +123,7 @@ $ curl -o $HOME/gimp/directory/gimp.bundle https://git.gnome.org/browse/gimp/pla
   curl -o $HOME/gimp/directory/custom/session.conf https://git.gnome.org/browse/gimp/plain/build/osx/custom/session.conf?h=gimp-2-8
 
 $ cp -p $HOME/gimp/10.6/source/gimp-2.8/desktop/gimp.desktop $HOME/gimp/directory/gimp.desktop
+$ cp -p $HOME/gimp/10.6/source/gimp-2.8/build/osx/info.plist $HOME/gimp/directory/info.plist
 
 
 2. We also need to fix a few outstanding issues:
@@ -156,7 +156,7 @@ gimp.icns                   application icon
 gimp.svg                    application icon
 gimp.modules                configuration for jhbuild
 gimp.bundle                 configuration for gtk-mac-bundler
-info.plist                  OS X application metadata
+info.plist.in               OS X application metadata (template)
 launcher.sh                 GIMP starter in the OS X application package
 patches                     Patches as long as they are not accepted upstream
 xcf.icns                    application icon

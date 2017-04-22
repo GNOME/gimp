@@ -2307,6 +2307,7 @@ app/tests/gimpdir/brushes/Makefile
 app/tests/gimpdir/gradients/Makefile
 app/tests/gimpdir/patterns/Makefile
 build/Makefile
+build/osx/Makefile
 build/windows/Makefile
 build/windows/gimp.rc
 build/windows/gimp-plug-ins.rc
