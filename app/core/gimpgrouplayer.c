@@ -157,6 +157,9 @@ static gboolean
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
+static void            gimp_group_layer_begin_render (GimpProjectable *projectable);
+static void            gimp_group_layer_end_render   (GimpProjectable *projectable);
+
 static gdouble       gimp_group_layer_get_opacity_at (GimpPickable    *pickable,
                                                       gint             x,
                                                       gint             y);
@@ -270,6 +273,8 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->get_offset         = (void (*) (GimpProjectable*, gint*, gint*)) gimp_item_get_offset;
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_viewable_get_size;
   iface->get_graph          = gimp_group_layer_get_graph;
+  iface->begin_render       = gimp_group_layer_begin_render;
+  iface->end_render         = gimp_group_layer_end_render;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
 }
 
@@ -1037,6 +1042,41 @@ gimp_group_layer_get_graph (GimpProjectable *projectable)
                         output,               "input");
 
   return private->graph;
+}
+
+static void
+gimp_group_layer_begin_render (GimpProjectable *projectable)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
+
+  if (private->source_node == NULL)
+    return;
+
+  if (gimp_layer_get_mode (GIMP_LAYER (projectable)) ==
+      GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      gegl_node_disconnect (private->graph, "input");
+    }
+}
+
+static void
+gimp_group_layer_end_render (GimpProjectable *projectable)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (projectable);
+
+  if (private->source_node == NULL)
+    return;
+
+  if (gimp_layer_get_mode (GIMP_LAYER (projectable)) ==
+      GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      GeglNode *input;
+
+      input = gegl_node_get_input_proxy (private->source_node, "input");
+
+      gegl_node_connect_to (input,          "output",
+                            private->graph, "input");
+    }
 }
 
 static gdouble
