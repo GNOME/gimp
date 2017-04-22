@@ -35,7 +35,7 @@
 
 typedef struct
 {
-  gint     scales;
+  gint scales;
 } WaveletDecomposeParams;
 
 
@@ -56,7 +56,7 @@ static gboolean  wavelet_decompose_dialog (void);
 /* create a few globals, set default values */
 static WaveletDecomposeParams wavelet_params =
 {
-  5 /*default scales*/
+  5 /* default scales */
 };
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -181,7 +181,7 @@ run (const gchar      *name,
           wavelet_blur (blur_id, 1 << id);
 
           /* grain extract */
-          gimp_layer_set_mode (blur_id,GIMP_LAYER_MODE_GRAIN_EXTRACT);
+          gimp_layer_set_mode (blur_id, GIMP_LAYER_MODE_GRAIN_EXTRACT);
 
           /* new from visible */
           g_snprintf (scale_name, sizeof (scale_name), "Scale %d", id + 1);
@@ -190,7 +190,7 @@ run (const gchar      *name,
 
           gimp_image_insert_layer (image_id, scale_ids[id], 0,
                                    gimp_image_get_item_position (image_id,
-                                                                 blur_id) );
+                                                                 blur_id));
           gimp_layer_set_mode (scale_ids[id], GIMP_LAYER_MODE_GRAIN_MERGE);
           gimp_layer_set_mode (blur_id, GIMP_LAYER_MODE_NORMAL_LEGACY);
           gimp_item_set_visible (scale_ids[id], FALSE);
