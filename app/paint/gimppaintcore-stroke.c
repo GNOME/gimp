@@ -380,8 +380,7 @@ gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
       /* Fill in direction */
       for (i = 1; i < length; i++)
         {
-           coords[i].direction = gimp_coords_direction (&coords[i-1], &coords[i]);
-
+          coords[i].direction = gimp_coords_direction (&coords[i-1], &coords[i]);
         }
 
       coords[0].direction = coords[1].direction;
