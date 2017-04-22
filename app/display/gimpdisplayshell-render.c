@@ -89,6 +89,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
 #ifdef USE_NODE_BLIT
   node   = gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
+
+  gimp_projectable_begin_render (GIMP_PROJECTABLE (image));
 #endif
 
 #ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
@@ -320,6 +322,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     }
 
   g_object_unref (cairo_buffer);
+
+#ifdef USE_NODE_BLIT
+  gimp_projectable_end_render (GIMP_PROJECTABLE (image));
+#endif
 
   if (shell->mask)
     {
