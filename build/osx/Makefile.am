@@ -3,7 +3,9 @@
 # usually use to build GIMP 2.8.
 MACOSX_DEPLOYMENT_TARGET ?= 10.6
 
-EXTRA_DIST = info.plist
+EXTRA_DIST = \
+	info.plist \
+	info.plist.in
 
 all-local: info.plist
 
