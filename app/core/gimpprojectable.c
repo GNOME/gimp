@@ -236,6 +236,32 @@ gimp_projectable_get_graph (GimpProjectable *projectable)
 }
 
 void
+gimp_projectable_begin_render (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->begin_render)
+    iface->begin_render (projectable);
+}
+
+void
+gimp_projectable_end_render (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->end_render)
+    iface->end_render (projectable);
+}
+
+void
 gimp_projectable_invalidate_preview (GimpProjectable *projectable)
 {
   GimpProjectableInterface *iface;

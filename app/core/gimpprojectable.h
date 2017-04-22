@@ -54,6 +54,8 @@ struct _GimpProjectableInterface
                                        gint            *width,
                                        gint            *height);
   GeglNode   * (* get_graph)          (GimpProjectable *projectable);
+  void         (* begin_render)       (GimpProjectable *projectable);
+  void         (* end_render)         (GimpProjectable *projectable);
   void         (* invalidate_preview) (GimpProjectable *projectable);
 };
 
@@ -78,6 +80,8 @@ void         gimp_projectable_get_size           (GimpProjectable *projectable,
                                                   gint            *width,
                                                   gint            *height);
 GeglNode   * gimp_projectable_get_graph          (GimpProjectable *projectable);
+void         gimp_projectable_begin_render       (GimpProjectable *projectable);
+void         gimp_projectable_end_render         (GimpProjectable *projectable);
 void         gimp_projectable_invalidate_preview (GimpProjectable *projectable);
 
 
