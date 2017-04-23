@@ -27,9 +27,9 @@
 
 #include "core-types.h"
 
-#include "gegl/gimpapplicator.h"
 #include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-apply-operation.h"
+#include "gegl/gimp-gegl-nodes.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "vectors/gimpvectors.h"
@@ -48,6 +48,7 @@
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
+#include "gimpprojectable.h"
 #include "gimpundostack.h"
 
 #include "gimp-intl.h"
@@ -421,35 +422,36 @@ gimp_image_merge_layers (GimpImage     *image,
                          GimpContext   *context,
                          GimpMergeType  merge_type)
 {
-  GList            *list;
-  GSList           *reverse_list = NULL;
-  GSList           *layers;
-  GimpLayer        *merge_layer;
-  GimpLayer        *layer;
-  GimpLayer        *bottom_layer;
-  GimpParasiteList *parasites;
-  gint              count;
-  gint              x1, y1, x2, y2;
-  gint              off_x, off_y;
-  gint              position;
-  gchar            *name;
   GimpLayer        *parent;
+  gint              x1, y1;
+  gint              x2, y2;
+  GSList           *layers;
+  GimpLayer        *layer;
+  GimpLayer        *top_layer;
+  GimpLayer        *bottom_layer;
+  GimpLayer        *merge_layer;
+  gint              position;
+  GeglNode         *node;
+  GeglNode         *source_node;
+  GeglNode         *flatten_node;
+  GeglNode         *offset_node;
+  GeglNode         *last_node;
+  GeglNode         *last_node_source;
+  GimpParasiteList *parasites;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  layer        = NULL;
-  x1 = y1      = 0;
-  x2 = y2      = 0;
-  bottom_layer = NULL;
-
   parent = gimp_layer_get_parent (merge_list->data);
 
   /*  Get the layer extents  */
-  count = 0;
-  while (merge_list)
+  x1 = y1 = 0;
+  x2 = y2 = 0;
+  for (layers = merge_list; layers; layers = g_slist_next (layers))
     {
-      layer = merge_list->data;
+      gint off_x, off_y;
+
+      layer = layers->data;
 
       gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
 
@@ -457,7 +459,7 @@ gimp_image_merge_layers (GimpImage     *image,
         {
         case GIMP_EXPAND_AS_NECESSARY:
         case GIMP_CLIP_TO_IMAGE:
-          if (! count)
+          if (layers == merge_list)
             {
               x1 = off_x;
               y1 = off_y;
@@ -486,7 +488,7 @@ gimp_image_merge_layers (GimpImage     *image,
           break;
 
         case GIMP_CLIP_TO_BOTTOM_LAYER:
-          if (merge_list->next == NULL)
+          if (layers->next == NULL)
             {
               x1 = off_x;
               y1 = off_y;
@@ -496,7 +498,7 @@ gimp_image_merge_layers (GimpImage     *image,
           break;
 
         case GIMP_FLATTEN_IMAGE:
-          if (merge_list->next == NULL)
+          if (layers->next == NULL)
             {
               x1 = 0;
               y1 = 0;
@@ -505,56 +507,41 @@ gimp_image_merge_layers (GimpImage     *image,
             }
           break;
         }
-
-      count ++;
-      reverse_list = g_slist_prepend (reverse_list, layer);
-      merge_list = g_slist_next (merge_list);
     }
 
   if ((x2 - x1) == 0 || (y2 - y1) == 0)
-    {
-      g_slist_free (reverse_list);
+    return NULL;
 
-      return NULL;
-    }
+  top_layer    = merge_list->data;
+  bottom_layer = layer;
 
-  /*  Start a merge undo group. */
-
-  name = g_strdup (gimp_object_get_name (layer));
+  flatten_node = NULL;
 
   if (merge_type == GIMP_FLATTEN_IMAGE ||
       (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) &&
        ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))))
     {
-      GeglColor *color;
-      GimpRGB    bg;
+      GimpRGB bg;
 
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
                                     gimp_image_get_layer_format (image, FALSE),
-                                    gimp_object_get_name (layer),
+                                    gimp_object_get_name (bottom_layer),
                                     GIMP_OPACITY_OPAQUE,
                                     GIMP_LAYER_MODE_NORMAL_LEGACY);
+
       if (! merge_layer)
         {
           g_warning ("%s: could not allocate merge layer", G_STRFUNC);
 
-          g_free (name);
-          g_slist_free (reverse_list);
-
           return NULL;
         }
-
-      gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
 
       /*  get the background for compositing  */
       gimp_context_get_background (context, &bg);
       gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
                                          &bg, &bg);
 
-      color = gimp_gegl_color_new (&bg);
-      gegl_buffer_set_color (gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),
-                             GEGL_RECTANGLE(0,0,x2-x1,y2-y1), color);
-      g_object_unref (color);
+      flatten_node = gimp_gegl_create_flatten_node (&bg);
 
       position = 0;
     }
@@ -567,8 +554,8 @@ gimp_image_merge_layers (GimpImage     *image,
 
       merge_layer =
         gimp_layer_new (image, (x2 - x1), (y2 - y1),
-                        gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layer)),
-                        "merged layer",
+                        gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (bottom_layer)),
+                        gimp_object_get_name (bottom_layer),
                         GIMP_OPACITY_OPAQUE,
                         GIMP_LAYER_MODE_NORMAL_LEGACY);
 
@@ -576,28 +563,68 @@ gimp_image_merge_layers (GimpImage     *image,
         {
           g_warning ("%s: could not allocate merge layer", G_STRFUNC);
 
-          g_free (name);
-          g_slist_free (reverse_list);
-
           return NULL;
         }
-
-      gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
-
-      /*  clear the layer  */
-      gegl_buffer_clear (gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),
-                         NULL);
 
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly
        */
-      layer = reverse_list->data;
       position =
         gimp_container_get_n_children (container) -
-        gimp_container_get_child_index (container, GIMP_OBJECT (layer));
+        gimp_container_get_child_index (container, GIMP_OBJECT (bottom_layer));
     }
 
-  bottom_layer = layer;
+  gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
+
+  /*  Make sure the image's graph is constructed, so that top-level layers have
+   *  a parent node.
+   */
+  (void) gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
+
+  /*  Build our graph inside the top-layer's parent node  */
+  source_node = gimp_filter_get_node (GIMP_FILTER (top_layer));
+
+  node = gegl_node_get_parent (source_node);
+  g_assert (node != NULL);
+
+  offset_node = gegl_node_new_child (node,
+                                     "operation", "gegl:translate",
+                                     "x",         (gdouble) -x1,
+                                     "y",         (gdouble) -y1,
+                                     NULL);
+
+  if (flatten_node)
+    {
+      gegl_node_add_child (node, flatten_node);
+      g_object_unref (flatten_node);
+
+      gegl_node_link_many (source_node, flatten_node, offset_node, NULL);
+    }
+  else
+    {
+      gegl_node_link_many (source_node, offset_node, NULL);
+    }
+
+  /*  Disconnect the bottom-layer node's input  */
+  last_node        = gimp_filter_get_node (GIMP_FILTER (bottom_layer));
+  last_node_source = gegl_node_get_producer (last_node, "input", NULL);
+
+  gegl_node_disconnect (last_node, "input");
+
+  /*  Render the graph into the merge layer  */
+  gegl_node_blit_buffer (offset_node,
+                         gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer)),
+                         NULL, 0, GEGL_ABYSS_NONE);
+
+  /*  Reconnect the bottom-layer node's input  */
+  if (last_node_source)
+    gegl_node_link (last_node_source, last_node);
+
+  /*  Clean up the graph  */
+  gegl_node_remove_child (node, offset_node);
+
+  if (flatten_node)
+    gegl_node_remove_child (node, flatten_node);
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
   gimp_item_set_tattoo (GIMP_ITEM (merge_layer),
@@ -608,88 +635,17 @@ gimp_image_merge_layers (GimpImage     *image,
   gimp_item_set_parasites (GIMP_ITEM (merge_layer), parasites);
   g_object_unref (parasites);
 
-  for (layers = reverse_list; layers; layers = g_slist_next (layers))
-    {
-      GeglBuffer             *merge_buffer;
-      GeglBuffer             *layer_buffer;
-      GimpApplicator         *applicator;
-      GimpLayerMode           mode;
-      GimpLayerColorSpace     blend_space;
-      GimpLayerColorSpace     composite_space;
-      GimpLayerCompositeMode  composite_mode;
+  /*  Remove the merged layers from the image  */
+  for (layers = merge_list; layers; layers = g_slist_next (layers))
+    gimp_image_remove_layer (image, layers->data, TRUE, NULL);
 
-      layer = layers->data;
-
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-
-      /* MODE_DISSOLVE is special since it is the only mode that does not
-       *  work on the projection with the lower layer, but only locally on
-       *  the layers alpha channel.
-       */
-      mode            = gimp_layer_get_mode (layer);
-      blend_space     = gimp_layer_get_blend_space (layer);
-      composite_space = gimp_layer_get_composite_space (layer);
-      composite_mode  = gimp_layer_get_composite_mode (layer);
-
-      if (layer == bottom_layer)
-        {
-          if (mode != GIMP_LAYER_MODE_DISSOLVE)
-            mode          = GIMP_LAYER_MODE_NORMAL_LEGACY;
-
-          blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
-          composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
-          composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
-        }
-
-      merge_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (merge_layer));
-      layer_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-
-      applicator = gimp_applicator_new (NULL, FALSE, FALSE);
-
-      if (gimp_layer_get_mask (layer) &&
-          gimp_layer_get_apply_mask (layer))
-        {
-          GeglBuffer *mask_buffer;
-
-          mask_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer->mask));
-
-          gimp_applicator_set_mask_buffer (applicator, mask_buffer);
-          gimp_applicator_set_mask_offset (applicator,
-                                           - (x1 - off_x),
-                                           - (y1 - off_y));
-        }
-
-      gimp_applicator_set_src_buffer (applicator, merge_buffer);
-      gimp_applicator_set_dest_buffer (applicator, merge_buffer);
-
-      gimp_applicator_set_apply_buffer (applicator, layer_buffer);
-      gimp_applicator_set_apply_offset (applicator,
-                                        - (x1 - off_x),
-                                        - (y1 - off_y));
-
-      gimp_applicator_set_opacity (applicator, gimp_layer_get_opacity (layer));
-      gimp_applicator_set_mode (applicator, mode,
-                                blend_space, composite_space, composite_mode);
-
-      gimp_applicator_blit (applicator,
-                            GEGL_RECTANGLE (0, 0,
-                                            gegl_buffer_get_width  (merge_buffer),
-                                            gegl_buffer_get_height (merge_buffer)));
-
-      g_object_unref (applicator);
-
-      gimp_image_remove_layer (image, layer, TRUE, NULL);
-    }
-
-  g_slist_free (reverse_list);
-
-  gimp_object_take_name (GIMP_OBJECT (merge_layer), name);
   gimp_item_set_visible (GIMP_ITEM (merge_layer), TRUE, FALSE);
 
   /*  if the type is flatten, remove all the remaining layers  */
   if (merge_type == GIMP_FLATTEN_IMAGE)
     {
-      list = gimp_image_get_layer_iter (image);
+      GList *list = gimp_image_get_layer_iter (image);
+
       while (list)
         {
           layer = list->data;
@@ -704,7 +660,6 @@ gimp_image_merge_layers (GimpImage     *image,
   else
     {
       /*  Add the layer to the image  */
-
       gimp_image_add_layer (image, merge_layer, parent,
                             gimp_container_get_n_children (container) -
                             position + 1,
