@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-02 10:04+0200\n"
-"PO-Revision-Date: 2017-04-02 10:05+0200\n"
+"POT-Creation-Date: 2017-04-23 20:52+0200\n"
+"PO-Revision-Date: 2017-04-23 20:53+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -319,7 +319,7 @@ msgid "Brush Editor"
 msgstr "Edytor pędzli"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:113 ../app/core/gimp-data-factories.c:353
+#: ../app/actions/actions.c:113 ../app/core/gimp-data-factories.c:356
 #: ../app/dialogs/dialogs.c:328 ../app/dialogs/preferences-dialog.c:2794
 msgid "Brushes"
 msgstr "Pędzle"
@@ -408,12 +408,12 @@ msgid "Gradient Editor"
 msgstr "Edytor gradientów"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:173 ../app/core/gimp-data-factories.c:378
+#: ../app/actions/actions.c:173 ../app/core/gimp-data-factories.c:381
 #: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2810
 msgid "Gradients"
 msgstr "Gradienty"
 
-#: ../app/actions/actions.c:176 ../app/core/gimp-data-factories.c:389
+#: ../app/actions/actions.c:176 ../app/core/gimp-data-factories.c:392
 #: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:2818
 msgid "Tool Presets"
 msgstr "Ustawienia narzędzia"
@@ -442,7 +442,7 @@ msgid "Layers"
 msgstr "Warstwy"
 
 #. initialize the list of mypaint brushes
-#: ../app/actions/actions.c:194 ../app/core/gimp-data-factories.c:363
+#: ../app/actions/actions.c:194 ../app/core/gimp-data-factories.c:366
 #: ../app/dialogs/dialogs.c:334 ../app/dialogs/preferences-dialog.c:2822
 msgid "MyPaint Brushes"
 msgstr "Pędzle programu MyPaint"
@@ -453,13 +453,13 @@ msgid "Palette Editor"
 msgstr "Edytor palety"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:200 ../app/core/gimp-data-factories.c:373
+#: ../app/actions/actions.c:200 ../app/core/gimp-data-factories.c:376
 #: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:2806
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:203 ../app/core/gimp-data-factories.c:368
+#: ../app/actions/actions.c:203 ../app/core/gimp-data-factories.c:371
 #: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2802
 msgid "Patterns"
 msgstr "Desenie"
@@ -1946,13 +1946,13 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:377
 #: ../app/tools/gimpforegroundselecttool.c:309 ../app/tools/gimptexttool.c:1528
-#: ../app/tools/gimptransformtool.c:1666 ../app/widgets/gimpactionview.c:674
+#: ../app/tools/gimptransformtool.c:1661 ../app/widgets/gimpactionview.c:674
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:665
 #: ../app/widgets/gimpcontrollerlist.c:568
 #: ../app/widgets/gimpdeviceeditor.c:508 ../app/widgets/gimpdnd-xds.c:228
 #: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:386
-#: ../app/widgets/gimphelp.c:721 ../app/widgets/gimpiconpicker.c:516
+#: ../app/widgets/gimphelp.c:725 ../app/widgets/gimpiconpicker.c:516
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:749
 msgid "_Cancel"
 msgstr "_Anuluj"
@@ -5716,7 +5716,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:376 ../app/tools/gimptransformtool.c:1665
+#: ../app/tools/gimpfiltertool.c:376 ../app/tools/gimptransformtool.c:1660
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "_Przywróć"
@@ -9562,19 +9562,19 @@ msgid "Deleting \"%s\" failed: %s"
 msgstr "Usunięcie „%s” się nie powiodło: %s"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp-data-factories.c:358 ../app/core/gimpcontext.c:711
+#: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:711
 #: ../app/dialogs/preferences-dialog.c:2798
 #: ../app/tools/gimppaintoptions-gui.c:222
 msgid "Dynamics"
 msgstr "Dynamika"
 
 #. initialize the color history
-#: ../app/core/gimp-data-factories.c:383 ../app/core/gimp-palettes.c:60
+#: ../app/core/gimp-data-factories.c:386 ../app/core/gimp-palettes.c:60
 msgid "Color History"
 msgstr "Historia kolorów"
 
 #. update tag cache
-#: ../app/core/gimp-data-factories.c:395
+#: ../app/core/gimp-data-factories.c:398
 msgid "Updating tag cache"
 msgstr "Aktualizowanie pamięci podręcznej etykiet"
 
@@ -9761,10 +9761,13 @@ msgstr ""
 msgid "Brush Spacing"
 msgstr "Odstępy pędzla"
 
-#: ../app/core/gimpbrushclipboard.c:168 ../app/core/gimppatternclipboard.c:168
-#: ../app/widgets/gimpclipboard.c:485
-msgid "Clipboard"
-msgstr "Schowek"
+#: ../app/core/gimpbrushclipboard.c:190
+msgid "Clipboard Mask"
+msgstr "Maska ze schowka"
+
+#: ../app/core/gimpbrushclipboard.c:192 ../app/core/gimppatternclipboard.c:169
+msgid "Clipboard Image"
+msgstr "Obraz ze schowka"
 
 #: ../app/core/gimpbrushgenerated-load.c:75
 #, c-format
@@ -14336,7 +14339,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:226
 #: ../app/tools/gimpcroptool.c:325 ../app/tools/gimpfiltertool.c:331
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1844 ../app/tools/gimpwarptool.c:579
+#: ../app/tools/gimptransformtool.c:1833 ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
@@ -15500,7 +15503,7 @@ msgctxt "smudge-tool"
 msgid "Rate"
 msgstr "Tempo"
 
-#: ../app/paint/gimpsourcecore.c:238
+#: ../app/paint/gimpsourcecore.c:239
 msgid "Set a source image first."
 msgstr "Należy najpierw wybrać źródło obrazu."
 
@@ -15642,7 +15645,7 @@ msgstr "Przekształcenia 2D"
 msgid "2D Transforming"
 msgstr "Przekształcanie 2D"
 
-#: ../app/pdb/edit-cmds.c:801
+#: ../app/pdb/edit-cmds.c:810
 msgid "Blending"
 msgstr "Mieszanie"
 
@@ -16799,7 +16802,7 @@ msgstr "_Gradient"
 #: ../app/tools/gimpblendtool.c:265 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:233 ../app/tools/gimpfiltertool.c:338
 #: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1852 ../app/tools/gimpwarptool.c:586
+#: ../app/tools/gimptransformtool.c:1841 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
@@ -17760,8 +17763,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Różdżka"
 
-#: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:484
-#: ../app/tools/gimpgegltool.c:485 ../app/tools/gimpoperationtool.c:130
+#: ../app/tools/gimpgegltool.c:72 ../app/tools/gimpgegltool.c:488
+#: ../app/tools/gimpgegltool.c:489 ../app/tools/gimpoperationtool.c:130
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -17773,7 +17776,7 @@ msgstr "GEGL: wykonuje wybrane działanie biblioteki GEGL"
 msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
-#: ../app/tools/gimpgegltool.c:439
+#: ../app/tools/gimpgegltool.c:443
 msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
@@ -18224,7 +18227,7 @@ msgstr "_Przesunięcie"
 msgid "There is no path to move."
 msgstr "Brak ścieżki do przeniesienia."
 
-#: ../app/tools/gimpmovetool.c:256 ../app/tools/gimptransformtool.c:1873
+#: ../app/tools/gimpmovetool.c:256 ../app/tools/gimptransformtool.c:1868
 msgid "The active path's position is locked."
 msgstr "Położenie aktywnej ścieżki jest zablokowane."
 
@@ -19126,15 +19129,15 @@ msgstr "Blokowanie"
 msgid "Lock pivot position to canvas"
 msgstr "Blokowanie położenia osi do płótna"
 
-#: ../app/tools/gimptransformtool.c:221
+#: ../app/tools/gimptransformtool.c:228
 msgid "_Transform"
 msgstr "Prze_kształć"
 
-#: ../app/tools/gimptransformtool.c:243
+#: ../app/tools/gimptransformtool.c:250
 msgid "Transforming"
 msgstr "Przekształcanie"
 
-#: ../app/tools/gimptransformtool.c:294
+#: ../app/tools/gimptransformtool.c:299
 #, c-format
 msgid "The selection does not intersect with the layer."
 msgstr "Zaznaczenie nie przecina się z warstwą."
@@ -19143,23 +19146,23 @@ msgstr "Zaznaczenie nie przecina się z warstwą."
 msgid "Transform Step"
 msgstr "Krok przekształcenia"
 
-#: ../app/tools/gimptransformtool.c:1841
+#: ../app/tools/gimptransformtool.c:1828
 msgid "There is no layer to transform."
 msgstr "Brak warstwy do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1846
+#: ../app/tools/gimptransformtool.c:1835
 msgid "The active layer's position and size are locked."
 msgstr "Położenie i wymiary aktywnej warstwy są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:1858
+#: ../app/tools/gimptransformtool.c:1848
 msgid "There is no selection to transform."
 msgstr "Brak zaznaczenia do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1868
+#: ../app/tools/gimptransformtool.c:1861
 msgid "There is no path to transform."
 msgstr "Brak ścieżki do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1871
+#: ../app/tools/gimptransformtool.c:1866
 msgid "The active path's strokes are locked."
 msgstr "Rysowanie wzdłuż ścieżki jest zablokowane."
 
@@ -19778,10 +19781,14 @@ msgstr "Ostrza"
 msgid "Percentage of width of brush"
 msgstr "Procent szerokości pędzla"
 
-#: ../app/widgets/gimpbufferview.c:175 ../app/widgets/gimpbufferview.c:267
+#: ../app/widgets/gimpbufferview.c:176 ../app/widgets/gimpbufferview.c:268
 #: ../app/widgets/gimpeditor.c:771
 msgid "(None)"
 msgstr "(Brak)"
+
+#: ../app/widgets/gimpclipboard.c:485
+msgid "Clipboard"
+msgstr "Schowek"
 
 #: ../app/widgets/gimpcolordialog.c:156
 msgid "Add the current color to the color history"
@@ -20621,21 +20628,21 @@ msgstr "Można użyć przeglądarki WWW do czytania stron pomocy."
 msgid "Use _Web Browser"
 msgstr "Użycie przeglądarki _WWW"
 
-#: ../app/widgets/gimphelp.c:717
+#: ../app/widgets/gimphelp.c:721
 msgid "GIMP user manual is missing"
 msgstr "Brak podręcznika użytkownika programu GIMP"
 
-#: ../app/widgets/gimphelp.c:722
+#: ../app/widgets/gimphelp.c:726
 msgid "Read _Online"
 msgstr "Pod_ręcznik w Internecie"
 
-#: ../app/widgets/gimphelp.c:745
+#: ../app/widgets/gimphelp.c:749
 msgid "The GIMP user manual is not installed on your computer."
 msgstr ""
 "Podręcznik użytkownika programu GIMP nie został zainstalowany na tym "
 "komputerze."
 
-#: ../app/widgets/gimphelp.c:748
+#: ../app/widgets/gimphelp.c:752
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
