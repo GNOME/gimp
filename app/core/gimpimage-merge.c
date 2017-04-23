@@ -512,7 +512,11 @@ gimp_image_merge_layers (GimpImage     *image,
     }
 
   if ((x2 - x1) == 0 || (y2 - y1) == 0)
-    return NULL;
+    {
+      g_slist_free (reverse_list);
+
+      return NULL;
+    }
 
   /*  Start a merge undo group. */
 
