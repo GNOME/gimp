@@ -536,7 +536,11 @@ gimp_image_merge_layers (GimpImage     *image,
                                     GIMP_LAYER_MODE_NORMAL_LEGACY);
       if (! merge_layer)
         {
-          g_warning ("%s: could not allocate merge layer.", G_STRFUNC);
+          g_warning ("%s: could not allocate merge layer", G_STRFUNC);
+
+          g_free (name);
+          g_slist_free (reverse_list);
+
           return NULL;
         }
 
@@ -568,9 +572,13 @@ gimp_image_merge_layers (GimpImage     *image,
                         GIMP_OPACITY_OPAQUE,
                         GIMP_LAYER_MODE_NORMAL_LEGACY);
 
-      if (!merge_layer)
+      if (! merge_layer)
         {
           g_warning ("%s: could not allocate merge layer", G_STRFUNC);
+
+          g_free (name);
+          g_slist_free (reverse_list);
+
           return NULL;
         }
 
