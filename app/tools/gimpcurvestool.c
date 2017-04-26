@@ -154,8 +154,6 @@ static gboolean   curves_get_channel_color         (GtkWidget            *widget
                                                     GimpHistogramChannel  channel,
                                                     GimpRGB              *color);
 
-static const GimpRGB * curves_get_channel_color    (GimpHistogramChannel  channel);
-
 G_DEFINE_TYPE (GimpCurvesTool, gimp_curves_tool, GIMP_TYPE_FILTER_TOOL)
 
 #define parent_class gimp_curves_tool_parent_class
@@ -685,8 +683,10 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                     G_CALLBACK (gimp_curves_tool_control_events),
                     tool);
 
+  /*
   gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
                                        GIMP_HISTOGRAM_VIEW (tool->graph));
+  */
 
   /*  The bottom color bar  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
