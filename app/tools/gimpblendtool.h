@@ -64,6 +64,9 @@ struct _GimpBlendTool
   gdouble             end_x;      /*  ending x coord    */
   gdouble             end_y;      /*  ending y coord    */
 
+  GList              *undo_stack;
+  GList              *redo_stack;
+
   GimpCanvasItem     *line;
   GimpCanvasItem     *start_handle_circle;
   GimpCanvasItem     *start_handle_cross;

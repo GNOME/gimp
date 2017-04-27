@@ -66,6 +66,17 @@
 #define PARTIAL_HANDLE_THRESHOLD_SQ (FULL_HANDLE_THRESHOLD_SQ * 5)
 
 
+typedef struct _BlendInfo BlendInfo;
+
+struct _BlendInfo
+{
+  gdouble start_x;
+  gdouble start_y;
+  gdouble end_x;
+  gdouble end_y;
+};
+
+
 /*  local function prototypes  */
 
 static void   gimp_blend_tool_dispose             (GObject               *object);
@@ -112,6 +123,14 @@ static void   gimp_blend_tool_cursor_update       (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
+static const gchar * gimp_blend_tool_get_undo_desc(GimpTool              *tool,
+                                                   GimpDisplay           *display);
+static const gchar * gimp_blend_tool_get_redo_desc(GimpTool              *tool,
+                                                   GimpDisplay           *display);
+static gboolean  gimp_blend_tool_undo             (GimpTool              *tool,
+                                                   GimpDisplay           *display);
+static gboolean  gimp_blend_tool_redo             (GimpTool              *tool,
+                                                   GimpDisplay           *display);
 static void   gimp_blend_tool_options_notify      (GimpTool              *tool,
                                                    GimpToolOptions       *options,
                                                    const GParamSpec      *pspec);
@@ -147,6 +166,12 @@ static void   gimp_blend_tool_create_filter       (GimpBlendTool         *blend_
                                                    GimpDrawable          *drawable);
 static void   gimp_blend_tool_filter_flush        (GimpDrawableFilter    *filter,
                                                    GimpTool              *tool);
+
+static BlendInfo * blend_info_new  (gdouble    start_x,
+                                    gdouble    start_y,
+                                    gdouble    end_x,
+                                    gdouble    end_y);
+static void        blend_info_free (BlendInfo *info);
 
 
 G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL)
@@ -193,6 +218,10 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   tool_class->key_press           = gimp_blend_tool_key_press;
   tool_class->active_modifier_key = gimp_blend_tool_active_modifier_key;
   tool_class->cursor_update       = gimp_blend_tool_cursor_update;
+  tool_class->get_undo_desc       = gimp_blend_tool_get_undo_desc;
+  tool_class->get_redo_desc       = gimp_blend_tool_get_redo_desc;
+  tool_class->undo                = gimp_blend_tool_undo;
+  tool_class->redo                = gimp_blend_tool_redo;
   tool_class->options_notify      = gimp_blend_tool_options_notify;
 
   draw_tool_class->draw           = gimp_blend_tool_draw;
@@ -355,6 +384,29 @@ gimp_blend_tool_button_press (GimpTool            *tool,
       blend_tool->grabbed_point = POINT_BOTH;
     }
 
+  if ((blend_tool->grabbed_point == POINT_START ||
+       blend_tool->grabbed_point == POINT_END   ||
+       blend_tool->grabbed_point == POINT_BOTH) &&
+      gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+    {
+      blend_tool->undo_stack =
+        g_list_prepend (blend_tool->undo_stack,
+                        blend_info_new (blend_tool->start_x,
+                                        blend_tool->start_y,
+                                        blend_tool->end_x,
+                                        blend_tool->end_y));
+
+      if (blend_tool->redo_stack)
+        {
+          g_list_free_full (blend_tool->redo_stack,
+                            (GDestroyNotify) blend_info_free);
+          blend_tool->redo_stack = NULL;
+        }
+
+      /*  update the undo actions / menu items  */
+      gimp_image_flush (gimp_display_get_image (display));
+    }
+
   gimp_blend_tool_point_motion (blend_tool,
                                 state & gimp_get_constrain_behavior_mask ());
 
@@ -395,7 +447,16 @@ gimp_blend_tool_button_release (GimpTool              *tool,
       break;
 
     case GIMP_BUTTON_RELEASE_CANCEL:
-      /* XXX: handle cancel properly */
+      if ((blend_tool->grabbed_point == POINT_START ||
+           blend_tool->grabbed_point == POINT_END   ||
+           blend_tool->grabbed_point == POINT_BOTH) &&
+          blend_tool->undo_stack)
+        {
+          gimp_blend_tool_undo (tool, display);
+          blend_info_free (blend_tool->redo_stack->data);
+          blend_tool->redo_stack = g_list_remove (blend_tool->redo_stack,
+                                                  blend_tool->redo_stack->data);
+        }
       break;
 
     case GIMP_BUTTON_RELEASE_CLICK:
@@ -600,6 +661,98 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static const gchar *
+gimp_blend_tool_get_undo_desc (GimpTool    *tool,
+                               GimpDisplay *display)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
+
+  if (display != draw_tool->display || ! blend_tool->undo_stack)
+    return NULL;
+
+  return _("Blend Step");
+}
+
+static const gchar *
+gimp_blend_tool_get_redo_desc (GimpTool    *tool,
+                               GimpDisplay *display)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
+
+  if (display != draw_tool->display || ! blend_tool->redo_stack)
+    return NULL;
+
+  return _("Blend Step");
+}
+
+static gboolean
+gimp_blend_tool_undo (GimpTool    *tool,
+                      GimpDisplay *display)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+  BlendInfo     *info;
+
+  if (! gimp_blend_tool_get_undo_desc (tool, display))
+    return FALSE;
+
+  info = blend_info_new (blend_tool->start_x,
+                         blend_tool->start_y,
+                         blend_tool->end_x,
+                         blend_tool->end_y);
+  blend_tool->redo_stack = g_list_prepend (blend_tool->redo_stack, info);
+
+  info = blend_tool->undo_stack->data;
+
+  blend_tool->start_x = info->start_x;
+  blend_tool->start_y = info->start_y;
+  blend_tool->end_x   = info->end_x;
+  blend_tool->end_y   = info->end_y;
+
+  blend_tool->undo_stack = g_list_remove (blend_tool->undo_stack, info);
+  blend_info_free (info);
+
+  gimp_blend_tool_update_graph (blend_tool);
+  gimp_drawable_filter_apply (blend_tool->filter, NULL);
+  gimp_blend_tool_update_items (blend_tool);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_blend_tool_redo (GimpTool    *tool,
+                      GimpDisplay *display)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+  BlendInfo     *info;
+
+  if (! gimp_blend_tool_get_redo_desc (tool, display))
+    return FALSE;
+
+  info = blend_info_new (blend_tool->start_x,
+                         blend_tool->start_y,
+                         blend_tool->end_x,
+                         blend_tool->end_y);
+  blend_tool->undo_stack = g_list_prepend (blend_tool->undo_stack, info);
+
+  info = blend_tool->redo_stack->data;
+
+  blend_tool->start_x = info->start_x;
+  blend_tool->start_y = info->start_y;
+  blend_tool->end_x   = info->end_x;
+  blend_tool->end_y   = info->end_y;
+
+  blend_tool->redo_stack = g_list_remove (blend_tool->redo_stack, info);
+  blend_info_free (info);
+
+  gimp_blend_tool_update_graph (blend_tool);
+  gimp_drawable_filter_apply (blend_tool->filter, NULL);
+  gimp_blend_tool_update_items (blend_tool);
+
+  return TRUE;
 }
 
 static void
@@ -940,6 +1093,20 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
 
+  if (blend_tool->undo_stack)
+    {
+      g_list_free_full (blend_tool->undo_stack,
+                        (GDestroyNotify) blend_info_free);
+      blend_tool->undo_stack = NULL;
+    }
+
+  if (blend_tool->redo_stack)
+    {
+      g_list_free_full (blend_tool->redo_stack,
+                        (GDestroyNotify) blend_info_free);
+      blend_tool->redo_stack = NULL;
+    }
+
   tool->display  = NULL;
   tool->drawable = NULL;
 
@@ -1232,4 +1399,26 @@ gimp_blend_tool_filter_flush (GimpDrawableFilter *filter,
   GimpImage *image = gimp_display_get_image (tool->display);
 
   gimp_projection_flush (gimp_image_get_projection (image));
+}
+
+static BlendInfo *
+blend_info_new (gdouble start_x,
+                gdouble start_y,
+                gdouble end_x,
+                gdouble end_y)
+{
+  BlendInfo *info = g_slice_new0 (BlendInfo);
+
+  info->start_x = start_x;
+  info->start_y = start_y;
+  info->end_x   = end_x;
+  info->end_y   = end_y;
+
+  return info;
+}
+
+static void
+blend_info_free (BlendInfo *info)
+{
+  g_slice_free (BlendInfo, info);
 }
