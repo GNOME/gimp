@@ -216,6 +216,16 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
   g_free (src);
 }
 
+static inline gfloat
+odd_powf (gfloat x,
+          gfloat y)
+{
+  if (x >= 0.0f)
+    return  powf ( x, y);
+  else
+    return -powf (-x, y);
+}
+
 void
 gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
                      const GeglRectangle *src_rect,
@@ -276,9 +286,9 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
           while (count--)
             {
-              *dest++ = pow (*src++, factor);
-              *dest++ = pow (*src++, factor);
-              *dest++ = pow (*src++, factor);
+              *dest++ = odd_powf (*src++, factor);
+              *dest++ = odd_powf (*src++, factor);
+              *dest++ = odd_powf (*src++, factor);
 
               *dest++ = *src++;
             }
