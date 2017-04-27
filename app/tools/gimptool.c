@@ -712,12 +712,16 @@ gimp_tool_button_release (GimpTool         *tool,
           release_type = GIMP_BUTTON_RELEASE_CLICK;
           my_coords    = tool->button_press_coords;
 
-          /*  synthesize a motion event back to the recorded press
-           *  coordinates
-           */
-          GIMP_TOOL_GET_CLASS (tool)->motion (tool, &my_coords, time,
-                                              state & GDK_BUTTON1_MASK,
-                                              display);
+          if (tool->got_motion_event)
+            {
+              /*  if there has been a motion() since button_press(),
+               *  synthesize a motion() back to the recorded press
+               *  coordinates
+               */
+              GIMP_TOOL_GET_CLASS (tool)->motion (tool, &my_coords, time,
+                                                  state & GDK_BUTTON1_MASK,
+                                                  display);
+            }
         }
       else if (! tool->got_motion_event)
         {
