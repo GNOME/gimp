@@ -98,7 +98,7 @@ static void   gimp_blend_tool_motion              (GimpTool              *tool,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
-static void   gimp_blend_tool_point_motion        (GimpBlendTool         *blend_tool,
+static gboolean gimp_blend_tool_point_motion      (GimpBlendTool         *blend_tool,
                                                    gboolean               constrain_angle);
 static gboolean gimp_blend_tool_key_press         (GimpTool              *tool,
                                                    GdkEventKey           *kevent,
@@ -361,7 +361,8 @@ gimp_blend_tool_button_press (GimpTool            *tool,
   tool->display = display;
   gimp_blend_tool_update_items (blend_tool);
 
-  if (blend_tool->grabbed_point != POINT_FILL_MODE &&
+  if (blend_tool->grabbed_point != POINT_NONE      &&
+      blend_tool->grabbed_point != POINT_FILL_MODE &&
       blend_tool->grabbed_point != POINT_INIT_MODE)
     {
       gimp_blend_tool_update_graph (blend_tool);
@@ -381,7 +382,7 @@ gimp_blend_tool_button_release (GimpTool              *tool,
                                 GimpButtonReleaseType  release_type,
                                 GimpDisplay           *display)
 {
-  GimpBlendTool    *blend_tool    = GIMP_BLEND_TOOL (tool);
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
   gimp_tool_pop_status (tool, display);
   /* XXX: Push a useful status message */
@@ -455,23 +456,28 @@ gimp_blend_tool_motion (GimpTool         *tool,
 
       blend_tool->end_x -= dx;
       blend_tool->end_y -= dy;
+
+      gimp_blend_tool_update_graph (blend_tool);
+      gimp_drawable_filter_apply (blend_tool->filter, NULL);
     }
   else
     {
-      gimp_blend_tool_point_motion (blend_tool,
-                                    state & gimp_get_constrain_behavior_mask ());
+      gboolean constrain = (state & gimp_get_constrain_behavior_mask ()) != 0;
+
+      if (gimp_blend_tool_point_motion (blend_tool, constrain))
+        {
+          gimp_blend_tool_update_graph (blend_tool);
+          gimp_drawable_filter_apply (blend_tool->filter, NULL);
+        }
     }
 
   gimp_tool_pop_status (tool, display);
   gimp_blend_tool_push_status (blend_tool, state, display);
 
   gimp_blend_tool_update_items (blend_tool);
-
-  gimp_blend_tool_update_graph (blend_tool);
-  gimp_drawable_filter_apply (blend_tool->filter, NULL);
 }
 
-static void
+static gboolean
 gimp_blend_tool_point_motion (GimpBlendTool *blend_tool,
                               gboolean       constrain_angle)
 {
@@ -488,7 +494,7 @@ gimp_blend_tool_point_motion (GimpBlendTool *blend_tool,
                                &blend_tool->start_x, &blend_tool->start_y,
                                GIMP_CONSTRAIN_LINE_15_DEGREES);
         }
-      break;
+      return TRUE;
 
     case POINT_END:
       blend_tool->end_x = blend_tool->mouse_x;
@@ -500,11 +506,13 @@ gimp_blend_tool_point_motion (GimpBlendTool *blend_tool,
                                &blend_tool->end_x, &blend_tool->end_y,
                                GIMP_CONSTRAIN_LINE_15_DEGREES);
         }
-      break;
+      return TRUE;
 
     default:
       break;
     }
+
+  return FALSE;
 }
 
 static gboolean
