@@ -10,6 +10,11 @@ here, just bug-fixes.
 Overview of Changes from GIMP 2.8.20 to GIMP 2.8.22
 ===================================================
 
+GUI:
+
+ - improve drawing performance in single window mode, especially with
+   pixmap themes
+ 
 
 macOS DMG:
 
@@ -18,6 +23,7 @@ macOS DMG:
    during clipboard operations with a clipboard manager active
  - Add patch for GTK+ Bug 767091 to the build which concerns crashes
    on some drag & drop operations
+ - generate OSX package metadata during build
 
 
 Plug-ins:
@@ -29,13 +35,31 @@ Plug-ins:
    error messages for good measure
  - Avoid creating wrong layer group structure when importing PSD
    files (already fixed in 2.8.20, didn't make it to the NEWS)
+ - Prevent a crash in PDF plug-in if images or resolution are large
+ - stop parsing invalid PCX files early and prevent a segmentation fault
 
+
+General:
+
+ - if NOCONFIGURE is set, autogen.sh won't run configure
+ - VPATH builds for win32 targets have been fixed
+ 
 
 Updated Translations:
 
+ - Basque
+ - Brazilian Portuguese
+ - Catalan 
  - Chinese (PRC)
+ - Finnish
+ - Greek
+ - Hungarian
  - Italian
+ - Kazakh
+ - Norwegian
+ - Polish
  - Slovenian
+ - Spanish
  - Swedish
 
 
