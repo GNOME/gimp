@@ -20,9 +20,9 @@
  * processing. It uses drawable filters that allow for non-destructive
  * manupulation of drawable data, with live preview on screen.
  *
- * To create a tool that uses this, see /tools/gimpimagemaptool.c for
- * the interface and /tools/gimpcolorbalancetool.c for an example of
- * using that interface.
+ * To create a tool that uses this, see app/tools/gimpfiltertool.c for
+ * the interface and e.g. app/tools/gimpcolorbalancetool.c for an
+ * example of using that interface.
  */
 
 #include "config.h"
