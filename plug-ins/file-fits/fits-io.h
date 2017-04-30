@@ -30,15 +30,15 @@
 
 /* Data representations */
 
-typedef unsigned char FitsBitpix8;
-typedef short         FitsBitpix16;
-typedef long          FitsBitpix32;
-typedef float         FitsBitpixM32;
-typedef double        FitsBitpixM64;
-typedef int           FitsBool;
-typedef long          FitsLong;
-typedef double        FitsDouble;
-typedef char          FitsString[FITS_CARD_SIZE];
+typedef guchar FitsBitpix8;
+typedef gint16 FitsBitpix16;
+typedef gint32 FitsBitpix32;
+typedef float  FitsBitpixM32;
+typedef double FitsBitpixM64;
+typedef gint32 FitsBool;
+typedef gint32 FitsLong;
+typedef double FitsDouble;
+typedef char   FitsString[FITS_CARD_SIZE];
 
 typedef enum
 {
