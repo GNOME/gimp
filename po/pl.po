@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-23 20:52+0200\n"
-"PO-Revision-Date: 2017-04-23 20:53+0200\n"
+"POT-Creation-Date: 2017-04-30 19:00+0200\n"
+"PO-Revision-Date: 2017-04-30 19:01+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -10159,7 +10159,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1201
+#: ../app/core/gimpdrawable-blend.c:150 ../app/tools/gimpblendtool.c:1376
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Gradient"
@@ -14329,13 +14329,13 @@ msgstr "Upuszczenie nowej warstwy"
 msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
-#: ../app/display/gimpdisplayshell-dnd.c:362 ../app/tools/gimpblendtool.c:251
+#: ../app/display/gimpdisplayshell-dnd.c:362 ../app/tools/gimpblendtool.c:280
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:219
 #: ../app/tools/gimpfiltertool.c:324 ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
-#: ../app/display/gimpdisplayshell-dnd.c:370 ../app/tools/gimpblendtool.c:258
+#: ../app/display/gimpdisplayshell-dnd.c:370 ../app/tools/gimpblendtool.c:287
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:226
 #: ../app/tools/gimpcroptool.c:325 ../app/tools/gimpfiltertool.c:331
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
@@ -16787,40 +16787,44 @@ msgstr "Progowanie"
 msgid "Edit this gradient"
 msgstr "Modyfikuje ten gradient"
 
-#: ../app/tools/gimpblendtool.c:170
+#: ../app/tools/gimpblendtool.c:195
 msgid "Blend"
 msgstr "Gradient"
 
-#: ../app/tools/gimpblendtool.c:171
+#: ../app/tools/gimpblendtool.c:196
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "Gradient: wypełnia zaznaczony obszar kolorem z gradientu"
 
-#: ../app/tools/gimpblendtool.c:172
+#: ../app/tools/gimpblendtool.c:197
 msgid "Blen_d"
 msgstr "_Gradient"
 
-#: ../app/tools/gimpblendtool.c:265 ../app/tools/gimpbucketfilltool.c:151
+#: ../app/tools/gimpblendtool.c:294 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:233 ../app/tools/gimpfiltertool.c:338
 #: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1841 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
-#: ../app/tools/gimpblendtool.c:272
+#: ../app/tools/gimpblendtool.c:301
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:975 ../app/tools/gimppainttool.c:656
+#: ../app/tools/gimpblendtool.c:676 ../app/tools/gimpblendtool.c:689
+msgid "Blend Step"
+msgstr "Krok gradientu"
+
+#: ../app/tools/gimpblendtool.c:1150 ../app/tools/gimppainttool.c:656
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
 
-#: ../app/tools/gimpblendtool.c:976
+#: ../app/tools/gimpblendtool.c:1151
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s przesuwa całą linię"
 
-#: ../app/tools/gimpblendtool.c:980
+#: ../app/tools/gimpblendtool.c:1155
 msgid "Blend: "
 msgstr "Gradient: "
 
@@ -18988,7 +18992,7 @@ msgstr "_Automatycznie"
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Automatyczne dopasowanie optymalnego progu binaryzacji"
 
-#: ../app/tools/gimptool.c:1035
+#: ../app/tools/gimptool.c:1039
 msgid "Can't work on an empty image, add a layer first"
 msgstr "Nie można pracować na pustym obrazie, należy najpierw dodać warstwę"
 
