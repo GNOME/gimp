@@ -303,6 +303,8 @@ libappwidgets_a_sources = \
 	gimppropgui.h			\
 	gimppropgui-constructors.c	\
 	gimppropgui-constructors.h	\
+	gimppropgui-eval.c		\
+	gimppropgui-eval.h		\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpradioaction.c		\
