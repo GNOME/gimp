@@ -658,11 +658,11 @@ gimp_prop_pointer_combo_box_notify (GObject    *config,
 /*  boolean combo box   */
 /************************/
 
-static void   gimp_prop_boolean_combo_box_callback (GtkWidget   *widget,
+static void   gimp_prop_boolean_combo_box_callback (GtkWidget   *combo,
                                                     GObject     *config);
 static void   gimp_prop_boolean_combo_box_notify   (GObject     *config,
                                                     GParamSpec  *param_spec,
-                                                    GtkWidget   *widget);
+                                                    GtkWidget   *combo);
 
 
 /**
@@ -688,7 +688,7 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
                                  const gchar *false_text)
 {
   GParamSpec *param_spec;
-  GtkWidget  *combo_box;
+  GtkWidget  *combo;
   gboolean    value;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
@@ -703,62 +703,62 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  combo_box = gtk_combo_box_text_new ();
+  combo = gimp_int_combo_box_new (true_text,  TRUE,
+                                  false_text, FALSE,
+                                  NULL);
 
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_box), true_text);
-  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_box), false_text);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), value);
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), value ? 0 : 1);
-
-  g_signal_connect (combo_box, "changed",
+  g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_prop_boolean_combo_box_callback),
                     config);
 
-  set_param_spec (G_OBJECT (combo_box), combo_box, param_spec);
+  set_param_spec (G_OBJECT (combo), combo, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_boolean_combo_box_notify),
-                  combo_box);
+                  combo);
 
-  return combo_box;
+  return combo;
 }
 
 static void
-gimp_prop_boolean_combo_box_callback (GtkWidget *widget,
+gimp_prop_boolean_combo_box_callback (GtkWidget *combo,
                                       GObject   *config)
 {
   GParamSpec  *param_spec;
   gint         value;
 
-  param_spec = get_param_spec (G_OBJECT (widget));
+  param_spec = get_param_spec (G_OBJECT (combo));
   if (! param_spec)
     return;
 
-  value = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
-
-  g_object_set (config,
-                param_spec->name, value ? FALSE : TRUE,
-                NULL);
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &value))
+    {
+      g_object_set (config,
+                    param_spec->name, value,
+                    NULL);
+    }
 }
 
 static void
 gimp_prop_boolean_combo_box_notify (GObject    *config,
                                     GParamSpec *param_spec,
-                                    GtkWidget  *combo_box)
+                                    GtkWidget  *combo)
 {
-  gint value;
+  gboolean value;
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
-  g_signal_handlers_block_by_func (combo_box,
+  g_signal_handlers_block_by_func (combo,
                                    gimp_prop_boolean_combo_box_callback,
                                    config);
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), value ? 0 : 1);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), value);
 
-  g_signal_handlers_unblock_by_func (combo_box,
+  g_signal_handlers_unblock_by_func (combo,
                                      gimp_prop_boolean_combo_box_callback,
                                      config);
 }
