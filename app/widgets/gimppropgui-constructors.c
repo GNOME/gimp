@@ -119,6 +119,8 @@ _gimp_prop_gui_new_generic (GObject              *config,
           gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
           gtk_widget_show (hbox);
 
+          gimp_prop_gui_bind_container (widget_x, hbox);
+
           vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
           gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
           gtk_widget_show (vbox);
@@ -200,6 +202,8 @@ _gimp_prop_gui_new_generic (GObject              *config,
               gtk_label_set_xalign (GTK_LABEL (l), 0.0);
               gtk_widget_show (l);
 
+              gimp_prop_gui_bind_label (widget, l);
+
               if (GTK_IS_SCROLLED_WINDOW (widget))
                 {
                   GtkWidget *frame;
@@ -213,6 +217,8 @@ _gimp_prop_gui_new_generic (GObject              *config,
 
                   gtk_container_add (GTK_CONTAINER (frame), widget);
                   gtk_widget_show (widget);
+
+                  gimp_prop_gui_bind_container (widget, frame);
                 }
               else
                 {
@@ -228,6 +234,8 @@ _gimp_prop_gui_new_generic (GObject              *config,
 
                   gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
                   gtk_widget_show (widget);
+
+                  gimp_prop_gui_bind_container (widget, hbox);
                 }
             }
           else if (widget)

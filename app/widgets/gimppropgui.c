@@ -44,6 +44,7 @@
 #include "gimpspinscale.h"
 #include "gimppropgui.h"
 #include "gimppropgui-constructors.h"
+#include "gimppropgui-eval.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-utils.h"
 
@@ -53,14 +54,20 @@
 #define HAS_KEY(p,k,v) gimp_gegl_param_spec_has_key (p, k, v)
 
 
-static GtkWidget * gimp_prop_kelvin_presets_new      (GObject       *config,
-                                                      const gchar   *property_name);
-static void        gimp_prop_widget_new_seed_clicked (GtkButton     *button,
-                                                      GtkAdjustment *adj);
-static gboolean    gimp_prop_string_to_boolean       (GBinding      *binding,
-                                                      const GValue  *from_value,
-                                                      GValue        *to_value,
-                                                      gpointer       user_data);
+static GtkWidget   * gimp_prop_kelvin_presets_new      (GObject        *config,
+                                                        const gchar    *property_name);
+static void          gimp_prop_widget_new_seed_clicked (GtkButton      *button,
+                                                        GtkAdjustment  *adj);
+static gboolean      gimp_prop_string_to_boolean       (GBinding       *binding,
+                                                        const GValue   *from_value,
+                                                        GValue         *to_value,
+                                                        gpointer        user_data);
+static void          gimp_prop_config_notify           (GObject        *config,
+                                                        GParamSpec     *pspec,
+                                                        GtkWidget      *widget);
+static void          gimp_prop_widget_show             (GtkWidget      *widget,
+                                                        GObject        *config);
+static void          gimp_prop_free_label_ref          (GWeakRef       *label_ref);
 
 /*  public functions  */
 
@@ -213,6 +220,9 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
           gtk_box_pack_start (GTK_BOX (hbox), dial, FALSE, FALSE, 0);
           gtk_widget_show (dial);
 
+          gimp_help_set_help_data (hbox, g_param_spec_get_blurb (pspec), NULL);
+          gimp_prop_gui_bind_label (hbox, widget);
+
           widget = hbox;
         }
       else if (HAS_KEY (pspec, "unit", "kelvin"))
@@ -229,30 +239,38 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
           gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
           gtk_widget_show (button);
 
+          gimp_help_set_help_data (hbox, g_param_spec_get_blurb (pspec), NULL);
+          gimp_prop_gui_bind_label (hbox, widget);
+
           widget = hbox;
         }
-      else if (area)
+      else
         {
-          if (HAS_KEY (pspec, "unit", "pixel-coordinate") ||
-              HAS_KEY (pspec, "unit", "pixel-distance"))
+          gimp_prop_gui_bind_label (widget, widget);
+
+          if (area)
             {
-              if (HAS_KEY (pspec, "axis", "x"))
+              if (HAS_KEY (pspec, "unit", "pixel-coordinate") ||
+                  HAS_KEY (pspec, "unit", "pixel-distance"))
                 {
-                  g_printerr ("XXX setting width %d on %s\n",
-                              area->width, pspec->name);
+                  if (HAS_KEY (pspec, "axis", "x"))
+                    {
+                      g_printerr ("XXX setting width %d on %s\n",
+                                  area->width, pspec->name);
 
-                  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
-                                                    area->x,
-                                                    area->x + area->width);
-                }
-              else if (HAS_KEY (pspec, "axis","y"))
-                {
-                  g_printerr ("XXX setting height %d on %s\n",
-                              area->height, pspec->name);
+                      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
+                                                        area->x,
+                                                        area->x + area->width);
+                    }
+                  else if (HAS_KEY (pspec, "axis","y"))
+                    {
+                      g_printerr ("XXX setting height %d on %s\n",
+                                  area->height, pspec->name);
 
-                  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
-                                                    area->y,
-                                                    area->y + area->height);
+                      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
+                                                        area->y,
+                                                        area->y + area->height);
+                    }
                 }
             }
         }
@@ -316,12 +334,16 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
     {
       widget = gimp_prop_check_button_new (config, pspec->name,
                                            g_param_spec_get_nick (pspec));
+
+      gimp_prop_gui_bind_label (widget, widget);
     }
   else if (G_IS_PARAM_SPEC_ENUM (pspec))
     {
       widget = gimp_prop_enum_combo_box_new (config, pspec->name, 0, 0);
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (widget),
                                     g_param_spec_get_nick (pspec));
+
+      gimp_prop_gui_bind_label (widget, widget);
     }
   else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
     {
@@ -337,6 +359,8 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
       gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), context);
       gtk_box_pack_start (GTK_BOX (widget), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
+
+      gimp_prop_gui_bind_tooltip (widget, button);
 
       if (create_picker_func)
         {
@@ -355,6 +379,36 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
     {
       g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
                  g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
+    }
+
+  /* if we have any keys for dynamic properties, listen to config's notify
+   * signal, and update the properties accordingly.
+   */
+  if (gegl_param_spec_get_property_key (pspec, "sensitive") ||
+      gegl_param_spec_get_property_key (pspec, "visible")   ||
+      gegl_param_spec_get_property_key (pspec, "label")     ||
+      gegl_param_spec_get_property_key (pspec, "description"))
+    {
+      g_object_set_data (G_OBJECT (widget), "gimp-prop-pspec", pspec);
+
+      g_signal_connect_object (config, "notify",
+                               G_CALLBACK (gimp_prop_config_notify),
+                               widget, 0);
+
+      if (gegl_param_spec_get_property_key (pspec, "visible"))
+        {
+          /* a bit of a hack: if we have a dynamic "visible" property key,
+           * connect to the widget's "show" signal, so that we can intercept
+           * our caller's gtk_widget_show() call, and keep the widget hidden if
+           * necessary.
+           */
+          g_signal_connect (widget, "show",
+                            G_CALLBACK (gimp_prop_widget_show),
+                            config);
+        }
+
+      /* update all the properties now */
+      gimp_prop_config_notify (config, NULL, widget);
     }
 
   return widget;
@@ -465,6 +519,62 @@ gimp_prop_gui_new (GObject              *config,
   g_free (param_specs);
 
   return gui;
+}
+
+void
+gimp_prop_gui_bind_container (GtkWidget *source,
+                              GtkWidget *target)
+{
+  g_object_bind_property (source, "sensitive",
+                          target, "sensitive",
+                          G_BINDING_SYNC_CREATE);
+  g_object_bind_property (source, "visible",
+                          target, "visible",
+                          G_BINDING_SYNC_CREATE);
+}
+
+void
+gimp_prop_gui_bind_label (GtkWidget *source,
+                          GtkWidget *target)
+{
+  GWeakRef    *label_ref;
+  const gchar *label;
+
+  /* we want to update "target"'s "label" property whenever the label
+   * expression associated with "source" is reevaluated, however, "source"
+   * might not itself have a "label" property we can bind to.  just keep around
+   * a reference to "target", and update its label manually.
+   */
+  g_return_if_fail (g_object_get_data (G_OBJECT (source),
+                                       "gimp-prop-label-ref") == NULL);
+
+  label_ref = g_slice_new (GWeakRef);
+
+  g_weak_ref_init (label_ref, target);
+
+  g_object_set_data_full (G_OBJECT (source),
+                          "gimp-prop-label-ref", label_ref,
+                          (GDestroyNotify) gimp_prop_free_label_ref);
+
+  label = g_object_get_data (G_OBJECT (source), "gimp-prop-label");
+
+  if (label)
+    g_object_set (target, "label", label, NULL);
+
+  /* note that "source" might be its own label widget, in which case there's no
+   * need to bind the rest of the properties.
+   */
+  if (source != target)
+    gimp_prop_gui_bind_tooltip (source, target);
+}
+
+void
+gimp_prop_gui_bind_tooltip (GtkWidget *source,
+                            GtkWidget *target)
+{
+  g_object_bind_property (source, "tooltip-text",
+                          target, "tooltip-text",
+                          G_BINDING_SYNC_CREATE);
 }
 
 
@@ -607,4 +717,77 @@ gimp_prop_string_to_boolean (GBinding     *binding,
   g_value_set_boolean (to_value, string && *string);
 
   return TRUE;
+}
+
+static void
+gimp_prop_config_notify (GObject    *config,
+                         GParamSpec *pspec,
+                         GtkWidget  *widget)
+{
+  GParamSpec *widget_pspec;
+  GWeakRef   *label_ref;
+  GtkWidget  *label_widget;
+  gboolean    sensitive;
+  gboolean    visible;
+  gchar      *label;
+  gchar      *description;
+
+  widget_pspec = g_object_get_data (G_OBJECT (widget), "gimp-prop-pspec");
+  label_ref    = g_object_get_data (G_OBJECT (widget), "gimp-prop-label-ref");
+
+  if (label_ref)
+    label_widget = g_weak_ref_get (label_ref);
+  else
+    label_widget = NULL;
+
+  sensitive   = gimp_prop_eval_boolean (config, widget_pspec, "sensitive", TRUE);
+  visible     = gimp_prop_eval_boolean (config, widget_pspec, "visible", TRUE);
+  label       = gimp_prop_eval_string (config, widget_pspec, "label",
+                                       g_param_spec_get_nick (widget_pspec));
+  description = gimp_prop_eval_string (config, widget_pspec, "description",
+                                       g_param_spec_get_blurb (widget_pspec));
+
+  /* we store the label in (and pass ownership over it to) the widget's
+   * "gimp-prop-label" key, so that we can use it to initialize the label
+   * widget's label in gimp_prop_gui_bind_label() upon binding.
+   */
+  g_object_set_data_full (G_OBJECT (widget), "gimp-prop-label", label, g_free);
+
+  g_signal_handlers_block_by_func (widget,
+                                   gimp_prop_widget_show, config);
+
+  gtk_widget_set_sensitive (widget, sensitive);
+  gtk_widget_set_visible (widget, visible);
+  if (label_widget) g_object_set (label_widget, "label", label, NULL);
+  gimp_help_set_help_data (widget, description, NULL);
+
+  g_signal_handlers_unblock_by_func (widget,
+                                     gimp_prop_widget_show, config);
+
+  g_free (description);
+
+  if (label_widget)
+    g_object_unref (label_widget);
+}
+
+static void
+gimp_prop_widget_show (GtkWidget *widget,
+                       GObject   *config)
+{
+  GParamSpec *widget_pspec;
+  gboolean    visible;
+
+  widget_pspec = g_object_get_data (G_OBJECT (widget), "gimp-prop-pspec");
+
+  visible = gimp_prop_eval_boolean (config, widget_pspec, "visible", TRUE);
+
+  gtk_widget_set_visible (widget, visible);
+}
+
+static void
+gimp_prop_free_label_ref (GWeakRef *label_ref)
+{
+  g_weak_ref_clear (label_ref);
+
+  g_slice_free (GWeakRef, label_ref);
 }
