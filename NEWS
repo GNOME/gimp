@@ -14,7 +14,7 @@ GUI:
 
  - improve drawing performance in single window mode, especially with
    pixmap themes
- 
+
 
 macOS DMG:
 
@@ -43,13 +43,13 @@ General:
 
  - if NOCONFIGURE is set, autogen.sh won't run configure
  - VPATH builds for win32 targets have been fixed
- 
+
 
 Updated Translations:
 
  - Basque
  - Brazilian Portuguese
- - Catalan 
+ - Catalan
  - Chinese (PRC)
  - Finnish
  - Greek
