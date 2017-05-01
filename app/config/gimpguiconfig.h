@@ -43,6 +43,7 @@ struct _GimpGuiConfig
 
   gboolean             move_tool_changes_active;
   gint                 filter_tool_max_recent;
+  gboolean             filter_tool_show_color_options;
   gboolean             trust_dirty_flag;
   gboolean             save_device_status;
   gboolean             devices_share_tool;

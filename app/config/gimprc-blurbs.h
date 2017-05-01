@@ -173,7 +173,10 @@ _("Sets the browser used by the help system.")
 "If empty, the language is taken from the user's locale setting."
 
 #define FILTER_TOOL_MAX_RECENT_BLURB \
-"How many recent settings to keep around in filter tools"
+_("How many recent settings to keep around in filter tools.")
+
+#define FILTER_TOOL_SHOW_COLOR_OPTIONS_BLURB \
+_("Show advanced color options in filter tools.")
 
 #define IMAGE_STATUS_FORMAT_BLURB \
 _("Sets the text to appear in image window status bars.")

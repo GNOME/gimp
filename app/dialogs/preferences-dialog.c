@@ -441,6 +441,7 @@ prefs_color_management_reset (GtkWidget *widget,
 
   gimp_config_reset (GIMP_CONFIG (core_config->color_management));
   gimp_config_reset_property (config, "color-profile-policy");
+  gimp_config_reset_property (config, "filter-tool-show-color-options");
 }
 
 static void
@@ -1271,6 +1272,14 @@ prefs_dialog_new (Gimp       *gimp,
     button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                        _("File Open behaviour:"),
                                        GTK_TABLE (table), 0, size_group);
+
+    /*  Filter Dialogs  */
+    vbox2 = prefs_frame_new (_("Filter Dialogs"), GTK_CONTAINER (vbox),
+                             FALSE);
+
+    button = prefs_check_button_add (object, "filter-tool-show-color-options",
+                                     _("Show advanced color options"),
+                                     GTK_BOX (vbox2));
 
     g_object_unref (size_group);
 

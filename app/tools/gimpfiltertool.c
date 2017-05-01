@@ -426,7 +426,11 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       /*  The Color Options expander  */
       expander = gtk_expander_new (_("Advanced Color Options"));
       gtk_box_pack_end (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
-      gtk_widget_show (expander);
+
+      g_object_bind_property (G_OBJECT (image->gimp->config),
+                              "filter-tool-show-color-options",
+                              G_OBJECT (expander), "visible",
+                              G_BINDING_SYNC_CREATE);
 
       frame = gimp_frame_new (NULL);
       gtk_container_add (GTK_CONTAINER (expander), frame);
