@@ -257,7 +257,7 @@ edit_paste_as_new_image_invoker (GimpProcedure         *procedure,
         }
       else if (GIMP_IS_BUFFER (paste))
         {
-          image = gimp_image_new_from_buffer (gimp, NULL, GIMP_BUFFER (paste));
+          image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
         }
 
       if (! image)
@@ -500,7 +500,7 @@ edit_named_paste_as_new_image_invoker (GimpProcedure         *procedure,
 
       if (buffer)
         {
-          image = gimp_image_new_from_buffer (gimp, NULL, buffer);
+          image = gimp_image_new_from_buffer (gimp, buffer);
 
           if (! image)
             success = FALSE;

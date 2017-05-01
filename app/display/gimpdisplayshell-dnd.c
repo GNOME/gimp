@@ -458,7 +458,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   if (! image)
     {
-      image = gimp_image_new_from_buffer (shell->display->gimp, NULL,
+      image = gimp_image_new_from_buffer (shell->display->gimp,
                                           GIMP_BUFFER (viewable));
       gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
                            G_OBJECT (gtk_widget_get_screen (widget)),

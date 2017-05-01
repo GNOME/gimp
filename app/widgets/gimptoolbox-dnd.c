@@ -225,7 +225,7 @@ gimp_toolbox_drop_buffer (GtkWidget    *widget,
   if (context->gimp->busy)
     return;
 
-  image = gimp_image_new_from_buffer (context->gimp, NULL,
+  image = gimp_image_new_from_buffer (context->gimp,
                                       GIMP_BUFFER (viewable));
   gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
                        G_OBJECT (gtk_widget_get_screen (widget)),

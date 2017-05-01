@@ -707,9 +707,17 @@ gimp_edit_extract (GimpImage     *image,
 
   if (buffer)
     {
-      GimpBuffer *gimp_buffer = gimp_buffer_new (buffer, _("Global Buffer"),
-                                                 offset_x, offset_y, FALSE);
+      GimpBuffer *gimp_buffer;
+      gdouble     res_x;
+      gdouble     res_y;
+
+      gimp_buffer = gimp_buffer_new (buffer, _("Global Buffer"),
+                                     offset_x, offset_y, FALSE);
       g_object_unref (buffer);
+
+      gimp_image_get_resolution (image, &res_x, &res_y);
+      gimp_buffer_set_resolution (gimp_buffer, res_x, res_y);
+      gimp_buffer_set_unit (gimp_buffer, gimp_image_get_unit (image));
 
       if (GIMP_IS_COLOR_MANAGED (pickable))
         {

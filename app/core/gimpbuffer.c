@@ -21,6 +21,7 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -466,6 +467,56 @@ gimp_buffer_get_buffer (GimpBuffer *buffer)
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 
   return buffer->buffer;
+}
+
+void
+gimp_buffer_set_resolution (GimpBuffer *buffer,
+                            gdouble     resolution_x,
+                            gdouble     resolution_y)
+{
+  g_return_if_fail (GIMP_IS_BUFFER (buffer));
+  g_return_if_fail (resolution_x >= 0.0 && resolution_x <= GIMP_MAX_RESOLUTION);
+  g_return_if_fail (resolution_y >= 0.0 && resolution_y <= GIMP_MAX_RESOLUTION);
+
+  buffer->resolution_x = resolution_x;
+  buffer->resolution_y = resolution_y;
+}
+
+gboolean
+gimp_buffer_get_resolution (GimpBuffer *buffer,
+                            gdouble    *resolution_x,
+                            gdouble    *resolution_y)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), FALSE);
+
+  if (buffer->resolution_x > 0.0 &&
+      buffer->resolution_y > 0.0)
+    {
+      if (resolution_x) *resolution_x = buffer->resolution_x;
+      if (resolution_y) *resolution_y = buffer->resolution_y;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+void
+gimp_buffer_set_unit (GimpBuffer *buffer,
+                      GimpUnit    unit)
+{
+  g_return_if_fail (GIMP_IS_BUFFER (buffer));
+  g_return_if_fail (unit > GIMP_UNIT_PIXEL);
+
+  buffer->unit = unit;
+}
+
+GimpUnit
+gimp_buffer_get_unit (GimpBuffer *buffer)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), GIMP_UNIT_PIXEL);
+
+  return buffer->unit;
 }
 
 void

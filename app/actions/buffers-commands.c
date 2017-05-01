@@ -92,7 +92,7 @@ buffers_paste_as_new_image_cmd_callback (GtkAction *action,
       GtkWidget *widget = GTK_WIDGET (editor);
       GimpImage *new_image;
 
-      new_image = gimp_image_new_from_buffer (context->gimp, NULL, buffer);
+      new_image = gimp_image_new_from_buffer (context->gimp, buffer);
       gimp_create_display (context->gimp, new_image,
                            GIMP_UNIT_PIXEL, 1.0,
                            G_OBJECT (gtk_widget_get_screen (widget)),

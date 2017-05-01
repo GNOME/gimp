@@ -40,6 +40,10 @@ struct _GimpBuffer
   gint              offset_x;
   gint              offset_y;
 
+  gdouble           resolution_x;
+  gdouble           resolution_y;
+  GimpUnit          unit;
+
   GimpColorProfile *color_profile;
 };
 
@@ -66,6 +70,17 @@ gint               gimp_buffer_get_height        (GimpBuffer       *buffer);
 const Babl       * gimp_buffer_get_format        (GimpBuffer       *buffer);
 
 GeglBuffer       * gimp_buffer_get_buffer        (GimpBuffer       *buffer);
+
+void               gimp_buffer_set_resolution    (GimpBuffer       *buffer,
+                                                  gdouble           resolution_x,
+                                                  gdouble           resolution_y);
+gboolean           gimp_buffer_get_resolution    (GimpBuffer       *buffer,
+                                                  gdouble          *resolution_x,
+                                                  gdouble          *resolution_y);
+
+void               gimp_buffer_set_unit          (GimpBuffer       *buffer,
+                                                  GimpUnit          unit);
+GimpUnit           gimp_buffer_get_unit          (GimpBuffer       *buffer);
 
 void               gimp_buffer_set_color_profile (GimpBuffer       *buffer,
                                                   GimpColorProfile *profile);

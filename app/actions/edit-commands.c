@@ -384,9 +384,7 @@ edit_paste_as_new_image_cmd_callback (GtkAction *action,
         }
       else if (GIMP_IS_BUFFER (paste))
         {
-          image = gimp_image_new_from_buffer (gimp,
-                                              action_data_get_image (data),
-                                              GIMP_BUFFER (paste));
+          image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
         }
 
       g_object_unref (paste);
