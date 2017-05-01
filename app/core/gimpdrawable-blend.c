@@ -37,33 +37,6 @@
 #include "gimp-intl.h"
 
 
-typedef struct
-{
-  GimpGradient     *gradient;
-  GimpContext      *context;
-  gboolean          reverse;
-#ifdef USE_GRADIENT_CACHE
-  GimpRGB          *gradient_cache;
-  gint              gradient_cache_size;
-#endif
-  gdouble           offset;
-  gdouble           sx, sy;
-  GimpGradientType  gradient_type;
-  gdouble           dist;
-  gdouble           vec[2];
-  GimpRepeatMode    repeat;
-  GRand            *seed;
-  GeglBuffer       *dist_buffer;
-} RenderBlendData;
-
-typedef struct
-{
-  GeglBuffer    *buffer;
-  gfloat        *row_data;
-  gint           width;
-  GRand         *dither_rand;
-} PutPixelData;
-
 /*  public functions  */
 
 void
