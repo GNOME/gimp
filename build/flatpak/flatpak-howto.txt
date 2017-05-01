@@ -60,9 +60,10 @@ Or simply update them:
 
 >  "desktop-file-name-prefix": "(Dev) ",
 
-* Run the flatpak builder with the following command:
+* Run flatpak builder with the following commands:
 
-> flatpak-builder --repo=gimp-repo gimp-flatpak-build org.gimp.GIMP.json
+> flatpak-builder --arch=x86_64 gimp-flatpak-build-x86-64 org.gimp.GIMP.json
+> flatpak-builder --arch=i386 gimp-flatpak-build-i386 org.gimp.GIMP.json
 
   Note: if you ever want to check the `config.log` of any of the module,
   this is available in a hidden directory of your working path.
@@ -70,10 +71,16 @@ Or simply update them:
   The number will be incrementing at each build (`flatpak-builder`
   apparently caches every build).
 
-  If it ends successfuly, this will have built then installed GIMP in a
-  new folder `gimp-flatpak-build/` and all its dependencies based on the
-  information from the manifest. It will also create or update the
-  folder `gimp-repo` which is a flatpak repository.
+  If it ends successfuly, this will have built GIMP in new folders,
+  `gimp-flatpak-build-x86-64/` and `gimp-flatpak-build-i386/`
+  respectively.
+
+* Export the 2 builds:
+
+> flatpak build-export --gpg-sign=YOUR_GPG_KEY /path/to/repo gimp-flatpak-build-x86-64
+> flatpak build-export --gpg-sign=YOUR_GPG_KEY /path/to/repo gimp-flatpak-build-i386
+
+  The same repository will contain all the builds.
 
 * Test it with:
 
