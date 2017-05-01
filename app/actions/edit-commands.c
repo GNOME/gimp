@@ -36,8 +36,6 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-new.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-duplicate.h"
-#include "core/gimpimage-new.h"
 #include "core/gimpimage-undo.h"
 
 #include "vectors/gimpvectors-import.h"
@@ -378,15 +376,7 @@ edit_paste_as_new_image_cmd_callback (GtkAction *action,
 
   if (paste)
     {
-      if (GIMP_IS_IMAGE (paste))
-        {
-          image = gimp_image_duplicate (GIMP_IMAGE (paste));
-        }
-      else if (GIMP_IS_BUFFER (paste))
-        {
-          image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
-        }
-
+      image = gimp_edit_paste_as_new_image (gimp, paste);
       g_object_unref (paste);
     }
 

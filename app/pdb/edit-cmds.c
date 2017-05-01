@@ -37,8 +37,6 @@
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage-duplicate.h"
-#include "core/gimpimage-new.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
@@ -251,21 +249,10 @@ edit_paste_as_new_image_invoker (GimpProcedure         *procedure,
 
   if (paste)
     {
-      if (GIMP_IS_IMAGE (paste))
-        {
-          image = gimp_image_duplicate (GIMP_IMAGE (paste));
-        }
-      else if (GIMP_IS_BUFFER (paste))
-        {
-          image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
-        }
+      image = gimp_edit_paste_as_new_image (gimp, paste);
 
       if (! image)
         success = FALSE;
-    }
-  else
-    {
-      image = NULL;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -500,7 +487,7 @@ edit_named_paste_as_new_image_invoker (GimpProcedure         *procedure,
 
       if (buffer)
         {
-          image = gimp_image_new_from_buffer (gimp, buffer);
+          image = gimp_edit_paste_as_new_image (gimp, GIMP_OBJECT (buffer));
 
           if (! image)
             success = FALSE;

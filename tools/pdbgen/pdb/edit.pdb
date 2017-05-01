@@ -248,21 +248,10 @@ HELP
 
   if (paste)
     {
-      if (GIMP_IS_IMAGE (paste))
-        {
-          image = gimp_image_duplicate (GIMP_IMAGE (paste));
-        }
-      else if (GIMP_IS_BUFFER (paste))
-        {
-	  image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
-        }
+      image = gimp_edit_paste_as_new_image (gimp, paste);
 
       if (! image)
         success = FALSE;
-    }
-  else
-    {
-      image = NULL;
     }
 }
 CODE
@@ -505,7 +494,7 @@ HELP
 
   if (buffer)
     {
-      image = gimp_image_new_from_buffer (gimp, buffer);
+      image = gimp_edit_paste_as_new_image (gimp, GIMP_OBJECT (buffer));
 
       if (! image)
         success = FALSE;
@@ -1027,8 +1016,6 @@ CODE
               "core/gimp-edit.h"
               "core/gimpbuffer.h"
               "core/gimpimage.h"
-              "core/gimpimage-duplicate.h"
-              "core/gimpimage-new.h"
               "core/gimpprogress.h"
               "gimppdb-utils.h"
               "gimppdbcontext.h"

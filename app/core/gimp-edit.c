@@ -39,6 +39,7 @@
 #include "gimpfilloptions.h"
 #include "gimpdrawableundo.h"
 #include "gimpimage.h"
+#include "gimpimage-duplicate.h"
 #include "gimpimage-new.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
@@ -476,6 +477,27 @@ gimp_edit_paste (GimpImage     *image,
   gimp_image_undo_group_end (image);
 
   return layer;
+}
+
+GimpImage *
+gimp_edit_paste_as_new_image (Gimp       *gimp,
+                              GimpObject *paste)
+{
+  GimpImage *image = NULL;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
+
+  if (GIMP_IS_IMAGE (paste))
+    {
+      image = gimp_image_duplicate (GIMP_IMAGE (paste));
+    }
+  else if (GIMP_IS_BUFFER (paste))
+    {
+      image = gimp_image_new_from_buffer (gimp, GIMP_BUFFER (paste));
+    }
+
+  return image;
 }
 
 const gchar *
