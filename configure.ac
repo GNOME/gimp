@@ -2127,6 +2127,14 @@ if test "x$enable_vector_icons" != "xno"; then
           NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
           NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
           enable_vector_icons="yes"
+
+          if test "x$platform_win32" = "xyes"; then
+            warning_vector_icons_windows="
+WARNING: You enabled vector icons on Win32. Make sure to run:
+           $ gdk-pixbuf-query-loaders.exe --update-cache
+         on the target machine (this command generates loaders.cache)
+         so that GdkPixbuf knows where to find the SVG loader."
+          fi
         else
           enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
         fi
@@ -2621,7 +2629,7 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
-$have_recommended_xgettext $have_recommended_fontconfig $have_recommended_gtk"
+$have_recommended_xgettext $have_recommended_fontconfig $have_recommended_gtk$warning_vector_icons_windows"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
