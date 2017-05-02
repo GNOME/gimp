@@ -2105,26 +2105,36 @@ if test "x$enable_vector_icons" != "xno"; then
   if test "x$have_recommended_gtk" != "x"; then
       enable_vector_icons="no (gtk+-2-0 < gtk_win32_recommended_version)"
   else
-    # Check if librsvg was built with --disable-pixbuf-loader.
-    gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
-    # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
-    # error: cannot check for file existence when cross compiling
-    # So let's test files the shell way.
-    if (test "x$platform_win32" = "xyes" &&
-        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
-       test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
-      # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
-      # to make sure we use the native pkg-config (in case we cross-compile).
-      if pkg-config --atleast-version=glib_required_version glib-2.0 &&
-         pkg-config gio-2.0; then
-        NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
-        NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
-        enable_vector_icons="yes"
+    have_shared_mime_info=""
+    # shared-mime-info is needed to correctly detect SVG files (except on
+    # Windows, apparently).
+    PKG_CHECK_MODULES(MIME_INFO, [shared-mime-info],
+                      have_shared_mime_info="yes", have_shared_mime_info="no")
+    if test "x$have_shared_mime_info" = "xyes" ||
+       test "x$platform_win32" = "xyes"; then
+      # Check if librsvg was built with --disable-pixbuf-loader.
+      gdk_pixbuf_moduledir=`$PKG_CONFIG --variable=gdk_pixbuf_moduledir gdk-pixbuf-2.0`
+      # AC_CHECK_FILE macro does not work when cross-compiling and exits with:
+      # error: cannot check for file existence when cross compiling
+      # So let's test files the shell way.
+      if (test "x$platform_win32" = "xyes" &&
+          test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.dll") ||
+         test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
+        # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
+        # to make sure we use the native pkg-config (in case we cross-compile).
+        if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+           pkg-config gio-2.0; then
+          NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
+          NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+          enable_vector_icons="yes"
+        else
+          enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
+        fi
       else
-        enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
+        enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
       fi
     else
-      enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
+      enable_vector_icons="no (missing shared-mime-info)"
     fi
   fi
 fi
