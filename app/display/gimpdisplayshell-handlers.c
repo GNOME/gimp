@@ -373,6 +373,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_color_config_notify_handler),
                     shell);
 
+  gimp_display_shell_active_vectors_handler     (image, shell);
   gimp_display_shell_invalidate_preview_handler (image, shell);
   gimp_display_shell_quick_mask_changed_handler (image, shell);
   gimp_display_shell_profile_changed_handler    (GIMP_COLOR_MANAGED (image),
