@@ -323,7 +323,8 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
   return gimp_filter_tool_add_color_picker (GIMP_FILTER_TOOL (tool),
                                             GUINT_TO_POINTER (value),
                                             icon_name,
-                                            help);
+                                            help,
+                                            /* pick_abyss = */ FALSE);
 }
 
 static void

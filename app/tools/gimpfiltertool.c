@@ -800,18 +800,36 @@ gimp_filter_tool_pick_color (GimpColorTool  *color_tool,
                              GimpRGB        *color)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
+  gboolean        pick_abyss;
   gint            off_x, off_y;
+  gboolean        picked;
+
+  pick_abyss =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (filter_tool->active_picker),
+                     "picker-pick-abyss"));
 
   gimp_item_get_offset (GIMP_ITEM (filter_tool->drawable), &off_x, &off_y);
 
   *sample_format = gimp_drawable_get_format (filter_tool->drawable);
 
-  return gimp_pickable_pick_color (GIMP_PICKABLE (filter_tool->drawable),
-                                   x - off_x,
-                                   y - off_y,
-                                   color_tool->options->sample_average,
-                                   color_tool->options->average_radius,
-                                   pixel, color);
+  picked = gimp_pickable_pick_color (GIMP_PICKABLE (filter_tool->drawable),
+                                     x - off_x,
+                                     y - off_y,
+                                     color_tool->options->sample_average,
+                                     color_tool->options->average_radius,
+                                     pixel, color);
+
+  if (! picked && pick_abyss)
+    {
+      color->r = 0.0;
+      color->g = 0.0;
+      color->b = 0.0;
+      color->a = 0.0;
+
+      picked = TRUE;
+    }
+
+  return picked;
 }
 
 static void
@@ -1555,7 +1573,8 @@ GtkWidget *
 gimp_filter_tool_add_color_picker (GimpFilterTool *filter_tool,
                                    gpointer        identifier,
                                    const gchar    *icon_name,
-                                   const gchar    *tooltip)
+                                   const gchar    *tooltip,
+                                   gboolean        pick_abyss)
 {
   GtkWidget *button;
   GtkWidget *image;
@@ -1575,7 +1594,10 @@ gimp_filter_tool_add_color_picker (GimpFilterTool *filter_tool,
   if (tooltip)
     gimp_help_set_help_data (button, tooltip, NULL);
 
-  g_object_set_data (G_OBJECT (button), "picker-identifier", identifier);
+  g_object_set_data (G_OBJECT (button),
+                     "picker-identifier", identifier);
+  g_object_set_data (G_OBJECT (button),
+                     "picker-pick-abyss", GINT_TO_POINTER (pick_abyss));
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_filter_tool_color_picker_toggled),

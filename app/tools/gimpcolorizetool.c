@@ -216,7 +216,8 @@ gimp_colorize_tool_dialog (GimpFilterTool *filter_tool)
   button = gimp_filter_tool_add_color_picker (filter_tool,
                                               "colorize",
                                               GIMP_ICON_COLOR_PICKER_GRAY,
-                                              _("Pick color from image"));
+                                              _("Pick color from image"),
+                                              /* pick_abyss = */ FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 }

@@ -127,7 +127,8 @@ GtkWidget * gimp_filter_tool_dialog_get_vbox  (GimpFilterTool   *filter_tool);
 GtkWidget * gimp_filter_tool_add_color_picker (GimpFilterTool   *filter_tool,
                                                gpointer          identifier,
                                                const gchar      *icon_name,
-                                               const gchar      *tooltip);
+                                               const gchar      *tooltip,
+                                               gboolean          pick_abyss);
 
 
 #endif /* __GIMP_FILTER_TOOL_H__ */

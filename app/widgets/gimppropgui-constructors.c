@@ -168,7 +168,8 @@ _gimp_prop_gui_new_generic (GObject              *config,
               button = create_picker_func (picker_creator,
                                            pspec_name,
                                            GIMP_ICON_CURSOR,
-                                           _("Pick coordinates from the image"));
+                                           _("Pick coordinates from the image"),
+                                           /* pick_abyss = */ TRUE);
               gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
               gtk_widget_show (button);
 
