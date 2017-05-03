@@ -108,6 +108,9 @@ static void      gimp_filter_tool_options_notify (GimpTool            *tool,
                                                   GimpToolOptions     *options,
                                                   const GParamSpec    *pspec);
 
+static gboolean  gimp_filter_tool_can_pick_color (GimpColorTool       *color_tool,
+                                                  const GimpCoords    *coords,
+                                                  GimpDisplay         *display);
 static gboolean  gimp_filter_tool_pick_color     (GimpColorTool       *color_tool,
                                                   gint                 x,
                                                   gint                 y,
@@ -179,6 +182,7 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   tool_class->cursor_update  = gimp_filter_tool_cursor_update;
   tool_class->options_notify = gimp_filter_tool_options_notify;
 
+  color_tool_class->can_pick = gimp_filter_tool_can_pick_color;
   color_tool_class->pick     = gimp_filter_tool_pick_color;
   color_tool_class->picked   = gimp_filter_tool_color_picked;
 
@@ -789,6 +793,23 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       gimp_drawable_filter_set_gamma_hack (filter_tool->filter,
                                            filter_options->gamma_hack);
     }
+}
+
+static gboolean
+gimp_filter_tool_can_pick_color (GimpColorTool    *color_tool,
+                                 const GimpCoords *coords,
+                                 GimpDisplay      *display)
+{
+  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
+  gboolean        pick_abyss;
+
+  pick_abyss =
+    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (filter_tool->active_picker),
+                     "picker-pick-abyss"));
+
+  return pick_abyss ||
+         GIMP_COLOR_TOOL_CLASS (parent_class)->can_pick (color_tool,
+                                                         coords, display);
 }
 
 static gboolean

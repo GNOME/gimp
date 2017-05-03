@@ -44,6 +44,7 @@ struct _GimpColorTool
 
   GimpColorPickMode  pick_mode;
 
+  gboolean           can_pick;
   gint               center_x;
   gint               center_y;
   GimpSamplePoint   *sample_point;
@@ -54,21 +55,24 @@ struct _GimpColorToolClass
   GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  gboolean (* pick)   (GimpColorTool      *tool,
-                       gint                x,
-                       gint                y,
-                       const Babl        **sample_format,
-                       gpointer            pixel,
-                       GimpRGB            *color);
+  gboolean (* can_pick) (GimpColorTool      *tool,
+                         const GimpCoords   *coords,
+                         GimpDisplay        *display);
+  gboolean (* pick)     (GimpColorTool      *tool,
+                         gint                x,
+                         gint                y,
+                         const Babl        **sample_format,
+                         gpointer            pixel,
+                         GimpRGB            *color);
 
   /*  signals  */
-  void     (* picked) (GimpColorTool      *tool,
-                       GimpColorPickState  pick_state,
-                       gdouble             x,
-                       gdouble             y,
-                       const Babl         *sample_format,
-                       gpointer            pixel,
-                       const GimpRGB      *color);
+  void     (* picked)   (GimpColorTool      *tool,
+                         GimpColorPickState  pick_state,
+                         gdouble             x,
+                         gdouble             y,
+                         const Babl         *sample_format,
+                         gpointer            pixel,
+                         const GimpRGB      *color);
 };
 
 

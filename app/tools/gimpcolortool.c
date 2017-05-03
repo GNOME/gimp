@@ -95,6 +95,10 @@ static void   gimp_color_tool_cursor_update  (GimpTool              *tool,
 
 static void   gimp_color_tool_draw           (GimpDrawTool          *draw_tool);
 
+static gboolean
+               gimp_color_tool_real_can_pick (GimpColorTool         *color_tool,
+                                              const GimpCoords      *coords,
+                                              GimpDisplay           *display);
 static gboolean   gimp_color_tool_real_pick  (GimpColorTool         *color_tool,
                                               gint                   x,
                                               gint                   y,
@@ -109,6 +113,9 @@ static void   gimp_color_tool_real_picked    (GimpColorTool         *color_tool,
                                               gpointer               pixel,
                                               const GimpRGB         *color);
 
+static gboolean   gimp_color_tool_can_pick   (GimpColorTool         *tool,
+                                              const GimpCoords      *coords,
+                                              GimpDisplay           *display);
 static void   gimp_color_tool_pick           (GimpColorTool         *tool,
                                               GimpColorPickState     pick_state,
                                               gint                   x,
@@ -154,6 +161,7 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
 
   draw_class->draw           = gimp_color_tool_draw;
 
+  klass->can_pick            = gimp_color_tool_real_can_pick;
   klass->pick                = gimp_color_tool_real_pick;
   klass->picked              = gimp_color_tool_real_picked;
 }
@@ -207,7 +215,7 @@ gimp_color_tool_button_press (GimpTool            *tool,
       gimp_sample_point_tool_start_edit (tool, display,
                                          color_tool->sample_point);
     }
-  else
+  else if (gimp_color_tool_can_pick (color_tool, coords, display))
     {
       gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_START,
                             coords->x, coords->y);
@@ -231,7 +239,8 @@ gimp_color_tool_button_release (GimpTool              *tool,
   if (! color_tool->enabled)
     return;
 
-  if (! color_tool->sample_point)
+  if (! color_tool->sample_point &&
+      gimp_color_tool_can_pick (color_tool, coords, display))
     {
       gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_END,
                             coords->x, coords->y);
@@ -254,13 +263,18 @@ gimp_color_tool_motion (GimpTool         *tool,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
+      color_tool->can_pick = gimp_color_tool_can_pick (color_tool,
+                                                       coords, display);
       color_tool->center_x = coords->x;
       color_tool->center_y = coords->y;
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      if (color_tool->can_pick)
+        {
+          gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_UPDATE,
+                                coords->x, coords->y);
+        }
 
-      gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_UPDATE,
-                            coords->x, coords->y);
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 }
 
@@ -303,6 +317,8 @@ gimp_color_tool_oper_update (GimpTool         *tool,
 
       color_tool->sample_point = sample_point;
 
+      color_tool->can_pick = gimp_color_tool_can_pick (color_tool,
+                                                       coords, display);
       color_tool->center_x = coords->x;
       color_tool->center_y = coords->y;
 
@@ -323,7 +339,6 @@ gimp_color_tool_cursor_update (GimpTool         *tool,
                                GimpDisplay      *display)
 {
   GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
-  GimpImage     *image      = gimp_display_get_image (display);
 
   if (color_tool->enabled)
     {
@@ -338,9 +353,7 @@ gimp_color_tool_cursor_update (GimpTool         *tool,
         {
           GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_BAD;
 
-          if (gimp_image_coords_in_active_pickable (image, coords,
-                                                    color_tool->options->sample_merged,
-                                                    FALSE))
+          if (gimp_color_tool_can_pick (color_tool, coords, display))
             {
               switch (color_tool->pick_mode)
                 {
@@ -394,7 +407,7 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
           item = gimp_draw_tool_add_sample_point (draw_tool, x, y, index);
           gimp_canvas_item_set_highlight (item, TRUE);
         }
-      else if (color_tool->options->sample_average)
+      else if (color_tool->can_pick && color_tool->options->sample_average)
         {
           gdouble radius = color_tool->options->average_radius;
 
@@ -406,6 +419,19 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
                                         2 * radius + 1);
         }
     }
+}
+
+static gboolean
+gimp_color_tool_real_can_pick (GimpColorTool    *color_tool,
+                               const GimpCoords *coords,
+                               GimpDisplay      *display)
+{
+  GimpImage *image = gimp_display_get_image (display);
+
+  return
+    gimp_image_coords_in_active_pickable (image, coords,
+                                          color_tool->options->sample_merged,
+                                          FALSE);
 }
 
 static gboolean
@@ -540,6 +566,18 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
       }
       break;
     }
+}
+
+static gboolean
+gimp_color_tool_can_pick (GimpColorTool    *tool,
+                          const GimpCoords *coords,
+                          GimpDisplay      *display)
+{
+  GimpColorToolClass *klass;
+
+  klass = GIMP_COLOR_TOOL_GET_CLASS (tool);
+
+  return klass->can_pick && klass->can_pick (tool, coords, display);
 }
 
 static void
