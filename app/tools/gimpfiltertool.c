@@ -801,7 +801,11 @@ gimp_filter_tool_can_pick_color (GimpColorTool    *color_tool,
                                  GimpDisplay      *display)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
+  GimpImage      *image       = gimp_display_get_image (display);
   gboolean        pick_abyss;
+
+  if (gimp_image_get_active_drawable (image) != filter_tool->drawable)
+    return FALSE;
 
   pick_abyss =
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (filter_tool->active_picker),
