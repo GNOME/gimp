@@ -187,7 +187,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEVICES_SHARE_TOOL,
                             "devices-share-tool",
-                            "Devics share tool",
+                            "Devices share tool",
                             DEVICES_SHARE_TOOL_BLURB,
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
