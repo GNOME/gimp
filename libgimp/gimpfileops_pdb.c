@@ -435,6 +435,40 @@ gimp_register_file_handler_uri (const gchar *procedure_name)
 }
 
 /**
+ * gimp_register_file_handler_raw:
+ * @procedure_name: The name of the procedure to enable raw handling for.
+ *
+ * Registers a file handler procedure as capable of handling raw camera
+ * files.
+ *
+ * Registers a file handler procedure as capable of handling raw
+ * digital camera files. Use this procedure only to register raw load
+ * handlers, calling it on a save handler will generate an error.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_register_file_handler_raw (const gchar *procedure_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-register-file-handler-raw",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, procedure_name,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_register_thumbnail_loader:
  * @load_proc: The name of the procedure the thumbnail loader with.
  * @thumb_proc: The name of the thumbnail load procedure.

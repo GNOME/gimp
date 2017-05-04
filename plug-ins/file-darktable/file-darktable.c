@@ -33,7 +33,9 @@
 
 #include "file-formats.h"
 
-#define LOAD_THUMB_PROC "file-raw-load-thumb"
+
+#define LOAD_THUMB_PROC "file-darktable-load-thumb"
+
 
 static void     query                (void);
 static void     run                  (const gchar      *name,
@@ -164,6 +166,7 @@ query (void)
 
       gimp_register_file_handler_mime (format->load_proc,
                                        format->mime_type);
+      gimp_register_file_handler_raw (format->load_proc);
       gimp_register_magic_load_handler (format->load_proc,
                                         format->extensions,
                                         "",

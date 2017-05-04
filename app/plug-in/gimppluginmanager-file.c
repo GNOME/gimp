@@ -210,6 +210,31 @@ gimp_plug_in_manager_register_handles_uri (GimpPlugInManager *manager,
 }
 
 gboolean
+gimp_plug_in_manager_register_handles_raw (GimpPlugInManager *manager,
+                                           const gchar       *name)
+{
+  GimpPlugInProcedure *file_proc;
+  GSList              *list;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
+  g_return_val_if_fail (name != NULL, FALSE);
+
+  if (manager->current_plug_in && manager->current_plug_in->plug_in_def)
+    list = manager->current_plug_in->plug_in_def->procedures;
+  else
+    list = manager->plug_in_procedures;
+
+  file_proc = gimp_plug_in_procedure_find (list, name);
+
+  if (! file_proc)
+    return FALSE;
+
+  gimp_plug_in_procedure_set_handles_raw (file_proc);
+
+  return TRUE;
+}
+
+gboolean
 gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
                                             const gchar       *load_proc,
                                             const gchar       *thumb_proc)

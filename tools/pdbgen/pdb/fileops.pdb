@@ -617,6 +617,36 @@ CODE
     );
 }
 
+sub register_file_handler_raw {
+    $blurb = 'Registers a file handler procedure as capable of handling raw camera files.';
+
+    $help = <<'HELP';
+Registers a file handler procedure as capable of handling raw digital
+camera files. Use this procedure only to register raw load handlers,
+calling it on a save handler will generate an error.
+HELP
+
+    &mitch_pdb_misc('2017', '2.10');
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => "The name of the procedure to enable raw handling for." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+  success = gimp_plug_in_manager_register_handles_raw (gimp->plug_in_manager,
+                                                       canonical);
+
+  g_free (canonical);
+}
+CODE
+    );
+}
+
 sub register_thumbnail_loader {
     $blurb = 'Associates a thumbnail loader with a file load procedure.';
 
@@ -675,9 +705,10 @@ CODE
             register_save_handler
             register_file_handler_mime
             register_file_handler_uri
+            register_file_handler_raw
             register_thumbnail_loader);
 
-%exports = (app => [@procs], lib => [@procs[0..3,5..11]]);
+%exports = (app => [@procs], lib => [@procs[0..3,5..12]]);
 
 $desc = 'File Operations';
 $doc_title = 'gimpfileops';

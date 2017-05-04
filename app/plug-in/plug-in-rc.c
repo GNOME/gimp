@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 3
+#define PLUG_IN_RC_FILE_VERSION 4
 
 
 /*
@@ -92,6 +92,7 @@ enum
   MAGIC,
   MIME_TYPE,
   HANDLES_URI,
+  HANDLES_RAW,
   THUMB_LOADER
 };
 
@@ -157,6 +158,8 @@ plug_in_rc_parse (Gimp    *gimp,
                               "mime-type", GINT_TO_POINTER (MIME_TYPE));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "handles-uri", GINT_TO_POINTER (HANDLES_URI));
+  g_scanner_scope_add_symbol (scanner, LOAD_PROC,
+                              "handles-raw", GINT_TO_POINTER (HANDLES_RAW));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "thumb-loader", GINT_TO_POINTER (THUMB_LOADER));
 
@@ -603,7 +606,8 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
           if (! gimp_scanner_parse_string_no_validate (scanner, &value))
             return G_TOKEN_STRING;
         }
-      else if (symbol != HANDLES_URI)
+      else if (symbol != HANDLES_URI &&
+               symbol != HANDLES_RAW)
         {
           if (! gimp_scanner_parse_string (scanner, &value))
             return G_TOKEN_STRING;
@@ -633,6 +637,10 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
 
         case HANDLES_URI:
           gimp_plug_in_procedure_set_handles_uri (proc);
+          break;
+
+        case HANDLES_RAW:
+          gimp_plug_in_procedure_set_handles_raw (proc);
           break;
 
         case THUMB_LOADER:
@@ -929,6 +937,12 @@ plug_in_rc_write (GSList  *plug_in_defs,
                   if (proc->handles_uri)
                     {
                       gimp_config_writer_open (writer, "handles-uri");
+                      gimp_config_writer_close (writer);
+                    }
+
+                  if (proc->handles_raw && ! proc->image_types)
+                    {
+                      gimp_config_writer_open (writer, "handles-raw");
                       gimp_config_writer_close (writer);
                     }
 

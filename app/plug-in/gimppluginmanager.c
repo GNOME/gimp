@@ -150,6 +150,12 @@ gimp_plug_in_manager_finalize (GObject *object)
       manager->export_procs = NULL;
     }
 
+  if (manager->raw_load_procs)
+    {
+      g_slist_free (manager->raw_load_procs);
+      manager->raw_load_procs = NULL;
+    }
+
   if (manager->plug_in_procedures)
     {
       g_slist_free_full (manager->plug_in_procedures,

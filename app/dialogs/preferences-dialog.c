@@ -34,6 +34,8 @@
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
 
+#include "plug-in/gimppluginmanager.h"
+
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainercombobox.h"
@@ -47,6 +49,7 @@
 #include "widgets/gimpiconsizescale.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimppluginview.h"
 #include "widgets/gimpprefsbox.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpstrokeeditor.h"
@@ -95,6 +98,8 @@ static void   prefs_color_management_reset        (GtkWidget  *widget,
 static void   prefs_dialog_defaults_reset         (GtkWidget  *widget,
                                                    GObject    *config);
 
+static void   prefs_import_raw_procedure_callback (GtkWidget  *widget,
+                                                   GObject    *config);
 static void   prefs_resolution_source_callback    (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
@@ -484,6 +489,21 @@ prefs_template_select_callback (GimpContainerView *view,
       gimp_config_sync (G_OBJECT (template), G_OBJECT (edit_template),
                         0);
     }
+}
+
+static void
+prefs_import_raw_procedure_callback (GtkWidget *widget,
+                                     GObject   *config)
+{
+  gchar *raw_plug_in;
+
+  raw_plug_in = gimp_plug_in_view_get_plug_in (GIMP_PLUG_IN_VIEW (widget));
+
+  g_object_set (config,
+                "import-raw-plug-in", raw_plug_in,
+                NULL);
+
+  g_free (raw_plug_in);
 }
 
 static void
@@ -1298,8 +1318,9 @@ prefs_dialog_new (Gimp       *gimp,
                                   NULL,
                                   &top_iter);
 
+  /*  Import Policies  */
   vbox2 = prefs_frame_new (_("Import Policies"),
-                           GTK_CONTAINER (vbox), TRUE);
+                           GTK_CONTAINER (vbox), FALSE);
 
   button = prefs_check_button_add (object, "import-promote-float",
                                    _("Promote imported images to "
@@ -1321,6 +1342,32 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Color profile policy:"),
                                      GTK_TABLE (table), 0, NULL);
 
+  /*  Raw Image Importer  */
+  vbox2 = prefs_frame_new (_("Raw Image Importer"),
+                           GTK_CONTAINER (vbox), TRUE);
+
+  {
+    GtkWidget *scrolled_window;
+    GtkWidget *view;
+
+    scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                    GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                         GTK_SHADOW_IN);
+    gtk_box_pack_start (GTK_BOX (vbox2), scrolled_window, TRUE, TRUE, 0);
+    gtk_widget_show (scrolled_window);
+
+    view = gimp_plug_in_view_new (gimp->plug_in_manager->raw_load_procs);
+    gimp_plug_in_view_set_plug_in (GIMP_PLUG_IN_VIEW (view),
+                                   core_config->import_raw_plug_in);
+    gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+    gtk_widget_show (view);
+
+    g_signal_connect (view, "changed",
+                      G_CALLBACK (prefs_import_raw_procedure_callback),
+                      config);
+  }
 
   /****************/
   /*  Playground  */

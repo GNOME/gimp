@@ -77,6 +77,7 @@ static void    gimp_plug_in_manager_add_from_rc       (GimpPlugInManager    *man
 static void    gimp_plug_in_manager_add_to_db         (GimpPlugInManager    *manager,
                                                        GimpContext          *context,
                                                        GimpPlugInProcedure  *proc);
+static void    gimp_plug_in_manager_sort_file_procs   (GimpPlugInManager    *manager);
 static gint    gimp_plug_in_manager_file_proc_compare (gconstpointer         a,
                                                        gconstpointer         b,
                                                        gpointer              data);
@@ -184,16 +185,8 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
       gimp_plug_in_manager_add_to_db (manager, context, list->data);
     }
 
-  /* sort the load, save and export procedures  */
-  manager->load_procs =
-    g_slist_sort_with_data (manager->load_procs,
-                            gimp_plug_in_manager_file_proc_compare, manager);
-  manager->save_procs =
-    g_slist_sort_with_data (manager->save_procs,
-                            gimp_plug_in_manager_file_proc_compare, manager);
-  manager->export_procs =
-    g_slist_sort_with_data (manager->export_procs,
-                            gimp_plug_in_manager_file_proc_compare, manager);
+  /* sort the load, save and export procedures, make the raw handler list */
+  gimp_plug_in_manager_sort_file_procs (manager);
 
   gimp_plug_in_manager_run_extensions (manager, context, status_callback);
 
@@ -794,6 +787,96 @@ gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
           gimp_message_literal (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                                 error->message);
           g_error_free (error);
+        }
+    }
+}
+
+static void
+gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
+{
+  GimpCoreConfig *config         = manager->gimp->config;
+  GFile          *config_plug_in = NULL;
+  GFile          *raw_plug_in    = NULL;
+  GSList         *list;
+
+  manager->load_procs =
+    g_slist_sort_with_data (manager->load_procs,
+                            gimp_plug_in_manager_file_proc_compare, manager);
+  manager->save_procs =
+    g_slist_sort_with_data (manager->save_procs,
+                            gimp_plug_in_manager_file_proc_compare, manager);
+  manager->export_procs =
+    g_slist_sort_with_data (manager->export_procs,
+                            gimp_plug_in_manager_file_proc_compare, manager);
+
+
+  if (config->import_raw_plug_in)
+    config_plug_in = gimp_file_new_for_config_path (config->import_raw_plug_in,
+                                                    NULL);
+
+  /* make the list of raw loaders, and remember the one configured in
+   * config if found
+   */
+  for (list = manager->load_procs; list; list = g_slist_next (list))
+    {
+      GimpPlugInProcedure *file_proc = list->data;
+
+      if (file_proc->handles_raw)
+        {
+          GFile *file;
+
+          manager->raw_load_procs = g_slist_append (manager->raw_load_procs,
+                                                    file_proc);
+
+          file = gimp_plug_in_procedure_get_file (file_proc);
+
+          if (! raw_plug_in  &&
+              config_plug_in &&
+              g_file_equal (config_plug_in, file))
+            {
+              raw_plug_in = file;
+            }
+        }
+    }
+
+  if (config_plug_in)
+    g_object_unref (config_plug_in);
+
+  /* if no raw loader was configured, or the configured raw loader
+   * wasn't found, default to the first loader, if any
+   */
+  if (! raw_plug_in && manager->raw_load_procs)
+    {
+      gchar *path;
+
+      raw_plug_in =
+        gimp_plug_in_procedure_get_file (manager->raw_load_procs->data);
+
+      path = gimp_file_get_config_path (raw_plug_in, NULL);
+
+      g_object_set (config,
+                    "import-raw-plug-in", path,
+                    NULL);
+
+      g_free (path);
+    }
+
+  /* finally, remove all raw loaders except the configured one from
+   * the list of load_procs
+   */
+  list = manager->load_procs;
+  while (list)
+    {
+      GimpPlugInProcedure *file_proc = list->data;
+
+      list = g_slist_next (list);
+
+      if (file_proc->handles_raw &&
+          ! g_file_equal (gimp_plug_in_procedure_get_file (file_proc),
+                          raw_plug_in))
+        {
+          manager->load_procs = g_slist_remove (manager->load_procs,
+                                                file_proc);
         }
     }
 }

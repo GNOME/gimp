@@ -94,6 +94,7 @@ struct _GimpCoreConfig
   gboolean                import_promote_float;
   gboolean                import_promote_dither;
   gboolean                import_add_alpha;
+  gchar                  *import_raw_plug_in;
 };
 
 struct _GimpCoreConfigClass

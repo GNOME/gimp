@@ -195,6 +195,9 @@ _("When promoting imported images to floating point precision, also add " \
 #define IMPORT_ADD_ALPHA_BLURB \
 _("Add an alpha channel to all layers of imported images.")
 
+#define IMPORT_RAW_PLUG_IN_BLURB \
+_("Which plug-in to use for importing raw digital camera files.")
+
 #define INITIAL_ZOOM_TO_FIT_BLURB \
 _("When enabled, this will ensure that the full image is visible after a " \
   "file is opened, otherwise it will be displayed with a scale of 1:1.")

@@ -1112,6 +1112,14 @@ gimp_plug_in_procedure_set_handles_uri (GimpPlugInProcedure *proc)
 }
 
 void
+gimp_plug_in_procedure_set_handles_raw (GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  proc->handles_raw = TRUE;
+}
+
+void
 gimp_plug_in_procedure_set_thumb_loader (GimpPlugInProcedure *proc,
                                          const gchar         *thumb_loader)
 {

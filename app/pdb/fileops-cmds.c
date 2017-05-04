@@ -562,6 +562,33 @@ register_file_handler_uri_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+register_file_handler_raw_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      gchar *canonical = gimp_canonicalize_identifier (procedure_name);
+
+      success = gimp_plug_in_manager_register_handles_raw (gimp->plug_in_manager,
+                                                           canonical);
+
+      g_free (canonical);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 register_thumbnail_loader_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
@@ -1035,6 +1062,30 @@ register_fileops_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
                                                        "The name of the procedure to enable URIs for.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-register-file-handler-raw
+   */
+  procedure = gimp_procedure_new (register_file_handler_raw_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-register-file-handler-raw");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-register-file-handler-raw",
+                                     "Registers a file handler procedure as capable of handling raw camera files.",
+                                     "Registers a file handler procedure as capable of handling raw digital camera files. Use this procedure only to register raw load handlers, calling it on a save handler will generate an error.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to enable raw handling for.",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

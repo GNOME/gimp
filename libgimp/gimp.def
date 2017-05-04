@@ -763,6 +763,7 @@ EXPORTS
 	gimp_read_expect_msg
 	gimp_rect_select
 	gimp_register_file_handler_mime
+	gimp_register_file_handler_raw
 	gimp_register_file_handler_uri
 	gimp_register_load_handler
 	gimp_register_magic_load_handler
