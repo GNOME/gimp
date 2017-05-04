@@ -586,12 +586,14 @@ CODE
 }
 
 sub register_file_handler_mime {
-    $blurb = 'Associates a MIME type with a file handler procedure.';
+    $blurb = 'Associates MIME types with a file handler procedure.';
 
     $help = <<'HELP';
-Registers a MIME type for a file handler procedure. This allows GIMP
-to determine the MIME type of the file opened or saved using this
-procedure.
+Registers MIME types for a file handler procedure. This allows GIMP to
+determine the MIME type of the file opened or saved using this
+procedure. It is recommended that only one MIME type is registered per
+file procedure; when registering more than one MIME type, GIMP will
+associate the first one with files opened or saved with this procedure.
 HELP
 
     &neo_pdb_misc('2004', '2.2');
@@ -599,8 +601,8 @@ HELP
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => "The name of the procedure to associate a MIME type with." },
-        { name => 'mime_type', type => 'string',
-          desc => "A single MIME type, like for example \"image/jpeg\"."     }
+        { name => 'mime_types', type => 'string',
+          desc => "A comma-separated list of MIME types, such as \"image/jpeg\"."     }
     );
 
     %invoke = (
@@ -608,8 +610,8 @@ HELP
 {
   gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-  success = gimp_plug_in_manager_register_mime_type (gimp->plug_in_manager,
-                                                     canonical, mime_type);
+  success = gimp_plug_in_manager_register_mime_types (gimp->plug_in_manager,
+                                                      canonical, mime_types);
 
   g_free (canonical);
 }

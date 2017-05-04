@@ -163,11 +163,12 @@ gimp_plug_in_procedure_finalize (GObject *object)
   g_free (proc->extensions);
   g_free (proc->prefixes);
   g_free (proc->magics);
-  g_free (proc->mime_type);
+  g_free (proc->mime_types);
 
   g_slist_free_full (proc->extensions_list, (GDestroyNotify) g_free);
   g_slist_free_full (proc->prefixes_list, (GDestroyNotify) g_free);
   g_slist_free_full (proc->magics_list, (GDestroyNotify) g_free);
+  g_slist_free_full (proc->mime_types_list, (GDestroyNotify) g_free);
 
   g_free (proc->thumb_loader);
 
@@ -204,7 +205,7 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
   memsize += gimp_string_get_memsize (proc->extensions);
   memsize += gimp_string_get_memsize (proc->prefixes);
   memsize += gimp_string_get_memsize (proc->magics);
-  memsize += gimp_string_get_memsize (proc->mime_type);
+  memsize += gimp_string_get_memsize (proc->mime_types);
   memsize += gimp_string_get_memsize (proc->thumb_loader);
 
   for (slist = proc->extensions_list; slist; slist = g_slist_next (slist))
@@ -214,6 +215,9 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
     memsize += sizeof (GSList) + gimp_string_get_memsize (slist->data);
 
   for (slist = proc->magics_list; slist; slist = g_slist_next (slist))
+    memsize += sizeof (GSList) + gimp_string_get_memsize (slist->data);
+
+  for (slist = proc->mime_types_list; slist; slist = g_slist_next (slist))
     memsize += sizeof (GSList) + gimp_string_get_memsize (slist->data);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
@@ -1092,15 +1096,23 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
 }
 
 void
-gimp_plug_in_procedure_set_mime_type (GimpPlugInProcedure *proc,
-                                      const gchar         *mime_type)
+gimp_plug_in_procedure_set_mime_types (GimpPlugInProcedure *proc,
+                                       const gchar         *mime_types)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
-  if (proc->mime_type)
-    g_free (proc->mime_type);
+  if (proc->mime_types != mime_types)
+    {
+      if (proc->mime_types)
+        g_free (proc->mime_types);
 
-  proc->mime_type = g_strdup (mime_type);
+      proc->mime_types = g_strdup (mime_types);
+    }
+
+  if (proc->mime_types_list)
+    g_slist_free_full (proc->mime_types_list, (GDestroyNotify) g_free);
+
+  proc->mime_types_list = extensions_parse (proc->mime_types);
 }
 
 void

@@ -820,12 +820,12 @@ gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
                                     GtkFileFilter        *all,
                                     GtkFileFilter        *all_savable)
 {
-  GtkFileFilter *filter = NULL;
-  GString       *str    = NULL;
-  GSList        *ext    = NULL;
-  gint           i      = 0;
+  GtkFileFilter *filter;
+  GString       *str;
+  GSList        *list;
+  gint           i;
 
-  if (!file_proc->extensions_list)
+  if (! file_proc->extensions_list)
     return;
 
   filter = gtk_file_filter_new ();
@@ -836,19 +836,21 @@ gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
    */
   g_object_ref_sink (filter);
 
-  if (file_proc->mime_type)
+  for (list = file_proc->mime_types_list; list; list = g_slist_next (list))
     {
-      gtk_file_filter_add_mime_type (filter, file_proc->mime_type);
-      gtk_file_filter_add_mime_type (all, file_proc->mime_type);
+      const gchar *mime_type = list->data;
+
+      gtk_file_filter_add_mime_type (filter, mime_type);
+      gtk_file_filter_add_mime_type (all, mime_type);
       if (all_savable)
-        gtk_file_filter_add_mime_type (all_savable, file_proc->mime_type);
+        gtk_file_filter_add_mime_type (all_savable, mime_type);
     }
 
-  for (ext = file_proc->extensions_list, i = 0;
-       ext;
-       ext = g_slist_next (ext), i++)
+  for (list = file_proc->extensions_list, i = 0;
+       list;
+       list = g_slist_next (list), i++)
     {
-      const gchar *extension = ext->data;
+      const gchar *extension = list->data;
       gchar       *pattern;
 
       pattern = gimp_file_dialog_pattern_from_extension (extension);
@@ -877,7 +879,7 @@ gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
           g_string_append (str, "...");
         }
 
-      if (! ext->next)
+      if (! list->next)
         {
           g_string_append (str, ")");
         }

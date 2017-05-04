@@ -158,16 +158,16 @@ gimp_plug_in_manager_register_save_handler (GimpPlugInManager *manager,
 }
 
 gboolean
-gimp_plug_in_manager_register_mime_type (GimpPlugInManager *manager,
-                                         const gchar       *name,
-                                         const gchar       *mime_type)
+gimp_plug_in_manager_register_mime_types (GimpPlugInManager *manager,
+                                          const gchar       *name,
+                                          const gchar       *mime_types)
 {
   GimpPlugInProcedure *file_proc;
   GSList              *list;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
-  g_return_val_if_fail (mime_type != NULL, FALSE);
+  g_return_val_if_fail (mime_types != NULL, FALSE);
 
   if (manager->current_plug_in && manager->current_plug_in->plug_in_def)
     list = manager->current_plug_in->plug_in_def->procedures;
@@ -179,7 +179,7 @@ gimp_plug_in_manager_register_mime_type (GimpPlugInManager *manager,
   if (! file_proc)
     return FALSE;
 
-  gimp_plug_in_procedure_set_mime_type (file_proc, mime_type);
+  gimp_plug_in_procedure_set_mime_types (file_proc, mime_types);
 
   return TRUE;
 }

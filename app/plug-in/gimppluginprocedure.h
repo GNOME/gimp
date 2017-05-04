@@ -59,12 +59,13 @@ struct _GimpPlugInProcedure
   gchar               *extensions;
   gchar               *prefixes;
   gchar               *magics;
-  gchar               *mime_type;
+  gchar               *mime_types;
   gboolean             handles_uri;
   gboolean             handles_raw;
   GSList              *extensions_list;
   GSList              *prefixes_list;
   GSList              *magics_list;
+  GSList              *mime_types_list;
   gchar               *thumb_loader;
 };
 
@@ -118,8 +119,8 @@ void          gimp_plug_in_procedure_set_file_proc     (GimpPlugInProcedure *pro
                                                         const gchar         *extensions,
                                                         const gchar         *prefixes,
                                                         const gchar         *magics);
-void          gimp_plug_in_procedure_set_mime_type     (GimpPlugInProcedure *proc,
-                                                        const gchar         *mime_ype);
+void          gimp_plug_in_procedure_set_mime_types    (GimpPlugInProcedure *proc,
+                                                        const gchar         *mime_ypes);
 void          gimp_plug_in_procedure_set_handles_uri   (GimpPlugInProcedure *proc);
 void          gimp_plug_in_procedure_set_handles_raw   (GimpPlugInProcedure *proc);
 void          gimp_plug_in_procedure_set_thumb_loader  (GimpPlugInProcedure *proc,

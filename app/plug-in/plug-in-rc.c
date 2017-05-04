@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 4
+#define PLUG_IN_RC_FILE_VERSION 5
 
 
 /*
@@ -87,10 +87,10 @@ enum
   ICON,
   LOAD_PROC,
   SAVE_PROC,
-  EXTENSION,
-  PREFIX,
-  MAGIC,
-  MIME_TYPE,
+  EXTENSIONS,
+  PREFIXES,
+  MAGICS,
+  MIME_TYPES,
   HANDLES_URI,
   HANDLES_RAW,
   THUMB_LOADER
@@ -149,13 +149,13 @@ plug_in_rc_parse (Gimp    *gimp,
                               "save-proc", GINT_TO_POINTER (SAVE_PROC));
 
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
-                              "extension", GINT_TO_POINTER (EXTENSION));
+                              "extensions", GINT_TO_POINTER (EXTENSIONS));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
-                              "prefix", GINT_TO_POINTER (PREFIX));
+                              "prefixes", GINT_TO_POINTER (PREFIXES));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
-                              "magic", GINT_TO_POINTER (MAGIC));
+                              "magics", GINT_TO_POINTER (MAGICS));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
-                              "mime-type", GINT_TO_POINTER (MIME_TYPE));
+                              "mime-types", GINT_TO_POINTER (MIME_TYPES));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "handles-uri", GINT_TO_POINTER (HANDLES_URI));
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
@@ -164,11 +164,11 @@ plug_in_rc_parse (Gimp    *gimp,
                               "thumb-loader", GINT_TO_POINTER (THUMB_LOADER));
 
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
-                              "extension", GINT_TO_POINTER (EXTENSION));
+                              "extensions", GINT_TO_POINTER (EXTENSIONS));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
-                              "prefix", GINT_TO_POINTER (PREFIX));
+                              "prefixes", GINT_TO_POINTER (PREFIXES));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
-                              "mime-type", GINT_TO_POINTER (MIME_TYPE));
+                              "mime-types", GINT_TO_POINTER (MIME_TYPES));
   g_scanner_scope_add_symbol (scanner, SAVE_PROC,
                               "handles-uri", GINT_TO_POINTER (HANDLES_URI));
 
@@ -601,7 +601,7 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
 
       symbol = GPOINTER_TO_INT (scanner->value.v_symbol);
 
-      if (symbol == MAGIC)
+      if (symbol == MAGICS)
         {
           if (! gimp_scanner_parse_string_no_validate (scanner, &value))
             return G_TOKEN_STRING;
@@ -615,23 +615,23 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
 
       switch (symbol)
         {
-        case EXTENSION:
+        case EXTENSIONS:
           g_free (proc->extensions);
           proc->extensions = value;
           break;
 
-        case PREFIX:
+        case PREFIXES:
           g_free (proc->prefixes);
           proc->prefixes = value;
           break;
 
-        case MAGIC:
+        case MAGICS:
           g_free (proc->magics);
           proc->magics = value;
           break;
 
-        case MIME_TYPE:
-          gimp_plug_in_procedure_set_mime_type (proc, value);
+        case MIME_TYPES:
+          gimp_plug_in_procedure_set_mime_types (proc, value);
           g_free (value);
           break;
 
@@ -908,29 +908,29 @@ plug_in_rc_write (GSList  *plug_in_defs,
 
                   if (proc->extensions && *proc->extensions)
                     {
-                      gimp_config_writer_open (writer, "extension");
+                      gimp_config_writer_open (writer, "extensions");
                       gimp_config_writer_string (writer, proc->extensions);
                       gimp_config_writer_close (writer);
                     }
 
                   if (proc->prefixes && *proc->prefixes)
                     {
-                      gimp_config_writer_open (writer, "prefix");
+                      gimp_config_writer_open (writer, "prefixes");
                       gimp_config_writer_string (writer, proc->prefixes);
                       gimp_config_writer_close (writer);
                     }
 
                   if (proc->magics && *proc->magics)
                     {
-                      gimp_config_writer_open (writer, "magic");
+                      gimp_config_writer_open (writer, "magics");
                       gimp_config_writer_string (writer, proc->magics);
                       gimp_config_writer_close (writer);
                     }
 
-                  if (proc->mime_type)
+                  if (proc->mime_types && *proc->mime_types)
                     {
-                      gimp_config_writer_open (writer, "mime-type");
-                      gimp_config_writer_string (writer, proc->mime_type);
+                      gimp_config_writer_open (writer, "mime-types");
+                      gimp_config_writer_string (writer, proc->mime_types);
                       gimp_config_writer_close (writer);
                     }
 

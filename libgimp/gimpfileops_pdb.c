@@ -367,12 +367,15 @@ gimp_register_save_handler (const gchar *procedure_name,
 /**
  * gimp_register_file_handler_mime:
  * @procedure_name: The name of the procedure to associate a MIME type with.
- * @mime_type: A single MIME type, like for example \"image/jpeg\".
+ * @mime_types: A comma-separated list of MIME types, such as \"image/jpeg\".
  *
- * Associates a MIME type with a file handler procedure.
+ * Associates MIME types with a file handler procedure.
  *
- * Registers a MIME type for a file handler procedure. This allows GIMP
+ * Registers MIME types for a file handler procedure. This allows GIMP
  * to determine the MIME type of the file opened or saved using this
+ * procedure. It is recommended that only one MIME type is registered
+ * per file procedure; when registering more than one MIME type, GIMP
+ * will associate the first one with files opened or saved with this
  * procedure.
  *
  * Returns: TRUE on success.
@@ -381,7 +384,7 @@ gimp_register_save_handler (const gchar *procedure_name,
  **/
 gboolean
 gimp_register_file_handler_mime (const gchar *procedure_name,
-                                 const gchar *mime_type)
+                                 const gchar *mime_types)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -390,7 +393,7 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
   return_vals = gimp_run_procedure ("gimp-register-file-handler-mime",
                                     &nreturn_vals,
                                     GIMP_PDB_STRING, procedure_name,
-                                    GIMP_PDB_STRING, mime_type,
+                                    GIMP_PDB_STRING, mime_types,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

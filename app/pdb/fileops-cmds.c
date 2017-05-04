@@ -515,17 +515,17 @@ register_file_handler_mime_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
-  const gchar *mime_type;
+  const gchar *mime_types;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
-  mime_type = g_value_get_string (gimp_value_array_index (args, 1));
+  mime_types = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
       gchar *canonical = gimp_canonicalize_identifier (procedure_name);
 
-      success = gimp_plug_in_manager_register_mime_type (gimp->plug_in_manager,
-                                                         canonical, mime_type);
+      success = gimp_plug_in_manager_register_mime_types (gimp->plug_in_manager,
+                                                          canonical, mime_types);
 
       g_free (canonical);
     }
@@ -1021,8 +1021,8 @@ register_fileops_procs (GimpPDB *pdb)
                                "gimp-register-file-handler-mime");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-register-file-handler-mime",
-                                     "Associates a MIME type with a file handler procedure.",
-                                     "Registers a MIME type for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure.",
+                                     "Associates MIME types with a file handler procedure.",
+                                     "Registers MIME types for a file handler procedure. This allows GIMP to determine the MIME type of the file opened or saved using this procedure. It is recommended that only one MIME type is registered per file procedure; when registering more than one MIME type, GIMP will associate the first one with files opened or saved with this procedure.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2004",
@@ -1035,9 +1035,9 @@ register_fileops_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("mime-type",
-                                                       "mime type",
-                                                       "A single MIME type, like for example \"image/jpeg\".",
+                               gimp_param_spec_string ("mime-types",
+                                                       "mime types",
+                                                       "A comma-separated list of MIME types, such as \"image/jpeg\".",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

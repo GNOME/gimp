@@ -263,11 +263,13 @@ file_save (Gimp                *gimp,
       documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
 
       imagefile = gimp_document_list_add_file (documents, file,
-                                               file_proc->mime_type);
+                                               g_slist_nth_data (file_proc->mime_types_list, 0));
 
       /* only save a thumbnail if we are saving as XCF, see bug #25272 */
       if (GIMP_PROCEDURE (file_proc)->proc_type == GIMP_INTERNAL)
-        gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, image,
+        gimp_imagefile_save_thumbnail (imagefile,
+                                       g_slist_nth_data (file_proc->mime_types_list, 0),
+                                       image,
                                        NULL);
     }
   else if (status != GIMP_PDB_CANCEL)

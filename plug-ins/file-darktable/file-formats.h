@@ -44,13 +44,13 @@ static const FileFormat file_formats[] =
 {
   {
     N_("Raw Canon"),
-    "image/x-canon-cr2,image/x-canon-crw,image/tiff", // FIXME: only one mime type
+    "image/x-canon-cr2,image/x-canon-crw,image/tiff",
     "cr2,crw,tif,tiff",
-    "0,string,II*\\0\\020\\0\\0\\0CR,"             // cr2
-    "0,string,II\\024\\0\\0\\0HEAPCCDR,"           // crw
-    "0,string,MM\\0*\\0\\0\\0\\020\\0272\\0260,"   // tiff
-    "0,string,MM\\0*\\0\\0\\021\\064\\0\\04,"      // tiff
-    "0,string,II*\\0\\0\\03\\0\\0\\0377\\01",      // tiff
+    "0,string,II*\\0\\020\\0\\0\\0CR,"             /* cr2  */
+    "0,string,II\\024\\0\\0\\0HEAPCCDR,"           /* crw  */
+    "0,string,MM\\0*\\0\\0\\0\\020\\0272\\0260,"   /* tiff */
+    "0,string,MM\\0*\\0\\0\\021\\064\\0\\04,"      /* tiff */
+    "0,string,II*\\0\\0\\03\\0\\0\\0377\\01",      /* tiff */
 
     "file-darktable-canon-load",
     "Load files in the Canon raw formats via darktable",
@@ -59,7 +59,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Nikon"),
-    "image/x-nikon-nef,image/x-nikon-nrw", // FIXME: only one mime type
+    "image/x-nikon-nef,image/x-nikon-nrw",
     "nef,nrw",
     NULL,
 
@@ -70,7 +70,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Hasselblad"),
-    "image/x-hasselblad-3fr,image/x-hasselblad-fff", // FIXME: only one mime type
+    "image/x-hasselblad-3fr,image/x-hasselblad-fff",
     "3fr,fff",
     NULL,
 
@@ -81,7 +81,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Sony"),
-    "image/x-sony-arw,image/x-sony-srf,image/x-sony-sr2", // FIXME: only one mime type
+    "image/x-sony-arw,image/x-sony-srf,image/x-sony-sr2",
     "arw,srf,sr2",
     NULL,
 
@@ -103,7 +103,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Phantom Software CINE"),
-    "", // FIXME: find a mime type
+    "", /* FIXME: find a mime type */
     "cine,cin",
     NULL,
 
@@ -114,7 +114,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Sinar"),
-    "", // FIXME: find a mime type
+    "", /* FIXME: find a mime type */
     "cs1,ia,sti",
     NULL,
 
@@ -125,10 +125,10 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Kodak"),
-    "image/x-kodak-dc2,image/x-kodak-dcr,image/x-kodak-kdc,image/x-kodak-k25,image/x-kodak-kc2,image/tiff", // FIXME: only one mime type
+    "image/x-kodak-dc2,image/x-kodak-dcr,image/x-kodak-kdc,image/x-kodak-k25,image/x-kodak-kc2,image/tiff",
     "dc2,dcr,kdc,k25,kc2,tif,tiff",
-    "0,string,MM\\0*\\0\\0\\021\\0166\\0\\04,"    // tiff
-    "0,string,II*\\0\\0\\03\\0\\0\\0174\\01",     // tiff
+    "0,string,MM\\0*\\0\\0\\021\\0166\\0\\04,"    /* tiff */
+    "0,string,II*\\0\\0\\03\\0\\0\\0174\\01",     /* tiff */
 
     "file-darktable-kodak-load",
     "Load files in the Kodak raw formats via darktable",
@@ -159,7 +159,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Phase One"),
-    "image/x-phaseone-cap,image/x-phaseone-iiq", // FIXME: only one mime type
+    "image/x-phaseone-cap,image/x-phaseone-iiq",
     "cap,iiq",
     NULL,
 
@@ -170,7 +170,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Minolta"),
-    "image/x-minolta-mdc,image/x-minolta-mrw", // FIXME: only one mime type
+    "image/x-minolta-mdc,image/x-minolta-mrw",
     "mdc,mrw",
     NULL,
 
@@ -213,7 +213,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Pentax PEF"),
-    "image/x-pentax-pef,image/x-pentax-raw", // FIXME: only one mime type
+    "image/x-pentax-pef,image/x-pentax-raw",
     "pef,raw",
     NULL,
 
@@ -224,7 +224,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Logitech PXN"),
-    "image/x-pxn", // FIXME: is that the correct mime type?
+    "image/x-pxn", /* FIXME: is that the correct mime type? */
     "pxn",
     NULL,
 
@@ -235,7 +235,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Apple QuickTake QTK"),
-    "", // FIXME: find a mime type
+    "", /* FIXME: find a mime type */
     "qtk",
     NULL,
 
@@ -257,7 +257,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Panasonic"),
-    "image/x-panasonic-raw,image/x-panasonic-rw2", // FIXME: only one mime type
+    "image/x-panasonic-raw,image/x-panasonic-rw2",
     "raw,rw2",
     "0,string,IIU\\0",
 
@@ -268,7 +268,7 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Digital Foto Maker RDC"),
-    "", // FIXME: find a mime type
+    "", /* FIXME: find a mime type */
     "rdc",
     NULL,
 

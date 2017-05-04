@@ -248,7 +248,7 @@ file_open_image (Gimp                *gimp,
           file_proc = gimp_image_get_load_proc (image);
 
           if (mime_type)
-            *mime_type = file_proc->mime_type;
+            *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
         }
       else
         {
@@ -454,7 +454,7 @@ file_open_thumbnail (Gimp           *gimp,
             {
               file_open_sanitize_image (image, FALSE);
 
-              *mime_type = file_proc->mime_type;
+              *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
 
 #ifdef GIMP_UNSTABLE
               g_printerr ("opened thumbnail at %d x %d\n",
@@ -823,6 +823,6 @@ static gboolean
 file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
 {
   return !(file_proc &&
-           file_proc->mime_type &&
-           strcmp (file_proc->mime_type, "image/x-xcf") == 0);
+           file_proc->mime_types &&
+           strcmp (file_proc->mime_types, "image/x-xcf") == 0);
 }

@@ -235,9 +235,13 @@ file_procedure_find_by_mime_type (GSList      *procs,
   for (list = procs; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *proc = list->data;
+      GSList              *mime;
 
-      if (proc->mime_type && ! strcmp (mime_type, proc->mime_type))
-        return proc;
+      for (mime = proc->mime_types_list; mime; mime = g_slist_next (mime))
+        {
+          if (! strcmp (mime_type, mime->data))
+            return proc;
+        }
     }
 
   return NULL;
