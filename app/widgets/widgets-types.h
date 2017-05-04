@@ -205,6 +205,7 @@ typedef struct _GimpMessageBox               GimpMessageBox;
 typedef struct _GimpOverlayBox               GimpOverlayBox;
 typedef struct _GimpPickableButton           GimpPickableButton;
 typedef struct _GimpPickablePopup            GimpPickablePopup;
+typedef struct _GimpPlugInView               GimpPlugInView;
 typedef struct _GimpPolar                    GimpPolar;
 typedef struct _GimpPopup                    GimpPopup;
 typedef struct _GimpPrefsBox                 GimpPrefsBox;

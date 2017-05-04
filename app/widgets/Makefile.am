@@ -285,6 +285,8 @@ libappwidgets_a_sources = \
 	gimppickablepopup.h		\
 	gimppixbuf.c			\
 	gimppixbuf.h			\
+	gimppluginview.c		\
+	gimppluginview.h		\
 	gimppolar.c			\
 	gimppolar.h			\
 	gimppopup.c			\

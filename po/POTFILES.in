@@ -535,6 +535,7 @@ app/widgets/gimppaletteeditor.c
 app/widgets/gimppanedbox.c
 app/widgets/gimppdbdialog.c
 app/widgets/gimppickablepopup.c
+app/widgets/gimppluginview.c
 app/widgets/gimpprogressdialog.c
 app/widgets/gimppropgui-constructors.c
 app/widgets/gimppropgui.c
