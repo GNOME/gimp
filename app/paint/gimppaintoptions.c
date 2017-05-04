@@ -809,8 +809,18 @@ gimp_paint_options_reset (GimpConfig *config)
   parent_config_iface->reset (config);
 
   if (brush)
-    gimp_paint_options_set_default_brush_aspect_ratio (GIMP_PAINT_OPTIONS (config),
-                                                       brush);
+    {
+      gimp_paint_options_set_default_brush_size (GIMP_PAINT_OPTIONS (config),
+                                                 brush);
+      gimp_paint_options_set_default_brush_hardness (GIMP_PAINT_OPTIONS (config),
+                                                     brush);
+      gimp_paint_options_set_default_brush_aspect_ratio (GIMP_PAINT_OPTIONS (config),
+                                                         brush);
+      gimp_paint_options_set_default_brush_angle (GIMP_PAINT_OPTIONS (config),
+                                                  brush);
+      gimp_paint_options_set_default_brush_spacing (GIMP_PAINT_OPTIONS (config),
+                                                    brush);
+    }
 }
 
 GimpPaintOptions *
