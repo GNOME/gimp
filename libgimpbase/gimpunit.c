@@ -244,6 +244,11 @@ gimp_unit_get_factor (GimpUnit unit)
  * Built-in units' accuracy is approximately the same as an inch with
  * two digits. User-defined units can suggest a different accuracy.
  *
+ * Note: the value is as-set by defaults or by the user and does not
+ * necessary provide enough precision on high-resolution images.
+ * When the information is needed for a specific image, the use of
+ * gimp_unit_get_scaled_digits() may be more appropriate.
+ *
  * Returns 0 for @unit == GIMP_UNIT_PIXEL.
  *
  * Returns: The suggested number of digits.
