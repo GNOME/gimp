@@ -43,8 +43,8 @@ typedef enum
   GIMP_LAYER_COMPOSITE_AUTO,      /*< desc="Auto"             >*/
   GIMP_LAYER_COMPOSITE_SRC_OVER,  /*< desc="Source over"      >*/
   GIMP_LAYER_COMPOSITE_SRC_ATOP,  /*< desc="Source atop"      >*/
-  GIMP_LAYER_COMPOSITE_SRC_IN,    /*< desc="Source in"        >*/
-  GIMP_LAYER_COMPOSITE_DST_ATOP   /*< desc="Destination atop" >*/
+  GIMP_LAYER_COMPOSITE_DST_ATOP,  /*< desc="Destination atop" >*/
+  GIMP_LAYER_COMPOSITE_SRC_IN     /*< desc="Source in"        >*/
 } GimpLayerCompositeMode;
 
 
