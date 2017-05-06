@@ -480,7 +480,7 @@ gimp_cursor_view_format_as_unit (GimpUnit  unit,
 
   if (unit != GIMP_UNIT_PIXEL)
     {
-      unit_digits = gimp_unit_get_digits (unit);
+      unit_digits = gimp_unit_get_scaled_digits (unit, image_res);
       unit_str    = gimp_unit_get_abbreviation (unit);
     }
 
