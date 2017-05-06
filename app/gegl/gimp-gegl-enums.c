@@ -8,7 +8,7 @@
 #include "gimp-gegl-enums.h"
 #include "gimp-intl.h"
 
-/* enumerations from "./gimp-gegl-enums.h" */
+/* enumerations from "gimp-gegl-enums.h" */
 GType
 gimp_cage_mode_get_type (void)
 {

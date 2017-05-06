@@ -202,7 +202,7 @@ gen_sources = xgen-bec xgen-cec
 CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
 $(srcdir)/gimpbaseenums.c: $(srcdir)/gimpbaseenums.h $(GIMP_MKENUMS)
-	$(GIMP_MKENUMS) \
+	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#undef GIMP_DISABLE_DEPRECATED\n#include \"gimpbasetypes.h\"\n#include \"libgimp/libgimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
@@ -211,13 +211,12 @@ $(srcdir)/gimpbaseenums.c: $(srcdir)/gimpbaseenums.h $(GIMP_MKENUMS)
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		$(srcdir)/gimpbaseenums.h > xgen-bec \
-	&& cp xgen-bec $(@F) \
+		gimpbaseenums.h) > xgen-bec \
+	&& cp xgen-bec $@ \
 	&& rm -f xgen-bec
 
-
 $(srcdir)/gimpcompatenums.c: $(srcdir)/gimpcompatenums.h $(GIMP_MKENUMS)
-	$(GIMP_MKENUMS) \
+	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpbasetypes.h\"\n#include \"gimpcompatenums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
@@ -226,8 +225,8 @@ $(srcdir)/gimpcompatenums.c: $(srcdir)/gimpcompatenums.h $(GIMP_MKENUMS)
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		$(srcdir)/gimpcompatenums.h > xgen-cec \
-	&& cp xgen-cec $(@F) \
+		gimpcompatenums.h) > xgen-cec \
+	&& cp xgen-cec $@ \
 	&& rm -f xgen-cec
 
 

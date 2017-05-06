@@ -7,7 +7,7 @@
 #include "gimpwidgetsenums.h"
 #include "libgimp/libgimp-intl.h"
 
-/* enumerations from "./gimpwidgetsenums.h" */
+/* enumerations from "gimpwidgetsenums.h" */
 GType
 gimp_aspect_type_get_type (void)
 {

@@ -7,7 +7,7 @@
 #include "text-enums.h"
 #include "gimp-intl.h"
 
-/* enumerations from "./text-enums.h" */
+/* enumerations from "text-enums.h" */
 GType
 gimp_text_box_mode_get_type (void)
 {

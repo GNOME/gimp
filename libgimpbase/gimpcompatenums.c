@@ -7,7 +7,7 @@
 #include "gimpcompatenums.h"
 #include "libgimp/libgimp-intl.h"
 
-/* enumerations from "./gimpcompatenums.h" */
+/* enumerations from "gimpcompatenums.h" */
 GType
 gimp_add_mask_type_compat_get_type (void)
 {

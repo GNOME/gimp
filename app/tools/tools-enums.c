@@ -8,7 +8,7 @@
 #include "tools-enums.h"
 #include "gimp-intl.h"
 
-/* enumerations from "./tools-enums.h" */
+/* enumerations from "tools-enums.h" */
 GType
 gimp_button_press_type_get_type (void)
 {

@@ -448,8 +448,8 @@ gimpmarshal.c: gimpmarshal.h
 	&& cp xgen-gmc $(@F) \
 	&& rm -f xgen-gmc xgen-gmc~
 
-core-enums.c: $(srcdir)/core-enums.h $(GIMP_MKENUMS)
-	$(GIMP_MKENUMS) \
+$(srcdir)/core-enums.c: $(srcdir)/core-enums.h $(GIMP_MKENUMS)
+	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"core-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
@@ -458,6 +458,6 @@ core-enums.c: $(srcdir)/core-enums.h $(GIMP_MKENUMS)
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		$(srcdir)/core-enums.h > xgen-cec \
-	&& cp xgen-cec $(@F) \
+		core-enums.h) > xgen-cec \
+	&& cp xgen-cec $@ \
 	&& rm -f xgen-cec

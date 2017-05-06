@@ -307,8 +307,8 @@ endif
 gen_sources = xgen-wec xgen-wmh xgen-wmc
 CLEANFILES = $(gen_sources)
 
-gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
-	$(AM_V_GEN) $(GIMP_MKENUMS) \
+$(srcdir)/gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
+	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpwidgetsenums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
@@ -317,8 +317,8 @@ gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		$(srcdir)/gimpwidgetsenums.h > xgen-wec \
-	&& cp xgen-wec $(@F) \
+		gimpwidgetsenums.h) > xgen-wec \
+	&& cp xgen-wec $@ \
 	&& rm -f xgen-wec
 
 gimpwidgetsmarshal.h: $(srcdir)/gimpwidgetsmarshal.list

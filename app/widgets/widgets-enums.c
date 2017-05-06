@@ -7,7 +7,7 @@
 #include "widgets-enums.h"
 #include "gimp-intl.h"
 
-/* enumerations from "./widgets-enums.h" */
+/* enumerations from "widgets-enums.h" */
 GType
 gimp_active_color_get_type (void)
 {

@@ -7,7 +7,7 @@
 #include "operations-enums.h"
 #include "gimp-intl.h"
 
-/* enumerations from "./operations-enums.h" */
+/* enumerations from "operations-enums.h" */
 GType
 gimp_layer_color_space_get_type (void)
 {

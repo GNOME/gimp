@@ -112,7 +112,7 @@ gen_sources = xgen-tec
 CLEANFILES = $(gen_sources)
 
 gimpthumb-enums.c: $(srcdir)/gimpthumb-enums.h $(GIMP_MKENUMS)
-	$(GIMP_MKENUMS) \
+	$(AM_V_GEN) $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpthumb-enums.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \

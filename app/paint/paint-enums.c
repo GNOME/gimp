@@ -7,7 +7,7 @@
 #include "paint-enums.h"
 #include "gimp-intl.h"
 
-/* enumerations from "./paint-enums.h" */
+/* enumerations from "paint-enums.h" */
 GType
 gimp_brush_application_mode_get_type (void)
 {

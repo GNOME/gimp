@@ -178,8 +178,8 @@ libappdisplay_a_SOURCES = \
 gen_sources = xgen-dec
 CLEANFILES = $(gen_sources)
 
-display-enums.c: $(srcdir)/display-enums.h $(GIMP_MKENUMS)
-	$(GIMP_MKENUMS) \
+$(srcdir)/display-enums.c: $(srcdir)/display-enums.h $(GIMP_MKENUMS)
+	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"display-enums.h\"\n#include\"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
@@ -188,6 +188,6 @@ display-enums.c: $(srcdir)/display-enums.h $(GIMP_MKENUMS)
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		$(srcdir)/display-enums.h > xgen-dec \
-	&& cp xgen-dec $(@F) \
+		display-enums.h) > xgen-dec \
+	&& cp xgen-dec $@ \
 	&& rm -f xgen-dec

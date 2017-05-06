@@ -52,8 +52,8 @@ libappgegl_a_SOURCES = $(libappgegl_a_built_sources) $(libappgegl_a_sources)
 gen_sources = xgen-tec
 CLEANFILES = $(gen_sources)
 
-gimp-gegl-enums.c: $(srcdir)/gimp-gegl-enums.h $(GIMP_MKENUMS)
-	$(GIMP_MKENUMS) \
+$(srcdir)/gimp-gegl-enums.c: $(srcdir)/gimp-gegl-enums.h $(GIMP_MKENUMS)
+	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"core/core-enums.h\"\n#include \"gimp-gegl-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
@@ -62,6 +62,6 @@ gimp-gegl-enums.c: $(srcdir)/gimp-gegl-enums.h $(GIMP_MKENUMS)
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		$(srcdir)/gimp-gegl-enums.h > xgen-tec \
-	&& cp xgen-tec $(@F) \
+		gimp-gegl-enums.h) > xgen-tec \
+	&& cp xgen-tec $@ \
 	&& rm -f xgen-tec

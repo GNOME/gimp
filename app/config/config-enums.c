@@ -7,7 +7,7 @@
 #include "config-enums.h"
 #include"gimp-intl.h"
 
-/* enumerations from "./config-enums.h" */
+/* enumerations from "config-enums.h" */
 GType
 gimp_canvas_padding_mode_get_type (void)
 {

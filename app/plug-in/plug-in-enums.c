@@ -7,7 +7,7 @@
 #include "plug-in-enums.h"
 #include "gimp-intl.h"
 
-/* enumerations from "./plug-in-enums.h" */
+/* enumerations from "plug-in-enums.h" */
 GType
 gimp_plug_in_image_type_get_type (void)
 {

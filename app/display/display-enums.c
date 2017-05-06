@@ -7,7 +7,7 @@
 #include "display-enums.h"
 #include"gimp-intl.h"
 
-/* enumerations from "./display-enums.h" */
+/* enumerations from "display-enums.h" */
 GType
 gimp_cursor_precision_get_type (void)
 {

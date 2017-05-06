@@ -7,7 +7,7 @@
 #include "gimpconfigenums.h"
 #include "libgimp/libgimp-intl.h"
 
-/* enumerations from "./gimpconfigenums.h" */
+/* enumerations from "gimpconfigenums.h" */
 GType
 gimp_color_management_mode_get_type (void)
 {
