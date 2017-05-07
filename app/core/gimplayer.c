@@ -64,6 +64,7 @@ enum
   BLEND_SPACE_CHANGED,
   COMPOSITE_SPACE_CHANGED,
   COMPOSITE_MODE_CHANGED,
+  EXCLUDES_BACKDROP_CHANGED,
   LOCK_ALPHA_CHANGED,
   MASK_CHANGED,
   APPLY_MASK_CHANGED,
@@ -80,6 +81,7 @@ enum
   PROP_BLEND_SPACE,
   PROP_COMPOSITE_SPACE,
   PROP_COMPOSITE_MODE,
+  PROP_EXCLUDES_BACKDROP,
   PROP_LOCK_ALPHA,
   PROP_MASK,
   PROP_FLOATING_SELECTION
@@ -208,6 +210,9 @@ static void    gimp_layer_srgb_to_pixel         (GimpPickable       *pickable,
                                                  const Babl         *format,
                                                  gpointer            pixel);
 
+static gboolean
+          gimp_layer_real_get_excludes_backdrop (GimpLayer          *layer);
+
 static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
                                                  gint                x,
                                                  gint                y,
@@ -278,6 +283,15 @@ gimp_layer_class_init (GimpLayerClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpLayerClass, composite_mode_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  layer_signals[EXCLUDES_BACKDROP_CHANGED] =
+    g_signal_new ("excludes-backdrop-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLayerClass, excludes_backdrop_changed),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
@@ -386,11 +400,13 @@ gimp_layer_class_init (GimpLayerClass *klass)
   klass->blend_space_changed          = NULL;
   klass->composite_space_changed      = NULL;
   klass->composite_mode_changed       = NULL;
+  klass->excludes_backdrop_changed    = NULL;
   klass->lock_alpha_changed           = NULL;
   klass->mask_changed                 = NULL;
   klass->apply_mask_changed           = NULL;
   klass->edit_mask_changed            = NULL;
   klass->show_mask_changed            = NULL;
+  klass->get_excludes_backdrop        = gimp_layer_real_get_excludes_backdrop;
 
   g_object_class_install_property (object_class, PROP_OPACITY,
                                    g_param_spec_double ("opacity", NULL, NULL,
@@ -426,6 +442,12 @@ gimp_layer_class_init (GimpLayerClass *klass)
                                                       GIMP_LAYER_COMPOSITE_AUTO,
                                                       GIMP_PARAM_READABLE));
 
+  g_object_class_install_property (object_class, PROP_EXCLUDES_BACKDROP,
+                                   g_param_spec_boolean ("excludes-backdrop",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READABLE));
+
   g_object_class_install_property (object_class, PROP_LOCK_ALPHA,
                                    g_param_spec_boolean ("lock-alpha",
                                                          NULL, NULL,
@@ -448,12 +470,13 @@ gimp_layer_class_init (GimpLayerClass *klass)
 static void
 gimp_layer_init (GimpLayer *layer)
 {
-  layer->opacity         = GIMP_OPACITY_OPAQUE;
-  layer->mode            = GIMP_LAYER_MODE_NORMAL_LEGACY;
-  layer->blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
-  layer->composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
-  layer->composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
-  layer->lock_alpha      = FALSE;
+  layer->opacity           = GIMP_OPACITY_OPAQUE;
+  layer->mode              = GIMP_LAYER_MODE_NORMAL_LEGACY;
+  layer->blend_space       = GIMP_LAYER_COLOR_SPACE_AUTO;
+  layer->composite_space   = GIMP_LAYER_COLOR_SPACE_AUTO;
+  layer->composite_mode    = GIMP_LAYER_COMPOSITE_AUTO;
+  layer->excludes_backdrop = FALSE;
+  layer->lock_alpha        = FALSE;
 
   layer->mask       = NULL;
   layer->apply_mask = TRUE;
@@ -519,6 +542,9 @@ gimp_layer_get_property (GObject    *object,
       break;
     case PROP_COMPOSITE_MODE:
       g_value_set_enum (value, gimp_layer_get_composite_mode (layer));
+      break;
+    case PROP_EXCLUDES_BACKDROP:
+      g_value_set_boolean (value, gimp_layer_get_excludes_backdrop (layer));
       break;
     case PROP_LOCK_ALPHA:
       g_value_set_boolean (value, gimp_layer_get_lock_alpha (layer));
@@ -1377,6 +1403,17 @@ gimp_layer_srgb_to_pixel (GimpPickable  *pickable,
   gimp_pickable_srgb_to_pixel (GIMP_PICKABLE (image), color, format, pixel);
 }
 
+static gboolean
+gimp_layer_real_get_excludes_backdrop (GimpLayer *layer)
+{
+  GimpLayerCompositeRegion included_region;
+
+  included_region = gimp_layer_mode_get_included_region (layer->mode,
+                                                         layer->composite_mode);
+
+  return ! (included_region & GIMP_LAYER_COMPOSITE_REGION_DESTINATION);
+}
+
 static void
 gimp_layer_layer_mask_update (GimpDrawable *drawable,
                               gint          x,
@@ -2200,6 +2237,8 @@ gimp_layer_set_mode (GimpLayer     *layer,
         gimp_layer_update_mode_node (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+
+      gimp_layer_update_excludes_backdrop (layer);
     }
 }
 
@@ -2317,6 +2356,8 @@ gimp_layer_set_composite_mode (GimpLayer              *layer,
         gimp_layer_update_mode_node (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+
+      gimp_layer_update_excludes_backdrop (layer);
     }
 }
 
@@ -2326,6 +2367,14 @@ gimp_layer_get_composite_mode (GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_COMPOSITE_AUTO);
 
   return layer->composite_mode;
+}
+
+gboolean
+gimp_layer_get_excludes_backdrop (GimpLayer *layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
+  return layer->excludes_backdrop;
 }
 
 void
@@ -2371,4 +2420,26 @@ gimp_layer_can_lock_alpha (GimpLayer *layer)
     return FALSE;
 
   return TRUE;
+}
+
+
+/*  protected functions  */
+
+void
+gimp_layer_update_excludes_backdrop (GimpLayer *layer)
+{
+  gboolean excludes_backdrop;
+
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  excludes_backdrop =
+    GIMP_LAYER_GET_CLASS (layer)->get_excludes_backdrop (layer);
+
+  if (excludes_backdrop != layer->excludes_backdrop)
+    {
+      layer->excludes_backdrop = excludes_backdrop;
+
+      g_signal_emit (layer, layer_signals[EXCLUDES_BACKDROP_CHANGED], 0);
+      g_object_notify (G_OBJECT (layer), "excludes-backdrop");
+    }
 }

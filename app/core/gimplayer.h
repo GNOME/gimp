@@ -36,17 +36,18 @@ struct _GimpLayer
 {
   GimpDrawable            parent_instance;
 
-  gdouble                 opacity;          /*  layer opacity              */
-  GimpLayerMode           mode;             /*  layer combination mode     */
-  GimpLayerColorSpace     blend_space;      /*  layer blend space          */
-  GimpLayerColorSpace     composite_space;  /*  layer composite space      */
-  GimpLayerCompositeMode  composite_mode;   /*  layer composite mode       */
-  gboolean                lock_alpha;       /*  lock the alpha channel     */
+  gdouble                 opacity;            /*  layer opacity              */
+  GimpLayerMode           mode;               /*  layer combination mode     */
+  GimpLayerColorSpace     blend_space;        /*  layer blend space          */
+  GimpLayerColorSpace     composite_space;    /*  layer composite space      */
+  GimpLayerCompositeMode  composite_mode;     /*  layer composite mode       */
+  gboolean                excludes_backdrop;  /*  layer clips backdrop       */
+  gboolean                lock_alpha;         /*  lock the alpha channel     */
 
-  GimpLayerMask          *mask;             /*  possible layer mask        */
-  gboolean                apply_mask;       /*  controls mask application  */
-  gboolean                edit_mask;        /*  edit mask or layer?        */
-  gboolean                show_mask;        /*  show mask or layer?        */
+  GimpLayerMask          *mask;               /*  possible layer mask        */
+  gboolean                apply_mask;         /*  controls mask application  */
+  gboolean                edit_mask;          /*  edit mask or layer?        */
+  gboolean                show_mask;          /*  show mask or layer?        */
 
   GeglNode               *layer_offset_node;
   GeglNode               *mask_offset_node;
@@ -65,16 +66,21 @@ struct _GimpLayerClass
 {
   GimpDrawableClass  parent_class;
 
-  void (* opacity_changed)         (GimpLayer *layer);
-  void (* mode_changed)            (GimpLayer *layer);
-  void (* blend_space_changed)     (GimpLayer *layer);
-  void (* composite_space_changed) (GimpLayer *layer);
-  void (* composite_mode_changed)  (GimpLayer *layer);
-  void (* lock_alpha_changed)      (GimpLayer *layer);
-  void (* mask_changed)            (GimpLayer *layer);
-  void (* apply_mask_changed)      (GimpLayer *layer);
-  void (* edit_mask_changed)       (GimpLayer *layer);
-  void (* show_mask_changed)       (GimpLayer *layer);
+  /*  signals  */
+  void     (* opacity_changed)           (GimpLayer *layer);
+  void     (* mode_changed)              (GimpLayer *layer);
+  void     (* blend_space_changed)       (GimpLayer *layer);
+  void     (* composite_space_changed)   (GimpLayer *layer);
+  void     (* composite_mode_changed)    (GimpLayer *layer);
+  void     (* excludes_backdrop_changed) (GimpLayer *layer);
+  void     (* lock_alpha_changed)        (GimpLayer *layer);
+  void     (* mask_changed)              (GimpLayer *layer);
+  void     (* apply_mask_changed)        (GimpLayer *layer);
+  void     (* edit_mask_changed)         (GimpLayer *layer);
+  void     (* show_mask_changed)         (GimpLayer *layer);
+
+  /*  virtual functions  */
+  gboolean (* get_excludes_backdrop)     (GimpLayer *layer);
 };
 
 
@@ -151,11 +157,18 @@ void            gimp_layer_set_composite_mode  (GimpLayer            *layer,
 GimpLayerCompositeMode
                 gimp_layer_get_composite_mode  (GimpLayer            *layer);
 
+gboolean      gimp_layer_get_excludes_backdrop (GimpLayer            *layer);
+
 void            gimp_layer_set_lock_alpha      (GimpLayer            *layer,
                                                 gboolean              lock_alpha,
                                                 gboolean              push_undo);
 gboolean        gimp_layer_get_lock_alpha      (GimpLayer            *layer);
 gboolean        gimp_layer_can_lock_alpha      (GimpLayer            *layer);
+
+
+/*  protected  */
+
+void       gimp_layer_update_excludes_backdrop (GimpLayer            *layer);
 
 
 #endif /* __GIMP_LAYER_H__ */
