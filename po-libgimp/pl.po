@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 21:21+0200\n"
-"PO-Revision-Date: 2017-03-26 21:22+0200\n"
+"POT-Creation-Date: 2017-05-07 10:20+0200\n"
+"PO-Revision-Date: 2017-05-07 10:22+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1026,7 +1026,7 @@ msgstr "Wewnętrzna procedura programu GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:1330
 msgctxt "pdb-proc-type"
-msgid "GIMP Plug-in"
+msgid "GIMP Plug-In"
 msgstr "Wtyczka programu GIMP"
 
 #: ../libgimpbase/gimpbaseenums.c:1331
