@@ -84,8 +84,8 @@ static gboolean gimp_operation_layer_mode_process      (GeglOperation          *
                                                         const GeglRectangle    *result,
                                                         gint                    level);
 
-static GimpLayerModeAffectMask
-        gimp_operation_layer_mode_real_get_affect_mask (GimpOperationLayerMode *layer_mode);
+static GimpLayerCompositeRegion
+    gimp_operation_layer_mode_real_get_affected_region (GimpOperationLayerMode *layer_mode);
 
 static inline void composite_func_src_atop_core     (gfloat *in,
                                                      gfloat *layer,
@@ -196,7 +196,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
   operation_class->process       = gimp_operation_layer_mode_process;
   point_composer3_class->process = gimp_operation_layer_mode_process_pixels;
 
-  klass->get_affect_mask = gimp_operation_layer_mode_real_get_affect_mask;
+  klass->get_affected_region     = gimp_operation_layer_mode_real_get_affected_region;
 
   g_object_class_install_property (object_class, PROP_LAYER_MODE,
                                    g_param_spec_enum ("layer-mode",
@@ -410,14 +410,15 @@ gimp_operation_layer_mode_process (GeglOperation        *operation,
           (point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
            point->composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP))
         {
-          GimpLayerModeAffectMask affect_mask;
+          GimpLayerCompositeRegion affected_region;
 
-          affect_mask = gimp_operation_layer_mode_get_affect_mask (point);
+          affected_region =
+            gimp_operation_layer_mode_get_affected_region (point);
 
           /* ... and the op doesn't otherwise affect 'aux', or changes its
            * alpha ...
            */
-          if (! (affect_mask & GIMP_LAYER_MODE_AFFECT_SRC) &&
+          if (! (affected_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE) &&
               point->opacity == 1.0                        &&
               ! gegl_operation_context_get_object (context, "aux2"))
             {
@@ -447,12 +448,13 @@ gimp_operation_layer_mode_process (GeglOperation        *operation,
       if (point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
           point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
         {
-          GimpLayerModeAffectMask affect_mask;
+          GimpLayerCompositeRegion affected_region;
 
-          affect_mask = gimp_operation_layer_mode_get_affect_mask (point);
+          affected_region =
+            gimp_operation_layer_mode_get_affected_region (point);
 
           /* ... and the op doesn't otherwise affect 'input' ... */
-          if (! (affect_mask & GIMP_LAYER_MODE_AFFECT_DST))
+          if (! (affected_region & GIMP_LAYER_COMPOSITE_REGION_DESTINATION))
             {
               /* pass 'input' directly as output; */
               gegl_operation_context_set_object (context, "output", input);
@@ -494,23 +496,23 @@ gimp_operation_layer_mode_process (GeglOperation        *operation,
                                                        level);
 }
 
-static GimpLayerModeAffectMask
-gimp_operation_layer_mode_real_get_affect_mask (GimpOperationLayerMode *layer_mode)
+static GimpLayerCompositeRegion
+gimp_operation_layer_mode_real_get_affected_region (GimpOperationLayerMode *layer_mode)
 {
   /* most modes only affect the overlapping regions. */
-  return GIMP_LAYER_MODE_AFFECT_NONE;
+  return GIMP_LAYER_COMPOSITE_REGION_INTERSECTION;
 }
 
 
 /* public functions */
 
-GimpLayerModeAffectMask
-gimp_operation_layer_mode_get_affect_mask (GimpOperationLayerMode *layer_mode)
+GimpLayerCompositeRegion
+gimp_operation_layer_mode_get_affected_region (GimpOperationLayerMode *layer_mode)
 {
   g_return_val_if_fail (GIMP_IS_OPERATION_LAYER_MODE (layer_mode),
-                        GIMP_LAYER_MODE_AFFECT_NONE);
+                        GIMP_LAYER_COMPOSITE_REGION_INTERSECTION);
 
-  return GIMP_OPERATION_LAYER_MODE_GET_CLASS (layer_mode)->get_affect_mask (layer_mode);
+  return GIMP_OPERATION_LAYER_MODE_GET_CLASS (layer_mode)->get_affected_region (layer_mode);
 }
 
 

@@ -28,7 +28,7 @@
 #include "gimpoperationantierase.h"
 
 
-static GimpLayerModeAffectMask gimp_operation_anti_erase_get_affect_mask (GimpOperationLayerMode *layer_mode);
+static GimpLayerCompositeRegion gimp_operation_anti_erase_get_affected_region (GimpOperationLayerMode *layer_mode);
 
 
 G_DEFINE_TYPE (GimpOperationAntiErase, gimp_operation_anti_erase,
@@ -53,7 +53,7 @@ gimp_operation_anti_erase_class_init (GimpOperationAntiEraseClass *klass)
 
   point_class->process = gimp_operation_anti_erase_process;
 
-  layer_mode_class->get_affect_mask = gimp_operation_anti_erase_get_affect_mask;
+  layer_mode_class->get_affected_region = gimp_operation_anti_erase_get_affected_region;
 }
 
 static void
@@ -178,8 +178,8 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
   return TRUE;
 }
 
-static GimpLayerModeAffectMask
-gimp_operation_anti_erase_get_affect_mask (GimpOperationLayerMode *layer_mode)
+static GimpLayerCompositeRegion
+gimp_operation_anti_erase_get_affected_region (GimpOperationLayerMode *layer_mode)
 {
-  return GIMP_LAYER_MODE_AFFECT_SRC;
+  return GIMP_LAYER_COMPOSITE_REGION_SOURCE;
 }

@@ -41,11 +41,11 @@ struct _GimpOperationLayerModeClass
 
   /*  virtual functions  */
 
-  /* Returns the set of inputs that the layer mode affects, apart
-   * from the overlapping regions.  Returns an empty set by default,
-   * which is suitable for almost all layer modes.
+  /* Returns the composite region (any combination of the layer and the
+   * backdrop) that the layer mode affects.  Most modes only affect the
+   * overlapping region, which is what the function returns by default.
    */
-  GimpLayerModeAffectMask (* get_affect_mask) (GimpOperationLayerMode *layer_mode);
+  GimpLayerCompositeRegion (* get_affected_region) (GimpOperationLayerMode *layer_mode);
 };
 
 
@@ -62,9 +62,9 @@ struct _GimpOperationLayerMode
 };
 
 
-GType                   gimp_operation_layer_mode_get_type        (void) G_GNUC_CONST;
+GType                    gimp_operation_layer_mode_get_type            (void) G_GNUC_CONST;
 
-GimpLayerModeAffectMask gimp_operation_layer_mode_get_affect_mask (GimpOperationLayerMode *layer_mode);
+GimpLayerCompositeRegion gimp_operation_layer_mode_get_affected_region (GimpOperationLayerMode *layer_mode);
 
 gboolean
 gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,

@@ -167,10 +167,12 @@ typedef enum  /*< pdb-skip >*/
 
 typedef enum  /*< pdb-skip, skip >*/
 {
-  GIMP_LAYER_MODE_AFFECT_NONE = 0,
-  GIMP_LAYER_MODE_AFFECT_DST  = 1 << 0,
-  GIMP_LAYER_MODE_AFFECT_SRC  = 1 << 1
-} GimpLayerModeAffectMask;
+  GIMP_LAYER_COMPOSITE_REGION_INTERSECTION = 0,
+  GIMP_LAYER_COMPOSITE_REGION_DESTINATION  = 1 << 0,
+  GIMP_LAYER_COMPOSITE_REGION_SOURCE       = 1 << 1,
+  GIMP_LAYER_COMPOSITE_REGION_UNION        = (GIMP_LAYER_COMPOSITE_REGION_DESTINATION |
+                                              GIMP_LAYER_COMPOSITE_REGION_SOURCE),
+} GimpLayerCompositeRegion;
 
 typedef enum  /*< pdb-skip, skip >*/
 {

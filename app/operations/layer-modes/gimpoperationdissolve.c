@@ -32,7 +32,7 @@
 #define RANDOM_TABLE_SIZE 4096
 
 
-static GimpLayerModeAffectMask gimp_operation_dissolve_get_affect_mask (GimpOperationLayerMode *layer_mode);
+static GimpLayerCompositeRegion gimp_operation_dissolve_get_affected_region (GimpOperationLayerMode *layer_mode);
 
 
 G_DEFINE_TYPE (GimpOperationDissolve, gimp_operation_dissolve,
@@ -63,7 +63,7 @@ gimp_operation_dissolve_class_init (GimpOperationDissolveClass *klass)
 
   point_composer_class->process = gimp_operation_dissolve_process;
 
-  layer_mode_class->get_affect_mask = gimp_operation_dissolve_get_affect_mask;
+  layer_mode_class->get_affected_region = gimp_operation_dissolve_get_affected_region;
 
   /* generate a table of random seeds */
   gr = g_rand_new_with_seed (314159265);
@@ -159,8 +159,8 @@ gimp_operation_dissolve_process (GeglOperation       *op,
   return TRUE;
 }
 
-static GimpLayerModeAffectMask
-gimp_operation_dissolve_get_affect_mask (GimpOperationLayerMode *layer_mode)
+GimpLayerCompositeRegion
+gimp_operation_dissolve_get_affected_region (GimpOperationLayerMode *layer_mode)
 {
-  return GIMP_LAYER_MODE_AFFECT_SRC;
+  return GIMP_LAYER_COMPOSITE_REGION_SOURCE;
 }

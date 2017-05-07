@@ -27,7 +27,7 @@
 #include "gimpoperationreplace.h"
 
 
-static GimpLayerModeAffectMask gimp_operation_replace_get_affect_mask (GimpOperationLayerMode *layer_mode);
+static GimpLayerCompositeRegion gimp_operation_replace_get_affected_region (GimpOperationLayerMode *layer_mode);
 
 
 G_DEFINE_TYPE (GimpOperationReplace, gimp_operation_replace,
@@ -52,7 +52,7 @@ gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
 
   point_class->process = gimp_operation_replace_process;
 
-  layer_mode_class->get_affect_mask = gimp_operation_replace_get_affect_mask;
+  layer_mode_class->get_affected_region = gimp_operation_replace_get_affected_region;
 }
 
 static void
@@ -195,17 +195,17 @@ gimp_operation_replace_process (GeglOperation       *op,
   return TRUE;
 }
 
-static GimpLayerModeAffectMask
-gimp_operation_replace_get_affect_mask (GimpOperationLayerMode *layer_mode)
+static GimpLayerCompositeRegion
+gimp_operation_replace_get_affected_region (GimpOperationLayerMode *layer_mode)
 {
-  GimpLayerModeAffectMask affect_mask = GIMP_LAYER_MODE_AFFECT_NONE;
+  GimpLayerCompositeRegion affected_region = GIMP_LAYER_COMPOSITE_REGION_INTERSECTION;
 
   if (layer_mode->opacity != 0.0)
-    affect_mask |= GIMP_LAYER_MODE_AFFECT_DST;
+    affected_region |= GIMP_LAYER_COMPOSITE_REGION_DESTINATION;
 
-  /* if opacity != 1.0, or we have a mask, thne we also affect SRC, but this is
-   * considered the case anyway, so no need for special handling.
+  /* if opacity != 1.0, or we have a mask, then we also affect SOURCE, but this
+   * is considered the case anyway, so no need for special handling.
    */
 
-  return affect_mask;
+  return affected_region;
 }
