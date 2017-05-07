@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-13 08:28+0100\n"
-"PO-Revision-Date: 2017-03-13 08:48+0100\n"
+"POT-Creation-Date: 2017-05-07 21:21+0200\n"
+"PO-Revision-Date: 2017-05-07 21:22+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -2177,7 +2177,7 @@ msgstr ""
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:669
+#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:678
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
@@ -2187,7 +2187,7 @@ msgstr ""
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-darktable/file-darktable.c:302
+#: ../plug-ins/file-darktable/file-darktable.c:305
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:664
 #: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
@@ -2269,7 +2269,7 @@ msgstr ""
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:690
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1295
+#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1304
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:534
 #: ../plug-ins/common/file-pcx.c:662 ../plug-ins/common/file-pix.c:536
 #: ../plug-ins/common/file-png.c:1553 ../plug-ins/common/file-pnm.c:1245
@@ -2417,8 +2417,8 @@ msgstr "Errore in file pennello di GIMP '%s'"
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: ../plug-ins/common/file-gbr.c:476 ../plug-ins/common/file-gih.c:499
-#: ../plug-ins/common/file-gih.c:1197
+#: ../plug-ins/common/file-gbr.c:476 ../plug-ins/common/file-gih.c:508
+#: ../plug-ins/common/file-gih.c:1206
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Senzanome"
@@ -2427,7 +2427,7 @@ msgstr "Senzanome"
 msgid "Brush"
 msgstr "Pennello"
 
-#: ../plug-ins/common/file-gbr.c:808 ../plug-ins/common/file-gih.c:923
+#: ../plug-ins/common/file-gbr.c:808 ../plug-ins/common/file-gih.c:932
 #: ../plug-ins/common/file-pat.c:623 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Descrizione:"
@@ -2579,55 +2579,55 @@ msgstr "Il commento predefinito è limitato a %d caratteri."
 msgid "GIMP brush (animated)"
 msgstr "Pennello Gimp (animato)"
 
-#: ../plug-ins/common/file-gih.c:575
+#: ../plug-ins/common/file-gih.c:584
 msgid "GIMP brush file appears to be corrupted."
 msgstr "Il file pennello di GIMP sembra rovinato."
 
-#: ../plug-ins/common/file-gih.c:905
+#: ../plug-ins/common/file-gih.c:914
 msgid "Brush Pipe"
 msgstr "Pennello animato"
 
-#: ../plug-ins/common/file-gih.c:938
+#: ../plug-ins/common/file-gih.c:947
 msgid "Spacing (percent):"
 msgstr "Spaziatura (percentuale):"
 
-#: ../plug-ins/common/file-gih.c:993
+#: ../plug-ins/common/file-gih.c:1002
 msgid "Pixels"
 msgstr "Pixel"
 
-#: ../plug-ins/common/file-gih.c:998
+#: ../plug-ins/common/file-gih.c:1007
 msgid "Cell size:"
 msgstr "Dimensione cella:"
 
-#: ../plug-ins/common/file-gih.c:1011
+#: ../plug-ins/common/file-gih.c:1020
 msgid "Number of cells:"
 msgstr "Numero di celle:"
 
-#: ../plug-ins/common/file-gih.c:1036
+#: ../plug-ins/common/file-gih.c:1045
 msgid " Rows of "
 msgstr " Righe di "
 
-#: ../plug-ins/common/file-gih.c:1048
+#: ../plug-ins/common/file-gih.c:1057
 msgid " Columns on each layer"
 msgstr " Colonne su ogni livello"
 
-#: ../plug-ins/common/file-gih.c:1052
+#: ../plug-ins/common/file-gih.c:1061
 msgid " (Width Mismatch!) "
 msgstr " (larghezza sbagliata!) "
 
-#: ../plug-ins/common/file-gih.c:1056
+#: ../plug-ins/common/file-gih.c:1065
 msgid " (Height Mismatch!) "
 msgstr " (altezza sbagliata!) "
 
-#: ../plug-ins/common/file-gih.c:1061
+#: ../plug-ins/common/file-gih.c:1070
 msgid "Display as:"
 msgstr "Mostra come:"
 
-#: ../plug-ins/common/file-gih.c:1072
+#: ../plug-ins/common/file-gih.c:1081
 msgid "Dimension:"
 msgstr "Dimensione:"
 
-#: ../plug-ins/common/file-gih.c:1148
+#: ../plug-ins/common/file-gih.c:1157
 msgid "Ranks:"
 msgstr "Ranghi:"
 
@@ -5244,7 +5244,7 @@ msgid "Display information about plug-ins"
 msgstr "Mostra le informazioni sui plug-in"
 
 #: ../plug-ins/common/plugin-browser.c:144
-msgid "_Plug-In Browser"
+msgid "_Plug-in Browser"
 msgstr "Navigatore _plug-in"
 
 #: ../plug-ins/common/plugin-browser.c:363
@@ -5274,7 +5274,7 @@ msgid "No matches"
 msgstr "Nessun riscontro"
 
 #: ../plug-ins/common/plugin-browser.c:546
-msgid "Plug-In Browser"
+msgid "Plug-in Browser"
 msgstr "Navigatore plug-in"
 
 #: ../plug-ins/common/plugin-browser.c:589
@@ -6580,7 +6580,7 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
 
-#: ../plug-ins/file-darktable/file-darktable.c:371
+#: ../plug-ins/file-darktable/file-darktable.c:374
 #: ../plug-ins/file-ico/ico-load.c:742 ../plug-ins/file-jpeg/jpeg-load.c:503
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
 #, c-format
@@ -9960,7 +9960,7 @@ msgid "Open IFS Fractal file"
 msgstr "Apri file IFS frattale"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-msgid "Image Map Plug-In"
+msgid "Image Map Plug-in"
 msgstr "Plug-in mappa immagine"
 
 #: ../plug-ins/imagemap/imap_about.c:46
