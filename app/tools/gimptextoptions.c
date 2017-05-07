@@ -408,8 +408,8 @@ gimp_text_options_reset (GimpConfig *config)
   gimp_config_reset_property (object, "foreground");
 
   /* text options */
-  gimp_config_reset_property (object, "font-size-unit");
   gimp_config_reset_property (object, "font-size");
+  gimp_config_reset_property (object, "font-size-unit");
   gimp_config_reset_property (object, "antialias");
   gimp_config_reset_property (object, "hint-style");
   gimp_config_reset_property (object, "language");
