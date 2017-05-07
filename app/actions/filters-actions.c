@@ -292,6 +292,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:high-pass",
     GIMP_HELP_FILTER_HIGH_PASS },
 
+  { "filters-hue-chroma", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Hue-_Chroma..."), NULL, NULL,
+    "gegl:hue-chroma",
+    GIMP_HELP_FILTER_HUE_CHROMA },
+
   { "filters-illusion", GIMP_ICON_GEGL,
     NC_("filters-action", "_Illusion..."), NULL, NULL,
     "gegl:illusion",
@@ -748,6 +753,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gegl-graph",              writable);
   SET_SENSITIVE ("filters-grid",                    writable);
   SET_SENSITIVE ("filters-high-pass",               writable);
+  SET_SENSITIVE ("filters-hue-chroma",              writable);
   SET_SENSITIVE ("filters-illusion",                writable);
   SET_SENSITIVE ("filters-image-gradient",          writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);

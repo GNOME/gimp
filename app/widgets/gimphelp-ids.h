@@ -371,6 +371,7 @@
 #define GIMP_HELP_FILTER_GEGL_GRAPH               "gimp-filter-gegl"
 #define GIMP_HELP_FILTER_GAUSSIAN_GRID            "gimp-filter-grid"
 #define GIMP_HELP_FILTER_HIGH_PASS                "gimp-filter-high-pass"
+#define GIMP_HELP_FILTER_HUE_CHROMA               "gimp-filter-hue-chroma"
 #define GIMP_HELP_FILTER_ILLUSION                 "gimp-filter-illusion"
 #define GIMP_HELP_FILTER_IMAGE_GRADIENT           "gimp-filter-image-gradient"
 #define GIMP_HELP_FILTER_KALEIDOSCOPE             "gimp-filter-kaleidoscope"

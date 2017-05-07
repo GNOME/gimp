@@ -565,6 +565,7 @@ sanity_check_gegl_ops (void)
     "gegl:gegl",
     "gegl:grid",
     "gegl:high-pass",
+    "gegl:hue-chroma",
     "gegl:illusion",
     "gegl:image-gradient",
     "gegl:introspect",
