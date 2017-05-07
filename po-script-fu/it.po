@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-29 17:26+0200\n"
-"PO-Revision-Date: 2015-06-29 17:27+0200\n"
+"POT-Creation-Date: 2017-05-07 23:22+0200\n"
+"PO-Revision-Date: 2017-05-07 23:24+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "Language: it\n"
@@ -101,6 +101,20 @@ msgstr ""
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
+#: ../plug-ins/script-fu/script-fu-console.c:132
+#: ../plug-ins/script-fu/script-fu-console.c:293
+msgid "_Save"
+msgstr "_Salva"
+
+#: ../plug-ins/script-fu/script-fu-console.c:133
+msgid "C_lear"
+msgstr "Cance_lla"
+
+#: ../plug-ins/script-fu/script-fu-console.c:134
+#: ../plug-ins/script-fu/script-fu-console.c:371
+msgid "_Close"
+msgstr "_Chiudi"
+
 #: ../plug-ins/script-fu/script-fu-console.c:190
 msgid "Welcome to TinyScheme"
 msgstr "Benvenuti a TinyScheme"
@@ -117,14 +131,24 @@ msgstr "_Scorri..."
 msgid "Save Script-Fu Console Output"
 msgstr "Salva il risultato della console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:335
+#: ../plug-ins/script-fu/script-fu-console.c:292
+#: ../plug-ins/script-fu/script-fu-interface.c:236
+#: ../plug-ins/script-fu/script-fu-server.c:834
+msgid "_Cancel"
+msgstr "A_nnulla"
+
+#: ../plug-ins/script-fu/script-fu-console.c:337
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:364
+#: ../plug-ins/script-fu/script-fu-console.c:366
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:370
+msgid "_Apply"
+msgstr "_Applica"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
@@ -132,61 +156,69 @@ msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
 "interattive"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:200
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu non può elaborare due o più script contemporaneamente."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Lo script \"%s\" è già in esecuzione."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:226
+#: ../plug-ins/script-fu/script-fu-interface.c:228
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:235
+msgid "_Reset"
+msgstr "_Reimposta"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:237
+msgid "_OK"
+msgstr "_OK"
+
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:289
+#: ../plug-ins/script-fu/script-fu-interface.c:291
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:338
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:446
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:451
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:464
 msgid "Script-Fu Font Selection"
 msgstr "Selezione carattere Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "Selezione tavolozza Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Pattern Selection"
 msgstr "Selezione motivo Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:490
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:499
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:857
+#: ../plug-ins/script-fu/script-fu-interface.c:868
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Errore durante l'esecuzione di %s:"
@@ -195,32 +227,32 @@ msgstr "Errore durante l'esecuzione di %s:"
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Troppo pochi argomenti per la chiamata \"script-fu-register\""
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:648
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Errore durante il caricamento di: %s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:827
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
 msgstr "Opzioni server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "_Start Server"
 msgstr "Avvia il _server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:865
+#: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
 msgstr "Ascolta sull'IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:872
+#: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
 msgstr "Porta del server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:878
+#: ../plug-ins/script-fu/script-fu-server.c:881
 msgid "Server logfile:"
 msgstr "File di log del server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:891
+#: ../plug-ins/script-fu/script-fu-server.c:894
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -570,11 +602,11 @@ msgstr "Macchie"
 msgid "Darken only"
 msgstr "Solo toni scuri"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "Difference Clouds..."
 msgstr "Nuvole a differenza..."
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Disturbo in tinta unita applicato con modalità livello differenza"
 
@@ -1080,11 +1112,11 @@ msgstr "Seppia"
 msgid "Mottle"
 msgstr "Chiazze"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
 msgstr "Cartella per il file di uscita"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+#: ../plug-ins/script-fu/scripts/palette-export.scm:227
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
@@ -1092,11 +1124,11 @@ msgstr ""
 "Il nome del file da creare (se un file con questo nome esiste già, "
 "quest'ultimo verrà sovrascritto)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
 msgstr "Il nome inserito non è adatto ad essere usato per un file."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+#: ../plug-ins/script-fu/scripts/palette-export.scm:237
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1104,7 +1136,7 @@ msgstr ""
 "Tutti i caratteri nel nome sono spazi o caratteri che non possono apparire "
 "nei nomi dei file."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+#: ../plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1113,15 +1145,15 @@ msgstr ""
 "colore uguale al nome della classe e il colore stesso come l'attributo di "
 "colore"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+#: ../plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Esporta la tavolozza attiva come un dizionario PHP (nome => colore)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+#: ../plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Esporta la tavolozza attiva come un dizionario Python (nome: colore)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+#: ../plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1129,7 +1161,7 @@ msgstr ""
 "Scrive tutti i colori di una tavolozza in un file di testo, un valore "
 "esadecimale per riga (senza nomi)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:408
+#: ../plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgstr ""
 "Esporta la tavolozza attiva come una java.util.Hashtable<stringa, colore>"
@@ -1234,7 +1266,9 @@ msgstr "_Ondine..."
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:68
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
-msgstr "Crea un'immagine multilivello aggiungendo un effetto acqua increspata al livello corrente"
+msgstr ""
+"Crea un'immagine multilivello aggiungendo un effetto acqua increspata al "
+"livello corrente"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:75
 msgid "Rippling strength"
