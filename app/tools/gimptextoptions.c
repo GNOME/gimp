@@ -142,7 +142,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                            "font-size",
                            _("Font size"),
                            _("Font size"),
-                           0.0, 8192.0, 18.0,
+                           0.0, 8192.0, 62.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
