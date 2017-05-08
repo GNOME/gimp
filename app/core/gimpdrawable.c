@@ -400,21 +400,16 @@ gimp_drawable_visibility_changed (GimpFilter *filter)
 
   if (node)
     {
-      GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
       GeglNode *output = gegl_node_get_output_proxy (node, "output");
 
       if (gimp_filter_get_visible (filter))
         {
-          gegl_node_connect_to (input,                        "output",
-                                drawable->private->mode_node, "input");
           gegl_node_connect_to (drawable->private->mode_node, "output",
                                 output,                       "input");
         }
       else
         {
-          gegl_node_disconnect (drawable->private->mode_node, "input");
-
-          /* The rest handled by GimpFilter */
+          /* Handled by GimpFilter */
         }
     }
 
@@ -441,10 +436,11 @@ gimp_drawable_get_node (GimpFilter *filter)
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
+  gegl_node_connect_to (input,                        "output",
+                        drawable->private->mode_node, "input");
+
   if (gimp_filter_get_visible (filter))
     {
-      gegl_node_connect_to (input,                        "output",
-                            drawable->private->mode_node, "input");
       gegl_node_connect_to (drawable->private->mode_node, "output",
                             output,                       "input");
     }
