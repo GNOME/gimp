@@ -35,7 +35,7 @@
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
-#include "gimpdrawablestack.h"
+#include "gimplayerstack.h"
 #include "gimppickable.h"
 #include "gimpprojectable.h"
 #include "gimpprojection.h"
@@ -261,7 +261,7 @@ gimp_group_layer_init (GimpGroupLayer *group)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (group);
 
-  private->children = gimp_drawable_stack_new (GIMP_TYPE_LAYER);
+  private->children = gimp_layer_stack_new (GIMP_TYPE_LAYER);
   private->expanded = TRUE;
 
   g_signal_connect (private->children, "add",

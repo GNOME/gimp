@@ -64,6 +64,7 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-selection.h"
 #include "gimplayermask.h"
+#include "gimplayerstack.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
@@ -728,7 +729,7 @@ gimp_image_init (GimpImage *image)
   private->sample_points       = NULL;
 
   private->layers              = gimp_item_tree_new (image,
-                                                     GIMP_TYPE_DRAWABLE_STACK,
+                                                     GIMP_TYPE_LAYER_STACK,
                                                      GIMP_TYPE_LAYER);
   private->channels            = gimp_item_tree_new (image,
                                                      GIMP_TYPE_DRAWABLE_STACK,

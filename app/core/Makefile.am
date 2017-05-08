@@ -308,6 +308,8 @@ libappcore_a_sources = \
 	gimplayermaskundo.h			\
 	gimplayerpropundo.c			\
 	gimplayerpropundo.h			\
+	gimplayerstack.c			\
+	gimplayerstack.h			\
 	gimplayerundo.c				\
 	gimplayerundo.h				\
 	gimplist.c				\

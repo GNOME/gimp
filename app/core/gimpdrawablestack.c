@@ -49,11 +49,6 @@ static void   gimp_drawable_stack_reorder          (GimpContainer     *container
                                                     GimpObject        *object,
                                                     gint               new_index);
 
-static void   gimp_drawable_stack_update           (GimpDrawableStack *stack,
-                                                    gint               x,
-                                                    gint               y,
-                                                    gint               width,
-                                                    gint               height);
 static void   gimp_drawable_stack_drawable_update  (GimpItem          *item,
                                                     gint               x,
                                                     gint               y,
@@ -173,18 +168,23 @@ gimp_drawable_stack_new (GType drawable_type)
 }
 
 
-/*  private functions  */
+/*  protected functions  */
 
-static void
+void
 gimp_drawable_stack_update (GimpDrawableStack *stack,
                             gint               x,
                             gint               y,
                             gint               width,
                             gint               height)
 {
+  g_return_if_fail (GIMP_IS_DRAWABLE_STACK (stack));
+
   g_signal_emit (stack, stack_signals[UPDATE], 0,
                  x, y, width, height);
 }
+
+
+/*  private functions  */
 
 static void
 gimp_drawable_stack_drawable_update (GimpItem          *item,

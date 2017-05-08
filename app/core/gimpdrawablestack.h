@@ -51,7 +51,16 @@ struct _GimpDrawableStackClass
 
 
 GType           gimp_drawable_stack_get_type  (void) G_GNUC_CONST;
-GimpContainer * gimp_drawable_stack_new       (GType drawable_type);
+GimpContainer * gimp_drawable_stack_new       (GType              drawable_type);
+
+
+/*  protected  */
+
+void            gimp_drawable_stack_update    (GimpDrawableStack *stack,
+                                               gint               x,
+                                               gint               y,
+                                               gint               width,
+                                               gint               height);
 
 
 #endif  /*  __GIMP_DRAWABLE_STACK_H__  */

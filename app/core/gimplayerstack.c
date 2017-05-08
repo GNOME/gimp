@@ -1,0 +1,233 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ *
+ * gimplayerstack.c
+ * Copyright (C) 2017 Ell
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gegl.h>
+
+#include "core-types.h"
+
+#include "gimplayer.h"
+#include "gimplayerstack.h"
+
+
+/*  local function prototypes  */
+
+static void   gimp_layer_stack_constructed             (GObject       *object);
+
+static void   gimp_layer_stack_add                     (GimpContainer *container,
+                                                        GimpObject    *object);
+static void   gimp_layer_stack_remove                  (GimpContainer *container,
+                                                        GimpObject    *object);
+static void   gimp_layer_stack_reorder                 (GimpContainer *container,
+                                                        GimpObject    *object,
+                                                        gint           new_index);
+
+static void   gimp_layer_stack_layer_visible           (GimpLayer      *layer,
+                                                        GimpLayerStack *stack);
+static void   gimp_layer_stack_layer_excludes_backdrop (GimpLayer      *layer,
+                                                        GimpLayerStack *stack);
+
+static void   gimp_layer_stack_update_backdrop         (GimpLayerStack *stack,
+                                                        GimpLayer      *layer,
+                                                        gboolean        ignore_visible,
+                                                        gboolean        ignore_excludes_backdrop);
+static void   gimp_layer_stack_update_range            (GimpLayerStack *stack,
+                                                        gint            first,
+                                                        gint            last);
+
+
+G_DEFINE_TYPE (GimpLayerStack, gimp_layer_stack, GIMP_TYPE_DRAWABLE_STACK)
+
+#define parent_class gimp_layer_stack_parent_class
+
+
+static void
+gimp_layer_stack_class_init (GimpLayerStackClass *klass)
+{
+  GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
+  GimpContainerClass *container_class = GIMP_CONTAINER_CLASS (klass);
+
+  object_class->constructed = gimp_layer_stack_constructed;
+
+  container_class->add      = gimp_layer_stack_add;
+  container_class->remove   = gimp_layer_stack_remove;
+  container_class->reorder  = gimp_layer_stack_reorder;
+}
+
+static void
+gimp_layer_stack_init (GimpLayerStack *stack)
+{
+}
+
+static void
+gimp_layer_stack_constructed (GObject *object)
+{
+  GimpContainer *container = GIMP_CONTAINER (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (g_type_is_a (gimp_container_get_children_type (container),
+                         GIMP_TYPE_LAYER));
+
+  gimp_container_add_handler (container, "visibility-changed",
+                              G_CALLBACK (gimp_layer_stack_layer_visible),
+                              container);
+  gimp_container_add_handler (container, "excludes-backdrop-changed",
+                              G_CALLBACK (gimp_layer_stack_layer_excludes_backdrop),
+                              container);
+}
+
+static void
+gimp_layer_stack_add (GimpContainer *container,
+                      GimpObject    *object)
+{
+  GimpLayerStack *stack = GIMP_LAYER_STACK (container);
+
+  GIMP_CONTAINER_CLASS (parent_class)->add (container, object);
+
+  gimp_layer_stack_update_backdrop (stack, GIMP_LAYER (object), FALSE, FALSE);
+}
+
+static void
+gimp_layer_stack_remove (GimpContainer *container,
+                         GimpObject    *object)
+{
+  GimpLayerStack *stack = GIMP_LAYER_STACK (container);
+
+  gimp_layer_stack_update_backdrop (stack, GIMP_LAYER (object), FALSE, FALSE);
+
+  GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
+}
+
+static void
+gimp_layer_stack_reorder (GimpContainer *container,
+                          GimpObject    *object,
+                          gint           new_index)
+{
+  GimpLayerStack *stack = GIMP_LAYER_STACK (container);
+  gboolean        excludes_backdrop;
+  gint            index;
+
+  excludes_backdrop = gimp_item_get_visible (GIMP_ITEM (object)) &&
+                      gimp_layer_get_excludes_backdrop (GIMP_LAYER (object));
+
+  if (excludes_backdrop)
+    index = gimp_container_get_child_index (container, object);
+
+  GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
+
+  if (excludes_backdrop)
+    gimp_layer_stack_update_range (stack, index, new_index);
+}
+
+
+/*  public functions  */
+
+GimpContainer *
+gimp_layer_stack_new (GType layer_type)
+{
+  g_return_val_if_fail (g_type_is_a (layer_type, GIMP_TYPE_LAYER), NULL);
+
+  return g_object_new (GIMP_TYPE_LAYER_STACK,
+                       "name",          g_type_name (layer_type),
+                       "children-type", layer_type,
+                       "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                       NULL);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_layer_stack_layer_visible (GimpLayer      *layer,
+                                GimpLayerStack *stack)
+{
+  gimp_layer_stack_update_backdrop (stack, layer, TRUE, FALSE);
+}
+
+static void
+gimp_layer_stack_layer_excludes_backdrop (GimpLayer      *layer,
+                                          GimpLayerStack *stack)
+{
+  gimp_layer_stack_update_backdrop (stack, layer, FALSE, TRUE);
+}
+
+static void
+gimp_layer_stack_update_backdrop (GimpLayerStack *stack,
+                                  GimpLayer      *layer,
+                                  gboolean        ignore_visible,
+                                  gboolean        ignore_excludes_backdrop)
+{
+  if ((ignore_visible           || gimp_item_get_visible (GIMP_ITEM (layer))) &&
+      (ignore_excludes_backdrop || gimp_layer_get_excludes_backdrop (layer)))
+    {
+      gint index;
+
+      index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
+                                              GIMP_OBJECT (layer));
+
+      gimp_layer_stack_update_range (stack, index, -1);
+    }
+}
+
+static void
+gimp_layer_stack_update_range (GimpLayerStack *stack,
+                               gint            first,
+                               gint            last)
+{
+  GList *iter;
+
+  g_assert (first >= 0 && last >= -1);
+
+  /* if the range is reversed, flip first and last; note that last == -1 is
+   * used to update all layers from first onward.
+   */
+  if (last >= 0 && last < first)
+    {
+      gint temp = first;
+
+      first = last + 1;
+      last  = temp + 1;
+    }
+
+  iter = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (stack));
+
+  for (iter = g_list_nth (iter, first);
+       iter && first != last;
+       iter = g_list_next (iter), first++)
+    {
+      GimpItem *item = iter->data;
+
+      if (gimp_item_get_visible (item))
+        {
+          gint offset_x;
+          gint offset_y;
+
+          gimp_item_get_offset (item, &offset_x, &offset_y);
+
+          gimp_drawable_stack_update (GIMP_DRAWABLE_STACK (stack),
+                                      offset_x, offset_y,
+                                      gimp_item_get_width  (item),
+                                      gimp_item_get_height (item));
+        }
+    }
+}
