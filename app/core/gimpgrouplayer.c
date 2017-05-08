@@ -150,6 +150,10 @@ static void            gimp_group_layer_convert_type (GimpLayer         *layer,
 static GeglNode   * gimp_group_layer_get_source_node (GimpDrawable      *drawable);
 
 static void            gimp_group_layer_mode_changed (GimpLayer         *layer);
+static void
+          gimp_group_layer_excludes_backdrop_changed (GimpLayer         *layer);
+static gboolean
+              gimp_group_layer_get_excludes_backdrop (GimpLayer         *layer);
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
 static GeglNode      * gimp_group_layer_get_graph    (GimpProjectable *projectable);
@@ -169,10 +173,17 @@ static void            gimp_group_layer_child_move   (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
 static void            gimp_group_layer_child_resize (GimpLayer       *child,
                                                       GimpGroupLayer  *group);
+static void
+           gimp_group_layer_child_visibility_changed (GimpLayer       *child,
+                                                      GimpGroupLayer  *group);
+static void
+    gimp_group_layer_child_excludes_backdrop_changed (GimpLayer       *child,
+                                                      GimpGroupLayer  *group);
 
 static void            gimp_group_layer_update       (GimpGroupLayer  *group);
 static void            gimp_group_layer_update_size  (GimpGroupLayer  *group);
 static void      gimp_group_layer_update_source_node (GimpGroupLayer  *group);
+static void        gimp_group_layer_update_mode_node (GimpGroupLayer  *group);
 
 static void            gimp_group_layer_stack_update (GimpDrawableStack *stack,
                                                       gint               x,
@@ -209,42 +220,44 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
   GimpLayerClass    *layer_class       = GIMP_LAYER_CLASS (klass);
 
-  object_class->set_property        = gimp_group_layer_set_property;
-  object_class->get_property        = gimp_group_layer_get_property;
-  object_class->finalize            = gimp_group_layer_finalize;
+  object_class->set_property             = gimp_group_layer_set_property;
+  object_class->get_property             = gimp_group_layer_get_property;
+  object_class->finalize                 = gimp_group_layer_finalize;
 
-  gimp_object_class->get_memsize    = gimp_group_layer_get_memsize;
+  gimp_object_class->get_memsize         = gimp_group_layer_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-group-layer";
-  viewable_class->get_size          = gimp_group_layer_get_size;
-  viewable_class->get_children      = gimp_group_layer_get_children;
-  viewable_class->set_expanded      = gimp_group_layer_set_expanded;
-  viewable_class->get_expanded      = gimp_group_layer_get_expanded;
+  viewable_class->default_icon_name      = "gimp-group-layer";
+  viewable_class->get_size               = gimp_group_layer_get_size;
+  viewable_class->get_children           = gimp_group_layer_get_children;
+  viewable_class->set_expanded           = gimp_group_layer_set_expanded;
+  viewable_class->get_expanded           = gimp_group_layer_get_expanded;
 
-  item_class->is_position_locked    = gimp_group_layer_is_position_locked;
-  item_class->duplicate             = gimp_group_layer_duplicate;
-  item_class->convert               = gimp_group_layer_convert;
+  item_class->is_position_locked         = gimp_group_layer_is_position_locked;
+  item_class->duplicate                  = gimp_group_layer_duplicate;
+  item_class->convert                    = gimp_group_layer_convert;
 
-  item_class->default_name          = _("Layer Group");
-  item_class->rename_desc           = C_("undo-type", "Rename Layer Group");
-  item_class->translate_desc        = C_("undo-type", "Move Layer Group");
-  item_class->scale_desc            = C_("undo-type", "Scale Layer Group");
-  item_class->resize_desc           = C_("undo-type", "Resize Layer Group");
-  item_class->flip_desc             = C_("undo-type", "Flip Layer Group");
-  item_class->rotate_desc           = C_("undo-type", "Rotate Layer Group");
-  item_class->transform_desc        = C_("undo-type", "Transform Layer Group");
+  item_class->default_name               = _("Layer Group");
+  item_class->rename_desc                = C_("undo-type", "Rename Layer Group");
+  item_class->translate_desc             = C_("undo-type", "Move Layer Group");
+  item_class->scale_desc                 = C_("undo-type", "Scale Layer Group");
+  item_class->resize_desc                = C_("undo-type", "Resize Layer Group");
+  item_class->flip_desc                  = C_("undo-type", "Flip Layer Group");
+  item_class->rotate_desc                = C_("undo-type", "Rotate Layer Group");
+  item_class->transform_desc             = C_("undo-type", "Transform Layer Group");
 
-  drawable_class->estimate_memsize  = gimp_group_layer_estimate_memsize;
-  drawable_class->get_source_node   = gimp_group_layer_get_source_node;
+  drawable_class->estimate_memsize       = gimp_group_layer_estimate_memsize;
+  drawable_class->get_source_node        = gimp_group_layer_get_source_node;
 
-  layer_class->mode_changed         = gimp_group_layer_mode_changed;
-  layer_class->translate            = gimp_group_layer_translate;
-  layer_class->scale                = gimp_group_layer_scale;
-  layer_class->resize               = gimp_group_layer_resize;
-  layer_class->flip                 = gimp_group_layer_flip;
-  layer_class->rotate               = gimp_group_layer_rotate;
-  layer_class->transform            = gimp_group_layer_transform;
-  layer_class->convert_type         = gimp_group_layer_convert_type;
+  layer_class->mode_changed              = gimp_group_layer_mode_changed;
+  layer_class->excludes_backdrop_changed = gimp_group_layer_excludes_backdrop_changed;
+  layer_class->translate                 = gimp_group_layer_translate;
+  layer_class->scale                     = gimp_group_layer_scale;
+  layer_class->resize                    = gimp_group_layer_resize;
+  layer_class->flip                      = gimp_group_layer_flip;
+  layer_class->rotate                    = gimp_group_layer_rotate;
+  layer_class->transform                 = gimp_group_layer_transform;
+  layer_class->convert_type              = gimp_group_layer_convert_type;
+  layer_class->get_excludes_backdrop     = gimp_group_layer_get_excludes_backdrop;
 
   g_type_class_add_private (klass, sizeof (GimpGroupLayerPrivate));
 }
@@ -289,6 +302,12 @@ gimp_group_layer_init (GimpGroupLayer *group)
                               group);
   gimp_container_add_handler (private->children, "size-changed",
                               G_CALLBACK (gimp_group_layer_child_resize),
+                              group);
+  gimp_container_add_handler (private->children, "visibility-changed",
+                              G_CALLBACK (gimp_group_layer_child_visibility_changed),
+                              group);
+  gimp_container_add_handler (private->children, "excludes-backdrop-changed",
+                              G_CALLBACK (gimp_group_layer_child_excludes_backdrop_changed),
                               group);
 
   g_signal_connect (private->children, "update",
@@ -916,9 +935,47 @@ gimp_group_layer_mode_changed (GimpLayer *layer)
   GimpGroupLayer *group = GIMP_GROUP_LAYER (layer);
 
   gimp_group_layer_update_source_node (group);
+  gimp_group_layer_update_mode_node (group);
 
   if (GIMP_LAYER_CLASS (parent_class)->mode_changed)
     GIMP_LAYER_CLASS (parent_class)->mode_changed (layer);
+}
+
+static void
+gimp_group_layer_excludes_backdrop_changed (GimpLayer *layer)
+{
+  GimpGroupLayer *group = GIMP_GROUP_LAYER (layer);
+
+  gimp_group_layer_update_source_node (group);
+  gimp_group_layer_update_mode_node (group);
+
+  if (GIMP_LAYER_CLASS (parent_class)->excludes_backdrop_changed)
+    GIMP_LAYER_CLASS (parent_class)->excludes_backdrop_changed (layer);
+}
+
+static gboolean
+gimp_group_layer_get_excludes_backdrop (GimpLayer *layer)
+{
+  if (gimp_layer_get_mode (layer) == GIMP_LAYER_MODE_PASS_THROUGH)
+    {
+      GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+      GList                 *list;
+
+      for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+           list;
+           list = g_list_next (list))
+        {
+          GimpItem *child = list->data;
+
+          if (gimp_item_get_visible (child) &&
+              gimp_layer_get_excludes_backdrop (GIMP_LAYER (child)))
+            return TRUE;
+        }
+
+      return FALSE;
+    }
+  else
+    return GIMP_LAYER_CLASS (parent_class)->get_excludes_backdrop (layer);
 }
 
 static const Babl *
@@ -1080,6 +1137,12 @@ gimp_group_layer_child_add (GimpContainer  *container,
                             GimpGroupLayer *group)
 {
   gimp_group_layer_update (group);
+
+  if (gimp_item_get_visible (GIMP_ITEM (child)) &&
+      gimp_layer_get_excludes_backdrop (child))
+    {
+      gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
+    }
 }
 
 static void
@@ -1088,6 +1151,12 @@ gimp_group_layer_child_remove (GimpContainer  *container,
                                GimpGroupLayer *group)
 {
   gimp_group_layer_update (group);
+
+  if (gimp_item_get_visible (GIMP_ITEM (child)) &&
+      gimp_layer_get_excludes_backdrop (child))
+    {
+      gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
+    }
 }
 
 static void
@@ -1103,6 +1172,22 @@ gimp_group_layer_child_resize (GimpLayer      *child,
                                GimpGroupLayer *group)
 {
   gimp_group_layer_update (group);
+}
+
+static void
+gimp_group_layer_child_visibility_changed (GimpLayer      *child,
+                                           GimpGroupLayer *group)
+{
+  if (gimp_layer_get_excludes_backdrop (child))
+    gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
+}
+
+static void
+gimp_group_layer_child_excludes_backdrop_changed (GimpLayer      *child,
+                                                  GimpGroupLayer *group)
+{
+  if (gimp_item_get_visible (GIMP_ITEM (child)))
+    gimp_layer_update_excludes_backdrop (GIMP_LAYER (group));
 }
 
 static void
@@ -1254,6 +1339,29 @@ gimp_group_layer_update_source_node (GimpGroupLayer *group)
 
       gegl_node_connect_to (private->parent_source_node, "output",
                             output,                      "input");
+    }
+}
+
+static void
+gimp_group_layer_update_mode_node (GimpGroupLayer *group)
+{
+  GeglNode *node;
+  GeglNode *input;
+  GeglNode *mode_node;
+
+  node      = gimp_filter_get_node (GIMP_FILTER (group));
+  input     = gegl_node_get_input_proxy (node, "input");
+  mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (group));
+
+  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH &&
+      gimp_layer_get_excludes_backdrop (GIMP_LAYER (group)))
+    {
+      gegl_node_disconnect (mode_node, "input");
+    }
+  else
+    {
+      gegl_node_connect_to (input,     "output",
+                            mode_node, "input");
     }
 }
 
