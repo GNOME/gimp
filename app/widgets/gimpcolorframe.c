@@ -788,6 +788,34 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
+    case GIMP_COLOR_FRAME_MODE_LCH:
+      names[0] = _("Light.:");
+      names[1] = _("Chr.:");
+      names[2] = _("Hue:");
+
+      if (has_alpha)
+        names[3] = _("Alpha:");
+
+      if (frame->sample_valid)
+        {
+          static const Babl *fish = NULL;
+          gfloat             lch[4];
+
+          if (G_UNLIKELY (! fish))
+            fish = babl_fish (babl_format ("R'G'B'A double"),
+                              babl_format ("CIE LCH(ab) alpha float"));
+
+          babl_process (fish, &frame->color, lch, 1);
+
+          values = g_new0 (gchar *, 5);
+
+          values[0] = g_strdup_printf ("%.01f  ",        lch[0]);
+          values[1] = g_strdup_printf ("%.01f  ",        lch[1]);
+          values[2] = g_strdup_printf ("%.01f \302\260", lch[2]);
+          values[3] = g_strdup_printf ("%.01f %%",       lch[3] * 100.0);
+        }
+      break;
+
     case GIMP_COLOR_FRAME_MODE_CMYK:
       names[0] = _("Cyan:");
       names[1] = _("Magenta:");
