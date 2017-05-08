@@ -33,8 +33,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-07 19:12+0200\n"
-"PO-Revision-Date: 2017-05-07 21:23+0200\n"
+"POT-Creation-Date: 2017-05-08 14:04+0200\n"
+"PO-Revision-Date: 2017-05-08 14:04+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -8073,7 +8073,8 @@ msgstr "Imposta il visualizzatore predefinito dell'aiuto in linea."
 
 #: ../app/config/gimprc-blurbs.h:176
 msgid "How many recent settings to keep around in filter tools."
-msgstr "Quante impostazioni usate recentemente mantenere negli strumenti filtro."
+msgstr ""
+"Quante impostazioni usate recentemente mantenere negli strumenti filtro."
 
 #: ../app/config/gimprc-blurbs.h:179
 msgid "Show advanced color options in filter tools."
@@ -8111,7 +8112,8 @@ msgstr "Aggiungi canale alfa a tutti i livelli delle immagini importate."
 
 #: ../app/config/gimprc-blurbs.h:199
 msgid "Which plug-in to use for importing raw digital camera files."
-msgstr "Che plug-in usare per importare file di immagini fotografiche in formato RAW."
+msgstr ""
+"Che plug-in usare per importare file di immagini fotografiche in formato RAW."
 
 #: ../app/config/gimprc-blurbs.h:202
 msgid ""
@@ -16013,7 +16015,7 @@ msgstr "Campione trasparente"
 #: ../app/pdb/gimppdbcontext.c:156 ../app/tools/gimpbucketfilloptions.c:124
 #: ../app/tools/gimpregionselectoptions.c:104
 msgid "Diagonal neighbors"
-msgstr "Vicinanza diagonali"
+msgstr "Vicini diagonali"
 
 #: ../app/pdb/gimppdbcontext.c:163 ../app/tools/gimptransformoptions.c:124
 #: ../app/tools/gimptransformoptions.c:441
@@ -17589,7 +17591,9 @@ msgstr "Converte i pixel in sRGB incorporato per applicare il filtro (lento)"
 
 #: ../app/tools/gimpfiltertool.c:451
 msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
-msgstr "Presume che i pixel siano in sRGB incorporato (ignora lo spazio colore immagine corrente)"
+msgstr ""
+"Presume che i pixel siano in sRGB incorporato (ignora lo spazio colore "
+"immagine corrente)"
 
 #: ../app/tools/gimpfiltertool.c:634
 msgid "Click to switch the original and filtered sides"
@@ -21118,13 +21122,17 @@ msgstr "Tutte le immagini XCF"
 msgid ""
 "The image uses features from %s, disabling compression won't make the XCF "
 "file readable by older GIMP versions."
-msgstr "L'immagine usa caratteristiche della %s e non può essere salvata in XCF per versioni più vecchie di GIMP."
+msgstr ""
+"L'immagine usa caratteristiche della %s e non può essere salvata in XCF per "
+"versioni più vecchie di GIMP."
 
 #: ../app/widgets/gimpsavedialog.c:266
 #, c-format
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
-msgstr "Disabilita la compressione per rendere il file XCF leggibile da %s e successive."
+msgstr ""
+"Disabilita la compressione per rendere il file XCF leggibile da %s e "
+"successive."
 
 #: ../app/widgets/gimpsavedialog.c:276
 msgid "Metadata won't be visible in GIMP older than version 2.10."
