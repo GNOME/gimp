@@ -64,7 +64,7 @@ struct _GimpToolPalettePrivate
                                                     GimpToolPalettePrivate)
 
 
-static void     gimp_tool_palette_finalize            (GObject        *object);
+static void     gimp_tool_palette_dispose             (GObject        *object);
 
 static void     gimp_tool_palette_size_allocate       (GtkWidget       *widget,
                                                        GtkAllocation   *allocation);
@@ -89,6 +89,7 @@ static gboolean gimp_tool_palette_tool_button_press   (GtkWidget       *widget,
 static void     gimp_tool_palette_config_size_changed (GimpGuiConfig   *config,
                                                        GimpToolPalette *palette);
 
+
 G_DEFINE_TYPE (GimpToolPalette, gimp_tool_palette, GTK_TYPE_TOOL_PALETTE)
 
 #define parent_class gimp_tool_palette_parent_class
@@ -100,7 +101,7 @@ gimp_tool_palette_class_init (GimpToolPaletteClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize          = gimp_tool_palette_finalize;
+  object_class->dispose           = gimp_tool_palette_dispose;
 
   widget_class->size_allocate     = gimp_tool_palette_size_allocate;
   widget_class->style_set         = gimp_tool_palette_style_set;
@@ -130,10 +131,9 @@ gimp_tool_palette_init (GimpToolPalette *palette)
 }
 
 static void
-gimp_tool_palette_finalize (GObject *object)
+gimp_tool_palette_dispose (GObject *object)
 {
-  GimpToolPalette        *palette = GIMP_TOOL_PALETTE (object);
-  GimpToolPalettePrivate *private = GET_PRIVATE (palette);
+  GimpToolPalettePrivate *private = GET_PRIVATE (object);
 
   if (private->toolbox)
     {
@@ -142,12 +142,11 @@ gimp_tool_palette_finalize (GObject *object)
       if (context)
         g_signal_handlers_disconnect_by_func (context->gimp->config,
                                               G_CALLBACK (gimp_tool_palette_config_size_changed),
-                                              palette);
+                                              object);
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
-
 
 static void
 gimp_tool_palette_size_allocate (GtkWidget     *widget,
