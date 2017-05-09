@@ -1581,6 +1581,9 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_S, "GIMP_SELECT_CRITERION_S", "s" },
     { GIMP_SELECT_CRITERION_V, "GIMP_SELECT_CRITERION_V", "v" },
     { GIMP_SELECT_CRITERION_A, "GIMP_SELECT_CRITERION_A", "a" },
+    { GIMP_SELECT_CRITERION_LCH_L, "GIMP_SELECT_CRITERION_LCH_L", "lch-l" },
+    { GIMP_SELECT_CRITERION_LCH_C, "GIMP_SELECT_CRITERION_LCH_C", "lch-c" },
+    { GIMP_SELECT_CRITERION_LCH_H, "GIMP_SELECT_CRITERION_LCH_H", "lch-h" },
     { 0, NULL, NULL }
   };
 
@@ -1594,6 +1597,9 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_S, NC_("select-criterion", "Saturation"), NULL },
     { GIMP_SELECT_CRITERION_V, NC_("select-criterion", "Value"), NULL },
     { GIMP_SELECT_CRITERION_A, NC_("select-criterion", "Alpha"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_L, NC_("select-criterion", "LCH Lightness"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_C, NC_("select-criterion", "LCH Chroma"), NULL },
+    { GIMP_SELECT_CRITERION_LCH_H, NC_("select-criterion", "LCH Hue"), NULL },
     { 0, NULL, NULL }
   };
 
