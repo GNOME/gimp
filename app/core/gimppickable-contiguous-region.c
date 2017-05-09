@@ -286,6 +286,9 @@ choose_format (GeglBuffer          *buffer,
       break;
 
     case GIMP_SELECT_CRITERION_LCH_L:
+      format = babl_format ("CIE L alpha float");
+      break;
+
     case GIMP_SELECT_CRITERION_LCH_C:
     case GIMP_SELECT_CRITERION_LCH_H:
       format = babl_format ("CIE LCH(ab) alpha float");
