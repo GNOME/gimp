@@ -502,9 +502,10 @@ gimp_prop_enum_combo_box_new (GObject     *config,
                               gint         minimum,
                               gint         maximum)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *combo_box;
-  gint        value;
+  GParamSpec   *param_spec;
+  GtkListStore *store = NULL;
+  GtkWidget    *combo_box;
+  gint          value;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -520,23 +521,14 @@ gimp_prop_enum_combo_box_new (GObject     *config,
 
   if (minimum != maximum)
     {
-      GtkListStore *store;
-
       store = gimp_enum_store_new_with_range (param_spec->value_type,
                                               minimum, maximum);
-
-      combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
-                                "model", store,
-                                NULL);
-      g_object_unref (store);
     }
   else if (param_spec->value_type == GIMP_TYPE_DESATURATE_MODE)
     {
       /* this is a bad hack, if we get more of those, we should probably
        * think of something less ugly
        */
-      GtkListStore *store;
-
       store = gimp_enum_store_new_with_values (param_spec->value_type,
                                                5,
                                                GIMP_DESATURATE_LUMINANCE,
@@ -544,7 +536,10 @@ gimp_prop_enum_combo_box_new (GObject     *config,
                                                GIMP_DESATURATE_LIGHTNESS,
                                                GIMP_DESATURATE_AVERAGE,
                                                GIMP_DESATURATE_VALUE);
+    }
 
+  if (store)
+    {
       combo_box = g_object_new (GIMP_TYPE_ENUM_COMBO_BOX,
                                 "model", store,
                                 NULL);
