@@ -543,6 +543,31 @@ else
 fi
 AC_MSG_RESULT($have_glib_2_31)
 
+AC_MSG_CHECKING([for glib-networking (GIO TLS implementation)])
+gimp_save_CFLAGS="$CFLAGS"
+gimp_save_LIBS="$LIBS"
+CFLAGS="$CFLAGS $GIO_CFLAGS"
+LIBS="$LIBS $GIO_LIBS"
+AC_RUN_IFELSE([AC_LANG_PROGRAM([#include <gio/gio.h>],
+                               [return !g_tls_backend_supports_tls (g_tls_backend_get_default ());])],
+              [have_glib_networking="yes"],
+              [have_glib_networking="no"],
+              [have_glib_networking="unknown (cross-compiling)"])
+CFLAGS="$gimp_save_CFLAGS"
+LIBS="$gimp_save_LIBS"
+AC_MSG_RESULT($have_glib_networking)
+
+if test "x$have_glib_networking" = "xno"; then
+  AC_MSG_ERROR([Test for glib-networking failed. This is required.])
+elif test "x$have_glib_networking" != "xyes"; then
+  warning_glib_networking="
+WARNING: Test for glib-networking cannot be performed while cross-compiling.
+         Make sure glib-networking is installed, otherwise GIMP will not be able
+         to display the remote help pages through the help browser, nor will it
+         be able to open remote HTTPS (or other protocol using SSL/TLS) files.
+         HTTPS is becoming the expected standard and should not be considered
+         optional anymore."
+fi
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
 gimp_save_LIBS=$LIBS
@@ -2500,5 +2525,5 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
-$have_recommended_xgettext $have_recommended_fontconfig
+$have_recommended_xgettext$have_recommended_fontconfig$warning_glib_networking
 ]);
