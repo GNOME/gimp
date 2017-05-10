@@ -537,6 +537,23 @@ gimp_prop_enum_combo_box_new (GObject     *config,
                                                GIMP_DESATURATE_AVERAGE,
                                                GIMP_DESATURATE_VALUE);
     }
+  else if (param_spec->value_type == GIMP_TYPE_SELECT_CRITERION)
+    {
+      /* ditto */
+      store = gimp_enum_store_new_with_values (param_spec->value_type,
+                                               11,
+                                               GIMP_SELECT_CRITERION_COMPOSITE,
+                                               GIMP_SELECT_CRITERION_R,
+                                               GIMP_SELECT_CRITERION_G,
+                                               GIMP_SELECT_CRITERION_B,
+                                               GIMP_SELECT_CRITERION_A,
+                                               GIMP_SELECT_CRITERION_H,
+                                               GIMP_SELECT_CRITERION_S,
+                                               GIMP_SELECT_CRITERION_V,
+                                               GIMP_SELECT_CRITERION_LCH_L,
+                                               GIMP_SELECT_CRITERION_LCH_C,
+                                               GIMP_SELECT_CRITERION_LCH_H);
+    }
 
   if (store)
     {
