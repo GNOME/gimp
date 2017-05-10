@@ -197,7 +197,8 @@ Name: loc; Description: "{cm:ComponentsTranslations}"; Types: full custom
 
 Name: py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('32')
 
-Name: gs; Description: "{cm:ComponentsGhostscript}"; Types: full custom
+;file-ps only works on x64 currently
+Name: gs; Description: "{cm:ComponentsGhostscript}"; Types: full custom; Check: Check3264('64')
 
 Name: gimp32on64; Description: "{cm:ComponentsGimp32}"; Types: full custom; Flags: checkablealone; Check: Check3264('64')
 Name: gimp32on64\py; Description: "{cm:ComponentsPython}"; Types: full custom; Check: Check3264('64')
@@ -238,10 +239,6 @@ Source: "{#GIMP_DIR32}\share\locale\*"; DestDir: "{app}\share\locale"; Component
 Source: "{#DEPS_DIR32}\etc\fonts\*"; DestDir: "{app}\etc\fonts"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\*"; DestDir: "{app}\etc\gtk-2.0"; Excludes: gtkrc; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete
 Source: "{#DEPS_DIR32}\etc\gtk-2.0\gtkrc"; DestDir: "{app}\etc\gtk-2.0"; Components: deps32\wimp or deps64\wimp; Flags: recursesubdirs restartreplace uninsrestartdelete
-
-;ghostscript TODO: detect version automatically
-Source: "{#DEPS_DIR32}\share\ghostscript\8.71\lib\*.*"; DestDir: "{app}\share\ghostscript\8.71\lib"; Components: gs; Flags: recursesubdirs restartreplace uninsrestartdelete
-Source: "{#DEPS_DIR32}\share\ghostscript\8.71\Resource\*.*"; DestDir: "{app}\share\ghostscript\8.71\Resource"; Components: gs; Flags: recursesubdirs restartreplace uninsrestartdelete
 
 ;32-on-64bit
 #include "32on64.isi"

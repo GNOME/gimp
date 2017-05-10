@@ -17,8 +17,8 @@ Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\2.0\p
 
 Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\2.0\plug-ins\file-ps.exe"; DestDir: "{app}\lib\gimp\2.0\plug-ins"; Components: gimp{#PLATFORM} and gs; Flags: restartreplace comparetimestamp uninsrestartdelete
 
-Source: "{#DEPS_DIR}\{#DDIR}\*.dll"; DestDir: "{app}"; Excludes: "\bin\libgs-8.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
-Source: "{#DEPS_DIR}\{#DDIR}\bin\libgs-8.dll"; DestDir: "{app}\bin"; Components: gs and deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\*.dll"; DestDir: "{app}"; Excludes: "\bin\gsdll??.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\gsdll??.dll"; DestDir: "{app}\bin"; Components: gs and deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\gspawn-win*.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace comparetimestamp uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\bin\bzip2.exe"; DestDir: "{app}\bin"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete
