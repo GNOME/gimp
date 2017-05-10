@@ -1896,6 +1896,7 @@ gimp_transform_tool_hide_active_item (GimpTransformTool *tr_tool,
   /*  hide only complete layers and channels, not layer masks  */
   if (options->type == GIMP_TRANSFORM_TYPE_LAYER &&
       options->show_preview                      &&
+      tr_tool->use_grid /* not for flip */       &&
       GIMP_IS_DRAWABLE (item)                    &&
       ! GIMP_IS_LAYER_MASK (item)                &&
       gimp_item_get_visible (item)               &&
