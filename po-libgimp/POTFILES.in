@@ -76,5 +76,3 @@ modules/controller-midi.c
 modules/display-filter-color-blind.c
 modules/display-filter-gamma.c
 modules/display-filter-high-contrast.c
-modules/display-filter-lcms.c
-modules/display-filter-proof.c
