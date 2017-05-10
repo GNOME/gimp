@@ -123,26 +123,28 @@ header files installed.
 
  17. Summary of required packages and what version you need:
 
-     Package Name	Version
+     Package Name	  Version
 
-     ATK     		@ATK_REQUIRED_VERSION@
-     babl		@BABL_REQUIRED_VERSION@
-     cairo 		@CAIRO_REQUIRED_VERSION@
-     Fontconfig 	@FONTCONFIG_REQUIRED_VERSION@
-     freetype2 		@FREETYPE2_REQUIRED_VERSION@
-     GDK-PixBuf 	@GDK_PIXBUF_REQUIRED_VERSION@
-     GEGL 		@GEGL_REQUIRED_VERSION@
-     GLib 		@GLIB_REQUIRED_VERSION@
-     GTK+ 		@GTK_REQUIRED_VERSION@
-     HarfBuzz 		@HARFBUZZ_REQUIRED_VERSION@
+     ATK              @ATK_REQUIRED_VERSION@
+     babl             @BABL_REQUIRED_VERSION@
+     cairo            @CAIRO_REQUIRED_VERSION@
+     Fontconfig       @FONTCONFIG_REQUIRED_VERSION@
+     freetype2        @FREETYPE2_REQUIRED_VERSION@
+     GDK-PixBuf       @GDK_PIXBUF_REQUIRED_VERSION@
+     GEGL             @GEGL_REQUIRED_VERSION@
+     GIO
+     GLib             @GLIB_REQUIRED_VERSION@
+     glib-networking
+     GTK+             @GTK_REQUIRED_VERSION@
+     HarfBuzz         @HARFBUZZ_REQUIRED_VERSION@
      libbzip2
      libjpeg
-     libpng 		@LIBPNG_REQUIRED_VERSION@
-     liblzma 		@LIBLZMA_REQUIRED_VERSION@
-     libmypaint 	@LIBMYPAINT_REQUIRED_VERSION@
+     libpng           @LIBPNG_REQUIRED_VERSION@
+     liblzma          @LIBLZMA_REQUIRED_VERSION@
+     libmypaint       @LIBMYPAINT_REQUIRED_VERSION@
      libtiff
-     Little CMS 	@LCMS_REQUIRED_VERSION@
-     pangocairo 	@PANGOCAIRO_REQUIRED_VERSION@
+     Little CMS       @LCMS_REQUIRED_VERSION@
+     pangocairo       @PANGOCAIRO_REQUIRED_VERSION@
      zlib
 
  18. Summary of optional packages:
