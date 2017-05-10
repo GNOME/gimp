@@ -33,8 +33,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-08 14:04+0200\n"
-"PO-Revision-Date: 2017-05-08 14:04+0200\n"
+"POT-Creation-Date: 2017-05-10 13:01+0200\n"
+"PO-Revision-Date: 2017-05-10 13:06+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -504,7 +504,7 @@ msgstr "Modifica del testo"
 msgid "Tool Options"
 msgstr "Opzioni strumento"
 
-#: ../app/actions/actions.c:230 ../app/widgets/gimptoolpalette.c:330
+#: ../app/actions/actions.c:230 ../app/widgets/gimptoolpalette.c:329
 msgid "Tools"
 msgstr "Strumenti"
 
@@ -1765,7 +1765,7 @@ msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "St_ato e testo"
 
-#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:257
+#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:259
 msgctxt "tab-style"
 msgid "Automatic"
 msgstr "Automatico"
@@ -14241,7 +14241,7 @@ msgstr "Spaziatura righe"
 #: ../app/display/gimpcursorview.c:697 ../app/display/gimpcursorview.c:699
 #: ../app/display/gimpcursorview.c:818 ../app/display/gimpcursorview.c:819
 #: ../app/display/gimpcursorview.c:820 ../app/display/gimpcursorview.c:821
-#: ../app/widgets/gimpcolorframe.c:621 ../app/widgets/gimpcolorframe.c:855
+#: ../app/widgets/gimpcolorframe.c:621 ../app/widgets/gimpcolorframe.c:883
 msgid "n/a"
 msgstr "n/a"
 
@@ -19939,7 +19939,7 @@ msgstr "Valore:"
 
 #: ../app/widgets/gimpcolorframe.c:696 ../app/widgets/gimpcolorframe.c:705
 #: ../app/widgets/gimpcolorframe.c:736 ../app/widgets/gimpcolorframe.c:773
-#: ../app/widgets/gimpcolorframe.c:798
+#: ../app/widgets/gimpcolorframe.c:797 ../app/widgets/gimpcolorframe.c:826
 msgid "Alpha:"
 msgstr "Alfa:"
 
@@ -19963,7 +19963,7 @@ msgstr "Indice:"
 msgid "Hex:"
 msgstr "Esa:"
 
-#: ../app/widgets/gimpcolorframe.c:768
+#: ../app/widgets/gimpcolorframe.c:768 ../app/widgets/gimpcolorframe.c:794
 msgid "Hue:"
 msgstr "Ton.:"
 
@@ -19972,18 +19972,26 @@ msgid "Sat.:"
 msgstr "Sat.:"
 
 #: ../app/widgets/gimpcolorframe.c:792
+msgid "Light.:"
+msgstr "Lumin.:"
+
+#: ../app/widgets/gimpcolorframe.c:793
+msgid "Chr.:"
+msgstr "Crom.:"
+
+#: ../app/widgets/gimpcolorframe.c:820
 msgid "Cyan:"
 msgstr "Ciano:"
 
-#: ../app/widgets/gimpcolorframe.c:793
+#: ../app/widgets/gimpcolorframe.c:821
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: ../app/widgets/gimpcolorframe.c:794
+#: ../app/widgets/gimpcolorframe.c:822
 msgid "Yellow:"
 msgstr "Giallo:"
 
-#: ../app/widgets/gimpcolorframe.c:795
+#: ../app/widgets/gimpcolorframe.c:823
 msgid "Black:"
 msgstr "Nero:"
 
@@ -21625,102 +21633,107 @@ msgctxt "circle-background"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:115
+#: ../app/widgets/widgets-enums.c:116
 msgctxt "color-frame-mode"
 msgid "Pixel"
 msgstr "Pixel"
 
-#: ../app/widgets/widgets-enums.c:116
+#: ../app/widgets/widgets-enums.c:117
 msgctxt "color-frame-mode"
 msgid "RGB (%)"
 msgstr "RGB (%)"
 
-#: ../app/widgets/widgets-enums.c:117
+#: ../app/widgets/widgets-enums.c:118
 msgctxt "color-frame-mode"
 msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
-#: ../app/widgets/widgets-enums.c:118
+#: ../app/widgets/widgets-enums.c:119
 msgctxt "color-frame-mode"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:119
+#: ../app/widgets/widgets-enums.c:120
+msgctxt "color-frame-mode"
+msgid "CIE LCH"
+msgstr "CIE LCH"
+
+#: ../app/widgets/widgets-enums.c:121
 msgctxt "color-frame-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../app/widgets/widgets-enums.c:149
+#: ../app/widgets/widgets-enums.c:151
 msgctxt "color-pick-mode"
 msgid "Pick only"
 msgstr "Solo prelievo"
 
-#: ../app/widgets/widgets-enums.c:150
+#: ../app/widgets/widgets-enums.c:152
 msgctxt "color-pick-mode"
 msgid "Set foreground color"
 msgstr "Imposta il colore di primo piano"
 
-#: ../app/widgets/widgets-enums.c:151
+#: ../app/widgets/widgets-enums.c:153
 msgctxt "color-pick-mode"
 msgid "Set background color"
 msgstr "Imposta il colore di sfondo"
 
-#: ../app/widgets/widgets-enums.c:152
+#: ../app/widgets/widgets-enums.c:154
 msgctxt "color-pick-mode"
 msgid "Add to palette"
 msgstr "Aggiungi alla tavolozza"
 
-#: ../app/widgets/widgets-enums.c:211
+#: ../app/widgets/widgets-enums.c:213
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr "Istogramma lineare"
 
-#: ../app/widgets/widgets-enums.c:212
+#: ../app/widgets/widgets-enums.c:214
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Istogramma logaritmico"
 
-#: ../app/widgets/widgets-enums.c:248
+#: ../app/widgets/widgets-enums.c:250
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Icona"
 
-#: ../app/widgets/widgets-enums.c:249
+#: ../app/widgets/widgets-enums.c:251
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Stato corrente"
 
-#: ../app/widgets/widgets-enums.c:250
+#: ../app/widgets/widgets-enums.c:252
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Testo"
 
-#: ../app/widgets/widgets-enums.c:251
+#: ../app/widgets/widgets-enums.c:253
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Descrizione"
 
-#: ../app/widgets/widgets-enums.c:252
+#: ../app/widgets/widgets-enums.c:254
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Icona e testo"
 
-#: ../app/widgets/widgets-enums.c:253
+#: ../app/widgets/widgets-enums.c:255
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Icona e desc"
 
-#: ../app/widgets/widgets-enums.c:254
+#: ../app/widgets/widgets-enums.c:256
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Stato e testo"
 
-#: ../app/widgets/widgets-enums.c:255
+#: ../app/widgets/widgets-enums.c:257
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stato e desc"
 
-#: ../app/widgets/widgets-enums.c:256
+#: ../app/widgets/widgets-enums.c:258
 msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Indefinito"
