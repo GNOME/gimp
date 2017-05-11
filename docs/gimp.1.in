@@ -33,7 +33,7 @@ intelligent scissors, and select by color.
 .PP
 GIMP offers a variety of plug-ins that perform a variety of image
 manipulations.  Examples include bumpmap, edge detect, gaussian blur,
-and many others. In addition, GIMP has several scripting extension
+and many others. In addition, GIMP has several scripting extensions
 which allow for advanced non-interactive processing and creation of
 images.
 .PP
