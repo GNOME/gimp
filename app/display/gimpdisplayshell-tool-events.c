@@ -88,6 +88,10 @@ static void       gimp_display_shell_start_scrolling          (GimpDisplayShell 
                                                                gint               y);
 static void       gimp_display_shell_stop_scrolling           (GimpDisplayShell  *shell,
                                                                const GdkEvent    *event);
+static void       gimp_display_shell_handle_scrolling         (GimpDisplayShell  *shell,
+                                                               GdkModifierType    state,
+                                                               gint               x,
+                                                               gint               y);
 
 static void       gimp_display_shell_space_pressed            (GimpDisplayShell  *shell,
                                                                const GdkEvent    *event);
@@ -872,40 +876,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (shell->scrolling)
           {
-            const gint x = (compressed_motion
-                            ? ((GdkEventMotion *) compressed_motion)->x
-                            : mevent->x);
-            const gint y = (compressed_motion
-                            ? ((GdkEventMotion *) compressed_motion)->y
-                            : mevent->y);
+            GdkEventMotion *me = (compressed_motion ?
+                                  (GdkEventMotion *) compressed_motion :
+                                  mevent);
 
-            if (shell->rotating)
-              {
-                gboolean constrain = (state & GDK_CONTROL_MASK) ? TRUE : FALSE;
-
-                gimp_display_shell_rotate_drag (shell,
-                                                shell->scroll_last_x,
-                                                shell->scroll_last_y,
-                                                x,
-                                                y,
-                                                constrain);
-              }
-            else if (shell->scaling)
-              {
-                gimp_display_shell_scale_drag (shell,
-                                               shell->scroll_last_x - x,
-                                               shell->scroll_last_y - y);
-              }
-            else
-              {
-                gimp_display_shell_scroll (shell,
-                                           shell->scroll_last_x - x,
-                                           shell->scroll_last_y - y);
-
-              }
-
-            shell->scroll_last_x = x;
-            shell->scroll_last_y = y;
+            gimp_display_shell_handle_scrolling (shell, state, me->x, me->y);
           }
         else if (state & GDK_BUTTON1_MASK)
           {
@@ -1517,7 +1492,7 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
   if (shell->rotating)
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GDK_EXCHANGE);
-  if (shell->scaling)
+  else if (shell->scaling)
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GIMP_CURSOR_ZOOM);
   else
@@ -1541,6 +1516,42 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   shell->scaling           = FALSE;
 
   gimp_display_shell_pointer_ungrab (shell, event);
+}
+
+static void
+gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
+                                     GdkModifierType   state,
+                                     gint              x,
+                                     gint              y)
+{
+  g_return_if_fail (shell->scrolling);
+
+  if (shell->rotating)
+    {
+      gboolean constrain = (state & GDK_CONTROL_MASK) ? TRUE : FALSE;
+
+      gimp_display_shell_rotate_drag (shell,
+                                      shell->scroll_last_x,
+                                      shell->scroll_last_y,
+                                      x,
+                                      y,
+                                      constrain);
+    }
+  else if (shell->scaling)
+    {
+      gimp_display_shell_scale_drag (shell,
+                                     shell->scroll_last_x - x,
+                                     shell->scroll_last_y - y);
+    }
+  else
+    {
+      gimp_display_shell_scroll (shell,
+                                 shell->scroll_last_x - x,
+                                 shell->scroll_last_y - y);
+    }
+
+  shell->scroll_last_x = x;
+  shell->scroll_last_y = y;
 }
 
 static void
