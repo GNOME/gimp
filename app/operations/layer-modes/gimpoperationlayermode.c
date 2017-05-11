@@ -375,11 +375,12 @@ gimp_operation_layer_mode_process (GeglOperation        *operation,
                                    const GeglRectangle  *result,
                                    gint                  level)
 {
-  GimpOperationLayerMode *point = GIMP_OPERATION_LAYER_MODE (operation);
-  GObject                *input;
-  GObject                *aux;
-  gboolean                has_input;
-  gboolean                has_aux;
+  GimpOperationLayerMode   *point = GIMP_OPERATION_LAYER_MODE (operation);
+  GObject                  *input;
+  GObject                  *aux;
+  gboolean                  has_input;
+  gboolean                  has_aux;
+  GimpLayerCompositeRegion  included_region;
 
   /* get the raw values.  this does not increase the reference count. */
   input = gegl_operation_context_get_object (context, "input");
@@ -402,13 +403,14 @@ gimp_operation_layer_mode_process (GeglOperation        *operation,
                               gegl_buffer_get_extent (GEGL_BUFFER (aux)),
                               result);
 
+  included_region = gimp_layer_mode_get_included_region (point->layer_mode,
+                                                         point->composite_mode);
+
   /* if there's no 'input' ... */
   if (! has_input)
     {
       /* ... and there's 'aux', and the composite mode includes it ... */
-      if (has_aux &&
-          (point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-           point->composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP))
+      if (has_aux && (included_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE))
         {
           GimpLayerCompositeRegion affected_region;
 
@@ -445,8 +447,7 @@ gimp_operation_layer_mode_process (GeglOperation        *operation,
   else if (! has_aux)
     {
       /* ... and the composite mode includes 'input' ... */
-      if (point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-          point->composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
+      if (included_region & GIMP_LAYER_COMPOSITE_REGION_DESTINATION)
         {
           GimpLayerCompositeRegion affected_region;
 

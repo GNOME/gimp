@@ -1440,3 +1440,29 @@ gimp_layer_mode_get_format (GimpLayerMode        mode,
 
   g_return_val_if_reached (babl_format ("RGBA float"));
 }
+
+GimpLayerCompositeRegion
+gimp_layer_mode_get_included_region (GimpLayerMode          mode,
+                                     GimpLayerCompositeMode composite_mode)
+{
+  if (composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
+    composite_mode = gimp_layer_mode_get_composite_mode (mode);
+
+  switch (composite_mode)
+    {
+    case GIMP_LAYER_COMPOSITE_SRC_OVER:
+      return GIMP_LAYER_COMPOSITE_REGION_UNION;
+
+    case GIMP_LAYER_COMPOSITE_SRC_ATOP:
+      return GIMP_LAYER_COMPOSITE_REGION_DESTINATION;
+
+    case GIMP_LAYER_COMPOSITE_DST_ATOP:
+      return GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+
+    case GIMP_LAYER_COMPOSITE_SRC_IN:
+      return GIMP_LAYER_COMPOSITE_REGION_INTERSECTION;
+
+    default:
+      g_return_val_if_reached (GIMP_LAYER_COMPOSITE_REGION_INTERSECTION);
+    }
+}

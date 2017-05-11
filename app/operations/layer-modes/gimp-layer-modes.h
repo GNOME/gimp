@@ -23,45 +23,47 @@
 #define __GIMP_LAYER_MODES_H__
 
 
-void                     gimp_layer_modes_init               (void);
+void                       gimp_layer_modes_init                      (void);
 
-gboolean                 gimp_layer_mode_is_legacy           (GimpLayerMode        mode);
+gboolean                   gimp_layer_mode_is_legacy                  (GimpLayerMode           mode);
 
-gboolean          gimp_layer_mode_is_blend_space_mutable     (GimpLayerMode        mode);
-gboolean          gimp_layer_mode_is_composite_space_mutable (GimpLayerMode        mode);
-gboolean          gimp_layer_mode_is_composite_mode_mutable  (GimpLayerMode        mode);
+gboolean                   gimp_layer_mode_is_blend_space_mutable     (GimpLayerMode           mode);
+gboolean                   gimp_layer_mode_is_composite_space_mutable (GimpLayerMode           mode);
+gboolean                   gimp_layer_mode_is_composite_mode_mutable  (GimpLayerMode           mode);
 
-gboolean                 gimp_layer_mode_is_subtractive      (GimpLayerMode        mode);
+gboolean                   gimp_layer_mode_is_subtractive             (GimpLayerMode           mode);
 
-GimpLayerColorSpace      gimp_layer_mode_get_blend_space     (GimpLayerMode        mode);
-GimpLayerColorSpace      gimp_layer_mode_get_composite_space (GimpLayerMode        mode);
-GimpLayerCompositeMode   gimp_layer_mode_get_composite_mode  (GimpLayerMode        mode);
-GimpLayerCompositeMode   gimp_layer_mode_get_paint_composite_mode
-                                                             (GimpLayerMode        mode);
+GimpLayerColorSpace        gimp_layer_mode_get_blend_space            (GimpLayerMode           mode);
+GimpLayerColorSpace        gimp_layer_mode_get_composite_space        (GimpLayerMode           mode);
+GimpLayerCompositeMode     gimp_layer_mode_get_composite_mode         (GimpLayerMode           mode);
+GimpLayerCompositeMode     gimp_layer_mode_get_paint_composite_mode   (GimpLayerMode           mode);
 
-const gchar            * gimp_layer_mode_get_operation       (GimpLayerMode        mode);
+const gchar              * gimp_layer_mode_get_operation              (GimpLayerMode           mode);
 
-GimpLayerModeFunc        gimp_layer_mode_get_function        (GimpLayerMode        mode);
+GimpLayerModeFunc          gimp_layer_mode_get_function               (GimpLayerMode           mode);
 
-GimpLayerModeContext     gimp_layer_mode_get_context         (GimpLayerMode        mode);
+GimpLayerModeContext       gimp_layer_mode_get_context                (GimpLayerMode           mode);
 
-GimpLayerMode          * gimp_layer_mode_get_context_array   (GimpLayerMode        mode,
-                                                              GimpLayerModeContext context,
-                                                              gint                *n_modes);
+GimpLayerMode            * gimp_layer_mode_get_context_array          (GimpLayerMode           mode,
+                                                                       GimpLayerModeContext    context,
+                                                                       gint                   *n_modes);
 
-GimpLayerModeGroup       gimp_layer_mode_get_group           (GimpLayerMode        mode);
+GimpLayerModeGroup         gimp_layer_mode_get_group                  (GimpLayerMode           mode);
 
-const GimpLayerMode    * gimp_layer_mode_get_group_array     (GimpLayerModeGroup   group,
-                                                              gint                *n_modes);
+const GimpLayerMode      * gimp_layer_mode_get_group_array            (GimpLayerModeGroup      group,
+                                                                       gint                   *n_modes);
 
-gboolean                 gimp_layer_mode_get_for_group       (GimpLayerMode        old_mode,
-                                                              GimpLayerModeGroup   new_group,
-                                                              GimpLayerMode       *new_mode);
+gboolean                   gimp_layer_mode_get_for_group              (GimpLayerMode           old_mode,
+                                                                       GimpLayerModeGroup      new_group,
+                                                                       GimpLayerMode          *new_mode);
 
-const Babl             * gimp_layer_mode_get_format          (GimpLayerMode        mode,
-                                                              GimpLayerColorSpace  composite_space,
-                                                              GimpLayerColorSpace  blend_space,
-                                                              const Babl          *preferred_format);
+const Babl               * gimp_layer_mode_get_format                 (GimpLayerMode           mode,
+                                                                       GimpLayerColorSpace     composite_space,
+                                                                       GimpLayerColorSpace     blend_space,
+                                                                       const Babl             *preferred_format);
+
+GimpLayerCompositeRegion   gimp_layer_mode_get_included_region        (GimpLayerMode           mode,
+                                                                       GimpLayerCompositeMode  composite_mode);
 
 
 #endif /* __GIMP_LAYER_MODES_H__ */
