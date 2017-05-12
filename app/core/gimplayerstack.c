@@ -112,10 +112,19 @@ gimp_layer_stack_remove (GimpContainer *container,
                          GimpObject    *object)
 {
   GimpLayerStack *stack = GIMP_LAYER_STACK (container);
+  gboolean        update_backdrop;
+  gint            index;
 
-  gimp_layer_stack_update_backdrop (stack, GIMP_LAYER (object), FALSE, FALSE);
+  update_backdrop = gimp_item_get_visible (GIMP_ITEM (object)) &&
+                    gimp_layer_get_excludes_backdrop (GIMP_LAYER (object));
+
+  if (update_backdrop)
+    index = gimp_container_get_child_index (container, object);
 
   GIMP_CONTAINER_CLASS (parent_class)->remove (container, object);
+
+  if (update_backdrop)
+    gimp_layer_stack_update_range (stack, index, -1);
 }
 
 static void
@@ -124,18 +133,18 @@ gimp_layer_stack_reorder (GimpContainer *container,
                           gint           new_index)
 {
   GimpLayerStack *stack = GIMP_LAYER_STACK (container);
-  gboolean        excludes_backdrop;
+  gboolean        update_backdrop;
   gint            index;
 
-  excludes_backdrop = gimp_item_get_visible (GIMP_ITEM (object)) &&
-                      gimp_layer_get_excludes_backdrop (GIMP_LAYER (object));
+  update_backdrop = gimp_item_get_visible (GIMP_ITEM (object)) &&
+                    gimp_layer_get_excludes_backdrop (GIMP_LAYER (object));
 
-  if (excludes_backdrop)
+  if (update_backdrop)
     index = gimp_container_get_child_index (container, object);
 
   GIMP_CONTAINER_CLASS (parent_class)->reorder (container, object, new_index);
 
-  if (excludes_backdrop)
+  if (update_backdrop)
     gimp_layer_stack_update_range (stack, index, new_index);
 }
 
