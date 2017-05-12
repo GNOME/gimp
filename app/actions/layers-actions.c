@@ -867,6 +867,7 @@ layers_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_label (group, action, label)
 
   SET_VISIBLE   ("layers-text-tool",        text_layer && !ac);
+  SET_SENSITIVE ("layers-text-tool",        text_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes",  layer && !fs && !ac);
 
   if (layer && gimp_layer_is_floating_sel (layer))
