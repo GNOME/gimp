@@ -185,7 +185,7 @@ gimp_layer_stack_update_backdrop (GimpLayerStack *stack,
       index = gimp_container_get_child_index (GIMP_CONTAINER (stack),
                                               GIMP_OBJECT (layer));
 
-      gimp_layer_stack_update_range (stack, index, -1);
+      gimp_layer_stack_update_range (stack, index + 1, -1);
     }
 }
 
