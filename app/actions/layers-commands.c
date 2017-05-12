@@ -186,11 +186,7 @@ layers_text_tool_cmd_callback (GtkAction *action,
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_item_is_text_layer (GIMP_ITEM (layer)))
-    {
-      layers_edit_attributes_cmd_callback (action, data);
-      return;
-    }
+  g_return_if_fail (gimp_item_is_text_layer (GIMP_ITEM (layer)));
 
   active_tool = tool_manager_get_active (image->gimp);
 
