@@ -210,7 +210,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->new_item        = gimp_layer_tree_view_item_new;
 
   item_view_class->action_group          = "layers";
-  item_view_class->activate_action       = "layers-text-tool";
+  item_view_class->activate_action       = "layers-edit";
   item_view_class->new_action            = "layers-new";
   item_view_class->new_default_action    = "layers-new-last-values";
   item_view_class->raise_action          = "layers-raise";

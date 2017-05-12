@@ -85,11 +85,17 @@ static const GimpActionEntry layers_actions[] =
   { "layers-mode-menu",              GIMP_ICON_TOOL_PENCIL,
     NC_("layers-action", "Layer _Mode")   },
 
-  { "layers-text-tool", GIMP_ICON_TOOL_TEXT,
-    NC_("layers-action", "Te_xt Tool"), NULL,
-    NC_("layers-action", "Activate the text tool on this text layer"),
-    G_CALLBACK (layers_text_tool_cmd_callback),
-    GIMP_HELP_TOOL_TEXT },
+  { "layers-edit", GIMP_ICON_EDIT,
+    NC_("layers-action", "Default edit action"), NULL,
+    NC_("layers-action", "Activate the default edit action for this type of layer"),
+    G_CALLBACK (layers_edit_cmd_callback),
+    GIMP_HELP_LAYER_EDIT },
+
+  { "layers-edit-text", GIMP_ICON_EDIT,
+    NC_("layers-action", "Edit Te_xt on canvas"), NULL,
+    NC_("layers-action", "Edit this text layer content on canvas"),
+    G_CALLBACK (layers_edit_text_cmd_callback),
+    GIMP_HELP_LAYER_EDIT },
 
   { "layers-edit-attributes", GIMP_ICON_EDIT,
     NC_("layers-action", "_Edit Layer Attributes..."), NULL,
@@ -866,8 +872,9 @@ layers_actions_update (GimpActionGroup *group,
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, label)
 
-  SET_VISIBLE   ("layers-text-tool",        text_layer && !ac);
-  SET_SENSITIVE ("layers-text-tool",        text_layer && !ac);
+  SET_SENSITIVE ("layers-edit",             !ac && ((layer && !fs) || text_layer));
+  SET_VISIBLE   ("layers-edit-text",        text_layer && !ac);
+  SET_SENSITIVE ("layers-edit-text",        text_layer && !ac);
   SET_SENSITIVE ("layers-edit-attributes",  layer && !fs && !ac);
 
   if (layer && gimp_layer_is_floating_sel (layer))

@@ -111,8 +111,8 @@ static void   vectors_export_callback          (GtkWidget    *dialog,
 /*  public functions  */
 
 void
-vectors_vectors_tool_cmd_callback (GtkAction *action,
-                                   gpointer   data)
+vectors_edit_cmd_callback (GtkAction *action,
+                           gpointer   data)
 {
   GimpImage   *image;
   GimpVectors *vectors;

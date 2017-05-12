@@ -486,7 +486,9 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
   "\"<Actions>/file/file-export\""              "|" \
   "\"<Actions>/edit/edit-paste-as-new\""        "|" \
   "\"<Actions>/buffers/buffers-paste-as-new\""  "|" \
-  "\"<Actions>/tools/tools-value-[1-4]-.*\""
+  "\"<Actions>/tools/tools-value-[1-4]-.*\""    "|" \
+  "\"<Actions>/layers/layers-text-tool\""       "|" \
+  "\"<Actions>/vectors/vectors-path-tool\""
 
 /**
  * callback to use for updating a menurc from GIMP over 2.0.
@@ -543,6 +545,14 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
     {
       g_string_append (new_value, "\"<Actions>/tools/tools-angle-");
       g_string_append (new_value, match + 31);
+    }
+  else if (g_strcmp0 (match, "\"<Actions>/layers/layers-text-tool\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/layers/layers-edit\"");
+    }
+  else if (g_strcmp0 (match, "\"<Actions>/vectors/vectors-path-tool\"") == 0)
+    {
+      g_string_append (new_value, "\"<Actions>/vectors/vectors-edit\"");
     }
   /* Should not happen. Just in case we match something unexpected by
    * mistake.

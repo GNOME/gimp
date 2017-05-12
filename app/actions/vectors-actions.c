@@ -50,9 +50,10 @@ static const GimpActionEntry vectors_actions[] =
     NC_("vectors-action", "Color Tag"), NULL, NULL, NULL,
     GIMP_HELP_PATH_COLOR_TAG },
 
-  { "vectors-path-tool", GIMP_ICON_TOOL_PATH,
-    NC_("vectors-action", "Path _Tool"), NULL, NULL,
-    G_CALLBACK (vectors_vectors_tool_cmd_callback),
+  { "vectors-edit", GIMP_ICON_TOOL_PATH,
+    NC_("vectors-action", "Edit Pa_th"), NULL,
+    NC_("vectors-action", "Edit the active path"),
+    G_CALLBACK (vectors_edit_cmd_callback),
     GIMP_HELP_TOOL_VECTORS },
 
   { "vectors-edit-attributes", GIMP_ICON_EDIT,
@@ -380,7 +381,7 @@ vectors_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("vectors-path-tool",       vectors);
+  SET_SENSITIVE ("vectors-edit",            vectors);
   SET_SENSITIVE ("vectors-edit-attributes", vectors);
 
   SET_SENSITIVE ("vectors-new",             image);

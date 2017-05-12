@@ -19,7 +19,9 @@
 #define __LAYERS_COMMANDS_H__
 
 
-void   layers_text_tool_cmd_callback          (GtkAction   *action,
+void   layers_edit_cmd_callback               (GtkAction   *action,
+                                               gpointer     data);
+void   layers_edit_text_cmd_callback          (GtkAction   *action,
                                                gpointer     data);
 void   layers_edit_attributes_cmd_callback    (GtkAction   *action,
                                                gpointer     data);

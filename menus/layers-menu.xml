@@ -3,7 +3,7 @@
 
 <ui>
   <popup action="layers-popup">
-    <menuitem action="layers-text-tool" />
+    <menuitem action="layers-edit-text" />
     <menuitem action="layers-edit-attributes" />
     <menu action="layers-blend-space-menu" name="Blend Space">
       <menuitem action="layers-blend-space-auto" />

@@ -19,7 +19,7 @@
 #define __VECTORS_COMMANDS_H__
 
 
-void   vectors_vectors_tool_cmd_callback         (GtkAction   *action,
+void   vectors_edit_cmd_callback                 (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_edit_attributes_cmd_callback      (GtkAction   *action,
                                                   gpointer     data);

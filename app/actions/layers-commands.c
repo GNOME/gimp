@@ -176,7 +176,27 @@ static GimpInterpolationType  layer_scale_interp  = -1;
 /*  public functions  */
 
 void
-layers_text_tool_cmd_callback (GtkAction *action,
+layers_edit_cmd_callback (GtkAction *action,
+                          gpointer   data)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+  GtkWidget *widget;
+  return_if_no_layer (image, layer, data);
+  return_if_no_widget (widget, data);
+
+  if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
+    {
+      layers_edit_text_cmd_callback (action, data);
+    }
+  else
+    {
+      layers_edit_attributes_cmd_callback (action, data);
+    }
+}
+
+void
+layers_edit_text_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpImage *image;

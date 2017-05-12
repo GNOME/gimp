@@ -98,7 +98,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->new_item        = gimp_vectors_tree_view_item_new;
 
   iv_class->action_group            = "vectors";
-  iv_class->activate_action         = "vectors-path-tool";
+  iv_class->activate_action         = "vectors-edit";
   iv_class->new_action              = "vectors-new";
   iv_class->new_default_action      = "vectors-new-last-values";
   iv_class->raise_action            = "vectors-raise";

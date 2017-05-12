@@ -3,7 +3,7 @@
 
 <ui>
   <popup action="vectors-popup">
-    <menuitem action="vectors-path-tool" />
+    <menuitem action="vectors-edit" />
     <menuitem action="vectors-edit-attributes" />
     <menu action="vectors-color-tag-menu" name="Color Tags">
      <menuitem action="vectors-color-tag-none" />
