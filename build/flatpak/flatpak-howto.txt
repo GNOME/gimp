@@ -1,6 +1,14 @@
 GIMP Flatpak HowTo
 ==================
 
+* Install flatpak and flatpak-builder. There are packages for most
+  distributions. Check: http://flatpak.org/getting.html
+
+* Make sure `appstream-compose` is installed as well. This is used to parse the
+  appdata file and generate the appstream (metadata like comments, etc.).
+  For instance on Fedora, this is provided by the package `libappstream-glib`,
+  on Ubuntu by `appstream-util`…
+
 * GIMP uses Flatpak's GNOME runtime, which contains a base of libraries,
   some of which are dependencies of GIMP.
   Check out the available versions at: http://flatpak.org/runtimes.html
