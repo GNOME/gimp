@@ -1582,12 +1582,51 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
+      {
+        gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                          &tr_tool->x1, &tr_tool->y1,
+                          &tr_tool->x2, &tr_tool->y2);
+        tr_tool->x2 += tr_tool->x1;
+        tr_tool->y2 += tr_tool->y1;
+      }
+      break;
+
     case GIMP_TRANSFORM_TYPE_PATH:
-      gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
-                        &tr_tool->x1, &tr_tool->y1,
-                        &tr_tool->x2, &tr_tool->y2);
-      tr_tool->x2 += tr_tool->x1;
-      tr_tool->y2 += tr_tool->y1;
+      {
+        GimpChannel *selection = gimp_image_get_mask (image);
+
+        /* if selection is not empty, use its bounds to perform the
+         * transformation of the path
+         */
+
+        if (! gimp_channel_is_empty (selection))
+          {
+            gimp_item_bounds (GIMP_ITEM (selection),
+                              &tr_tool->x1, &tr_tool->y1,
+                              &tr_tool->x2, &tr_tool->y2);
+          }
+        else
+          {
+            /* without selection, test the emptiness of the path bounds :
+             * if empty, use the canvas bounds
+             * else use the path bounds
+             */
+
+            if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_active_vectors (image)),
+                                    &tr_tool->x1, &tr_tool->y1,
+                                    &tr_tool->x2, &tr_tool->y2))
+              {
+                tr_tool->x1 = 0;
+                tr_tool->y1 = 0;
+                tr_tool->x2 = gimp_image_get_width (image);
+                tr_tool->y2 = gimp_image_get_height (image);
+              }
+          }
+
+        tr_tool->x2 += tr_tool->x1;
+        tr_tool->y2 += tr_tool->y1;
+      }
+
       break;
     }
 
@@ -1866,6 +1905,8 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
             locked_message = _("The active path's strokes are locked.");
           else if (gimp_item_is_position_locked (item))
             locked_message = _("The active path's position is locked.");
+          else if (! gimp_vectors_get_n_strokes (GIMP_VECTORS (item)))
+            locked_message = _("The active path has no strokes.");
         }
       break;
     }
