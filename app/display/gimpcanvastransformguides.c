@@ -473,17 +473,27 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
         width  = MAX (1, private->x2 - private->x1);
         height = MAX (1, private->y2 - private->y1);
 
+        /*  the MIN() in the code below limits the grid to one line
+         *  every 5 image pixels, see bug 772667.
+         */
+
         if (private->type == GIMP_GUIDES_N_LINES)
           {
             if (width <= height)
               {
                 ngx = private->n_guides;
+                ngx = MIN (ngx, width / 5);
+
                 ngy = ngx * MAX (1, height / width);
+                ngy = MIN (ngy, height / 5);
               }
             else
               {
                 ngy = private->n_guides;
+                ngy = MIN (ngy, height / 5);
+
                 ngx = ngy * MAX (1, width / height);
+                ngx = MIN (ngx, width / 5);
               }
           }
         else /* GIMP_GUIDES_SPACING */
@@ -491,7 +501,10 @@ gimp_canvas_transform_guides_draw (GimpCanvasItem *item,
             gint grid_size = MAX (2, private->n_guides);
 
             ngx = width  / grid_size;
+            ngx = MIN (ngx, width / 5);
+
             ngy = height / grid_size;
+            ngy = MIN (ngy, height / 5);
           }
 
         for (i = 1; i <= ngx; i++)
