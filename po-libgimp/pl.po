@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-07 10:20+0200\n"
-"PO-Revision-Date: 2017-05-07 10:22+0200\n"
+"POT-Creation-Date: 2017-05-14 15:54+0200\n"
+"PO-Revision-Date: 2017-05-14 15:55+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1134,157 +1134,172 @@ msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Uruchom z ostatnio użytymi wartościami"
 
-#: ../libgimpbase/gimpbaseenums.c:1589
+#: ../libgimpbase/gimpbaseenums.c:1592
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Zbiorowe"
 
-#: ../libgimpbase/gimpbaseenums.c:1590
+#: ../libgimpbase/gimpbaseenums.c:1593
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Czerwone"
 
-#: ../libgimpbase/gimpbaseenums.c:1591
+#: ../libgimpbase/gimpbaseenums.c:1594
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Zielone"
 
-#: ../libgimpbase/gimpbaseenums.c:1592
+#: ../libgimpbase/gimpbaseenums.c:1595
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Niebieskie"
 
-#: ../libgimpbase/gimpbaseenums.c:1593
-msgctxt "select-criterion"
-msgid "Hue"
-msgstr "Barwa"
-
-#: ../libgimpbase/gimpbaseenums.c:1594
-msgctxt "select-criterion"
-msgid "Saturation"
-msgstr "Nasycenie"
-
-#: ../libgimpbase/gimpbaseenums.c:1595
-msgctxt "select-criterion"
-msgid "Value"
-msgstr "Wartość"
-
 #: ../libgimpbase/gimpbaseenums.c:1596
+msgctxt "select-criterion"
+msgid "Hue (HSV)"
+msgstr "Barwa (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:1597
+msgctxt "select-criterion"
+msgid "Saturation (HSV)"
+msgstr "Nasycenie (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:1598
+msgctxt "select-criterion"
+msgid "Value (HSV)"
+msgstr "Wartość (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:1599
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:1625
+#: ../libgimpbase/gimpbaseenums.c:1600
+msgctxt "select-criterion"
+msgid "Lightness (LCH)"
+msgstr "Jasność (LCH)"
+
+#: ../libgimpbase/gimpbaseenums.c:1601
+msgctxt "select-criterion"
+msgid "Chroma (LCH)"
+msgstr "Nasycenie (LCH)"
+
+#: ../libgimpbase/gimpbaseenums.c:1602
+msgctxt "select-criterion"
+msgid "Hue (LCH)"
+msgstr "Barwa (LCH)"
+
+#: ../libgimpbase/gimpbaseenums.c:1631
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Piksele"
 
-#: ../libgimpbase/gimpbaseenums.c:1626
+#: ../libgimpbase/gimpbaseenums.c:1632
 msgctxt "size-type"
 msgid "Points"
 msgstr "Punkty"
 
-#: ../libgimpbase/gimpbaseenums.c:1687
+#: ../libgimpbase/gimpbaseenums.c:1693
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Rysowanie linii"
 
-#: ../libgimpbase/gimpbaseenums.c:1688
+#: ../libgimpbase/gimpbaseenums.c:1694
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Rysowanie za pomocą narzędzia rysowania"
 
-#: ../libgimpbase/gimpbaseenums.c:1717
+#: ../libgimpbase/gimpbaseenums.c:1723
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Od lewej do prawej"
 
-#: ../libgimpbase/gimpbaseenums.c:1718
+#: ../libgimpbase/gimpbaseenums.c:1724
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Od prawej do lewej"
 
-#: ../libgimpbase/gimpbaseenums.c:1749
+#: ../libgimpbase/gimpbaseenums.c:1755
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Brak"
 
-#: ../libgimpbase/gimpbaseenums.c:1750
+#: ../libgimpbase/gimpbaseenums.c:1756
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Lekki"
 
-#: ../libgimpbase/gimpbaseenums.c:1751
+#: ../libgimpbase/gimpbaseenums.c:1757
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Średni"
 
-#: ../libgimpbase/gimpbaseenums.c:1752
+#: ../libgimpbase/gimpbaseenums.c:1758
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Pełny"
 
-#: ../libgimpbase/gimpbaseenums.c:1783
+#: ../libgimpbase/gimpbaseenums.c:1789
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Wyrównane do lewej"
 
-#: ../libgimpbase/gimpbaseenums.c:1784
+#: ../libgimpbase/gimpbaseenums.c:1790
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Wyrównane do prawej"
 
-#: ../libgimpbase/gimpbaseenums.c:1785
+#: ../libgimpbase/gimpbaseenums.c:1791
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Wyśrodkowane"
 
-#: ../libgimpbase/gimpbaseenums.c:1786
+#: ../libgimpbase/gimpbaseenums.c:1792
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Wypełnione"
 
-#: ../libgimpbase/gimpbaseenums.c:1816
+#: ../libgimpbase/gimpbaseenums.c:1822
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Cienie"
 
-#: ../libgimpbase/gimpbaseenums.c:1817
+#: ../libgimpbase/gimpbaseenums.c:1823
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Półtony"
 
-#: ../libgimpbase/gimpbaseenums.c:1818
+#: ../libgimpbase/gimpbaseenums.c:1824
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Światła"
 
-#: ../libgimpbase/gimpbaseenums.c:1847
+#: ../libgimpbase/gimpbaseenums.c:1853
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Zwykły (przedni)"
 
-#: ../libgimpbase/gimpbaseenums.c:1848
+#: ../libgimpbase/gimpbaseenums.c:1854
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Korekcyjny (tylny)"
 
-#: ../libgimpbase/gimpbaseenums.c:1879
+#: ../libgimpbase/gimpbaseenums.c:1885
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Dostosowanie"
 
-#: ../libgimpbase/gimpbaseenums.c:1880
+#: ../libgimpbase/gimpbaseenums.c:1886
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Przycięcie"
 
-#: ../libgimpbase/gimpbaseenums.c:1881
+#: ../libgimpbase/gimpbaseenums.c:1887
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Kadrowanie do wyniku"
 
-#: ../libgimpbase/gimpbaseenums.c:1882
+#: ../libgimpbase/gimpbaseenums.c:1888
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Kadrowanie z proporcjami"
@@ -2014,7 +2029,7 @@ msgstr "Rozmiar szachownicy"
 msgid "Check Style"
 msgstr "Wygląd szachownicy"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2130
+#: ../libgimpwidgets/gimppropwidgets.c:2142
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2636,75 +2651,3 @@ msgstr "Kontrast"
 #: ../modules/display-filter-high-contrast.c:226
 msgid "Contrast c_ycles:"
 msgstr "_Cykle kontrastu:"
-
-#: ../modules/display-filter-lcms.c:92
-msgid "Color management display filter using ICC color profiles"
-msgstr "Filtr zarządzania kolorami, używający profili kolorów ICC"
-
-#: ../modules/display-filter-lcms.c:124
-msgid "Color Management"
-msgstr "Zarządzanie kolorami"
-
-#: ../modules/display-filter-lcms.c:173
-msgid ""
-"This filter takes its configuration from the Color Management section in the "
-"Preferences dialog."
-msgstr ""
-"Ten filtr pobiera konfigurację z sekcji Zarządzanie kolorami okna "
-"Preferencji."
-
-#: ../modules/display-filter-lcms.c:187
-msgid "Mode of operation:"
-msgstr "Tryb działania:"
-
-#: ../modules/display-filter-lcms.c:194
-msgid "Image profile:"
-msgstr "Profil obrazu:"
-
-#: ../modules/display-filter-lcms.c:202
-msgid "Monitor profile:"
-msgstr "Profil monitora:"
-
-#: ../modules/display-filter-lcms.c:210
-msgid "Print simulation profile:"
-msgstr "Profil symulacji wydruku:"
-
-#: ../modules/display-filter-lcms.c:364
-msgid "None"
-msgstr "Brak"
-
-#: ../modules/display-filter-proof.c:91
-msgid "Color proof filter using ICC color profile"
-msgstr "Filtr korygujący kolory za pomocą profilu ICC"
-
-#: ../modules/display-filter-proof.c:129
-msgid "Intent"
-msgstr "Pożądany efekt"
-
-#: ../modules/display-filter-proof.c:137
-msgid "Black point compensation"
-msgstr "Kompensacja czarnego punktu"
-
-#: ../modules/display-filter-proof.c:144
-msgid "Profile"
-msgstr "Profil"
-
-#: ../modules/display-filter-proof.c:149
-msgid "Color Proof"
-msgstr "Korekcja kolorów"
-
-#: ../modules/display-filter-proof.c:292
-msgid "Choose an ICC Color Profile"
-msgstr "Wybór profilu kolorów ICC"
-
-#: ../modules/display-filter-proof.c:316
-msgid "_Profile:"
-msgstr "_Profil:"
-
-#: ../modules/display-filter-proof.c:322
-msgid "_Intent:"
-msgstr "Pożądany _efekt:"
-
-#: ../modules/display-filter-proof.c:327
-msgid "_Black Point Compensation"
-msgstr "Kompensacja _czarnego punktu"
