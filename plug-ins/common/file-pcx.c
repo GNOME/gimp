@@ -60,15 +60,10 @@ static void   load_4           (FILE             *fp,
                                 gint              height,
                                 guchar           *buf,
                                 guint16           bytes);
-static void   load_by_bpp      (FILE             *fp,
+static void   load_sub_8       (FILE             *fp,
                                 gint              width,
                                 gint              height,
                                 gint              bpp,
-                                guchar           *buf,
-                                guint16           bytes);
-static void   load_by_plane    (FILE             *fp,
-                                gint              width,
-                                gint              height,
                                 gint              plane,
                                 guchar           *buf,
                                 guint16           bytes);
@@ -473,39 +468,39 @@ load_image (const gchar  *filename,
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_1 (fd, width, height, dest, bytesperline);
-      gimp_image_set_colormap (image, mono, 2);
+      gimp_image_set_colormap (image, pcx_header.colormap, 2);
     }
-  else if (pcx_header.planes == 2 && pcx_header.bpp == 1)
+  else if (pcx_header.bpp == 1 && pcx_header.planes == 2)
     {
       dest = g_new (guchar, ((gsize) width) * height);
-      load_by_plane (fd, width, height, 2, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 16);
+      load_sub_8 (fd, width, height, 1, 2, dest, bytesperline);
+      gimp_image_set_colormap (image, pcx_header.colormap, 4);
     }
-  else if (pcx_header.planes == 1 && pcx_header.bpp == 2)
+  else if (pcx_header.bpp == 2 && pcx_header.planes == 1)
     {
       dest = g_new (guchar, ((gsize) width) * height);
-      load_by_bpp (fd, width, height, 2, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 16);
+      load_sub_8 (fd, width, height, 2, 1, dest, bytesperline); 
+      gimp_image_set_colormap (image, pcx_header.colormap, 4);
     }
-  else if (pcx_header.planes == 3 && pcx_header.bpp == 1)
+  else if (pcx_header.bpp == 1 && pcx_header.planes == 3)
     {
       dest = g_new (guchar, ((gsize) width) * height);
-      load_by_plane (fd, width, height, 3, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 16);
+      load_sub_8 (fd, width, height, 1, 3, dest, bytesperline);
+      gimp_image_set_colormap (image, pcx_header.colormap, 8);
     }
-  else if (pcx_header.planes == 4 && pcx_header.bpp == 1)
+  else if (pcx_header.bpp == 1 && pcx_header.planes == 4)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_4 (fd, width, height, dest, bytesperline);
       gimp_image_set_colormap (image, pcx_header.colormap, 16);
     }
-  else if (pcx_header.planes == 1 && pcx_header.bpp == 4)
+  else if (pcx_header.bpp == 4 && pcx_header.planes == 1)
     {
       dest = g_new (guchar, ((gsize) width) * height);
-      load_by_bpp (fd, width, height, 4, dest, bytesperline);
+      load_sub_8 (fd, width, height, 4, 1, dest, bytesperline);
       gimp_image_set_colormap (image, pcx_header.colormap, 16);
     }
-  else if (pcx_header.planes == 1 && pcx_header.bpp == 8)
+  else if (pcx_header.bpp == 8 && pcx_header.planes == 1)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_8 (fd, width, height, dest, bytesperline);
@@ -513,7 +508,7 @@ load_image (const gchar  *filename,
       fread (cmap, 768, 1, fd);
       gimp_image_set_colormap (image, cmap, 256);
     }
-  else if (pcx_header.planes == 3 && pcx_header.bpp == 8)
+  else if (pcx_header.bpp == 8 && pcx_header.planes == 3)
     {
       dest = g_new (guchar, ((gsize) width) * height * 3);
       load_24 (fd, width, height, dest, bytesperline);
@@ -639,47 +634,18 @@ load_4 (FILE    *fp,
 }
 
 static void
-load_by_bpp (FILE    *fp,
-            gint     width,
-            gint     height,
-            gint     bpp,
-            guchar  *buf,
-            guint16  bytes)
-{
-  gint    x, y;
-  guchar *line = g_new (guchar, bytes);
-  gint real_bpp = bpp - 1;
-  gint current_bit = 0;
-
-  for (y = 0; y < height; buf += width, ++y)
-    {
-      readline (fp, line, bytes);
-      for (x = 0; x < width; ++x)
-        {
-          buf[x] = 0;
-          for(int c = 0; c < bpp; c++)
-            {
-              current_bit = bpp * x + c; 
-              if (line[current_bit / 8] & (128 >> (current_bit % 8)))
-                buf[x] += (1 << (real_bpp - c));
-            }
-        }
-      gimp_progress_update ((double) y / (double) height);
-    }
-
-  g_free (line);
-}
-
-static void
-load_by_plane (FILE    *fp,
+load_sub_8    (FILE    *fp,
                gint     width,
                gint     height,
+               gint     bpp,
                gint     plane,
                guchar  *buf,
                guint16  bytes)
 {
-  gint    x, y, c;
+  gint    x, y, c, b;
   guchar *line = g_new (guchar, bytes);
+  gint real_bpp = bpp - 1;
+  gint current_bit = 0;
 
   for (y = 0; y < height; buf += width, ++y)
     {
@@ -690,8 +656,12 @@ load_by_plane (FILE    *fp,
           readline(fp, line, bytes);
           for (x = 0; x < width; ++x)
             {
-              if (line[x / 8] & (128 >> (x % 8)))
-                buf[x] += (1 << c);
+              for (b = 0; b < bpp; b++)
+                {
+                  current_bit = bpp * x + b;
+                  if (line[current_bit / 8] & (128 >> (current_bit % 8)))
+                    buf[x] += (1 << (real_bpp - b + c));
+                }
             }
         }
       gimp_progress_update ((double) y / (double) height);
@@ -794,7 +764,7 @@ save_image (const gchar  *filename,
   
       if(colors <= 16)
         {
-        for(i = 0; i < colors * 3; i++)
+        for(i = 0; i < (colors * 3); i++)
           {
             pcx_header.colormap[i] = cmap[i];
           }
@@ -822,6 +792,12 @@ save_image (const gchar  *filename,
       g_message (_("Cannot export images with alpha channel."));
       return FALSE;
   }
+  
+  /* Bytes per Line must be an even number, according to spec */
+  if (pcx_header.bytesperline % 2 != 0)
+    {
+      pcx_header.bytesperline++;
+    } 
 
   pixels = (guchar *) g_malloc (width * height * pcx_header.planes);
 
@@ -949,26 +925,27 @@ save_less_than_8 (FILE         *fp,
 
   line = (guchar *) g_malloc (((width + 7) / 8) * bpp);
 
-  for(gint x = 0; x < buf_size; x++)
+  for (gint x = 0; x < buf_size; x++)
     {
       byte_to_write |= (buf[x] << j);
       j -= bpp;
 
-      if(j < 0 || (x % width == line_end))
+      if (j < 0 || (x % width == line_end))
         {
           line[count] = byte_to_write;
           count++;
           byte_to_write = 0x00;
           j = bit_limit;
 
-          if((x % width == line_end))
+          if ((x % width == line_end))
             {
               writeline (fp, line, count);
               count = 0;
               gimp_progress_update ((double) x / (double) buf_size);
-            } 
+            }
         }
     }
+  g_free (line);
 }
 
 static void
