@@ -36,6 +36,8 @@
 
 #define LOAD_THUMB_PROC "file-darktable-load-thumb"
 
+static gchar   *get_executable_path  (const gchar      *suffix,
+                                      gboolean         *search_path);
 
 static void     query                (void);
 static void     run                  (const gchar      *name,
@@ -63,6 +65,18 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 MAIN ()
 
+static gchar *
+get_executable_path (const gchar *suffix,
+                     gboolean    *search_path)
+{
+  /* TODO: allow setting the location of the executable in preferences
+   */
+
+  *search_path = TRUE;
+  if (suffix)
+    return g_strconcat ("darktable", suffix, NULL);
+  return g_strdup ("darktable");
+}
 
 static void
 query (void)
@@ -93,9 +107,10 @@ query (void)
   };
 
   /* check if darktable is installed
-   * TODO: allow setting the location of the executable in preferences
    */
-  gchar    *argv[]           = { "darktable", "--version", NULL };
+  gboolean  search_path      = FALSE;
+  gchar    *exec_path        = get_executable_path (NULL, &search_path);
+  gchar    *argv[]           = { exec_path, "--version", NULL };
   gchar    *darktable_stdout = NULL;
   gboolean  have_darktable   = FALSE;
   gint      i;
@@ -104,7 +119,7 @@ query (void)
                     argv,
                     NULL,
                     G_SPAWN_STDERR_TO_DEV_NULL |
-                    G_SPAWN_SEARCH_PATH,
+                    (search_path ? G_SPAWN_SEARCH_PATH : 0),
                     NULL,
                     NULL,
                     &darktable_stdout,
@@ -130,6 +145,8 @@ query (void)
 
       g_free (darktable_stdout);
     }
+
+  g_free (exec_path);
 
   if (! have_darktable)
     return;
@@ -287,9 +304,11 @@ load_image (const gchar  *filename,
   gchar *darktable_stdout = NULL;
 
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
+  gboolean  search_path      = FALSE;
+  gchar    *exec_path        = get_executable_path (NULL, &search_path);
   gchar *argv[] =
     {
-      "darktable",
+      exec_path,
       "--library", ":memory:",
       "--luacmd",  lua_cmd,
       "--conf",    "plugins/lighttable/export/icctype=3",
@@ -310,7 +329,7 @@ load_image (const gchar  *filename,
                     NULL,
 //                     G_SPAWN_STDOUT_TO_DEV_NULL |
                     G_SPAWN_STDERR_TO_DEV_NULL |
-                    G_SPAWN_SEARCH_PATH,
+                    (search_path ? G_SPAWN_SEARCH_PATH : 0),
                     NULL,
                     NULL,
                     &darktable_stdout,
@@ -330,6 +349,7 @@ load_image (const gchar  *filename,
   g_free (lua_cmd);
   g_free (filename_out);
   g_free (export_filename);
+  g_free (exec_path);
 
   gimp_progress_update (1.0);
 
@@ -354,9 +374,11 @@ load_thumbnail_image (const gchar   *filename,
   gchar  *lua_cmd          = g_strdup_printf ("dofile(%s)", lua_quoted);
   gchar  *darktable_stdout = NULL;
 
+  gboolean  search_path      = FALSE;
+  gchar    *exec_path        = get_executable_path ("-cli", &search_path);
   gchar *argv[] =
     {
-      "darktable-cli",
+      exec_path,
       (gchar *) filename, filename_out,
       "--width",          size,
       "--height",         size,
@@ -380,7 +402,7 @@ load_thumbnail_image (const gchar   *filename,
                     argv,
                     NULL,
                     G_SPAWN_STDERR_TO_DEV_NULL |
-                    G_SPAWN_SEARCH_PATH,
+                    (search_path ? G_SPAWN_SEARCH_PATH : 0),
                     NULL,
                     NULL,
                     &darktable_stdout,
@@ -416,6 +438,7 @@ load_thumbnail_image (const gchar   *filename,
   g_free (size);
   g_free (lua_cmd);
   g_free (darktable_stdout);
+  g_free (exec_path);
 
   return image_ID;
 }
