@@ -33,6 +33,9 @@
 
 #include "file-formats.h"
 
+#ifdef GDK_WINDOWING_QUARTZ
+#include <CoreServices/CoreServices.h>
+#endif
 
 #define LOAD_THUMB_PROC "file-darktable-load-thumb"
 
@@ -71,6 +74,50 @@ get_executable_path (const gchar *suffix,
 {
   /* TODO: allow setting the location of the executable in preferences
    */
+
+#ifdef GDK_WINDOWING_QUARTZ
+  OSStatus status;
+  CFURLRef bundle_url = NULL;
+
+  /* For macOS, attempt searching for a darktable app bundle first. */
+  status = LSFindApplicationForInfo (kLSUnknownCreator,
+                                     CFSTR ("org.darktable"),
+                                     NULL, NULL, &bundle_url);
+
+  if (status >= 0)
+    {
+      CFBundleRef bundle;
+      CFURLRef exec_url, absolute_url;
+      CFStringRef path;
+      gchar *ret;
+      CFIndex len;
+
+      bundle = CFBundleCreate (kCFAllocatorDefault, bundle_url);
+      CFRelease (bundle_url);
+
+      exec_url = CFBundleCopyExecutableURL (bundle);
+      absolute_url = CFURLCopyAbsoluteURL (exec_url);
+      path = CFURLCopyFileSystemPath (absolute_url, kCFURLPOSIXPathStyle);
+
+      /* This gets us the length in UTF16 characters, we multiply by 2
+       * to make sure we have a buffer big enough to fit the UTF8 string.
+       */
+      len = CFStringGetLength (path);
+      ret = g_malloc0 (len * 2 * sizeof (gchar));
+      if (!CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
+                               kCFStringEncodingUTF8))
+        ret = NULL;
+
+      CFRelease (path);
+      CFRelease (absolute_url);
+      CFRelease (exec_url);
+      CFRelease (bundle);
+
+      if (ret)
+        return ret;
+    }
+  /* else, app bundle was not found, try path search as last resort. */
+#endif
 
   *search_path = TRUE;
   if (suffix)
