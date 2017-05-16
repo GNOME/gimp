@@ -188,7 +188,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GimpRGB       color;
 
-  gimp_rgba_set_uchar (&color, 0x80, 0x80, 0x80, 0xff);
+  gimp_rgba_set (&color, 1.0, 0.0, 1.0, 1.0); /* magenta */
 
   object_class->finalize     = gimp_color_config_finalize;
   object_class->set_property = gimp_color_config_set_property;
