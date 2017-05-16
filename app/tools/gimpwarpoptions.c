@@ -43,6 +43,7 @@ enum
   PROP_EFFECT_STRENGTH,
   PROP_EFFECT_SIZE,
   PROP_EFFECT_HARDNESS,
+  PROP_STROKE_SPACING,
   PROP_N_ANIMATION_FRAMES
 };
 
@@ -97,7 +98,14 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                            "effect-hardness",
                            _("Hardness"),
                            _("Effect Hardness"),
-                           0.0, 1.0, 0.5,
+                           0.0, 100.0, 50.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_SPACING,
+                           "stroke-spacing",
+                           _("Spacing"),
+                           _("Stroke Spacing"),
+                           1.0, 100.0, 20.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_N_ANIMATION_FRAMES,
@@ -135,6 +143,9 @@ gimp_warp_options_set_property (GObject      *object,
     case PROP_EFFECT_HARDNESS:
       options->effect_hardness = g_value_get_double (value);
       break;
+    case PROP_STROKE_SPACING:
+      options->stroke_spacing = g_value_get_double (value);
+      break;
     case PROP_N_ANIMATION_FRAMES:
       options->n_animation_frames = g_value_get_int (value);
       break;
@@ -166,6 +177,9 @@ gimp_warp_options_get_property (GObject    *object,
       break;
     case PROP_EFFECT_HARDNESS:
       g_value_set_double (value, options->effect_hardness);
+      break;
+    case PROP_STROKE_SPACING:
+      g_value_set_double (value, options->stroke_spacing);
       break;
     case PROP_N_ANIMATION_FRAMES:
       g_value_set_int (value, options->n_animation_frames);
@@ -206,8 +220,14 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (scale);
 
   scale = gimp_prop_spin_scale_new (config, "effect-hardness", NULL,
-                                    0.01, 1.0, 2);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 1.0);
+                                    1, 10, 1);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_spin_scale_new (config, "stroke-spacing", NULL,
+                                    1, 10, 1);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 

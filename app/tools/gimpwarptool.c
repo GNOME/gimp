@@ -247,7 +247,8 @@ gimp_warp_tool_button_press (GimpTool            *tool,
                                 "behavior",  options->behavior,
                                 "strength",  options->effect_strength,
                                 "size",      options->effect_size,
-                                "hardness",  options->effect_hardness,
+                                "hardness",  options->effect_hardness / 100.0,
+                                "spacing",   options->stroke_spacing / 100.0,
                                 "stroke",    wt->current_stroke,
                                 NULL);
 

@@ -43,6 +43,7 @@ struct _GimpWarpOptions
   gdouble           effect_strength;
   gdouble           effect_size;
   gdouble           effect_hardness;
+  gdouble           stroke_spacing;
 
   gint              n_animation_frames;
 
