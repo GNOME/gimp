@@ -34,7 +34,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-16 08:41+0200\n"
-"PO-Revision-Date: 2017-05-16 08:46+0200\n"
+"PO-Revision-Date: 2017-05-16 10:25+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -4170,7 +4170,7 @@ msgstr "Imposta un profilo colore all'immagine"
 #: ../app/actions/image-actions.c:93
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
-msgstr "_Converti a profilo colore..."
+msgstr "_Converti in profilo colore..."
 
 #: ../app/actions/image-actions.c:94
 msgctxt "image-action"
