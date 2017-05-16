@@ -121,6 +121,7 @@ static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt,
                                                      GeglNode              *op);
 static void       gimp_warp_tool_remove_op          (GimpWarpTool          *wt,
                                                      GeglNode              *op);
+static void       gimp_warp_tool_free_op            (GeglNode              *op);
 
 static void       gimp_warp_tool_animate            (GimpWarpTool          *wt);
 
@@ -304,7 +305,7 @@ gimp_warp_tool_button_release (GimpTool              *tool,
       gimp_warp_tool_undo (tool, display);
 
       /*  the just undone stroke has no business on the redo stack  */
-      g_object_unref (wt->redo_stack->data);
+      gimp_warp_tool_free_op (wt->redo_stack->data);
       wt->redo_stack = g_list_remove_link (wt->redo_stack, wt->redo_stack);
     }
   else
@@ -312,7 +313,8 @@ gimp_warp_tool_button_release (GimpTool              *tool,
       if (wt->redo_stack)
         {
           /*  the redo stack becomes invalid by actually doing a stroke  */
-          g_list_free_full (wt->redo_stack, (GDestroyNotify) g_object_unref);
+          g_list_free_full (wt->redo_stack,
+                            (GDestroyNotify) gimp_warp_tool_free_op);
           wt->redo_stack = NULL;
         }
 
@@ -483,6 +485,7 @@ gimp_warp_tool_undo (GimpTool    *tool,
 {
   GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
   GeglNode     *to_delete;
+  GeglNode     *prev_node;
   const gchar  *type;
 
   if (! wt->render_node)
@@ -494,11 +497,17 @@ gimp_warp_tool_undo (GimpTool    *tool,
   if (strcmp (type, "gegl:warp"))
     return FALSE;
 
-  wt->redo_stack = g_list_prepend (wt->redo_stack, g_object_ref (to_delete));
+  wt->redo_stack = g_list_prepend (wt->redo_stack, to_delete);
 
-  gimp_warp_tool_remove_op (wt, to_delete);
+  /* we connect render_node to the previous node, but keep the current node
+   * in the graph, connected to the previous node as well, so that it doesn't
+   * get invalidated and maintains its cache.  this way, redoing it doesn't
+   * require reprocessing.
+   */
+  prev_node = gegl_node_get_producer (to_delete, "input", NULL);
 
-  gegl_node_remove_child (wt->graph, to_delete);
+  gegl_node_connect_to (prev_node,       "output",
+                        wt->render_node, "aux");
 
   gimp_warp_tool_update_stroke (wt, to_delete);
 
@@ -517,8 +526,8 @@ gimp_warp_tool_redo (GimpTool    *tool,
 
   to_add = wt->redo_stack->data;
 
-  gimp_warp_tool_add_op (wt, to_add);
-  g_object_unref (to_add);
+  gegl_node_connect_to (to_add,          "output",
+                        wt->render_node, "aux");
 
   wt->redo_stack = g_list_remove_link (wt->redo_stack, wt->redo_stack);
 
@@ -651,7 +660,7 @@ gimp_warp_tool_halt (GimpWarpTool *wt)
 
   if (wt->redo_stack)
     {
-      g_list_free_full (wt->redo_stack, (GDestroyNotify) g_object_unref);
+      g_list_free (wt->redo_stack);
       wt->redo_stack = NULL;
     }
 
@@ -868,6 +877,18 @@ gimp_warp_tool_remove_op (GimpWarpTool *wt,
                         wt->render_node, "aux");
 
   gegl_node_remove_child (wt->graph, op);
+}
+
+static void
+gimp_warp_tool_free_op (GeglNode *op)
+{
+  GeglNode *parent;
+
+  parent = gegl_node_get_parent (op);
+
+  g_assert (parent != NULL);
+
+  gegl_node_remove_child (parent, op);
 }
 
 static void
