@@ -33,8 +33,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-10 13:01+0200\n"
-"PO-Revision-Date: 2017-05-10 13:06+0200\n"
+"POT-Creation-Date: 2017-05-16 08:41+0200\n"
+"PO-Revision-Date: 2017-05-16 08:46+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -1214,7 +1214,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1998
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1999
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:777 ../app/widgets/gimpdnd-xds.c:89
@@ -1949,7 +1949,7 @@ msgstr "Cancella la cronologia documenti"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:381
 #: ../app/tools/gimpforegroundselecttool.c:309 ../app/tools/gimptexttool.c:1528
-#: ../app/tools/gimptransformtool.c:1661 ../app/widgets/gimpactionview.c:674
+#: ../app/tools/gimptransformtool.c:1700 ../app/widgets/gimpactionview.c:674
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:665
 #: ../app/widgets/gimpcontrollerlist.c:568
@@ -4532,7 +4532,7 @@ msgstr "Riflessione"
 msgid "Rotating"
 msgstr "Rotazione"
 
-#: ../app/actions/image-commands.c:846 ../app/actions/layers-commands.c:779
+#: ../app/actions/image-commands.c:846 ../app/actions/layers-commands.c:802
 msgid "Cannot crop because the current selection is empty."
 msgstr "Non è possibile ritagliare perché la regione selezionata è vuota."
 
@@ -4583,7 +4583,7 @@ msgid "Scale Image"
 msgstr "Scala immagine"
 
 #. Scaling
-#: ../app/actions/image-commands.c:1449 ../app/actions/layers-commands.c:1569
+#: ../app/actions/image-commands.c:1449 ../app/actions/layers-commands.c:1592
 #: ../app/dialogs/preferences-dialog.c:1438
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
@@ -4705,250 +4705,260 @@ msgstr "_Modalità livelli"
 
 #: ../app/actions/layers-actions.c:89
 msgctxt "layers-action"
-msgid "Te_xt Tool"
-msgstr "Str_umento testo"
+msgid "Default edit action"
+msgstr "Azione di modifica predefinita"
 
 #: ../app/actions/layers-actions.c:90
 msgctxt "layers-action"
-msgid "Activate the text tool on this text layer"
-msgstr "Attiva lo strumento testo in questo livello di testo"
+msgid "Activate the default edit action for this type of layer"
+msgstr "Attiva l'azione di modifica predefinita per questo tipo di livello"
 
 #: ../app/actions/layers-actions.c:95
+msgctxt "layers-action"
+msgid "Edit Te_xt on canvas"
+msgstr "Modifica _testo sull'immagine"
+
+#: ../app/actions/layers-actions.c:96
+msgctxt "layers-action"
+msgid "Edit this text layer content on canvas"
+msgstr "Modifica il contenuto di questo livello di testo sull'immagine"
+
+#: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "_Modifica attributi di livello..."
 
-#: ../app/actions/layers-actions.c:96
+#: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Modifica il nome del livello"
 
-#: ../app/actions/layers-actions.c:101 ../app/actions/layers-actions.c:879
+#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:887
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Nuovo livello..."
 
-#: ../app/actions/layers-actions.c:102
+#: ../app/actions/layers-actions.c:108
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Crea un nuovo livello e aggiungilo all'immagine"
 
-#: ../app/actions/layers-actions.c:107 ../app/actions/layers-actions.c:880
+#: ../app/actions/layers-actions.c:113 ../app/actions/layers-actions.c:888
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Nuovo livello"
 
-#: ../app/actions/layers-actions.c:108
+#: ../app/actions/layers-actions.c:114
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "Nuovo livello con gli ultimi valori utilizzati"
 
-#: ../app/actions/layers-actions.c:113
+#: ../app/actions/layers-actions.c:119
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "Nuovo dal _visibile"
 
-#: ../app/actions/layers-actions.c:115
+#: ../app/actions/layers-actions.c:121
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "Crea un nuovo livello da ciò che è visibile di questa immagine"
 
-#: ../app/actions/layers-actions.c:120
+#: ../app/actions/layers-actions.c:126
 msgctxt "layers-action"
 msgid "New Layer _Group"
 msgstr "Nuovo _gruppo livelli"
 
-#: ../app/actions/layers-actions.c:121
+#: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
 msgstr "Crea un nuovo gruppo livelli e aggiungilo all'immagine"
 
-#: ../app/actions/layers-actions.c:126
+#: ../app/actions/layers-actions.c:132
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "D_uplica livello"
 
-#: ../app/actions/layers-actions.c:128
+#: ../app/actions/layers-actions.c:134
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Crea un duplicato del livello e aggiungilo all'immagine"
 
-#: ../app/actions/layers-actions.c:133
+#: ../app/actions/layers-actions.c:139
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "_Elimina livello"
 
-#: ../app/actions/layers-actions.c:134
+#: ../app/actions/layers-actions.c:140
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "Cancella questo livello"
 
-#: ../app/actions/layers-actions.c:139
+#: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "_Alza il livello"
 
-#: ../app/actions/layers-actions.c:140
+#: ../app/actions/layers-actions.c:146
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "Alza questo livello di una posizione nella pila"
 
-#: ../app/actions/layers-actions.c:145
+#: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "Alza il livello fino in _cima"
 
-#: ../app/actions/layers-actions.c:146
+#: ../app/actions/layers-actions.c:152
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "Sposta questo livello sino alla cima della pila"
 
-#: ../app/actions/layers-actions.c:151
+#: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "Abbassa il _livello"
 
-#: ../app/actions/layers-actions.c:152
+#: ../app/actions/layers-actions.c:158
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "Abbassa questo livello di una posizione nella pila"
 
-#: ../app/actions/layers-actions.c:157
+#: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "Abbassa il livello fino in _fondo"
 
-#: ../app/actions/layers-actions.c:158
+#: ../app/actions/layers-actions.c:164
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Sposta questo livello fino in fondo alla pila"
 
-#: ../app/actions/layers-actions.c:163
+#: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "Àncor_a livello"
 
-#: ../app/actions/layers-actions.c:164
+#: ../app/actions/layers-actions.c:170
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Àncora il livello fluttuante"
 
-#: ../app/actions/layers-actions.c:169
+#: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "_Fondi in basso"
 
-#: ../app/actions/layers-actions.c:170
+#: ../app/actions/layers-actions.c:176
 msgctxt "layers-action"
 msgid "Merge this layer with the first visible layer below it"
 msgstr "Fondi questo livello con il primo visibile sotto di esso"
 
-#: ../app/actions/layers-actions.c:175
+#: ../app/actions/layers-actions.c:181
 msgctxt "layers-action"
 msgid "Merge Layer Group"
 msgstr "Fondi il gruppo livelli"
 
-#: ../app/actions/layers-actions.c:176
+#: ../app/actions/layers-actions.c:182
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
 msgstr "Fonde i livelli gruppo livelli in un livello normale"
 
-#: ../app/actions/layers-actions.c:181
+#: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "Fondi livelli _visibili..."
 
-#: ../app/actions/layers-actions.c:182
+#: ../app/actions/layers-actions.c:188
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Fonde tutti i livelli visibili in un livello"
 
-#: ../app/actions/layers-actions.c:187
+#: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "A_ppiattisci immagine"
 
-#: ../app/actions/layers-actions.c:188
+#: ../app/actions/layers-actions.c:194
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Fonde tutti i livelli in uno e rimuove la trasparenza"
 
-#: ../app/actions/layers-actions.c:193
+#: ../app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "_Abbandona informazioni sul testo"
 
-#: ../app/actions/layers-actions.c:194
+#: ../app/actions/layers-actions.c:200
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "Trasforma questo livello di testo in un livello normale"
 
-#: ../app/actions/layers-actions.c:199
+#: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "Testo a t_racciato"
 
-#: ../app/actions/layers-actions.c:200
+#: ../app/actions/layers-actions.c:206
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "Crea un tracciato da questo livello di testo"
 
-#: ../app/actions/layers-actions.c:205
+#: ../app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Testo lun_go il tracciato"
 
-#: ../app/actions/layers-actions.c:206
+#: ../app/actions/layers-actions.c:212
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Disponi il livello testo lungo il tracciato corrente"
 
-#: ../app/actions/layers-actions.c:211
+#: ../app/actions/layers-actions.c:217
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "Dimensione margini del livell_o..."
 
-#: ../app/actions/layers-actions.c:212
+#: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "Regola le dimensioni del livello"
 
-#: ../app/actions/layers-actions.c:217
+#: ../app/actions/layers-actions.c:223
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "Livello a dimensione _immagine"
 
-#: ../app/actions/layers-actions.c:218
+#: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "Ridimensiona il livello alle dimensioni dell'immagine"
 
-#: ../app/actions/layers-actions.c:223
+#: ../app/actions/layers-actions.c:229
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "_Scala livello..."
 
-#: ../app/actions/layers-actions.c:224
+#: ../app/actions/layers-actions.c:230
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "Cambia la dimensione del contenuto del livello"
 
-#: ../app/actions/layers-actions.c:229
+#: ../app/actions/layers-actions.c:235
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "Rita_glia alla selezione"
 
-#: ../app/actions/layers-actions.c:230
+#: ../app/actions/layers-actions.c:236
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "Ritaglia il livello alla dimensione della selezione"
 
-#: ../app/actions/layers-actions.c:235
+#: ../app/actions/layers-actions.c:241
 msgctxt "layers-action"
 msgid "Crop to C_ontent"
 msgstr "Ritaglia al c_ontenuto"
 
-#: ../app/actions/layers-actions.c:236
+#: ../app/actions/layers-actions.c:242
 msgctxt "layers-action"
 msgid ""
 "Crop the layer to the extents of its content (remove empty borders from the "
@@ -4957,359 +4967,359 @@ msgstr ""
 "Ritaglia il livello all'estensione dei suoi contenuti (rimuove i bordi vuoti "
 "dal livello)"
 
-#: ../app/actions/layers-actions.c:241 ../app/actions/layers-actions.c:251
+#: ../app/actions/layers-actions.c:247 ../app/actions/layers-actions.c:257
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "Aggi_ungi maschera di livello..."
 
-#: ../app/actions/layers-actions.c:243 ../app/actions/layers-actions.c:253
+#: ../app/actions/layers-actions.c:249 ../app/actions/layers-actions.c:259
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
 "Aggiungi una maschera che permetta la modifica non distruttiva della "
 "trasparenza"
 
-#: ../app/actions/layers-actions.c:258
+#: ../app/actions/layers-actions.c:264
 msgctxt "layers-action"
 msgid "Add La_yer Mask"
 msgstr "Aggi_ungi maschera di livello"
 
-#: ../app/actions/layers-actions.c:260
+#: ../app/actions/layers-actions.c:266
 msgctxt "layers-action"
 msgid "Add a mask with last used values"
 msgstr "Aggiungo una maschera con gli ultimi valori utilizzati"
 
-#: ../app/actions/layers-actions.c:265
+#: ../app/actions/layers-actions.c:271
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Aggiungi _canale alfa"
 
-#: ../app/actions/layers-actions.c:266
+#: ../app/actions/layers-actions.c:272
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "Aggiungi le informazioni di trasparenza al livello"
 
-#: ../app/actions/layers-actions.c:271
+#: ../app/actions/layers-actions.c:277
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "_Rimuovi canale alfa"
 
-#: ../app/actions/layers-actions.c:272
+#: ../app/actions/layers-actions.c:278
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "Rimuovi le informazioni di trasparenza dal livello"
 
-#: ../app/actions/layers-actions.c:280
+#: ../app/actions/layers-actions.c:286
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "Modifica masch_era di livello"
 
-#: ../app/actions/layers-actions.c:281
+#: ../app/actions/layers-actions.c:287
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Lavora sulla maschera di livello"
 
-#: ../app/actions/layers-actions.c:287
+#: ../app/actions/layers-actions.c:293
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "Mostra maschera di li_vello"
 
-#: ../app/actions/layers-actions.c:293
+#: ../app/actions/layers-actions.c:299
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "_Disabilita maschera di livello"
 
-#: ../app/actions/layers-actions.c:294
+#: ../app/actions/layers-actions.c:300
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "Abbandona gli effetti della maschera di livello"
 
-#: ../app/actions/layers-actions.c:300
+#: ../app/actions/layers-actions.c:306
 msgctxt "layers-action"
 msgid "_Visible"
 msgstr "_Visibile"
 
-#: ../app/actions/layers-actions.c:306
+#: ../app/actions/layers-actions.c:312
 msgctxt "layers-action"
 msgid "_Linked"
 msgstr "Co_llegato"
 
 #. GIMP_ICON_LOCK
-#: ../app/actions/layers-actions.c:312
+#: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
 msgid "L_ock pixels"
 msgstr "Bl_occa i pixel"
 
-#: ../app/actions/layers-actions.c:318
+#: ../app/actions/layers-actions.c:324
 msgctxt "layers-action"
 msgid "L_ock position"
 msgstr "Bl_occa la posizione"
 
-#: ../app/actions/layers-actions.c:324
+#: ../app/actions/layers-actions.c:330
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "Blocca canale alfa"
 
-#: ../app/actions/layers-actions.c:326
+#: ../app/actions/layers-actions.c:332
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr ""
 "Mantieni le informazioni di trasparenza su questo livello dall'essere "
 "modificate"
 
-#: ../app/actions/layers-actions.c:335 ../app/actions/layers-actions.c:353
-#: ../app/actions/layers-actions.c:371
+#: ../app/actions/layers-actions.c:341 ../app/actions/layers-actions.c:359
+#: ../app/actions/layers-actions.c:377
 msgctxt "layers-action"
 msgid "Auto"
 msgstr "Auto"
 
-#: ../app/actions/layers-actions.c:340 ../app/actions/layers-actions.c:358
+#: ../app/actions/layers-actions.c:346 ../app/actions/layers-actions.c:364
 msgctxt "layers-action"
 msgid "RGB (linear)"
 msgstr "RGB (lineare)"
 
-#: ../app/actions/layers-actions.c:345 ../app/actions/layers-actions.c:363
+#: ../app/actions/layers-actions.c:351 ../app/actions/layers-actions.c:369
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
 msgstr "RGB (percettivo)"
 
-#: ../app/actions/layers-actions.c:376
+#: ../app/actions/layers-actions.c:382
 msgctxt "layers-action"
 msgid "Source over"
 msgstr "Sorgente sopra"
 
-#: ../app/actions/layers-actions.c:381
+#: ../app/actions/layers-actions.c:387
 msgctxt "layers-action"
 msgid "Source atop"
 msgstr "Sorgente in cima"
 
-#: ../app/actions/layers-actions.c:386
+#: ../app/actions/layers-actions.c:392
 msgctxt "layers-action"
 msgid "Source in"
 msgstr "Sorgente in"
 
-#: ../app/actions/layers-actions.c:391
+#: ../app/actions/layers-actions.c:397
 msgctxt "layers-action"
 msgid "Destination atop"
 msgstr "Destinazione in cima"
 
 #. abused
-#: ../app/actions/layers-actions.c:399
+#: ../app/actions/layers-actions.c:405
 msgctxt "layers-action"
 msgid "None"
 msgstr "Nessuna"
 
-#: ../app/actions/layers-actions.c:400
+#: ../app/actions/layers-actions.c:406
 msgctxt "layers-action"
 msgid "Clear color tag"
 msgstr "Pulisci la targhetta colore"
 
-#: ../app/actions/layers-actions.c:405
+#: ../app/actions/layers-actions.c:411
 msgctxt "layers-action"
 msgid "Blue"
 msgstr "Blu"
 
-#: ../app/actions/layers-actions.c:406
+#: ../app/actions/layers-actions.c:412
 msgctxt "layers-action"
 msgid "Set color tag to blue"
 msgstr "Imposta il colore della targhetta a blu"
 
-#: ../app/actions/layers-actions.c:411
+#: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
 msgid "Green"
 msgstr "Verde"
 
-#: ../app/actions/layers-actions.c:412
+#: ../app/actions/layers-actions.c:418
 msgctxt "layers-action"
 msgid "Set color tag to green"
 msgstr "Imposta il colore della targhetta a verde"
 
-#: ../app/actions/layers-actions.c:417
+#: ../app/actions/layers-actions.c:423
 msgctxt "layers-action"
 msgid "Yellow"
 msgstr "Giallo"
 
-#: ../app/actions/layers-actions.c:418
+#: ../app/actions/layers-actions.c:424
 msgctxt "layers-action"
 msgid "Set color tag to yellow"
 msgstr "Imposta il colore della targhetta a giallo"
 
-#: ../app/actions/layers-actions.c:423
+#: ../app/actions/layers-actions.c:429
 msgctxt "layers-action"
 msgid "Orange"
 msgstr "Arancio"
 
-#: ../app/actions/layers-actions.c:424
+#: ../app/actions/layers-actions.c:430
 msgctxt "layers-action"
 msgid "Set color tag to orange"
 msgstr "Imposta il colore della targhetta a arancio"
 
-#: ../app/actions/layers-actions.c:429
+#: ../app/actions/layers-actions.c:435
 msgctxt "layers-action"
 msgid "Brown"
 msgstr "Marrone"
 
-#: ../app/actions/layers-actions.c:430
+#: ../app/actions/layers-actions.c:436
 msgctxt "layers-action"
 msgid "Set color tag to brown"
 msgstr "Imposta il colore della targhetta a marrone"
 
-#: ../app/actions/layers-actions.c:435
+#: ../app/actions/layers-actions.c:441
 msgctxt "layers-action"
 msgid "Red"
 msgstr "Rosso"
 
-#: ../app/actions/layers-actions.c:436
+#: ../app/actions/layers-actions.c:442
 msgctxt "layers-action"
 msgid "Set color tag to red"
 msgstr "Imposta il colore della targhetta a rosso"
 
-#: ../app/actions/layers-actions.c:441
+#: ../app/actions/layers-actions.c:447
 msgctxt "layers-action"
 msgid "Violet"
 msgstr "Viola"
 
-#: ../app/actions/layers-actions.c:442
+#: ../app/actions/layers-actions.c:448
 msgctxt "layers-action"
 msgid "Set color tag to violet"
 msgstr "Imposta il colore della targhetta a viola"
 
-#: ../app/actions/layers-actions.c:447
+#: ../app/actions/layers-actions.c:453
 msgctxt "layers-action"
 msgid "Gray"
 msgstr "Grigio"
 
-#: ../app/actions/layers-actions.c:448
+#: ../app/actions/layers-actions.c:454
 msgctxt "layers-action"
 msgid "Set color tag to gray"
 msgstr "Imposta il colore della targhetta a grigio"
 
-#: ../app/actions/layers-actions.c:456
+#: ../app/actions/layers-actions.c:462
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Applica _maschera di livello"
 
-#: ../app/actions/layers-actions.c:457
+#: ../app/actions/layers-actions.c:463
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Applica l'effetto della maschera di livello e rimuovilo"
 
-#: ../app/actions/layers-actions.c:462
+#: ../app/actions/layers-actions.c:468
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Elimina masc_hera di livello"
 
-#: ../app/actions/layers-actions.c:463
+#: ../app/actions/layers-actions.c:469
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Rimuovi la maschera di livello ed i suoi effetti"
 
-#: ../app/actions/layers-actions.c:471
+#: ../app/actions/layers-actions.c:477
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "_Maschera a selezione"
 
-#: ../app/actions/layers-actions.c:472
+#: ../app/actions/layers-actions.c:478
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Rimpiazza la selezione con la maschera di livello"
 
-#: ../app/actions/layers-actions.c:477
+#: ../app/actions/layers-actions.c:483
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "_Aggiungi alla selezione"
 
-#: ../app/actions/layers-actions.c:478
+#: ../app/actions/layers-actions.c:484
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Aggiungi la maschera di livello alla selezione corrente"
 
-#: ../app/actions/layers-actions.c:483 ../app/actions/layers-actions.c:512
+#: ../app/actions/layers-actions.c:489 ../app/actions/layers-actions.c:518
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "_Sottrai dalla selezione"
 
-#: ../app/actions/layers-actions.c:484
+#: ../app/actions/layers-actions.c:490
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Sottrai la maschera di livello dalla selezione corrente"
 
-#: ../app/actions/layers-actions.c:489 ../app/actions/layers-actions.c:519
+#: ../app/actions/layers-actions.c:495 ../app/actions/layers-actions.c:525
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "_Interseca con la selezione"
 
-#: ../app/actions/layers-actions.c:490
+#: ../app/actions/layers-actions.c:496
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "Interseca la maschera di livello con la selezione corrente"
 
-#: ../app/actions/layers-actions.c:498
+#: ../app/actions/layers-actions.c:504
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Al_fa a selezione"
 
-#: ../app/actions/layers-actions.c:500
+#: ../app/actions/layers-actions.c:506
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Rimpiazza la selezione con il canale alfa del livello"
 
-#: ../app/actions/layers-actions.c:505
+#: ../app/actions/layers-actions.c:511
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "A_ggiungi alla selezione"
 
-#: ../app/actions/layers-actions.c:507
+#: ../app/actions/layers-actions.c:513
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Aggiungi il canale alfa del livello alla selezione corrente"
 
-#: ../app/actions/layers-actions.c:514
+#: ../app/actions/layers-actions.c:520
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Sottrai il canale alfa del livello dalla selezione corrente"
 
-#: ../app/actions/layers-actions.c:521
+#: ../app/actions/layers-actions.c:527
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Interseca il canale alfa del livello con la selezione corrente"
 
-#: ../app/actions/layers-actions.c:529
+#: ../app/actions/layers-actions.c:535
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Seleziona il livello in _cima"
 
-#: ../app/actions/layers-actions.c:530
+#: ../app/actions/layers-actions.c:536
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Seleziona il livello in cima"
 
-#: ../app/actions/layers-actions.c:535
+#: ../app/actions/layers-actions.c:541
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Seleziona il livello in _fondo"
 
-#: ../app/actions/layers-actions.c:536
+#: ../app/actions/layers-actions.c:542
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Seleziona il livello in fondo"
 
-#: ../app/actions/layers-actions.c:541
+#: ../app/actions/layers-actions.c:547
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "Seleziona il livello _precedente"
 
-#: ../app/actions/layers-actions.c:542
+#: ../app/actions/layers-actions.c:548
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "Seleziona il livello sopra il livello corrente"
 
-#: ../app/actions/layers-actions.c:547
+#: ../app/actions/layers-actions.c:553
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "Selezio_na il livello successivo"
 
-#: ../app/actions/layers-actions.c:548
+#: ../app/actions/layers-actions.c:554
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "Seleziona il livello sotto il livello corrente"
@@ -5317,65 +5327,65 @@ msgstr "Seleziona il livello sotto il livello corrente"
 #. Will be followed with e.g. "Shift-Click
 #. on thumbnail"
 #.
-#: ../app/actions/layers-actions.c:629
+#: ../app/actions/layers-actions.c:635
 msgid "Shortcut: "
 msgstr "Scorciatoia: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
 #.
-#: ../app/actions/layers-actions.c:634
+#: ../app/actions/layers-actions.c:640
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-clic sulla miniatura in livelli agganciabili"
 
-#: ../app/actions/layers-actions.c:874 ../app/actions/layers-actions.c:875
+#: ../app/actions/layers-actions.c:882 ../app/actions/layers-actions.c:883
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "A _nuovo livello"
 
-#: ../app/actions/layers-commands.c:236 ../app/actions/layers-commands.c:1418
+#: ../app/actions/layers-commands.c:259 ../app/actions/layers-commands.c:1441
 msgid "Layer Attributes"
 msgstr "Attributi di livello"
 
-#: ../app/actions/layers-commands.c:239
+#: ../app/actions/layers-commands.c:262
 msgid "Edit Layer Attributes"
 msgstr "Modifica attributi livello"
 
-#: ../app/actions/layers-commands.c:305 ../app/actions/layers-commands.c:380
+#: ../app/actions/layers-commands.c:328 ../app/actions/layers-commands.c:403
 #: ../app/widgets/gimpdrawabletreeview.c:331
 #: ../app/widgets/gimplayertreeview.c:846
 msgid "New Layer"
 msgstr "Nuovo livello"
 
-#: ../app/actions/layers-commands.c:308
+#: ../app/actions/layers-commands.c:331
 msgid "Create a New Layer"
 msgstr "Crea un nuovo livello"
 
-#: ../app/actions/layers-commands.c:420 ../app/core/gimptoolinfo.c:82
+#: ../app/actions/layers-commands.c:443 ../app/core/gimptoolinfo.c:82
 msgid "Visible"
 msgstr "Visibile"
 
-#: ../app/actions/layers-commands.c:685
+#: ../app/actions/layers-commands.c:708
 msgid "Set Layer Boundary Size"
 msgstr "Imposta dimensioni margini del livello"
 
-#: ../app/actions/layers-commands.c:747
+#: ../app/actions/layers-commands.c:770
 msgid "Scale Layer"
 msgstr "Scala livello"
 
-#: ../app/actions/layers-commands.c:789
+#: ../app/actions/layers-commands.c:812
 msgid "Crop Layer to Selection"
 msgstr "Ritaglia il livello alla selezione"
 
-#: ../app/actions/layers-commands.c:819
+#: ../app/actions/layers-commands.c:842
 msgid "Crop Layer to Content"
 msgstr "Ritaglia il livello al contenuto"
 
-#: ../app/actions/layers-commands.c:832
+#: ../app/actions/layers-commands.c:855
 msgid "Cannot crop because the active layer has no content."
 msgstr "Impossibile ritagliare perché il livello attivo selezionato è vuoto."
 
-#: ../app/actions/layers-commands.c:839
+#: ../app/actions/layers-commands.c:862
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Impossibile ritagliare perché il livello attivo è già stato ritagliato ai "
@@ -5740,7 +5750,7 @@ msgstr "Reimposta tutti i filtri"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:380 ../app/tools/gimptransformtool.c:1660
+#: ../app/tools/gimpfiltertool.c:380 ../app/tools/gimptransformtool.c:1699
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "_Reimposta"
@@ -6505,347 +6515,352 @@ msgstr "Targhetta colore"
 
 #: ../app/actions/vectors-actions.c:54
 msgctxt "vectors-action"
-msgid "Path _Tool"
-msgstr "Strumento _tracciato"
+msgid "Edit Pa_th"
+msgstr "Modifica _tracciato"
 
-#: ../app/actions/vectors-actions.c:59
+#: ../app/actions/vectors-actions.c:55
+msgctxt "vectors-action"
+msgid "Edit the active path"
+msgstr "Modifica il tracciato corrente"
+
+#: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
 msgstr "_Modifica attributi tracciato..."
 
-#: ../app/actions/vectors-actions.c:60
+#: ../app/actions/vectors-actions.c:61
 msgctxt "vectors-action"
 msgid "Edit path attributes"
 msgstr "Modifica attributi tracciato"
 
-#: ../app/actions/vectors-actions.c:65
+#: ../app/actions/vectors-actions.c:66
 msgctxt "vectors-action"
 msgid "_New Path..."
 msgstr "_Nuovo tracciato..."
 
-#: ../app/actions/vectors-actions.c:66
+#: ../app/actions/vectors-actions.c:67
 msgctxt "vectors-action"
 msgid "Create a new path..."
 msgstr "Crea un nuovo tracciato..."
 
-#: ../app/actions/vectors-actions.c:71
+#: ../app/actions/vectors-actions.c:72
 msgctxt "vectors-action"
 msgid "_New Path with last values"
 msgstr "_Nuovo tracciato con gli ultimi valori"
 
-#: ../app/actions/vectors-actions.c:72
+#: ../app/actions/vectors-actions.c:73
 msgctxt "vectors-action"
 msgid "Create a new path with last used values"
 msgstr "Nuovo tracciato con gli ultimi valori utilizzati"
 
-#: ../app/actions/vectors-actions.c:77
+#: ../app/actions/vectors-actions.c:78
 msgctxt "vectors-action"
 msgid "D_uplicate Path"
 msgstr "_Duplica tracciato"
 
-#: ../app/actions/vectors-actions.c:78
+#: ../app/actions/vectors-actions.c:79
 msgctxt "vectors-action"
 msgid "Duplicate this path"
 msgstr "Duplica questo tracciato"
 
-#: ../app/actions/vectors-actions.c:83
+#: ../app/actions/vectors-actions.c:84
 msgctxt "vectors-action"
 msgid "_Delete Path"
 msgstr "_Cancella tracciato"
 
-#: ../app/actions/vectors-actions.c:84
+#: ../app/actions/vectors-actions.c:85
 msgctxt "vectors-action"
 msgid "Delete this path"
 msgstr "Cancella questo tracciato"
 
-#: ../app/actions/vectors-actions.c:89
+#: ../app/actions/vectors-actions.c:90
 msgctxt "vectors-action"
 msgid "Merge _Visible Paths"
 msgstr "Fondi tracciati _visibili"
 
-#: ../app/actions/vectors-actions.c:94
+#: ../app/actions/vectors-actions.c:95
 msgctxt "vectors-action"
 msgid "_Raise Path"
 msgstr "_Alza il tracciato"
 
-#: ../app/actions/vectors-actions.c:95
+#: ../app/actions/vectors-actions.c:96
 msgctxt "vectors-action"
 msgid "Raise this path"
 msgstr "Alza questo tracciato"
 
-#: ../app/actions/vectors-actions.c:100
+#: ../app/actions/vectors-actions.c:101
 msgctxt "vectors-action"
 msgid "Raise Path to _Top"
 msgstr "Alza il tracciato fino in _cima"
 
-#: ../app/actions/vectors-actions.c:101
+#: ../app/actions/vectors-actions.c:102
 msgctxt "vectors-action"
 msgid "Raise this path to the top"
 msgstr "Alza questo tracciato fino in cima"
 
-#: ../app/actions/vectors-actions.c:106
+#: ../app/actions/vectors-actions.c:107
 msgctxt "vectors-action"
 msgid "_Lower Path"
 msgstr "Ab_bassa il tracciato"
 
-#: ../app/actions/vectors-actions.c:107
+#: ../app/actions/vectors-actions.c:108
 msgctxt "vectors-action"
 msgid "Lower this path"
 msgstr "Abbassa questo tracciato"
 
-#: ../app/actions/vectors-actions.c:112
+#: ../app/actions/vectors-actions.c:113
 msgctxt "vectors-action"
 msgid "Lower Path to _Bottom"
 msgstr "Abbassa il tracciato fino in _fondo"
 
-#: ../app/actions/vectors-actions.c:113
+#: ../app/actions/vectors-actions.c:114
 msgctxt "vectors-action"
 msgid "Lower this path to the bottom"
 msgstr "Abbassa questo tracciato fino in fondo"
 
-#: ../app/actions/vectors-actions.c:118
+#: ../app/actions/vectors-actions.c:119
 msgctxt "vectors-action"
 msgid "Fill Path..."
 msgstr "Riempi il tracciato..."
 
-#: ../app/actions/vectors-actions.c:119
+#: ../app/actions/vectors-actions.c:120
 msgctxt "vectors-action"
 msgid "Fill the path"
 msgstr "Riempi il tracciato"
 
-#: ../app/actions/vectors-actions.c:124
+#: ../app/actions/vectors-actions.c:125
 msgctxt "vectors-action"
 msgid "Fill Path"
 msgstr "Riempi tracciato"
 
-#: ../app/actions/vectors-actions.c:125
+#: ../app/actions/vectors-actions.c:126
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
 msgstr "Riempi il tracciato con gli ultimi valori"
 
-#: ../app/actions/vectors-actions.c:130
+#: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
 msgid "Stro_ke Path..."
 msgstr "De_linea tracciato..."
 
-#: ../app/actions/vectors-actions.c:131
+#: ../app/actions/vectors-actions.c:132
 msgctxt "vectors-action"
 msgid "Paint along the path"
 msgstr "Disegna lungo il tracciato"
 
-#: ../app/actions/vectors-actions.c:136
+#: ../app/actions/vectors-actions.c:137
 msgctxt "vectors-action"
 msgid "Stro_ke Path"
 msgstr "De_linea tracciato"
 
-#: ../app/actions/vectors-actions.c:137
+#: ../app/actions/vectors-actions.c:138
 msgctxt "vectors-action"
 msgid "Paint along the path with last values"
 msgstr "Disegna lungo il tracciato con gli ultimi valori"
 
-#: ../app/actions/vectors-actions.c:142
+#: ../app/actions/vectors-actions.c:143
 msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "Co_pia tracciato"
 
-#: ../app/actions/vectors-actions.c:147
+#: ../app/actions/vectors-actions.c:148
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "Incol_la tracciato"
 
-#: ../app/actions/vectors-actions.c:152
+#: ../app/actions/vectors-actions.c:153
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "_Esporta tracciato..."
 
-#: ../app/actions/vectors-actions.c:157
+#: ../app/actions/vectors-actions.c:158
 msgctxt "vectors-action"
 msgid "I_mport Path..."
 msgstr "I_mporta tracciato..."
 
-#: ../app/actions/vectors-actions.c:165
+#: ../app/actions/vectors-actions.c:166
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr "_Visibile"
 
-#: ../app/actions/vectors-actions.c:171
+#: ../app/actions/vectors-actions.c:172
 msgctxt "vectors-action"
 msgid "_Linked"
 msgstr "Co_llegato"
 
 #. GIMP_ICON_LOCK
-#: ../app/actions/vectors-actions.c:177
+#: ../app/actions/vectors-actions.c:178
 msgctxt "vectors-action"
 msgid "L_ock strokes"
 msgstr "Bl_occa le delineature"
 
-#: ../app/actions/vectors-actions.c:183
+#: ../app/actions/vectors-actions.c:184
 msgctxt "vectors-action"
 msgid "L_ock position"
 msgstr "Bl_occa la posizione"
 
 #. abused
-#: ../app/actions/vectors-actions.c:192
+#: ../app/actions/vectors-actions.c:193
 msgctxt "vectors-action"
 msgid "None"
 msgstr "Nessuna"
 
-#: ../app/actions/vectors-actions.c:193
+#: ../app/actions/vectors-actions.c:194
 msgctxt "vectors-action"
 msgid "Clear color tag"
 msgstr "Pulisci targhetta colore"
 
-#: ../app/actions/vectors-actions.c:198
+#: ../app/actions/vectors-actions.c:199
 msgctxt "vectors-action"
 msgid "Blue"
 msgstr "Blu"
 
-#: ../app/actions/vectors-actions.c:199
+#: ../app/actions/vectors-actions.c:200
 msgctxt "vectors-action"
 msgid "Set color tag to blue"
 msgstr "Imposta il colore della targhetta a blu"
 
-#: ../app/actions/vectors-actions.c:204
+#: ../app/actions/vectors-actions.c:205
 msgctxt "vectors-action"
 msgid "Green"
 msgstr "Verde"
 
-#: ../app/actions/vectors-actions.c:205
+#: ../app/actions/vectors-actions.c:206
 msgctxt "vectors-action"
 msgid "Set color tag to green"
 msgstr "Imposta il colore della targhetta a verde"
 
-#: ../app/actions/vectors-actions.c:210
+#: ../app/actions/vectors-actions.c:211
 msgctxt "vectors-action"
 msgid "Yellow"
 msgstr "Giallo"
 
-#: ../app/actions/vectors-actions.c:211
+#: ../app/actions/vectors-actions.c:212
 msgctxt "vectors-action"
 msgid "Set color tag to yellow"
 msgstr "Imposta il colore della targhetta a giallo"
 
-#: ../app/actions/vectors-actions.c:216
+#: ../app/actions/vectors-actions.c:217
 msgctxt "vectors-action"
 msgid "Orange"
 msgstr "Arancio"
 
-#: ../app/actions/vectors-actions.c:217
+#: ../app/actions/vectors-actions.c:218
 msgctxt "vectors-action"
 msgid "Set color tag to orange"
 msgstr "Imposta il colore della targhetta a arancio"
 
-#: ../app/actions/vectors-actions.c:222
+#: ../app/actions/vectors-actions.c:223
 msgctxt "vectors-action"
 msgid "Brown"
 msgstr "Marrone"
 
-#: ../app/actions/vectors-actions.c:223
+#: ../app/actions/vectors-actions.c:224
 msgctxt "vectors-action"
 msgid "Set color tag to brown"
 msgstr "Imposta il colore della targhetta a marrone"
 
-#: ../app/actions/vectors-actions.c:228
+#: ../app/actions/vectors-actions.c:229
 msgctxt "vectors-action"
 msgid "Red"
 msgstr "Rosso"
 
-#: ../app/actions/vectors-actions.c:229
+#: ../app/actions/vectors-actions.c:230
 msgctxt "vectors-action"
 msgid "Set color tag to red"
 msgstr "Imposta il colore della targhetta a rosso"
 
-#: ../app/actions/vectors-actions.c:234
+#: ../app/actions/vectors-actions.c:235
 msgctxt "vectors-action"
 msgid "Violet"
 msgstr "Viola"
 
-#: ../app/actions/vectors-actions.c:235
+#: ../app/actions/vectors-actions.c:236
 msgctxt "vectors-action"
 msgid "Set color tag to violet"
 msgstr "Imposta il colore della targhetta a viola"
 
-#: ../app/actions/vectors-actions.c:240
+#: ../app/actions/vectors-actions.c:241
 msgctxt "vectors-action"
 msgid "Gray"
 msgstr "Grigio"
 
-#: ../app/actions/vectors-actions.c:241
+#: ../app/actions/vectors-actions.c:242
 msgctxt "vectors-action"
 msgid "Set color tag to gray"
 msgstr "Imposta il colore della targhetta a grigio"
 
-#: ../app/actions/vectors-actions.c:249
+#: ../app/actions/vectors-actions.c:250
 msgctxt "vectors-action"
 msgid "Path to Sele_ction"
 msgstr "Tracciato a sele_zione"
 
-#: ../app/actions/vectors-actions.c:250
+#: ../app/actions/vectors-actions.c:251
 msgctxt "vectors-action"
 msgid "Path to selection"
 msgstr "Tracciato a selezione"
 
-#: ../app/actions/vectors-actions.c:255
+#: ../app/actions/vectors-actions.c:256
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr "Dal tracciat_o"
 
-#: ../app/actions/vectors-actions.c:256
+#: ../app/actions/vectors-actions.c:257
 msgctxt "vectors-action"
 msgid "Replace selection with path"
 msgstr "Rimpiazza la selezione con questo tracciato"
 
-#: ../app/actions/vectors-actions.c:261
+#: ../app/actions/vectors-actions.c:262
 msgctxt "vectors-action"
 msgid "_Add to Selection"
 msgstr "_Aggiungi alla selezione"
 
-#: ../app/actions/vectors-actions.c:262
+#: ../app/actions/vectors-actions.c:263
 msgctxt "vectors-action"
 msgid "Add path to selection"
 msgstr "Aggiungi il tracciato alla selezione"
 
-#: ../app/actions/vectors-actions.c:267
+#: ../app/actions/vectors-actions.c:268
 msgctxt "vectors-action"
 msgid "_Subtract from Selection"
 msgstr "_Sottrai dalla selezione"
 
-#: ../app/actions/vectors-actions.c:268
+#: ../app/actions/vectors-actions.c:269
 msgctxt "vectors-action"
 msgid "Subtract path from selection"
 msgstr "_Sottrai il tracciato dalla selezione"
 
-#: ../app/actions/vectors-actions.c:273
+#: ../app/actions/vectors-actions.c:274
 msgctxt "vectors-action"
 msgid "_Intersect with Selection"
 msgstr "_Interseca con la selezione"
 
-#: ../app/actions/vectors-actions.c:274
+#: ../app/actions/vectors-actions.c:275
 msgctxt "vectors-action"
 msgid "Intersect path with selection"
 msgstr "Interseca il tracciato con la selezione"
 
-#: ../app/actions/vectors-actions.c:282
+#: ../app/actions/vectors-actions.c:283
 msgctxt "vectors-action"
 msgid "Selecti_on to Path"
 msgstr "Selezi_one a tracciato "
 
-#: ../app/actions/vectors-actions.c:283 ../app/actions/vectors-actions.c:289
+#: ../app/actions/vectors-actions.c:284 ../app/actions/vectors-actions.c:290
 msgctxt "vectors-action"
 msgid "Selection to path"
 msgstr "Selezione a tracciato "
 
-#: ../app/actions/vectors-actions.c:288
+#: ../app/actions/vectors-actions.c:289
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "A _tracciato"
 
-#: ../app/actions/vectors-actions.c:294
+#: ../app/actions/vectors-actions.c:295
 msgctxt "vectors-action"
 msgid "Selection to Path (_Advanced)"
 msgstr "Selezione a tracciato (_avanzata)"
 
-#: ../app/actions/vectors-actions.c:295
+#: ../app/actions/vectors-actions.c:296
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Opzioni avanzate"
@@ -7942,7 +7957,7 @@ msgstr ""
 "predefiniti. È stata fatta una copia di salvataggio della configurazione su "
 "\"%s\"."
 
-#: ../app/config/gimpdialogconfig.c:297 ../app/core/gimplayer.c:359
+#: ../app/config/gimpdialogconfig.c:297 ../app/core/gimplayer.c:373
 msgid "Layer"
 msgstr "Livello"
 
@@ -9901,7 +9916,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Selezione rettangolare arrotondata"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:367
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:381
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa a selezione"
@@ -10288,7 +10303,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Ruota"
 
-#: ../app/core/gimpdrawable-transform.c:991 ../app/core/gimplayer.c:366
+#: ../app/core/gimpdrawable-transform.c:991 ../app/core/gimplayer.c:380
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Trasforma livello"
@@ -10484,33 +10499,33 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Trasforma gruppo livelli"
 
-#: ../app/core/gimpimage.c:642 ../app/widgets/gimpsymmetryeditor.c:178
+#: ../app/core/gimpimage.c:643 ../app/widgets/gimpsymmetryeditor.c:178
 msgid "Symmetry"
 msgstr "Simmetria"
 
-#: ../app/core/gimpimage.c:2250
+#: ../app/core/gimpimage.c:2251
 msgid " (exported)"
 msgstr " (esportata)"
 
-#: ../app/core/gimpimage.c:2254
+#: ../app/core/gimpimage.c:2255
 msgid " (overwritten)"
 msgstr " (sovrascritta)"
 
-#: ../app/core/gimpimage.c:2263
+#: ../app/core/gimpimage.c:2264
 msgid " (imported)"
 msgstr " (importata)"
 
-#: ../app/core/gimpimage.c:2578
+#: ../app/core/gimpimage.c:2579
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:2630
+#: ../app/core/gimpimage.c:2631
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:3510
+#: ../app/core/gimpimage.c:3511
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -10518,47 +10533,47 @@ msgstr ""
 "validazione parassita 'gimp-comment' fallita: il commento contiene UTF-8 non "
 "valido"
 
-#: ../app/core/gimpimage.c:3562
+#: ../app/core/gimpimage.c:3563
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Allega parassita all'immagine"
 
-#: ../app/core/gimpimage.c:3603
+#: ../app/core/gimpimage.c:3604
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parassita dall'immagine"
 
-#: ../app/core/gimpimage.c:4312
+#: ../app/core/gimpimage.c:4313
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:4362 ../app/core/gimpimage.c:4382
+#: ../app/core/gimpimage.c:4363 ../app/core/gimpimage.c:4383
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:4376
+#: ../app/core/gimpimage.c:4377
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/gimpimage.c:4541
+#: ../app/core/gimpimage.c:4542
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:4579 ../app/core/gimpimage.c:4592
+#: ../app/core/gimpimage.c:4580 ../app/core/gimpimage.c:4593
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:4646
+#: ../app/core/gimpimage.c:4647
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:4677
+#: ../app/core/gimpimage.c:4678
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"
@@ -10942,7 +10957,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Àncora selezione fluttuante"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:937
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:963
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -10955,76 +10970,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Selezione fluttuante al livello"
 
-#: ../app/core/gimplayer.c:360
+#: ../app/core/gimplayer.c:374
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Rinomina livello"
 
-#: ../app/core/gimplayer.c:361
+#: ../app/core/gimplayer.c:375
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Sposta livello"
 
-#: ../app/core/gimplayer.c:362
+#: ../app/core/gimplayer.c:376
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Scala livello"
 
-#: ../app/core/gimplayer.c:363
+#: ../app/core/gimplayer.c:377
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Ridimensiona Livello"
 
-#: ../app/core/gimplayer.c:364
+#: ../app/core/gimplayer.c:378
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Rifletti livello"
 
-#: ../app/core/gimplayer.c:365
+#: ../app/core/gimplayer.c:379
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Ruota livello"
 
-#: ../app/core/gimplayer.c:368
+#: ../app/core/gimplayer.c:382
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Ordina il livello"
 
-#: ../app/core/gimplayer.c:369
+#: ../app/core/gimplayer.c:383
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Alza il livello"
 
-#: ../app/core/gimplayer.c:370
+#: ../app/core/gimplayer.c:384
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Alza il livello fino in cima"
 
-#: ../app/core/gimplayer.c:371
+#: ../app/core/gimplayer.c:385
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Abbassa il livello"
 
-#: ../app/core/gimplayer.c:372
+#: ../app/core/gimplayer.c:386
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Abbassa il livello fino in fondo"
 
-#: ../app/core/gimplayer.c:373
+#: ../app/core/gimplayer.c:387
 msgid "Layer cannot be raised higher."
 msgstr "Il livello non può essere alzato ulteriormente."
 
-#: ../app/core/gimplayer.c:374
+#: ../app/core/gimplayer.c:388
 msgid "Layer cannot be lowered more."
 msgstr "Il livello non può essere abbassato ulteriormente."
 
-#: ../app/core/gimplayer.c:650 ../app/core/gimplayer.c:1531
+#: ../app/core/gimplayer.c:676 ../app/core/gimplayer.c:1568
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "%s maschera"
 
-#: ../app/core/gimplayer.c:689
+#: ../app/core/gimplayer.c:715
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -11033,64 +11048,64 @@ msgstr ""
 "Selezione fluttuante\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1437
+#: ../app/core/gimplayer.c:1474
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Impossibile aggiungere una maschera di livello dato che il livello ne ha già "
 "una."
 
-#: ../app/core/gimplayer.c:1448
+#: ../app/core/gimplayer.c:1485
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossibile aggiungere maschera livello con dimensioni diverse dal livello "
 "specificato."
 
-#: ../app/core/gimplayer.c:1454
+#: ../app/core/gimplayer.c:1491
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Aggiungi maschera di livello"
 
-#: ../app/core/gimplayer.c:1582
+#: ../app/core/gimplayer.c:1619
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Trasferimento alfa su maschera"
 
-#: ../app/core/gimplayer.c:1733
+#: ../app/core/gimplayer.c:1770
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Applica maschera di livello"
 
-#: ../app/core/gimplayer.c:1734
+#: ../app/core/gimplayer.c:1771
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Elimina maschera di livello"
 
-#: ../app/core/gimplayer.c:1836
+#: ../app/core/gimplayer.c:1873
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Abilita maschera di livello"
 
-#: ../app/core/gimplayer.c:1837
+#: ../app/core/gimplayer.c:1874
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Disabilita maschera di livello"
 
-#: ../app/core/gimplayer.c:1913
+#: ../app/core/gimplayer.c:1950
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Mostra maschera di livello"
 
-#: ../app/core/gimplayer.c:1986
+#: ../app/core/gimplayer.c:2023
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Aggiungi canale alfa"
 
-#: ../app/core/gimplayer.c:2018
+#: ../app/core/gimplayer.c:2055
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Rimuovi canale alfa"
 
-#: ../app/core/gimplayer.c:2039
+#: ../app/core/gimplayer.c:2076
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Livello a dimensione immagine"
@@ -14403,7 +14418,7 @@ msgstr "Impossibile modificare i pixel di un gruppo di livelli."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:226
 #: ../app/tools/gimpcroptool.c:325 ../app/tools/gimpfiltertool.c:335
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1833 ../app/tools/gimpwarptool.c:579
+#: ../app/tools/gimptransformtool.c:1872 ../app/tools/gimpwarptool.c:579
 msgid "The active layer's pixels are locked."
 msgstr "I pixel del livello attivo sono bloccati."
 
@@ -16874,7 +16889,7 @@ msgstr "S_fumatura"
 #: ../app/tools/gimpblendtool.c:294 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:233 ../app/tools/gimpfiltertool.c:342
 #: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1841 ../app/tools/gimpwarptool.c:586
+#: ../app/tools/gimptransformtool.c:1880 ../app/tools/gimpwarptool.c:586
 msgid "The active layer is not visible."
 msgstr "Il livello attivo non è visibile."
 
@@ -18314,7 +18329,7 @@ msgstr "_Sposta"
 msgid "There is no path to move."
 msgstr "Nessun tracciato da spostare."
 
-#: ../app/tools/gimpmovetool.c:256 ../app/tools/gimptransformtool.c:1868
+#: ../app/tools/gimpmovetool.c:256 ../app/tools/gimptransformtool.c:1907
 msgid "The active path's position is locked."
 msgstr "La posizione del tracciato attivo è bloccata."
 
@@ -19245,25 +19260,29 @@ msgstr "La selezione non si interseca con il livello."
 msgid "Transform Step"
 msgstr "Passo di trasformazione"
 
-#: ../app/tools/gimptransformtool.c:1828
+#: ../app/tools/gimptransformtool.c:1867
 msgid "There is no layer to transform."
 msgstr "Nessun livello da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1835
+#: ../app/tools/gimptransformtool.c:1874
 msgid "The active layer's position and size are locked."
 msgstr "La posizione e la dimensione del livello attivo sono bloccate."
 
-#: ../app/tools/gimptransformtool.c:1848
+#: ../app/tools/gimptransformtool.c:1887
 msgid "There is no selection to transform."
 msgstr "Nessuna selezione da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1861
+#: ../app/tools/gimptransformtool.c:1900
 msgid "There is no path to transform."
 msgstr "Nessun tracciato da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1866
+#: ../app/tools/gimptransformtool.c:1905
 msgid "The active path's strokes are locked."
 msgstr "Le delineature del tracciato attivo sono bloccate."
+
+#: ../app/tools/gimptransformtool.c:1909
+msgid "The active path has no strokes."
+msgstr "Il tracciato attivo non ha tratti."
 
 #: ../app/tools/gimpunifiedtransformtool.c:104
 msgid "Unified Transform"
@@ -20969,155 +20988,155 @@ msgstr "Plug-in"
 msgid "Progress"
 msgstr "Operazione in corso"
 
-#: ../app/widgets/gimppropgui-constructors.c:171
+#: ../app/widgets/gimppropgui-constructors.c:173
 msgid "Pick coordinates from the image"
 msgstr "Prelievo coordinate dall'immagine"
 
-#: ../app/widgets/gimppropgui-constructors.c:331
+#: ../app/widgets/gimppropgui-constructors.c:339
 msgid "Clockwise"
 msgstr "In senso orario"
 
-#: ../app/widgets/gimppropgui-constructors.c:335
+#: ../app/widgets/gimppropgui-constructors.c:343
 msgid "Invert Range"
 msgstr "Inverti campo"
 
-#: ../app/widgets/gimppropgui-constructors.c:339
+#: ../app/widgets/gimppropgui-constructors.c:347
 msgid "Select All"
 msgstr "Seleziona tutto"
 
-#: ../app/widgets/gimppropgui-constructors.c:418
+#: ../app/widgets/gimppropgui-constructors.c:426
 msgid "Source Range"
 msgstr "Campo sorgente"
 
-#: ../app/widgets/gimppropgui-constructors.c:429
+#: ../app/widgets/gimppropgui-constructors.c:437
 msgid "Destination Range"
 msgstr "Campo destinazione"
 
-#: ../app/widgets/gimppropgui-constructors.c:440
+#: ../app/widgets/gimppropgui-constructors.c:448
 msgid "Gray Handling"
 msgstr "Gestione grigi"
 
-#: ../app/widgets/gimppropgui-constructors.c:625
+#: ../app/widgets/gimppropgui-constructors.c:633
 msgid "Rotate matrix 90° counter-clockwise"
 msgstr "Ruota matrice di 90° in senso antiorario"
 
-#: ../app/widgets/gimppropgui-constructors.c:631
+#: ../app/widgets/gimppropgui-constructors.c:639
 msgid "Rotate matrix 90° clockwise"
 msgstr "Ruota matrice di 90° in senso orario"
 
-#: ../app/widgets/gimppropgui-constructors.c:637
+#: ../app/widgets/gimppropgui-constructors.c:645
 msgid "Flip matrix horizontally"
 msgstr "Rifletti la matrice orizzontalmente"
 
-#: ../app/widgets/gimppropgui-constructors.c:643
+#: ../app/widgets/gimppropgui-constructors.c:651
 msgid "Flip matrix vertically"
 msgstr "Rifletti la matrice verticalmente"
 
-#: ../app/widgets/gimppropgui-constructors.c:754
+#: ../app/widgets/gimppropgui-constructors.c:762
 msgid "Red channel"
 msgstr "Canale rosso"
 
-#: ../app/widgets/gimppropgui-constructors.c:778
+#: ../app/widgets/gimppropgui-constructors.c:786
 msgid "Green channel"
 msgstr "Canale verde"
 
-#: ../app/widgets/gimppropgui-constructors.c:802
+#: ../app/widgets/gimppropgui-constructors.c:810
 msgid "Blue channel"
 msgstr "Canale blu"
 
-#: ../app/widgets/gimppropgui-constructors.c:860
+#: ../app/widgets/gimppropgui-constructors.c:868
 msgid "Frequencies"
 msgstr "Frequenze"
 
-#: ../app/widgets/gimppropgui-constructors.c:869
+#: ../app/widgets/gimppropgui-constructors.c:877
 msgid "Contours"
 msgstr "Contorni"
 
-#: ../app/widgets/gimppropgui-constructors.c:878
+#: ../app/widgets/gimppropgui-constructors.c:886
 msgid "Sharp Edges"
 msgstr "Bordi affilati"
 
-#: ../app/widgets/gimppropgui-constructors.c:887
+#: ../app/widgets/gimppropgui-constructors.c:895
 msgid "Other Options"
 msgstr "Altre opzioni"
 
-#: ../app/widgets/gimppropgui.c:119
+#: ../app/widgets/gimppropgui.c:126
 msgid "New Seed"
 msgstr "Nuovo seme"
 
-#: ../app/widgets/gimppropgui.c:346
+#: ../app/widgets/gimppropgui.c:370
 msgid "Pick color from the image"
 msgstr "Prelievo colore dall'immagine"
 
-#: ../app/widgets/gimppropgui.c:458
+#: ../app/widgets/gimppropgui.c:512
 msgid "This operation has no editable properties"
 msgstr "Questa operazione non ha proprietà modificabili"
 
-#: ../app/widgets/gimppropgui.c:528
+#: ../app/widgets/gimppropgui.c:638
 msgid "1,700 K – Match flame"
 msgstr "1,700 K – Fiammifero"
 
-#: ../app/widgets/gimppropgui.c:529
+#: ../app/widgets/gimppropgui.c:639
 msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1,850 K – Candela, alba/tramonto"
 
-#: ../app/widgets/gimppropgui.c:530
+#: ../app/widgets/gimppropgui.c:640
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr "3,000 K – Morbido (o caldo) bianco di piccole lampade fluorescenti"
 
-#: ../app/widgets/gimppropgui.c:531
+#: ../app/widgets/gimppropgui.c:641
 msgid "3,300 K – Incandescent lamps"
 msgstr "3,300 K – Lampade ad incandescenza"
 
-#: ../app/widgets/gimppropgui.c:532
+#: ../app/widgets/gimppropgui.c:642
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr "3,200 K – Lampade da studio, photoflood, ecc."
 
-#: ../app/widgets/gimppropgui.c:533
+#: ../app/widgets/gimppropgui.c:643
 msgid "3,350 K – Studio \"CP\" light"
 msgstr "3,350 K – Lampade da studio \"CP\" light"
 
-#: ../app/widgets/gimppropgui.c:534
+#: ../app/widgets/gimppropgui.c:644
 msgid "4,100 K – Moonlight"
 msgstr "4,100 K – Luce lunare"
 
-#: ../app/widgets/gimppropgui.c:535
+#: ../app/widgets/gimppropgui.c:645
 msgid "5,000 K – D50"
 msgstr "5,000 K – D50"
 
-#: ../app/widgets/gimppropgui.c:536
+#: ../app/widgets/gimppropgui.c:646
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr "5,000 K – Bianco freddo/lampade fluorescenti compatte a luce diurna"
 
-#: ../app/widgets/gimppropgui.c:537
+#: ../app/widgets/gimppropgui.c:647
 msgid "5,000 K – Horizon daylight"
 msgstr "5,000 K – Luce diurna dell'orizzonte"
 
-#: ../app/widgets/gimppropgui.c:538
+#: ../app/widgets/gimppropgui.c:648
 msgid "5,500 K – D55"
 msgstr "5,500 K – D55"
 
-#: ../app/widgets/gimppropgui.c:539
+#: ../app/widgets/gimppropgui.c:649
 msgid "5,500 K – Vertical daylight, electronic flash"
 msgstr "5,500 K – Luce diurna verticale, flash elettronico"
 
-#: ../app/widgets/gimppropgui.c:540
+#: ../app/widgets/gimppropgui.c:650
 msgid "6,200 K – Xenon short-arc lamp"
 msgstr "6,200 K – Lampada ad arco corto allo Xenon"
 
-#: ../app/widgets/gimppropgui.c:541
+#: ../app/widgets/gimppropgui.c:651
 msgid "6,500 K – D65"
 msgstr "6,500 K – D65"
 
-#: ../app/widgets/gimppropgui.c:542
+#: ../app/widgets/gimppropgui.c:652
 msgid "6,500 K – Daylight, overcast"
 msgstr "6,500 K – Luce diurna, cielo coperto"
 
-#: ../app/widgets/gimppropgui.c:543
+#: ../app/widgets/gimppropgui.c:653
 msgid "7,500 K – D75"
 msgstr "7,500 K – D75"
 
-#: ../app/widgets/gimppropgui.c:544
+#: ../app/widgets/gimppropgui.c:654
 msgid "9,300 K"
 msgstr "9,300 K"
 
