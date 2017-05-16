@@ -622,6 +622,7 @@ struct _GimpParamSpecRGB
   GParamSpecBoxed  parent_instance;
 
   gboolean         has_alpha;
+  gboolean         validate; /* change this to enable [0.0...1.0] */
   GimpRGB          default_value;
 };
 
@@ -700,9 +701,10 @@ static gboolean
 gimp_param_rgb_validate (GParamSpec *pspec,
                          GValue     *value)
 {
-  GimpRGB *rgb = value->data[0].v_pointer;
+  GimpParamSpecRGB *rgb_spec = GIMP_PARAM_SPEC_RGB (pspec);
+  GimpRGB          *rgb      = value->data[0].v_pointer;
 
-  if (rgb)
+  if (rgb_spec->validate && rgb)
     {
       GimpRGB oval = *rgb;
 
@@ -711,7 +713,7 @@ gimp_param_rgb_validate (GParamSpec *pspec,
       return (oval.r != rgb->r ||
               oval.g != rgb->g ||
               oval.b != rgb->b ||
-              (GIMP_PARAM_SPEC_RGB (pspec)->has_alpha && oval.a != rgb->a));
+              (rgb_spec->has_alpha && oval.a != rgb->a));
     }
 
   return FALSE;
