@@ -43,6 +43,7 @@ struct _GimpWarpTool
 
   gdouble             cursor_x;      /* Hold the cursor x position */
   gdouble             cursor_y;      /* Hold the cursor y position */
+  gboolean            cursor_moved;  /* Did the cursor move since the last stroke? */
 
   GeglBuffer         *coords_buffer; /* Buffer where coordinates are stored */
 

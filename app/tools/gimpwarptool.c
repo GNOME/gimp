@@ -265,6 +265,8 @@ gimp_warp_tool_button_press (GimpTool            *tool,
   gegl_path_append (wt->current_stroke,
                     'M', coords->x - off_x, coords->y - off_y);
 
+  wt->cursor_moved = FALSE;
+
   wt->stroke_timer = g_timeout_add (STROKE_PERIOD,
                                     (GSourceFunc) gimp_warp_tool_stroke_timer,
                                     wt);
@@ -339,8 +341,9 @@ gimp_warp_tool_motion (GimpTool         *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  wt->cursor_x = coords->x;
-  wt->cursor_y = coords->y;
+  wt->cursor_x     = coords->x;
+  wt->cursor_y     = coords->y;
+  wt->cursor_moved = TRUE;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -702,13 +705,23 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
 static gboolean
 gimp_warp_tool_stroke_timer (GimpWarpTool *wt)
 {
-  GimpTool *tool = GIMP_TOOL (wt);
-  gint      off_x, off_y;
+  GimpTool        *tool = GIMP_TOOL (wt);
+  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  gint             off_x, off_y;
 
-  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  /* don't append the current point to the path if we're using the MOVE
+   * behavior, and the cursor didn't move since last time; it's a nop, and
+   * results in an unnecessary update.
+   */
+  if (options->behavior != GIMP_WARP_BEHAVIOR_MOVE || wt->cursor_moved)
+    {
+      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
-  gegl_path_append (wt->current_stroke,
-                    'L', wt->cursor_x - off_x, wt->cursor_y - off_y);
+      gegl_path_append (wt->current_stroke,
+                        'L', wt->cursor_x - off_x, wt->cursor_y - off_y);
+
+      wt->cursor_moved = FALSE;
+    }
 
   return TRUE;
 }
