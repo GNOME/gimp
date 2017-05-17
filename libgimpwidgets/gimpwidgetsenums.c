@@ -118,18 +118,24 @@ gimp_color_selector_channel_get_type (void)
     { GIMP_COLOR_SELECTOR_GREEN, "GIMP_COLOR_SELECTOR_GREEN", "green" },
     { GIMP_COLOR_SELECTOR_BLUE, "GIMP_COLOR_SELECTOR_BLUE", "blue" },
     { GIMP_COLOR_SELECTOR_ALPHA, "GIMP_COLOR_SELECTOR_ALPHA", "alpha" },
+    { GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, "GIMP_COLOR_SELECTOR_LCH_LIGHTNESS", "lch-lightness" },
+    { GIMP_COLOR_SELECTOR_LCH_CHROMA, "GIMP_COLOR_SELECTOR_LCH_CHROMA", "lch-chroma" },
+    { GIMP_COLOR_SELECTOR_LCH_HUE, "GIMP_COLOR_SELECTOR_LCH_HUE", "lch-hue" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_COLOR_SELECTOR_HUE, NC_("color-selector-channel", "_H"), N_("Hue") },
-    { GIMP_COLOR_SELECTOR_SATURATION, NC_("color-selector-channel", "_S"), N_("Saturation") },
-    { GIMP_COLOR_SELECTOR_VALUE, NC_("color-selector-channel", "_V"), N_("Value") },
+    { GIMP_COLOR_SELECTOR_HUE, NC_("color-selector-channel", "_H"), N_("HSV Hue") },
+    { GIMP_COLOR_SELECTOR_SATURATION, NC_("color-selector-channel", "_S"), N_("HSV Saturation") },
+    { GIMP_COLOR_SELECTOR_VALUE, NC_("color-selector-channel", "_V"), N_("HSV Value") },
     { GIMP_COLOR_SELECTOR_RED, NC_("color-selector-channel", "_R"), N_("Red") },
     { GIMP_COLOR_SELECTOR_GREEN, NC_("color-selector-channel", "_G"), N_("Green") },
     { GIMP_COLOR_SELECTOR_BLUE, NC_("color-selector-channel", "_B"), N_("Blue") },
     { GIMP_COLOR_SELECTOR_ALPHA, NC_("color-selector-channel", "_A"), N_("Alpha") },
+    { GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, NC_("color-selector-channel", "_L"), N_("LCH Lightness") },
+    { GIMP_COLOR_SELECTOR_LCH_CHROMA, NC_("color-selector-channel", "_C"), N_("LCH Chroma") },
+    { GIMP_COLOR_SELECTOR_LCH_HUE, NC_("color-selector-channel", "_H"), N_("LCH Hue") },
     { 0, NULL, NULL }
   };
 

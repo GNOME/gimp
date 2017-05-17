@@ -89,13 +89,16 @@ typedef enum
 
 /**
  * GimpColorSelectorChannel:
- * @GIMP_COLOR_SELECTOR_HUE:        the hue channel
- * @GIMP_COLOR_SELECTOR_SATURATION: the saturation channel
- * @GIMP_COLOR_SELECTOR_VALUE:      the value channel
- * @GIMP_COLOR_SELECTOR_RED:        the red channel
- * @GIMP_COLOR_SELECTOR_GREEN:      the green channel
- * @GIMP_COLOR_SELECTOR_BLUE:       the blue channel
- * @GIMP_COLOR_SELECTOR_ALPHA:      the alpha channel
+ * @GIMP_COLOR_SELECTOR_HUE:            the hue channel
+ * @GIMP_COLOR_SELECTOR_SATURATION:     the saturation channel
+ * @GIMP_COLOR_SELECTOR_VALUE:          the value channel
+ * @GIMP_COLOR_SELECTOR_RED:            the red channel
+ * @GIMP_COLOR_SELECTOR_GREEN:          the green channel
+ * @GIMP_COLOR_SELECTOR_BLUE:           the blue channel
+ * @GIMP_COLOR_SELECTOR_ALPHA:          the alpha channel
+ * @GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:  the lightness channel
+ * @GIMP_COLOR_SELECTOR_LCH_CHOMA:      the chroma channel
+ * @GIMP_COLOR_SELECTOR_LCH_HUE:        the hue channel
  *
  * An enum to specify the types of color channels edited in
  * #GimpColorSelector widgets.
@@ -106,13 +109,16 @@ GType gimp_color_selector_channel_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_SELECTOR_HUE,        /*< desc="_H", help="Hue"        >*/
-  GIMP_COLOR_SELECTOR_SATURATION, /*< desc="_S", help="Saturation" >*/
-  GIMP_COLOR_SELECTOR_VALUE,      /*< desc="_V", help="Value"      >*/
-  GIMP_COLOR_SELECTOR_RED,        /*< desc="_R", help="Red"        >*/
-  GIMP_COLOR_SELECTOR_GREEN,      /*< desc="_G", help="Green"      >*/
-  GIMP_COLOR_SELECTOR_BLUE,       /*< desc="_B", help="Blue"       >*/
-  GIMP_COLOR_SELECTOR_ALPHA       /*< desc="_A", help="Alpha"      >*/
+  GIMP_COLOR_SELECTOR_HUE,           /*< desc="_H", help="HSV Hue"        >*/
+  GIMP_COLOR_SELECTOR_SATURATION,    /*< desc="_S", help="HSV Saturation" >*/
+  GIMP_COLOR_SELECTOR_VALUE,         /*< desc="_V", help="HSV Value"      >*/
+  GIMP_COLOR_SELECTOR_RED,           /*< desc="_R", help="Red"            >*/
+  GIMP_COLOR_SELECTOR_GREEN,         /*< desc="_G", help="Green"          >*/
+  GIMP_COLOR_SELECTOR_BLUE,          /*< desc="_B", help="Blue"           >*/
+  GIMP_COLOR_SELECTOR_ALPHA,         /*< desc="_A", help="Alpha"          >*/
+  GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, /*< desc="_L", help="LCH Lightness"  >*/
+  GIMP_COLOR_SELECTOR_LCH_CHROMA,    /*< desc="_C", help="LCH Chroma"     >*/
+  GIMP_COLOR_SELECTOR_LCH_HUE        /*< desc="_H", help="LCH Hue"        >*/
 } GimpColorSelectorChannel;
 
 
