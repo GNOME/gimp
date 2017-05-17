@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -818,12 +819,14 @@ gimp_warp_tool_stroke_changed (GeglPath            *path,
                                GimpWarpTool        *wt)
 {
   GimpWarpOptions *options       = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  GeglRectangle    update_region = *roi;
+  GeglRectangle    update_region;
 
-  update_region.x      -= options->effect_size * 0.5;
-  update_region.y      -= options->effect_size * 0.5;
-  update_region.width  += options->effect_size;
-  update_region.height += options->effect_size;
+  update_region.x      = floor (roi->x - options->effect_size * 0.5);
+  update_region.y      = floor (roi->y - options->effect_size * 0.5);
+  update_region.width  = ceil (roi->x + roi->width  +
+                               options->effect_size * 0.5) - update_region.x;
+  update_region.height = ceil (roi->y + roi->height +
+                               options->effect_size * 0.5) - update_region.y;
 
 #ifdef WARP_DEBUG
   g_printerr ("update rect: (%d,%d), %dx%d\n",
