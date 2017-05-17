@@ -816,6 +816,34 @@ gimp_color_frame_update (GimpColorFrame *frame)
         }
       break;
 
+    case GIMP_COLOR_FRAME_MODE_LAB:
+      names[0] = _("Lab_L*:");
+      names[1] = _("Lab_a*:");
+      names[2] = _("Lab_b*:");
+
+      if (has_alpha)
+        names[3] = _("Alpha:");
+
+      if (frame->sample_valid)
+        {
+          static const Babl *fish = NULL;
+          gfloat             lab[4];
+
+          if (G_UNLIKELY (! fish))
+            fish = babl_fish (babl_format ("R'G'B'A double"),
+                              babl_format ("CIE Lab alpha float"));
+
+          babl_process (fish, &frame->color, lab, 1);
+
+          values = g_new0 (gchar *, 5);
+
+          values[0] = g_strdup_printf ("%.01f  ",        lab[0]);
+          values[1] = g_strdup_printf ("%.01f  ",        lab[1]);
+          values[2] = g_strdup_printf ("%.01f  ",        lab[2]);
+          values[3] = g_strdup_printf ("%.01f %%",       lab[3] * 100.0);
+        }
+      break;
+
     case GIMP_COLOR_FRAME_MODE_CMYK:
       names[0] = _("Cyan:");
       names[1] = _("Magenta:");

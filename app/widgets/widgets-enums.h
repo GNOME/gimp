@@ -68,6 +68,7 @@ typedef enum
   GIMP_COLOR_FRAME_MODE_RGB_U8,      /*< desc="RGB (0..255)" >*/
   GIMP_COLOR_FRAME_MODE_HSV,         /*< desc="HSV"          >*/
   GIMP_COLOR_FRAME_MODE_LCH,         /*< desc="CIE LCH"      >*/
+  GIMP_COLOR_FRAME_MODE_LAB,         /*< desc="CIE LAB"      >*/
   GIMP_COLOR_FRAME_MODE_CMYK         /*< desc="CMYK"         >*/
 } GimpColorFrameMode;
 
