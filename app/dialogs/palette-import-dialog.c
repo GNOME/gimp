@@ -324,6 +324,7 @@ palette_import_dialog_new (GimpContext *context)
                                           256, 2, 10000, 1, 10, 0,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));
+  gimp_scale_entry_set_logarithmic (GTK_OBJECT (private->num_colors), TRUE);
 
   g_signal_connect_swapped (private->num_colors,
                             "value-changed",
