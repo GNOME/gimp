@@ -1465,17 +1465,27 @@ color_select_render_lch_hue (ColorSelectFill *csf)
 static void
 color_select_render_red_green (ColorSelectFill *csf)
 {
-  guchar *p = csf->buffer;
-  gint    i, g, b;
-  gfloat  r, dr;
+  guchar *p  = csf->buffer;
+  gfloat  r  = 0;
+  gfloat  g  = 0;
+  gfloat  b  = 0;
+  gfloat  dr = 0;
+  gint    i;
 
-  b = ROUND (csf->rgb.b * 255.0);
+  b = csf->rgb.b * 255.0;
 
-  g = (csf->height - csf->y + 1) * 255 / csf->height;
-  g = CLAMP (g, 0, 255);
+  if (b < 0.0 || b > 255.0)
+    {
+      r = csf->oog_color[0];
+      g = csf->oog_color[1];
+      b = csf->oog_color[2];
+    }
+  else
+    {
+      g = (csf->height - csf->y + 1) * 255.0 / csf->height;
 
-  r = 0;
-  dr = 255.0 / csf->width;
+      dr = 255.0 / csf->width;
+    }
 
   for (i = 0; i < csf->width; i++)
     {
@@ -1490,17 +1500,27 @@ color_select_render_red_green (ColorSelectFill *csf)
 static void
 color_select_render_red_blue (ColorSelectFill *csf)
 {
-  guchar *p = csf->buffer;
-  gint    i, g, b;
-  gfloat  r, dr;
+  guchar *p  = csf->buffer;
+  gfloat  r  = 0;
+  gfloat  g  = 0;
+  gfloat  b  = 0;
+  gfloat  dr = 0;
+  gint    i;
 
-  g = ROUND (csf->rgb.g * 255.0);
+  g = csf->rgb.g * 255.0;
 
-  b = (csf->height - csf->y + 1) * 255 / csf->height;
-  b = CLAMP (b, 0, 255);
+  if (g < 0.0 || g > 255.0)
+    {
+      r = csf->oog_color[0];
+      g = csf->oog_color[1];
+      b = csf->oog_color[2];
+    }
+  else
+    {
+      b = (csf->height - csf->y + 1) * 255.0 / csf->height;
 
-  r = 0;
-  dr = 255.0 / csf->width;
+      dr = 255.0 / csf->width;
+    }
 
   for (i = 0; i < csf->width; i++)
     {
@@ -1515,17 +1535,27 @@ color_select_render_red_blue (ColorSelectFill *csf)
 static void
 color_select_render_green_blue (ColorSelectFill *csf)
 {
-  guchar *p = csf->buffer;
-  gint    i, r, b;
-  gfloat  g, dg;
+  guchar *p  = csf->buffer;
+  gfloat  r  = 0;
+  gfloat  g  = 0;
+  gfloat  b  = 0;
+  gfloat  dg = 0;
+  gint    i;
 
-  r = ROUND (csf->rgb.r * 255.0);
+  r = csf->rgb.r * 255.0;
 
-  b = (csf->height - csf->y + 1) * 255 / csf->height;
-  b = CLAMP (b, 0, 255);
+  if (r < 0.0 || r > 255.0)
+    {
+      r = csf->oog_color[0];
+      g = csf->oog_color[1];
+      b = csf->oog_color[2];
+    }
+  else
+    {
+      b = (csf->height - csf->y + 1) * 255.0 / csf->height;
 
-  g = 0;
-  dg = 255.0 / csf->width;
+      dg = 255.0 / csf->width;
+    }
 
   for (i = 0; i < csf->width; i++)
     {
@@ -1556,40 +1586,58 @@ color_select_render_hue_saturation (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+      gfloat r, g, b;
+
       f = ((h / 60) - (int) (h / 60)) * 255;
 
       switch ((int) (h / 60))
         {
+        default:
         case 0:
-          *p++ = v * 255;
-          *p++ = v * (255 - (s * (255 - f)));
-          *p++ = v * 255 * (1 - s);
+          r = v * 255;
+          g = v * (255 - (s * (255 - f)));
+          b = v * 255 * (1 - s);
           break;
         case 1:
-          *p++ = v * (255 - s * f);
-          *p++ = v * 255;
-          *p++ = v * 255 * (1 - s);
+          r = v * (255 - s * f);
+          g = v * 255;
+          b = v * 255 * (1 - s);
           break;
         case 2:
-          *p++ = v * 255 * (1 - s);
-          *p++ = v *255;
-          *p++ = v * (255 - (s * (255 - f)));
+          r = v * 255 * (1 - s);
+          g = v *255;
+          b = v * (255 - (s * (255 - f)));
           break;
         case 3:
-          *p++ = v * 255 * (1 - s);
-          *p++ = v * (255 - s * f);
-          *p++ = v * 255;
+          r = v * 255 * (1 - s);
+          g = v * (255 - s * f);
+          b = v * 255;
           break;
         case 4:
-          *p++ = v * (255 - (s * (255 - f)));
-          *p++ = v * (255 * (1 - s));
-          *p++ = v * 255;
+          r = v * (255 - (s * (255 - f)));
+          g = v * (255 * (1 - s));
+          b = v * 255;
           break;
         case 5:
-          *p++ = v * 255;
-          *p++ = v * 255 * (1 - s);
-          *p++ = v * (255 - s * f);
+          r = v * 255;
+          g = v * 255 * (1 - s);
+          b = v * (255 - s * f);
           break;
+        }
+
+      if (r < 0.0 || r > 255.0 ||
+          g < 0.0 || g > 255.0 ||
+          b < 0.0 || b > 255.0)
+        {
+          *p++ = csf->oog_color[0];
+          *p++ = csf->oog_color[1];
+          *p++ = csf->oog_color[2];
+        }
+      else
+        {
+          *p++ = r;
+          *p++ = g;
+          *p++ = b;
         }
 
       h += dh;
@@ -1615,40 +1663,58 @@ color_select_render_hue_value (ColorSelectFill *csf)
 
   for (i = 0; i < csf->width; i++)
     {
+      gfloat r, g, b;
+
       f = ((h / 60) - (int) (h / 60)) * 255;
 
       switch ((int) (h / 60))
         {
+        default:
         case 0:
-          *p++ = v * 255;
-          *p++ = v * (255 - (s * (255 - f)));
-          *p++ = v * 255 * (1 - s);
+          r = v * 255;
+          g = v * (255 - (s * (255 - f)));
+          b = v * 255 * (1 - s);
           break;
         case 1:
-          *p++ = v * (255 - s * f);
-          *p++ = v * 255;
-          *p++ = v * 255 * (1 - s);
+          r = v * (255 - s * f);
+          g = v * 255;
+          b = v * 255 * (1 - s);
           break;
         case 2:
-          *p++ = v * 255 * (1 - s);
-          *p++ = v *255;
-          *p++ = v * (255 - (s * (255 - f)));
+          r = v * 255 * (1 - s);
+          g = v *255;
+          b = v * (255 - (s * (255 - f)));
           break;
         case 3:
-          *p++ = v * 255 * (1 - s);
-          *p++ = v * (255 - s * f);
-          *p++ = v * 255;
+          r = v * 255 * (1 - s);
+          g = v * (255 - s * f);
+          b = v * 255;
           break;
         case 4:
-          *p++ = v * (255 - (s * (255 - f)));
-          *p++ = v * (255 * (1 - s));
-          *p++ = v * 255;
+          r = v * (255 - (s * (255 - f)));
+          g = v * (255 * (1 - s));
+          b = v * 255;
           break;
         case 5:
-          *p++ = v * 255;
-          *p++ = v * 255 * (1 - s);
-          *p++ = v * (255 - s * f);
+          r = v * 255;
+          g = v * 255 * (1 - s);
+          b = v * (255 - s * f);
           break;
+        }
+
+      if (r < 0.0 || r > 255.0 ||
+          g < 0.0 || g > 255.0 ||
+          b < 0.0 || b > 255.0)
+        {
+          *p++ = csf->oog_color[0];
+          *p++ = csf->oog_color[1];
+          *p++ = csf->oog_color[2];
+        }
+      else
+        {
+          *p++ = r;
+          *p++ = g;
+          *p++ = b;
         }
 
       h += dh;
