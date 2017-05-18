@@ -24,7 +24,9 @@
 #include <libgimp/stdplugins-intl.h>
 
 #include "animation-utils.h"
+
 #include "animation-animatic.h"
+#include "animation-renderer.h"
 
 typedef enum
 {
@@ -61,8 +63,6 @@ typedef struct _AnimationAnimaticPrivate AnimationAnimaticPrivate;
 
 struct _AnimationAnimaticPrivate
 {
-  /* Panels are cached as GEGL buffers. */
-  GeglBuffer **cache;
   /* The number of panels. */
   gint         n_panels;
   /* Layers associated to each panel. For serialization. */
@@ -86,14 +86,11 @@ static void         animation_animatic_finalize       (GObject           *object
 
 static gint         animation_animatic_get_duration   (Animation         *animation);
 
-static GeglBuffer * animation_animatic_get_frame      (Animation         *animation,
-                                                       gint               pos);
-
-static gboolean     animation_animatic_same           (Animation         *animation,
-                                                       gint               pos1,
-                                                       gint               pos2);
-
-static void         animation_animatic_purge_cache    (Animation         *animation);
+static gchar      * animation_animatic_get_frame_hash (Animation         *animation,
+                                                       gint               position);
+static GeglBuffer * animation_animatic_create_frame   (Animation         *animation,
+                                                       GObject           *renderer,
+                                                       gint               position);
 
 static void         animation_animatic_reset_defaults (Animation         *animation);
 static gchar      * animation_animatic_serialize      (Animation         *animation,
@@ -120,12 +117,6 @@ static void      animation_animatic_text          (GMarkupParseContext  *context
                                                    gsize                 text_len,
                                                    gpointer              user_data,
                                                    GError              **error);
-
-/* Utils */
-
-static void      animation_animatic_cache_panel   (AnimationAnimatic    *animation,
-                                                   gint                  panel,
-                                                   gboolean              recursion);
 
 /* Tag handling (from layer names) */
 
@@ -174,11 +165,8 @@ animation_animatic_class_init (AnimationAnimaticClass *klass)
   object_class->finalize     = animation_animatic_finalize;
 
   anim_class->get_duration   = animation_animatic_get_duration;
-  anim_class->get_frame      = animation_animatic_get_frame;
-
-  anim_class->same           = animation_animatic_same;
-
-  anim_class->purge_cache    = animation_animatic_purge_cache;
+  anim_class->get_frame_hash = animation_animatic_get_frame_hash;
+  anim_class->create_frame   = animation_animatic_create_frame;
 
   anim_class->reset_defaults = animation_animatic_reset_defaults;
   anim_class->serialize      = animation_animatic_serialize;
@@ -211,15 +199,6 @@ animation_animatic_finalize (GObject *object)
           g_free (priv->comments[i]);
         }
       g_free (priv->comments);
-    }
-  if (priv->cache)
-    {
-      for (i = 0; i < priv->n_panels; i++)
-        {
-          if (priv->cache[i])
-            g_object_unref (priv->cache[i]);
-        }
-      g_free (priv->cache);
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -303,8 +282,32 @@ animation_animatic_set_combine (AnimationAnimatic *animatic,
 
   if (priv->combine[panel_num] != combine)
     {
+      gint i;
+
       priv->combine[panel_num] = combine;
-      animation_animatic_cache_panel (animatic, panel_num, TRUE);
+
+      if (animation_animatic_get_panel_duration (animatic, panel_num) > 0)
+        g_signal_emit_by_name (animatic, "frames-changed",
+                               animation_animatic_get_position (animatic,
+                                                                panel_num),
+                               animation_animatic_get_panel_duration (animatic,
+                                                                      panel_num));
+
+      /* If next panel is in "combine" mode, it must also be re-cached.
+       * And so on, recursively. */
+      for (i = panel_num + 1; i < priv->n_panels; i++)
+        {
+          if (priv->combine[i])
+            {
+              g_signal_emit_by_name (animatic, "frames-changed",
+                                     animation_animatic_get_position (animatic, i),
+                                     animation_animatic_get_panel_duration (animatic, i));
+            }
+          else
+            {
+              break;
+            }
+        }
     }
 }
 
@@ -382,64 +385,78 @@ animation_animatic_get_duration (Animation *animation)
   return count;
 }
 
-static GeglBuffer *
-animation_animatic_get_frame (Animation *animation,
-                              gint       pos)
+static gchar *
+animation_animatic_get_frame_hash (Animation *animation,
+                                   gint       position)
 {
-  AnimationAnimaticPrivate *priv;
-  GeglBuffer               *frame = NULL;
+  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
+  gchar                    *hash;
   gint                      panel;
 
-  priv = GET_PRIVATE (animation);
   panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
-                                        pos);
-  if (priv->cache[panel])
-    frame = g_object_ref (priv->cache[panel]);
-
-  return frame;
+                                        position);
+  hash = g_strdup_printf ("%d;", priv->tattoos[panel]);
+  while (panel > 0 && priv->combine[panel--])
+    {
+      gchar *tmp = hash;
+      hash = g_strdup_printf ("%s%d;", hash, priv->tattoos[panel]);
+      g_free (tmp);
+    }
+  return hash;
 }
 
-static gboolean
-animation_animatic_same (Animation *animation,
-                         gint       pos1,
-                         gint       pos2)
+static GeglBuffer *
+animation_animatic_create_frame (Animation *animation,
+                                 GObject   *renderer,
+                                 gint       position)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
-  gint                      count = 0;
-  gboolean                  identical = FALSE;
-  gint                      i ;
+  GeglBuffer               *buffer;
+  GeglBuffer               *buffer2;
+  GeglBuffer               *backdrop = NULL;
+  gint                      layer_offx;
+  gint                      layer_offy;
+  gint                      preview_width;
+  gint                      preview_height;
+  gint32                    image_id;
+  gint32                    layer;
+  gdouble                   proxy_ratio;
+  gint                      panel;
 
-  for (i = 0; i < priv->n_panels; i++)
+  panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
+                                        position);
+  image_id = animation_get_image_id (animation);
+  layer = gimp_image_get_layer_by_tattoo (image_id,
+                                          priv->tattoos[panel]);
+  if (! layer)
     {
-      count += priv->durations[i];
-      if (count > pos1 && count > pos2)
-        {
-          identical = TRUE;
-          break;
-        }
-      else if (count > pos1 || count > pos2)
-        {
-          identical = FALSE;
-          break;
-        }
+      g_printerr ("Warning: buffer creation of panel %d failed; "
+                  "the associated layer must have been deleted.\n",
+                  panel);
+      return NULL;
     }
 
-  return identical;
-}
+  proxy_ratio = animation_get_proxy (animation);
+  buffer2 = gimp_drawable_get_buffer (layer);
+  animation_get_size (animation, &preview_width, &preview_height);
+  gimp_drawable_offsets (layer,
+                         &layer_offx, &layer_offy);
 
-static void
-animation_animatic_purge_cache (Animation *animation)
-{
-  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
-  gint                      i;
-
-  for (i = 0; i < priv->n_panels; i++)
+  if (panel > 0 && priv->combine[panel])
     {
-      animation_animatic_cache_panel (ANIMATION_ANIMATIC (animation), i, FALSE);
-      g_signal_emit_by_name (animation, "loading",
-                             (gdouble) i / ((gdouble) priv->n_panels - 0.999));
+      backdrop = animation_renderer_get_buffer (ANIMATION_RENDERER (renderer),
+                                                panel - 1);
     }
-  g_signal_emit_by_name (animation, "loaded");
+
+  buffer = normal_blend (preview_width, preview_height,
+                         backdrop, 1.0, 0, 0,
+                         buffer2, proxy_ratio,
+                         layer_offx, layer_offy);
+  g_object_unref (buffer2);
+  if (backdrop)
+    g_object_unref (backdrop);
+
+  return buffer;
 }
 
 static void
@@ -457,11 +474,8 @@ animation_animatic_reset_defaults (Animation *animation)
   for (i = 0; i < priv->n_panels; i++)
     {
       g_free (priv->comments[i]);
-      if (priv->cache[i])
-        g_object_unref (priv->cache[i]);
     }
   g_free (priv->comments);
-  g_free (priv->cache);
 
   image_id = animation_get_image_id (animation);
   layers   = gimp_image_get_layers (image_id, &priv->n_panels);
@@ -470,10 +484,8 @@ animation_animatic_reset_defaults (Animation *animation)
   priv->durations = g_try_malloc0_n (priv->n_panels, sizeof (gint));
   priv->combine   = g_try_malloc0_n (priv->n_panels, sizeof (gboolean));
   priv->comments  = g_try_malloc0_n (priv->n_panels, sizeof (gchar*));
-  priv->cache     = g_try_malloc0_n (priv->n_panels, sizeof (GeglBuffer*));
   if (! priv->tattoos || ! priv->durations ||
-      ! priv->combine || ! priv->comments  ||
-      ! priv->cache)
+      ! priv->combine || ! priv->comments)
     {
       gimp_message (_("Memory could not be allocated to the animatic."));
       gimp_quit ();
@@ -838,76 +850,6 @@ animation_animatic_text (GMarkupParseContext  *context,
     default:
       /* Ignoring text everywhere else. */
       break;
-    }
-}
-
-/**** Utils ****/
-
-static void
-animation_animatic_cache_panel (AnimationAnimatic *animatic,
-                                gint               panel,
-                                gboolean           recursion)
-{
-  AnimationAnimaticPrivate *priv      = GET_PRIVATE (animatic);
-  Animation                *animation = ANIMATION (animatic);
-  GeglBuffer               *buffer;
-  GeglBuffer               *backdrop_buffer = NULL;
-  gint                      layer_offx;
-  gint                      layer_offy;
-  gint                      preview_width;
-  gint                      preview_height;
-  gint32                    image_id;
-  gint32                    layer;
-  gdouble                   proxy_ratio;
-
-  image_id = animation_get_image_id (animation);
-  layer = gimp_image_get_layer_by_tattoo (image_id,
-                                          priv->tattoos[panel]);
-  if (! layer)
-    {
-      g_printerr ("Warning: caching of panel %d failed; "
-                  "the associated layer must have been deleted.\n",
-                  panel);
-      return;
-    }
-
-  /* Destroy existing cache. */
-  if (priv->cache[panel])
-    {
-      g_object_unref (priv->cache[panel]);
-    }
-
-  proxy_ratio = animation_get_proxy (animation);
-  buffer = gimp_drawable_get_buffer (layer);
-  animation_get_size (animation, &preview_width, &preview_height);
-  gimp_drawable_offsets (layer,
-                         &layer_offx, &layer_offy);
-
-  if (panel > 0 && priv->combine[panel])
-    {
-      backdrop_buffer = priv->cache[panel - 1];
-    }
-
-  priv->cache[panel] = normal_blend (preview_width, preview_height,
-                                     backdrop_buffer, 1.0, 0, 0,
-                                     buffer, proxy_ratio,
-                                     layer_offx, layer_offy);
-  g_object_unref (buffer);
-
-  if (animation_animatic_get_panel_duration (animatic, panel) > 0)
-    g_signal_emit_by_name (animation, "cache-invalidated",
-                           animation_animatic_get_position (animatic,
-                                                            panel),
-                           animation_animatic_get_panel_duration (animatic,
-                                                                  panel));
-
-  /* If next panel is in "combine" mode, it must also be re-cached.
-   * And so on, recursively. */
-  if (recursion                  &&
-      panel < priv->n_panels - 1 &&
-      priv->combine[panel + 1])
-    {
-      animation_animatic_cache_panel (animatic, panel + 1, TRUE);
     }
 }
 

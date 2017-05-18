@@ -68,6 +68,8 @@ void          animation_playback_set_animation (AnimationPlayback   *playback,
 Animation   * animation_playback_get_animation (AnimationPlayback   *playback);
 
 gint          animation_playback_get_position  (AnimationPlayback   *playback);
+GeglBuffer  * animation_playback_get_buffer    (AnimationPlayback   *playback,
+                                                gint                 position);
 
 gboolean      animation_playback_is_playing    (AnimationPlayback   *playback);
 void          animation_playback_play          (AnimationPlayback   *playback);

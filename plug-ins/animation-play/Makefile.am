@@ -53,6 +53,8 @@ animation_play_SOURCES = \
 	core/animation-celanimation.c	\
 	core/animation-playback.h		\
 	core/animation-playback.c		\
+	core/animation-renderer.h		\
+	core/animation-renderer.c		\
 	widgets/animation-dialog.h		\
 	widgets/animation-dialog.c		\
 	widgets/animation-keyframe-view.h	\

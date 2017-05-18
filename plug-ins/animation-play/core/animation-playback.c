@@ -27,6 +27,7 @@
 
 #include "animation.h"
 #include "animation-playback.h"
+#include "animation-renderer.h"
 
 enum
 {
@@ -47,6 +48,7 @@ enum
 struct _AnimationPlaybackPrivate
 {
   Animation   *animation;
+  GObject     *renderer;
 
   /* State of the currently loaded playback. */
   gint         position;
@@ -67,11 +69,6 @@ typedef struct
   gint               level;
 } ParseStatus;
 
-#define ANIMATION_PLAYBACK_GET_PRIVATE(playback) \
-        G_TYPE_INSTANCE_GET_PRIVATE (playback, \
-                                     ANIMATION_PLAYBACK_TYPE_ANIMATION_PLAYBACK, \
-                                     AnimationPlaybackPrivate)
-
 static void       animation_playback_finalize               (GObject      *object);
 static void       animation_playback_set_property           (GObject           *object,
                                                              guint              property_id,
@@ -85,9 +82,8 @@ static void       animation_playback_get_property           (GObject           *
 static void       on_duration_changed                       (Animation         *animation,
                                                              gint               duration,
                                                              AnimationPlayback *playback);
-static void       on_cache_invalidated                      (Animation         *animation,
+static void       on_cache_updated                          (AnimationRenderer *renderer,
                                                              gint               position,
-                                                             gint               length,
                                                              AnimationPlayback *playback);
 
 /* Timer callback for playback. */
@@ -312,6 +308,16 @@ animation_playback_get_position (AnimationPlayback *playback)
   return playback->priv->position;
 }
 
+GeglBuffer *
+animation_playback_get_buffer (AnimationPlayback *playback,
+                               gint               position)
+{
+  AnimationRenderer *renderer;
+
+  renderer = ANIMATION_RENDERER (playback->priv->renderer);
+  return animation_renderer_get_buffer (renderer, position);
+}
+
 gboolean
 animation_playback_is_playing (AnimationPlayback *playback)
 {
@@ -360,10 +366,10 @@ animation_playback_stop (AnimationPlayback *playback)
 void
 animation_playback_next (AnimationPlayback *playback)
 {
-  Animation  *animation    = playback->priv->animation;
-  GeglBuffer *buffer       = NULL;
-  gint        previous_pos = playback->priv->position;
-  gboolean    identical;
+  AnimationRenderer *renderer;
+  GeglBuffer        *buffer       = NULL;
+  gint               previous_pos = playback->priv->position;
+  gboolean           identical;
 
   if (! playback->priv->animation)
     return;
@@ -372,12 +378,14 @@ animation_playback_next (AnimationPlayback *playback)
                              ((playback->priv->position - playback->priv->start + 1) %
                               (playback->priv->stop - playback->priv->start + 1));
 
-  identical = ANIMATION_GET_CLASS (animation)->same (animation,
-                                                     previous_pos,
-                                                     playback->priv->position);
+  renderer = ANIMATION_RENDERER (playback->priv->renderer);
+  identical = animation_renderer_identical (renderer,
+                                            previous_pos,
+                                            playback->priv->position);
   if (! identical)
     {
-      buffer = animation_get_frame (animation, playback->priv->position);
+      buffer = animation_renderer_get_buffer (renderer,
+                                              playback->priv->position);
     }
   g_signal_emit (playback, animation_playback_signals[RENDER], 0,
                  playback->priv->position, buffer, ! identical);
@@ -390,10 +398,10 @@ animation_playback_next (AnimationPlayback *playback)
 void
 animation_playback_prev (AnimationPlayback *playback)
 {
-  Animation  *animation = playback->priv->animation;
-  GeglBuffer *buffer    = NULL;
-  gint        prev_pos  = playback->priv->position;
-  gboolean    identical;
+  AnimationRenderer *renderer;
+  GeglBuffer        *buffer    = NULL;
+  gint               prev_pos  = playback->priv->position;
+  gboolean           identical;
 
   if (! playback->priv->animation)
     return;
@@ -407,12 +415,13 @@ animation_playback_prev (AnimationPlayback *playback)
       --playback->priv->position;
     }
 
-  identical = ANIMATION_GET_CLASS (animation)->same (animation,
-                                                     prev_pos,
-                                                     playback->priv->position);
+  renderer = ANIMATION_RENDERER (playback->priv->renderer);
+  identical = animation_renderer_identical (renderer,
+                                            prev_pos,
+                                            playback->priv->position);
   if (! identical)
     {
-      buffer = animation_get_frame (animation, playback->priv->position);
+      buffer = animation_renderer_get_buffer (renderer, playback->priv->position);
     }
   g_signal_emit (playback, animation_playback_signals[RENDER], 0,
                  playback->priv->position, buffer, ! identical);
@@ -424,10 +433,10 @@ void
 animation_playback_jump (AnimationPlayback *playback,
                          gint               index)
 {
-  Animation  *animation = playback->priv->animation;
-  GeglBuffer *buffer    = NULL;
-  gint        prev_pos  = playback->priv->position;
-  gboolean    identical;
+  AnimationRenderer *renderer;
+  GeglBuffer        *buffer    = NULL;
+  gint               prev_pos  = playback->priv->position;
+  gboolean           identical;
 
   if (! playback->priv->animation)
     return;
@@ -438,12 +447,13 @@ animation_playback_jump (AnimationPlayback *playback,
   else
     playback->priv->position = index;
 
-  identical = ANIMATION_GET_CLASS (animation)->same (animation,
-                                                     prev_pos,
-                                                     playback->priv->position);
+  renderer = ANIMATION_RENDERER (playback->priv->renderer);
+  identical = animation_renderer_identical (renderer,
+                                            prev_pos,
+                                            playback->priv->position);
   if (! identical)
     {
-      buffer = animation_get_frame (animation, playback->priv->position);
+      buffer = animation_renderer_get_buffer (renderer, playback->priv->position);
     }
   g_signal_emit (playback, animation_playback_signals[RENDER], 0,
                  playback->priv->position, buffer, ! identical);
@@ -545,6 +555,7 @@ animation_playback_finalize (GObject      *object)
 {
   AnimationPlayback *playback = ANIMATION_PLAYBACK (object);
 
+  g_object_unref (playback->priv->renderer);
   if (playback->priv->animation)
     g_object_unref (playback->priv->animation);
 
@@ -567,9 +578,12 @@ animation_playback_set_property (GObject      *object,
 
           if (playback->priv->animation)
             g_object_unref (playback->priv->animation);
+          if (playback->priv->renderer)
+            g_object_unref (playback->priv->renderer);
 
           animation = g_value_dup_object (value);
           playback->priv->animation = animation;
+          playback->priv->renderer = NULL;
 
           if (! animation)
             break;
@@ -580,10 +594,12 @@ animation_playback_set_property (GObject      *object,
           playback->priv->stop  = animation_get_duration (animation) - 1;
           playback->priv->stop_at_end = TRUE;
 
-          g_signal_connect (animation, "cache-invalidated",
-                            G_CALLBACK (on_cache_invalidated), playback);
           g_signal_connect (animation, "duration-changed",
                             G_CALLBACK (on_duration_changed), playback);
+
+          playback->priv->renderer = animation_renderer_new (object);
+          g_signal_connect (playback->priv->renderer, "cache-updated",
+                            G_CALLBACK (on_cache_updated), playback);
         }
       break;
 
@@ -643,23 +659,19 @@ on_duration_changed (Animation         *animation,
 }
 
 static void
-on_cache_invalidated (Animation         *animation,
-                      gint               position,
-                      gint               length,
-                      AnimationPlayback *playback)
+on_cache_updated (AnimationRenderer *renderer,
+                  gint               position,
+                  AnimationPlayback *playback)
 {
-  gint cur_position;
-
-  cur_position = animation_playback_get_position (playback);
-
-  if (cur_position >= position &&
-      cur_position < position + length)
+  if (animation_playback_get_position (playback) == position)
     {
-      GeglBuffer *buffer;
+      AnimationRenderer *renderer;
+      GeglBuffer        *buffer;
 
-      buffer = animation_get_frame (animation, cur_position);
-      g_signal_emit_by_name (playback, "render",
-                             cur_position, buffer, TRUE);
+      renderer = ANIMATION_RENDERER (playback->priv->renderer);
+      buffer = animation_renderer_get_buffer (renderer, position);
+      g_signal_emit (playback, animation_playback_signals[RENDER], 0,
+                     position, buffer, TRUE);
       if (buffer)
         {
           g_object_unref (buffer);

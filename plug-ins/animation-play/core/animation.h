@@ -45,8 +45,9 @@ struct _AnimationClass
                                       gdouble       ratio);
   void         (*loaded)             (Animation    *animation);
 
-  void         (*cache_invalidated)  (Animation    *animation,
-                                      gint          position);
+  void         (*frames_changed)     (Animation    *animation,
+                                      gint          position,
+                                      gint          length);
   void         (*duration_changed)   (Animation    *animation,
                                       gint          duration);
   void         (*framerate_changed)  (Animation    *animation,
@@ -54,18 +55,8 @@ struct _AnimationClass
   void         (*proxy)              (Animation    *animation,
                                       gdouble       ratio);
 
-  /* Defaults to returning FALSE for any different position. */
-  gboolean     (*same)               (Animation    *animation,
-                                      gint          prev_pos,
-                                      gint          next_pos);
-
   /* These virtual methods must be implemented by any subclass. */
   gint         (*get_duration)       (Animation    *animation);
-
-  GeglBuffer * (*get_frame)          (Animation    *animation,
-                                      gint          pos);
-
-  void         (*purge_cache)        (Animation    *animation);
 
   void         (*reset_defaults)     (Animation    *animation);
   gchar      * (*serialize)          (Animation    *animation,
@@ -75,6 +66,13 @@ struct _AnimationClass
                                       GError      **error);
 
   void         (*update_paint_view)  (Animation    *animation,
+                                      gint          position);
+
+  /* Used by the renderer only. Must be implemented too. */
+  gchar      * (*get_frame_hash)     (Animation    *animation,
+                                      gint          position);
+  GeglBuffer * (*create_frame)       (Animation    *animation,
+                                      GObject      *renderer,
                                       gint          position);
 };
 
@@ -99,9 +97,6 @@ gdouble       animation_get_proxy          (Animation   *animation);
 void          animation_get_size           (Animation   *animation,
                                             gint        *width,
                                             gint        *height);
-
-GeglBuffer  * animation_get_frame          (Animation   *animation,
-                                            gint         frame_number);
 
 void          animation_set_framerate      (Animation   *animation,
                                             gdouble      fps);

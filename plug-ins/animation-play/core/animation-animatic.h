@@ -64,7 +64,7 @@ const gboolean   animation_animatic_get_combine        (AnimationAnimatic *anima
                                                         gint               panel);
 
 gint             animation_animatic_get_panel          (AnimationAnimatic *animation,
-                                                        gint               pos);
+                                                        gint               position);
 gint             animation_animatic_get_position       (AnimationAnimatic *animation,
                                                         gint               panel);
 

@@ -27,7 +27,6 @@
 
 #include "animation.h"
 #include "animation-camera.h"
-
 #include "animation-celanimation.h"
 
 typedef struct _AnimationCelAnimationPrivate AnimationCelAnimationPrivate;
@@ -35,40 +34,15 @@ typedef struct _AnimationCelAnimationPrivate AnimationCelAnimationPrivate;
 typedef struct
 {
   gchar *title;
-  /* The list of list of layers (identified by their tattoos). */
+  /* List of list of layers identified by tattoos. */
   GList *frames;
 }
 Track;
-
-typedef struct
-{
-  gint   tattoo;
-  gint   offset_x;
-  gint   offset_y;
-}
-CompLayer;
-
-typedef struct
-{
-  GeglBuffer *buffer;
-
-  /* The list of layers (identified by their tattoos) composited into
-   * this buffer allows to easily compare caches so that to not
-   * duplicate them.*/
-  CompLayer  *composition;
-  gint        n_sources;
-
-  gint        refs;
-}
-Cache;
 
 struct _AnimationCelAnimationPrivate
 {
   /* The number of frames. */
   gint             duration;
-
-  /* Frames are cached as GEGL buffers. */
-  GList           *cache;
 
   /* Panel comments. */
   GList           *comments;
@@ -111,30 +85,27 @@ typedef struct
                                      ANIMATION_TYPE_CEL_ANIMATION, \
                                      AnimationCelAnimationPrivate)
 
-static void         animation_cel_animation_finalize       (GObject           *object);
+static void         animation_cel_animation_finalize          (GObject      *object);
 
 /* Virtual methods */
 
-static gint         animation_cel_animation_get_duration   (Animation         *animation);
+static gint         animation_cel_animation_get_duration      (Animation    *animation);
 
-static GeglBuffer * animation_cel_animation_get_frame      (Animation         *animation,
-                                                            gint               pos);
+static gchar      * animation_cel_animation_get_frame_hash    (Animation    *animation,
+                                                               gint          position);
+static GeglBuffer * animation_cel_animation_create_frame      (Animation    *animation,
+                                                               GObject      *renderer,
+                                                               gint          position);
 
-static gboolean     animation_cel_animation_same           (Animation         *animation,
-                                                            gint               previous_pos,
-                                                            gint               next_pos);
+static void         animation_cel_animation_reset_defaults    (Animation    *animation);
+static gchar      * animation_cel_animation_serialize         (Animation    *animation,
+                                                               const gchar  *playback_xml);
+static gboolean     animation_cel_animation_deserialize       (Animation    *animation,
+                                                               const gchar  *xml,
+                                                               GError      **error);
 
-static void         animation_cel_animation_purge_cache    (Animation         *animation);
-
-static void         animation_cel_animation_reset_defaults (Animation         *animation);
-static gchar      * animation_cel_animation_serialize      (Animation         *animation,
-                                                            const gchar       *playback_xml);
-static gboolean     animation_cel_animation_deserialize    (Animation         *animation,
-                                                            const gchar       *xml,
-                                                            GError           **error);
-
-static void         animation_cel_animation_update_paint_view (Animation      *animation,
-                                                               gint            position);
+static void         animation_cel_animation_update_paint_view (Animation    *animation,
+                                                               gint          position);
 
 /* XML parsing */
 
@@ -163,12 +134,7 @@ static void      on_camera_offsets_changed                 (AnimationCamera     
                                                             AnimationCelAnimation  *animation);
 /* Utils */
 
-static void         animation_cel_animation_cache          (AnimationCelAnimation  *animation,
-                                                            gint                    position);
 static void         animation_cel_animation_cleanup        (AnimationCelAnimation  *animation);
-static gboolean     animation_cel_animation_cache_cmp      (Cache                   *cache1,
-                                                            Cache                   *cache2);
-static void         animation_cel_animation_clean_cache    (Cache                   *cache);
 static void         animation_cel_animation_clean_track    (Track                   *track);
 
 G_DEFINE_TYPE (AnimationCelAnimation, animation_cel_animation, ANIMATION_TYPE_ANIMATION)
@@ -184,10 +150,9 @@ animation_cel_animation_class_init (AnimationCelAnimationClass *klass)
   object_class->finalize     = animation_cel_animation_finalize;
 
   anim_class->get_duration   = animation_cel_animation_get_duration;
-  anim_class->get_frame      = animation_cel_animation_get_frame;
-  anim_class->same           = animation_cel_animation_same;
 
-  anim_class->purge_cache    = animation_cel_animation_purge_cache;
+  anim_class->get_frame_hash = animation_cel_animation_get_frame_hash;
+  anim_class->create_frame   = animation_cel_animation_create_frame;
 
   anim_class->reset_defaults = animation_cel_animation_reset_defaults;
   anim_class->serialize      = animation_cel_animation_serialize;
@@ -223,39 +188,40 @@ animation_cel_animation_set_layers (AnimationCelAnimation *animation,
                                     const GList           *new_layers)
 {
   Track *track;
+  GList *layers;
 
   track = g_list_nth_data (animation->priv->tracks, level);
+  g_return_if_fail (track && position >= 0 &&
+                    position < animation->priv->duration);
 
-  if (track)
+  layers = g_list_nth (track->frames, position);
+
+  if (! layers)
     {
-      GList *layers = g_list_nth (track->frames, position);
+      gint frames_length = g_list_length (track->frames);
+      gint i;
 
-      if (! layers)
+      track->frames = g_list_reverse (track->frames);
+      for (i = frames_length; i < position + 1; i++)
         {
-          gint frames_length = g_list_length (track->frames);
-          gint i;
-
-          track->frames = g_list_reverse (track->frames);
-          for (i = frames_length; i < position + 1; i++)
-            {
-              track->frames = g_list_prepend (track->frames, NULL);
-              layers = track->frames;
-            }
-          track->frames = g_list_reverse (track->frames);
+          track->frames = g_list_prepend (track->frames, NULL);
+          layers = track->frames;
         }
-      /* Clean out previous layer list. */
-      g_list_free (layers->data);
-      if (new_layers)
-        {
-          layers->data = g_list_copy ((GList *) new_layers);
-        }
-      else
-        {
-          layers->data = NULL;
-        }
-      animation_cel_animation_cache (animation, position);
-      g_signal_emit_by_name (animation, "cache-invalidated", position, 1);
+      track->frames = g_list_reverse (track->frames);
     }
+
+  /* Clean out previous layer list. */
+  g_list_free (layers->data);
+  if (new_layers)
+    {
+      layers->data = g_list_copy ((GList *) new_layers);
+    }
+  else
+    {
+      layers->data = NULL;
+    }
+
+  g_signal_emit_by_name (animation, "frames-changed", position, 1);
 }
 
 const GList *
@@ -263,17 +229,14 @@ animation_cel_animation_get_layers (AnimationCelAnimation *animation,
                                     gint                   level,
                                     gint                   position)
 {
-  GList *layers = NULL;
   Track *track;
 
   track = g_list_nth_data (animation->priv->tracks, level);
+  g_return_val_if_fail (track && position >= 0 &&
+                        position < animation->priv->duration,
+                        NULL);
 
-  if (track)
-    {
-      layers = g_list_nth_data (track->frames, position);
-    }
-
-  return layers;
+  return g_list_nth_data (track->frames, position);
 }
 
 void
@@ -328,14 +291,6 @@ animation_cel_animation_set_duration (AnimationCelAnimation *animation,
       GList *iter;
 
       /* Free memory. */
-      iter = g_list_nth (animation->priv->cache, duration);
-      if (iter && iter->prev)
-        {
-          iter->prev->next = NULL;
-          iter->prev = NULL;
-        }
-      g_list_free_full (iter, (GDestroyNotify) animation_cel_animation_clean_cache);
-
       iter = g_list_nth (animation->priv->tracks, duration);
       if (iter && iter->prev)
         {
@@ -391,46 +346,39 @@ gint
 animation_cel_animation_level_up (AnimationCelAnimation *animation,
                                   gint                   level)
 {
-  gint tracks_n = g_list_length (animation->priv->tracks);
+  GList *track;
+  GList *prev_track;
+  GList *next_track;
+  GList *iter;
+  gint   i;
 
-  g_return_val_if_fail (level >= 0 && level < tracks_n, level);
+  g_return_val_if_fail (level >= 0 &&
+                        level < g_list_length (animation->priv->tracks) - 1,
+                        level);
 
-  if (level < tracks_n - 1)
+  track = g_list_nth (animation->priv->tracks, level);
+  prev_track = track->prev;
+  next_track = track->next;
+
+  if (prev_track)
+    prev_track->next = next_track;
+  else
+    animation->priv->tracks = next_track;
+  next_track->prev = prev_track;
+  track->prev      = next_track;
+  track->next      = next_track->next;
+  next_track->next = track;
+
+  level++;
+
+  iter  = ((Track *) track->data)->frames;
+  for (i = 0; iter; iter = iter->next, i++)
     {
-      GList *item = g_list_nth (animation->priv->tracks, level);
-      GList *prev = item->prev;
-      GList *next = item->next;
-      Track *track;
-      GList *iter;
-      gint   i;
-
-      if (prev)
-        prev->next = next;
-      else
-        animation->priv->tracks = next;
-      next->prev = prev;
-      item->prev = next;
-      item->next = next->next;
-      next->next = item;
-
-      level++;
-
-      track = item->data;
-      iter  = track->frames;
-      for (i = 0; iter; iter = iter->next, i++)
+      if (iter->data)
         {
-          g_signal_emit_by_name (animation, "loading",
-                                 (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
-
-          if (iter->data)
-            {
-              /* Only cache if the track had contents for this frame. */
-              animation_cel_animation_cache (animation, i);
-            }
+          /* Only cache if the track had contents for this frame. */
+          g_signal_emit_by_name (animation, "frames-changed", i, 1);
         }
-      g_signal_emit_by_name (animation, "cache-invalidated",
-                             0, g_list_length (track->frames));
-      g_signal_emit_by_name (animation, "loaded");
     }
 
   return level;
@@ -440,46 +388,39 @@ gint
 animation_cel_animation_level_down (AnimationCelAnimation *animation,
                                     gint                   level)
 {
-  gint tracks_n = g_list_length (animation->priv->tracks);
+  GList *track;
+  GList *prev_track;
+  GList *next_track;
+  GList *iter;
+  gint   i;
 
-  g_return_val_if_fail (level >= 0 && level < tracks_n, level);
+  g_return_val_if_fail (level > 0 &&
+                        level < g_list_length (animation->priv->tracks),
+                        level);
 
-  if (level > 0)
+  track = g_list_nth (animation->priv->tracks, level);
+  prev_track = track->prev;
+  next_track = track->next;
+
+  if (! prev_track->prev)
+    animation->priv->tracks = track;
+  if (next_track)
+    next_track->prev = prev_track;
+  prev_track->next = next_track;
+  track->next = prev_track;
+  track->prev = prev_track->prev;
+  prev_track->prev = track;
+
+  level--;
+
+  iter  = ((Track *) track->data)->frames;
+  for (i = 0; iter; iter = iter->next, i++)
     {
-      GList *item = g_list_nth (animation->priv->tracks, level);
-      GList *prev = item->prev;
-      GList *next = item->next;
-      Track *track;
-      GList *iter;
-      gint   i;
-
-      if (! prev->prev)
-        animation->priv->tracks = item;
-      if (next)
-        next->prev = prev;
-      prev->next = next;
-      item->next = prev;
-      item->prev = prev->prev;
-      prev->prev = item;
-
-      level--;
-
-      track = item->data;
-      iter  = track->frames;
-      for (i = 0; iter; iter = iter->next, i++)
+      if (iter->data)
         {
-          g_signal_emit_by_name (animation, "loading",
-                                 (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
-
-          if (iter->data)
-            {
-              /* Only cache if the track had contents for this frame. */
-              animation_cel_animation_cache (animation, i);
-            }
+          /* Only cache if the track had contents for this frame. */
+          g_signal_emit_by_name (animation, "frames-changed", i, 1);
         }
-      g_signal_emit_by_name (animation, "cache-invalidated",
-                             0, g_list_length (track->frames));
-      g_signal_emit_by_name (animation, "loaded");
     }
 
   return level;
@@ -489,36 +430,31 @@ gboolean
 animation_cel_animation_level_delete (AnimationCelAnimation *animation,
                                       gint                   level)
 {
-  gint   tracks_n = g_list_length (animation->priv->tracks);
-  GList *item;
-  GList *iter;
-  Track *track;
-  gint   i;
+  gint tracks_n = g_list_length (animation->priv->tracks);
 
   g_return_val_if_fail (level >= 0 && level < tracks_n, FALSE);
 
   /* Do not remove when there is only a single level. */
   if (tracks_n > 1)
     {
+      Track *track;
+      GList *item;
+      GList *iter;
+      gint   i;
+
       item = g_list_nth (animation->priv->tracks, level);
       track = item->data;
-      animation->priv->tracks = g_list_delete_link (animation->priv->tracks, item);
-
+      animation->priv->tracks = g_list_delete_link (animation->priv->tracks,
+                                                    item);
       iter = track->frames;
       for (i = 0; iter; iter = iter->next, i++)
         {
-          g_signal_emit_by_name (animation, "loading",
-                                 (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
-
           if (iter->data)
             {
               /* Only cache if the track had contents for this frame. */
-              animation_cel_animation_cache (animation, i);
+              g_signal_emit_by_name (animation, "frames-changed", i, 1);
             }
         }
-      g_signal_emit_by_name (animation, "cache-invalidated",
-                             0, g_list_length (track->frames));
-      g_signal_emit_by_name (animation, "loaded");
       animation_cel_animation_clean_track (track);
 
       return TRUE;
@@ -600,15 +536,8 @@ animation_cel_animation_cel_delete (AnimationCelAnimation *animation,
 
           for (i = position; iter; iter = iter->next, i++)
             {
-              g_signal_emit_by_name (animation, "loading",
-                                     (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
-
-              animation_cel_animation_cache (animation, i);
+              g_signal_emit_by_name (animation, "frames-changed", i, 1);
             }
-          if (i > position)
-            g_signal_emit_by_name (animation, "cache-invalidated",
-                                   position, i - position);
-          g_signal_emit_by_name (animation, "loaded");
 
           return TRUE;
         }
@@ -653,16 +582,8 @@ animation_cel_animation_cel_add (AnimationCelAnimation *animation,
         {
           for (; cel; cel = cel->next, i++)
             {
-              g_signal_emit_by_name (animation, "loading",
-                                     (gdouble) i / ((gdouble) animation->priv->duration - 0.999));
-
-              animation_cel_animation_cache (animation, i);
+              g_signal_emit_by_name (animation, "frames-changed", i, 1);
             }
-          if (i > position)
-            g_signal_emit_by_name (animation, "cache-invalidated",
-                                   position, i - position);
-          g_signal_emit_by_name (animation, "loaded");
-
           return TRUE;
         }
     }
@@ -677,63 +598,120 @@ animation_cel_animation_get_duration (Animation *animation)
   return ANIMATION_CEL_ANIMATION (animation)->priv->duration;
 }
 
+static gchar *
+animation_cel_animation_get_frame_hash (Animation *animation,
+                                        gint       position)
+{
+  AnimationCelAnimation *cel_animation;
+  gchar                 *hash = g_strdup ("");
+  GList                 *iter;
+  gint                   main_offset_x;
+  gint                   main_offset_y;
+
+  cel_animation = ANIMATION_CEL_ANIMATION (animation);
+  animation_camera_get (cel_animation->priv->camera,
+                        position, &main_offset_x, &main_offset_y);
+
+  /* Create the new buffer layer composition. */
+  for (iter = cel_animation->priv->tracks; iter; iter = iter->next)
+    {
+      Track *track = iter->data;
+      GList *layers;
+      GList *layer;
+
+      layers = g_list_nth_data (track->frames, position);
+
+      for (layer = layers; layer; layer = layer->next)
+        {
+          gint tattoo;
+
+          tattoo = GPOINTER_TO_INT (layer->data);
+          if (tattoo)
+            {
+              gchar *tmp = hash;
+              hash = g_strdup_printf ("%s[%d,%d]%d;",
+                                      hash,
+                                      main_offset_x, main_offset_y,
+                                      tattoo);
+              g_free (tmp);
+            }
+        }
+    }
+  if (strlen (hash) == 0)
+    {
+      g_free (hash);
+      hash = NULL;
+    }
+  return hash;
+
+}
+
 static GeglBuffer *
-animation_cel_animation_get_frame (Animation *animation,
-                                   gint       pos)
+animation_cel_animation_create_frame (Animation *animation,
+                                      GObject   *renderer G_GNUC_UNUSED,
+                                      gint       position)
 {
   AnimationCelAnimation *cel_animation;
-  Cache                 *cache;
-  GeglBuffer            *frame = NULL;
+  GeglBuffer            *buffer = NULL;
+  GList                 *iter;
+  gint32                 image_id;
+  gdouble                proxy_ratio;
+  gint                   preview_width;
+  gint                   preview_height;
+  gint                   offset_x;
+  gint                   offset_y;
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
+  image_id = animation_get_image_id (animation);
+  proxy_ratio = animation_get_proxy (animation);
+  animation_get_size (animation,
+                      &preview_width, &preview_height);
+  animation_camera_get (cel_animation->priv->camera,
+                        position, &offset_x, &offset_y);
 
-  cache = g_list_nth_data (cel_animation->priv->cache,
-                           pos);
-  if (cache)
+  for (iter = cel_animation->priv->tracks; iter; iter = iter->next)
     {
-      frame = g_object_ref (cache->buffer);
+      Track *track = iter->data;
+      GList *layers;
+      GList *iter2;
+
+      layers = g_list_nth_data (track->frames, position);
+
+      for (iter2 = layers; iter2; iter2 = iter2->next)
+        {
+          GeglBuffer *source = NULL;
+          GeglBuffer *intermediate;
+          gint        layer_offx;
+          gint        layer_offy;
+          gint32      layer;
+          gint        tattoo;
+
+          tattoo = GPOINTER_TO_INT (iter2->data);
+
+          layer = gimp_image_get_layer_by_tattoo (image_id, tattoo);
+          if (layer > 0)
+            source = gimp_drawable_get_buffer (layer);
+          if (layer <= 0 || ! source)
+            {
+              g_printerr ("Warning: a layer used for frame %d has been deleted.\n",
+                          position);
+              continue;
+            }
+          gimp_drawable_offsets (layer, &layer_offx, &layer_offy);
+          intermediate = normal_blend (preview_width, preview_height,
+                                       buffer, 1.0, 0, 0,
+                                       source, proxy_ratio,
+                                       layer_offx + offset_x,
+                                       layer_offy + offset_y);
+          g_object_unref (source);
+          if (buffer)
+            {
+              g_object_unref (buffer);
+            }
+          buffer = intermediate;
+        }
     }
-  return frame;
-}
-
-static gboolean
-animation_cel_animation_same (Animation *animation,
-                              gint       pos1,
-                              gint       pos2)
-{
-  AnimationCelAnimation *cel_animation;
-  Cache                 *cache1;
-  Cache                 *cache2;
-
-  cel_animation = ANIMATION_CEL_ANIMATION (animation);
-
-  g_return_val_if_fail (pos1 >= 0                            &&
-                        pos1 < cel_animation->priv->duration &&
-                        pos2 >= 0                            &&
-                        pos2 < cel_animation->priv->duration,
-                        FALSE);
-
-  cache1 = g_list_nth_data (cel_animation->priv->cache, pos1);
-  cache2 = g_list_nth_data (cel_animation->priv->cache, pos2);
-
-  return animation_cel_animation_cache_cmp (cache1, cache2);
-}
-
-static void
-animation_cel_animation_purge_cache (Animation *animation)
-{
-  gint duration;
-  gint i;
-
-  duration = animation_get_duration (animation);
-  for (i = 0; i < duration; i++)
-    {
-      animation_cel_animation_cache (ANIMATION_CEL_ANIMATION (animation),
-                                     i);
-      g_signal_emit_by_name (animation, "loading",
-                             (gdouble) i / ((gdouble) duration - 0.999));
-    }
-  g_signal_emit_by_name (animation, "loaded");
+  return buffer;
 }
 
 static void
@@ -808,7 +786,7 @@ animation_cel_animation_serialize (Animation   *animation,
     {
       Track *track = iter->data;
       GList *iter2;
-      gint   pos;
+      gint   position;
       gint   duration;
 
       xml2 = g_markup_printf_escaped ("<sequence name=\"%s\">",
@@ -818,7 +796,7 @@ animation_cel_animation_serialize (Animation   *animation,
       g_free (tmp);
       g_free (xml2);
 
-      pos = 1;
+      position = 1;
       duration = 0;
       for (iter2 = track->frames; iter2; iter2 = iter2->next)
         {
@@ -851,7 +829,8 @@ animation_cel_animation_serialize (Animation   *animation,
                   /* Open tag. */
                   xml2 = g_markup_printf_escaped ("<frame position=\"%d\""
                                                   " duration=\"%d\">",
-                                                  pos - duration, duration);
+                                                  position - duration,
+                                                  duration);
                   tmp = xml;
                   xml = g_strconcat (xml, xml2, NULL);
                   g_free (tmp);
@@ -879,7 +858,7 @@ animation_cel_animation_serialize (Animation   *animation,
                   duration = 0;
                 }
             }
-          pos++;
+          position++;
         }
 
       tmp = xml;
@@ -956,6 +935,8 @@ animation_cel_animation_deserialize (Animation    *animation,
       g_signal_connect (cel_animation->priv->camera, "offsets-changed",
                         G_CALLBACK (on_camera_offsets_changed),
                         animation);
+      g_signal_emit_by_name (animation, "frames-changed", 0,
+                             cel_animation->priv->duration);
     }
   g_markup_parse_context_free (context);
 
@@ -967,12 +948,13 @@ animation_cel_animation_update_paint_view (Animation *animation,
                                            gint       position)
 {
   AnimationCelAnimation *cel_animation;
-  Cache                 *cache;
   gint                  *layers;
+  GList                 *iter;
   gint                   num_layers;
   gint32                 image_id;
   gint                   i;
 
+  cel_animation = ANIMATION_CEL_ANIMATION (animation);
   image_id = animation_get_image_id (animation);
 
   /* Hide all layers. */
@@ -983,21 +965,21 @@ animation_cel_animation_update_paint_view (Animation *animation,
     }
 
   /* Show layers */
-  cel_animation = ANIMATION_CEL_ANIMATION (animation);
-
-  cache = g_list_nth_data (cel_animation->priv->cache,
-                           position);
-  if (cache)
+  for (iter = cel_animation->priv->tracks; iter; iter = iter->next)
     {
-      gint i;
+      Track *track = iter->data;
+      GList *frame_layers;
+      GList *iter2;
 
-      for (i = 0; i < cache->n_sources; i++)
+      frame_layers = g_list_nth_data (track->frames, position);
+
+      for (iter2 = frame_layers; iter2; iter2 = iter2->next)
         {
-          gint tattoo = cache->composition[i].tattoo;
+          gint tattoo;
           gint layer;
 
+          tattoo = GPOINTER_TO_INT (iter2->data);
           layer = gimp_image_get_layer_by_tattoo (image_id, tattoo);
-
           show_item (layer, GIMP_COLOR_TAG_RED);
         }
     }
@@ -1310,191 +1292,15 @@ on_camera_offsets_changed (AnimationCamera       *camera,
                            gint                   duration,
                            AnimationCelAnimation *animation)
 {
-  gint i;
-
-  for (i = position; i < position + duration; i++)
-    animation_cel_animation_cache (animation, i);
-
-  g_signal_emit_by_name (animation, "cache-invalidated",
+  g_signal_emit_by_name (animation, "frames-changed",
                          position, duration);
 }
 
 /**** Utils ****/
 
 static void
-animation_cel_animation_cache (AnimationCelAnimation *animation,
-                               gint                   pos)
-{
-  GeglBuffer *backdrop = NULL;
-  GList      *iter;
-  Cache      *cache;
-  CompLayer  *composition;
-  gint        n_sources = 0;
-  gint32      image_id;
-  gdouble     proxy_ratio;
-  gint        preview_width;
-  gint        preview_height;
-  gint        i;
-  gint        main_offset_x;
-  gint        main_offset_y;
-
-  /* Clean out current cache. */
-  iter = g_list_nth (animation->priv->cache, pos);
-  if (iter && iter->data)
-    {
-      Cache *cache = iter->data;
-
-      if (--(cache->refs) == 0)
-        {
-          g_free (cache->composition);
-          g_object_unref (cache->buffer);
-          g_free (cache);
-        }
-      iter->data = NULL;
-    }
-
-  /* Check if new configuration needs caching. */
-  for (iter = animation->priv->tracks; iter; iter = iter->next)
-    {
-      Track *track = iter->data;
-      GList *layers;
-
-      layers = g_list_nth_data (track->frames, pos);
-
-      n_sources += g_list_length (layers);
-    }
-  if (n_sources == 0)
-    {
-      return;
-    }
-
-  /* Make sure the cache list is long enough. */
-  if (pos >= g_list_length (animation->priv->cache))
-    {
-      animation->priv->cache = g_list_reverse (animation->priv->cache);
-      for (i = g_list_length (animation->priv->cache); i <= pos; i++)
-        {
-          animation->priv->cache = g_list_prepend (animation->priv->cache,
-                                                   NULL);
-        }
-      animation->priv->cache = g_list_reverse (animation->priv->cache);
-    }
-
-  animation_camera_get (animation->priv->camera,
-                        pos, &main_offset_x, &main_offset_y);
-
-  /* Create the new buffer composition. */
-  composition = g_new0 (CompLayer, n_sources);
-  i = 0;
-  for (iter = animation->priv->tracks; iter; iter = iter->next)
-    {
-      Track *track = iter->data;
-      GList *layers;
-      GList *layer;
-
-      layers = g_list_nth_data (track->frames, pos);
-
-      for (layer = layers; layer; layer = layer->next)
-        {
-          gint tattoo;
-
-          tattoo = GPOINTER_TO_INT (layer->data);
-          if (tattoo)
-            {
-              composition[i].tattoo = tattoo;
-              composition[i].offset_x = main_offset_x;
-              composition[i++].offset_y = main_offset_y;
-            }
-        }
-    }
-
-  /* Check if new configuration was not already cached. */
-  for (iter = animation->priv->cache; iter; iter = iter->next)
-    {
-      if (iter->data)
-        {
-          Cache    *cache = iter->data;
-          gboolean  same = FALSE;
-
-          if (n_sources == cache->n_sources)
-            {
-              same = TRUE;
-              for (i = 0; i < n_sources; i++)
-                {
-                  if (cache->composition[i].tattoo   != composition[i].tattoo   ||
-                      cache->composition[i].offset_x != composition[i].offset_x ||
-                      cache->composition[i].offset_y != composition[i].offset_y)
-                    {
-                      same = FALSE;
-                      break;
-                    }
-                }
-              if (same)
-                {
-                  /* A buffer with the same contents already exists. */
-                  g_free (composition);
-                  (cache->refs)++;
-                  g_list_nth (animation->priv->cache, pos)->data = cache;
-                  return;
-                }
-            }
-        }
-    }
-
-  /* New configuration. Finally compute the cache. */
-  cache = g_new0 (Cache, 1);
-  cache->refs        = 1;
-  cache->n_sources   = n_sources;
-  cache->composition = composition;
-
-  image_id    = animation_get_image_id (ANIMATION (animation));
-  proxy_ratio = animation_get_proxy (ANIMATION (animation));
-  animation_get_size (ANIMATION (animation),
-                      &preview_width, &preview_height);
-
-  for (i = 0; i < n_sources; i++)
-    {
-      GeglBuffer *source;
-      GeglBuffer *intermediate;
-      gint32      layer;
-      gint        layer_offx;
-      gint        layer_offy;
-
-      layer = gimp_image_get_layer_by_tattoo (image_id,
-                                              cache->composition[i].tattoo);
-      if (layer > 0)
-        source = gimp_drawable_get_buffer (layer);
-      if (layer <= 0 || ! source)
-        {
-          g_printerr ("Warning: a layer used for frame %d has been deleted.\n",
-                      pos);
-          continue;
-        }
-      gimp_drawable_offsets (layer, &layer_offx, &layer_offy);
-      intermediate = normal_blend (preview_width, preview_height,
-                                   backdrop, 1.0, 0, 0,
-                                   source, proxy_ratio,
-                                   layer_offx + cache->composition[i].offset_x,
-                                   layer_offy + cache->composition[i].offset_y);
-      g_object_unref (source);
-      if (backdrop)
-        {
-          g_object_unref (backdrop);
-        }
-      backdrop = intermediate;
-    }
-  cache->buffer = backdrop;
-
-  /* This item exists and has a NULL data. */
-  g_list_nth (animation->priv->cache, pos)->data = cache;
-}
-
-static void
 animation_cel_animation_cleanup (AnimationCelAnimation *animation)
 {
-  g_list_free_full (animation->priv->cache,
-                    (GDestroyNotify) animation_cel_animation_clean_cache);
-  animation->priv->cache    = NULL;
   g_list_free_full (animation->priv->comments,
                     (GDestroyNotify) g_free);
   animation->priv->comments = NULL;
@@ -1503,43 +1309,6 @@ animation_cel_animation_cleanup (AnimationCelAnimation *animation)
   animation->priv->tracks   = NULL;
 
   g_object_unref (animation->priv->camera);
-}
-
-static gboolean
-animation_cel_animation_cache_cmp (Cache *cache1,
-                                   Cache *cache2)
-{
-  gboolean identical = FALSE;
-
-  if (cache1 && cache2 &&
-      cache1->n_sources == cache2->n_sources)
-    {
-      gint i;
-
-      identical = TRUE;
-      for (i = 0; i < cache1->n_sources; i++)
-        {
-          if (cache1->composition[i].tattoo   != cache2->composition[i].tattoo   ||
-              cache1->composition[i].offset_x != cache2->composition[i].offset_x ||
-              cache1->composition[i].offset_y != cache2->composition[i].offset_y)
-            {
-              identical = FALSE;
-              break;
-            }
-        }
-    }
-  return identical;
-}
-
-static void
-animation_cel_animation_clean_cache (Cache *cache)
-{
-  if (cache != NULL && --(cache->refs) == 0)
-    {
-      g_object_unref (cache->buffer);
-      g_free (cache->composition);
-      g_free (cache);
-    }
 }
 
 static void

@@ -1976,11 +1976,11 @@ detach_callback (GtkToggleAction *action,
     }
 
   /* Force a refresh after detachment/attachment. */
-  buffer = animation_get_frame (priv->animation,
-                                animation_playback_get_position (priv->playback));
+  buffer = animation_playback_get_buffer (priv->playback,
+                                          animation_playback_get_position (priv->playback));
   render_frame (dialog, buffer, TRUE);
   /* clean up */
-  if (buffer != NULL)
+  if (buffer)
     g_object_unref (buffer);
 }
 
@@ -2330,11 +2330,11 @@ da_size_callback (GtkWidget       *drawing_area,
             {
               GeglBuffer *buffer;
 
-              buffer = animation_get_frame (priv->animation,
-                                            animation_playback_get_position (priv->playback));
+              buffer = animation_playback_get_buffer (priv->playback,
+                                                      animation_playback_get_position (priv->playback));
               render_frame (dialog, buffer, TRUE);
               /* clean up */
-              if (buffer != NULL)
+              if (buffer)
                 g_object_unref (buffer);
             }
         }
@@ -2431,11 +2431,11 @@ render_on_realize (GtkWidget       *drawing_area,
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   GeglBuffer *buffer;
 
-  buffer = animation_get_frame (priv->animation,
-                                animation_playback_get_position (priv->playback));
+  buffer = animation_playback_get_buffer (priv->playback,
+                                          animation_playback_get_position (priv->playback));
   render_frame (dialog, buffer, TRUE);
   /* clean up */
-  if (buffer != NULL)
+  if (buffer)
     g_object_unref (buffer);
 
   g_signal_handlers_disconnect_by_func (drawing_area,

@@ -1295,7 +1295,8 @@ on_playback_rendered (AnimationPlayback *playback,
                       gboolean           must_draw_null,
                       AnimationXSheet   *xsheet)
 {
-  animation_xsheet_jump (xsheet, frame_number);
+  if (animation_loaded (ANIMATION (xsheet->priv->animation)))
+    animation_xsheet_jump (xsheet, frame_number);
 }
 
 static void
@@ -1925,7 +1926,7 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
                              gboolean         recursively)
 {
   const GList *layers;
-  const GList *prev_layers;
+  const GList *prev_layers = NULL;
   gpointer     track_num;
   gpointer     position;
   gboolean     same_as_prev = FALSE;
@@ -1938,9 +1939,10 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
   layers = animation_cel_animation_get_layers (xsheet->priv->animation,
                                                GPOINTER_TO_INT (track_num),
                                                GPOINTER_TO_INT (position));
-  prev_layers = animation_cel_animation_get_layers (xsheet->priv->animation,
-                                                    GPOINTER_TO_INT (track_num),
-                                                    GPOINTER_TO_INT (position) - 1);
+  if (position > 0)
+    prev_layers = animation_cel_animation_get_layers (xsheet->priv->animation,
+                                                      GPOINTER_TO_INT (track_num),
+                                                      GPOINTER_TO_INT (position) - 1);
 
   /* Remove the previous label, if any. */
   if (gtk_bin_get_child (GTK_BIN (cel)))

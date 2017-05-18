@@ -30,6 +30,8 @@
 #include "animation.h"
 #include "animation-animatic.h"
 #include "animation-celanimation.h"
+#include "animation-playback.h"
+#include "animation-renderer.h"
 
 /* Settings we cache assuming they may be the user's
  * favorite, like a framerate.
@@ -44,7 +46,7 @@ enum
 {
   LOADING,
   LOADED,
-  CACHE_INVALIDATED,
+  FRAMES_CHANGED,
   DURATION_CHANGED,
   FRAMERATE_CHANGED,
   PROXY_CHANGED,
@@ -87,11 +89,6 @@ static void       animation_get_property           (GObject      *object,
                                                     guint         property_id,
                                                     GValue       *value,
                                                     GParamSpec   *pspec);
-
-/* Base implementation of virtual methods. */
-static gboolean   animation_real_same              (Animation *animation,
-                                                    gint       prev_pos,
-                                                    gint       next_pos);
 
 G_DEFINE_TYPE (Animation, animation, G_TYPE_OBJECT)
 
@@ -145,19 +142,19 @@ animation_class_init (AnimationClass *klass)
                   G_TYPE_NONE,
                   0);
   /**
-   * Animation::cache-invalidated:
+   * Animation::frames-changed:
    * @animation: the animation.
-   * @position: the first frame position whose cache is invalid.
-   * @length: the number of invalidated frames from @position.
+   * @position: the first frame position whose contents changed.
+   * @length: the number of changed frames from @position.
    *
-   * The ::cache-invalidated signal must be emitted when the contents
+   * The ::frames-changed signal must be emitted when the contents
    * of one or more successive frames change.
    */
-  animation_signals[CACHE_INVALIDATED] =
-    g_signal_new ("cache-invalidated",
+  animation_signals[FRAMES_CHANGED] =
+    g_signal_new ("frames-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (AnimationClass, cache_invalidated),
+                  G_STRUCT_OFFSET (AnimationClass, frames_changed),
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
@@ -222,8 +219,6 @@ animation_class_init (AnimationClass *klass)
   object_class->set_property = animation_set_property;
   object_class->get_property = animation_get_property;
 
-  klass->same                = animation_real_same;
-
   /**
    * Animation:image:
    *
@@ -279,6 +274,8 @@ animation_new (gint32       image_id,
                             "image", image_id,
                             "xml", xml,
                             NULL);
+  g_signal_emit (animation, animation_signals[FRAMES_CHANGED], 0,
+                 0, animation_get_duration (animation));
 
   return animation;
 }
@@ -304,10 +301,10 @@ animation_load (Animation *animation)
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
 
   priv->loaded = FALSE;
-  ANIMATION_GET_CLASS (animation)->purge_cache (animation);
-  priv->loaded = TRUE;
-  g_signal_emit (animation, animation_signals[CACHE_INVALIDATED], 0,
+  g_signal_emit (animation, animation_signals[FRAMES_CHANGED], 0,
                  0, animation_get_duration (animation));
+  priv->loaded = TRUE;
+  g_signal_emit (animation, animation_signals[LOADED], 0);
 }
 
 void
@@ -444,13 +441,6 @@ animation_get_size (Animation *animation,
   *height *= priv->proxy_ratio;
 }
 
-GeglBuffer *
-animation_get_frame (Animation *animation,
-                     gint       pos)
-{
-  return ANIMATION_GET_CLASS (animation)->get_frame (animation, pos);
-}
-
 void
 animation_set_framerate (Animation *animation,
                          gdouble    fps)
@@ -566,13 +556,4 @@ animation_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static gboolean
-animation_real_same (Animation *animation,
-                     gint       previous_pos,
-                     gint       next_pos)
-{
-  /* By default all frames are supposed different. */
-  return (previous_pos == next_pos);
 }
