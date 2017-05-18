@@ -144,13 +144,21 @@ gimp_color_scales_init (GimpColorScales *scales)
   GSList            *group;
   gint               i;
 
+  /*{   H,   S,   V,      R,    G,    B,   A,     L,   C,   H }*/
+
   static const gdouble slider_initial_vals[] =
-  /*{   H,   S,   V,   R,   G,   B,   A,   L,   C,   H }*/
-    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 };
+    {   0,   0,   0,      0,    0,    0,   0,     0,   0,   0 };
+  static const gdouble slider_min_vals[] =
+    {   0,   0,   0,      0,    0,    0,   0,     0,   0,   0 };
   static const gdouble slider_max_vals[] =
-    { 360, 100, 100, 100, 100, 100, 100, 100, 100, 360 };
+    { 360, 100, 100,    100,  100,  100, 100,   100, 100, 360 };
   static const gdouble slider_incs[] =
-    {  30,  10,  10,  16,  16,  16,  10,  10,  10,  30 };
+    {  30,  10,  10,     16,   16,   16,  10,    10,  10,  30 };
+
+  static const gdouble spin_min_vals[] =
+    {   0,   0,   0,   -500, -500, -500,   0,     0,   0,   0 };
+  static const gdouble spin_max_vals[] =
+    { 360, 500, 500,    500,  500,  500, 100,   300, 300, 360 };
 
   /*  don't needs the toggles for our own operation  */
   selector->toggles_visible = FALSE;
@@ -201,11 +209,20 @@ gimp_color_scales_init (GimpColorScales *scales)
                                     gettext (enum_desc->value_desc),
                                     -1, -1,
                                     slider_initial_vals[i],
-                                    0.0, slider_max_vals[i],
+                                    slider_min_vals[i],
+                                    slider_max_vals[i],
                                     1.0, slider_incs[i],
                                     1,
                                     gettext (enum_desc->value_help),
                                     NULL);
+
+      gtk_adjustment_configure (GTK_ADJUSTMENT (scales->slider_data[i]),
+                                slider_initial_vals[i],
+                                spin_min_vals[i],
+                                spin_max_vals[i],
+                                1.0,
+                                slider_incs[i],
+                                0);
 
       scales->sliders[i] = GIMP_SCALE_ENTRY_SCALE (scales->slider_data[i]);
       g_object_add_weak_pointer (G_OBJECT (scales->sliders[i]),
