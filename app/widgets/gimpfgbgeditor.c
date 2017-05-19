@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -269,6 +270,7 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   gint            swap_w, swap_h;
   gint            rect_w, rect_h;
   GimpRGB         color;
+  GimpRGB         transformed_color;
 
   if (! gtk_widget_is_drawable (widget))
     return FALSE;
@@ -346,10 +348,12 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
                                              babl_format ("R'G'B'A double"),
                                              &color,
                                              babl_format ("R'G'B'A double"),
-                                             &color,
+                                             &transformed_color,
                                              1);
+      else
+        transformed_color = color;
 
-      gimp_cairo_set_source_rgb (cr, &color);
+      gimp_cairo_set_source_rgb (cr, &transformed_color);
 
       cairo_rectangle (cr,
                        width - rect_w,
@@ -357,6 +361,23 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
                        rect_w,
                        rect_h);
       cairo_fill (cr);
+
+      if (editor->color_config &&
+          (color.r < 0.0 || color.r > 1.0 ||
+           color.g < 0.0 || color.g > 1.0 ||
+           color.b < 0.0 || color.b > 1.0))
+        {
+          gint side = MIN (rect_w, rect_h) / 2;
+
+          cairo_move_to (cr, width, height);
+          cairo_line_to (cr, width - side, height);
+          cairo_line_to (cr, width, height - side);
+          cairo_line_to (cr, width, height);
+
+          gimp_cairo_set_source_rgb (cr,
+                                     &editor->color_config->out_of_gamut_color);
+          cairo_fill (cr);
+        }
     }
 
   gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
@@ -379,15 +400,34 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
                                              babl_format ("R'G'B'A double"),
                                              &color,
                                              babl_format ("R'G'B'A double"),
-                                             &color,
+                                             &transformed_color,
                                              1);
+      else
+        transformed_color = color;
 
-      gimp_cairo_set_source_rgb (cr, &color);
+      gimp_cairo_set_source_rgb (cr, &transformed_color);
 
       cairo_rectangle (cr,
                        0, 0,
                        rect_w, rect_h);
       cairo_fill (cr);
+
+      if (editor->color_config &&
+          (color.r < 0.0 || color.r > 1.0 ||
+           color.g < 0.0 || color.g > 1.0 ||
+           color.b < 0.0 || color.b > 1.0))
+        {
+          gint side = MIN (rect_w, rect_h) / 2;
+
+          cairo_move_to (cr, 0, 0);
+          cairo_line_to (cr, 0, side);
+          cairo_line_to (cr, side, 0);
+          cairo_line_to (cr, 0, 0);
+
+          gimp_cairo_set_source_rgb (cr,
+                                     &editor->color_config->out_of_gamut_color);
+          cairo_fill (cr);
+        }
     }
 
   gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
