@@ -450,6 +450,23 @@ gimp_color_area_expose (GtkWidget      *widget,
       cairo_stroke (cr);
     }
 
+  if (priv->config &&
+      (area->color.r < 0.0 || area->color.r > 1.0 ||
+       area->color.g < 0.0 || area->color.g > 1.0 ||
+       area->color.b < 0.0 || area->color.b > 1.0))
+    {
+      cairo_move_to (cr, area->width, 0);
+      cairo_line_to (cr, area->width - MIN (area->width, area->height), 0);
+      cairo_line_to (cr, area->width, MIN (area->width, area->height));
+      cairo_line_to (cr, area->width, 0);
+
+      cairo_set_source_rgb (cr,
+                            priv->config->out_of_gamut_color.r,
+                            priv->config->out_of_gamut_color.g,
+                            priv->config->out_of_gamut_color.b);
+      cairo_fill (cr);
+    }
+
   cairo_destroy (cr);
 
   return FALSE;
