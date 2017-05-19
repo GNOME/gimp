@@ -713,14 +713,11 @@ gimp_scanner_parse_color (GScanner *scanner,
                 GimpHSV hsv;
 
                 gimp_hsva_set (&hsv, col[0], col[1], col[2], col[3]);
-                gimp_hsv_clamp (&hsv);
-
                 gimp_hsv_to_rgb (&hsv, &color);
               }
             else
               {
                 gimp_rgba_set (&color, col[0], col[1], col[2], col[3]);
-                gimp_rgb_clamp (&color);
               }
 
             token = G_TOKEN_RIGHT_PAREN;
