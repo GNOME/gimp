@@ -334,7 +334,7 @@ colorsel_cmyk_adj_update (GtkAdjustment *adj,
       cmyk_values[2] = module->cmyk.y * 100.0;
       cmyk_values[3] = module->cmyk.k * 100.0;
 
-      gimp_color_transform_process_pixels (module->rgb2cmyk,
+      gimp_color_transform_process_pixels (module->cmyk2rgb,
                                            babl_format ("CMYK double"),
                                            cmyk_values,
                                            babl_format ("R'G'B' double"),
