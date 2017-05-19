@@ -436,8 +436,23 @@ gimp_color_area_expose (GtkWidget      *widget,
 
   cairo_set_source_surface (cr, buffer, 0.0, 0.0);
   cairo_surface_destroy (buffer);
-
   cairo_paint (cr);
+
+  if (priv->config &&
+      (area->color.r < 0.0 || area->color.r > 1.0 ||
+       area->color.g < 0.0 || area->color.g > 1.0 ||
+       area->color.b < 0.0 || area->color.b > 1.0))
+    {
+      gint side = MIN (area->width, area->height) * 2 / 3;
+
+      cairo_move_to (cr, area->width, 0);
+      cairo_line_to (cr, area->width - side, 0);
+      cairo_line_to (cr, area->width, side);
+      cairo_line_to (cr, area->width, 0);
+
+      gimp_cairo_set_source_rgb (cr, &priv->config->out_of_gamut_color);
+      cairo_fill (cr);
+    }
 
   if (area->draw_border)
     {
@@ -446,25 +461,7 @@ gimp_color_area_expose (GtkWidget      *widget,
                                   &style->fg[gtk_widget_get_state (widget)]);
 
       cairo_rectangle (cr, 0.5, 0.5, area->width - 1, area->height - 1);
-
       cairo_stroke (cr);
-    }
-
-  if (priv->config &&
-      (area->color.r < 0.0 || area->color.r > 1.0 ||
-       area->color.g < 0.0 || area->color.g > 1.0 ||
-       area->color.b < 0.0 || area->color.b > 1.0))
-    {
-      cairo_move_to (cr, area->width, 0);
-      cairo_line_to (cr, area->width - MIN (area->width, area->height), 0);
-      cairo_line_to (cr, area->width, MIN (area->width, area->height));
-      cairo_line_to (cr, area->width, 0);
-
-      cairo_set_source_rgb (cr,
-                            priv->config->out_of_gamut_color.r,
-                            priv->config->out_of_gamut_color.g,
-                            priv->config->out_of_gamut_color.b);
-      cairo_fill (cr);
     }
 
   cairo_destroy (cr);
