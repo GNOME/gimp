@@ -31,33 +31,33 @@
 #include "gimpwidgets.h"
 
 
-static gboolean    gimp_scale_entry_linear_to_log (GBinding     *binding,
-                                                   const GValue *from_value,
-                                                   GValue       *to_value,
-                                                   gpointer      user_data);
-static gboolean    gimp_scale_entry_log_to_linear (GBinding     *binding,
-                                                   const GValue *from_value,
-                                                   GValue       *to_value,
-                                                   gpointer      user_data);
+static gboolean        gimp_scale_entry_linear_to_log (GBinding     *binding,
+                                                       const GValue *from_value,
+                                                       GValue       *to_value,
+                                                       gpointer      user_data);
+static gboolean        gimp_scale_entry_log_to_linear (GBinding     *binding,
+                                                       const GValue *from_value,
+                                                       GValue       *to_value,
+                                                       gpointer      user_data);
 
-static GtkObject * gimp_scale_entry_new_internal  (gboolean      color_scale,
-                                                   GtkTable     *table,
-                                                   gint          column,
-                                                   gint          row,
-                                                   const gchar  *text,
-                                                   gint          scale_width,
-                                                   gint          spinbutton_width,
-                                                   gdouble       value,
-                                                   gdouble       lower,
-                                                   gdouble       upper,
-                                                   gdouble       step_increment,
-                                                   gdouble       page_increment,
-                                                   guint         digits,
-                                                   gboolean      constrain,
-                                                   gdouble       unconstrained_lower,
-                                                   gdouble       unconstrained_upper,
-                                                   const gchar  *tooltip,
-                                                   const gchar  *help_id);
+static GtkAdjustment * gimp_scale_entry_new_internal  (gboolean      color_scale,
+                                                       GtkTable     *table,
+                                                       gint          column,
+                                                       gint          row,
+                                                       const gchar  *text,
+                                                       gint          scale_width,
+                                                       gint          spinbutton_width,
+                                                       gdouble       value,
+                                                       gdouble       lower,
+                                                       gdouble       upper,
+                                                       gdouble       step_increment,
+                                                       gdouble       page_increment,
+                                                       guint         digits,
+                                                       gboolean      constrain,
+                                                       gdouble       unconstrained_lower,
+                                                       gdouble       unconstrained_upper,
+                                                       const gchar  *tooltip,
+                                                       const gchar  *help_id);
 
 
 static gboolean
@@ -102,7 +102,7 @@ gimp_scale_entry_log_to_linear (GBinding     *binding,
   return TRUE;
 }
 
-static GtkObject *
+static GtkAdjustment *
 gimp_scale_entry_new_internal (gboolean     color_scale,
                                GtkTable    *table,
                                gint         column,
@@ -213,7 +213,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   g_object_set_data (G_OBJECT (spin_adjustment), "spinbutton", spinbutton);
   g_object_set_data (G_OBJECT (spin_adjustment), "binding",    binding);
 
-  return GTK_OBJECT (spin_adjustment);
+  return spin_adjustment;
 }
 
 /**
@@ -264,16 +264,17 @@ gimp_scale_entry_new (GtkTable    *table,
                       const gchar *tooltip,
                       const gchar *help_id)
 {
-  return gimp_scale_entry_new_internal (FALSE,
-                                        table, column, row,
-                                        text, scale_width, spinbutton_width,
-                                        value, lower, upper,
-                                        step_increment, page_increment,
-                                        digits,
-                                        constrain,
-                                        unconstrained_lower,
-                                        unconstrained_upper,
-                                        tooltip, help_id);
+  return (GtkObject *)
+    gimp_scale_entry_new_internal (FALSE,
+                                   table, column, row,
+                                   text, scale_width, spinbutton_width,
+                                   value, lower, upper,
+                                   step_increment, page_increment,
+                                   digits,
+                                   constrain,
+                                   unconstrained_lower,
+                                   unconstrained_upper,
+                                   tooltip, help_id);
 }
 
 /**
@@ -315,14 +316,15 @@ gimp_color_scale_entry_new (GtkTable    *table,
                             const gchar *tooltip,
                             const gchar *help_id)
 {
-  return gimp_scale_entry_new_internal (TRUE,
-                                        table, column, row,
-                                        text, scale_width, spinbutton_width,
-                                        value, lower, upper,
-                                        step_increment, page_increment,
-                                        digits,
-                                        TRUE, 0.0, 0.0,
-                                        tooltip, help_id);
+  return (GtkObject *)
+    gimp_scale_entry_new_internal (TRUE,
+                                   table, column, row,
+                                   text, scale_width, spinbutton_width,
+                                   value, lower, upper,
+                                   step_increment, page_increment,
+                                   digits,
+                                   TRUE, 0.0, 0.0,
+                                   tooltip, help_id);
 }
 
 /**
