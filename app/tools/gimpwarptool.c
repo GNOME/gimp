@@ -52,7 +52,9 @@
 #include "gimp-intl.h"
 
 
-#define STROKE_PERIOD 100
+#define STROKE_PERIOD   100
+#define PREVIEW_SAMPLER GEGL_SAMPLER_NEAREST
+#define COMMIT_SAMPLER  GEGL_SAMPLER_CUBIC
 
 
 static void       gimp_warp_tool_control            (GimpTool              *tool,
@@ -692,6 +694,13 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
+      if (COMMIT_SAMPLER != PREVIEW_SAMPLER)
+        {
+          gegl_node_set (wt->render_node,
+                         "sampler-type", COMMIT_SAMPLER,
+                         NULL);
+        }
+
       gimp_drawable_filter_commit (wt->filter, GIMP_PROGRESS (tool), FALSE);
       g_object_unref (wt->filter);
       wt->filter = NULL;
@@ -747,8 +756,8 @@ gimp_warp_tool_create_graph (GimpWarpTool *wt)
                                NULL);
 
   render = gegl_node_new_child (graph,
-                                "operation", "gegl:map-relative",
-                                "sampler-type", GEGL_SAMPLER_LINEAR,
+                                "operation",    "gegl:map-relative",
+                                "sampler-type", PREVIEW_SAMPLER,
                                 NULL);
 
   gegl_node_connect_to (input,  "output",
@@ -770,6 +779,13 @@ gimp_warp_tool_create_filter (GimpWarpTool *wt,
 {
   if (! wt->graph)
     gimp_warp_tool_create_graph (wt);
+
+  if (PREVIEW_SAMPLER != COMMIT_SAMPLER)
+    {
+      gegl_node_set (wt->render_node,
+                     "sampler-type", PREVIEW_SAMPLER,
+                     NULL);
+    }
 
   wt->filter = gimp_drawable_filter_new (drawable,
                                          _("Warp transform"),
@@ -933,6 +949,13 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
       gimp_drawable_filter_abort (wt->filter);
       g_object_unref (wt->filter);
       wt->filter = NULL;
+    }
+
+  if (COMMIT_SAMPLER != PREVIEW_SAMPLER)
+    {
+      gegl_node_set (wt->render_node,
+                     "sampler-type", COMMIT_SAMPLER,
+                     NULL);
     }
 
   gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
