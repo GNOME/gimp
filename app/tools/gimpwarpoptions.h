@@ -37,22 +37,25 @@ typedef struct _GimpWarpOptionsClass GimpWarpOptionsClass;
 
 struct _GimpWarpOptions
 {
-  GimpToolOptions   parent_instance;
+  GimpToolOptions        parent_instance;
 
-  GimpWarpBehavior  behavior;
-  gdouble           effect_size;
-  gdouble           effect_hardness;
-  gdouble           effect_strength;
-  gdouble           stroke_spacing;
+  GimpWarpBehavior       behavior;
+  gdouble                effect_size;
+  gdouble                effect_hardness;
+  gdouble                effect_strength;
+  gdouble                stroke_spacing;
+  GimpInterpolationType  interpolation;
+  GeglAbyssPolicy        abyss_policy;
+  gboolean               high_quality_preview;
 
-  gboolean          stroke_during_motion;
-  gboolean          stroke_periodically;
-  gdouble           stroke_periodically_rate;
+  gboolean               stroke_during_motion;
+  gboolean               stroke_periodically;
+  gdouble                stroke_periodically_rate;
 
-  gint              n_animation_frames;
+  gint                   n_animation_frames;
 
   /*  options gui  */
-  GtkWidget        *animate_button;
+  GtkWidget             *animate_button;
 };
 
 struct _GimpWarpOptionsClass

@@ -44,6 +44,9 @@ enum
   PROP_EFFECT_HARDNESS,
   PROP_EFFECT_STRENGTH,
   PROP_STROKE_SPACING,
+  PROP_INTERPOLATION,
+  PROP_ABYSS_POLICY,
+  PROP_HIGH_QUALITY_PREVIEW,
   PROP_STROKE_DURING_MOTION,
   PROP_STROKE_PERIODICALLY,
   PROP_STROKE_PERIODICALLY_RATE,
@@ -111,6 +114,29 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                            1.0, 100.0, 20.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_INTERPOLATION,
+                         "interpolation",
+                         _("Interpolation"),
+                         _("Interpolation method"),
+                         GIMP_TYPE_INTERPOLATION_TYPE,
+                         GIMP_INTERPOLATION_CUBIC,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ABYSS_POLICY,
+                         "abyss-policy",
+                         _("Abyss policy"),
+                         _("Out-of-bounds sampling behavior"),
+                         GEGL_TYPE_ABYSS_POLICY,
+                         GEGL_ABYSS_NONE,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HIGH_QUALITY_PREVIEW,
+                            "high-quality-preview",
+                            _("High quality preview"),
+                            _("Use an accurate but slower preview"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_DURING_MOTION,
                             "stroke-during-motion",
                             _("During motion"),
@@ -128,7 +154,7 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_PERIODICALLY_RATE,
                            "stroke-periodically-rate",
                            _("Rate"),
-                           _("Periodical stroke rate"),
+                           _("Periodic stroke rate"),
                            0.0, 100.0, 50.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
@@ -169,6 +195,15 @@ gimp_warp_options_set_property (GObject      *object,
       break;
     case PROP_STROKE_SPACING:
       options->stroke_spacing = g_value_get_double (value);
+      break;
+    case PROP_INTERPOLATION:
+      options->interpolation = g_value_get_enum (value);
+      break;
+    case PROP_ABYSS_POLICY:
+      options->abyss_policy = g_value_get_enum (value);
+      break;
+    case PROP_HIGH_QUALITY_PREVIEW:
+      options->high_quality_preview = g_value_get_boolean (value);
       break;
     case PROP_STROKE_DURING_MOTION:
       options->stroke_during_motion = g_value_get_boolean (value);
@@ -213,6 +248,15 @@ gimp_warp_options_get_property (GObject    *object,
       break;
     case PROP_STROKE_SPACING:
       g_value_set_double (value, options->stroke_spacing);
+      break;
+    case PROP_INTERPOLATION:
+      g_value_set_enum (value, options->interpolation);
+      break;
+    case PROP_ABYSS_POLICY:
+      g_value_set_enum (value, options->abyss_policy);
+      break;
+    case PROP_HIGH_QUALITY_PREVIEW:
+      g_value_set_boolean (value, options->high_quality_preview);
       break;
     case PROP_STROKE_DURING_MOTION:
       g_value_set_boolean (value, options->stroke_during_motion);
@@ -273,6 +317,23 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
+
+  combo = gimp_prop_enum_combo_box_new (config, "interpolation", 0, 0);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Interpolation"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
+  combo = gimp_prop_enum_combo_box_new (config, "abyss-policy",
+                                        GEGL_ABYSS_NONE, GEGL_ABYSS_LOOP);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Abyss policy"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
+  button = gimp_prop_check_button_new (config, "high-quality-preview", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  the stroke frame  */
   frame = gimp_frame_new (_("Stroke"));
