@@ -34,7 +34,7 @@ typedef struct _GimpFgBgEditorClass GimpFgBgEditorClass;
 
 struct _GimpFgBgEditor
 {
-  GtkDrawingArea      parent_instance;
+  GtkEventBox         parent_instance;
 
   GimpContext        *context;
   GimpColorConfig    *color_config;
@@ -52,7 +52,7 @@ struct _GimpFgBgEditor
 
 struct _GimpFgBgEditorClass
 {
-  GtkDrawingAreaClass  parent_class;
+  GtkEventBoxClass    parent_class;
 
   /*  signals  */
 
