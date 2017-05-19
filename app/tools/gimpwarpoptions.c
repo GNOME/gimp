@@ -44,18 +44,21 @@ enum
   PROP_EFFECT_SIZE,
   PROP_EFFECT_HARDNESS,
   PROP_STROKE_SPACING,
+  PROP_STROKE_DURING_MOTION,
+  PROP_STROKE_PERIODICALLY,
+  PROP_STROKE_PERIODICALLY_RATE,
   PROP_N_ANIMATION_FRAMES
 };
 
 
-static void   gimp_warp_options_set_property (GObject      *object,
-                                              guint         property_id,
-                                              const GValue *value,
-                                              GParamSpec   *pspec);
-static void   gimp_warp_options_get_property (GObject      *object,
-                                              guint         property_id,
-                                              GValue       *value,
-                                              GParamSpec   *pspec);
+static void       gimp_warp_options_set_property (GObject      *object,
+                                                  guint         property_id,
+                                                  const GValue *value,
+                                                  GParamSpec   *pspec);
+static void       gimp_warp_options_get_property (GObject      *object,
+                                                  guint         property_id,
+                                                  GValue       *value,
+                                                  GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpWarpOptions, gimp_warp_options,
@@ -108,6 +111,27 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                            1.0, 100.0, 20.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_DURING_MOTION,
+                            "stroke-during-motion",
+                            _("During motion"),
+                            _("Apply effect during motion"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_STROKE_PERIODICALLY,
+                            "stroke-periodically",
+                            _("Periodically"),
+                            _("Apply effect periodically"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_PERIODICALLY_RATE,
+                           "stroke-periodically-rate",
+                           _("Rate"),
+                           _("Periodical stroke rate"),
+                           0.0, 100.0, 50.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_INT (object_class, PROP_N_ANIMATION_FRAMES,
                         "n-animation-frames",
                         _("Frames"),
@@ -146,6 +170,15 @@ gimp_warp_options_set_property (GObject      *object,
     case PROP_STROKE_SPACING:
       options->stroke_spacing = g_value_get_double (value);
       break;
+    case PROP_STROKE_DURING_MOTION:
+      options->stroke_during_motion = g_value_get_boolean (value);
+      break;
+    case PROP_STROKE_PERIODICALLY:
+      options->stroke_periodically = g_value_get_boolean (value);
+      break;
+    case PROP_STROKE_PERIODICALLY_RATE:
+      options->stroke_periodically_rate = g_value_get_double (value);
+      break;
     case PROP_N_ANIMATION_FRAMES:
       options->n_animation_frames = g_value_get_int (value);
       break;
@@ -181,6 +214,15 @@ gimp_warp_options_get_property (GObject    *object,
     case PROP_STROKE_SPACING:
       g_value_set_double (value, options->stroke_spacing);
       break;
+    case PROP_STROKE_DURING_MOTION:
+      g_value_set_boolean (value, options->stroke_during_motion);
+      break;
+    case PROP_STROKE_PERIODICALLY:
+      g_value_set_boolean (value, options->stroke_periodically);
+      break;
+    case PROP_STROKE_PERIODICALLY_RATE:
+      g_value_set_double (value, options->stroke_periodically_rate);
+      break;
     case PROP_N_ANIMATION_FRAMES:
       g_value_set_int (value, options->n_animation_frames);
       break;
@@ -198,7 +240,8 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   GObject         *config  = G_OBJECT (tool_options);
   GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget       *frame;
-  GtkWidget       *anim_vbox;
+  GtkWidget       *vbox2;
+  GtkWidget       *button;
   GtkWidget       *combo;
   GtkWidget       *scale;
 
@@ -231,24 +274,46 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
+  /*  the stroke frame  */
+  frame = gimp_frame_new (_("Stroke"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  button = gimp_prop_check_button_new (config, "stroke-during-motion", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  scale = gimp_prop_spin_scale_new (config, "stroke-periodically-rate", NULL,
+                                    1, 10, 1);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100.0);
+
+  frame = gimp_prop_expanding_frame_new (config, "stroke-periodically", NULL,
+                                         scale, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   /*  the animation frame  */
   frame = gimp_frame_new (_("Animate"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  anim_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_container_add (GTK_CONTAINER (frame), anim_vbox);
-  gtk_widget_show (anim_vbox);
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
   scale = gimp_prop_spin_scale_new (config, "n-animation-frames", NULL,
                                     1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 3.0, 100.0);
-  gtk_box_pack_start (GTK_BOX (anim_vbox), scale, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   options->animate_button = gtk_button_new_with_label (_("Create Animation"));
   gtk_widget_set_sensitive (options->animate_button, FALSE);
-  gtk_box_pack_start (GTK_BOX (anim_vbox), options->animate_button,
+  gtk_box_pack_start (GTK_BOX (vbox2), options->animate_button,
                       FALSE, FALSE, 0);
   gtk_widget_show (options->animate_button);
 

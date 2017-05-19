@@ -45,6 +45,10 @@ struct _GimpWarpOptions
   gdouble           effect_hardness;
   gdouble           stroke_spacing;
 
+  gboolean          stroke_during_motion;
+  gboolean          stroke_periodically;
+  gdouble           stroke_periodically_rate;
+
   gint              n_animation_frames;
 
   /*  options gui  */

@@ -52,9 +52,9 @@
 #include "gimp-intl.h"
 
 
-#define STROKE_PERIOD   100
-#define PREVIEW_SAMPLER GEGL_SAMPLER_NEAREST
-#define COMMIT_SAMPLER  GEGL_SAMPLER_CUBIC
+#define STROKE_TIMER_MAX_FPS 20
+#define PREVIEW_SAMPLER      GEGL_SAMPLER_NEAREST
+#define COMMIT_SAMPLER       GEGL_SAMPLER_CUBIC
 
 
 static void       gimp_warp_tool_control            (GimpTool              *tool,
@@ -103,11 +103,17 @@ static void       gimp_warp_tool_options_notify     (GimpTool              *tool
 
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
+static gboolean   gimp_warp_tool_can_stroke         (GimpWarpTool          *wt,
+                                                     GimpDisplay           *display,
+                                                     gboolean               show_message);
+
 static gboolean   gimp_warp_tool_start              (GimpWarpTool          *wt,
                                                      GimpDisplay           *display);
 static void       gimp_warp_tool_halt               (GimpWarpTool          *wt);
 static void       gimp_warp_tool_commit             (GimpWarpTool          *wt);
 
+static void       gimp_warp_tool_start_stroke_timer (GimpWarpTool          *wt);
+static void       gimp_warp_tool_stop_stroke_timer  (GimpWarpTool          *wt);
 static gboolean   gimp_warp_tool_stroke_timer       (GimpWarpTool          *wt);
 
 static void       gimp_warp_tool_create_graph       (GimpWarpTool          *wt);
@@ -243,6 +249,9 @@ gimp_warp_tool_button_press (GimpTool            *tool,
         return;
     }
 
+  if (! gimp_warp_tool_can_stroke (wt, display, TRUE))
+    return;
+
   wt->current_stroke = gegl_path_new ();
 
   new_op = gegl_node_new_child (NULL,
@@ -267,11 +276,7 @@ gimp_warp_tool_button_press (GimpTool            *tool,
   gegl_path_append (wt->current_stroke,
                     'M', coords->x - off_x, coords->y - off_y);
 
-  wt->cursor_moved = FALSE;
-
-  wt->stroke_timer = g_timeout_add (STROKE_PERIOD,
-                                    (GSourceFunc) gimp_warp_tool_stroke_timer,
-                                    wt);
+  gimp_warp_tool_start_stroke_timer (wt);
 
   gimp_tool_control_activate (tool->control);
 }
@@ -290,8 +295,7 @@ gimp_warp_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  g_source_remove (wt->stroke_timer);
-  wt->stroke_timer = 0;
+  gimp_warp_tool_stop_stroke_timer (wt);
 
   g_signal_handlers_disconnect_by_func (wt->current_stroke,
                                         gimp_warp_tool_stroke_changed,
@@ -339,13 +343,25 @@ gimp_warp_tool_motion (GimpTool         *tool,
                        GdkModifierType   state,
                        GimpDisplay      *display)
 {
-  GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
+  GimpWarpTool    *wt = GIMP_WARP_TOOL (tool);
+  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  wt->cursor_x     = coords->x;
-  wt->cursor_y     = coords->y;
-  wt->cursor_moved = TRUE;
+  wt->cursor_x = coords->x;
+  wt->cursor_y = coords->y;
+
+  if (options->stroke_during_motion)
+    {
+      gint off_x, off_y;
+
+      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+
+      gegl_path_append (wt->current_stroke,
+                        'L', wt->cursor_x - off_x, wt->cursor_y - off_y);
+
+      gimp_warp_tool_start_stroke_timer (wt);
+    }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -414,10 +430,15 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
+  GimpWarpTool       *wt       = GIMP_WARP_TOOL (tool);
   GimpWarpOptions    *options  = GIMP_WARP_TOOL_GET_OPTIONS (tool);
   GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
 
-  if (display == tool->display)
+  if (! gimp_warp_tool_can_stroke (wt, display, FALSE))
+    {
+      modifier = GIMP_CURSOR_MODIFIER_BAD;
+    }
+  else if (display == tool->display)
     {
       /* FIXME have better cursors  */
 
@@ -432,18 +453,6 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
         case GEGL_WARP_BEHAVIOR_SMOOTH:
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
-        }
-    }
-  else
-    {
-      GimpImage    *image    = gimp_display_get_image (display);
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-          gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
-          ! gimp_item_is_visible (GIMP_ITEM (drawable)))
-        {
-          modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
     }
 
@@ -571,6 +580,64 @@ gimp_warp_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static gboolean
+gimp_warp_tool_can_stroke (GimpWarpTool *wt,
+                           GimpDisplay  *display,
+                           gboolean      show_message)
+{
+  GimpTool        *tool     = GIMP_TOOL (wt);
+  GimpWarpOptions *options  = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpImage       *image    = gimp_display_get_image (display);
+  GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
+
+  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      if (show_message)
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("Cannot warp layer groups."));
+        }
+
+      return FALSE;
+    }
+
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+    {
+      if (show_message)
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("The active layer's pixels are locked."));
+        }
+
+      return FALSE;
+    }
+
+  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
+    {
+      if (show_message)
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("The active layer is not visible."));
+        }
+
+      return FALSE;
+    }
+
+  if (! options->stroke_during_motion &&
+      ! options->stroke_periodically)
+    {
+      if (show_message)
+        {
+          gimp_tool_message_literal (tool, display,
+                                     _("No stroke events selected."));
+        }
+
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
 gimp_warp_tool_start (GimpWarpTool *wt,
                       GimpDisplay  *display)
 {
@@ -581,26 +648,8 @@ gimp_warp_tool_start (GimpWarpTool *wt,
   const Babl      *format;
   GeglRectangle    bbox;
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-    {
-      gimp_tool_message_literal (tool, display,
-                                 _("Cannot warp layer groups."));
-      return FALSE;
-    }
-
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
-    {
-      gimp_tool_message_literal (tool, display,
-                                 _("The active layer's pixels are locked."));
-      return FALSE;
-    }
-
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
-    {
-      gimp_tool_message_literal (tool, display,
-                                 _("The active layer is not visible."));
-      return FALSE;
-    }
+  if (! gimp_warp_tool_can_stroke (wt, display, TRUE))
+    return FALSE;
 
   tool->display  = display;
   tool->drawable = drawable;
@@ -711,26 +760,47 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
     }
 }
 
+static void
+gimp_warp_tool_start_stroke_timer (GimpWarpTool *wt)
+{
+  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+
+  gimp_warp_tool_stop_stroke_timer (wt);
+
+  if (options->stroke_periodically                    &&
+      options->stroke_periodically_rate > 0.0         &&
+      ! (options->behavior == GIMP_WARP_BEHAVIOR_MOVE &&
+         options->stroke_during_motion))
+    {
+      gdouble fps;
+
+      fps = STROKE_TIMER_MAX_FPS * options->stroke_periodically_rate / 100.0;
+
+      wt->stroke_timer = g_timeout_add (1000.0 / fps,
+                                        (GSourceFunc) gimp_warp_tool_stroke_timer,
+                                        wt);
+    }
+}
+
+static void
+gimp_warp_tool_stop_stroke_timer (GimpWarpTool *wt)
+{
+  if (wt->stroke_timer)
+    g_source_remove (wt->stroke_timer);
+
+  wt->stroke_timer = 0;
+}
+
 static gboolean
 gimp_warp_tool_stroke_timer (GimpWarpTool *wt)
 {
-  GimpTool        *tool = GIMP_TOOL (wt);
-  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  gint             off_x, off_y;
+  GimpTool *tool = GIMP_TOOL (wt);
+  gint      off_x, off_y;
 
-  /* don't append the current point to the path if we're using the MOVE
-   * behavior, and the cursor didn't move since last time; it's a nop, and
-   * results in an unnecessary update.
-   */
-  if (options->behavior != GIMP_WARP_BEHAVIOR_MOVE || wt->cursor_moved)
-    {
-      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
-      gegl_path_append (wt->current_stroke,
-                        'L', wt->cursor_x - off_x, wt->cursor_y - off_y);
-
-      wt->cursor_moved = FALSE;
-    }
+  gegl_path_append (wt->current_stroke,
+                    'L', wt->cursor_x - off_x, wt->cursor_y - off_y);
 
   return TRUE;
 }
@@ -826,10 +896,10 @@ gimp_warp_tool_update_stroke (GimpWarpTool *wt,
       gegl_path_get_bounds (stroke, &min_x, &max_x, &min_y, &max_y);
       g_object_unref (stroke);
 
-      bbox.x      = min_x - size * 0.5;
-      bbox.y      = min_y - size * 0.5;
-      bbox.width  = max_x - min_x + size;
-      bbox.height = max_y - min_y + size;
+      bbox.x      = floor (min_x - size * 0.5);
+      bbox.y      = floor (min_y - size * 0.5);
+      bbox.width  = ceil (max_x + size * 0.5) - bbox.x;
+      bbox.height = ceil (max_y + size * 0.5) - bbox.y;
 
 #ifdef WARP_DEBUG
   g_printerr ("update stroke: (%d,%d), %dx%d\n",
