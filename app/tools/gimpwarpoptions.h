@@ -40,9 +40,9 @@ struct _GimpWarpOptions
   GimpToolOptions   parent_instance;
 
   GimpWarpBehavior  behavior;
-  gdouble           effect_strength;
   gdouble           effect_size;
   gdouble           effect_hardness;
+  gdouble           effect_strength;
   gdouble           stroke_spacing;
 
   gboolean          stroke_during_motion;

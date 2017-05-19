@@ -40,9 +40,9 @@ enum
 {
   PROP_0,
   PROP_BEHAVIOR,
-  PROP_EFFECT_STRENGTH,
   PROP_EFFECT_SIZE,
   PROP_EFFECT_HARDNESS,
+  PROP_EFFECT_STRENGTH,
   PROP_STROKE_SPACING,
   PROP_STROKE_DURING_MOTION,
   PROP_STROKE_PERIODICALLY,
@@ -83,13 +83,6 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                          GIMP_WARP_BEHAVIOR_MOVE,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
-                           "effect-strength",
-                           _("Strength"),
-                           _("Effect Strength"),
-                           1.0, 100.0, 50.0,
-                           GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_SIZE,
                            "effect-size",
                            _("Size"),
@@ -102,6 +95,13 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                            _("Hardness"),
                            _("Effect Hardness"),
                            0.0, 100.0, 50.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
+                           "effect-strength",
+                           _("Strength"),
+                           _("Effect Strength"),
+                           1.0, 100.0, 50.0,
                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_STROKE_SPACING,
@@ -158,14 +158,14 @@ gimp_warp_options_set_property (GObject      *object,
     case PROP_BEHAVIOR:
       options->behavior = g_value_get_enum (value);
       break;
-    case PROP_EFFECT_STRENGTH:
-      options->effect_strength = g_value_get_double (value);
-      break;
     case PROP_EFFECT_SIZE:
       options->effect_size = g_value_get_double (value);
       break;
     case PROP_EFFECT_HARDNESS:
       options->effect_hardness = g_value_get_double (value);
+      break;
+    case PROP_EFFECT_STRENGTH:
+      options->effect_strength = g_value_get_double (value);
       break;
     case PROP_STROKE_SPACING:
       options->stroke_spacing = g_value_get_double (value);
@@ -202,14 +202,14 @@ gimp_warp_options_get_property (GObject    *object,
     case PROP_BEHAVIOR:
       g_value_set_enum (value, options->behavior);
       break;
-    case PROP_EFFECT_STRENGTH:
-      g_value_set_double (value, options->effect_strength);
-      break;
     case PROP_EFFECT_SIZE:
       g_value_set_double (value, options->effect_size);
       break;
     case PROP_EFFECT_HARDNESS:
       g_value_set_double (value, options->effect_hardness);
+      break;
+    case PROP_EFFECT_STRENGTH:
+      g_value_set_double (value, options->effect_strength);
       break;
     case PROP_STROKE_SPACING:
       g_value_set_double (value, options->stroke_spacing);
@@ -250,12 +250,6 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
-  scale = gimp_prop_spin_scale_new (config, "effect-strength", NULL,
-                                    1, 10, 1);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
-  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
-  gtk_widget_show (scale);
-
   scale = gimp_prop_spin_scale_new (config, "effect-size", NULL,
                                     0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
@@ -265,6 +259,12 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "effect-hardness", NULL,
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_spin_scale_new (config, "effect-strength", NULL,
+                                    1, 10, 1);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
