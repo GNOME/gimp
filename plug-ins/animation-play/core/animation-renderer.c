@@ -42,30 +42,47 @@ struct _AnimationRendererPrivate
 {
   AnimationPlayback  *playback;
 
+  GAsyncQueue        *queue;
+
+  GAsyncQueue        *ack_queue;
+  guint               idle_id;
+
   /* Frames are cached as GEGL buffers. */
+  GMutex              lock;
   GeglBuffer        **cache;
   gchar             **hashes;
   GHashTable         *cache_table;
   gint                cache_size;
+
+  GThread            *queue_thread;
 };
 
-static void     animation_renderer_finalize     (GObject           *object);
-static void     animation_renderer_set_property (GObject           *object,
-                                                 guint              property_id,
-                                                 const GValue      *value,
-                                                 GParamSpec        *pspec);
-static void     animation_renderer_get_property (GObject           *object,
-                                                 guint              property_id,
-                                                 GValue            *value,
-                                                 GParamSpec        *pspec);
+static void     animation_renderer_finalize      (GObject           *object);
+static void     animation_renderer_set_property  (GObject           *object,
+                                                  guint              property_id,
+                                                  const GValue      *value,
+                                                  GParamSpec        *pspec);
+static void     animation_renderer_get_property  (GObject           *object,
+                                                  guint              property_id,
+                                                  GValue            *value,
+                                                  GParamSpec        *pspec);
 
-static void     on_frames_changed               (Animation         *animation,
-                                                 gint               position,
-                                                 gint               length,
-                                                 AnimationRenderer *renderer);
-static void     on_duration_changed             (Animation         *animation,
-                                                 gint               duration,
-                                                 AnimationRenderer *renderer);
+static gint     animation_renderer_sort_frame    (gconstpointer      f1,
+                                                  gconstpointer      f2,
+                                                  gpointer           data);
+
+static gpointer animation_renderer_process_queue (AnimationRenderer *renderer);
+static gboolean animation_renderer_idle_update   (AnimationRenderer *renderer);
+
+static void     on_frames_changed                (Animation         *animation,
+                                                  gint               position,
+                                                  gint               length,
+                                                  AnimationRenderer *renderer);
+static void     on_duration_changed              (Animation         *animation,
+                                                  gint               duration,
+                                                  AnimationRenderer *renderer);
+static void     on_animation_loaded              (Animation         *animation,
+                                                  AnimationRenderer *renderer);
 
 G_DEFINE_TYPE (AnimationRenderer, animation_renderer, G_TYPE_OBJECT)
 
@@ -122,9 +139,12 @@ animation_renderer_init (AnimationRenderer *renderer)
   renderer->priv = G_TYPE_INSTANCE_GET_PRIVATE (renderer,
                                                 ANIMATION_TYPE_RENDERER,
                                                 AnimationRendererPrivate);
+  g_mutex_init (&(renderer->priv->lock));
   renderer->priv->cache_table = g_hash_table_new_full (g_str_hash, g_str_equal,
                                                        (GDestroyNotify) g_free,
                                                        (GDestroyNotify) g_weak_ref_clear);
+  renderer->priv->queue = g_async_queue_new_full ((GDestroyNotify) g_weak_ref_clear);
+  renderer->priv->ack_queue = g_async_queue_new_full ((GDestroyNotify) g_weak_ref_clear);
 }
 
 static void
@@ -136,6 +156,15 @@ animation_renderer_finalize (GObject *object)
 
   animation = animation_playback_get_animation (renderer->priv->playback);
 
+  /* Stop the thread. */
+  g_async_queue_push_front (renderer->priv->queue,
+                            GINT_TO_POINTER (- 1));
+  g_thread_join (renderer->priv->queue_thread);
+  g_thread_unref (renderer->priv->queue_thread);
+
+  /* Clean remaining data. */
+  g_source_remove (renderer->priv->idle_id);
+  g_mutex_lock (&renderer->priv->lock);
   for (i = 0; i < animation_get_duration (animation); i++)
     {
       if (renderer->priv->cache[i])
@@ -145,7 +174,12 @@ animation_renderer_finalize (GObject *object)
     }
   g_free (renderer->priv->cache);
   g_free (renderer->priv->hashes);
+
+  g_async_queue_unref (renderer->priv->queue);
+  g_async_queue_unref (renderer->priv->ack_queue);
   g_hash_table_destroy (renderer->priv->cache_table);
+  g_mutex_unlock (&renderer->priv->lock);
+  g_mutex_clear (&renderer->priv->lock);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -190,22 +224,63 @@ animation_renderer_get_property (GObject      *object,
     }
 }
 
-static void
-on_frames_changed (Animation         *animation,
-                   gint               position,
-                   gint               length,
-                   AnimationRenderer *renderer)
+static gint
+animation_renderer_sort_frame (gconstpointer f1,
+                               gconstpointer f2,
+                               gpointer      data)
 {
-  gint i;
+  gint first_frame = GPOINTER_TO_INT (data);
+  gint frame1      = GPOINTER_TO_INT (f1);
+  gint frame2      = GPOINTER_TO_INT (f2);
+  gint invert;
 
-  for (i = position; i < position + length; i++)
+  if (frame1 == frame2)
     {
+      return 0;
+    }
+  else
+    {
+      invert = ((frame1 >= first_frame && frame2 >= first_frame) ||
+                (frame1 < first_frame && frame2 < first_frame)) ? 1 : -1;
+      if (frame1 < frame2)
+        return invert * -1;
+      else
+        return invert;
+    }
+}
+
+static gpointer
+animation_renderer_process_queue (AnimationRenderer *renderer)
+{
+  while (TRUE)
+    {
+      Animation  *animation;
       GeglBuffer *buffer  = NULL;
       GWeakRef   *ref     = NULL;
       gchar      *hash    = NULL;
       gchar      *hash_cp = NULL;
+      gint        frame;
 
-      hash = ANIMATION_GET_CLASS (animation)->get_frame_hash (animation, i);
+      frame = GPOINTER_TO_INT (g_async_queue_pop (renderer->priv->queue)) - 1;
+
+      /* End flag. */
+      if (frame < 0)
+        g_thread_exit (NULL);
+
+      /* It is possible to have position bigger than the animation duration if the
+       * request was sent before a duration change. When this happens, just ignore
+       * the request silently and go to the next one. */
+      g_mutex_lock (&renderer->priv->lock);
+      if (frame >= renderer->priv->cache_size)
+        {
+          g_mutex_unlock (&renderer->priv->lock);
+          continue;
+        }
+      g_mutex_unlock (&renderer->priv->lock);
+
+      animation = animation_playback_get_animation (renderer->priv->playback);
+      hash = ANIMATION_GET_CLASS (animation)->get_frame_hash (animation,
+                                                              frame);
       if (hash)
         {
           ref = g_hash_table_lookup (renderer->priv->cache_table, hash);
@@ -219,27 +294,83 @@ on_frames_changed (Animation         *animation,
             {
               ref = g_new (GWeakRef, 1);
               g_weak_ref_init (ref, NULL);
+              g_mutex_lock (&renderer->priv->lock);
               g_hash_table_insert (renderer->priv->cache_table,
                                    hash, ref);
+              g_mutex_unlock (&renderer->priv->lock);
             }
 
           if (! buffer)
             {
               buffer = ANIMATION_GET_CLASS (animation)->create_frame (animation,
                                                                       G_OBJECT (renderer),
-                                                                      i);
+                                                                      frame);
               g_weak_ref_set (ref, buffer);
             }
         }
 
-      if (renderer->priv->cache[i])
-        g_object_unref (renderer->priv->cache[i]);
-      if (renderer->priv->hashes[i])
-        g_free (renderer->priv->hashes[i]);
-      renderer->priv->cache[i]  = buffer;
-      renderer->priv->hashes[i] = hash_cp;
+      g_mutex_lock (&renderer->priv->lock);
+      if (renderer->priv->cache[frame])
+        g_object_unref (renderer->priv->cache[frame]);
+      if (renderer->priv->hashes[frame])
+        g_free (renderer->priv->hashes[frame]);
+      renderer->priv->cache[frame]  = buffer;
+      renderer->priv->hashes[frame] = hash_cp;
+      g_mutex_unlock (&renderer->priv->lock);
 
-      g_signal_emit_by_name (renderer, "cache-updated", i);
+      /* Tell the main thread which buffers were updated, so that the
+       * GUI reflects the change. */
+      g_async_queue_remove (renderer->priv->ack_queue,
+                            GINT_TO_POINTER (frame + 1));
+      g_async_queue_push (renderer->priv->ack_queue,
+                          GINT_TO_POINTER (frame + 1));
+
+      /* Relinquish CPU regularly. */
+      g_thread_yield ();
+    }
+  return NULL;
+}
+
+static gboolean
+animation_renderer_idle_update (AnimationRenderer *renderer)
+{
+  gpointer p;
+
+  while ((p = g_async_queue_try_pop (renderer->priv->ack_queue)))
+    {
+      gint frame = GPOINTER_TO_INT (p) - 1;
+      g_signal_emit_by_name (renderer, "cache-updated", frame);
+    }
+  /* Make sure the UI gets updated regularly. */
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, FALSE);
+
+  return G_SOURCE_CONTINUE;
+}
+
+static void
+on_frames_changed (Animation         *animation,
+                   gint               position,
+                   gint               length,
+                   AnimationRenderer *renderer)
+{
+  gint i;
+
+  for (i = position; i < position + length; i++)
+    {
+      /* Remove if already present: don't process twice the same frames.
+       * XXX GAsyncQueue does not allow NULL data for no good reason (it relies
+       * on GQueue which does allow NULL data. As a trick, I just add 1 so that
+       * we can process the frame 0. */
+      g_async_queue_remove (renderer->priv->queue, GINT_TO_POINTER (i + 1));
+      g_async_queue_push_sorted (renderer->priv->queue,
+                                 GINT_TO_POINTER (i + 1),
+                                 (GCompareDataFunc) animation_renderer_sort_frame,
+                                 /* TODO: right now I am sorting the render
+                                  * queue in common order. I will have to test
+                                  * sorting it from the current position.
+                                  */
+                                 0);
     }
 }
 
@@ -250,6 +381,7 @@ on_duration_changed (Animation         *animation,
 {
   gint i;
 
+  g_mutex_lock (&renderer->priv->lock);
   if (duration < renderer->priv->cache_size)
     {
       for (i = duration; i < renderer->priv->cache_size; i++)
@@ -281,6 +413,22 @@ on_duration_changed (Animation         *animation,
         }
     }
   renderer->priv->cache_size = duration;
+  g_mutex_unlock (&renderer->priv->lock);
+}
+
+static void
+on_animation_loaded (Animation         *animation,
+                     AnimationRenderer *renderer)
+{
+  g_signal_handlers_disconnect_by_func (animation,
+                                        G_CALLBACK (on_animation_loaded),
+                                        renderer);
+  renderer->priv->queue_thread = g_thread_new ("gimp-animation-process-queue",
+                                               (GThreadFunc) animation_renderer_process_queue,
+                                               renderer);
+  renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
+                                             (GSourceFunc) animation_renderer_idle_update,
+                                             renderer, NULL);
 }
 
 /**** Public Functions ****/
@@ -314,6 +462,8 @@ animation_renderer_new (GObject *playback)
                     G_CALLBACK (on_frames_changed), renderer);
   g_signal_connect (animation, "duration-changed",
                     G_CALLBACK (on_duration_changed), renderer);
+  g_signal_connect (animation, "loaded",
+                    G_CALLBACK (on_animation_loaded), renderer);
 
   return object;
 }
@@ -338,9 +488,11 @@ animation_renderer_get_buffer (AnimationRenderer *renderer,
 {
   GeglBuffer *frame;
 
+  g_mutex_lock (&renderer->priv->lock);
   frame = renderer->priv->cache[position];
   if (frame)
     frame = g_object_ref (frame);
+  g_mutex_unlock (&renderer->priv->lock);
 
   return frame;
 }

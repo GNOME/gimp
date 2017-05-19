@@ -47,14 +47,15 @@ struct _AnimationRendererClass
                                   gint               position);
 };
 
-GType         animation_renderer_get_type (void);
+GType       animation_renderer_get_type    (void);
 
 
-GObject     * animation_renderer_new          (GObject           *playback);
-GeglBuffer  * animation_renderer_get_buffer   (AnimationRenderer *renderer,
-                                               gint               position);
-gboolean      animation_renderer_identical    (AnimationRenderer *renderer,
-                                               gint               position1,
-                                               gint               position2);
+GObject    * animation_renderer_new        (GObject             *playback);
+
+GeglBuffer * animation_renderer_get_buffer (AnimationRenderer   *renderer,
+                                            gint                 position);
+gboolean     animation_renderer_identical  (AnimationRenderer   *renderer,
+                                            gint                 position1,
+                                            gint                 position2);
 
 #endif  /*  __ANIMATION_RENDERER_H__  */
