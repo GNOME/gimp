@@ -367,7 +367,7 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
            color.g < 0.0 || color.g > 1.0 ||
            color.b < 0.0 || color.b > 1.0))
         {
-          gint side = MIN (rect_w, rect_h) / 2;
+          gint side = MIN (rect_w, rect_h) * 2 / 3;
 
           cairo_move_to (cr, width, height);
           cairo_line_to (cr, width - side, height);
@@ -417,7 +417,7 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
            color.g < 0.0 || color.g > 1.0 ||
            color.b < 0.0 || color.b > 1.0))
         {
-          gint side = MIN (rect_w, rect_h) / 2;
+          gint side = MIN (rect_w, rect_h) * 2 / 3;
 
           cairo_move_to (cr, 0, 0);
           cairo_line_to (cr, 0, side);
