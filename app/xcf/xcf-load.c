@@ -55,6 +55,8 @@
 #include "core/gimpselection.h"
 #include "core/gimptemplate.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
 
@@ -1106,9 +1108,26 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_BLEND_SPACE:
           {
-            GimpLayerColorSpace blend_space;
+            gint32 blend_space;
 
             xcf_read_int32 (info, (guint32 *) &blend_space, 1);
+
+            /* if blend_space < 0 it was originally AUTO, and its negative is
+             * the actual value AUTO used to map to at the time the file was
+             * saved.  if AUTO still maps to the same value, keep using AUTO
+             * for the property; otherwise, use the concrete value.
+             */
+            if (blend_space < 0)
+              {
+                GimpLayerMode mode = gimp_layer_get_mode (*layer);
+
+                blend_space = -blend_space;
+
+                if (blend_space == gimp_layer_mode_get_blend_space (mode))
+                  blend_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+                else
+                  GIMP_LOG (XCF, "BLEND_SPACE: AUTO => %d", blend_space);
+              }
 
             gimp_layer_set_blend_space (*layer, blend_space, FALSE);
           }
@@ -1116,9 +1135,26 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_COMPOSITE_SPACE:
           {
-            GimpLayerColorSpace composite_space;
+            gint32 composite_space;
 
             xcf_read_int32 (info, (guint32 *) &composite_space, 1);
+
+            /* if composite_space < 0 it was originally AUTO, and its negative
+             * is the actual value AUTO used to map to at the time the file was
+             * saved.  if AUTO still maps to the same value, keep using AUTO
+             * for the property; otherwise, use the concrete value.
+             */
+            if (composite_space < 0)
+              {
+                GimpLayerMode mode = gimp_layer_get_mode (*layer);
+
+                composite_space = -composite_space;
+
+                if (composite_space == gimp_layer_mode_get_composite_space (mode))
+                  composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+                else
+                  GIMP_LOG (XCF, "COMPOSITE_SPACE: AUTO => %d", composite_space);
+              }
 
             gimp_layer_set_composite_space (*layer, composite_space, FALSE);
           }
@@ -1126,9 +1162,26 @@ xcf_load_layer_props (XcfInfo    *info,
 
         case PROP_COMPOSITE_MODE:
           {
-            GimpLayerCompositeMode composite_mode;
+            gint32 composite_mode;
 
             xcf_read_int32 (info, (guint32 *) &composite_mode, 1);
+
+            /* if composite_mode < 0 it was originally AUTO, and its negative
+             * is the actual value AUTO used to map to at the time the file was
+             * saved.  if AUTO still maps to the same value, keep using AUTO
+             * for the property; otherwise, use the concrete value.
+             */
+            if (composite_mode < 0)
+              {
+                GimpLayerMode mode = gimp_layer_get_mode (*layer);
+
+                composite_mode = -composite_mode;
+
+                if (composite_mode == gimp_layer_mode_get_composite_mode (mode))
+                  composite_mode = GIMP_LAYER_COMPOSITE_AUTO;
+                else
+                  GIMP_LOG (XCF, "COMPOSITE_MODE: AUTO => %d", composite_mode);
+              }
 
             gimp_layer_set_composite_mode (*layer, composite_mode, FALSE);
           }

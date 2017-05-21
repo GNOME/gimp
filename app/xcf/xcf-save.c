@@ -51,6 +51,8 @@
 #include "core/gimpprogress.h"
 #include "core/gimpsamplepoint.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "text/gimptextlayer.h"
 #include "text/gimptextlayer-xcf.h"
 
@@ -518,10 +520,13 @@ xcf_save_layer_props (XcfInfo    *info,
   xcf_check_error (xcf_save_prop (info, image, PROP_MODE, error,
                                   gimp_layer_get_mode (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_BLEND_SPACE, error,
+                                  gimp_layer_get_mode (layer),
                                   gimp_layer_get_blend_space (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE_SPACE, error,
+                                  gimp_layer_get_mode (layer),
                                   gimp_layer_get_composite_space (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_COMPOSITE_MODE, error,
+                                  gimp_layer_get_mode (layer),
                                   gimp_layer_get_composite_mode (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_item_get_tattoo (GIMP_ITEM (layer))));
@@ -716,7 +721,17 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_BLEND_SPACE:
       {
-        gint32 blend_space = va_arg (args, gint32);
+        GimpLayerMode mode        = va_arg (args, GimpLayerMode);
+        gint32        blend_space = va_arg (args, gint32);
+
+        G_STATIC_ASSERT (GIMP_LAYER_COLOR_SPACE_AUTO == 0);
+
+        /* if blend_space is AUTO, save the negative of the actual value AUTO
+         * maps to for the given mode, so that we can correctly load it even if
+         * the mapping changes in the future.
+         */
+        if (blend_space == GIMP_LAYER_COLOR_SPACE_AUTO)
+          blend_space = -gimp_layer_mode_get_blend_space (mode);
 
         size = 4;
 
@@ -729,7 +744,17 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COMPOSITE_SPACE:
       {
-        gint32 composite_space = va_arg (args, gint32);
+        GimpLayerMode mode            = va_arg (args, GimpLayerMode);
+        gint32        composite_space = va_arg (args, gint32);
+
+        G_STATIC_ASSERT (GIMP_LAYER_COLOR_SPACE_AUTO == 0);
+
+        /* if composite_space is AUTO, save the negative of the actual value
+         * AUTO maps to for the given mode, so that we can correctly load it
+         * even if the mapping changes in the future.
+         */
+        if (composite_space == GIMP_LAYER_COLOR_SPACE_AUTO)
+          composite_space = -gimp_layer_mode_get_composite_space (mode);
 
         size = 4;
 
@@ -742,7 +767,17 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_COMPOSITE_MODE:
       {
-        gint32 composite_mode = va_arg (args, gint32);
+        GimpLayerMode mode           = va_arg (args, GimpLayerMode);
+        gint32        composite_mode = va_arg (args, gint32);
+
+        G_STATIC_ASSERT (GIMP_LAYER_COMPOSITE_AUTO == 0);
+
+        /* if composite_mode is AUTO, save the negative of the actual value
+         * AUTO maps to for the given mode, so that we can correctly load it
+         * even if the mapping changes in the future.
+         */
+        if (composite_mode == GIMP_LAYER_COMPOSITE_AUTO)
+          composite_mode = -gimp_layer_mode_get_composite_mode (mode);
 
         size = 4;
 
