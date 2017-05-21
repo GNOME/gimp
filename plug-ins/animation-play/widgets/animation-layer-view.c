@@ -413,7 +413,7 @@ animation_layer_view_get_row (AnimationLayerView *view,
 
   do
     {
-      GtkTreePath *path;
+      GtkTreePath *path = NULL;
       GValue       value = { 0, };
 
       gtk_tree_model_get_value (model, &iter,
