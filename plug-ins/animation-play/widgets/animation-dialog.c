@@ -1021,27 +1021,27 @@ ui_manager_new (AnimationDialog *dialog)
   static GtkActionEntry view_entries[] =
   {
     { "zoom-in", GIMP_ICON_ZOOM_IN,
-      NULL, "<control>plus", N_("Zoom in"),
+      N_("Zoom in"), "<control>plus", N_("Zoom in"),
       G_CALLBACK (zoom_in_callback) },
 
     { "zoom-in-accel", GIMP_ICON_ZOOM_IN,
-      NULL, "<control>KP_Add", N_("Zoom in"),
+      N_("Zoom in"), "<control>KP_Add", N_("Zoom in"),
       G_CALLBACK (zoom_in_callback) },
 
     { "zoom-out", GIMP_ICON_ZOOM_OUT,
-      NULL, "<control>minus", N_("Zoom out"),
+      N_("Zoom out"), "<control>minus", N_("Zoom out"),
       G_CALLBACK (zoom_out_callback) },
 
     { "zoom-out-accel", GIMP_ICON_ZOOM_OUT,
-      NULL, "<control>KP_Subtract", N_("Zoom out"),
+      N_("Zoom out"), "<control>KP_Subtract", N_("Zoom out"),
       G_CALLBACK (zoom_out_callback) },
 
     { "zoom-reset", GIMP_ICON_ZOOM_OUT,
-      NULL, "<control>equal", N_("Zoom out"),
+      N_("Zoom 1:1"), "<control>equal", N_("Zoom 1:1"),
       G_CALLBACK (zoom_reset_callback) },
 
     { "zoom-reset-accel", GIMP_ICON_ZOOM_OUT,
-      NULL, "<control>KP_Equal", N_("Zoom out"),
+      N_("Zoom 1:1"), "<control>KP_Equal", N_("Zoom 1:1"),
       G_CALLBACK (zoom_reset_callback) },
   };
 
