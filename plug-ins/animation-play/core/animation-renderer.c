@@ -163,7 +163,8 @@ animation_renderer_finalize (GObject *object)
   g_thread_unref (renderer->priv->queue_thread);
 
   /* Clean remaining data. */
-  g_source_remove (renderer->priv->idle_id);
+  if (renderer->priv->idle_id)
+    g_source_remove (renderer->priv->idle_id);
   g_mutex_lock (&renderer->priv->lock);
   for (i = 0; i < animation_get_duration (animation); i++)
     {
@@ -335,6 +336,7 @@ static gboolean
 animation_renderer_idle_update (AnimationRenderer *renderer)
 {
   gpointer p;
+  gboolean retval;
 
   while ((p = g_async_queue_try_pop (renderer->priv->ack_queue)))
     {
@@ -345,7 +347,21 @@ animation_renderer_idle_update (AnimationRenderer *renderer)
   while (g_main_context_pending (NULL))
     g_main_context_iteration (NULL, FALSE);
 
-  return G_SOURCE_CONTINUE;
+  /* If nothing is being rendered (negative queue length, meaning the
+   * renderer is waiting), nor is there anything in the ACK queue, just
+   * stop the idle source. */
+  if (g_async_queue_length (renderer->priv->queue) < 0 &&
+      g_async_queue_length (renderer->priv->ack_queue) == 0)
+    {
+      retval = G_SOURCE_REMOVE;
+      renderer->priv->idle_id = 0;
+    }
+  else
+    {
+      retval = G_SOURCE_CONTINUE;
+    }
+
+  return retval;
 }
 
 static void
@@ -371,6 +387,10 @@ on_frames_changed (Animation         *animation,
                                   * sorting it from the current position.
                                   */
                                  0);
+      if (renderer->priv->idle_id == 0)
+        renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
+                                                   (GSourceFunc) animation_renderer_idle_update,
+                                                   renderer, NULL);
     }
 }
 
@@ -426,9 +446,7 @@ on_animation_loaded (Animation         *animation,
   renderer->priv->queue_thread = g_thread_new ("gimp-animation-process-queue",
                                                (GThreadFunc) animation_renderer_process_queue,
                                                renderer);
-  renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
-                                             (GSourceFunc) animation_renderer_idle_update,
-                                             renderer, NULL);
+  renderer->priv->idle_id = 0;
 }
 
 /**** Public Functions ****/
