@@ -200,6 +200,7 @@ gimp_tile_get (GimpTile *tile)
   tile_req.tile_num    = tile->tile_num;
   tile_req.shadow      = tile->shadow;
 
+  gp_lock ();
   if (! gp_tile_req_write (_writechannel, &tile_req, NULL))
     gimp_quit ();
 
@@ -230,6 +231,7 @@ gimp_tile_get (GimpTile *tile)
 
   if (! gp_tile_ack_write (_writechannel, NULL))
     gimp_quit ();
+  gp_unlock ();
 
   gimp_wire_destroy (&msg);
 }
@@ -248,6 +250,7 @@ gimp_tile_put (GimpTile *tile)
   tile_req.tile_num    = 0;
   tile_req.shadow      = 0;
 
+  gp_lock ();
   if (! gp_tile_req_write (_writechannel, &tile_req, NULL))
     gimp_quit ();
 
@@ -280,6 +283,7 @@ gimp_tile_put (GimpTile *tile)
   gimp_wire_destroy (&msg);
 
   gimp_read_expect_msg (&msg, GP_TILE_ACK);
+  gp_unlock ();
   gimp_wire_destroy (&msg);
 }
 

@@ -1117,10 +1117,12 @@ gimp_run_procedure2 (const gchar     *name,
   proc_run.nparams = n_params;
   proc_run.params  = (GPParam *) params;
 
+  gp_lock ();
   if (! gp_proc_run_write (_writechannel, &proc_run, NULL))
     gimp_quit ();
 
   gimp_read_expect_msg (&msg, GP_PROC_RETURN);
+  gp_unlock ();
 
   proc_return = msg.data;
 

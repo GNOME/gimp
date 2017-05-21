@@ -228,6 +228,9 @@ gboolean  gp_has_init_write         (GIOChannel      *channel,
 void      gp_params_destroy         (GPParam         *params,
                                      gint             nparams);
 
+void      gp_lock                   (void);
+void      gp_unlock                 (void);
+
 
 G_END_DECLS
 
