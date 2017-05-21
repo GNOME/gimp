@@ -33,8 +33,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-16 08:41+0200\n"
-"PO-Revision-Date: 2017-05-16 10:25+0200\n"
+"POT-Creation-Date: 2017-05-21 02:21+0200\n"
+"PO-Revision-Date: 2017-05-21 02:24+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -1217,7 +1217,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1999
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
-#: ../app/dialogs/palette-import-dialog.c:777 ../app/widgets/gimpdnd-xds.c:89
+#: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
 msgid "Untitled"
 msgstr "Senzanome"
 
@@ -1765,7 +1765,7 @@ msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "St_ato e testo"
 
-#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:259
+#: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:261
 msgctxt "tab-style"
 msgid "Automatic"
 msgstr "Automatico"
@@ -12578,25 +12578,25 @@ msgstr "_Nome tavolozza:"
 msgid "N_umber of colors:"
 msgstr "N_umero di colori:"
 
-#: ../app/dialogs/palette-import-dialog.c:336
+#: ../app/dialogs/palette-import-dialog.c:337
 msgid "C_olumns:"
 msgstr "C_olonne:"
 
-#: ../app/dialogs/palette-import-dialog.c:348
+#: ../app/dialogs/palette-import-dialog.c:349
 msgid "I_nterval:"
 msgstr "I_ntervallo:"
 
 #. The "Preview" frame
-#: ../app/dialogs/palette-import-dialog.c:359
+#: ../app/dialogs/palette-import-dialog.c:360
 #: ../app/tools/gimpforegroundselecttool.c:1231
 msgid "Preview"
 msgstr "Anteprima"
 
-#: ../app/dialogs/palette-import-dialog.c:380
+#: ../app/dialogs/palette-import-dialog.c:381
 msgid "The selected source contains no colors."
 msgstr "La sorgente selezionata non contiene colori."
 
-#: ../app/dialogs/palette-import-dialog.c:465
+#: ../app/dialogs/palette-import-dialog.c:466
 msgid "There is no palette to import."
 msgstr "Nessuna tavolozza da importare."
 
@@ -14256,7 +14256,7 @@ msgstr "Spaziatura righe"
 #: ../app/display/gimpcursorview.c:697 ../app/display/gimpcursorview.c:699
 #: ../app/display/gimpcursorview.c:818 ../app/display/gimpcursorview.c:819
 #: ../app/display/gimpcursorview.c:820 ../app/display/gimpcursorview.c:821
-#: ../app/widgets/gimpcolorframe.c:621 ../app/widgets/gimpcolorframe.c:883
+#: ../app/widgets/gimpcolorframe.c:621 ../app/widgets/gimpcolorframe.c:911
 msgid "n/a"
 msgstr "n/a"
 
@@ -14418,7 +14418,7 @@ msgstr "Impossibile modificare i pixel di un gruppo di livelli."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:226
 #: ../app/tools/gimpcroptool.c:325 ../app/tools/gimpfiltertool.c:335
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1872 ../app/tools/gimpwarptool.c:579
+#: ../app/tools/gimptransformtool.c:1872 ../app/tools/gimpwarptool.c:640
 msgid "The active layer's pixels are locked."
 msgstr "I pixel del livello attivo sono bloccati."
 
@@ -15431,7 +15431,8 @@ msgstr "Collega la dimensione pennello allo zoom dell'area disegnabile"
 msgid "Aspect Ratio"
 msgstr "Rapporto dimensioni"
 
-#: ../app/paint/gimppaintoptions.c:219 ../app/widgets/gimpbrusheditor.c:211
+#: ../app/paint/gimppaintoptions.c:219 ../app/tools/gimpwarpoptions.c:112
+#: ../app/widgets/gimpbrusheditor.c:211
 #: ../app/widgets/gimpbrushfactoryview.c:81 ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Spaziatura"
@@ -16033,7 +16034,8 @@ msgid "Diagonal neighbors"
 msgstr "Vicini diagonali"
 
 #: ../app/pdb/gimppdbcontext.c:163 ../app/tools/gimptransformoptions.c:124
-#: ../app/tools/gimptransformoptions.c:441
+#: ../app/tools/gimptransformoptions.c:441 ../app/tools/gimpwarpoptions.c:119
+#: ../app/tools/gimpwarpoptions.c:322
 msgid "Interpolation"
 msgstr "Interpolazione"
 
@@ -16889,7 +16891,7 @@ msgstr "S_fumatura"
 #: ../app/tools/gimpblendtool.c:294 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:233 ../app/tools/gimpfiltertool.c:342
 #: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1880 ../app/tools/gimpwarptool.c:586
+#: ../app/tools/gimptransformtool.c:1880 ../app/tools/gimpwarptool.c:651
 msgid "The active layer is not visible."
 msgstr "Il livello attivo non è visibile."
 
@@ -17073,7 +17075,7 @@ msgstr "Trasformazione gabbia: deforma una selezione all'interno di una gabbia"
 msgid "_Cage Transform"
 msgstr "_Trasformazione gabbia"
 
-#: ../app/tools/gimpcagetool.c:732 ../app/tools/gimpwarptool.c:319
+#: ../app/tools/gimpcagetool.c:732 ../app/tools/gimpwarptool.c:333
 msgid "Press ENTER to commit the transform"
 msgstr "Premere INVIO per confermare la trasformazione"
 
@@ -18708,7 +18710,7 @@ msgstr "Criteri di selezione"
 
 #: ../app/tools/gimpregionselectoptions.c:127
 msgid "Draw mask"
-msgstr "Maschera di disegno"
+msgstr "Disegna maschera"
 
 #: ../app/tools/gimpregionselectoptions.c:128
 msgid "Draw the selected region's mask"
@@ -19106,7 +19108,7 @@ msgstr "Impossibile lavorare su un'immagine vuota, aggiungere prima un livello"
 msgid "Direction of transformation"
 msgstr "Direzione della trasformazione"
 
-#: ../app/tools/gimptransformoptions.c:125
+#: ../app/tools/gimptransformoptions.c:125 ../app/tools/gimpwarpoptions.c:120
 msgid "Interpolation method"
 msgstr "Metodo di interpolazione"
 
@@ -19486,17 +19488,9 @@ msgstr "Elimina àncora"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Non c'è un livello o un canale attivo da disegnare"
 
-#: ../app/tools/gimpwarpoptions.c:76 ../app/tools/gimpwarpoptions.c:77
+#: ../app/tools/gimpwarpoptions.c:83 ../app/tools/gimpwarpoptions.c:84
 msgid "Behavior"
 msgstr "Comportamento"
-
-#: ../app/tools/gimpwarpoptions.c:84
-msgid "Strength"
-msgstr "Forza"
-
-#: ../app/tools/gimpwarpoptions.c:85
-msgid "Effect Strength"
-msgstr "Forza effetto"
 
 #: ../app/tools/gimpwarpoptions.c:92
 msgid "Effect Size"
@@ -19507,61 +19501,122 @@ msgid "Effect Hardness"
 msgstr "Durezza effetto"
 
 #: ../app/tools/gimpwarpoptions.c:105
+msgid "Strength"
+msgstr "Forza"
+
+#: ../app/tools/gimpwarpoptions.c:106
+msgid "Effect Strength"
+msgstr "Forza effetto"
+
+#: ../app/tools/gimpwarpoptions.c:113
+msgid "Stroke Spacing"
+msgstr "Spaziatura tratti"
+
+#: ../app/tools/gimpwarpoptions.c:127 ../app/tools/gimpwarpoptions.c:329
+msgid "Abyss policy"
+msgstr ""
+
+#: ../app/tools/gimpwarpoptions.c:128
+msgid "Out-of-bounds sampling behavior"
+msgstr "Comportamento campionamento fuori dai bordi"
+
+#: ../app/tools/gimpwarpoptions.c:135
+msgid "High quality preview"
+msgstr "Anteprima di alta qualità"
+
+#: ../app/tools/gimpwarpoptions.c:136
+msgid "Use an accurate but slower preview"
+msgstr "Usa anteprima accurata ma più lenta"
+
+#: ../app/tools/gimpwarpoptions.c:142
+msgid "During motion"
+msgstr "Durante il moto"
+
+#: ../app/tools/gimpwarpoptions.c:143
+msgid "Apply effect during motion"
+msgstr "Applica l'effetto durante il moto"
+
+#: ../app/tools/gimpwarpoptions.c:149
+msgid "Periodically"
+msgstr "Periodicamente"
+
+#: ../app/tools/gimpwarpoptions.c:150
+msgid "Apply effect periodically"
+msgstr "Applica l'effetto periodicamente"
+
+#: ../app/tools/gimpwarpoptions.c:156
+msgid "Rate"
+msgstr "Frequenza"
+
+#: ../app/tools/gimpwarpoptions.c:157
+msgid "Periodic stroke rate"
+msgstr "Frequenza periodica tratti"
+
+#: ../app/tools/gimpwarpoptions.c:163
 msgid "Frames"
 msgstr "Quadri"
 
-#: ../app/tools/gimpwarpoptions.c:106
+#: ../app/tools/gimpwarpoptions.c:164
 msgid "Number of animation frames"
 msgstr "Numero di quadri di animazione"
 
+#. the stroke frame
+#: ../app/tools/gimpwarpoptions.c:339
+msgid "Stroke"
+msgstr "Tratto"
+
 #. the animation frame
-#: ../app/tools/gimpwarpoptions.c:215
+#: ../app/tools/gimpwarpoptions.c:361
 msgid "Animate"
 msgstr "Anima"
 
-#: ../app/tools/gimpwarpoptions.c:229
+#: ../app/tools/gimpwarpoptions.c:375
 msgid "Create Animation"
 msgstr "Crea animazione"
 
-#: ../app/tools/gimpwarptool.c:142
+#: ../app/tools/gimpwarptool.c:155
 msgid "Warp Transform"
 msgstr "Trasformazione Warp"
 
-#: ../app/tools/gimpwarptool.c:143
+#: ../app/tools/gimpwarptool.c:156
 msgid "Warp Transform: Deform with different tools"
 msgstr "Trasformazione warp: deforma con diversi strumenti"
 
-#: ../app/tools/gimpwarptool.c:144
+#: ../app/tools/gimpwarptool.c:157
 msgid "_Warp Transform"
 msgstr "Trasformazione _warp"
 
-#: ../app/tools/gimpwarptool.c:464 ../app/tools/gimpwarptool.c:476
+#: ../app/tools/gimpwarptool.c:484 ../app/tools/gimpwarptool.c:496
 msgid "Warp Tool Stroke"
 msgstr "Tratteggio con lo strumento Warp"
 
-#: ../app/tools/gimpwarptool.c:572
+#: ../app/tools/gimpwarptool.c:629
 msgid "Cannot warp layer groups."
 msgstr "Impossibile fare warp sui gruppi livello."
 
-#: ../app/tools/gimpwarptool.c:752
+#: ../app/tools/gimpwarptool.c:663
+msgid "No stroke events selected."
+msgstr "Nessun evento tratto selezionato."
+
+#: ../app/tools/gimpwarptool.c:884
 msgid "Warp transform"
 msgstr "Trasformazione warp"
 
-#: ../app/tools/gimpwarptool.c:889
+#: ../app/tools/gimpwarptool.c:1097
 msgid "Please add some warp strokes first."
 msgstr "Aggiungere prima alcuni colpi di warp."
 
-#: ../app/tools/gimpwarptool.c:902 ../app/tools/gimpwarptool.c:938
+#: ../app/tools/gimpwarptool.c:1112 ../app/tools/gimpwarptool.c:1148
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Rendering quadro %d"
 
-#: ../app/tools/gimpwarptool.c:917 ../app/tools/gimpwarptool.c:946
+#: ../app/tools/gimpwarptool.c:1127 ../app/tools/gimpwarptool.c:1156
 #, c-format
 msgid "Frame %d"
 msgstr "Quadro %d"
 
-#: ../app/tools/gimpwarptool.c:955
+#: ../app/tools/gimpwarptool.c:1165
 msgid "Frame"
 msgstr "Quadro"
 
@@ -19958,7 +20013,8 @@ msgstr "Valore:"
 
 #: ../app/widgets/gimpcolorframe.c:696 ../app/widgets/gimpcolorframe.c:705
 #: ../app/widgets/gimpcolorframe.c:736 ../app/widgets/gimpcolorframe.c:773
-#: ../app/widgets/gimpcolorframe.c:797 ../app/widgets/gimpcolorframe.c:826
+#: ../app/widgets/gimpcolorframe.c:797 ../app/widgets/gimpcolorframe.c:825
+#: ../app/widgets/gimpcolorframe.c:854
 msgid "Alpha:"
 msgstr "Alfa:"
 
@@ -19999,18 +20055,30 @@ msgid "Chr.:"
 msgstr "Crom.:"
 
 #: ../app/widgets/gimpcolorframe.c:820
+msgid "Lab_L*:"
+msgstr ""
+
+#: ../app/widgets/gimpcolorframe.c:821
+msgid "Lab_a*:"
+msgstr ""
+
+#: ../app/widgets/gimpcolorframe.c:822
+msgid "Lab_b*:"
+msgstr ""
+
+#: ../app/widgets/gimpcolorframe.c:848
 msgid "Cyan:"
 msgstr "Ciano:"
 
-#: ../app/widgets/gimpcolorframe.c:821
+#: ../app/widgets/gimpcolorframe.c:849
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: ../app/widgets/gimpcolorframe.c:822
+#: ../app/widgets/gimpcolorframe.c:850
 msgid "Yellow:"
 msgstr "Giallo:"
 
-#: ../app/widgets/gimpcolorframe.c:823
+#: ../app/widgets/gimpcolorframe.c:851
 msgid "Black:"
 msgstr "Nero:"
 
@@ -21652,107 +21720,112 @@ msgctxt "circle-background"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:116
+#: ../app/widgets/widgets-enums.c:117
 msgctxt "color-frame-mode"
 msgid "Pixel"
 msgstr "Pixel"
 
-#: ../app/widgets/widgets-enums.c:117
+#: ../app/widgets/widgets-enums.c:118
 msgctxt "color-frame-mode"
 msgid "RGB (%)"
 msgstr "RGB (%)"
 
-#: ../app/widgets/widgets-enums.c:118
+#: ../app/widgets/widgets-enums.c:119
 msgctxt "color-frame-mode"
 msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
-#: ../app/widgets/widgets-enums.c:119
+#: ../app/widgets/widgets-enums.c:120
 msgctxt "color-frame-mode"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:120
+#: ../app/widgets/widgets-enums.c:121
 msgctxt "color-frame-mode"
 msgid "CIE LCH"
 msgstr "CIE LCH"
 
-#: ../app/widgets/widgets-enums.c:121
+#: ../app/widgets/widgets-enums.c:122
+msgctxt "color-frame-mode"
+msgid "CIE LAB"
+msgstr "CIE LAB"
+
+#: ../app/widgets/widgets-enums.c:123
 msgctxt "color-frame-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../app/widgets/widgets-enums.c:151
+#: ../app/widgets/widgets-enums.c:153
 msgctxt "color-pick-mode"
 msgid "Pick only"
 msgstr "Solo prelievo"
 
-#: ../app/widgets/widgets-enums.c:152
+#: ../app/widgets/widgets-enums.c:154
 msgctxt "color-pick-mode"
 msgid "Set foreground color"
 msgstr "Imposta il colore di primo piano"
 
-#: ../app/widgets/widgets-enums.c:153
+#: ../app/widgets/widgets-enums.c:155
 msgctxt "color-pick-mode"
 msgid "Set background color"
 msgstr "Imposta il colore di sfondo"
 
-#: ../app/widgets/widgets-enums.c:154
+#: ../app/widgets/widgets-enums.c:156
 msgctxt "color-pick-mode"
 msgid "Add to palette"
 msgstr "Aggiungi alla tavolozza"
 
-#: ../app/widgets/widgets-enums.c:213
+#: ../app/widgets/widgets-enums.c:215
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr "Istogramma lineare"
 
-#: ../app/widgets/widgets-enums.c:214
+#: ../app/widgets/widgets-enums.c:216
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Istogramma logaritmico"
 
-#: ../app/widgets/widgets-enums.c:250
+#: ../app/widgets/widgets-enums.c:252
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Icona"
 
-#: ../app/widgets/widgets-enums.c:251
+#: ../app/widgets/widgets-enums.c:253
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Stato corrente"
 
-#: ../app/widgets/widgets-enums.c:252
+#: ../app/widgets/widgets-enums.c:254
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Testo"
 
-#: ../app/widgets/widgets-enums.c:253
+#: ../app/widgets/widgets-enums.c:255
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Descrizione"
 
-#: ../app/widgets/widgets-enums.c:254
+#: ../app/widgets/widgets-enums.c:256
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Icona e testo"
 
-#: ../app/widgets/widgets-enums.c:255
+#: ../app/widgets/widgets-enums.c:257
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Icona e desc"
 
-#: ../app/widgets/widgets-enums.c:256
+#: ../app/widgets/widgets-enums.c:258
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Stato e testo"
 
-#: ../app/widgets/widgets-enums.c:257
+#: ../app/widgets/widgets-enums.c:259
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stato e desc"
 
-#: ../app/widgets/widgets-enums.c:258
+#: ../app/widgets/widgets-enums.c:260
 msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Indefinito"
