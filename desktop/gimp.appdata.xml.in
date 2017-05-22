@@ -32,7 +32,7 @@
   </description>
   <url type="homepage">http://www.gimp.org/</url>
   <screenshots>
-    <screenshot type="default">http://www.gimp.org/screenshots/linux_mixer.jpg</screenshot>
+    <screenshot type="default">http://www.gimp.org/screenshots/Screenshot-gimp-2.8-photo-editing.jpg</screenshot>
   </screenshots>
   <updatecontact>gimp-developer-list_at_gnome.org</updatecontact>
 </application>
