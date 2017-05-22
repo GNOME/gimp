@@ -131,9 +131,6 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 
   label = gtk_label_new_with_mnemonic (text);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_table_attach (GTK_TABLE (table), label,
-                    column, column + 1, row, row + 1,
-                    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   scale_adjustment = (GtkAdjustment *)
@@ -164,6 +161,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 
   spinbutton = gtk_spin_button_new (spin_adjustment, step_increment, digits);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_show (spinbutton);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
@@ -191,15 +189,19 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
     gtk_widget_set_size_request (scale, scale_width, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), digits);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+  gtk_widget_show (scale);
+
+  gtk_table_attach (GTK_TABLE (table), label,
+                    column, column + 1, row, row + 1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+
   gtk_table_attach (GTK_TABLE (table), scale,
                     column + 1, column + 2, row, row + 1,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_widget_show (scale);
 
   gtk_table_attach (GTK_TABLE (table), spinbutton,
                     column + 2, column + 3, row, row + 1,
                     GTK_FILL | GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (spinbutton);
 
   if (tooltip || help_id)
     {
