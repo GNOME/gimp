@@ -98,7 +98,7 @@ libapppaint_a_SOURCES = $(libapppaint_a_built_sources) $(libapppaint_a_sources)
 gen_sources = xgen-pec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/paint-enums.c: $(srcdir)/paint-enums.h $(GIMP_MKENUMS)
+xgen-pec: $(srcdir)/paint-enums.h $(GIMP_MKENUMS) Makefile.am
 	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"paint-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
@@ -108,6 +108,15 @@ $(srcdir)/paint-enums.c: $(srcdir)/paint-enums.h $(GIMP_MKENUMS)
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		paint-enums.h) > xgen-pec \
-	&& cp xgen-pec $@ \
-	&& rm -f xgen-pec
+		paint-enums.h) > $@
+
+$(srcdir)/paint-enums.c: xgen-pec
+	$(AM_V_GEN) if ! cmp -s $< $@; then \
+		cp $< $@; \
+	else \
+		# if the file hasn't changed, only update its timestamp, so that \
+		# the receipe doesn't get executed again next time, but allow this \
+		# to fail (e.g., when using a read-only source directory). \
+		touch $@ 2> /dev/null \
+		|| true; \
+	fi

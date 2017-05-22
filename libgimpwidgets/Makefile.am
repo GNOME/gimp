@@ -307,7 +307,7 @@ endif
 gen_sources = xgen-wec xgen-wmh xgen-wmc
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
+xgen-wec: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS) Makefile.am
 	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpwidgetsenums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
@@ -317,9 +317,18 @@ $(srcdir)/gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		gimpwidgetsenums.h) > xgen-wec \
-	&& cp xgen-wec $@ \
-	&& rm -f xgen-wec
+		gimpwidgetsenums.h) > $@
+
+$(srcdir)/gimpwidgetsenums.c: xgen-wec
+	$(AM_V_GEN) if ! cmp -s $< $@; then \
+		cp $< $@; \
+	else \
+		# if the file hasn't changed, only update its timestamp, so that \
+		# the receipe doesn't get executed again next time, but allow this \
+		# to fail (e.g., when using a read-only source directory). \
+		touch $@ 2> /dev/null \
+		|| true; \
+	fi
 
 gimpwidgetsmarshal.h: $(srcdir)/gimpwidgetsmarshal.list
 	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --header >> xgen-wmh \
