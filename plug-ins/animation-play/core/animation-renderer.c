@@ -23,6 +23,8 @@
 #include <libgimp/gimp.h>
 #include <libgimp/stdplugins-intl.h>
 
+#include "animation-utils.h"
+
 #include "animation.h"
 #include "animation-playback.h"
 #include "animation-renderer.h"
@@ -66,10 +68,6 @@ static void     animation_renderer_get_property  (GObject           *object,
                                                   guint              property_id,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
-
-static gint     animation_renderer_sort_frame    (gconstpointer      f1,
-                                                  gconstpointer      f2,
-                                                  gpointer           data);
 
 static gpointer animation_renderer_process_queue (AnimationRenderer *renderer);
 static gboolean animation_renderer_idle_update   (AnimationRenderer *renderer);
@@ -225,31 +223,6 @@ animation_renderer_get_property (GObject      *object,
     }
 }
 
-static gint
-animation_renderer_sort_frame (gconstpointer f1,
-                               gconstpointer f2,
-                               gpointer      data)
-{
-  gint first_frame = GPOINTER_TO_INT (data);
-  gint frame1      = GPOINTER_TO_INT (f1);
-  gint frame2      = GPOINTER_TO_INT (f2);
-  gint invert;
-
-  if (frame1 == frame2)
-    {
-      return 0;
-    }
-  else
-    {
-      invert = ((frame1 >= first_frame && frame2 >= first_frame) ||
-                (frame1 < first_frame && frame2 < first_frame)) ? 1 : -1;
-      if (frame1 < frame2)
-        return invert * -1;
-      else
-        return invert;
-    }
-}
-
 static gpointer
 animation_renderer_process_queue (AnimationRenderer *renderer)
 {
@@ -381,7 +354,7 @@ on_frames_changed (Animation         *animation,
       g_async_queue_remove (renderer->priv->queue, GINT_TO_POINTER (i + 1));
       g_async_queue_push_sorted (renderer->priv->queue,
                                  GINT_TO_POINTER (i + 1),
-                                 (GCompareDataFunc) animation_renderer_sort_frame,
+                                 (GCompareDataFunc) compare_int_from,
                                  /* TODO: right now I am sorting the render
                                   * queue in common order. I will have to test
                                   * sorting it from the current position.

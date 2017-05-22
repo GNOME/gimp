@@ -54,6 +54,10 @@ void         hide_item           (gint               item,
 void         show_item           (gint               item,
                                   gint32             color_tag);
 
+gint         compare_int_from    (gconstpointer      f1,
+                                  gconstpointer      f2,
+                                  gpointer           data);
+
 #endif  /*  __ANIMATION_UTILS_H__  */
 
 

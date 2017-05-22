@@ -315,3 +315,28 @@ show_item (gint   item,
   if (parent > 0)
     show_item (parent, -1);
 }
+
+gint
+compare_int_from (gconstpointer f1,
+                  gconstpointer f2,
+                  gpointer      data)
+{
+  gint first_frame = GPOINTER_TO_INT (data);
+  gint frame1      = GPOINTER_TO_INT (f1);
+  gint frame2      = GPOINTER_TO_INT (f2);
+  gint invert;
+
+  if (frame1 == frame2)
+    {
+      return 0;
+    }
+  else
+    {
+      invert = ((frame1 >= first_frame && frame2 >= first_frame) ||
+                (frame1 < first_frame && frame2 < first_frame)) ? 1 : -1;
+      if (frame1 < frame2)
+        return invert * -1;
+      else
+        return invert;
+    }
+}

@@ -203,7 +203,8 @@ static void     on_track_right_clicked               (GtkToolButton   *toolbutto
 /* Utils */
 static void     animation_xsheet_rename_cel          (AnimationXSheet *xsheet,
                                                       GtkWidget       *cel,
-                                                      gboolean         recursively);
+                                                      gboolean         recursively,
+                                                      gint             stop_position);
 static void     animation_xsheet_jump                (AnimationXSheet *xsheet,
                                                       gint             position);
 static void     animation_xsheet_attach_cel          (AnimationXSheet *xsheet,
@@ -626,7 +627,7 @@ animation_xsheet_add_track (AnimationXSheet *xsheet,
       cel = gtk_toggle_button_new ();
       track->data = g_list_append (track->data, cel);
       animation_xsheet_attach_cel (xsheet, cel, level, i);
-      animation_xsheet_rename_cel (xsheet, cel, FALSE);
+      animation_xsheet_rename_cel (xsheet, cel, FALSE, -1);
 
       g_signal_connect (cel, "button-release-event",
                         G_CALLBACK (animation_xsheet_cel_clicked),
@@ -705,7 +706,7 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
           cel = gtk_toggle_button_new ();
           iter->data = g_list_append (iter->data, cel);
           animation_xsheet_attach_cel (xsheet, cel, j, i);
-          animation_xsheet_rename_cel (xsheet, cel, FALSE);
+          animation_xsheet_rename_cel (xsheet, cel, FALSE, -1);
 
           g_signal_connect (cel, "button-release-event",
                             G_CALLBACK (animation_xsheet_cel_clicked),
@@ -1187,6 +1188,7 @@ on_layer_selection (AnimationLayerView *view,
     return;
 
   frames = g_queue_copy (xsheet->priv->selected_frames);
+  g_queue_sort (frames, compare_int_from, 0);
   while (! g_queue_is_empty (frames))
     {
       GList     *track_cels;
@@ -1204,7 +1206,8 @@ on_layer_selection (AnimationLayerView *view,
                                           GPOINTER_TO_INT (position),
                                           layers);
 
-      animation_xsheet_rename_cel (xsheet, button, TRUE);
+      animation_xsheet_rename_cel (xsheet, button, TRUE,
+                                   GPOINTER_TO_INT (g_queue_peek_head (frames)));
     }
   g_queue_free (frames);
 }
@@ -1461,7 +1464,7 @@ animation_xsheet_suite_do (GtkWidget       *button,
   cels = g_list_nth_data (xsheet->priv->cels, level);
   cel = g_list_nth_data (cels, position);
 
-  animation_xsheet_rename_cel (xsheet, cel, TRUE);
+  animation_xsheet_rename_cel (xsheet, cel, TRUE, -1);
 
   /* Delete the widget. */
   animation_xsheet_suite_cancelled (NULL, xsheet);
@@ -1802,7 +1805,7 @@ animation_xsheet_track_title_updated (GtkEntryBuffer  *buffer,
       GtkWidget *cel;
 
       cel = iter->data;
-      animation_xsheet_rename_cel (xsheet, cel, FALSE);
+      animation_xsheet_rename_cel (xsheet, cel, FALSE, -1);
     }
 }
 
@@ -1923,7 +1926,8 @@ on_track_right_clicked (GtkToolButton   *button,
 static void
 animation_xsheet_rename_cel (AnimationXSheet *xsheet,
                              GtkWidget       *cel,
-                             gboolean         recursively)
+                             gboolean         recursively,
+                             gint             stop_position)
 {
   const GList *layers;
   const GList *prev_layers = NULL;
@@ -1995,7 +1999,7 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
                                               GPOINTER_TO_INT (track_num),
                                               GPOINTER_TO_INT (position),
                                               NULL);
-          animation_xsheet_rename_cel (xsheet, cel, recursively);
+          animation_xsheet_rename_cel (xsheet, cel, recursively, stop_position);
           return;
         }
       else
@@ -2047,7 +2051,8 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
       g_free (markup);
     }
 
-  if (recursively)
+  if (recursively &&
+      GPOINTER_TO_INT (position) + 1 != stop_position)
     {
       GList     *track_cels;
       GtkWidget *next_cel;
@@ -2058,7 +2063,8 @@ animation_xsheet_rename_cel (AnimationXSheet *xsheet,
                                   GPOINTER_TO_INT (position) + 1);
       if (next_cel)
         {
-          animation_xsheet_rename_cel (xsheet, next_cel, TRUE);
+          animation_xsheet_rename_cel (xsheet, next_cel, TRUE,
+                                       stop_position);
         }
     }
 }
