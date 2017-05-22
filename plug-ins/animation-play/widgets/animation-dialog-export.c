@@ -35,8 +35,10 @@
 #include "animation-dialog.h"
 #include "animation-dialog-export.h"
 
-static void animation_dialog_export_video (AnimationPlayback *playback,
-                                           gchar             *filename);
+static void animation_dialog_export_video  (AnimationPlayback *playback,
+                                            gchar             *filename);
+static void animation_dialog_export_images (AnimationPlayback *playback,
+                                            gchar             *filename);
 
 void
 animation_dialog_export (GtkWindow         *main_dialog,
@@ -45,6 +47,7 @@ animation_dialog_export (GtkWindow         *main_dialog,
   GtkWidget     *dialog;
   GtkFileFilter *all;
   GtkFileFilter *videos;
+  GtkFileFilter *images;
   gchar         *filename = NULL;
 
   dialog = gtk_file_chooser_dialog_new (_("Export animation"),
@@ -54,6 +57,7 @@ animation_dialog_export (GtkWindow         *main_dialog,
                                         _("_Export"), GTK_RESPONSE_ACCEPT,
                                         NULL);
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog), TRUE);
+  gtk_file_chooser_set_create_folders (GTK_FILE_CHOOSER (dialog), TRUE);
   /*gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
                                          default_folder_for_saving);*/
   /*gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
@@ -81,6 +85,18 @@ animation_dialog_export (GtkWindow         *main_dialog,
   gtk_file_filter_add_mime_type (videos, "video/x-matroska");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), videos);
 
+  images = gtk_file_filter_new ();
+  gtk_file_filter_set_name (images, _("Image Sequences"));
+  gtk_file_filter_add_pattern (images, "*.[pP][nN][gG]");
+  gtk_file_filter_add_pattern (images, "*.[tT][iI][fF][fF]");
+  gtk_file_filter_add_pattern (images, "*.[tT][iI][fF]");
+  gtk_file_filter_add_pattern (images, "*.[jJ][pP][gG]");
+  gtk_file_filter_add_pattern (images, "*.[jJ][pP][eE][gG]");
+  gtk_file_filter_add_mime_type (images, "image/tiff");
+  gtk_file_filter_add_mime_type (images, "image/png");
+  gtk_file_filter_add_mime_type (images, "image/jpeg");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), images);
+
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), videos);
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
@@ -88,9 +104,27 @@ animation_dialog_export (GtkWindow         *main_dialog,
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
     }
   gtk_widget_destroy (dialog);
+
   if (filename)
     {
-      animation_dialog_export_video (playback, filename);
+      gchar *lower = g_ascii_strdown (filename, -1);
+
+      /* check the type of files. */
+      if (g_str_has_suffix (lower, ".png")  ||
+          g_str_has_suffix (lower, ".jpg")  ||
+          g_str_has_suffix (lower, ".jpeg") ||
+          g_str_has_suffix (lower, ".tiff") ||
+          g_str_has_suffix (lower, ".tif"))
+        {
+          animation_dialog_export_images (playback, filename);
+        }
+      else
+        {
+          /* We assume unrecognized type are videos. I doubt that's
+           * a good assumption, but enough for a first hack. */
+          animation_dialog_export_video (playback, filename);
+        }
+      g_free (lower);
       g_free (filename);
     }
 }
@@ -131,6 +165,56 @@ animation_dialog_export_video (AnimationPlayback *playback,
       gegl_node_set (input, "buffer", buffer, NULL);
       gegl_node_process (export);
       g_object_unref (buffer);
+    }
+  g_object_unref (graph);
+  g_signal_emit_by_name (animation, "loaded");
+}
+
+static void
+animation_dialog_export_images (AnimationPlayback *playback,
+                                gchar             *filename)
+{
+  Animation *animation;
+  GeglNode  *graph;
+  GeglNode  *export;
+  GeglNode  *input;
+  gint       duration;
+  gchar     *ext;
+  gint       i;
+
+  ext = g_strrstr (filename, ".");
+  g_return_if_fail (ext);
+  *ext = '\0';
+  ext++;
+
+  animation = animation_playback_get_animation (playback);
+  duration = animation_get_duration (animation);
+  graph  = gegl_node_new ();
+  export = gegl_node_new_child (graph,
+                                "operation", "gegl:save",
+                                NULL);
+  input = gegl_node_new_child (graph,
+                               "operation", "gegl:buffer-source",
+                               NULL);
+  gegl_node_link_many (input, export, NULL);
+
+  for (i = 0; i < duration; i++)
+    {
+      GeglBuffer *buffer;
+      gchar      *path;
+
+      g_signal_emit_by_name (animation, "loading",
+                             (gdouble) i / ((gdouble) duration - 0.999));
+      path = g_strdup_printf ("%s-%.*d.%s",
+                              filename,
+                              (gint) floor (log10(duration)) + 1,
+                              i + 1, ext);
+      buffer = animation_playback_get_buffer (playback, i);
+      gegl_node_set (input, "buffer", buffer, NULL);
+      gegl_node_set (export, "path", path, NULL);
+      gegl_node_process (export);
+      g_object_unref (buffer);
+      g_free (path);
     }
   g_object_unref (graph);
   g_signal_emit_by_name (animation, "loaded");
