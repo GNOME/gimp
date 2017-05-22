@@ -57,6 +57,8 @@ animation_play_SOURCES = \
 	core/animation-renderer.c		\
 	widgets/animation-dialog.h		\
 	widgets/animation-dialog.c		\
+	widgets/animation-dialog-export.h	\
+	widgets/animation-dialog-export.c	\
 	widgets/animation-keyframe-view.h	\
 	widgets/animation-keyframe-view.c	\
 	widgets/animation-layer-view.h	\

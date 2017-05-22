@@ -35,6 +35,7 @@
 #include "core/animation-playback.h"
 
 #include "animation-dialog.h"
+#include "animation-dialog-export.h"
 #include "animation-keyframe-view.h"
 #include "animation-layer-view.h"
 #include "animation-storyboard.h"
@@ -1476,7 +1477,7 @@ export_callback (GtkAction       *action,
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
 
-  animation_playback_export (priv->playback);
+  animation_dialog_export (GTK_WINDOW (dialog), priv->playback);
 }
 
 static void
