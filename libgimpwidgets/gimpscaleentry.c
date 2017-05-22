@@ -180,12 +180,12 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   else
     {
       scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, scale_adjustment);
+      gtk_scale_set_digits (GTK_SCALE (scale), digits);
+      gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
     }
 
   if (scale_width > 0)
     gtk_widget_set_size_request (scale, scale_width, -1);
-  gtk_scale_set_digits (GTK_SCALE (scale), digits);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_widget_show (scale);
 
   gtk_table_attach (GTK_TABLE (table), label,
