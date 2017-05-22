@@ -42,12 +42,12 @@ typedef struct _GimpColorScaleClass  GimpColorScaleClass;
 
 struct _GimpColorScale
 {
-  GtkScale  parent_instance;
+  GtkRange  parent_instance;
 };
 
 struct _GimpColorScaleClass
 {
-  GtkScaleClass  parent_class;
+  GtkRangeClass  parent_class;
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
