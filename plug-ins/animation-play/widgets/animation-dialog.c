@@ -79,6 +79,7 @@ struct _AnimationDialogPrivate
   GtkWidget         *upper_bar;
   GtkWidget         *zoomcombo;
   GtkWidget         *refresh;
+  GtkWidget         *export;
 
   GtkWidget         *scrolled_drawing_area;
   GtkWidget         *drawing_area;
@@ -153,6 +154,8 @@ static gboolean    on_dialog_expose                (GtkWidget      *widget,
 static void        update_ui_sensitivity     (AnimationDialog  *dialog);
 
 /* UI callbacks */
+static void        export_callback           (GtkAction        *action,
+                                              AnimationDialog  *dialog);
 static void        close_callback            (GtkAction        *action,
                                               AnimationDialog  *dialog);
 static void        help_callback             (GtkAction        *action,
@@ -633,6 +636,15 @@ animation_dialog_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (priv->upper_bar), priv->zoomcombo, FALSE, FALSE, 0);
   gtk_widget_show (priv->zoomcombo);
 
+  /* Export. */
+  priv->export = GTK_WIDGET (gtk_tool_button_new (NULL, N_("Export the animation")));
+
+  gtk_activatable_set_related_action (GTK_ACTIVATABLE (priv->export),
+                                      gtk_action_group_get_action (priv->various_actions, "export"));
+
+  gtk_box_pack_end (GTK_BOX (priv->upper_bar), priv->export, FALSE, FALSE, 0);
+  gtk_widget_show (priv->export);
+
   /* Refresh. */
   priv->refresh = GTK_WIDGET (gtk_tool_button_new (NULL, N_("Reload the image")));
 
@@ -1055,6 +1067,10 @@ ui_manager_new (AnimationDialog *dialog)
 
   static GtkActionEntry various_entries[] =
   {
+    { "export", GIMP_ICON_DOCUMENT_SAVE,
+      NULL, "<control>e", N_("Export the video"),
+      G_CALLBACK (export_callback) },
+
     { "help", "help-browser",
       N_("About the animation plug-in"), "question", NULL,
       G_CALLBACK (help_callback) },
@@ -1453,6 +1469,15 @@ update_ui_sensitivity (AnimationDialog *dialog)
 }
 
 /**** UI CALLBACKS ****/
+
+static void
+export_callback (GtkAction       *action,
+                 AnimationDialog *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+
+  animation_playback_export (priv->playback);
+}
 
 static void
 close_callback (GtkAction       *action,

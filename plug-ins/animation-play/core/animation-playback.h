@@ -87,4 +87,5 @@ void          animation_playback_set_stop      (AnimationPlayback   *playback,
                                                 gint                 index);
 gint          animation_playback_get_stop      (AnimationPlayback   *playback);
 
+void          animation_playback_export        (AnimationPlayback   *playback);
 #endif  /*  __ANIMATION_PLAYBACK_H__  */

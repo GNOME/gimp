@@ -548,6 +548,46 @@ animation_playback_get_stop (AnimationPlayback *playback)
   return playback->priv->stop;
 }
 
+void
+animation_playback_export (AnimationPlayback *playback)
+{
+  AnimationRenderer *renderer;
+  GeglNode          *graph;
+  GeglNode          *export;
+  GeglNode          *input;
+  gint               duration;
+  gint               i;
+
+  renderer = ANIMATION_RENDERER (playback->priv->renderer);
+  duration = animation_get_duration (playback->priv->animation);
+  graph  = gegl_node_new ();
+  export = gegl_node_new_child (graph,
+                                "operation", "gegl:ff-save",
+                                "path", "bla.ogv",
+                                NULL);
+  input = gegl_node_new_child (graph,
+                               "operation", "gegl:buffer-source",
+                               NULL);
+  gegl_node_set (export, "frame-rate", 24.0, NULL);
+  gegl_node_set (export, "video-bufsize", 0, NULL);
+  gegl_node_set (export, "video-bit-rate", 0, NULL);
+  gegl_node_link_many (input, export, NULL);
+
+  for (i = 0; i < duration; i++)
+    {
+      GeglBuffer *buffer;
+
+      g_signal_emit_by_name (playback->priv->animation, "loading",
+                             (gdouble) i / ((gdouble) duration - 0.999));
+      buffer = animation_renderer_get_buffer (renderer, i);
+      gegl_node_set (input, "buffer", buffer, NULL);
+      gegl_node_process (export);
+      g_object_unref (buffer);
+    }
+  g_object_unref (graph);
+  g_signal_emit_by_name (playback->priv->animation, "loaded");
+}
+
 /************ Private Functions ****************/
 
 static void
