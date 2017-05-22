@@ -74,7 +74,7 @@ struct _GimpColorScales
 
   GtkWidget         *toggles[10];
   GtkWidget         *sliders[10];
-  GtkObject         *slider_data[10];
+  GtkAdjustment     *slider_data[10];
 };
 
 struct _GimpColorScalesClass
@@ -204,7 +204,7 @@ gimp_color_scales_init (GimpColorScales *scales)
                             scales);
         }
 
-      scales->slider_data[i] =
+      scales->slider_data[i] = (GtkAdjustment *)
         gimp_color_scale_entry_new (GTK_TABLE (table), 1, i,
                                     gettext (enum_desc->value_desc),
                                     -1, -1,
@@ -216,7 +216,7 @@ gimp_color_scales_init (GimpColorScales *scales)
                                     gettext (enum_desc->value_help),
                                     NULL);
 
-      gtk_adjustment_configure (GTK_ADJUSTMENT (scales->slider_data[i]),
+      gtk_adjustment_configure (scales->slider_data[i],
                                 slider_initial_vals[i],
                                 spin_min_vals[i],
                                 spin_max_vals[i],
@@ -366,8 +366,7 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
                                            gimp_color_scales_scale_changed,
                                            scales);
 
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (scales->slider_data[i]),
-                                    values[i]);
+          gtk_adjustment_set_value (scales->slider_data[i], values[i]);
 
           g_signal_handlers_unblock_by_func (scales->slider_data[i],
                                              gimp_color_scales_scale_changed,
@@ -410,7 +409,7 @@ gimp_color_scales_scale_changed (GtkAdjustment   *adjustment,
   gint               i;
 
   for (i = 0; i < 10; i++)
-    if (scales->slider_data[i] == GTK_OBJECT (adjustment))
+    if (scales->slider_data[i] == adjustment)
       break;
 
   switch (i)

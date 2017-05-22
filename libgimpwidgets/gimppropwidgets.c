@@ -1296,12 +1296,12 @@ gimp_prop_hscale_new (GObject     *config,
                       gdouble      page_increment,
                       gint         digits)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *scale;
-  GtkObject  *adjustment;
-  gdouble     value;
-  gdouble     lower;
-  gdouble     upper;
+  GParamSpec    *param_spec;
+  GtkWidget     *scale;
+  GtkAdjustment *adjustment;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -1314,8 +1314,9 @@ gimp_prop_hscale_new (GObject     *config,
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 
-  adjustment = gtk_adjustment_new (value, lower, upper,
-                                   step_increment, page_increment, 0.0);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (value, lower, upper,
+                        step_increment, page_increment, 0.0);
 
   scale = g_object_new (GTK_TYPE_SCALE,
                         "orientation", GTK_ORIENTATION_HORIZONTAL,
