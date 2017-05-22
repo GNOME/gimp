@@ -41,8 +41,8 @@
   <url type="homepage">http://www.gimp.org/</url>
   <screenshots>
     <screenshot type="default">
-      <image>http://www.gimp.org/screenshots/linux_mixer.jpg</image>
-      <_caption>Screenshot showing channel mixing and layer editor</_caption>
+      <image>http://www.gimp.org/screenshots/Screenshot-gimp-2.10-photo-editing.jpg</image>
+      <_caption>Photo editing in GIMP</_caption>
     </screenshot>
   </screenshots>
   <update_contact>gimp-developer-list_at_gnome.org</update_contact>
