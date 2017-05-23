@@ -410,10 +410,24 @@ animation_dialog_constructed (GObject *object)
   gint                    preview_width;
   gint                    preview_height;
   gint                    index;
+  gchar                  *icon_path;
+  GdkPixbuf              *pixbuf;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_window_set_role (GTK_WINDOW (dialog), PLUG_IN_ROLE);
+
+  /* Set plugin custom icon. */
+  icon_path = g_build_filename (gimp_data_directory (),
+                                "plug-ins",
+                                PLUG_IN_BINARY,
+                                "icons",
+                                "gimp-motion.png",
+                                NULL);
+  pixbuf = gdk_pixbuf_new_from_file (icon_path, NULL);
+  gtk_window_set_icon (GTK_WINDOW (dialog), pixbuf);
+  g_free (icon_path);
+  g_object_unref (pixbuf);
 
   /* Popup menu */
   g_signal_connect (dialog, "popup-menu",

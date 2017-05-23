@@ -72,3 +72,7 @@ animation_play_SOURCES = \
 	animation-utils.h				\
 	animation-utils.c				\
 	animation-play.c
+
+iconsdir = $(gimpdatadir)/plug-ins/animation-play/icons/
+
+icons_DATA = icons/gimp-motion.png
