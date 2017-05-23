@@ -2196,6 +2196,26 @@ if test "x$with_xvfb_run" != "xno"; then
 fi
 AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$have_xvfb_run" = "xyes")
 
+##########################
+# Check for appstream-util
+##########################
+
+AC_ARG_WITH(appdata-test,  [  --without-appdata-test  do not validate the appdata file])
+
+have_appstream_util="no (disabled)"
+if test "x$with_appdata_test" != "xno"; then
+  AC_PATH_PROG(APPSTREAM_UTIL, appstream-util, no)
+  if test "x$APPSTREAM_UTIL" != "xno"; then
+    have_appstream_util="yes"
+  else
+    have_appstream_util="no (appstream-util not found)"
+  fi
+fi
+AM_CONDITIONAL(HAVE_APPSTREAM_UTIL, test "x$have_appstream_util" = "xyes")
+if test "x$have_appstream_util" = "xyes"; then
+  have_appstream_util="yes (this test requires network access; --without-appdata-test to disable)"
+fi
+
 
 ######################################
 # Checks for gtk-doc and docbook-tools
@@ -2656,6 +2676,7 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
+  Test appdata         $have_appstream_util
 $have_recommended_xgettext$have_recommended_fontconfig$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking"
 
 if test "x$required_deps" = "x"; then
