@@ -342,13 +342,13 @@ static HMODULE libgimpbase_dll = NULL;
 
 BOOL WINAPI /* Avoid silly "no previous prototype" gcc warning */
 DllMain (HINSTANCE hinstDLL,
-	 DWORD     fdwReason,
-	 LPVOID    lpvReserved);
+         DWORD     fdwReason,
+         LPVOID    lpvReserved);
 
 BOOL WINAPI
 DllMain (HINSTANCE hinstDLL,
-	 DWORD     fdwReason,
-	 LPVOID    lpvReserved)
+         DWORD     fdwReason,
+         LPVOID    lpvReserved)
 {
   switch (fdwReason)
     {
