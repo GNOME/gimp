@@ -82,16 +82,16 @@ gen_sources = xgen-pec
 CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
 xgen-pec: $(srcdir)/plug-in-enums.h $(GIMP_MKENUMS) Makefile.am
-	$(AM_V_GEN) (cd $(srcdir) && $(GIMP_MKENUMS) \
+	$(AM_V_GEN) $(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"plug-in-enums.h\"\n#include \"gimp-intl.h\"" \
-		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--fprod "\n/* enumerations from \"@basename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 		--vtail "    { 0, NULL, NULL }\n  };\n" \
 		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ }," \
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
-		plug-in-enums.h) > $@
+		$< > $@
 
 $(srcdir)/plug-in-enums.c: xgen-pec
 	$(AM_V_GEN) if ! cmp -s $< $@; then \

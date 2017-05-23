@@ -9,6 +9,7 @@
 # value is by default put into the N_() macro. 
 
 use Text::ParseWords;
+use File::Basename;
 
 # gimp-mkenums
 # Information about the current enumeration
@@ -178,6 +179,7 @@ sub usage {
     print STDERR "  \@Type\@                     either Enum or Flags\n";
     print STDERR "  \@TYPE\@                     either ENUM or FLAGS\n";
     print STDERR "  \@filename\@                 name of current input file\n";
+    print STDERR "  \@basename\@                 basename of current input file\n";
     exit 0;
 }
 
@@ -228,6 +230,7 @@ if (length($fhead)) {
     my $prod = $fhead;
 
     $prod =~ s/\@filename\@/$ARGV[0]/g;
+    $prod =~ s/\@basename\@/basename($ARGV[0])/ge;
     $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
     $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
 		
@@ -376,6 +379,7 @@ while (<>) {
 		my $prod = $fprod;
 
 		$prod =~ s/\@filename\@/$ARGV/g;
+                $prod =~ s/\@basename\@/basename($ARGV)/ge;
 		$prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
 		$prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
 		
@@ -516,6 +520,7 @@ if (length($ftail)) {
     my $prod = $ftail;
 
     $prod =~ s/\@filename\@/$ARGV/g;
+    $prod =~ s/\@basename\@/basename($ARGV)/ge;
     $prod =~ s/\\a/\a/g; $prod =~ s/\\b/\b/g; $prod =~ s/\\t/\t/g; $prod =~ s/\\n/\n/g;
     $prod =~ s/\\f/\f/g; $prod =~ s/\\r/\r/g;
 		
