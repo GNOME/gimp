@@ -12,7 +12,6 @@ scripts = \
 	palette-sort.py		\
 	palette-to-gradient.py	\
 	py-slice.py		\
-	python-console.py	\
 	python-eval.py
 
 test_scripts = \
@@ -24,6 +23,10 @@ test_scripts = \
 
 pluginexec_SCRIPTS = $(scripts)
 
-pluginexec_DATA = pyconsole.py
+# python-console has a data file.
+# Therefore let's move it to its own sub-directory.
+pythonconsoledir = $(gimpplugindir)/plug-ins/python-console
+pythonconsole_SCRIPTS = python-console.py
+dist_pythonconsole_DATA = pyconsole.py
 
-EXTRA_DIST = $(pluginexec_DATA) $(scripts) $(test_scripts)
+EXTRA_DIST = $(scripts) $(test_scripts)
