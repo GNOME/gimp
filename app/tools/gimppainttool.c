@@ -24,7 +24,6 @@
 #include "libgimpmath/gimpmath.h"
 
 #include "tools-types.h"
-#include "core/gimp.h"
 
 #include "config/gimpdisplayconfig.h"
 
@@ -258,7 +257,6 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   GimpCoords        curr_coords;
   gint              off_x, off_y;
   GError           *error = NULL;
-  GList            *list;
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
@@ -366,14 +364,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
     }
 
   gimp_projection_flush_now (gimp_image_get_projection (image));
-
-  /* Update all views this image is in. */
-  for (list = gimp_get_display_iter (image->gimp);
-       list;
-       list = g_list_next (list))
-    {
-      gimp_display_flush_now (GIMP_DISPLAY (list->data));
-    }
+  gimp_display_flush_now (display);
 
   gimp_draw_tool_start (draw_tool, display);
 }
@@ -438,7 +429,6 @@ gimp_paint_tool_motion (GimpTool         *tool,
   GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
   GimpCoords        curr_coords;
   gint              off_x, off_y;
-  GList            *list;
 
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
@@ -467,14 +457,7 @@ gimp_paint_tool_motion (GimpTool         *tool,
                                &curr_coords, time);
 
   gimp_projection_flush_now (gimp_image_get_projection (image));
-
-  /* Update all views this image is in. */
-  for (list = gimp_get_display_iter (image->gimp);
-       list;
-       list = g_list_next (list))
-    {
-      gimp_display_flush_now (GIMP_DISPLAY (list->data));
-    }
+  gimp_display_flush_now (display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
