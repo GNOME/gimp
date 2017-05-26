@@ -258,84 +258,98 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                                           G_FILE_ATTRIBUTE_TIME_MODIFIED,
                                           G_FILE_QUERY_INFO_NONE,
                                           NULL, NULL);
-
   if (enumerator)
     {
       GFileInfo *info;
 
       while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
         {
-         if (! g_file_info_get_is_hidden (info))
+          GFile *child;
+
+          if (g_file_info_get_is_hidden (info))
             {
-              GFile *child = g_file_enumerator_get_child (enumerator, info);
-
-              if (gimp_file_is_executable (child))
-                {
-                  guint64 mtime;
-
-                  mtime = g_file_info_get_attribute_uint64 (info,
-                                                            G_FILE_ATTRIBUTE_TIME_MODIFIED);
-
-                  gimp_plug_in_manager_add_from_file (manager, child, mtime);
-                }
-              else if (g_file_query_file_type (child,
-                                               G_FILE_CREATE_NONE,
-                                               NULL) == G_FILE_TYPE_DIRECTORY)
-                {
-                  /* Search in subdirectory the first executable file with the
-                   * same name as the directory (except extension).
-                   * We don't search recursively, but only at a single level
-                   * and assume that there can be only 1 plugin inside a
-                   * directory.
-                   */
-                  GFileEnumerator *enumerator2;
-
-                  enumerator2 = g_file_enumerate_children (child,
-                                                           G_FILE_ATTRIBUTE_STANDARD_NAME ","
-                                                           G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
-                                                           G_FILE_ATTRIBUTE_TIME_MODIFIED,
-                                                           G_FILE_QUERY_INFO_NONE,
-                                                           NULL, NULL);
-                  if (enumerator2)
-                    {
-                      GFileInfo *info2;
-
-                      while ((info2 = g_file_enumerator_next_file (enumerator2, NULL, NULL)))
-                        {
-                          if (! g_file_info_get_is_hidden (info2))
-                            {
-                              GFile *child2;
-                              gchar *file_name;
-                              char  *ext;
-
-                              child2 = g_file_enumerator_get_child (enumerator2, info2);
-                              file_name = g_strdup (g_file_info_get_name (info2));
-                              ext = strrchr (file_name, '.');
-                              if (ext)
-                                *ext = '\0';
-                              if (g_strcmp0 (file_name, g_file_info_get_name (info)) == 0 &&
-                                  gimp_file_is_executable (child2))
-                                {
-                                  guint64 mtime;
-
-                                  mtime = g_file_info_get_attribute_uint64 (info2,
-                                                                            G_FILE_ATTRIBUTE_TIME_MODIFIED);
-
-                                  gimp_plug_in_manager_add_from_file (manager, child2, mtime);
-                                  break;
-                                }
-                              g_object_unref (child2);
-                              g_free (file_name);
-                            }
-                          g_object_unref (info2);
-                        }
-                    }
-                  g_object_unref (enumerator2);
-                }
-
-              g_object_unref (child);
+              g_object_unref (info);
+              continue;
             }
 
+          child = g_file_enumerator_get_child (enumerator, info);
+
+          if (gimp_file_is_executable (child))
+            {
+              guint64 mtime;
+
+              mtime = g_file_info_get_attribute_uint64 (info,
+                                                        G_FILE_ATTRIBUTE_TIME_MODIFIED);
+
+              gimp_plug_in_manager_add_from_file (manager, child, mtime);
+            }
+          else if (g_file_query_file_type (child,
+                                           G_FILE_CREATE_NONE,
+                                           NULL) == G_FILE_TYPE_DIRECTORY)
+            {
+              /* Search in subdirectory the first executable file with
+               * the same name as the directory (except extension).
+               * We don't search recursively, but only at a single
+               * level and assume that there can be only 1 plugin
+               * inside a directory.
+               */
+              GFileEnumerator *enumerator2;
+
+              enumerator2 = g_file_enumerate_children (child,
+                                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                                       G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                                       G_FILE_QUERY_INFO_NONE,
+                                                       NULL, NULL);
+              if (enumerator2)
+                {
+                  GFileInfo *info2;
+
+                  while ((info2 = g_file_enumerator_next_file (enumerator2, NULL, NULL)))
+                    {
+                      GFile *child2;
+                      gchar *file_name;
+                      char  *ext;
+
+                      if (g_file_info_get_is_hidden (info2))
+                        {
+                          g_object_unref (info2);
+                          continue;
+                        }
+
+                      child2 = g_file_enumerator_get_child (enumerator2, info2);
+                      file_name = g_strdup (g_file_info_get_name (info2));
+
+                      ext = strrchr (file_name, '.');
+                      if (ext)
+                        *ext = '\0';
+
+                      if (g_strcmp0 (file_name, g_file_info_get_name (info)) == 0 &&
+                          gimp_file_is_executable (child2))
+                        {
+                          guint64 mtime;
+
+                          mtime = g_file_info_get_attribute_uint64 (info2,
+                                                                    G_FILE_ATTRIBUTE_TIME_MODIFIED);
+
+                          gimp_plug_in_manager_add_from_file (manager, child2, mtime);
+
+                          g_free (file_name);
+                          g_object_unref (child2);
+                          g_object_unref (info2);
+                          break;
+                        }
+
+                      g_free (file_name);
+                      g_object_unref (child2);
+                      g_object_unref (info2);
+                    }
+
+                  g_object_unref (enumerator2);
+                }
+            }
+
+          g_object_unref (child);
           g_object_unref (info);
         }
 
