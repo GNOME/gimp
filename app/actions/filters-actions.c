@@ -307,6 +307,21 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:image-gradient",
     GIMP_HELP_FILTER_IMAGE_GRADIENT },
 
+  { "filters-invert-linear", GIMP_ICON_INVERT,
+    NC_("filters-action", "_Linear Invert"), NULL, NULL,
+    "gegl:invert-linear",
+    GIMP_HELP_FILTER_INVERT_LINEAR },
+
+  { "filters-invert-perceptual", GIMP_ICON_INVERT,
+    NC_("filters-action", "In_vert"), NULL, NULL,
+    "gegl:invert-gamma",
+    GIMP_HELP_FILTER_INVERT_PERCEPTUAL },
+
+  { "filters-invert-value", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Value Invert"), NULL, NULL,
+    "gegl:value-invert",
+    GIMP_HELP_FILTER_INVERT_VALUE },
+
   { "filters-kaleidoscope", GIMP_ICON_GEGL,
     NC_("filters-action", "_Kaleidoscope..."), NULL, NULL,
     "gegl:mirrors",
@@ -755,6 +770,9 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-high-pass",               writable);
   SET_SENSITIVE ("filters-hue-chroma",              writable);
   SET_SENSITIVE ("filters-illusion",                writable);
+  SET_SENSITIVE ("filters-invert-linear",           writable);
+  SET_SENSITIVE ("filters-invert-perceptual",       writable);
+  SET_SENSITIVE ("filters-invert-value",            writable);
   SET_SENSITIVE ("filters-image-gradient",          writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);

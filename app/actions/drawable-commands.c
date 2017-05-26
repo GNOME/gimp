@@ -71,55 +71,6 @@ drawable_equalize_cmd_callback (GtkAction *action,
 }
 
 void
-drawable_invert_cmd_callback (GtkAction *action,
-                              gpointer   data)
-{
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GimpDisplay  *display;
-  return_if_no_drawable (image, drawable, data);
-  return_if_no_display (display, data);
-
-  gimp_drawable_apply_operation_by_name (drawable, GIMP_PROGRESS (display),
-                                         _("Invert"), "gegl:invert-gamma",
-                                         NULL);
-  gimp_image_flush (image);
-}
-
-void
-drawable_linear_invert_cmd_callback (GtkAction *action,
-                                     gpointer   data)
-{
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GimpDisplay  *display;
-  return_if_no_drawable (image, drawable, data);
-  return_if_no_display (display, data);
-
-  gimp_drawable_apply_operation_by_name (drawable, GIMP_PROGRESS (display),
-                                         _("Linear Invert"), "gegl:invert-linear",
-                                         NULL);
-  gimp_image_flush (image);
-}
-
-
-void
-drawable_value_invert_cmd_callback (GtkAction *action,
-                                    gpointer   data)
-{
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GimpDisplay  *display;
-  return_if_no_drawable (image, drawable, data);
-  return_if_no_display (display, data);
-
-  gimp_drawable_apply_operation_by_name (drawable, GIMP_PROGRESS (display),
-                                         _("Value Invert"), "gegl:value-invert",
-                                         NULL);
-  gimp_image_flush (image);
-}
-
-void
 drawable_levels_stretch_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {

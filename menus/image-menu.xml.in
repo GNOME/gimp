@@ -567,9 +567,9 @@
       <menuitem action="tools-curves" />
       <separator />
       <placeholder name="Invert">
-        <menuitem action="drawable-invert" />
-        <menuitem action="drawable-linear-invert" />
-        <menuitem action="drawable-value-invert" />
+        <menuitem action="filters-invert-perceptual" />
+        <menuitem action="filters-invert-linear" />
+        <menuitem action="filters-invert-value" />
       </placeholder>
       <separator />
       <menu action="colors-auto-menu" name="Auto">
