@@ -141,8 +141,8 @@ animation_renderer_init (AnimationRenderer *renderer)
   renderer->priv->cache_table = g_hash_table_new_full (g_str_hash, g_str_equal,
                                                        (GDestroyNotify) g_free,
                                                        (GDestroyNotify) g_weak_ref_clear);
-  renderer->priv->queue = g_async_queue_new_full ((GDestroyNotify) g_weak_ref_clear);
-  renderer->priv->ack_queue = g_async_queue_new_full ((GDestroyNotify) g_weak_ref_clear);
+  renderer->priv->queue = g_async_queue_new ();
+  renderer->priv->ack_queue = g_async_queue_new ();
 }
 
 static void
