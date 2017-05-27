@@ -559,12 +559,23 @@ gboolean
 gimp_scanner_parse_float (GScanner *scanner,
                           gdouble  *dest)
 {
+  gboolean negate = FALSE;
+
+  if (g_scanner_peek_next_token (scanner) == '-')
+    {
+      negate = TRUE;
+      g_scanner_get_next_token (scanner);
+    }
+
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_FLOAT)
     return FALSE;
 
   g_scanner_get_next_token (scanner);
 
-  *dest = scanner->value.v_float;
+  if (negate)
+    *dest = -scanner->value.v_float;
+  else
+    *dest = scanner->value.v_float;
 
   return TRUE;
 }
