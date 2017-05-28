@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-21 17:39+0200\n"
-"PO-Revision-Date: 2017-05-21 17:40+0200\n"
+"POT-Creation-Date: 2017-05-28 17:22+0200\n"
+"PO-Revision-Date: 2017-05-28 17:23+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -71,15 +71,19 @@ msgid ""
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and OS X."
 msgstr ""
-"Program GIMP jest wysoce rozszerzalny. Za pomocą wtyczek i rozszerzeń można "
-"osiągnąć niemalże wszystko. Zaawansowany interfejs skryptów umożliwia łatwe "
+"GIMP jest wysoce rozszerzalny. Za pomocą wtyczek i rozszerzeń można osiągnąć "
+"niemalże wszystko. Zaawansowany interfejs skryptów umożliwia łatwe "
 "automatyzowanie wszystkich działań, od najprostszych zadań do złożonych "
-"procedur manipulacji obrazami. Program GIMP jest dostępny dla systemów "
-"Linux, Microsoft Windows i OS X."
+"procedur manipulacji obrazami. GIMP jest dostępny dla systemów Linux, "
+"Microsoft Windows i OS X."
 
 #: ../desktop/gimp.appdata.xml.in.h:6
-msgid "Screenshot showing channel mixing and layer editor"
-msgstr "Miksowanie kanałów i edytor warstw"
+msgid "Painting in GIMP"
+msgstr "Malowanie w GIMP-ie"
+
+#: ../desktop/gimp.appdata.xml.in.h:7
+msgid "Photo editing in GIMP"
+msgstr "Obróbka zdjęć w GIMP-ie"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -1985,186 +1989,144 @@ msgstr "Automatycznie powiększa kontrast"
 
 #: ../app/actions/drawable-actions.c:51
 msgctxt "drawable-action"
-msgid "In_vert"
-msgstr "Od_wróć"
-
-#: ../app/actions/drawable-actions.c:52
-msgctxt "drawable-action"
-msgid "Invert the colors perceptually"
-msgstr "Odwraca kolory percepcyjnie"
-
-#: ../app/actions/drawable-actions.c:57
-msgctxt "drawable-action"
-msgid "_Linear Invert"
-msgstr "Odwróć _liniowo"
-
-#: ../app/actions/drawable-actions.c:58
-msgctxt "drawable-action"
-msgid "Invert the colors in linear light"
-msgstr "Odwraca kolory w świetle liniowym"
-
-#: ../app/actions/drawable-actions.c:63
-msgctxt "drawable-action"
-msgid "_Value Invert"
-msgstr "Od_wróć wartości"
-
-#: ../app/actions/drawable-actions.c:65
-msgctxt "drawable-action"
-msgid "Invert the brightness of each pixel, keeping the color"
-msgstr "Odwraca jasność każdego piksela, nie zmieniając koloru"
-
-#: ../app/actions/drawable-actions.c:70
-msgctxt "drawable-action"
 msgid "_White Balance"
 msgstr "_Balans bieli"
 
-#: ../app/actions/drawable-actions.c:71
+#: ../app/actions/drawable-actions.c:52
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
 msgstr "Automatyczna korekcja balansu bieli"
 
-#: ../app/actions/drawable-actions.c:76
+#: ../app/actions/drawable-actions.c:57
 msgctxt "drawable-action"
 msgid "_Dilate"
 msgstr "_Rozciągaj"
 
-#: ../app/actions/drawable-actions.c:77
+#: ../app/actions/drawable-actions.c:58
 msgctxt "drawable-action"
 msgid "Grow lighter areas of the image"
 msgstr "Powiększa jaśniejsze obszary obrazu"
 
-#: ../app/actions/drawable-actions.c:82
+#: ../app/actions/drawable-actions.c:63
 msgctxt "drawable-action"
 msgid "E_rode"
 msgstr "E_rozja"
 
-#: ../app/actions/drawable-actions.c:83
+#: ../app/actions/drawable-actions.c:64
 msgctxt "drawable-action"
 msgid "Grow darker areas of the image"
 msgstr "Powiększa ciemniejsze obszary obrazu"
 
-#: ../app/actions/drawable-actions.c:88
+#: ../app/actions/drawable-actions.c:69
 msgctxt "drawable-action"
 msgid "_Offset..."
 msgstr "_Przesunięcie…"
 
-#: ../app/actions/drawable-actions.c:90
+#: ../app/actions/drawable-actions.c:71
 msgctxt "drawable-action"
 msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "Przesuwa piksele, opcjonalnie otaczając je obramowaniami"
 
-#: ../app/actions/drawable-actions.c:98
+#: ../app/actions/drawable-actions.c:79
 msgctxt "drawable-action"
 msgid "_Visible"
 msgstr "_Widoczne"
 
-#: ../app/actions/drawable-actions.c:99
+#: ../app/actions/drawable-actions.c:80
 msgctxt "drawable-action"
 msgid "Toggle visibility"
 msgstr "Przełącza widoczność"
 
-#: ../app/actions/drawable-actions.c:105
+#: ../app/actions/drawable-actions.c:86
 msgctxt "drawable-action"
 msgid "_Linked"
 msgstr "_Dowiązane"
 
-#: ../app/actions/drawable-actions.c:106
+#: ../app/actions/drawable-actions.c:87
 msgctxt "drawable-action"
 msgid "Toggle the linked state"
 msgstr "Przełącza stan dowiązania"
 
 #. GIMP_ICON_LOCK
-#: ../app/actions/drawable-actions.c:112
+#: ../app/actions/drawable-actions.c:93
 msgctxt "drawable-action"
 msgid "L_ock pixels"
 msgstr "Zab_lokuj piksele"
 
-#: ../app/actions/drawable-actions.c:114
+#: ../app/actions/drawable-actions.c:95
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
 msgstr "Zabezpiecza piksele przed modyfikacją"
 
-#: ../app/actions/drawable-actions.c:120
+#: ../app/actions/drawable-actions.c:101
 msgctxt "drawable-action"
 msgid "L_ock position of channel"
 msgstr "Za_blokuj położenie kanału"
 
-#: ../app/actions/drawable-actions.c:122
+#: ../app/actions/drawable-actions.c:103
 msgctxt "drawable-action"
 msgid "Keep the position on this drawable from being modified"
 msgstr "Zabezpiecza położenie przed modyfikacją"
 
-#: ../app/actions/drawable-actions.c:131
+#: ../app/actions/drawable-actions.c:112
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
 msgstr "Odbij po_ziomo"
 
-#: ../app/actions/drawable-actions.c:132
+#: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
 msgstr "Odbija obszar rysowania poziomo"
 
-#: ../app/actions/drawable-actions.c:137
+#: ../app/actions/drawable-actions.c:118
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
 msgstr "Odbij p_ionowo"
 
-#: ../app/actions/drawable-actions.c:138
+#: ../app/actions/drawable-actions.c:119
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
 msgstr "Odbija obszar rysowania pionowo"
 
-#: ../app/actions/drawable-actions.c:146
+#: ../app/actions/drawable-actions.c:127
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Obróć o 90° w _prawo"
 
-#: ../app/actions/drawable-actions.c:147
+#: ../app/actions/drawable-actions.c:128
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
 msgstr "Obraca obszar rysowania o 90 stopni w prawo"
 
-#: ../app/actions/drawable-actions.c:152
+#: ../app/actions/drawable-actions.c:133
 msgctxt "drawable-action"
 msgid "Rotate _180°"
 msgstr "Obróć o _180°"
 
-#: ../app/actions/drawable-actions.c:153
+#: ../app/actions/drawable-actions.c:134
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
 msgstr "Odwraca obszar rysowania do góry nogami"
 
-#: ../app/actions/drawable-actions.c:158
+#: ../app/actions/drawable-actions.c:139
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Obróć o 90° w _lewo"
 
-#: ../app/actions/drawable-actions.c:159
+#: ../app/actions/drawable-actions.c:140
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
 msgstr "Obraca obszar rysowania o 90 stopni w lewo"
 
-#: ../app/actions/drawable-commands.c:84 ../app/pdb/color-cmds.c:388
-msgid "Invert"
-msgstr "Odwrócenie"
-
-#: ../app/actions/drawable-commands.c:100
-msgid "Linear Invert"
-msgstr "Odwrócenie liniowe"
-
-#: ../app/actions/drawable-commands.c:117
-msgid "Value Invert"
-msgstr "Odwrócenie wartości"
-
-#: ../app/actions/drawable-commands.c:138
+#: ../app/actions/drawable-commands.c:89
 msgid "White Balance operates only on RGB color layers."
 msgstr "Bilans bieli możliwy jest tylko na warstwach RGB."
 
-#: ../app/actions/drawable-commands.c:173
+#: ../app/actions/drawable-commands.c:124
 msgid "Dilate"
 msgstr "Rozciągaj"
 
-#: ../app/actions/drawable-commands.c:205
+#: ../app/actions/drawable-commands.c:156
 msgid "Erode"
 msgstr "Erozja"
 
@@ -3244,324 +3206,339 @@ msgstr "_Gradient obrazu…"
 
 #: ../app/actions/filters-actions.c:311
 msgctxt "filters-action"
+msgid "_Linear Invert"
+msgstr "Odwróć _liniowo"
+
+#: ../app/actions/filters-actions.c:316
+msgctxt "filters-action"
+msgid "In_vert"
+msgstr "Od_wróć"
+
+#: ../app/actions/filters-actions.c:321
+msgctxt "filters-action"
+msgid "_Value Invert"
+msgstr "Od_wróć wartości"
+
+#: ../app/actions/filters-actions.c:326
+msgctxt "filters-action"
 msgid "_Kaleidoscope..."
 msgstr "_Kalejdoskop…"
 
-#: ../app/actions/filters-actions.c:316
+#: ../app/actions/filters-actions.c:331
 msgctxt "filters-action"
 msgid "Lens Distortion..."
 msgstr "Zniekształcenie soczewki…"
 
-#: ../app/actions/filters-actions.c:321
+#: ../app/actions/filters-actions.c:336
 msgctxt "filters-action"
 msgid "Lens Flare..."
 msgstr "Błysk soczewki…"
 
-#: ../app/actions/filters-actions.c:326
+#: ../app/actions/filters-actions.c:341
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
 msgstr "_Mantiuk 2006…"
 
-#: ../app/actions/filters-actions.c:331
+#: ../app/actions/filters-actions.c:346
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Labirynt…"
 
-#: ../app/actions/filters-actions.c:336
+#: ../app/actions/filters-actions.c:351
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
 msgstr "_Mikser monochromatyczny…"
 
-#: ../app/actions/filters-actions.c:341
+#: ../app/actions/filters-actions.c:356
 msgctxt "filters-action"
 msgid "_Mosaic..."
 msgstr "_Mozaika…"
 
-#: ../app/actions/filters-actions.c:346
+#: ../app/actions/filters-actions.c:361
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
 msgstr "_Koliste rozmycie ruchu…"
 
-#: ../app/actions/filters-actions.c:351
+#: ../app/actions/filters-actions.c:366
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
 msgstr "_Liniowe rozmycie ruchu…"
 
-#: ../app/actions/filters-actions.c:356
+#: ../app/actions/filters-actions.c:371
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
 msgstr "_Rozmycie ruchu powiększenia…"
 
-#: ../app/actions/filters-actions.c:361
+#: ../app/actions/filters-actions.c:376
 msgctxt "filters-action"
 msgid "_Cell Noise..."
 msgstr "Szum _komórkowy…"
 
-#: ../app/actions/filters-actions.c:366
+#: ../app/actions/filters-actions.c:381
 msgctxt "filters-action"
 msgid "CIE lch Noise..."
 msgstr "Szum lch CIE…"
 
-#: ../app/actions/filters-actions.c:371
+#: ../app/actions/filters-actions.c:386
 msgctxt "filters-action"
 msgid "HSV Noise..."
 msgstr "Szum HSV…"
 
-#: ../app/actions/filters-actions.c:376
+#: ../app/actions/filters-actions.c:391
 msgctxt "filters-action"
 msgid "_Hurl..."
 msgstr "_Wygnieć…"
 
-#: ../app/actions/filters-actions.c:381
+#: ../app/actions/filters-actions.c:396
 msgctxt "filters-action"
 msgid "_Perlin Noise..."
 msgstr "Szum _Perlina…"
 
-#: ../app/actions/filters-actions.c:386
+#: ../app/actions/filters-actions.c:401
 msgctxt "filters-action"
 msgid "_Pick..."
 msgstr "_Wyciosaj…"
 
-#: ../app/actions/filters-actions.c:391
+#: ../app/actions/filters-actions.c:406
 msgctxt "filters-action"
 msgid "_RGB Noise..."
 msgstr "Szum _RGB…"
 
-#: ../app/actions/filters-actions.c:396
+#: ../app/actions/filters-actions.c:411
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
 msgstr "R_edukcja szumu…"
 
-#: ../app/actions/filters-actions.c:401
+#: ../app/actions/filters-actions.c:416
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
 msgstr "_Szum Simplex…"
 
-#: ../app/actions/filters-actions.c:406
+#: ../app/actions/filters-actions.c:421
 msgctxt "filters-action"
 msgid "_Slur..."
 msgstr "_Rozszarp…"
 
-#: ../app/actions/filters-actions.c:411
+#: ../app/actions/filters-actions.c:426
 msgctxt "filters-action"
 msgid "_Solid Noise..."
 msgstr "_Jednolity szum…"
 
-#: ../app/actions/filters-actions.c:416
+#: ../app/actions/filters-actions.c:431
 msgctxt "filters-action"
 msgid "Sp_read..."
 msgstr "_Rozrzuć…"
 
-#: ../app/actions/filters-actions.c:421
+#: ../app/actions/filters-actions.c:436
 msgctxt "filters-action"
 msgid "Oili_fy..."
 msgstr "Farba _olejna…"
 
-#: ../app/actions/filters-actions.c:426
+#: ../app/actions/filters-actions.c:441
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
 msgstr "_Rzut panoramy…"
 
-#: ../app/actions/filters-actions.c:431
+#: ../app/actions/filters-actions.c:446
 msgctxt "filters-action"
 msgid "_Photocopy..."
 msgstr "_Fotokopia…"
 
-#: ../app/actions/filters-actions.c:436
+#: ../app/actions/filters-actions.c:451
 msgctxt "filters-action"
 msgid "_Pixelize..."
 msgstr "_Pikselizuj…"
 
-#: ../app/actions/filters-actions.c:441
+#: ../app/actions/filters-actions.c:456
 msgctxt "filters-action"
 msgid "_Plasma..."
 msgstr "_Plazma…"
 
-#: ../app/actions/filters-actions.c:446
+#: ../app/actions/filters-actions.c:461
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
 msgstr "Współrzędne p_olarne…"
 
-#: ../app/actions/filters-actions.c:451
+#: ../app/actions/filters-actions.c:466
 msgctxt "filters-action"
 msgid "_Posterize..."
 msgstr "_Redukcja kolorów…"
 
-#: ../app/actions/filters-actions.c:456
+#: ../app/actions/filters-actions.c:471
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
 msgstr "Usuwanie efektu _czerwonych oczu…"
 
-#: ../app/actions/filters-actions.c:461
+#: ../app/actions/filters-actions.c:476
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005…"
 
-#: ../app/actions/filters-actions.c:466
+#: ../app/actions/filters-actions.c:481
 msgctxt "filters-action"
 msgid "RGB _Clip..."
 msgstr "Przy_cięcie RGB…"
 
-#: ../app/actions/filters-actions.c:471
+#: ../app/actions/filters-actions.c:486
 msgctxt "filters-action"
 msgid "_Ripple..."
 msgstr "_Falowanie…"
 
-#: ../app/actions/filters-actions.c:476
+#: ../app/actions/filters-actions.c:491
 msgctxt "filters-action"
 msgid "Sat_uration..."
 msgstr "_Nasycenie…"
 
-#: ../app/actions/filters-actions.c:481
+#: ../app/actions/filters-actions.c:496
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
 msgstr "Pół_spłaszczenie…"
 
-#: ../app/actions/filters-actions.c:486
+#: ../app/actions/filters-actions.c:501
 msgctxt "filters-action"
 msgid "_Sepia..."
 msgstr "_Sepia…"
 
-#: ../app/actions/filters-actions.c:491
+#: ../app/actions/filters-actions.c:506
 msgctxt "filters-action"
 msgid "_Shift..."
 msgstr "_Przesuń…"
 
-#: ../app/actions/filters-actions.c:496
+#: ../app/actions/filters-actions.c:511
 msgctxt "filters-action"
 msgid "_Sinus..."
 msgstr "_Sinus…"
 
-#: ../app/actions/filters-actions.c:501
+#: ../app/actions/filters-actions.c:516
 msgctxt "filters-action"
 msgid "_Simple Linear Iterative Clustering..."
 msgstr "_SLIC…"
 
-#: ../app/actions/filters-actions.c:506
+#: ../app/actions/filters-actions.c:521
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
 msgstr "_Symetryczni najbliżsi sąsiedzi…"
 
-#: ../app/actions/filters-actions.c:511
+#: ../app/actions/filters-actions.c:526
 msgctxt "filters-action"
 msgid "_Softglow..."
 msgstr "_Lekki żar…"
 
-#: ../app/actions/filters-actions.c:516
+#: ../app/actions/filters-actions.c:531
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Rozciągnij kontrast…"
 
-#: ../app/actions/filters-actions.c:521
+#: ../app/actions/filters-actions.c:536
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV..."
 msgstr "_Rozciągnij kontrast HSV…"
 
-#: ../app/actions/filters-actions.c:526
+#: ../app/actions/filters-actions.c:541
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_STRESS…"
 
-#: ../app/actions/filters-actions.c:531
+#: ../app/actions/filters-actions.c:546
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nowa…"
 
-#: ../app/actions/filters-actions.c:536
+#: ../app/actions/filters-actions.c:551
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Próg alfy…"
 
-#: ../app/actions/filters-actions.c:541
+#: ../app/actions/filters-actions.c:556
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Szklane płytki…"
 
-#: ../app/actions/filters-actions.c:546
+#: ../app/actions/filters-actions.c:561
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Kawałki papieru…"
 
-#: ../app/actions/filters-actions.c:551
+#: ../app/actions/filters-actions.c:566
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Bezszwowe kafelki…"
 
-#: ../app/actions/filters-actions.c:556
+#: ../app/actions/filters-actions.c:571
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Maska wyostrzająca…"
 
-#: ../app/actions/filters-actions.c:561
+#: ../app/actions/filters-actions.c:576
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Rozprowadzanie _wartości…"
 
-#: ../app/actions/filters-actions.c:566
+#: ../app/actions/filters-actions.c:581
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradacja wideo…"
 
-#: ../app/actions/filters-actions.c:571
+#: ../app/actions/filters-actions.c:586
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Winieta…"
 
-#: ../app/actions/filters-actions.c:576
+#: ../app/actions/filters-actions.c:591
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Piksele wody…"
 
-#: ../app/actions/filters-actions.c:581
+#: ../app/actions/filters-actions.c:596
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Fale…"
 
-#: ../app/actions/filters-actions.c:586
+#: ../app/actions/filters-actions.c:601
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "S_kręć i zaciśnij…"
 
-#: ../app/actions/filters-actions.c:591
+#: ../app/actions/filters-actions.c:606
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_iatr…"
 
-#: ../app/actions/filters-actions.c:599
+#: ../app/actions/filters-actions.c:614
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:601
+#: ../app/actions/filters-actions.c:616
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Uruchamia ponownie ostatnio używany filtr z tymi samymi ustawieniami"
 
-#: ../app/actions/filters-actions.c:606
+#: ../app/actions/filters-actions.c:621
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Wyświetl ponownie ostatni"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Wyświetla jeszcze raz okno ostatnio używanego filtru"
 
-#: ../app/actions/filters-actions.c:892
+#: ../app/actions/filters-actions.c:910
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz „%s”"
 
-#: ../app/actions/filters-actions.c:893
+#: ../app/actions/filters-actions.c:911
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl „%s” ponownie"
 
-#: ../app/actions/filters-actions.c:931
+#: ../app/actions/filters-actions.c:949
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:933
+#: ../app/actions/filters-actions.c:951
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -15622,6 +15599,10 @@ msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Desaturacja"
 
+#: ../app/pdb/color-cmds.c:388
+msgid "Invert"
+msgstr "Odwrócenie"
+
 #: ../app/pdb/color-cmds.c:435 ../app/pdb/color-cmds.c:483
 #: ../app/pdb/drawable-color-cmds.c:235 ../app/pdb/drawable-color-cmds.c:283
 msgctxt "undo-type"
@@ -16531,19 +16512,19 @@ msgstr "Nieznany typ pliku"
 msgid "Searching plug-ins"
 msgstr "Wyszukiwanie wtyczek"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:327
+#: ../app/plug-in/gimppluginmanager-restore.c:395
 msgid "Resource configuration"
 msgstr "Konfiguracja zasobów"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:363
+#: ../app/plug-in/gimppluginmanager-restore.c:431
 msgid "Querying new Plug-ins"
 msgstr "Odpytywanie nowych wtyczek"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:414
+#: ../app/plug-in/gimppluginmanager-restore.c:482
 msgid "Initializing Plug-ins"
 msgstr "Inicjowanie wtyczek"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:487
+#: ../app/plug-in/gimppluginmanager-restore.c:555
 msgid "Starting Extensions"
 msgstr "Uruchamianie rozszerzeń"
 
