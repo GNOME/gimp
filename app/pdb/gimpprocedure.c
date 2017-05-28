@@ -414,6 +414,9 @@ gimp_procedure_execute (GimpProcedure   *procedure,
   else
     context = gimp_pdb_context_new (gimp, context, TRUE);
 
+  if (progress)
+    g_object_ref (progress);
+
   /*  call the procedure  */
   return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->execute (procedure,
                                                                gimp,
@@ -421,6 +424,9 @@ gimp_procedure_execute (GimpProcedure   *procedure,
                                                                progress,
                                                                args,
                                                                error);
+
+  if (progress)
+    g_object_unref (progress);
 
   g_object_unref (context);
 
@@ -499,9 +505,15 @@ gimp_procedure_execute_async (GimpProcedure  *procedure,
       else
         context = gimp_pdb_context_new (gimp, context, TRUE);
 
+      if (progress)
+        g_object_ref (progress);
+
       GIMP_PROCEDURE_GET_CLASS (procedure)->execute_async (procedure, gimp,
                                                            context, progress,
                                                            args, display);
+
+      if (progress)
+        g_object_unref (progress);
 
       g_object_unref (context);
     }
