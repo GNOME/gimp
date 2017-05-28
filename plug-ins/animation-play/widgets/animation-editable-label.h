@@ -59,4 +59,6 @@ void          animation_editable_label_show_icon   (AnimationEditableLabel *labe
 
 const gchar * animation_editable_label_get_text    (AnimationEditableLabel *label);
 
+GtkWidget   * animation_editable_label_get_label   (AnimationEditableLabel *label);
+
 #endif /* __ANIMATION_EDITABLE_LABEL_H__ */

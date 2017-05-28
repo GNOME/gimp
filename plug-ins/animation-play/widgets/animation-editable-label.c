@@ -302,3 +302,8 @@ animation_editable_label_get_text (AnimationEditableLabel *label)
   return label->priv->text;
 }
 
+GtkWidget *
+animation_editable_label_get_label (AnimationEditableLabel *label)
+{
+  return label->priv->label;
+}

@@ -462,6 +462,8 @@ animation_xsheet_add_headers (AnimationXSheet *xsheet,
                               gint             level)
 {
   const gchar    *title;
+  GtkRcStyle     *rc_style;
+  GtkWidget      *label;
   GtkWidget      *frame;
   GtkWidget      *toolbar;
   GtkWidget      *image;
@@ -485,6 +487,23 @@ animation_xsheet_add_headers (AnimationXSheet *xsheet,
                     G_CALLBACK (animation_xsheet_track_title_updated),
                     xsheet);
   gtk_widget_show (frame);
+
+  /* Style a bit the title label. */
+  label = animation_editable_label_get_label (ANIMATION_EDITABLE_LABEL (frame));
+  rc_style = gtk_widget_get_modifier_style (label);
+
+  if (! rc_style->font_desc)
+    {
+      PangoContext         *context;
+      PangoFontDescription *font_desc;
+
+      context = gtk_widget_get_pango_context (label);
+      font_desc = pango_context_get_font_description (context);
+
+      rc_style->font_desc = pango_font_description_copy (font_desc);
+    }
+  pango_font_description_set_weight (rc_style->font_desc, PANGO_WEIGHT_BOLD);
+  gtk_widget_modify_style (label, rc_style);
 
   /* Adding a add-track [+] button. */
   toolbar = gtk_toolbar_new ();
