@@ -334,18 +334,27 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_COLOR:
-          left_align = TRUE;
-          widget = gimp_color_button_new (_("Script-Fu Color Selection"),
-                                          COLOR_SAMPLE_WIDTH,
-                                          COLOR_SAMPLE_HEIGHT,
-                                          &arg->value.sfa_color,
-                                          GIMP_COLOR_AREA_FLAT);
+          {
+            GimpColorConfig *config;
 
-          gimp_color_button_set_update (GIMP_COLOR_BUTTON (widget), TRUE);
+            left_align = TRUE;
+            widget = gimp_color_button_new (_("Script-Fu Color Selection"),
+                                            COLOR_SAMPLE_WIDTH,
+                                            COLOR_SAMPLE_HEIGHT,
+                                            &arg->value.sfa_color,
+                                            GIMP_COLOR_AREA_FLAT);
 
-          g_signal_connect (widget, "color-changed",
-                            G_CALLBACK (gimp_color_button_get_color),
-                            &arg->value.sfa_color);
+            gimp_color_button_set_update (GIMP_COLOR_BUTTON (widget), TRUE);
+
+            config = gimp_get_color_configuration ();
+            gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (widget),
+                                                config);
+            g_object_unref (config);
+
+            g_signal_connect (widget, "color-changed",
+                              G_CALLBACK (gimp_color_button_get_color),
+                              &arg->value.sfa_color);
+          }
           break;
 
         case SF_TOGGLE:
