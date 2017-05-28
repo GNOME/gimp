@@ -59,6 +59,10 @@ animation_play_SOURCES = \
 	widgets/animation-dialog.c		\
 	widgets/animation-dialog-export.h	\
 	widgets/animation-dialog-export.c	\
+	widgets/animation-editable-label.h	\
+	widgets/animation-editable-label.c	\
+	widgets/animation-editable-label-string.h	\
+	widgets/animation-editable-label-string.c	\
 	widgets/animation-keyframe-view.h	\
 	widgets/animation-keyframe-view.c	\
 	widgets/animation-layer-view.h	\

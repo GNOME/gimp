@@ -33,6 +33,8 @@
 #include "core/animation-playback.h"
 #include "core/animation-celanimation.h"
 
+#include "animation-editable-label.h"
+#include "animation-editable-label-string.h"
 #include "animation-keyframe-view.h"
 #include "animation-layer-view.h"
 #include "animation-menus.h"
@@ -170,61 +172,61 @@ static void     on_layer_selection             (AnimationLayerView *view,
                                                 AnimationXSheet    *xsheet);
 
 /* UI Signals */
-static void     animation_xsheet_suite_do            (GtkWidget       *button,
-                                                      AnimationXSheet *xsheet);
-static void     animation_xsheet_suite_cancelled     (GtkWidget       *button,
-                                                      AnimationXSheet *xsheet);
-static gboolean animation_xsheet_effect_clicked      (GtkWidget       *button,
-                                                      GdkEvent        *event,
-                                                      AnimationXSheet *xsheet);
-static gboolean animation_xsheet_frame_clicked       (GtkWidget       *button,
-                                                      GdkEvent        *event,
-                                                      AnimationXSheet *xsheet);
-static gboolean animation_xsheet_cel_clicked         (GtkWidget       *button,
-                                                      GdkEventButton  *event,
-                                                      AnimationXSheet *xsheet);
-static void     animation_xsheet_track_title_updated (GtkEntryBuffer  *buffer,
-                                                      GParamSpec      *param_spec,
-                                                      AnimationXSheet *xsheet);
-static void     animation_xsheet_comment_changed     (GtkTextBuffer   *text_buffer,
-                                                      AnimationXSheet *xsheet);
-static gboolean animation_xsheet_comment_keypress    (GtkWidget       *entry,
-                                                      GdkEventKey     *event,
-                                                      AnimationXSheet *xsheet);
+static void     animation_xsheet_suite_do            (GtkWidget              *button,
+                                                      AnimationXSheet        *xsheet);
+static void     animation_xsheet_suite_cancelled     (GtkWidget              *button,
+                                                      AnimationXSheet        *xsheet);
+static gboolean animation_xsheet_effect_clicked      (GtkWidget              *button,
+                                                      GdkEvent               *event,
+                                                      AnimationXSheet        *xsheet);
+static gboolean animation_xsheet_frame_clicked       (GtkWidget              *button,
+                                                      GdkEvent               *event,
+                                                      AnimationXSheet        *xsheet);
+static gboolean animation_xsheet_cel_clicked         (GtkWidget              *button,
+                                                      GdkEventButton         *event,
+                                                      AnimationXSheet        *xsheet);
+static void     animation_xsheet_track_title_updated (AnimationEditableLabel *buffer,
+                                                      GParamSpec             *param_spec,
+                                                      AnimationXSheet        *xsheet);
+static void     animation_xsheet_comment_changed     (GtkTextBuffer          *text_buffer,
+                                                      AnimationXSheet        *xsheet);
+static gboolean animation_xsheet_comment_keypress    (GtkWidget              *entry,
+                                                      GdkEventKey            *event,
+                                                      AnimationXSheet        *xsheet);
 
-static void     on_track_add_clicked                 (GtkToolButton   *button,
-                                                      AnimationXSheet *xsheet);
-static void     on_track_delete_clicked              (GtkToolButton   *button,
-                                                      AnimationXSheet *xsheet);
-static void     on_track_left_clicked                (GtkToolButton   *toolbutton,
-                                                      AnimationXSheet *xsheet);
-static void     on_track_right_clicked               (GtkToolButton   *toolbutton,
-                                                      AnimationXSheet *xsheet);
+static void     on_track_add_clicked                 (GtkToolButton          *button,
+                                                      AnimationXSheet        *xsheet);
+static void     on_track_delete_clicked              (GtkToolButton          *button,
+                                                      AnimationXSheet        *xsheet);
+static void     on_track_left_clicked                (GtkToolButton          *toolbutton,
+                                                      AnimationXSheet        *xsheet);
+static void     on_track_right_clicked               (GtkToolButton          *toolbutton,
+                                                      AnimationXSheet        *xsheet);
 /* Utils */
-static void     animation_xsheet_rename_cel          (AnimationXSheet *xsheet,
-                                                      GtkWidget       *cel,
-                                                      gboolean         recursively,
-                                                      gint             stop_position);
-static void     animation_xsheet_jump                (AnimationXSheet *xsheet,
-                                                      gint             position);
-static void     animation_xsheet_attach_cel          (AnimationXSheet *xsheet,
-                                                      GtkWidget       *cel,
-                                                      gint             track,
-                                                      gint             pos);
-static void     animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
-                                                      GTree           **suite,
-                                                      gboolean          same_numbering,
-                                                      const gchar      *prefix,
-                                                      const gchar      *suffix,
-                                                      const gint       *lower_key);
-static gboolean create_suite                         (gint             *key,
-                                                      GList            *layers,
-                                                      CreateData       *data);
-static gboolean merge_suites                         (gint             *key,
-                                                      GList            *layers,
-                                                      MergeData        *data);
-static gint     compare_keys                         (gint             *key1,
-                                                      gint             *key2);
+static void     animation_xsheet_rename_cel          (AnimationXSheet        *xsheet,
+                                                      GtkWidget              *cel,
+                                                      gboolean                recursively,
+                                                      gint                    stop_position);
+static void     animation_xsheet_jump                (AnimationXSheet        *xsheet,
+                                                      gint                    position);
+static void     animation_xsheet_attach_cel          (AnimationXSheet        *xsheet,
+                                                      GtkWidget              *cel,
+                                                      gint                    track,
+                                                      gint                    pos);
+static void     animation_xsheet_extract_layer_suite (AnimationXSheet         *xsheet,
+                                                      GTree                  **suite,
+                                                      gboolean                 same_numbering,
+                                                      const gchar             *prefix,
+                                                      const gchar             *suffix,
+                                                      const gint              *lower_key);
+static gboolean create_suite                         (gint                    *key,
+                                                      GList                   *layers,
+                                                      CreateData              *data);
+static gboolean merge_suites                         (gint                    *key,
+                                                      GList                   *layers,
+                                                      MergeData               *data);
+static gint     compare_keys                         (gint                    *key1,
+                                                      gint                    *key2);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -460,9 +462,7 @@ animation_xsheet_add_headers (AnimationXSheet *xsheet,
                               gint             level)
 {
   const gchar    *title;
-  GtkEntryBuffer *entry_buffer;
   GtkWidget      *frame;
-  GtkWidget      *label;
   GtkWidget      *toolbar;
   GtkWidget      *image;
   GtkToolItem    *item;
@@ -471,24 +471,19 @@ animation_xsheet_add_headers (AnimationXSheet *xsheet,
                                                    level);
 
   /* Adding a title. */
-  frame = gtk_frame_new (NULL);
+  frame = animation_editable_label_string_new (title);;
   xsheet->priv->titles = g_list_insert (xsheet->priv->titles,
                                         frame, level);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
   gtk_table_attach (GTK_TABLE (xsheet->priv->track_layout),
                     frame, level * 9 + 2, level * 9 + 11, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
-  label = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (label), title);
-  entry_buffer = gtk_entry_get_buffer (GTK_ENTRY (label));
-  g_object_set_data (G_OBJECT (entry_buffer), "track-num",
+  g_object_set_data (G_OBJECT (frame), "track-num",
                      GINT_TO_POINTER (level));
-  g_signal_connect (entry_buffer,
+  g_signal_connect (frame,
                     "notify::text",
                     G_CALLBACK (animation_xsheet_track_title_updated),
                     xsheet);
-  gtk_container_add (GTK_CONTAINER (frame), label);
-  gtk_widget_show (label);
   gtk_widget_show (frame);
 
   /* Adding a add-track [+] button. */
@@ -1079,14 +1074,10 @@ animation_xsheet_move_tracks (AnimationXSheet *xsheet,
   track = g_list_nth (xsheet->priv->titles, level);
   for (j = level, iter = track; iter; iter = iter->next, j++)
     {
-      GtkWidget      *frame;
-      GtkWidget      *entry;
-      GtkEntryBuffer *buffer;
+      GtkWidget *frame;
 
       frame = g_object_ref (iter->data);
-      entry = gtk_bin_get_child (GTK_BIN (frame));
-      buffer = gtk_entry_get_buffer (GTK_ENTRY (entry));
-      g_object_set_data (G_OBJECT (buffer), "track-num",
+      g_object_set_data (G_OBJECT (frame), "track-num",
                          GINT_TO_POINTER (j));
 
       gtk_container_remove (GTK_CONTAINER (xsheet->priv->track_layout),
@@ -1783,16 +1774,16 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
 }
 
 static void
-animation_xsheet_track_title_updated (GtkEntryBuffer  *buffer,
-                                      GParamSpec      *param_spec,
-                                      AnimationXSheet *xsheet)
+animation_xsheet_track_title_updated (AnimationEditableLabel *buffer,
+                                      GParamSpec             *param_spec,
+                                      AnimationXSheet        *xsheet)
 {
   const gchar *title;
   GList       *iter;
   gpointer     track_num;
 
   track_num = g_object_get_data (G_OBJECT (buffer), "track-num");
-  title = gtk_entry_buffer_get_text (buffer);
+  title = animation_editable_label_get_text (buffer);
 
   animation_cel_animation_set_track_title (xsheet->priv->animation,
                                            GPOINTER_TO_INT (track_num),
