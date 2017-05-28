@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <babl/babl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -73,6 +74,8 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
   _gimp_get_foreground_func = get_foreground_func;
   _gimp_get_background_func = get_background_func;
   _gimp_ensure_modules_func = ensure_modules_func;
+
+  babl_init (); /* color selectors use babl */
 
   gimp_icons_init ();
 
