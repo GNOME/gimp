@@ -228,6 +228,11 @@ static gboolean merge_suites                         (gint                    *k
 static gint     compare_keys                         (gint                    *key1,
                                                       gint                    *key2);
 
+static void     animation_xsheet_select_all          (AnimationXSheet         *xsheet,
+                                                      gint                     level);
+static gboolean animation_xsheet_title_clicked       (GtkWidget               *title,
+                                                      gpointer                 user_data);
+
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
 #define parent_class animation_xsheet_parent_class
@@ -485,6 +490,9 @@ animation_xsheet_add_headers (AnimationXSheet *xsheet,
   g_signal_connect (frame,
                     "notify::text",
                     G_CALLBACK (animation_xsheet_track_title_updated),
+                    xsheet);
+  g_signal_connect (frame, "alternate-action",
+                    G_CALLBACK (animation_xsheet_title_clicked),
                     xsheet);
   gtk_widget_show (frame);
 
@@ -2359,4 +2367,70 @@ compare_keys (gint *key1,
     }
 
   return retval;
+}
+
+static void
+animation_xsheet_select_all (AnimationXSheet *xsheet,
+                             gint             level)
+{
+  GList *track_iter;
+  GList *frame_iter;
+  gint   i;
+
+  if (xsheet->priv->selected_track >= 0 &&
+      xsheet->priv->selected_track != level)
+    {
+      /* Reset current selection. */
+      GList *track_iter;
+      GList *frame_iter;
+
+      for (track_iter = xsheet->priv->cels; track_iter; track_iter = track_iter->next)
+        {
+          for (frame_iter = track_iter->data; frame_iter; frame_iter = frame_iter->next)
+            {
+              gtk_toggle_button_set_active (frame_iter->data, FALSE);
+            }
+        }
+    }
+  g_queue_clear (xsheet->priv->selected_frames);
+  xsheet->priv->selected_track = level;
+
+  track_iter = g_list_nth (xsheet->priv->cels, level);
+  frame_iter = track_iter->data;
+  for (i = 0; frame_iter; frame_iter = frame_iter->next, i++)
+    {
+      g_queue_push_head (xsheet->priv->selected_frames,
+                         GINT_TO_POINTER (i));
+      gtk_toggle_button_set_active (frame_iter->data, TRUE);
+    }
+
+  /* Finally update the layer view. */
+  if (g_queue_is_empty (xsheet->priv->selected_frames))
+    {
+      animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                   NULL);
+    }
+  else
+    {
+      const GList *layers;
+
+      /* Show layers of position 0. */
+      layers = animation_cel_animation_get_layers (xsheet->priv->animation,
+                                                   level, 0);
+      animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                   layers);
+    }
+}
+
+static gboolean
+animation_xsheet_title_clicked (GtkWidget *title_label,
+                                gpointer   user_data)
+{
+  gpointer track_num;
+
+  track_num = g_object_get_data (G_OBJECT (title_label), "track-num");
+  animation_xsheet_select_all (ANIMATION_XSHEET (user_data),
+                               GPOINTER_TO_INT (track_num));
+
+  return TRUE;
 }

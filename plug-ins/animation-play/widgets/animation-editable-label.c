@@ -34,6 +34,7 @@ enum
 
 enum
 {
+  ALTERNATE_ACTION,
   PREPARE_EDITING,
   EDITING,
   LAST_SIGNAL
@@ -63,6 +64,7 @@ static void animation_editable_label_get_property  (GObject              *object
                                                     GValue               *value,
                                                     GParamSpec           *pspec);
 
+static gboolean animation_editable_label_alternate_click (gpointer        user_data);
 static gboolean animation_editable_label_clicked   (GtkWidget            *widget,
                                                     GdkEvent             *event,
                                                     gpointer              user_data);
@@ -78,6 +80,15 @@ animation_editable_label_class_init (AnimationEditableLabelClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  animation_editable_label_signals[ALTERNATE_ACTION] =
+    g_signal_new ("alternate-action",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  0,
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_NONE,
+                  0);
   animation_editable_label_signals[PREPARE_EDITING] =
     g_signal_new ("prepare-editing",
                   G_TYPE_FROM_CLASS (klass),
@@ -238,17 +249,44 @@ animation_editable_label_get_property (GObject    *object,
 }
 
 static gboolean
+animation_editable_label_alternate_click (gpointer user_data)
+{
+  AnimationEditableLabel *label = ANIMATION_EDITABLE_LABEL (user_data);
+
+  if (! label->priv->is_editing)
+    g_signal_emit (label, animation_editable_label_signals[ALTERNATE_ACTION],
+                   0, NULL);
+
+  return FALSE;
+}
+
+static gboolean
 animation_editable_label_clicked (GtkWidget *widget,
                                   GdkEvent  *event,
                                   gpointer   user_data)
 {
   AnimationEditableLabel *label = ANIMATION_EDITABLE_LABEL (user_data);
 
-  g_signal_emit (label, animation_editable_label_signals[PREPARE_EDITING],
-                 0, NULL);
-  animation_editable_label_set_editing (label, TRUE);
-  g_signal_emit (label, animation_editable_label_signals[EDITING],
-                 0, NULL);
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      gint time;
+
+      g_object_get (gtk_settings_get_for_screen (gdk_screen_get_default ()),
+                    "gtk-double-click-time", &time,
+                    NULL);
+      /* Do not run the alternate action immediately because we want
+       * it to be ignored on a double click. */
+      g_timeout_add (time, animation_editable_label_alternate_click,
+                             label);
+    }
+  else if (event->type == GDK_2BUTTON_PRESS)
+    {
+      g_signal_emit (label, animation_editable_label_signals[PREPARE_EDITING],
+                     0, NULL);
+      animation_editable_label_set_editing (label, TRUE);
+      g_signal_emit (label, animation_editable_label_signals[EDITING],
+                     0, NULL);
+    }
 
   return TRUE;
 }
