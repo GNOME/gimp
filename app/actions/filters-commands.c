@@ -85,10 +85,10 @@ filters_repeat_cmd_callback (GtkAction *action,
 
       if (args)
         {
-          if (procedure_commands_run_procedure (procedure, gimp,
-                                                GIMP_PROGRESS (display),
-                                                run_mode, args,
-                                                display))
+          if (procedure_commands_run_procedure_async (procedure, gimp,
+                                                      GIMP_PROGRESS (display),
+                                                      run_mode, args,
+                                                      display))
             {
               gimp_filter_history_add (gimp, procedure);
             }
@@ -113,10 +113,10 @@ filters_history_cmd_callback (GtkAction     *action,
 
   if (args)
     {
-      if (procedure_commands_run_procedure (procedure, gimp,
-                                            GIMP_PROGRESS (display),
-                                            GIMP_RUN_INTERACTIVE, args,
-                                            display))
+      if (procedure_commands_run_procedure_async (procedure, gimp,
+                                                  GIMP_PROGRESS (display),
+                                                  GIMP_RUN_INTERACTIVE, args,
+                                                  display))
         {
           gimp_filter_history_add (gimp, procedure);
         }

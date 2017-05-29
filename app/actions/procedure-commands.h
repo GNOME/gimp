@@ -31,7 +31,11 @@ GimpValueArray * procedure_commands_get_display_args (GimpProcedure  *procedure,
                                                       GimpDisplay    *display,
                                                       GimpObject     *settings);
 
-gboolean         procedure_commands_run_procedure    (GimpProcedure  *procedure,
+gboolean      procedure_commands_run_procedure       (GimpProcedure  *procedure,
+                                                      Gimp           *gimp,
+                                                      GimpProgress   *progress,
+                                                      GimpValueArray *args);
+gboolean      procedure_commands_run_procedure_async (GimpProcedure  *procedure,
                                                       Gimp           *gimp,
                                                       GimpProgress   *progress,
                                                       GimpRunMode     run_mode,

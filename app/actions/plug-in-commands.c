@@ -141,10 +141,10 @@ plug_in_run_cmd_callback (GtkAction     *action,
 
   if (args)
     {
-      if (procedure_commands_run_procedure (procedure, gimp,
-                                            GIMP_PROGRESS (display),
-                                            GIMP_RUN_INTERACTIVE, args,
-                                            display))
+      if (procedure_commands_run_procedure_async (procedure, gimp,
+                                                  GIMP_PROGRESS (display),
+                                                  GIMP_RUN_INTERACTIVE, args,
+                                                  display))
         {
           /* remember only image plug-ins */
           if (procedure->num_args >= 2 &&
