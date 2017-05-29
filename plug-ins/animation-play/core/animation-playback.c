@@ -576,10 +576,10 @@ animation_playback_set_property (GObject      *object,
         {
           Animation *animation;
 
-          if (playback->priv->animation)
-            g_object_unref (playback->priv->animation);
           if (playback->priv->renderer)
             g_object_unref (playback->priv->renderer);
+          if (playback->priv->animation)
+            g_object_unref (playback->priv->animation);
 
           animation = g_value_dup_object (value);
           playback->priv->animation = animation;
