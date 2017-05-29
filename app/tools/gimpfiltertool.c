@@ -1379,10 +1379,11 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                                 NULL);
 
   filter_tool->config =
-    G_OBJECT (gimp_operation_config_new (tool_info->gimp,
-                                         operation_name,
-                                         filter_tool->icon_name,
-                                         GIMP_TYPE_SETTINGS));
+    g_object_new (gimp_operation_config_get_type (tool_info->gimp,
+                                                  operation_name,
+                                                  filter_tool->icon_name,
+                                                  GIMP_TYPE_SETTINGS),
+                  NULL);
 
   gimp_operation_config_sync_node (GIMP_OBJECT (filter_tool->config),
                                    filter_tool->operation);

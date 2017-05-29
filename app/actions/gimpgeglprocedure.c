@@ -250,18 +250,16 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
   GimpObject    *settings;
   GimpContainer *container;
   GimpTool      *active_tool;
+  GType          config_type;
 
-  settings = gimp_operation_config_new (gimp,
-                                        procedure->original_name,
-                                        gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
-                                        GIMP_TYPE_SETTINGS);
+  config_type = gimp_operation_config_get_type (gimp,
+                                                procedure->original_name,
+                                                gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
+                                                GIMP_TYPE_SETTINGS);
 
   container =
-    gimp_operation_config_get_container (gimp,
-                                         G_TYPE_FROM_INSTANCE (settings),
+    gimp_operation_config_get_container (gimp, config_type,
                                          (GCompareFunc) gimp_settings_compare);
-
-  g_object_unref (settings);
 
   /*  the last used settings  */
   settings = gimp_container_get_child_by_index (container, 0);

@@ -23,7 +23,7 @@ void            gimp_operation_config_register      (Gimp          *gimp,
                                                      const gchar   *operation,
                                                      GType          config_type);
 
-GimpObject    * gimp_operation_config_new           (Gimp          *gimp,
+GType           gimp_operation_config_get_type      (Gimp          *gimp,
                                                      const gchar   *operation,
                                                      const gchar   *icon_name,
                                                      GType          parent_type);

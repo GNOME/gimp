@@ -260,18 +260,18 @@ gimp_operation_config_register (Gimp        *gimp,
                        (gpointer) config_type);
  }
 
-GimpObject *
-gimp_operation_config_new (Gimp        *gimp,
-                           const gchar *operation,
-                           const gchar *icon_name,
-                           GType        parent_type)
+GType
+gimp_operation_config_get_type (Gimp        *gimp,
+                                const gchar *operation,
+                                const gchar *icon_name,
+                                GType        parent_type)
 {
   GHashTable *config_types;
   GType       config_type;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (operation != NULL, NULL);
-  g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), G_TYPE_NONE);
+  g_return_val_if_fail (operation != NULL, G_TYPE_NONE);
+  g_return_val_if_fail (g_type_is_a (parent_type, GIMP_TYPE_OBJECT), G_TYPE_NONE);
 
   config_types = gimp_operation_config_get_type_table (gimp);
 
@@ -331,7 +331,7 @@ gimp_operation_config_new (Gimp        *gimp,
       }
     }
 
-  return g_object_new (config_type, NULL);
+  return config_type;
 }
 
 GimpContainer *
