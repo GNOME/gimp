@@ -1458,10 +1458,10 @@ animation_xsheet_suite_do (GtkWidget       *button,
   data.suite_length = g_tree_nnodes (suite) * xsheet->priv->suite_fpi;
 
   data.end_of_animation = FALSE;
-  data.index = 0;
 
   for (data.loop_idx = 0; xsheet->priv->suite_cycle == 0 || data.loop_idx < xsheet->priv->suite_cycle; data.loop_idx++)
     {
+      data.index = 0;
       g_tree_foreach (suite, (GTraverseFunc) create_suite, &data);
       if (data.end_of_animation)
         break;
