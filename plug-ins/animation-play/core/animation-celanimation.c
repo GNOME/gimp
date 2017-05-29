@@ -1308,7 +1308,8 @@ animation_cel_animation_cleanup (AnimationCelAnimation *animation)
                     (GDestroyNotify) animation_cel_animation_clean_track);
   animation->priv->tracks   = NULL;
 
-  g_object_unref (animation->priv->camera);
+  if (animation->priv->camera)
+    g_object_unref (animation->priv->camera);
 }
 
 static void
