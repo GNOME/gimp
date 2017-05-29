@@ -180,7 +180,8 @@ procedure_commands_get_item_args (GimpProcedure *procedure,
 
 GimpValueArray *
 procedure_commands_get_display_args (GimpProcedure *procedure,
-                                     GimpDisplay   *display)
+                                     GimpDisplay   *display,
+                                     GimpObject    *settings)
 {
   GimpValueArray *args;
   gint            n_args = 0;
@@ -216,8 +217,7 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
 
       if (image)
         {
-          gimp_value_set_image (gimp_value_array_index (args, n_args),
-                                image);
+          gimp_value_set_image (gimp_value_array_index (args, n_args), image);
           n_args++;
 
           if (gimp_value_array_length (args) > n_args &&
@@ -239,6 +239,14 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
                 }
             }
         }
+    }
+
+  if (gimp_value_array_length (args) > n_args &&
+      g_type_is_a (G_PARAM_SPEC_VALUE_TYPE (procedure->args[n_args]),
+                   GIMP_TYPE_OBJECT))
+    {
+      g_value_set_object (gimp_value_array_index (args, n_args), settings);
+      n_args++;
     }
 
   gimp_value_array_truncate (args, n_args);

@@ -81,7 +81,7 @@ filters_repeat_cmd_callback (GtkAction *action,
     {
       GimpValueArray *args;
 
-      args = procedure_commands_get_display_args (procedure, display);
+      args = procedure_commands_get_display_args (procedure, display, NULL);
 
       if (args)
         {
@@ -109,7 +109,7 @@ filters_history_cmd_callback (GtkAction     *action,
   return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
 
-  args = procedure_commands_get_display_args (procedure, display);
+  args = procedure_commands_get_display_args (procedure, display, NULL);
 
   if (args)
     {

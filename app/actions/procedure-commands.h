@@ -28,7 +28,8 @@ GimpValueArray * procedure_commands_get_item_args    (GimpProcedure  *procedure,
                                                       GimpImage      *image,
                                                       GimpItem       *item);
 GimpValueArray * procedure_commands_get_display_args (GimpProcedure  *procedure,
-                                                      GimpDisplay    *display);
+                                                      GimpDisplay    *display,
+                                                      GimpObject     *settings);
 
 gboolean         procedure_commands_run_procedure    (GimpProcedure  *procedure,
                                                       Gimp           *gimp,

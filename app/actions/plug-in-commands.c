@@ -130,7 +130,7 @@ plug_in_run_cmd_callback (GtkAction     *action,
         {
           display = action_data_get_display (data);
 
-          args = procedure_commands_get_display_args (procedure, display);
+          args = procedure_commands_get_display_args (procedure, display, NULL);
         }
       break;
 
