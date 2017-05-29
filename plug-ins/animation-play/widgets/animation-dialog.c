@@ -67,6 +67,7 @@ struct _AnimationDialogPrivate
   Animation         *animation;
   AnimationPlayback *playback;
   gdouble            zoom;
+  gboolean           rendered_once;
 
   /* GUI */
   GtkWidget         *play_bar;
@@ -331,6 +332,7 @@ animation_dialog_init (AnimationDialog *dialog)
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
 
   priv->playback = animation_playback_new ();
+  priv->rendered_once = FALSE;
 }
 
 /**** Public Functions ****/
@@ -1452,10 +1454,6 @@ on_dialog_expose (GtkWidget *dialog,
                                         animation);
   animation_load (animation);
 
-  /* Fit to display. */
-  update_scale (ANIMATION_DIALOG (dialog),
-                get_zoom (ANIMATION_DIALOG (dialog), 0));
-
   return FALSE;
 }
 
@@ -2469,7 +2467,7 @@ render_on_realize (GtkWidget       *drawing_area,
                    AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GeglBuffer *buffer;
+  GeglBuffer             *buffer;
 
   buffer = animation_playback_get_buffer (priv->playback,
                                           animation_playback_get_position (priv->playback));
@@ -2510,6 +2508,14 @@ render_frame (AnimationDialog *dialog,
       ! gtk_widget_get_realized (priv->shape_drawing_area) ||
       ! gtk_widget_get_realized (priv->drawing_area))
     return;
+
+  if (!priv->rendered_once)
+    {
+      /* Fit to display on first render. */
+      update_scale (ANIMATION_DIALOG (dialog),
+                    get_zoom (ANIMATION_DIALOG (dialog), 0));
+    }
+  priv->rendered_once = TRUE;
 
   if (is_detached (dialog))
     {
