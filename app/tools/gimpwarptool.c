@@ -458,6 +458,8 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
         }
+#else
+      (void) options;
 #endif
     }
 
