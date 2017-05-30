@@ -75,6 +75,7 @@ CURSOR_IMAGES = \
 	tool-shear.png				\
 	tool-smudge.png				\
 	tool-text.png				\
+	tool-warp.png				\
 	tool-zoom.png
 
 COLOR_PICKER_IMAGES = \

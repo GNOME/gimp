@@ -192,6 +192,7 @@ static GimpCursor gimp_tool_cursors[] =
   { "tool-dodge.png" },
   { "tool-burn.png" },
   { "tool-measure.png" },
+  { "tool-warp.png" },
   { "tool-hand.png" }
 };
 

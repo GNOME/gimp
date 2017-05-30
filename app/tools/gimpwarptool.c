@@ -195,7 +195,7 @@ gimp_warp_tool_init (GimpWarpTool *self)
                                          GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_wants_click     (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor     (tool->control,
-                                         GIMP_TOOL_CURSOR_PERSPECTIVE);
+                                         GIMP_TOOL_CURSOR_WARP);
   gimp_tool_control_set_action_size     (tool->control,
                                          "tools/tools-warp-effect-size-set");
   gimp_tool_control_set_action_hardness (tool->control,
@@ -435,7 +435,7 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
 {
   GimpWarpTool       *wt       = GIMP_WARP_TOOL (tool);
   GimpWarpOptions    *options  = GIMP_WARP_TOOL_GET_OPTIONS (tool);
-  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   if (! gimp_warp_tool_can_stroke (wt, display, FALSE))
     {
@@ -443,6 +443,7 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
     }
   else if (display == tool->display)
     {
+#if 0
       /* FIXME have better cursors  */
 
       switch (options->behavior)
@@ -457,6 +458,7 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
         }
+#endif
     }
 
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
