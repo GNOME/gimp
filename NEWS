@@ -15,9 +15,6 @@ Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 
 Core:
 
-  - Layer modes' code is now refactored to separate gamma-corrected
-    variations from the linear light ones, legacy modes have been
-    preserved to support older XCF files.
   - New clipboard implementation allows copying/pasting layers and
     layer groups.
   - Color tags simplify managing large projects with a lot of layers
@@ -27,10 +24,30 @@ Core:
   - Gamma and precision selectors for newly created images.
   - Never dither when converting to a higher bit depth, or to anything
     more than 16 bits; don't offer dithering options in these cases.
-  - Default to linear when converting to 16-bit float.
+  - Default to linear TRC when converting to 16-bit float.
   - Pre-initialize some babl-based pixel format conversion routines
     at start-up to decrease the initial lazy intialization cost for
     some interactions.
+  - Remove max size limitation of 4GB for XCF files.
+  - Support clipboard images in the clipboard brush and pattern.
+
+Layers and compositing:
+
+  - Layer modes' code is now refactored to separate gamma-corrected
+    variations from the linear light ones, legacy modes have been
+    preserved to support older XCF files.
+  - Blending and compositing of layers are configurable separately for
+    more flexibility now, compositing can be linear TRC, perceptual TRC
+    or CIE LAB.
+  - Layer blending color space and compositing color space are
+    configurable now.
+  - New layer modes: linear burn, vivid light, linear light, pin light,
+    exclusion, merge, split, luminance (rgb).
+  - Make erase mode an ordinary layer/paint mode.
+  - Better performance of HSV-based layer modes.
+  - Rename "Color (HSV)" mode to "Color (HSL)" to indicate the actual
+    color space being used.
+
 
 GUI:
 
@@ -66,6 +83,17 @@ GUI:
   - Allow to toggle the histogram dialog between gamma and linear.
   - New 'Colors -> Linear Invert' command to provide radiometrically
     correct color inversion.
+  - Quit dialog now exits when all the images in the list have been
+    saved.
+
+Color selection and management:
+
+  - Add the profile import policy to prefs -> import
+  - Color management for GEGL-based filters is expensive, so it's off
+    by default for now, and options are hidden by default too.
+  - Add LCH color selector, with support for gamut checking.
+  - Default to magenta for out-of-gamut color.
+  - Make all script-fu color buttons color-managed.
 
 Configurability:
 
@@ -81,21 +109,33 @@ Configurability:
   - Default to 300ppi and 1920x1080px for new documents.
   - Do not allow Alt+[0-9] shortcuts, they are typically reserved for
     display switching.
+  - Icons size is now a configurable option, not a theme feature.
+    The icon size is also auto-guessed from monitor resolution now.
 
 Tools:
 
+  - Add Hue-Chroma operation/tool.
   - The Move tool now shows relative coordinates when moving guides
     and sample points.
+  - The Measure tool has better digit precision now (before that, at
+    4000 PPI, up to 7 pixels would show up as 0 mm, then at 0.1 mm from
+    the 8th pixel etc.).
   - Performance of the Fuzzy Select and the Bucket Fill tool has been
     improved.
-  - The Warp Transform tool now uses the linear sampler to ensure
-    crisp lines after an erase.
+  - The Fuzzy Select and the Bucket Fill tool now can select colors by
+    CIE L, C, and H.
+  - Unclutter transform tools: default to "no grid", hide the original
+    layer during the interactive transform (except for the Flip tool).
+  - Make the Warp Transform tool faster, add more options, use
+    the linear sampler to ensure crisp lines after an erase.
   - Select by Color and Color Picker tools work now correctly in color
     spaces other than sRGB.
   - Color Picker doesn't snap to anything when picking colors anymore,
     always draws the outline of the averaged region (not only while the
     mouse is being pressed), and supports arbitrary range of values
     regardless of the actual image color precision.
+  - Color Picker now displays pick position (also visible in the
+    Sample Points dialog now), as well as values in CIE LAB and CIE LCH.
   - Uncommitted selection by the Intelligent Scissors tool is not
     discarded on tool change anymore.
   - GIMP now checks whether the first and the last isegments are
@@ -109,6 +149,10 @@ Painting:
   - For bitmap brushes, GIMP now caches hardness and disables dynamic
     change of hardness to improve painting performance. Bitmap brushes
     also don't get clipped anymore, when hardness is less than 100.
+  - Allow painting on transparent layers with modes other than normal.
+  - Add a specialized convolution algorithm for the hardness blur
+    to make it faster.
+  - Make paint tools draw in all open views.
 
 File Formats
 
@@ -116,9 +160,20 @@ File Formats
     animation, metadata.
   - The TIFF loader will not generate warnings about private tags
     anymore.
-  - Handle linear gamma PNG files correctly.
+  - Handle linear gamma PNG files correctly, provide a combo box for
+    specifying PNG bitdepth/variant at exporting time.
   - Load PSD files with layers which contain additional information
     with a length that is not divisible by 4.
+  - Add support for linear burn, linear light, vivid light, pin light, 
+    and hard mix layer modes in PSD (importing and exporting).
+  - Add support to import/export layer color tags from/to PSD files.
+  - Optionally convert all imported (not XCF) images to 32-bit linear
+    floating point, and optionally add a little noise in order to
+    distribute the colors minimally.
+  - Optionally add alpha channel to layers of imported images
+    (configurable in Preferences > Import).
+  - Support writing PNM files with 16-bit image precision.
+  - make the raw image importer configurable
 
 Printing
 
@@ -127,10 +182,20 @@ Printing
 
 Plug-ins
 
+  - The Screenshot plug-in now assigns either monitors profile or
+    converts to sRGB.
   - Port smooth-palette to GEGL.
   - Enhance the raw (not the digital negative) files plugin:
     introduce exporting settings and remember them across sessions,
     make the plugin invokable non-interactively, and more.
+  - Add GEGL-based plug-ins: Neon (Edge detection), Wavelet decompose,
+    Image Gradient, Symmetric Nearest Neighbor, Extract Component,
+    RGB Clip, Simple Linear Iterative Clustering, Waterpixels.
+  - Add rotate/flip buttons to the Convolution Matrix plug-in's GUI
+    to rotate/flip the matrix.
+  - For GEGL-based tools, use a new metadata language to dynamically
+    control UI attributes based on context (e.g. auto-disable
+    unapplicable options).
 
 Color Palettes
 
@@ -147,6 +212,8 @@ Build:
     problems with certain GIMP blend modes.
   - Depends on libpng 1.6.25+ to avoid warnings about known incorrect
     sRGB profiles, also avoid various vulnerabilities.
+  - Depends on glib-networking now for HTTPS support.
+  - Add a flatpak-builder manifest.
 
 OS-specific changes:
 
@@ -159,9 +226,10 @@ Bugs:
 
 Translations:
 
-  - Updated: Catalan, Czech, Danish, Finnish, French, German, Greek,
-    Hungarian, Icelandic, Italian, Occitan, Polish, Portuguese, Russian,
-    Scottish Gaelic, Serbian, Slovak, Slovenian, Spanish, Swedish.
+  - Updated: Catalan, Chinese (Taiwan), Czech, Danish, Finnish, French,
+    German, Greek, Hungarian, Icelandic, Italian, Kazakh, Occitan,
+    Polish, Portuguese, Russian, Scottish Gaelic, Serbian, Slovak,
+    Slovenian, Spanish, Swedish.
 
 
 Overview of Changes from GIMP 2.9.2 to GIMP 2.9.4
