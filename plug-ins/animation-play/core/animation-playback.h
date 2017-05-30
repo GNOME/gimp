@@ -55,6 +55,8 @@ struct _AnimationPlaybackClass
                                   gboolean           must_draw_null);
   void       (*low_framerate)    (AnimationPlayback *playback,
                                   gdouble            actual_fps);
+  void       (*proxy_changed)    (Animation         *animation,
+                                  gdouble            ratio);
 };
 
 GType         animation_playback_get_type (void);
@@ -86,5 +88,12 @@ gint          animation_playback_get_start     (AnimationPlayback   *playback);
 void          animation_playback_set_stop      (AnimationPlayback   *playback,
                                                 gint                 index);
 gint          animation_playback_get_stop      (AnimationPlayback   *playback);
+
+void          animation_playback_get_size      (AnimationPlayback   *playback,
+                                                gint                *width,
+                                                gint                *height);
+void          animation_playback_set_proxy     (AnimationPlayback   *playback,
+                                                gdouble              ratio);
+gdouble       animation_playback_get_proxy     (AnimationPlayback   *playback);
 
 #endif  /*  __ANIMATION_PLAYBACK_H__  */

@@ -90,7 +90,8 @@ static gchar      * animation_animatic_get_frame_hash (Animation         *animat
                                                        gint               position);
 static GeglBuffer * animation_animatic_create_frame   (Animation         *animation,
                                                        GObject           *renderer,
-                                                       gint               position);
+                                                       gint               position,
+                                                       gdouble            proxy_ratio);
 
 static void         animation_animatic_reset_defaults (Animation         *animation);
 static gchar      * animation_animatic_serialize      (Animation         *animation,
@@ -408,7 +409,8 @@ animation_animatic_get_frame_hash (Animation *animation,
 static GeglBuffer *
 animation_animatic_create_frame (Animation *animation,
                                  GObject   *renderer,
-                                 gint       position)
+                                 gint       position,
+                                 gdouble    proxy_ratio)
 {
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   GeglBuffer               *buffer;
@@ -420,7 +422,6 @@ animation_animatic_create_frame (Animation *animation,
   gint                      preview_height;
   gint32                    image_id;
   gint32                    layer;
-  gdouble                   proxy_ratio;
   gint                      panel;
 
   panel = animation_animatic_get_panel (ANIMATION_ANIMATIC (animation),
@@ -436,9 +437,10 @@ animation_animatic_create_frame (Animation *animation,
       return NULL;
     }
 
-  proxy_ratio = animation_get_proxy (animation);
   buffer2 = gimp_drawable_get_buffer (layer);
   animation_get_size (animation, &preview_width, &preview_height);
+  preview_height *= proxy_ratio;
+  preview_width  *= proxy_ratio;
   gimp_drawable_offsets (layer,
                          &layer_offx, &layer_offy);
 

@@ -95,7 +95,8 @@ static gchar      * animation_cel_animation_get_frame_hash    (Animation    *ani
                                                                gint          position);
 static GeglBuffer * animation_cel_animation_create_frame      (Animation    *animation,
                                                                GObject      *renderer,
-                                                               gint          position);
+                                                               gint          position,
+                                                               gdouble       proxy_ratio);
 
 static void         animation_cel_animation_reset_defaults    (Animation    *animation);
 static gchar      * animation_cel_animation_serialize         (Animation    *animation,
@@ -649,13 +650,13 @@ animation_cel_animation_get_frame_hash (Animation *animation,
 static GeglBuffer *
 animation_cel_animation_create_frame (Animation *animation,
                                       GObject   *renderer G_GNUC_UNUSED,
-                                      gint       position)
+                                      gint       position,
+                                      gdouble    proxy_ratio)
 {
   AnimationCelAnimation *cel_animation;
   GeglBuffer            *buffer = NULL;
   GList                 *iter;
   gint32                 image_id;
-  gdouble                proxy_ratio;
   gint                   preview_width;
   gint                   preview_height;
   gint                   offset_x;
@@ -663,9 +664,10 @@ animation_cel_animation_create_frame (Animation *animation,
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
   image_id = animation_get_image_id (animation);
-  proxy_ratio = animation_get_proxy (animation);
   animation_get_size (animation,
                       &preview_width, &preview_height);
+  preview_height *= proxy_ratio;
+  preview_width  *= proxy_ratio;
   animation_camera_get (cel_animation->priv->camera,
                         position, &offset_x, &offset_y);
 

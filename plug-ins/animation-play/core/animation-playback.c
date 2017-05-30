@@ -36,6 +36,7 @@ enum
   RANGE,
   RENDER,
   LOW_FRAMERATE,
+  PROXY_CHANGED,
   LAST_SIGNAL
 };
 
@@ -56,6 +57,8 @@ struct _AnimationPlaybackPrivate
   gint         start;
   gint         stop;
   gboolean     stop_at_end;
+
+  gdouble      proxy_ratio;
 
   guint        timer;
   gint64       start_time;
@@ -206,6 +209,24 @@ animation_playback_class_init (AnimationPlaybackClass *klass)
                   1,
                   G_TYPE_DOUBLE);
 
+  /**
+   * AnimationPlayback::proxy:
+   * @playback: the #AnimationPlayback.
+   * @ratio: the current proxy ratio [0-1.0].
+   *
+   * The ::proxy signal is emitted to announce a change of proxy size.
+   */
+  animation_playback_signals[PROXY_CHANGED] =
+    g_signal_new ("proxy-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (AnimationPlaybackClass, proxy_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__DOUBLE,
+                  G_TYPE_NONE,
+                  1,
+                  G_TYPE_DOUBLE);
+
   object_class->finalize     = animation_playback_finalize;
   object_class->set_property = animation_playback_set_property;
   object_class->get_property = animation_playback_get_property;
@@ -230,6 +251,7 @@ animation_playback_init (AnimationPlayback *playback)
   playback->priv = G_TYPE_INSTANCE_GET_PRIVATE (playback,
                                                 ANIMATION_TYPE_PLAYBACK,
                                                 AnimationPlaybackPrivate);
+  playback->priv->proxy_ratio = 1.0;
 }
 
 /************ Public Functions ****************/
@@ -546,6 +568,40 @@ gint
 animation_playback_get_stop (AnimationPlayback *playback)
 {
   return playback->priv->stop;
+}
+
+void
+animation_playback_get_size (AnimationPlayback   *playback,
+                             gint                *width,
+                             gint                *height)
+{
+  animation_get_size (playback->priv->animation,
+                      width, height);
+
+  /* Apply proxy ratio. */
+  *width  *= playback->priv->proxy_ratio;
+  *height *= playback->priv->proxy_ratio;
+}
+
+void
+animation_playback_set_proxy (AnimationPlayback *playback,
+                              gdouble            ratio)
+{
+  g_return_if_fail (ratio > 0.0 && ratio <= 1.0);
+
+  if (playback->priv->proxy_ratio != ratio)
+    {
+      playback->priv->proxy_ratio = ratio;
+      g_signal_emit (playback,
+                     animation_playback_signals[PROXY_CHANGED],
+                     0, ratio);
+    }
+}
+
+gdouble
+animation_playback_get_proxy (AnimationPlayback *playback)
+{
+  return playback->priv->proxy_ratio;
 }
 
 /************ Private Functions ****************/

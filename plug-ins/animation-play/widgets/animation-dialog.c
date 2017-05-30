@@ -1408,9 +1408,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
                                      dialog);
 
   /* Animation. */
-  g_signal_connect (priv->animation, "proxy-changed",
-                    G_CALLBACK (proxy_changed),
-                    dialog);
   g_signal_connect (priv->animation, "framerate-changed",
                     G_CALLBACK (framerate_changed),
                     dialog);
@@ -1424,6 +1421,11 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   g_signal_connect_swapped (priv->animation, "loaded",
                             (GCallback) update_progress,
                             dialog);
+
+  /* Playback. */
+  g_signal_connect (priv->playback, "proxy-changed",
+                    G_CALLBACK (proxy_changed),
+                    dialog);
   g_signal_connect (priv->playback, "render",
                     G_CALLBACK (render_callback),
                     dialog);
@@ -1730,13 +1732,13 @@ proxycombo_activated (GtkEntry        *combo_entry,
   g_free (text);
 
   /* Finally set the preview size, unless they were already good. */
-  if (animation_get_proxy (priv->animation) != ratio)
+  if (animation_playback_get_proxy (priv->playback) != ratio)
     {
       gboolean was_playing;
 
       was_playing = animation_playback_is_playing (priv->playback);
 
-      animation_set_proxy (priv->animation, ratio);
+      animation_playback_set_proxy (priv->playback, ratio);
       update_scale (dialog, get_zoom (dialog, -1));
 
       if (was_playing)
@@ -2209,14 +2211,14 @@ repaint_da (GtkWidget       *darea,
             AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  GtkStyle *style = gtk_widget_get_style (darea);
-  guchar   *da_data;
-  gint      da_width;
-  gint      da_height;
-  gint      preview_width, preview_height;
+  GtkStyle               *style = gtk_widget_get_style (darea);
+  guchar                 *da_data;
+  gint                    da_width;
+  gint                    da_height;
+  gint                    preview_width, preview_height;
 
-  animation_get_size (priv->animation, &preview_width, &preview_height);
-
+  animation_playback_get_size (priv->playback,
+                               &preview_width, &preview_height);
   if (darea == priv->drawing_area)
     {
       da_width  = priv->drawing_area_width;
@@ -2324,7 +2326,8 @@ da_size_callback (GtkWidget       *drawing_area,
       drawing_data = &priv->drawing_area_data;
     }
 
-  animation_get_size (priv->animation, &preview_width, &preview_height);
+  animation_playback_get_size (priv->playback,
+                               &preview_width, &preview_height);
   priv->zoom = MIN ((gdouble) allocation->width / (gdouble) preview_width,
                     (gdouble) allocation->height / (gdouble) preview_height);
 
@@ -2608,7 +2611,8 @@ render_frame (AnimationDialog *dialog,
     }
 
   /* Display the preview buffer. */
-  animation_get_size (priv->animation, &preview_width, &preview_height);
+  animation_playback_get_size (priv->playback,
+                               &preview_width, &preview_height);
   gdk_draw_rgb_image (gtk_widget_get_window (da),
                       (gtk_widget_get_style (da))->white_gc,
                       (gint) (((gint)drawing_width - priv->zoom * preview_width) / 2),
@@ -2884,7 +2888,8 @@ get_zoom (AnimationDialog *dialog,
               gint          width;
               gint          height;
 
-              animation_get_size (priv->animation, &width, &height);
+              animation_playback_get_size (priv->playback,
+                                           &width, &height);
               gtk_widget_get_allocation (priv->scrolled_drawing_area, &allocation);
               if (width > allocation.width || height > allocation.height)
                 {
@@ -2949,8 +2954,8 @@ update_scale (AnimationDialog *dialog,
   if (priv->animation == NULL)
     return;
 
-  animation_get_size (priv->animation, &preview_width, &preview_height);
-
+  animation_playback_get_size (priv->playback,
+                               &preview_width, &preview_height);
   expected_drawing_area_width  = preview_width * scale;
   expected_drawing_area_height = preview_height * scale;
 

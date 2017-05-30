@@ -52,8 +52,6 @@ struct _AnimationClass
                                       gint          duration);
   void         (*framerate_changed)  (Animation    *animation,
                                       gdouble       fps);
-  void         (*proxy)              (Animation    *animation,
-                                      gdouble       ratio);
 
   /* These virtual methods must be implemented by any subclass. */
   gint         (*get_duration)       (Animation    *animation);
@@ -73,7 +71,8 @@ struct _AnimationClass
                                       gint          position);
   GeglBuffer * (*create_frame)       (Animation    *animation,
                                       GObject      *renderer,
-                                      gint          position);
+                                      gint          position,
+                                      gdouble       proxy_ratio);
 };
 
 GType         animation_get_type (void);
@@ -91,9 +90,6 @@ void          animation_save_to_parasite   (Animation   *animation,
 
 gint          animation_get_duration       (Animation   *animation);
 
-void          animation_set_proxy          (Animation   *animation,
-                                            gdouble      ratio);
-gdouble       animation_get_proxy          (Animation   *animation);
 void          animation_get_size           (Animation   *animation,
                                             gint        *width,
                                             gint        *height);

@@ -49,7 +49,6 @@ enum
   FRAMES_CHANGED,
   DURATION_CHANGED,
   FRAMERATE_CHANGED,
-  PROXY_CHANGED,
   LAST_SIGNAL
 };
 
@@ -67,9 +66,6 @@ struct _AnimationPrivate
   gint32    image_id;
 
   gdouble   framerate;
-
-  /* Proxy settings generates a reload. */
-  gdouble   proxy_ratio;
 
   gboolean  loaded;
 };
@@ -197,23 +193,6 @@ animation_class_init (AnimationClass *klass)
                   G_TYPE_NONE,
                   1,
                   G_TYPE_DOUBLE);
-  /**
-   * Animation::proxy:
-   * @animation: the animation.
-   * @ratio: the current proxy ratio [0-1.0].
-   *
-   * The ::proxy signal is emitted to announce a change of proxy size.
-   */
-  animation_signals[PROXY_CHANGED] =
-    g_signal_new ("proxy-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (AnimationClass, proxy),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__DOUBLE,
-                  G_TYPE_NONE,
-                  1,
-                  G_TYPE_DOUBLE);
 
   object_class->finalize     = animation_finalize;
   object_class->set_property = animation_set_property;
@@ -257,7 +236,6 @@ animation_init (Animation *animation)
 
   /* Acceptable settings for the default. */
   priv->framerate   = settings.framerate;
-  priv->proxy_ratio = 1.0;
 }
 
 /************ Public Functions ****************/
@@ -395,32 +373,6 @@ animation_get_duration (Animation *animation)
 }
 
 void
-animation_set_proxy (Animation *animation,
-                     gdouble    ratio)
-{
-  AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
-
-  g_return_if_fail (ratio > 0.0 && ratio <= 1.0);
-
-  if (priv->proxy_ratio != ratio)
-    {
-      priv->proxy_ratio = ratio;
-      g_signal_emit (animation, animation_signals[PROXY_CHANGED], 0, ratio);
-
-      /* A proxy change implies a reload. */
-      animation_load (animation);
-    }
-}
-
-gdouble
-animation_get_proxy (Animation *animation)
-{
-  AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
-
-  return priv->proxy_ratio;
-}
-
-void
 animation_get_size (Animation *animation,
                     gint      *width,
                     gint      *height)
@@ -435,10 +387,6 @@ animation_get_size (Animation *animation,
   /* Full preview size. */
   *width  = image_width;
   *height = image_height;
-
-  /* Apply proxy ratio. */
-  *width  *= priv->proxy_ratio;
-  *height *= priv->proxy_ratio;
 }
 
 void

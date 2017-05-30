@@ -72,9 +72,10 @@ static void     animation_renderer_get_property  (GObject           *object,
 static gpointer animation_renderer_process_queue (AnimationRenderer *renderer);
 static gboolean animation_renderer_idle_update   (AnimationRenderer *renderer);
 
-static void     on_proxy_changed                 (Animation         *animation,
+static void     on_proxy_changed                 (AnimationPlayback *animation,
                                                   gdouble            ratio,
                                                   AnimationRenderer *renderer);
+
 static void     on_frames_changed                (Animation         *animation,
                                                   gint               position,
                                                   gint               length,
@@ -279,9 +280,13 @@ animation_renderer_process_queue (AnimationRenderer *renderer)
 
           if (! buffer)
             {
+              gdouble proxy_ratio;
+
+              proxy_ratio = animation_playback_get_proxy (renderer->priv->playback);
               buffer = ANIMATION_GET_CLASS (animation)->create_frame (animation,
                                                                       G_OBJECT (renderer),
-                                                                      frame);
+                                                                      frame,
+                                                                      proxy_ratio);
               g_weak_ref_set (ref, buffer);
             }
         }
@@ -341,11 +346,12 @@ animation_renderer_idle_update (AnimationRenderer *renderer)
 }
 
 static void
-on_proxy_changed (Animation         *animation,
+on_proxy_changed (AnimationPlayback *playback,
                   gdouble            ratio,
                   AnimationRenderer *renderer)
 {
-  gint i;
+  Animation *animation = animation_playback_get_animation (playback);
+  gint       i;
 
   if (renderer->priv->idle_id)
     {
@@ -508,7 +514,7 @@ animation_renderer_new (GObject *playback)
                     G_CALLBACK (on_duration_changed), renderer);
   g_signal_connect (animation, "loaded",
                     G_CALLBACK (on_animation_loaded), renderer);
-  g_signal_connect (animation, "proxy-changed",
+  g_signal_connect (renderer->priv->playback, "proxy-changed",
                     G_CALLBACK (on_proxy_changed), renderer);
 
   return object;
