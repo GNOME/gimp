@@ -343,9 +343,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (filter_tool->active_picker)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (filter_tool->active_picker),
-                                  FALSE);
+  gimp_filter_tool_disable_color_picking (filter_tool);
 
   /*  set display so the dialog can be hidden on display destruction  */
   tool->display = display;
@@ -802,16 +800,11 @@ gimp_filter_tool_can_pick_color (GimpColorTool    *color_tool,
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
   GimpImage      *image       = gimp_display_get_image (display);
-  gboolean        pick_abyss;
 
   if (gimp_image_get_active_drawable (image) != filter_tool->drawable)
     return FALSE;
 
-  pick_abyss =
-    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (filter_tool->active_picker),
-                     "picker-pick-abyss"));
-
-  return pick_abyss ||
+  return filter_tool->pick_abyss ||
          GIMP_COLOR_TOOL_CLASS (parent_class)->can_pick (color_tool,
                                                          coords, display);
 }
@@ -825,13 +818,8 @@ gimp_filter_tool_pick_color (GimpColorTool  *color_tool,
                              GimpRGB        *color)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
-  gboolean        pick_abyss;
   gint            off_x, off_y;
   gboolean        picked;
-
-  pick_abyss =
-    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (filter_tool->active_picker),
-                     "picker-pick-abyss"));
 
   gimp_item_get_offset (GIMP_ITEM (filter_tool->drawable), &off_x, &off_y);
 
@@ -844,7 +832,7 @@ gimp_filter_tool_pick_color (GimpColorTool  *color_tool,
                                      color_tool->options->average_radius,
                                      pixel, color);
 
-  if (! picked && pick_abyss)
+  if (! picked && filter_tool->pick_abyss)
     {
       color->r = 0.0;
       color->g = 0.0;
@@ -867,18 +855,12 @@ gimp_filter_tool_color_picked (GimpColorTool      *color_tool,
                                const GimpRGB      *color)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
-  gpointer        identifier;
 
-  g_return_if_fail (GTK_IS_WIDGET (filter_tool->active_picker));
-
-  identifier = g_object_get_data (G_OBJECT (filter_tool->active_picker),
-                                  "picker-identifier");
-
-  GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->color_picked (filter_tool,
-                                                         identifier,
-                                                         x, y,
-                                                         sample_format,
-                                                         color);
+  GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->color_picked (
+    filter_tool,
+    filter_tool->pick_identifier,
+    x, y,
+    sample_format, color);
 }
 
 static void
@@ -989,9 +971,7 @@ static void
 gimp_filter_tool_dialog_unmap (GtkWidget      *dialog,
                                GimpFilterTool *filter_tool)
 {
-  if (filter_tool->active_picker)
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (filter_tool->active_picker),
-                                  FALSE);
+  gimp_filter_tool_disable_color_picking (filter_tool);
 }
 
 static void
@@ -1570,28 +1550,68 @@ gimp_filter_tool_dialog_get_vbox (GimpFilterTool *filter_tool)
   return gimp_tool_gui_get_vbox (filter_tool->gui);
 }
 
+void
+gimp_filter_tool_enable_color_picking (GimpFilterTool *filter_tool,
+                                       gpointer        identifier,
+                                       gboolean        pick_abyss)
+{
+  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
+
+  gimp_filter_tool_disable_color_picking (filter_tool);
+
+  /* note that ownership over `identifier` is not transferred, and its lifetime
+   * should be managed by the caller.
+   */
+  filter_tool->pick_identifier = identifier;
+  filter_tool->pick_abyss      = pick_abyss;
+
+  gimp_color_tool_enable (GIMP_COLOR_TOOL (filter_tool),
+                          GIMP_COLOR_TOOL_GET_OPTIONS (filter_tool));
+}
+
+void
+gimp_filter_tool_disable_color_picking (GimpFilterTool *filter_tool)
+{
+  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
+
+  if (filter_tool->active_picker)
+    {
+      GtkToggleButton *toggle = GTK_TOGGLE_BUTTON (filter_tool->active_picker);
+
+      filter_tool->active_picker = NULL;
+
+      gtk_toggle_button_set_active (toggle, FALSE);
+    }
+
+  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (filter_tool)))
+    gimp_color_tool_disable (GIMP_COLOR_TOOL (filter_tool));
+}
+
 static void
 gimp_filter_tool_color_picker_toggled (GtkWidget      *widget,
                                        GimpFilterTool *filter_tool)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
+      gpointer identifier;
+      gboolean pick_abyss;
+
       if (filter_tool->active_picker == widget)
         return;
 
-      if (filter_tool->active_picker)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (filter_tool->active_picker),
-                                      FALSE);
+      identifier =                  g_object_get_data (G_OBJECT (widget),
+                                                       "picker-identifier");
+      pick_abyss = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                       "picker-pick-abyss"));
+
+      gimp_filter_tool_enable_color_picking (filter_tool,
+                                             identifier, pick_abyss);
 
       filter_tool->active_picker = widget;
-
-      gimp_color_tool_enable (GIMP_COLOR_TOOL (filter_tool),
-                              GIMP_COLOR_TOOL_GET_OPTIONS (filter_tool));
     }
   else if (filter_tool->active_picker == widget)
     {
-      filter_tool->active_picker = NULL;
-      gimp_color_tool_disable (GIMP_COLOR_TOOL (filter_tool));
+      gimp_filter_tool_disable_color_picking (filter_tool);
     }
 }
 

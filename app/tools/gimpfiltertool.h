@@ -60,6 +60,9 @@ struct _GimpFilterTool
 
   GimpGuide             *preview_guide;
 
+  gpointer               pick_identifier;
+  gboolean               pick_abyss;
+
   /* dialog */
   gboolean               overlay;
   GimpToolGui           *gui;
@@ -104,31 +107,35 @@ struct _GimpFilterToolClass
 };
 
 
-GType       gimp_filter_tool_get_type         (void) G_GNUC_CONST;
+GType       gimp_filter_tool_get_type              (void) G_GNUC_CONST;
 
-void        gimp_filter_tool_get_operation    (GimpFilterTool   *filter_tool);
+void        gimp_filter_tool_get_operation         (GimpFilterTool   *filter_tool);
 
-void        gimp_filter_tool_set_has_settings (GimpFilterTool   *filter_tool,
-                                               gboolean          has_settings);
+void        gimp_filter_tool_set_has_settings      (GimpFilterTool   *filter_tool,
+                                                    gboolean          has_settings);
 
-void        gimp_filter_tool_set_config       (GimpFilterTool   *filter_tool,
-                                               GimpConfig       *config);
+void        gimp_filter_tool_set_config            (GimpFilterTool   *filter_tool,
+                                                    GimpConfig       *config);
 
-void        gimp_filter_tool_edit_as          (GimpFilterTool   *filter_tool,
-                                               const gchar      *new_tool_id,
-                                               GimpConfig       *config);
+void        gimp_filter_tool_edit_as               (GimpFilterTool   *filter_tool,
+                                                    const gchar      *new_tool_id,
+                                                    GimpConfig       *config);
 
-gboolean    gimp_filter_tool_on_guide         (GimpFilterTool   *filter_tool,
-                                               const GimpCoords *coords,
-                                               GimpDisplay      *display);
+gboolean    gimp_filter_tool_on_guide              (GimpFilterTool   *filter_tool,
+                                                    const GimpCoords *coords,
+                                                    GimpDisplay      *display);
 
-GtkWidget * gimp_filter_tool_dialog_get_vbox  (GimpFilterTool   *filter_tool);
+GtkWidget * gimp_filter_tool_dialog_get_vbox       (GimpFilterTool   *filter_tool);
 
-GtkWidget * gimp_filter_tool_add_color_picker (GimpFilterTool   *filter_tool,
-                                               gpointer          identifier,
-                                               const gchar      *icon_name,
-                                               const gchar      *tooltip,
-                                               gboolean          pick_abyss);
+void        gimp_filter_tool_enable_color_picking  (GimpFilterTool   *filter_tool,
+                                                    gpointer          identifier,
+                                                    gboolean          pick_abyss);
+void        gimp_filter_tool_disable_color_picking (GimpFilterTool   *filter_tool);
+GtkWidget * gimp_filter_tool_add_color_picker      (GimpFilterTool   *filter_tool,
+                                                    gpointer          identifier,
+                                                    const gchar      *icon_name,
+                                                    const gchar      *tooltip,
+                                                    gboolean          pick_abyss);
 
 
 #endif /* __GIMP_FILTER_TOOL_H__ */
