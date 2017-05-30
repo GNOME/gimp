@@ -49,7 +49,7 @@ Layers and compositing:
     color space being used.
 
 
-GUI:
+GUI and usability:
 
   - Easily add or remove layer masks by clicking either the layer
     preview or a new button in the Layers dialog.
@@ -88,7 +88,7 @@ GUI:
 
 Color selection and management:
 
-  - Add the profile import policy to prefs -> import
+  - Add the profile import policy to Preferences -> Import.
   - Color management for GEGL-based filters is expensive, so it's off
     by default for now, and options are hidden by default too.
   - Add LCH color selector, with support for gamut checking.
@@ -138,8 +138,8 @@ Tools:
     Sample Points dialog now), as well as values in CIE LAB and CIE LCH.
   - Uncommitted selection by the Intelligent Scissors tool is not
     discarded on tool change anymore.
-  - GIMP now checks whether the first and the last isegments are
-    distinct before closing the curve.
+  - For Intelligent Scissors, GIMP now checks whether the first and the
+    last isegments are distinct before closing the curve.
 
 Painting:
 
@@ -164,7 +164,7 @@ File Formats
     specifying PNG bitdepth/variant at exporting time.
   - Load PSD files with layers which contain additional information
     with a length that is not divisible by 4.
-  - Add support for linear burn, linear light, vivid light, pin light, 
+  - Add support for linear burn, linear light, vivid light, pin light,
     and hard mix layer modes in PSD (importing and exporting).
   - Add support to import/export layer color tags from/to PSD files.
   - Optionally convert all imported (not XCF) images to 32-bit linear
@@ -173,7 +173,7 @@ File Formats
   - Optionally add alpha channel to layers of imported images
     (configurable in Preferences > Import).
   - Support writing PNM files with 16-bit image precision.
-  - make the raw image importer configurable
+  - Make the default raw (DLSR) image importer configurable.
 
 Printing
 
@@ -205,6 +205,8 @@ Color Palettes
 PDB:
 
   - Rename *-paste-as-new to *-paste-as-new-image.
+  - Add PDB API for layer blend space, compositing space, and
+    compositing mode.
 
 Build:
 
