@@ -72,6 +72,9 @@ static void     animation_renderer_get_property  (GObject           *object,
 static gpointer animation_renderer_process_queue (AnimationRenderer *renderer);
 static gboolean animation_renderer_idle_update   (AnimationRenderer *renderer);
 
+static void     on_proxy_changed                 (Animation         *animation,
+                                                  gdouble            ratio,
+                                                  AnimationRenderer *renderer);
 static void     on_frames_changed                (Animation         *animation,
                                                   gint               position,
                                                   gint               length,
@@ -338,6 +341,56 @@ animation_renderer_idle_update (AnimationRenderer *renderer)
 }
 
 static void
+on_proxy_changed (Animation         *animation,
+                  gdouble            ratio,
+                  AnimationRenderer *renderer)
+{
+  gint i;
+
+  if (renderer->priv->idle_id)
+    {
+      g_source_remove (renderer->priv->idle_id);
+      renderer->priv->idle_id = 0;
+    }
+  /* Stop any rendering. */
+  for (i = 0; i < animation_get_duration (animation); i++)
+    {
+      g_async_queue_remove (renderer->priv->queue, GINT_TO_POINTER (i + 1));
+    }
+  /* Delete the cache. */
+  g_mutex_lock (&renderer->priv->lock);
+  for (i = 0; i < animation_get_duration (animation); i++)
+    {
+      if (renderer->priv->cache[i])
+        {
+          g_object_unref (renderer->priv->cache[i]);
+          renderer->priv->cache[i] = NULL;
+        }
+      if (renderer->priv->hashes[i])
+        {
+          g_free (renderer->priv->hashes[i]);
+          renderer->priv->hashes[i] = NULL;
+        }
+    }
+  g_mutex_unlock (&renderer->priv->lock);
+  /* Queue the whole animation to be updated. */
+  for (i = 0; i < animation_get_duration (animation); i++)
+    {
+      g_async_queue_push_sorted (renderer->priv->queue,
+                                 GINT_TO_POINTER (i + 1),
+                                 (GCompareDataFunc) compare_int_from,
+                                 /* TODO: right now I am sorting the render
+                                  * queue in common order. I will have to test
+                                  * sorting it from the current position.
+                                  */
+                                 0);
+    }
+  renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
+                                             (GSourceFunc) animation_renderer_idle_update,
+                                             renderer, NULL);
+}
+
+static void
 on_frames_changed (Animation         *animation,
                    gint               position,
                    gint               length,
@@ -455,6 +508,8 @@ animation_renderer_new (GObject *playback)
                     G_CALLBACK (on_duration_changed), renderer);
   g_signal_connect (animation, "loaded",
                     G_CALLBACK (on_animation_loaded), renderer);
+  g_signal_connect (animation, "proxy-changed",
+                    G_CALLBACK (on_proxy_changed), renderer);
 
   return object;
 }
