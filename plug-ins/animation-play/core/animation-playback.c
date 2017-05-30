@@ -271,12 +271,19 @@ gchar *
 animation_playback_serialize (AnimationPlayback *playback)
 {
   gchar *xml;
+  gchar  proxy[6];
 
+  /* Make sure to have a locale-independent string. Also no need to have
+   * useless precision. This should give 3 digits after the decimal point.
+   * More than enough.
+   */
+  g_ascii_dtostr ((gchar*) &proxy, 6, playback->priv->proxy_ratio);
   xml = g_strdup_printf ("<playback position=\"%d\" "
-                         "start=\"%d\" stop=\"%d\"/>",
+                         "start=\"%d\" stop=\"%d\" proxy=\"%s\"/>",
                          playback->priv->position,
                          playback->priv->start,
-                         playback->priv->stop);
+                         playback->priv->stop,
+                         proxy);
   return xml;
 }
 
@@ -851,6 +858,11 @@ animation_playback_start_element (GMarkupParseContext  *context,
                   playback->priv->stop = stop;
                   playback->priv->stop_at_end = (stop == duration - 1);
                 }
+            }
+          else if (strcmp (*names, "proxy") == 0 && **values)
+            {
+              gdouble ratio = g_ascii_strtod (*values, NULL);
+              animation_playback_set_proxy (playback, ratio);
             }
 
           names++;
