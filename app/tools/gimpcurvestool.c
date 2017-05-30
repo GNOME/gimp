@@ -82,14 +82,6 @@ static void       gimp_curves_tool_oper_update     (GimpTool             *tool,
                                                     gboolean              proximity,
                                                     GimpDisplay          *display);
 
-static void       gimp_curves_tool_color_picked    (GimpColorTool        *color_tool,
-                                                    GimpColorPickState    pick_state,
-                                                    gdouble               x,
-                                                    gdouble               y,
-                                                    const Babl           *sample_format,
-                                                    gpointer              pixel,
-                                                    const GimpRGB        *color);
-
 static gchar    * gimp_curves_tool_get_operation   (GimpFilterTool       *filter_tool,
                                                     gchar               **title,
                                                     gchar               **description,
@@ -108,6 +100,12 @@ static gboolean   gimp_curves_tool_settings_import (GimpFilterTool       *filter
 static gboolean   gimp_curves_tool_settings_export (GimpFilterTool       *filter_tool,
                                                     GOutputStream        *output,
                                                     GError              **error);
+static void       gimp_curves_tool_color_picked    (GimpFilterTool       *filter_tool,
+                                                    gpointer              identifier,
+                                                    gdouble               x,
+                                                    gdouble               y,
+                                                    const Babl           *sample_format,
+                                                    const GimpRGB        *color);
 
 static void       gimp_curves_tool_export_setup    (GimpSettingsBox      *settings_box,
                                                     GtkFileChooserDialog *dialog,
@@ -166,7 +164,6 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 {
   GObjectClass        *object_class      = G_OBJECT_CLASS (klass);
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
-  GimpColorToolClass  *color_tool_class  = GIMP_COLOR_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
   object_class->constructed          = gimp_curves_tool_constructed;
@@ -176,13 +173,12 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
   tool_class->key_press              = gimp_curves_tool_key_press;
   tool_class->oper_update            = gimp_curves_tool_oper_update;
 
-  color_tool_class->picked           = gimp_curves_tool_color_picked;
-
   filter_tool_class->get_operation   = gimp_curves_tool_get_operation;
   filter_tool_class->dialog          = gimp_curves_tool_dialog;
   filter_tool_class->reset           = gimp_curves_tool_reset;
   filter_tool_class->settings_import = gimp_curves_tool_settings_import;
   filter_tool_class->settings_export = gimp_curves_tool_settings_export;
+  filter_tool_class->color_picked    = gimp_curves_tool_color_picked;
 }
 
 static void
@@ -202,11 +198,6 @@ gimp_curves_tool_constructed (GObject *object)
   g_signal_connect_object (GIMP_FILTER_TOOL (object)->config, "notify",
                            G_CALLBACK (gimp_curves_tool_config_notify),
                            object, 0);
-
-  /*  always pick colors  */
-  gimp_color_tool_enable (GIMP_COLOR_TOOL (object),
-                          GIMP_COLOR_TOOL_GET_OPTIONS (object));
-
 }
 
 static gboolean
@@ -214,9 +205,10 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                              GimpDisplay  *display,
                              GError      **error)
 {
-  GimpCurvesTool *c_tool   = GIMP_CURVES_TOOL (tool);
-  GimpImage      *image    = gimp_display_get_image (display);
-  GimpDrawable   *drawable = gimp_image_get_active_drawable (image);
+  GimpCurvesTool *c_tool      = GIMP_CURVES_TOOL (tool);
+  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpImage      *image       = gimp_display_get_image (display);
+  GimpDrawable   *drawable    = gimp_image_get_active_drawable (image);
   GimpHistogram  *histogram;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
@@ -240,6 +232,9 @@ gimp_curves_tool_initialize (GimpTool     *tool,
       gimp_curve_view_set_range_x (GIMP_CURVE_VIEW (c_tool->graph), 0, 100);
       gimp_curve_view_set_range_y (GIMP_CURVE_VIEW (c_tool->graph), 0, 100);
     }
+
+  /*  always pick colors  */
+  gimp_filter_tool_enable_color_picking (filter_tool, NULL, FALSE);
 
   return TRUE;
 }
@@ -368,16 +363,14 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
 }
 
 static void
-gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
-                               GimpColorPickState  pick_state,
-                               gdouble             x,
-                               gdouble             y,
-                               const Babl         *sample_format,
-                               gpointer            pixel,
-                               const GimpRGB      *color)
+gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
+                               gpointer        identifier,
+                               gdouble         x,
+                               gdouble         y,
+                               const Babl     *sample_format,
+                               const GimpRGB  *color)
 {
-  GimpCurvesTool   *tool        = GIMP_CURVES_TOOL (color_tool);
-  GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (color_tool);
+  GimpCurvesTool   *tool        = GIMP_CURVES_TOOL (filter_tool);
   GimpCurvesConfig *config      = GIMP_CURVES_CONFIG (filter_tool->config);
   GimpDrawable     *drawable;
 
