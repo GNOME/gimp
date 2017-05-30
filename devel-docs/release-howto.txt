@@ -4,7 +4,7 @@
                   a check-list for doing a GIMP release
 
  ( ) Announce a string freeze on the GIMP Developer mailing list.
- 
+
      Mention that a release is planned, what brach will be frozen, and
      how long the string freeze is going to last. Plan for a couple of
      weeks at least. No translatable strings must be touched during
@@ -63,9 +63,6 @@
 
      [ ] Run 'make' to do a complete build of the source tree.
 
-     [ ] Close all running GIMP instances, we don't want any unique
-         code called during 'make distcheck'.
-
      [ ] Run 'make distcheck'. Avoid passing make -j since that can
          cause mysterious fails.
 
@@ -93,6 +90,10 @@
  ( ) Bump the version number (past the tagged version) in configure.ac
      to the next odd micro and commit this change. GIT versions always
      have odd micro numbers.
+
+     [ ] In configure.ac, modify gimp_micro_version accordingly.
+
+     [ ] In configure.ac, modify gimp_interface_age accordingly.
 
  ( ) Publish dist tarballs:
 
@@ -124,8 +125,8 @@
      [ ] Create a news items for the release in content/news/
 
      [ ] Commit and push the changes, the web server should then
-         update itself soon (every 5 minutes). Go to
-         https://testing.gimp.org to verify the changes.
+         update itself soon (it checks for updates every 5 minutes).
+         Go to https://testing.gimp.org to verify the changes.
 
  ( ) Grab a properly chilled beverage and enjoy yourself.
 
@@ -137,8 +138,8 @@
          the changes you did in the testing branch.
 
      [ ] Push the changes, the web server should then update itself
-         soon (every 15 minutes). Got to https://www.gimp.org to
-         verify the changes.
+         soon (it checks for updates every 15 minutes).
+         Go to https://www.gimp.org to verify the changes.
 
      [ ] Due to the tendency of news sites to front-run release
          articles even before actual announcements appear, publish
