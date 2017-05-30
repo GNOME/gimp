@@ -609,7 +609,7 @@ shoot_dialog (GdkScreen **screen)
                                     _("Color Profile"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &shootvals.profile_policy,
-                                    SCREENSHOT_PROFILE_POLICY_MONITOR,
+                                    shootvals.profile_policy,
 
                                     _("Tag image with _monitor profile"),
                                     SCREENSHOT_PROFILE_POLICY_MONITOR,
