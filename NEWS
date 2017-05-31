@@ -152,7 +152,6 @@ Painting:
   - Allow painting on transparent layers with modes other than normal.
   - Add a specialized convolution algorithm for the hardness blur
     to make it faster.
-  - Make paint tools draw in all open views.
 
 File Formats
 
