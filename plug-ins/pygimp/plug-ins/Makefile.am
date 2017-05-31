@@ -28,6 +28,6 @@ pluginexec_SCRIPTS = $(scripts)
 consoleexecdir = $(gimpplugindir)/plug-ins/python-console
 console_scripts = python-console.py
 consoleexec_SCRIPTS = $(console_scripts)
-consoleexec_DATA = pyconsole.py
+dist_consoleexec_DATA = pyconsole.py
 
 EXTRA_DIST = $(scripts) $(test_scripts) $(console_scripts)
