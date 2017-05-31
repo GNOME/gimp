@@ -25,8 +25,9 @@ pluginexec_SCRIPTS = $(scripts)
 
 # python-console has a data file.
 # Therefore let's move it to its own sub-directory.
-pythonconsoledir = $(gimpplugindir)/plug-ins/python-console
-pythonconsole_SCRIPTS = python-console.py
-dist_pythonconsole_DATA = pyconsole.py
+consoleexecdir = $(gimpplugindir)/plug-ins/python-console
+console_scripts = python-console.py
+consoleexec_SCRIPTS = $(console_scripts)
+consoleexec_DATA = pyconsole.py
 
-EXTRA_DIST = $(scripts) $(test_scripts)
+EXTRA_DIST = $(scripts) $(test_scripts) $(console_scripts)
