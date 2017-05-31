@@ -90,10 +90,15 @@ Or simply update them:
 
   The same repository will contain all the builds.
 
-* Test it with:
+* Test it locally with:
 
-> flatpak --user remote-add --no-gpg-verify gimp-repo gimp-repo
-> flatpak --user install gimp-repo org.gimp.GIMP
+> flatpak --user remote-add --no-gpg-verify gimp /path/to/repo
+
+Or remotely:
+
+> flatpak --user remote-add --no-gpg-verify gimp http://example.com/repo
+
+> flatpak --user install gimp org.gimp.GIMP
 > flatpak run org.gimp.GIMP
 
   Also an entry "(Dev) GNU Image Manipulation Software" should now be
