@@ -40,6 +40,8 @@ struct _GimpGeglProcedure
 {
   GimpProcedure  parent_instance;
 
+  GimpRunMode    default_run_mode;
+
   gchar         *menu_label;
   gchar         *label;
   gchar         *help_id;
@@ -54,6 +56,7 @@ struct _GimpGeglProcedureClass
 GType           gimp_gegl_procedure_get_type (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_gegl_procedure_new      (Gimp        *gimp,
+                                              GimpRunMode  default_run_mode,
                                               const gchar *operation,
                                               const gchar *name,
                                               const gchar *menu_label,

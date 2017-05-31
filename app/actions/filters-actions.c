@@ -97,6 +97,24 @@ static const GimpActionEntry filters_menu_actions[] =
 
 static const GimpStringActionEntry filters_actions[] =
 {
+  { "filters-invert-linear", GIMP_ICON_INVERT,
+    NC_("filters-action", "_Linear Invert"), NULL, NULL,
+    "gegl:invert-linear",
+    GIMP_HELP_FILTER_INVERT_LINEAR },
+
+  { "filters-invert-perceptual", GIMP_ICON_INVERT,
+    NC_("filters-action", "In_vert"), NULL, NULL,
+    "gegl:invert-gamma",
+    GIMP_HELP_FILTER_INVERT_PERCEPTUAL },
+
+  { "filters-invert-value", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Value Invert"), NULL, NULL,
+    "gegl:value-invert",
+    GIMP_HELP_FILTER_INVERT_VALUE }
+};
+
+static const GimpStringActionEntry filters_interactive_actions[] =
+{
   { "filters-alien-map", GIMP_ICON_GEGL,
     NC_("filters-action", "_Alien Map..."), NULL, NULL,
     "gegl:alien-map",
@@ -306,21 +324,6 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Image Gradient..."), NULL, NULL,
     "gegl:image-gradient",
     GIMP_HELP_FILTER_IMAGE_GRADIENT },
-
-  { "filters-invert-linear", GIMP_ICON_INVERT,
-    NC_("filters-action", "_Linear Invert"), NULL, NULL,
-    "gegl:invert-linear",
-    GIMP_HELP_FILTER_INVERT_LINEAR },
-
-  { "filters-invert-perceptual", GIMP_ICON_INVERT,
-    NC_("filters-action", "In_vert"), NULL, NULL,
-    "gegl:invert-gamma",
-    GIMP_HELP_FILTER_INVERT_PERCEPTUAL },
-
-  { "filters-invert-value", GIMP_ICON_GEGL,
-    NC_("filters-action", "_Value Invert"), NULL, NULL,
-    "gegl:value-invert",
-    GIMP_HELP_FILTER_INVERT_VALUE },
 
   { "filters-kaleidoscope", GIMP_ICON_GEGL,
     NC_("filters-action", "_Kaleidoscope..."), NULL, NULL,
@@ -639,7 +642,12 @@ filters_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_actions,
                                         G_N_ELEMENTS (filters_actions),
-                                        G_CALLBACK (filters_filter_cmd_callback));
+                                        G_CALLBACK (filters_apply_cmd_callback));
+
+  gimp_action_group_add_string_actions (group, "filters-action",
+                                        filters_interactive_actions,
+                                        G_N_ELEMENTS (filters_interactive_actions),
+                                        G_CALLBACK (filters_apply_interactive_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, "filters-action",
                                       filters_repeat_actions,
@@ -649,6 +657,18 @@ filters_actions_setup (GimpActionGroup *group)
   for (i = 0; i < G_N_ELEMENTS (filters_actions); i++)
     {
       const GimpStringActionEntry *entry = &filters_actions[i];
+      const gchar                 *description;
+
+      description = gegl_operation_get_key (entry->value, "description");
+
+      if (description)
+        gimp_action_group_set_action_tooltip (group, entry->name,
+                                              description);
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (filters_interactive_actions); i++)
+    {
+      const GimpStringActionEntry *entry = &filters_interactive_actions[i];
       const gchar                 *description;
 
       description = gegl_operation_get_key (entry->value, "description");

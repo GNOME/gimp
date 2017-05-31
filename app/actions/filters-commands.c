@@ -38,15 +38,41 @@
 /*  public functions  */
 
 void
-filters_filter_cmd_callback (GtkAction   *action,
-                             const gchar *operation,
-                             gpointer     data)
+filters_apply_cmd_callback (GtkAction   *action,
+                            const gchar *operation,
+                            gpointer     data)
 {
   GimpDisplay   *display;
   GimpProcedure *procedure;
   return_if_no_display (display, data);
 
   procedure = gimp_gegl_procedure_new (action_data_get_gimp (data),
+                                       GIMP_RUN_NONINTERACTIVE,
+                                       operation,
+                                       gtk_action_get_name (action),
+                                       gtk_action_get_label (action),
+                                       gtk_action_get_tooltip (action),
+                                       gtk_action_get_icon_name (action),
+                                       g_object_get_qdata (G_OBJECT (action),
+                                                           GIMP_HELP_ID));
+
+  gimp_filter_history_add (action_data_get_gimp (data), procedure);
+  filters_history_cmd_callback (NULL, procedure, data);
+
+  g_object_unref (procedure);
+}
+
+void
+filters_apply_interactive_cmd_callback (GtkAction   *action,
+                                        const gchar *operation,
+                                        gpointer     data)
+{
+  GimpDisplay   *display;
+  GimpProcedure *procedure;
+  return_if_no_display (display, data);
+
+  procedure = gimp_gegl_procedure_new (action_data_get_gimp (data),
+                                       GIMP_RUN_INTERACTIVE,
                                        operation,
                                        gtk_action_get_name (action),
                                        gtk_action_get_label (action),
@@ -80,18 +106,32 @@ filters_repeat_cmd_callback (GtkAction *action,
   if (procedure)
     {
       GimpValueArray *args;
+      gboolean        success = FALSE;
 
       args = procedure_commands_get_display_args (procedure, display, NULL);
 
       if (args)
         {
-          if (procedure_commands_run_procedure_async (procedure, gimp,
-                                                      GIMP_PROGRESS (display),
-                                                      run_mode, args,
-                                                      display))
+          if (GIMP_IS_GEGL_PROCEDURE (procedure) &&
+              GIMP_GEGL_PROCEDURE (procedure)->default_run_mode ==
+              GIMP_RUN_NONINTERACTIVE)
             {
-              gimp_filter_history_add (gimp, procedure);
+              success =
+                procedure_commands_run_procedure (procedure, gimp,
+                                                  GIMP_PROGRESS (display),
+                                                  args);
             }
+          else
+            {
+              success =
+                procedure_commands_run_procedure_async (procedure, gimp,
+                                                        GIMP_PROGRESS (display),
+                                                        run_mode, args,
+                                                        display);
+            }
+
+          if (success)
+            gimp_filter_history_add (gimp, procedure);
 
           gimp_value_array_unref (args);
         }
@@ -113,13 +153,28 @@ filters_history_cmd_callback (GtkAction     *action,
 
   if (args)
     {
-      if (procedure_commands_run_procedure_async (procedure, gimp,
-                                                  GIMP_PROGRESS (display),
-                                                  GIMP_RUN_INTERACTIVE, args,
-                                                  display))
+      gboolean success = FALSE;
+
+      if (GIMP_IS_GEGL_PROCEDURE (procedure) &&
+          GIMP_GEGL_PROCEDURE (procedure)->default_run_mode ==
+          GIMP_RUN_NONINTERACTIVE)
         {
-          gimp_filter_history_add (gimp, procedure);
+          success =
+            procedure_commands_run_procedure (procedure, gimp,
+                                              GIMP_PROGRESS (display),
+                                              args);
         }
+      else
+        {
+          success =
+            procedure_commands_run_procedure_async (procedure, gimp,
+                                                    GIMP_PROGRESS (display),
+                                                    GIMP_RUN_INTERACTIVE, args,
+                                                    display);
+        }
+
+      if (success)
+        gimp_filter_history_add (gimp, procedure);
 
       gimp_value_array_unref (args);
     }
