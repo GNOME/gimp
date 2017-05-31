@@ -362,36 +362,6 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
     }
 }
 
-static void
-gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
-                               gpointer        identifier,
-                               gdouble         x,
-                               gdouble         y,
-                               const Babl     *sample_format,
-                               const GimpRGB  *color)
-{
-  GimpCurvesTool   *tool        = GIMP_CURVES_TOOL (filter_tool);
-  GimpCurvesConfig *config      = GIMP_CURVES_CONFIG (filter_tool->config);
-  GimpDrawable     *drawable;
-
-  drawable = GIMP_FILTER_TOOL (tool)->drawable;
-
-  tool->picked_color[GIMP_HISTOGRAM_RED]   = color->r;
-  tool->picked_color[GIMP_HISTOGRAM_GREEN] = color->g;
-  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = color->b;
-
-  if (gimp_drawable_has_alpha (drawable))
-    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = color->a;
-  else
-    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = -1;
-
-  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (color->r, color->g),
-                                                  color->b);
-
-  gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
-                            tool->picked_color[config->channel]);
-}
-
 static gchar *
 gimp_curves_tool_get_operation (GimpFilterTool  *filter_tool,
                                 gchar          **title,
@@ -674,6 +644,36 @@ gimp_curves_tool_settings_export (GimpFilterTool  *filter_tool,
   return GIMP_FILTER_TOOL_CLASS (parent_class)->settings_export (filter_tool,
                                                                  output,
                                                                  error);
+}
+
+static void
+gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
+                               gpointer        identifier,
+                               gdouble         x,
+                               gdouble         y,
+                               const Babl     *sample_format,
+                               const GimpRGB  *color)
+{
+  GimpCurvesTool   *tool   = GIMP_CURVES_TOOL (filter_tool);
+  GimpCurvesConfig *config = GIMP_CURVES_CONFIG (filter_tool->config);
+  GimpDrawable     *drawable;
+
+  drawable = GIMP_FILTER_TOOL (tool)->drawable;
+
+  tool->picked_color[GIMP_HISTOGRAM_RED]   = color->r;
+  tool->picked_color[GIMP_HISTOGRAM_GREEN] = color->g;
+  tool->picked_color[GIMP_HISTOGRAM_BLUE]  = color->b;
+
+  if (gimp_drawable_has_alpha (drawable))
+    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = color->a;
+  else
+    tool->picked_color[GIMP_HISTOGRAM_ALPHA] = -1;
+
+  tool->picked_color[GIMP_HISTOGRAM_VALUE] = MAX (MAX (color->r, color->g),
+                                                  color->b);
+
+  gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
+                            tool->picked_color[config->channel]);
 }
 
 static void
