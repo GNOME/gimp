@@ -21,11 +21,13 @@ The following people have contributed code to GIMP:
  Karl-Johan Andersson
  Rob Antonishen
  Nicola Archibald
+ Timm Bäder
  Luis Barrancos
  Jerry Baker
  John Beale
  Zach Beane
  Tom Bech
+ Daniel P. Berrange
  Marc Bless
  Edward Blevins
  Reagan Blundell
@@ -56,6 +58,7 @@ The following people have contributed code to GIMP:
  Daniel Cotting
  Jay Cox
  Kevin Cozens
+ Jeremiah Darais
  Michael Deal
  Alexia Death
  Brian Degenhardt
@@ -88,6 +91,7 @@ The following people have contributed code to GIMP:
  GG
  Graeme Gill
  Pedro Gimeno
+ Richard Gitschlag
  Scott Goehring
  Heiko Goller
  Marcelo de Gomensoro Malheiros
@@ -109,12 +113,14 @@ The following people have contributed code to GIMP:
  David Hodson
  Christoph Hoegl
  Wolfgang Hofer
+ Éric Hoffman
  Patrick Horgan
  Alan Horkan
  Daniel Hornung
  Christopher Howard
  Jan Hubička
  Alexander Hämmerle
+ HJ Imbens
  Barak Itkin
  Ben Jackson
  Tim Janik
@@ -147,6 +153,7 @@ The following people have contributed code to GIMP:
  Marco Lamberto
  Jens Lautenbacher
  Laramie Leavitt
+ Roman Lebedev
  Tom Lechner
  Elliot Lee
  Marc Lehmann
@@ -171,11 +178,14 @@ The following people have contributed code to GIMP:
  John Marshall
  Kelly Martin
  Torsten Martinsen
+ Pascal Massimino
  Johannes Matschke
  Takeshi Matsuyama
  Gordon Matzigkeit
  Téo Mazars
+ Robert McHardy
  Gregory McLean
+ Richard McLean
  Jörn Meier
  Mike Melancon
  Federico Mena Quintero
@@ -216,6 +226,7 @@ The following people have contributed code to GIMP:
  Alan Paeth
  Jehan Pagès
  Jay Painter
+ Juan Palacios
  Ville Pätsi
  Akkana Peck
  Asbjorn Pettersen
@@ -227,6 +238,7 @@ The following people have contributed code to GIMP:
  John Ralls
  Dennis Ranke
  Tom Rathborne
+ Debarshi Ray
  Martin Renold
  Jens Restemeier
  Kristian Rietveld
@@ -265,6 +277,7 @@ The following people have contributed code to GIMP:
  Adam Spiers
  Jakub Steiner
  Omari Stephens
+ Tobias Stoeckmann
  Elle Stone
  Nathan Summers
  Mike Sweet
@@ -299,6 +312,7 @@ The following people have contributed code to GIMP:
  Andrew Wyatt
  Yoshinori Yamakawa
  Shirasaki Yasuhiro
+ Mihail Zenkov
  Zhenfeng Zhao
  Simon Zilliken
  Przemyslaw Zych
