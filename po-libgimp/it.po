@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-10 13:11+0200\n"
-"PO-Revision-Date: 2017-05-10 13:13+0200\n"
+"PO-Revision-Date: 2017-06-01 13:16+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -1829,7 +1829,7 @@ msgstr "Non è un file normale."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:145
 msgid "Select color profile from disk..."
-msgstr "Seleziona il profilo di colore da disco..."
+msgstr "Seleziona il profilo di colore dal disco..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:317
 msgctxt "profile"
