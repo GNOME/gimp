@@ -833,7 +833,7 @@ gimp_color_scale_render (GimpColorScale *scale)
       from_lch = TRUE;
       break;
     case GIMP_COLOR_SELECTOR_LCH_CHROMA:
-      multiplier = 100;
+      multiplier = 200;
       from_lch = TRUE;
       break;
     case GIMP_COLOR_SELECTOR_LCH_HUE:

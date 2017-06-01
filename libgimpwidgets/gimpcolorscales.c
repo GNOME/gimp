@@ -151,7 +151,7 @@ gimp_color_scales_init (GimpColorScales *scales)
   static const gdouble slider_min_vals[] =
     {   0,   0,   0,      0,    0,    0,   0,     0,   0,   0 };
   static const gdouble slider_max_vals[] =
-    { 360, 100, 100,    100,  100,  100, 100,   100, 100, 360 };
+    { 360, 100, 100,    100,  100,  100, 100,   100, 200, 360 };
   static const gdouble slider_incs[] =
     {  30,  10,  10,     16,   16,   16,  10,    10,  10,  30 };
 

@@ -691,16 +691,16 @@ gimp_color_select_update_values (GimpColorSelect *select)
 
     case COLOR_SELECT_LCH_LIGHTNESS:
       lch.h = select->pos[0] * 360;
-      lch.c = select->pos[1] * 100;
+      lch.c = select->pos[1] * 200;
       lch.l = select->pos[2] * 100;
       break;
     case COLOR_SELECT_LCH_CHROMA:
       lch.h = select->pos[0] * 360;
       lch.l = select->pos[1] * 100;
-      lch.c = select->pos[2] * 100;
+      lch.c = select->pos[2] * 200;
       break;
     case COLOR_SELECT_LCH_HUE:
-      lch.c = select->pos[0] * 100;
+      lch.c = select->pos[0] * 200;
       lch.l = select->pos[1] * 100;
       lch.h = select->pos[2] * 360;
       break;
@@ -779,16 +779,16 @@ gimp_color_select_update_pos (GimpColorSelect *select)
 
     case COLOR_SELECT_LCH_LIGHTNESS:
       select->pos[0] = CLAMP (lch.h / 360, 0.0, 1.0);
-      select->pos[1] = CLAMP (lch.c / 100, 0.0, 1.0);
+      select->pos[1] = CLAMP (lch.c / 200, 0.0, 1.0);
       select->pos[2] = CLAMP (lch.l / 100, 0.0, 1.0);
       break;
     case COLOR_SELECT_LCH_CHROMA:
       select->pos[0] = CLAMP (lch.h / 360, 0.0, 1.0);
       select->pos[1] = CLAMP (lch.l / 100, 0.0, 1.0);
-      select->pos[2] = CLAMP (lch.c / 100, 0.0, 1.0);
+      select->pos[2] = CLAMP (lch.c / 200, 0.0, 1.0);
       break;
     case COLOR_SELECT_LCH_HUE:
-      select->pos[0] = CLAMP (lch.c / 100, 0.0, 1.0);
+      select->pos[0] = CLAMP (lch.c / 200, 0.0, 1.0);
       select->pos[1] = CLAMP (lch.l / 100, 0.0, 1.0);
       select->pos[2] = CLAMP (lch.h / 360, 0.0, 1.0);
       break;
@@ -1432,7 +1432,7 @@ color_select_render_lch_chroma (ColorSelectFill *csf)
   guchar   rgb[3];
   gint     i;
 
-  lch.c = (csf->height - 1 - csf->y) * 100.0 / csf->height ;
+  lch.c = (csf->height - 1 - csf->y) * 200.0 / csf->height ;
   babl_process (fish_lch_to_rgb_u8, &lch, &rgb, 1);
 
   for (i = 0; i < csf->width; i++)
@@ -1821,7 +1821,7 @@ color_select_render_lch_chroma_lightness (ColorSelectFill *csf)
     {
       GimpRGB rgb;
 
-      lch.c = i * 100.0 / csf->width;
+      lch.c = i * 200.0 / csf->width;
 
       babl_process (fish_lch_to_rgb, &lch, &rgb, 1);
 
@@ -1885,7 +1885,7 @@ color_select_render_lch_hue_chroma (ColorSelectFill *csf)
   gint     i;
 
   lch.l = csf->lch.l;
-  lch.c = (csf->height - 1 - csf->y) * 100.0 / csf->height;
+  lch.c = (csf->height - 1 - csf->y) * 200.0 / csf->height;
 
   for (i = 0; i < csf->width; i++)
     {
