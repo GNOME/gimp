@@ -10,7 +10,8 @@ DOC_MAIN_SGML_FILE = $(DOC_MODULE)-docs.sgml
 DOC_SOURCE_DIR = $(top_srcdir)/$(DOC_MODULE)
 
 # Extra options to pass to gtkdoc-scangobj
-SCANGOBJ_OPTIONS =
+# make sure babl is initialized, otherwise we segfault.
+SCANGOBJ_OPTIONS = --type-init-func="do { void babl_init (void); babl_init (); } while (0)"
 
 # Extra options to supply to gtkdoc-scan
 SCAN_OPTIONS = --deprecated-guards="GIMP_DISABLE_DEPRECATED"
