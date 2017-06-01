@@ -34,7 +34,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-27 02:30+0200\n"
-"PO-Revision-Date: 2017-05-27 02:33+0200\n"
+"PO-Revision-Date: 2017-06-01 12:22+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -4147,7 +4147,7 @@ msgstr "Imposta un profilo colore all'immagine"
 #: ../app/actions/image-actions.c:93
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
-msgstr "_Converti in profilo colore..."
+msgstr "_Converti al profilo colore..."
 
 #: ../app/actions/image-actions.c:94
 msgctxt "image-action"
@@ -8467,17 +8467,13 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:449
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
-msgstr ""
-"Imposta l'intento di rendering per la finestra di dialogo \"Converti a "
-"profilo colore\"."
+msgstr "Imposta l'intento di rendering per la finestra di dialogo \"Converti al profilo colore\"."
 
 #: ../app/config/gimprc-blurbs.h:452
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
-msgstr ""
-"Imposta lo stato predefinito \"Compensazione del punto nero\" per la "
-"finestra di dialogo \"Converti a profilo colore\"."
+msgstr "Imposta lo stato predefinito \"Compensazione del punto nero\" per la finestra di dialogo \"Converti al profilo colore\"."
 
 #: ../app/config/gimprc-blurbs.h:456
 msgid ""
@@ -8503,9 +8499,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:465
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
-msgstr ""
-"Imposta il tipo di tavolozza predefinita per la finestra di dialogo "
-"\"Coverti in indicizzata\"."
+msgstr "Imposta il tipo di tavolozza predefinita per la finestra di dialogo \"Converti in indicizzata\"."
 
 #: ../app/config/gimprc-blurbs.h:468
 msgid ""
@@ -9500,7 +9494,7 @@ msgstr "Mantieni il profilo incorporato"
 #: ../app/core/core-enums.c:1052
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
-msgstr "Converte nel profilo colore RGB preferito"
+msgstr "Converte al profilo colore RGB preferito"
 
 #: ../app/core/core-enums.c:1089
 msgctxt "dynamics-output-type"
@@ -11725,11 +11719,11 @@ msgstr "Assegna"
 
 #: ../app/dialogs/color-profile-dialog.c:146
 msgid "Convert to ICC Color Profile"
-msgstr "Converte in un profilo colore ICC"
+msgstr "Converte al profilo colore ICC"
 
 #: ../app/dialogs/color-profile-dialog.c:149
 msgid "Convert the image to a color profile"
-msgstr "Converte l'immagine in un profilo colore"
+msgstr "Converte l'immagine ad un profilo colore"
 
 #: ../app/dialogs/color-profile-dialog.c:155
 #: ../app/dialogs/color-profile-dialog.c:173
@@ -13151,7 +13145,7 @@ msgstr "Finestra di dialogo di importazione profilo"
 #. Convert to Color Profile Dialog
 #: ../app/dialogs/preferences-dialog.c:1926
 msgid "Convert to Color Profile Dialog"
-msgstr "Finestra di dialogo \"Converti a profilo colore\""
+msgstr "Finestra di dialogo \"Converti al profilo colore\""
 
 #: ../app/dialogs/preferences-dialog.c:1931
 msgid "Rendering intent:"
