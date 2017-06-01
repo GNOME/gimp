@@ -97,6 +97,16 @@ static const GimpActionEntry filters_menu_actions[] =
 
 static const GimpStringActionEntry filters_actions[] =
 {
+  { "filters-antialias", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Antialias"), NULL, NULL,
+    "gegl:antialias",
+    GIMP_HELP_FILTER_ANTIALIAS },
+
+  { "filters-color-enhance", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Color Enhance"), NULL, NULL,
+    "gegl:color-enhance",
+    GIMP_HELP_FILTER_COLOR_ENHANCE },
+
   { "filters-invert-linear", GIMP_ICON_INVERT,
     NC_("filters-action", "_Linear Invert"), NULL, NULL,
     "gegl:invert-linear",
@@ -110,7 +120,12 @@ static const GimpStringActionEntry filters_actions[] =
   { "filters-invert-value", GIMP_ICON_GEGL,
     NC_("filters-action", "_Value Invert"), NULL, NULL,
     "gegl:value-invert",
-    GIMP_HELP_FILTER_INVERT_VALUE }
+    GIMP_HELP_FILTER_INVERT_VALUE },
+
+  { "filters-stretch-contrast-hsv", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Stretch Contrast HSV"), NULL, NULL,
+    "gegl:stretch-contrast-hsv",
+    GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV }
 };
 
 static const GimpStringActionEntry filters_interactive_actions[] =
@@ -119,11 +134,6 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     NC_("filters-action", "_Alien Map..."), NULL, NULL,
     "gegl:alien-map",
     GIMP_HELP_FILTER_ALIEN_MAP },
-
-  { "filters-antialias", GIMP_ICON_GEGL,
-    NC_("filters-action", "_Antialias..."), NULL, NULL,
-    "gegl:antialias",
-    GIMP_HELP_FILTER_ANTIALIAS },
 
   { "filters-apply-canvas", GIMP_ICON_GEGL,
     NC_("filters-action", "_Apply Canvas..."), NULL, NULL,
@@ -159,11 +169,6 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     NC_("filters-action", "_Checkerboard..."), NULL, NULL,
     "gegl:checkerboard",
     GIMP_HELP_FILTER_CHECKERBOARD },
-
-  { "filters-color-enhance", GIMP_ICON_GEGL,
-    NC_("filters-action", "_Color Enhance..."), NULL, NULL,
-    "gegl:color-enhance",
-    GIMP_HELP_FILTER_COLOR_ENHANCE },
 
   { "filters-color-exchange", GIMP_ICON_GEGL,
     NC_("filters-action", "_Color Exchange..."), NULL, NULL,
@@ -534,11 +539,6 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     NC_("filters-action", "_Stretch Contrast..."), NULL, NULL,
     "gegl:stretch-contrast",
     GIMP_HELP_FILTER_STRETCH_CONTRAST },
-
-  { "filters-stretch-contrast-hsv", GIMP_ICON_GEGL,
-    NC_("filters-action", "_Stretch Contrast HSV..."), NULL, NULL,
-    "gegl:stretch-contrast-hsv",
-    GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV },
 
   { "filters-stress", GIMP_ICON_GEGL,
     NC_("filters-action", "_Stress..."), NULL, NULL,
