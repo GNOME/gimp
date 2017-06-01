@@ -34,6 +34,8 @@
 #include "libgimp/libgimp-intl.h"
 
 
+static gboolean       gimp_widgets_initialized  = FALSE;
+
 GimpHelpFunc          _gimp_standard_help_func  = NULL;
 GimpGetColorFunc      _gimp_get_foreground_func = NULL;
 GimpGetColorFunc      _gimp_get_background_func = NULL;
@@ -63,8 +65,6 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
                    GimpGetColorFunc      get_background_func,
                    GimpEnsureModulesFunc ensure_modules_func)
 {
-  static gboolean  gimp_widgets_initialized = FALSE;
-
   g_return_if_fail (standard_help_func != NULL);
 
   if (gimp_widgets_initialized)
@@ -85,3 +85,22 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gimp_widgets_initialized = TRUE;
 }
+
+/* clean up babl (in particular, so that the fish cache is constructed) if the
+ * compiler supports destructors
+ */
+#ifdef HAVE_FUNC_ATTRIBUTE_DESTRUCTOR
+
+__attribute__ ((destructor))
+static void
+gimp_widgets_exit (void)
+{
+  if (gimp_widgets_initialized)
+    babl_exit ();
+}
+
+#elif defined (__GNUC__)
+
+#warning babl_init() not paired with babl_exit()
+
+#endif

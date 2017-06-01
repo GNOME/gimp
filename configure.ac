@@ -945,6 +945,12 @@ AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
     AC_DEFINE(HAVE_RINT)])])
 
 
+##############################
+# Check for attributes we need
+##############################
+
+AX_GCC_FUNC_ATTRIBUTE(destructor)
+
 #####################################################################
 # Check for extra libs needed for getaddrinfo, getnameinfo and socket
 #####################################################################
