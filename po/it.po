@@ -34,7 +34,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-27 02:30+0200\n"
-"PO-Revision-Date: 2017-06-01 12:22+0200\n"
+"PO-Revision-Date: 2017-06-01 13:27+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -11719,7 +11719,7 @@ msgstr "Assegna"
 
 #: ../app/dialogs/color-profile-dialog.c:146
 msgid "Convert to ICC Color Profile"
-msgstr "Converte al profilo colore ICC"
+msgstr "Converti al profilo colore ICC"
 
 #: ../app/dialogs/color-profile-dialog.c:149
 msgid "Convert the image to a color profile"
@@ -11732,7 +11732,7 @@ msgstr "Converte l'immagine ad un profilo colore"
 #: ../app/dialogs/convert-indexed-dialog.c:139
 #: ../app/dialogs/convert-precision-dialog.c:166
 msgid "C_onvert"
-msgstr "C_onversione"
+msgstr "C_onverti"
 
 #: ../app/dialogs/color-profile-dialog.c:158
 #: ../app/dialogs/color-profile-dialog.c:176
