@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-10 13:11+0200\n"
-"PO-Revision-Date: 2017-06-01 13:16+0200\n"
+"PO-Revision-Date: 2017-06-01 13:48+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -1410,7 +1410,7 @@ msgstr "Modello: %s"
 #: ../libgimpcolor/gimpcolorprofile.c:641
 #, c-format
 msgid "Manufacturer: %s"
-msgstr "Fabbricante: %s"
+msgstr "Produttore: %s"
 
 #: ../libgimpcolor/gimpcolorprofile.c:650
 #, c-format
@@ -1838,7 +1838,7 @@ msgstr "Nessuno"
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:174
 msgid "Manufacturer: "
-msgstr "Fabbricante: "
+msgstr "Produttore: "
 
 #: ../libgimpwidgets/gimpcolorprofileview.c:186
 msgid "Copyright: "
