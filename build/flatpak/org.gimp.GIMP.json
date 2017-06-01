@@ -2,7 +2,7 @@
     "id": "org.gimp.GIMP",
     "branch": "master",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "3.22",
+    "runtime-version": "3.24",
     "sdk": "org.gnome.Sdk",
     "command": "gimp-2.9",
     "rename-desktop-file": "gimp.desktop",

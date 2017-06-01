@@ -14,12 +14,13 @@ GIMP Flatpak HowTo
   Check out the available versions at: http://flatpak.org/runtimes.html
   Verify that we use the last runtime version in `org.gimp.GIMP.json`:
 
-> "runtime-version": "3.22"
+> "runtime-version": "3.24"
 
 * Install this runtime and the corresponding SDK if you haven't already:
 
 > flatpak remote-add --from gnome https://sdk.gnome.org/gnome.flatpakrepo
-> flatpak install gnome org.gnome.Platform//3.22 org.gnome.Sdk//3.22
+> flatpak install gnome org.gnome.Platform/x86_64/3.24 org.gnome.Sdk/x86_64/3.24
+> flatpak install gnome org.gnome.Platform/i386/3.24 org.gnome.Sdk/i386/3.24
 
 Or simply update them:
 
