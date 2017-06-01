@@ -184,18 +184,6 @@
                             "sha256": "d8d3ec9de6b5db740fefac702c37ffcf96ae46cb17c18c1544635a3852f78f7a"
                         }
                     ]
-                },
-                {
-                    "name": "lcms2",
-                    "config-opts": [ "--disable-static" ],
-                    "cleanup": [ "/bin", "/share" ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://download.sourceforge.net/lcms/lcms2-2.8.tar.gz",
-                            "sha256": "66d02b229d2ea9474e62c2b6cd6720fde946155cd1d0d2bffdab829790a0fb22"
-                        }
-                    ]
                 }
             ]
         },
