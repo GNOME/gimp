@@ -41,6 +41,7 @@ endif
 
 EXTRA_DIST = \
 	$(appdata_in_files)	\
+	test-appdata.sh		\
 	gimp.desktop.in.in	\
 	16x16/gimp.png		\
 	22x22/gimp.png		\
