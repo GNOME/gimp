@@ -190,13 +190,14 @@ xgen-dec: $(srcdir)/display-enums.h $(GIMP_MKENUMS) Makefile.am
 		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
 		$< > $@
 
+# copy the generated enum file back to the source directory only if it's
+# changed; otherwise, only update its timestamp, so that the recipe isn't
+# executed again on the next build, however, allow this to (harmlessly) fail,
+# to support building from a read-only source tree.
 $(srcdir)/display-enums.c: xgen-dec
 	$(AM_V_GEN) if ! cmp -s $< $@; then \
 		cp $< $@; \
 	else \
-		# if the file hasn't changed, only update its timestamp, so that \
-		# the receipe doesn't get executed again next time, but allow this \
-		# to fail (e.g., when using a read-only source directory). \
 		touch $@ 2> /dev/null \
 		|| true; \
 	fi
