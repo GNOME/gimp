@@ -648,7 +648,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                          "Import raw plug-in",
                          IMPORT_RAW_PLUG_IN_BLURB,
                          GIMP_CONFIG_PATH_FILE,
-                         NULL,
+                         "",
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 
