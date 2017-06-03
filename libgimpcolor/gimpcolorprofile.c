@@ -376,9 +376,9 @@ gimp_color_profile_new_from_lcms_profile (gpointer   lcms_profile,
 
 /**
  * gimp_color_profile_save_to_file:
- * profile: a #GimpColorProfile
- * @file:   a #GFile
- * @error:  return location for #GError
+ * @profile: a #GimpColorProfile
+ * @file:    a #GFile
+ * @error:   return location for #GError
  *
  * This function saves @profile to @file as ICC profile.
  *
@@ -409,7 +409,6 @@ gimp_color_profile_save_to_file (GimpColorProfile  *profile,
  * gimp_color_profile_get_icc_profile:
  * @profile: a #GimpColorProfile
  * @length:  return location for the number of bytes
- * @error:   return location for #GError
  *
  * This function returns @profile as ICC profile data. The returned
  * memory belongs to @profile and must not be modified or freed.
@@ -1306,7 +1305,7 @@ gimp_color_profile_new_d65_gray_srgb_trc_internal (void)
  * gimp_color_profile_new_d65_gray_srgb_trc
  *
  * This function creates a grayscale #GimpColorProfile with an
- * sRGB TRC. See gimp_color_profile_new_srgb().
+ * sRGB TRC. See gimp_color_profile_new_rgb_srgb().
  *
  * Return value: the sRGB-gamma grayscale #GimpColorProfile.
  *

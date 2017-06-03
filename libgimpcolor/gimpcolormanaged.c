@@ -135,7 +135,7 @@ gimp_color_managed_get_icc_profile (GimpColorManaged *managed,
  * @managed: an object the implements the #GimpColorManaged interface
  *
  * This function always returns a #GimpColorProfile and falls back to
- * gimp_color_profile_new_srgb() if the method is not implemented.
+ * gimp_color_profile_new_rgb_srgb() if the method is not implemented.
  *
  * Return value: The @managed's #GimpColorProfile.
  *

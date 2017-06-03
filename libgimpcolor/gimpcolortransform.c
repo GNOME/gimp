@@ -170,12 +170,12 @@ gimp_color_transform_finalize (GObject *object)
 
 /**
  * gimp_color_transform_new:
- * @src_profile:
- * @src_format:
- * @desr_profile:
- * @dest_format:
- * @rendering_intent:
- * @flags:
+ * @src_profile:      the source #GimpColorProfile
+ * @src_format:       the source #Babl format
+ * @dest_profile:     the destination #GimpColorProfile
+ * @dest_format:      the destination #Babl format
+ * @rendering_intent: the rendering intent
+ * @flags:            transform flags
  *
  * This function creates an color transform.
  *
@@ -248,14 +248,14 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
 
 /**
  * gimp_color_transform_new_proofing:
- * @src_profile:
- * @src_format:
- * @desr_profile:
- * @dest_format:
- * @proof_profile:
- * @proof_intent:
- * @display_intent:
- * @flags:
+ * @src_profile:    the source #GimpColorProfile
+ * @src_format:     the source #Babl format
+ * @dest_profile:   the destination #GimpColorProfile
+ * @dest_format:    the destination #Babl format
+ * @proof_profile:  the proof #GimpColorProfile
+ * @proof_intent:   the proof intent
+ * @display_intent: the display intent
+ * @flags:          transform flags
  *
  * This function creates a simulation / proofing color transform.
  *
@@ -331,12 +331,12 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
 
 /**
  * gimp_color_transform_process_pixels:
- * @transform:
- * @src_format:
- * @src_pixels:
- * @dest_format:
- * @dest_pixels:
- * @length:
+ * @transform:   a #GimpColorTransform
+ * @src_format:  #Babl format of @src_pixels
+ * @src_pixels:  pointer to the source pixels
+ * @dest_format: #Babl format of @dest_pixels
+ * @dest_pixels: pointer to the destination pixels
+ * @length:      number of pixels to process
  *
  * This function transforms a contiguous line of pixels.
  *
@@ -409,11 +409,11 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
 
 /**
  * gimp_color_transform_process_buffer:
- * @transform:
- * @src_format:
- * @src_rect:
- * @dest_format:
- * @dest_rect:
+ * @transform:   a #GimpColorTransform
+ * @src_buffer:  source #GeglBuffer
+ * @src_rect:    rectangle in @src_buffer
+ * @dest_buffer: destination #GeglBuffer
+ * @dest_rect:   rectangle in @dest_buffer
  *
  * This function transforms buffer into another buffer.
  *
@@ -507,8 +507,8 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
 /**
  * gimp_color_transform_can_gegl_copy:
- * @src_format:  src profile
- * @dest_format: dest profile
+ * @src_profile:  source #GimpColorProfile
+ * @dest_profile: destination #GimpColorProfile
  *
  * This function checks if a GimpColorTransform is needed at all.
  *

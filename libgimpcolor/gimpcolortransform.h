@@ -96,9 +96,9 @@ GimpColorTransform *
 
 void    gimp_color_transform_process_pixels   (GimpColorTransform       *transform,
                                                const Babl               *src_format,
-                                               gconstpointer             src,
+                                               gconstpointer             src_pixels,
                                                const Babl               *dest_format,
-                                               gpointer                  dest,
+                                               gpointer                  dest_pixels,
                                                gsize                     length);
 
 void    gimp_color_transform_process_buffer   (GimpColorTransform       *transform,
