@@ -100,7 +100,7 @@
     (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask-size 0)
     (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 1 0)
     (if (= type RGBA-IMAGE)
-      (gimp-desaturate-drawable active-layer DESATURATE-LIGHTNESS))
+      (gimp-drawable-desaturate active-layer DESATURATE-LIGHTNESS))
 
     (if (and
          (= remove-bg TRUE)
