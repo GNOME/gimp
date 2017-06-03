@@ -26,7 +26,7 @@ and falling back on the file's extension and/or prefix if not. The name of
 the file to load is typically a full pathname, and the name entered is what
 the user actually typed before prepending a directory path. The reason for
 this is that if the user types http://www.xcf/~gimp/ he wants to fetch a URL,
-and the full pathname will not look like a URL."
+and the full pathname will not look like a URL.
 HELP
 
     &josh_pdb_misc('1997');
@@ -602,7 +602,7 @@ HELP
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => "The name of the procedure to associate a MIME type with." },
         { name => 'mime_types', type => 'string',
-          desc => "A comma-separated list of MIME types, such as \"image/jpeg\"."     }
+          desc => 'A comma-separated list of MIME types, such as "image/jpeg".' }
     );
 
     %invoke = (
