@@ -1211,8 +1211,8 @@ HELP
           desc => 'Input drawable' },
         { name => 'amount', type => '1.0 <= float <= 10.0',
           desc => 'Edge detection amount' },
-        { name => 'warpmode', type => '1 <= int32 <= 3',
-          desc => 'Edge detection behavior { WRAP (1), SMEAR (2), BLACK (3) }' },
+        { name => 'warpmode', type => '0 <= int32 <= 3',
+          desc => 'Edge detection behavior { NONE (0), WRAP (1), SMEAR (2), BLACK (3) }' },
         { name => 'edgemode', type => '0 <= int32 <= 5',
           desc => 'Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }' }
     );
@@ -1229,6 +1229,10 @@ HELP
 
       switch (warpmode)
         {
+	case 0:
+	  border_behavior = GEGL_ABYSS_NONE;
+	  break;
+
 	case 1:
 	  border_behavior = GEGL_ABYSS_LOOP;
 	  break;

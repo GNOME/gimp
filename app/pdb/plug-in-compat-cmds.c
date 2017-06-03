@@ -1427,6 +1427,10 @@ plug_in_edge_invoker (GimpProcedure         *procedure,
 
           switch (warpmode)
             {
+            case 0:
+              border_behavior = GEGL_ABYSS_NONE;
+              break;
+
             case 1:
               border_behavior = GEGL_ABYSS_LOOP;
               break;
@@ -5565,8 +5569,8 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("warpmode",
                                                       "warpmode",
-                                                      "Edge detection behavior { WRAP (1), SMEAR (2), BLACK (3) }",
-                                                      1, 3, 1,
+                                                      "Edge detection behavior { NONE (0), WRAP (1), SMEAR (2), BLACK (3) }",
+                                                      0, 3, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("edgemode",
