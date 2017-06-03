@@ -50,7 +50,7 @@
  * the name entered is what the user actually typed before prepending a
  * directory path. The reason for this is that if the user types
  * http://www.xcf/~gimp/ he wants to fetch a URL, and the full pathname
- * will not look like a URL.\"
+ * will not look like a URL.
  *
  * Returns: The output image.
  **/
