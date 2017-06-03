@@ -43,8 +43,11 @@
 
 /*  local function prototypes  */
 
-static void   filters_actions_history_changed (Gimp            *gimp,
-                                               GimpActionGroup *group);
+static void   filters_actions_set_tooltips    (GimpActionGroup             *group,
+                                               const GimpStringActionEntry *entries,
+                                               gint                         n_entries);
+static void   filters_actions_history_changed (Gimp                        *gimp,
+                                               GimpActionGroup             *group);
 
 
 /*  private variables  */
@@ -126,6 +129,41 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Stretch Contrast HSV"), NULL, NULL,
     "gegl:stretch-contrast-hsv",
     GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV }
+};
+
+static const GimpStringActionEntry filters_settings_actions[] =
+{
+  { "filters-dilate", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Dilate"), NULL,
+    NC_("drawable-action", "Grow lighter areas of the image"),
+    "gegl:value-propagate\n"
+    "(mode white)"
+    "(lower-threshold 0.000000)"
+    "(upper-threshold 1.000000)"
+    "(rate 1.000000)"
+    "(top yes)"
+    "(left yes)"
+    "(right yes)"
+    "(bottom yes)"
+    "(value yes)"
+    "(alpha no)",
+    GIMP_HELP_FILTER_DILATE },
+
+  { "filters-erode", GIMP_ICON_GEGL,
+    NC_("filters-action", "_Erode"), NULL,
+    NC_("drawable-action", "Grow darker areas of the image"),
+    "gegl:value-propagate\n"
+    "(mode black)"
+    "(lower-threshold 0.000000)"
+    "(upper-threshold 1.000000)"
+    "(rate 1.000000)"
+    "(top yes)"
+    "(left yes)"
+    "(right yes)"
+    "(bottom yes)"
+    "(value yes)"
+    "(alpha no)",
+    GIMP_HELP_FILTER_ERODE }
 };
 
 static const GimpStringActionEntry filters_interactive_actions[] =
@@ -643,40 +681,27 @@ filters_actions_setup (GimpActionGroup *group)
                                         filters_actions,
                                         G_N_ELEMENTS (filters_actions),
                                         G_CALLBACK (filters_apply_cmd_callback));
+  filters_actions_set_tooltips (group, filters_actions,
+                                G_N_ELEMENTS (filters_actions));
+
+  gimp_action_group_add_string_actions (group, "filters-action",
+                                        filters_settings_actions,
+                                        G_N_ELEMENTS (filters_settings_actions),
+                                        G_CALLBACK (filters_apply_cmd_callback));
+  filters_actions_set_tooltips (group, filters_settings_actions,
+                                G_N_ELEMENTS (filters_settings_actions));
 
   gimp_action_group_add_string_actions (group, "filters-action",
                                         filters_interactive_actions,
                                         G_N_ELEMENTS (filters_interactive_actions),
                                         G_CALLBACK (filters_apply_interactive_cmd_callback));
+  filters_actions_set_tooltips (group, filters_interactive_actions,
+                                G_N_ELEMENTS (filters_interactive_actions));
 
   gimp_action_group_add_enum_actions (group, "filters-action",
                                       filters_repeat_actions,
                                       G_N_ELEMENTS (filters_repeat_actions),
                                       G_CALLBACK (filters_repeat_cmd_callback));
-
-  for (i = 0; i < G_N_ELEMENTS (filters_actions); i++)
-    {
-      const GimpStringActionEntry *entry = &filters_actions[i];
-      const gchar                 *description;
-
-      description = gegl_operation_get_key (entry->value, "description");
-
-      if (description)
-        gimp_action_group_set_action_tooltip (group, entry->name,
-                                              description);
-    }
-
-  for (i = 0; i < G_N_ELEMENTS (filters_interactive_actions); i++)
-    {
-      const GimpStringActionEntry *entry = &filters_interactive_actions[i];
-      const gchar                 *description;
-
-      description = gegl_operation_get_key (entry->value, "description");
-
-      if (description)
-        gimp_action_group_set_action_tooltip (group, entry->name,
-                                              description);
-    }
 
   n_entries = gimp_filter_history_size (group->gimp);
 
@@ -771,6 +796,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-desaturate",              writable && !gray);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
   SET_SENSITIVE ("filters-diffraction-patterns",    writable);
+  SET_SENSITIVE ("filters-dilate",                  writable);
   SET_SENSITIVE ("filters-displace",                writable);
   SET_SENSITIVE ("filters-distance-map",            writable);
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
@@ -780,6 +806,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-edge-sobel",              writable);
   SET_SENSITIVE ("filters-emboss",                  writable);
   SET_SENSITIVE ("filters-engrave",                 writable);
+  SET_SENSITIVE ("filters-erode",                   writable);
   SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-fattal-2002",             writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
@@ -882,7 +909,27 @@ filters_actions_update (GimpActionGroup *group,
 
         g_free (name);
       }
- }
+  }
+}
+
+static void
+filters_actions_set_tooltips (GimpActionGroup             *group,
+                              const GimpStringActionEntry *entries,
+                              gint                         n_entries)
+{
+  gint i;
+
+  for (i = 0; i < n_entries; i++)
+    {
+      const GimpStringActionEntry *entry = entries + i;
+      const gchar                 *description;
+
+      description = gegl_operation_get_key (entry->value, "description");
+
+      if (description)
+        gimp_action_group_set_action_tooltip (group, entry->name,
+                                              description);
+    }
 }
 
 static GimpActionGroup *

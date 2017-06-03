@@ -53,18 +53,6 @@ static const GimpActionEntry drawable_actions[] =
     G_CALLBACK (drawable_levels_stretch_cmd_callback),
     GIMP_HELP_LAYER_WHITE_BALANCE },
 
-  { "drawable-dilate", GIMP_ICON_GEGL,
-    NC_("drawable-action", "_Dilate"), NULL,
-    NC_("drawable-action", "Grow lighter areas of the image"),
-    G_CALLBACK (drawable_dilate_cmd_callback),
-    GIMP_HELP_LAYER_DILATE },
-
-  { "drawable-erode", GIMP_ICON_GEGL,
-    NC_("drawable-action", "E_rode"), NULL,
-    NC_("drawable-action", "Grow darker areas of the image"),
-    G_CALLBACK (drawable_erode_cmd_callback),
-    GIMP_HELP_LAYER_ERODE },
-
   { "drawable-offset", NULL,
     NC_("drawable-action", "_Offset..."), "<primary><shift>O",
     NC_("drawable-action",
@@ -229,8 +217,6 @@ drawable_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("drawable-equalize",       writable && !children);
   SET_SENSITIVE ("drawable-levels-stretch", writable && !children && is_rgb);
-  SET_SENSITIVE ("drawable-dilate",         writable && !children);
-  SET_SENSITIVE ("drawable-erode",          writable && !children);
   SET_SENSITIVE ("drawable-offset",         writable && !children);
 
   SET_SENSITIVE ("drawable-visible",       drawable);

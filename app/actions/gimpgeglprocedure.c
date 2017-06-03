@@ -119,6 +119,9 @@ gimp_gegl_procedure_finalize (GObject *object)
 {
   GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (object);
 
+  if (proc->default_settings)
+    g_object_unref (proc->default_settings);
+
   g_free (proc->menu_label);
   g_free (proc->label);
   g_free (proc->help_id);
@@ -374,6 +377,7 @@ gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
 GimpProcedure *
 gimp_gegl_procedure_new (Gimp        *gimp,
                          GimpRunMode  default_run_mode,
+                         GimpObject  *default_settings,
                          const gchar *operation,
                          const gchar *name,
                          const gchar *menu_label,
@@ -381,8 +385,9 @@ gimp_gegl_procedure_new (Gimp        *gimp,
                          const gchar *icon_name,
                          const gchar *help_id)
 {
-  GimpProcedure *procedure;
-  GType          config_type;
+  GimpProcedure     *procedure;
+  GimpGeglProcedure *gegl_procedure;
+  GType              config_type;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (operation != NULL, NULL);
@@ -394,9 +399,14 @@ gimp_gegl_procedure_new (Gimp        *gimp,
 
   procedure = g_object_new (GIMP_TYPE_GEGL_PROCEDURE, NULL);
 
-  GIMP_GEGL_PROCEDURE (procedure)->default_run_mode = default_run_mode;
-  GIMP_GEGL_PROCEDURE (procedure)->menu_label       = g_strdup (menu_label);
-  GIMP_GEGL_PROCEDURE (procedure)->help_id          = g_strdup (help_id);
+  gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
+
+  gegl_procedure->default_run_mode = default_run_mode;
+  gegl_procedure->menu_label       = g_strdup (menu_label);
+  gegl_procedure->help_id          = g_strdup (help_id);
+
+  if (default_settings)
+    gegl_procedure->default_settings = g_object_ref (default_settings);
 
   gimp_object_set_name (GIMP_OBJECT (procedure), name);
   gimp_viewable_set_icon_name (GIMP_VIEWABLE (procedure), icon_name);

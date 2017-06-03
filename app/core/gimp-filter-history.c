@@ -19,6 +19,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
@@ -33,6 +35,14 @@
 
 #include "pdb/gimpprocedure.h"
 
+
+/*  local function prototypes  */
+
+static gint   gimp_filter_history_compare (GimpProcedure *proc1,
+                                           GimpProcedure *proc2);
+
+
+/*  public functions  */
 
 gint
 gimp_filter_history_size (Gimp *gimp)
@@ -70,14 +80,14 @@ gimp_filter_history_add (Gimp          *gimp,
 
   /* return early if the procedure is already at the top */
   if (gimp->filter_history &&
-      gimp_procedure_name_compare (gimp->filter_history->data, procedure) == 0)
+      gimp_filter_history_compare (gimp->filter_history->data, procedure) == 0)
     return;
 
   /* ref new first then unref old, they might be the same */
   g_object_ref (procedure);
 
   link = g_list_find_custom (gimp->filter_history, procedure,
-                             (GCompareFunc) gimp_procedure_name_compare);
+                             (GCompareFunc) gimp_filter_history_compare);
 
   if (link)
     {
@@ -108,7 +118,7 @@ gimp_filter_history_remove (Gimp          *gimp,
   g_return_if_fail (GIMP_IS_PROCEDURE (procedure));
 
   link = g_list_find_custom (gimp->filter_history, procedure,
-                             (GCompareFunc) gimp_procedure_name_compare);
+                             (GCompareFunc) gimp_filter_history_compare);
 
   if (link)
     {
@@ -131,4 +141,20 @@ gimp_filter_history_clear (Gimp *gimp)
 
       gimp_filter_history_changed (gimp);
     }
+}
+
+
+/*  private functions  */
+
+static gint
+gimp_filter_history_compare (GimpProcedure *proc1,
+                             GimpProcedure *proc2)
+{
+  /*  the procedures can have the same name, but could still be two
+   *  different filters using the same operation, so also compare
+   *  their menu labels
+   */
+  return (gimp_procedure_name_compare (proc1, proc2) ||
+          strcmp (gimp_procedure_get_menu_label (proc1),
+                  gimp_procedure_get_menu_label (proc2)));
 }
