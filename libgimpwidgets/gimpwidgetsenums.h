@@ -97,7 +97,7 @@ typedef enum
  * @GIMP_COLOR_SELECTOR_BLUE:           the blue channel
  * @GIMP_COLOR_SELECTOR_ALPHA:          the alpha channel
  * @GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:  the lightness channel
- * @GIMP_COLOR_SELECTOR_LCH_CHOMA:      the chroma channel
+ * @GIMP_COLOR_SELECTOR_LCH_CHROMA:     the chroma channel
  * @GIMP_COLOR_SELECTOR_LCH_HUE:        the hue channel
  *
  * An enum to specify the types of color channels edited in

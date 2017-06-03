@@ -1349,7 +1349,7 @@ gimp_prop_hscale_new (GObject     *config,
  * @step_increment: Step size.
  * @page_increment: Page size.
  * @digits:         Number of digits after decimal point to display.
- * @scale_limits:   %FALSE if the range of possible values of the
+ * @limit_scale:    %FALSE if the range of possible values of the
  *                  GtkHScale should be the same as of the GtkSpinButton.
  * @lower_limit:    The scale's lower boundary if @scale_limits is %TRUE.
  * @upper_limit:    The scale's upper boundary if @scale_limits is %TRUE.

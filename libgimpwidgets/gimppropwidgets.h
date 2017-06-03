@@ -93,7 +93,7 @@ GtkWidget     * gimp_prop_enum_stock_box_new      (GObject      *config,
 
 GtkWidget     * gimp_prop_enum_icon_box_new       (GObject      *config,
                                                    const gchar  *property_name,
-                                                   const gchar  *stock_prefix,
+                                                   const gchar  *icon_prefix,
                                                    gint          minimum,
                                                    gint          maximum);
 

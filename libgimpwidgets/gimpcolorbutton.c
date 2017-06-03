@@ -677,7 +677,7 @@ gimp_color_button_new (const gchar       *title,
 /**
  * gimp_color_button_set_title:
  * @button: a #GimpColorButton.
- * @color:  the new title.
+ * @title:  the new title.
  *
  * Sets the @button dialog's title.
  *

@@ -446,7 +446,7 @@ gimp_file_new_for_config_path (const gchar  *path,
 }
 
 /**
- * gimp_file_new_for_config_path:
+ * gimp_file_get_config_path:
  * @file:   a #GFile
  * @error:  return location for errors
  *

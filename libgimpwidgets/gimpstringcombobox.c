@@ -253,8 +253,9 @@ gimp_string_model_lookup (GtkTreeModel *model,
 
 /**
  * gimp_string_combo_box_new:
- * @id_column:
- * @label_column:
+ * @model:        a #GtkTreeModel
+ * @id_column:    the model column of the ID
+ * @label_column: the modl column of the label
  *
  * Return value: a new #GimpStringComboBox.
  *

@@ -305,7 +305,8 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
 
   GIMP_CONFIG_PROP_STRING (object_class, PROP_DISPLAY_MODULE,
                            "display-module",
-                           NULL, NULL,
+                           "Display module",
+                           "This property is deprecated and its value ignored",
                            "CdisplayLcms",
                            GIMP_PARAM_STATIC_STRINGS);
 
