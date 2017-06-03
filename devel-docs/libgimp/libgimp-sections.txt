@@ -331,6 +331,12 @@ gimp_context_set_ink_tilt_sensitivity
 </SECTION>
 
 <SECTION>
+<FILE>gimpdebug</FILE>
+gimp_debug_timer_start
+gimp_debug_timer_end
+</SECTION>
+
+<SECTION>
 <FILE>gimpdisplay</FILE>
 gimp_display_new
 gimp_display_delete
@@ -476,6 +482,7 @@ gimp_register_load_handler
 gimp_register_save_handler
 gimp_register_file_handler_mime
 gimp_register_file_handler_uri
+gimp_register_file_handler_raw
 gimp_register_thumbnail_loader
 </SECTION>
 

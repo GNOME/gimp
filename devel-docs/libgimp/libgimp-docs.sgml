@@ -34,6 +34,7 @@
       <xi:include href="xml/gimpplugin.xml" />
       <xi:include href="xml/gimpproceduraldb.xml" />
       <xi:include href="xml/gimpprogress.xml" />
+      <xi:include href="xml/gimpdebug.xml" />
     </chapter>
 
     <chapter id="libgimp-image">
