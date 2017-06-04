@@ -195,6 +195,9 @@ Plug-ins
   - For GEGL-based tools, use a new metadata language to dynamically
     control UI attributes based on context (e.g. auto-disable
     unapplicable options).
+  - Allow filter actions to have hardcoded default operation settings
+    by encoding them directly in the string attached to all filter
+    actions.
 
 Color Palettes
 
