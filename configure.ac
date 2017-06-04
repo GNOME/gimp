@@ -1524,6 +1524,9 @@ if test "x$with_libmng" != xno && test -z "$MNG_LIBS" &&
   if test "$mng_ok" = yes; then
     have_libmng=yes
     FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"; MNG_CFLAGS="$PNG_CFLAGS"
+    if test "x$platform_win32" = "xyes"; then
+      MNG_CFLAGS="$MNG_CFLAGS -DMNG_USE_DLL"
+    fi
   else
     have_libmng="no (MNG header file not found)"
   fi
