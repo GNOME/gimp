@@ -104,8 +104,8 @@ gimp_colorize_config_class_init (GimpColorizeConfigClass *klass)
 
   g_object_class_install_property (object_class, PROP_COLOR,
                                    gimp_param_spec_rgb ("color",
-                                                        "Color",
-                                                        "The color",
+                                                        _("Color"),
+                                                        _("Color"),
                                                         FALSE, &rgb,
                                                         G_PARAM_READWRITE));
 }

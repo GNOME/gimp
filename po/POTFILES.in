@@ -271,6 +271,7 @@ app/operations/gimphuesaturationconfig.c
 app/operations/gimplevelsconfig.c
 app/operations/gimpoperationcagecoefcalc.c
 app/operations/gimpoperationcagetransform.c
+app/operations/gimpoperationcolorize.c
 app/operations/gimpoperationdesaturate.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
@@ -381,7 +382,6 @@ app/tools/gimpcagetool.c
 app/tools/gimpcloneoptions-gui.c
 app/tools/gimpclonetool.c
 app/tools/gimpcolorbalancetool.c
-app/tools/gimpcolorizetool.c
 app/tools/gimpcoloroptions.c
 app/tools/gimpcolorpickeroptions.c
 app/tools/gimpcolorpickertool.c

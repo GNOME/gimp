@@ -610,7 +610,7 @@
       </menu>
       <separator />
       <menuitem action="tools-threshold" />
-      <menuitem action="tools-colorize" />
+      <menuitem action="filters-colorize" />
       <menuitem action="filters-posterize" />
       <menuitem action="filters-color-to-alpha" />
       <menuitem action="filters-dither" />
@@ -666,7 +666,6 @@
       <menu action="tools-color-menu" name="Color Tools">
         <menuitem action="tools-color-balance" />
         <menuitem action="tools-hue-saturation" />
-        <menuitem action="tools-colorize" />
         <menuitem action="tools-brightness-contrast" />
         <menuitem action="tools-threshold" />
         <menuitem action="tools-levels" />

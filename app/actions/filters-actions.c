@@ -213,6 +213,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:color-exchange",
     GIMP_HELP_FILTER_COLOR_EXCHANGE },
 
+  { "filters-colorize", GIMP_ICON_TOOL_COLORIZE,
+    NC_("filters-action", "Colori_ze..."), NULL, NULL,
+    "gimp:colorize",
+    GIMP_HELP_TOOL_COLORIZE },
+
   { "filters-dither", GIMP_ICON_GEGL,
     NC_("filters-action", "Dithe_r..."), NULL, NULL,
     "gegl:dither",
@@ -785,6 +790,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-checkerboard",            writable);
   SET_SENSITIVE ("filters-color-enhance",           writable && !gray);
   SET_SENSITIVE ("filters-color-exchange",          writable);
+  SET_SENSITIVE ("filters-colorize",                writable && !gray);
   SET_SENSITIVE ("filters-dither",                  writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);

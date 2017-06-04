@@ -31,6 +31,8 @@
 #include "gimpcolorizeconfig.h"
 #include "gimpoperationcolorize.h"
 
+#include "gimp-intl.h"
+
 
 static gboolean gimp_operation_colorize_process (GeglOperation       *operation,
                                                  void                *in_buf,
@@ -59,7 +61,7 @@ gimp_operation_colorize_class_init (GimpOperationColorizeClass *klass)
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:colorize",
                                  "categories",  "color",
-                                 "description", "GIMP Colorize operation",
+                                 "description", _("Colorize the image"),
                                  NULL);
 
   point_class->process = gimp_operation_colorize_process;
