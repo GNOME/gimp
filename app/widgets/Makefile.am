@@ -301,6 +301,8 @@ libappwidgets_a_sources = \
 	gimpprogressdialog.h		\
 	gimppropgui.c			\
 	gimppropgui.h			\
+	gimppropgui-color-balance.c	\
+	gimppropgui-color-balance.h	\
 	gimppropgui-constructors.c	\
 	gimppropgui-constructors.h	\
 	gimppropgui-eval.c		\

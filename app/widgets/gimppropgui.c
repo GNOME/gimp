@@ -43,6 +43,7 @@
 #include "gimpmessagebox.h"
 #include "gimpspinscale.h"
 #include "gimppropgui.h"
+#include "gimppropgui-color-balance.h"
 #include "gimppropgui-constructors.h"
 #include "gimppropgui-eval.h"
 #include "gimppropwidgets.h"
@@ -431,6 +432,8 @@ static const struct
 
 gui_new_funcs[] =
 {
+  { "GimpColorBalanceConfig",
+    _gimp_prop_gui_new_color_balance },
   { "GimpGegl-gegl-color-rotate-config",
     _gimp_prop_gui_new_color_rotate },
   { "GimpGegl-gegl-convolution-matrix-config",

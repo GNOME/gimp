@@ -52,8 +52,6 @@ libapptools_a_sources = \
 	gimpcoloroptions.h		\
 	gimpcolortool.c			\
 	gimpcolortool.h			\
-	gimpcolorbalancetool.c		\
-	gimpcolorbalancetool.h		\
 	gimpcolorpickeroptions.c	\
 	gimpcolorpickeroptions.h	\
 	gimpcolorpickertool.c		\

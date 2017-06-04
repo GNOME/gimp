@@ -208,6 +208,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:checkerboard",
     GIMP_HELP_FILTER_CHECKERBOARD },
 
+  { "filters-color-balance", GIMP_ICON_TOOL_COLOR_BALANCE,
+    NC_("filters-action", "Color _Balance..."), NULL, NULL,
+    "gimp:color-balance",
+    GIMP_HELP_TOOL_COLOR_BALANCE },
+
   { "filters-color-exchange", GIMP_ICON_GEGL,
     NC_("filters-action", "_Color Exchange..."), NULL, NULL,
     "gegl:color-exchange",
@@ -788,6 +793,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-channel-mixer",           writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);
+  SET_SENSITIVE ("filters-color-balance",           writable && !gray);
   SET_SENSITIVE ("filters-color-enhance",           writable && !gray);
   SET_SENSITIVE ("filters-color-exchange",          writable);
   SET_SENSITIVE ("filters-colorize",                writable && !gray);

@@ -556,7 +556,7 @@
     </menu>
 
     <menu action="colors-menu" name="Colors">
-      <menuitem action="tools-color-balance" />
+      <menuitem action="filters-color-balance" />
       <menuitem action="filters-color-temperature" />
       <menuitem action="filters-hue-chroma" />
       <menuitem action="tools-hue-saturation" />

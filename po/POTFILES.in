@@ -381,7 +381,6 @@ app/tools/gimpcageoptions.c
 app/tools/gimpcagetool.c
 app/tools/gimpcloneoptions-gui.c
 app/tools/gimpclonetool.c
-app/tools/gimpcolorbalancetool.c
 app/tools/gimpcoloroptions.c
 app/tools/gimpcolorpickeroptions.c
 app/tools/gimpcolorpickertool.c
@@ -537,6 +536,7 @@ app/widgets/gimppdbdialog.c
 app/widgets/gimppickablepopup.c
 app/widgets/gimppluginview.c
 app/widgets/gimpprogressdialog.c
+app/widgets/gimppropgui-color-balance.c
 app/widgets/gimppropgui-constructors.c
 app/widgets/gimppropgui.c
 app/widgets/gimppropwidgets.c
