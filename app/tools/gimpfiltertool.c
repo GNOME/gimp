@@ -277,12 +277,6 @@ gimp_filter_tool_finalize (GObject *object)
       filter_tool->help_id = NULL;
     }
 
-  if (filter_tool->settings_folder)
-    {
-      g_object_unref (filter_tool->settings_folder);
-      filter_tool->settings_folder = NULL;
-    }
-
   if (filter_tool->import_dialog_title)
     {
       g_free (filter_tool->import_dialog_title);
@@ -1226,7 +1220,6 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   GimpFilterToolClass *klass;
   GimpToolInfo        *tool_info;
   gchar               *operation_name;
-  gchar               *settings_folder = NULL;
 
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
 
@@ -1299,12 +1292,6 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
       filter_tool->help_id = NULL;
     }
 
-  if (filter_tool->settings_folder)
-    {
-      g_object_unref (filter_tool->settings_folder);
-      filter_tool->settings_folder = NULL;
-    }
-
   if (filter_tool->import_dialog_title)
     {
       g_free (filter_tool->import_dialog_title);
@@ -1324,7 +1311,6 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                          &filter_tool->icon_name,
                                          &filter_tool->help_id,
                                          &filter_tool->has_settings,
-                                         &settings_folder,
                                          &filter_tool->import_dialog_title,
                                          &filter_tool->export_dialog_title);
 
@@ -1346,13 +1332,6 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
 
   if (! filter_tool->help_id)
     filter_tool->help_id = g_strdup (tool_info->help_id);
-
-  if (settings_folder)
-    {
-      filter_tool->settings_folder = gimp_directory_file (settings_folder,
-                                                          NULL);
-      g_free (settings_folder);
-    }
 
   filter_tool->operation = gegl_node_new_child (NULL,
                                                 "operation", operation_name,
@@ -1433,6 +1412,12 @@ gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
     {
       if (filter_tool->has_settings)
         {
+          GQuark  quark = g_quark_from_static_string ("settings-folder");
+          GType   type  = G_TYPE_FROM_INSTANCE (filter_tool->config);
+          GFile  *settings_folder;
+
+          settings_folder = g_type_get_qdata (type, quark);
+
           g_object_set (filter_tool->settings_box,
                         "visible",        TRUE,
                         "config",         filter_tool->config,
@@ -1440,7 +1425,7 @@ gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
                         "help-id",        filter_tool->help_id,
                         "import-title",   filter_tool->import_dialog_title,
                         "export-title",   filter_tool->export_dialog_title,
-                        "default-folder", filter_tool->settings_folder,
+                        "default-folder", settings_folder,
                         "last-file",      NULL,
                         NULL);
         }

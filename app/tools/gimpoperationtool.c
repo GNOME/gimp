@@ -85,7 +85,6 @@ static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filte
                                                         gchar            **icon_name,
                                                         gchar            **help_id,
                                                         gboolean          *has_settings,
-                                                        gchar            **settings_folder,
                                                         gchar            **import_dialog_title,
                                                         gchar            **export_dialog_title);
 static void        gimp_operation_tool_dialog          (GimpFilterTool    *filter_tool);
@@ -261,7 +260,6 @@ gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
                                    gchar          **icon_name,
                                    gchar          **help_id,
                                    gboolean        *has_settings,
-                                   gchar          **settings_folder,
                                    gchar          **import_dialog_title,
                                    gchar          **export_dialog_title)
 {

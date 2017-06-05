@@ -66,9 +66,14 @@ GtkWidget *
 gimp_filter_tool_get_settings_box (GimpFilterTool *filter_tool)
 {
   GimpToolInfo *tool_info = GIMP_TOOL (filter_tool)->tool_info;
+  GQuark        quark     = g_quark_from_static_string ("settings-folder");
+  GType         type      = G_TYPE_FROM_INSTANCE (filter_tool->config);
+  GFile        *settings_folder;
   GtkWidget    *box;
   GtkWidget    *label;
   GtkWidget    *combo;
+
+  settings_folder = g_type_get_qdata (type, quark);
 
   box = gimp_settings_box_new (tool_info->gimp,
                                filter_tool->config,
@@ -76,7 +81,7 @@ gimp_filter_tool_get_settings_box (GimpFilterTool *filter_tool)
                                filter_tool->import_dialog_title,
                                filter_tool->export_dialog_title,
                                filter_tool->help_id,
-                               filter_tool->settings_folder,
+                               settings_folder,
                                NULL);
 
   g_signal_connect (box, "import",

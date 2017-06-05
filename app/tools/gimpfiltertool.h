@@ -52,7 +52,6 @@ struct _GimpFilterTool
   gchar                 *help_id;
 
   gboolean               has_settings;
-  GFile                 *settings_folder;
   gchar                 *import_dialog_title;
   gchar                 *export_dialog_title;
 
@@ -83,7 +82,6 @@ struct _GimpFilterToolClass
                                    gchar            **icon_name,
                                    gchar            **help_id,
                                    gboolean          *has_settings,
-                                   gchar            **settings_folder,
                                    gchar            **import_dialog_title,
                                    gchar            **export_dialog_title);
   void        (* dialog)          (GimpFilterTool    *filter_tool);
