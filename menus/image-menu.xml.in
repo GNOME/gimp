@@ -664,7 +664,6 @@
 	-->
       </menu>
       <menu action="tools-color-menu" name="Color Tools">
-        <menuitem action="tools-color-balance" />
         <menuitem action="tools-hue-saturation" />
         <menuitem action="tools-brightness-contrast" />
         <menuitem action="tools-threshold" />
