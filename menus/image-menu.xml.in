@@ -559,7 +559,7 @@
       <menuitem action="filters-color-balance" />
       <menuitem action="filters-color-temperature" />
       <menuitem action="filters-hue-chroma" />
-      <menuitem action="tools-hue-saturation" />
+      <menuitem action="filters-hue-saturation" />
       <menuitem action="filters-saturation" />
       <menuitem action="filters-exposure" />
       <menuitem action="tools-brightness-contrast" />
@@ -664,7 +664,6 @@
 	-->
       </menu>
       <menu action="tools-color-menu" name="Color Tools">
-        <menuitem action="tools-hue-saturation" />
         <menuitem action="tools-brightness-contrast" />
         <menuitem action="tools-threshold" />
         <menuitem action="tools-levels" />

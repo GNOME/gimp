@@ -106,8 +106,6 @@ libapptools_a_sources = \
 	gimphealtool.h			\
 	gimphistogramoptions.c		\
 	gimphistogramoptions.h		\
-	gimphuesaturationtool.c		\
-	gimphuesaturationtool.h		\
 	gimpinkoptions-gui.c		\
 	gimpinkoptions-gui.h		\
 	gimpinktool.c			\

@@ -50,6 +50,7 @@
 #include "gimppropgui-diffration-patterns.h"
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
+#include "gimppropgui-hue-saturation.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-utils.h"
 
@@ -438,6 +439,8 @@ gui_new_funcs[] =
 {
   { "GimpColorBalanceConfig",
     _gimp_prop_gui_new_color_balance },
+  { "GimpHueSaturationConfig",
+    _gimp_prop_gui_new_hue_saturation },
   { "GimpGegl-gegl-color-rotate-config",
     _gimp_prop_gui_new_color_rotate },
   { "GimpGegl-gegl-convolution-matrix-config",

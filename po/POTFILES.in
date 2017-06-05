@@ -274,6 +274,7 @@ app/operations/gimpoperationcagetransform.c
 app/operations/gimpoperationcolorbalance.c
 app/operations/gimpoperationcolorize.c
 app/operations/gimpoperationdesaturate.c
+app/operations/gimpoperationhuesaturation.c
 app/operations/gimpoperationposterize.c
 app/operations/gimpoperationsemiflatten.c
 app/operations/gimpoperationthreshold.c
@@ -409,7 +410,6 @@ app/tools/gimphandletransformoptions.c
 app/tools/gimphandletransformtool.c
 app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
-app/tools/gimphuesaturationtool.c
 app/tools/gimpinkoptions-gui.c
 app/tools/gimpinktool.c
 app/tools/gimpiscissorsoptions.c
@@ -543,6 +543,7 @@ app/widgets/gimppropgui-color-rotate.c
 app/widgets/gimppropgui-convolution-matrix.c
 app/widgets/gimppropgui-diffration-patterns.c
 app/widgets/gimppropgui-generic.c
+app/widgets/gimppropgui-hue-saturation.c
 app/widgets/gimppropgui.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpsavedialog.c

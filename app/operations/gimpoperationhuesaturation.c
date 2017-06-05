@@ -32,6 +32,8 @@
 #include "gimphuesaturationconfig.h"
 #include "gimpoperationhuesaturation.h"
 
+#include "gimp-intl.h"
+
 
 static gboolean gimp_operation_hue_saturation_process (GeglOperation       *operation,
                                                        void                *in_buf,
@@ -60,7 +62,7 @@ gimp_operation_hue_saturation_class_init (GimpOperationHueSaturationClass *klass
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:hue-saturation",
                                  "categories",  "color",
-                                 "description", "GIMP Hue-Saturation operation",
+                                 "description", _("Adjust hue, saturation, and lightness"),
                                  NULL);
 
   point_class->process = gimp_operation_hue_saturation_process;

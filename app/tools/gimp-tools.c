@@ -60,7 +60,6 @@
 #include "gimpgegltool.h"
 #include "gimphandletransformtool.h"
 #include "gimphealtool.h"
-#include "gimphuesaturationtool.h"
 #include "gimpinktool.h"
 #include "gimpiscissorstool.h"
 #include "gimplevelstool.h"
@@ -175,7 +174,6 @@ gimp_tools_init (Gimp *gimp)
 
     /*  color tools  */
 
-    gimp_hue_saturation_tool_register,
     gimp_brightness_contrast_tool_register,
     gimp_threshold_tool_register,
     gimp_levels_tool_register,

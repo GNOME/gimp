@@ -368,6 +368,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:hue-chroma",
     GIMP_HELP_FILTER_HUE_CHROMA },
 
+  { "filters-hue-saturation", GIMP_ICON_TOOL_HUE_SATURATION,
+    NC_("filters-action", "Hue-_Saturation..."), NULL, NULL,
+    "gimp:hue-saturation",
+    GIMP_HELP_TOOL_HUE_SATURATION },
+
   { "filters-illusion", GIMP_ICON_GEGL,
     NC_("filters-action", "_Illusion..."), NULL, NULL,
     "gegl:illusion",
@@ -828,6 +833,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-grid",                    writable);
   SET_SENSITIVE ("filters-high-pass",               writable);
   SET_SENSITIVE ("filters-hue-chroma",              writable);
+  SET_SENSITIVE ("filters-hue-saturation",          writable && !gray);
   SET_SENSITIVE ("filters-illusion",                writable);
   SET_SENSITIVE ("filters-invert-linear",           writable);
   SET_SENSITIVE ("filters-invert-perceptual",       writable);
