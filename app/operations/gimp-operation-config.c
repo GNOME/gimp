@@ -405,7 +405,11 @@ gimp_operation_config_serialize (Gimp          *gimp,
   g_return_if_fail (GIMP_IS_CONTAINER (container));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (! file)
+  if (file)
+    {
+      g_object_ref (file);
+    }
+  else
     {
       GType config_type = gimp_container_get_children_type (container);
 
@@ -444,7 +448,11 @@ gimp_operation_config_deserialize (Gimp          *gimp,
   g_return_if_fail (GIMP_IS_CONTAINER (container));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (! file)
+  if (file)
+    {
+      g_object_ref (file);
+    }
+  else
     {
       GType config_type = gimp_container_get_children_type (container);
 
