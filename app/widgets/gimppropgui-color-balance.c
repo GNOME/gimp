@@ -20,17 +20,15 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "operations/gimpcolorbalanceconfig.h"
+
+#include "core/gimpcontext.h"
 
 #include "gimppropgui.h"
 #include "gimppropgui-color-balance.h"
@@ -86,6 +84,11 @@ _gimp_prop_gui_new_color_balance (GObject              *config,
   GtkWidget *table;
   GtkWidget *button;
   GtkWidget *frame;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (param_specs != NULL, NULL);
+  g_return_val_if_fail (n_param_specs > 0, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 

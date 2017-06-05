@@ -536,8 +536,12 @@ app/widgets/gimppdbdialog.c
 app/widgets/gimppickablepopup.c
 app/widgets/gimppluginview.c
 app/widgets/gimpprogressdialog.c
+app/widgets/gimppropgui-channel-mixer.c
 app/widgets/gimppropgui-color-balance.c
+app/widgets/gimppropgui-color-rotate.c
 app/widgets/gimppropgui-constructors.c
+app/widgets/gimppropgui-convolution-matrix.c
+app/widgets/gimppropgui-diffration-patterns.c
 app/widgets/gimppropgui.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpsavedialog.c
