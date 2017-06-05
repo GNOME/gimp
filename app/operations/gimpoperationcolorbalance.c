@@ -32,6 +32,8 @@
 #include "gimpcolorbalanceconfig.h"
 #include "gimpoperationcolorbalance.h"
 
+#include "gimp-intl.h"
+
 
 static gboolean gimp_operation_color_balance_process (GeglOperation       *operation,
                                                       void                *in_buf,
@@ -60,7 +62,7 @@ gimp_operation_color_balance_class_init (GimpOperationColorBalanceClass *klass)
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:color-balance",
                                  "categories",  "color",
-                                 "description", "GIMP Color Balance operation",
+                                 "description", _("Adjust color distribution"),
                                  NULL);
 
   point_class->process = gimp_operation_color_balance_process;

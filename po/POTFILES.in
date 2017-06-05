@@ -271,6 +271,7 @@ app/operations/gimphuesaturationconfig.c
 app/operations/gimplevelsconfig.c
 app/operations/gimpoperationcagecoefcalc.c
 app/operations/gimpoperationcagetransform.c
+app/operations/gimpoperationcolorbalance.c
 app/operations/gimpoperationcolorize.c
 app/operations/gimpoperationdesaturate.c
 app/operations/gimpoperationposterize.c
