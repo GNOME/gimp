@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-constructors.h
+ * gimppropgui-generic.h
  * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
  *                          Sven Neumann <sven@gimp.org>
  *
@@ -19,8 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROP_GUI_CONSTRUCTORS_H__
-#define __GIMP_PROP_GUI_CONSTRUCTORS_H__
+#ifndef __GIMP_PROP_GUI_GENERIC_H__
+#define __GIMP_PROP_GUI_GENERIC_H__
 
 
 GtkWidget * _gimp_prop_gui_new_generic (GObject              *config,
@@ -32,4 +32,4 @@ GtkWidget * _gimp_prop_gui_new_generic (GObject              *config,
                                         gpointer              picker_creator);
 
 
-#endif /* __GIMP_PROP_GUI_CONSTRUCTORS_H__ */
+#endif /* __GIMP_PROP_GUI_GENERIC_H__ */

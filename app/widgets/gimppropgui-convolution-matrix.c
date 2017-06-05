@@ -31,8 +31,8 @@
 #include "core/gimpcontext.h"
 
 #include "gimppropgui.h"
-#include "gimppropgui-constructors.h"
 #include "gimppropgui-convolution-matrix.h"
+#include "gimppropgui-generic.h"
 
 #include "gimp-intl.h"
 

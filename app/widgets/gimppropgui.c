@@ -48,8 +48,8 @@
 #include "gimppropgui-color-rotate.h"
 #include "gimppropgui-convolution-matrix.h"
 #include "gimppropgui-diffration-patterns.h"
-#include "gimppropgui-constructors.h"
 #include "gimppropgui-eval.h"
+#include "gimppropgui-generic.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-utils.h"
 

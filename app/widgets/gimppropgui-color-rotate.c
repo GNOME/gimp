@@ -32,7 +32,7 @@
 
 #include "gimppropgui.h"
 #include "gimppropgui-color-rotate.h"
-#include "gimppropgui-constructors.h"
+#include "gimppropgui-generic.h"
 #include "gimppropwidgets.h"
 
 #include "gimp-intl.h"

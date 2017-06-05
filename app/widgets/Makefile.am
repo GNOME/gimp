@@ -307,14 +307,14 @@ libappwidgets_a_sources = \
 	gimppropgui-color-balance.h	\
 	gimppropgui-color-rotate.c	\
 	gimppropgui-color-rotate.h	\
-	gimppropgui-constructors.c	\
-	gimppropgui-constructors.h	\
 	gimppropgui-convolution-matrix.c	\
 	gimppropgui-convolution-matrix.h	\
 	gimppropgui-diffration-patterns.c	\
 	gimppropgui-diffration-patterns.h	\
 	gimppropgui-eval.c		\
 	gimppropgui-eval.h		\
+	gimppropgui-generic.c		\
+	gimppropgui-generic.h		\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpradioaction.c		\
