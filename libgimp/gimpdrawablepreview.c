@@ -137,7 +137,9 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_DRAWABLE,
-                                   g_param_spec_pointer ("drawable", NULL, NULL,
+                                   g_param_spec_pointer ("drawable",
+                                                         "Drawable",
+                                                         "Deprecated: use the drawable-id property instead",
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
@@ -149,7 +151,9 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
    * Since: 2.10
    */
   g_object_class_install_property (object_class, PROP_DRAWABLE_ID,
-                                   g_param_spec_int ("drawable-id", NULL, NULL,
+                                   g_param_spec_int ("drawable-id",
+                                                     "Drawable ID",
+                                                     "The drawable this preview is attached to",
                                                      -1, G_MAXINT, -1,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));

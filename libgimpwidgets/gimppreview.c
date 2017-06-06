@@ -184,14 +184,16 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_UPDATE,
                                    g_param_spec_boolean ("update",
-                                                         NULL, NULL,
+                                                         "Update",
+                                                         "Whether the preview should update automatically",
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("size",
-                                                             NULL, NULL,
+                                                             "Size",
+                                                             "The preview's size",
                                                              1, 1024,
                                                              DEFAULT_SIZE,
                                                              GIMP_PARAM_READABLE));

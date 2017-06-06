@@ -80,12 +80,14 @@ gimp_frame_class_init (GimpFrameClass *klass)
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_boolean ("label-bold",
-                                                                 NULL, NULL,
+                                                                 "Label Bold",
+                                                                 "Whether the frame's label should be bold",
                                                                  DEFAULT_LABEL_BOLD,
                                                                  G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("label-spacing",
-                                                             NULL, NULL,
+                                                             "Label Spacing",
+                                                             "The spacing between the label and the frame content",
                                                              0,
                                                              G_MAXINT,
                                                              DEFAULT_LABEL_SPACING,

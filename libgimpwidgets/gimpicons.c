@@ -34,8 +34,8 @@
 
 
 /**
- * SECTION: gimpstock
- * @title: GimpStock
+ * SECTION: gimpicons
+ * @title: GimpIcons
  * @short_description: Prebuilt common menu/toolbar items and
  *                     corresponding icons
  *

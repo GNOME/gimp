@@ -132,7 +132,8 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config",
-                                                        NULL, NULL,
+                                                        "Config",
+                                                        "The color config used by this color selection",
                                                         GIMP_TYPE_COLOR_CONFIG,
                                                         G_PARAM_WRITABLE));
 

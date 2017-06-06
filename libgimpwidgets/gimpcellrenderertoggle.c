@@ -141,21 +141,24 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name",
-                                                        NULL, NULL,
+                                                        "Icon Name",
+                                                        "The icon to display",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id",
-                                                        NULL, NULL,
+                                                        "Stock ID",
+                                                        "The icon to display, deprecated",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_STOCK_SIZE,
                                    g_param_spec_int ("stock-size",
-                                                     NULL, NULL,
+                                                     "Stock Size",
+                                                     "The icon size to use",
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,
                                                      GIMP_PARAM_READWRITE |
@@ -163,7 +166,8 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 
   g_object_class_install_property (object_class, PROP_OVERRIDE_BACKGROUND,
                                    g_param_spec_boolean ("override-background",
-                                                         NULL, NULL,
+                                                         "Override Background",
+                                                         "Draw the background if the row is selected",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
@@ -376,7 +380,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
       return;
     }
 
-  if (flags & GTK_CELL_RENDERER_SELECTED &&
+  if ((flags & GTK_CELL_RENDERER_SELECTED) &&
       priv->override_background)
     {
       gboolean background_set;

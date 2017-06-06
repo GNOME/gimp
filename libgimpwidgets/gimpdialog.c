@@ -119,7 +119,9 @@ gimp_dialog_class_init (GimpDialogClass *klass)
    * Since: 2.2
    **/
   g_object_class_install_property (object_class, PROP_HELP_FUNC,
-                                   g_param_spec_pointer ("help-func", NULL, NULL,
+                                   g_param_spec_pointer ("help-func",
+                                                         "Help Func",
+                                                         "The help function to call when F1 is hit",
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
@@ -129,7 +131,9 @@ gimp_dialog_class_init (GimpDialogClass *klass)
    * Since: 2.2
    **/
   g_object_class_install_property (object_class, PROP_HELP_ID,
-                                   g_param_spec_string ("help-id", NULL, NULL,
+                                   g_param_spec_string ("help-id",
+                                                        "Help ID",
+                                                        "The help ID to pass to help-func",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
@@ -140,7 +144,9 @@ gimp_dialog_class_init (GimpDialogClass *klass)
    * Since: 2.8
    **/
   g_object_class_install_property (object_class, PROP_PARENT,
-                                   g_param_spec_object ("parent", NULL, NULL,
+                                   g_param_spec_object ("parent",
+                                                        "Parent",
+                                                        "The dialog's parent widget",
                                                         GTK_TYPE_WIDGET,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));

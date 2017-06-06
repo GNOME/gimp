@@ -97,20 +97,25 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
   cell_class->get_size       = gimp_cell_renderer_color_get_size;
   cell_class->render         = gimp_cell_renderer_color_render;
 
-  g_object_class_install_property (object_class,
-                                   PROP_COLOR,
-                                   g_param_spec_boxed ("color", NULL, NULL,
+  g_object_class_install_property (object_class, PROP_COLOR,
+                                   g_param_spec_boxed ("color",
+                                                       "Color",
+                                                       "The displayed color",
                                                        GIMP_TYPE_RGB,
                                                        GIMP_PARAM_READWRITE));
-  g_object_class_install_property (object_class,
-                                   PROP_OPAQUE,
-                                   g_param_spec_boolean ("opaque", NULL, NULL,
+
+  g_object_class_install_property (object_class, PROP_OPAQUE,
+                                   g_param_spec_boolean ("opaque",
+                                                         "Opaque",
+                                                         "Whether to show transparency",
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
-  g_object_class_install_property (object_class,
-                                   PROP_SIZE,
-                                   g_param_spec_int ("icon-size", NULL, NULL,
+
+  g_object_class_install_property (object_class, PROP_SIZE,
+                                   g_param_spec_int ("icon-size",
+                                                     "Icon Size",
+                                                     "The cell's size",
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,
                                                      GIMP_PARAM_READWRITE |

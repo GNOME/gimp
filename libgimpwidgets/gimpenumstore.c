@@ -84,7 +84,8 @@ gimp_enum_store_class_init (GimpEnumStoreClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_ENUM_TYPE,
                                    g_param_spec_gtype ("enum-type",
-                                                       NULL, NULL,
+                                                       "Enum Type",
+                                                       "The type of the enum",
                                                        G_TYPE_ENUM,
                                                        G_PARAM_CONSTRUCT_ONLY |
                                                        GIMP_PARAM_READWRITE));

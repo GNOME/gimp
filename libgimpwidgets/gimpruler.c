@@ -219,7 +219,8 @@ gimp_ruler_class_init (GimpRulerClass *klass)
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_double ("font-scale",
-                                                                NULL, NULL,
+                                                                "Font Scale",
+                                                                "The size of the used font",
                                                                 0.0,
                                                                 G_MAXDOUBLE,
                                                                 DEFAULT_RULER_FONT_SCALE,

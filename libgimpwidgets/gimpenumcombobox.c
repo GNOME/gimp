@@ -74,7 +74,9 @@ gimp_enum_combo_box_class_init (GimpEnumComboBoxClass *klass)
   /*  override the "model" property of GtkComboBox  */
   g_object_class_install_property (object_class,
                                    PROP_MODEL,
-                                   g_param_spec_object ("model", NULL, NULL,
+                                   g_param_spec_object ("model",
+                                                        "Model",
+                                                        "The enum store used by this combo box",
                                                         GIMP_TYPE_ENUM_STORE,
                                                         GIMP_PARAM_READWRITE));
 }

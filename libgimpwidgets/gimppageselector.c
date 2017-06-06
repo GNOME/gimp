@@ -183,7 +183,9 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
    * Since: 2.4
    **/
   g_object_class_install_property (object_class, PROP_N_PAGES,
-                                   g_param_spec_int ("n-pages", NULL, NULL,
+                                   g_param_spec_int ("n-pages",
+                                                     "N Pages",
+                                                     "The number of pages to open",
                                                      0, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE));
 
@@ -195,7 +197,9 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
    * Since: 2.4
    **/
   g_object_class_install_property (object_class, PROP_TARGET,
-                                   g_param_spec_enum ("target", NULL, NULL,
+                                   g_param_spec_enum ("target",
+                                                      "Target",
+                                                      "the target to open to",
                                                       GIMP_TYPE_PAGE_SELECTOR_TARGET,
                                                       GIMP_PAGE_SELECTOR_TARGET_LAYERS,
                                                       GIMP_PARAM_READWRITE));

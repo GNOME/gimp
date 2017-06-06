@@ -111,7 +111,8 @@ gimp_int_store_class_init (GimpIntStoreClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_USER_DATA_TYPE,
                                    g_param_spec_gtype ("user-data-type",
-                                                       NULL, NULL,
+                                                       "User Data Type",
+                                                       "The GType of the user_data column",
                                                        G_TYPE_NONE,
                                                        G_PARAM_CONSTRUCT_ONLY |
                                                        GIMP_PARAM_READWRITE));

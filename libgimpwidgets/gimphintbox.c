@@ -87,17 +87,25 @@ gimp_hint_box_class_init (GimpHintBoxClass *klass)
   object_class->get_property  = gimp_hint_box_get_property;
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
-                                   g_param_spec_string ("icon-name", NULL, NULL,
+                                   g_param_spec_string ("icon-name",
+                                                        "Icon Name",
+                                                        "The icon to show next to the hint",
                                                         GIMP_ICON_DIALOG_INFORMATION,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_STOCK_ID,
-                                   g_param_spec_string ("stock-id", NULL, NULL,
+                                   g_param_spec_string ("stock-id",
+                                                        "Stock ID",
+                                                        "Deprecated: use icon-name instead",
                                                         GIMP_ICON_DIALOG_INFORMATION,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_HINT,
-                                   g_param_spec_string ("hint", NULL, NULL,
+                                   g_param_spec_string ("hint",
+                                                        "Hint",
+                                                        "The hint to display",
                                                         NULL,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));

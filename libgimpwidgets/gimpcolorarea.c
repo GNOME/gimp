@@ -178,7 +178,9 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_rgb ("color", NULL, NULL,
+                                   gimp_param_spec_rgb ("color",
+                                                        "Color",
+                                                        "The displayed color",
                                                         TRUE, &color,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
@@ -190,7 +192,9 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_TYPE,
-                                   g_param_spec_enum ("type", NULL, NULL,
+                                   g_param_spec_enum ("type",
+                                                      "Type",
+                                                      "The type of the color area",
                                                       GIMP_TYPE_COLOR_AREA_TYPE,
                                                       GIMP_COLOR_AREA_FLAT,
                                                       GIMP_PARAM_READWRITE |
@@ -198,12 +202,14 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   /**
    * GimpColorArea:drag-type:
    *
-   * The event_mask that should trigger drags.
+   * The modifier mask that should trigger drags.
    *
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_DRAG_MASK,
-                                   g_param_spec_flags ("drag-mask", NULL, NULL,
+                                   g_param_spec_flags ("drag-mask",
+                                                       "Drag Mask",
+                                                       "The modifier mask that triggers dragging the color",
                                                        GDK_TYPE_MODIFIER_TYPE,
                                                        0,
                                                        GIMP_PARAM_WRITABLE |
@@ -217,7 +223,8 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
    */
   g_object_class_install_property (object_class, PROP_DRAW_BORDER,
                                    g_param_spec_boolean ("draw-border",
-                                                         NULL, NULL,
+                                                         "Draw Border",
+                                                         "Whether to draw a thin border in the foreground color around the area",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 

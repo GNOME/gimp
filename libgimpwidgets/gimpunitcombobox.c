@@ -60,7 +60,8 @@ gimp_unit_combo_box_class_init (GimpUnitComboBoxClass *klass)
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_double ("label-scale",
-                                                                NULL, NULL,
+                                                                "Label Scale",
+                                                                "The scale for the text cell renderer",
                                                                 0.0,
                                                                 G_MAXDOUBLE,
                                                                 1.0,

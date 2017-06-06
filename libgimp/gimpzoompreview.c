@@ -170,7 +170,9 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_DRAWABLE,
-                                   g_param_spec_pointer ("drawable", NULL, NULL,
+                                   g_param_spec_pointer ("drawable",
+                                                         "Drawable",
+                                                         "Deprecated: use the drawable-id property instead",
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
@@ -182,7 +184,9 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
    * Since: 2.10
    */
   g_object_class_install_property (object_class, PROP_DRAWABLE_ID,
-                                   g_param_spec_int ("drawable-id", NULL, NULL,
+                                   g_param_spec_int ("drawable-id",
+                                                     "Drawable ID",
+                                                     "The drawable this preview is attached to",
                                                      -1, G_MAXINT, -1,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
@@ -195,7 +199,9 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_MODEL,
-                                   g_param_spec_object ("model", NULL, NULL,
+                                   g_param_spec_object ("model",
+                                                        "Model",
+                                                        "The zoom preview's GimpZoomModel",
                                                         GIMP_TYPE_ZOOM_MODEL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));

@@ -108,7 +108,9 @@ gimp_color_profile_store_class_init (GimpColorProfileStoreClass *klass)
    */
   g_object_class_install_property (object_class,
                                    PROP_HISTORY,
-                                   g_param_spec_string ("history", NULL, NULL,
+                                   g_param_spec_string ("history",
+                                                        "History",
+                                                        "Filename of the color history used to populate the profile store",
                                                         NULL,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));

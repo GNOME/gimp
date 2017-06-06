@@ -110,7 +110,9 @@ gimp_color_profile_combo_box_class_init (GimpColorProfileComboBoxClass *klass)
    */
   g_object_class_install_property (object_class,
                                    PROP_DIALOG,
-                                   g_param_spec_object ("dialog", NULL, NULL,
+                                   g_param_spec_object ("dialog",
+                                                        "Dialog",
+                                                        "The dialog to present when selecting profiles from disk",
                                                         GTK_TYPE_DIALOG,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
@@ -125,7 +127,9 @@ gimp_color_profile_combo_box_class_init (GimpColorProfileComboBoxClass *klass)
    */
   g_object_class_install_property (object_class,
                                    PROP_MODEL,
-                                   g_param_spec_object ("model", NULL, NULL,
+                                   g_param_spec_object ("model",
+                                                        "Model",
+                                                        "The profile store used for this combo box",
                                                         GIMP_TYPE_COLOR_PROFILE_STORE,
                                                         GIMP_PARAM_READWRITE));
 

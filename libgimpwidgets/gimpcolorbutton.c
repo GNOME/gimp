@@ -241,7 +241,9 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_TITLE,
-                                   g_param_spec_string ("title", NULL, NULL,
+                                   g_param_spec_string ("title",
+                                                        "Title",
+                                                        "The title to be used for the color selection dialog",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
@@ -253,7 +255,9 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_rgb ("color", NULL, NULL,
+                                   gimp_param_spec_rgb ("color",
+                                                        "Color",
+                                                        "The color displayed in the button's color area",
                                                         TRUE, &color,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
@@ -265,7 +269,9 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_TYPE,
-                                   g_param_spec_enum ("type", NULL, NULL,
+                                   g_param_spec_enum ("type",
+                                                      "Type",
+                                                      "The type of the button's color area",
                                                       GIMP_TYPE_COLOR_AREA_TYPE,
                                                       GIMP_COLOR_AREA_FLAT,
                                                       GIMP_PARAM_READWRITE |
@@ -279,7 +285,8 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
    */
   g_object_class_install_property (object_class, PROP_UPDATE,
                                    g_param_spec_boolean ("continuous-update",
-                                                         NULL, NULL,
+                                                         "Contiguous Update",
+                                                         "The update policy of the color button",
                                                          FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
@@ -292,7 +299,8 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
    */
   g_object_class_install_property (object_class, PROP_AREA_WIDTH,
                                    g_param_spec_int ("area-width",
-                                                     NULL, NULL,
+                                                     "Area Width",
+                                                     "The minimum width of the button's GimpColorArea",
                                                      1, G_MAXINT, 16,
                                                      G_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT));
@@ -305,7 +313,8 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
    */
   g_object_class_install_property (object_class, PROP_AREA_HEIGHT,
                                    g_param_spec_int ("area-height",
-                                                     NULL, NULL,
+                                                     "Area Height",
+                                                     "The minimum height of the button's GimpColorArea",
                                                      1, G_MAXINT, 16,
                                                      G_PARAM_WRITABLE |
                                                      G_PARAM_CONSTRUCT));
@@ -319,7 +328,8 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
    */
   g_object_class_install_property (object_class, PROP_COLOR_CONFIG,
                                    g_param_spec_object ("color-config",
-                                                        NULL, NULL,
+                                                        "Color Config",
+                                                        "The color config object used",
                                                         GIMP_TYPE_COLOR_CONFIG,
                                                         G_PARAM_READWRITE));
 
@@ -681,7 +691,7 @@ gimp_color_button_new (const gchar       *title,
  *
  * Sets the @button dialog's title.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_color_button_set_title (GimpColorButton *button,
@@ -705,7 +715,7 @@ gimp_color_button_set_title (GimpColorButton *button,
  *
  * Returns: The @button dialog's title.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 const gchar *
 gimp_color_button_get_title (GimpColorButton *button)
@@ -894,7 +904,7 @@ gimp_color_button_set_color_config (GimpColorButton *button,
  *
  * Returns: The @button's #GtkUIManager.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GtkUIManager *
 gimp_color_button_get_ui_manager (GimpColorButton *button)

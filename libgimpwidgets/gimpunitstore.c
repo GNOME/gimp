@@ -138,32 +138,37 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
 
   g_object_class_install_property (object_class, PROP_NUM_VALUES,
                                    g_param_spec_int ("num-values",
-                                                     NULL, NULL,
+                                                     "Num Values",
+                                                     "The number of values this store provides",
                                                      0, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_HAS_PIXELS,
                                    g_param_spec_boolean ("has-pixels",
-                                                         NULL, NULL,
+                                                         "Has Pixels",
+                                                         "Whether the store has GIMP_UNIT_PIXELS",
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HAS_PERCENT,
                                    g_param_spec_boolean ("has-percent",
-                                                         NULL, NULL,
+                                                         "Has Percent",
+                                                         "Whether the store has GIMP_UNIT_PERCENT",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SHORT_FORMAT,
                                    g_param_spec_string ("short-format",
-                                                        NULL, NULL,
+                                                        "Short Format",
+                                                        "Format string for a short label",
                                                         "%a",
                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_LONG_FORMAT,
                                    g_param_spec_string ("long-format",
-                                                        NULL, NULL,
+                                                        "Long Format",
+                                                        "Format string for a long label",
                                                         "%p",
                                                         GIMP_PARAM_READWRITE));
 

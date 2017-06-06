@@ -109,19 +109,25 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
   g_type_class_add_private (object_class, sizeof (GimpColorDisplayPrivate));
 
   g_object_class_install_property (object_class, PROP_ENABLED,
-                                   g_param_spec_boolean ("enabled", NULL, NULL,
+                                   g_param_spec_boolean ("enabled",
+                                                         "Enabled",
+                                                         "Whether this display filter is enabled",
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_COLOR_CONFIG,
                                    g_param_spec_object ("color-config",
-                                                        NULL, NULL,
+                                                        "Color Config",
+                                                        "The color config used for this filter",
                                                         GIMP_TYPE_COLOR_CONFIG,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_COLOR_MANAGED,
                                    g_param_spec_object ("color-managed",
-                                                        NULL, NULL,
+                                                        "Color Managed",
+                                                        "The color managed pixel source that is filtered",
                                                         GIMP_TYPE_COLOR_MANAGED,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));

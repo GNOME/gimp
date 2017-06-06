@@ -123,14 +123,16 @@ gimp_preview_area_class_init (GimpPreviewAreaClass *klass)
 
   g_object_class_install_property (object_class, PROP_CHECK_SIZE,
                                    g_param_spec_enum ("check-size",
-                                                      _("Check Size"), NULL,
+                                                      _("Check Size"),
+                                                      "The size of the checkerboard pattern indicating transparency",
                                                       GIMP_TYPE_CHECK_SIZE,
                                                       DEFAULT_CHECK_SIZE,
                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CHECK_TYPE,
                                    g_param_spec_enum ("check-type",
-                                                      _("Check Style"), NULL,
+                                                      _("Check Style"),
+                                                      "The colors of the checkerboard pattern indicating transparency",
                                                       GIMP_TYPE_CHECK_TYPE,
                                                       DEFAULT_CHECK_TYPE,
                                                       GIMP_PARAM_READWRITE));

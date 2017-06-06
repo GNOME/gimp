@@ -178,8 +178,6 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  g_type_class_add_private (klass, sizeof (GimpNumberPairEntryPrivate));
-
   entry_signals[NUMBERS_CHANGED] =
     g_signal_new ("numbers-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -198,43 +196,52 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  klass->numbers_changed = NULL;
-  klass->ratio_changed   = NULL;
-
   object_class->set_property = gimp_number_pair_entry_set_property;
   object_class->get_property = gimp_number_pair_entry_get_property;
   object_class->finalize     = gimp_number_pair_entry_finalize;
 
+  klass->numbers_changed = NULL;
+  klass->ratio_changed   = NULL;
+
   g_object_class_install_property (object_class, PROP_LEFT_NUMBER,
                                    g_param_spec_double ("left-number",
-                                                        "Left number", NULL,
+                                                        "Left number",
+                                                        "The left number",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         100.0,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_RIGHT_NUMBER,
                                    g_param_spec_double ("right-number",
-                                                        "Right number", NULL,
+                                                        "Right number",
+                                                        "The right number",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         100.0,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_DEFAULT_LEFT_NUMBER,
                                    g_param_spec_double ("default-left-number",
-                                                        "Default left number", NULL,
+                                                        "Default left number",
+                                                        "The default left number",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         100.0,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_DEFAULT_RIGHT_NUMBER,
                                    g_param_spec_double ("default-right-number",
-                                                        "Default right number", NULL,
+                                                        "Default right number",
+                                                        "The default right number",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         100.0,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_USER_OVERRIDE,
                                    g_param_spec_boolean ("user-override",
                                                          "User override",
                                                          "Whether the widget is in 'user override' mode",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_SEPARATORS,
                                    g_param_spec_string ("separators",
                                                         "Separators",
@@ -242,18 +249,21 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_DEFAULT_TEXT,
                                    g_param_spec_string ("default-text",
                                                         "Default text",
                                                         "String to show when in automatic mode",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_ALLOW_SIMPLIFICATION,
                                    g_param_spec_boolean ("allow-simplification",
                                                          "Allow simplification",
                                                          "Whether to allow simplification",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_MIN_VALID_VALUE,
                                    g_param_spec_double ("min-valid-value",
                                                         "Min valid value",
@@ -261,6 +271,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         G_MINDOUBLE,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_MAX_VALID_VALUE,
                                    g_param_spec_double ("max-valid-value",
                                                         "Max valid value",
@@ -268,18 +279,24 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_RATIO,
                                    g_param_spec_double ("ratio",
-                                                        "Ratio", NULL,
+                                                        "Ratio",
+                                                        "The value as ratio",
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         1.0,
                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_ASPECT,
                                    g_param_spec_enum ("aspect",
-                                                      "Aspect", NULL,
+                                                      "Aspect",
+                                                      "The value as aspect",
                                                       GIMP_TYPE_ASPECT_TYPE,
                                                       GIMP_ASPECT_SQUARE,
                                                       GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (klass, sizeof (GimpNumberPairEntryPrivate));
 }
 
 static void

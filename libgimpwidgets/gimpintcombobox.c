@@ -109,7 +109,9 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_ELLIPSIZE,
-                                   g_param_spec_enum ("ellipsize", NULL, NULL,
+                                   g_param_spec_enum ("ellipsize",
+                                                      "Ellipsize",
+                                                      "Ellipsize mode for the used text cell renderer",
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
                                                       GIMP_PARAM_READWRITE));
@@ -122,7 +124,9 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
    * Since: 2.10
    */
   g_object_class_install_property (object_class, PROP_LABEL,
-                                   g_param_spec_string ("label", NULL, NULL,
+                                   g_param_spec_string ("label",
+                                                        "Label",
+                                                        "An optional label to be displayed",
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
 

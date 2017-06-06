@@ -94,7 +94,9 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
    */
   g_object_class_install_property (object_class,
                                    PROP_ID_COLUMN,
-                                   g_param_spec_int ("id-column", NULL, NULL,
+                                   g_param_spec_int ("id-column",
+                                                     "ID Column",
+                                                     "The model column that holds the ID",
                                                      0, G_MAXINT,
                                                      0,
                                                      GIMP_PARAM_READWRITE |
@@ -109,7 +111,9 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
    */
   g_object_class_install_property (object_class,
                                    PROP_LABEL_COLUMN,
-                                   g_param_spec_int ("label-column", NULL, NULL,
+                                   g_param_spec_int ("label-column",
+                                                     "Label Column",
+                                                     "The model column that holds the label",
                                                      0, G_MAXINT,
                                                      0,
                                                      GIMP_PARAM_READWRITE |
@@ -126,7 +130,9 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
    */
   g_object_class_install_property (object_class,
                                    PROP_ELLIPSIZE,
-                                   g_param_spec_enum ("ellipsize", NULL, NULL,
+                                   g_param_spec_enum ("ellipsize",
+                                                      "Ellipsize",
+                                                      "Ellipsize mode for the text cell renderer",
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
                                                       GIMP_PARAM_READWRITE));
