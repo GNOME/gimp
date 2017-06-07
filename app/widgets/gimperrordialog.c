@@ -97,6 +97,7 @@ gimp_error_dialog_finalize (GObject *object)
 
   g_list_free_full (dialog->messages,
                     gimp_error_dialog_message_destroy);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -116,6 +117,7 @@ gimp_error_dialog_message_destroy (gpointer data)
   g_free (item->message);
   g_free (item);
 }
+
 
 /*  public functions  */
 

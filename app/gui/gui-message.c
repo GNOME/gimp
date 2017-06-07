@@ -22,7 +22,6 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "about.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -44,6 +43,8 @@
 #include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
+#include "about.h"
+
 #include "gui-message.h"
 
 #include "gimp-intl.h"
@@ -58,6 +59,7 @@ typedef struct
   GimpMessageSeverity  severity;
 } GimpLogMessageData;
 
+
 static gboolean  gui_message_idle          (gpointer             user_data);
 static gboolean  gui_message_error_console (Gimp                *gimp,
                                             GimpMessageSeverity  severity,
@@ -71,6 +73,7 @@ static gboolean  gui_message_error_dialog  (Gimp                *gimp,
 static void      gui_message_console       (GimpMessageSeverity  severity,
                                             const gchar         *domain,
                                             const gchar         *message);
+
 
 void
 gui_message (Gimp                *gimp,
