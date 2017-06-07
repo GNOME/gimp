@@ -206,8 +206,8 @@ struct _GimpParam
    main (int argc, char *argv[])                        \
    {                                                    \
      /* Use __argc and __argv here, too, as they work   \
-      * better with mingw-w64.				\
-      */						\
+      * better with mingw-w64.                          \
+      */                                                \
      return gimp_main (&PLUG_IN_INFO, __argc, __argv);  \
    }
 #else
