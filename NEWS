@@ -116,9 +116,9 @@ Configurability:
 Tools:
 
   - Add Hue-Chroma operation/tool that operates in CIE LCH color space.
-  - Replace Color Balance and Hue-Saturation with GEGL-based filters with
-    a custom user interface to ease future transition to non-destructive
-    editing planned for v3.2.
+  - Replace Color Balance, Colorize and Hue-Saturation with GEGL-based
+    filters with a custom user interface to ease future transition to
+    non-destructive editing planned for v3.2.
   - The Move tool now shows relative coordinates when moving guides
     and sample points.
   - The Measure tool has better digit precision now (before that, at
