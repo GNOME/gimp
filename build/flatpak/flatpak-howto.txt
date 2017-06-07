@@ -47,6 +47,10 @@ Or simply update them:
   Other than by trial and error, you can find the installed dependencies
   by running:
 
+> flatpak run --devel --command=bash org.gnome.Sdk//3.24
+
+Or if you already have a build:
+
 > flatpak run --devel --command=bash org.gimp.GIMP
 
   GIMP manifest available at:
@@ -74,11 +78,12 @@ Or simply update them:
 > flatpak-builder --arch=x86_64 gimp-flatpak-build-x86-64 org.gimp.GIMP.json
 > flatpak-builder --arch=i386 gimp-flatpak-build-i386 org.gimp.GIMP.json
 
-  Note: if you ever want to check the `config.log` of any of the module,
-  this is available in a hidden directory of your working path.
+  Note: if you ever want to check the `config.log` of any of the module which
+  failed to compile, it is available in a hidden directory of your working path.
   For instance GIMP build dir will be `.flatpak-builder/build/gimp-1/`.
-  The number will be incrementing at each build (`flatpak-builder`
-  apparently caches every build).
+  The number will be incrementing at each build.
+  If you want to check build directories even if the builds are successful, add
+  `--keep-build-dirs` option to your command.
 
   If it ends successfuly, this will have built GIMP in new folders,
   `gimp-flatpak-build-x86-64/` and `gimp-flatpak-build-i386/`
