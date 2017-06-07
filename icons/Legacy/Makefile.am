@@ -38,8 +38,8 @@ icons12_DATA = \
 	12/gimp-zoom-follow-window.png
 
 icons16_DATA = \
-	16/gtk-edit.png						\
-										\
+	16/gtk-edit.png					\
+	\
 	16/gimp-anchor.png				\
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\

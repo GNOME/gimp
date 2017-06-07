@@ -1030,7 +1030,7 @@ icons64_images = \
 icons64_system_images = \
 	64/gimp-error.png					\
 	64/gimp-info.png					\
-	64/gimp-question.png				\
+	64/gimp-question.png					\
 	64/gimp-warning.png
 
 icons96_images = \

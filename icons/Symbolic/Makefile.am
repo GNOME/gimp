@@ -26,22 +26,23 @@ ICON_IMAGES = \
 	64/gimp-wilber-eek.png
 
 EXTRA_DIST = \
-	$(icons_DATA)		\
-	$(icons12_images)	\
-	$(icons16_images)	\
-	$(icons18_images)	\
-	$(icons20_images)	\
-	$(icons22_images)	\
-	$(icons24_images)	\
-	$(icons32_images)	\
-	$(icons48_images)	\
-	$(icons64_images)	\
-	$(icons96_images)	\
-	$(icons128_images)	\
-	$(icons192_images)	\
-	$(icons256_images)	\
-	$(scalable_images)	\
-	$(vector24_images)	\
+	$(icons_DATA)			\
+	$(icons12_images)		\
+	$(icons16_images)		\
+	$(icons18_images)		\
+	$(icons20_images)		\
+	$(icons22_images)		\
+	$(icons24_images)		\
+	$(icons32_images)		\
+	$(icons48_images)		\
+	$(icons64_images)		\
+	$(icons64_system_images)	\
+	$(icons96_images)		\
+	$(icons128_images)		\
+	$(icons192_images)		\
+	$(icons256_images)		\
+	$(scalable_images)		\
+	$(vector24_images)		\
 	symbolic-scalable.svg
 
 noinst_DATA = \
