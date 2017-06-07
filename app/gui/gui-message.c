@@ -22,6 +22,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "about.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -48,6 +49,16 @@
 #include "gimp-intl.h"
 
 
+typedef struct
+{
+  Gimp                *gimp;
+  gchar               *domain;
+  gchar               *message;
+  GObject             *handler;
+  GimpMessageSeverity  severity;
+} GimpLogMessageData;
+
+static gboolean  gui_message_idle          (gpointer             user_data);
 static gboolean  gui_message_error_console (Gimp                *gimp,
                                             GimpMessageSeverity  severity,
                                             const gchar         *domain,
@@ -60,7 +71,6 @@ static gboolean  gui_message_error_dialog  (Gimp                *gimp,
 static void      gui_message_console       (GimpMessageSeverity  severity,
                                             const gchar         *domain,
                                             const gchar         *message);
-
 
 void
 gui_message (Gimp                *gimp,
@@ -79,6 +89,26 @@ gui_message (Gimp                *gimp,
       /*  fallthru  */
 
     case GIMP_MESSAGE_BOX:
+      if (g_strcmp0 (GIMP_ACRONYM, domain) != 0)
+        {
+          /* Handle non-GIMP messages in a multi-thread safe way,
+           * because we can't know for sure whether the log message may
+           * not have been called from a thread other than the main one.
+           */
+          GimpLogMessageData *data;
+
+          data = g_new0 (GimpLogMessageData, 1);
+          data->gimp     = gimp;
+          data->domain   = g_strdup (domain);
+          data->message  = g_strdup (message);
+          data->handler  = handler? g_object_ref (handler) : NULL;
+          data->severity = severity;
+
+          gdk_threads_add_idle_full (G_PRIORITY_DEFAULT_IDLE,
+                                     gui_message_idle,
+                                     data, g_free);
+          return;
+        }
       if (gui_message_error_dialog (gimp, handler, severity, domain, message))
         return;
 
@@ -89,6 +119,29 @@ gui_message (Gimp                *gimp,
       gui_message_console (severity, domain, message);
       break;
     }
+}
+
+static gboolean
+gui_message_idle (gpointer user_data)
+{
+  GimpLogMessageData *data = (GimpLogMessageData *) user_data;
+
+  if (! gui_message_error_dialog (data->gimp,
+                                  data->handler,
+                                  data->severity,
+                                  data->domain,
+                                  data->message))
+    {
+      gui_message_console (data->severity,
+                           data->domain,
+                           data->message);
+    }
+  g_free (data->domain);
+  g_free (data->message);
+  if (data->handler)
+    g_object_unref (data->handler);
+
+  return FALSE;
 }
 
 static gboolean

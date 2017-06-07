@@ -56,14 +56,18 @@ static G_GNUC_NORETURN void  gimp_eek (const gchar *reason,
                                        const gchar *message,
                                        gboolean     use_handler);
 
-static void   gimp_message_log_func (const gchar        *log_domain,
-                                     GLogLevelFlags      flags,
-                                     const gchar        *message,
-                                     gpointer            data);
-static void   gimp_error_log_func   (const gchar        *domain,
-                                     GLogLevelFlags      flags,
-                                     const gchar        *message,
-                                     gpointer            data) G_GNUC_NORETURN;
+static void   gimp_third_party_message_log_func (const gchar        *log_domain,
+                                                 GLogLevelFlags      flags,
+                                                 const gchar        *message,
+                                                 gpointer            data);
+static void   gimp_message_log_func             (const gchar        *log_domain,
+                                                 GLogLevelFlags      flags,
+                                                 const gchar        *message,
+                                                 gpointer            data);
+static void   gimp_error_log_func               (const gchar        *domain,
+                                                 GLogLevelFlags      flags,
+                                                 const gchar        *message,
+                                                 gpointer            data) G_GNUC_NORETURN;
 
 
 
@@ -128,6 +132,9 @@ errors_init (Gimp               *gimp,
                        G_LOG_LEVEL_MESSAGE,
                        gimp_message_log_func, gimp);
 
+  g_log_set_handler ("GEGL",
+                     G_LOG_LEVEL_MESSAGE,
+                     gimp_third_party_message_log_func, gimp);
   g_log_set_handler (NULL,
                      G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
                      gimp_error_log_func, gimp);
@@ -153,6 +160,29 @@ gimp_terminate (const gchar *message)
 
 
 /*  private functions  */
+
+static void
+gimp_third_party_message_log_func (const gchar    *log_domain,
+                                   GLogLevelFlags  flags,
+                                   const gchar    *message,
+                                   gpointer        data)
+{
+  Gimp *gimp = data;
+
+  if (gimp)
+    {
+      /* Whereas all GIMP messages are processed under the same domain,
+       * we need to keep the log domain information for third party
+       * messages.
+       */
+      gimp_show_message (gimp, NULL, GIMP_MESSAGE_WARNING,
+                         log_domain, message);
+    }
+  else
+    {
+      g_printerr ("%s: %s\n\n", log_domain, message);
+    }
+}
 
 static void
 gimp_message_log_func (const gchar    *log_domain,
