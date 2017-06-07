@@ -40,10 +40,8 @@ struct _GimpErrorDialog
 
   GtkWidget       *vbox;
 
-  GtkWidget       *last_box;
-  gchar           *last_domain;
-  gchar           *last_message;
-  gint             num_messages;
+  GList           *messages;
+  gboolean         overflow;
 };
 
 struct _GimpErrorDialogClass
