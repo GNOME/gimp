@@ -1020,16 +1020,18 @@ icons48_images = \
 
 icons64_images = \
 	64/dialog-information.png				\
-	64/gimp-error.png					\
 	64/gimp-frame.png					\
-	64/gimp-info.png					\
-	64/gimp-question.png					\
 	64/gimp-texture.png					\
 	64/gimp-user-manual.png					\
-	64/gimp-warning.png					\
 	64/gimp-wilber-eek.png					\
 	64/gimp-wilber.png					\
 	64/gimp-wilber-outline.png
+
+icons64_system_images = \
+	64/gimp-error.png					\
+	64/gimp-info.png					\
+	64/gimp-question.png				\
+	64/gimp-warning.png
 
 icons96_images = \
 	96/gimp-wilber.png					\
@@ -1058,7 +1060,8 @@ icons24_DATA = \
 	$(vector24_images)
 
 icons64_DATA = \
-	64/gimp-frame.png		\
+	$(icons64_system_images)	\
+	64/gimp-frame.png			\
 	64/gimp-texture.png
 
 scalable_DATA = \
@@ -1104,7 +1107,8 @@ icons48_DATA = \
 	$(icons48_images)
 
 icons64_DATA = \
-	$(icons64_images)
+	$(icons64_images) \
+	$(icons64_system_images)
 
 icons96_DATA = \
 	$(icons96_images)
