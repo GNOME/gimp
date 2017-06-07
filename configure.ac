@@ -2134,6 +2134,17 @@ AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 # Check for vector icons
 ########################
 
+# If not cross-compiling, default build's link and compile flags to the
+# target's flags.
+if test "$cross_compiling" != "yes"; then
+  if test "x$LDFLAGS_FOR_BUILD" = "x"; then
+    LDFLAGS_FOR_BUILD="$LDFLAGS"
+  fi
+  if test "x$CFLAGS_FOR_BUILD" = "x"; then
+    CFLAGS_FOR_BUILD="$CFLAGS"
+  fi
+fi
+
 AC_ARG_ENABLE(vector-icons, [  --disable-vector-icons  use raster icons rather than vector ones (default=auto)], ,
               enable_vector_icons=auto)
 
