@@ -90,20 +90,21 @@ MAKE_ICON = mkdir -p `dirname $@`; GEGL_USE_OPENCL=no GEGL_SWAP=ram $(GEGL) $< -
 	$(MAKE_ICON)
 
 all_icons = \
-	$(icons12_images)	\
-	$(icons16_images)	\
-	$(icons18_images)	\
-	$(icons20_images)	\
-	$(icons22_images)	\
-	$(icons24_images)	\
-	$(icons32_images)	\
-	$(icons48_images)	\
-	$(icons64_images)	\
-	$(icons96_images)	\
-	$(icons128_images)	\
-	$(icons192_images)	\
-	$(icons256_images)	\
-	$(scalable_images)	\
+	$(icons12_images)		\
+	$(icons16_images)		\
+	$(icons18_images)		\
+	$(icons20_images)		\
+	$(icons22_images)		\
+	$(icons24_images)		\
+	$(icons32_images)		\
+	$(icons48_images)		\
+	$(icons64_images)		\
+	$(icons64_system_images)	\
+	$(icons96_images)		\
+	$(icons128_images)		\
+	$(icons192_images)		\
+	$(icons256_images)		\
+	$(scalable_images)		\
 	$(vector24_images)
 
 EXTRA_DIST = \
