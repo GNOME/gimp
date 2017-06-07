@@ -85,6 +85,7 @@ GUI and usability:
     correct color inversion.
   - Quit dialog now exits when all the images in the list have been
     saved.
+  - The built-in error dialog now displays errors outputted by GEGL.
 
 Color selection and management:
 
@@ -114,7 +115,10 @@ Configurability:
 
 Tools:
 
-  - Add Hue-Chroma operation/tool.
+  - Add Hue-Chroma operation/tool that operates in CIE LCH color space.
+  - Replace Color Balance and Hue-Saturation with GEGL-based filters with
+    a custom user interface to ease future transition to non-destructive
+    editing planned for v3.2.
   - The Move tool now shows relative coordinates when moving guides
     and sample points.
   - The Measure tool has better digit precision now (before that, at
