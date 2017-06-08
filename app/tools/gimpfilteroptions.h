@@ -43,8 +43,6 @@ struct _GimpFilterOptions
   GimpFilterRegion    region;
   gboolean            color_managed;
   gboolean            gamma_hack;
-
-  GFile              *settings;
 };
 
 struct _GimpFilterOptionsClass

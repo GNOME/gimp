@@ -185,10 +185,6 @@ gimp_filter_tool_settings_import (GimpSettingsBox *box,
 
   g_object_unref (input);
 
-  g_object_set (GIMP_TOOL_GET_OPTIONS (filter_tool),
-                "settings", file,
-                NULL);
-
   return TRUE;
 }
 
@@ -239,10 +235,6 @@ gimp_filter_tool_settings_export (GimpSettingsBox *box,
                 GIMP_MESSAGE_INFO,
                 _("Settings saved to '%s'"),
                 gimp_file_get_utf8_name (file));
-
-  g_object_set (GIMP_TOOL_GET_OPTIONS (filter_tool),
-                "settings", file,
-                NULL);
 
   return TRUE;
 }
