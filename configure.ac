@@ -2143,6 +2143,9 @@ if test "$cross_compiling" != "yes"; then
   if test "x$CFLAGS_FOR_BUILD" = "x"; then
     CFLAGS_FOR_BUILD="$CFLAGS"
   fi
+  if test "x$CPPFLAGS_FOR_BUILD" = "x"; then
+    CPPFLAGS_FOR_BUILD="$CPPFLAGS"
+  fi
 fi
 
 AC_ARG_ENABLE(vector-icons, [  --disable-vector-icons  use raster icons rather than vector ones (default=auto)], ,
