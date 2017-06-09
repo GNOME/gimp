@@ -282,8 +282,6 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static const guchar mono[6]= { 0, 0, 0, 255, 255, 255 };
-
 static struct
 {
   guint8  manufacturer;
@@ -468,6 +466,16 @@ load_image (const gchar  *filename,
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_1 (fd, width, height, dest, bytesperline);
+      /* Monochrome does not mean necessarily B&W. Therefore we still
+       * want to check the header palette, even for just 2 colors.
+       * Hopefully the header palette will always be filled with
+       * meaningful colors and the creator software did not just assume
+       * B&W by being monochrome.
+       * Until now test samples showed that even when B&W the header
+       * palette was correctly filled with these 2 colors and we didn't
+       * find counter-examples.
+       * See bug 159947, comment 21 and 23.
+       */
       gimp_image_set_colormap (image, pcx_header.colormap, 2);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 2)
@@ -479,7 +487,7 @@ load_image (const gchar  *filename,
   else if (pcx_header.bpp == 2 && pcx_header.planes == 1)
     {
       dest = g_new (guchar, ((gsize) width) * height);
-      load_sub_8 (fd, width, height, 2, 1, dest, bytesperline); 
+      load_sub_8 (fd, width, height, 2, 1, dest, bytesperline);
       gimp_image_set_colormap (image, pcx_header.colormap, 4);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 3)
@@ -634,18 +642,18 @@ load_4 (FILE    *fp,
 }
 
 static void
-load_sub_8    (FILE    *fp,
-               gint     width,
-               gint     height,
-               gint     bpp,
-               gint     plane,
-               guchar  *buf,
-               guint16  bytes)
+load_sub_8 (FILE    *fp,
+            gint     width,
+            gint     height,
+            gint     bpp,
+            gint     plane,
+            guchar  *buf,
+            guint16  bytes)
 {
   gint    x, y, c, b;
   guchar *line = g_new (guchar, bytes);
-  gint real_bpp = bpp - 1;
-  gint current_bit = 0;
+  gint    real_bpp = bpp - 1;
+  gint    current_bit = 0;
 
   for (y = 0; y < height; buf += width, ++y)
     {
@@ -653,7 +661,7 @@ load_sub_8    (FILE    *fp,
         buf[x] = 0;
       for (c = 0; c < plane; ++c)
         {
-          readline(fp, line, bytes);
+          readline (fp, line, bytes);
           for (x = 0; x < width; ++x)
             {
               for (b = 0; b < bpp; b++)
@@ -741,13 +749,13 @@ save_image (const gchar  *filename,
     {
     case GIMP_INDEXED_IMAGE:
       cmap                          = gimp_image_get_colormap (image, &colors);
-      if(colors > 16)
+      if (colors > 16)
         {
           pcx_header.bpp            = 8;
           pcx_header.planes         = 1;
           pcx_header.bytesperline   = GUINT16_TO_LE (width);
         }
-      else if(colors > 2)
+      else if (colors > 2)
         {
           pcx_header.bpp            = 4;
           pcx_header.planes         = 1;
@@ -761,15 +769,22 @@ save_image (const gchar  *filename,
         }
       pcx_header.color        = GUINT16_TO_LE (1);
       format                  = NULL;
-  
-      if(colors <= 16)
+
+      /* Some references explain that 2bpp/1plane and 4bpp/1plane files
+       * would use the palette at EOF (not the one from the header) if
+       * we are in version 5 of PCX. Other sources affirm that even in
+       * version 5, EOF palette must be used only when there are more
+       * than 16 colors. We go with this second assumption.
+       * See bug 159947, comment 21 and 23.
+       */
+      if (colors <= 16)
         {
-        for(i = 0; i < (colors * 3); i++)
-          {
-            pcx_header.colormap[i] = cmap[i];
-          }
+          for (i = 0; i < (colors * 3); i++)
+            {
+              pcx_header.colormap[i] = cmap[i];
+            }
         }
-  
+
       break;
 
     case GIMP_RGB_IMAGE:
@@ -792,12 +807,12 @@ save_image (const gchar  *filename,
       g_message (_("Cannot export images with alpha channel."));
       return FALSE;
   }
-  
+
   /* Bytes per Line must be an even number, according to spec */
   if (pcx_header.bytesperline % 2 != 0)
     {
       pcx_header.bytesperline++;
-    } 
+    }
 
   pixels = (guchar *) g_malloc (width * height * pcx_header.planes);
 
@@ -857,17 +872,17 @@ save_image (const gchar  *filename,
   switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
-      if(colors > 16)
+      if (colors > 16)
         {
-        save_8 (fp, width, height, pixels);
-        fputc (0x0c, fp);
-        fwrite (cmap, colors, 3, fp);
-        for (i = colors; i < 256; i++)
-          {
-            fputc (0, fp);
-            fputc (0, fp);
-            fputc (0, fp);
-          }
+          save_8 (fp, width, height, pixels);
+          fputc (0x0c, fp);
+          fwrite (cmap, colors, 3, fp);
+          for (i = colors; i < 256; i++)
+            {
+              fputc (0, fp);
+              fputc (0, fp);
+              fputc (0, fp);
+            }
         }
       else /* Covers 1 and 4 bpp */
         {
@@ -915,13 +930,13 @@ save_less_than_8 (FILE         *fp,
                   const gint    bpp,
                   const guchar *buf)
 {
-  const gint bit_limit     = (8 - bpp);
-  const gint buf_size      = width * height;
-  const gint line_end      = width - 1;
-  gint       j             = bit_limit;
-  gint       count         = 0;
-  guchar     byte_to_write = 0x00;
-  guchar    *line;
+  const gint  bit_limit     = (8 - bpp);
+  const gint  buf_size      = width * height;
+  const gint  line_end      = width - 1;
+  gint        j             = bit_limit;
+  gint        count         = 0;
+  guchar      byte_to_write = 0x00;
+  guchar     *line;
 
   line = (guchar *) g_malloc (((width + 7) / 8) * bpp);
 
