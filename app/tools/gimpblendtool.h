@@ -22,18 +22,6 @@
 #include "gimpdrawtool.h"
 
 
-typedef enum
-{
-  /* POINT_NONE evaluates to FALSE */
-  POINT_NONE = 0,
-  POINT_START,
-  POINT_END,
-  POINT_BOTH,
-  POINT_INIT_MODE,
-  POINT_FILL_MODE
-} GimpBlendToolPoint;
-
-
 #define GIMP_TYPE_BLEND_TOOL            (gimp_blend_tool_get_type ())
 #define GIMP_BLEND_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BLEND_TOOL, GimpBlendTool))
 #define GIMP_BLEND_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BLEND_TOOL, GimpBlendToolClass))
@@ -51,13 +39,7 @@ struct _GimpBlendTool
 {
   GimpDrawTool        parent_instance;
 
-
   GimpGradient       *gradient;
-
-  gdouble             mouse_x;    /*  pointer x coord   */
-  gdouble             mouse_y;    /*  pointer y coord   */
-
-  GimpBlendToolPoint  grabbed_point;
 
   gdouble             start_x;    /*  starting x coord  */
   gdouble             start_y;    /*  starting y coord  */
@@ -67,11 +49,8 @@ struct _GimpBlendTool
   GList              *undo_stack;
   GList              *redo_stack;
 
-  GimpCanvasItem     *line;
-  GimpCanvasItem     *start_handle_circle;
-  GimpCanvasItem     *start_handle_cross;
-  GimpCanvasItem     *end_handle_circle;
-  GimpCanvasItem     *end_handle_cross;
+  GimpToolWidget     *line;
+  GimpToolWidget     *grab_widget;
 
   GeglNode           *graph;
   GeglNode           *render_node;
