@@ -18,34 +18,10 @@
 #ifndef __TOOLS_ENUMS_H__
 #define __TOOLS_ENUMS_H__
 
+
 /*
  * these enums are registered with the type system
  */
-
-#define GIMP_TYPE_BUTTON_PRESS_TYPE (gimp_button_press_type_get_type ())
-
-GType gimp_button_press_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_BUTTON_PRESS_NORMAL,
-  GIMP_BUTTON_PRESS_DOUBLE,
-  GIMP_BUTTON_PRESS_TRIPLE
-} GimpButtonPressType;
-
-
-#define GIMP_TYPE_BUTTON_RELEASE_TYPE (gimp_button_release_type_get_type ())
-
-GType gimp_button_release_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_BUTTON_RELEASE_NORMAL,
-  GIMP_BUTTON_RELEASE_CANCEL,
-  GIMP_BUTTON_RELEASE_CLICK,
-  GIMP_BUTTON_RELEASE_NO_MOTION
-} GimpButtonReleaseType;
-
 
 #define GIMP_TYPE_TRANSFORM_HANDLE_MODE (gimp_transform_handle_mode_get_type ())
 
