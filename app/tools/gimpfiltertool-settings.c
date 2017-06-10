@@ -19,9 +19,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-
-#include <glib/gstdio.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -31,19 +28,13 @@
 
 #include "tools-types.h"
 
-#include "operations/gimp-operation-config.h"
-
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimplist.h"
-#include "core/gimpsettings.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpsettingsbox.h"
 
 #include "display/gimptoolgui.h"
 
-#include "gimpfilteroptions.h"
 #include "gimpfiltertool.h"
 #include "gimpfiltertool-settings.h"
 
