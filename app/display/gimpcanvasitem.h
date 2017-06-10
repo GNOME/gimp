@@ -113,6 +113,18 @@ void             gimp_canvas_item_transform_xy_f   (GimpCanvasItem   *item,
                                                     gdouble           y,
                                                     gdouble          *tx,
                                                     gdouble          *ty);
+gdouble          gimp_canvas_item_transform_distance
+                                                   (GimpCanvasItem   *item,
+                                                    gdouble           x1,
+                                                    gdouble           y1,
+                                                    gdouble           x2,
+                                                    gdouble           y2);
+gdouble          gimp_canvas_item_transform_distance_square
+                                                   (GimpCanvasItem   *item,
+                                                    gdouble           x1,
+                                                    gdouble           y1,
+                                                    gdouble           x2,
+                                                    gdouble           y2);
 
 
 /*  protected  */
