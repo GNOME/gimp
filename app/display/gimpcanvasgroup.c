@@ -50,7 +50,7 @@ struct _GimpCanvasGroupPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_group_dispose      (GObject         *object);
+static void             gimp_canvas_group_finalize     (GObject         *object);
 static void             gimp_canvas_group_set_property (GObject         *object,
                                                         guint            property_id,
                                                         const GValue    *value,
@@ -82,7 +82,7 @@ gimp_canvas_group_class_init (GimpCanvasGroupClass *klass)
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
 
-  object_class->dispose      = gimp_canvas_group_dispose;
+  object_class->finalize     = gimp_canvas_group_finalize;
   object_class->set_property = gimp_canvas_group_set_property;
   object_class->get_property = gimp_canvas_group_get_property;
 
@@ -116,17 +116,18 @@ gimp_canvas_group_init (GimpCanvasGroup *group)
 }
 
 static void
-gimp_canvas_group_dispose (GObject *object)
+gimp_canvas_group_finalize (GObject *object)
 {
   GimpCanvasGroup *group = GIMP_CANVAS_GROUP (object);
+  GimpCanvasItem  *item;
 
-  if (group->priv->items)
-    {
-      g_queue_free_full (group->priv->items, (GDestroyNotify) g_object_unref);
-      group->priv->items = NULL;
-    }
+  while ((item = g_queue_peek_head (group->priv->items)))
+    gimp_canvas_group_remove_item (group, item);
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
+  g_queue_free (group->priv->items);
+  group->priv->items = NULL;
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
