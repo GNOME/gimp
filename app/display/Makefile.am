@@ -164,6 +164,8 @@ libappdisplay_a_sources = \
 	gimptooldialog.h			\
 	gimptoolgui.c				\
 	gimptoolgui.h				\
+	gimptoolline.c				\
+	gimptoolline.h				\
 	gimptoolwidget.c			\
 	gimptoolwidget.h
 
