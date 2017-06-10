@@ -67,6 +67,7 @@ struct _GimpCanvasItemPrivate
 
 /*  local function prototypes  */
 
+static void             gimp_canvas_item_dispose          (GObject         *object);
 static void             gimp_canvas_item_constructed      (GObject         *object);
 static void             gimp_canvas_item_set_property     (GObject         *object,
                                                            guint            property_id,
@@ -105,6 +106,7 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->dispose                     = gimp_canvas_item_dispose;
   object_class->constructed                 = gimp_canvas_item_constructed;
   object_class->set_property                = gimp_canvas_item_set_property;
   object_class->get_property                = gimp_canvas_item_get_property;
@@ -187,6 +189,16 @@ gimp_canvas_item_constructed (GObject *object)
   item->private->change_count = 0; /* undo hack from init() */
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+}
+
+static void
+gimp_canvas_item_dispose (GObject *object)
+{
+  GimpCanvasItem *item = GIMP_CANVAS_ITEM (object);
+
+  item->private->change_count++; /* avoid emissions during destruction */
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
