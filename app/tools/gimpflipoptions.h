@@ -38,6 +38,9 @@ struct _GimpFlipOptions
   GimpTransformOptions  parent_instance;
 
   GimpOrientationType   flip_type;
+
+  /*  options gui  */
+  GtkWidget            *direction_frame;
 };
 
 

@@ -117,8 +117,9 @@ gimp_flip_options_get_property (GObject    *object,
 GtkWidget *
 gimp_flip_options_gui (GimpToolOptions *tool_options)
 {
-  GObject         *config = G_OBJECT (tool_options);
-  GtkWidget       *vbox   = gimp_tool_options_gui (tool_options);
+  GObject         *config  = G_OBJECT (tool_options);
+  GimpFlipOptions *options = GIMP_FLIP_OPTIONS (tool_options);
+  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget       *hbox;
   GtkWidget       *box;
   GtkWidget       *label;
@@ -152,6 +153,8 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   g_free (str);
+
+  options->direction_frame = frame;
 
   return vbox;
 }
