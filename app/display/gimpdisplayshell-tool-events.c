@@ -126,7 +126,7 @@ static void       gimp_display_shell_untransform_event_coords (GimpDisplayShell 
                                                                GimpCoords        *image_coords,
                                                                gboolean          *update_software_cursor);
 
-static GdkEvent * gimp_display_shell_compress_motion          (GimpDisplayShell  *shell);
+static GdkEvent * gimp_display_shell_compress_motion          (GdkEvent          *initial_event);
 
 
 /*  public functions  */
@@ -851,7 +851,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (shell->scrolling ||
             motion_mode == GIMP_MOTION_MODE_COMPRESS)
           {
-            compressed_motion = gimp_display_shell_compress_motion (shell);
+            compressed_motion = gimp_display_shell_compress_motion (event);
 
             if (compressed_motion && ! shell->scrolling)
               {
@@ -1946,8 +1946,9 @@ gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
 
 /* gimp_display_shell_compress_motion:
  *
- * This function walks the whole GDK event queue seeking motion events
- * corresponding to the widget 'widget'.  If it finds any it will
+ * This function walks the GDK event queue, seeking motion events at the
+ * front of the queue corresponding to the same widget as, and having
+ * similar characteristics to, `initial_event`.   If it finds any it will
  * remove them from the queue, and return the most recent motion event.
  * Otherwise it will return NULL.
  *
@@ -1955,15 +1956,16 @@ gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
  * the XFree86-style license. <adam@gimp.org>
  */
 static GdkEvent *
-gimp_display_shell_compress_motion (GimpDisplayShell *shell)
+gimp_display_shell_compress_motion (GdkEvent *initial_event)
 {
-  GList       *requeued_events = NULL;
-  const GList *list;
-  GdkEvent    *last_motion = NULL;
+  GdkEvent  *last_motion = NULL;
+  GtkWidget *widget;
 
-  /*  Move the entire GDK event queue to a private list, filtering
-   *  out any motion events for the desired widget.
-   */
+  if (initial_event->any.type != GDK_MOTION_NOTIFY)
+    return NULL;
+
+  widget = gtk_get_event_widget (initial_event);
+
   while (gdk_events_pending ())
     {
       GdkEvent *event = gdk_event_get ();
@@ -1972,45 +1974,24 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
         {
           /* Do nothing */
         }
-      else if ((gtk_get_event_widget (event) == shell->canvas) &&
-               (event->any.type == GDK_MOTION_NOTIFY))
+      else if ((gtk_get_event_widget (event) == widget)               &&
+               (event->any.type      == GDK_MOTION_NOTIFY)            &&
+               (event->motion.state  == initial_event->motion.state)  &&
+               (event->motion.device == initial_event->motion.device))
         {
           if (last_motion)
             gdk_event_free (last_motion);
 
           last_motion = event;
         }
-      else if ((gtk_get_event_widget (event) == shell->canvas) &&
-               (event->any.type == GDK_BUTTON_RELEASE))
+      else
         {
-          requeued_events = g_list_prepend (requeued_events, event);
-
-          while (gdk_events_pending ())
-            if ((event = gdk_event_get ()))
-              requeued_events = g_list_prepend (requeued_events, event);
+          gdk_event_put (event);
+          gdk_event_free (event);
 
           break;
         }
-      else
-        {
-          requeued_events = g_list_prepend (requeued_events, event);
-        }
     }
-
-  /* Replay the remains of our private event list back into the
-   * event queue in order.
-   */
-  requeued_events = g_list_reverse (requeued_events);
-
-  for (list = requeued_events; list; list = g_list_next (list))
-    {
-      GdkEvent *event = list->data;
-
-      gdk_event_put (event);
-      gdk_event_free (event);
-    }
-
-  g_list_free (requeued_events);
 
   return last_motion;
 }
