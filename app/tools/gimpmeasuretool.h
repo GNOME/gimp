@@ -22,18 +22,6 @@
 #include "gimpdrawtool.h"
 
 
-/*  possible measure functions  */
-typedef enum
-{
-  CREATING,
-  ADDING,
-  MOVING,
-  MOVING_ALL,
-  GUIDING,
-  FINISHED
-} MeasureFunction;
-
-
 #define GIMP_TYPE_MEASURE_TOOL            (gimp_measure_tool_get_type ())
 #define GIMP_MEASURE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MEASURE_TOOL, GimpMeasureTool))
 #define GIMP_MEASURE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MEASURE_TOOL, GimpMeasureToolClass))
@@ -51,20 +39,12 @@ struct _GimpMeasureTool
 {
   GimpDrawTool     parent_instance;
 
-  MeasureFunction  function;    /*  function we're performing  */
-  gdouble          mouse_x;     /*  pointer x coordinate       */
-  gdouble          mouse_y;     /*  pointer y coordinate       */
-  gint             last_x;      /*  last x coordinate          */
-  gint             last_y;      /*  last y coordinate          */
-  gint             point;       /*  what are we manipulating?  */
-  gint             num_points;  /*  how many points?           */
-  gint             x[3];        /*  three x coordinates        */
-  gint             y[3];        /*  three y coordinates        */
-  gdouble          angle1;      /*  first angle                */
-  gdouble          angle2;      /*  second angle               */
-  gboolean         status_help; /*  help is currently in s.bar */
+  GimpToolWidget  *compass;
+  GimpToolWidget  *grab_widget;
 
-  GimpCanvasItem  *handles[3];
+  gint             n_points;
+  gint             x[3];
+  gint             y[3];
 
   GimpToolGui     *gui;
   GtkWidget       *distance_label[2];
