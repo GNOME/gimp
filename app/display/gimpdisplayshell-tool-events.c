@@ -1986,8 +1986,27 @@ gimp_display_shell_compress_motion (GdkEvent *initial_event)
         }
       else
         {
-          gdk_event_put (event);
-          gdk_event_free (event);
+          GSList *remaining_events = NULL;
+
+          /* Put the event back at the front of the queue... the hard way :P */
+          remaining_events = g_slist_prepend (remaining_events, event);
+
+          while (gdk_events_pending ())
+            if ((event = gdk_event_get ()))
+              remaining_events = g_slist_prepend (remaining_events, event);
+
+          remaining_events = g_slist_reverse (remaining_events);
+
+          while (remaining_events)
+            {
+              event = remaining_events->data;
+
+              gdk_event_put (event);
+              gdk_event_free (event);
+
+              remaining_events = g_slist_delete_link (remaining_events,
+                                                      remaining_events);
+            }
 
           break;
         }
