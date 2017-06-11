@@ -1,0 +1,24 @@
+# GIMP tool preset file
+
+(icon-name "gimp-tool-crop")
+(name "16×9")
+(tool-options "GimpCropOptions"
+    (aspect-denominator 9.000000)
+    (aspect-numerator 16.000000)
+    (desired-fixed-size-height 1280.000000)
+    (desired-fixed-size-width 720.000000)
+    (desired-fixed-width 1290.000000)
+    (fixed-rule-active yes)
+    (overridden-fixed-aspect yes)
+    (overridden-fixed-size yes)
+    (tool "gimp-crop-tool"))
+(use-fg-bg no)
+(use-brush no)
+(use-dynamics no)
+(use-mypaint-brush no)
+(use-gradient no)
+(use-pattern no)
+(use-palette no)
+(use-font no)
+
+# end of GIMP tool preset file
