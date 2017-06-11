@@ -158,6 +158,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
                                      gint                *new_offset_x,
                                      gint                *new_offset_y)
 {
+  const Babl    *format;
   GeglBuffer    *new_buffer;
   GeglRectangle  src_rect;
   GeglRectangle  dest_rect;
@@ -205,9 +206,11 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
       break;
     }
 
+  format = gegl_buffer_get_format (orig_buffer);
+
   new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                 new_width, new_height),
-                                gegl_buffer_get_format (orig_buffer));
+                                format);
 
   if (clip_result && (new_x != orig_x || new_y != orig_y))
     {
@@ -219,8 +222,10 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
       *new_offset_x = orig_x;
       *new_offset_y = orig_y;
 
-      /*  "Outside" a channel is transparency, not the bg color  */
-      if (GIMP_IS_CHANNEL (drawable))
+      /*  Use transparency, rather than the bg color, as the "outside" color of
+       *  channels, and drawables with an alpha channel.
+       */
+      if (GIMP_IS_CHANNEL (drawable) || babl_format_has_alpha (format))
         {
           gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
         }
@@ -360,6 +365,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
                                        gint              *new_offset_x,
                                        gint              *new_offset_y)
 {
+  const Babl    *format;
   GeglBuffer    *new_buffer;
   GeglRectangle  src_rect;
   GeglRectangle  dest_rect;
@@ -420,6 +426,8 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
       break;
     }
 
+  format = gegl_buffer_get_format (orig_buffer);
+
   if (clip_result && (new_x != orig_x || new_y != orig_y ||
                       new_width != orig_width || new_height != orig_height))
 
@@ -431,13 +439,15 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
 
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                     orig_width, orig_height),
-                                    gegl_buffer_get_format (orig_buffer));
+                                    format);
 
       *new_offset_x = orig_x;
       *new_offset_y = orig_y;
 
-      /*  "Outside" a channel is transparency, not the bg color  */
-      if (GIMP_IS_CHANNEL (drawable))
+      /*  Use transparency, rather than the bg color, as the "outside" color of
+       *  channels, and drawables with an alpha channel.
+       */
+      if (GIMP_IS_CHANNEL (drawable) || babl_format_has_alpha (format))
         {
           gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
         }
@@ -514,7 +524,7 @@ gimp_drawable_transform_buffer_rotate (GimpDrawable      *drawable,
     {
       new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                     new_width, new_height),
-                                    gegl_buffer_get_format (orig_buffer));
+                                    format);
 
       *new_offset_x = new_x;
       *new_offset_y = new_y;
