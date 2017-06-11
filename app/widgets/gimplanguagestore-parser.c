@@ -97,6 +97,7 @@ gimp_language_store_parser_init (void)
   GHashTable     *base_lang_list;
   gchar          *current_env;
   GDir           *locales_dir;
+  GError         *error = NULL;
   GHashTableIter  lang_iter;
   gpointer        key;
 
@@ -165,7 +166,7 @@ gimp_language_store_parser_init (void)
     }
 
   /* Parse ISO-639 file to get full list of language and their names. */
-  parse_iso_codes (base_lang_list, NULL);
+  parse_iso_codes (base_lang_list, &error);
 
   /* Generate the localized language names. */
   g_hash_table_iter_init (&lang_iter, l10n_lang_list);
@@ -343,6 +344,13 @@ parse_iso_codes (GHashTable  *base_lang_list,
 #endif
 
   success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
+  if (error && *error)
+    {
+      g_warning ("%s: error parsing '%s': %s\n",
+                 G_STRFUNC, g_file_get_path (file),
+                 (*error)->message);
+      g_clear_error (error);
+    }
 
   g_object_unref (file);
 
