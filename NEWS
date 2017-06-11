@@ -144,6 +144,10 @@ Tools:
     discarded on tool change anymore.
   - For Intelligent Scissors, GIMP now checks whether the first and the
     last isegments are distinct before closing the curve.
+  - Flip tool: add Clipping option to the flip tool. Add support for
+    reflecting across guides: when clicking on a guide while using the
+    Flip tool, reflect the active item across the guide, rather than
+    around its center.
 
 Painting:
 
