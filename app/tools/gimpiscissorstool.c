@@ -798,7 +798,8 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                                                 segment->x1, segment->y1,
                                                 segment->x2, segment->y2);
 
-              gimp_canvas_item_set_highlight (item, TRUE);
+              if (item)
+                gimp_canvas_item_set_highlight (item, TRUE);
             }
         }
     }
