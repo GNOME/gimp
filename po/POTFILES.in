@@ -253,6 +253,7 @@ app/display/gimpdisplayshell-scale-dialog.c
 app/display/gimpdisplayshell-title.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
+app/display/gimptoolcompass.c
 
 app/file/file-open.c
 app/file/file-remote.c
