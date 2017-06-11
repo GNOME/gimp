@@ -545,6 +545,38 @@ gimp_canvas_handle_set_position (GimpCanvasItem *handle,
 }
 
 void
+gimp_canvas_handle_get_size (GimpCanvasItem *handle,
+                             gint           *width,
+                             gint           *height)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_HANDLE (handle));
+  g_return_if_fail (width != NULL);
+  g_return_if_fail (height != NULL);
+
+  g_object_get (handle,
+                "width",  width,
+                "height", height,
+                NULL);
+}
+
+void
+gimp_canvas_handle_set_size (GimpCanvasItem *handle,
+                             gint            width,
+                             gint            height)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_HANDLE (handle));
+
+  gimp_canvas_item_begin_change (handle);
+
+  g_object_set (handle,
+                "width",  width,
+                "height", height,
+                NULL);
+
+  gimp_canvas_item_end_change (handle);
+}
+
+void
 gimp_canvas_handle_set_angles (GimpCanvasItem *handle,
                                gdouble         start_angle,
                                gdouble         slice_angle)

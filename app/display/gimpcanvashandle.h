@@ -64,6 +64,13 @@ void             gimp_canvas_handle_set_position (GimpCanvasItem   *handle,
                                                   gdouble           x,
                                                   gdouble           y);
 
+void             gimp_canvas_handle_get_size     (GimpCanvasItem   *handle,
+                                                  gint             *width,
+                                                  gint             *height);
+void             gimp_canvas_handle_set_size     (GimpCanvasItem   *handle,
+                                                  gint              width,
+                                                  gint              height);
+
 void             gimp_canvas_handle_set_angles   (GimpCanvasItem   *handle,
                                                   gdouble           start_handle,
                                                   gdouble           slice_handle);
