@@ -48,7 +48,9 @@ struct _GimpToolWidgetClass
   GimpObjectClass  parent_class;
 
   /*  signals  */
-  void     (* changed)        (GimpToolWidget        *widget);
+  void     (* changed)         (GimpToolWidget        *widget);
+  void     (* status)          (GimpToolWidget        *widget,
+                                const gchar           *status);
 
   /*  virtual functions  */
   gboolean (* button_press)    (GimpToolWidget        *widget,
@@ -94,6 +96,11 @@ GType              gimp_tool_widget_get_type         (void) G_GNUC_CONST;
 GimpDisplayShell * gimp_tool_widget_get_shell        (GimpToolWidget  *widget);
 GimpCanvasItem   * gimp_tool_widget_get_item         (GimpToolWidget  *widget);
 
+/*  for subclasses, to add emit status messages
+ */
+void               gimp_tool_widget_status           (GimpToolWidget  *widget,
+                                                      const gchar     *status);
+
 /*  for subclasses, to add and manage their items
  */
 void               gimp_tool_widget_add_item         (GimpToolWidget  *widget,
@@ -108,7 +115,7 @@ void               gimp_tool_widget_push_group       (GimpToolWidget  *widget,
                                                       GimpCanvasGroup *group);
 void               gimp_tool_widget_pop_group        (GimpToolWidget  *widget);
 
-/*  convenience functions to add specific items
+/*  for subclasses, convenience functions to add specific items
  */
 GimpCanvasItem * gimp_tool_widget_add_line   (GimpToolWidget   *widget,
                                               gdouble           x1,

@@ -42,6 +42,7 @@ enum
 enum
 {
   CHANGED,
+  STATUS,
   LAST_SIGNAL
 };
 
@@ -96,6 +97,16 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  widget_signals[STATUS] =
+    g_signal_new ("status",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolWidgetClass, status),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__STRING,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
 
   g_object_class_install_property (object_class, PROP_SHELL,
                                    g_param_spec_object ("shell",
@@ -220,6 +231,16 @@ gimp_tool_widget_get_item (GimpToolWidget *widget)
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
   return widget->private->item;
+}
+
+void
+gimp_tool_widget_status (GimpToolWidget *widget,
+                         const gchar    *status)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  g_signal_emit (widget, widget_signals[STATUS], 0,
+                 status);
 }
 
 void
