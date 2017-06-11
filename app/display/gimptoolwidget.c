@@ -181,6 +181,10 @@ gimp_tool_widget_get_property (GObject    *object,
       g_value_set_object (value, private->shell);
       break;
 
+    case PROP_ITEM:
+      g_value_set_object (value, private->item);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -201,6 +205,14 @@ gimp_tool_widget_properties_changed (GObject     *object,
 
 
 /*  public functions  */
+
+GimpDisplayShell *
+gimp_tool_widget_get_shell (GimpToolWidget *widget)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  return widget->private->shell;
+}
 
 GimpCanvasItem *
 gimp_tool_widget_get_item (GimpToolWidget *widget)
