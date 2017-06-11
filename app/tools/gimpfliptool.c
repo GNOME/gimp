@@ -300,12 +300,14 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                           gint              *new_offset_x,
                           gint              *new_offset_y)
 {
-  GimpFlipTool         *flip      = GIMP_FLIP_TOOL (trans_tool);
-  GimpFlipOptions      *options   = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
-  GimpContext          *context   = GIMP_CONTEXT (options);
-  GimpOrientationType   flip_type = GIMP_ORIENTATION_UNKNOWN;
-  gdouble               axis      = 0.0;
-  GeglBuffer           *ret       = NULL;
+  GimpFlipTool         *flip        = GIMP_FLIP_TOOL (trans_tool);
+  GimpFlipOptions      *options     = GIMP_FLIP_TOOL_GET_OPTIONS (trans_tool);
+  GimpTransformOptions *tr_options  = GIMP_TRANSFORM_TOOL_GET_OPTIONS (trans_tool);
+  GimpContext          *context     = GIMP_CONTEXT (options);
+  GimpOrientationType   flip_type   = GIMP_ORIENTATION_UNKNOWN;
+  gdouble               axis        = 0.0;
+  gboolean              clip_result = FALSE;
+  GeglBuffer           *ret         = NULL;
 
   flip_type = gimp_flip_tool_get_flip_type (flip);
 
@@ -332,11 +334,32 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
         }
     }
 
+  switch (tr_options->clip)
+    {
+    case GIMP_TRANSFORM_RESIZE_ADJUST:
+      clip_result = FALSE;
+      break;
+
+    case GIMP_TRANSFORM_RESIZE_CLIP:
+      clip_result = TRUE;
+      break;
+
+    default:
+      g_return_val_if_reached (NULL);
+    }
+
   if (orig_buffer)
     {
       /*  this happens when transforming a selection cut out of a
        *  normal drawable, or the selection
        */
+
+      /*  always clip the selction and unfloated channels
+       *  so they keep their size
+       */
+      if (GIMP_IS_CHANNEL (active_item) &&
+          ! babl_format_has_alpha (gegl_buffer_get_format (orig_buffer)))
+        clip_result = TRUE;
 
       ret = gimp_drawable_transform_buffer_flip (GIMP_DRAWABLE (active_item),
                                                  context,
@@ -344,7 +367,7 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
                                                  orig_offset_x,
                                                  orig_offset_y,
                                                  flip_type, axis,
-                                                 FALSE,
+                                                 clip_result,
                                                  buffer_profile,
                                                  new_offset_x,
                                                  new_offset_y);
@@ -353,15 +376,20 @@ gimp_flip_tool_transform (GimpTransformTool *trans_tool,
     {
       /*  this happens for entire drawables, paths and layer groups  */
 
+      /*  always clip layer masks so they keep their size
+       */
+      if (GIMP_IS_CHANNEL (active_item))
+        clip_result = TRUE;
+
       if (gimp_item_get_linked (active_item))
         {
           gimp_item_linked_flip (active_item, context,
-                                 flip_type, axis, FALSE);
+                                 flip_type, axis, clip_result);
         }
       else
         {
           gimp_item_flip (active_item, context,
-                          flip_type, axis, FALSE);
+                          flip_type, axis, clip_result);
         }
     }
 

@@ -117,15 +117,18 @@ gimp_flip_options_get_property (GObject    *object,
 GtkWidget *
 gimp_flip_options_gui (GimpToolOptions *tool_options)
 {
-  GObject         *config  = G_OBJECT (tool_options);
-  GimpFlipOptions *options = GIMP_FLIP_OPTIONS (tool_options);
-  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
-  GtkWidget       *hbox;
-  GtkWidget       *box;
-  GtkWidget       *label;
-  GtkWidget       *frame;
-  gchar           *str;
-  GdkModifierType  toggle_mask;
+  GObject              *config     = G_OBJECT (tool_options);
+  GimpFlipOptions      *options    = GIMP_FLIP_OPTIONS (tool_options);
+  GimpTransformOptions *tr_options = GIMP_TRANSFORM_OPTIONS (tool_options);
+  GtkWidget            *vbox       = gimp_tool_options_gui (tool_options);
+  GtkWidget            *hbox;
+  GtkWidget            *box;
+  GtkWidget            *label;
+  GtkWidget            *frame;
+  GtkWidget            *combo;
+  gchar                *str;
+  GtkListStore         *clip_model;
+  GdkModifierType       toggle_mask;
 
   toggle_mask = gimp_get_toggle_behavior_mask ();
 
@@ -155,6 +158,21 @@ gimp_flip_options_gui (GimpToolOptions *tool_options)
   g_free (str);
 
   options->direction_frame = frame;
+
+  /*  the clipping menu  */
+  clip_model = gimp_enum_store_new_with_range (GIMP_TYPE_TRANSFORM_RESIZE,
+                                               GIMP_TRANSFORM_RESIZE_ADJUST,
+                                               GIMP_TRANSFORM_RESIZE_CLIP);
+
+  combo = gimp_prop_enum_combo_box_new (config, "clip", 0, 0);
+  gtk_combo_box_set_model (GTK_COMBO_BOX (combo), GTK_TREE_MODEL (clip_model));
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), tr_options->clip);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Clipping"));
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
+
+  g_object_unref (clip_model);
 
   return vbox;
 }
