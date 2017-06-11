@@ -354,20 +354,22 @@ gimp_blend_tool_button_press (GimpTool            *tool,
     {
       GimpDisplayShell *shell = gimp_display_get_shell (display);
 
+      blend_tool->start_x = coords->x;
+      blend_tool->start_y = coords->y;
+      blend_tool->end_x   = coords->x;
+      blend_tool->end_y   = coords->y;
+
       blend_tool->line = gimp_tool_line_new (shell,
-                                             coords->x, coords->y,
-                                             coords->x, coords->y);
+                                             blend_tool->start_x,
+                                             blend_tool->start_y,
+                                             blend_tool->end_x,
+                                             blend_tool->end_y);
 
       gimp_tool_widget_hover (blend_tool->line, coords, state, TRUE);
 
       g_signal_connect (blend_tool->line, "changed",
                         G_CALLBACK (gimp_blend_tool_line_changed),
                         blend_tool);
-
-      blend_tool->start_x = coords->x;
-      blend_tool->start_y = coords->y;
-      blend_tool->end_x   = coords->x;
-      blend_tool->end_y   = coords->y;
 
       gimp_blend_tool_start (blend_tool, display);
     }
