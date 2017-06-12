@@ -2627,6 +2627,7 @@ data/patterns/Wood/Makefile
 data/tags/Makefile
 data/tips/Makefile
 data/tool-presets/Makefile
+data/tool-presets/Crop/Makefile
 data/tool-presets/FX/Makefile
 data/tool-presets/Paint/Makefile
 data/tool-presets/Selection/Makefile
