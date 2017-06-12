@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="24"
+   height="24"
+   id="svg2"
+   viewBox="0 0 24 24"
+   inkscape:version="0.92pre1 unknown"
+   sodipodi:docname="gimp-display.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1346"
+     inkscape:window-height="939"
+     id="namedview1697"
+     showgrid="true"
+     inkscape:zoom="21.634045"
+     inkscape:cx="14.769669"
+     inkscape:cy="14.57674"
+     inkscape:window-x="50"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4244" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata90">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7386" />
+  <g
+     transform="translate(0,-24)"
+     id="g4298">
+    <ellipse
+       ry="2.3748744"
+       rx="5.5532532"
+       cy="45.326656"
+       cx="12.000002"
+       id="path2407"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#adb0aa;fill-opacity:1;fill-rule:evenodd;stroke:#4b4d4a;stroke-width:0.59694356;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none" />
+    <path
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cssssssss"
+       id="rect2404"
+       d="M 2.0726299,25.298472 H 21.927369 c 0.538715,0 0.960071,0.351736 0.985255,0.844908 l 0.787401,15.419048 c 0.03441,0.673795 -0.532634,1.217884 -1.194248,1.217884 H 1.4942221 c -0.66161337,0 -1.2286565,-0.544089 -1.19424795,-1.217884 L 1.0873753,26.14338 c 0.023812,-0.466304 0.3236412,-0.844908 0.9852546,-0.844908 z"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#dde1d9;fill-opacity:1;fill-rule:evenodd;stroke:#8f8f8f;stroke-width:0.59694356;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;marker:none;marker-start:none;marker-mid:none;marker-end:none" />
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#3465a4;fill-opacity:1;fill-rule:evenodd;stroke:#204a87;stroke-width:0.31076095;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 2.9281308,27.15538 2.1553796,40.84462 H 21.84462 L 21.014125,27.213394 Z"
+       id="path2377"
+       sodipodi:nodetypes="ccccc" />
+  </g>
+</svg>

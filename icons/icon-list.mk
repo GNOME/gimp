@@ -61,6 +61,7 @@ scalable_images = \
 	scalable/gtk-yes.svg					\
 	\
 	scalable/gimp-anchor.svg				\
+	scalable/gimp-business-card.svg			\
 	scalable/gimp-cap-butt.svg				\
 	scalable/gimp-cap-round.svg				\
 	scalable/gimp-cap-square.svg				\
@@ -98,6 +99,7 @@ scalable_images = \
 	scalable/gimp-curve-smooth.svg				\
 	scalable/gimp-default-colors.svg			\
 	scalable/gimp-device-status.svg				\
+	scalable/gimp-display.svg					\
 	scalable/gimp-display-filter-colorblind.svg		\
 	scalable/gimp-display-filter-contrast.svg		\
 	scalable/gimp-display-filter-gamma.svg			\
@@ -240,6 +242,7 @@ scalable_images = \
 	scalable/gimp-shape-diamond.svg				\
 	scalable/gimp-shape-square.svg				\
 	scalable/gimp-shred.svg					\
+	scalable/gimp-smartphone.svg			\
 	scalable/gimp-swap-colors.svg				\
 	scalable/gimp-symmetry.svg				\
 	scalable/gimp-template.svg				\
@@ -323,6 +326,7 @@ vector24_images = \
 	\
 	24/gtk-select-color.svg					\
 	\
+	24/gimp-business-card.svg			\
 	24/gimp-center.svg					\
 	24/gimp-channel.svg					\
 	24/gimp-channel-alpha.svg				\
@@ -341,6 +345,7 @@ vector24_images = \
 	24/gimp-controller-wheel.svg				\
 	24/gimp-cursor.svg					\
 	24/gimp-device-status.svg				\
+	24/gimp-display.svg						\
 	24/gimp-display-filter.svg				\
 	24/gimp-display-filter-colorblind.svg			\
 	24/gimp-display-filter-contrast.svg			\
@@ -412,6 +417,7 @@ vector24_images = \
 	24/gimp-sample-point.svg				\
 	24/gimp-scale.svg					\
 	24/gimp-selection.svg					\
+	24/gimp-smartphone.svg					\
 	24/gimp-symmetry.svg					\
 	24/gimp-template.svg					\
 	24/gimp-text-layer.svg					\
@@ -544,6 +550,7 @@ icons16_images = \
 	16/gtk-yes.png						\
 	\
 	16/gimp-anchor.png					\
+	16/gimp-business-card.png			\
 	16/gimp-cap-butt.png					\
 	16/gimp-cap-round.png					\
 	16/gimp-cap-square.png					\
@@ -576,6 +583,7 @@ icons16_images = \
 	16/gimp-curve-free.png					\
 	16/gimp-curve-smooth.png				\
 	16/gimp-device-status.png				\
+	16/gimp-display.png					\
 	16/gimp-display-filter-colorblind.png			\
 	16/gimp-display-filter-contrast.png			\
 	16/gimp-display-filter-gamma.png			\
@@ -683,6 +691,7 @@ icons16_images = \
 	16/gimp-shape-diamond.png				\
 	16/gimp-shape-square.png				\
 	16/gimp-shred.png					\
+	16/gimp-smartphone.png				\
 	16/gimp-symmetry.png					\
 	16/gimp-template.png					\
 	16/gimp-text-layer.png					\
@@ -824,6 +833,7 @@ icons24_images = \
 	\
 	24/gtk-select-color.png					\
 	\
+	24/gimp-business-card.png			\
 	24/gimp-center.png					\
 	24/gimp-channel-alpha.png				\
 	24/gimp-channel-blue.png				\
@@ -841,6 +851,7 @@ icons24_images = \
 	24/gimp-controller.png					\
 	24/gimp-cursor.png					\
 	24/gimp-device-status.png				\
+	24/gimp-display.png					\
 	24/gimp-display-filter-colorblind.png			\
 	24/gimp-display-filter-contrast.png			\
 	24/gimp-display-filter-gamma.png			\
@@ -876,6 +887,7 @@ icons24_images = \
 	24/gimp-sample-point.png				\
 	24/gimp-scale.png					\
 	24/gimp-selection.png					\
+	24/gimp-smartphone.png				\
 	24/gimp-symmetry.png					\
 	24/gimp-template.png					\
 	24/gimp-text-dir-ltr.png				\
