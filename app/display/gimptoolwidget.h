@@ -117,18 +117,27 @@ void               gimp_tool_widget_pop_group        (GimpToolWidget  *widget);
 
 /*  for subclasses, convenience functions to add specific items
  */
-GimpCanvasItem * gimp_tool_widget_add_line   (GimpToolWidget   *widget,
-                                              gdouble           x1,
-                                              gdouble           y1,
-                                              gdouble           x2,
-                                              gdouble           y2);
-GimpCanvasItem * gimp_tool_widget_add_handle (GimpToolWidget   *widget,
-                                              GimpHandleType    type,
-                                              gdouble           x,
-                                              gdouble           y,
-                                              gint              width,
-                                              gint              height,
-                                              GimpHandleAnchor  anchor);
+GimpCanvasItem * gimp_tool_widget_add_line   (GimpToolWidget    *widget,
+                                              gdouble            x1,
+                                              gdouble            y1,
+                                              gdouble            x2,
+                                              gdouble            y2);
+GimpCanvasItem * gimp_tool_widget_add_handle (GimpToolWidget    *widget,
+                                              GimpHandleType     type,
+                                              gdouble            x,
+                                              gdouble            y,
+                                              gint               width,
+                                              gint               height,
+                                              GimpHandleAnchor   anchor);
+GimpCanvasItem * gimp_tool_widget_add_transform_guides
+                                             (GimpToolWidget    *widget,
+                                              const GimpMatrix3 *transform,
+                                              gdouble            x1,
+                                              gdouble            y1,
+                                              gdouble            x2,
+                                              gdouble            y2,
+                                              GimpGuidesType     type,
+                                              gint               n_guides);
 
 /*  for tools, to be called from the respective GimpTool method
  *  implementations

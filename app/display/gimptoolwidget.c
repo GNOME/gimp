@@ -28,6 +28,7 @@
 #include "gimpcanvasgroup.h"
 #include "gimpcanvashandle.h"
 #include "gimpcanvasline.h"
+#include "gimpcanvastransformguides.h"
 #include "gimpdisplayshell.h"
 #include "gimptoolwidget.h"
 
@@ -369,6 +370,30 @@ gimp_tool_widget_add_handle (GimpToolWidget   *widget,
 
   item = gimp_canvas_handle_new (widget->private->shell,
                                  type, anchor, x, y, width, height);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_tool_widget_add_transform_guides (GimpToolWidget    *widget,
+                                       const GimpMatrix3 *transform,
+                                       gdouble            x1,
+                                       gdouble            y1,
+                                       gdouble            x2,
+                                       gdouble            y2,
+                                       GimpGuidesType     type,
+                                       gint               n_guides)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_transform_guides_new (widget->private->shell,
+                                           transform, x1, y1, x2, y2,
+                                           type, n_guides);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);
