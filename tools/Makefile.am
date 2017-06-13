@@ -45,7 +45,7 @@ test_clipboard_LDADD = $(GTK_LIBS)
 
 if ENABLE_VECTOR_ICONS
 invert-svg$(BUILD_EXEEXT): invert-svg.c
-	$(CC_FOR_BUILD) -o $@ $< $(NATIVE_GLIB_LIBS) $(CPPFLAGS_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) $(NATIVE_GLIB_CFLAGS)
+	$(CC_FOR_BUILD) -fPIC -o $@ $< $(NATIVE_GLIB_LIBS) $(CPPFLAGS_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) $(NATIVE_GLIB_CFLAGS)
 
 
 # compute_svg_viewbox is not built or used because librsvg is just too buggy
