@@ -393,7 +393,10 @@ gimp_canvas_item_hit (GimpCanvasItem   *item,
 {
   g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
 
-  return GIMP_CANVAS_ITEM_GET_CLASS (item)->hit (item, x, y);
+  if (item->private->visible)
+    return GIMP_CANVAS_ITEM_GET_CLASS (item)->hit (item, x, y);
+
+  return FALSE;
 }
 
 void
