@@ -683,9 +683,9 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
  * @group:  the #GimpActionGroup to which @action belongs.
  * @action: the #GimpAction.
  *
- * This function removes action from the groupe and clean any
+ * This function removes @action from @group and clean any
  * accelerator this action may have set.
- * If you wish only to only remove the action from the group, use
+ * If you wish to only remove the action from the group, use
  * gtk_action_group_remove_action() instead.
  */
 void
