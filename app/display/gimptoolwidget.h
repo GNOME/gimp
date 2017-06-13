@@ -49,6 +49,11 @@ struct _GimpToolWidgetClass
 
   /*  signals  */
   void     (* changed)         (GimpToolWidget        *widget);
+  void     (* snap_offsets)    (GimpToolWidget        *widget,
+                                gint                   offset_x,
+                                gint                   offset_y,
+                                gint                   width,
+                                gint                   height);
   void     (* status)          (GimpToolWidget        *widget,
                                 const gchar           *status);
 
@@ -96,8 +101,13 @@ GType              gimp_tool_widget_get_type         (void) G_GNUC_CONST;
 GimpDisplayShell * gimp_tool_widget_get_shell        (GimpToolWidget  *widget);
 GimpCanvasItem   * gimp_tool_widget_get_item         (GimpToolWidget  *widget);
 
-/*  for subclasses, to add emit status messages
+/*  for subclasses, to notify the handling tool
  */
+void               gimp_tool_widget_snap_offsets     (GimpToolWidget  *widget,
+                                                      gint             offset_x,
+                                                      gint             offset_y,
+                                                      gint             width,
+                                                      gint             height);
 void               gimp_tool_widget_status           (GimpToolWidget  *widget,
                                                       const gchar     *status);
 

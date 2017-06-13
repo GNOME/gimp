@@ -25,6 +25,8 @@
 
 #include "display-types.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimpcanvasgroup.h"
 #include "gimpcanvashandle.h"
 #include "gimpcanvasline.h"
@@ -43,6 +45,7 @@ enum
 enum
 {
   CHANGED,
+  SNAP_OFFSETS,
   STATUS,
   LAST_SIGNAL
 };
@@ -98,6 +101,19 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  widget_signals[SNAP_OFFSETS] =
+    g_signal_new ("snap-offsets",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolWidgetClass, snap_offsets),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  G_TYPE_NONE, 4,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
   widget_signals[STATUS] =
     g_signal_new ("status",
@@ -232,6 +248,19 @@ gimp_tool_widget_get_item (GimpToolWidget *widget)
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
   return widget->private->item;
+}
+
+void
+gimp_tool_widget_snap_offsets (GimpToolWidget *widget,
+                               gint            offset_x,
+                               gint            offset_y,
+                               gint            width,
+                               gint            height)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  g_signal_emit (widget, widget_signals[SNAP_OFFSETS], 0,
+                 offset_x, offset_y, width, height);
 }
 
 void
