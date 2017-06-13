@@ -590,6 +590,10 @@ gimp_canvas_transform_guides_new (GimpDisplayShell  *shell,
 void
 gimp_canvas_transform_guides_set (GimpCanvasItem    *guides,
                                   const GimpMatrix3 *transform,
+                                  gdouble            x1,
+                                  gdouble            y1,
+                                  gdouble            x2,
+                                  gdouble            y2,
                                   GimpGuidesType     type,
                                   gint               n_guides)
 {
@@ -599,6 +603,10 @@ gimp_canvas_transform_guides_set (GimpCanvasItem    *guides,
 
   g_object_set (guides,
                 "transform", transform,
+                "x1",        x1,
+                "y1",        y1,
+                "x2",        x2,
+                "y2",        y2,
                 "type",      type,
                 "n-guides",  n_guides,
                 NULL);
