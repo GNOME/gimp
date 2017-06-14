@@ -115,6 +115,7 @@
 
 
 #define SAVE_PROC               "file-pdf-save"
+#define SAVE2_PROC              "file-pdf-save2"
 #define SAVE_MULTI_PROC         "file-pdf-save-multi"
 #define PLUG_IN_BINARY          "file-pdf-save"
 #define PLUG_IN_ROLE            "gimp-file-pdf-save"
@@ -152,8 +153,6 @@ typedef enum
   SA_ARG_COUNT
 } SaveArgs;
 
-#define SA_ARG_COUNT_DEFAULT 5
-
 typedef enum
 {
   SMA_RUN_MODE,
@@ -162,7 +161,6 @@ typedef enum
   SMA_VECTORIZE,
   SMA_IGNORE_HIDDEN,
   SMA_APPLY_MASKS,
-  SMA_LAYERS_AS_PAGES,
   SMA_FILENAME,
   SMA_RAWFILENAME,
   SMA_ARG_COUNT
@@ -288,6 +286,18 @@ query (void)
 {
   static GimpParamDef save_args[] =
   {
+    { GIMP_PDB_INT32,    "run-mode",      "Run mode" },
+    { GIMP_PDB_IMAGE,    "image",         "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",      "Input drawable" },
+    { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename",  "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "vectorize",     "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "ignore-hidden", "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "apply-masks",   "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" }
+  };
+
+  static GimpParamDef save2_args[] =
+  {
     { GIMP_PDB_INT32,    "run-mode",        "Run mode" },
     { GIMP_PDB_IMAGE,    "image",           "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",        "Input drawable" },
@@ -296,7 +306,7 @@ query (void)
     { GIMP_PDB_INT32,    "vectorize",       "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
     { GIMP_PDB_INT32,    "ignore-hidden",   "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
     { GIMP_PDB_INT32,    "apply-masks",     "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
-    { GIMP_PDB_INT32,    "layers_as_pages", "Layers as pages" }
+    { GIMP_PDB_INT32,    "layers-as-pages", "Layers as pages. TRUE or FALSE" }
   };
 
   static GimpParamDef save_multi_args[] =
@@ -307,7 +317,6 @@ query (void)
     { GIMP_PDB_INT32,      "vectorize",       "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
     { GIMP_PDB_INT32,      "ignore-hidden",   "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
     { GIMP_PDB_INT32,      "apply-masks",     "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
-    { GIMP_PDB_INT32,      "layers_as_pages", "Layers as pages" },
     { GIMP_PDB_STRING,     "filename",        "The name of the file to save the image in" },
     { GIMP_PDB_STRING,     "raw-filename",    "The name of the file to save the image in" }
   };
@@ -326,6 +335,23 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
+
+  gimp_install_procedure (SAVE2_PROC,
+                          "Save files in PDF format",
+                          "Saves files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
+                          "of different platforms, and is a distant cousin of "
+                          "PostScript.\n"
+                          "This procedure adds an extra parameter to "
+                          "file-pdf-save to save layers as pages.",
+                          "Barak Itkin, Lionel N., Jehan",
+                          "Copyright Barak Itkin, Lionel N., Jehan",
+                          "August 2009, 2017",
+                          N_("Portable Document Format"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save2_args), 0,
+                          save2_args, NULL);
 
   gimp_install_procedure (SAVE_MULTI_PROC,
                           "Save files in PDF format",
@@ -347,8 +373,8 @@ query (void)
                              "<Image>/File/Create/PDF");
 #endif
 
-  gimp_register_file_handler_mime (SAVE_PROC, "application/pdf");
-  gimp_register_save_handler (SAVE_PROC, "pdf", "");
+  gimp_register_file_handler_mime (SAVE2_PROC, "application/pdf");
+  gimp_register_save_handler (SAVE2_PROC, "pdf", "");
 }
 
 static cairo_status_t
@@ -649,7 +675,8 @@ run (const gchar      *name,
                   drawText (layer_ID, opacity, cr, x_res, y_res);
                 }
               /* draw new page if "layers as pages" option is checked */
-              if (optimize.layers_as_pages)
+              if (optimize.layers_as_pages &&
+                  g_strcmp0 (name, SAVE2_PROC) == 0)
                 cairo_show_page (cr);
             }
           /* We are done with the layer - time to free some resources */
@@ -660,7 +687,8 @@ run (const gchar      *name,
       /* We are done with this image - Show it!
        * Unless that's a multi-page to avoid blank page at the end
        */
-      if (! optimize.layers_as_pages)
+      if (g_strcmp0 (name, SAVE2_PROC) != 0 ||
+          ! optimize.layers_as_pages)
         cairo_show_page (cr);
       cairo_restore (cr);
 
@@ -704,23 +732,21 @@ init_vals (const gchar      *name,
   gint32   i;
   gint32   image;
 
-  if (g_str_equal (name, SAVE_PROC))
+  if ((g_str_equal (name, SAVE_PROC) && nparams == SA_ARG_COUNT - 1) ||
+      (g_str_equal (name, SAVE2_PROC) && nparams == SA_ARG_COUNT))
     {
       single = TRUE;
-      if (nparams != SA_ARG_COUNT && nparams != SA_ARG_COUNT_DEFAULT)
-        return FALSE;
-
       *run_mode = param[SA_RUN_MODE].data.d_int32;
       image = param[SA_IMAGE].data.d_int32;
       file_name = param[SA_FILENAME].data.d_string;
 
-      if (*run_mode == GIMP_RUN_NONINTERACTIVE &&
-          nparams == SA_ARG_COUNT)
+      if (*run_mode == GIMP_RUN_NONINTERACTIVE)
         {
           optimize.apply_masks = param[SA_APPLY_MASKS].data.d_int32;
           optimize.vectorize = param[SA_VECTORIZE].data.d_int32;
           optimize.ignore_hidden = param[SA_IGNORE_HIDDEN].data.d_int32;
-          optimize.layers_as_pages = param[SA_LAYERS_AS_PAGES].data.d_int32;
+          if (nparams == SA_ARG_COUNT)
+            optimize.layers_as_pages = param[SA_LAYERS_AS_PAGES].data.d_int32;
         }
       else
         defaults = TRUE;
@@ -738,10 +764,11 @@ init_vals (const gchar      *name,
       optimize.apply_masks = param[SMA_APPLY_MASKS].data.d_int32;
       optimize.vectorize = param[SMA_VECTORIZE].data.d_int32;
       optimize.ignore_hidden = param[SMA_IGNORE_HIDDEN].data.d_int32;
-      optimize.layers_as_pages = param[SMA_LAYERS_AS_PAGES].data.d_int32;
     }
   else
-    return FALSE;
+    {
+      return FALSE;
+    }
 
   switch (*run_mode)
     {
@@ -916,7 +943,6 @@ gui_multi (void)
   GtkWidget   *vectorize_c;
   GtkWidget   *ignore_hidden_c;
   GtkWidget   *apply_c;
-  GtkWidget   *layers_as_pages_c;
   GtkWidget   *scroll;
   GtkWidget   *page_view;
   GtkWidget   *h_but_box;
@@ -1010,11 +1036,6 @@ gui_multi (void)
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);
   gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
 
-  layers_as_pages_c = gtk_check_button_new_with_label (_("Layers as pages"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
-                                optimize.layers_as_pages);
-  gtk_box_pack_end (GTK_BOX (vbox), layers_as_pages_c, FALSE, FALSE, 0);
-
   gtk_widget_show_all (window);
 
   g_signal_connect (G_OBJECT (file_browse), "clicked",
@@ -1046,8 +1067,6 @@ gui_multi (void)
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vectorize_c));
   optimize.apply_masks =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (apply_c));
-  optimize.layers_as_pages =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (layers_as_pages_c));
 
   gtk_widget_destroy (window);
 
