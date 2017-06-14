@@ -187,6 +187,7 @@ File Formats
     * loading 2bpp, 2 planes/1bpp, 3 planes/1bpp and 4bpp images.
     * non-Black&White monochrome PCX files (any 2 colors according to
       the palette).
+  - Add support for exporting multi-page PDF from image layers.
 
 Printing
 
