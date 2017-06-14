@@ -160,6 +160,7 @@ Painting:
   - Allow painting on transparent layers with modes other than normal.
   - Add a specialized convolution algorithm for the hardness blur
     to make it faster.
+  - New dynamics "Pressure Size".
 
 File Formats
 
