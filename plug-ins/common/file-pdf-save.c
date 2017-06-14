@@ -714,7 +714,8 @@ init_vals (const gchar      *name,
       image = param[SA_IMAGE].data.d_int32;
       file_name = param[SA_FILENAME].data.d_string;
 
-      if (nparams == SA_ARG_COUNT)
+      if (*run_mode == GIMP_RUN_NONINTERACTIVE &&
+          nparams == SA_ARG_COUNT)
         {
           optimize.apply_masks = param[SA_APPLY_MASKS].data.d_int32;
           optimize.vectorize = param[SA_VECTORIZE].data.d_int32;
