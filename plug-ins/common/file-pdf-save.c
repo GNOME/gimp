@@ -259,9 +259,9 @@ static PdfMultiPage multi_page;
 
 static PdfOptimize optimize =
 {
-  FALSE, /* vectorize */
+  TRUE,  /* vectorize */
   TRUE,  /* ignore_hidden */
-  FALSE, /* apply_masks */
+  TRUE,  /* apply_masks */
   FALSE  /* layers_as_pages */
 };
 
