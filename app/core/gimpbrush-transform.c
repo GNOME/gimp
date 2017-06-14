@@ -176,14 +176,6 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   source = gimp_brush_get_mask (brush);
 
-  if (scale        == 1.0 &&
-      aspect_ratio == 0.0 &&
-      angle        == 0.0 &&
-      hardness     == 1.0)
-    {
-      return gimp_temp_buf_copy (source);
-    }
-
   src_width  = gimp_brush_get_width  (brush);
   src_height = gimp_brush_get_height (brush);
 
@@ -474,14 +466,6 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   const guint fraction_bitmask = pow(2, fraction_bits)- 1 ;
 
   source = gimp_brush_get_pixmap (brush);
-
-  if (scale        == 1.0 &&
-      aspect_ratio == 0.0 &&
-      angle        == 0.0 &&
-      hardness     == 1.0)
-    {
-      return gimp_temp_buf_copy (source);
-    }
 
   src_width  = gimp_brush_get_width  (brush);
   src_height = gimp_brush_get_height (brush);
