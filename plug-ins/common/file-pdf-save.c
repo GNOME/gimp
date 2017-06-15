@@ -488,7 +488,10 @@ run (const gchar      *name,
                   GIMP_EXPORT_CAN_HANDLE_GRAY   |
                   GIMP_EXPORT_CAN_HANDLE_LAYERS |
                   GIMP_EXPORT_CAN_HANDLE_INDEXED);
-  if (optimize.apply_masks)
+  /* This seems counter-intuitive, but not setting the mask capability
+   * will apply any layer mask upon gimp_export_image().
+   */
+  if (! optimize.apply_masks)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS;
 
   for (i = 0; i < multi_page.image_count; i++)
