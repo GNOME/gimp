@@ -219,6 +219,13 @@ Color Palettes
   - Merge Palettes command is available for multiple selected color
     palettes now.
 
+Assets / Resources
+
+  - Some basic presets are available for the Crop tool now: 2x3, 
+    3x4, 16:10, 16x9, and square.
+  - Documents templates have been updated and now feature popular,
+    contemporary document presets for both print and digital media.
+
 PDB:
 
   - Rename *-paste-as-new to *-paste-as-new-image.
