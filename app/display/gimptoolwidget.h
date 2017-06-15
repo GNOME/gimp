@@ -49,6 +49,11 @@ struct _GimpToolWidgetClass
 
   /*  signals  */
   void     (* changed)         (GimpToolWidget        *widget);
+  void     (* snap_offsets)    (GimpToolWidget        *widget,
+                                gint                   offset_x,
+                                gint                   offset_y,
+                                gint                   width,
+                                gint                   height);
   void     (* status)          (GimpToolWidget        *widget,
                                 const gchar           *status);
 
@@ -96,8 +101,13 @@ GType              gimp_tool_widget_get_type         (void) G_GNUC_CONST;
 GimpDisplayShell * gimp_tool_widget_get_shell        (GimpToolWidget  *widget);
 GimpCanvasItem   * gimp_tool_widget_get_item         (GimpToolWidget  *widget);
 
-/*  for subclasses, to add emit status messages
+/*  for subclasses, to notify the handling tool
  */
+void               gimp_tool_widget_snap_offsets     (GimpToolWidget  *widget,
+                                                      gint             offset_x,
+                                                      gint             offset_y,
+                                                      gint             width,
+                                                      gint             height);
 void               gimp_tool_widget_status           (GimpToolWidget  *widget,
                                                       const gchar     *status);
 
@@ -117,18 +127,27 @@ void               gimp_tool_widget_pop_group        (GimpToolWidget  *widget);
 
 /*  for subclasses, convenience functions to add specific items
  */
-GimpCanvasItem * gimp_tool_widget_add_line   (GimpToolWidget   *widget,
-                                              gdouble           x1,
-                                              gdouble           y1,
-                                              gdouble           x2,
-                                              gdouble           y2);
-GimpCanvasItem * gimp_tool_widget_add_handle (GimpToolWidget   *widget,
-                                              GimpHandleType    type,
-                                              gdouble           x,
-                                              gdouble           y,
-                                              gint              width,
-                                              gint              height,
-                                              GimpHandleAnchor  anchor);
+GimpCanvasItem * gimp_tool_widget_add_line   (GimpToolWidget    *widget,
+                                              gdouble            x1,
+                                              gdouble            y1,
+                                              gdouble            x2,
+                                              gdouble            y2);
+GimpCanvasItem * gimp_tool_widget_add_handle (GimpToolWidget    *widget,
+                                              GimpHandleType     type,
+                                              gdouble            x,
+                                              gdouble            y,
+                                              gint               width,
+                                              gint               height,
+                                              GimpHandleAnchor   anchor);
+GimpCanvasItem * gimp_tool_widget_add_transform_guides
+                                             (GimpToolWidget    *widget,
+                                              const GimpMatrix3 *transform,
+                                              gdouble            x1,
+                                              gdouble            y1,
+                                              gdouble            x2,
+                                              gdouble            y2,
+                                              GimpGuidesType     type,
+                                              gint               n_guides);
 
 /*  for tools, to be called from the respective GimpTool method
  *  implementations

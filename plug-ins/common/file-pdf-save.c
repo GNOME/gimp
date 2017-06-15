@@ -115,6 +115,7 @@
 
 
 #define SAVE_PROC               "file-pdf-save"
+#define SAVE2_PROC              "file-pdf-save2"
 #define SAVE_MULTI_PROC         "file-pdf-save-multi"
 #define PLUG_IN_BINARY          "file-pdf-save"
 #define PLUG_IN_ROLE            "gimp-file-pdf-save"
@@ -148,10 +149,9 @@ typedef enum
   SA_VECTORIZE,
   SA_IGNORE_HIDDEN,
   SA_APPLY_MASKS,
+  SA_LAYERS_AS_PAGES,
   SA_ARG_COUNT
 } SaveArgs;
-
-#define SA_ARG_COUNT_DEFAULT 5
 
 typedef enum
 {
@@ -171,6 +171,7 @@ typedef struct
   gboolean vectorize;
   gboolean ignore_hidden;
   gboolean apply_masks;
+  gboolean layers_as_pages;
 } PdfOptimize;
 
 typedef struct
@@ -258,15 +259,15 @@ static PdfMultiPage multi_page;
 
 static PdfOptimize optimize =
 {
-  TRUE, /* vectorize */
-  TRUE, /* ignore_hidden */
-  TRUE  /* apply_masks */
+  TRUE,  /* vectorize */
+  TRUE,  /* ignore_hidden */
+  TRUE,  /* apply_masks */
+  FALSE  /* layers_as_pages */
 };
 
 static GtkTreeModel *model;
 static GtkWidget    *file_choose;
 static gchar        *file_name;
-
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -285,26 +286,39 @@ query (void)
 {
   static GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",     "Run mode" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32,    "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
-    { GIMP_PDB_INT32,    "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
-    { GIMP_PDB_INT32,    "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" }
+    { GIMP_PDB_INT32,    "run-mode",      "Run mode" },
+    { GIMP_PDB_IMAGE,    "image",         "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",      "Input drawable" },
+    { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename",  "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "vectorize",     "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "ignore-hidden", "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "apply-masks",   "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" }
+  };
+
+  static GimpParamDef save2_args[] =
+  {
+    { GIMP_PDB_INT32,    "run-mode",        "Run mode" },
+    { GIMP_PDB_IMAGE,    "image",           "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",        "Input drawable" },
+    { GIMP_PDB_STRING,   "filename",        "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename",    "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "vectorize",       "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "ignore-hidden",   "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
+    { GIMP_PDB_INT32,    "apply-masks",     "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
+    { GIMP_PDB_INT32,    "layers-as-pages", "Layers as pages. TRUE or FALSE" }
   };
 
   static GimpParamDef save_multi_args[] =
   {
-    { GIMP_PDB_INT32,      "run-mode",     "Run mode" },
-    { GIMP_PDB_INT32,      "count",        "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT" },
-    { GIMP_PDB_INT32ARRAY, "images",       "Input image for each page (An image can appear more than once)" },
-    { GIMP_PDB_INT32,      "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
-    { GIMP_PDB_INT32,      "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
-    { GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
-    { GIMP_PDB_STRING,     "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,     "raw-filename", "The name of the file to save the image in" }
+    { GIMP_PDB_INT32,      "run-mode",        "Run mode" },
+    { GIMP_PDB_INT32,      "count",           "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT" },
+    { GIMP_PDB_INT32ARRAY, "images",          "Input image for each page (An image can appear more than once)" },
+    { GIMP_PDB_INT32,      "vectorize",       "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
+    { GIMP_PDB_INT32,      "ignore-hidden",   "Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
+    { GIMP_PDB_INT32,      "apply-masks",     "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },
+    { GIMP_PDB_STRING,     "filename",        "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,     "raw-filename",    "The name of the file to save the image in" }
   };
 
   gimp_install_procedure (SAVE_PROC,
@@ -321,6 +335,23 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
+
+  gimp_install_procedure (SAVE2_PROC,
+                          "Save files in PDF format",
+                          "Saves files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
+                          "of different platforms, and is a distant cousin of "
+                          "PostScript.\n"
+                          "This procedure adds an extra parameter to "
+                          "file-pdf-save to save layers as pages.",
+                          "Barak Itkin, Lionel N., Jehan",
+                          "Copyright Barak Itkin, Lionel N., Jehan",
+                          "August 2009, 2017",
+                          N_("Portable Document Format"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save2_args), 0,
+                          save2_args, NULL);
 
   gimp_install_procedure (SAVE_MULTI_PROC,
                           "Save files in PDF format",
@@ -342,8 +373,8 @@ query (void)
                              "<Image>/File/Create/PDF");
 #endif
 
-  gimp_register_file_handler_mime (SAVE_PROC, "application/pdf");
-  gimp_register_save_handler (SAVE_PROC, "pdf", "");
+  gimp_register_file_handler_mime (SAVE2_PROC, "application/pdf");
+  gimp_register_save_handler (SAVE2_PROC, "pdf", "");
 }
 
 static cairo_status_t
@@ -457,7 +488,10 @@ run (const gchar      *name,
                   GIMP_EXPORT_CAN_HANDLE_GRAY   |
                   GIMP_EXPORT_CAN_HANDLE_LAYERS |
                   GIMP_EXPORT_CAN_HANDLE_INDEXED);
-  if (optimize.apply_masks)
+  /* This seems counter-intuitive, but not setting the mask capability
+   * will apply any layer mask upon gimp_export_image().
+   */
+  if (! optimize.apply_masks)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS;
 
   for (i = 0; i < multi_page.image_count; i++)
@@ -551,9 +585,8 @@ run (const gchar      *name,
 
           opacity = gimp_layer_get_opacity (layer_ID) / 100.0;
 
-          if (gimp_item_get_visible (layer_ID) &&
-              (! optimize.ignore_hidden ||
-               (optimize.ignore_hidden && opacity > 0.0)))
+          if ((gimp_item_get_visible (layer_ID) && opacity > 0.0) ||
+              ! optimize.ignore_hidden)
             {
               mask_ID = gimp_layer_get_mask (layer_ID);
               if (mask_ID != -1)
@@ -642,18 +675,24 @@ run (const gchar      *name,
               else
                 {
                   /* For text layers */
-
                   drawText (layer_ID, opacity, cr, x_res, y_res);
                 }
+              /* draw new page if "layers as pages" option is checked */
+              if (optimize.layers_as_pages &&
+                  g_strcmp0 (name, SAVE2_PROC) == 0)
+                cairo_show_page (cr);
             }
-
           /* We are done with the layer - time to free some resources */
           if (mask_ID != -1)
             cairo_surface_destroy (mask_image);
         }
 
-      /* We are done with this image - Show it! */
-      cairo_show_page (cr);
+      /* We are done with this image - Show it!
+       * Unless that's a multi-page to avoid blank page at the end
+       */
+      if (g_strcmp0 (name, SAVE2_PROC) != 0 ||
+          ! optimize.layers_as_pages)
+        cairo_show_page (cr);
       cairo_restore (cr);
 
       if (exported)
@@ -696,21 +735,21 @@ init_vals (const gchar      *name,
   gint32   i;
   gint32   image;
 
-  if (g_str_equal (name, SAVE_PROC))
+  if ((g_str_equal (name, SAVE_PROC) && nparams == SA_ARG_COUNT - 1) ||
+      (g_str_equal (name, SAVE2_PROC) && nparams == SA_ARG_COUNT))
     {
       single = TRUE;
-      if (nparams != SA_ARG_COUNT && nparams != SA_ARG_COUNT_DEFAULT)
-        return FALSE;
-
       *run_mode = param[SA_RUN_MODE].data.d_int32;
       image = param[SA_IMAGE].data.d_int32;
       file_name = param[SA_FILENAME].data.d_string;
 
-      if (nparams == SA_ARG_COUNT)
+      if (*run_mode == GIMP_RUN_NONINTERACTIVE)
         {
           optimize.apply_masks = param[SA_APPLY_MASKS].data.d_int32;
           optimize.vectorize = param[SA_VECTORIZE].data.d_int32;
           optimize.ignore_hidden = param[SA_IGNORE_HIDDEN].data.d_int32;
+          if (nparams == SA_ARG_COUNT)
+            optimize.layers_as_pages = param[SA_LAYERS_AS_PAGES].data.d_int32;
         }
       else
         defaults = TRUE;
@@ -730,7 +769,9 @@ init_vals (const gchar      *name,
       optimize.ignore_hidden = param[SMA_IGNORE_HIDDEN].data.d_int32;
     }
   else
-    return FALSE;
+    {
+      return FALSE;
+    }
 
   switch (*run_mode)
     {
@@ -839,6 +880,7 @@ gui_single (void)
   GtkWidget *vectorize_c;
   GtkWidget *ignore_hidden_c;
   GtkWidget *apply_c;
+  GtkWidget *layers_as_pages_c;
   gboolean   run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
@@ -867,6 +909,11 @@ gui_single (void)
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
   gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
 
+  layers_as_pages_c = gtk_check_button_new_with_label (_("Layers as pages"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
+                                optimize.layers_as_pages);
+  gtk_box_pack_end (GTK_BOX (vbox), layers_as_pages_c, TRUE, TRUE, 0);
+
   gtk_widget_show_all (window);
 
   run = gtk_dialog_run (GTK_DIALOG (window)) == GTK_RESPONSE_OK;
@@ -877,6 +924,8 @@ gui_single (void)
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vectorize_c));
   optimize.apply_masks =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (apply_c));
+  optimize.layers_as_pages =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (layers_as_pages_c));
 
   gtk_widget_destroy (window);
 
@@ -1344,30 +1393,30 @@ get_layer_color (gint32    layer_ID,
     {
       /* Are we in RGB mode? */
 
-      gimp_histogram (layer_ID, GIMP_HISTOGRAM_RED, 0, 255,
-                      &red, &dev, &median, &pixels, &count, &precentile);
+      gimp_drawable_histogram (layer_ID, GIMP_HISTOGRAM_RED, 0.0, 1.0,
+                               &red, &dev, &median, &pixels, &count, &precentile);
       devSum += dev;
-      gimp_histogram (layer_ID, GIMP_HISTOGRAM_GREEN, 0, 255,
-                      &green, &dev, &median, &pixels, &count, &precentile);
+      gimp_drawable_histogram (layer_ID, GIMP_HISTOGRAM_GREEN, 0.0, 1.0,
+                               &green, &dev, &median, &pixels, &count, &precentile);
       devSum += dev;
-      gimp_histogram (layer_ID, GIMP_HISTOGRAM_BLUE, 0, 255,
-                      &blue, &dev, &median, &pixels, &count, &precentile);
+      gimp_drawable_histogram (layer_ID, GIMP_HISTOGRAM_BLUE, 0.0, 1.0,
+                               &blue, &dev, &median, &pixels, &count, &precentile);
       devSum += dev;
     }
   else
     {
       /* We are in Grayscale mode (or Indexed) */
 
-      gimp_histogram (layer_ID, GIMP_HISTOGRAM_VALUE, 0, 255,
-                      &red, &dev, &median, &pixels, &count, &precentile);
+      gimp_drawable_histogram (layer_ID, GIMP_HISTOGRAM_VALUE, 0.0, 1.0,
+                               &red, &dev, &median, &pixels, &count, &precentile);
       devSum += dev;
       green = red;
       blue = red;
     }
 
   if (gimp_drawable_has_alpha (layer_ID))
-    gimp_histogram (layer_ID, GIMP_HISTOGRAM_ALPHA, 0, 255,
-                    &alpha, &dev, &median, &pixels, &count, &precentile);
+    gimp_drawable_histogram (layer_ID, GIMP_HISTOGRAM_ALPHA, 0.0, 1.0,
+                             &alpha, &dev, &median, &pixels, &count, &precentile);
   else
     alpha = 255;
 

@@ -356,6 +356,14 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
   else if (angle > 180.0)
     angle = fmod (angle, 180.0);
 
+  if (scale    == 1.0                 &&
+      ratio    == brush->aspect_ratio &&
+      angle    == brush->angle        &&
+      hardness == brush->hardness)
+    {
+      return gimp_temp_buf_copy (gimp_brush_get_mask (gbrush));
+    }
+
   return gimp_brush_generated_calc (brush,
                                     brush->shape,
                                     brush->radius * scale,

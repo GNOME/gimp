@@ -309,6 +309,7 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
     case GIMP_HANDLE_FILLED_SQUARE:
     case GIMP_HANDLE_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
+    case GIMP_HANDLE_CROSS:
       cairo_save (cr);
       cairo_translate (cr, tx, ty);
       cairo_rotate (cr, private->start_angle);
@@ -320,10 +321,12 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
           cairo_rectangle (cr, x, y, private->width - 1.0, private->height - 1.0);
           _gimp_canvas_item_stroke (item, cr);
           break;
+
         case GIMP_HANDLE_FILLED_SQUARE:
           cairo_rectangle (cr, x - 0.5, y - 0.5, private->width, private->height);
           _gimp_canvas_item_fill (item, cr);
           break;
+
         case GIMP_HANDLE_DIAMOND:
         case GIMP_HANDLE_FILLED_DIAMOND:
           cairo_move_to (cr, x, y - (gdouble) private->height / 2.0);
@@ -336,9 +339,19 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
           else
             _gimp_canvas_item_fill (item, cr);
           break;
+
+        case GIMP_HANDLE_CROSS:
+          cairo_move_to (cr, x - private->width / 2, y);
+          cairo_line_to (cr, x + private->width / 2 - 0.5, y);
+          cairo_move_to (cr, x, y - private->height / 2);
+          cairo_line_to (cr, x, y + private->height / 2 - 0.5);
+          _gimp_canvas_item_stroke (item, cr);
+          break;
+
         default:
           g_assert_not_reached ();
         }
+
       cairo_restore (cr);
       break;
 
@@ -358,16 +371,6 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
                           private->slice_angle);
 
       _gimp_canvas_item_fill (item, cr);
-      break;
-
-    case GIMP_HANDLE_CROSS:
-      cairo_move_to (cr, x - private->width / 2, y);
-      cairo_line_to (cr, x + private->width / 2 - 0.5, y);
-
-      cairo_move_to (cr, x, y - private->height / 2);
-      cairo_line_to (cr, x, y + private->height / 2 - 0.5);
-
-      _gimp_canvas_item_stroke (item, cr);
       break;
 
     case GIMP_HANDLE_CROSSHAIR:
