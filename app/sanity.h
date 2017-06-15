@@ -23,7 +23,8 @@
 #endif
 
 
-const gchar * sanity_check (void);
+const gchar * sanity_check_early (void);
+const gchar * sanity_check_late  (void);
 
 
 #endif /* __SANITY_H__ */

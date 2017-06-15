@@ -536,7 +536,7 @@ main (int    argc,
     }
 #endif
 
-  abort_message = sanity_check ();
+  abort_message = sanity_check_early ();
   if (abort_message)
     app_abort (no_interface, abort_message);
 

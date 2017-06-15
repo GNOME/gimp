@@ -33,6 +33,7 @@
 #include "gimp-intl.h"
 
 
+/*  early-stage tests  */
 static gchar * sanity_check_gimp              (void);
 static gchar * sanity_check_glib              (void);
 static gchar * sanity_check_cairo             (void);
@@ -44,16 +45,22 @@ static gchar * sanity_check_lcms              (void);
 static gchar * sanity_check_gexiv2            (void);
 static gchar * sanity_check_babl              (void);
 static gchar * sanity_check_gegl              (void);
-static gchar * sanity_check_gegl_ops          (void);
 static gchar * sanity_check_filename_encoding (void);
+
+/*  late-stage tests  */
+static gchar * sanity_check_gegl_ops          (void);
 
 
 /*  public functions  */
 
+/* early-stage sanity check, performed before the call to app_run(). */
 const gchar *
-sanity_check (void)
+sanity_check_early (void)
 {
-  gchar *abort_message = sanity_check_gimp ();
+  gchar *abort_message = NULL;
+
+  if (! abort_message)
+    abort_message = sanity_check_gimp ();
 
   if (! abort_message)
     abort_message = sanity_check_glib ();
@@ -86,16 +93,36 @@ sanity_check (void)
     abort_message = sanity_check_gegl ();
 
   if (! abort_message)
-    abort_message = sanity_check_gegl_ops ();
-
-  if (! abort_message)
     abort_message = sanity_check_filename_encoding ();
+
+  return abort_message;
+}
+
+/* late-stage sanity check, performed during app_run(), after the user
+ * configuration has been loaded.
+ */
+const gchar *
+sanity_check_late (void)
+{
+  gchar *abort_message = NULL;
+
+  /* the gegl ops test initializes all gegl ops; in particular, it initializes
+   * all the strings used by their properties, which appear in the ui.  it
+   * must be run after we've called language_init(), potentially overriding
+   * LANGUAGE according to the user config, or else all affected strings would
+   * use the translation corresponding to the system locale, regardless.
+   */
+  if (! abort_message)
+    abort_message = sanity_check_gegl_ops ();
 
   return abort_message;
 }
 
 
 /*  private functions  */
+
+
+/*  early-stage tests  */
 
 static gboolean
 sanity_check_version (guint major_version, guint required_major,
@@ -521,6 +548,58 @@ sanity_check_gegl (void)
 }
 
 static gchar *
+sanity_check_filename_encoding (void)
+{
+  gchar  *result;
+  GError *error = NULL;
+
+  result = g_filename_to_utf8 ("", -1, NULL, NULL, &error);
+
+  if (! result)
+    {
+      gchar *msg =
+        g_strdup_printf
+        (_("The configured filename encoding cannot be converted to UTF-8: "
+           "%s\n\n"
+           "Please check the value of the environment variable "
+           "G_FILENAME_ENCODING."),
+         error->message);
+
+      g_error_free (error);
+
+      return msg;
+    }
+
+  g_free (result);
+
+  result = g_filename_to_utf8 (gimp_directory (), -1, NULL, NULL, &error);
+
+  if (! result)
+    {
+      gchar *msg =
+        g_strdup_printf
+        (_("The name of the directory holding the GIMP user configuration "
+           "cannot be converted to UTF-8: "
+           "%s\n\n"
+           "Your filesystem probably stores files in an encoding "
+           "other than UTF-8 and you didn't tell GLib about this. "
+           "Please set the environment variable G_FILENAME_ENCODING."),
+         error->message);
+
+      g_error_free (error);
+
+      return msg;
+    }
+
+  g_free (result);
+
+  return NULL;
+}
+
+
+/*  late-stage tests  */
+
+static gchar *
 sanity_check_gegl_ops (void)
 {
   static const gchar *required_ops[] =
@@ -655,55 +734,6 @@ sanity_check_gegl_ops (void)
              required_ops [i]);
         }
     }
-
-  return NULL;
-}
-
-static gchar *
-sanity_check_filename_encoding (void)
-{
-  gchar  *result;
-  GError *error = NULL;
-
-  result = g_filename_to_utf8 ("", -1, NULL, NULL, &error);
-
-  if (! result)
-    {
-      gchar *msg =
-        g_strdup_printf
-        (_("The configured filename encoding cannot be converted to UTF-8: "
-           "%s\n\n"
-           "Please check the value of the environment variable "
-           "G_FILENAME_ENCODING."),
-         error->message);
-
-      g_error_free (error);
-
-      return msg;
-    }
-
-  g_free (result);
-
-  result = g_filename_to_utf8 (gimp_directory (), -1, NULL, NULL, &error);
-
-  if (! result)
-    {
-      gchar *msg =
-        g_strdup_printf
-        (_("The name of the directory holding the GIMP user configuration "
-           "cannot be converted to UTF-8: "
-           "%s\n\n"
-           "Your filesystem probably stores files in an encoding "
-           "other than UTF-8 and you didn't tell GLib about this. "
-           "Please set the environment variable G_FILENAME_ENCODING."),
-         error->message);
-
-      g_error_free (error);
-
-      return msg;
-    }
-
-  g_free (result);
 
   return NULL;
 }
