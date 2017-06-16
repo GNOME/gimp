@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-11 15:32+0200\n"
-"PO-Revision-Date: 2017-06-11 15:33+0200\n"
+"POT-Creation-Date: 2017-06-16 17:38+0200\n"
+"PO-Revision-Date: 2017-06-16 17:39+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -276,7 +276,7 @@ msgstr ""
 "Wyjście programu GIMP. Można zminimalizować to okno, ale nie należy go "
 "zamykać."
 
-#: ../app/sanity.c:674
+#: ../app/sanity.c:562
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -288,7 +288,7 @@ msgstr ""
 "\n"
 "Proszę sprawdzić wartość zmiennej środowiskowej G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:693
+#: ../app/sanity.c:581
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -9221,7 +9221,7 @@ msgid "Text"
 msgstr "Tekst"
 
 #: ../app/core/core-enums.c:851 ../app/core/core-enums.c:900
-#: ../app/core/gimpdrawable-transform.c:672
+#: ../app/core/gimpdrawable-transform.c:682
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -9908,7 +9908,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Obrót kanału"
 
-#: ../app/core/gimpchannel.c:298 ../app/core/gimpdrawable-transform.c:993
+#: ../app/core/gimpchannel.c:298 ../app/core/gimpdrawable-transform.c:1003
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Przekształcenie kanału"
@@ -10176,7 +10176,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-blend.c:123 ../app/tools/gimpblendtool.c:1066
+#: ../app/core/gimpdrawable-blend.c:123 ../app/tools/gimpblendtool.c:1085
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Gradient"
@@ -10228,22 +10228,22 @@ msgstr "Przesunięcie obszaru rysowania"
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
 
-#: ../app/core/gimpdrawable-transform.c:761
+#: ../app/core/gimpdrawable-transform.c:771
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/core/gimpdrawable-transform.c:846
+#: ../app/core/gimpdrawable-transform.c:856
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:991 ../app/core/gimplayer.c:380
+#: ../app/core/gimpdrawable-transform.c:1001 ../app/core/gimplayer.c:380
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
 
-#: ../app/core/gimpdrawable-transform.c:1004
+#: ../app/core/gimpdrawable-transform.c:1014
 msgid "Transformation"
 msgstr "Przekształcenie"
 
@@ -12151,7 +12151,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:353
-#: ../app/tools/gimpmeasuretool.c:1079 ../app/widgets/gimpcontrollerlist.c:644
+#: ../app/tools/gimpmeasuretool.c:728 ../app/widgets/gimpcontrollerlist.c:644
 #: ../app/widgets/gimppdbdialog.c:175 ../app/widgets/gimpsettingsbox.c:678
 #: ../app/widgets/gimptexteditor.c:165
 msgid "_Close"
@@ -12279,13 +12279,11 @@ msgid "Composite mode:"
 msgstr "Tryb mieszania:"
 
 #. The size labels
-#: ../app/dialogs/layer-options-dialog.c:252
-#: ../app/tools/gimpmeasuretool.c:1154
+#: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:803
 msgid "Width:"
 msgstr "Szerokość:"
 
-#: ../app/dialogs/layer-options-dialog.c:258
-#: ../app/tools/gimpmeasuretool.c:1182
+#: ../app/dialogs/layer-options-dialog.c:258 ../app/tools/gimpmeasuretool.c:831
 msgid "Height:"
 msgstr "Wysokość:"
 
@@ -14361,13 +14359,13 @@ msgstr "Upuszczenie nowej warstwy"
 msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
-#: ../app/display/gimpdisplayshell-dnd.c:360 ../app/tools/gimpblendtool.c:262
+#: ../app/display/gimpdisplayshell-dnd.c:360 ../app/tools/gimpblendtool.c:263
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:219
 #: ../app/tools/gimpfiltertool.c:322 ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
-#: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:269
+#: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:270
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:226
 #: ../app/tools/gimpcroptool.c:325 ../app/tools/gimpfiltertool.c:329
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
@@ -14431,7 +14429,7 @@ msgid "Select Rotation Angle"
 msgstr "Wybór kąta obrotu"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:1126
+#: ../app/tools/gimpmeasuretool.c:775
 msgid "Angle:"
 msgstr "Kąt:"
 
@@ -14479,6 +14477,30 @@ msgstr "bez zarządzania kolorami"
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Anuluj <i>%s</i>"
+
+#: ../app/display/gimptoolcompass.c:822
+msgid "Click to place vertical and horizontal guides"
+msgstr "Kliknięcie doda poziome lub pionowe prowadnice"
+
+#: ../app/display/gimptoolcompass.c:830
+msgid "Click to place a horizontal guide"
+msgstr "Kliknięcie doda poziome prowadnice"
+
+#: ../app/display/gimptoolcompass.c:843
+msgid "Click to place a vertical guide"
+msgstr "Kliknięcie doda pionowe prowadnice"
+
+#: ../app/display/gimptoolcompass.c:855
+msgid "Click-Drag to add a new point"
+msgstr "Kliknięcie i przeciągnięcie doda nowy punkt"
+
+#: ../app/display/gimptoolcompass.c:865 ../app/tools/gimpiscissorstool.c:912
+msgid "Click-Drag to move this point"
+msgstr "Kliknięcie i przeciągnięcie przemieści ten punkt"
+
+#: ../app/display/gimptoolcompass.c:883
+msgid "Click-Drag to move all points"
+msgstr "Kliknięcie i przeciągnięcie przemieści wszystkie punkty"
 
 #: ../app/file/file-open.c:116 ../app/file/file-save.c:114
 msgid "Not a regular file"
@@ -16842,46 +16864,50 @@ msgstr "Progowanie"
 msgid "Edit this gradient"
 msgstr "Modyfikuje ten gradient"
 
-#: ../app/tools/gimpblendtool.c:177
+#: ../app/tools/gimpblendtool.c:178
 msgid "Blend"
 msgstr "Gradient"
 
-#: ../app/tools/gimpblendtool.c:178
+#: ../app/tools/gimpblendtool.c:179
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "Gradient: wypełnia zaznaczony obszar kolorem z gradientu"
 
-#: ../app/tools/gimpblendtool.c:179
+#: ../app/tools/gimpblendtool.c:180
 msgid "Blen_d"
 msgstr "_Gradient"
 
-#: ../app/tools/gimpblendtool.c:276 ../app/tools/gimpbucketfilltool.c:151
+#: ../app/tools/gimpblendtool.c:277 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:233 ../app/tools/gimpfiltertool.c:336
 #: ../app/tools/gimpforegroundselecttool.c:290 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1880 ../app/tools/gimpwarptool.c:655
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
-#: ../app/tools/gimpblendtool.c:283
+#: ../app/tools/gimpblendtool.c:284
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:553 ../app/tools/gimpblendtool.c:566
+#: ../app/tools/gimpblendtool.c:558 ../app/tools/gimpblendtool.c:571
 msgid "Blend Step"
 msgstr "Krok gradientu"
 
-#: ../app/tools/gimpblendtool.c:840 ../app/tools/gimppainttool.c:656
+#: ../app/tools/gimpblendtool.c:852 ../app/tools/gimppainttool.c:656
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
 
-#: ../app/tools/gimpblendtool.c:841
+#: ../app/tools/gimpblendtool.c:853
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s przesuwa całą linię"
 
-#: ../app/tools/gimpblendtool.c:845
+#: ../app/tools/gimpblendtool.c:857
 msgid "Blend: "
 msgstr "Gradient: "
+
+#: ../app/tools/gimpblendtool.c:868
+msgid "Blend: Click-Drag to draw a gradient"
+msgstr "Gradient: kliknięcie i przeciągnięcie rysuje gradient"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:104
 msgid "Brightness-Contrast"
@@ -17489,35 +17515,40 @@ msgstr "Typ odbicia"
 msgid "Direction of flipping"
 msgstr "Kierunek odbicia"
 
-#: ../app/tools/gimpflipoptions.c:135 ../app/tools/gimptransformoptions.c:426
+#: ../app/tools/gimpflipoptions.c:139 ../app/tools/gimptransformoptions.c:426
 msgid "Transform:"
 msgstr "Przekształcenie:"
 
 #. tool toggle
-#: ../app/tools/gimpflipoptions.c:144 ../app/tools/gimpmagnifyoptions.c:191
+#: ../app/tools/gimpflipoptions.c:148 ../app/tools/gimpmagnifyoptions.c:191
 #, c-format
 msgid "Direction  (%s)"
 msgstr "Kierunek  (%s)"
 
-#: ../app/tools/gimpfliptool.c:85
+#: ../app/tools/gimpflipoptions.c:170 ../app/tools/gimptransformoptions.c:132
+#: ../app/tools/gimptransformoptions.c:448
+msgid "Clipping"
+msgstr "Przycinanie"
+
+#: ../app/tools/gimpfliptool.c:103
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/tools/gimpfliptool.c:86
+#: ../app/tools/gimpfliptool.c:104
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr "Odbicie: odwraca warstwę, zaznaczenie lub ścieżkę, pionowo lub poziomo"
 
-#: ../app/tools/gimpfliptool.c:88 ../app/tools/gimpfliptool.c:106
+#: ../app/tools/gimpfliptool.c:106 ../app/tools/gimpfliptool.c:129
 msgid "_Flip"
 msgstr "Od_bicie"
 
-#: ../app/tools/gimpfliptool.c:190
+#: ../app/tools/gimpfliptool.c:280
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Odbicie poziome"
 
-#: ../app/tools/gimpfliptool.c:193
+#: ../app/tools/gimpfliptool.c:283
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Odbicie pionowe"
@@ -17525,7 +17556,7 @@ msgstr "Odbicie pionowe"
 #. probably this is not actually reached today, but
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
-#: ../app/tools/gimpfliptool.c:199
+#: ../app/tools/gimpfliptool.c:289
 msgctxt "undo-desc"
 msgid "Flip"
 msgstr "Odbicie"
@@ -17845,45 +17876,41 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "Inteligentne _nożyce"
 
-#: ../app/tools/gimpiscissorstool.c:905
+#: ../app/tools/gimpiscissorstool.c:906
 msgid "Click to remove this point"
 msgstr "Kliknięcie usunie ten punkt"
 
-#: ../app/tools/gimpiscissorstool.c:911 ../app/tools/gimpmeasuretool.c:608
-msgid "Click-Drag to move this point"
-msgstr "Kliknięcie i przeciągnięcie przemieści ten punkt"
-
-#: ../app/tools/gimpiscissorstool.c:913 ../app/tools/gimpiscissorstool.c:982
+#: ../app/tools/gimpiscissorstool.c:914 ../app/tools/gimpiscissorstool.c:983
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: wyłącza automatyczne przyciąganie"
 
-#: ../app/tools/gimpiscissorstool.c:914
+#: ../app/tools/gimpiscissorstool.c:915
 #, c-format
 msgid "%s: remove this point"
 msgstr "%s: usuwa ten punkt"
 
-#: ../app/tools/gimpiscissorstool.c:934
+#: ../app/tools/gimpiscissorstool.c:935
 msgid "Click to close the curve"
 msgstr "Kliknięcie zamknie krzywą"
 
-#: ../app/tools/gimpiscissorstool.c:940
+#: ../app/tools/gimpiscissorstool.c:941
 msgid "Click to add a point on this segment"
 msgstr "Kliknięcie doda punkt w tym segmencie"
 
-#: ../app/tools/gimpiscissorstool.c:953
+#: ../app/tools/gimpiscissorstool.c:954
 msgid "Click or press Enter to convert to a selection"
 msgstr "Kliknięcie lub naciśnięcie klawisza Enter konwertuje do zaznaczenia"
 
-#: ../app/tools/gimpiscissorstool.c:963
+#: ../app/tools/gimpiscissorstool.c:964
 msgid "Press Enter to convert to a selection"
 msgstr "Naciśnięcie klawisza Enter konwertuje do zaznaczenia"
 
-#: ../app/tools/gimpiscissorstool.c:979
+#: ../app/tools/gimpiscissorstool.c:980
 msgid "Click or Click-Drag to add a point"
 msgstr "Kliknięcie lub kliknięcie i przeciągnięcie doda punkt"
 
-#: ../app/tools/gimpiscissorstool.c:1118 ../app/tools/gimpiscissorstool.c:1130
+#: ../app/tools/gimpiscissorstool.c:1119 ../app/tools/gimpiscissorstool.c:1131
 msgid "Modify Scissors Curve"
 msgstr "Modyfikacja krzywej nożyc"
 
@@ -17997,57 +18024,37 @@ msgstr "_Powiększenie"
 msgid "Open a floating dialog to view details about measurements"
 msgstr "Otwiera oddzielne okno wyświetlające informacje o pomiarach"
 
-#: ../app/tools/gimpmeasuretool.c:127
+#: ../app/tools/gimpmeasuretool.c:132
 msgid "Measure"
 msgstr "Miarka"
 
-#: ../app/tools/gimpmeasuretool.c:128
+#: ../app/tools/gimpmeasuretool.c:133
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Miarka: umożliwia mierzenie odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:129
+#: ../app/tools/gimpmeasuretool.c:134
 msgid "_Measure"
 msgstr "_Miarka"
 
-#: ../app/tools/gimpmeasuretool.c:251
+#: ../app/tools/gimpmeasuretool.c:374
+msgid "Click-Drag to create a line"
+msgstr "Kliknięcie i przeciągnięcie utworzy linię"
+
+#: ../app/tools/gimpmeasuretool.c:475
 msgid "Add Guides"
 msgstr "Dodanie prowadnic"
 
-#: ../app/tools/gimpmeasuretool.c:317
-msgid "Drag to create a line"
-msgstr "Przeciągnięcie utworzy linię"
-
-#: ../app/tools/gimpmeasuretool.c:563
-msgid "Click to place vertical and horizontal guides"
-msgstr "Kliknięcie doda poziome lub pionowe prowadnice"
-
-#: ../app/tools/gimpmeasuretool.c:571
-msgid "Click to place a horizontal guide"
-msgstr "Kliknięcie doda poziome prowadnice"
-
-#: ../app/tools/gimpmeasuretool.c:585
-msgid "Click to place a vertical guide"
-msgstr "Kliknięcie doda pionowe prowadnice"
-
-#: ../app/tools/gimpmeasuretool.c:598
-msgid "Click-Drag to add a new point"
-msgstr "Kliknięcie i przeciągnięcie doda nowy punkt"
-
-#: ../app/tools/gimpmeasuretool.c:627
-msgid "Click-Drag to move all points"
-msgstr "Kliknięcie i przeciągnięcie przemieści wszystkie punkty"
-
-#: ../app/tools/gimpmeasuretool.c:955 ../app/tools/gimpmeasuretool.c:1109
-#: ../app/tools/gimpmeasuretool.c:1165 ../app/tools/gimpmeasuretool.c:1193
+#: ../app/tools/gimpmeasuretool.c:605 ../app/tools/gimpmeasuretool.c:758
+#: ../app/tools/gimpmeasuretool.c:814 ../app/tools/gimpmeasuretool.c:842
 #: ../app/tools/gimppainttool.c:665
 msgid "pixels"
 msgstr "piksele"
 
-#: ../app/tools/gimpmeasuretool.c:1073
+#: ../app/tools/gimpmeasuretool.c:722
 msgid "Measure Distances and Angles"
 msgstr "Pomiary odległości i kątów"
 
-#: ../app/tools/gimpmeasuretool.c:1098
+#: ../app/tools/gimpmeasuretool.c:747
 msgid "Distance:"
 msgstr "Odległość:"
 
@@ -18869,11 +18876,6 @@ msgstr "Kierunek przekształcenia"
 #: ../app/tools/gimptransformoptions.c:125 ../app/tools/gimpwarpoptions.c:120
 msgid "Interpolation method"
 msgstr "Metoda interpolacji"
-
-#: ../app/tools/gimptransformoptions.c:132
-#: ../app/tools/gimptransformoptions.c:448
-msgid "Clipping"
-msgstr "Przycinanie"
 
 #: ../app/tools/gimptransformoptions.c:133
 msgid "How to clip"
@@ -20754,7 +20756,7 @@ msgstr "kolory"
 msgid "Lock:"
 msgstr "Blokowanie:"
 
-#: ../app/widgets/gimplanguagestore-parser.c:252
+#: ../app/widgets/gimplanguagestore-parser.c:253
 msgid "System Language"
 msgstr "Język systemowy"
 
