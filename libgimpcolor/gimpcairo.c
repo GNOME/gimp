@@ -164,6 +164,7 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
     {
     case CAIRO_FORMAT_RGB24:  return babl_format ("cairo-RGB24");
     case CAIRO_FORMAT_ARGB32: return babl_format ("cairo-ARGB32");
+    case CAIRO_FORMAT_A8:     return babl_format ("cairo-A8");
 
     default:
       break;
