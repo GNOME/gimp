@@ -221,7 +221,7 @@ Color Palettes
 
 Assets / Resources
 
-  - Some basic presets are available for the Crop tool now: 2x3, 
+  - Some basic presets are available for the Crop tool now: 2x3,
     3x4, 16:10, 16x9, and square.
   - Documents templates have been updated and now feature popular,
     contemporary document presets for both print and digital media.
@@ -234,11 +234,11 @@ PDB:
 
 Build:
 
-  - Depends on LCMS2.7+ now, because earlier LCMS2 releases caused
+  - Depend on LCMS2.7+ now, because earlier LCMS2 releases caused
     problems with certain GIMP blend modes.
-  - Depends on libpng 1.6.25+ to avoid warnings about known incorrect
+  - Depend on libpng 1.6.25+ to avoid warnings about known incorrect
     sRGB profiles, also avoid various vulnerabilities.
-  - Depends on glib-networking now for HTTPS support.
+  - Depend on glib-networking now for HTTPS support.
   - Add a flatpak-builder manifest.
 
 OS-specific changes:
