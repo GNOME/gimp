@@ -242,7 +242,8 @@ static void              remove_call                (GtkTreeModel    *tree_model
                                                      gpointer         user_data);
 static void              recount_pages              (void);
 
-static cairo_surface_t * get_drawable_image         (gint32           drawable_ID,
+static cairo_surface_t * get_cairo_surface          (gint32           drawable_ID,
+                                                     gboolean         as_mask,
                                                      GError         **error);
 
 static GimpRGB           get_layer_color            (gint32           layer_ID,
@@ -591,7 +592,8 @@ run (const gchar      *name,
               mask_ID = gimp_layer_get_mask (layer_ID);
               if (mask_ID != -1)
                 {
-                  mask_image = get_drawable_image (mask_ID, &error);
+                  mask_image = get_cairo_surface (mask_ID, TRUE,
+                                                  &error);
                   if (error != NULL)
                     {
                       *nreturn_vals = 2;
@@ -638,7 +640,8 @@ run (const gchar      *name,
                     {
                       cairo_surface_t *layer_image;
 
-                      layer_image = get_drawable_image (layer_ID, &error);
+                      layer_image = get_cairo_surface (layer_ID, FALSE,
+                                                       &error);
                       if (error != NULL)
                         {
                           *nreturn_vals = 2;
@@ -1304,8 +1307,9 @@ recount_pages (void)
 /******************************************************/
 
 static cairo_surface_t *
-get_drawable_image (gint32 drawable_ID,
-                    GError **error)
+get_cairo_surface (gint32     drawable_ID,
+                   gboolean   as_mask,
+                   GError   **error)
 {
   GeglBuffer      *src_buffer;
   GeglBuffer      *dest_buffer;
@@ -1320,7 +1324,9 @@ get_drawable_image (gint32 drawable_ID,
   width  = gegl_buffer_get_width  (src_buffer);
   height = gegl_buffer_get_height (src_buffer);
 
-  if (gimp_drawable_has_alpha (drawable_ID))
+  if (as_mask)
+    format = CAIRO_FORMAT_A8;
+  else if (gimp_drawable_has_alpha (drawable_ID))
     format = CAIRO_FORMAT_ARGB32;
   else
     format = CAIRO_FORMAT_RGB24;
@@ -1351,6 +1357,16 @@ get_drawable_image (gint32 drawable_ID,
     }
 
   dest_buffer = gimp_cairo_surface_create_buffer (surface);
+  if (as_mask)
+    {
+      /* src_buffer represents a mask in "Y u8", "Y u16", etc. formats.
+       * Yet cairo_mask*() functions only care about the alpha channel of
+       * the surface. Hence I change the format of dest_buffer so that the
+       * Y channel of src_buffer actually refers to the A channel of
+       * dest_buffer/surface in Cairo.
+       */
+      gegl_buffer_set_format (dest_buffer, babl_format ("Y u8"));
+    }
 
   gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
 
