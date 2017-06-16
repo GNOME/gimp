@@ -430,22 +430,22 @@ gimp_tool_widget_add_transform_guides (GimpToolWidget    *widget,
   return item;
 }
 
-gboolean
+gint
 gimp_tool_widget_button_press (GimpToolWidget      *widget,
                                const GimpCoords    *coords,
                                guint32              time,
                                GdkModifierType      state,
                                GimpButtonPressType  press_type)
 {
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
-  g_return_val_if_fail (coords != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), 0);
+  g_return_val_if_fail (coords != NULL, 0);
 
   if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_press)
     return GIMP_TOOL_WIDGET_GET_CLASS (widget)->button_press (widget,
                                                               coords, time, state,
                                                               press_type);
 
-  return FALSE;
+  return 0;
 }
 
 void

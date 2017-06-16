@@ -118,7 +118,7 @@ static void     gimp_tool_compass_get_property    (GObject               *object
                                                    GParamSpec            *pspec);
 
 static void     gimp_tool_compass_changed         (GimpToolWidget        *widget);
-static gboolean gimp_tool_compass_button_press    (GimpToolWidget        *widget,
+static gint     gimp_tool_compass_button_press    (GimpToolWidget        *widget,
                                                    const GimpCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
@@ -557,7 +557,7 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
   gimp_tool_compass_update_hilight (compass);
 }
 
-gboolean
+gint
 gimp_tool_compass_button_press (GimpToolWidget      *widget,
                                 const GimpCoords    *coords,
                                 guint32              time,
@@ -639,7 +639,7 @@ gimp_tool_compass_button_press (GimpToolWidget      *widget,
       private->function = ADDING;
     }
 
-  return TRUE;
+  return 1;
 }
 
 void

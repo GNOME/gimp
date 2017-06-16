@@ -105,7 +105,7 @@ static void     gimp_tool_line_get_property    (GObject               *object,
                                                 GParamSpec            *pspec);
 
 static void     gimp_tool_line_changed         (GimpToolWidget        *widget);
-static gboolean gimp_tool_line_button_press    (GimpToolWidget        *widget,
+static gint     gimp_tool_line_button_press    (GimpToolWidget        *widget,
                                                 const GimpCoords      *coords,
                                                 guint32                time,
                                                 GdkModifierType        state,
@@ -372,10 +372,10 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
       gimp_tool_line_point_motion (line,
                                    state & gimp_get_constrain_behavior_mask ());
 
-      return TRUE;
+      return 1;
     }
 
-  return FALSE;
+  return 0;
 }
 
 void

@@ -58,7 +58,7 @@ struct _GimpToolWidgetClass
                                 const gchar           *status);
 
   /*  virtual functions  */
-  gboolean (* button_press)    (GimpToolWidget        *widget,
+  gint     (* button_press)    (GimpToolWidget        *widget,
                                 const GimpCoords      *coords,
                                 guint32                time,
                                 GdkModifierType        state,
@@ -152,7 +152,7 @@ GimpCanvasItem * gimp_tool_widget_add_transform_guides
 /*  for tools, to be called from the respective GimpTool method
  *  implementations
  */
-gboolean   gimp_tool_widget_button_press    (GimpToolWidget        *widget,
+gint       gimp_tool_widget_button_press    (GimpToolWidget        *widget,
                                              const GimpCoords      *coords,
                                              guint32                time,
                                              GdkModifierType        state,
