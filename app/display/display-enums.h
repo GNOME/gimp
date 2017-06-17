@@ -120,6 +120,20 @@ typedef enum
 } GimpPathStyle;
 
 
+#define GIMP_TYPE_TRANSFORM_FUNCTION (gimp_transform_function_get_type ())
+
+GType gimp_transform_function_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TRANSFORM_FUNCTION_MOVE,
+  GIMP_TRANSFORM_FUNCTION_SCALE,
+  GIMP_TRANSFORM_FUNCTION_ROTATE,
+  GIMP_TRANSFORM_FUNCTION_SHEAR,
+  GIMP_TRANSFORM_FUNCTION_PERSPECTIVE
+} GimpTransformFunction;
+
+
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
 
 GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;

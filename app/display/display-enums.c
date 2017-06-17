@@ -260,6 +260,41 @@ gimp_path_style_get_type (void)
 }
 
 GType
+gimp_transform_function_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TRANSFORM_FUNCTION_MOVE, "GIMP_TRANSFORM_FUNCTION_MOVE", "move" },
+    { GIMP_TRANSFORM_FUNCTION_SCALE, "GIMP_TRANSFORM_FUNCTION_SCALE", "scale" },
+    { GIMP_TRANSFORM_FUNCTION_ROTATE, "GIMP_TRANSFORM_FUNCTION_ROTATE", "rotate" },
+    { GIMP_TRANSFORM_FUNCTION_SHEAR, "GIMP_TRANSFORM_FUNCTION_SHEAR", "shear" },
+    { GIMP_TRANSFORM_FUNCTION_PERSPECTIVE, "GIMP_TRANSFORM_FUNCTION_PERSPECTIVE", "perspective" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TRANSFORM_FUNCTION_MOVE, "GIMP_TRANSFORM_FUNCTION_MOVE", NULL },
+    { GIMP_TRANSFORM_FUNCTION_SCALE, "GIMP_TRANSFORM_FUNCTION_SCALE", NULL },
+    { GIMP_TRANSFORM_FUNCTION_ROTATE, "GIMP_TRANSFORM_FUNCTION_ROTATE", NULL },
+    { GIMP_TRANSFORM_FUNCTION_SHEAR, "GIMP_TRANSFORM_FUNCTION_SHEAR", NULL },
+    { GIMP_TRANSFORM_FUNCTION_PERSPECTIVE, "GIMP_TRANSFORM_FUNCTION_PERSPECTIVE", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpTransformFunction", values);
+      gimp_type_set_translation_context (type, "transform-function");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_zoom_focus_get_type (void)
 {
   static const GEnumValue values[] =
