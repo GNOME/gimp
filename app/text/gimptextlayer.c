@@ -85,14 +85,6 @@ static gboolean   gimp_text_layer_rename         (GimpItem          *item,
                                                   const gchar       *undo_desc,
                                                   GError           **error);
 
-static void       gimp_text_layer_convert_type   (GimpDrawable      *drawable,
-                                                  GimpImage         *dest_image,
-                                                  const Babl        *new_format,
-                                                  GimpColorProfile  *dest_profile,
-                                                  GeglDitherMethod   layer_dither_type,
-                                                  GeglDitherMethod   mask_dither_type,
-                                                  gboolean           push_undo,
-                                                  GimpProgress      *progress);
 static void       gimp_text_layer_set_buffer     (GimpDrawable      *drawable,
                                                   gboolean           push_undo,
                                                   const gchar       *undo_desc,
@@ -106,6 +98,15 @@ static void       gimp_text_layer_push_undo      (GimpDrawable      *drawable,
                                                   gint               y,
                                                   gint               width,
                                                   gint               height);
+
+static void       gimp_text_layer_convert_type   (GimpLayer         *layer,
+                                                  GimpImage         *dest_image,
+                                                  const Babl        *new_format,
+                                                  GimpColorProfile  *dest_profile,
+                                                  GeglDitherMethod   layer_dither_type,
+                                                  GeglDitherMethod   mask_dither_type,
+                                                  gboolean           push_undo,
+                                                  GimpProgress      *progress);
 
 static void       gimp_text_layer_text_changed   (GimpTextLayer     *layer);
 static gboolean   gimp_text_layer_render         (GimpTextLayer     *layer);
@@ -126,6 +127,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
+  GimpLayerClass    *layer_class       = GIMP_LAYER_CLASS (klass);
 
   object_class->finalize            = gimp_text_layer_finalize;
   object_class->get_property        = gimp_text_layer_get_property;
@@ -154,9 +156,10 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   item_class->rotate_desc           = _("Rotate Text Layer");
   item_class->transform_desc        = _("Transform Text Layer");
 
-  drawable_class->convert_type      = gimp_text_layer_convert_type;
   drawable_class->set_buffer        = gimp_text_layer_set_buffer;
   drawable_class->push_undo         = gimp_text_layer_push_undo;
+
+  layer_class->convert_type         = gimp_text_layer_convert_type;
 
   GIMP_CONFIG_PROP_OBJECT (object_class, PROP_TEXT,
                            "text",
@@ -315,44 +318,6 @@ gimp_text_layer_rename (GimpItem     *item,
 }
 
 static void
-gimp_text_layer_convert_type (GimpDrawable      *drawable,
-                              GimpImage         *dest_image,
-                              const Babl        *new_format,
-                              GimpColorProfile  *dest_profile,
-                              GeglDitherMethod   layer_dither_type,
-                              GeglDitherMethod   mask_dither_type,
-                              gboolean           push_undo,
-                              GimpProgress      *progress)
-{
-  GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
-  GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
-
-  if (! layer->text   ||
-      layer->modified ||
-      layer_dither_type != GEGL_DITHER_NONE)
-    {
-      GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
-                                                        new_format,
-                                                        dest_profile,
-                                                        layer_dither_type,
-                                                        mask_dither_type,
-                                                        push_undo,
-                                                        progress);
-    }
-  else
-    {
-      if (push_undo)
-        gimp_image_undo_push_text_layer_convert (image, NULL, layer);
-
-      layer->convert_format = new_format;
-
-      gimp_text_layer_render (layer);
-
-      layer->convert_format = NULL;
-    }
-}
-
-static void
 gimp_text_layer_set_buffer (GimpDrawable *drawable,
                             gboolean      push_undo,
                             const gchar  *undo_desc,
@@ -408,6 +373,44 @@ gimp_text_layer_push_undo (GimpDrawable *drawable,
       g_object_set (drawable, "modified", TRUE, NULL);
 
       gimp_image_undo_group_end (image);
+    }
+}
+
+static void
+gimp_text_layer_convert_type (GimpLayer         *layer,
+                              GimpImage         *dest_image,
+                              const Babl        *new_format,
+                              GimpColorProfile  *dest_profile,
+                              GeglDitherMethod   layer_dither_type,
+                              GeglDitherMethod   mask_dither_type,
+                              gboolean           push_undo,
+                              GimpProgress      *progress)
+{
+  GimpTextLayer *text_layer = GIMP_TEXT_LAYER (layer);
+  GimpImage     *image      = gimp_item_get_image (GIMP_ITEM (text_layer));
+
+  if (! text_layer->text   ||
+      text_layer->modified ||
+      layer_dither_type != GEGL_DITHER_NONE)
+    {
+      GIMP_LAYER_CLASS (parent_class)->convert_type (layer, dest_image,
+                                                     new_format,
+                                                     dest_profile,
+                                                     layer_dither_type,
+                                                     mask_dither_type,
+                                                     push_undo,
+                                                     progress);
+    }
+  else
+    {
+      if (push_undo)
+        gimp_image_undo_push_text_layer_convert (image, NULL, text_layer);
+
+      text_layer->convert_format = new_format;
+
+      gimp_text_layer_render (text_layer);
+
+      text_layer->convert_format = NULL;
     }
 }
 

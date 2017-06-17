@@ -96,48 +96,48 @@ static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
 static void            gimp_group_layer_convert      (GimpItem        *item,
                                                       GimpImage       *dest_image,
                                                       GType            old_type);
-static void            gimp_group_layer_translate    (GimpItem        *item,
+
+static gint64      gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
+                                                      GimpComponentType  component_type,
+                                                      gint               width,
+                                                      gint               height);
+
+static void            gimp_group_layer_translate    (GimpLayer       *layer,
                                                       gint             offset_x,
-                                                      gint             offset_y,
-                                                      gboolean         push_undo);
-static void            gimp_group_layer_scale        (GimpItem        *item,
+                                                      gint             offset_y);
+static void            gimp_group_layer_scale        (GimpLayer       *layer,
                                                       gint             new_width,
                                                       gint             new_height,
                                                       gint             new_offset_x,
                                                       gint             new_offset_y,
                                                       GimpInterpolationType  interp_type,
                                                       GimpProgress    *progress);
-static void            gimp_group_layer_resize       (GimpItem        *item,
+static void            gimp_group_layer_resize       (GimpLayer       *layer,
                                                       GimpContext     *context,
                                                       GimpFillType     fill_type,
                                                       gint             new_width,
                                                       gint             new_height,
                                                       gint             offset_x,
                                                       gint             offset_y);
-static void            gimp_group_layer_flip         (GimpItem        *item,
+static void            gimp_group_layer_flip         (GimpLayer       *layer,
                                                       GimpContext     *context,
                                                       GimpOrientationType flip_type,
                                                       gdouble          axis,
                                                       gboolean         clip_result);
-static void            gimp_group_layer_rotate       (GimpItem        *item,
+static void            gimp_group_layer_rotate       (GimpLayer       *layer,
                                                       GimpContext     *context,
                                                       GimpRotationType rotate_type,
                                                       gdouble          center_x,
                                                       gdouble          center_y,
                                                       gboolean         clip_result);
-static void            gimp_group_layer_transform    (GimpItem        *item,
+static void            gimp_group_layer_transform    (GimpLayer       *layer,
                                                       GimpContext     *context,
                                                       const GimpMatrix3 *matrix,
                                                       GimpTransformDirection direction,
                                                       GimpInterpolationType  interpolation_type,
                                                       GimpTransformResize clip_result,
-                                                      GimpProgress    *progress);
-
-static gint64      gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
-                                                      GimpComponentType  component_type,
-                                                      gint               width,
-                                                      gint               height);
-static void            gimp_group_layer_convert_type (GimpDrawable      *drawable,
+                                                      GimpProgress      *progress);
+static void            gimp_group_layer_convert_type (GimpLayer         *layer,
                                                       GimpImage         *dest_image,
                                                       const Babl        *new_format,
                                                       GimpColorProfile  *dest_profile,
@@ -201,6 +201,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
+  GimpLayerClass    *layer_class       = GIMP_LAYER_CLASS (klass);
 
   object_class->set_property        = gimp_group_layer_set_property;
   object_class->get_property        = gimp_group_layer_get_property;
@@ -217,12 +218,6 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->is_position_locked    = gimp_group_layer_is_position_locked;
   item_class->duplicate             = gimp_group_layer_duplicate;
   item_class->convert               = gimp_group_layer_convert;
-  item_class->translate             = gimp_group_layer_translate;
-  item_class->scale                 = gimp_group_layer_scale;
-  item_class->resize                = gimp_group_layer_resize;
-  item_class->flip                  = gimp_group_layer_flip;
-  item_class->rotate                = gimp_group_layer_rotate;
-  item_class->transform             = gimp_group_layer_transform;
 
   item_class->default_name          = _("Layer Group");
   item_class->rename_desc           = C_("undo-type", "Rename Layer Group");
@@ -234,7 +229,14 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   item_class->transform_desc        = C_("undo-type", "Transform Layer Group");
 
   drawable_class->estimate_memsize  = gimp_group_layer_estimate_memsize;
-  drawable_class->convert_type      = gimp_group_layer_convert_type;
+
+  layer_class->translate            = gimp_group_layer_translate;
+  layer_class->scale                = gimp_group_layer_scale;
+  layer_class->resize               = gimp_group_layer_resize;
+  layer_class->flip                 = gimp_group_layer_flip;
+  layer_class->rotate               = gimp_group_layer_rotate;
+  layer_class->transform            = gimp_group_layer_transform;
+  layer_class->convert_type         = gimp_group_layer_convert_type;
 
   g_type_class_add_private (klass, sizeof (GimpGroupLayerPrivate));
 }
@@ -520,15 +522,56 @@ gimp_group_layer_convert (GimpItem  *item,
   GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
-static void
-gimp_group_layer_translate (GimpItem *item,
-                            gint      offset_x,
-                            gint      offset_y,
-                            gboolean  push_undo)
+static gint64
+gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
+                                   GimpComponentType  component_type,
+                                   gint               width,
+                                   gint               height)
 {
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-  GimpLayerMask         *mask;
+  GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
+  GList                 *list;
+  GimpImageBaseType      base_type;
+  gint64                 memsize = 0;
+
+  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
+       list;
+       list = g_list_next (list))
+    {
+      GimpDrawable *child = list->data;
+      gint          child_width;
+      gint          child_height;
+
+      child_width  = (gimp_item_get_width (GIMP_ITEM (child)) *
+                      width /
+                      gimp_item_get_width (GIMP_ITEM (drawable)));
+      child_height = (gimp_item_get_height (GIMP_ITEM (child)) *
+                      height /
+                      gimp_item_get_height (GIMP_ITEM (drawable)));
+
+      memsize += gimp_drawable_estimate_memsize (child,
+                                                 component_type,
+                                                 child_width,
+                                                 child_height);
+    }
+
+  base_type = gimp_drawable_get_base_type (drawable);
+
+  memsize += gimp_projection_estimate_memsize (base_type, component_type,
+                                               width, height);
+
+  return memsize +
+         GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
+                                                               component_type,
+                                                               width, height);
+}
+
+static void
+gimp_group_layer_translate (GimpLayer *layer,
+                            gint       offset_x,
+                            gint       offset_y)
+{
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
   GList                 *list;
 
   /*  don't push an undo here because undo will call us again  */
@@ -540,19 +583,8 @@ gimp_group_layer_translate (GimpItem *item,
     {
       GimpItem *child = list->data;
 
-      gimp_item_translate (child, offset_x, offset_y, push_undo);
-    }
-
-  mask = gimp_layer_get_mask (GIMP_LAYER (group));
-
-  if (mask)
-    {
-      gint off_x, off_y;
-
-      gimp_item_get_offset (item, &off_x, &off_y);
-      gimp_item_set_offset (GIMP_ITEM (mask), off_x, off_y);
-
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (mask));
+      /*  don't push an undo here because undo will call us again  */
+      gimp_item_translate (child, offset_x, offset_y, FALSE);
     }
 
   /*  don't push an undo here because undo will call us again  */
@@ -560,7 +592,7 @@ gimp_group_layer_translate (GimpItem *item,
 }
 
 static void
-gimp_group_layer_scale (GimpItem              *item,
+gimp_group_layer_scale (GimpLayer             *layer,
                         gint                   new_width,
                         gint                   new_height,
                         gint                   new_offset_x,
@@ -568,9 +600,9 @@ gimp_group_layer_scale (GimpItem              *item,
                         GimpInterpolationType  interpolation_type,
                         GimpProgress          *progress)
 {
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-  GimpLayerMask         *mask;
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
+  GimpItem              *item    = GIMP_ITEM (layer);
   GList                 *list;
   gdouble                width_factor;
   gdouble                height_factor;
@@ -626,19 +658,11 @@ gimp_group_layer_scale (GimpItem              *item,
         }
     }
 
-  mask = gimp_layer_get_mask (GIMP_LAYER (group));
-
-  if (mask)
-    gimp_item_scale (GIMP_ITEM (mask),
-                     new_width, new_height,
-                     new_offset_x, new_offset_y,
-                     interpolation_type, progress);
-
   gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static void
-gimp_group_layer_resize (GimpItem     *item,
+gimp_group_layer_resize (GimpLayer    *layer,
                          GimpContext  *context,
                          GimpFillType  fill_type,
                          gint          new_width,
@@ -646,14 +670,13 @@ gimp_group_layer_resize (GimpItem     *item,
                          gint          offset_x,
                          gint          offset_y)
 {
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-  GimpLayerMask         *mask;
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
   GList                 *list;
   gint                   x, y;
 
-  x = gimp_item_get_offset_x (item) - offset_x;
-  y = gimp_item_get_offset_y (item) - offset_y;
+  x = gimp_item_get_offset_x (GIMP_ITEM (group)) - offset_x;
+  y = gimp_item_get_offset_y (GIMP_ITEM (group)) - offset_y;
 
   gimp_group_layer_suspend_resize (group, TRUE);
 
@@ -689,9 +712,9 @@ gimp_group_layer_resize (GimpItem     *item,
                             child_width, child_height,
                             child_offset_x, child_offset_y);
         }
-      else if (gimp_item_is_attached (item))
+      else if (gimp_item_is_attached (GIMP_ITEM (group)))
         {
-          gimp_image_remove_layer (gimp_item_get_image (item),
+          gimp_image_remove_layer (gimp_item_get_image (GIMP_ITEM (group)),
                                    GIMP_LAYER (child),
                                    TRUE, NULL);
         }
@@ -701,25 +724,18 @@ gimp_group_layer_resize (GimpItem     *item,
         }
     }
 
-  mask = gimp_layer_get_mask (GIMP_LAYER (group));
-
-  if (mask)
-    gimp_item_resize (GIMP_ITEM (mask), context, GIMP_FILL_TRANSPARENT,
-                      new_width, new_height, offset_x, offset_y);
-
   gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static void
-gimp_group_layer_flip (GimpItem            *item,
+gimp_group_layer_flip (GimpLayer           *layer,
                        GimpContext         *context,
                        GimpOrientationType  flip_type,
                        gdouble              axis,
                        gboolean             clip_result)
 {
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-  GimpLayerMask         *mask;
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
   GList                 *list;
 
   gimp_group_layer_suspend_resize (group, TRUE);
@@ -734,26 +750,19 @@ gimp_group_layer_flip (GimpItem            *item,
                       flip_type, axis, clip_result);
     }
 
-  mask = gimp_layer_get_mask (GIMP_LAYER (group));
-
-  if (mask)
-    gimp_item_flip (GIMP_ITEM (mask), context,
-                    flip_type, axis, clip_result);
-
   gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static void
-gimp_group_layer_rotate (GimpItem         *item,
+gimp_group_layer_rotate (GimpLayer        *layer,
                          GimpContext      *context,
                          GimpRotationType  rotate_type,
                          gdouble           center_x,
                          gdouble           center_y,
                          gboolean          clip_result)
 {
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-  GimpLayerMask         *mask;
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
   GList                 *list;
 
   gimp_group_layer_suspend_resize (group, TRUE);
@@ -768,17 +777,11 @@ gimp_group_layer_rotate (GimpItem         *item,
                         rotate_type, center_x, center_y, clip_result);
     }
 
-  mask = gimp_layer_get_mask (GIMP_LAYER (group));
-
-  if (mask)
-    gimp_item_rotate (GIMP_ITEM (mask), context,
-                      rotate_type, center_x, center_y, clip_result);
-
   gimp_group_layer_resume_resize (group, TRUE);
 }
 
 static void
-gimp_group_layer_transform (GimpItem               *item,
+gimp_group_layer_transform (GimpLayer              *layer,
                             GimpContext            *context,
                             const GimpMatrix3      *matrix,
                             GimpTransformDirection  direction,
@@ -786,9 +789,8 @@ gimp_group_layer_transform (GimpItem               *item,
                             GimpTransformResize     clip_result,
                             GimpProgress           *progress)
 {
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (item);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (item);
-  GimpLayerMask         *mask;
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
   GList                 *list;
 
   gimp_group_layer_suspend_resize (group, TRUE);
@@ -805,58 +807,7 @@ gimp_group_layer_transform (GimpItem               *item,
                            clip_result, progress);
     }
 
-  mask = gimp_layer_get_mask (GIMP_LAYER (group));
-
-  if (mask)
-    gimp_item_transform (GIMP_ITEM (mask), context,
-                         matrix, direction,
-                         interpolation_type,
-                         clip_result, progress);
-
   gimp_group_layer_resume_resize (group, TRUE);
-}
-
-static gint64
-gimp_group_layer_estimate_memsize (GimpDrawable      *drawable,
-                                   GimpComponentType  component_type,
-                                   gint               width,
-                                   gint               height)
-{
-  GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
-  GList                 *list;
-  GimpImageBaseType      base_type;
-  gint64                 memsize = 0;
-
-  for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (private->children));
-       list;
-       list = g_list_next (list))
-    {
-      GimpDrawable *child = list->data;
-      gint          child_width;
-      gint          child_height;
-
-      child_width  = (gimp_item_get_width (GIMP_ITEM (child)) *
-                      width /
-                      gimp_item_get_width (GIMP_ITEM (drawable)));
-      child_height = (gimp_item_get_height (GIMP_ITEM (child)) *
-                      height /
-                      gimp_item_get_height (GIMP_ITEM (drawable)));
-
-      memsize += gimp_drawable_estimate_memsize (child,
-                                                 component_type,
-                                                 child_width,
-                                                 child_height);
-    }
-
-  base_type = gimp_drawable_get_base_type (drawable);
-
-  memsize += gimp_projection_estimate_memsize (base_type, component_type,
-                                               width, height);
-
-  return memsize +
-         GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
-                                                               component_type,
-                                                               width, height);
 }
 
 static const Babl *
@@ -882,7 +833,7 @@ get_projection_format (GimpProjectable   *projectable,
 }
 
 static void
-gimp_group_layer_convert_type (GimpDrawable     *drawable,
+gimp_group_layer_convert_type (GimpLayer        *layer,
                                GimpImage        *dest_image,
                                const Babl       *new_format,
                                GimpColorProfile *dest_profile,
@@ -891,9 +842,8 @@ gimp_group_layer_convert_type (GimpDrawable     *drawable,
                                gboolean          push_undo,
                                GimpProgress     *progress)
 {
-  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
-  GimpGroupLayerPrivate *private = GET_PRIVATE (drawable);
-  GimpLayerMask         *mask;
+  GimpGroupLayer        *group   = GIMP_GROUP_LAYER (layer);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (layer);
   GeglBuffer            *buffer;
 
   if (push_undo)
@@ -908,37 +858,22 @@ gimp_group_layer_convert_type (GimpDrawable     *drawable,
    *  depth
    */
   private->convert_format =
-    get_projection_format (GIMP_PROJECTABLE (drawable),
+    get_projection_format (GIMP_PROJECTABLE (group),
                            gimp_babl_format_get_base_type (new_format),
                            gimp_babl_format_get_precision (new_format));
-  gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
   gimp_pickable_flush (GIMP_PICKABLE (private->projection));
 
   buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (private->projection));
 
-  gimp_drawable_set_buffer_full (drawable,
+  gimp_drawable_set_buffer_full (GIMP_DRAWABLE (group),
                                  FALSE, NULL,
                                  buffer,
-                                 gimp_item_get_offset_x (GIMP_ITEM (drawable)),
-                                 gimp_item_get_offset_y (GIMP_ITEM (drawable)));
+                                 gimp_item_get_offset_x (GIMP_ITEM (group)),
+                                 gimp_item_get_offset_y (GIMP_ITEM (group)));
 
   /*  reset, the actual format is right now  */
   private->convert_format = NULL;
-
-  mask = gimp_layer_get_mask (GIMP_LAYER (group));
-
-  if (mask &&
-      gimp_babl_format_get_precision (new_format) !=
-      gimp_drawable_get_precision (GIMP_DRAWABLE (mask)))
-    {
-      gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
-                                  GIMP_GRAY,
-                                  gimp_babl_format_get_precision (new_format),
-                                  gimp_drawable_has_alpha (GIMP_DRAWABLE (mask)),
-                                  NULL,
-                                  layer_dither_type, mask_dither_type,
-                                  push_undo, progress);
-    }
 }
 
 static const Babl *

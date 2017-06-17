@@ -67,20 +67,63 @@ struct _GimpLayerClass
   GimpDrawableClass  parent_class;
 
   /*  signals  */
-  void     (* opacity_changed)           (GimpLayer *layer);
-  void     (* mode_changed)              (GimpLayer *layer);
-  void     (* blend_space_changed)       (GimpLayer *layer);
-  void     (* composite_space_changed)   (GimpLayer *layer);
-  void     (* composite_mode_changed)    (GimpLayer *layer);
-  void     (* excludes_backdrop_changed) (GimpLayer *layer);
-  void     (* lock_alpha_changed)        (GimpLayer *layer);
-  void     (* mask_changed)              (GimpLayer *layer);
-  void     (* apply_mask_changed)        (GimpLayer *layer);
-  void     (* edit_mask_changed)         (GimpLayer *layer);
-  void     (* show_mask_changed)         (GimpLayer *layer);
+  void     (* opacity_changed)           (GimpLayer              *layer);
+  void     (* mode_changed)              (GimpLayer              *layer);
+  void     (* blend_space_changed)       (GimpLayer              *layer);
+  void     (* composite_space_changed)   (GimpLayer              *layer);
+  void     (* composite_mode_changed)    (GimpLayer              *layer);
+  void     (* excludes_backdrop_changed) (GimpLayer              *layer);
+  void     (* lock_alpha_changed)        (GimpLayer              *layer);
+  void     (* mask_changed)              (GimpLayer              *layer);
+  void     (* apply_mask_changed)        (GimpLayer              *layer);
+  void     (* edit_mask_changed)         (GimpLayer              *layer);
+  void     (* show_mask_changed)         (GimpLayer              *layer);
 
   /*  virtual functions  */
-  gboolean (* get_excludes_backdrop)     (GimpLayer *layer);
+  void     (* translate)                 (GimpLayer              *layer,
+                                          gint                    offset_x,
+                                          gint                    offset_y);
+  void     (* scale)                     (GimpLayer              *layer,
+                                          gint                    new_width,
+                                          gint                    new_height,
+                                          gint                    new_offset_x,
+                                          gint                    new_offset_y,
+                                          GimpInterpolationType   interpolation_type,
+                                          GimpProgress           *progress);
+  void     (* resize)                    (GimpLayer              *layer,
+                                          GimpContext            *context,
+                                          GimpFillType            fill_type,
+                                          gint                    new_width,
+                                          gint                    new_height,
+                                          gint                    offset_x,
+                                          gint                    offset_y);
+  void     (* flip)                      (GimpLayer              *layer,
+                                          GimpContext            *context,
+                                          GimpOrientationType     flip_type,
+                                          gdouble                 axis,
+                                          gboolean                clip_result);
+  void     (* rotate)                    (GimpLayer              *layer,
+                                          GimpContext            *context,
+                                          GimpRotationType        rotate_type,
+                                          gdouble                 center_x,
+                                          gdouble                 center_y,
+                                          gboolean                clip_result);
+  void     (* transform)                 (GimpLayer              *layer,
+                                          GimpContext            *context,
+                                          const GimpMatrix3      *matrix,
+                                          GimpTransformDirection  direction,
+                                          GimpInterpolationType   interpolation_type,
+                                          GimpTransformResize     clip_result,
+                                          GimpProgress           *progress);
+  void     (* convert_type)              (GimpLayer              *layer,
+                                          GimpImage              *dest_image,
+                                          const Babl             *new_format,
+                                          GimpColorProfile       *dest_profile,
+                                          GeglDitherMethod        layer_dither_type,
+                                          GeglDitherMethod        mask_dither_type,
+                                          gboolean                push_undo,
+                                          GimpProgress           *progress);
+  gboolean (* get_excludes_backdrop)     (GimpLayer              *layer);
 };
 
 

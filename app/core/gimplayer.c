@@ -210,6 +210,49 @@ static void    gimp_layer_srgb_to_pixel         (GimpPickable       *pickable,
                                                  const Babl         *format,
                                                  gpointer            pixel);
 
+static void       gimp_layer_real_translate     (GimpLayer          *layer,
+                                                 gint                offset_x,
+                                                 gint                offset_y);
+static void       gimp_layer_real_scale         (GimpLayer          *layer,
+                                                 gint                new_width,
+                                                 gint                new_height,
+                                                 gint                new_offset_x,
+                                                 gint                new_offset_y,
+                                                 GimpInterpolationType  interp_type,
+                                                 GimpProgress       *progress);
+static void       gimp_layer_real_resize        (GimpLayer          *layer,
+                                                 GimpContext        *context,
+                                                 GimpFillType        fill_type,
+                                                 gint                new_width,
+                                                 gint                new_height,
+                                                 gint                offset_x,
+                                                 gint                offset_y);
+static void       gimp_layer_real_flip          (GimpLayer          *layer,
+                                                 GimpContext        *context,
+                                                 GimpOrientationType flip_type,
+                                                 gdouble             axis,
+                                                 gboolean            clip_result);
+static void       gimp_layer_real_rotate        (GimpLayer          *layer,
+                                                 GimpContext        *context,
+                                                 GimpRotationType    rotate_type,
+                                                 gdouble             center_x,
+                                                 gdouble             center_y,
+                                                 gboolean            clip_result);
+static void       gimp_layer_real_transform     (GimpLayer          *layer,
+                                                 GimpContext        *context,
+                                                 const GimpMatrix3  *matrix,
+                                                 GimpTransformDirection direction,
+                                                 GimpInterpolationType  interpolation_type,
+                                                 GimpTransformResize clip_result,
+                                                 GimpProgress       *progress);
+static void       gimp_layer_real_convert_type  (GimpLayer          *layer,
+                                                 GimpImage          *dest_image,
+                                                 const Babl         *new_format,
+                                                 GimpColorProfile   *dest_profile,
+                                                 GeglDitherMethod    layer_dither_type,
+                                                 GeglDitherMethod    mask_dither_type,
+                                                 gboolean            push_undo,
+                                                 GimpProgress       *progress);
 static gboolean
           gimp_layer_real_get_excludes_backdrop (GimpLayer          *layer);
 
@@ -406,6 +449,13 @@ gimp_layer_class_init (GimpLayerClass *klass)
   klass->apply_mask_changed           = NULL;
   klass->edit_mask_changed            = NULL;
   klass->show_mask_changed            = NULL;
+  klass->translate                    = gimp_layer_real_translate;
+  klass->scale                        = gimp_layer_real_scale;
+  klass->resize                       = gimp_layer_real_resize;
+  klass->flip                         = gimp_layer_real_flip;
+  klass->rotate                       = gimp_layer_real_rotate;
+  klass->transform                    = gimp_layer_real_transform;
+  klass->convert_type                 = gimp_layer_real_convert_type;
   klass->get_excludes_backdrop        = gimp_layer_real_get_excludes_backdrop;
 
   g_object_class_install_property (object_class, PROP_OPACITY,
@@ -995,17 +1045,7 @@ gimp_layer_translate (GimpItem *item,
   if (push_undo)
     gimp_image_undo_push_item_displace (gimp_item_get_image (item), NULL, item);
 
-  /*  update the old region  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
-
-  /*  invalidate the selection boundary because of a layer modification  */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
-
-  GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y,
-                                             push_undo);
-
-  /*  update the new region  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+  GIMP_LAYER_GET_CLASS (layer)->translate (layer, offset_x, offset_y);
 
   if (layer->mask)
     {
@@ -1029,9 +1069,9 @@ gimp_layer_scale (GimpItem              *item,
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
-                                         new_offset_x, new_offset_y,
-                                         interpolation_type, progress);
+  GIMP_LAYER_GET_CLASS (layer)->scale (layer, new_width, new_height,
+                                       new_offset_x, new_offset_y,
+                                       interpolation_type, progress);
 
   if (layer->mask)
     gimp_item_scale (GIMP_ITEM (layer->mask),
@@ -1051,15 +1091,9 @@ gimp_layer_resize (GimpItem     *item,
 {
   GimpLayer *layer  = GIMP_LAYER (item);
 
-  if (fill_type == GIMP_FILL_TRANSPARENT &&
-      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    {
-      fill_type = GIMP_FILL_BACKGROUND;
-    }
-
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, fill_type,
-                                          new_width, new_height,
-                                          offset_x, offset_y);
+  GIMP_LAYER_GET_CLASS (layer)->resize (layer, context, fill_type,
+                                        new_width, new_height,
+                                        offset_x, offset_y);
 
   if (layer->mask)
     gimp_item_resize (GIMP_ITEM (layer->mask), context, GIMP_FILL_TRANSPARENT,
@@ -1075,8 +1109,8 @@ gimp_layer_flip (GimpItem            *item,
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->flip (item, context, flip_type, axis,
-                                        clip_result);
+  GIMP_LAYER_GET_CLASS (layer)->flip (layer, context, flip_type, axis,
+                                      clip_result);
 
   if (layer->mask)
     gimp_item_flip (GIMP_ITEM (layer->mask), context,
@@ -1093,9 +1127,9 @@ gimp_layer_rotate (GimpItem         *item,
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->rotate (item, context,
-                                          rotate_type, center_x, center_y,
-                                          clip_result);
+  GIMP_LAYER_GET_CLASS (layer)->rotate (layer, context,
+                                        rotate_type, center_x, center_y,
+                                        clip_result);
 
   if (layer->mask)
     gimp_item_rotate (GIMP_ITEM (layer->mask), context,
@@ -1113,15 +1147,10 @@ gimp_layer_transform (GimpItem               *item,
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-  /* FIXME: make interpolated transformations work on layers without alpha */
-  if (interpolation_type != GIMP_INTERPOLATION_NONE &&
-      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)))
-    gimp_layer_add_alpha (layer);
-
-  GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
-                                             interpolation_type,
-                                             clip_result,
-                                             progress);
+  GIMP_LAYER_GET_CLASS (layer)->transform (layer, context, matrix, direction,
+                                           interpolation_type,
+                                           clip_result,
+                                           progress);
 
   if (layer->mask)
     gimp_item_transform (GIMP_ITEM (layer->mask), context,
@@ -1190,57 +1219,12 @@ gimp_layer_convert_type (GimpDrawable     *drawable,
                          gboolean          push_undo,
                          GimpProgress     *progress)
 {
-  GimpLayer  *layer = GIMP_LAYER (drawable);
-  GeglBuffer *src_buffer;
-  GeglBuffer *dest_buffer;
+  GimpLayer *layer = GIMP_LAYER (drawable);
 
-  if (layer_dither_type == GEGL_DITHER_NONE)
-    {
-      src_buffer = g_object_ref (gimp_drawable_get_buffer (drawable));
-    }
-  else
-    {
-      gint bits;
-
-      src_buffer =
-        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                         gimp_item_get_height (GIMP_ITEM (drawable))),
-                         gimp_drawable_get_format (drawable));
-
-      bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
-              babl_format_get_n_components (new_format));
-
-      gimp_gegl_apply_dither (gimp_drawable_get_buffer (drawable),
-                              NULL, NULL,
-                              src_buffer, 1 << bits, layer_dither_type);
-    }
-
-  dest_buffer =
-    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                     gimp_item_get_height (GIMP_ITEM (drawable))),
-                     new_format);
-
-  if (dest_profile)
-    {
-      GimpColorProfile *src_profile =
-        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
-
-      gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
-                                       dest_buffer, NULL, dest_profile,
-                                       GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                       TRUE, progress);
-    }
-  else
-    {
-      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
-    }
-
-  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
-
-  g_object_unref (src_buffer);
-  g_object_unref (dest_buffer);
+  GIMP_LAYER_GET_CLASS (layer)->convert_type (layer, dest_image, new_format,
+                                              dest_profile, layer_dither_type,
+                                              mask_dither_type, push_undo,
+                                              progress);
 
   if (layer->mask &&
       gimp_babl_format_get_precision (new_format) !=
@@ -1401,6 +1385,170 @@ gimp_layer_srgb_to_pixel (GimpPickable  *pickable,
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (pickable));
 
   gimp_pickable_srgb_to_pixel (GIMP_PICKABLE (image), color, format, pixel);
+}
+
+static void
+gimp_layer_real_translate (GimpLayer *layer,
+                           gint       offset_x,
+                           gint       offset_y)
+{
+  /*  update the old region  */
+  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+
+  /*  invalidate the selection boundary because of a layer modification  */
+  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));
+
+  GIMP_ITEM_CLASS (parent_class)->translate (GIMP_ITEM (layer),
+                                             offset_x, offset_y,
+                                             FALSE);
+
+  /*  update the new region  */
+  gimp_drawable_update (GIMP_DRAWABLE (layer), 0, 0, -1, -1);
+}
+
+static void
+gimp_layer_real_scale (GimpLayer             *layer,
+                       gint                   new_width,
+                       gint                   new_height,
+                       gint                   new_offset_x,
+                       gint                   new_offset_y,
+                       GimpInterpolationType  interpolation_type,
+                       GimpProgress          *progress)
+{
+  GIMP_ITEM_CLASS (parent_class)->scale (GIMP_ITEM (layer),
+                                         new_width, new_height,
+                                         new_offset_x, new_offset_y,
+                                         interpolation_type, progress);
+}
+
+static void
+gimp_layer_real_resize (GimpLayer    *layer,
+                        GimpContext  *context,
+                        GimpFillType  fill_type,
+                        gint          new_width,
+                        gint          new_height,
+                        gint          offset_x,
+                        gint          offset_y)
+{
+  if (fill_type == GIMP_FILL_TRANSPARENT &&
+      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    {
+      fill_type = GIMP_FILL_BACKGROUND;
+    }
+
+  GIMP_ITEM_CLASS (parent_class)->resize (GIMP_ITEM (layer),
+                                          context, fill_type,
+                                          new_width, new_height,
+                                          offset_x, offset_y);
+}
+
+static void
+gimp_layer_real_flip (GimpLayer           *layer,
+                      GimpContext         *context,
+                      GimpOrientationType  flip_type,
+                      gdouble              axis,
+                      gboolean             clip_result)
+{
+  GIMP_ITEM_CLASS (parent_class)->flip (GIMP_ITEM (layer),
+                                        context, flip_type, axis, clip_result);
+}
+
+static void
+gimp_layer_real_rotate (GimpLayer        *layer,
+                        GimpContext      *context,
+                        GimpRotationType  rotate_type,
+                        gdouble           center_x,
+                        gdouble           center_y,
+                        gboolean          clip_result)
+{
+  GIMP_ITEM_CLASS (parent_class)->rotate (GIMP_ITEM (layer),
+                                          context, rotate_type,
+                                          center_x, center_y,
+                                          clip_result);
+}
+
+static void
+gimp_layer_real_transform (GimpLayer              *layer,
+                           GimpContext            *context,
+                           const GimpMatrix3      *matrix,
+                           GimpTransformDirection  direction,
+                           GimpInterpolationType   interpolation_type,
+                           GimpTransformResize     clip_result,
+                           GimpProgress           *progress)
+{
+  /* FIXME: make interpolated transformations work on layers without alpha */
+  if (interpolation_type != GIMP_INTERPOLATION_NONE &&
+      ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+    gimp_layer_add_alpha (layer);
+
+  GIMP_ITEM_CLASS (parent_class)->transform (GIMP_ITEM (layer),
+                                             context, matrix, direction,
+                                             interpolation_type,
+                                             clip_result,
+                                             progress);
+}
+
+static void
+gimp_layer_real_convert_type (GimpLayer        *layer,
+                              GimpImage        *dest_image,
+                              const Babl       *new_format,
+                              GimpColorProfile *dest_profile,
+                              GeglDitherMethod  layer_dither_type,
+                              GeglDitherMethod  mask_dither_type,
+                              gboolean          push_undo,
+                              GimpProgress     *progress)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (layer);
+  GeglBuffer   *src_buffer;
+  GeglBuffer   *dest_buffer;
+
+  if (layer_dither_type == GEGL_DITHER_NONE)
+    {
+      src_buffer = g_object_ref (gimp_drawable_get_buffer (drawable));
+    }
+  else
+    {
+      gint bits;
+
+      src_buffer =
+        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                         gimp_item_get_width  (GIMP_ITEM (layer)),
+                                         gimp_item_get_height (GIMP_ITEM (layer))),
+                         gimp_drawable_get_format (drawable));
+
+      bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
+              babl_format_get_n_components (new_format));
+
+      gimp_gegl_apply_dither (gimp_drawable_get_buffer (drawable),
+                              NULL, NULL,
+                              src_buffer, 1 << bits, layer_dither_type);
+    }
+
+  dest_buffer =
+    gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                                     gimp_item_get_height (GIMP_ITEM (layer))),
+                     new_format);
+
+  if (dest_profile)
+    {
+      GimpColorProfile *src_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+
+      gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+                                       dest_buffer, NULL, dest_profile,
+                                       GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                       TRUE, progress);
+    }
+  else
+    {
+      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+    }
+
+  gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
+
+  g_object_unref (src_buffer);
+  g_object_unref (dest_buffer);
 }
 
 static gboolean
