@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -36,6 +34,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimptoolgui.h"
+#include "display/gimptoolrotategrid.h"
 
 #include "gimprotatetool.h"
 #include "gimptoolcontrol.h"
@@ -48,33 +47,35 @@
 enum
 {
   ANGLE,
-  REAL_ANGLE,
   PIVOT_X,
   PIVOT_Y
 };
 
-#define FIFTEEN_DEG  (G_PI / 12.0)
 
-#define SB_WIDTH     10
+#define SB_WIDTH 10
 
 
 /*  local function prototypes  */
 
-static gboolean  gimp_rotate_tool_key_press     (GimpTool           *tool,
-                                                 GdkEventKey        *kevent,
-                                                 GimpDisplay        *display);
+static gboolean         gimp_rotate_tool_key_press      (GimpTool           *tool,
+                                                         GdkEventKey        *kevent,
+                                                         GimpDisplay        *display);
 
-static void      gimp_rotate_tool_dialog        (GimpTransformTool  *tr_tool);
-static void      gimp_rotate_tool_dialog_update (GimpTransformTool  *tr_tool);
-static void      gimp_rotate_tool_prepare       (GimpTransformTool  *tr_tool);
-static void      gimp_rotate_tool_motion        (GimpTransformTool  *tr_tool);
-static void      gimp_rotate_tool_recalc_matrix (GimpTransformTool  *tr_tool);
-static gchar   * gimp_rotate_tool_get_undo_desc (GimpTransformTool  *tr_tool);
+static void             gimp_rotate_tool_dialog         (GimpTransformTool  *tr_tool);
+static void             gimp_rotate_tool_dialog_update  (GimpTransformTool  *tr_tool);
+static void             gimp_rotate_tool_prepare        (GimpTransformTool  *tr_tool);
+static GimpToolWidget * gimp_rotate_tool_get_widget     (GimpTransformTool *tr_tool);
+static void             gimp_rotate_tool_recalc_matrix  (GimpTransformTool  *tr_tool,
+                                                         GimpToolWidget     *widget);
+static gchar          * gimp_rotate_tool_get_undo_desc  (GimpTransformTool  *tr_tool);
 
-static void      rotate_angle_changed           (GtkAdjustment      *adj,
-                                                 GimpTransformTool  *tr_tool);
-static void      rotate_center_changed          (GtkWidget          *entry,
-                                                GimpTransformTool   *tr_tool);
+static void             gimp_rotate_tool_widget_changed (GimpToolWidget    *widget,
+                                                         GimpTransformTool *tr_tool);
+
+static void             rotate_angle_changed            (GtkAdjustment      *adj,
+                                                         GimpTransformTool  *tr_tool);
+static void             rotate_center_changed           (GtkWidget          *entry,
+                                                         GimpTransformTool   *tr_tool);
 
 
 G_DEFINE_TYPE (GimpRotateTool, gimp_rotate_tool, GIMP_TYPE_TRANSFORM_TOOL)
@@ -110,7 +111,7 @@ gimp_rotate_tool_class_init (GimpRotateToolClass *klass)
   trans_class->dialog          = gimp_rotate_tool_dialog;
   trans_class->dialog_update   = gimp_rotate_tool_dialog_update;
   trans_class->prepare         = gimp_rotate_tool_prepare;
-  trans_class->motion          = gimp_rotate_tool_motion;
+  trans_class->get_widget      = gimp_rotate_tool_get_widget;
   trans_class->recalc_matrix   = gimp_rotate_tool_recalc_matrix;
   trans_class->get_undo_desc   = gimp_rotate_tool_get_undo_desc;
 
@@ -125,10 +126,8 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_ROTATE);
 
-  tr_tool->progress_text    = _("Rotating");
-
-  tr_tool->use_grid         = TRUE;
-  tr_tool->use_pivot_handle = TRUE;
+  tr_tool->progress_text = _("Rotating");
+  tr_tool->use_grid      = TRUE;
 }
 
 static gboolean
@@ -258,13 +257,9 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool)
   gdouble         xres;
   gdouble         yres;
 
-  tr_tool->px = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
-  tr_tool->py = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
-
-  tr_tool->trans_info[ANGLE]      = 0.0;
-  tr_tool->trans_info[REAL_ANGLE] = 0.0;
-  tr_tool->trans_info[PIVOT_X]    = tr_tool->px;
-  tr_tool->trans_info[PIVOT_Y]    = tr_tool->py;
+  tr_tool->trans_info[ANGLE]   = 0.0;
+  tr_tool->trans_info[PIVOT_X] = (gdouble) (tr_tool->x1 + tr_tool->x2) / 2.0;
+  tr_tool->trans_info[PIVOT_Y] = (gdouble) (tr_tool->y1 + tr_tool->y2) / 2.0;
 
   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -299,78 +294,65 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool)
                                      tr_tool);
 }
 
-static void
-gimp_rotate_tool_motion (GimpTransformTool *tr_tool)
+static GimpToolWidget *
+gimp_rotate_tool_get_widget (GimpTransformTool *tr_tool)
 {
+  GimpTool             *tool    = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-  gdouble               angle1, angle2, angle;
-  gdouble               px, py;
-  gdouble               x1, y1, x2, y2;
+  GimpDisplayShell     *shell   = gimp_display_get_shell (tool->display);
+  GimpToolWidget       *widget;
 
-  if (tr_tool->function == TRANSFORM_HANDLE_PIVOT)
-    {
-      tr_tool->trans_info[PIVOT_X] = tr_tool->curx;
-      tr_tool->trans_info[PIVOT_Y] = tr_tool->cury;
+  widget = gimp_tool_rotate_grid_new (shell,
+                                      tr_tool->x1,
+                                      tr_tool->y1,
+                                      tr_tool->x2,
+                                      tr_tool->y2,
+                                      tr_tool->trans_info[PIVOT_X],
+                                      tr_tool->trans_info[PIVOT_Y],
+                                      tr_tool->trans_info[ANGLE]);
 
-      return;
-    }
+  g_object_set (widget,
+                "guide-type",              options->grid_type,
+                "n-guides",                options->grid_size,
+                "inside-function",         GIMP_TRANSFORM_FUNCTION_ROTATE,
+                "outside-function",        GIMP_TRANSFORM_FUNCTION_ROTATE,
+                "use-pivot-handle",        TRUE,
+                "constrain-move",          options->constrain_move,
+                "constrain-scale",         options->constrain_scale,
+                "constrain-rotate",        options->constrain_rotate,
+                "constrain-shear",         options->constrain_shear,
+                "constrain-perspective",   options->constrain_perspective,
+                "frompivot-scale",         options->frompivot_scale,
+                "frompivot-shear",         options->frompivot_shear,
+                "frompivot-perspective",   options->frompivot_perspective,
+                "cornersnap",              options->cornersnap,
+                "fixedpivot",              options->fixedpivot,
+                NULL);
 
-  px = tr_tool->trans_info[PIVOT_X];
-  py = tr_tool->trans_info[PIVOT_Y];
+  g_signal_connect (widget, "changed",
+                    G_CALLBACK (gimp_rotate_tool_widget_changed),
+                    tr_tool);
 
-  x1 = tr_tool->curx  - px;
-  x2 = tr_tool->lastx - px;
-  y1 = py - tr_tool->cury;
-  y2 = py - tr_tool->lasty;
-
-  /*  find the first angle  */
-  angle1 = atan2 (y1, x1);
-
-  /*  find the angle  */
-  angle2 = atan2 (y2, x2);
-
-  angle = angle2 - angle1;
-
-  if (angle > G_PI || angle < -G_PI)
-    angle = angle2 - ((angle1 < 0) ? 2.0 * G_PI + angle1 : angle1 - 2.0 * G_PI);
-
-  /*  increment the transform tool's angle  */
-  tr_tool->trans_info[REAL_ANGLE] += angle;
-
-  /*  limit the angle to between -180 and 180 degrees  */
-  if (tr_tool->trans_info[REAL_ANGLE] < - G_PI)
-    {
-      tr_tool->trans_info[REAL_ANGLE] += 2.0 * G_PI;
-    }
-  else if (tr_tool->trans_info[REAL_ANGLE] > G_PI)
-    {
-      tr_tool->trans_info[REAL_ANGLE] -= 2.0 * G_PI;
-    }
-
-  /*  constrain the angle to 15-degree multiples if ctrl is held down  */
-  if (options->constrain_rotate)
-    {
-      tr_tool->trans_info[ANGLE] =
-        FIFTEEN_DEG * (gint) ((tr_tool->trans_info[REAL_ANGLE] +
-                               FIFTEEN_DEG / 2.0) / FIFTEEN_DEG);
-    }
-  else
-    {
-      tr_tool->trans_info[ANGLE] = tr_tool->trans_info[REAL_ANGLE];
-    }
+  return widget;
 }
 
 static void
-gimp_rotate_tool_recalc_matrix (GimpTransformTool *tr_tool)
+gimp_rotate_tool_recalc_matrix (GimpTransformTool *tr_tool,
+                                GimpToolWidget    *widget)
 {
-  tr_tool->px = tr_tool->trans_info[PIVOT_X];
-  tr_tool->py = tr_tool->trans_info[PIVOT_Y];
-
   gimp_matrix3_identity (&tr_tool->transform);
   gimp_transform_matrix_rotate_center (&tr_tool->transform,
-                                       tr_tool->px,
-                                       tr_tool->py,
+                                       tr_tool->trans_info[PIVOT_X],
+                                       tr_tool->trans_info[PIVOT_Y],
                                        tr_tool->trans_info[ANGLE]);
+
+  if (widget)
+    g_object_set (widget,
+                  "transform", &tr_tool->transform,
+                  "angle",     tr_tool->trans_info[ANGLE],
+                  "pivot-x",   tr_tool->trans_info[PIVOT_X],
+                  "pivot-y",   tr_tool->trans_info[PIVOT_Y],
+                  NULL);
 }
 
 static gchar *
@@ -384,6 +366,19 @@ gimp_rotate_tool_get_undo_desc (GimpTransformTool  *tr_tool)
 }
 
 static void
+gimp_rotate_tool_widget_changed (GimpToolWidget    *widget,
+                                 GimpTransformTool *tr_tool)
+{
+  g_object_get (widget,
+                "angle",   &tr_tool->trans_info[ANGLE],
+                "pivot-x", &tr_tool->trans_info[PIVOT_X],
+                "pivot-y", &tr_tool->trans_info[PIVOT_Y],
+                NULL);
+
+  gimp_transform_tool_recalc_matrix (tr_tool, NULL);
+}
+
+static void
 rotate_angle_changed (GtkAdjustment     *adj,
                       GimpTransformTool *tr_tool)
 {
@@ -393,15 +388,11 @@ rotate_angle_changed (GtkAdjustment     *adj,
 
   if (ABS (value - tr_tool->trans_info[ANGLE]) > ANGLE_EPSILON)
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
-      tr_tool->trans_info[REAL_ANGLE] = tr_tool->trans_info[ANGLE] = value;
+      tr_tool->trans_info[ANGLE] = value;
 
       gimp_transform_tool_push_internal_undo (tr_tool);
 
-      gimp_transform_tool_recalc_matrix (tr_tool);
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+      gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
     }
 
 #undef ANGLE_EPSILON
@@ -417,17 +408,11 @@ rotate_center_changed (GtkWidget         *widget,
   if ((px != tr_tool->trans_info[PIVOT_X]) ||
       (py != tr_tool->trans_info[PIVOT_Y]))
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
       tr_tool->trans_info[PIVOT_X] = px;
       tr_tool->trans_info[PIVOT_Y] = py;
-      tr_tool->px = px;
-      tr_tool->py = py;
 
       gimp_transform_tool_push_internal_undo (tr_tool);
 
-      gimp_transform_tool_recalc_matrix (tr_tool);
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+      gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
     }
 }

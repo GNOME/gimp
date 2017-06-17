@@ -105,7 +105,8 @@ static void   gimp_handle_transform_tool_dialog         (GimpTransformTool  *tr_
 static void   gimp_handle_transform_tool_dialog_update  (GimpTransformTool  *tr_tool);
 static void   gimp_handle_transform_tool_prepare        (GimpTransformTool  *tr_tool);
 static void   gimp_handle_transform_tool_motion         (GimpTransformTool  *tr_tool);
-static void   gimp_handle_transform_tool_recalc_matrix  (GimpTransformTool  *tr_tool);
+static void   gimp_handle_transform_tool_recalc_matrix  (GimpTransformTool  *tr_tool,
+                                                         GimpToolWidget     *widget);
 static gchar *gimp_handle_transform_tool_get_undo_desc  (GimpTransformTool  *tr_tool);
 static TransformAction
               gimp_handle_transform_tool_pick_function  (GimpTransformTool  *tr_tool,
@@ -115,9 +116,7 @@ static TransformAction
 static void   gimp_handle_transform_tool_cursor_update  (GimpTransformTool  *tr_tool,
                                                          GimpCursorType     *cursor,
                                                          GimpCursorModifier *modifier);
-static void   gimp_handle_transform_tool_draw_gui       (GimpTransformTool  *tr_tool,
-                                                         gint                handle_w,
-                                                         gint                handle_h);
+static void   gimp_handle_transform_tool_draw_gui       (GimpTransformTool  *tr_tool);
 
 static gboolean       is_handle_position_valid          (GimpTransformTool  *tr_tool,
                                                          gint                active_handle);
@@ -606,7 +605,8 @@ gimp_handle_transform_tool_motion (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_handle_transform_tool_recalc_matrix (GimpTransformTool *tr_tool)
+gimp_handle_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
+                                          GimpToolWidget    *widget)
 {
   GimpHandleTransformTool *ht_tool = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
   gdouble                  coeff[8 * 9];
@@ -765,9 +765,7 @@ gimp_handle_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
 }
 
 static void
-gimp_handle_transform_tool_draw_gui (GimpTransformTool *tr_tool,
-                                     gint               handle_w,
-                                     gint               handle_h)
+gimp_handle_transform_tool_draw_gui (GimpTransformTool *tr_tool)
 {
   GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tr_tool);
   gint          i;

@@ -617,8 +617,8 @@ gimp_transform_options_show_preview (GimpTransformOptions *options)
 {
   g_return_val_if_fail (GIMP_IS_TRANSFORM_OPTIONS (options), FALSE);
 
-  return (options->show_preview                           &&
-          options->type      == GIMP_TRANSFORM_TYPE_LAYER);
+  return (options->show_preview &&
+          options->type == GIMP_TRANSFORM_TYPE_LAYER);
 }
 
 

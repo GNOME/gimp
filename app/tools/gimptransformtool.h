@@ -89,16 +89,6 @@ struct _GimpTransformTool
 
   gint            x1, y1;             /*  upper left hand coordinate         */
   gint            x2, y2;             /*  lower right hand coords            */
-  gdouble         cx, cy;             /*  center point (for moving)          */
-  gdouble         px, py;             /*  pivot point (for rotation/scaling) */
-  gdouble         aspect;             /*  original aspect ratio              */
-
-  gdouble         tx1, ty1;           /*  transformed handle coords          */
-  gdouble         tx2, ty2;
-  gdouble         tx3, ty3;
-  gdouble         tx4, ty4;
-  gdouble         tcx, tcy;
-  gdouble         tpx, tpy;
 
   GimpMatrix3     transform;          /*  transformation matrix              */
   TransInfo       trans_info;         /*  transformation info                */
@@ -116,14 +106,14 @@ struct _GimpTransformTool
   TransformAction function;           /*  current tool activity              */
 
   gboolean        use_grid;           /*  does the tool use the grid         */
-  gboolean        use_corner_handles; /*  uses the corner handles            */
-  gboolean        use_side_handles;   /*  use handles at midpoints of edges  */
-  gboolean        use_center_handle;  /*  uses the center handle             */
-  gboolean        use_pivot_handle;   /*  use the pivot point handle         */
-
   gboolean        does_perspective;   /*  does the tool do non-affine
-                                          transformations                    */
+                                       *  transformations
+                                       */
 
+  GimpToolWidget *widget;
+  GimpToolWidget *grab_widget;
+
+  GimpCanvasItem *preview;
   GimpCanvasItem *handles[TRANSFORM_HANDLE_NUM];
 
   const gchar    *progress_text;
@@ -136,30 +126,32 @@ struct _GimpTransformToolClass
   GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  void            (* dialog)        (GimpTransformTool *tool);
-  void            (* dialog_update) (GimpTransformTool *tool);
-  void            (* prepare)       (GimpTransformTool *tool);
-  void            (* motion)        (GimpTransformTool *tool);
-  void            (* recalc_matrix) (GimpTransformTool *tool);
-  gchar         * (* get_undo_desc) (GimpTransformTool *tool);
-  TransformAction (* pick_function) (GimpTransformTool *tool,
-                                     const GimpCoords  *coords,
-                                     GdkModifierType    state,
-                                     GimpDisplay       *display);
-  void            (* cursor_update) (GimpTransformTool  *tr_tool,
-                                     GimpCursorType     *cursor,
-                                     GimpCursorModifier *modifier);
-  void            (* draw_gui)      (GimpTransformTool *tool,
-                                     gint               handle_w,
-                                     gint               handle_h);
-  GeglBuffer    * (* transform)     (GimpTransformTool *tool,
-                                     GimpItem          *item,
-                                     GeglBuffer        *orig_buffer,
-                                     gint               orig_offset_x,
-                                     gint               orig_offset_y,
-                                     GimpColorProfile **buffer_profile,
-                                     gint              *new_offset_x,
-                                     gint              *new_offset_y);
+  void             (* dialog)        (GimpTransformTool *tool);
+  void             (* dialog_update) (GimpTransformTool *tool);
+  void             (* prepare)       (GimpTransformTool *tool);
+
+  GimpToolWidget * (* get_widget)    (GimpTransformTool *tool);
+
+  void             (* motion)        (GimpTransformTool *tool);
+  void             (* recalc_matrix) (GimpTransformTool *tool,
+                                      GimpToolWidget    *widget);
+  gchar          * (* get_undo_desc) (GimpTransformTool *tool);
+  TransformAction  (* pick_function) (GimpTransformTool *tool,
+                                      const GimpCoords  *coords,
+                                      GdkModifierType    state,
+                                      GimpDisplay       *display);
+  void             (* cursor_update) (GimpTransformTool  *tr_tool,
+                                      GimpCursorType     *cursor,
+                                      GimpCursorModifier *modifier);
+  void             (* draw_gui)      (GimpTransformTool *tool);
+  GeglBuffer     * (* transform)     (GimpTransformTool *tool,
+                                      GimpItem          *item,
+                                      GeglBuffer        *orig_buffer,
+                                      gint               orig_offset_x,
+                                      gint               orig_offset_y,
+                                      GimpColorProfile **buffer_profile,
+                                      gint              *new_offset_x,
+                                      gint              *new_offset_y);
 
   const gchar *ok_button_label;
 };
@@ -167,7 +159,8 @@ struct _GimpTransformToolClass
 
 GType   gimp_transform_tool_get_type           (void) G_GNUC_CONST;
 
-void    gimp_transform_tool_recalc_matrix      (GimpTransformTool *tr_tool);
+void    gimp_transform_tool_recalc_matrix      (GimpTransformTool *tr_tool,
+                                                GimpToolWidget    *widget);
 void    gimp_transform_tool_push_internal_undo (GimpTransformTool *tr_tool);
 
 

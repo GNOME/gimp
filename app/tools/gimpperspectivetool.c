@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -29,12 +27,12 @@
 
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
-#include "core/gimpdrawable-transform.h"
 
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimptoolgui.h"
+#include "display/gimptooltransformgrid.h"
 
 #include "gimpperspectivetool.h"
 #include "gimptoolcontrol.h"
@@ -59,12 +57,16 @@ enum
 
 /*  local function prototypes  */
 
-static void    gimp_perspective_tool_dialog        (GimpTransformTool *tr_tool);
-static void    gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool);
-static void    gimp_perspective_tool_prepare       (GimpTransformTool *tr_tool);
-static void    gimp_perspective_tool_motion        (GimpTransformTool *tr_tool);
-static void    gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool);
-static gchar * gimp_perspective_tool_get_undo_desc (GimpTransformTool *tr_tool);
+static void             gimp_perspective_tool_dialog         (GimpTransformTool *tr_tool);
+static void             gimp_perspective_tool_dialog_update  (GimpTransformTool *tr_tool);
+static void             gimp_perspective_tool_prepare        (GimpTransformTool *tr_tool);
+static GimpToolWidget * gimp_perspective_tool_get_widget     (GimpTransformTool *tr_tool);
+static void             gimp_perspective_tool_recalc_matrix  (GimpTransformTool *tr_tool,
+                                                              GimpToolWidget    *widget);
+static gchar          * gimp_perspective_tool_get_undo_desc  (GimpTransformTool *tr_tool);
+
+static void             gimp_perspective_tool_widget_changed (GimpToolWidget    *widget,
+                                                              GimpTransformTool *tr_tool);
 
 
 G_DEFINE_TYPE (GimpPerspectiveTool, gimp_perspective_tool,
@@ -97,7 +99,7 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
   trans_class->dialog        = gimp_perspective_tool_dialog;
   trans_class->dialog_update = gimp_perspective_tool_dialog_update;
   trans_class->prepare       = gimp_perspective_tool_prepare;
-  trans_class->motion        = gimp_perspective_tool_motion;
+  trans_class->get_widget    = gimp_perspective_tool_get_widget;
   trans_class->recalc_matrix = gimp_perspective_tool_recalc_matrix;
   trans_class->get_undo_desc = gimp_perspective_tool_get_undo_desc;
 }
@@ -111,13 +113,9 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
 
-  tr_tool->progress_text      = _("Perspective transformation");
-
-  tr_tool->use_grid           = TRUE;
-  tr_tool->use_corner_handles = TRUE;
-  tr_tool->use_center_handle  = TRUE;
-
-  tr_tool->does_perspective   = TRUE;
+  tr_tool->progress_text    = _("Perspective transformation");
+  tr_tool->use_grid         = TRUE;
+  tr_tool->does_perspective = TRUE;
 }
 
 static void
@@ -185,54 +183,50 @@ gimp_perspective_tool_prepare (GimpTransformTool  *tr_tool)
   tr_tool->trans_info[Y3] = (gdouble) tr_tool->y2;
 }
 
-static void
-gimp_perspective_tool_motion (GimpTransformTool *transform_tool)
+static GimpToolWidget *
+gimp_perspective_tool_get_widget (GimpTransformTool *tr_tool)
 {
-  gdouble diff_x, diff_y;
+  GimpTool             *tool    = GIMP_TOOL (tr_tool);
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpDisplayShell     *shell   = gimp_display_get_shell (tool->display);
+  GimpToolWidget       *widget;
 
-  diff_x = transform_tool->curx - transform_tool->lastx;
-  diff_y = transform_tool->cury - transform_tool->lasty;
+  widget = gimp_tool_transform_grid_new (shell,
+                                         &tr_tool->transform,
+                                         tr_tool->x1,
+                                         tr_tool->y1,
+                                         tr_tool->x2,
+                                         tr_tool->y2,
+                                         options->grid_type,
+                                         options->grid_size);
 
-  switch (transform_tool->function)
-    {
-    case TRANSFORM_HANDLE_NW:
-      transform_tool->trans_info[X0] += diff_x;
-      transform_tool->trans_info[Y0] += diff_y;
-      break;
+  g_object_set (widget,
+                "inside-function",         GIMP_TRANSFORM_FUNCTION_PERSPECTIVE,
+                "outside-function",        GIMP_TRANSFORM_FUNCTION_PERSPECTIVE,
+                "use-perspective-handles", TRUE,
+                "use-center-handle",       TRUE,
+                "constrain-move",          options->constrain_move,
+                "constrain-scale",         options->constrain_scale,
+                "constrain-rotate",        options->constrain_rotate,
+                "constrain-shear",         options->constrain_shear,
+                "constrain-perspective",   options->constrain_perspective,
+                "frompivot-scale",         options->frompivot_scale,
+                "frompivot-shear",         options->frompivot_shear,
+                "frompivot-perspective",   options->frompivot_perspective,
+                "cornersnap",              options->cornersnap,
+                "fixedpivot",              options->fixedpivot,
+                NULL);
 
-    case TRANSFORM_HANDLE_NE:
-      transform_tool->trans_info[X1] += diff_x;
-      transform_tool->trans_info[Y1] += diff_y;
-      break;
+  g_signal_connect (widget, "changed",
+                    G_CALLBACK (gimp_perspective_tool_widget_changed),
+                    tr_tool);
 
-    case TRANSFORM_HANDLE_SW:
-      transform_tool->trans_info[X2] += diff_x;
-      transform_tool->trans_info[Y2] += diff_y;
-      break;
-
-    case TRANSFORM_HANDLE_SE:
-      transform_tool->trans_info[X3] += diff_x;
-      transform_tool->trans_info[Y3] += diff_y;
-      break;
-
-    case TRANSFORM_HANDLE_CENTER:
-      transform_tool->trans_info[X0] += diff_x;
-      transform_tool->trans_info[Y0] += diff_y;
-      transform_tool->trans_info[X1] += diff_x;
-      transform_tool->trans_info[Y1] += diff_y;
-      transform_tool->trans_info[X2] += diff_x;
-      transform_tool->trans_info[Y2] += diff_y;
-      transform_tool->trans_info[X3] += diff_x;
-      transform_tool->trans_info[Y3] += diff_y;
-      break;
-
-    default:
-      break;
-    }
+  return widget;
 }
 
 static void
-gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool)
+gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool,
+                                     GimpToolWidget    *widget)
 {
   gimp_matrix3_identity (&tr_tool->transform);
   gimp_transform_matrix_perspective (&tr_tool->transform,
@@ -248,10 +242,51 @@ gimp_perspective_tool_recalc_matrix (GimpTransformTool *tr_tool)
                                      tr_tool->trans_info[Y2],
                                      tr_tool->trans_info[X3],
                                      tr_tool->trans_info[Y3]);
+
+  if (widget)
+    g_object_set (widget,
+                  "transform", &tr_tool->transform,
+                  "x1",        (gdouble) tr_tool->x1,
+                  "y1",        (gdouble) tr_tool->y1,
+                  "x2",        (gdouble) tr_tool->x2,
+                  "y2",        (gdouble) tr_tool->y2,
+                  NULL);
 }
 
 static gchar *
 gimp_perspective_tool_get_undo_desc (GimpTransformTool *tr_tool)
 {
   return g_strdup (C_("undo-type", "Perspective"));
+}
+
+static void
+gimp_perspective_tool_widget_changed (GimpToolWidget    *widget,
+                                      GimpTransformTool *tr_tool)
+{
+  GimpMatrix3 *transform;
+
+  g_object_get (widget,
+                "transform", &transform,
+                NULL);
+
+  gimp_matrix3_transform_point (transform,
+                                tr_tool->x1, tr_tool->y1,
+                                &tr_tool->trans_info[X0],
+                                &tr_tool->trans_info[Y0]);
+  gimp_matrix3_transform_point (transform,
+                                tr_tool->x2, tr_tool->y1,
+                                &tr_tool->trans_info[X1],
+                                &tr_tool->trans_info[Y1]);
+  gimp_matrix3_transform_point (transform,
+                                tr_tool->x1, tr_tool->y2,
+                                &tr_tool->trans_info[X2],
+                                &tr_tool->trans_info[Y2]);
+  gimp_matrix3_transform_point (transform,
+                                tr_tool->x2, tr_tool->y2,
+                                &tr_tool->trans_info[X3],
+                                &tr_tool->trans_info[Y3]);
+
+  g_free (transform);
+
+  gimp_transform_tool_recalc_matrix (tr_tool, NULL);
 }

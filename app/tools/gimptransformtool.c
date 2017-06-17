@@ -59,6 +59,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimptoolgui.h"
+#include "display/gimptoolwidget.h"
 
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
@@ -139,14 +140,18 @@ static GeglBuffer *
                                                              GimpColorProfile     **buffer_profile,
                                                              gint                  *new_offset_x,
                                                              gint                  *new_offset_y);
-static void      gimp_transform_tool_real_draw_gui          (GimpTransformTool     *tr_tool,
-                                                             gint                   handle_w,
-                                                             gint                   handle_h);
-static TransformAction
-                 gimp_transform_tool_real_pick_function     (GimpTransformTool     *tr_tool,
-                                                             const GimpCoords      *coords,
-                                                             GdkModifierType        state,
-                                                             GimpDisplay           *display);
+
+static void      gimp_transform_tool_widget_changed         (GimpToolWidget        *widget,
+                                                             GimpTransformTool     *tr_tool);
+static void      gimp_transform_tool_widget_snap_offsets    (GimpToolWidget        *widget,
+                                                             gint                   offset_x,
+                                                             gint                   offset_y,
+                                                             gint                   width,
+                                                             gint                   height,
+                                                             GimpTransformTool     *tr_tool);
+static void      gimp_transform_tool_widget_status          (GimpToolWidget        *widget,
+                                                             const gchar           *status,
+                                                             GimpTransformTool     *tr_tool);
 
 static void      gimp_transform_tool_halt                   (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_set_function           (GimpTransformTool     *tr_tool,
@@ -158,12 +163,7 @@ static void      gimp_transform_tool_prepare                (GimpTransformTool  
                                                              GimpDisplay           *display);
 static void      gimp_transform_tool_transform              (GimpTransformTool     *tr_tool,
                                                              GimpDisplay           *display);
-static void      gimp_transform_tool_transform_bounding_box (GimpTransformTool     *tr_tool);
 
-static void      gimp_transform_tool_handles_recalc         (GimpTransformTool     *tr_tool,
-                                                             GimpDisplay           *display,
-                                                             gint                  *handle_w,
-                                                             gint                  *handle_h);
 static void      gimp_transform_tool_response               (GimpToolGui           *gui,
                                                              gint                   response_id,
                                                              GimpTransformTool     *tr_tool);
@@ -222,8 +222,8 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   klass->recalc_matrix            = NULL;
   klass->get_undo_desc            = NULL;
   klass->transform                = gimp_transform_tool_real_transform;
-  klass->pick_function            = gimp_transform_tool_real_pick_function;
-  klass->draw_gui                 = gimp_transform_tool_real_draw_gui;
+  klass->pick_function            = NULL;
+  klass->draw_gui                 = NULL;
 
   klass->ok_button_label          = _("_Transform");
 }
@@ -316,7 +316,25 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       gimp_transform_tool_prepare (tr_tool, display);
 
       /*  Recalculate the transform tool  */
-      gimp_transform_tool_recalc_matrix (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool, NULL);
+
+      /*  Get the on-canvas gui  */
+      if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget)
+        tr_tool->widget =
+          GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget (tr_tool);
+
+      if (tr_tool->widget)
+        {
+          g_signal_connect (tr_tool->widget, "changed",
+                            G_CALLBACK (gimp_transform_tool_widget_changed),
+                            tr_tool);
+          g_signal_connect (tr_tool->widget, "snap-offsets",
+                            G_CALLBACK (gimp_transform_tool_widget_snap_offsets),
+                            tr_tool);
+          g_signal_connect (tr_tool->widget, "status",
+                            G_CALLBACK (gimp_transform_tool_widget_status),
+                            tr_tool);
+        }
 
       /*  start drawing the bounding box and handles...  */
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
@@ -352,7 +370,7 @@ gimp_transform_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_RESUME:
       gimp_transform_tool_bounds (tr_tool, display);
-      gimp_transform_tool_recalc_matrix (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -376,6 +394,21 @@ gimp_transform_tool_button_press (GimpTool            *tool,
                                   GimpDisplay         *display)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  if (tr_tool->widget)
+    {
+      gimp_tool_widget_hover (tr_tool->widget, coords, state, TRUE);
+
+      if (gimp_tool_widget_button_press (tr_tool->widget, coords, time, state,
+                                         press_type))
+        {
+          tr_tool->grab_widget = tr_tool->widget;
+        }
+
+      gimp_tool_control_activate (tool->control);
+
+      return;
+    }
 
   if (tr_tool->function == TRANSFORM_CREATING)
     GIMP_TOOL_GET_CLASS (tool)->oper_update (tool, coords, state, TRUE, display);
@@ -447,9 +480,18 @@ gimp_transform_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  /*  if we are creating, there is nothing to be done...exit  */
-  if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
-    return;
+  if (tr_tool->grab_widget)
+    {
+      gimp_tool_widget_button_release (tr_tool->grab_widget,
+                                       coords, time, state, release_type);
+      tr_tool->grab_widget = NULL;
+    }
+  else
+    {
+      /*  if we are creating, there is nothing to be done...exit  */
+      if (tr_tool->function == TRANSFORM_CREATING && tr_tool->use_grid)
+        return;
+    }
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
@@ -465,7 +507,8 @@ gimp_transform_tool_button_release (GimpTool              *tool,
     }
   else
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      if (! tr_tool->widget)
+        gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
       /*  Restore the last saved state  */
       memcpy (tr_tool->trans_info, tr_tool->prev_trans_info,
@@ -475,9 +518,10 @@ gimp_transform_tool_button_release (GimpTool              *tool,
       gimp_transform_tool_bounds (tr_tool, display);
 
       /*  recalculate the tool's transformation matrix  */
-      gimp_transform_tool_recalc_matrix (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      if (! tr_tool->widget)
+        gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 }
 
@@ -489,6 +533,16 @@ gimp_transform_tool_motion (GimpTool         *tool,
                             GimpDisplay      *display)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  if (tr_tool->widget)
+    {
+      if (tr_tool->grab_widget)
+        {
+          gimp_tool_widget_motion (tr_tool->grab_widget, coords, time, state);
+        }
+
+      return;
+    }
 
   /*  if we are creating, there is nothing to be done so exit.  */
   if (tr_tool->function == TRANSFORM_CREATING || ! tr_tool->use_grid)
@@ -504,7 +558,7 @@ gimp_transform_tool_motion (GimpTool         *tool,
     {
       GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->motion (tr_tool);
 
-      gimp_transform_tool_recalc_matrix (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool, NULL);
     }
 
   tr_tool->lastx = tr_tool->curx;
@@ -590,99 +644,6 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
     }
 }
 
-static TransformAction
-gimp_transform_tool_real_pick_function (GimpTransformTool *tr_tool,
-                                        const GimpCoords  *coords,
-                                        GdkModifierType    state,
-                                        GimpDisplay       *display)
-{
-  GimpDrawTool   *draw_tool = GIMP_DRAW_TOOL (tr_tool);
-  TransformAction function  = TRANSFORM_HANDLE_NONE;
-
-  if (tr_tool->use_corner_handles)
-    {
-      gdouble closest_dist;
-      gdouble dist;
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                                  coords->x, coords->y,
-                                                  tr_tool->tx1, tr_tool->ty1);
-      closest_dist = dist;
-      function = TRANSFORM_HANDLE_NW;
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                                  coords->x, coords->y,
-                                                  tr_tool->tx2, tr_tool->ty2);
-      if (dist < closest_dist)
-        {
-          closest_dist = dist;
-          function = TRANSFORM_HANDLE_NE;
-        }
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                                  coords->x, coords->y,
-                                                  tr_tool->tx3, tr_tool->ty3);
-      if (dist < closest_dist)
-        {
-          closest_dist = dist;
-          function = TRANSFORM_HANDLE_SW;
-        }
-
-      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                                  coords->x, coords->y,
-                                                  tr_tool->tx4, tr_tool->ty4);
-      if (dist < closest_dist)
-        {
-          closest_dist = dist;
-          function = TRANSFORM_HANDLE_SE;
-        }
-    }
-
-  if (tr_tool->use_side_handles)
-    {
-      if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_N],
-                                coords->x, coords->y))
-        {
-          function = TRANSFORM_HANDLE_N;
-        }
-      else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_E],
-                                     coords->x, coords->y))
-        {
-          function = TRANSFORM_HANDLE_E;
-        }
-      else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_S],
-                                     coords->x, coords->y))
-        {
-          function = TRANSFORM_HANDLE_S;
-        }
-      else if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_W],
-                                     coords->x, coords->y))
-        {
-          function = TRANSFORM_HANDLE_W;
-        }
-    }
-
-  if (tr_tool->use_center_handle)
-    {
-      if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_CENTER],
-                                coords->x, coords->y))
-        {
-          function = TRANSFORM_HANDLE_CENTER;
-        }
-    }
-
-  if (tr_tool->use_pivot_handle)
-    {
-      if (gimp_canvas_item_hit (tr_tool->handles[TRANSFORM_HANDLE_PIVOT],
-                                coords->x, coords->y))
-        {
-          function = TRANSFORM_HANDLE_PIVOT;
-        }
-    }
-
-  return function;
-}
-
 static void
 gimp_transform_tool_oper_update (GimpTool         *tool,
                                  const GimpCoords *coords,
@@ -694,16 +655,27 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
   GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
   TransformAction    function  = TRANSFORM_HANDLE_NONE;
 
+  if (tr_tool->widget)
+    {
+      if (display == tool->display)
+        {
+          gimp_tool_widget_hover (tr_tool->widget, coords, state, proximity);
+        }
+
+      return;
+    }
+
   if (display != tool->display || draw_tool->item == NULL)
     {
       gimp_transform_tool_set_function (tr_tool, function);
       return;
     }
 
-  function = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->pick_function (tr_tool,
-                                                                     coords,
-                                                                     state,
-                                                                     display);
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->pick_function)
+    function = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->pick_function (tr_tool,
+                                                                       coords,
+                                                                       state,
+                                                                       display);
 
   gimp_transform_tool_set_function (tr_tool, function);
 }
@@ -714,71 +686,27 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
                                    GdkModifierType   state,
                                    GimpDisplay      *display)
 {
-  GimpTransformTool  *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
-  GimpImage          *image    = gimp_display_get_image (display);
-  GimpCursorType      cursor   = gimp_tool_control_get_cursor (tool->control);
-  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
+  GimpTransformTool  *tr_tool     = GIMP_TRANSFORM_TOOL (tool);
+  GimpImage          *image       = gimp_display_get_image (display);
+  GimpCursorType      cursor      = GIMP_CURSOR_CROSSHAIR_SMALL;
+  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_NONE;
+  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
-  if (tr_tool->use_corner_handles ||
-      tr_tool->use_side_handles)
+  if (tr_tool->widget)
     {
-      switch (tr_tool->function)
+      if (display == tool->display)
         {
-        case TRANSFORM_HANDLE_NW:
-          cursor = GIMP_CURSOR_CORNER_TOP_LEFT;
-          break;
-
-        case TRANSFORM_HANDLE_NE:
-          cursor = GIMP_CURSOR_CORNER_TOP_RIGHT;
-          break;
-
-        case TRANSFORM_HANDLE_SW:
-          cursor = GIMP_CURSOR_CORNER_BOTTOM_LEFT;
-          break;
-
-        case TRANSFORM_HANDLE_SE:
-          cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
-          break;
-
-        case TRANSFORM_HANDLE_N:
-          cursor = GIMP_CURSOR_SIDE_TOP;
-          break;
-
-        case TRANSFORM_HANDLE_E:
-          cursor = GIMP_CURSOR_SIDE_RIGHT;
-          break;
-
-        case TRANSFORM_HANDLE_S:
-          cursor = GIMP_CURSOR_SIDE_BOTTOM;
-          break;
-
-        case TRANSFORM_HANDLE_W:
-          cursor = GIMP_CURSOR_SIDE_LEFT;
-          break;
-
-        default:
-          cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
-          break;
+          gimp_tool_widget_get_cursor (tr_tool->widget,
+                                       coords, state,
+                                       &cursor, &tool_cursor, &modifier);
         }
-    }
-
-  if (tr_tool->use_center_handle &&
-      tr_tool->function == TRANSFORM_HANDLE_CENTER)
-    {
-      modifier = GIMP_CURSOR_MODIFIER_MOVE;
-    }
-
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->cursor_update)
-    {
-      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->cursor_update (tr_tool,
-                                                              &cursor,
-                                                              &modifier);
     }
 
   if (! gimp_transform_tool_check_active_item (tr_tool, image, TRUE, NULL))
     modifier = GIMP_CURSOR_MODIFIER_BAD;
 
   gimp_tool_control_set_cursor          (tool->control, cursor);
+  gimp_tool_control_set_tool_cursor     (tool->control, tool_cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
@@ -831,7 +759,8 @@ gimp_transform_tool_undo (GimpTool    *tool,
 
   tr_tool->prev_trans_info = item->data;
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  if (! tr_tool->widget)
+    gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  Restore the previous transformation info  */
   memcpy (tr_tool->trans_info, tr_tool->prev_trans_info,
@@ -841,9 +770,10 @@ gimp_transform_tool_undo (GimpTool    *tool,
   gimp_transform_tool_bounds (tr_tool, tool->display);
 
   /*  recalculate the tool's transformation matrix  */
-  gimp_transform_tool_recalc_matrix (tr_tool);
+  gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  if (! tr_tool->widget)
+    gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   return TRUE;
 }
@@ -868,7 +798,8 @@ gimp_transform_tool_redo (GimpTool    *tool,
   tr_tool->redo_list = g_list_remove (tr_tool->redo_list,
                                       tr_tool->prev_trans_info);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  if (! tr_tool->widget)
+    gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  Restore the previous transformation info  */
   memcpy (tr_tool->trans_info, tr_tool->prev_trans_info,
@@ -878,9 +809,10 @@ gimp_transform_tool_redo (GimpTool    *tool,
   gimp_transform_tool_bounds (tr_tool, tool->display);
 
   /*  recalculate the tool's transformation matrix  */
-  gimp_transform_tool_recalc_matrix (tr_tool);
+  gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  if (! tr_tool->widget)
+    gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   return TRUE;
 }
@@ -890,7 +822,8 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
                                     GimpToolOptions  *options,
                                     const GParamSpec *pspec)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformTool    *tr_tool    = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformOptions *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
 
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
@@ -900,166 +833,76 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
       return;
     }
 
-  if (tr_tool->use_grid)
+  if (! tr_tool->use_grid)
+    return;
+
+  if (! tr_tool->widget)
+    gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+
+  if (! strcmp (pspec->name, "direction"))
     {
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
-      if (! strcmp (pspec->name, "direction"))
+      if (tr_tool->widget || tr_tool->function != TRANSFORM_CREATING)
         {
-          if (tr_tool->function != TRANSFORM_CREATING)
+          if (tool->display)
             {
-              if (tool->display)
-                {
-                  /*  reget the selection bounds  */
-                  gimp_transform_tool_bounds (tr_tool, tool->display);
+              /*  reget the selection bounds  */
+              gimp_transform_tool_bounds (tr_tool, tool->display);
 
-                  /*  recalculate the tool's transformation matrix  */
-                  gimp_transform_tool_recalc_matrix (tr_tool);
-                }
+              /*  recalculate the tool's transformation matrix  */
+              gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
             }
         }
+    }
 
-      if (tr_tool->function != TRANSFORM_CREATING)
+  if (! tr_tool->widget)
+    gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+
+  if (! strcmp (pspec->name, "show-preview"))
+    {
+      if (tr_tool->widget && tr_tool->preview)
+        gimp_canvas_item_set_visible (tr_tool->preview,
+                                      tr_options->show_preview);
+    }
+  else if (! strcmp (pspec->name, "preview-opacity"))
+    {
+      if (tr_tool->widget && tr_tool->preview)
+        g_object_set (tr_tool->preview,
+                      "opacity", tr_options->preview_opacity,
+                      NULL);
+    }
+  else if (! strcmp (pspec->name, "grid-type"))
+    {
+      if (tr_tool->widget)
+        g_object_set (tr_tool->widget,
+                      "guide-type", tr_options->grid_type,
+                      NULL);
+    }
+  else if (! strcmp (pspec->name, "grid-size"))
+    {
+      if (tr_tool->widget)
+        g_object_set (tr_tool->widget,
+                      "n-guides", tr_options->grid_size,
+                      NULL);
+    }
+  else if (g_str_has_prefix (pspec->name, "constrain-") ||
+           g_str_has_prefix (pspec->name, "frompivot-") ||
+           ! strcmp (pspec->name, "fixedpivot") ||
+           ! strcmp (pspec->name, "cornersnap"))
+    {
+      if (tr_tool->widget)
         {
-          gimp_transform_tool_transform_bounding_box (tr_tool);
+          gboolean value;
+
+          g_object_get (options,
+                        pspec->name, &value,
+                        NULL);
+
+          g_object_set (tr_tool->widget,
+                        pspec->name, value,
+                        NULL);
         }
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
-    }
-
-  if (g_str_has_prefix (pspec->name, "constrain-") ||
-      g_str_has_prefix (pspec->name, "frompivot-") ||
-      ! strcmp (pspec->name, "fixedpivot") ||
-      ! strcmp (pspec->name, "cornersnap"))
-    {
       gimp_transform_tool_dialog_update (tr_tool);
-    }
-}
-
-static void
-gimp_transform_tool_real_draw_gui (GimpTransformTool *tr_tool,
-                                   gint               handle_w,
-                                   gint               handle_h)
-{
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tr_tool);
-
-  if (tr_tool->use_corner_handles)
-    {
-      tr_tool->handles[TRANSFORM_HANDLE_NW] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   tr_tool->tx1, tr_tool->ty1,
-                                   handle_w, handle_h,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-
-      tr_tool->handles[TRANSFORM_HANDLE_NE] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   tr_tool->tx2, tr_tool->ty2,
-                                   handle_w, handle_h,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-
-      tr_tool->handles[TRANSFORM_HANDLE_SW] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   tr_tool->tx3, tr_tool->ty3,
-                                   handle_w, handle_h,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-
-      tr_tool->handles[TRANSFORM_HANDLE_SE] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   tr_tool->tx4, tr_tool->ty4,
-                                   handle_w, handle_h,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-    }
-
-  if (tr_tool->use_side_handles)
-    {
-      tr_tool->handles[TRANSFORM_HANDLE_N] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   (tr_tool->tx1 + tr_tool->tx2) / 2.0,
-                                   (tr_tool->ty1 + tr_tool->ty2) / 2.0,
-                                   handle_w, handle_h,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-
-      tr_tool->handles[TRANSFORM_HANDLE_E] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   (tr_tool->tx2 + tr_tool->tx4) / 2.0,
-                                   (tr_tool->ty2 + tr_tool->ty4) / 2.0,
-                                   handle_w, handle_h,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-
-      tr_tool->handles[TRANSFORM_HANDLE_S] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   (tr_tool->tx3 + tr_tool->tx4) / 2.0,
-                                   (tr_tool->ty3 + tr_tool->ty4) / 2.0,
-                                   handle_w, handle_h,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-
-      tr_tool->handles[TRANSFORM_HANDLE_W] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_SQUARE,
-                                   (tr_tool->tx3 + tr_tool->tx1) / 2.0,
-                                   (tr_tool->ty3 + tr_tool->ty1) / 2.0,
-                                   handle_w, handle_h,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-    }
-
-  if (tr_tool->use_pivot_handle)
-    {
-      GimpCanvasGroup *stroke_group;
-      gint             d = MIN (handle_w, handle_h);
-
-      if (tr_tool->use_center_handle)
-        d *= 2; /* so you can grab it from under the center handle */
-
-      stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
-
-      tr_tool->handles[TRANSFORM_HANDLE_PIVOT] = GIMP_CANVAS_ITEM (stroke_group);
-
-      gimp_draw_tool_push_group (draw_tool, stroke_group);
-
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_CIRCLE,
-                                 tr_tool->tpx, tr_tool->tpy,
-                                 d, d,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_CROSS,
-                                 tr_tool->tpx, tr_tool->tpy,
-                                 d, d,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-
-      gimp_draw_tool_pop_group (draw_tool);
-    }
-
-  if (tr_tool->use_center_handle)
-    {
-      GimpCanvasGroup *stroke_group;
-      gint             d = MIN (handle_w, handle_h);
-
-      stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
-
-      tr_tool->handles[TRANSFORM_HANDLE_CENTER] = GIMP_CANVAS_ITEM (stroke_group);
-
-      gimp_draw_tool_push_group (draw_tool, stroke_group);
-
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_SQUARE,
-                                 tr_tool->tcx, tr_tool->tcy,
-                                 d, d,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_CROSS,
-                                 tr_tool->tcx, tr_tool->tcy,
-                                 d, d,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-
-      gimp_draw_tool_pop_group (draw_tool);
     }
 }
 
@@ -1070,29 +913,44 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (tool->display);
-  gint                  handle_w;
-  gint                  handle_h;
 
   memset (tr_tool->handles, 0, sizeof (tr_tool->handles));
 
   if (tr_tool->use_grid)
     {
-      if (gimp_transform_options_show_preview (options))
+      gboolean show_preview = gimp_transform_options_show_preview (options);
+
+      if (tr_tool->widget || show_preview)
         {
           GimpMatrix3 matrix = tr_tool->transform;
 
           if (options->direction == GIMP_TRANSFORM_BACKWARD)
             gimp_matrix3_invert (&matrix);
 
-          gimp_draw_tool_add_transform_preview (draw_tool,
-                                                tool->drawable,
-                                                &matrix,
-                                                tr_tool->x1,
-                                                tr_tool->y1,
-                                                tr_tool->x2,
-                                                tr_tool->y2,
-                                                tr_tool->does_perspective,
-                                                options->preview_opacity);
+          tr_tool->preview =
+            gimp_draw_tool_add_transform_preview (draw_tool,
+                                                  tool->drawable,
+                                                  &matrix,
+                                                  tr_tool->x1,
+                                                  tr_tool->y1,
+                                                  tr_tool->x2,
+                                                  tr_tool->y2,
+                                                  tr_tool->does_perspective,
+                                                  options->preview_opacity);
+          g_object_add_weak_pointer (G_OBJECT (tr_tool->preview),
+                                     (gpointer) &tr_tool->preview);
+
+          if (tr_tool->widget)
+            gimp_canvas_item_set_visible (tr_tool->preview, show_preview);
+        }
+
+      if (tr_tool->widget)
+        {
+          GimpCanvasItem *item = gimp_tool_widget_get_item (tr_tool->widget);
+
+          gimp_draw_tool_add_item (draw_tool, item);
+
+          return;
         }
 
       gimp_draw_tool_add_transform_guides (draw_tool,
@@ -1105,10 +963,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                            tr_tool->y2);
     }
 
-  gimp_transform_tool_handles_recalc (tr_tool, tool->display,
-                                      &handle_w, &handle_h);
-
-  GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->draw_gui (tr_tool, handle_w, handle_h);
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->draw_gui)
+    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->draw_gui (tr_tool);
 
   if (tr_tool->handles[tr_tool->function])
     {
@@ -1460,12 +1316,67 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 }
 
 static void
+gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
+                                    GimpTransformTool *tr_tool)
+{
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+
+  if (tr_tool->preview)
+    {
+      GimpMatrix3 matrix = tr_tool->transform;
+
+      if (options->direction == GIMP_TRANSFORM_BACKWARD)
+        gimp_matrix3_invert (&matrix);
+
+      gimp_canvas_item_begin_change (tr_tool->preview);
+      g_object_set (tr_tool->preview,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tr_tool->preview);
+    }
+}
+
+static void
+gimp_transform_tool_widget_snap_offsets (GimpToolWidget    *widget,
+                                         gint               offset_x,
+                                         gint               offset_y,
+                                         gint               width,
+                                         gint               height,
+                                         GimpTransformTool *tr_tool)
+{
+  GimpTool *tool = GIMP_TOOL (tr_tool);
+
+  gimp_tool_control_set_snap_offsets (tool->control,
+                                      offset_x, offset_y,
+                                      width, height);
+}
+
+static void
+gimp_transform_tool_widget_status (GimpToolWidget    *widget,
+                                   const gchar       *status,
+                                   GimpTransformTool *tr_tool)
+{
+  GimpTool *tool = GIMP_TOOL (tr_tool);
+
+  if (status)
+    {
+      gimp_tool_replace_status (tool, tool->display, "%s", status);
+    }
+  else
+    {
+      gimp_tool_pop_status (tool, tool->display);
+    }
+}
+
+static void
 gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
+
+  g_clear_object (&tr_tool->widget);
 
   tr_tool->function = TRANSFORM_CREATING;
 
@@ -1513,41 +1424,6 @@ gimp_transform_tool_set_function (GimpTransformTool *tr_tool,
                                           TRUE);
         }
     }
-}
-
-static void
-gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
-{
-  g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
-
-  gimp_matrix3_transform_point (&tr_tool->transform,
-                                tr_tool->x1, tr_tool->y1,
-                                &tr_tool->tx1, &tr_tool->ty1);
-  gimp_matrix3_transform_point (&tr_tool->transform,
-                                tr_tool->x2, tr_tool->y1,
-                                &tr_tool->tx2, &tr_tool->ty2);
-  gimp_matrix3_transform_point (&tr_tool->transform,
-                                tr_tool->x1, tr_tool->y2,
-                                &tr_tool->tx3, &tr_tool->ty3);
-  gimp_matrix3_transform_point (&tr_tool->transform,
-                                tr_tool->x2, tr_tool->y2,
-                                &tr_tool->tx4, &tr_tool->ty4);
-  gimp_matrix3_transform_point (&tr_tool->transform,
-                                tr_tool->px, tr_tool->py,
-                                &tr_tool->tpx, &tr_tool->tpy);
-
-  /* don't transform these */
-  tr_tool->tpx = tr_tool->px;
-  tr_tool->tpy = tr_tool->py;
-
-  tr_tool->tcx = (tr_tool->tx1 +
-                  tr_tool->tx2 +
-                  tr_tool->tx3 +
-                  tr_tool->tx4) / 4.0;
-  tr_tool->tcy = (tr_tool->ty1 +
-                  tr_tool->ty2 +
-                  tr_tool->ty3 +
-                  tr_tool->ty4) / 4.0;
 }
 
 static gboolean
@@ -1630,47 +1506,7 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
       break;
     }
 
-  tr_tool->aspect = ((gdouble) (tr_tool->x2 - tr_tool->x1) /
-                     (gdouble) (tr_tool->y2 - tr_tool->y1));
-
   return non_empty;
-}
-
-static void
-gimp_transform_tool_handles_recalc (GimpTransformTool *tr_tool,
-                                    GimpDisplay       *display,
-                                    gint              *handle_w,
-                                    gint              *handle_h)
-{
-  gint dx1, dy1;
-  gint dx2, dy2;
-  gint dx3, dy3;
-  gint dx4, dy4;
-  gint x1, y1;
-  gint x2, y2;
-
-  gimp_display_shell_transform_xy (gimp_display_get_shell (display),
-                                   tr_tool->tx1, tr_tool->ty1,
-                                   &dx1, &dy1);
-  gimp_display_shell_transform_xy (gimp_display_get_shell (display),
-                                   tr_tool->tx2, tr_tool->ty2,
-                                   &dx2, &dy2);
-  gimp_display_shell_transform_xy (gimp_display_get_shell (display),
-                                   tr_tool->tx3, tr_tool->ty3,
-                                   &dx3, &dy3);
-  gimp_display_shell_transform_xy (gimp_display_get_shell (display),
-                                   tr_tool->tx4, tr_tool->ty4,
-                                   &dx4, &dy4);
-
-  x1 = MIN4 (dx1, dx2, dx3, dx4);
-  y1 = MIN4 (dy1, dy2, dy3, dy4);
-  x2 = MAX4 (dx1, dx2, dx3, dx4);
-  y2 = MAX4 (dy1, dy2, dy3, dy4);
-
-  *handle_w = CLAMP ((x2 - x1) / 3,
-                     MIN_HANDLE_SIZE, GIMP_TOOL_HANDLE_SIZE_LARGE);
-  *handle_h = CLAMP ((y2 - y1) / 3,
-                     MIN_HANDLE_SIZE, GIMP_TOOL_HANDLE_SIZE_LARGE);
 }
 
 static void
@@ -1736,14 +1572,14 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
 }
 
 void
-gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool)
+gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
+                                   GimpToolWidget    *widget)
 {
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
+  g_return_if_fail (widget == NULL || GIMP_IS_TOOL_WIDGET (widget));
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
-    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix (tr_tool);
-
-  gimp_transform_tool_transform_bounding_box (tr_tool);
+    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix (tr_tool, widget);
 
   gimp_transform_tool_dialog_update (tr_tool);
 
@@ -1776,7 +1612,8 @@ gimp_transform_tool_response (GimpToolGui       *gui,
 
       gimp_transform_tool_update_sensitivity (tr_tool);
 
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      if (! tr_tool->widget)
+        gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
       /*  Restore the previous transformation info  */
       memcpy (tr_tool->trans_info, tr_tool->prev_trans_info,
@@ -1786,9 +1623,10 @@ gimp_transform_tool_response (GimpToolGui       *gui,
       gimp_transform_tool_bounds (tr_tool, display);
 
       /*  recalculate the tool's transformation matrix  */
-      gimp_transform_tool_recalc_matrix (tr_tool);
+      gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
 
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      if (! tr_tool->widget)
+        gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
       /*  update the undo actions / menu items  */
       gimp_image_flush (gimp_display_get_image (display));
