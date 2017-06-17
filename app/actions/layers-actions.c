@@ -338,17 +338,17 @@ static const GimpToggleActionEntry layers_toggle_actions[] =
 static const GimpRadioActionEntry layers_blend_space_actions[] =
 {
   { "layers-blend-space-auto", NULL,
-    NC_("layers-action", "Auto"), NULL, NULL,
+    NC_("layers-action", "Layer Blend Space: Auto"), NULL, NULL,
     GIMP_LAYER_COLOR_SPACE_AUTO,
     NULL },
 
   { "layers-blend-space-rgb-linear", NULL,
-    NC_("layers-action", "RGB (linear)"), NULL, NULL,
+    NC_("layers-action", "Layer Blend Space: RGB (linear)"), NULL, NULL,
     GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     NULL },
 
   { "layers-blend-space-rgb-perceptual", NULL,
-    NC_("layers-action", "RGB (perceptual)"), NULL, NULL,
+    NC_("layers-action", "Layer Blend Space: RGB (perceptual)"), NULL, NULL,
     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
     NULL }
 };
@@ -356,17 +356,17 @@ static const GimpRadioActionEntry layers_blend_space_actions[] =
 static const GimpRadioActionEntry layers_composite_space_actions[] =
 {
   { "layers-composite-space-auto", NULL,
-    NC_("layers-action", "Auto"), NULL, NULL,
+    NC_("layers-action", "Layer Composite Space: Auto"), NULL, NULL,
     GIMP_LAYER_COLOR_SPACE_AUTO,
     NULL },
 
   { "layers-composite-space-rgb-linear", NULL,
-    NC_("layers-action", "RGB (linear)"), NULL, NULL,
+    NC_("layers-action", "Layer Composite Space: RGB (linear)"), NULL, NULL,
     GIMP_LAYER_COLOR_SPACE_RGB_LINEAR,
     NULL },
 
   { "layers-composite-space-rgb-perceptual", NULL,
-    NC_("layers-action", "RGB (perceptual)"), NULL, NULL,
+    NC_("layers-action", "Layer Composite Space: RGB (perceptual)"), NULL, NULL,
     GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
     NULL }
 };
@@ -374,27 +374,27 @@ static const GimpRadioActionEntry layers_composite_space_actions[] =
 static const GimpRadioActionEntry layers_composite_mode_actions[] =
 {
   { "layers-composite-mode-auto", NULL,
-    NC_("layers-action", "Auto"), NULL, NULL,
+    NC_("layers-action", "Layer Composite Mode: Auto"), NULL, NULL,
     GIMP_LAYER_COMPOSITE_AUTO,
     NULL },
 
   { "layers-composite-mode-src-over", NULL,
-    NC_("layers-action", "Source over"), NULL, NULL,
+    NC_("layers-action", "Layer Composite Mode: Source Over"), NULL, NULL,
     GIMP_LAYER_COMPOSITE_SRC_OVER,
     NULL },
 
   { "layers-composite-mode-src-atop", NULL,
-    NC_("layers-action", "Source atop"), NULL, NULL,
+    NC_("layers-action", "Layer Composite Mode: Source Atop"), NULL, NULL,
     GIMP_LAYER_COMPOSITE_SRC_ATOP,
     NULL },
 
   { "layers-composite-mode-src-in", NULL,
-    NC_("layers-action", "Source in"), NULL, NULL,
+    NC_("layers-action", "Layer Composite Mode: Source In"), NULL, NULL,
     GIMP_LAYER_COMPOSITE_SRC_IN,
     NULL },
 
   { "layers-composite-mode-dst-atop", NULL,
-    NC_("layers-action", "Destination atop"), NULL, NULL,
+    NC_("layers-action", "Layer Composite Mode: Destination Atop"), NULL, NULL,
     GIMP_LAYER_COMPOSITE_DST_ATOP,
     NULL }
 };
@@ -403,55 +403,55 @@ static const GimpEnumActionEntry layers_color_tag_actions[] =
 {
   { "layers-color-tag-none", GIMP_ICON_CLOSE /* abused */,
     NC_("layers-action", "None"), NULL,
-    NC_("layers-action", "Clear color tag"),
+    NC_("layers-action", "Color Tag: Clear"),
     GIMP_COLOR_TAG_NONE, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-blue", NULL,
     NC_("layers-action", "Blue"), NULL,
-    NC_("layers-action", "Set color tag to blue"),
+    NC_("layers-action", "Color Tag: Set to Blue"),
     GIMP_COLOR_TAG_BLUE, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-green", NULL,
     NC_("layers-action", "Green"), NULL,
-    NC_("layers-action", "Set color tag to green"),
+    NC_("layers-action", "Color Tag: Set to Green"),
     GIMP_COLOR_TAG_GREEN, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-yellow", NULL,
     NC_("layers-action", "Yellow"), NULL,
-    NC_("layers-action", "Set color tag to yellow"),
+    NC_("layers-action", "Color Tag: Set to Yellow"),
     GIMP_COLOR_TAG_YELLOW, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-orange", NULL,
     NC_("layers-action", "Orange"), NULL,
-    NC_("layers-action", "Set color tag to orange"),
+    NC_("layers-action", "Color Tag: Set to Orange"),
     GIMP_COLOR_TAG_ORANGE, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-brown", NULL,
     NC_("layers-action", "Brown"), NULL,
-    NC_("layers-action", "Set color tag to brown"),
+    NC_("layers-action", "Color Tag: Set to Brown"),
     GIMP_COLOR_TAG_BROWN, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-red", NULL,
     NC_("layers-action", "Red"), NULL,
-    NC_("layers-action", "Set color tag to red"),
+    NC_("layers-action", "Color Tag: Set to red"),
     GIMP_COLOR_TAG_RED, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-violet", NULL,
     NC_("layers-action", "Violet"), NULL,
-    NC_("layers-action", "Set color tag to violet"),
+    NC_("layers-action", "Color Tag: Set to violet"),
     GIMP_COLOR_TAG_VIOLET, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG },
 
   { "layers-color-tag-gray", NULL,
     NC_("layers-action", "Gray"), NULL,
-    NC_("layers-action", "Set color tag to gray"),
+    NC_("layers-action", "Color Tag: Set to gray"),
     GIMP_COLOR_TAG_GRAY, FALSE,
     GIMP_HELP_LAYER_COLOR_TAG }
 };
@@ -559,31 +559,31 @@ static const GimpEnumActionEntry layers_select_actions[] =
 static const GimpEnumActionEntry layers_opacity_actions[] =
 {
   { "layers-opacity-set", GIMP_ICON_TRANSPARENCY,
-    "Set Opacity", NULL, NULL,
+    NC_("layers-action", "Layer Opacity: Set"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-transparent", GIMP_ICON_TRANSPARENCY,
-    "Completely Transparent", NULL, NULL,
+    NC_("layers-action", "Layer Opacity: Make Completely Transparent"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-opaque", GIMP_ICON_TRANSPARENCY,
-    "Completely Opaque", NULL, NULL,
+    NC_("layers-action", "Layer Opacity: Make Completely Opaque"), NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-decrease", GIMP_ICON_TRANSPARENCY,
-    "More Transparent", NULL, NULL,
+    NC_("layers-action", "Layer Opacity: Make More Transparent"), NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-increase", GIMP_ICON_TRANSPARENCY,
-    "More Opaque", NULL, NULL,
+    NC_("layers-action", "Layer Opacity: Make More Opaque"), NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-decrease-skip", GIMP_ICON_TRANSPARENCY,
-    "10% More Transparent", NULL, NULL,
+    NC_("layers-action", "Layer Opacity: Make 10% More Transparent"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-increase-skip", GIMP_ICON_TRANSPARENCY,
-    "10% More Opaque", NULL, NULL,
+    NC_("layers-action", "Layer Opacity: Make 10% More Opaque"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_LAYER_OPACITY }
 };
@@ -591,19 +591,19 @@ static const GimpEnumActionEntry layers_opacity_actions[] =
 static const GimpEnumActionEntry layers_mode_actions[] =
 {
   { "layers-mode-first", GIMP_ICON_TOOL_PENCIL,
-    "First Layer Mode", NULL, NULL,
+    NC_("layers-action", "Layer Mode: Select First"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_MODE },
   { "layers-mode-last", GIMP_ICON_TOOL_PENCIL,
-    "Last Layer Mode", NULL, NULL,
+    NC_("layers-action", "Layer Mode: Select Last"), NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_MODE },
   { "layers-mode-previous", GIMP_ICON_TOOL_PENCIL,
-    "Previous Layer Mode", NULL, NULL,
+    NC_("layers-action", "Layer Mode: Select Previous"), NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_MODE },
   { "layers-mode-next", GIMP_ICON_TOOL_PENCIL,
-    "Next Layer Mode", NULL, NULL,
+    NC_("layers-action", "Layer Mode: Select Next"), NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_MODE }
 };

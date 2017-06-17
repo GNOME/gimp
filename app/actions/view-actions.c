@@ -312,17 +312,17 @@ static const GimpToggleActionEntry view_toggle_actions[] =
 static const GimpEnumActionEntry view_zoom_actions[] =
 {
   { "view-zoom", NULL,
-    "Set zoom factor", NULL, NULL,
+    NC_("view-action", "Set zoom factor"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
   { "view-zoom-minimum", GIMP_ICON_ZOOM_OUT,
-    "Zoom out as far as possible", NULL, NULL,
+    NC_("view-action", "Zoom out as far as possible"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-maximum", GIMP_ICON_ZOOM_IN,
-    "Zoom in as far as possible", NULL, NULL,
+    NC_("view-action", "Zoom in as far as possible"), NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
@@ -351,12 +351,12 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-out-skip", GIMP_ICON_ZOOM_OUT,
-    "Zoom out a lot", NULL, NULL,
+    NC_("view-action", "Zoom out a lot"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-in-skip", GIMP_ICON_ZOOM_IN,
-    "Zoom in a lot", NULL, NULL,
+    NC_("view-action", "Zoom in a lot"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN }
 };
@@ -610,37 +610,37 @@ static const GimpEnumActionEntry view_padding_color_actions[] =
 static const GimpEnumActionEntry view_scroll_horizontal_actions[] =
 {
   { "view-scroll-horizontal", NULL,
-    "Set horizontal scroll offset", NULL, NULL,
+    NC_("view-action", "Set horizontal scroll offset"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
   { "view-scroll-left-border", NULL,
-    "Scroll to left border", NULL, NULL,
+    NC_("view-action", "Scroll to left border"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
 
   { "view-scroll-right-border", NULL,
-    "Scroll to right border", NULL, NULL,
+    NC_("view-action", "Scroll to right border"), NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
 
   { "view-scroll-left", NULL,
-    "Scroll left", NULL, NULL,
+    NC_("view-action", "Scroll left"), NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
 
   { "view-scroll-right", NULL,
-    "Scroll right", NULL, NULL,
+    NC_("view-action", "Scroll right"), NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
 
   { "view-scroll-page-left", NULL,
-    "Scroll page left", NULL, NULL,
+    NC_("view-action", "Scroll page left"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
 
   { "view-scroll-page-right", NULL,
-    "Scroll page right", NULL, NULL,
+    NC_("view-action", "Scroll page right"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL }
 };
@@ -648,37 +648,37 @@ static const GimpEnumActionEntry view_scroll_horizontal_actions[] =
 static const GimpEnumActionEntry view_scroll_vertical_actions[] =
 {
   { "view-scroll-vertical", NULL,
-    "Set vertical scroll offset", NULL, NULL,
+    NC_("view-action", "Set vertical scroll offset"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
   { "view-scroll-top-border", NULL,
-    "Scroll to top border", NULL, NULL,
+    NC_("view-action", "Scroll to top border"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
 
   { "view-scroll-bottom-border", NULL,
-    "Scroll to bottom border", NULL, NULL,
+    NC_("view-action", "Scroll to bottom border"), NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
 
   { "view-scroll-up", NULL,
-    "Scroll up", NULL, NULL,
+    NC_("view-action", "Scroll up"), NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
 
   { "view-scroll-down", NULL,
-    "Scroll down", NULL, NULL,
+    NC_("view-action", "Scroll down"), NULL, NULL,
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
 
   { "view-scroll-page-up", NULL,
-    "Scroll page up", NULL, NULL,
+    NC_("view-action", "Scroll page up"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
 
   { "view-scroll-page-down", NULL,
-    "Scroll page down", NULL, NULL,
+    NC_("view-action", "Scroll page down"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL }
 };
