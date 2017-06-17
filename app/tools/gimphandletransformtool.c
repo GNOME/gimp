@@ -30,6 +30,7 @@
 #include "config/gimpguiconfig.h" /* playground */
 
 #include "core/gimp.h" /* playground */
+#include "core/gimp-transform-utils.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -136,9 +137,6 @@ static inline gdouble calc_lineintersect_ratio          (gdouble  p1x,
                                                          gdouble  q1y,
                                                          gdouble  q2x,
                                                          gdouble  q2y);
-static gboolean       mod_gauss                         (gdouble  matrix[],
-                                                         gdouble  solution[],
-                                                         gint     s);
 
 
 G_DEFINE_TYPE (GimpHandleTransformTool, gimp_handle_transform_tool,
@@ -609,66 +607,27 @@ gimp_handle_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
                                           GimpToolWidget    *widget)
 {
   GimpHandleTransformTool *ht_tool = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
-  gdouble                  coeff[8 * 9];
-  gdouble                  sol[8];
-  gdouble                  opos_x[4];
-  gdouble                  opos_y[4];
-  gdouble                  pos_x[4];
-  gdouble                  pos_y[4];
-  gint                     i;
 
   if (ht_tool->matrix_recalculation)
     {
-      for (i = 0; i < 4; i++)
-        {
-          pos_x[i]  = tr_tool->trans_info[X0 + i * 2];
-          pos_y[i]  = tr_tool->trans_info[Y0 + i * 2];
-          opos_x[i] = tr_tool->trans_info[OX0 + i * 2];
-          opos_y[i] = tr_tool->trans_info[OY0 + i * 2];
-        }
-
-      for (i = 0; i < 4; i++)
-        {
-          coeff[i * 9 + 0] = opos_x[i];
-          coeff[i * 9 + 1] = opos_y[i];
-          coeff[i * 9 + 2] = 1;
-          coeff[i * 9 + 3] = 0;
-          coeff[i * 9 + 4] = 0;
-          coeff[i * 9 + 5] = 0;
-          coeff[i * 9 + 6] = -opos_x[i] * pos_x[i];
-          coeff[i * 9 + 7] = -opos_y[i] * pos_x[i];
-          coeff[i * 9 + 8] = pos_x[i];
-
-          coeff[(i + 4) * 9 + 0] = 0;
-          coeff[(i + 4) * 9 + 1] = 0;
-          coeff[(i + 4) * 9 + 2] = 0;
-          coeff[(i + 4) * 9 + 3] = opos_x[i];
-          coeff[(i + 4) * 9 + 4] = opos_y[i];
-          coeff[(i + 4) * 9 + 5] = 1;
-          coeff[(i + 4) * 9 + 6] = -opos_x[i] * pos_y[i];
-          coeff[(i + 4) * 9 + 7] = -opos_y[i] * pos_y[i];
-          coeff[(i + 4) * 9 + 8] = pos_y[i];
-        }
-
-      if (mod_gauss (coeff, sol, 8))
-        {
-          tr_tool->transform.coeff[0][0] = sol[0];
-          tr_tool->transform.coeff[0][1] = sol[1];
-          tr_tool->transform.coeff[0][2] = sol[2];
-          tr_tool->transform.coeff[1][0] = sol[3];
-          tr_tool->transform.coeff[1][1] = sol[4];
-          tr_tool->transform.coeff[1][2] = sol[5];
-          tr_tool->transform.coeff[2][0] = sol[6];
-          tr_tool->transform.coeff[2][1] = sol[7];
-          tr_tool->transform.coeff[2][2] = 1;
-        }
-      else
-        {
-          /* this should not happen reset the matrix so the user sees
-           * that something went wrong
-           */
-          gimp_matrix3_identity (&tr_tool->transform);
-        }
+      gimp_matrix3_identity (&tr_tool->transform);
+      gimp_transform_matrix_handles (&tr_tool->transform,
+                                     tr_tool->trans_info[OX0],
+                                     tr_tool->trans_info[OY0],
+                                     tr_tool->trans_info[OX1],
+                                     tr_tool->trans_info[OY1],
+                                     tr_tool->trans_info[OX2],
+                                     tr_tool->trans_info[OY2],
+                                     tr_tool->trans_info[OX3],
+                                     tr_tool->trans_info[OY3],
+                                     tr_tool->trans_info[X0],
+                                     tr_tool->trans_info[Y0],
+                                     tr_tool->trans_info[X1],
+                                     tr_tool->trans_info[Y1],
+                                     tr_tool->trans_info[X2],
+                                     tr_tool->trans_info[Y2],
+                                     tr_tool->trans_info[X3],
+                                     tr_tool->trans_info[Y3]);
     }
 }
 
@@ -927,98 +886,4 @@ calc_lineintersect_ratio (gdouble p1x, gdouble p1y,
   u /= denom;
 
   return u / (u - 1);
-}
-
-
-/* modified gaussian algorithm
- * solves a system of linear equations
- *
- * Example:
- * 1x + 2y + 4z = 25
- * 2x + 1y      = 4
- * 3x + 5y + 2z = 23
- * Solution: x=1, y=2, z=5
- *
- * Input:
- * matrix = { 1,2,4,25,2,1,0,4,3,5,2,23 }
- * s = 3 (Number of variables)
- * Output:
- * return value == TRUE (TRUE, if there is a single unique solution)
- * solution == { 1,2,5 } (if the return value is FALSE, the content
- * of solution is of no use)
- */
-static gboolean
-mod_gauss (gdouble matrix[],
-           gdouble solution[],
-           gint    s)
-{
-  gint    p[s]; /* row permutation */
-  gint    i, j, r, temp;
-  gdouble q;
-  gint    t = s + 1;
-
-  for (i = 0; i < s; i++)
-    {
-      p[i] = i;
-    }
-
-  for (r = 0; r < s; r++)
-    {
-      /* make sure that (r,r) is not 0 */
-      if (matrix[p[r] * t + r] == 0.0)
-        {
-          /* we need to permutate rows */
-          for (i = r + 1; i <= s; i++)
-            {
-              if (i == s)
-                {
-                  /* if this happens, the linear system has zero or
-                   * more than one solutions.
-                   */
-                  return FALSE;
-                }
-
-              if (matrix[p[i] * t + r] != 0.0)
-                break;
-            }
-
-          temp = p[r];
-          p[r] = p[i];
-          p[i] = temp;
-        }
-
-      /* make (r,r) == 1 */
-      q = 1.0 / matrix[p[r] * t + r];
-      matrix[p[r] * t + r] = 1.0;
-
-      for (j = r + 1; j < t; j++)
-        {
-          matrix[p[r] * t + j] *= q;
-        }
-
-      /* make that all entries in column r are 0 (except (r,r)) */
-      for (i = 0; i < s; i++)
-        {
-          if (i == r)
-            continue;
-
-          for (j = r + 1; j < t ; j++)
-            {
-              matrix[p[i] * t + j] -= matrix[p[r] * t + j] * matrix[p[i] * t + r];
-            }
-
-          /* we don't need to execute the following line
-           * since we won't access this element again:
-           *
-           * matrix[p[i] * t + r] = 0.0;
-           */
-        }
-    }
-
-  for (i = 0; i < s; i++)
-    {
-      solution[i] = matrix[p[i] * t + s];
-    }
-
-  return TRUE;
 }
