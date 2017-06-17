@@ -190,7 +190,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *operation,
                 }
 
               alpha = alpha * v_opacity;
-                  
+
               if (_mm_ucomigt_ss (alpha, _mm_setzero_ps ()))
                 {
                   /* out(color) = src */
