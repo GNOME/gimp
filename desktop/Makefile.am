@@ -3,10 +3,8 @@
 desktop_in_files = gimp.desktop.in.in
 desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
-appdata_in_files = gimp.appdata.xml.in
-appdata_files = \
-	$(appdata_in_files:.appdata.xml.in=.appdata.xml) \
-	gimp-data-extras.metainfo.xml
+appstream_in_files = gimp.appdata.xml.in gimp-data-extras.metainfo.xml.in
+appstream_files = $(appstream_in_files:.xml.in=.xml)
 
 if DESKTOP_DATADIR
 
@@ -14,7 +12,7 @@ applicationsdir = $(DESKTOP_DATADIR)/applications
 applications_DATA = $(desktop_files)
 
 appdatadir = $(DESKTOP_DATADIR)/appdata
-appdata_DATA = $(appdata_files)
+appdata_DATA = $(appstream_files)
 
 icons16dir = $(DESKTOP_DATADIR)/icons/hicolor/16x16/apps
 icons16_DATA = 16x16/gimp.png
@@ -42,19 +40,19 @@ install-data-hook:
 endif
 
 EXTRA_DIST = \
-	$(appdata_in_files)	\
-	test-appdata.sh		\
-	gimp.desktop.in.in	\
-	16x16/gimp.png		\
-	22x22/gimp.png		\
-	24x24/gimp.png		\
-	32x32/gimp.png		\
-	48x48/gimp.png		\
-	64x64/gimp.png		\
+	$(appstream_in_files) \
+	test-appdata.sh       \
+	gimp.desktop.in.in    \
+	16x16/gimp.png        \
+	22x22/gimp.png        \
+	24x24/gimp.png        \
+	32x32/gimp.png        \
+	48x48/gimp.png        \
+	64x64/gimp.png        \
 	256x256/gimp.png
 
 
-DISTCLEANFILES = $(desktop_files) $(appdata_files)
+DISTCLEANFILES = $(desktop_files) $(appstream_files)
 
 @INTLTOOL_XML_RULE@
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2015 Jiri Eischmann <eischmann@redhat.com> -->
+<component type="addon">
+  <id>gimp-data-extras</id>
+  <extends>gimp.desktop</extends>
+  <_name>Extra files for GIMP</_name>
+  <_summary>Patterns, gradients, and other extra files for GIMP</_summary>
+  <url type="homepage">http://www.gimp.org/</url>
+  <url type="bugtracker">https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP</url>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <update_contact>alexandre.prokoudine@gmail.com</update_contact>
+</component>
