@@ -4,7 +4,9 @@ desktop_in_files = gimp.desktop.in.in
 desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
 appdata_in_files = gimp.appdata.xml.in
-appdata_files = $(appdata_in_files:.appdata.xml.in=.appdata.xml)
+appdata_files = \
+	$(appdata_in_files:.appdata.xml.in=.appdata.xml) \
+	gimp-data-extras.metainfo.xml
 
 if DESKTOP_DATADIR
 
