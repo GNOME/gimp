@@ -1489,17 +1489,17 @@ _gp_params_read (GIOChannel  *channel,
             goto cleanup;
           break;
 
-	case GIMP_PDB_COLORARRAY:
-	  (*params)[i].data.d_colorarray = g_new (GimpRGB,
+        case GIMP_PDB_COLORARRAY:
+          (*params)[i].data.d_colorarray = g_new (GimpRGB,
                                                   (*params)[i-1].data.d_int32);
-	  if (! _gimp_wire_read_color (channel,
-                                        (*params)[i].data.d_colorarray,
-                                        (*params)[i-1].data.d_int32,
-                                        user_data))
-	    {
-	      g_free ((*params)[i].data.d_colorarray);
-	      goto cleanup;
-	    }
+          if (! _gimp_wire_read_color (channel,
+                                       (*params)[i].data.d_colorarray,
+                                       (*params)[i-1].data.d_int32,
+                                       user_data))
+            {
+              g_free ((*params)[i].data.d_colorarray);
+              goto cleanup;
+            }
           break;
 
         case GIMP_PDB_VECTORS:

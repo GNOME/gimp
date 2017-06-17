@@ -563,7 +563,7 @@ gimp_config_path_expand_only (const gchar  *path,
           if (!s)
             {
               g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-			   _("Cannot expand ${%s}"), token);
+                           _("Cannot expand ${%s}"), token);
               g_free (token);
               goto cleanup;
             }

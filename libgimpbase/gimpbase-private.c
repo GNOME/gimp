@@ -48,33 +48,33 @@ gimp_base_init (GimpUnitVtable *vtable)
   quark = g_quark_from_static_string ("gimp-compat-enum");
 
   g_type_set_qdata (GIMP_TYPE_ADD_MASK_TYPE, quark,
-		    (gpointer) GIMP_TYPE_ADD_MASK_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_ADD_MASK_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_BLEND_MODE, quark,
-		    (gpointer) GIMP_TYPE_BLEND_MODE_COMPAT);
+                    (gpointer) GIMP_TYPE_BLEND_MODE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_BUCKET_FILL_MODE, quark,
-		    (gpointer) GIMP_TYPE_BUCKET_FILL_MODE_COMPAT);
+                    (gpointer) GIMP_TYPE_BUCKET_FILL_MODE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_CHANNEL_TYPE, quark,
-		    (gpointer) GIMP_TYPE_CHANNEL_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_CHANNEL_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_CLONE_TYPE, quark,
-		    (gpointer) GIMP_TYPE_CLONE_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_CLONE_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_CONVERT_PALETTE_TYPE, quark,
-		    (gpointer) GIMP_TYPE_CONVERT_PALETTE_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_CONVERT_PALETTE_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_CONVOLVE_TYPE, quark,
-		    (gpointer) GIMP_TYPE_CONVOLVE_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_CONVOLVE_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_DESATURATE_MODE, quark,
-		    (gpointer) GIMP_TYPE_DESATURATE_MODE_COMPAT);
+                    (gpointer) GIMP_TYPE_DESATURATE_MODE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_DODGE_BURN_TYPE, quark,
-		    (gpointer) GIMP_TYPE_DODGE_BURN_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_DODGE_BURN_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_FILL_TYPE, quark,
-		    (gpointer) GIMP_TYPE_FILL_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_FILL_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_HUE_RANGE, quark,
-		    (gpointer) GIMP_TYPE_HUE_RANGE_COMPAT);
+                    (gpointer) GIMP_TYPE_HUE_RANGE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_ICON_TYPE, quark,
-		    (gpointer) GIMP_TYPE_ICON_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_ICON_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_INTERPOLATION_TYPE, quark,
-		    (gpointer) GIMP_TYPE_INTERPOLATION_TYPE_COMPAT);
+                    (gpointer) GIMP_TYPE_INTERPOLATION_TYPE_COMPAT);
   g_type_set_qdata (GIMP_TYPE_TRANSFER_MODE, quark,
-		    (gpointer) GIMP_TYPE_TRANSFER_MODE_COMPAT);
+                    (gpointer) GIMP_TYPE_TRANSFER_MODE_COMPAT);
 
   gimp_base_initialized = TRUE;
 }

@@ -90,8 +90,8 @@ gimp_value_array_index (const GimpValueArray *value_array,
 
 static inline void
 value_array_grow (GimpValueArray *value_array,
-		  gint            n_values,
-		  gboolean        zero_init)
+                  gint            n_values,
+                  gboolean        zero_init)
 {
   g_return_if_fail ((guint) n_values >= (guint) value_array->n_values);
 
@@ -104,10 +104,10 @@ value_array_grow (GimpValueArray *value_array,
       value_array->values = g_renew (GValue, value_array->values, value_array->n_prealloced);
 
       if (!zero_init)
-	i = value_array->n_values;
+        i = value_array->n_values;
 
       memset (value_array->values + i, 0,
-	      (value_array->n_prealloced - i) * sizeof (value_array->values[0]));
+              (value_array->n_prealloced - i) * sizeof (value_array->values[0]));
     }
 }
 
