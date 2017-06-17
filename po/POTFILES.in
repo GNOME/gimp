@@ -254,6 +254,7 @@ app/display/gimpdisplayshell-title.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
 app/display/gimptoolcompass.c
+app/display/gimptooltransformgrid.c
 
 app/file/file-open.c
 app/file/file-remote.c
