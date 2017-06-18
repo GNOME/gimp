@@ -40,7 +40,6 @@ struct _GimpHandleTransformTool
   GimpTransformTool        parent_instance;
 
   GtkWidget               *label[3][3];
-  gboolean                 matrix_recalculation;
 
   GimpTransformHandleMode  saved_handle_mode;
 };

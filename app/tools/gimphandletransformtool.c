@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -35,8 +33,8 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
+#include "display/gimptoolhandlegrid.h"
 #include "display/gimptoolgui.h"
 
 #include "gimphandletransformoptions.h"
@@ -84,59 +82,26 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_handle_transform_tool_button_press  (GimpTool              *tool,
-                                                        const GimpCoords      *coords,
-                                                        guint32                time,
-                                                        GdkModifierType        state,
-                                                        GimpButtonPressType    press_type,
-                                                        GimpDisplay           *display);
-static void   gimp_handle_transform_tool_button_release (GimpTool              *tool,
-                                                         const GimpCoords      *coords,
-                                                         guint32                time,
-                                                         GdkModifierType        state,
-                                                         GimpButtonReleaseType    release_type,
-                                                         GimpDisplay           *display);
-static void   gimp_handle_transform_tool_modifier_key   (GimpTool              *tool,
-                                                         GdkModifierType        key,
-                                                         gboolean               press,
-                                                         GdkModifierType        state,
-                                                         GimpDisplay           *display);
+static void   gimp_handle_transform_tool_modifier_key   (GimpTool          *tool,
+                                                         GdkModifierType    key,
+                                                         gboolean           press,
+                                                         GdkModifierType    state,
+                                                         GimpDisplay       *display);
+static void   gimp_handle_transform_tool_options_notify (GimpTool          *tool,
+                                                         GimpToolOptions   *options,
+                                                         const GParamSpec  *pspec);
 
-static void   gimp_handle_transform_tool_dialog         (GimpTransformTool  *tr_tool);
-static void   gimp_handle_transform_tool_dialog_update  (GimpTransformTool  *tr_tool);
-static void   gimp_handle_transform_tool_prepare        (GimpTransformTool  *tr_tool);
-static void   gimp_handle_transform_tool_motion         (GimpTransformTool  *tr_tool);
-static void   gimp_handle_transform_tool_recalc_matrix  (GimpTransformTool  *tr_tool,
-                                                         GimpToolWidget     *widget);
-static gchar *gimp_handle_transform_tool_get_undo_desc  (GimpTransformTool  *tr_tool);
-static TransformAction
-              gimp_handle_transform_tool_pick_function  (GimpTransformTool  *tr_tool,
-                                                         const GimpCoords   *coords,
-                                                         GdkModifierType     state,
-                                                         GimpDisplay        *display);
-static void   gimp_handle_transform_tool_cursor_update  (GimpTransformTool  *tr_tool,
-                                                         GimpCursorType     *cursor,
-                                                         GimpCursorModifier *modifier);
-static void   gimp_handle_transform_tool_draw_gui       (GimpTransformTool  *tr_tool);
+static void   gimp_handle_transform_tool_dialog         (GimpTransformTool *tr_tool);
+static void   gimp_handle_transform_tool_dialog_update  (GimpTransformTool *tr_tool);
+static void   gimp_handle_transform_tool_prepare        (GimpTransformTool *tr_tool);
+static GimpToolWidget *
+              gimp_handle_transform_tool_get_widget     (GimpTransformTool *tr_tool);
+static void   gimp_handle_transform_tool_recalc_matrix  (GimpTransformTool *tr_tool,
+                                                         GimpToolWidget    *widget);
+static gchar *gimp_handle_transform_tool_get_undo_desc  (GimpTransformTool *tr_tool);
 
-static gboolean       is_handle_position_valid          (GimpTransformTool  *tr_tool,
-                                                         gint                active_handle);
-static void           handle_micro_move                 (GimpTransformTool *tr_tool,
-                                                         gint               active_handle);
-static inline gdouble calc_angle                        (gdouble  ax,
-                                                         gdouble  ay,
-                                                         gdouble  bx,
-                                                         gdouble  by);
-static inline gdouble calc_len                          (gdouble  a,
-                                                         gdouble  b);
-static inline gdouble calc_lineintersect_ratio          (gdouble  p1x,
-                                                         gdouble  p1y,
-                                                         gdouble  p2x,
-                                                         gdouble  p2y,
-                                                         gdouble  q1x,
-                                                         gdouble  q1y,
-                                                         gdouble  q2x,
-                                                         gdouble  q2y);
+static void   gimp_handle_transform_tool_widget_changed (GimpToolWidget    *widget,
+                                                         GimpTransformTool *tr_tool);
 
 
 G_DEFINE_TYPE (GimpHandleTransformTool, gimp_handle_transform_tool,
@@ -173,19 +138,15 @@ gimp_handle_transform_tool_class_init (GimpHandleTransformToolClass *klass)
   GimpToolClass          *tool_class  = GIMP_TOOL_CLASS (klass);
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
-  tool_class->button_press   = gimp_handle_transform_tool_button_press;
-  tool_class->button_release = gimp_handle_transform_tool_button_release;
   tool_class->modifier_key   = gimp_handle_transform_tool_modifier_key;
+  tool_class->options_notify = gimp_handle_transform_tool_options_notify;
 
   trans_class->dialog        = gimp_handle_transform_tool_dialog;
   trans_class->dialog_update = gimp_handle_transform_tool_dialog_update;
   trans_class->prepare       = gimp_handle_transform_tool_prepare;
-  trans_class->motion        = gimp_handle_transform_tool_motion;
+  trans_class->get_widget    = gimp_handle_transform_tool_get_widget;
   trans_class->recalc_matrix = gimp_handle_transform_tool_recalc_matrix;
   trans_class->get_undo_desc = gimp_handle_transform_tool_get_undo_desc;
-  trans_class->pick_function = gimp_handle_transform_tool_pick_function;
-  trans_class->cursor_update = gimp_handle_transform_tool_cursor_update;
-  trans_class->draw_gui      = gimp_handle_transform_tool_draw_gui;
 }
 
 static void
@@ -195,168 +156,9 @@ gimp_handle_transform_tool_init (GimpHandleTransformTool *ht_tool)
 
   tr_tool->progress_text    = _("Handle transformation");
   tr_tool->use_grid         = TRUE;
-
   tr_tool->does_perspective = TRUE;
 
   ht_tool->saved_handle_mode = GIMP_HANDLE_MODE_ADD_TRANSFORM;
-}
-
-static void
-gimp_handle_transform_tool_button_press (GimpTool            *tool,
-                                         const GimpCoords    *coords,
-                                         guint32              time,
-                                         GdkModifierType      state,
-                                         GimpButtonPressType  press_type,
-                                         GimpDisplay         *display)
-{
-  GimpHandleTransformTool    *ht      = GIMP_HANDLE_TRANSFORM_TOOL (tool);
-  GimpTransformTool          *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpHandleTransformOptions *options;
-  gint                        n_handles;
-  gint                        active_handle;
-
-  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-
-  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                press_type, display);
-
-  n_handles     = (gint) tr_tool->trans_info[N_HANDLES];
-  active_handle = tr_tool->function - TRANSFORM_HANDLE_N;
-
-  switch (options->handle_mode)
-    {
-    case GIMP_HANDLE_MODE_ADD_TRANSFORM:
-      if (n_handles < 4 && tr_tool->function == TRANSFORM_HANDLE_NONE)
-        {
-          /* add handle */
-
-          GimpMatrix3 matrix;
-
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-          active_handle = n_handles;
-
-          tr_tool->trans_info[X0 + 2 * active_handle] = coords->x;
-          tr_tool->trans_info[Y0 + 2 * active_handle] = coords->y;
-          tr_tool->trans_info[N_HANDLES]++;
-
-          if (! is_handle_position_valid (tr_tool, active_handle))
-            {
-              handle_micro_move (tr_tool, active_handle);
-            }
-
-          /* handle was added, calculate new original position */
-          matrix = tr_tool->transform;
-          gimp_matrix3_invert (&matrix);
-          gimp_matrix3_transform_point (&matrix,
-                                        tr_tool->trans_info[X0 + 2 * active_handle],
-                                        tr_tool->trans_info[Y0 + 2 * active_handle],
-                                        &tr_tool->trans_info[OX0 + 2 * active_handle],
-                                        &tr_tool->trans_info[OY0 + 2 * active_handle]);
-
-          /*  this is disgusting: we put the new handle's coordinates
-           *  into the prev_trans_info array, because our motion
-           *  handler needs them for doing the actual transform; we
-           *  can only do this because the values will be ignored by
-           *  anything but our motion handler because we don't
-           *  increase the N_HANDLES value in prev_trans_info.
-           */
-          (*tr_tool->prev_trans_info)[X0 + 2 * active_handle] = tr_tool->trans_info[X0 + 2 * active_handle];
-          (*tr_tool->prev_trans_info)[Y0 + 2 * active_handle] = tr_tool->trans_info[Y0 + 2 * active_handle];
-
-          (*tr_tool->prev_trans_info)[OX0 + 2 * active_handle] = tr_tool->trans_info[OX0 + 2 * active_handle];
-          (*tr_tool->prev_trans_info)[OY0 + 2 * active_handle] = tr_tool->trans_info[OY0 + 2 * active_handle];
-
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-          tr_tool->function = TRANSFORM_HANDLE_N + active_handle;
-        }
-      break;
-
-    case GIMP_HANDLE_MODE_MOVE:
-      /* check for valid position and calculating of OX0...OY3 is
-       * done on button release
-       */
-
-      /* move handles without changing the transformation matrix */
-      ht->matrix_recalculation = FALSE;
-      break;
-
-    case GIMP_HANDLE_MODE_REMOVE:
-      if (n_handles > 0      &&
-          active_handle >= 0 &&
-          active_handle < 4)
-        {
-          /* remove handle */
-
-          gdouble tempx  = tr_tool->trans_info[X0  + 2 * active_handle];
-          gdouble tempy  = tr_tool->trans_info[Y0  + 2 * active_handle];
-          gdouble tempox = tr_tool->trans_info[OX0 + 2 * active_handle];
-          gdouble tempoy = tr_tool->trans_info[OY0 + 2 * active_handle];
-          gint    i;
-
-          n_handles--;
-          tr_tool->trans_info[N_HANDLES]--;
-
-          for (i = active_handle; i < n_handles; i++)
-            {
-              tr_tool->trans_info[X0  + 2 * i] = tr_tool->trans_info[X1  + 2 * i];
-              tr_tool->trans_info[Y0  + 2 * i] = tr_tool->trans_info[Y1  + 2 * i];
-              tr_tool->trans_info[OX0 + 2 * i] = tr_tool->trans_info[OX1 + 2 * i];
-              tr_tool->trans_info[OY0 + 2 * i] = tr_tool->trans_info[OY1 + 2 * i];
-            }
-
-          tr_tool->trans_info[X0  + 2 * n_handles] = tempx;
-          tr_tool->trans_info[Y0  + 2 * n_handles] = tempy;
-          tr_tool->trans_info[OX0 + 2 * n_handles] = tempox;
-          tr_tool->trans_info[OY0 + 2 * n_handles] = tempoy;
-        }
-      break;
-    }
-}
-
-static void
-gimp_handle_transform_tool_button_release (GimpTool              *tool,
-                                           const GimpCoords      *coords,
-                                           guint32                time,
-                                           GdkModifierType        state,
-                                           GimpButtonReleaseType  release_type,
-                                           GimpDisplay           *display)
-{
-  GimpHandleTransformTool    *ht      = GIMP_HANDLE_TRANSFORM_TOOL (tool);
-  GimpTransformTool          *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpHandleTransformOptions *options;
-  gint                        active_handle;
-
-  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-
-  active_handle = tr_tool->function - TRANSFORM_HANDLE_N;
-
-  if (options->handle_mode == GIMP_HANDLE_MODE_MOVE &&
-      active_handle >= 0 &&
-      active_handle < 4)
-    {
-      GimpMatrix3 matrix;
-
-      if (! is_handle_position_valid (tr_tool, active_handle))
-        {
-          handle_micro_move (tr_tool, active_handle);
-        }
-
-      /* handle was moved, calculate new original position */
-      matrix = tr_tool->transform;
-      gimp_matrix3_invert (&matrix);
-      gimp_matrix3_transform_point (&matrix,
-                                    tr_tool->trans_info[X0 + 2 * active_handle],
-                                    tr_tool->trans_info[Y0 + 2 * active_handle],
-                                    &tr_tool->trans_info[OX0 + 2 * active_handle],
-                                    &tr_tool->trans_info[OY0 + 2 * active_handle]);
-    }
-
-  ht->matrix_recalculation = TRUE;
-
-  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time,
-                                                  state, release_type, display);
 }
 
 static void
@@ -404,11 +206,30 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
 
   if (handle_mode != options->handle_mode)
     {
-      g_object_set (options, "handle-mode", handle_mode, NULL);
+      g_object_set (options,
+                    "handle-mode", handle_mode,
+                    NULL);
     }
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
                                                 state, display);
+}
+
+static void
+gimp_handle_transform_tool_options_notify (GimpTool         *tool,
+                                           GimpToolOptions  *options,
+                                           const GParamSpec *pspec)
+{
+  GimpTransformTool          *tr_tool    = GIMP_TRANSFORM_TOOL (tool);
+  GimpHandleTransformOptions *ht_options = GIMP_HANDLE_TRANSFORM_OPTIONS (options);
+
+  if (! strcmp (pspec->name, "handle-mode"))
+    {
+      if (tr_tool->widget)
+        g_object_set (tr_tool->widget,
+                      "handle-mode", ht_options->handle_mode,
+                      NULL);
+    }
 }
 
 static void
@@ -468,10 +289,8 @@ gimp_handle_transform_tool_dialog_update (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_handle_transform_tool_prepare (GimpTransformTool  *tr_tool)
+gimp_handle_transform_tool_prepare (GimpTransformTool *tr_tool)
 {
-  GimpHandleTransformTool *ht_tool = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
-
   tr_tool->trans_info[X0]        = (gdouble) tr_tool->x1;
   tr_tool->trans_info[Y0]        = (gdouble) tr_tool->y1;
   tr_tool->trans_info[X1]        = (gdouble) tr_tool->x2;
@@ -489,146 +308,98 @@ gimp_handle_transform_tool_prepare (GimpTransformTool  *tr_tool)
   tr_tool->trans_info[OX3]       = (gdouble) tr_tool->x2;
   tr_tool->trans_info[OY3]       = (gdouble) tr_tool->y2;
   tr_tool->trans_info[N_HANDLES] = 0;
-
-  ht_tool->matrix_recalculation = TRUE;
 }
 
-static void
-gimp_handle_transform_tool_motion (GimpTransformTool *tr_tool)
+static GimpToolWidget *
+gimp_handle_transform_tool_get_widget (GimpTransformTool *tr_tool)
 {
-  GimpHandleTransformOptions *options;
-  gint                        n_handles;
-  gint                        active_handle;
+  GimpTool             *tool    = GIMP_TOOL (tr_tool);
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpDisplayShell     *shell   = gimp_display_get_shell (tool->display);
+  GimpToolWidget       *widget;
 
-  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  widget = gimp_tool_handle_grid_new (shell,
+                                      tr_tool->x1,
+                                      tr_tool->y1,
+                                      tr_tool->x2,
+                                      tr_tool->y2);
 
-  n_handles     = (gint) tr_tool->trans_info[N_HANDLES];
-  active_handle = tr_tool->function - TRANSFORM_HANDLE_N;
+  g_object_set (widget,
+                "n-handles", (gint) tr_tool->trans_info[N_HANDLES],
+                "orig-x1",   tr_tool->trans_info[OX0],
+                "orig-y1",   tr_tool->trans_info[OY0],
+                "orig-x2",   tr_tool->trans_info[OX1],
+                "orig-y2",   tr_tool->trans_info[OY1],
+                "orig-x3",   tr_tool->trans_info[OX2],
+                "orig-y3",   tr_tool->trans_info[OY2],
+                "orig-x4",   tr_tool->trans_info[OX3],
+                "orig-y4",   tr_tool->trans_info[OY3],
+                "trans-x1",  tr_tool->trans_info[X0],
+                "trans-y1",  tr_tool->trans_info[Y0],
+                "trans-x2",  tr_tool->trans_info[X1],
+                "trans-y2",  tr_tool->trans_info[Y1],
+                "trans-x3",  tr_tool->trans_info[X2],
+                "trans-y3",  tr_tool->trans_info[Y2],
+                "trans-x4",  tr_tool->trans_info[X3],
+                "trans-y4",  tr_tool->trans_info[Y3],
+                NULL);
 
-  if (active_handle >= 0 && active_handle < 4)
-    {
-      if (options->handle_mode == GIMP_HANDLE_MODE_MOVE)
-        {
-          tr_tool->trans_info[X0 + 2 * active_handle] += tr_tool->curx - tr_tool->lastx;
-          tr_tool->trans_info[Y0 + 2 * active_handle] += tr_tool->cury - tr_tool->lasty;
+  g_object_set (widget,
+                "guide-type", options->grid_type,
+                "n-guides",   options->grid_size,
+                NULL);
 
-          /* check for valid position and calculating of OX0...OY3 is
-           * done on button release hopefully this makes the code run
-           * faster Moving could be even faster if there was caching
-           * for the image preview
-           */
-        }
-      else if (options->handle_mode == GIMP_HANDLE_MODE_ADD_TRANSFORM)
-        {
-          gdouble angle, angle_sin, angle_cos, scale;
-          gdouble fixed_handles_x[3];
-          gdouble fixed_handles_y[3];
-          gdouble oldpos_x[4], oldpos_y[4];
-          gdouble newpos_x[4], newpos_y[4];
-          gint    i, j;
+  g_signal_connect (widget, "changed",
+                    G_CALLBACK (gimp_handle_transform_tool_widget_changed),
+                    tr_tool);
 
-          for (i = 0, j = 0; i < 4; i++)
-            {
-              /* Find all visible handles that are not being moved */
-              if (i < n_handles && i != active_handle)
-                {
-                  fixed_handles_x[j] = tr_tool->trans_info[X0 + i * 2];
-                  fixed_handles_y[j] = tr_tool->trans_info[Y0 + i * 2];
-                  j++;
-                }
-
-              newpos_x[i] = oldpos_x[i] = (*tr_tool->prev_trans_info)[X0 + i * 2];
-              newpos_y[i] = oldpos_y[i] = (*tr_tool->prev_trans_info)[Y0 + i * 2];
-            }
-
-          newpos_x[active_handle] = oldpos_x[active_handle] + tr_tool->curx - tr_tool->mousex;
-          newpos_y[active_handle] = oldpos_y[active_handle] + tr_tool->cury - tr_tool->mousey;
-
-          switch (n_handles)
-            {
-            case 1:
-              /* move */
-              for (i = 1; i < 4; i++)
-                {
-                  newpos_x[i] = oldpos_x[i] + tr_tool->curx - tr_tool->mousex;
-                  newpos_y[i] = oldpos_y[i] + tr_tool->cury - tr_tool->mousey;
-                }
-              break;
-
-            case 2:
-              /* rotate and keep-aspect-scale */
-              scale = calc_len (newpos_x[active_handle] - fixed_handles_x[0],
-                                newpos_y[active_handle] - fixed_handles_y[0])
-                / calc_len (oldpos_x[active_handle] - fixed_handles_x[0],
-                            oldpos_y[active_handle] - fixed_handles_y[0]);
-
-              angle = calc_angle (oldpos_x[active_handle] - fixed_handles_x[0],
-                                  oldpos_y[active_handle] - fixed_handles_y[0],
-                                  newpos_x[active_handle] - fixed_handles_x[0],
-                                  newpos_y[active_handle] - fixed_handles_y[0]);
-
-              angle_sin = sin (angle);
-              angle_cos = cos (angle);
-
-              for (i = 2; i < 4; i++)
-                {
-                  newpos_x[i] = fixed_handles_x[0]
-                    + scale * (angle_cos * (oldpos_x[i]-fixed_handles_x[0])
-                               + angle_sin * (oldpos_y[i]-fixed_handles_y[0]) );
-                  newpos_y[i] = fixed_handles_y[0]
-                    + scale * (-angle_sin * (oldpos_x[i]-fixed_handles_x[0])
-                               + angle_cos * (oldpos_y[i]-fixed_handles_y[0]) );
-                }
-              break;
-
-            case 3:
-              /* shear and non-aspect-scale */
-              scale = calc_lineintersect_ratio (oldpos_x[3], oldpos_y[3],
-                                                oldpos_x[active_handle], oldpos_y[active_handle],
-                                                fixed_handles_x[0], fixed_handles_y[0],
-                                                fixed_handles_x[1], fixed_handles_y[1]);
-
-              newpos_x[3] = oldpos_x[3] + scale * (tr_tool->curx - tr_tool->mousex);
-              newpos_y[3] = oldpos_y[3] + scale * (tr_tool->cury - tr_tool->mousey);
-              break;
-            }
-
-          for (i = 0; i < 4; i++)
-            {
-              tr_tool->trans_info[X0 + 2 * i] = newpos_x[i];
-              tr_tool->trans_info[Y0 + 2 * i] = newpos_y[i];
-            }
-        }
-    }
+  return widget;
 }
 
 static void
 gimp_handle_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
                                           GimpToolWidget    *widget)
 {
-  GimpHandleTransformTool *ht_tool = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
+  gimp_matrix3_identity (&tr_tool->transform);
+  gimp_transform_matrix_handles (&tr_tool->transform,
+                                 tr_tool->trans_info[OX0],
+                                 tr_tool->trans_info[OY0],
+                                 tr_tool->trans_info[OX1],
+                                 tr_tool->trans_info[OY1],
+                                 tr_tool->trans_info[OX2],
+                                 tr_tool->trans_info[OY2],
+                                 tr_tool->trans_info[OX3],
+                                 tr_tool->trans_info[OY3],
+                                 tr_tool->trans_info[X0],
+                                 tr_tool->trans_info[Y0],
+                                 tr_tool->trans_info[X1],
+                                 tr_tool->trans_info[Y1],
+                                 tr_tool->trans_info[X2],
+                                 tr_tool->trans_info[Y2],
+                                 tr_tool->trans_info[X3],
+                                 tr_tool->trans_info[Y3]);
 
-  if (ht_tool->matrix_recalculation)
-    {
-      gimp_matrix3_identity (&tr_tool->transform);
-      gimp_transform_matrix_handles (&tr_tool->transform,
-                                     tr_tool->trans_info[OX0],
-                                     tr_tool->trans_info[OY0],
-                                     tr_tool->trans_info[OX1],
-                                     tr_tool->trans_info[OY1],
-                                     tr_tool->trans_info[OX2],
-                                     tr_tool->trans_info[OY2],
-                                     tr_tool->trans_info[OX3],
-                                     tr_tool->trans_info[OY3],
-                                     tr_tool->trans_info[X0],
-                                     tr_tool->trans_info[Y0],
-                                     tr_tool->trans_info[X1],
-                                     tr_tool->trans_info[Y1],
-                                     tr_tool->trans_info[X2],
-                                     tr_tool->trans_info[Y2],
-                                     tr_tool->trans_info[X3],
-                                     tr_tool->trans_info[Y3]);
-    }
+  if (widget)
+    g_object_set (widget,
+                  "transform", &tr_tool->transform,
+                  "n-handles", (gint) tr_tool->trans_info[N_HANDLES],
+                  "orig-x1",   tr_tool->trans_info[OX0],
+                  "orig-y1",   tr_tool->trans_info[OY0],
+                  "orig-x2",   tr_tool->trans_info[OX1],
+                  "orig-y2",   tr_tool->trans_info[OY1],
+                  "orig-x3",   tr_tool->trans_info[OX2],
+                  "orig-y3",   tr_tool->trans_info[OY2],
+                  "orig-x4",   tr_tool->trans_info[OX3],
+                  "orig-y4",   tr_tool->trans_info[OY3],
+                  "trans-x1",  tr_tool->trans_info[X0],
+                  "trans-y1",  tr_tool->trans_info[Y0],
+                  "trans-x2",  tr_tool->trans_info[X1],
+                  "trans-y2",  tr_tool->trans_info[Y1],
+                  "trans-x3",  tr_tool->trans_info[X2],
+                  "trans-y3",  tr_tool->trans_info[Y2],
+                  "trans-x4",  tr_tool->trans_info[X3],
+                  "trans-y4",  tr_tool->trans_info[Y3],
+                  NULL);
 }
 
 static gchar *
@@ -637,253 +408,33 @@ gimp_handle_transform_tool_get_undo_desc (GimpTransformTool *tr_tool)
   return g_strdup (C_("undo-type", "Handle transform"));
 }
 
-static TransformAction
-gimp_handle_transform_tool_pick_function (GimpTransformTool *tr_tool,
-                                          const GimpCoords  *coords,
-                                          GdkModifierType    state,
-                                          GimpDisplay       *display)
-{
-  TransformAction i;
-
-  for (i = TRANSFORM_HANDLE_N; i < TRANSFORM_HANDLE_N + 4; i++)
-    {
-      if (tr_tool->handles[i] &&
-          gimp_canvas_item_hit (tr_tool->handles[i], coords->x, coords->y))
-        {
-          return i;
-        }
-    }
-
-  return TRANSFORM_HANDLE_NONE;
-}
-
 static void
-gimp_handle_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
-                                          GimpCursorType     *cursor,
-                                          GimpCursorModifier *modifier)
+gimp_handle_transform_tool_widget_changed (GimpToolWidget    *widget,
+                                           GimpTransformTool *tr_tool)
 {
-  GimpHandleTransformOptions *options;
-  GimpToolCursorType          tool_cursor = GIMP_TOOL_CURSOR_NONE;
+  gint n_handles;
 
-  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  g_object_get (widget,
+                "n-handles", &n_handles,
+                "orig-x1",   &tr_tool->trans_info[OX0],
+                "orig-y1",   &tr_tool->trans_info[OY0],
+                "orig-x2",   &tr_tool->trans_info[OX1],
+                "orig-y2",   &tr_tool->trans_info[OY1],
+                "orig-x3",   &tr_tool->trans_info[OX2],
+                "orig-y3",   &tr_tool->trans_info[OY2],
+                "orig-x4",   &tr_tool->trans_info[OX3],
+                "orig-y4",   &tr_tool->trans_info[OY3],
+                "trans-x1",  &tr_tool->trans_info[X0],
+                "trans-y1",  &tr_tool->trans_info[Y0],
+                "trans-x2",  &tr_tool->trans_info[X1],
+                "trans-y2",  &tr_tool->trans_info[Y1],
+                "trans-x3",  &tr_tool->trans_info[X2],
+                "trans-y3",  &tr_tool->trans_info[Y2],
+                "trans-x4",  &tr_tool->trans_info[X3],
+                "trans-y4",  &tr_tool->trans_info[Y3],
+                NULL);
 
-  *cursor   = GIMP_CURSOR_CROSSHAIR_SMALL;
-  *modifier = GIMP_CURSOR_MODIFIER_NONE;
+  tr_tool->trans_info[N_HANDLES] = n_handles;
 
-  /* do not show modifiers when the tool isn't active */
-  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
-    return;
-
-  switch (options->handle_mode)
-    {
-    case GIMP_HANDLE_MODE_ADD_TRANSFORM:
-      if (tr_tool->function > TRANSFORM_HANDLE_NONE)
-        {
-          switch ((gint) tr_tool->trans_info[N_HANDLES])
-            {
-            case 1:
-              tool_cursor = GIMP_TOOL_CURSOR_MOVE;
-              break;
-            case 2:
-              tool_cursor = GIMP_TOOL_CURSOR_ROTATE;
-              break;
-            case 3:
-              tool_cursor = GIMP_TOOL_CURSOR_SHEAR;
-              break;
-            case 4:
-              tool_cursor = GIMP_TOOL_CURSOR_PERSPECTIVE;
-              break;
-            }
-        }
-      else
-        {
-          if ((gint) tr_tool->trans_info[N_HANDLES] < 4)
-            *modifier = GIMP_CURSOR_MODIFIER_PLUS;
-          else
-            *modifier = GIMP_CURSOR_MODIFIER_BAD;
-        }
-      break;
-
-    case GIMP_HANDLE_MODE_MOVE:
-      if (tr_tool->function > TRANSFORM_HANDLE_NONE)
-        *modifier = GIMP_CURSOR_MODIFIER_MOVE;
-      else
-        *modifier = GIMP_CURSOR_MODIFIER_BAD;
-      break;
-
-    case GIMP_HANDLE_MODE_REMOVE:
-      if (tr_tool->function > TRANSFORM_HANDLE_NONE)
-        *modifier = GIMP_CURSOR_MODIFIER_MINUS;
-      else
-        *modifier = GIMP_CURSOR_MODIFIER_BAD;
-      break;
-    }
-
-  gimp_tool_control_set_tool_cursor (GIMP_TOOL (tr_tool)->control,
-                                     tool_cursor);
-}
-
-static void
-gimp_handle_transform_tool_draw_gui (GimpTransformTool *tr_tool)
-{
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tr_tool);
-  gint          i;
-
-#if 0
-  /* show additional points for debugging */
-  for (i = tr_tool->trans_info[N_HANDLES]; i < 4; i++)
-    {
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_FILLED_CIRCLE,
-                                 tr_tool->trans_info[X0 + 2 * i],
-                                 tr_tool->trans_info[Y0 + 2 * i],
-                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-      gimp_draw_tool_add_handle (draw_tool,
-                                 GIMP_HANDLE_FILLED_DIAMOND,
-                                 tr_tool->trans_info[OX0 + 2 * i],
-                                 tr_tool->trans_info[OY0 + 2 * i],
-                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
-      }
-
-  for (i = 0; i < tr_tool->trans_info[N_HANDLES]; i++)
-    {
-      tr_tool->handles[TRANSFORM_HANDLE_N + i] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_DIAMOND,
-                                   tr_tool->trans_info[OX0 + 2 * i],
-                                   tr_tool->trans_info[OY0 + 2 * i],
-                                   GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                   GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-    }
-#endif
-
-  for (i = 0; i < tr_tool->trans_info[N_HANDLES]; i++)
-    {
-      tr_tool->handles[TRANSFORM_HANDLE_N + i] =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_CIRCLE,
-                                   tr_tool->trans_info[X0 + 2 * i],
-                                   tr_tool->trans_info[Y0 + 2 * i],
-                                   GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                   GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-    }
-}
-
-/* check if a handle is not on the connection line of two other handles */
-static gboolean
-is_handle_position_valid (GimpTransformTool *tr_tool,
-                          gint               active_handle)
-{
-  gint i, j, k;
-
-  for (i = 0; i < 2; i++)
-    {
-      for (j = i + 1; j < 3; j++)
-        {
-          for (k = j + 1; i < 4; i++)
-            {
-              if (active_handle == i ||
-                  active_handle == j ||
-                  active_handle == k)
-                {
-                  if ((tr_tool->trans_info[X0 + 2 * i] -
-                       tr_tool->trans_info[X0 + 2 * j]) *
-                      (tr_tool->trans_info[Y0 + 2 * j] -
-                       tr_tool->trans_info[Y0 + 2 * k]) ==
-
-                      (tr_tool->trans_info[X0 + 2 * j] -
-                       tr_tool->trans_info[X0 + 2 * k]) *
-                      (tr_tool->trans_info[Y0 + 2 * i] -
-                       tr_tool->trans_info[Y0 + 2 * j]))
-                    {
-                      return FALSE;
-                    }
-                }
-            }
-        }
-    }
-
-  return TRUE;
-}
-
-/* three handles on a line causes problems.
- * Let's move the new handle around a bit to find a better position */
-static void
-handle_micro_move (GimpTransformTool *tr_tool,
-                   gint               active_handle)
-{
-  gdouble posx = tr_tool->trans_info[X0 + 2 * active_handle];
-  gdouble posy = tr_tool->trans_info[Y0 + 2 * active_handle];
-  gdouble dx, dy;
-
-  for (dx = -0.1; dx < 0.11; dx += 0.1)
-    {
-      tr_tool->trans_info[X0 + 2 * active_handle] = posx + dx;
-
-      for (dy = -0.1; dy < 0.11; dy += 0.1)
-        {
-          tr_tool->trans_info[Y0 + 2 * active_handle] = posy + dy;
-
-          if (is_handle_position_valid (tr_tool, active_handle))
-            {
-              return;
-            }
-        }
-    }
-}
-
-/* finds the clockwise angle between the vectors given, 0-2π */
-static inline gdouble
-calc_angle (gdouble ax,
-            gdouble ay,
-            gdouble bx,
-            gdouble by)
-{
-  gdouble angle;
-  gdouble direction;
-  gdouble length = sqrt ((ax * ax + ay * ay) * (bx * bx + by * by));
-
-  angle = acos ((ax * bx + ay * by) / length);
-  direction = ax * by - ay * bx;
-
-  return ((direction < 0) ? angle : 2 * G_PI - angle);
-}
-
-static inline gdouble
-calc_len  (gdouble a,
-           gdouble b)
-{
-  return sqrt (a * a + b * b);
-}
-
-
-/* imagine two lines, one through the points p1 and p2, the other one
- * through the points q1 and q2. Find the intersection point r.
- * Calculate (distance p1 to r)/(distance p2 to r)
- */
-static inline gdouble
-calc_lineintersect_ratio (gdouble p1x, gdouble p1y,
-                          gdouble p2x, gdouble p2y,
-                          gdouble q1x, gdouble q1y,
-                          gdouble q2x, gdouble q2y)
-{
-  gdouble denom, u;
-
-  denom = (q2y - q1y) * (p2x - p1x) - (q2x - q1x) * (p2y - p1y);
-  if (denom == 0.0)
-    {
-      /* u is infinite, so u/(u-1) is 1 */
-      return 1.0;
-    }
-
-  u = (q2y - q1y) * (q1x - p1x) - (q1y - p1y) * (q2x - q1x);
-  u /= denom;
-
-  return u / (u - 1);
+  gimp_transform_tool_recalc_matrix (tr_tool, NULL);
 }
