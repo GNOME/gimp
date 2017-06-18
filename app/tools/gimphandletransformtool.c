@@ -155,7 +155,6 @@ gimp_handle_transform_tool_init (GimpHandleTransformTool *ht_tool)
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (ht_tool);
 
   tr_tool->progress_text    = _("Handle transformation");
-  tr_tool->use_grid         = TRUE;
   tr_tool->does_perspective = TRUE;
 
   ht_tool->saved_handle_mode = GIMP_HANDLE_MODE_ADD_TRANSFORM;

@@ -22,34 +22,6 @@
 #include "gimpdrawtool.h"
 
 
-typedef enum
-{
-  TRANSFORM_CREATING,
-  TRANSFORM_HANDLE_NONE,
-  TRANSFORM_HANDLE_NW_P, /* perspective handles */
-  TRANSFORM_HANDLE_NE_P,
-  TRANSFORM_HANDLE_SW_P,
-  TRANSFORM_HANDLE_SE_P,
-  TRANSFORM_HANDLE_NW, /* north west */
-  TRANSFORM_HANDLE_NE, /* north east */
-  TRANSFORM_HANDLE_SW, /* south west */
-  TRANSFORM_HANDLE_SE, /* south east */
-  TRANSFORM_HANDLE_N,  /* north      */
-  TRANSFORM_HANDLE_S,  /* south      */
-  TRANSFORM_HANDLE_E,  /* east       */
-  TRANSFORM_HANDLE_W,  /* west       */
-  TRANSFORM_HANDLE_CENTER, /* for moving */
-  TRANSFORM_HANDLE_PIVOT,  /* pivot for rotation and scaling */
-  TRANSFORM_HANDLE_N_S,  /* shearing handles */
-  TRANSFORM_HANDLE_S_S,
-  TRANSFORM_HANDLE_E_S,
-  TRANSFORM_HANDLE_W_S,
-  TRANSFORM_HANDLE_ROTATION, /* rotation handle */
-
-  TRANSFORM_HANDLE_NUM /* keep this last so *handles[] is the right size */
-} TransformAction;
-
-
 /* This is not the number of items in the enum above, but the max size
  * of the enums at the top of each transformation tool, stored in
  * trans_info and related
@@ -75,18 +47,6 @@ struct _GimpTransformTool
 {
   GimpDrawTool    parent_instance;
 
-  gdouble         curx;               /*  current x coord                    */
-  gdouble         cury;               /*  current y coord                    */
-
-  gdouble         lastx;              /*  last x coord                       */
-  gdouble         lasty;              /*  last y coord                       */
-
-  gdouble         previousx;          /*  previous x coord                   */
-  gdouble         previousy;          /*  previous y coord                   */
-
-  gdouble         mousex;             /*  x coord where mouse was clicked    */
-  gdouble         mousey;             /*  y coord where mouse was clicked    */
-
   gint            x1, y1;             /*  upper left hand coordinate         */
   gint            x2, y2;             /*  lower right hand coords            */
 
@@ -103,18 +63,13 @@ struct _GimpTransformTool
   GimpItem       *hidden_item;        /*  the item that was hidden during
                                           the transform                      */
 
-  TransformAction function;           /*  current tool activity              */
-
-  gboolean        use_grid;           /*  does the tool use the grid         */
   gboolean        does_perspective;   /*  does the tool do non-affine
                                        *  transformations
                                        */
 
   GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
-
   GimpCanvasItem *preview;
-  GimpCanvasItem *handles[TRANSFORM_HANDLE_NUM];
 
   const gchar    *progress_text;
 
@@ -129,21 +84,10 @@ struct _GimpTransformToolClass
   void             (* dialog)        (GimpTransformTool *tool);
   void             (* dialog_update) (GimpTransformTool *tool);
   void             (* prepare)       (GimpTransformTool *tool);
-
   GimpToolWidget * (* get_widget)    (GimpTransformTool *tool);
-
-  void             (* motion)        (GimpTransformTool *tool);
   void             (* recalc_matrix) (GimpTransformTool *tool,
                                       GimpToolWidget    *widget);
   gchar          * (* get_undo_desc) (GimpTransformTool *tool);
-  TransformAction  (* pick_function) (GimpTransformTool *tool,
-                                      const GimpCoords  *coords,
-                                      GdkModifierType    state,
-                                      GimpDisplay       *display);
-  void             (* cursor_update) (GimpTransformTool  *tr_tool,
-                                      GimpCursorType     *cursor,
-                                      GimpCursorModifier *modifier);
-  void             (* draw_gui)      (GimpTransformTool *tool);
   GeglBuffer     * (* transform)     (GimpTransformTool *tool,
                                       GimpItem          *item,
                                       GeglBuffer        *orig_buffer,

@@ -114,7 +114,6 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
 
   tr_tool->progress_text    = _("Perspective transformation");
-  tr_tool->use_grid         = TRUE;
   tr_tool->does_perspective = TRUE;
 }
 
