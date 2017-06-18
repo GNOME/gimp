@@ -134,6 +134,18 @@ typedef enum
 } GimpTransformFunction;
 
 
+#define GIMP_TYPE_TRANSFORM_HANDLE_MODE (gimp_transform_handle_mode_get_type ())
+
+GType gimp_transform_handle_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HANDLE_MODE_ADD_TRANSFORM, /*< desc="Add / Transform" >*/
+  GIMP_HANDLE_MODE_MOVE,          /*< desc="Move"            >*/
+  GIMP_HANDLE_MODE_REMOVE         /*< desc="Remove"          >*/
+} GimpTransformHandleMode;
+
+
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
 
 GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;

@@ -10,37 +10,6 @@
 
 /* enumerations from "tools-enums.h" */
 GType
-gimp_transform_handle_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_HANDLE_MODE_ADD_TRANSFORM, "GIMP_HANDLE_MODE_ADD_TRANSFORM", "add-transform" },
-    { GIMP_HANDLE_MODE_MOVE, "GIMP_HANDLE_MODE_MOVE", "move" },
-    { GIMP_HANDLE_MODE_REMOVE, "GIMP_HANDLE_MODE_REMOVE", "remove" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_HANDLE_MODE_ADD_TRANSFORM, NC_("transform-handle-mode", "Add / Transform"), NULL },
-    { GIMP_HANDLE_MODE_MOVE, NC_("transform-handle-mode", "Move"), NULL },
-    { GIMP_HANDLE_MODE_REMOVE, NC_("transform-handle-mode", "Remove"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpTransformHandleMode", values);
-      gimp_type_set_translation_context (type, "transform-handle-mode");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_rectangle_constraint_get_type (void)
 {
   static const GEnumValue values[] =
