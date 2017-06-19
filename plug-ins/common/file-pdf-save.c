@@ -542,8 +542,12 @@ run (const gchar      *name,
        */
       cairo_surface_set_fallback_resolution (pdf_file, x_res, y_res);
 
-      /* PDF is usually 72 points per inch. If we have a different resolution,
-       * we will need this to fit our drawings
+      /* Cairo has a concept of user-space vs device-space units.
+       * From what I understand, by default the user-space unit is the
+       * typographical "point". Since we work mostly with pixels, not
+       * points, the following call simply scales the transformation
+       * matrix from points to pixels, relatively to the image
+       * resolution, knowing that 1 typographical point == 1/72 inch.
        */
       cairo_scale (cr, x_scale, y_scale);
 
