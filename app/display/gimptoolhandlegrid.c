@@ -40,7 +40,7 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_TOOL_HANDLE_SIZE_CIRCLE    13
+#define GIMP_TOOL_HANDLE_SIZE_CIRCLE 13
 
 
 enum
@@ -80,6 +80,9 @@ struct _GimpToolHandleGridPrivate
   gint     handle;
   gdouble  last_x;
   gdouble  last_y;
+
+  gdouble  mouse_x;
+  gdouble  mouse_y;
 
   GimpCanvasItem *handles[5];
 };
@@ -686,6 +689,9 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
   gdouble                    diff_x        = coords->x - private->last_x;
   gdouble                    diff_y        = coords->y - private->last_y;
 
+  private->mouse_x = coords->x;
+  private->mouse_y = coords->y;
+
   if (active_handle >= 0 && active_handle < 4)
     {
       if (private->handle_mode == GIMP_HANDLE_MODE_MOVE)
@@ -809,6 +815,9 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
   GimpToolHandleGridPrivate *private = grid->private;
   gint                       i;
 
+  private->mouse_x = coords->x;
+  private->mouse_y = coords->y;
+
   private->handle = 0;
 
   for (i = 0; i < 4; i++)
@@ -888,6 +897,26 @@ gimp_tool_handle_grid_get_cursor (GimpToolWidget     *widget,
   return TRUE;
 }
 
+static gint
+calc_handle_diameter (gdouble distance)
+{
+#define HANDLE_DIAMETER             (2 * GIMP_TOOL_HANDLE_SIZE_CIRCLE)
+#define POINT_GRAB_THRESHOLD_SQ     (SQR (HANDLE_DIAMETER / 2))
+#define FULL_HANDLE_THRESHOLD_SQ    (POINT_GRAB_THRESHOLD_SQ * 9)
+#define PARTIAL_HANDLE_THRESHOLD_SQ (FULL_HANDLE_THRESHOLD_SQ * 5)
+
+  /* Calculate the handle size based on distance from the cursor
+   */
+  gdouble size = (1.0 - (distance - FULL_HANDLE_THRESHOLD_SQ) /
+                  (PARTIAL_HANDLE_THRESHOLD_SQ - FULL_HANDLE_THRESHOLD_SQ));
+
+  size = CLAMP (size, 0.0, 1.0);
+
+  return (gint) CLAMP ((size * HANDLE_DIAMETER),
+                       GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                       HANDLE_DIAMETER);
+}
+
 static void
 gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid *grid)
 {
@@ -896,10 +925,23 @@ gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid *grid)
 
   for (i = 0; i < 4; i++)
     {
-      if (private->handles[i + 1])
+      GimpCanvasItem *item = private->handles[i + 1];
+
+      if (item)
         {
-          gimp_canvas_item_set_highlight (private->handles[i + 1],
-                                          (i + 1) == private->handle);
+          gdouble x, y;
+          gdouble dist;
+          gdouble diameter;
+
+          gimp_canvas_handle_get_position (item, &x, &y);
+          dist = gimp_canvas_item_transform_distance_square (item,
+                                                             private->mouse_x,
+                                                             private->mouse_y,
+                                                             x, y);
+          diameter = calc_handle_diameter (dist);
+
+          gimp_canvas_handle_set_size (item, diameter, diameter);
+          gimp_canvas_item_set_highlight (item, (i + 1) == private->handle);
         }
     }
 }
