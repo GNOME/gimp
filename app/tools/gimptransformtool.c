@@ -787,17 +787,17 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (tool->display);
+  GimpMatrix3           matrix  = tr_tool->transform;
+
+  if (options->direction == GIMP_TRANSFORM_BACKWARD)
+    gimp_matrix3_invert (&matrix);
 
   if (tr_tool->widget)
     {
       GimpCanvasItem *item;
-      GimpMatrix3     matrix = tr_tool->transform;
       gboolean        show_preview;
 
       show_preview = gimp_transform_options_show_preview (options);
-
-      if (options->direction == GIMP_TRANSFORM_BACKWARD)
-        gimp_matrix3_invert (&matrix);
 
       tr_tool->preview =
         gimp_draw_tool_add_transform_preview (draw_tool,
@@ -818,12 +818,12 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
       gimp_draw_tool_add_item (draw_tool, item);
 
+      /* FIXME */
       return;
     }
 
   if (options->type == GIMP_TRANSFORM_TYPE_SELECTION)
     {
-      GimpMatrix3         matrix = tr_tool->transform;
       const GimpBoundSeg *orig_in;
       const GimpBoundSeg *orig_out;
       GimpBoundSeg       *segs_in;
@@ -831,9 +831,6 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       gint                num_segs_in;
       gint                num_segs_out;
       gint                i;
-
-      if (options->direction == GIMP_TRANSFORM_BACKWARD)
-        gimp_matrix3_invert (&matrix);
 
       gimp_channel_boundary (gimp_image_get_mask (image),
                              &orig_in, &orig_out,
@@ -899,15 +896,11 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
     {
       GimpVectors *vectors;
       GimpStroke  *stroke = NULL;
-      GimpMatrix3  matrix = tr_tool->transform;
 
       vectors = gimp_image_get_active_vectors (image);
 
       if (vectors)
         {
-          if (options->direction == GIMP_TRANSFORM_BACKWARD)
-            gimp_matrix3_invert (&matrix);
-
           while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
             {
               GArray   *coords;
