@@ -161,6 +161,7 @@ gimp_canvas_boundary_set_property (GObject      *object,
     {
     case PROP_SEGS:
       break;
+
     case PROP_TRANSFORM:
       {
         GimpMatrix3 *transform = g_value_get_pointer (value);
@@ -172,6 +173,7 @@ gimp_canvas_boundary_set_property (GObject      *object,
           private->transform = NULL;
       }
       break;
+
     case PROP_OFFSET_X:
       private->offset_x = g_value_get_double (value);
       break;
@@ -197,9 +199,11 @@ gimp_canvas_boundary_get_property (GObject    *object,
     {
     case PROP_SEGS:
       break;
+
     case PROP_TRANSFORM:
       g_value_set_pointer (value, private->transform);
       break;
+
     case PROP_OFFSET_X:
       g_value_set_double (value, private->offset_x);
       break;
