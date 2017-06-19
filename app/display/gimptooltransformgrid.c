@@ -43,7 +43,6 @@
 
 
 #define MIN_HANDLE_SIZE 6
-#define GIMP_TOOL_HANDLE_SIZE_LARGE 25 /* FIXME */
 
 
 enum
@@ -2212,9 +2211,9 @@ gimp_tool_transform_grid_calc_handles (GimpToolTransformGrid *grid,
   y2 = MAX4 (dy1, dy2, dy3, dy4);
 
   *handle_w = CLAMP ((x2 - x1) / 3,
-                     MIN_HANDLE_SIZE, GIMP_TOOL_HANDLE_SIZE_LARGE);
+                     MIN_HANDLE_SIZE, GIMP_CANVAS_HANDLE_SIZE_LARGE);
   *handle_h = CLAMP ((y2 - y1) / 3,
-                     MIN_HANDLE_SIZE, GIMP_TOOL_HANDLE_SIZE_LARGE);
+                     MIN_HANDLE_SIZE, GIMP_CANVAS_HANDLE_SIZE_LARGE);
 }
 
 

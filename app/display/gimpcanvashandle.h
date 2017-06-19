@@ -25,6 +25,13 @@
 #include "gimpcanvasitem.h"
 
 
+#define GIMP_CANVAS_HANDLE_SIZE_CIRCLE    13
+#define GIMP_CANVAS_HANDLE_SIZE_CROSS     15
+#define GIMP_CANVAS_HANDLE_SIZE_CROSSHAIR 43
+#define GIMP_CANVAS_HANDLE_SIZE_LARGE     25
+#define GIMP_CANVAS_HANDLE_SIZE_SMALL     7
+
+
 #define GIMP_TYPE_CANVAS_HANDLE            (gimp_canvas_handle_get_type ())
 #define GIMP_CANVAS_HANDLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_HANDLE, GimpCanvasHandle))
 #define GIMP_CANVAS_HANDLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_HANDLE, GimpCanvasHandleClass))

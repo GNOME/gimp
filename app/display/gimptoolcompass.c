@@ -47,9 +47,6 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_TOOL_HANDLE_SIZE_CROSS     15 /* FIXME */
-
-
 #define ARC_RADIUS 30
 
 /*  possible measure functions  */
@@ -322,6 +319,7 @@ gimp_tool_compass_constructed (GObject *object)
   GimpToolWidget         *widget  = GIMP_TOOL_WIDGET (object);
   GimpToolCompassPrivate *private = compass->private;
   GimpCanvasGroup        *stroke_group;
+  gint                    i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -357,29 +355,18 @@ gimp_tool_compass_constructed (GObject *object)
 
   gimp_tool_widget_pop_group (widget);
 
-  private->handles[0] = gimp_tool_widget_add_handle (widget,
-                                                     GIMP_HANDLE_CIRCLE,
-                                                     private->x[0],
-                                                     private->y[0],
-                                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                                     GIMP_HANDLE_ANCHOR_CENTER);
-
-  private->handles[1] = gimp_tool_widget_add_handle (widget,
-                                                     GIMP_HANDLE_CROSS,
-                                                     private->x[1],
-                                                     private->y[1],
-                                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                                     GIMP_HANDLE_ANCHOR_CENTER);
-
-  private->handles[2] = gimp_tool_widget_add_handle (widget,
-                                                     GIMP_HANDLE_CROSS,
-                                                     private->x[2],
-                                                     private->y[2],
-                                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                                     GIMP_HANDLE_ANCHOR_CENTER);
+  for (i = 0; i < 3; i++)
+    {
+      private->handles[i] =
+        gimp_tool_widget_add_handle (widget,
+                                     i == 0 ?
+                                     GIMP_HANDLE_CIRCLE : GIMP_HANDLE_CROSS,
+                                     private->x[i],
+                                     private->y[i],
+                                     GIMP_CANVAS_HANDLE_SIZE_CROSS,
+                                     GIMP_CANVAS_HANDLE_SIZE_CROSS,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+    }
 
   gimp_tool_compass_changed (widget);
 }
@@ -525,7 +512,7 @@ gimp_tool_compass_changed (GimpToolWidget *widget)
                                 draw_arc == private->n_points - 1 &&
                                 angle2 != 0.0);
 
-  target     = FUNSCALEX (shell, (GIMP_TOOL_HANDLE_SIZE_CROSS >> 1));
+  target     = FUNSCALEX (shell, (GIMP_CANVAS_HANDLE_SIZE_CROSS >> 1));
   arc_radius = FUNSCALEX (shell, ARC_RADIUS);
 
   gimp_canvas_line_set (private->angle_line,

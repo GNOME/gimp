@@ -40,9 +40,6 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_TOOL_HANDLE_SIZE_CIRCLE 13
-
-
 enum
 {
   PROP_0,
@@ -359,8 +356,8 @@ gimp_tool_handle_grid_constructed (GObject *object)
         gimp_tool_widget_add_handle (widget,
                                      GIMP_HANDLE_CIRCLE,
                                      0, 0,
-                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                     GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                     GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
                                      GIMP_HANDLE_ANCHOR_CENTER);
     }
 
@@ -900,7 +897,7 @@ gimp_tool_handle_grid_get_cursor (GimpToolWidget     *widget,
 static gint
 calc_handle_diameter (gdouble distance)
 {
-#define HANDLE_DIAMETER             (2 * GIMP_TOOL_HANDLE_SIZE_CIRCLE)
+#define HANDLE_DIAMETER             (2 * GIMP_CANVAS_HANDLE_SIZE_CIRCLE)
 #define POINT_GRAB_THRESHOLD_SQ     (SQR (HANDLE_DIAMETER / 2))
 #define FULL_HANDLE_THRESHOLD_SQ    (POINT_GRAB_THRESHOLD_SQ * 9)
 #define PARTIAL_HANDLE_THRESHOLD_SQ (FULL_HANDLE_THRESHOLD_SQ * 5)
@@ -913,7 +910,7 @@ calc_handle_diameter (gdouble distance)
   size = CLAMP (size, 0.0, 1.0);
 
   return (gint) CLAMP ((size * HANDLE_DIAMETER),
-                       GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                       GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
                        HANDLE_DIAMETER);
 }
 
