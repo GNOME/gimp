@@ -84,9 +84,6 @@ static void   gimp_handle_transform_tool_modifier_key   (GimpTool          *tool
                                                          gboolean           press,
                                                          GdkModifierType    state,
                                                          GimpDisplay       *display);
-static void   gimp_handle_transform_tool_options_notify (GimpTool          *tool,
-                                                         GimpToolOptions   *options,
-                                                         const GParamSpec  *pspec);
 
 static void   gimp_handle_transform_tool_dialog         (GimpTransformTool *tr_tool);
 static void   gimp_handle_transform_tool_dialog_update  (GimpTransformTool *tr_tool);
@@ -132,7 +129,6 @@ gimp_handle_transform_tool_class_init (GimpHandleTransformToolClass *klass)
   GimpTransformToolClass *trans_class = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   tool_class->modifier_key   = gimp_handle_transform_tool_modifier_key;
-  tool_class->options_notify = gimp_handle_transform_tool_options_notify;
 
   trans_class->dialog        = gimp_handle_transform_tool_dialog;
   trans_class->dialog_update = gimp_handle_transform_tool_dialog_update;
@@ -205,23 +201,6 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
                                                 state, display);
-}
-
-static void
-gimp_handle_transform_tool_options_notify (GimpTool         *tool,
-                                           GimpToolOptions  *options,
-                                           const GParamSpec *pspec)
-{
-  GimpTransformTool          *tr_tool    = GIMP_TRANSFORM_TOOL (tool);
-  GimpHandleTransformOptions *ht_options = GIMP_HANDLE_TRANSFORM_OPTIONS (options);
-
-  if (! strcmp (pspec->name, "handle-mode"))
-    {
-      if (tr_tool->widget)
-        g_object_set (tr_tool->widget,
-                      "handle-mode", ht_options->handle_mode,
-                      NULL);
-    }
 }
 
 static void
@@ -338,9 +317,10 @@ gimp_handle_transform_tool_get_widget (GimpTransformTool *tr_tool)
                 "trans-y4",  tr_tool->trans_info[Y3],
                 NULL);
 
-  g_object_set (widget,
-                "handle-mode", options->handle_mode,
-                NULL);
+  g_object_bind_property (G_OBJECT (options), "handle-mode",
+                          G_OBJECT (widget),  "handle-mode",
+                          G_BINDING_SYNC_CREATE |
+                          G_BINDING_BIDIRECTIONAL);
 
   g_signal_connect (widget, "changed",
                     G_CALLBACK (gimp_handle_transform_tool_widget_changed),
