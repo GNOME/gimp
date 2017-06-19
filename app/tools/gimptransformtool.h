@@ -70,6 +70,8 @@ struct _GimpTransformTool
   GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
   GimpCanvasItem *preview;
+  GimpCanvasItem *boundary_in;
+  GimpCanvasItem *boundary_out;
 
   const gchar    *progress_text;
 

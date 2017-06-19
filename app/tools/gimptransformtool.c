@@ -817,85 +817,49 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       item = gimp_tool_widget_get_item (tr_tool->widget);
 
       gimp_draw_tool_add_item (draw_tool, item);
-
-      /* FIXME */
-      return;
     }
 
   if (options->type == GIMP_TRANSFORM_TYPE_SELECTION)
     {
-      const GimpBoundSeg *orig_in;
-      const GimpBoundSeg *orig_out;
-      GimpBoundSeg       *segs_in;
-      GimpBoundSeg       *segs_out;
-      gint                num_segs_in;
-      gint                num_segs_out;
-      gint                i;
+      const GimpBoundSeg *segs_in;
+      const GimpBoundSeg *segs_out;
+      gint                n_segs_in;
+      gint                n_segs_out;
 
       gimp_channel_boundary (gimp_image_get_mask (image),
-                             &orig_in, &orig_out,
-                             &num_segs_in, &num_segs_out,
+                             &segs_in, &segs_out,
+                             &n_segs_in, &n_segs_out,
                              0, 0, 0, 0);
-
-      segs_in  = g_memdup (orig_in,  num_segs_in  * sizeof (GimpBoundSeg));
-      segs_out = g_memdup (orig_out, num_segs_out * sizeof (GimpBoundSeg));
 
       if (segs_in)
         {
-          for (i = 0; i < num_segs_in; i++)
-            {
-              gdouble tx, ty;
-
-              gimp_matrix3_transform_point (&matrix,
-                                            segs_in[i].x1, segs_in[i].y1,
-                                            &tx, &ty);
-              segs_in[i].x1 = RINT (tx);
-              segs_in[i].y1 = RINT (ty);
-
-              gimp_matrix3_transform_point (&matrix,
-                                            segs_in[i].x2, segs_in[i].y2,
-                                            &tx, &ty);
-              segs_in[i].x2 = RINT (tx);
-              segs_in[i].y2 = RINT (ty);
-            }
-
-          gimp_draw_tool_add_boundary (draw_tool,
-                                       segs_in, num_segs_in,
-                                       NULL,
-                                       0, 0);
-          g_free (segs_in);
+          tr_tool->boundary_in =
+            gimp_draw_tool_add_boundary (draw_tool,
+                                         segs_in, n_segs_in,
+                                         &matrix,
+                                         0, 0);
+          g_object_add_weak_pointer (G_OBJECT (tr_tool->boundary_in),
+                                     (gpointer) &tr_tool->boundary_in);
         }
 
       if (segs_out)
         {
-          for (i = 0; i < num_segs_out; i++)
-            {
-              gdouble tx, ty;
-
-              gimp_matrix3_transform_point (&matrix,
-                                            segs_out[i].x1, segs_out[i].y1,
-                                            &tx, &ty);
-              segs_out[i].x1 = RINT (tx);
-              segs_out[i].y1 = RINT (ty);
-
-              gimp_matrix3_transform_point (&matrix,
-                                            segs_out[i].x2, segs_out[i].y2,
-                                            &tx, &ty);
-              segs_out[i].x2 = RINT (tx);
-              segs_out[i].y2 = RINT (ty);
-            }
-
-          gimp_draw_tool_add_boundary (draw_tool,
-                                       segs_out, num_segs_out,
-                                       NULL,
-                                       0, 0);
-          g_free (segs_out);
+          tr_tool->boundary_out =
+            gimp_draw_tool_add_boundary (draw_tool,
+                                         segs_out, n_segs_out,
+                                         &matrix,
+                                         0, 0);
+          g_object_add_weak_pointer (G_OBJECT (tr_tool->boundary_in),
+                                     (gpointer) &tr_tool->boundary_out);
         }
     }
   else if (options->type == GIMP_TRANSFORM_TYPE_PATH)
     {
       GimpVectors *vectors;
       GimpStroke  *stroke = NULL;
+
+      /* FIXME */
+      return;
 
       vectors = gimp_image_get_active_vectors (image);
 
@@ -1162,19 +1126,36 @@ gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
                                     GimpTransformTool *tr_tool)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpMatrix3           matrix  = tr_tool->transform;
+
+  if (options->direction == GIMP_TRANSFORM_BACKWARD)
+    gimp_matrix3_invert (&matrix);
 
   if (tr_tool->preview)
     {
-      GimpMatrix3 matrix = tr_tool->transform;
-
-      if (options->direction == GIMP_TRANSFORM_BACKWARD)
-        gimp_matrix3_invert (&matrix);
-
       gimp_canvas_item_begin_change (tr_tool->preview);
       g_object_set (tr_tool->preview,
                     "transform", &matrix,
                     NULL);
       gimp_canvas_item_end_change (tr_tool->preview);
+    }
+
+  if (tr_tool->boundary_in)
+    {
+      gimp_canvas_item_begin_change (tr_tool->boundary_in);
+      g_object_set (tr_tool->boundary_in,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tr_tool->boundary_in);
+    }
+
+  if (tr_tool->boundary_out)
+    {
+      gimp_canvas_item_begin_change (tr_tool->boundary_out);
+      g_object_set (tr_tool->boundary_out,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tr_tool->boundary_out);
     }
 }
 
