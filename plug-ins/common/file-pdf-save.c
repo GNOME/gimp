@@ -553,23 +553,13 @@ run (const gchar      *name,
        * otherwise the output PDF will always show white for background,
        * and may display artifacts at transparency boundaries
        */
-      if (gimp_drawable_has_alpha(layers[n_layers - 1]))
+      if (gimp_drawable_has_alpha (layers[n_layers - 1]))
         {
           GimpRGB color;
-          gint width=0, height=0;
-          for (j = 0; j < n_layers; j++)
-            {
-              gint32 layer_ID   = layers [n_layers - j - 1];
 
-              if (gimp_item_get_visible (layer_ID) &&
-                 (! optimize.ignore_hidden ||
-                  (optimize.ignore_hidden && gimp_layer_get_opacity (layer_ID) > 0.0)))
-                {
-                  width = MAX (width, gimp_drawable_width (layer_ID));
-                  height = MAX (height, gimp_drawable_height (layer_ID));
-                }
-            }
-          cairo_rectangle (cr, 0, 0, width, height);
+          cairo_rectangle (cr, 0.0, 0.0,
+                           gimp_image_width (image_ID),
+                           gimp_image_height (image_ID));
           gimp_context_get_background (&color);
           cairo_set_source_rgb (cr,
                                 color.r,
