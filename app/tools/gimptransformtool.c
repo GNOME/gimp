@@ -310,6 +310,22 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       /*  Get the on-canvas gui  */
       if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget)
         {
+          static const gchar *properties[] =
+          {
+            "constrain-move",
+            "constrain-scale",
+            "constrain-rotate",
+            "constrain-shear",
+            "constrain-perspective",
+            "frompivot-scale",
+            "frompivot-shear",
+            "frompivot-perspective",
+            "cornersnap",
+            "fixedpivot"
+          };
+
+          gint i;
+
           tr_tool->widget =
             GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget (tr_tool);
 
@@ -321,6 +337,12 @@ gimp_transform_tool_initialize (GimpTool     *tool,
                                   G_OBJECT (tr_tool->widget), "n-guides",
                                   G_BINDING_SYNC_CREATE |
                                   G_BINDING_BIDIRECTIONAL);
+
+          for (i = 0; i < G_N_ELEMENTS (properties); i++)
+            g_object_bind_property (G_OBJECT (options),         properties[i],
+                                    G_OBJECT (tr_tool->widget), properties[i],
+                                    G_BINDING_SYNC_CREATE |
+                                    G_BINDING_BIDIRECTIONAL);
 
           g_signal_connect (tr_tool->widget, "changed",
                             G_CALLBACK (gimp_transform_tool_widget_changed),
@@ -772,16 +794,6 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
            ! strcmp (pspec->name, "fixedpivot") ||
            ! strcmp (pspec->name, "cornersnap"))
     {
-      gboolean value;
-
-      g_object_get (options,
-                    pspec->name, &value,
-                    NULL);
-
-      g_object_set (tr_tool->widget,
-                    pspec->name, value,
-                    NULL);
-
       gimp_transform_tool_dialog_update (tr_tool);
     }
 }
