@@ -38,6 +38,7 @@ enum
 {
   PROP_0,
   PROP_POINTS,
+  PROP_TRANSFORM,
   PROP_FILLED
 };
 
@@ -46,9 +47,10 @@ typedef struct _GimpCanvasPolygonPrivate GimpCanvasPolygonPrivate;
 
 struct _GimpCanvasPolygonPrivate
 {
-  GimpVector2 *points;
-  gint         n_points;
-  gboolean     filled;
+  GimpVector2  *points;
+  gint          n_points;
+  GimpMatrix3  *transform;
+  gboolean      filled;
 };
 
 #define GET_PRIVATE(polygon) \
@@ -96,6 +98,10 @@ gimp_canvas_polygon_class_init (GimpCanvasPolygonClass *klass)
                                    gimp_param_spec_array ("points", NULL, NULL,
                                                           GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_TRANSFORM,
+                                   g_param_spec_pointer ("transform", NULL, NULL,
+                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_FILLED,
                                    g_param_spec_boolean ("filled", NULL, NULL,
                                                          FALSE,
@@ -119,6 +125,12 @@ gimp_canvas_polygon_finalize (GObject *object)
       g_free (private->points);
       private->points = NULL;
       private->n_points = 0;
+    }
+
+  if (private->transform)
+    {
+      g_free (private->transform);
+      private->transform = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -149,6 +161,19 @@ gimp_canvas_polygon_set_property (GObject      *object,
           }
       }
       break;
+
+    case PROP_TRANSFORM:
+      {
+        GimpMatrix3 *transform = g_value_get_pointer (value);
+        if (private->transform)
+          g_free (private->transform);
+        if (transform)
+          private->transform = g_memdup (transform, sizeof (GimpMatrix3));
+        else
+          private->transform = NULL;
+      }
+      break;
+
     case PROP_FILLED:
       private->filled = g_value_get_boolean (value);
       break;
@@ -184,6 +209,11 @@ gimp_canvas_polygon_get_property (GObject    *object,
           g_value_set_boxed (value, NULL);
         }
       break;
+
+    case PROP_TRANSFORM:
+      g_value_set_pointer (value, private->transform);
+      break;
+
     case PROP_FILLED:
       g_value_set_boolean (value, private->filled);
       break;
@@ -201,16 +231,38 @@ gimp_canvas_polygon_transform (GimpCanvasItem *item,
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (item);
   gint                      i;
 
-  for (i = 0; i < private->n_points; i++)
+  if (private->transform)
     {
-      gimp_canvas_item_transform_xy_f (item,
-                                       private->points[i].x,
-                                       private->points[i].y,
-                                       &points[i].x,
-                                       &points[i].y);
+      for (i = 0; i < private->n_points; i++)
+        {
+          gdouble tx, ty;
 
-      points[i].x = floor (points[i].x) + 0.5;
-      points[i].y = floor (points[i].y) + 0.5;
+          gimp_matrix3_transform_point (private->transform,
+                                        private->points[i].x,
+                                        private->points[i].y,
+                                        &tx, &ty);
+          gimp_canvas_item_transform_xy_f (item,
+                                           tx, ty,
+                                           &points[i].x,
+                                           &points[i].y);
+
+          points[i].x = floor (points[i].x) + 0.5;
+          points[i].y = floor (points[i].y) + 0.5;
+        }
+    }
+  else
+    {
+      for (i = 0; i < private->n_points; i++)
+        {
+          gimp_canvas_item_transform_xy_f (item,
+                                           private->points[i].x,
+                                           private->points[i].y,
+                                           &points[i].x,
+                                           &points[i].y);
+
+          points[i].x = floor (points[i].x) + 0.5;
+          points[i].y = floor (points[i].y) + 0.5;
+        }
     }
 }
 
@@ -286,6 +338,7 @@ GimpCanvasItem *
 gimp_canvas_polygon_new (GimpDisplayShell  *shell,
                          const GimpVector2 *points,
                          gint               n_points,
+                         GimpMatrix3       *transform,
                          gboolean           filled)
 {
   GimpCanvasItem *item;
@@ -298,9 +351,10 @@ gimp_canvas_polygon_new (GimpDisplayShell  *shell,
                           n_points * sizeof (GimpVector2), TRUE);
 
   item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
-                       "shell",  shell,
-                       "filled", filled,
-                       "points", array,
+                       "shell",     shell,
+                       "transform", transform,
+                       "filled",    filled,
+                       "points",    array,
                        NULL);
 
   gimp_array_free (array);
@@ -312,6 +366,7 @@ GimpCanvasItem *
 gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
                                      const GimpCoords *coords,
                                      gint              n_coords,
+                                     GimpMatrix3      *transform,
                                      gboolean          filled)
 {
   GimpCanvasItem *item;
@@ -334,9 +389,10 @@ gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
                           n_coords * sizeof (GimpVector2), TRUE);
 
   item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
-                       "shell",  shell,
-                       "filled", filled,
-                       "points", array,
+                       "shell",     shell,
+                       "transform", transform,
+                       "filled",    filled,
+                       "points",    array,
                        NULL);
 
   gimp_array_free (array);

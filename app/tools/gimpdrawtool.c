@@ -809,6 +809,7 @@ GimpCanvasItem *
 gimp_draw_tool_add_lines (GimpDrawTool      *draw_tool,
                           const GimpVector2 *points,
                           gint               n_points,
+                          GimpMatrix3       *transform,
                           gboolean           filled)
 {
   GimpCanvasItem *item;
@@ -819,7 +820,7 @@ gimp_draw_tool_add_lines (GimpDrawTool      *draw_tool,
     return NULL;
 
   item = gimp_canvas_polygon_new (gimp_display_get_shell (draw_tool->display),
-                                  points, n_points, filled);
+                                  points, n_points, transform, filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -831,6 +832,7 @@ GimpCanvasItem *
 gimp_draw_tool_add_strokes (GimpDrawTool     *draw_tool,
                             const GimpCoords *points,
                             gint              n_points,
+                            GimpMatrix3      *transform,
                             gboolean          filled)
 {
   GimpCanvasItem *item;
@@ -841,7 +843,7 @@ gimp_draw_tool_add_strokes (GimpDrawTool     *draw_tool,
     return NULL;
 
   item = gimp_canvas_polygon_new_from_coords (gimp_display_get_shell (draw_tool->display),
-                                              points, n_points, filled);
+                                              points, n_points, transform, filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

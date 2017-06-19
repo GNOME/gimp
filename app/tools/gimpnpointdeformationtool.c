@@ -764,7 +764,7 @@ gimp_n_point_deformation_tool_draw_lattice (GimpNPointDeformationTool *npd_tool)
 
   for (i = 0; i < n_squares; i++)
     gimp_draw_tool_add_lines (GIMP_DRAW_TOOL (npd_tool),
-                              &points[5 * i], 5, FALSE);
+                              &points[5 * i], 5, NULL, FALSE);
 }
 
 static void

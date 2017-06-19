@@ -174,11 +174,13 @@ GimpCanvasItem * gimp_draw_tool_add_corner           (GimpDrawTool     *draw_too
 GimpCanvasItem * gimp_draw_tool_add_lines            (GimpDrawTool     *draw_tool,
                                                       const GimpVector2 *points,
                                                       gint              n_points,
+                                                      GimpMatrix3      *transform,
                                                       gboolean          filled);
 
 GimpCanvasItem * gimp_draw_tool_add_strokes          (GimpDrawTool     *draw_tool,
                                                       const GimpCoords *points,
                                                       gint              n_points,
+                                                      GimpMatrix3      *transform,
                                                       gboolean          filled);
 GimpCanvasItem * gimp_draw_tool_add_path             (GimpDrawTool     *draw_tool,
                                                       const GimpBezierDesc *desc,

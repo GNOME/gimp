@@ -1316,7 +1316,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
   gimp_draw_tool_push_group (draw_tool, stroke_group);
   gimp_draw_tool_add_lines (draw_tool,
                             priv->points, priv->n_points,
-                            FALSE);
+                            NULL, FALSE);
   gimp_draw_tool_pop_group (draw_tool);
 
   /* We always show the handle for the first point, even with button1

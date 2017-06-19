@@ -888,7 +888,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                   gimp_draw_tool_add_strokes (draw_tool,
                                               &g_array_index (coords,
                                                               GimpCoords, 0),
-                                              coords->len, FALSE);
+                                              coords->len, NULL, FALSE);
                 }
 
               if (coords)

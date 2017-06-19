@@ -875,7 +875,7 @@ iscissors_draw_segment (GimpDrawTool *draw_tool,
       points[i].y = (coords >> 16);
     }
 
-  item = gimp_draw_tool_add_lines (draw_tool, points, len, FALSE);
+  item = gimp_draw_tool_add_lines (draw_tool, points, len, NULL, FALSE);
 
   g_free (points);
 
