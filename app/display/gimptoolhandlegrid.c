@@ -951,26 +951,6 @@ gimp_tool_handle_grid_get_cursor (GimpToolWidget     *widget,
   return TRUE;
 }
 
-static gint
-calc_handle_diameter (gdouble distance)
-{
-#define HANDLE_DIAMETER             (2 * GIMP_CANVAS_HANDLE_SIZE_CIRCLE)
-#define POINT_GRAB_THRESHOLD_SQ     (SQR (HANDLE_DIAMETER / 2))
-#define FULL_HANDLE_THRESHOLD_SQ    (POINT_GRAB_THRESHOLD_SQ * 9)
-#define PARTIAL_HANDLE_THRESHOLD_SQ (FULL_HANDLE_THRESHOLD_SQ * 5)
-
-  /* Calculate the handle size based on distance from the cursor
-   */
-  gdouble size = (1.0 - (distance - FULL_HANDLE_THRESHOLD_SQ) /
-                  (PARTIAL_HANDLE_THRESHOLD_SQ - FULL_HANDLE_THRESHOLD_SQ));
-
-  size = CLAMP (size, 0.0, 1.0);
-
-  return (gint) CLAMP ((size * HANDLE_DIAMETER),
-                       GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
-                       HANDLE_DIAMETER);
-}
-
 static void
 gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid *grid)
 {
@@ -983,16 +963,12 @@ gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid *grid)
 
       if (item)
         {
-          gdouble x, y;
-          gdouble dist;
-          gdouble diameter;
-
-          gimp_canvas_handle_get_position (item, &x, &y);
-          dist = gimp_canvas_item_transform_distance_square (item,
-                                                             private->mouse_x,
-                                                             private->mouse_y,
-                                                             x, y);
-          diameter = calc_handle_diameter (dist);
+          gdouble diameter =
+            gimp_canvas_handle_calc_size (item,
+                                          private->mouse_x,
+                                          private->mouse_y,
+                                          GIMP_CANVAS_HANDLE_SIZE_CIRCLE,
+                                          2 * GIMP_CANVAS_HANDLE_SIZE_CIRCLE);
 
           gimp_canvas_handle_set_size (item, diameter, diameter);
           gimp_canvas_item_set_highlight (item, (i + 1) == private->handle);

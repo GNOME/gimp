@@ -71,6 +71,12 @@ void             gimp_canvas_handle_set_position (GimpCanvasItem   *handle,
                                                   gdouble           x,
                                                   gdouble           y);
 
+gint             gimp_canvas_handle_calc_size    (GimpCanvasItem   *item,
+                                                  gdouble           mouse_x,
+                                                  gdouble           mouse_y,
+                                                  gint              normal_size,
+                                                  gint              hover_size);
+
 void             gimp_canvas_handle_get_size     (GimpCanvasItem   *handle,
                                                   gint             *width,
                                                   gint             *height);

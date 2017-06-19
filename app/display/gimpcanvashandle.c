@@ -547,6 +547,38 @@ gimp_canvas_handle_set_position (GimpCanvasItem *handle,
   gimp_canvas_item_end_change (handle);
 }
 
+gint
+gimp_canvas_handle_calc_size (GimpCanvasItem *item,
+                              gdouble         mouse_x,
+                              gdouble         mouse_y,
+                              gint            normal_size,
+                              gint            hover_size)
+{
+  gdouble x, y;
+  gdouble distance;
+  gdouble size;
+  gint    full_threshold_sq    = SQR (hover_size / 2) * 9;
+  gint    partial_threshold_sq = full_threshold_sq * 5;
+
+  g_return_val_if_fail (GIMP_IS_CANVAS_HANDLE (item), normal_size);
+
+  gimp_canvas_handle_get_position (item, &x, &y);
+  distance = gimp_canvas_item_transform_distance_square (item,
+                                                         mouse_x,
+                                                         mouse_y,
+                                                         x, y);
+
+  /*  calculate the handle size based on distance from the cursor  */
+  size = (1.0 - (distance - full_threshold_sq) /
+          (partial_threshold_sq - full_threshold_sq));
+
+  size = CLAMP (size, 0.0, 1.0);
+
+  return (gint) CLAMP ((size * hover_size),
+                       normal_size,
+                       hover_size);
+}
+
 void
 gimp_canvas_handle_get_size (GimpCanvasItem *handle,
                              gint           *width,
