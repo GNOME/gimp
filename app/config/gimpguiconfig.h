@@ -80,7 +80,6 @@ struct _GimpGuiConfig
 
   /* experimental playground */
   gboolean             playground_npd_tool;
-  gboolean             playground_handle_transform_tool;
   gboolean             playground_seamless_clone_tool;
 
   /* saved in sessionrc */

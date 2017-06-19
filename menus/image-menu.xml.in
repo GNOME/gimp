@@ -653,9 +653,7 @@
         <menuitem action="tools-shear" />
         <menuitem action="tools-perspective" />
         <menuitem action="tools-unified-transform" />
-	<!-- Enable when the tool leaves the playground
-             <menuitem action="tools-handle-transform" />
-	-->
+        <menuitem action="tools-handle-transform" />
         <menuitem action="tools-flip" />
         <menuitem action="tools-cage" />
         <menuitem action="tools-warp" />

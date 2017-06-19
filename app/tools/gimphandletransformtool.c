@@ -25,9 +25,6 @@
 
 #include "tools-types.h"
 
-#include "config/gimpguiconfig.h" /* playground */
-
-#include "core/gimp.h" /* playground */
 #include "core/gimp-transform-utils.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -114,22 +111,18 @@ void
 gimp_handle_transform_tool_register (GimpToolRegisterCallback  callback,
                                      gpointer                  data)
 {
-  /* we should not know that "data" is a Gimp*, but what the heck this
-   * is experimental playground stuff
-   */
-  if (GIMP_GUI_CONFIG (GIMP (data)->config)->playground_handle_transform_tool)
-    (* callback) (GIMP_TYPE_HANDLE_TRANSFORM_TOOL,
-                  GIMP_TYPE_HANDLE_TRANSFORM_OPTIONS,
-                  gimp_handle_transform_options_gui,
-                  GIMP_CONTEXT_PROP_MASK_BACKGROUND,
-                  "gimp-handle-transform-tool",
-                  _("Handle Transform"),
-                  _("Handle Transform Tool: "
-                    "Deform the layer, selection or path with handles"),
-                  N_("_Handle Transform"), "<ctrl><shift>H",
-                  NULL, GIMP_HELP_TOOL_HANDLE_TRANSFORM,
-                  GIMP_ICON_TOOL_HANDLE_TRANSFORM,
-                  data);
+  (* callback) (GIMP_TYPE_HANDLE_TRANSFORM_TOOL,
+                GIMP_TYPE_HANDLE_TRANSFORM_OPTIONS,
+                gimp_handle_transform_options_gui,
+                GIMP_CONTEXT_PROP_MASK_BACKGROUND,
+                "gimp-handle-transform-tool",
+                _("Handle Transform"),
+                _("Handle Transform Tool: "
+                  "Deform the layer, selection or path with handles"),
+                N_("_Handle Transform"), "<ctrl><shift>H",
+                NULL, GIMP_HELP_TOOL_HANDLE_TRANSFORM,
+                GIMP_ICON_TOOL_HANDLE_TRANSFORM,
+                data);
 }
 
 static void
