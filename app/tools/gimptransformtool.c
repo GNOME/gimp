@@ -117,8 +117,6 @@ static void      gimp_transform_tool_options_notify      (GimpTool              
 
 static void      gimp_transform_tool_draw                (GimpDrawTool          *draw_tool);
 
-static void      gimp_transform_tool_dialog_update       (GimpTransformTool     *tr_tool);
-
 static GeglBuffer *
                  gimp_transform_tool_real_transform      (GimpTransformTool     *tr_tool,
                                                           GimpItem              *item,
@@ -145,8 +143,11 @@ static void      gimp_transform_tool_halt                (GimpTransformTool     
 static gboolean  gimp_transform_tool_bounds              (GimpTransformTool     *tr_tool,
                                                           GimpDisplay           *display);
 static void      gimp_transform_tool_dialog              (GimpTransformTool     *tr_tool);
+static void      gimp_transform_tool_dialog_update       (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_prepare             (GimpTransformTool     *tr_tool,
                                                           GimpDisplay           *display);
+static GimpToolWidget *
+                 gimp_transform_tool_get_widget          (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_transform           (GimpTransformTool     *tr_tool,
                                                           GimpDisplay           *display);
 
@@ -261,11 +262,10 @@ gimp_transform_tool_initialize (GimpTool     *tool,
                                 GimpDisplay  *display,
                                 GError      **error)
 {
-  GimpTransformTool    *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformOptions *options  = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-  GimpImage            *image    = gimp_display_get_image (display);
-  GimpDrawable         *drawable = gimp_image_get_active_drawable (image);
-  GimpItem             *item;
+  GimpTransformTool *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
+  GimpImage         *image    = gimp_display_get_image (display);
+  GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
+  GimpItem          *item;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -308,52 +308,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       gimp_transform_tool_recalc_matrix (tr_tool, NULL);
 
       /*  Get the on-canvas gui  */
-      if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget)
-        {
-          static const gchar *properties[] =
-          {
-            "constrain-move",
-            "constrain-scale",
-            "constrain-rotate",
-            "constrain-shear",
-            "constrain-perspective",
-            "frompivot-scale",
-            "frompivot-shear",
-            "frompivot-perspective",
-            "cornersnap",
-            "fixedpivot"
-          };
-
-          gint i;
-
-          tr_tool->widget =
-            GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget (tr_tool);
-
-          g_object_bind_property (G_OBJECT (options),         "grid-type",
-                                  G_OBJECT (tr_tool->widget), "guide-type",
-                                  G_BINDING_SYNC_CREATE |
-                                  G_BINDING_BIDIRECTIONAL);
-          g_object_bind_property (G_OBJECT (options),         "grid-size",
-                                  G_OBJECT (tr_tool->widget), "n-guides",
-                                  G_BINDING_SYNC_CREATE |
-                                  G_BINDING_BIDIRECTIONAL);
-
-          for (i = 0; i < G_N_ELEMENTS (properties); i++)
-            g_object_bind_property (G_OBJECT (options),         properties[i],
-                                    G_OBJECT (tr_tool->widget), properties[i],
-                                    G_BINDING_SYNC_CREATE |
-                                    G_BINDING_BIDIRECTIONAL);
-
-          g_signal_connect (tr_tool->widget, "changed",
-                            G_CALLBACK (gimp_transform_tool_widget_changed),
-                            tr_tool);
-          g_signal_connect (tr_tool->widget, "snap-offsets",
-                            G_CALLBACK (gimp_transform_tool_widget_snap_offsets),
-                            tr_tool);
-          g_signal_connect (tr_tool->widget, "status",
-                            G_CALLBACK (gimp_transform_tool_widget_status),
-                            tr_tool);
-        }
+      tr_tool->widget = gimp_transform_tool_get_widget (tr_tool);
 
       gimp_transform_tool_hide_active_item (tr_tool, item);
 
@@ -761,17 +716,13 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
 
   if (! strcmp (pspec->name, "direction"))
     {
-      if (tool->display)
-        {
-          /*  reget the selection bounds  */
-          gimp_transform_tool_bounds (tr_tool, tool->display);
+      /*  reget the selection bounds  */
+      gimp_transform_tool_bounds (tr_tool, tool->display);
 
-          /*  recalculate the tool's transformation matrix  */
-          gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
-        }
+      /*  recalculate the tool's transformation matrix  */
+      gimp_transform_tool_recalc_matrix (tr_tool, tr_tool->widget);
     }
-
-  if (! strcmp (pspec->name, "show-preview"))
+  else if (! strcmp (pspec->name, "show-preview"))
     {
       if (tr_tool->preview)
         {
@@ -899,16 +850,6 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                 g_array_free (coords, TRUE);
             }
         }
-    }
-}
-
-static void
-gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
-{
-  if (tr_tool->gui &&
-      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
-    {
-      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
     }
 }
 
@@ -1368,6 +1309,16 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 }
 
 static void
+gimp_transform_tool_dialog_update (GimpTransformTool *tr_tool)
+{
+  if (tr_tool->gui &&
+      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
+    {
+      GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
+    }
+}
+
+static void
 gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                              GimpDisplay       *display)
 {
@@ -1382,6 +1333,61 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare)
     GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare (tr_tool);
+}
+
+static GimpToolWidget *
+gimp_transform_tool_get_widget (GimpTransformTool *tr_tool)
+{
+  static const gchar *properties[] =
+  {
+    "constrain-move",
+    "constrain-scale",
+    "constrain-rotate",
+    "constrain-shear",
+    "constrain-perspective",
+    "frompivot-scale",
+    "frompivot-shear",
+    "frompivot-perspective",
+    "cornersnap",
+    "fixedpivot"
+  };
+
+  GimpToolWidget *widget = NULL;
+
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget)
+    {
+      GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+      gint                  i;
+
+      widget = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget (tr_tool);
+
+      g_object_bind_property (G_OBJECT (options), "grid-type",
+                              G_OBJECT (widget),  "guide-type",
+                              G_BINDING_SYNC_CREATE |
+                              G_BINDING_BIDIRECTIONAL);
+      g_object_bind_property (G_OBJECT (options), "grid-size",
+                              G_OBJECT (widget),  "n-guides",
+                              G_BINDING_SYNC_CREATE |
+                              G_BINDING_BIDIRECTIONAL);
+
+      for (i = 0; i < G_N_ELEMENTS (properties); i++)
+        g_object_bind_property (G_OBJECT (options), properties[i],
+                                G_OBJECT (widget),  properties[i],
+                                G_BINDING_SYNC_CREATE |
+                                G_BINDING_BIDIRECTIONAL);
+
+      g_signal_connect (widget, "changed",
+                        G_CALLBACK (gimp_transform_tool_widget_changed),
+                        tr_tool);
+      g_signal_connect (widget, "snap-offsets",
+                        G_CALLBACK (gimp_transform_tool_widget_snap_offsets),
+                        tr_tool);
+      g_signal_connect (widget, "status",
+                        G_CALLBACK (gimp_transform_tool_widget_status),
+                        tr_tool);
+    }
+
+  return widget;
 }
 
 void
