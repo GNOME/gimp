@@ -1889,8 +1889,14 @@ gimp_tool_transform_grid_hover (GimpToolWidget   *widget,
         }
     }
 
-  if (handle != GIMP_TRANSFORM_HANDLE_NONE)
-    gimp_tool_widget_status (widget, get_friendly_operation_name (handle));
+  if (handle != GIMP_TRANSFORM_HANDLE_NONE && proximity)
+    {
+      gimp_tool_widget_status (widget, get_friendly_operation_name (handle));
+    }
+  else
+    {
+      gimp_tool_widget_status (widget, NULL);
+    }
 
   private->handle = handle;
 
