@@ -739,7 +739,7 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
               /* move */
               for (i = 0; i < 4; i++)
                 {
-                  newpos_x[i] = oldpos_x[i] + diff_y;
+                  newpos_x[i] = oldpos_x[i] + diff_x;
                   newpos_y[i] = oldpos_y[i] + diff_y;
                 }
               break;
