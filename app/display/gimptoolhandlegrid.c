@@ -33,6 +33,8 @@
 #include "core/gimp-transform-utils.h"
 #include "core/gimp-utils.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpcanvashandle.h"
 #include "gimpdisplayshell.h"
 #include "gimptoolhandlegrid.h"
@@ -112,24 +114,24 @@ static void   gimp_tool_handle_grid_motion         (GimpToolWidget        *widge
                                                     const GimpCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state);
-static void     gimp_tool_handle_grid_hover          (GimpToolWidget        *widget,
-                                                      const GimpCoords      *coords,
-                                                      GdkModifierType        state,
-                                                      gboolean               proximity);
-static gboolean gimp_tool_handle_grid_get_cursor     (GimpToolWidget        *widget,
-                                                      const GimpCoords      *coords,
-                                                      GdkModifierType        state,
-                                                      GimpCursorType        *cursor,
-                                                      GimpToolCursorType    *tool_cursor,
-                                                      GimpCursorModifier    *cursor_modifier);
+static void     gimp_tool_handle_grid_hover        (GimpToolWidget        *widget,
+                                                    const GimpCoords      *coords,
+                                                    GdkModifierType        state,
+                                                    gboolean               proximity);
+static gboolean gimp_tool_handle_grid_get_cursor   (GimpToolWidget        *widget,
+                                                    const GimpCoords      *coords,
+                                                    GdkModifierType        state,
+                                                    GimpCursorType        *cursor,
+                                                    GimpToolCursorType    *tool_cursor,
+                                                    GimpCursorModifier    *cursor_modifier);
 
-static void     gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid *grid);
-static void     gimp_tool_handle_grid_update_matrix  (GimpToolHandleGrid *grid);
+static void     gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid  *grid);
+static void     gimp_tool_handle_grid_update_matrix  (GimpToolHandleGrid  *grid);
 
-static gboolean is_handle_position_valid (GimpToolHandleGrid *grid,
-                                          gint                handle);
-static void     handle_micro_move        (GimpToolHandleGrid *grid,
-                                          gint                handle);
+static gboolean is_handle_position_valid           (GimpToolHandleGrid    *grid,
+                                                    gint                   handle);
+static void     handle_micro_move                  (GimpToolHandleGrid    *grid,
+                                                    gint                   handle);
 
 static inline gdouble calc_angle               (gdouble ax,
                                                 gdouble ay,
@@ -735,7 +737,7 @@ gimp_tool_handle_grid_motion (GimpToolWidget   *widget,
             {
             case 1:
               /* move */
-              for (i = 1; i < 4; i++)
+              for (i = 0; i < 4; i++)
                 {
                   newpos_x[i] = oldpos_x[i] + diff_y;
                   newpos_y[i] = oldpos_y[i] + diff_y;
@@ -810,6 +812,7 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
 {
   GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
   GimpToolHandleGridPrivate *private = grid->private;
+  gchar                     *status  = NULL;
   gint                       i;
 
   private->mouse_x = coords->x;
@@ -827,6 +830,60 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
           break;
         }
     }
+
+  if (proximity)
+    {
+      GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
+      GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
+
+      switch (private->handle_mode)
+        {
+        case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+          if (private->handle > 0)
+            {
+              const gchar *s = NULL;
+
+              switch (private->n_handles)
+                {
+                case 1:
+                  s = _("Click-Drag to move");
+                  break;
+                case 2:
+                  s = _("Click-Drag to rotate and scale");
+                  break;
+                case 3:
+                  s = _("Click-Drag to shear and scale");
+                  break;
+                case 4:
+                  s = _("Click-Drag to change perspective");
+                  break;
+                }
+
+              status = gimp_suggest_modifiers (s,
+                                               extend_mask | toggle_mask,
+                                               NULL, NULL, NULL);
+            }
+          else
+            {
+              if (private->n_handles < 4)
+                status = g_strdup (_("Click to add a handle"));
+            }
+          break;
+
+        case GIMP_HANDLE_MODE_MOVE:
+          if (private->handle > 0)
+            status = g_strdup (_("Click-Drag to move this handle"));
+          break;
+
+        case GIMP_HANDLE_MODE_REMOVE:
+          if (private->handle > 0)
+            status = g_strdup (_("Click-Drag to remove this handle"));
+          break;
+        }
+    }
+
+  gimp_tool_widget_status (widget, status);
+  g_free (status);
 
   gimp_tool_handle_grid_update_hilight (grid);
 }
