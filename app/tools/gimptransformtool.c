@@ -782,13 +782,6 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
           gimp_canvas_item_set_visible (tr_tool->preview, show_preview);
         }
     }
-  else if (! strcmp (pspec->name, "preview-opacity"))
-    {
-      if (tr_tool->preview)
-        g_object_set (tr_tool->preview,
-                      "opacity", tr_options->preview_opacity,
-                      NULL);
-    }
   else if (g_str_has_prefix (pspec->name, "constrain-") ||
            g_str_has_prefix (pspec->name, "frompivot-") ||
            ! strcmp (pspec->name, "fixedpivot") ||
@@ -823,12 +816,16 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                               tr_tool->y1,
                                               tr_tool->x2,
                                               tr_tool->y2,
-                                              tr_tool->does_perspective,
-                                              options->preview_opacity);
+                                              tr_tool->does_perspective);
       g_object_add_weak_pointer (G_OBJECT (tr_tool->preview),
                                  (gpointer) &tr_tool->preview);
 
       gimp_canvas_item_set_visible (tr_tool->preview, show_preview);
+
+      g_object_bind_property (G_OBJECT (options),          "preview-opacity",
+                              G_OBJECT (tr_tool->preview), "opacity",
+                              G_BINDING_SYNC_CREATE |
+                              G_BINDING_BIDIRECTIONAL);
 
       item = gimp_tool_widget_get_item (tr_tool->widget);
 

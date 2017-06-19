@@ -960,8 +960,7 @@ gimp_draw_tool_add_transform_preview (GimpDrawTool      *draw_tool,
                                       gdouble            y1,
                                       gdouble            x2,
                                       gdouble            y2,
-                                      gboolean           perspective,
-                                      gdouble            opacity)
+                                      gboolean           perspective)
 {
   GimpCanvasItem *item;
 
@@ -972,7 +971,7 @@ gimp_draw_tool_add_transform_preview (GimpDrawTool      *draw_tool,
   item = gimp_canvas_transform_preview_new (gimp_display_get_shell (draw_tool->display),
                                             drawable, transform,
                                             x1, y1, x2, y2,
-                                            perspective, opacity);
+                                            perspective);
 
   gimp_draw_tool_add_preview (draw_tool, item);
   g_object_unref (item);

@@ -576,8 +576,7 @@ gimp_canvas_transform_preview_new (GimpDisplayShell  *shell,
                                    gdouble            y1,
                                    gdouble            x2,
                                    gdouble            y2,
-                                   gboolean           perspective,
-                                   gdouble            opacity)
+                                   gboolean           perspective)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -592,7 +591,6 @@ gimp_canvas_transform_preview_new (GimpDisplayShell  *shell,
                        "x2",          x2,
                        "y2",          y2,
                        "perspective", perspective,
-                       "opacity",     CLAMP (opacity, 0.0, 1.0),
                        NULL);
 }
 

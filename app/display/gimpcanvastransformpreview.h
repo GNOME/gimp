@@ -56,8 +56,7 @@ GimpCanvasItem * gimp_canvas_transform_preview_new      (GimpDisplayShell  *shel
                                                          gdouble            y1,
                                                          gdouble            x2,
                                                          gdouble            y2,
-                                                         gboolean           perspective,
-                                                         gdouble            opacity);
+                                                         gboolean           perspective);
 
 
 #endif /* __GIMP_CANVAS_TRANSFORM_PREVIEW_H__ */
