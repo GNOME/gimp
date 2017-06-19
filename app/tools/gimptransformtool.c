@@ -232,6 +232,8 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->progress_text = _("Transforming");
 
   gimp_matrix3_identity (&tr_tool->transform);
+
+  tr_tool->strokes = g_ptr_array_new ();
 }
 
 static void
@@ -244,6 +246,12 @@ gimp_transform_tool_finalize (GObject *object)
       g_object_unref (tr_tool->gui);
       tr_tool->gui = NULL;
      }
+
+  if (tr_tool->strokes)
+    {
+      g_ptr_array_unref (tr_tool->strokes);
+      tr_tool->strokes = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -788,16 +796,14 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (tool->display);
   GimpMatrix3           matrix  = tr_tool->transform;
+  GimpCanvasItem       *item;
 
   if (options->direction == GIMP_TRANSFORM_BACKWARD)
     gimp_matrix3_invert (&matrix);
 
   if (tr_tool->widget)
     {
-      GimpCanvasItem *item;
-      gboolean        show_preview;
-
-      show_preview = gimp_transform_options_show_preview (options);
+      gboolean show_preview = gimp_transform_options_show_preview (options);
 
       tr_tool->preview =
         gimp_draw_tool_add_transform_preview (draw_tool,
@@ -855,16 +861,12 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
     }
   else if (options->type == GIMP_TRANSFORM_TYPE_PATH)
     {
-      GimpVectors *vectors;
-      GimpStroke  *stroke = NULL;
-
-      /* FIXME */
-      return;
-
-      vectors = gimp_image_get_active_vectors (image);
+      GimpVectors *vectors = gimp_image_get_active_vectors (image);
 
       if (vectors)
         {
+          GimpStroke *stroke = NULL;
+
           while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
             {
               GArray   *coords;
@@ -874,21 +876,16 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
               if (coords && coords->len)
                 {
-                  gint i;
+                  item =
+                    gimp_draw_tool_add_strokes (draw_tool,
+                                                &g_array_index (coords,
+                                                                GimpCoords, 0),
+                                                coords->len, &matrix, FALSE);
 
-                  for (i = 0; i < coords->len; i++)
-                    {
-                      GimpCoords *curr = &g_array_index (coords, GimpCoords, i);
-
-                      gimp_matrix3_transform_point (&matrix,
-                                                    curr->x, curr->y,
-                                                    &curr->x, &curr->y);
-                    }
-
-                  gimp_draw_tool_add_strokes (draw_tool,
-                                              &g_array_index (coords,
-                                                              GimpCoords, 0),
-                                              coords->len, NULL, FALSE);
+                  g_ptr_array_add (tr_tool->strokes, item);
+                  g_object_weak_ref (G_OBJECT (item),
+                                     (GWeakNotify) g_ptr_array_remove,
+                                     tr_tool->strokes);
                 }
 
               if (coords)
@@ -1127,6 +1124,7 @@ gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
   GimpMatrix3           matrix  = tr_tool->transform;
+  gint                  i;
 
   if (options->direction == GIMP_TRANSFORM_BACKWARD)
     gimp_matrix3_invert (&matrix);
@@ -1156,6 +1154,17 @@ gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
                     "transform", &matrix,
                     NULL);
       gimp_canvas_item_end_change (tr_tool->boundary_out);
+    }
+
+  for (i = 0; i < tr_tool->strokes->len; i++)
+    {
+      GimpCanvasItem *item = g_ptr_array_index (tr_tool->strokes, i);
+
+      gimp_canvas_item_begin_change (item);
+      g_object_set (item,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (item);
     }
 }
 

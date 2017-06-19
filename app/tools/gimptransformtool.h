@@ -72,6 +72,7 @@ struct _GimpTransformTool
   GimpCanvasItem *preview;
   GimpCanvasItem *boundary_in;
   GimpCanvasItem *boundary_out;
+  GPtrArray      *strokes;
 
   const gchar    *progress_text;
 
