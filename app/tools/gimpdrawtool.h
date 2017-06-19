@@ -143,14 +143,6 @@ GimpCanvasItem * gimp_draw_tool_add_arc              (GimpDrawTool     *draw_too
                                                       gdouble           height,
                                                       gdouble           start_angle,
                                                       gdouble           slice_angle);
-GimpCanvasItem * gimp_draw_tool_add_transform_guides (GimpDrawTool     *draw_tool,
-                                                      const GimpMatrix3 *transform,
-                                                      GimpGuidesType    type,
-                                                      gint              n_guides,
-                                                      gdouble           x1,
-                                                      gdouble           y1,
-                                                      gdouble           x2,
-                                                      gdouble           y2);
 GimpCanvasItem * gimp_draw_tool_add_transform_preview(GimpDrawTool     *draw_tool,
                                                       GimpDrawable     *drawable,
                                                       const GimpMatrix3 *transform,

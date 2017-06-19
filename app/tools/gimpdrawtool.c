@@ -951,31 +951,6 @@ gimp_draw_tool_add_text_cursor (GimpDrawTool   *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_add_transform_guides (GimpDrawTool      *draw_tool,
-                                     const GimpMatrix3 *transform,
-                                     GimpGuidesType     type,
-                                     gint               n_guides,
-                                     gdouble            x1,
-                                     gdouble            y1,
-                                     gdouble            x2,
-                                     gdouble            y2)
-{
-  GimpCanvasItem *item;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
-  g_return_val_if_fail (transform != NULL, NULL);
-
-  item = gimp_canvas_transform_guides_new (gimp_display_get_shell (draw_tool->display),
-                                           transform, x1, y1, x2, y2,
-                                           type, n_guides);
-
-  gimp_draw_tool_add_item (draw_tool, item);
-  g_object_unref (item);
-
-  return item;
-}
-
-GimpCanvasItem *
 gimp_draw_tool_add_transform_preview (GimpDrawTool      *draw_tool,
                                       GimpDrawable      *drawable,
                                       const GimpMatrix3 *transform,
