@@ -23,34 +23,6 @@
 #include "gimptransformtool.h"  /* for TransInfo */
 
 
-typedef enum
-{
-  TRANSFORM_CREATING,
-  TRANSFORM_HANDLE_NONE,
-  TRANSFORM_HANDLE_NW_P, /* perspective handles */
-  TRANSFORM_HANDLE_NE_P,
-  TRANSFORM_HANDLE_SW_P,
-  TRANSFORM_HANDLE_SE_P,
-  TRANSFORM_HANDLE_NW, /* north west */
-  TRANSFORM_HANDLE_NE, /* north east */
-  TRANSFORM_HANDLE_SW, /* south west */
-  TRANSFORM_HANDLE_SE, /* south east */
-  TRANSFORM_HANDLE_N,  /* north      */
-  TRANSFORM_HANDLE_S,  /* south      */
-  TRANSFORM_HANDLE_E,  /* east       */
-  TRANSFORM_HANDLE_W,  /* west       */
-  TRANSFORM_HANDLE_CENTER, /* for moving */
-  TRANSFORM_HANDLE_PIVOT,  /* pivot for rotation and scaling */
-  TRANSFORM_HANDLE_N_S,  /* shearing handles */
-  TRANSFORM_HANDLE_S_S,
-  TRANSFORM_HANDLE_E_S,
-  TRANSFORM_HANDLE_W_S,
-  TRANSFORM_HANDLE_ROTATION, /* rotation handle */
-
-  TRANSFORM_HANDLE_NUM /* keep this last so *handles[] is the right size */
-} TransformAction;
-
-
 #define GIMP_TYPE_PERSPECTIVE_CLONE_TOOL            (gimp_perspective_clone_tool_get_type ())
 #define GIMP_PERSPECTIVE_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PERSPECTIVE_CLONE_TOOL, GimpPerspectiveCloneTool))
 #define GIMP_PERSPECTIVE_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PERSPECTIVE_CLONE_TOOL, GimpPerspectiveCloneToolClass))
@@ -69,15 +41,8 @@ struct _GimpPerspectiveCloneTool
   GimpBrushTool   parent_instance;
 
   GimpDisplay    *src_display;
-
   gint            src_x;
   gint            src_y;
-
-  gdouble         curx;           /*  current x coord                  */
-  gdouble         cury;           /*  current y coord                  */
-
-  gdouble         lastx;          /*  last x coord                     */
-  gdouble         lasty;          /*  last y coord                     */
 
   GimpMatrix3     transform;      /*  transformation matrix            */
   TransInfo       trans_info;     /*  transformation info              */
@@ -86,13 +51,8 @@ struct _GimpPerspectiveCloneTool
   gint            x1, y1;         /*  upper left hand coordinate       */
   gint            x2, y2;         /*  lower right hand coords          */
 
-  gdouble         tx1, ty1;       /*  transformed coords               */
-  gdouble         tx2, ty2;
-  gdouble         tx3, ty3;
-  gdouble         tx4, ty4;
-  gdouble         tcx, tcy;
-
-  TransformAction function;       /*  current tool activity            */
+  GimpToolWidget *widget;
+  GimpToolWidget *grab_widget;
 };
 
 struct _GimpPerspectiveCloneToolClass
