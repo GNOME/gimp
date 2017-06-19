@@ -189,8 +189,6 @@ gimp_shear_tool_get_widget (GimpTransformTool *tr_tool)
                                      tr_tool->trans_info[SHEAR_Y]);
 
   g_object_set (widget,
-                "guide-type",              options->grid_type,
-                "n-guides",                options->grid_size,
                 "inside-function",         GIMP_TRANSFORM_FUNCTION_SHEAR,
                 "outside-function",        GIMP_TRANSFORM_FUNCTION_SHEAR,
                 "constrain-move",          options->constrain_move,

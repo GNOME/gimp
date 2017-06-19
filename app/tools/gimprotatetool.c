@@ -311,8 +311,6 @@ gimp_rotate_tool_get_widget (GimpTransformTool *tr_tool)
                                       tr_tool->trans_info[ANGLE]);
 
   g_object_set (widget,
-                "guide-type",              options->grid_type,
-                "n-guides",                options->grid_size,
                 "inside-function",         GIMP_TRANSFORM_FUNCTION_ROTATE,
                 "outside-function",        GIMP_TRANSFORM_FUNCTION_ROTATE,
                 "use-pivot-handle",        TRUE,

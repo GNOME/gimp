@@ -2225,9 +2225,7 @@ gimp_tool_transform_grid_new (GimpDisplayShell  *shell,
                               gdouble            x1,
                               gdouble            y1,
                               gdouble            x2,
-                              gdouble            y2,
-                              GimpGuidesType     guide_type,
-                              gint               n_guides)
+                              gdouble            y2)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
@@ -2238,7 +2236,5 @@ gimp_tool_transform_grid_new (GimpDisplayShell  *shell,
                        "y1",         y1,
                        "x2",         x2,
                        "y2",         y2,
-                       "guide-type", guide_type,
-                       "n-guides",   n_guides,
                        NULL);
 }

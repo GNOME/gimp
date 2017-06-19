@@ -306,13 +306,11 @@ static GimpToolWidget *
 gimp_handle_transform_tool_get_widget (GimpTransformTool *tr_tool)
 {
   GimpTool                   *tool  = GIMP_TOOL (tr_tool);
-  GimpTransformOptions       *options;
-  GimpHandleTransformOptions *ht_options;
+  GimpHandleTransformOptions *options;
   GimpDisplayShell           *shell = gimp_display_get_shell (tool->display);
   GimpToolWidget             *widget;
 
-  options    = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-  ht_options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
   widget = gimp_tool_handle_grid_new (shell,
                                       tr_tool->x1,
@@ -341,9 +339,7 @@ gimp_handle_transform_tool_get_widget (GimpTransformTool *tr_tool)
                 NULL);
 
   g_object_set (widget,
-                "guide-type",  options->grid_type,
-                "n-guides",    options->grid_size,
-                "handle-mode", ht_options->handle_mode,
+                "handle-mode", options->handle_mode,
                 NULL);
 
   g_signal_connect (widget, "changed",

@@ -221,8 +221,7 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
                                       clone_tool->x1,
                                       clone_tool->y1,
                                       clone_tool->x2,
-                                      clone_tool->y2,
-                                      GIMP_GUIDES_NONE, 1);
+                                      clone_tool->y2);
 
       g_object_set (clone_tool->widget,
                     "pivot-x",                 (clone_tool->x1 + clone_tool->x2) / 2.0,

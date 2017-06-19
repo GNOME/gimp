@@ -261,10 +261,11 @@ gimp_transform_tool_initialize (GimpTool     *tool,
                                 GimpDisplay  *display,
                                 GError      **error)
 {
-  GimpTransformTool *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
-  GimpImage         *image    = gimp_display_get_image (display);
-  GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
-  GimpItem          *item;
+  GimpTransformTool    *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
+  GimpTransformOptions *options  = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
+  GimpImage            *image    = gimp_display_get_image (display);
+  GimpDrawable         *drawable = gimp_image_get_active_drawable (image);
+  GimpItem             *item;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -311,6 +312,15 @@ gimp_transform_tool_initialize (GimpTool     *tool,
         {
           tr_tool->widget =
             GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget (tr_tool);
+
+          g_object_bind_property (G_OBJECT (options),         "grid-type",
+                                  G_OBJECT (tr_tool->widget), "guide-type",
+                                  G_BINDING_SYNC_CREATE |
+                                  G_BINDING_BIDIRECTIONAL);
+          g_object_bind_property (G_OBJECT (options),         "grid-size",
+                                  G_OBJECT (tr_tool->widget), "n-guides",
+                                  G_BINDING_SYNC_CREATE |
+                                  G_BINDING_BIDIRECTIONAL);
 
           g_signal_connect (tr_tool->widget, "changed",
                             G_CALLBACK (gimp_transform_tool_widget_changed),
@@ -756,18 +766,6 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
         g_object_set (tr_tool->preview,
                       "opacity", tr_options->preview_opacity,
                       NULL);
-    }
-  else if (! strcmp (pspec->name, "grid-type"))
-    {
-      g_object_set (tr_tool->widget,
-                    "guide-type", tr_options->grid_type,
-                    NULL);
-    }
-  else if (! strcmp (pspec->name, "grid-size"))
-    {
-      g_object_set (tr_tool->widget,
-                    "n-guides", tr_options->grid_size,
-                    NULL);
     }
   else if (g_str_has_prefix (pspec->name, "constrain-") ||
            g_str_has_prefix (pspec->name, "frompivot-") ||

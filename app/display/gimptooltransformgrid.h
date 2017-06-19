@@ -84,9 +84,7 @@ GimpToolWidget * gimp_tool_transform_grid_new      (GimpDisplayShell  *shell,
                                                     gdouble            x1,
                                                     gdouble            y1,
                                                     gdouble            x2,
-                                                    gdouble            y2,
-                                                    GimpGuidesType     guide_type,
-                                                    gint               n_guides);
+                                                    gdouble            y2);
 
 
 #endif /* __GIMP_TOOL_TRANSFORM_GRID_H__ */

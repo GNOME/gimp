@@ -195,9 +195,7 @@ gimp_perspective_tool_get_widget (GimpTransformTool *tr_tool)
                                          tr_tool->x1,
                                          tr_tool->y1,
                                          tr_tool->x2,
-                                         tr_tool->y2,
-                                         options->grid_type,
-                                         options->grid_size);
+                                         tr_tool->y2);
 
   g_object_set (widget,
                 "inside-function",         GIMP_TRANSFORM_FUNCTION_PERSPECTIVE,
