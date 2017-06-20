@@ -492,6 +492,32 @@ gimp_tool_widget_hover (GimpToolWidget   *widget,
                                                 coords, state, proximity);
 }
 
+gboolean
+gimp_tool_widget_key_press (GimpToolWidget *widget,
+                            GdkEventKey    *kevent)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+  g_return_val_if_fail (kevent != NULL, FALSE);
+
+  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_press)
+    return GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_press (widget, kevent);
+
+  return FALSE;
+}
+
+gboolean
+gimp_tool_widget_key_release (GimpToolWidget *widget,
+                              GdkEventKey    *kevent)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
+  g_return_val_if_fail (kevent != NULL, FALSE);
+
+  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_release)
+    return GIMP_TOOL_WIDGET_GET_CLASS (widget)->key_release (widget, kevent);
+
+  return FALSE;
+}
+
 void
 gimp_tool_widget_motion_modifier (GimpToolWidget  *widget,
                                   GdkModifierType  key,
