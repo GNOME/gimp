@@ -430,6 +430,23 @@ gimp_tool_widget_add_transform_guides (GimpToolWidget    *widget,
   return item;
 }
 
+GimpCanvasItem *
+gimp_tool_widget_add_path (GimpToolWidget       *widget,
+                           const GimpBezierDesc *desc)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_path_new (widget->private->shell,
+                               desc, 0, 0, FALSE, GIMP_PATH_STYLE_DEFAULT);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
 gint
 gimp_tool_widget_button_press (GimpToolWidget      *widget,
                                const GimpCoords    *coords,
