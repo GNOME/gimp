@@ -3,6 +3,7 @@ GIMP Flatpak HowTo
 
 * Install flatpak and flatpak-builder. There are packages for most
   distributions. Check: http://flatpak.org/getting.html
+  Use at least flatpak 0.9.5.
 
 * Make sure `appstream-compose` is installed as well. This is used to parse the
   appdata file and generate the appstream (metadata like comments, etc.).
@@ -91,10 +92,13 @@ Or if you already have a build:
 
 * Export the 2 builds:
 
-> flatpak build-export --gpg-sign=YOUR_GPG_KEY /path/to/repo gimp-flatpak-build-x86-64
-> flatpak build-export --gpg-sign=YOUR_GPG_KEY /path/to/repo gimp-flatpak-build-i386
+> flatpak-builder --export-only --gpg-sign=YOUR_GPG_KEY --repo=/path/to/repo --arch=x86_64 gimp-flatpak-build-x86-64 org.gimp.GIMP.json
+> flatpak-builder --export-only --gpg-sign=YOUR_GPG_KEY --repo=/path/to/repo --arch=i386 gimp-flatpak-build-i386 org.gimp.GIMP.json
 
+  If you key was protected with a passphrase, you will need to input it.
   The same repository will contain all the builds.
+  Note: do not use `flatpak build-export` which is an internal low-level
+  command. See https://github.com/flatpak/flatpak/issues/824
 
 * Test it locally with:
 
