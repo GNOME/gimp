@@ -165,37 +165,6 @@ gimp_transform_type_get_type (void)
 }
 
 GType
-gimp_vector_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_VECTOR_MODE_DESIGN, "GIMP_VECTOR_MODE_DESIGN", "design" },
-    { GIMP_VECTOR_MODE_EDIT, "GIMP_VECTOR_MODE_EDIT", "edit" },
-    { GIMP_VECTOR_MODE_MOVE, "GIMP_VECTOR_MODE_MOVE", "move" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_VECTOR_MODE_DESIGN, NC_("vector-mode", "Design"), NULL },
-    { GIMP_VECTOR_MODE_EDIT, NC_("vector-mode", "Edit"), NULL },
-    { GIMP_VECTOR_MODE_MOVE, NC_("vector-mode", "Move"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpVectorMode", values);
-      gimp_type_set_translation_context (type, "vector-mode");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_tool_action_get_type (void)
 {
   static const GEnumValue values[] =

@@ -256,6 +256,7 @@ app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
 app/display/gimptoolcompass.c
 app/display/gimptoolhandlegrid.c
+app/display/gimptoolpath.c
 app/display/gimptooltransformgrid.c
 
 app/file/file-open.c

@@ -170,6 +170,8 @@ libappdisplay_a_sources = \
 	gimptoolhandlegrid.h			\
 	gimptoolline.c				\
 	gimptoolline.h				\
+	gimptoolpath.c				\
+	gimptoolpath.h				\
 	gimptoolrotategrid.c			\
 	gimptoolrotategrid.h			\
 	gimptoolsheargrid.c			\
