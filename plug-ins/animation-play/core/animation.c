@@ -31,7 +31,6 @@
 #include "animation-animatic.h"
 #include "animation-celanimation.h"
 #include "animation-playback.h"
-#include "animation-renderer.h"
 
 /* Settings we cache assuming they may be the user's
  * favorite, like a framerate.
