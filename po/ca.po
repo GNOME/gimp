@@ -74,11 +74,11 @@ msgstr ""
 
 #: ../desktop/gimp.appdata.xml.in.h:6
 msgid "Painting in GIMP"
-msgstr ""
+msgstr "Dibuixeu amb el GIMP"
 
 #: ../desktop/gimp.appdata.xml.in.h:7
 msgid "Photo editing in GIMP"
-msgstr ""
+msgstr "Editeu fotografies amb el GIMP"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -3115,7 +3115,7 @@ msgstr "Color a _alfa..."
 #: ../app/actions/filters-actions.c:247
 msgctxt "filters-action"
 msgid "_Extract Component..."
-msgstr ""
+msgstr "_Extreu component..."
 
 #: ../app/actions/filters-actions.c:252
 msgctxt "filters-action"
@@ -3272,7 +3272,7 @@ msgstr "Centelleig de la lent..."
 #: ../app/actions/filters-actions.c:402
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
-msgstr ""
+msgstr "_Mantiuk 2006..."
 
 #: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
@@ -3407,7 +3407,7 @@ msgstr "Elimina els ulls ve_rmells..."
 #: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
-msgstr ""
+msgstr "_Reinhard 2005..."
 
 #: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
@@ -3452,7 +3452,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
-msgstr ""
+msgstr "_Veí més proper simètric..."
 
 #: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
@@ -5087,28 +5087,24 @@ msgid "RGB (perceptual)"
 msgstr "RGB (perceptiu)"
 
 #: ../app/actions/layers-actions.c:382
-#, fuzzy
 msgctxt "layers-action"
 msgid "Source over"
-msgstr "Origen"
+msgstr "Origen per sobre"
 
 #: ../app/actions/layers-actions.c:387
-#, fuzzy
 msgctxt "layers-action"
 msgid "Source atop"
-msgstr "Origen"
+msgstr "Origen a dalt"
 
 #: ../app/actions/layers-actions.c:392
-#, fuzzy
 msgctxt "layers-action"
 msgid "Source in"
-msgstr "Origen"
+msgstr "Origen dins"
 
 #: ../app/actions/layers-actions.c:397
-#, fuzzy
 msgctxt "layers-action"
 msgid "Destination atop"
-msgstr "Rang de destinació"
+msgstr "Destinació a dalt"
 
 #. abused
 #: ../app/actions/layers-actions.c:405
@@ -14740,34 +14736,29 @@ msgid "Auto"
 msgstr "Automàtic"
 
 #: ../app/operations/operations-enums.c:60
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Source over"
-msgstr "Origen"
+msgstr "Origen per sobre"
 
 #: ../app/operations/operations-enums.c:61
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Source atop"
-msgstr "Origen"
+msgstr "Origen a dalt"
 
 #: ../app/operations/operations-enums.c:62
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Destination atop"
-msgstr "Rang de destinació"
+msgstr "Destinació a dalt"
 
 #: ../app/operations/operations-enums.c:63
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Source in"
-msgstr "Origen"
+msgstr  "Origen dins"
 
 #: ../app/operations/operations-enums.c:152
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Normal (legacy)"
-msgstr "Finestra normal (lineal)"
+msgstr "Normal (antic)"
 
 #: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
@@ -14775,10 +14766,9 @@ msgid "Dissolve"
 msgstr "Dissol"
 
 #: ../app/operations/operations-enums.c:154
-#, fuzzy
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
-msgstr "Darrere (lineal)"
+msgstr "Darrere (antic)"
 
 #: ../app/operations/operations-enums.c:155
 msgctxt "layer-mode"
@@ -19866,7 +19856,7 @@ msgstr ""
 
 #: ../app/widgets/gimpcolorframe.c:192
 msgid "X,Y:"
-msgstr ""
+msgstr "X,Y:"
 
 #: ../app/widgets/gimpcolorframe.c:693 ../app/widgets/gimpcolorframe.c:770
 msgid "Value:"
@@ -21177,16 +21167,16 @@ msgid "All XCF images"
 msgstr "Totes les imatges XCF"
 
 #: ../app/widgets/gimpsavedialog.c:259
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The image uses features from %s, disabling compression won't make the XCF "
 "file readable by older GIMP versions."
 msgstr ""
-"La imatge utilitza característiques de %s i no es pot desar per a versions "
+"La imatge utilitza característiques de %s, inhabilitant la compressió no farà que el fitxer XCF es pugui llegir amb versions "
 "més antigues del GIMP."
 
 #: ../app/widgets/gimpsavedialog.c:266
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Keep compression disabled to make the XCF file readable by %s and later."
 msgstr ""
@@ -21198,9 +21188,8 @@ msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "Les metadades no són visibles en GIMP més antics que la versió 2.10."
 
 #: ../app/widgets/gimpsavedialog.c:329
-#, fuzzy
 msgid "Save this XCF file with better but slower compression"
-msgstr "Desa aquest fitxer XCF amb la compatibilitat màxima"
+msgstr "Desa aquest fitxer XCF amb millor compressió però més lenta"
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
