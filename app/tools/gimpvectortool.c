@@ -52,6 +52,7 @@
 #include "gimpvectoroptions.h"
 #include "gimpvectortool.h"
 
+#include "dialogs/fill-dialog.h"
 #include "dialogs/stroke-dialog.h"
 
 #include "gimp-intl.h"
@@ -135,6 +136,16 @@ static void     gimp_vector_tool_to_selection    (GimpVectorTool        *vector_
 static void     gimp_vector_tool_to_selection_extended
                                                  (GimpVectorTool        *vector_tool,
                                                   GdkModifierType        state);
+
+static void     gimp_vector_tool_fill_vectors    (GimpVectorTool        *vector_tool,
+                                                  GtkWidget             *button);
+static void     gimp_vector_tool_fill_callback   (GtkWidget             *dialog,
+                                                  GimpItem              *item,
+                                                  GimpDrawable          *drawable,
+                                                  GimpContext           *context,
+                                                  GimpFillOptions       *options,
+                                                  gpointer               data);
+
 static void     gimp_vector_tool_stroke_vectors  (GimpVectorTool        *vector_tool,
                                                   GtkWidget             *button);
 static void     gimp_vector_tool_stroke_callback (GtkWidget             *dialog,
@@ -648,6 +659,14 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                                 tool);
         }
 
+      if (options->fill_button)
+        {
+          gtk_widget_set_sensitive (options->fill_button, FALSE);
+          g_signal_handlers_disconnect_by_func (options->fill_button,
+                                                gimp_vector_tool_fill_vectors,
+                                                tool);
+        }
+
       if (options->stroke_button)
         {
           gtk_widget_set_sensitive (options->stroke_button, FALSE);
@@ -685,6 +704,14 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                 G_CALLBACK (gimp_vector_tool_to_selection_extended),
                                 tool);
       gtk_widget_set_sensitive (options->to_selection_button, TRUE);
+    }
+
+  if (options->fill_button)
+    {
+      g_signal_connect_swapped (options->fill_button, "clicked",
+                                G_CALLBACK (gimp_vector_tool_fill_vectors),
+                                tool);
+      gtk_widget_set_sensitive (options->fill_button, TRUE);
     }
 
   if (options->stroke_button)
@@ -757,6 +784,78 @@ gimp_vector_tool_to_selection_extended (GimpVectorTool  *vector_tool,
                           gimp_modifiers_to_channel_op (state),
                           TRUE, FALSE, 0, 0);
   gimp_image_flush (image);
+}
+
+
+static void
+gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
+                               GtkWidget      *button)
+{
+  GimpDialogConfig *config;
+  GimpImage        *image;
+  GimpDrawable     *drawable;
+  GtkWidget        *dialog;
+
+  if (! vector_tool->vectors)
+    return;
+
+  image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
+
+  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+
+  drawable = gimp_image_get_active_drawable (image);
+
+  if (! drawable)
+    {
+      gimp_tool_message (GIMP_TOOL (vector_tool),
+                         GIMP_TOOL (vector_tool)->display,
+                         _("There is no active layer or channel to fill"));
+      return;
+    }
+
+  dialog = fill_dialog_new (GIMP_ITEM (vector_tool->vectors),
+                            drawable,
+                            GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
+                            _("Fill Path"),
+                            GIMP_ICON_TOOL_BUCKET_FILL,
+                            GIMP_HELP_PATH_FILL,
+                            button,
+                            config->fill_options,
+                            gimp_vector_tool_fill_callback,
+                            vector_tool);
+  gtk_widget_show (dialog);
+}
+
+static void
+gimp_vector_tool_fill_callback (GtkWidget       *dialog,
+                                GimpItem        *item,
+                                GimpDrawable    *drawable,
+                                GimpContext     *context,
+                                GimpFillOptions *options,
+                                gpointer         data)
+{
+  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
+  GimpImage        *image  = gimp_item_get_image (item);
+  GError           *error  = NULL;
+
+  gimp_config_sync (G_OBJECT (options),
+                    G_OBJECT (config->fill_options), 0);
+
+  if (! gimp_item_fill (item, drawable, options,
+                        TRUE, NULL, &error))
+    {
+      gimp_message_literal (context->gimp,
+                            G_OBJECT (dialog),
+                            GIMP_MESSAGE_WARNING,
+                            error ? error->message : "NULL");
+
+      g_clear_error (&error);
+      return;
+    }
+
+  gimp_image_flush (image);
+
+  gtk_widget_destroy (dialog);
 }
 
 

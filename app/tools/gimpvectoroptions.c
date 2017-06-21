@@ -199,6 +199,14 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
 
   options->to_selection_button = button;
 
+  button = gtk_button_new_with_label (_("Fill Path"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (button, FALSE);
+  gimp_help_set_help_data (button, NULL, GIMP_HELP_PATH_FILL);
+  gtk_widget_show (button);
+
+  options->fill_button = button;
+
   button = gtk_button_new_with_label (_("Stroke Path"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
