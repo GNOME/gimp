@@ -30,6 +30,7 @@
 #include "gimpcanvasgroup.h"
 #include "gimpcanvashandle.h"
 #include "gimpcanvasline.h"
+#include "gimpcanvaspath.h"
 #include "gimpcanvastransformguides.h"
 #include "gimpdisplayshell.h"
 #include "gimptoolwidget.h"
