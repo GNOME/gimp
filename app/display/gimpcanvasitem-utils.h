@@ -22,20 +22,60 @@
 #define __GIMP_CANVAS_ITEM_UTILS_H__
 
 
-void   gimp_canvas_item_shift_to_north_west (GimpHandleAnchor  anchor,
-                                             gdouble           x,
-                                             gdouble           y,
-                                             gint              width,
-                                             gint              height,
-                                             gdouble          *shifted_x,
-                                             gdouble          *shifted_y);
-void   gimp_canvas_item_shift_to_center     (GimpHandleAnchor  anchor,
-                                             gdouble           x,
-                                             gdouble           y,
-                                             gint              width,
-                                             gint              height,
-                                             gdouble          *shifted_x,
-                                             gdouble          *shifted_y);
+gboolean   gimp_canvas_item_on_handle           (GimpCanvasItem    *item,
+                                                 gdouble            x,
+                                                 gdouble            y,
+                                                 GimpHandleType     type,
+                                                 gdouble            handle_x,
+                                                 gdouble            handle_y,
+                                                 gint               width,
+                                                 gint               height,
+                                                 GimpHandleAnchor   anchor);
+
+gboolean   gimp_canvas_item_on_vectors_handle   (GimpCanvasItem    *item,
+                                                 GimpVectors       *vectors,
+                                                 const GimpCoords  *coord,
+                                                 gint               width,
+                                                 gint               height,
+                                                 GimpAnchorType     preferred,
+                                                 gboolean           exclusive,
+                                                 GimpAnchor       **ret_anchor,
+                                                 GimpStroke       **ret_stroke);
+gboolean   gimp_canvas_item_on_vectors_curve    (GimpCanvasItem    *item,
+                                                 GimpVectors       *vectors,
+                                                 const GimpCoords  *coord,
+                                                 gint               width,
+                                                 gint               height,
+                                                 GimpCoords        *ret_coords,
+                                                 gdouble           *ret_pos,
+                                                 GimpAnchor       **ret_segment_start,
+                                                 GimpAnchor       **ret_segment_end,
+                                                 GimpStroke       **ret_stroke);
+gboolean   gimp_canvas_item_on_vectors          (GimpCanvasItem    *item,
+                                                 const GimpCoords  *coords,
+                                                 gint               width,
+                                                 gint               height,
+                                                 GimpCoords        *ret_coords,
+                                                 gdouble           *ret_pos,
+                                                 GimpAnchor       **ret_segment_start,
+                                                 GimpAnchor       **ret_segment_end,
+                                                 GimpStroke       **ret_stroke,
+                                                 GimpVectors      **ret_vectors);
+
+void       gimp_canvas_item_shift_to_north_west (GimpHandleAnchor   anchor,
+                                                 gdouble            x,
+                                                 gdouble            y,
+                                                 gint               width,
+                                                 gint               height,
+                                                 gdouble           *shifted_x,
+                                                 gdouble           *shifted_y);
+void       gimp_canvas_item_shift_to_center     (GimpHandleAnchor   anchor,
+                                                 gdouble            x,
+                                                 gdouble            y,
+                                                 gint               width,
+                                                 gint               height,
+                                                 gdouble           *shifted_x,
+                                                 gdouble           *shifted_y);
 
 
 #endif /* __GIMP_CANVAS_ITEM_UTILS_H__ */
