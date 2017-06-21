@@ -181,10 +181,6 @@ GimpCanvasItem * gimp_draw_tool_add_strokes          (GimpDrawTool     *draw_too
                                                       gint              n_points,
                                                       GimpMatrix3      *transform,
                                                       gboolean          filled);
-GimpCanvasItem * gimp_draw_tool_add_path             (GimpDrawTool     *draw_tool,
-                                                      const GimpBezierDesc *desc,
-                                                      gdouble           x,
-                                                      gdouble           y);
 
 GimpCanvasItem * gimp_draw_tool_add_pen              (GimpDrawTool     *draw_tool,
                                                       const GimpVector2 *points,
@@ -214,39 +210,12 @@ gboolean         gimp_draw_tool_on_handle            (GimpDrawTool     *draw_too
                                                       gint              width,
                                                       gint              height,
                                                       GimpHandleAnchor  anchor);
-gboolean         gimp_draw_tool_on_vectors_handle    (GimpDrawTool     *draw_tool,
-                                                      GimpDisplay      *display,
-                                                      GimpVectors      *vectors,
-                                                      const GimpCoords *coord,
-                                                      gint              width,
-                                                      gint              height,
-                                                      GimpAnchorType    preferred,
-                                                      gboolean          exclusive,
-                                                      GimpAnchor      **ret_anchor,
-                                                      GimpStroke      **ret_stroke);
-gboolean         gimp_draw_tool_on_vectors_curve     (GimpDrawTool     *draw_tool,
-                                                      GimpDisplay      *display,
-                                                      GimpVectors      *vectors,
-                                                      const GimpCoords *coord,
-                                                      gint              width,
-                                                      gint              height,
-                                                      GimpCoords       *ret_coords,
-                                                      gdouble          *ret_pos,
-                                                      GimpAnchor      **ret_segment_start,
-                                                      GimpAnchor      **ret_segment_end,
-                                                      GimpStroke      **ret_stroke);
 
-gboolean         gimp_draw_tool_on_vectors           (GimpDrawTool     *draw_tool,
+GimpVectors    * gimp_draw_tool_on_vectors           (GimpDrawTool     *draw_tool,
                                                       GimpDisplay      *display,
                                                       const GimpCoords *coord,
                                                       gint              width,
-                                                      gint              height,
-                                                      GimpCoords       *ret_coords,
-                                                      gdouble          *ret_pos,
-                                                      GimpAnchor      **ret_segment_start,
-                                                      GimpAnchor      **ret_segment_end,
-                                                      GimpStroke      **ret_stroke,
-                                                      GimpVectors     **ret_vectors);
+                                                      gint              height);
 
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

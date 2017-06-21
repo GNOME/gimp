@@ -42,14 +42,12 @@
 #include "display/gimpcanvashandle.h"
 #include "display/gimpcanvasitem-utils.h"
 #include "display/gimpcanvasline.h"
-#include "display/gimpcanvaspath.h"
 #include "display/gimpcanvaspen.h"
 #include "display/gimpcanvaspolygon.h"
 #include "display/gimpcanvasrectangle.h"
 #include "display/gimpcanvasrectangleguides.h"
 #include "display/gimpcanvassamplepoint.h"
 #include "display/gimpcanvastextcursor.h"
-#include "display/gimpcanvastransformguides.h"
 #include "display/gimpcanvastransformpreview.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -852,26 +850,6 @@ gimp_draw_tool_add_strokes (GimpDrawTool     *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_add_path (GimpDrawTool         *draw_tool,
-                         const GimpBezierDesc *desc,
-                         gdouble               x,
-                         gdouble               y)
-{
-  GimpCanvasItem *item;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
-  g_return_val_if_fail (desc != NULL, NULL);
-
-  item = gimp_canvas_path_new (gimp_display_get_shell (draw_tool->display),
-                               desc, x, y, FALSE, GIMP_PATH_STYLE_DEFAULT);
-
-  gimp_draw_tool_add_item (draw_tool, item);
-  g_object_unref (item);
-
-  return item;
-}
-
-GimpCanvasItem *
 gimp_draw_tool_add_pen (GimpDrawTool      *draw_tool,
                         const GimpVector2 *points,
                         gint               n_points,
@@ -1044,182 +1022,39 @@ gimp_draw_tool_on_handle (GimpDrawTool     *draw_tool,
   return FALSE;
 }
 
-gboolean
-gimp_draw_tool_on_vectors_handle (GimpDrawTool      *draw_tool,
-                                  GimpDisplay       *display,
-                                  GimpVectors       *vectors,
-                                  const GimpCoords  *coord,
-                                  gint               width,
-                                  gint               height,
-                                  GimpAnchorType     preferred,
-                                  gboolean           exclusive,
-                                  GimpAnchor       **ret_anchor,
-                                  GimpStroke       **ret_stroke)
+static gboolean
+gimp_draw_tool_on_vectors_curve (GimpDrawTool     *draw_tool,
+                                 GimpDisplay      *display,
+                                 GimpVectors      *vectors,
+                                 const GimpCoords *coords,
+                                 gint              width,
+                                 gint              height)
 {
-  GimpStroke *stroke       = NULL;
-  GimpStroke *pref_stroke  = NULL;
-  GimpAnchor *anchor       = NULL;
-  GimpAnchor *pref_anchor  = NULL;
-  gdouble     dx, dy;
-  gdouble     pref_mindist = -1;
-  gdouble     mindist      = -1;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (coord != NULL, FALSE);
-
-  if (ret_anchor) *ret_anchor = NULL;
-  if (ret_stroke) *ret_stroke = NULL;
-
-  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
-    {
-      GList *anchor_list;
-      GList *list;
-
-      anchor_list = g_list_concat (gimp_stroke_get_draw_anchors (stroke),
-                                   gimp_stroke_get_draw_controls (stroke));
-
-      for (list = anchor_list; list; list = g_list_next (list))
-        {
-          dx = coord->x - GIMP_ANCHOR (list->data)->position.x;
-          dy = coord->y - GIMP_ANCHOR (list->data)->position.y;
-
-          if (mindist < 0 || mindist > dx * dx + dy * dy)
-            {
-              mindist = dx * dx + dy * dy;
-              anchor = GIMP_ANCHOR (list->data);
-
-              if (ret_stroke)
-                *ret_stroke = stroke;
-            }
-
-          if ((pref_mindist < 0 || pref_mindist > dx * dx + dy * dy) &&
-              GIMP_ANCHOR (list->data)->type == preferred)
-            {
-              pref_mindist = dx * dx + dy * dy;
-              pref_anchor = GIMP_ANCHOR (list->data);
-              pref_stroke = stroke;
-            }
-        }
-
-      g_list_free (anchor_list);
-    }
-
-  /* If the data passed into ret_anchor is a preferred anchor, return it. */
-  if (ret_anchor && *ret_anchor &&
-      gimp_draw_tool_on_handle (draw_tool, display,
-                                coord->x,
-                                coord->y,
-                                GIMP_HANDLE_CIRCLE,
-                                (*ret_anchor)->position.x,
-                                (*ret_anchor)->position.y,
-                                width, height,
-                                GIMP_HANDLE_ANCHOR_CENTER) &&
-      (*ret_anchor)->type == preferred)
-    {
-      if (ret_stroke) *ret_stroke = pref_stroke;
-
-      return TRUE;
-    }
-
-  if (pref_anchor && gimp_draw_tool_on_handle (draw_tool, display,
-                                               coord->x,
-                                               coord->y,
-                                               GIMP_HANDLE_CIRCLE,
-                                               pref_anchor->position.x,
-                                               pref_anchor->position.y,
-                                               width, height,
-                                               GIMP_HANDLE_ANCHOR_CENTER))
-    {
-      if (ret_anchor) *ret_anchor = pref_anchor;
-      if (ret_stroke) *ret_stroke = pref_stroke;
-
-      return TRUE;
-    }
-  else if (!exclusive && anchor &&
-           gimp_draw_tool_on_handle (draw_tool, display,
-                                     coord->x,
-                                     coord->y,
-                                     GIMP_HANDLE_CIRCLE,
-                                     anchor->position.x,
-                                     anchor->position.y,
-                                     width, height,
-                                     GIMP_HANDLE_ANCHOR_CENTER))
-    {
-      if (ret_anchor)
-        *ret_anchor = anchor;
-
-      /* *ret_stroke already set correctly. */
-      return TRUE;
-    }
-
-  if (ret_anchor)
-    *ret_anchor = NULL;
-  if (ret_stroke)
-    *ret_stroke = NULL;
-
-  return FALSE;
-}
-
-gboolean
-gimp_draw_tool_on_vectors_curve (GimpDrawTool      *draw_tool,
-                                 GimpDisplay       *display,
-                                 GimpVectors       *vectors,
-                                 const GimpCoords  *coord,
-                                 gint               width,
-                                 gint               height,
-                                 GimpCoords        *ret_coords,
-                                 gdouble           *ret_pos,
-                                 GimpAnchor       **ret_segment_start,
-                                 GimpAnchor       **ret_segment_end,
-                                 GimpStroke       **ret_stroke)
-{
-  GimpStroke *stroke = NULL;
-  GimpAnchor *segment_start;
-  GimpAnchor *segment_end;
+  GimpStroke *stroke     = NULL;
   GimpCoords  min_coords = GIMP_COORDS_DEFAULT_VALUES;
   GimpCoords  cur_coords;
-  gdouble     min_dist, cur_dist, cur_pos;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (coord != NULL, FALSE);
-
-  if (ret_coords)        *ret_coords        = *coord;
-  if (ret_pos)           *ret_pos           = -1.0;
-  if (ret_segment_start) *ret_segment_start = NULL;
-  if (ret_segment_end)   *ret_segment_end   = NULL;
-  if (ret_stroke)        *ret_stroke        = NULL;
-
-  min_dist = -1.0;
+  gdouble     min_dist   = -1;
+  gdouble     cur_dist;
+  gdouble     cur_pos;
 
   while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
     {
-      cur_dist = gimp_stroke_nearest_point_get (stroke, coord, 1.0,
+      cur_dist = gimp_stroke_nearest_point_get (stroke, coords, 1.0,
                                                 &cur_coords,
-                                                &segment_start,
-                                                &segment_end,
+                                                NULL, NULL,
                                                 &cur_pos);
 
-      if (cur_dist >= 0 && (min_dist < 0 || cur_dist < min_dist))
+      if (cur_dist >= 0.0 && (min_dist < 0.0 || cur_dist < min_dist))
         {
           min_dist   = cur_dist;
           min_coords = cur_coords;
-
-          if (ret_coords)        *ret_coords        = cur_coords;
-          if (ret_pos)           *ret_pos           = cur_pos;
-          if (ret_segment_start) *ret_segment_start = segment_start;
-          if (ret_segment_end)   *ret_segment_end   = segment_end;
-          if (ret_stroke)        *ret_stroke        = stroke;
         }
     }
 
   if (min_dist >= 0 &&
       gimp_draw_tool_on_handle (draw_tool, display,
-                                coord->x,
-                                coord->y,
+                                coords->x,
+                                coords->y,
                                 GIMP_HANDLE_CIRCLE,
                                 min_coords.x,
                                 min_coords.y,
@@ -1232,28 +1067,19 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool      *draw_tool,
   return FALSE;
 }
 
-gboolean
+GimpVectors *
 gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
                            GimpDisplay       *display,
                            const GimpCoords  *coords,
                            gint               width,
-                           gint               height,
-                           GimpCoords        *ret_coords,
-                           gdouble           *ret_pos,
-                           GimpAnchor       **ret_segment_start,
-                           GimpAnchor       **ret_segment_end,
-                           GimpStroke       **ret_stroke,
-                           GimpVectors      **ret_vectors)
+                           gint               height)
 {
   GList *all_vectors;
   GList *list;
 
-  if (ret_coords)        *ret_coords         = *coords;
-  if (ret_pos)           *ret_pos            = -1.0;
-  if (ret_segment_start) *ret_segment_start  = NULL;
-  if (ret_segment_end)   *ret_segment_end    = NULL;
-  if (ret_stroke)        *ret_stroke         = NULL;
-  if (ret_vectors)       *ret_vectors        = NULL;
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (coords != NULL, NULL);
 
   all_vectors = gimp_image_get_vectors_list (gimp_display_get_image (display));
 
@@ -1267,23 +1093,15 @@ gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
       if (gimp_draw_tool_on_vectors_curve (draw_tool,
                                            display,
                                            vectors, coords,
-                                           width, height,
-                                           ret_coords,
-                                           ret_pos,
-                                           ret_segment_start,
-                                           ret_segment_end,
-                                           ret_stroke))
+                                           width, height))
         {
-          if (ret_vectors)
-            *ret_vectors = vectors;
-
           g_list_free (all_vectors);
 
-          return TRUE;
+          return vectors;
         }
     }
 
   g_list_free (all_vectors);
 
-  return FALSE;
+  return NULL;
 }

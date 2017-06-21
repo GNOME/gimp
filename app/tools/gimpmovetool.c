@@ -180,10 +180,9 @@ gimp_move_tool_button_press (GimpTool            *tool,
         {
           GimpVectors *vectors;
 
-          if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
-                                         coords, 7, 7,
-                                         NULL, NULL, NULL, NULL, NULL,
-                                         &vectors))
+          vectors = gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
+                                               coords, 7, 7);
+          if (vectors)
             {
               move->old_active_vectors =
                 gimp_image_get_active_vectors (image);
@@ -540,8 +539,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
       else
         {
           if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
-                                         coords, 7, 7,
-                                         NULL, NULL, NULL, NULL, NULL, NULL))
+                                         coords, 7, 7))
             {
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
             }

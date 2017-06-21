@@ -284,10 +284,10 @@ gimp_align_tool_button_release (GimpTool              *tool,
       GimpLayer   *layer;
       gint         snap_distance = display->config->snap_distance;
 
-      if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
-                                     coords, snap_distance, snap_distance,
-                                     NULL, NULL, NULL, NULL, NULL,
-                                     &vectors))
+      vectors = gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
+                                           coords,
+                                           snap_distance, snap_distance);
+      if (vectors)
         {
           object = G_OBJECT (vectors);
         }
@@ -435,8 +435,7 @@ gimp_align_tool_oper_update (GimpTool         *tool,
          align_tool->selected_objects);
 
   if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
-                                 coords, snap_distance, snap_distance,
-                                 NULL, NULL, NULL, NULL, NULL, NULL))
+                                 coords, snap_distance, snap_distance))
     {
       if (add)
         align_tool->function = ALIGN_TOOL_ADD_PATH;

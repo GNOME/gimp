@@ -415,8 +415,7 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
   else if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
                                       coords,
                                       GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                      GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                      NULL, NULL, NULL, NULL, NULL, NULL))
+                                      GIMP_TOOL_HANDLE_SIZE_CIRCLE))
     {
       tool_cursor = GIMP_TOOL_CURSOR_HAND;
     }
