@@ -30,6 +30,14 @@
 #define MAX_FRAMERATE      300.0
 #define DEFAULT_FRAMERATE  24.0
 
+typedef enum
+{
+  ANIMATION_DND_TYPE_NONE      = 0,
+  ANIMATION_DND_TYPE_PANEL     = 1,
+
+  GIMP_DND_TYPE_LAST         = ANIMATION_DND_TYPE_PANEL
+} AnimationDndType;
+
 void         total_alpha_preview (guchar            *drawing_data,
                                   guint              drawing_width,
                                   guint              drawing_height);

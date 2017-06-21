@@ -51,6 +51,8 @@ struct _AnimationStoryboardPrivate
   GList              *panel_buttons;
   GList              *disposal_buttons;
   GList              *comments;
+
+  gint                dragged_panel;
 };
 
 /* GObject handlers */
@@ -89,9 +91,26 @@ static void animation_storyboard_disposal_toggled      (GtkToggleButton     *but
 static void animation_storyboard_button_clicked        (GtkWidget           *widget,
                                                         AnimationStoryboard *storyboard);
 
+/* Drag and drop */
+static void animation_storyboard_panel_drag_begin      (GtkWidget           *widget,
+                                                        GdkDragContext      *drag_context,
+                                                        AnimationStoryboard *storyboard);
+static void animation_storyboard_panel_drag_end        (GtkWidget           *widget,
+                                                        GdkDragContext      *drag_context,
+                                                        AnimationStoryboard *storyboard);
+static gboolean animation_storyboard_panel_drag_drop   (GtkWidget           *widget,
+                                                        GdkDragContext      *drag_context,
+                                                        gint                 x,
+                                                        gint                 y,
+                                                        guint                time,
+                                                        AnimationStoryboard *storyboard);
+
 /* Utils */
 static void animation_storyboard_jump                  (AnimationStoryboard *view,
                                                         gint                 panel);
+static void animation_storyboard_move                  (AnimationStoryboard *storyboard,
+                                                        gint                 from_panel,
+                                                        gint                 to_panel);
 
 G_DEFINE_TYPE (AnimationStoryboard, animation_storyboard, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -128,6 +147,7 @@ animation_storyboard_init (AnimationStoryboard *view)
   view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
                                             ANIMATION_TYPE_STORYBOARD,
                                             AnimationStoryboardPrivate);
+  view->priv->dragged_panel = -1;
 }
 
 /**** Public Functions ****/
@@ -243,6 +263,12 @@ animation_storyboard_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static const GtkTargetEntry target_table[] = {
+      { "application/x-gimp-animation-panel",
+        GTK_TARGET_SAME_APP,
+        ANIMATION_DND_TYPE_PANEL }
+};
+
 /* animation_storyboard_load:
  * @view: the #AnimationStoryboard.
  *
@@ -255,13 +281,15 @@ animation_storyboard_load (Animation           *animation,
 {
   AnimationAnimatic *animatic = ANIMATION_ANIMATIC (animation);
   GtkWidget         *layout;
+  gint              *orig_layers;
   gint              *layers;
+  gint32             orig_image_id;
   gint32             image_id;
   gint               n_images;
   gint               i;
 
-  image_id = animation_get_image_id (animation);
-  image_id = gimp_image_duplicate (image_id);
+  orig_image_id = animation_get_image_id (animation);
+  image_id = gimp_image_duplicate (orig_image_id);
   gimp_image_undo_disable (image_id);
 
   /* The actual layout is the grand-child. */
@@ -289,6 +317,8 @@ animation_storyboard_load (Animation           *animation,
     }
 
   /* Setting new values. */
+  orig_layers = gimp_image_get_layers (orig_image_id,
+                                       &n_images);
   layers = gimp_image_get_layers (image_id,
                                   &n_images);
 
@@ -319,6 +349,8 @@ animation_storyboard_load (Animation           *animation,
                         GTK_EXPAND | GTK_FILL,
                         GTK_FILL,
                         1, 1);
+      g_object_set_data (G_OBJECT (panel_button), "layer-tattoo",
+                         GINT_TO_POINTER (gimp_item_get_tattoo (orig_layers[i])));
       g_object_set_data (G_OBJECT (panel_button), "panel-num",
                          GINT_TO_POINTER (panel_num));
       g_signal_connect (panel_button, "clicked",
@@ -333,7 +365,28 @@ animation_storyboard_load (Animation           *animation,
       thumbnail = gimp_drawable_get_thumbnail (layers[i], 250, 250,
                                                GIMP_PIXBUF_SMALL_CHECKS);
       image = gtk_image_new_from_pixbuf (thumbnail);
+
+      /* Make this button a drag source. */
+      gtk_drag_source_set (panel_button, GDK_BUTTON1_MASK,
+                           target_table, G_N_ELEMENTS (target_table),
+                           GDK_ACTION_MOVE);
+      gtk_drag_source_set_icon_pixbuf (panel_button, thumbnail);
+
       g_object_unref (thumbnail);
+
+      gtk_drag_dest_set (panel_button, GTK_DEST_DEFAULT_ALL,
+                         target_table, G_N_ELEMENTS (target_table),
+                         GDK_ACTION_MOVE);
+
+      g_signal_connect (panel_button, "drag-begin",
+                        G_CALLBACK (animation_storyboard_panel_drag_begin),
+                        view);
+      g_signal_connect (panel_button, "drag-end",
+                        G_CALLBACK (animation_storyboard_panel_drag_end),
+                        view);
+      g_signal_connect (panel_button, "drag-drop",
+                        G_CALLBACK (animation_storyboard_panel_drag_drop),
+                        view);
 
       /* Let's align top-right, in case the storyboard gets resized
        * and the image grows (the thumbnail right now stays as fixed size). */
@@ -440,6 +493,7 @@ animation_storyboard_load (Animation           *animation,
                     (GCallback) animation_storyboard_stopped,
                     view);
   g_free (layers);
+  g_free (orig_layers);
   gimp_image_delete (image_id);
 }
 
@@ -577,6 +631,67 @@ animation_storyboard_button_clicked (GtkWidget           *widget,
   animation_playback_jump (storyboard->priv->playback, position);
 }
 
+/**** Drag and drop ****/
+
+static void
+animation_storyboard_panel_drag_begin (GtkWidget           *widget,
+                                       GdkDragContext      *drag_context,
+                                       AnimationStoryboard *storyboard)
+{
+  gpointer panel_num;
+
+  panel_num = g_object_get_data (G_OBJECT (widget), "panel-num");
+  storyboard->priv->dragged_panel = GPOINTER_TO_INT (panel_num);
+}
+
+static void
+animation_storyboard_panel_drag_end (GtkWidget           *widget,
+                                     GdkDragContext      *drag_context,
+                                     AnimationStoryboard *storyboard)
+{
+  storyboard->priv->dragged_panel = -1;
+}
+
+static gboolean
+animation_storyboard_panel_drag_drop (GtkWidget           *widget,
+                                      GdkDragContext      *context,
+                                      gint                 x,
+                                      gint                 y,
+                                      guint                time,
+                                      AnimationStoryboard *storyboard)
+{
+  gpointer       panel_num;
+  GtkAllocation  allocation;
+  gint           panel_dest;
+
+  g_return_val_if_fail (storyboard->priv->dragged_panel >= 0, FALSE);
+
+  panel_num = g_object_get_data (G_OBJECT (widget), "panel-num");
+  gtk_widget_get_allocation (widget, &allocation);
+  if (y > allocation.height / 2)
+    {
+      panel_dest = GPOINTER_TO_INT (panel_num) + 1;
+    }
+  else
+    {
+      panel_dest = GPOINTER_TO_INT (panel_num);
+    }
+  if (storyboard->priv->dragged_panel < panel_dest)
+    {
+      panel_dest--;
+    }
+  animation_storyboard_move (storyboard,
+                             storyboard->priv->dragged_panel,
+                             panel_dest);
+
+  gtk_drag_finish (context, TRUE,
+                   gdk_drag_context_get_selected_action (context) == GDK_ACTION_MOVE,
+                   time);
+  return TRUE;
+}
+
+/**** Utils ****/
+
 static void
 animation_storyboard_jump (AnimationStoryboard *view,
                            gint                 panel)
@@ -600,5 +715,39 @@ animation_storyboard_jump (AnimationStoryboard *view,
       gtk_button_set_relief (GTK_BUTTON (button),
                              GTK_RELIEF_NORMAL);
       show_scrolled_child (GTK_SCROLLED_WINDOW (view), button);
+    }
+}
+
+static void
+animation_storyboard_move (AnimationStoryboard *storyboard,
+                           gint                 from_panel,
+                           gint                 to_panel)
+{
+  Animation *animation;
+  gint32     image_id;
+
+  animation = ANIMATION (storyboard->priv->animation);
+  image_id  = animation_get_image_id (animation);
+  if (from_panel != to_panel)
+    {
+      GtkWidget *button;
+      gpointer   tattoo;
+      gint32     layer;
+      gint       new_position;
+
+      button = g_list_nth_data (storyboard->priv->panel_buttons,
+                                from_panel);
+      tattoo = g_object_get_data (G_OBJECT (button), "layer-tattoo");
+      layer = gimp_image_get_layer_by_tattoo (image_id,
+                                              GPOINTER_TO_INT (tattoo));
+
+      /* Layers are ordered from top to bottom in GIMP. */
+      new_position = g_list_length (storyboard->priv->panel_buttons) - to_panel - 1;
+      gimp_image_reorder_item (image_id, layer, 0, new_position);
+
+      /* For now, do a full reload. Ugly but that's a first version.
+       * TODO: implement a saner, lighter reordering of the GUI.
+       */
+      animation_load (animation);
     }
 }
