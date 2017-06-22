@@ -260,16 +260,16 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
 }
 
 void
-gimp_channel_select_polygon (GimpChannel    *channel,
-                             const gchar    *undo_desc,
-                             gint            n_points,
-                             GimpVector2    *points,
-                             GimpChannelOps  op,
-                             gboolean        antialias,
-                             gboolean        feather,
-                             gdouble         feather_radius_x,
-                             gdouble         feather_radius_y,
-                             gboolean        push_undo)
+gimp_channel_select_polygon (GimpChannel       *channel,
+                             const gchar       *undo_desc,
+                             gint               n_points,
+                             const GimpVector2 *points,
+                             GimpChannelOps     op,
+                             gboolean           antialias,
+                             gboolean           feather,
+                             gdouble            feather_radius_x,
+                             gdouble            feather_radius_y,
+                             gboolean           push_undo)
 {
   GimpScanConvert *scan_convert;
 
