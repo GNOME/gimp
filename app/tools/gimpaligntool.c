@@ -33,7 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-arrange.h"
 #include "core/gimpimage-guides.h"
-#include "core/gimpimage-pick-layer.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 

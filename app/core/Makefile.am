@@ -251,8 +251,8 @@ libappcore_a_sources = \
 	gimpimage-new.h				\
 	gimpimage-pick-color.c			\
 	gimpimage-pick-color.h			\
-	gimpimage-pick-layer.c			\
-	gimpimage-pick-layer.h			\
+	gimpimage-pick-item.c			\
+	gimpimage-pick-item.h			\
 	gimpimage-preview.c			\
 	gimpimage-preview.h			\
 	gimpimage-private.h			\

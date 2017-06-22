@@ -519,7 +519,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-pick-layer.h") ],
+        headers => [ qw("core/gimpimage-pick-item.h") ],
         code => <<'CODE'
 {
   layer = gimp_image_pick_layer (image, x, y);

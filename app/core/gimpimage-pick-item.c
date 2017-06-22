@@ -24,7 +24,7 @@
 
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
-#include "gimpimage-pick-layer.h"
+#include "gimpimage-pick-item.h"
 #include "gimppickable.h"
 
 #include "text/gimptextlayer.h"

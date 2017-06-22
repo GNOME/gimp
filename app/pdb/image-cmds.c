@@ -42,7 +42,7 @@
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-metadata.h"
 #include "core/gimpimage-pick-color.h"
-#include "core/gimpimage-pick-layer.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplayer.h"

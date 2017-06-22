@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PICK_LAYER_H__
-#define __GIMP_IMAGE_PICK_LAYER_H__
+#ifndef __GIMP_IMAGE_PICK_ITEM_H__
+#define __GIMP_IMAGE_PICK_ITEM_H__
 
 
 GimpLayer     * gimp_image_pick_layer           (GimpImage *image,
@@ -30,4 +30,4 @@ GimpTextLayer * gimp_image_pick_text_layer      (GimpImage *image,
                                                  gint       y);
 
 
-#endif /* __GIMP_IMAGE_PICK_LAYER_H__ */
+#endif /* __GIMP_IMAGE_PICK_ITEM_H__ */

@@ -35,7 +35,7 @@
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
-#include "core/gimpimage-pick-layer.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimplayer.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayermask.h"
