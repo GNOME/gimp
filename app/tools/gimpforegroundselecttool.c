@@ -139,7 +139,9 @@ static void   gimp_foreground_select_tool_options_notify (GimpTool         *tool
 static void   gimp_foreground_select_tool_draw           (GimpDrawTool     *draw_tool);
 
 static void   gimp_foreground_select_tool_select         (GimpFreeSelectTool *free_sel,
-                                                          GimpDisplay        *display);
+                                                          GimpDisplay        *display,
+                                                          const GimpVector2  *points,
+                                                          gint                n_points);
 
 static void   gimp_foreground_select_tool_halt           (GimpForegroundSelectTool *fg_select);
 static void   gimp_foreground_select_tool_commit         (GimpForegroundSelectTool *fg_select);
@@ -889,30 +891,19 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
 static void
 gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
-                                    GimpDisplay        *display)
+                                    GimpDisplay        *display,
+                                    const GimpVector2  *points,
+                                    gint                n_points)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
   GimpImage                *image     = gimp_display_get_image (display);
   GimpDrawable             *drawable  = gimp_image_get_active_drawable (image);
-  GimpScanConvert          *scan_convert;
-  const GimpVector2        *points;
-  gint                      n_points;
 
-  if (! drawable)
-    return;
-
-  if (fg_select->state == MATTING_STATE_FREE_SELECT)
+  if (drawable && fg_select->state == MATTING_STATE_FREE_SELECT)
     {
-      scan_convert = gimp_scan_convert_new ();
+      GimpScanConvert *scan_convert = gimp_scan_convert_new ();
 
-      gimp_free_select_tool_get_points (free_sel,
-                                        &points,
-                                        &n_points);
-
-      gimp_scan_convert_add_polyline (scan_convert,
-                                      n_points,
-                                      points,
-                                      TRUE);
+      gimp_scan_convert_add_polyline (scan_convert, n_points, points, TRUE);
 
       fg_select->trimap =
         gegl_buffer_new (GEGL_RECTANGLE (0, 0,
