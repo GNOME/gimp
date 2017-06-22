@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimptoolinfo.h"
@@ -403,6 +404,7 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
                                 GimpDisplay      *display)
 {
   GimpVectorTool     *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpDisplayShell   *shell       = gimp_display_get_shell (display);
   GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_PATHS;
   GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
@@ -412,10 +414,12 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
                                    coords, state,
                                    NULL, &tool_cursor, &modifier);
     }
-  else if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
-                                      coords,
-                                      GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                      GIMP_TOOL_HANDLE_SIZE_CIRCLE))
+  else if (gimp_image_pick_vectors (gimp_display_get_image (display),
+                                    coords->x, coords->y,
+                                    FUNSCALEX (shell,
+                                               GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2),
+                                    FUNSCALEY (shell,
+                                               GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2)))
     {
       tool_cursor = GIMP_TOOL_CURSOR_HAND;
     }

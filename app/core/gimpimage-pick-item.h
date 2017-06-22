@@ -29,6 +29,12 @@ GimpTextLayer   * gimp_image_pick_text_layer      (GimpImage *image,
                                                    gint       x,
                                                    gint       y);
 
+GimpVectors     * gimp_image_pick_vectors         (GimpImage *image,
+                                                   gdouble    x,
+                                                   gdouble    y,
+                                                   gdouble    epsilon_x,
+                                                   gdouble    epsilon_y);
+
 GimpGuide       * gimp_image_pick_guide           (GimpImage *image,
                                                    gdouble    x,
                                                    gdouble    y,

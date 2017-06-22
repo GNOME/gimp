@@ -211,11 +211,5 @@ gboolean         gimp_draw_tool_on_handle            (GimpDrawTool     *draw_too
                                                       gint              height,
                                                       GimpHandleAnchor  anchor);
 
-GimpVectors    * gimp_draw_tool_on_vectors           (GimpDrawTool     *draw_tool,
-                                                      GimpDisplay      *display,
-                                                      const GimpCoords *coord,
-                                                      gint              width,
-                                                      gint              height);
-
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

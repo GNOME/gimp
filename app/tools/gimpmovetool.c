@@ -175,12 +175,16 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
   if (! options->move_current)
     {
+      const gint snap_distance = display->config->snap_distance;
+
       if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
         {
           GimpVectors *vectors;
 
-          vectors = gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
-                                               coords, 7, 7);
+          vectors = gimp_image_pick_vectors (image,
+                                             coords->x, coords->y,
+                                             FUNSCALEX (shell, snap_distance),
+                                             FUNSCALEY (shell, snap_distance));
           if (vectors)
             {
               move->old_active_vectors =
@@ -198,7 +202,6 @@ gimp_move_tool_button_press (GimpTool            *tool,
         {
           GimpGuide  *guide;
           GimpLayer  *layer;
-          const gint  snap_distance = display->config->snap_distance;
 
           if (gimp_display_shell_get_show_guides (shell) &&
               (guide = gimp_image_pick_guide (image,
@@ -516,12 +519,13 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
-  GimpMoveOptions    *options     = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell   *shell       = gimp_display_get_shell (display);
-  GimpImage          *image       = gimp_display_get_image (display);
-  GimpCursorType      cursor      = GIMP_CURSOR_MOUSE;
-  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_MOVE;
-  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
+  GimpMoveOptions    *options       = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell   *shell         = gimp_display_get_shell (display);
+  GimpImage          *image         = gimp_display_get_image (display);
+  GimpCursorType      cursor        = GIMP_CURSOR_MOUSE;
+  GimpToolCursorType  tool_cursor   = GIMP_TOOL_CURSOR_MOVE;
+  GimpCursorModifier  modifier      = GIMP_CURSOR_MODIFIER_NONE;
+  gint                snap_distance = display->config->snap_distance;
 
   if (options->move_type == GIMP_TRANSFORM_TYPE_PATH)
     {
@@ -537,8 +541,10 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
         }
       else
         {
-          if (gimp_draw_tool_on_vectors (GIMP_DRAW_TOOL (tool), display,
-                                         coords, 7, 7))
+          if (gimp_image_pick_vectors (image,
+                                       coords->x, coords->y,
+                                       FUNSCALEX (shell, snap_distance),
+                                       FUNSCALEY (shell, snap_distance)))
             {
               tool_cursor = GIMP_TOOL_CURSOR_HAND;
             }
@@ -566,7 +572,6 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
   else
     {
       GimpLayer  *layer;
-      const gint  snap_distance = display->config->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
           gimp_image_pick_guide (image, coords->x, coords->y,

@@ -29,10 +29,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "vectors/gimpanchor.h"
-#include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
-
 #include "display/gimpcanvas.h"
 #include "display/gimpcanvasarc.h"
 #include "display/gimpcanvasboundary.h"
@@ -1020,88 +1016,4 @@ gimp_draw_tool_on_handle (GimpDrawTool     *draw_tool,
     }
 
   return FALSE;
-}
-
-static gboolean
-gimp_draw_tool_on_vectors_curve (GimpDrawTool     *draw_tool,
-                                 GimpDisplay      *display,
-                                 GimpVectors      *vectors,
-                                 const GimpCoords *coords,
-                                 gint              width,
-                                 gint              height)
-{
-  GimpStroke *stroke     = NULL;
-  GimpCoords  min_coords = GIMP_COORDS_DEFAULT_VALUES;
-  GimpCoords  cur_coords;
-  gdouble     min_dist   = -1;
-  gdouble     cur_dist;
-  gdouble     cur_pos;
-
-  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
-    {
-      cur_dist = gimp_stroke_nearest_point_get (stroke, coords, 1.0,
-                                                &cur_coords,
-                                                NULL, NULL,
-                                                &cur_pos);
-
-      if (cur_dist >= 0.0 && (min_dist < 0.0 || cur_dist < min_dist))
-        {
-          min_dist   = cur_dist;
-          min_coords = cur_coords;
-        }
-    }
-
-  if (min_dist >= 0 &&
-      gimp_draw_tool_on_handle (draw_tool, display,
-                                coords->x,
-                                coords->y,
-                                GIMP_HANDLE_CIRCLE,
-                                min_coords.x,
-                                min_coords.y,
-                                width, height,
-                                GIMP_HANDLE_ANCHOR_CENTER))
-    {
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-GimpVectors *
-gimp_draw_tool_on_vectors (GimpDrawTool      *draw_tool,
-                           GimpDisplay       *display,
-                           const GimpCoords  *coords,
-                           gint               width,
-                           gint               height)
-{
-  GList *all_vectors;
-  GList *list;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
-  g_return_val_if_fail (coords != NULL, NULL);
-
-  all_vectors = gimp_image_get_vectors_list (gimp_display_get_image (display));
-
-  for (list = all_vectors; list; list = g_list_next (list))
-    {
-      GimpVectors *vectors = list->data;
-
-      if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
-        continue;
-
-      if (gimp_draw_tool_on_vectors_curve (draw_tool,
-                                           display,
-                                           vectors, coords,
-                                           width, height))
-        {
-          g_list_free (all_vectors);
-
-          return vectors;
-        }
-    }
-
-  g_list_free (all_vectors);
-
-  return NULL;
 }

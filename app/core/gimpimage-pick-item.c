@@ -34,6 +34,9 @@
 
 #include "text/gimptextlayer.h"
 
+#include "vectors/gimpstroke.h"
+#include "vectors/gimpvectors.h"
+
 
 GimpLayer *
 gimp_image_pick_layer (GimpImage *image,
@@ -154,6 +157,56 @@ gimp_image_pick_text_layer (GimpImage *image,
   g_list_free (all_layers);
 
   return NULL;
+}
+
+GimpVectors *
+gimp_image_pick_vectors (GimpImage *image,
+                         gdouble    x,
+                         gdouble    y,
+                         gdouble    epsilon_x,
+                         gdouble    epsilon_y)
+{
+  GimpVectors *ret = NULL;
+  GList       *all_vectors;
+  GList       *list;
+  gdouble      mindist = G_MAXDOUBLE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  all_vectors = gimp_image_get_vectors_list (image);
+
+  for (list = all_vectors; list; list = g_list_next (list))
+    {
+      GimpVectors *vectors = list->data;
+
+      if (gimp_item_is_visible (GIMP_ITEM (vectors)))
+        {
+          GimpStroke *stroke = NULL;
+          GimpCoords  coords = GIMP_COORDS_DEFAULT_VALUES;
+
+          while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+            {
+              gdouble dist;
+
+              coords.x = x;
+              coords.y = y;
+
+              dist = gimp_stroke_nearest_point_get (stroke, &coords, 1.0,
+                                                    NULL, NULL, NULL, NULL);
+
+              if (dist >= 0.0 &&
+                  dist <  MIN (epsilon_y, mindist))
+                {
+                  mindist = dist;
+                  ret     = vectors;
+                }
+            }
+        }
+    }
+
+  g_list_free (all_vectors);
+
+  return ret;
 }
 
 GimpGuide *
