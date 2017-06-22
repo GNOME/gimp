@@ -31,6 +31,7 @@
 #include "gimpcanvashandle.h"
 #include "gimpcanvasline.h"
 #include "gimpcanvaspath.h"
+#include "gimpcanvaspolygon.h"
 #include "gimpcanvastransformguides.h"
 #include "gimpdisplayshell.h"
 #include "gimptoolwidget.h"
@@ -378,6 +379,50 @@ gimp_tool_widget_add_line (GimpToolWidget *widget,
 
   item = gimp_canvas_line_new (widget->private->shell,
                                x1, y1, x2, y2);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_tool_widget_add_polygon (GimpToolWidget    *widget,
+                              GimpMatrix3       *transform,
+                              const GimpVector2 *points,
+                              gint               n_points,
+                              gboolean           filled)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (points == NULL || n_points > 0, NULL);
+
+  item = gimp_canvas_polygon_new (widget->private->shell,
+                                  points, n_points,
+                                  transform, filled);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_tool_widget_add_polygon_from_coords (GimpToolWidget    *widget,
+                                          GimpMatrix3       *transform,
+                                          const GimpCoords  *points,
+                                          gint               n_points,
+                                          gboolean           filled)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+  g_return_val_if_fail (points == NULL || n_points > 0, NULL);
+
+  item = gimp_canvas_polygon_new_from_coords (widget->private->shell,
+                                              points, n_points,
+                                              transform, filled);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);
