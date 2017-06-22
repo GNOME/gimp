@@ -274,6 +274,9 @@ gimp_canvas_polygon_draw (GimpCanvasItem *item,
   GimpVector2              *points;
   gint                      i;
 
+  if (! private->points)
+    return;
+
   points = g_new0 (GimpVector2, private->n_points);
 
   gimp_canvas_polygon_transform (item, points);
@@ -301,6 +304,9 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem *item)
   GimpVector2              *points;
   gint                      x1, y1, x2, y2;
   gint                      i;
+
+  if (! private->points)
+    return NULL;
 
   points = g_new0 (GimpVector2, private->n_points);
 
@@ -345,7 +351,7 @@ gimp_canvas_polygon_new (GimpDisplayShell  *shell,
   GimpArray      *array;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-  g_return_val_if_fail (points != NULL && n_points > 1, NULL);
+  g_return_val_if_fail (points == NULL || n_points > 0, NULL);
 
   array = gimp_array_new ((const guint8 *) points,
                           n_points * sizeof (GimpVector2), TRUE);
@@ -375,7 +381,7 @@ gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
   gint            i;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-  g_return_val_if_fail (coords != NULL && n_coords > 1, NULL);
+  g_return_val_if_fail (coords == NULL || n_coords > 0, NULL);
 
   points = g_new (GimpVector2, n_coords);
 
@@ -399,4 +405,26 @@ gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
   g_free (points);
 
   return item;
+}
+
+void
+gimp_canvas_polygon_set_points (GimpCanvasItem    *polygon,
+                                const GimpVector2 *points,
+                                gint               n_points)
+{
+  GimpArray *array;
+
+  g_return_if_fail (GIMP_IS_CANVAS_POLYGON (polygon));
+  g_return_if_fail (points == NULL || n_points > 0);
+
+  array = gimp_array_new ((const guint8 *) points,
+                          n_points * sizeof (GimpVector2), TRUE);
+
+  gimp_canvas_item_begin_change (polygon);
+  g_object_set (polygon,
+                "points", array,
+                NULL);
+  gimp_canvas_item_end_change (polygon);
+
+  gimp_array_free (array);
 }

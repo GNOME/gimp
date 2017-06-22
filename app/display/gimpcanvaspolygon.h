@@ -60,5 +60,9 @@ GimpCanvasItem * gimp_canvas_polygon_new_from_coords (GimpDisplayShell  *shell,
                                                       GimpMatrix3       *transform,
                                                       gboolean           filled);
 
+void             gimp_canvas_polygon_set_points      (GimpCanvasItem    *polygon,
+                                                      const GimpVector2 *points,
+                                                      gint               n_points);
+
 
 #endif /* __GIMP_CANVAS_POLYGON_H__ */
