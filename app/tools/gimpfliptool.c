@@ -31,7 +31,7 @@
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-guides.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimpitem-linked.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -205,7 +205,7 @@ gimp_flip_tool_oper_update (GimpTool         *tool,
     {
       gint snap_distance = display->config->snap_distance;
 
-      guide = gimp_image_find_guide (image, coords->x, coords->y,
+      guide = gimp_image_pick_guide (image, coords->x, coords->y,
                                      FUNSCALEX (shell, snap_distance),
                                      FUNSCALEY (shell, snap_distance));
     }

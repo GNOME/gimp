@@ -20,12 +20,17 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "core-types.h"
 
 #include "gimpgrouplayer.h"
+#include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-pick-item.h"
+#include "gimpimage-private.h"
 #include "gimppickable.h"
+#include "gimpsamplepoint.h"
 
 #include "text/gimptextlayer.h"
 
@@ -149,4 +154,102 @@ gimp_image_pick_text_layer (GimpImage *image,
   g_list_free (all_layers);
 
   return NULL;
+}
+
+GimpGuide *
+gimp_image_pick_guide (GimpImage *image,
+                       gdouble    x,
+                       gdouble    y,
+                       gdouble    epsilon_x,
+                       gdouble    epsilon_y)
+{
+  GList     *list;
+  GimpGuide *ret     = NULL;
+  gdouble    mindist = G_MAXDOUBLE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
+
+  for (list = GIMP_IMAGE_GET_PRIVATE (image)->guides;
+       list;
+       list = g_list_next (list))
+    {
+      GimpGuide *guide    = list->data;
+      gint       position = gimp_guide_get_position (guide);
+      gdouble    dist;
+
+      switch (gimp_guide_get_orientation (guide))
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          dist = ABS (position - y);
+          if (dist < MIN (epsilon_y, mindist))
+            {
+              mindist = dist;
+              ret = guide;
+            }
+          break;
+
+        /* mindist always is in vertical resolution to make it comparable */
+        case GIMP_ORIENTATION_VERTICAL:
+          dist = ABS (position - x);
+          if (dist < MIN (epsilon_x, mindist / epsilon_y * epsilon_x))
+            {
+              mindist = dist * epsilon_y / epsilon_x;
+              ret = guide;
+            }
+          break;
+
+        default:
+          continue;
+        }
+
+    }
+
+  return ret;
+}
+
+GimpSamplePoint *
+gimp_image_pick_sample_point (GimpImage *image,
+                              gdouble    x,
+                              gdouble    y,
+                              gdouble    epsilon_x,
+                              gdouble    epsilon_y)
+{
+  GList           *list;
+  GimpSamplePoint *ret     = NULL;
+  gdouble          mindist = G_MAXDOUBLE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
+
+  if (x < 0 || x >= gimp_image_get_width  (image) ||
+      y < 0 || y >= gimp_image_get_height (image))
+    {
+      return NULL;
+    }
+
+  for (list = GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
+       list;
+       list = g_list_next (list))
+    {
+      GimpSamplePoint *sample_point = list->data;
+      gint             sp_x;
+      gint             sp_y;
+      gdouble          dist;
+
+      gimp_sample_point_get_position (sample_point, &sp_x, &sp_y);
+
+      if (sp_x < 0 || sp_y < 0)
+        continue;
+
+      dist = hypot ((sp_x + 0.5) - x,
+                    (sp_y + 0.5) - y);
+      if (dist < MIN (epsilon_y, mindist))
+        {
+          mindist = dist;
+          ret = sample_point;
+        }
+    }
+
+  return ret;
 }

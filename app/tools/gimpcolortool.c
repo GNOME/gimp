@@ -31,6 +31,7 @@
 #include "core/gimpdata.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
+#include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpsamplepoint.h"
@@ -309,7 +310,7 @@ gimp_color_tool_oper_update (GimpTool         *tool,
           gint       snap_distance = display->config->snap_distance;
 
           sample_point =
-            gimp_image_find_sample_point (image,
+            gimp_image_pick_sample_point (image,
                                           coords->x, coords->y,
                                           FUNSCALEX (shell, snap_distance),
                                           FUNSCALEY (shell, snap_distance));

@@ -34,7 +34,6 @@
 #include "core/gimp-cairo.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-guides.h"
 #include "core/gimpimage-pick-item.h"
 #include "core/gimplayer.h"
 #include "core/gimpimage-undo.h"
@@ -202,7 +201,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
           const gint  snap_distance = display->config->snap_distance;
 
           if (gimp_display_shell_get_show_guides (shell) &&
-              (guide = gimp_image_find_guide (image,
+              (guide = gimp_image_pick_guide (image,
                                               coords->x, coords->y,
                                               FUNSCALEX (shell, snap_distance),
                                               FUNSCALEY (shell, snap_distance))))
@@ -487,7 +486,7 @@ gimp_move_tool_oper_update (GimpTool         *tool,
     {
       gint snap_distance = display->config->snap_distance;
 
-      guide = gimp_image_find_guide (image, coords->x, coords->y,
+      guide = gimp_image_pick_guide (image, coords->x, coords->y,
                                      FUNSCALEX (shell, snap_distance),
                                      FUNSCALEY (shell, snap_distance));
     }
@@ -570,7 +569,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
       const gint  snap_distance = display->config->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
-          gimp_image_find_guide (image, coords->x, coords->y,
+          gimp_image_pick_guide (image, coords->x, coords->y,
                                  FUNSCALEX (shell, snap_distance),
                                  FUNSCALEY (shell, snap_distance)))
         {

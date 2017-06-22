@@ -50,11 +50,5 @@ GimpGuide * gimp_image_get_next_guide (GimpImage *image,
                                        guint32    id,
                                        gboolean  *guide_found);
 
-GimpGuide * gimp_image_find_guide     (GimpImage *image,
-                                       gdouble    x,
-                                       gdouble    y,
-                                       gdouble    epsilon_x,
-                                       gdouble    epsilon_y);
-
 
 #endif /* __GIMP_IMAGE_GUIDES_H__ */

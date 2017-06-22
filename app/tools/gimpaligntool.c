@@ -32,7 +32,6 @@
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-arrange.h"
-#include "core/gimpimage-guides.h"
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
@@ -292,7 +291,7 @@ gimp_align_tool_button_release (GimpTool              *tool,
           object = G_OBJECT (vectors);
         }
       else if (gimp_display_shell_get_show_guides (shell) &&
-               (guide = gimp_image_find_guide (image,
+               (guide = gimp_image_pick_guide (image,
                                                coords->x, coords->y,
                                                FUNSCALEX (shell, snap_distance),
                                                FUNSCALEY (shell, snap_distance))))
@@ -443,7 +442,7 @@ gimp_align_tool_oper_update (GimpTool         *tool,
         align_tool->function = ALIGN_TOOL_PICK_PATH;
     }
   else if (gimp_display_shell_get_show_guides (shell) &&
-           gimp_image_find_guide (image,
+           gimp_image_pick_guide (image,
                                   coords->x, coords->y,
                                   FUNSCALEX (shell, snap_distance),
                                   FUNSCALEY (shell, snap_distance)))

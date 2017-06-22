@@ -51,11 +51,5 @@ GimpSamplePoint * gimp_image_get_next_sample_point   (GimpImage       *image,
                                                       guint32          id,
                                                       gboolean        *sample_point_found);
 
-GimpSamplePoint * gimp_image_find_sample_point       (GimpImage       *image,
-                                                      gdouble          x,
-                                                      gdouble          y,
-                                                      gdouble          epsilon_x,
-                                                      gdouble          epsilon_y);
-
 
 #endif /* __GIMP_IMAGE_SAMPLE_POINTS_H__ */

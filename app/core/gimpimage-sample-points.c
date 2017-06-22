@@ -20,8 +20,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
-
 #include "core-types.h"
 
 #include "gimp.h"
@@ -188,50 +186,4 @@ gimp_image_get_next_sample_point (GimpImage *image,
     }
 
   return NULL;
-}
-
-GimpSamplePoint *
-gimp_image_find_sample_point (GimpImage *image,
-                              gdouble    x,
-                              gdouble    y,
-                              gdouble    epsilon_x,
-                              gdouble    epsilon_y)
-{
-  GList           *list;
-  GimpSamplePoint *ret     = NULL;
-  gdouble          mindist = G_MAXDOUBLE;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
-
-  if (x < 0 || x >= gimp_image_get_width  (image) ||
-      y < 0 || y >= gimp_image_get_height (image))
-    {
-      return NULL;
-    }
-
-  for (list = GIMP_IMAGE_GET_PRIVATE (image)->sample_points;
-       list;
-       list = g_list_next (list))
-    {
-      GimpSamplePoint *sample_point = list->data;
-      gint             sp_x;
-      gint             sp_y;
-      gdouble          dist;
-
-      gimp_sample_point_get_position (sample_point, &sp_x, &sp_y);
-
-      if (sp_x < 0 || sp_y < 0)
-        continue;
-
-      dist = hypot ((sp_x + 0.5) - x,
-                    (sp_y + 0.5) - y);
-      if (dist < MIN (epsilon_y, mindist))
-        {
-          mindist = dist;
-          ret = sample_point;
-        }
-    }
-
-  return ret;
 }
