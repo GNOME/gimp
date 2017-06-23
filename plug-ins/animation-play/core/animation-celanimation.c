@@ -954,6 +954,7 @@ animation_cel_animation_update_paint_view (Animation *animation,
   GList                 *iter;
   gint                   num_layers;
   gint32                 image_id;
+  gint                   last_layer;
   gint                   i;
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
@@ -966,7 +967,7 @@ animation_cel_animation_update_paint_view (Animation *animation,
       hide_item (layers[i], TRUE, TRUE);
     }
 
-  /* Show layers */
+  /* Show layers from current position. */
   for (iter = cel_animation->priv->tracks; iter; iter = iter->next)
     {
       Track *track = iter->data;
@@ -982,9 +983,35 @@ animation_cel_animation_update_paint_view (Animation *animation,
 
           tattoo = GPOINTER_TO_INT (iter2->data);
           layer = gimp_image_get_layer_by_tattoo (image_id, tattoo);
-          show_item (layer, GIMP_COLOR_TAG_RED);
+          show_layer (layer, GIMP_COLOR_TAG_RED, 1.0);
+          last_layer = layer;
         }
     }
+
+  if (position > 0)
+    {
+      /* Show layers from previous position (onion skinning). */
+      for (iter = cel_animation->priv->tracks; iter; iter = iter->next)
+        {
+          Track *track = iter->data;
+          GList *frame_layers;
+          GList *iter2;
+
+          frame_layers = g_list_nth_data (track->frames, position - 1);
+
+          for (iter2 = frame_layers; iter2; iter2 = iter2->next)
+            {
+              gint tattoo;
+              gint layer;
+
+              tattoo = GPOINTER_TO_INT (iter2->data);
+              layer = gimp_image_get_layer_by_tattoo (image_id, tattoo);
+              if (! gimp_item_get_visible (layer))
+                show_layer (layer, GIMP_COLOR_TAG_ORANGE, 0.5);
+            }
+        }
+    }
+  gimp_image_set_active_layer (image_id, last_layer);
 }
 
 static void

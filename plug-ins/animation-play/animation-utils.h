@@ -59,8 +59,9 @@ void         show_scrolled_child (GtkScrolledWindow *window,
 void         hide_item           (gint               item,
                                   gboolean           recursive,
                                   gboolean           reset_color_tag);
-void         show_item           (gint               item,
-                                  gint32             color_tag);
+void         show_layer          (gint               item,
+                                  gint32             color_tag,
+                                  gdouble            opacity);
 
 gint         compare_int_from    (gconstpointer      f1,
                                   gconstpointer      f2,

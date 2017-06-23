@@ -301,19 +301,23 @@ hide_item (gint     item,
 }
 
 void
-show_item (gint   item,
-           gint32 color_tag)
+show_layer (gint    item,
+            gint32  color_tag,
+            gdouble opacity)
 {
   gint32 parent;
 
   gimp_item_set_visible (item, TRUE);
   if (color_tag >= 0)
     gimp_item_set_color_tag (item, color_tag);
+  gimp_layer_set_opacity (item, opacity * 100.0);
 
   /* Show the parent as well, but do not update its color tag. */
   parent = gimp_item_get_parent (item);
   if (parent > 0)
-    show_item (parent, -1);
+    {
+      show_layer (parent, -1, 1.0);
+    }
 }
 
 gint
