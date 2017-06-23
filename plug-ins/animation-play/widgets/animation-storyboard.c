@@ -49,6 +49,8 @@ struct _AnimationStoryboardPrivate
   gint                current_panel;
 
   GList              *panel_buttons;
+  GList              *panel_separators;
+  GtkWidget          *displayed_separator;
   GList              *disposal_buttons;
   GList              *comments;
 
@@ -102,6 +104,16 @@ static gboolean animation_storyboard_panel_drag_drop   (GtkWidget           *wid
                                                         GdkDragContext      *drag_context,
                                                         gint                 x,
                                                         gint                 y,
+                                                        guint                time,
+                                                        AnimationStoryboard *storyboard);
+static gboolean animation_storyboard_panel_drag_motion (GtkWidget           *widget,
+                                                        GdkDragContext      *drag_context,
+                                                        gint                 x,
+                                                        gint                 y,
+                                                        guint                time,
+                                                        AnimationStoryboard *storyboard);
+static void animation_storyboard_panel_drag_leave      (GtkWidget           *widget,
+                                                        GdkDragContext      *context,
                                                         guint                time,
                                                         AnimationStoryboard *storyboard);
 
@@ -251,6 +263,10 @@ animation_storyboard_finalize (GObject *object)
     {
       g_list_free (view->priv->panel_buttons);
     }
+  if (view->priv->panel_separators)
+    {
+      g_list_free (view->priv->panel_separators);
+    }
   if (view->priv->disposal_buttons)
     {
       g_list_free (view->priv->disposal_buttons);
@@ -281,6 +297,7 @@ animation_storyboard_load (Animation           *animation,
 {
   AnimationAnimatic *animatic = ANIMATION_ANIMATIC (animation);
   GtkWidget         *layout;
+  GtkWidget         *separator;
   gint              *orig_layers;
   gint              *layers;
   gint32             orig_image_id;
@@ -305,6 +322,12 @@ animation_storyboard_load (Animation           *animation,
       g_list_free (view->priv->panel_buttons);
       view->priv->panel_buttons = NULL;
     }
+  if (view->priv->panel_separators)
+    {
+      g_list_free (view->priv->panel_separators);
+      view->priv->panel_separators = NULL;
+    }
+  view->priv->displayed_separator = NULL;
   if (view->priv->disposal_buttons)
     {
       g_list_free (view->priv->disposal_buttons);
@@ -323,8 +346,19 @@ animation_storyboard_load (Animation           *animation,
                                   &n_images);
 
   gtk_table_resize (GTK_TABLE (layout),
-                    5 * n_images,
+                    6 * n_images + 1,
                     9);
+
+  separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_table_attach (GTK_TABLE (layout),
+                    separator, 0, 9,
+                    6 * n_images,
+                    6 * n_images + 1,
+                    GTK_EXPAND | GTK_FILL,
+                    GTK_FILL,
+                    1, 1);
+  view->priv->panel_separators = g_list_prepend (view->priv->panel_separators,
+                                                 separator);
 
   for (i = 0; i < n_images; i++)
     {
@@ -337,6 +371,17 @@ animation_storyboard_load (Animation           *animation,
       gchar     *image_name;
       gint       panel_num = n_images - i - 1;
 
+      separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+      gtk_table_attach (GTK_TABLE (layout),
+                        separator, 0, 9,
+                        6 * panel_num,
+                        6 * panel_num + 1,
+                        GTK_EXPAND | GTK_FILL,
+                        GTK_FILL,
+                        1, 1);
+      view->priv->panel_separators = g_list_prepend (view->priv->panel_separators,
+                                                     separator);
+
       panel_button = gtk_button_new ();
       gtk_button_set_alignment (GTK_BUTTON (panel_button),
                                 0.5, 0.5);
@@ -344,8 +389,8 @@ animation_storyboard_load (Animation           *animation,
                              GTK_RELIEF_NONE);
       gtk_table_attach (GTK_TABLE (layout),
                         panel_button, 0, 4,
-                        5 * panel_num,
-                        5 * (panel_num + 1),
+                        6 * panel_num + 1,
+                        6 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
                         GTK_FILL,
                         1, 1);
@@ -387,6 +432,12 @@ animation_storyboard_load (Animation           *animation,
       g_signal_connect (panel_button, "drag-drop",
                         G_CALLBACK (animation_storyboard_panel_drag_drop),
                         view);
+      g_signal_connect (panel_button, "drag-motion",
+                        G_CALLBACK (animation_storyboard_panel_drag_motion),
+                        view);
+      g_signal_connect (panel_button, "drag-leave",
+                        G_CALLBACK (animation_storyboard_panel_drag_leave),
+                        view);
 
       /* Let's align top-right, in case the storyboard gets resized
        * and the image grows (the thumbnail right now stays as fixed size). */
@@ -400,8 +451,8 @@ animation_storyboard_load (Animation           *animation,
                          GINT_TO_POINTER (panel_num));
       gtk_table_attach (GTK_TABLE (layout),
                         comment, 5, 9,
-                        5 * panel_num,
-                        5 * (panel_num + 1),
+                        6 * panel_num + 1,
+                        6 * (panel_num + 1),
                         GTK_EXPAND | GTK_FILL,
                         GTK_FILL,
                         0, 1);
@@ -450,8 +501,8 @@ animation_storyboard_load (Animation           *animation,
 
       gtk_table_attach (GTK_TABLE (layout),
                         duration, 4, 5,
-                        5 * panel_num + 1,
-                        5 * panel_num + 2,
+                        6 * panel_num + 1,
+                        6 * panel_num + 2,
                         0, /* Do not expand nor fill, nor shrink. */
                         0, /* Do not expand nor fill, nor shrink. */
                         0, 1);
@@ -472,8 +523,8 @@ animation_storyboard_load (Animation           *animation,
       gtk_widget_show (image);
       gtk_table_attach (GTK_TABLE (layout),
                         disposal, 4, 5,
-                        5 * panel_num + 2,
-                        5 * panel_num + 3,
+                        6 * panel_num + 2,
+                        6 * panel_num + 3,
                         GTK_EXPAND, GTK_EXPAND,
                         0, 1);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (disposal),
@@ -688,6 +739,51 @@ animation_storyboard_panel_drag_drop (GtkWidget           *widget,
                    gdk_drag_context_get_selected_action (context) == GDK_ACTION_MOVE,
                    time);
   return TRUE;
+}
+
+static gboolean
+animation_storyboard_panel_drag_motion (GtkWidget           *widget,
+                                        GdkDragContext      *context,
+                                        gint                 x,
+                                        gint                 y,
+                                        guint                time,
+                                        AnimationStoryboard *storyboard)
+{
+  GtkWidget     *separator;
+  gpointer       panel_num;
+  GtkAllocation  allocation;
+  gint           panel_dest;
+
+  g_return_val_if_fail (storyboard->priv->dragged_panel >= 0, FALSE);
+
+  panel_num = g_object_get_data (G_OBJECT (widget), "panel-num");
+  gtk_widget_get_allocation (widget, &allocation);
+  if (y > allocation.height / 2)
+    {
+      panel_dest = GPOINTER_TO_INT (panel_num) + 1;
+    }
+  else
+    {
+      panel_dest = GPOINTER_TO_INT (panel_num);
+    }
+  separator = g_list_nth_data (storyboard->priv->panel_separators,
+                               panel_dest);
+  if (storyboard->priv->displayed_separator)
+    gtk_widget_hide (storyboard->priv->displayed_separator);
+  storyboard->priv->displayed_separator = separator;
+  gtk_widget_show (separator);
+
+  return TRUE;
+}
+
+static void
+animation_storyboard_panel_drag_leave (GtkWidget           *widget,
+                                       GdkDragContext      *context,
+                                       guint                time,
+                                       AnimationStoryboard *storyboard)
+{
+  if (storyboard->priv->displayed_separator)
+    gtk_widget_hide (storyboard->priv->displayed_separator);
 }
 
 /**** Utils ****/
