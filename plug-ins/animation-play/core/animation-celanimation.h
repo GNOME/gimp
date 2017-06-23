@@ -66,6 +66,10 @@ const gchar * animation_cel_animation_get_comment     (AnimationCelAnimation *an
 void          animation_cel_animation_set_duration    (AnimationCelAnimation *animation,
                                                        gint                   duration);
 
+void          animation_cel_animation_set_onion_skins (AnimationCelAnimation *animation,
+                                                       gint                   skins);
+gint          animation_cel_animation_get_onion_skins (AnimationCelAnimation *animation);
+
 GObject     * animation_cel_animation_get_main_camera (AnimationCelAnimation *animation);
 
 gint          animation_cel_animation_get_levels      (AnimationCelAnimation *animation);

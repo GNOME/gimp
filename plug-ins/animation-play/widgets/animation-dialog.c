@@ -104,6 +104,7 @@ struct _AnimationDialogPrivate
   GtkWidget         *settings;
   GtkWidget         *animation_type_combo;
   GtkWidget         *fpscombo;
+  GtkWidget         *onion_spin;
   GtkWidget         *duration_spin;
   GtkWidget         *proxycombo;
 
@@ -166,6 +167,8 @@ static void        help_callback             (GtkAction        *action,
 static void        animation_type_changed    (GtkWidget        *combo,
                                               AnimationDialog  *dialog);
 
+static void        on_onion_spin_changed     (GtkAdjustment    *adjustment,
+                                              AnimationDialog  *dialog);
 static void        on_duration_spin_changed  (GtkAdjustment    *adjustment,
                                               AnimationDialog  *dialog);
 
@@ -574,13 +577,39 @@ animation_dialog_constructed (GObject *object)
                     3, 5, 2, 3, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (priv->fpscombo);
 
+  /* Settings: onion skinning */
+  widget = gtk_label_new (_("Onion skins:"));
+  g_signal_connect (dialog, "notify::animation",
+                    G_CALLBACK (hide_on_animatic),
+                    widget);
+  gtk_table_attach (GTK_TABLE (priv->settings), widget,
+                    0, 3, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+  gtk_widget_show (widget);
+
+  adjust = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 5.0, 1.0, 2.0, 0.0));
+  priv->onion_spin = gtk_spin_button_new (adjust, 0.0, 0.0);
+  g_signal_connect (dialog, "notify::animation",
+                    G_CALLBACK (hide_on_animatic),
+                    priv->onion_spin);
+  gtk_entry_set_width_chars (GTK_ENTRY (priv->onion_spin), 1);
+  gimp_help_set_help_data (priv->onion_spin, _("Number of skins to show on painting area"), NULL);
+  gtk_table_attach (GTK_TABLE (priv->settings), priv->onion_spin,
+                    3, 4, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+
+  g_signal_connect (adjust,
+                    "value-changed",
+                    G_CALLBACK (on_onion_spin_changed),
+                    dialog);
+
+  gtk_widget_show (priv->onion_spin);
+
   /* Settings: duration */
   widget = gtk_label_new (_("Duration:"));
   g_signal_connect (dialog, "notify::animation",
                     G_CALLBACK (hide_on_animatic),
                     widget);
   gtk_table_attach (GTK_TABLE (priv->settings), widget,
-                    0, 3, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    0, 3, 4, 5, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (widget);
 
   adjust = GTK_ADJUSTMENT (gtk_adjustment_new (240.0, 1.0, G_MAXDOUBLE, 1.0, 10.0, 0.0));
@@ -591,7 +620,7 @@ animation_dialog_constructed (GObject *object)
   gtk_entry_set_width_chars (GTK_ENTRY (priv->duration_spin), 5);
   gimp_help_set_help_data (priv->duration_spin, _("Duration in frames"), NULL);
   gtk_table_attach (GTK_TABLE (priv->settings), priv->duration_spin,
-                    3, 4, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    3, 4, 4, 5, GTK_SHRINK, GTK_SHRINK, 1, 1);
 
   g_signal_connect (adjust,
                     "value-changed",
@@ -605,7 +634,7 @@ animation_dialog_constructed (GObject *object)
                     G_CALLBACK (hide_on_animatic),
                     widget);
   gtk_table_attach (GTK_TABLE (priv->settings), widget,
-                    4, 5, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    4, 5, 4, 5, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (widget);
 
   gtk_widget_show (priv->settings);
@@ -1561,6 +1590,21 @@ on_duration_spin_changed (GtkAdjustment   *adjustment,
 
   animation = ANIMATION_CEL_ANIMATION (priv->animation);
   animation_cel_animation_set_duration (animation, (gint) value);
+}
+
+static void
+on_onion_spin_changed (GtkAdjustment   *adjustment,
+                       AnimationDialog *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  AnimationCelAnimation  *animation;
+  gdouble                 value = gtk_adjustment_get_value (adjustment);
+
+  g_return_if_fail (priv->animation &&
+                    ANIMATION_IS_CEL_ANIMATION (priv->animation));
+
+  animation = ANIMATION_CEL_ANIMATION (priv->animation);
+  animation_cel_animation_set_onion_skins (animation, (gint) value);
 }
 
 

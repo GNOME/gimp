@@ -43,6 +43,7 @@ struct _AnimationCelAnimationPrivate
 {
   /* The number of frames. */
   gint             duration;
+  gint             onion_skins;
 
   /* Panel comments. */
   GList           *comments;
@@ -135,8 +136,12 @@ static void      on_camera_offsets_changed                 (AnimationCamera     
                                                             AnimationCelAnimation  *animation);
 /* Utils */
 
-static void         animation_cel_animation_cleanup        (AnimationCelAnimation  *animation);
-static void         animation_cel_animation_clean_track    (Track                   *track);
+static void      animation_cel_animation_cleanup           (AnimationCelAnimation  *animation);
+static void      animation_cel_animation_clean_track       (Track                   *track);
+static gchar *   animation_cel_animation_get_hash          (AnimationCelAnimation  *animation,
+                                                            gint                    position,
+                                                            gboolean                layers_only);
+
 
 G_DEFINE_TYPE (AnimationCelAnimation, animation_cel_animation, ANIMATION_TYPE_ANIMATION)
 
@@ -281,6 +286,19 @@ animation_cel_animation_get_comment (AnimationCelAnimation *animation,
                         0);
 
   return g_list_nth_data (animation->priv->comments, position);
+}
+
+void
+animation_cel_animation_set_onion_skins (AnimationCelAnimation *animation,
+                                         gint                   skins)
+{
+  animation->priv->onion_skins = skins;
+}
+
+gint
+animation_cel_animation_get_onion_skins (AnimationCelAnimation *animation)
+{
+  return animation->priv->onion_skins;
 }
 
 void
@@ -603,48 +621,8 @@ static gchar *
 animation_cel_animation_get_frame_hash (Animation *animation,
                                         gint       position)
 {
-  AnimationCelAnimation *cel_animation;
-  gchar                 *hash = g_strdup ("");
-  GList                 *iter;
-  gint                   main_offset_x;
-  gint                   main_offset_y;
-
-  cel_animation = ANIMATION_CEL_ANIMATION (animation);
-  animation_camera_get (cel_animation->priv->camera,
-                        position, &main_offset_x, &main_offset_y);
-
-  /* Create the new buffer layer composition. */
-  for (iter = cel_animation->priv->tracks; iter; iter = iter->next)
-    {
-      Track *track = iter->data;
-      GList *layers;
-      GList *layer;
-
-      layers = g_list_nth_data (track->frames, position);
-
-      for (layer = layers; layer; layer = layer->next)
-        {
-          gint tattoo;
-
-          tattoo = GPOINTER_TO_INT (layer->data);
-          if (tattoo)
-            {
-              gchar *tmp = hash;
-              hash = g_strdup_printf ("%s[%d,%d]%d;",
-                                      hash,
-                                      main_offset_x, main_offset_y,
-                                      tattoo);
-              g_free (tmp);
-            }
-        }
-    }
-  if (strlen (hash) == 0)
-    {
-      g_free (hash);
-      hash = NULL;
-    }
-  return hash;
-
+  return animation_cel_animation_get_hash (ANIMATION_CEL_ANIMATION (animation),
+                                           position, FALSE);
 }
 
 static GeglBuffer *
@@ -952,9 +930,11 @@ animation_cel_animation_update_paint_view (Animation *animation,
   AnimationCelAnimation *cel_animation;
   gint                  *layers;
   GList                 *iter;
+  gchar                 *prev_hash;
   gint                   num_layers;
   gint32                 image_id;
   gint                   last_layer;
+  gint                   skin = 0;
   gint                   i;
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
@@ -988,8 +968,29 @@ animation_cel_animation_update_paint_view (Animation *animation,
         }
     }
 
-  if (position > 0)
+  prev_hash = animation_cel_animation_get_hash (cel_animation, position, TRUE);
+  for (i = position - 1; skin < cel_animation->priv->onion_skins && i >= 0; i--)
     {
+      gchar  *hash;
+      gint32  color;
+
+      hash = animation_cel_animation_get_hash (cel_animation, i, TRUE);
+      if (g_strcmp0 (hash, prev_hash) == 0)
+        {
+          g_free (hash);
+          continue;
+        }
+      g_free (prev_hash);
+      prev_hash = hash;
+
+      switch (skin)
+        {
+        case 0: color = GIMP_COLOR_TAG_BROWN; break;
+        case 1: color = GIMP_COLOR_TAG_ORANGE; break;
+        case 2: color = GIMP_COLOR_TAG_YELLOW; break;
+        case 3: color = GIMP_COLOR_TAG_VIOLET; break;
+        default: color = GIMP_COLOR_TAG_GRAY; break;
+        }
       /* Show layers from previous position (onion skinning). */
       for (iter = cel_animation->priv->tracks; iter; iter = iter->next)
         {
@@ -997,7 +998,7 @@ animation_cel_animation_update_paint_view (Animation *animation,
           GList *frame_layers;
           GList *iter2;
 
-          frame_layers = g_list_nth_data (track->frames, position - 1);
+          frame_layers = g_list_nth_data (track->frames, i);
 
           for (iter2 = frame_layers; iter2; iter2 = iter2->next)
             {
@@ -1007,10 +1008,12 @@ animation_cel_animation_update_paint_view (Animation *animation,
               tattoo = GPOINTER_TO_INT (iter2->data);
               layer = gimp_image_get_layer_by_tattoo (image_id, tattoo);
               if (! gimp_item_get_visible (layer))
-                show_layer (layer, GIMP_COLOR_TAG_ORANGE, 0.5);
+                show_layer (layer, color, 0.5 - 0.1 * skin);
             }
         }
+      skin++;
     }
+  g_free (prev_hash);
   gimp_image_set_active_layer (image_id, last_layer);
 }
 
@@ -1347,4 +1350,58 @@ animation_cel_animation_clean_track (Track *track)
   g_free (track->title);
   g_list_free_full (track->frames, (GDestroyNotify) g_list_free);
   g_free (track);
+}
+
+static gchar *
+animation_cel_animation_get_hash (AnimationCelAnimation *animation,
+                                  gint                   position,
+                                  gboolean               layers_only)
+{
+  gchar *hash = g_strdup ("");
+  GList *iter;
+  gint   main_offset_x;
+  gint   main_offset_y;
+
+  animation_camera_get (animation->priv->camera,
+                        position, &main_offset_x, &main_offset_y);
+
+  /* Create the new buffer layer composition. */
+  for (iter = animation->priv->tracks; iter; iter = iter->next)
+    {
+      Track *track = iter->data;
+      GList *layers;
+      GList *layer;
+
+      layers = g_list_nth_data (track->frames, position);
+
+      for (layer = layers; layer; layer = layer->next)
+        {
+          gint tattoo;
+
+          tattoo = GPOINTER_TO_INT (layer->data);
+          if (tattoo)
+            {
+              gchar *tmp = hash;
+              if (layers_only)
+                {
+                  hash = g_strdup_printf ("%s%d;",
+                                          hash, tattoo);
+                }
+              else
+                {
+                  hash = g_strdup_printf ("%s[%d,%d]%d;",
+                                          hash,
+                                          main_offset_x, main_offset_y,
+                                          tattoo);
+                }
+              g_free (tmp);
+            }
+        }
+    }
+  if (strlen (hash) == 0)
+    {
+      g_free (hash);
+      hash = NULL;
+    }
+  return hash;
 }
