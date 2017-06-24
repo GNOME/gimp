@@ -204,21 +204,6 @@ scale_dialog_new (GimpViewable          *viewable,
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),
                                  private->interpolation);
 
-  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
-    {
-      GtkWidget *box = gimp_message_box_new (GIMP_ICON_DIALOG_INFORMATION);
-
-      gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
-                                 _("Indexed color layers are always scaled "
-                                   "without interpolation. The chosen "
-                                   "interpolation type will affect channels "
-                                   "and layer masks only."));
-
-      gtk_container_set_border_width (GTK_CONTAINER (box), 0);
-      gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
-      gtk_widget_show (box);
-    }
-
   return dialog;
 }
 
