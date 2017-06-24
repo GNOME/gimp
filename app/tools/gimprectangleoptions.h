@@ -76,68 +76,68 @@ struct _GimpRectangleOptionsInterface
 
 struct _GimpRectangleOptionsPrivate
 {
-  gboolean                    auto_shrink;
-  gboolean                    shrink_merged;
+  gboolean                auto_shrink;
+  gboolean                shrink_merged;
 
-  gboolean                    highlight;
-  GimpGuidesType              guide;
+  gboolean                highlight;
+  GimpGuidesType          guide;
 
-  gdouble                     x;
-  gdouble                     y;
-  gdouble                     width;
-  gdouble                     height;
+  gdouble                 x;
+  gdouble                 y;
+  gdouble                 width;
+  gdouble                 height;
 
-  GimpUnit                    position_unit;
-  GimpUnit                    size_unit;
+  GimpUnit                position_unit;
+  GimpUnit                size_unit;
 
-  gboolean                    fixed_rule_active;
-  GimpRectangleToolFixedRule  fixed_rule;
+  gboolean                fixed_rule_active;
+  GimpRectangleFixedRule  fixed_rule;
 
-  gdouble                     desired_fixed_width;
-  gdouble                     desired_fixed_height;
+  gdouble                 desired_fixed_width;
+  gdouble                 desired_fixed_height;
 
-  gdouble                     desired_fixed_size_width;
-  gdouble                     desired_fixed_size_height;
+  gdouble                 desired_fixed_size_width;
+  gdouble                 desired_fixed_size_height;
 
-  gdouble                     default_fixed_size_width;
-  gdouble                     default_fixed_size_height;
-  gboolean                    overridden_fixed_size;
+  gdouble                 default_fixed_size_width;
+  gdouble                 default_fixed_size_height;
+  gboolean                overridden_fixed_size;
 
-  gdouble                     aspect_numerator;
-  gdouble                     aspect_denominator;
+  gdouble                 aspect_numerator;
+  gdouble                 aspect_denominator;
 
-  gdouble                     default_aspect_numerator;
-  gdouble                     default_aspect_denominator;
-  gboolean                    overridden_fixed_aspect;
+  gdouble                 default_aspect_numerator;
+  gdouble                 default_aspect_denominator;
+  gboolean                overridden_fixed_aspect;
 
-  gboolean                    fixed_center;
+  gboolean                fixed_center;
 
   /* This gboolean is not part of the actual rectangle tool options,
    * and should be refactored out along with the pointers to widgets.
    */
-  gboolean                    use_string_current;
+  gboolean                use_string_current;
 
-  GimpUnit                    fixed_unit;
+  GimpUnit                fixed_unit;
 
   /* options gui */
 
-  GtkWidget                  *auto_shrink_button;
+  GtkWidget              *auto_shrink_button;
 
-  GtkWidget                  *fixed_width_entry;
-  GtkWidget                  *fixed_height_entry;
+  GtkWidget              *fixed_width_entry;
+  GtkWidget              *fixed_height_entry;
 
-  GtkWidget                  *fixed_aspect_hbox;
-  GtkWidget                  *aspect_button_box;
-  GtkListStore               *aspect_history;
+  GtkWidget              *fixed_aspect_hbox;
+  GtkWidget              *aspect_button_box;
+  GtkListStore           *aspect_history;
 
-  GtkWidget                  *fixed_size_hbox;
-  GtkWidget                  *size_button_box;
-  GtkListStore               *size_history;
+  GtkWidget              *fixed_size_hbox;
+  GtkWidget              *size_button_box;
+  GtkListStore           *size_history;
 
-  GtkWidget                  *x_entry;
-  GtkWidget                  *y_entry;
-  GtkWidget                  *width_entry;
-  GtkWidget                  *height_entry;
+  GtkWidget              *x_entry;
+  GtkWidget              *y_entry;
+  GtkWidget              *width_entry;
+  GtkWidget              *height_entry;
 };
 
 
@@ -146,7 +146,7 @@ GType       gimp_rectangle_options_interface_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_rectangle_options_gui                (GimpToolOptions      *tool_options);
 
 gboolean    gimp_rectangle_options_fixed_rule_active  (GimpRectangleOptions *rectangle_options,
-                                                       GimpRectangleToolFixedRule fixed_rule);
+                                                       GimpRectangleFixedRule fixed_rule);
 
 GimpRectangleOptionsPrivate *
             gimp_rectangle_options_get_private        (GimpRectangleOptions *options);

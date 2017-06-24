@@ -195,8 +195,8 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                            g_param_spec_enum ("fixed-rule",
                                                               NULL,
                                                               N_("Choose what has to be locked"),
-                                                              GIMP_TYPE_RECTANGLE_TOOL_FIXED_RULE,
-                                                              GIMP_RECTANGLE_TOOL_FIXED_ASPECT,
+                                                              GIMP_TYPE_RECTANGLE_FIXED_RULE,
+                                                              GIMP_RECTANGLE_FIXED_ASPECT,
                                                               GIMP_CONFIG_PARAM_FLAGS |
                                                               GIMP_PARAM_STATIC_STRINGS));
 
@@ -706,16 +706,16 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
   gtk_widget_set_sensitive (private->width_entry,
                             ! (private->fixed_rule_active &&
                                (private->fixed_rule ==
-                                GIMP_RECTANGLE_TOOL_FIXED_WIDTH ||
+                                GIMP_RECTANGLE_FIXED_WIDTH ||
                                 private->fixed_rule ==
-                                GIMP_RECTANGLE_TOOL_FIXED_SIZE)));
+                                GIMP_RECTANGLE_FIXED_SIZE)));
 
   gtk_widget_set_sensitive (private->height_entry,
                             ! (private->fixed_rule_active &&
                                (private->fixed_rule ==
-                                GIMP_RECTANGLE_TOOL_FIXED_HEIGHT ||
+                                GIMP_RECTANGLE_FIXED_HEIGHT ||
                                 private->fixed_rule ==
-                                GIMP_RECTANGLE_TOOL_FIXED_SIZE)));
+                                GIMP_RECTANGLE_FIXED_SIZE)));
 
   /* Setup current fixed rule entries */
 
@@ -726,19 +726,19 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
 
   switch (private->fixed_rule)
     {
-    case GIMP_RECTANGLE_TOOL_FIXED_ASPECT:
+    case GIMP_RECTANGLE_FIXED_ASPECT:
       gtk_widget_show (private->fixed_aspect_hbox);
       break;
 
-    case GIMP_RECTANGLE_TOOL_FIXED_WIDTH:
+    case GIMP_RECTANGLE_FIXED_WIDTH:
       gtk_widget_show (private->fixed_width_entry);
       break;
 
-    case GIMP_RECTANGLE_TOOL_FIXED_HEIGHT:
+    case GIMP_RECTANGLE_FIXED_HEIGHT:
       gtk_widget_show (private->fixed_height_entry);
       break;
 
-    case GIMP_RECTANGLE_TOOL_FIXED_SIZE:
+    case GIMP_RECTANGLE_FIXED_SIZE:
       gtk_widget_show (private->fixed_size_hbox);
       break;
     }
@@ -1065,8 +1065,8 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
  * Return value: %TRUE if @fixed_rule is active, %FALSE otherwise.
  */
 gboolean
-gimp_rectangle_options_fixed_rule_active (GimpRectangleOptions       *rectangle_options,
-                                          GimpRectangleToolFixedRule  fixed_rule)
+gimp_rectangle_options_fixed_rule_active (GimpRectangleOptions   *rectangle_options,
+                                          GimpRectangleFixedRule  fixed_rule)
 {
   GimpRectangleOptionsPrivate *private;
 

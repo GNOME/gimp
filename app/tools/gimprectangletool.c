@@ -1181,7 +1181,7 @@ gimp_rectangle_tool_motion (GimpTool         *tool,
       gimp_rectangle_tool_set_function (rect_tool, function);
 
       if (gimp_rectangle_options_fixed_rule_active (options,
-                                                    GIMP_RECTANGLE_TOOL_FIXED_SIZE))
+                                                    GIMP_RECTANGLE_FIXED_SIZE))
         {
           /* For fixed size, set the function to moving immediately since the
            * rectangle can not be resized anyway.
@@ -3938,7 +3938,7 @@ gimp_rectangle_tool_apply_fixed_rule (GimpRectangleTool *rect_tool)
   constraint_to_use = gimp_rectangle_tool_get_constraint (rect_tool);
 
   if (gimp_rectangle_options_fixed_rule_active (options,
-                                                GIMP_RECTANGLE_TOOL_FIXED_ASPECT))
+                                                GIMP_RECTANGLE_FIXED_ASPECT))
     {
       gdouble aspect;
 
@@ -3989,7 +3989,7 @@ gimp_rectangle_tool_apply_fixed_rule (GimpRectangleTool *rect_tool)
         }
     }
   else if (gimp_rectangle_options_fixed_rule_active (options,
-                                                     GIMP_RECTANGLE_TOOL_FIXED_SIZE))
+                                                     GIMP_RECTANGLE_FIXED_SIZE))
     {
       gimp_rectangle_tool_apply_fixed_width (rect_tool,
                                              constraint_to_use,
@@ -3999,14 +3999,14 @@ gimp_rectangle_tool_apply_fixed_rule (GimpRectangleTool *rect_tool)
                                               options_private->desired_fixed_size_height);
     }
   else if (gimp_rectangle_options_fixed_rule_active (options,
-                                                     GIMP_RECTANGLE_TOOL_FIXED_WIDTH))
+                                                     GIMP_RECTANGLE_FIXED_WIDTH))
     {
       gimp_rectangle_tool_apply_fixed_width (rect_tool,
                                              constraint_to_use,
                                              options_private->desired_fixed_width);
     }
   else if (gimp_rectangle_options_fixed_rule_active (options,
-                                                     GIMP_RECTANGLE_TOOL_FIXED_HEIGHT))
+                                                     GIMP_RECTANGLE_FIXED_HEIGHT))
     {
       gimp_rectangle_tool_apply_fixed_height (rect_tool,
                                               constraint_to_use,
