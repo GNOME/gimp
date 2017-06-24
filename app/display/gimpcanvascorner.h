@@ -59,5 +59,14 @@ GimpCanvasItem * gimp_canvas_corner_new      (GimpDisplayShell *shell,
                                               gint              corner_height,
                                               gboolean          outside);
 
+void             gimp_canvas_corner_set      (GimpCanvasItem   *corner,
+                                              gdouble           x,
+                                              gdouble           y,
+                                              gdouble           width,
+                                              gdouble           height,
+                                              gint              corner_width,
+                                              gint              corner_height,
+                                              gboolean          outside);
+
 
 #endif /* __GIMP_CANVAS_CORNER_H__ */

@@ -445,3 +445,28 @@ gimp_canvas_corner_new (GimpDisplayShell *shell,
                        "outside",       outside,
                        NULL);
 }
+
+void
+gimp_canvas_corner_set (GimpCanvasItem *corner,
+                        gdouble         x,
+                        gdouble         y,
+                        gdouble         width,
+                        gdouble         height,
+                        gint            corner_width,
+                        gint            corner_height,
+                        gboolean        outside)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_CORNER (corner));
+
+  gimp_canvas_item_begin_change (corner);
+  g_object_set (corner,
+                "x",             x,
+                "y",             y,
+                "width",         width,
+                "height",        height,
+                "corner-width",  corner_width,
+                "corner-height", corner_height,
+                "outside",       outside,
+                NULL);
+  gimp_canvas_item_end_change (corner);
+}
