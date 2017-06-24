@@ -1389,6 +1389,7 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   else
     {
       GtkWidget *scrolled_win;
+      gint       skins;
 
       scrolled_win = gtk_scrolled_window_new (NULL, NULL);
       gtk_notebook_prepend_page (GTK_NOTEBOOK (priv->right_notebook),
@@ -1407,6 +1408,11 @@ animation_dialog_set_animation (AnimationDialog *dialog,
 
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 1);
+
+      /* Settings: onion-skins */
+      skins = animation_cel_animation_get_onion_skins (ANIMATION_CEL_ANIMATION (animation));
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (priv->onion_spin),
+                                 (gdouble) skins);
     }
 
   /* The bottom panel. */

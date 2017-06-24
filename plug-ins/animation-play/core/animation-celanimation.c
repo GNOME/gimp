@@ -758,9 +758,11 @@ animation_cel_animation_serialize (Animation   *animation,
   priv = ANIMATION_CEL_ANIMATION (animation)->priv;
 
   xml = g_strdup_printf ("<animation type=\"cels\" framerate=\"%f\" "
-                          " duration=\"%d\" width=\"\" height=\"\">%s",
+                          " duration=\"%d\" onion-skins=\"%d\""
+                          " width=\"\" height=\"\">%s",
                           animation_get_framerate (animation),
-                          priv->duration, playback_xml);
+                          priv->duration, priv->onion_skins,
+                          playback_xml);
 
   for (iter = priv->tracks; iter; iter = iter->next)
     {
@@ -1074,6 +1076,12 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
               gint duration = (gint) g_ascii_strtoull (*values, NULL, 10);
 
               animation_cel_animation_set_duration (animation, duration);
+            }
+          else if (strcmp (*names, "onion-skins") == 0 && **values)
+            {
+              gint skins = (gint) g_ascii_strtoull (*values, NULL, 10);
+
+              animation_cel_animation_set_onion_skins (animation, skins);
             }
 
           names++;
