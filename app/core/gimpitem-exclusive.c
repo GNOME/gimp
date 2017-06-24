@@ -255,14 +255,10 @@ gimp_item_exclusive_get_lists (GimpItem     *item,
 
       if (other != item)
         {
-          /* we are only interested in toplevel items that are not
-           * item's ancestor and same level items.
+          /* we are only interested in same level items.
            */
-          if ((! gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ||
-               gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
-               gimp_viewable_get_parent (GIMP_VIEWABLE (item))) &&
-              ! gimp_viewable_is_ancestor (GIMP_VIEWABLE (other),
-                                           GIMP_VIEWABLE (item)))
+          if (gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
+              gimp_viewable_get_parent (GIMP_VIEWABLE (item)))
             {
               gboolean value;
 
