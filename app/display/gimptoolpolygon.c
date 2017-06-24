@@ -963,12 +963,12 @@ gimp_tool_polygon_status_update (GimpToolPolygon  *polygon,
 
       if (status_text)
         {
-          gimp_tool_widget_status (widget, status_text);
+          gimp_tool_widget_set_status (widget, status_text);
         }
     }
   else
     {
-      gimp_tool_widget_status (widget, NULL);
+      gimp_tool_widget_set_status (widget, NULL);
     }
 }
 

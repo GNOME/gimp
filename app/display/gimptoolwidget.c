@@ -49,6 +49,7 @@ enum
   CHANGED,
   SNAP_OFFSETS,
   STATUS,
+  STATUS_COORDS,
   LAST_SIGNAL
 };
 
@@ -57,6 +58,11 @@ struct _GimpToolWidgetPrivate
   GimpDisplayShell *shell;
   GimpCanvasItem   *item;
   GList            *group_stack;
+
+  gint              snap_offset_x;
+  gint              snap_offset_y;
+  gint              snap_width;
+  gint              snap_height;
 };
 
 
@@ -125,6 +131,20 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__STRING,
                   G_TYPE_NONE, 1,
+                  G_TYPE_STRING);
+
+  widget_signals[STATUS_COORDS] =
+    g_signal_new ("status-coords",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolWidgetClass, status_coords),
+                  NULL, NULL,
+                  gimp_marshal_VOID__STRING_DOUBLE_STRING_DOUBLE_STRING,
+                  G_TYPE_NONE, 5,
+                  G_TYPE_STRING,
+                  G_TYPE_DOUBLE,
+                  G_TYPE_STRING,
+                  G_TYPE_DOUBLE,
                   G_TYPE_STRING);
 
   g_object_class_install_property (object_class, PROP_SHELL,
@@ -253,26 +273,74 @@ gimp_tool_widget_get_item (GimpToolWidget *widget)
 }
 
 void
-gimp_tool_widget_snap_offsets (GimpToolWidget *widget,
-                               gint            offset_x,
-                               gint            offset_y,
-                               gint            width,
-                               gint            height)
+gimp_tool_widget_set_snap_offsets (GimpToolWidget *widget,
+                                   gint            offset_x,
+                                   gint            offset_y,
+                                   gint            width,
+                                   gint            height)
 {
+  GimpToolWidgetPrivate *private;
+
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
 
-  g_signal_emit (widget, widget_signals[SNAP_OFFSETS], 0,
+  private = widget->private;
+
+  if (offset_x != private->snap_offset_x ||
+      offset_y != private->snap_offset_y ||
+      width    != private->snap_width    ||
+      height   != private->snap_height)
+    {
+      private->snap_offset_x = offset_x;
+      private->snap_offset_y = offset_y;
+      private->snap_width    = width;
+      private->snap_height   = height;
+
+      g_signal_emit (widget, widget_signals[SNAP_OFFSETS], 0,
                  offset_x, offset_y, width, height);
+    }
 }
 
 void
-gimp_tool_widget_status (GimpToolWidget *widget,
-                         const gchar    *status)
+gimp_tool_widget_get_snap_offsets (GimpToolWidget *widget,
+                                   gint           *offset_x,
+                                   gint           *offset_y,
+                                   gint           *width,
+                                   gint           *height)
+{
+  GimpToolWidgetPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  private = widget->private;
+
+  if (offset_x) *offset_x = private->snap_offset_x;
+  if (offset_y) *offset_y = private->snap_offset_y;
+  if (width)    *width    = private->snap_width;
+  if (height)   *height   = private->snap_height;
+}
+
+void
+gimp_tool_widget_set_status (GimpToolWidget *widget,
+                             const gchar    *status)
 {
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
 
   g_signal_emit (widget, widget_signals[STATUS], 0,
                  status);
+}
+
+void
+gimp_tool_widget_set_status_coords (GimpToolWidget *widget,
+                                    const gchar    *title,
+                                    gdouble         x,
+                                    const gchar    *separator,
+                                    gdouble         y,
+                                    const gchar    *help)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  g_signal_emit (widget, widget_signals[STATUS_COORDS], 0,
+                 title, x, separator, y, help);
 }
 
 void

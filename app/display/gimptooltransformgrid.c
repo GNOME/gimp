@@ -1152,14 +1152,14 @@ gimp_tool_transform_grid_button_press (GimpToolWidget      *widget,
 
           gimp_canvas_handle_get_position (handle, &x, &y);
 
-          gimp_tool_widget_snap_offsets (widget,
-                                         SIGNED_ROUND (x - coords->x),
-                                         SIGNED_ROUND (y - coords->y),
-                                         0, 0);
+          gimp_tool_widget_set_snap_offsets (widget,
+                                             SIGNED_ROUND (x - coords->x),
+                                             SIGNED_ROUND (y - coords->y),
+                                             0, 0);
         }
       else
         {
-          gimp_tool_widget_snap_offsets (widget, 0, 0, 0, 0);
+          gimp_tool_widget_set_snap_offsets (widget, 0, 0, 0, 0);
         }
 
       private->prev_tx1 = private->tx1;
@@ -1178,7 +1178,7 @@ gimp_tool_transform_grid_button_press (GimpToolWidget      *widget,
       return private->handle;
     }
 
-  gimp_tool_widget_snap_offsets (widget, 0, 0, 0, 0);
+  gimp_tool_widget_set_snap_offsets (widget, 0, 0, 0, 0);
 
   return 0;
 }
@@ -1891,11 +1891,12 @@ gimp_tool_transform_grid_hover (GimpToolWidget   *widget,
 
   if (handle != GIMP_TRANSFORM_HANDLE_NONE && proximity)
     {
-      gimp_tool_widget_status (widget, get_friendly_operation_name (handle));
+      gimp_tool_widget_set_status (widget,
+                                   get_friendly_operation_name (handle));
     }
   else
     {
-      gimp_tool_widget_status (widget, NULL);
+      gimp_tool_widget_set_status (widget, NULL);
     }
 
   private->handle = handle;

@@ -56,6 +56,12 @@ struct _GimpToolWidgetClass
                                 gint                   height);
   void     (* status)          (GimpToolWidget        *widget,
                                 const gchar           *status);
+  void     (* status_coords)   (GimpToolWidget        *widget,
+                                const gchar           *title,
+                                gdouble                x,
+                                const gchar           *separator,
+                                gdouble                y,
+                                const gchar           *help);
 
   /*  virtual functions  */
   gint     (* button_press)    (GimpToolWidget        *widget,
@@ -101,20 +107,32 @@ struct _GimpToolWidgetClass
 };
 
 
-GType              gimp_tool_widget_get_type         (void) G_GNUC_CONST;
+GType              gimp_tool_widget_get_type          (void) G_GNUC_CONST;
 
-GimpDisplayShell * gimp_tool_widget_get_shell        (GimpToolWidget  *widget);
-GimpCanvasItem   * gimp_tool_widget_get_item         (GimpToolWidget  *widget);
+GimpDisplayShell * gimp_tool_widget_get_shell         (GimpToolWidget  *widget);
+GimpCanvasItem   * gimp_tool_widget_get_item          (GimpToolWidget  *widget);
 
 /*  for subclasses, to notify the handling tool
  */
-void               gimp_tool_widget_snap_offsets     (GimpToolWidget  *widget,
-                                                      gint             offset_x,
-                                                      gint             offset_y,
-                                                      gint             width,
-                                                      gint             height);
-void               gimp_tool_widget_status           (GimpToolWidget  *widget,
-                                                      const gchar     *status);
+void               gimp_tool_widget_set_snap_offsets  (GimpToolWidget  *widget,
+                                                       gint             offset_x,
+                                                       gint             offset_y,
+                                                       gint             width,
+                                                       gint             height);
+void               gimp_tool_widget_get_snap_offsets  (GimpToolWidget  *widget,
+                                                       gint            *offset_x,
+                                                       gint            *offset_y,
+                                                       gint            *width,
+                                                       gint            *height);
+
+void               gimp_tool_widget_set_status        (GimpToolWidget  *widget,
+                                                       const gchar     *status);
+void               gimp_tool_widget_set_status_coords (GimpToolWidget  *widget,
+                                                       const gchar     *title,
+                                                       gdouble          x,
+                                                       const gchar     *separator,
+                                                       gdouble          y,
+                                                       const gchar     *help);
 
 /*  for subclasses, to add and manage their items
  */

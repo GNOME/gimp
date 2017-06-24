@@ -488,8 +488,8 @@ gimp_tool_path_check_writable (GimpToolPath *path)
   if (gimp_item_is_content_locked (GIMP_ITEM (private->vectors)) ||
       gimp_item_is_position_locked (GIMP_ITEM (private->vectors)))
     {
-      gimp_tool_widget_status (GIMP_TOOL_WIDGET (path),
-                               _("The active path is locked."));
+      gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (path),
+                                   _("The active path is locked."));
 
       private->function = VECTORS_FINISHED;
 
@@ -1430,7 +1430,7 @@ gimp_tool_path_update_status (GimpToolPath    *path,
 
   if (! proximity)
     {
-      gimp_tool_widget_status (GIMP_TOOL_WIDGET (path), NULL);
+      gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (path), NULL);
       return;
     }
 
@@ -1547,7 +1547,7 @@ gimp_tool_path_update_status (GimpToolPath    *path,
       break;
     }
 
-  gimp_tool_widget_status (GIMP_TOOL_WIDGET (path), status);
+  gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (path), status);
 
   if (free_status)
     g_free ((gchar *) status);

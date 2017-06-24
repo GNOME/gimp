@@ -820,7 +820,7 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
                                                    NULL, NULL, NULL);
                 }
 
-              gimp_tool_widget_status (widget, status);
+              gimp_tool_widget_set_status (widget, status);
               g_free (status);
               break;
             }
@@ -831,7 +831,7 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
                                                  "vertical guide"),
                                                toggle_mask & ~state,
                                                NULL, NULL, NULL);
-              gimp_tool_widget_status (widget, status);
+              gimp_tool_widget_set_status (widget, status);
               g_free (status);
               break;
             }
@@ -857,7 +857,7 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
                                                NULL, NULL, NULL);
             }
 
-          gimp_tool_widget_status (widget, status);
+          gimp_tool_widget_set_status (widget, status);
           g_free (status);
           break;
         }
@@ -867,11 +867,12 @@ gimp_tool_compass_hover (GimpToolWidget   *widget,
     {
       if ((private->n_points > 1) && (state & GDK_MOD1_MASK))
         {
-          gimp_tool_widget_status (widget, _("Click-Drag to move all points"));
+          gimp_tool_widget_set_status (widget,
+                                       _("Click-Drag to move all points"));
         }
       else
         {
-          gimp_tool_widget_status (widget, NULL);
+          gimp_tool_widget_set_status (widget, NULL);
         }
     }
 

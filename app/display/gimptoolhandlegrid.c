@@ -882,7 +882,7 @@ gimp_tool_handle_grid_hover (GimpToolWidget   *widget,
         }
     }
 
-  gimp_tool_widget_status (widget, status);
+  gimp_tool_widget_set_status (widget, status);
   g_free (status);
 
   gimp_tool_handle_grid_update_hilight (grid);
