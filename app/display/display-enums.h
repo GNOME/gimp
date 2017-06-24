@@ -120,6 +120,42 @@ typedef enum
 } GimpPathStyle;
 
 
+#define GIMP_TYPE_RECTANGLE_CONSTRAINT (gimp_rectangle_constraint_get_type ())
+
+GType gimp_rectangle_constraint_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RECTANGLE_CONSTRAIN_NONE,
+  GIMP_RECTANGLE_CONSTRAIN_IMAGE,
+  GIMP_RECTANGLE_CONSTRAIN_DRAWABLE
+} GimpRectangleConstraint;
+
+
+#define GIMP_TYPE_RECTANGLE_TOOL_FIXED_RULE (gimp_rectangle_tool_fixed_rule_get_type ())
+
+GType gimp_rectangle_tool_fixed_rule_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RECTANGLE_TOOL_FIXED_ASPECT, /*< desc="Aspect ratio" >*/
+  GIMP_RECTANGLE_TOOL_FIXED_WIDTH,  /*< desc="Width"        >*/
+  GIMP_RECTANGLE_TOOL_FIXED_HEIGHT, /*< desc="Height"       >*/
+  GIMP_RECTANGLE_TOOL_FIXED_SIZE,   /*< desc="Size"         >*/
+} GimpRectangleToolFixedRule;
+
+
+#define GIMP_TYPE_RECTANGLE_PRECISION (gimp_rectangle_precision_get_type ())
+
+GType gimp_rectangle_precision_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RECTANGLE_PRECISION_INT,
+  GIMP_RECTANGLE_PRECISION_DOUBLE,
+} GimpRectanglePrecision;
+
+
 #define GIMP_TYPE_TRANSFORM_FUNCTION (gimp_transform_function_get_type ())
 
 GType gimp_transform_function_get_type (void) G_GNUC_CONST;
