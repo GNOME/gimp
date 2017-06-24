@@ -534,7 +534,7 @@ animation_storyboard_load (Animation           *animation,
                         G_CALLBACK (animation_storyboard_disposal_toggled),
                         animation);
       view->priv->disposal_buttons = g_list_prepend (view->priv->disposal_buttons,
-                                                    disposal);
+                                                     disposal);
       gtk_widget_show (disposal);
     }
   g_signal_connect (view->priv->playback, "render",
@@ -826,14 +826,19 @@ animation_storyboard_move (AnimationStoryboard *storyboard,
   image_id  = animation_get_image_id (animation);
   if (from_panel != to_panel)
     {
-      GtkWidget *button;
+      GtkWidget *layout;
+      GList     *iter;
       gpointer   tattoo;
       gint32     layer;
       gint       new_position;
+      gint       i;
 
-      button = g_list_nth_data (storyboard->priv->panel_buttons,
-                                from_panel);
-      tattoo = g_object_get_data (G_OBJECT (button), "layer-tattoo");
+      layout = gtk_bin_get_child (GTK_BIN (storyboard));
+      layout = gtk_bin_get_child (GTK_BIN (layout));
+
+      iter = g_list_nth (storyboard->priv->panel_buttons,
+                         from_panel);
+      tattoo = g_object_get_data (G_OBJECT (iter->data), "layer-tattoo");
       layer = gimp_image_get_layer_by_tattoo (image_id,
                                               GPOINTER_TO_INT (tattoo));
 
@@ -841,9 +846,55 @@ animation_storyboard_move (AnimationStoryboard *storyboard,
       new_position = g_list_length (storyboard->priv->panel_buttons) - to_panel - 1;
       gimp_image_reorder_item (image_id, layer, 0, new_position);
 
-      /* For now, do a full reload. Ugly but that's a first version.
-       * TODO: implement a saner, lighter reordering of the GUI.
-       */
-      animation_load (animation);
+      /* Reorder the internal lists. */
+      storyboard->priv->panel_buttons = g_list_remove_link (storyboard->priv->panel_buttons,
+                                                            iter);
+      storyboard->priv->panel_buttons = g_list_insert (storyboard->priv->panel_buttons,
+                                                       iter->data, to_panel);
+      g_list_free (iter);
+
+      iter = g_list_nth (storyboard->priv->comments,
+                         from_panel);
+      storyboard->priv->comments = g_list_remove_link (storyboard->priv->comments,
+                                                       iter);
+      storyboard->priv->comments = g_list_insert (storyboard->priv->comments,
+                                                  iter->data, to_panel);
+      g_list_free (iter);
+
+      /* Refresh the GUI. */
+      i = MIN (from_panel, to_panel);
+      iter  = g_list_nth (storyboard->priv->panel_buttons, i);
+      for (; iter; iter = iter->next, i++)
+        {
+          g_object_ref (iter->data);
+          gtk_container_remove (GTK_CONTAINER (layout), iter->data);
+          gtk_table_attach (GTK_TABLE (layout),
+                            iter->data, 0, 4,
+                            6 * i + 1,
+                            6 * (i + 1),
+                            GTK_EXPAND | GTK_FILL,
+                            GTK_FILL,
+                            1, 1);
+          g_object_unref (iter->data);
+          g_object_set_data (G_OBJECT (iter->data), "panel-num",
+                             GINT_TO_POINTER (i));
+        }
+      i = MIN (from_panel, to_panel);
+      iter = g_list_nth (storyboard->priv->comments, i);
+      for (; iter; iter = iter->next, i++)
+        {
+          g_object_ref (iter->data);
+          gtk_container_remove (GTK_CONTAINER (layout), iter->data);
+          gtk_table_attach (GTK_TABLE (layout),
+                            iter->data, 5, 9,
+                            6 * i + 1,
+                            6 * (i + 1),
+                            GTK_EXPAND | GTK_FILL,
+                            GTK_FILL,
+                            0, 1);
+          g_object_unref (iter->data);
+          g_object_set_data (G_OBJECT (iter->data), "panel-num",
+                             GINT_TO_POINTER (i));
+        }
     }
 }
