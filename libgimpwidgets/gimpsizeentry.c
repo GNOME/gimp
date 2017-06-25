@@ -210,10 +210,10 @@ gimp_size_entry_finalize (GObject *object)
  * @unit:              The initial unit.
  * @unit_format:       A printf-like unit-format string as is used with
  *                     gimp_unit_menu_new().
- * @menu_show_pixels:  %TRUE if the unit menu shold contain an item for
+ * @menu_show_pixels:  %TRUE if the unit menu should contain an item for
  *                     GIMP_UNIT_PIXEL (ignored if the @update_policy is not
  *                     GIMP_SIZE_ENTRY_UPDATE_NONE).
- * @menu_show_percent: %TRUE if the unit menu shold contain an item for
+ * @menu_show_percent: %TRUE if the unit menu should contain an item for
  *                     GIMP_UNIT_PERCENT.
  * @show_refval:       %TRUE if you want an extra "reference value"
  *                     spinbutton per input field.
