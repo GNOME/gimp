@@ -27,11 +27,14 @@
 
 #include "core/gimpmarshal.h"
 
+#include "gimpcanvascorner.h"
 #include "gimpcanvasgroup.h"
 #include "gimpcanvashandle.h"
 #include "gimpcanvasline.h"
 #include "gimpcanvaspath.h"
 #include "gimpcanvaspolygon.h"
+#include "gimpcanvasrectangle.h"
+#include "gimpcanvasrectangleguides.h"
 #include "gimpcanvastransformguides.h"
 #include "gimpdisplayshell.h"
 #include "gimptoolwidget.h"
@@ -455,6 +458,27 @@ gimp_tool_widget_add_line (GimpToolWidget *widget,
 }
 
 GimpCanvasItem *
+gimp_tool_widget_add_rectangle (GimpToolWidget *widget,
+                                gdouble         x,
+                                gdouble         y,
+                                gdouble         width,
+                                gdouble         height,
+                                gboolean        filled)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_rectangle_new (widget->private->shell,
+                                    x, y, width, height, filled);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
 gimp_tool_widget_add_polygon (GimpToolWidget    *widget,
                               GimpMatrix3       *transform,
                               const GimpVector2 *points,
@@ -499,6 +523,23 @@ gimp_tool_widget_add_polygon_from_coords (GimpToolWidget    *widget,
 }
 
 GimpCanvasItem *
+gimp_tool_widget_add_path (GimpToolWidget       *widget,
+                           const GimpBezierDesc *desc)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_path_new (widget->private->shell,
+                               desc, 0, 0, FALSE, GIMP_PATH_STYLE_DEFAULT);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
 gimp_tool_widget_add_handle (GimpToolWidget   *widget,
                              GimpHandleType    type,
                              gdouble           x,
@@ -513,6 +554,53 @@ gimp_tool_widget_add_handle (GimpToolWidget   *widget,
 
   item = gimp_canvas_handle_new (widget->private->shell,
                                  type, anchor, x, y, width, height);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_tool_widget_add_corner (GimpToolWidget   *widget,
+                             gdouble           x1,
+                             gdouble           y1,
+                             gdouble           x2,
+                             gdouble           y2,
+                             GimpHandleAnchor  anchor,
+                             gint              width,
+                             gint              height,
+                             gboolean          outside)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_corner_new (widget->private->shell,
+                                 x1, y1, x2 - x1, y2 - y1,
+                                 anchor, width, height,
+                                 outside);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_tool_widget_add_rectangle_guides (GimpToolWidget *widget,
+                                       gdouble         x,
+                                       gdouble         y,
+                                       gdouble         width,
+                                       gdouble         height,
+                                       GimpGuidesType  type)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_rectangle_guides_new (widget->private->shell,
+                                           x, y, width, height, type, 4);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);
@@ -537,23 +625,6 @@ gimp_tool_widget_add_transform_guides (GimpToolWidget    *widget,
   item = gimp_canvas_transform_guides_new (widget->private->shell,
                                            transform, x1, y1, x2, y2,
                                            type, n_guides);
-
-  gimp_tool_widget_add_item (widget, item);
-  g_object_unref (item);
-
-  return item;
-}
-
-GimpCanvasItem *
-gimp_tool_widget_add_path (GimpToolWidget       *widget,
-                           const GimpBezierDesc *desc)
-{
-  GimpCanvasItem *item;
-
-  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
-
-  item = gimp_canvas_path_new (widget->private->shell,
-                               desc, 0, 0, FALSE, GIMP_PATH_STYLE_DEFAULT);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);

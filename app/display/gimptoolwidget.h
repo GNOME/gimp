@@ -150,40 +150,64 @@ void               gimp_tool_widget_pop_group        (GimpToolWidget  *widget);
 
 /*  for subclasses, convenience functions to add specific items
  */
-GimpCanvasItem * gimp_tool_widget_add_line    (GimpToolWidget       *widget,
-                                               gdouble               x1,
-                                               gdouble               y1,
-                                               gdouble               x2,
-                                               gdouble               y2);
-GimpCanvasItem * gimp_tool_widget_add_polygon (GimpToolWidget       *widget,
-                                               GimpMatrix3          *transform,
-                                               const GimpVector2    *points,
-                                               gint                  n_points,
-                                               gboolean              filled);
+GimpCanvasItem * gimp_tool_widget_add_line      (GimpToolWidget       *widget,
+                                                 gdouble               x1,
+                                                 gdouble               y1,
+                                                 gdouble               x2,
+                                                 gdouble               y2);
+GimpCanvasItem * gimp_tool_widget_add_rectangle (GimpToolWidget       *widget,
+                                                 gdouble               x,
+                                                 gdouble               y,
+                                                 gdouble               width,
+                                                 gdouble               height,
+                                                 gboolean              filled);
+GimpCanvasItem * gimp_tool_widget_add_polygon   (GimpToolWidget       *widget,
+                                                 GimpMatrix3          *transform,
+                                                 const GimpVector2    *points,
+                                                 gint                  n_points,
+                                                 gboolean              filled);
 GimpCanvasItem * gimp_tool_widget_add_polygon_from_coords
-                                              (GimpToolWidget       *widget,
-                                               GimpMatrix3          *transform,
-                                               const GimpCoords     *points,
-                                               gint                  n_points,
-                                               gboolean              filled);
-GimpCanvasItem * gimp_tool_widget_add_handle  (GimpToolWidget       *widget,
-                                               GimpHandleType        type,
-                                               gdouble               x,
-                                               gdouble               y,
-                                               gint                  width,
-                                               gint                  height,
-                                               GimpHandleAnchor      anchor);
+                                                (GimpToolWidget       *widget,
+                                                 GimpMatrix3          *transform,
+                                                 const GimpCoords     *points,
+                                                 gint                  n_points,
+                                                 gboolean              filled);
+GimpCanvasItem * gimp_tool_widget_add_path      (GimpToolWidget       *widget,
+                                                 const GimpBezierDesc *desc);
+
+GimpCanvasItem * gimp_tool_widget_add_handle    (GimpToolWidget       *widget,
+                                                 GimpHandleType        type,
+                                                 gdouble               x,
+                                                 gdouble               y,
+                                                 gint                  width,
+                                                 gint                  height,
+                                                 GimpHandleAnchor      anchor);
+GimpCanvasItem * gimp_tool_widget_add_corner    (GimpToolWidget       *widget,
+                                                 gdouble               x1,
+                                                 gdouble               y1,
+                                                 gdouble               x2,
+                                                 gdouble               y2,
+                                                 GimpHandleAnchor      anchor,
+                                                 gint                  width,
+                                                 gint                  height,
+                                                 gboolean              outside);
+
+GimpCanvasItem * gimp_tool_widget_add_rectangle_guides
+                                                (GimpToolWidget       *widget,
+                                                 gdouble               x,
+                                                 gdouble               y,
+                                                 gdouble               width,
+                                                 gdouble               height,
+                                                 GimpGuidesType        type);
 GimpCanvasItem * gimp_tool_widget_add_transform_guides
-                                              (GimpToolWidget       *widget,
-                                               const GimpMatrix3    *transform,
-                                               gdouble               x1,
-                                               gdouble               y1,
-                                               gdouble               x2,
-                                               gdouble               y2,
-                                               GimpGuidesType        type,
-                                               gint                  n_guides);
-GimpCanvasItem * gimp_tool_widget_add_path    (GimpToolWidget       *widget,
-                                               const GimpBezierDesc *desc);
+                                                (GimpToolWidget       *widget,
+                                                 const GimpMatrix3    *transform,
+                                                 gdouble               x1,
+                                                 gdouble               y1,
+                                                 gdouble               x2,
+                                                 gdouble               y2,
+                                                 GimpGuidesType        type,
+                                                 gint                  n_guides);
 
 /*  for tools, to be called from the respective GimpTool method
  *  implementations
