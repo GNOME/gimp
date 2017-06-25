@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-16 17:38+0200\n"
-"PO-Revision-Date: 2017-06-16 17:39+0200\n"
+"POT-Creation-Date: 2017-06-25 19:32+0200\n"
+"PO-Revision-Date: 2017-06-25 19:33+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -52,7 +52,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:934 ../plug-ins/common/file-gif-save.c:1089
 #: ../plug-ins/common/file-pdf-load.c:1089
-#: ../plug-ins/common/file-pdf-save.c:982 ../plug-ins/common/file-ps.c:3421
+#: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3421
 #: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/file-svg.c:726
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
@@ -834,7 +834,7 @@ msgstr "_Otwórz"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1277
 #: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:1500
-#: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:981
+#: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:1008
 #: ../plug-ins/common/qbist.c:766 ../plug-ins/common/qbist.c:896
 #: ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:475
@@ -1029,7 +1029,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:852
-#: ../plug-ins/common/file-pdf-save.c:464 ../plug-ins/common/file-png.c:1560
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1560
 #: ../plug-ins/common/file-raw-data.c:977
 #: ../plug-ins/common/file-raw-data.c:1005 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1475
@@ -1211,11 +1211,11 @@ msgstr "Porządkowanie według wartości"
 
 #: ../plug-ins/common/colormap-remap.c:513
 msgid "Reverse Order"
-msgstr "Odwrócony porządek"
+msgstr "Odwrócona kolejność"
 
 #: ../plug-ins/common/colormap-remap.c:517
 msgid "Reset Order"
-msgstr "Przywróć porządek"
+msgstr "Przywróć kolejność"
 
 #: ../plug-ins/common/colormap-remap.c:616
 msgid "Rearrange Colormap"
@@ -3047,8 +3047,8 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Zapisanie do pliku „%s” się nie powiodło: %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:334
-#: ../plug-ins/common/file-pdf-save.c:351
+#: ../plug-ins/common/file-pdf-save.c:338
+#: ../plug-ins/common/file-pdf-save.c:355
 msgid "Portable Document Format"
 msgstr "PDF"
 
@@ -3105,15 +3105,15 @@ msgstr "Użycie _wygładzania"
 msgid "pixels/%a"
 msgstr "piksele/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:366
+#: ../plug-ins/common/file-pdf-save.c:370
 msgid "_Create multipage PDF..."
 msgstr "_Utwórz wielostronicowy plik PDF…"
 
-#: ../plug-ins/common/file-pdf-save.c:449
+#: ../plug-ins/common/file-pdf-save.c:453
 msgid "You must select a file to save!"
 msgstr "Należy wybrać plik do zapisu."
 
-#: ../plug-ins/common/file-pdf-save.c:475
+#: ../plug-ins/common/file-pdf-save.c:479
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3126,63 +3126,67 @@ msgstr ""
 "Proszę się upewnić, że podano prawidłową nazwę pliku i zaznaczone położenie "
 "nie jest tylko do odczytu."
 
-#: ../plug-ins/common/file-pdf-save.c:899
-#: ../plug-ins/common/file-pdf-save.c:1029
+#: ../plug-ins/common/file-pdf-save.c:907
+#: ../plug-ins/common/file-pdf-save.c:1056
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Pominięcie ukrytych warstw i warstw o zerowym kryciu"
 
-#: ../plug-ins/common/file-pdf-save.c:904
-#: ../plug-ins/common/file-pdf-save.c:1034
+#: ../plug-ins/common/file-pdf-save.c:912
+#: ../plug-ins/common/file-pdf-save.c:1061
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Konwersja bitmap do grafik wektorowych, jeśli to możliwe"
 
-#: ../plug-ins/common/file-pdf-save.c:909
-#: ../plug-ins/common/file-pdf-save.c:1039
+#: ../plug-ins/common/file-pdf-save.c:917
+#: ../plug-ins/common/file-pdf-save.c:1066
 msgid "Apply layer masks before saving"
 msgstr "Zastosowanie masek warstw przed zapisaniem"
 
-#: ../plug-ins/common/file-pdf-save.c:913
-#: ../plug-ins/common/file-pdf-save.c:1043
+#: ../plug-ins/common/file-pdf-save.c:921
+#: ../plug-ins/common/file-pdf-save.c:1070
 msgid "Keeping the masks will not change the output"
 msgstr "Utrzymanie masek nie zmieni pliku wyjściowego"
 
-#: ../plug-ins/common/file-pdf-save.c:915
+#: ../plug-ins/common/file-pdf-save.c:923
+msgid "Reverse the pages order"
+msgstr "Odwrócona kolejność stron"
+
+#: ../plug-ins/common/file-pdf-save.c:928
 msgid "Layers as pages"
 msgstr "Warstwy jako strony"
 
-#: ../plug-ins/common/file-pdf-save.c:973
+#: ../plug-ins/common/file-pdf-save.c:1000
 msgid "Save to:"
 msgstr "Zapisywanie do:"
 
-#: ../plug-ins/common/file-pdf-save.c:977
+#: ../plug-ins/common/file-pdf-save.c:1004
 msgid "Browse..."
 msgstr "Przeglądaj…"
 
-#: ../plug-ins/common/file-pdf-save.c:978
+#: ../plug-ins/common/file-pdf-save.c:1005
 msgid "Multipage PDF export"
 msgstr "Eksport wielostronicowych plików PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:1014
+#: ../plug-ins/common/file-pdf-save.c:1041
 msgid "Remove the selected pages"
 msgstr "Usunięcie zaznaczonych stron"
 
-#: ../plug-ins/common/file-pdf-save.c:1024
+#: ../plug-ins/common/file-pdf-save.c:1051
 msgid "Add this image"
 msgstr "Dodanie tego obrazu"
 
-#: ../plug-ins/common/file-pdf-save.c:1132
-#: ../plug-ins/common/file-pdf-save.c:1200
-#: ../plug-ins/common/file-pdf-save.c:1298 ../plug-ins/common/file-ps.c:1915
+#: ../plug-ins/common/file-pdf-save.c:1159
+#: ../plug-ins/common/file-pdf-save.c:1227
+#: ../plug-ins/common/file-pdf-save.c:1325 ../plug-ins/common/file-ps.c:1915
 #: ../plug-ins/file-tiff/file-tiff-load.c:925
 #, c-format
 msgid "Page %d"
 msgstr "%d. strona"
 
-#: ../plug-ins/common/file-pdf-save.c:1169
+#: ../plug-ins/common/file-pdf-save.c:1196
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Błąd. Aby zapisać plik, należy dodać co najmniej jeden obraz."
 
-#: ../plug-ins/common/file-pdf-save.c:1345
+#: ../plug-ins/common/file-pdf-save.c:1372
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Nie można obsłużyć rozmiaru (szerokości lub wysokości) obrazu."
