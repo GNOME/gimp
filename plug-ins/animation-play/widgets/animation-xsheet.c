@@ -703,13 +703,14 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
                              gint             position,
                              gint             n_frames)
 {
-  GtkWidget *frame;
-  GList     *iter;
-  gdouble    framerate;
-  gint       duration;
-  gint       n_tracks;
-  gint       i;
-  gint       j;
+  AnimationCamera *camera;
+  GtkWidget       *frame;
+  GList           *iter;
+  gdouble          framerate;
+  gint             duration;
+  gint             n_tracks;
+  gint             i;
+  gint             j;
 
   duration = animation_get_duration (ANIMATION (xsheet->priv->animation));
 
@@ -717,6 +718,7 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
 
   n_tracks = animation_cel_animation_get_levels (xsheet->priv->animation);
   framerate = animation_get_framerate (ANIMATION (xsheet->priv->animation));
+  camera = ANIMATION_CAMERA (animation_cel_animation_get_main_camera (xsheet->priv->animation));
 
   for (j = 0, iter = xsheet->priv->cels; iter; iter = iter->next, j++)
     {
@@ -805,6 +807,17 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
       label = gtk_toggle_button_new ();
       xsheet->priv->effect_buttons = g_list_append (xsheet->priv->effect_buttons,
                                                     label);
+
+      if (animation_camera_has_keyframe (camera, i))
+        {
+          GtkWidget *image;
+
+          image = gtk_image_new_from_icon_name ("gtk-ok",
+                                                GTK_ICON_SIZE_SMALL_TOOLBAR);
+          gtk_container_add (GTK_CONTAINER (label), image);
+          gtk_widget_show (image);
+        }
+
       g_object_set_data (G_OBJECT (label), "frame-position",
                          GINT_TO_POINTER (i));
       gtk_button_set_relief (GTK_BUTTON (label), GTK_RELIEF_NONE);
@@ -812,12 +825,10 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
       g_signal_connect (label, "button-press-event",
                         G_CALLBACK (animation_xsheet_effect_clicked),
                         xsheet);
-      g_signal_connect (animation_cel_animation_get_main_camera (xsheet->priv->animation),
-                        "keyframe-set",
+      g_signal_connect (camera, "keyframe-set",
                         G_CALLBACK (on_camera_keyframe_set),
                         xsheet);
-      g_signal_connect (animation_cel_animation_get_main_camera (xsheet->priv->animation),
-                        "keyframe-deleted",
+      g_signal_connect (camera, "keyframe-deleted",
                         G_CALLBACK (on_camera_keyframe_deleted),
                         xsheet);
       gtk_container_add (GTK_CONTAINER (frame), label);

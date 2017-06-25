@@ -66,6 +66,8 @@ typedef enum
   SEQUENCE_STATE,
   FRAME_STATE,
   LAYER_STATE,
+  CAMERA_STATE,
+  KEYFRAME_STATE,
   COMMENTS_STATE,
   COMMENT_STATE,
   END_STATE
@@ -86,6 +88,7 @@ typedef struct
                                      ANIMATION_TYPE_CEL_ANIMATION, \
                                      AnimationCelAnimationPrivate)
 
+static void         animation_cel_animation_constructed       (GObject      *object);
 static void         animation_cel_animation_finalize          (GObject      *object);
 
 /* Virtual methods */
@@ -153,6 +156,7 @@ animation_cel_animation_class_init (AnimationCelAnimationClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   AnimationClass *anim_class   = ANIMATION_CLASS (klass);
 
+  object_class->constructed  = animation_cel_animation_constructed;
   object_class->finalize     = animation_cel_animation_finalize;
 
   anim_class->get_duration   = animation_cel_animation_get_duration;
@@ -175,6 +179,17 @@ animation_cel_animation_init (AnimationCelAnimation *animation)
   animation->priv = G_TYPE_INSTANCE_GET_PRIVATE (animation,
                                                  ANIMATION_TYPE_CEL_ANIMATION,
                                                  AnimationCelAnimationPrivate);
+  animation->priv->camera = animation_camera_new (ANIMATION (animation));
+}
+
+static void
+animation_cel_animation_constructed (GObject *object)
+{
+  AnimationCelAnimation *animation = ANIMATION_CEL_ANIMATION (object);
+
+  g_signal_connect (animation->priv->camera, "offsets-changed",
+                    G_CALLBACK (on_camera_offsets_changed),
+                    animation);
 }
 
 static void
@@ -737,11 +752,6 @@ animation_cel_animation_reset_defaults (Animation *animation)
                                           layers);
         }
     }
-
-  priv->camera = animation_camera_new (animation);
-  g_signal_connect (priv->camera, "offsets-changed",
-                    G_CALLBACK (on_camera_offsets_changed),
-                    animation);
 }
 
 static gchar *
@@ -852,6 +862,33 @@ animation_cel_animation_serialize (Animation   *animation,
     }
 
   tmp = xml;
+  xml = g_strconcat (xml, "<camera>", NULL);
+  g_free (tmp);
+
+  for (i = 0; i < priv->duration; i++)
+    {
+      if (animation_camera_has_keyframe (priv->camera, i))
+        {
+          gint offset_x;
+          gint offset_y;
+
+          animation_camera_get (priv->camera,
+                                i, &offset_x, &offset_y);
+          xml2 = g_markup_printf_escaped ("<keyframe " "position=\"%d\""
+                                          " x=\"%d\" y=\"%d\"/>",
+                                          i, offset_x, offset_y);
+          tmp = xml;
+          xml = g_strconcat (xml, xml2, NULL);
+          g_free (tmp);
+          g_free (xml2);
+        }
+    }
+
+  tmp = xml;
+  xml = g_strconcat (xml, "</camera>", NULL);
+  g_free (tmp);
+
+  tmp = xml;
   xml = g_strconcat (xml, "<comments title=\"\">", NULL);
   g_free (tmp);
 
@@ -912,14 +949,6 @@ animation_cel_animation_deserialize (Animation    *animation,
       /* Reverse track order. */
       cel_animation->priv->tracks = g_list_reverse (cel_animation->priv->tracks);
 
-      /* TODO: just testing right now. I will have to add actual
-       * (de)serialization, otherwise there is no persistency of
-       * camera works.
-       */
-      cel_animation->priv->camera = animation_camera_new (animation);
-      g_signal_connect (cel_animation->priv->camera, "offsets-changed",
-                        G_CALLBACK (on_camera_offsets_changed),
-                        animation);
       g_signal_emit_by_name (animation, "frames-changed", 0,
                              cel_animation->priv->duration);
     }
@@ -1134,6 +1163,10 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
         {
           status->state = PLAYBACK_STATE;
         }
+      else if (g_strcmp0 (element_name, "camera") == 0)
+        {
+          status->state = CAMERA_STATE;
+        }
       else
         {
           g_set_error (error, 0, 0,
@@ -1244,6 +1277,48 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
                    _("Unexpected child of <layer>: \"%s\"."),
                    element_name);
       return;
+    case CAMERA_STATE:
+      if (g_strcmp0 (element_name, "keyframe") != 0)
+        {
+          g_set_error (error, 0, 0,
+                       _("Tag <keyframe> expected. "
+                         "Got \"%s\" instead."),
+                       element_name);
+          return;
+        }
+      else
+        {
+          gboolean has_x    = FALSE;
+          gboolean has_y    = FALSE;
+          gint     position = -1;
+          gint     x;
+          gint     y;
+
+          while (*names && *values)
+            {
+              if (strcmp (*names, "position") == 0 && **values)
+                {
+                  position = (gint) g_ascii_strtoll (*values, NULL, 10);
+                }
+              else if (strcmp (*names, "x") == 0 && **values)
+                {
+                  has_x = TRUE;
+                  x = (gint) g_ascii_strtoll (*values, NULL, 10);
+                }
+              else if (strcmp (*names, "y") == 0 && **values)
+                {
+                  has_y = TRUE;
+                  y = (gint) g_ascii_strtoll (*values, NULL, 10);
+                }
+
+              names++;
+              values++;
+            }
+          if (position >= 0 && has_x && has_y)
+            animation_camera_set_keyframe (priv->camera, position, x, y);
+        }
+      status->state = KEYFRAME_STATE;
+      break;
     case COMMENTS_STATE:
       if (g_strcmp0 (element_name, "comment") != 0)
         {
@@ -1277,6 +1352,12 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
                    _("Unexpected child of <comment>: <\"%s\">."),
                    element_name);
       return;
+    case KEYFRAME_STATE:
+      /* <keyframe> should have no child tag for now. */
+      g_set_error (error, 0, 0,
+                   _("Unexpected child of <keyframe>: <\"%s\">."),
+                   element_name);
+      return;
     default:
       g_set_error (error, 0, 0,
                    _("Unknown state!"));
@@ -1297,6 +1378,7 @@ animation_cel_animation_end_element (GMarkupParseContext *context,
     case SEQUENCE_STATE:
     case COMMENTS_STATE:
     case PLAYBACK_STATE:
+    case CAMERA_STATE:
       status->state = ANIMATION_STATE;
       break;
     case FRAME_STATE:
@@ -1310,6 +1392,9 @@ animation_cel_animation_end_element (GMarkupParseContext *context,
       break;
     case COMMENT_STATE:
       status->state = COMMENTS_STATE;
+      break;
+    case KEYFRAME_STATE:
+      status->state = CAMERA_STATE;
       break;
     default: /* START/END_STATE */
       /* invalid XML. I expect the parser to raise an error anyway.*/

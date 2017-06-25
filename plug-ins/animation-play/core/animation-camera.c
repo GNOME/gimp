@@ -179,6 +179,17 @@ animation_camera_new (Animation *animation)
   return camera;
 }
 
+gboolean
+animation_camera_has_keyframe (AnimationCamera *camera,
+                               gint             position)
+{
+  g_return_val_if_fail (position >= 0 &&
+                        position < animation_get_duration (camera->priv->animation),
+                        FALSE);
+
+  return (g_list_nth_data (camera->priv->offsets, position) != NULL);
+}
+
 void
 animation_camera_set_keyframe (AnimationCamera *camera,
                                gint             position,

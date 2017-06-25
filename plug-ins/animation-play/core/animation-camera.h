@@ -57,6 +57,9 @@ GType             animation_camera_get_type        (void) G_GNUC_CONST;
 
 AnimationCamera * animation_camera_new             (Animation       *animation);
 
+gboolean          animation_camera_has_keyframe    (AnimationCamera *camera,
+                                                    gint             position);
+
 void              animation_camera_set_keyframe    (AnimationCamera *camera,
                                                     gint             position,
                                                     gint             x,
