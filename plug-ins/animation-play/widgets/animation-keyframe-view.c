@@ -37,17 +37,23 @@ struct _AnimationKeyFrameViewPrivate
   gint             position;
 
   GtkWidget       *offset_entry;
+
+  guint            update_source;
+  gint             update_x_offset;
+  gint             update_y_offset;
+  gint             update_position;
 };
 
 /* GObject handlers */
-static void animation_keyframe_view_constructed  (GObject               *object);
+static void     animation_keyframe_view_constructed  (GObject               *object);
 
-static void on_offset_entry_changed              (GimpSizeEntry         *entry,
-                                                  AnimationKeyFrameView *view);
-static void on_offsets_changed                   (AnimationCamera       *camera,
-                                                  gint                   position,
-                                                  gint                   duration,
-                                                  AnimationKeyFrameView *view);
+static gboolean animation_keyframe_update_source     (gpointer               user_data);
+static void     on_offset_entry_changed              (GimpSizeEntry         *entry,
+                                                      AnimationKeyFrameView *view);
+static void     on_offsets_changed                   (AnimationCamera       *camera,
+                                                      gint                   position,
+                                                      gint                   duration,
+                                                      AnimationKeyFrameView *view);
 
 G_DEFINE_TYPE (AnimationKeyFrameView, animation_keyframe_view, GTK_TYPE_NOTEBOOK)
 
@@ -198,6 +204,19 @@ animation_keyframe_view_constructed (GObject *object)
   gtk_widget_show (page);
 }
 
+static gboolean
+animation_keyframe_update_source (gpointer user_data)
+{
+  AnimationKeyFrameView *view = user_data;
+
+  view->priv->update_source = 0;
+  animation_camera_set_keyframe (view->priv->camera,
+                                 view->priv->update_position,
+                                 view->priv->update_x_offset,
+                                 view->priv->update_y_offset);
+  return G_SOURCE_REMOVE;
+}
+
 static void
 on_offset_entry_changed (GimpSizeEntry         *entry,
                          AnimationKeyFrameView *view)
@@ -205,11 +224,27 @@ on_offset_entry_changed (GimpSizeEntry         *entry,
   gdouble x_offset;
   gdouble y_offset;
 
+  /* If a timeout is pending, remove then recreate it in order to
+   * postpone the camera update. */
+  if (view->priv->update_source)
+    {
+      g_source_remove (view->priv->update_source);
+      if (view->priv->position != view->priv->update_position)
+        {
+          /* Do not postpone the update for another position. */
+          animation_camera_set_keyframe (view->priv->camera,
+                                         view->priv->update_position,
+                                         view->priv->update_x_offset,
+                                         view->priv->update_y_offset);
+        }
+    }
+
   x_offset = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (view->priv->offset_entry), 0);
   y_offset = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (view->priv->offset_entry), 1);
-  animation_camera_set_keyframe (view->priv->camera,
-                                 view->priv->position,
-                                 (gint) x_offset, (gint) y_offset);
+  view->priv->update_x_offset = x_offset;
+  view->priv->update_y_offset = y_offset;
+  view->priv->update_position = view->priv->position;
+  view->priv->update_source = g_timeout_add (100, animation_keyframe_update_source, view);
 }
 
 static void
