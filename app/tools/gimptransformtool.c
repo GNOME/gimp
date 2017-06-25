@@ -129,6 +129,9 @@ static GeglBuffer *
 
 static void      gimp_transform_tool_widget_changed      (GimpToolWidget        *widget,
                                                           GimpTransformTool     *tr_tool);
+static void      gimp_transform_tool_widget_response     (GimpToolWidget        *widget,
+                                                          gint                   response_id,
+                                                          GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_widget_snap_offsets (GimpToolWidget        *widget,
                                                           gint                   offset_x,
                                                           gint                   offset_y,
@@ -480,27 +483,11 @@ gimp_transform_tool_key_press (GimpTool    *tool,
                                GdkEventKey *kevent,
                                GimpDisplay *display)
 {
-  GimpTransformTool *tr_tool   = GIMP_TRANSFORM_TOOL (tool);
-  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  if (display == draw_tool->display)
+  if (tr_tool->widget && display == tool->display)
     {
-      switch (kevent->keyval)
-        {
-        case GDK_KEY_Return:
-        case GDK_KEY_KP_Enter:
-        case GDK_KEY_ISO_Enter:
-          gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
-          return TRUE;
-
-        case GDK_KEY_BackSpace:
-          gimp_transform_tool_response (NULL, RESPONSE_RESET, tr_tool);
-          return TRUE;
-
-        case GDK_KEY_Escape:
-          gimp_transform_tool_response (NULL, GTK_RESPONSE_CANCEL, tr_tool);
-          return TRUE;
-        }
+      return gimp_tool_widget_key_press (tr_tool->widget, kevent);
     }
 
   return FALSE;
@@ -1117,6 +1104,27 @@ gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
 }
 
 static void
+gimp_transform_tool_widget_response (GimpToolWidget    *widget,
+                                     gint               response_id,
+                                     GimpTransformTool *tr_tool)
+{
+  switch (response_id)
+    {
+    case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
+      gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
+      break;
+
+    case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
+      gimp_transform_tool_response (NULL, GTK_RESPONSE_CANCEL, tr_tool);
+      break;
+
+    case GIMP_TOOL_WIDGET_RESPONSE_RESET:
+      gimp_transform_tool_response (NULL, RESPONSE_RESET, tr_tool);
+      break;
+    }
+}
+
+static void
 gimp_transform_tool_widget_snap_offsets (GimpToolWidget    *widget,
                                          gint               offset_x,
                                          gint               offset_y,
@@ -1378,6 +1386,9 @@ gimp_transform_tool_get_widget (GimpTransformTool *tr_tool)
 
       g_signal_connect (widget, "changed",
                         G_CALLBACK (gimp_transform_tool_widget_changed),
+                        tr_tool);
+      g_signal_connect (widget, "response",
+                        G_CALLBACK (gimp_transform_tool_widget_response),
                         tr_tool);
       g_signal_connect (widget, "snap-offsets",
                         G_CALLBACK (gimp_transform_tool_widget_snap_offsets),

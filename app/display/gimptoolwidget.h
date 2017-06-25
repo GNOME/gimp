@@ -25,6 +25,11 @@
 #include "core/gimpobject.h"
 
 
+#define GIMP_TOOL_WIDGET_RESPONSE_CONFIRM -1
+#define GIMP_TOOL_WIDGET_RESPONSE_CANCEL  -2
+#define GIMP_TOOL_WIDGET_RESPONSE_RESET   -3
+
+
 #define GIMP_TYPE_TOOL_WIDGET            (gimp_tool_widget_get_type ())
 #define GIMP_TOOL_WIDGET(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_WIDGET, GimpToolWidget))
 #define GIMP_TOOL_WIDGET_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_WIDGET, GimpToolWidgetClass))
@@ -49,6 +54,8 @@ struct _GimpToolWidgetClass
 
   /*  signals  */
   void     (* changed)         (GimpToolWidget        *widget);
+  void     (* response)        (GimpToolWidget        *widget,
+                                gint                   response_id);
   void     (* snap_offsets)    (GimpToolWidget        *widget,
                                 gint                   offset_x,
                                 gint                   offset_y,
@@ -114,6 +121,9 @@ GimpCanvasItem   * gimp_tool_widget_get_item          (GimpToolWidget  *widget);
 
 /*  for subclasses, to notify the handling tool
  */
+void               gimp_tool_widget_response          (GimpToolWidget  *widget,
+                                                       gint             response_id);
+
 void               gimp_tool_widget_set_snap_offsets  (GimpToolWidget  *widget,
                                                        gint             offset_x,
                                                        gint             offset_y,

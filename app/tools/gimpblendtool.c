@@ -128,6 +128,9 @@ static void   gimp_blend_tool_commit              (GimpBlendTool         *blend_
 
 static void   gimp_blend_tool_line_changed        (GimpToolWidget        *widget,
                                                    GimpBlendTool         *blend_tool);
+static void   gimp_blend_tool_line_response       (GimpToolWidget        *widget,
+                                                   gint                   response_id,
+                                                   GimpBlendTool         *blend_tool);
 
 static void   gimp_blend_tool_update_status       (GimpBlendTool         *blend_tool,
                                                    GdkModifierType        state,
@@ -370,6 +373,9 @@ gimp_blend_tool_button_press (GimpTool            *tool,
       g_signal_connect (blend_tool->line, "changed",
                         G_CALLBACK (gimp_blend_tool_line_changed),
                         blend_tool);
+      g_signal_connect (blend_tool->line, "response",
+                        G_CALLBACK (gimp_blend_tool_line_response),
+                        blend_tool);
 
       gimp_blend_tool_start (blend_tool, display);
     }
@@ -472,23 +478,11 @@ gimp_blend_tool_key_press (GimpTool    *tool,
                            GdkEventKey *kevent,
                            GimpDisplay *display)
 {
-  switch (kevent->keyval)
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+
+  if (blend_tool->line && display == tool->display)
     {
-    case GDK_KEY_BackSpace:
-      return TRUE;
-
-    case GDK_KEY_Return:
-    case GDK_KEY_KP_Enter:
-    case GDK_KEY_ISO_Enter:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-      /* fall thru */
-
-    case GDK_KEY_Escape:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-      return TRUE;
-
-    default:
-      break;
+      return gimp_tool_widget_key_press (blend_tool->line, kevent);
     }
 
   return FALSE;
@@ -827,6 +821,25 @@ gimp_blend_tool_line_changed (GimpToolWidget *widget,
 
   gimp_blend_tool_update_graph (blend_tool);
   gimp_drawable_filter_apply (blend_tool->filter, NULL);
+}
+
+static void
+gimp_blend_tool_line_response (GimpToolWidget *widget,
+                               gint            response_id,
+                               GimpBlendTool  *blend_tool)
+{
+  GimpTool *tool = GIMP_TOOL (blend_tool);
+
+  switch (response_id)
+    {
+    case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+      break;
+
+    case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+      break;
+    }
 }
 
 static void

@@ -22,6 +22,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "display-types.h"
 
@@ -50,6 +51,7 @@ enum
 enum
 {
   CHANGED,
+  RESPONSE,
   SNAP_OFFSETS,
   STATUS,
   STATUS_COORDS,
@@ -71,19 +73,22 @@ struct _GimpToolWidgetPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_tool_widget_finalize           (GObject         *object);
-static void   gimp_tool_widget_constructed        (GObject         *object);
-static void   gimp_tool_widget_set_property       (GObject         *object,
-                                                   guint            property_id,
-                                                   const GValue    *value,
-                                                   GParamSpec      *pspec);
-static void   gimp_tool_widget_get_property       (GObject         *object,
-                                                   guint            property_id,
-                                                   GValue          *value,
-                                                   GParamSpec      *pspec);
-static void   gimp_tool_widget_properties_changed (GObject         *object,
-                                                   guint            n_pspecs,
-                                                   GParamSpec     **pspecs);
+static void     gimp_tool_widget_finalize           (GObject         *object);
+static void     gimp_tool_widget_constructed        (GObject         *object);
+static void     gimp_tool_widget_set_property       (GObject         *object,
+                                                     guint            property_id,
+                                                     const GValue    *value,
+                                                     GParamSpec      *pspec);
+static void     gimp_tool_widget_get_property       (GObject         *object,
+                                                     guint            property_id,
+                                                     GValue          *value,
+                                                     GParamSpec      *pspec);
+static void     gimp_tool_widget_properties_changed (GObject         *object,
+                                                     guint            n_pspecs,
+                                                     GParamSpec     **pspecs);
+
+static gboolean gimp_tool_widget_real_key_press     (GimpToolWidget  *widget,
+                                                     GdkEventKey     *kevent);
 
 
 G_DEFINE_TYPE (GimpToolWidget, gimp_tool_widget, GIMP_TYPE_OBJECT)
@@ -104,6 +109,8 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
   object_class->get_property                = gimp_tool_widget_get_property;
   object_class->dispatch_properties_changed = gimp_tool_widget_properties_changed;
 
+  klass->key_press                          = gimp_tool_widget_real_key_press;
+
   widget_signals[CHANGED] =
     g_signal_new ("changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -112,6 +119,16 @@ gimp_tool_widget_class_init (GimpToolWidgetClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  widget_signals[RESPONSE] =
+    g_signal_new ("response",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolWidgetClass, response),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_INT);
 
   widget_signals[SNAP_OFFSETS] =
     g_signal_new ("snap-offsets",
@@ -256,6 +273,33 @@ gimp_tool_widget_properties_changed (GObject     *object,
   g_signal_emit (object, widget_signals[CHANGED], 0);
 }
 
+static gboolean
+gimp_tool_widget_real_key_press (GimpToolWidget *widget,
+                                 GdkEventKey    *kevent)
+{
+  switch (kevent->keyval)
+    {
+    case GDK_KEY_Return:
+    case GDK_KEY_KP_Enter:
+    case GDK_KEY_ISO_Enter:
+      gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
+      return TRUE;
+
+    case GDK_KEY_Escape:
+      gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_CANCEL);
+      return TRUE;
+
+    case GDK_KEY_BackSpace:
+      gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_RESET);
+      return TRUE;
+
+    default:
+      break;
+    }
+
+  return FALSE;
+}
+
 
 /*  public functions  */
 
@@ -273,6 +317,16 @@ gimp_tool_widget_get_item (GimpToolWidget *widget)
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
   return widget->private->item;
+}
+
+void
+gimp_tool_widget_response (GimpToolWidget *widget,
+                           gint            response_id)
+{
+  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+
+  g_signal_emit (widget, widget_signals[RESPONSE], 0,
+                 response_id);
 }
 
 void

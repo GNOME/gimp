@@ -107,12 +107,11 @@ static void     gimp_free_select_tool_real_select         (GimpFreeSelectTool   
 
 static void     gimp_free_select_tool_polygon_changed     (GimpToolWidget        *polygon,
                                                            GimpFreeSelectTool    *fst);
+static void     gimp_free_select_tool_polygon_response    (GimpToolWidget        *polygon,
+                                                           gint                   response_id,
+                                                           GimpFreeSelectTool    *fst);
 static void     gimp_free_select_tool_polygon_status      (GimpToolWidget        *polygon,
                                                            const gchar           *status,
-                                                           GimpFreeSelectTool    *fst);
-static void     gimp_free_select_tool_polygon_commit      (GimpToolWidget        *polygon,
-                                                           GimpFreeSelectTool    *fst);
-static void     gimp_free_select_tool_polygon_cancel      (GimpToolWidget        *polygon,
                                                            GimpFreeSelectTool    *fst);
 
 
@@ -344,14 +343,11 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
       g_signal_connect (private->polygon, "changed",
                         G_CALLBACK (gimp_free_select_tool_polygon_changed),
                         fst);
+      g_signal_connect (private->polygon, "response",
+                        G_CALLBACK (gimp_free_select_tool_polygon_response),
+                        fst);
       g_signal_connect (private->polygon, "status",
                         G_CALLBACK (gimp_free_select_tool_polygon_status),
-                        fst);
-      g_signal_connect (private->polygon, "commit",
-                        G_CALLBACK (gimp_free_select_tool_polygon_commit),
-                        fst);
-      g_signal_connect (private->polygon, "cancel",
-                        G_CALLBACK (gimp_free_select_tool_polygon_cancel),
                         fst);
 
       gimp_draw_tool_start (draw_tool, display);
@@ -432,7 +428,7 @@ gimp_free_select_tool_key_press (GimpTool    *tool,
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv = fst->private;
 
-  if (priv->polygon)
+  if (priv->polygon && display == tool->display)
     {
       return gimp_tool_widget_key_press (priv->polygon, kevent);
     }
@@ -469,7 +465,7 @@ gimp_free_select_tool_active_modifier_key (GimpTool        *tool,
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv = fst->private;
 
-  if (priv->polygon && display == tool->display)
+  if (priv->polygon)
     {
       gimp_tool_widget_motion_modifier (priv->polygon, key, press, state);
 
@@ -524,6 +520,25 @@ gimp_free_select_tool_polygon_changed (GimpToolWidget     *polygon,
 }
 
 static void
+gimp_free_select_tool_polygon_response (GimpToolWidget     *polygon,
+                                        gint                response_id,
+                                        GimpFreeSelectTool *fst)
+{
+  GimpTool *tool = GIMP_TOOL (fst);
+
+  switch (response_id)
+    {
+    case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+      break;
+
+    case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+      break;
+    }
+}
+
+static void
 gimp_free_select_tool_polygon_status (GimpToolWidget     *polygon,
                                       const gchar        *status,
                                       GimpFreeSelectTool *fst)
@@ -539,22 +554,3 @@ gimp_free_select_tool_polygon_status (GimpToolWidget     *polygon,
       gimp_tool_pop_status (tool, tool->display);
     }
 }
-
-static void
-gimp_free_select_tool_polygon_commit (GimpToolWidget     *polygon,
-                                      GimpFreeSelectTool *fst)
-{
-  GimpTool *tool = GIMP_TOOL (fst);
-
-  gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
-}
-
-static void
-gimp_free_select_tool_polygon_cancel (GimpToolWidget     *polygon,
-                                      GimpFreeSelectTool *fst)
-{
-  GimpTool *tool = GIMP_TOOL (fst);
-
-  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
-}
-

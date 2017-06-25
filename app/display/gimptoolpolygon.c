@@ -66,13 +66,6 @@ enum
 };
 #endif
 
-enum
-{
-  COMMIT,
-  CANCEL,
-  LAST_SIGNAL
-};
-
 
 struct _GimpToolPolygonPrivate
 {
@@ -200,8 +193,6 @@ G_DEFINE_TYPE (GimpToolPolygon, gimp_tool_polygon, GIMP_TYPE_TOOL_WIDGET)
 
 #define parent_class gimp_tool_polygon_parent_class
 
-static guint polygon_signals[LAST_SIGNAL] = { 0 };
-
 static const GimpVector2 vector2_zero = { 0.0, 0.0 };
 
 
@@ -225,24 +216,6 @@ gimp_tool_polygon_class_init (GimpToolPolygonClass *klass)
   widget_class->motion_modifier = gimp_tool_polygon_motion_modifier;
   widget_class->hover_modifier  = gimp_tool_polygon_hover_modifier;
   widget_class->get_cursor      = gimp_tool_polygon_get_cursor;
-
-  polygon_signals[COMMIT] =
-    g_signal_new ("commit",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolPolygonClass, commit),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
-  polygon_signals[CANCEL] =
-    g_signal_new ("cancel",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolPolygonClass, cancel),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
 
 #if 0
   g_object_class_install_property (object_class, PROP_X1,
@@ -507,7 +480,8 @@ gimp_tool_polygon_remove_last_segment (GimpToolPolygon *polygon)
       priv->n_points              = 0;
       priv->n_segment_indices     = 0;
 
-      g_signal_emit (polygon, polygon_signals[CANCEL], 0);
+      gimp_tool_widget_response (GIMP_TOOL_WIDGET (polygon),
+                                 GIMP_TOOL_WIDGET_RESPONSE_CANCEL);
     }
   else
     {
@@ -1179,7 +1153,8 @@ gimp_tool_polygon_button_release (GimpToolWidget        *widget,
            */
           gimp_tool_polygon_revert_to_saved_state (polygon);
 
-          g_signal_emit (polygon, polygon_signals[COMMIT], 0);
+          gimp_tool_widget_response (widget,
+                                     GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
         }
 
       priv->last_click_time  = time;
@@ -1199,7 +1174,8 @@ gimp_tool_polygon_button_release (GimpToolWidget        *widget,
                                           NO_CLICK_TIME_AVAILABLE,
                                           coords))
         {
-          g_signal_emit (polygon, polygon_signals[COMMIT], 0);
+          gimp_tool_widget_response (widget,
+                                     GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
         }
       break;
 
@@ -1343,21 +1319,11 @@ gimp_tool_polygon_key_press (GimpToolWidget *widget,
       gimp_tool_polygon_remove_last_segment (polygon);
       return TRUE;
 
-    case GDK_KEY_Return:
-    case GDK_KEY_KP_Enter:
-    case GDK_KEY_ISO_Enter:
-      g_signal_emit (polygon, polygon_signals[COMMIT], 0);
-      return TRUE;
-
-    case GDK_KEY_Escape:
-      g_signal_emit (polygon, polygon_signals[CANCEL], 0);
-      return TRUE;
-
     default:
       break;
     }
 
-  return FALSE;
+  return GIMP_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
 }
 
 static void
