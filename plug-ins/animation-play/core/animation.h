@@ -45,6 +45,9 @@ struct _AnimationClass
                                       gdouble       ratio);
   void         (*loaded)             (Animation    *animation);
 
+  void         (*size_changed)       (Animation    *animation,
+                                      gint          width,
+                                      gint          height);
   void         (*frames_changed)     (Animation    *animation,
                                       gint          position,
                                       gint          length);
@@ -90,6 +93,9 @@ void          animation_save_to_parasite   (Animation   *animation,
 
 gint          animation_get_duration       (Animation   *animation);
 
+void          animation_set_size           (Animation   *animation,
+                                            gint         width,
+                                            gint         height);
 void          animation_get_size           (Animation   *animation,
                                             gint        *width,
                                             gint        *height);

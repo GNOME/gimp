@@ -45,6 +45,7 @@ enum
 {
   LOADING,
   LOADED,
+  SIZE_CHANGED,
   FRAMES_CHANGED,
   DURATION_CHANGED,
   FRAMERATE_CHANGED,
@@ -63,6 +64,10 @@ typedef struct _AnimationPrivate AnimationPrivate;
 struct _AnimationPrivate
 {
   gint32    image_id;
+
+  /* Animation size may be different from image size. */
+  gint      width;
+  gint      height;
 
   gdouble   framerate;
 
@@ -136,6 +141,26 @@ animation_class_init (AnimationClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE,
                   0);
+  /**
+   * Animation::size-changed:
+   * @animation: the animation.
+   * @width: @animation width.
+   * @height: @animation height.
+   *
+   * The ::size-changed signal will be emitted when @animation display
+   * size changes.
+   */
+  animation_signals[SIZE_CHANGED] =
+    g_signal_new ("size-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (AnimationClass, size_changed),
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_NONE,
+                  2,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
   /**
    * Animation::frames-changed:
    * @animation: the animation.
@@ -372,20 +397,32 @@ animation_get_duration (Animation *animation)
 }
 
 void
+animation_set_size (Animation *animation,
+                    gint       width,
+                    gint       height)
+{
+  AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
+
+  if (width != priv->width || height != priv->height)
+    {
+      priv->width  = width;
+      priv->height = height;
+      g_signal_emit (animation, animation_signals[SIZE_CHANGED], 0,
+                     width, height);
+    }
+}
+
+void
 animation_get_size (Animation *animation,
                     gint      *width,
                     gint      *height)
 {
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
-  gint              image_width;
-  gint              image_height;
 
-  image_width  = gimp_image_width (priv->image_id);
-  image_height = gimp_image_height (priv->image_id);
-
-  /* Full preview size. */
-  *width  = image_width;
-  *height = image_height;
+  if (width)
+    *width  = priv->width;
+  if (height)
+    *height = priv->height;
 }
 
 void
@@ -452,6 +489,8 @@ animation_set_property (GObject      *object,
         {
           const gchar *xml   = g_value_get_string (value);
           GError      *error = NULL;
+          gint         width;
+          gint         height;
 
           if (! xml ||
               ! ANIMATION_GET_CLASS (animation)->deserialize (animation,
@@ -465,6 +504,15 @@ animation_set_property (GObject      *object,
               ANIMATION_GET_CLASS (animation)->reset_defaults (animation);
             }
           g_clear_error (&error);
+
+          animation_get_size (animation, &width, &height);
+          if (width <= 0 || height <= 0)
+            {
+              /* Default display size is the size of the image. */
+              animation_set_size (animation,
+                                  gimp_image_width (priv->image_id),
+                                  gimp_image_height (priv->image_id));
+            }
         }
       break;
 

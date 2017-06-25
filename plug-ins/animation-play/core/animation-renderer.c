@@ -76,6 +76,10 @@ static void     on_proxy_changed                 (AnimationPlayback *animation,
                                                   gdouble            ratio,
                                                   AnimationRenderer *renderer);
 
+static void     on_size_changed                  (Animation         *animation,
+                                                  gint               width,
+                                                  gint               height,
+                                                  AnimationRenderer *renderer);
 static void     on_frames_changed                (Animation         *animation,
                                                   gint               position,
                                                   gint               length,
@@ -397,6 +401,16 @@ on_proxy_changed (AnimationPlayback *playback,
 }
 
 static void
+on_size_changed (Animation         *animation,
+                 gint               width,
+                 gint               height,
+                 AnimationRenderer *renderer)
+{
+  on_frames_changed (animation, 0, animation_get_duration (animation),
+                     renderer);
+}
+
+static void
 on_frames_changed (Animation         *animation,
                    gint               position,
                    gint               length,
@@ -508,6 +522,8 @@ animation_renderer_new (GObject *playback)
                                        renderer->priv->cache_size);
   renderer->priv->hashes     = g_new0 (gchar*,
                                        renderer->priv->cache_size);
+  g_signal_connect (animation, "size-changed",
+                    G_CALLBACK (on_size_changed), renderer);
   g_signal_connect (animation, "frames-changed",
                     G_CALLBACK (on_frames_changed), renderer);
   g_signal_connect (animation, "duration-changed",

@@ -103,6 +103,7 @@ struct _AnimationDialogPrivate
   /* Notebook: settings. */
   GtkWidget         *settings;
   GtkWidget         *animation_type_combo;
+  GtkWidget         *size_entry;
   GtkWidget         *fpscombo;
   GtkWidget         *onion_spin;
   GtkWidget         *duration_spin;
@@ -165,6 +166,9 @@ static void        help_callback             (GtkAction        *action,
                                               AnimationDialog  *dialog);
 
 static void        animation_type_changed    (GtkWidget        *combo,
+                                              AnimationDialog  *dialog);
+
+static void        animation_size_changed    (GimpSizeEntry    *gse,
                                               AnimationDialog  *dialog);
 
 static void        on_onion_spin_changed     (GtkAdjustment    *adjustment,
@@ -505,10 +509,33 @@ animation_dialog_constructed (GObject *object)
                     3, 5, 0, 1, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (priv->animation_type_combo);
 
+  /* Settings: animation size. */
+  widget = gtk_label_new (_("Animation Size: "));
+  gtk_table_attach (GTK_TABLE (priv->settings), widget,
+                    0, 3, 1, 2, GTK_EXPAND, GTK_SHRINK, 1, 1);
+  gtk_widget_show (widget);
+
+  priv->size_entry = gimp_size_entry_new (2, GIMP_UNIT_PIXEL, "%a", TRUE, FALSE, FALSE, 7,
+                                          GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (priv->size_entry), FALSE);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (priv->size_entry),
+                                _("Width"), 0, 1, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (priv->size_entry),
+                                _("Height"), 0, 2, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (priv->size_entry),
+                                _("px"), 1, 3, 0.5);
+  gtk_table_attach (GTK_TABLE (priv->settings), priv->size_entry,
+                    3, 5, 1, 2, GTK_EXPAND, GTK_SHRINK, 1, 1);
+  g_signal_connect (priv->size_entry,
+                    "value-changed",
+                    G_CALLBACK (animation_size_changed),
+                    dialog);
+  gtk_widget_show (priv->size_entry);
+
   /* Settings: proxy. */
   widget = gtk_label_new (_("Proxy: "));
   gtk_table_attach (GTK_TABLE (priv->settings), widget,
-                    0, 3, 1, 2, GTK_EXPAND, GTK_SHRINK, 1, 1);
+                    0, 3, 2, 3, GTK_EXPAND, GTK_SHRINK, 1, 1);
   gtk_widget_show (widget);
 
   priv->proxycombo = gtk_combo_box_text_new_with_entry ();
@@ -541,12 +568,12 @@ animation_dialog_constructed (GObject *object)
 
   gtk_widget_show (priv->proxycombo);
   gtk_table_attach (GTK_TABLE (priv->settings), priv->proxycombo,
-                    3, 5, 1, 2, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    3, 5, 2, 3, GTK_SHRINK, GTK_SHRINK, 1, 1);
 
   /* Settings: fps */
   widget = gtk_label_new (_("Framerate: "));
   gtk_table_attach (GTK_TABLE (priv->settings), widget,
-                    0, 3, 2, 3, GTK_EXPAND, GTK_SHRINK, 1, 1);
+                    0, 3, 3, 4, GTK_EXPAND, GTK_SHRINK, 1, 1);
   gtk_widget_show (widget);
 
   priv->fpscombo = gtk_combo_box_text_new_with_entry ();
@@ -574,7 +601,7 @@ animation_dialog_constructed (GObject *object)
   gimp_help_set_help_data (priv->fpscombo, _("Frame Rate"), NULL);
 
   gtk_table_attach (GTK_TABLE (priv->settings), priv->fpscombo,
-                    3, 5, 2, 3, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    3, 5, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (priv->fpscombo);
 
   /* Settings: onion skinning */
@@ -583,7 +610,7 @@ animation_dialog_constructed (GObject *object)
                     G_CALLBACK (hide_on_animatic),
                     widget);
   gtk_table_attach (GTK_TABLE (priv->settings), widget,
-                    0, 3, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    0, 3, 4, 5, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (widget);
 
   adjust = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 5.0, 1.0, 2.0, 0.0));
@@ -594,7 +621,7 @@ animation_dialog_constructed (GObject *object)
   gtk_entry_set_width_chars (GTK_ENTRY (priv->onion_spin), 1);
   gimp_help_set_help_data (priv->onion_spin, _("Number of skins to show on painting area"), NULL);
   gtk_table_attach (GTK_TABLE (priv->settings), priv->onion_spin,
-                    3, 4, 3, 4, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    3, 4, 4, 5, GTK_SHRINK, GTK_SHRINK, 1, 1);
 
   g_signal_connect (adjust,
                     "value-changed",
@@ -609,7 +636,7 @@ animation_dialog_constructed (GObject *object)
                     G_CALLBACK (hide_on_animatic),
                     widget);
   gtk_table_attach (GTK_TABLE (priv->settings), widget,
-                    0, 3, 4, 5, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    0, 3, 5, 6, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (widget);
 
   adjust = GTK_ADJUSTMENT (gtk_adjustment_new (240.0, 1.0, G_MAXDOUBLE, 1.0, 10.0, 0.0));
@@ -620,7 +647,7 @@ animation_dialog_constructed (GObject *object)
   gtk_entry_set_width_chars (GTK_ENTRY (priv->duration_spin), 5);
   gimp_help_set_help_data (priv->duration_spin, _("Duration in frames"), NULL);
   gtk_table_attach (GTK_TABLE (priv->settings), priv->duration_spin,
-                    3, 4, 4, 5, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    3, 4, 5, 6, GTK_SHRINK, GTK_SHRINK, 1, 1);
 
   g_signal_connect (adjust,
                     "value-changed",
@@ -634,7 +661,7 @@ animation_dialog_constructed (GObject *object)
                     G_CALLBACK (hide_on_animatic),
                     widget);
   gtk_table_attach (GTK_TABLE (priv->settings), widget,
-                    4, 5, 4, 5, GTK_SHRINK, GTK_SHRINK, 1, 1);
+                    4, 5, 5, 6, GTK_SHRINK, GTK_SHRINK, 1, 1);
   gtk_widget_show (widget);
 
   gtk_widget_show (priv->settings);
@@ -1254,6 +1281,8 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   gchar                  *text;
   gdouble                 fps;
   gint                    index;
+  gint                    width;
+  gint                    height;
 
   /* Disconnect all handlers on the previous animation. */
   if (priv->animation)
@@ -1315,6 +1344,20 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   g_object_set (dialog,
                 "animation", animation,
                 NULL);
+
+  /* Settings: display size. */
+  g_signal_handlers_block_by_func (priv->size_entry,
+                                   G_CALLBACK (animation_size_changed),
+                                   dialog);
+  animation_get_size (animation, &width, &height);
+  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (priv->size_entry),
+                             0, (gdouble) width);
+  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (priv->size_entry),
+                             1, (gdouble) height);
+
+  g_signal_handlers_unblock_by_func (priv->size_entry,
+                                     G_CALLBACK (animation_size_changed),
+                                     dialog);
 
   /* Settings: proxy image. */
   g_signal_handlers_unblock_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->proxycombo))),
@@ -1409,7 +1452,7 @@ animation_dialog_set_animation (AnimationDialog *dialog,
       /* The animation type box. */
       gtk_combo_box_set_active (GTK_COMBO_BOX (priv->animation_type_combo), 1);
 
-      /* Settings: onion-skins */
+      /* Settings: onion-skins. */
       skins = animation_cel_animation_get_onion_skins (ANIMATION_CEL_ANIMATION (animation));
       gtk_spin_button_set_value (GTK_SPIN_BUTTON (priv->onion_spin),
                                  (gdouble) skins);
@@ -1544,6 +1587,26 @@ help_callback (GtkAction           *action,
                AnimationDialog *dialog)
 {
   gimp_standard_help_func (PLUG_IN_PROC, dialog);
+}
+
+static void
+animation_size_changed (GimpSizeEntry   *gse,
+                        AnimationDialog *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  gint                    width;
+  gint                    height;
+
+  width  = (gint) gimp_size_entry_get_value (gse, 0);
+  height = (gint) gimp_size_entry_get_value (gse, 1);
+
+  animation_set_size (priv->animation, width, height);
+  /* Resize the drawing areas. */
+  gtk_widget_set_size_request (priv->drawing_area, width, height);
+  gtk_widget_set_size_request (priv->shape_drawing_area, width, height);
+  /* Keep identical zoom. */
+  update_scale (ANIMATION_DIALOG (dialog),
+                get_zoom (ANIMATION_DIALOG (dialog), -1));
 }
 
 static void
