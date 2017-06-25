@@ -81,5 +81,8 @@ void   vectors_color_tag_cmd_callback            (GtkAction   *action,
                                                   gint         value,
                                                   gpointer     data);
 
-
+void   vectors_select_cmd_callback               (GtkAction   *action,
+                                                  gint         value,
+                                                  gpointer     data);
+                                                  
 #endif /* __VECTORS_COMMANDS_H__ */

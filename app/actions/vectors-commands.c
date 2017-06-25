@@ -827,3 +827,32 @@ vectors_export_callback (GtkWidget *dialog,
 
   gtk_widget_destroy (dialog);
 }
+
+void
+vectors_select_cmd_callback (GtkAction *action,
+                             gint       value,
+                             gpointer   data)
+{
+  GimpImage      *image;
+  GimpVectors    *vectors;
+  GimpContainer  *container;
+  GimpVectors    *new_vectors;
+  return_if_no_image (image, data);
+
+  vectors = gimp_image_get_active_vectors (image);
+
+  if (vectors)
+    container = gimp_item_get_container (GIMP_ITEM (vectors));
+  else
+    container = gimp_image_get_vectors (image);
+
+  new_vectors = (GimpVectors *) action_select_object ((GimpActionSelectType) value,
+                                                       container,
+                                                      (GimpObject *) vectors);
+
+  if (new_vectors && new_vectors != vectors)
+    {
+      gimp_image_set_active_vectors (image, new_vectors);
+      gimp_image_flush (image);
+    }
+}

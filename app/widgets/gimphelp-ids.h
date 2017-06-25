@@ -222,6 +222,11 @@
 #define GIMP_HELP_LAYER_CROP                      "gimp-layer-crop"
 #define GIMP_HELP_LAYER_EDIT                      "gimp-layer-edit"
 
+#define GIMP_HELP_VECTORS_PREVIOUS                "gimp-vector-previous"
+#define GIMP_HELP_VECTORS_NEXT                    "gimp-vector-next"
+#define GIMP_HELP_VECTORS_TOP                     "gimp-vector-top"
+#define GIMP_HELP_VECTORS_BOTTOM                  "gimp-vector-bottom"
+
 #define GIMP_HELP_CHANNEL_DIALOG                  "gimp-channel-dialog"
 #define GIMP_HELP_CHANNEL_NEW                     "gimp-channel-new"
 #define GIMP_HELP_CHANNEL_RAISE                   "gimp-channel-raise"
@@ -705,6 +710,5 @@
 #define GIMP_HELP_CONTROLLER_MIDI                 "gimp-controller-midi"
 #define GIMP_HELP_CONTROLLER_MOUSE                "gimp-controller-mouse"
 #define GIMP_HELP_CONTROLLER_WHEEL                "gimp-controller-wheel"
-
 
 #endif /* __GIMP_HELP_IDS_H__ */
