@@ -522,13 +522,17 @@ animation_animatic_serialize (Animation   *animation,
   AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
   gchar                    *text;
   gchar                    *tmp;
+  gint                      width;
+  gint                      height;
   gint                      i;
 
+  animation_get_size (animation, &width, &height);
   text = g_strdup_printf ("<animation type=\"animatic\" framerate=\"%f\" "
-                          " duration=\"%d\" width=\"\" height=\"\">"
+                          " duration=\"%d\" width=\"%d\" height=\"%d\">"
                           "%s<sequence>",
                           animation_get_framerate (animation),
-                          priv->n_panels, playback_xml);
+                          priv->n_panels, width, height,
+                          playback_xml);
   for (i = 0; i < priv->n_panels; i++)
     {
       gchar  *panel;
@@ -650,6 +654,24 @@ animation_animatic_start_element (GMarkupParseContext *context,
                                *values);
                   return;
                 }
+            }
+          else if (strcmp (*names, "width") == 0 && **values)
+            {
+              gint width;
+              gint height;
+
+              animation_get_size (status->animation, &width, &height);
+              width = (gint) g_ascii_strtoull (*values, NULL, 10);
+              animation_set_size (status->animation, width, height);
+            }
+          else if (strcmp (*names, "height") == 0 && **values)
+            {
+              gint width;
+              gint height;
+
+              animation_get_size (status->animation, &width, &height);
+              height = (gint) g_ascii_strtoull (*values, NULL, 10);
+              animation_set_size (status->animation, width, height);
             }
           else if (strcmp (*names, "framerate") == 0 && **values)
             {

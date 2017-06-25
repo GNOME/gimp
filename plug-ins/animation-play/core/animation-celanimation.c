@@ -753,16 +753,19 @@ animation_cel_animation_serialize (Animation   *animation,
   gchar                        *xml2;
   gchar                        *tmp;
   GList                        *iter;
+  gint                          width;
+  gint                          height;
   gint                          i;
 
   priv = ANIMATION_CEL_ANIMATION (animation)->priv;
 
+  animation_get_size (animation, &width, &height);
   xml = g_strdup_printf ("<animation type=\"cels\" framerate=\"%f\" "
                           " duration=\"%d\" onion-skins=\"%d\""
-                          " width=\"\" height=\"\">%s",
+                          " width=\"%d\" height=\"%d\">%s",
                           animation_get_framerate (animation),
                           priv->duration, priv->onion_skins,
-                          playback_xml);
+                          width, height, playback_xml);
 
   for (iter = priv->tracks; iter; iter = iter->next)
     {
@@ -1055,6 +1058,24 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
                                *values);
                   return;
                 }
+            }
+          else if (strcmp (*names, "width") == 0 && **values)
+            {
+              gint width;
+              gint height;
+
+              animation_get_size (status->animation, &width, &height);
+              width = (gint) g_ascii_strtoull (*values, NULL, 10);
+              animation_set_size (status->animation, width, height);
+            }
+          else if (strcmp (*names, "height") == 0 && **values)
+            {
+              gint width;
+              gint height;
+
+              animation_get_size (status->animation, &width, &height);
+              height = (gint) g_ascii_strtoull (*values, NULL, 10);
+              animation_set_size (status->animation, width, height);
             }
           else if (strcmp (*names, "framerate") == 0 && **values)
             {
