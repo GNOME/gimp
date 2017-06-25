@@ -123,9 +123,11 @@ animation_keyframe_view_show (AnimationKeyFrameView *view,
 
   animation_get_size (ANIMATION (animation), &width, &height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                                         0, (gdouble) -width, (gdouble) width);
+                                         0, (gdouble) -GIMP_MAX_IMAGE_SIZE,
+                                         (gdouble) GIMP_MAX_IMAGE_SIZE);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                                         1, (gdouble) -height, (gdouble) height);
+                                         1, (gdouble) -GIMP_MAX_IMAGE_SIZE,
+                                         (gdouble) GIMP_MAX_IMAGE_SIZE);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (view->priv->offset_entry),
                             0, 0.0, (gdouble) width);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (view->priv->offset_entry),
@@ -189,6 +191,7 @@ animation_keyframe_view_constructed (GObject *object)
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (view->priv->offset_entry),
                                 _("Vertical offset:"), 0, 2, 0.0);
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (view->priv->offset_entry), 0);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (view->priv->offset_entry), FALSE);
   gtk_box_pack_start (GTK_BOX (page), view->priv->offset_entry, FALSE, FALSE, 0);
   gtk_widget_show (view->priv->offset_entry);
 
@@ -206,7 +209,7 @@ on_offset_entry_changed (GimpSizeEntry         *entry,
   y_offset = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (view->priv->offset_entry), 1);
   animation_camera_set_keyframe (view->priv->camera,
                                  view->priv->position,
-                                 x_offset, y_offset);
+                                 (gint) x_offset, (gint) y_offset);
 }
 
 static void
@@ -224,7 +227,7 @@ on_offsets_changed (AnimationCamera       *camera,
       g_signal_handlers_block_by_func (view->priv->offset_entry,
                                        G_CALLBACK (on_offset_entry_changed),
                                        view);
-      animation_camera_get (camera, position, &x_offset, &y_offset);
+      animation_camera_get (camera, view->priv->position, &x_offset, &y_offset);
       gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
                                  0, (gdouble) x_offset);
       gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
