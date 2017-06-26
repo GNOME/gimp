@@ -344,3 +344,26 @@ gimp_canvas_arc_new (GimpDisplayShell *shell,
                        "filled",      filled,
                        NULL);
 }
+
+void
+gimp_canvas_arc_set (GimpCanvasItem *arc,
+                     gdouble         center_x,
+                     gdouble         center_y,
+                     gdouble         radius_x,
+                     gdouble         radius_y,
+                     gdouble         start_angle,
+                     gdouble         slice_angle)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_ARC (arc));
+
+  gimp_canvas_item_begin_change (arc);
+  g_object_set (arc,
+                "center-x",    center_x,
+                "center-y",    center_y,
+                "radius-x",    radius_x,
+                "radius-y",    radius_y,
+                "start-angle", start_angle,
+                "slice-angle", slice_angle,
+                NULL);
+  gimp_canvas_item_end_change (arc);
+}

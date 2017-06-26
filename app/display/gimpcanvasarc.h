@@ -58,5 +58,12 @@ GimpCanvasItem * gimp_canvas_arc_new      (GimpDisplayShell *shell,
                                            gdouble          slice_angle,
                                            gboolean         filled);
 
+void             gimp_canvas_arc_set      (GimpCanvasItem  *arc,
+                                           gdouble          center_x,
+                                           gdouble          center_y,
+                                           gdouble          radius_x,
+                                           gdouble          radius_y,
+                                           gdouble          start_angle,
+                                           gdouble          slice_angle);
 
 #endif /* __GIMP_CANVAS_ARC_H__ */
