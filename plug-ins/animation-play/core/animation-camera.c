@@ -275,6 +275,35 @@ animation_camera_preview_keyframe (AnimationCamera *camera,
 }
 
 void
+animation_camera_apply_preview (AnimationCamera *camera)
+{
+  if (camera->priv->preview_offset)
+    {
+      gint preview_offset_x;
+      gint preview_offset_y;
+      gint real_offset_x;
+      gint real_offset_y;
+      gint position;
+
+      animation_camera_get (camera, camera->priv->preview_position,
+                            &preview_offset_x, &preview_offset_y);
+      animation_camera_get_real (camera, camera->priv->preview_position,
+                                 &real_offset_x, &real_offset_y);
+
+      g_free (camera->priv->preview_offset);
+      camera->priv->preview_offset    = NULL;
+      position = camera->priv->preview_position;
+      camera->priv->preview_position  = -1;
+
+      if (preview_offset_x != real_offset_x ||
+          preview_offset_y != real_offset_y)
+        animation_camera_set_keyframe (camera, position,
+                                       preview_offset_x,
+                                       preview_offset_y);
+    }
+}
+
+void
 animation_camera_reset_preview (AnimationCamera *camera)
 {
   gboolean offsets_changed = FALSE;

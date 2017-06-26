@@ -251,6 +251,7 @@ static gboolean    da_button_press           (GtkWidget        *widget,
                                               GdkEventButton   *event,
                                               AnimationDialog  *dialog);
 static gboolean    da_button_released        (GtkWidget        *widget,
+                                              GdkEvent         *event,
                                               AnimationDialog  *dialog);
 static gboolean    da_button_motion          (GtkWidget        *widget,
                                               GdkEventMotion   *event,
@@ -2415,8 +2416,17 @@ da_button_press (GtkWidget       *widget,
 
 static gboolean
 da_button_released (GtkWidget       *widget,
+                    GdkEvent        *event,
                     AnimationDialog *dialog)
 {
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  AnimationCelAnimation  *animation;
+  AnimationCamera        *camera;
+
+  animation = ANIMATION_CEL_ANIMATION (priv->animation);
+  camera = ANIMATION_CAMERA (animation_cel_animation_get_main_camera (animation));
+  animation_camera_apply_preview (camera);
+
   gtk_grab_remove (widget);
   gdk_display_pointer_ungrab (gtk_widget_get_display (widget), 0);
   gdk_flush ();
@@ -2462,7 +2472,7 @@ da_button_motion (GtkWidget       *widget,
     }
   else /* the user has released all buttons */
     {
-      da_button_released (widget, dialog);
+      da_button_released (widget, NULL, dialog);
     }
 
   return FALSE;

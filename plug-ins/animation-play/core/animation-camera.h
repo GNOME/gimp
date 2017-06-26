@@ -70,6 +70,7 @@ void              animation_camera_preview_keyframe (AnimationCamera *camera,
                                                      gint             position,
                                                      gint             x,
                                                      gint             y);
+void              animation_camera_apply_preview    (AnimationCamera *camera);
 void              animation_camera_reset_preview    (AnimationCamera *camera);
 
 void              animation_camera_get              (AnimationCamera *camera,
