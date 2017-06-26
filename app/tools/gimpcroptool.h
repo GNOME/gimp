@@ -37,9 +37,12 @@ typedef struct _GimpCropToolClass GimpCropToolClass;
 
 struct _GimpCropTool
 {
-  GimpDrawTool  parent_instance;
+  GimpDrawTool    parent_instance;
 
-  GimpImage    *current_image;
+  GimpImage      *current_image;
+
+  GimpToolWidget *rectangle;
+  GimpToolWidget *grab_widget;
 };
 
 struct _GimpCropToolClass
