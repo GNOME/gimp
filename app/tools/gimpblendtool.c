@@ -119,8 +119,6 @@ static void   gimp_blend_tool_options_notify      (GimpTool              *tool,
                                                    GimpToolOptions       *options,
                                                    const GParamSpec      *pspec);
 
-static void   gimp_blend_tool_draw                (GimpDrawTool          *draw_tool);
-
 static void   gimp_blend_tool_start               (GimpBlendTool         *blend_tool,
                                                    GimpDisplay           *display);
 static void   gimp_blend_tool_halt                (GimpBlendTool         *blend_tool);
@@ -189,9 +187,8 @@ gimp_blend_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_blend_tool_class_init (GimpBlendToolClass *klass)
 {
-  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
+  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
   object_class->dispose           = gimp_blend_tool_dispose;
 
@@ -209,8 +206,6 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   tool_class->undo                = gimp_blend_tool_undo;
   tool_class->redo                = gimp_blend_tool_redo;
   tool_class->options_notify      = gimp_blend_tool_options_notify;
-
-  draw_tool_class->draw           = gimp_blend_tool_draw;
 }
 
 static void
@@ -367,6 +362,8 @@ gimp_blend_tool_button_press (GimpTool            *tool,
                                              blend_tool->start_y,
                                              blend_tool->end_x,
                                              blend_tool->end_y);
+
+      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), blend_tool->line);
 
       gimp_tool_widget_hover (blend_tool->line, coords, state, TRUE);
 
@@ -679,19 +676,6 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
                                      GIMP_LAYER_COLOR_SPACE_AUTO,
                                      GIMP_LAYER_COLOR_SPACE_AUTO,
                                      GIMP_LAYER_COMPOSITE_AUTO);
-    }
-}
-
-static void
-gimp_blend_tool_draw (GimpDrawTool *draw_tool)
-{
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (draw_tool);
-
-  if (blend_tool->line)
-    {
-      GimpCanvasItem *item = gimp_tool_widget_get_item (blend_tool->line);
-
-      gimp_draw_tool_add_item (draw_tool, item);
     }
 }
 

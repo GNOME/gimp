@@ -90,8 +90,6 @@ static void     gimp_measure_tool_cursor_update   (GimpTool              *tool,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
 
-static void     gimp_measure_tool_draw            (GimpDrawTool          *draw_tool);
-
 static void     gimp_measure_tool_compass_changed (GimpToolWidget        *widget,
                                                    GimpMeasureTool       *measure);
 static void     gimp_measure_tool_compass_status  (GimpToolWidget        *widget,
@@ -140,8 +138,7 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
 {
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   tool_class->control             = gimp_measure_tool_control;
   tool_class->button_press        = gimp_measure_tool_button_press;
@@ -151,8 +148,6 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   tool_class->active_modifier_key = gimp_measure_tool_active_modifier_key;
   tool_class->oper_update         = gimp_measure_tool_oper_update;
   tool_class->cursor_update       = gimp_measure_tool_cursor_update;
-
-  draw_tool_class->draw           = gimp_measure_tool_draw;
 }
 
 static void
@@ -237,6 +232,8 @@ gimp_measure_tool_button_press (GimpTool            *tool,
                                                 measure->y[1],
                                                 measure->x[2],
                                                 measure->y[2]);
+
+      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), measure->compass);
 
       gimp_tool_widget_hover (measure->compass, coords, state, TRUE);
 
@@ -400,19 +397,6 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
-}
-
-static void
-gimp_measure_tool_draw (GimpDrawTool *draw_tool)
-{
-  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (draw_tool);
-
-  if (measure->compass)
-    {
-      GimpCanvasItem *item = gimp_tool_widget_get_item (measure->compass);
-
-      gimp_draw_tool_add_item (draw_tool, item);
-    }
 }
 
 static void

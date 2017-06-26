@@ -87,8 +87,6 @@ static void      gimp_crop_tool_options_notify            (GimpTool             
                                                            GimpToolOptions      *options,
                                                            const GParamSpec     *pspec);
 
-static void      gimp_crop_tool_draw                      (GimpDrawTool         *draw_tool);
-
 static void      gimp_crop_tool_rectangle_changed         (GimpToolWidget       *rectangle,
                                                            GimpCropTool         *crop_tool);
 static void      gimp_crop_tool_rectangle_response        (GimpToolWidget       *rectangle,
@@ -156,9 +154,8 @@ gimp_crop_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_crop_tool_class_init (GimpCropToolClass *klass)
 {
-  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
+  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
   object_class->constructed       = gimp_crop_tool_constructed;
 
@@ -171,8 +168,6 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   tool_class->oper_update         = gimp_crop_tool_oper_update;
   tool_class->cursor_update       = gimp_crop_tool_cursor_update;
   tool_class->options_notify      = gimp_crop_tool_options_notify;
-
-  draw_tool_class->draw           = gimp_crop_tool_draw;
 }
 
 static void
@@ -279,6 +274,8 @@ gimp_crop_tool_button_press (GimpTool            *tool,
       tool->display = display;
 
       crop_tool->rectangle = widget = gimp_tool_rectangle_new (shell);
+
+      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
 
       for (i = 0; i < G_N_ELEMENTS (properties); i++)
         g_object_bind_property (G_OBJECT (options), properties[i],
@@ -456,19 +453,6 @@ gimp_crop_tool_options_notify (GimpTool         *tool,
           gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (crop_tool->rectangle),
                                               gimp_crop_tool_get_constraint (crop_tool));
         }
-    }
-}
-
-static void
-gimp_crop_tool_draw (GimpDrawTool *draw_tool)
-{
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (draw_tool);
-
-  if (crop_tool->rectangle)
-    {
-      GimpCanvasItem *item = gimp_tool_widget_get_item (crop_tool->rectangle);
-
-      gimp_draw_tool_add_item (draw_tool, item);
     }
 }
 

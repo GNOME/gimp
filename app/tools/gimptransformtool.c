@@ -765,9 +765,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                               G_BINDING_SYNC_CREATE |
                               G_BINDING_BIDIRECTIONAL);
 
-      item = gimp_tool_widget_get_item (tr_tool->widget);
-
-      gimp_draw_tool_add_item (draw_tool, item);
+      GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
     }
 
   if (options->type == GIMP_TRANSFORM_TYPE_SELECTION)
@@ -1368,6 +1366,8 @@ gimp_transform_tool_get_widget (GimpTransformTool *tr_tool)
       gint                  i;
 
       widget = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_widget (tr_tool);
+
+      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tr_tool), widget);
 
       g_object_bind_property (G_OBJECT (options), "grid-type",
                               G_OBJECT (widget),  "guide-type",

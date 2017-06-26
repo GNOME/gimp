@@ -106,8 +106,6 @@ static void     gimp_vector_tool_cursor_update   (GimpTool              *tool,
                                                   GdkModifierType        state,
                                                   GimpDisplay           *display);
 
-static void     gimp_vector_tool_draw            (GimpDrawTool          *draw_tool);
-
 static void     gimp_vector_tool_start           (GimpVectorTool        *vector_tool,
                                                   GimpDisplay           *display);
 static void     gimp_vector_tool_halt            (GimpVectorTool        *vector_tool);
@@ -184,9 +182,8 @@ gimp_vector_tool_register (GimpToolRegisterCallback callback,
 static void
 gimp_vector_tool_class_init (GimpVectorToolClass *klass)
 {
-  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
+  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
   object_class->dispose      = gimp_vector_tool_dispose;
 
@@ -198,8 +195,6 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   tool_class->modifier_key   = gimp_vector_tool_modifier_key;
   tool_class->oper_update    = gimp_vector_tool_oper_update;
   tool_class->cursor_update  = gimp_vector_tool_cursor_update;
-
-  draw_tool_class->draw      = gimp_vector_tool_draw;
 }
 
 static void
@@ -431,19 +426,6 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
 }
 
 static void
-gimp_vector_tool_draw (GimpDrawTool *draw_tool)
-{
-  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (draw_tool);
-
-  if (vector_tool->path)
-    {
-      GimpCanvasItem *item = gimp_tool_widget_get_item (vector_tool->path);
-
-      gimp_draw_tool_add_item (draw_tool, item);
-    }
-}
-
-static void
 gimp_vector_tool_start (GimpVectorTool *vector_tool,
                         GimpDisplay    *display)
 {
@@ -455,6 +437,8 @@ gimp_vector_tool_start (GimpVectorTool *vector_tool,
   tool->display = display;
 
   vector_tool->path = widget = gimp_tool_path_new (shell);
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
 
   g_object_bind_property (G_OBJECT (options), "vectors-edit-mode",
                           G_OBJECT (widget),  "edit-mode",

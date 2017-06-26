@@ -98,8 +98,6 @@ static void     gimp_free_select_tool_active_modifier_key (GimpTool             
                                                            GdkModifierType        state,
                                                            GimpDisplay           *display);
 
-static void     gimp_free_select_tool_draw                (GimpDrawTool          *draw_tool);
-
 static void     gimp_free_select_tool_real_select         (GimpFreeSelectTool    *fst,
                                                            GimpDisplay           *display,
                                                            const GimpVector2     *points,
@@ -142,9 +140,8 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
 {
-  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
+  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
   object_class->finalize          = gimp_free_select_tool_finalize;
 
@@ -157,8 +154,6 @@ gimp_free_select_tool_class_init (GimpFreeSelectToolClass *klass)
   tool_class->key_press           = gimp_free_select_tool_key_press;
   tool_class->modifier_key        = gimp_free_select_tool_modifier_key;
   tool_class->active_modifier_key = gimp_free_select_tool_active_modifier_key;
-
-  draw_tool_class->draw           = gimp_free_select_tool_draw;
 
   klass->select                   = gimp_free_select_tool_real_select;
 
@@ -340,6 +335,8 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
 
       private->polygon = gimp_tool_polygon_new (shell);
 
+      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), private->polygon);
+
       g_signal_connect (private->polygon, "changed",
                         G_CALLBACK (gimp_free_select_tool_polygon_changed),
                         fst);
@@ -472,20 +469,6 @@ gimp_free_select_tool_active_modifier_key (GimpTool        *tool,
       GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool,
                                                            key, press, state,
                                                            display);
-    }
-}
-
-static void
-gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
-{
-  GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (draw_tool);
-  GimpFreeSelectToolPrivate *priv = fst->private;
-
-  if (priv->polygon)
-    {
-      GimpCanvasItem *item = gimp_tool_widget_get_item (priv->polygon);
-
-      gimp_draw_tool_add_item (draw_tool, item);
     }
 }
 

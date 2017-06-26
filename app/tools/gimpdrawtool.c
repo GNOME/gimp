@@ -49,6 +49,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-items.h"
 #include "display/gimpdisplayshell-transform.h"
+#include "display/gimptoolwidget.h"
 
 #include "gimpdrawtool.h"
 
@@ -164,6 +165,7 @@ gimp_draw_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       if (gimp_draw_tool_is_active (draw_tool))
         gimp_draw_tool_stop (draw_tool);
+      gimp_draw_tool_set_widget (draw_tool, NULL);
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
@@ -269,7 +271,12 @@ gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
 static void
 gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
 {
-  /* the default implementation does nothing */
+  if (draw_tool->widget)
+    {
+      GimpCanvasItem *item = gimp_tool_widget_get_item (draw_tool->widget);
+
+      gimp_draw_tool_add_item (draw_tool, item);
+    }
 }
 
 void
@@ -422,6 +429,43 @@ gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
   gimp_display_shell_transform_xy_f (shell, x2, y2, &tx2, &ty2);
 
   return SQR (tx2 - tx1) + SQR (ty2 - ty1);
+}
+
+void
+gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
+                           GimpToolWidget *widget)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (widget == NULL || GIMP_IS_TOOL_WIDGET (widget));
+
+  if (widget == draw_tool->widget)
+    return;
+
+  if (draw_tool->widget)
+    {
+      if (gimp_draw_tool_is_active (draw_tool))
+        {
+          GimpCanvasItem *item = gimp_tool_widget_get_item (draw_tool->widget);
+
+          gimp_draw_tool_remove_item (draw_tool, item);
+        }
+
+      g_object_unref (draw_tool->widget);
+    }
+
+  draw_tool->widget = widget;
+
+  if (draw_tool->widget)
+    {
+      g_object_ref (draw_tool->widget);
+
+      if (gimp_draw_tool_is_active (draw_tool))
+        {
+          GimpCanvasItem *item = gimp_tool_widget_get_item (draw_tool->widget);
+
+          gimp_draw_tool_add_item (draw_tool, item);
+        }
+    }
 }
 
 void
