@@ -449,7 +449,6 @@ gimp_blend_tool_button_release (GimpTool              *tool,
       /*  a click outside any handle commits the tool
        */
       gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
     }
 }
 
@@ -790,6 +789,8 @@ gimp_blend_tool_commit (GimpBlendTool *blend_tool)
 
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
+
+  gimp_blend_tool_halt (blend_tool);
 }
 
 static void
