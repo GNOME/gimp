@@ -770,6 +770,7 @@ animation_cel_animation_serialize (Animation   *animation,
 
   priv = ANIMATION_CEL_ANIMATION (animation)->priv;
 
+  animation_camera_reset_preview (priv->camera);
   animation_get_size (animation, &width, &height);
   xml = g_strdup_printf ("<animation type=\"cels\" framerate=\"%f\" "
                           " duration=\"%d\" onion-skins=\"%d\""

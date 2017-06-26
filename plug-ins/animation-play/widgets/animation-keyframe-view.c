@@ -75,6 +75,8 @@ animation_keyframe_view_init (AnimationKeyFrameView *view)
   view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
                                             ANIMATION_TYPE_KEYFRAME_VIEW,
                                             AnimationKeyFrameViewPrivate);
+  view->priv->position        = -1;
+  view->priv->update_position = -1;
 }
 
 /************ Public Functions ****************/
@@ -121,46 +123,60 @@ animation_keyframe_view_show (AnimationKeyFrameView *view,
 
   camera = ANIMATION_CAMERA (animation_cel_animation_get_main_camera (animation));
 
-  view->priv->camera   = camera;
-  view->priv->position = position;
+  if (view->priv->position != position ||
+      view->priv->camera != camera)
+    {
+      if (view->priv->camera == camera &&
+          view->priv->update_position != -1)
+        {
+          /* We jumped to another position. Apply the ongoing preview. */
+          animation_camera_set_keyframe (view->priv->camera,
+                                         view->priv->update_position,
+                                         view->priv->update_x_offset,
+                                         view->priv->update_y_offset);
+        }
+      view->priv->camera   = camera;
+      view->priv->position = position;
 
-  image_id = animation_get_image_id (ANIMATION (animation));
-  gimp_image_get_resolution (image_id, &xres, &yres);
+      image_id = animation_get_image_id (ANIMATION (animation));
+      gimp_image_get_resolution (image_id, &xres, &yres);
 
-  animation_get_size (ANIMATION (animation), &width, &height);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                                         0, (gdouble) -GIMP_MAX_IMAGE_SIZE,
-                                         (gdouble) GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                                         1, (gdouble) -GIMP_MAX_IMAGE_SIZE,
-                                         (gdouble) GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                            0, 0.0, (gdouble) width);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                            1, 0.0, (gdouble) height);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                            0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                            1, yres, TRUE);
+      animation_get_size (ANIMATION (animation), &width, &height);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (view->priv->offset_entry),
+                                             0, (gdouble) -GIMP_MAX_IMAGE_SIZE,
+                                             (gdouble) GIMP_MAX_IMAGE_SIZE);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (view->priv->offset_entry),
+                                             1, (gdouble) -GIMP_MAX_IMAGE_SIZE,
+                                             (gdouble) GIMP_MAX_IMAGE_SIZE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (view->priv->offset_entry),
+                                0, 0.0, (gdouble) width);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (view->priv->offset_entry),
+                                1, 0.0, (gdouble) height);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (view->priv->offset_entry),
+                                      0, xres, TRUE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (view->priv->offset_entry),
+                                      1, yres, TRUE);
 
-  g_signal_handlers_disconnect_by_func (view->priv->offset_entry,
-                                        G_CALLBACK (on_offset_entry_changed),
-                                        view);
-  g_signal_handlers_disconnect_by_func (view->priv->camera,
-                                        G_CALLBACK (on_offsets_changed),
-                                        view);
-  animation_camera_get (camera, position, &x_offset, &y_offset);
-  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                             0, (gdouble) x_offset);
-  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
-                             1, (gdouble) y_offset);
-  g_signal_connect (view->priv->offset_entry, "value-changed",
-                    G_CALLBACK (on_offset_entry_changed),
-                    view);
-  g_signal_connect (camera, "offsets-changed",
-                    G_CALLBACK (on_offsets_changed),
-                    view);
-  gtk_widget_show (GTK_WIDGET (view));
+      g_signal_handlers_disconnect_by_func (view->priv->offset_entry,
+                                            G_CALLBACK (on_offset_entry_changed),
+                                            view);
+      g_signal_handlers_disconnect_by_func (view->priv->camera,
+                                            G_CALLBACK (on_offsets_changed),
+                                            view);
+      animation_camera_reset_preview (camera);
+      animation_camera_get (camera, position, &x_offset, &y_offset);
+      gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
+                                 0, (gdouble) x_offset);
+      gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
+                                 1, (gdouble) y_offset);
+      g_signal_connect (view->priv->offset_entry, "value-changed",
+                        G_CALLBACK (on_offset_entry_changed),
+                        view);
+      g_signal_connect (camera, "offsets-changed",
+                        G_CALLBACK (on_offsets_changed),
+                        view);
+      gtk_widget_show (GTK_WIDGET (view));
+    }
 }
 
 void
@@ -210,10 +226,14 @@ animation_keyframe_update_source (gpointer user_data)
   AnimationKeyFrameView *view = user_data;
 
   view->priv->update_source = 0;
-  animation_camera_set_keyframe (view->priv->camera,
-                                 view->priv->update_position,
-                                 view->priv->update_x_offset,
-                                 view->priv->update_y_offset);
+  /* Only update the preview if we are currently showing this frame. */
+  if (view->priv->position == view->priv->update_position)
+    {
+      animation_camera_preview_keyframe (view->priv->camera,
+                                         view->priv->update_position,
+                                         view->priv->update_x_offset,
+                                         view->priv->update_y_offset);
+    }
   return G_SOURCE_REMOVE;
 }
 
@@ -224,19 +244,11 @@ on_offset_entry_changed (GimpSizeEntry         *entry,
   gdouble x_offset;
   gdouble y_offset;
 
-  /* If a timeout is pending, remove then recreate it in order to
+  /* If a timeout is pending, remove before recreating in order to
    * postpone the camera update. */
   if (view->priv->update_source)
     {
       g_source_remove (view->priv->update_source);
-      if (view->priv->position != view->priv->update_position)
-        {
-          /* Do not postpone the update for another position. */
-          animation_camera_set_keyframe (view->priv->camera,
-                                         view->priv->update_position,
-                                         view->priv->update_x_offset,
-                                         view->priv->update_y_offset);
-        }
     }
 
   x_offset = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (view->priv->offset_entry), 0);
@@ -244,7 +256,7 @@ on_offset_entry_changed (GimpSizeEntry         *entry,
   view->priv->update_x_offset = x_offset;
   view->priv->update_y_offset = y_offset;
   view->priv->update_position = view->priv->position;
-  view->priv->update_source = g_timeout_add (100, animation_keyframe_update_source, view);
+  view->priv->update_source = g_timeout_add (10, animation_keyframe_update_source, view);
 }
 
 static void
