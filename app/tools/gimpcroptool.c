@@ -66,9 +66,6 @@ static void     gimp_crop_tool_motion                     (GimpTool             
                                                            guint32               time,
                                                            GdkModifierType       state,
                                                            GimpDisplay          *display);
-static gboolean  gimp_crop_tool_key_press                 (GimpTool             *tool,
-                                                           GdkEventKey          *kevent,
-                                                           GimpDisplay          *display);
 static void      gimp_crop_tool_active_modifier_key       (GimpTool             *tool,
                                                            GdkModifierType       key,
                                                            gboolean              press,
@@ -163,7 +160,6 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   tool_class->button_press        = gimp_crop_tool_button_press;
   tool_class->button_release      = gimp_crop_tool_button_release;
   tool_class->motion              = gimp_crop_tool_motion;
-  tool_class->key_press           = gimp_crop_tool_key_press;
   tool_class->active_modifier_key = gimp_crop_tool_active_modifier_key;
   tool_class->oper_update         = gimp_crop_tool_oper_update;
   tool_class->cursor_update       = gimp_crop_tool_cursor_update;
@@ -368,21 +364,6 @@ gimp_crop_tool_motion (GimpTool         *tool,
     {
       gimp_tool_widget_motion (crop_tool->grab_widget, coords, time, state);
     }
-}
-
-static gboolean
-gimp_crop_tool_key_press (GimpTool    *tool,
-                          GdkEventKey *kevent,
-                          GimpDisplay *display)
-{
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
-
-  if (crop_tool->rectangle && display == tool->display)
-    {
-      return gimp_tool_widget_key_press (crop_tool->rectangle, kevent);
-    }
-
-  return FALSE;
 }
 
 static void

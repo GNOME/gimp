@@ -68,6 +68,12 @@ static GimpDisplay * gimp_draw_tool_has_image    (GimpTool         *tool,
 static void          gimp_draw_tool_control      (GimpTool         *tool,
                                                   GimpToolAction    action,
                                                   GimpDisplay      *display);
+static gboolean      gimp_draw_tool_key_press    (GimpTool         *tool,
+                                                  GdkEventKey      *kevent,
+                                                  GimpDisplay      *display);
+static gboolean      gimp_draw_tool_key_release  (GimpTool         *tool,
+                                                  GdkEventKey      *kevent,
+                                                  GimpDisplay      *display);
 
 static void          gimp_draw_tool_draw         (GimpDrawTool     *draw_tool);
 static void          gimp_draw_tool_undraw       (GimpDrawTool     *draw_tool);
@@ -90,6 +96,8 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
   tool_class->has_display = gimp_draw_tool_has_display;
   tool_class->has_image   = gimp_draw_tool_has_image;
   tool_class->control     = gimp_draw_tool_control;
+  tool_class->key_press   = gimp_draw_tool_key_press;
+  tool_class->key_release = gimp_draw_tool_key_release;
 
   klass->draw             = gimp_draw_tool_real_draw;
 }
@@ -173,6 +181,36 @@ gimp_draw_tool_control (GimpTool       *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+}
+
+static gboolean
+gimp_draw_tool_key_press (GimpTool    *tool,
+                          GdkEventKey *kevent,
+                          GimpDisplay *display)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (draw_tool->widget && display == draw_tool->display)
+    {
+      return gimp_tool_widget_key_press (draw_tool->widget, kevent);
+    }
+
+  return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
+}
+
+static gboolean
+gimp_draw_tool_key_release (GimpTool    *tool,
+                            GdkEventKey *kevent,
+                            GimpDisplay *display)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (draw_tool->widget && display == draw_tool->display)
+    {
+      return gimp_tool_widget_key_release (draw_tool->widget, kevent);
+    }
+
+  return GIMP_TOOL_CLASS (parent_class)->key_release (tool, kevent, display);
 }
 
 #ifdef USE_TIMEOUT

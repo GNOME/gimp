@@ -88,9 +88,6 @@ static void     gimp_vector_tool_motion          (GimpTool              *tool,
                                                   guint32                time,
                                                   GdkModifierType        state,
                                                   GimpDisplay           *display);
-static gboolean gimp_vector_tool_key_press       (GimpTool              *tool,
-                                                  GdkEventKey           *kevent,
-                                                  GimpDisplay           *display);
 static void     gimp_vector_tool_modifier_key    (GimpTool              *tool,
                                                   GdkModifierType        key,
                                                   gboolean               press,
@@ -191,7 +188,6 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   tool_class->button_press   = gimp_vector_tool_button_press;
   tool_class->button_release = gimp_vector_tool_button_release;
   tool_class->motion         = gimp_vector_tool_motion;
-  tool_class->key_press      = gimp_vector_tool_key_press;
   tool_class->modifier_key   = gimp_vector_tool_modifier_key;
   tool_class->oper_update    = gimp_vector_tool_oper_update;
   tool_class->cursor_update  = gimp_vector_tool_cursor_update;
@@ -308,21 +304,6 @@ gimp_vector_tool_motion (GimpTool         *tool,
     {
       gimp_tool_widget_motion (vector_tool->grab_widget, coords, time, state);
     }
-}
-
-static gboolean
-gimp_vector_tool_key_press (GimpTool     *tool,
-                            GdkEventKey  *kevent,
-                            GimpDisplay  *display)
-{
-  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
-
-  if (display == tool->display && vector_tool->path)
-    {
-      return gimp_tool_widget_key_press (vector_tool->path, kevent);
-    }
-
-  return FALSE;
 }
 
 static void

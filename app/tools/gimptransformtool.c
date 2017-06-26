@@ -86,9 +86,6 @@ static void      gimp_transform_tool_motion              (GimpTool              
                                                           guint32                time,
                                                           GdkModifierType        state,
                                                           GimpDisplay           *display);
-static gboolean  gimp_transform_tool_key_press           (GimpTool              *tool,
-                                                          GdkEventKey           *kevent,
-                                                          GimpDisplay           *display);
 static void      gimp_transform_tool_modifier_key        (GimpTool              *tool,
                                                           GdkModifierType        key,
                                                           gboolean               press,
@@ -192,7 +189,6 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class->button_press        = gimp_transform_tool_button_press;
   tool_class->button_release      = gimp_transform_tool_button_release;
   tool_class->motion              = gimp_transform_tool_motion;
-  tool_class->key_press           = gimp_transform_tool_key_press;
   tool_class->modifier_key        = gimp_transform_tool_modifier_key;
   tool_class->active_modifier_key = gimp_transform_tool_modifier_key;
   tool_class->oper_update         = gimp_transform_tool_oper_update;
@@ -476,21 +472,6 @@ gimp_transform_tool_motion (GimpTool         *tool,
     {
       gimp_tool_widget_motion (tr_tool->grab_widget, coords, time, state);
     }
-}
-
-static gboolean
-gimp_transform_tool_key_press (GimpTool    *tool,
-                               GdkEventKey *kevent,
-                               GimpDisplay *display)
-{
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-
-  if (tr_tool->widget && display == tool->display)
-    {
-      return gimp_tool_widget_key_press (tr_tool->widget, kevent);
-    }
-
-  return FALSE;
 }
 
 static void

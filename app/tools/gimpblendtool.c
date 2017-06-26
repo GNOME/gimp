@@ -95,9 +95,6 @@ static void   gimp_blend_tool_motion              (GimpTool              *tool,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
-static gboolean gimp_blend_tool_key_press         (GimpTool              *tool,
-                                                   GdkEventKey           *kevent,
-                                                   GimpDisplay           *display);
 static void   gimp_blend_tool_active_modifier_key (GimpTool              *tool,
                                                    GdkModifierType        key,
                                                    gboolean               press,
@@ -198,7 +195,6 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   tool_class->button_press        = gimp_blend_tool_button_press;
   tool_class->button_release      = gimp_blend_tool_button_release;
   tool_class->motion              = gimp_blend_tool_motion;
-  tool_class->key_press           = gimp_blend_tool_key_press;
   tool_class->active_modifier_key = gimp_blend_tool_active_modifier_key;
   tool_class->cursor_update       = gimp_blend_tool_cursor_update;
   tool_class->get_undo_desc       = gimp_blend_tool_get_undo_desc;
@@ -467,21 +463,6 @@ gimp_blend_tool_motion (GimpTool         *tool,
     }
 
   gimp_blend_tool_update_status (blend_tool, state, TRUE, display);
-}
-
-static gboolean
-gimp_blend_tool_key_press (GimpTool    *tool,
-                           GdkEventKey *kevent,
-                           GimpDisplay *display)
-{
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-
-  if (blend_tool->line && display == tool->display)
-    {
-      return gimp_tool_widget_key_press (blend_tool->line, kevent);
-    }
-
-  return FALSE;
 }
 
 static void
