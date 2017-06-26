@@ -46,6 +46,8 @@ struct _AnimationKeyFrameViewPrivate
 
 /* GObject handlers */
 static void     animation_keyframe_view_constructed  (GObject               *object);
+static void     animation_keyframe_view_dispose      (GObject               *object);
+
 
 static gboolean animation_keyframe_update_source     (gpointer               user_data);
 static void     on_offset_entry_changed              (GimpSizeEntry         *entry,
@@ -65,6 +67,7 @@ animation_keyframe_view_class_init (AnimationKeyFrameViewClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed  = animation_keyframe_view_constructed;
+  object_class->dispose      = animation_keyframe_view_dispose;
 
   g_type_class_add_private (klass, sizeof (AnimationKeyFrameViewPrivate));
 }
@@ -191,6 +194,12 @@ animation_keyframe_view_hide (AnimationKeyFrameView *view)
 }
 
 /************ Private Functions ****************/
+
+static void animation_keyframe_view_dispose (GObject *object)
+{
+  animation_keyframe_view_hide (ANIMATION_KEYFRAME_VIEW (object));
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
 
 static void
 animation_keyframe_view_constructed (GObject *object)

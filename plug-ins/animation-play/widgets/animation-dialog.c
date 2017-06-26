@@ -48,7 +48,7 @@
 /* for shaping */
 typedef struct
 {
-  gint x, y;
+  gdouble x, y;
 } CursorOffset;
 
 enum
@@ -249,6 +249,11 @@ static gboolean    repaint_da                (GtkWidget        *darea,
                                               AnimationDialog  *dialog);
 static gboolean    da_button_press           (GtkWidget        *widget,
                                               GdkEventButton   *event,
+                                              AnimationDialog  *dialog);
+static gboolean    da_button_released        (GtkWidget        *widget,
+                                              AnimationDialog  *dialog);
+static gboolean    da_button_motion          (GtkWidget        *widget,
+                                              GdkEventMotion   *event,
                                               AnimationDialog  *dialog);
 static gboolean    da_scrolled               (GtkWidget        *widget,
                                               GdkEventScroll   *event,
@@ -770,15 +775,26 @@ animation_dialog_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (abox), priv->drawing_area);
   gtk_widget_show (priv->drawing_area);
 
+  gtk_widget_add_events (priv->drawing_area,
+                         GDK_POINTER_MOTION_MASK | GDK_BUTTON_PRESS_MASK |
+                         GDK_BUTTON_RELEASE_MASK | GDK_SCROLL_MASK);
   g_signal_connect (priv->drawing_area, "size-allocate",
                     G_CALLBACK (da_size_callback),
                     dialog);
   g_signal_connect (priv->drawing_area, "button-press-event",
                     G_CALLBACK (da_button_press),
                     dialog);
+  g_signal_connect (priv->drawing_area, "button-release-event",
+                    G_CALLBACK (da_button_released),
+                    dialog);
+  g_signal_connect (priv->drawing_area, "motion-notify-event",
+                    G_CALLBACK (da_button_motion),
+                    dialog);
   g_signal_connect (priv->drawing_area, "scroll-event",
                     G_CALLBACK (da_scrolled),
                     dialog);
+  g_object_set_data (G_OBJECT (priv->drawing_area),
+                     "cursor-offset", g_new0 (CursorOffset, 1));
 
   /*****************/
   /* Play toolbar. */
@@ -2374,6 +2390,80 @@ da_button_press (GtkWidget       *widget,
                       event->time);
       return TRUE;
     }
+  else if (event->type == GDK_BUTTON_PRESS)
+    {
+      CursorOffset *p = g_object_get_data (G_OBJECT (widget),
+                                           "cursor-offset");
+
+      if (! p)
+        return FALSE;
+
+      p->x = event->x;
+      p->y = event->y;
+
+      gtk_grab_add (widget);
+      gdk_pointer_grab (gtk_widget_get_window (widget), TRUE,
+                        GDK_BUTTON_RELEASE_MASK |
+                        GDK_BUTTON_MOTION_MASK  |
+                        GDK_POINTER_MOTION_HINT_MASK,
+                        NULL, NULL, 0);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+da_button_released (GtkWidget       *widget,
+                    AnimationDialog *dialog)
+{
+  gtk_grab_remove (widget);
+  gdk_display_pointer_ungrab (gtk_widget_get_display (widget), 0);
+  gdk_flush ();
+
+  return FALSE;
+}
+
+static gboolean
+da_button_motion (GtkWidget       *widget,
+                  GdkEventMotion  *event,
+                  AnimationDialog *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+
+  /* if a button is still held by the time we process this event... */
+  if (event->state & GDK_BUTTON1_MASK)
+    {
+      CursorOffset *p = g_object_get_data (G_OBJECT (widget),
+                                           "cursor-offset");
+
+      if (! p)
+        return FALSE;
+
+      if (ANIMATION_IS_CEL_ANIMATION (priv->animation))
+        {
+          AnimationCelAnimation *animation;
+          AnimationCamera       *camera;
+          gint                   position;
+          gint                   x_offset;
+          gint                   y_offset;
+
+          animation = ANIMATION_CEL_ANIMATION (priv->animation);
+          camera = ANIMATION_CAMERA (animation_cel_animation_get_main_camera (animation));
+          position = animation_playback_get_position (priv->playback);
+          animation_camera_get (camera, position, &x_offset, &y_offset);
+          animation_camera_preview_keyframe (camera, position,
+                                             x_offset + (event->x - p->x) / priv->zoom,
+                                             y_offset + (event->y - p->y) / priv->zoom);
+          p->x = event->x;
+          p->y = event->y;
+          return TRUE;
+        }
+    }
+  else /* the user has released all buttons */
+    {
+      da_button_released (widget, dialog);
+    }
 
   return FALSE;
 }
@@ -2511,8 +2601,8 @@ shape_pressed (GtkWidget       *widget,
       if (!p)
         return FALSE;
 
-      p->x = (gint) event->x;
-      p->y = (gint) event->y;
+      p->x = event->x;
+      p->y = event->y;
 
       gtk_grab_add (widget);
       gdk_pointer_grab (gtk_widget_get_window (widget), TRUE,
