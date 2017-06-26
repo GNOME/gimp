@@ -176,9 +176,6 @@ static void     animation_xsheet_suite_do            (GtkWidget              *bu
                                                       AnimationXSheet        *xsheet);
 static void     animation_xsheet_suite_cancelled     (GtkWidget              *button,
                                                       AnimationXSheet        *xsheet);
-static gboolean animation_xsheet_effect_clicked      (GtkWidget              *button,
-                                                      GdkEvent               *event,
-                                                      AnimationXSheet        *xsheet);
 static gboolean animation_xsheet_frame_clicked       (GtkWidget              *button,
                                                       GdkEvent               *event,
                                                       AnimationXSheet        *xsheet);
@@ -804,7 +801,8 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
                         frame, 1, 2, i + 2, i + 3,
                         GTK_FILL, GTK_FILL, 0, 0);
 
-      label = gtk_toggle_button_new ();
+      label = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_OUT);
       xsheet->priv->effect_buttons = g_list_append (xsheet->priv->effect_buttons,
                                                     label);
 
@@ -820,11 +818,6 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
 
       g_object_set_data (G_OBJECT (label), "frame-position",
                          GINT_TO_POINTER (i));
-      gtk_button_set_relief (GTK_BUTTON (label), GTK_RELIEF_NONE);
-      gtk_button_set_focus_on_click (GTK_BUTTON (label), FALSE);
-      g_signal_connect (label, "button-press-event",
-                        G_CALLBACK (animation_xsheet_effect_clicked),
-                        xsheet);
       g_signal_connect (camera, "keyframe-set",
                         G_CALLBACK (on_camera_keyframe_set),
                         xsheet);
@@ -1510,23 +1503,6 @@ animation_xsheet_suite_cancelled (GtkWidget       *button,
 }
 
 static gboolean
-animation_xsheet_effect_clicked (GtkWidget       *button,
-                                 GdkEvent        *event,
-                                 AnimationXSheet *xsheet)
-{
-  gpointer position;
-
-  position = g_object_get_data (G_OBJECT (button), "frame-position");
-
-  animation_keyframe_view_show (ANIMATION_KEYFRAME_VIEW (xsheet->priv->keyframe_view),
-                                ANIMATION_CEL_ANIMATION (xsheet->priv->animation),
-                                GPOINTER_TO_INT (position));
-
-  /* All handled here. */
-  return TRUE;
-}
-
-static gboolean
 animation_xsheet_frame_clicked (GtkWidget       *button,
                                 GdkEvent        *event,
                                 AnimationXSheet *xsheet)
@@ -2120,6 +2096,10 @@ animation_xsheet_jump (AnimationXSheet *xsheet,
       xsheet->priv->active_pos_button = button;
 
       show_scrolled_child (GTK_SCROLLED_WINDOW (xsheet), button);
+
+      animation_keyframe_view_show (ANIMATION_KEYFRAME_VIEW (xsheet->priv->keyframe_view),
+                                    ANIMATION_CEL_ANIMATION (xsheet->priv->animation),
+                                    position);
     }
 }
 
