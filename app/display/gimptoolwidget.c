@@ -795,9 +795,9 @@ gimp_tool_widget_hover_modifier (GimpToolWidget  *widget,
 {
   g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
 
-  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier)
-    GIMP_TOOL_WIDGET_GET_CLASS (widget)->motion_modifier (widget,
-                                                          key, press, state);
+  if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier)
+    GIMP_TOOL_WIDGET_GET_CLASS (widget)->hover_modifier (widget,
+                                                         key, press, state);
 }
 
 gboolean
