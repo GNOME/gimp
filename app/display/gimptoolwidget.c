@@ -28,6 +28,7 @@
 
 #include "core/gimpmarshal.h"
 
+#include "gimpcanvasarc.h"
 #include "gimpcanvascorner.h"
 #include "gimpcanvasgroup.h"
 #include "gimpcanvashandle.h"
@@ -525,6 +526,32 @@ gimp_tool_widget_add_rectangle (GimpToolWidget *widget,
 
   item = gimp_canvas_rectangle_new (widget->private->shell,
                                     x, y, width, height, filled);
+
+  gimp_tool_widget_add_item (widget, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_tool_widget_add_arc (GimpToolWidget *widget,
+                          gdouble         center_x,
+                          gdouble         center_y,
+                          gdouble         radius_x,
+                          gdouble         radius_y,
+                          gdouble         start_angle,
+                          gdouble         slice_angle,
+                          gboolean        filled)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
+
+  item = gimp_canvas_arc_new (widget->private->shell,
+                              center_x, center_y,
+                              radius_x, radius_y,
+                              start_angle, slice_angle,
+                              filled);
 
   gimp_tool_widget_add_item (widget, item);
   g_object_unref (item);
