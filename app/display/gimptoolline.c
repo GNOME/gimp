@@ -40,6 +40,8 @@
 #include "gimpdisplayshell.h"
 #include "gimptoolline.h"
 
+#include "gimp-intl.h"
+
 
 #define SHOW_LINE TRUE
 
@@ -134,6 +136,9 @@ static gboolean gimp_tool_line_point_motion    (GimpToolLine          *line,
 
 static void     gimp_tool_line_update_handles  (GimpToolLine          *line);
 static void     gimp_tool_line_update_hilight  (GimpToolLine          *line);
+static void     gimp_tool_line_update_status   (GimpToolLine          *line,
+                                                GdkModifierType        state,
+                                                gboolean               proximity);
 
 
 G_DEFINE_TYPE (GimpToolLine, gimp_tool_line, GIMP_TYPE_TOOL_WIDGET)
@@ -369,6 +374,8 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
       return private->point;
     }
 
+  gimp_tool_line_update_status (line, state, TRUE);
+
   return 0;
 }
 
@@ -424,6 +431,8 @@ gimp_tool_line_motion (GimpToolWidget   *widget,
 
       gimp_tool_line_point_motion (line, constrain);
     }
+
+  gimp_tool_line_update_status (line, state, TRUE);
 }
 
 void
@@ -462,6 +471,7 @@ gimp_tool_line_hover (GimpToolWidget   *widget,
     }
 
   gimp_tool_line_update_hilight (line);
+  gimp_tool_line_update_status (line, state, proximity);
 }
 
 static void
@@ -475,6 +485,8 @@ gimp_tool_line_motion_modifier (GimpToolWidget  *widget,
   if (key == gimp_get_constrain_behavior_mask ())
     {
       gimp_tool_line_point_motion (line, press);
+
+      gimp_tool_line_update_status (line, state, TRUE);
     }
 }
 
@@ -596,6 +608,39 @@ gimp_tool_line_update_hilight (GimpToolLine *line)
                                   private->point == POINT_END);
   gimp_canvas_item_set_highlight (private->end_handle_cross,
                                   private->point == POINT_END);
+}
+
+static void
+gimp_tool_line_update_status (GimpToolLine    *line,
+                              GdkModifierType  state,
+                              gboolean         proximity)
+{
+  GimpToolLinePrivate *private = line->private;
+
+  if (proximity)
+    {
+      gchar *status_help =
+        gimp_suggest_modifiers ("",
+                                (gimp_get_constrain_behavior_mask () |
+                                 GDK_MOD1_MASK) &
+                                ~state,
+                                NULL,
+                                _("%s for constrained angles"),
+                                _("%s to move the whole line"));
+
+      gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (line),
+                                          _("Blend: "),
+                                          private->x2 - private->x1,
+                                          ", ",
+                                          private->y2 - private->y1,
+                                          status_help);
+
+      g_free (status_help);
+    }
+  else
+    {
+      gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (line), NULL);
+    }
 }
 
 
