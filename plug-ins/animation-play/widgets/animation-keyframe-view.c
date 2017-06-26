@@ -37,6 +37,7 @@ struct _AnimationKeyFrameViewPrivate
   gint             position;
 
   GtkWidget       *offset_entry;
+  GtkWidget       *delete_button;
 
   guint            update_source;
   gint             update_x_offset;
@@ -55,6 +56,8 @@ static void     on_offset_entry_changed              (GimpSizeEntry         *ent
 static void     on_offsets_changed                   (AnimationCamera       *camera,
                                                       gint                   position,
                                                       gint                   duration,
+                                                      AnimationKeyFrameView *view);
+static void     on_delete_clicked                    (GtkButton             *button,
                                                       AnimationKeyFrameView *view);
 
 G_DEFINE_TYPE (AnimationKeyFrameView, animation_keyframe_view, GTK_TYPE_NOTEBOOK)
@@ -179,6 +182,11 @@ animation_keyframe_view_show (AnimationKeyFrameView *view,
                         G_CALLBACK (on_offsets_changed),
                         view);
       gtk_widget_show (GTK_WIDGET (view));
+
+      if (animation_camera_has_keyframe (camera, position))
+        gtk_widget_show (view->priv->delete_button);
+      else
+        gtk_widget_hide (view->priv->delete_button);
     }
 }
 
@@ -225,6 +233,12 @@ animation_keyframe_view_constructed (GObject *object)
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (view->priv->offset_entry), FALSE);
   gtk_box_pack_start (GTK_BOX (page), view->priv->offset_entry, FALSE, FALSE, 0);
   gtk_widget_show (view->priv->offset_entry);
+
+  view->priv->delete_button = gtk_button_new_with_label (_("Reset"));
+  g_signal_connect (view->priv->delete_button, "clicked",
+                    G_CALLBACK (on_delete_clicked),
+                    view);
+  gtk_box_pack_end (GTK_BOX (page), view->priv->delete_button, FALSE, FALSE, 0);
 
   gtk_widget_show (page);
 }
@@ -291,5 +305,19 @@ on_offsets_changed (AnimationCamera       *camera,
       g_signal_handlers_unblock_by_func (view->priv->offset_entry,
                                          G_CALLBACK (on_offset_entry_changed),
                                          view);
+
+      if (animation_camera_has_keyframe (camera, view->priv->position))
+        gtk_widget_show (view->priv->delete_button);
+      else
+        gtk_widget_hide (view->priv->delete_button);
     }
+}
+
+static void
+on_delete_clicked (GtkButton             *button,
+                   AnimationKeyFrameView *view)
+{
+  animation_camera_delete_keyframe  (view->priv->camera,
+                                     view->priv->position);
+  gtk_widget_hide (view->priv->delete_button);
 }
