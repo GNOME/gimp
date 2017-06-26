@@ -115,13 +115,6 @@ static void     gimp_perspective_clone_tool_recalc_matrix  (GimpPerspectiveClone
 
 static void     gimp_perspective_clone_tool_widget_changed (GimpToolWidget           *widget,
                                                             GimpPerspectiveCloneTool *clone_tool);
-static void     gimp_perspective_clone_tool_widget_snap_offsets
-                                                           (GimpToolWidget           *widget,
-                                                            gint                      offset_x,
-                                                            gint                      offset_y,
-                                                            gint                      width,
-                                                            gint                      height,
-                                                            GimpPerspectiveCloneTool *clone_tool);
 static void     gimp_perspective_clone_tool_widget_status  (GimpToolWidget           *widget,
                                                             const gchar              *status,
                                                             GimpPerspectiveCloneTool *clone_tool);
@@ -237,9 +230,6 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
 
       g_signal_connect (clone_tool->widget, "changed",
                         G_CALLBACK (gimp_perspective_clone_tool_widget_changed),
-                        clone_tool);
-      g_signal_connect (clone_tool->widget, "snap-offsets",
-                        G_CALLBACK (gimp_perspective_clone_tool_widget_snap_offsets),
                         clone_tool);
       g_signal_connect (clone_tool->widget, "status",
                         G_CALLBACK (gimp_perspective_clone_tool_widget_status),
@@ -825,21 +815,6 @@ gimp_perspective_clone_tool_widget_changed (GimpToolWidget           *widget,
   g_free (transform);
 
   gimp_perspective_clone_tool_recalc_matrix (clone_tool, NULL);
-}
-
-static void
-gimp_perspective_clone_tool_widget_snap_offsets (GimpToolWidget           *widget,
-                                                 gint                      offset_x,
-                                                 gint                      offset_y,
-                                                 gint                      width,
-                                                 gint                      height,
-                                                 GimpPerspectiveCloneTool *clone_tool)
-{
-  GimpTool *tool = GIMP_TOOL (clone_tool);
-
-  gimp_tool_control_set_snap_offsets (tool->control,
-                                      offset_x, offset_y,
-                                      width, height);
 }
 
 static void

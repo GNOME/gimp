@@ -52,6 +52,7 @@
 #include "display/gimptoolwidget.h"
 
 #include "gimpdrawtool.h"
+#include "gimptoolcontrol.h"
 
 
 #define DRAW_TIMEOUT              4
@@ -79,6 +80,14 @@ static void          gimp_draw_tool_oper_update  (GimpTool         *tool,
                                                   GdkModifierType   state,
                                                   gboolean          proximity,
                                                   GimpDisplay      *display);
+
+static void          gimp_draw_tool_widget_snap_offsets
+                                                 (GimpToolWidget   *widget,
+                                                  gint              offset_x,
+                                                  gint              offset_y,
+                                                  gint              width,
+                                                  gint              height,
+                                                  GimpTool         *tool);
 
 static void          gimp_draw_tool_draw         (GimpDrawTool     *draw_tool);
 static void          gimp_draw_tool_undraw       (GimpDrawTool     *draw_tool);
@@ -237,6 +246,19 @@ gimp_draw_tool_oper_update (GimpTool         *tool,
       GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                    proximity, display);
     }
+}
+
+static void
+gimp_draw_tool_widget_snap_offsets (GimpToolWidget   *widget,
+                                    gint              offset_x,
+                                    gint              offset_y,
+                                    gint              width,
+                                    gint              height,
+                                    GimpTool         *tool)
+{
+  gimp_tool_control_set_snap_offsets (tool->control,
+                                      offset_x, offset_y,
+                                      width, height);
 }
 
 #ifdef USE_TIMEOUT
@@ -507,6 +529,10 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
 
   if (draw_tool->widget)
     {
+      g_signal_handlers_disconnect_by_func (draw_tool->widget,
+                                            gimp_draw_tool_widget_snap_offsets,
+                                            draw_tool);
+
       if (gimp_draw_tool_is_active (draw_tool))
         {
           GimpCanvasItem *item = gimp_tool_widget_get_item (draw_tool->widget);
@@ -529,6 +555,10 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
 
           gimp_draw_tool_add_item (draw_tool, item);
         }
+
+      g_signal_connect (draw_tool->widget, "snap-offsets",
+                        G_CALLBACK (gimp_draw_tool_widget_snap_offsets),
+                        draw_tool);
     }
 }
 

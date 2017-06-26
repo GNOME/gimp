@@ -124,12 +124,6 @@ static void      gimp_transform_tool_widget_changed      (GimpToolWidget        
 static void      gimp_transform_tool_widget_response     (GimpToolWidget        *widget,
                                                           gint                   response_id,
                                                           GimpTransformTool     *tr_tool);
-static void      gimp_transform_tool_widget_snap_offsets (GimpToolWidget        *widget,
-                                                          gint                   offset_x,
-                                                          gint                   offset_y,
-                                                          gint                   width,
-                                                          gint                   height,
-                                                          GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_widget_status       (GimpToolWidget        *widget,
                                                           const gchar           *status,
                                                           GimpTransformTool     *tr_tool);
@@ -1080,21 +1074,6 @@ gimp_transform_tool_widget_response (GimpToolWidget    *widget,
 }
 
 static void
-gimp_transform_tool_widget_snap_offsets (GimpToolWidget    *widget,
-                                         gint               offset_x,
-                                         gint               offset_y,
-                                         gint               width,
-                                         gint               height,
-                                         GimpTransformTool *tr_tool)
-{
-  GimpTool *tool = GIMP_TOOL (tr_tool);
-
-  gimp_tool_control_set_snap_offsets (tool->control,
-                                      offset_x, offset_y,
-                                      width, height);
-}
-
-static void
 gimp_transform_tool_widget_status (GimpToolWidget    *widget,
                                    const gchar       *status,
                                    GimpTransformTool *tr_tool)
@@ -1346,9 +1325,6 @@ gimp_transform_tool_get_widget (GimpTransformTool *tr_tool)
                         tr_tool);
       g_signal_connect (widget, "response",
                         G_CALLBACK (gimp_transform_tool_widget_response),
-                        tr_tool);
-      g_signal_connect (widget, "snap-offsets",
-                        G_CALLBACK (gimp_transform_tool_widget_snap_offsets),
                         tr_tool);
       g_signal_connect (widget, "status",
                         G_CALLBACK (gimp_transform_tool_widget_status),

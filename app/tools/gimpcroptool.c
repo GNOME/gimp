@@ -94,12 +94,6 @@ static void      gimp_crop_tool_rectangle_status_coords   (GimpToolWidget       
                                                            gdouble               y,
                                                            const gchar          *help,
                                                            GimpCropTool         *crop_tool);
-static void      gimp_crop_tool_rectangle_snap_offsets    (GimpToolRectangle    *rectangle,
-                                                           gint                  x,
-                                                           gint                  y,
-                                                           gint                  width,
-                                                           gint                  height,
-                                                           GimpCropTool         *crop_tool);
 static void      gimp_crop_tool_rectangle_change_complete (GimpToolRectangle    *rectangle,
                                                            GimpCropTool         *crop_tool);
 
@@ -284,9 +278,6 @@ gimp_crop_tool_button_press (GimpTool            *tool,
                         crop_tool);
       g_signal_connect (widget, "status-coords",
                         G_CALLBACK (gimp_crop_tool_rectangle_status_coords),
-                        crop_tool);
-      g_signal_connect (widget, "snap-offsets",
-                        G_CALLBACK (gimp_crop_tool_rectangle_snap_offsets),
                         crop_tool);
       g_signal_connect (widget, "change-complete",
                         G_CALLBACK (gimp_crop_tool_rectangle_change_complete),
@@ -473,21 +464,6 @@ gimp_crop_tool_rectangle_status_coords (GimpToolWidget *rectangle,
   gimp_tool_push_status_coords (tool, tool->display,
                                 gimp_tool_control_get_precision (tool->control),
                                 title, x, separator, y, help);
-}
-
-static void
-gimp_crop_tool_rectangle_snap_offsets (GimpToolRectangle *rectangle,
-                                       gint               offset_x,
-                                       gint               offset_y,
-                                       gint               width,
-                                       gint               height,
-                                       GimpCropTool      *crop_tool)
-{
-  GimpTool *tool = GIMP_TOOL (crop_tool);
-
-  gimp_tool_control_set_snap_offsets (tool->control,
-                                      offset_x, offset_y,
-                                      width, height);
 }
 
 static void
