@@ -740,9 +740,9 @@ gimp_unit_store_set_has_percent (GimpUnitStore *store,
           GtkTreeIter  iter;
 
           gtk_tree_model_get_iter_first (model, &iter);
-           if (private->has_pixels)
+          if (private->has_pixels)
             gtk_tree_model_iter_next (model, &iter);
-         path = gtk_tree_model_get_path (model, &iter);
+          path = gtk_tree_model_get_path (model, &iter);
           gtk_tree_model_row_inserted (model, path, &iter);
           gtk_tree_path_free (path);
         }
