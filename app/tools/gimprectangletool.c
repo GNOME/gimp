@@ -1983,16 +1983,8 @@ static void
 gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
                            GimpDisplay       *display)
 {
-  GimpTool                    *tool = GIMP_TOOL (rect_tool);
-  GimpRectangleOptionsPrivate *options_private;
-  GimpImage                   *image;
-  gdouble                      xres;
-  gdouble                      yres;
-
-  options_private =
-    GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (gimp_tool_get_options (tool));
-
-  image = gimp_display_get_image (display);
+  GimpTool             *tool = GIMP_TOOL (rect_tool);
+  GimpRectangleOptions *options  = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rect_tool);
 
   tool->display = display;
 
@@ -2010,80 +2002,17 @@ gimp_rectangle_tool_start (GimpRectangleTool *rect_tool,
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->display);
 
-  gimp_image_get_resolution (image, &xres, &yres);
-
-  if (options_private->fixed_width_entry)
-    {
-      GtkWidget *entry = options_private->fixed_width_entry;
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_width (image));
-    }
-
-  if (options_private->fixed_height_entry)
-    {
-      GtkWidget *entry = options_private->fixed_height_entry;
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_height (image));
-    }
-
-  if (options_private->x_entry)
-    {
-      GtkWidget *entry = options_private->x_entry;
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_width (image));
-    }
-
-  if (options_private->y_entry)
-    {
-      GtkWidget *entry = options_private->y_entry;
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_height (image));
-    }
-
-  if (options_private->width_entry)
-    {
-      GtkWidget *entry = options_private->width_entry;
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_width (image));
-    }
-
-  if (options_private->height_entry)
-    {
-      GtkWidget *entry = options_private->height_entry;
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_height (image));
-    }
-
-  if (options_private->auto_shrink_button)
-    {
-      g_signal_connect_swapped (options_private->auto_shrink_button, "clicked",
-                                G_CALLBACK (gimp_rectangle_tool_auto_shrink),
-                                rect_tool);
-
-      gtk_widget_set_sensitive (options_private->auto_shrink_button, TRUE);
-    }
+  gimp_rectangle_options_connect (options,
+                                  gimp_display_get_image (display),
+                                  G_CALLBACK (gimp_rectangle_tool_auto_shrink),
+                                  rect_tool);
 }
 
 static void
 gimp_rectangle_tool_halt (GimpRectangleTool *rect_tool)
 {
-  GimpTool                    *tool = GIMP_TOOL (rect_tool);
-  GimpRectangleOptionsPrivate *options_private;
-
-  options_private =
-    GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (gimp_tool_get_options (tool));
+  GimpTool             *tool    = GIMP_TOOL (rect_tool);
+  GimpRectangleOptions *options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rect_tool);
 
   if (tool->display)
     {
@@ -2104,14 +2033,9 @@ gimp_rectangle_tool_halt (GimpRectangleTool *rect_tool)
 
   gimp_rectangle_tool_set_function (rect_tool, GIMP_RECTANGLE_TOOL_INACTIVE);
 
-  if (options_private->auto_shrink_button)
-    {
-      gtk_widget_set_sensitive (options_private->auto_shrink_button, FALSE);
-
-      g_signal_handlers_disconnect_by_func (options_private->auto_shrink_button,
-                                            gimp_rectangle_tool_auto_shrink,
-                                            rect_tool);
-    }
+  gimp_rectangle_options_disconnect (options,
+                                     G_CALLBACK (gimp_rectangle_tool_auto_shrink),
+                                     rect_tool);
 }
 
 gboolean

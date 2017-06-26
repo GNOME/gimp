@@ -28,6 +28,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimpimage.h"
 #include "core/gimptooloptions.h"
 
 #include "widgets/gimppropwidgets.h"
@@ -1055,6 +1056,112 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gimp_rectangle_options_fixed_rule_changed (NULL, private);
 
   return vbox;
+}
+
+void
+gimp_rectangle_options_connect (GimpRectangleOptions *options,
+                                GimpImage            *image,
+                                GCallback             shrink_callback,
+                                gpointer              shrink_object)
+{
+  GimpRectangleOptionsPrivate *options_private;
+  gdouble                      xres;
+  gdouble                      yres;
+
+  g_return_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (shrink_callback != NULL);
+  g_return_if_fail (shrink_object != NULL);
+
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  if (options_private->fixed_width_entry)
+    {
+      GtkWidget *entry = options_private->fixed_width_entry;
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
+                                0, gimp_image_get_width (image));
+    }
+
+  if (options_private->fixed_height_entry)
+    {
+      GtkWidget *entry = options_private->fixed_height_entry;
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
+                                0, gimp_image_get_height (image));
+    }
+
+  if (options_private->x_entry)
+    {
+      GtkWidget *entry = options_private->x_entry;
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
+                                0, gimp_image_get_width (image));
+    }
+
+  if (options_private->y_entry)
+    {
+      GtkWidget *entry = options_private->y_entry;
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
+                                0, gimp_image_get_height (image));
+    }
+
+  if (options_private->width_entry)
+    {
+      GtkWidget *entry = options_private->width_entry;
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
+                                0, gimp_image_get_width (image));
+    }
+
+  if (options_private->height_entry)
+    {
+      GtkWidget *entry = options_private->height_entry;
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
+                                0, gimp_image_get_height (image));
+    }
+
+  if (options_private->auto_shrink_button)
+    {
+      g_signal_connect_swapped (options_private->auto_shrink_button, "clicked",
+                                shrink_callback,
+                                shrink_object);
+
+      gtk_widget_set_sensitive (options_private->auto_shrink_button, TRUE);
+    }
+}
+
+void
+gimp_rectangle_options_disconnect (GimpRectangleOptions *options,
+                                   GCallback             shrink_callback,
+                                   gpointer              shrink_object)
+{
+  GimpRectangleOptionsPrivate *options_private;
+
+  g_return_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options));
+  g_return_if_fail (shrink_callback != NULL);
+  g_return_if_fail (shrink_object != NULL);
+
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  if (options_private->auto_shrink_button)
+    {
+      gtk_widget_set_sensitive (options_private->auto_shrink_button, FALSE);
+
+      g_signal_handlers_disconnect_by_func (options_private->auto_shrink_button,
+                                            shrink_callback,
+                                            shrink_object);
+    }
 }
 
 /**

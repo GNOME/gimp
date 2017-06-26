@@ -145,6 +145,14 @@ GType       gimp_rectangle_options_interface_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_rectangle_options_gui                (GimpToolOptions      *tool_options);
 
+void        gimp_rectangle_options_connect            (GimpRectangleOptions *options,
+                                                       GimpImage            *image,
+                                                       GCallback             shrink_callback,
+                                                       gpointer              shrink_object);
+void        gimp_rectangle_options_disconnect         (GimpRectangleOptions *options,
+                                                       GCallback             shrink_callback,
+                                                       gpointer              shrink_object);
+
 gboolean    gimp_rectangle_options_fixed_rule_active  (GimpRectangleOptions *rectangle_options,
                                                        GimpRectangleFixedRule fixed_rule);
 
