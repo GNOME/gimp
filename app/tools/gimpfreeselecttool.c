@@ -108,9 +108,6 @@ static void     gimp_free_select_tool_polygon_changed     (GimpToolWidget       
 static void     gimp_free_select_tool_polygon_response    (GimpToolWidget        *polygon,
                                                            gint                   response_id,
                                                            GimpFreeSelectTool    *fst);
-static void     gimp_free_select_tool_polygon_status      (GimpToolWidget        *polygon,
-                                                           const gchar           *status,
-                                                           GimpFreeSelectTool    *fst);
 
 
 G_DEFINE_TYPE (GimpFreeSelectTool, gimp_free_select_tool,
@@ -343,9 +340,6 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
       g_signal_connect (private->polygon, "response",
                         G_CALLBACK (gimp_free_select_tool_polygon_response),
                         fst);
-      g_signal_connect (private->polygon, "status",
-                        G_CALLBACK (gimp_free_select_tool_polygon_status),
-                        fst);
 
       gimp_draw_tool_start (draw_tool, display);
 
@@ -518,22 +512,5 @@ gimp_free_select_tool_polygon_response (GimpToolWidget     *polygon,
     case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
       break;
-    }
-}
-
-static void
-gimp_free_select_tool_polygon_status (GimpToolWidget     *polygon,
-                                      const gchar        *status,
-                                      GimpFreeSelectTool *fst)
-{
-  GimpTool *tool = GIMP_TOOL (fst);
-
-  if (status)
-    {
-      gimp_tool_replace_status (tool, tool->display, "%s", status);
-    }
-  else
-    {
-      gimp_tool_pop_status (tool, tool->display);
     }
 }

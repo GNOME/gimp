@@ -60,38 +60,49 @@
 #define MINIMUM_DRAW_INTERVAL 50000 /* 50000 microseconds == 20 fps */
 
 
-static void          gimp_draw_tool_dispose      (GObject          *object);
+static void          gimp_draw_tool_dispose       (GObject          *object);
 
-static gboolean      gimp_draw_tool_has_display  (GimpTool         *tool,
-                                                  GimpDisplay      *display);
-static GimpDisplay * gimp_draw_tool_has_image    (GimpTool         *tool,
-                                                  GimpImage        *image);
-static void          gimp_draw_tool_control      (GimpTool         *tool,
-                                                  GimpToolAction    action,
-                                                  GimpDisplay      *display);
-static gboolean      gimp_draw_tool_key_press    (GimpTool         *tool,
-                                                  GdkEventKey      *kevent,
-                                                  GimpDisplay      *display);
-static gboolean      gimp_draw_tool_key_release  (GimpTool         *tool,
-                                                  GdkEventKey      *kevent,
-                                                  GimpDisplay      *display);
-static void          gimp_draw_tool_oper_update  (GimpTool         *tool,
-                                                  const GimpCoords *coords,
-                                                  GdkModifierType   state,
-                                                  gboolean          proximity,
-                                                  GimpDisplay      *display);
+static gboolean      gimp_draw_tool_has_display   (GimpTool         *tool,
+                                                   GimpDisplay      *display);
+static GimpDisplay * gimp_draw_tool_has_image     (GimpTool         *tool,
+                                                   GimpImage        *image);
+static void          gimp_draw_tool_control       (GimpTool         *tool,
+                                                   GimpToolAction    action,
+                                                   GimpDisplay      *display);
+static gboolean      gimp_draw_tool_key_press     (GimpTool         *tool,
+                                                   GdkEventKey      *kevent,
+                                                   GimpDisplay      *display);
+static gboolean      gimp_draw_tool_key_release   (GimpTool         *tool,
+                                                   GdkEventKey      *kevent,
+                                                   GimpDisplay      *display);
+static void          gimp_draw_tool_oper_update   (GimpTool         *tool,
+                                                   const GimpCoords *coords,
+                                                   GdkModifierType   state,
+                                                   gboolean          proximity,
+                                                   GimpDisplay      *display);
 
+static void          gimp_draw_tool_widget_status (GimpToolWidget   *widget,
+                                                   const gchar      *status,
+                                                   GimpTool         *tool);
+static void          gimp_draw_tool_widget_status_coords
+                                                  (GimpToolWidget   *widget,
+                                                   const gchar      *title,
+                                                   gdouble           x,
+                                                   const gchar      *separator,
+                                                   gdouble           y,
+                                                   const gchar      *help,
+                                                   GimpTool         *tool);
 static void          gimp_draw_tool_widget_snap_offsets
-                                                 (GimpToolWidget   *widget,
-                                                  gint              offset_x,
-                                                  gint              offset_y,
-                                                  gint              width,
-                                                  gint              height,
-                                                  GimpTool         *tool);
+                                                  (GimpToolWidget   *widget,
+                                                   gint              offset_x,
+                                                   gint              offset_y,
+                                                   gint              width,
+                                                   gint              height,
+                                                   GimpTool         *tool);
 
-static void          gimp_draw_tool_draw         (GimpDrawTool     *draw_tool);
-static void          gimp_draw_tool_undraw       (GimpDrawTool     *draw_tool);
-static void          gimp_draw_tool_real_draw    (GimpDrawTool     *draw_tool);
+static void          gimp_draw_tool_draw          (GimpDrawTool     *draw_tool);
+static void          gimp_draw_tool_undraw        (GimpDrawTool     *draw_tool);
+static void          gimp_draw_tool_real_draw     (GimpDrawTool     *draw_tool);
 
 
 G_DEFINE_TYPE (GimpDrawTool, gimp_draw_tool, GIMP_TYPE_TOOL)
@@ -246,6 +257,40 @@ gimp_draw_tool_oper_update (GimpTool         *tool,
       GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                    proximity, display);
     }
+}
+
+static void
+gimp_draw_tool_widget_status (GimpToolWidget *rectangle,
+                              const gchar    *status,
+                              GimpTool       *tool)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (status)
+    {
+      gimp_tool_replace_status (tool, draw_tool->display, "%s", status);
+    }
+  else
+    {
+      gimp_tool_pop_status (tool, draw_tool->display);
+    }
+}
+
+static void
+gimp_draw_tool_widget_status_coords (GimpToolWidget *rectangle,
+                                     const gchar    *title,
+                                     gdouble         x,
+                                     const gchar    *separator,
+                                     gdouble         y,
+                                     const gchar    *help,
+                                     GimpTool       *tool)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  gimp_tool_pop_status (tool, draw_tool->display);
+  gimp_tool_push_status_coords (tool, draw_tool->display,
+                                gimp_tool_control_get_precision (tool->control),
+                                title, x, separator, y, help);
 }
 
 static void
@@ -530,6 +575,12 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
   if (draw_tool->widget)
     {
       g_signal_handlers_disconnect_by_func (draw_tool->widget,
+                                            gimp_draw_tool_widget_status,
+                                            draw_tool);
+      g_signal_handlers_disconnect_by_func (draw_tool->widget,
+                                            gimp_draw_tool_widget_status_coords,
+                                            draw_tool);
+      g_signal_handlers_disconnect_by_func (draw_tool->widget,
                                             gimp_draw_tool_widget_snap_offsets,
                                             draw_tool);
 
@@ -556,6 +607,12 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
           gimp_draw_tool_add_item (draw_tool, item);
         }
 
+      g_signal_connect (draw_tool->widget, "status",
+                        G_CALLBACK (gimp_draw_tool_widget_status),
+                        draw_tool);
+      g_signal_connect (draw_tool->widget, "status-coords",
+                        G_CALLBACK (gimp_draw_tool_widget_status_coords),
+                        draw_tool);
       g_signal_connect (draw_tool->widget, "snap-offsets",
                         G_CALLBACK (gimp_draw_tool_widget_snap_offsets),
                         draw_tool);

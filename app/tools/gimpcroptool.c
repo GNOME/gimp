@@ -84,16 +84,6 @@ static void      gimp_crop_tool_rectangle_changed         (GimpToolWidget       
 static void      gimp_crop_tool_rectangle_response        (GimpToolWidget       *rectangle,
                                                            gint                  response_id,
                                                            GimpCropTool         *crop_tool);
-static void      gimp_crop_tool_rectangle_status          (GimpToolWidget       *rectangle,
-                                                           const gchar          *status,
-                                                           GimpCropTool         *crop_tool);
-static void      gimp_crop_tool_rectangle_status_coords   (GimpToolWidget       *rectangle,
-                                                           const gchar          *title,
-                                                           gdouble               x,
-                                                           const gchar          *separator,
-                                                           gdouble               y,
-                                                           const gchar          *help,
-                                                           GimpCropTool         *crop_tool);
 static void      gimp_crop_tool_rectangle_change_complete (GimpToolRectangle    *rectangle,
                                                            GimpCropTool         *crop_tool);
 
@@ -273,12 +263,6 @@ gimp_crop_tool_button_press (GimpTool            *tool,
       g_signal_connect (widget, "response",
                         G_CALLBACK (gimp_crop_tool_rectangle_response),
                         crop_tool);
-      g_signal_connect (widget, "status",
-                        G_CALLBACK (gimp_crop_tool_rectangle_status),
-                        crop_tool);
-      g_signal_connect (widget, "status-coords",
-                        G_CALLBACK (gimp_crop_tool_rectangle_status_coords),
-                        crop_tool);
       g_signal_connect (widget, "change-complete",
                         G_CALLBACK (gimp_crop_tool_rectangle_change_complete),
                         crop_tool);
@@ -430,40 +414,6 @@ gimp_crop_tool_rectangle_response (GimpToolWidget *rectangle,
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
       break;
     }
-}
-
-static void
-gimp_crop_tool_rectangle_status (GimpToolWidget *rectangle,
-                                 const gchar    *status,
-                                 GimpCropTool   *crop_tool)
-{
-  GimpTool *tool = GIMP_TOOL (crop_tool);
-
-  if (status)
-    {
-      gimp_tool_replace_status (tool, tool->display, "%s", status);
-    }
-  else
-    {
-      gimp_tool_pop_status (tool, tool->display);
-    }
-}
-
-static void
-gimp_crop_tool_rectangle_status_coords (GimpToolWidget *rectangle,
-                                        const gchar    *title,
-                                        gdouble         x,
-                                        const gchar    *separator,
-                                        gdouble         y,
-                                        const gchar    *help,
-                                        GimpCropTool   *crop_tool)
-{
-  GimpTool *tool = GIMP_TOOL (crop_tool);
-
-  gimp_tool_pop_status (tool, tool->display);
-  gimp_tool_push_status_coords (tool, tool->display,
-                                gimp_tool_control_get_precision (tool->control),
-                                title, x, separator, y, help);
 }
 
 static void

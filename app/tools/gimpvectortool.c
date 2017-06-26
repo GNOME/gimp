@@ -104,9 +104,6 @@ static void     gimp_vector_tool_halt            (GimpVectorTool        *vector_
 
 static void     gimp_vector_tool_path_changed    (GimpToolWidget        *path,
                                                   GimpVectorTool        *vector_tool);
-static void     gimp_vector_tool_path_status     (GimpToolWidget        *path,
-                                                  const gchar           *status,
-                                                  GimpVectorTool        *vector_tool);
 static void     gimp_vector_tool_path_begin_change
                                                  (GimpToolWidget        *path,
                                                   const gchar           *desc,
@@ -415,9 +412,6 @@ gimp_vector_tool_start (GimpVectorTool *vector_tool,
   g_signal_connect (widget, "changed",
                     G_CALLBACK (gimp_vector_tool_path_changed),
                     vector_tool);
-  g_signal_connect (widget, "status",
-                    G_CALLBACK (gimp_vector_tool_path_status),
-                    vector_tool);
   g_signal_connect (widget, "begin-change",
                     G_CALLBACK (gimp_vector_tool_path_begin_change),
                     vector_tool);
@@ -481,23 +475,6 @@ gimp_vector_tool_path_changed (GimpToolWidget *path,
 
   if (vectors)
     g_object_unref (vectors);
-}
-
-static void
-gimp_vector_tool_path_status (GimpToolWidget *path,
-                              const gchar    *status,
-                              GimpVectorTool *vector_tool)
-{
-  GimpTool *tool = GIMP_TOOL (vector_tool);
-
-  if (status)
-    {
-      gimp_tool_replace_status (tool, tool->display, "%s", status);
-    }
-  else
-    {
-      gimp_tool_pop_status (tool, tool->display);
-    }
 }
 
 static void

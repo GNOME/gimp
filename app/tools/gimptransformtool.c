@@ -124,9 +124,6 @@ static void      gimp_transform_tool_widget_changed      (GimpToolWidget        
 static void      gimp_transform_tool_widget_response     (GimpToolWidget        *widget,
                                                           gint                   response_id,
                                                           GimpTransformTool     *tr_tool);
-static void      gimp_transform_tool_widget_status       (GimpToolWidget        *widget,
-                                                          const gchar           *status,
-                                                          GimpTransformTool     *tr_tool);
 
 static void      gimp_transform_tool_halt                (GimpTransformTool     *tr_tool);
 static gboolean  gimp_transform_tool_bounds              (GimpTransformTool     *tr_tool,
@@ -1074,23 +1071,6 @@ gimp_transform_tool_widget_response (GimpToolWidget    *widget,
 }
 
 static void
-gimp_transform_tool_widget_status (GimpToolWidget    *widget,
-                                   const gchar       *status,
-                                   GimpTransformTool *tr_tool)
-{
-  GimpTool *tool = GIMP_TOOL (tr_tool);
-
-  if (status)
-    {
-      gimp_tool_replace_status (tool, tool->display, "%s", status);
-    }
-  else
-    {
-      gimp_tool_pop_status (tool, tool->display);
-    }
-}
-
-static void
 gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
@@ -1325,9 +1305,6 @@ gimp_transform_tool_get_widget (GimpTransformTool *tr_tool)
                         tr_tool);
       g_signal_connect (widget, "response",
                         G_CALLBACK (gimp_transform_tool_widget_response),
-                        tr_tool);
-      g_signal_connect (widget, "status",
-                        G_CALLBACK (gimp_transform_tool_widget_status),
                         tr_tool);
     }
 
