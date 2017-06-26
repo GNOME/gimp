@@ -75,11 +75,6 @@ static void     gimp_measure_tool_motion          (GimpTool              *tool,
 static gboolean gimp_measure_tool_key_press       (GimpTool              *tool,
                                                    GdkEventKey           *kevent,
                                                    GimpDisplay           *display);
-static void gimp_measure_tool_active_modifier_key (GimpTool              *tool,
-                                                   GdkModifierType        key,
-                                                   gboolean               press,
-                                                   GdkModifierType        state,
-                                                   GimpDisplay           *display);
 static void     gimp_measure_tool_oper_update     (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
@@ -140,14 +135,13 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
-  tool_class->control             = gimp_measure_tool_control;
-  tool_class->button_press        = gimp_measure_tool_button_press;
-  tool_class->button_release      = gimp_measure_tool_button_release;
-  tool_class->motion              = gimp_measure_tool_motion;
-  tool_class->key_press           = gimp_measure_tool_key_press;
-  tool_class->active_modifier_key = gimp_measure_tool_active_modifier_key;
-  tool_class->oper_update         = gimp_measure_tool_oper_update;
-  tool_class->cursor_update       = gimp_measure_tool_cursor_update;
+  tool_class->control        = gimp_measure_tool_control;
+  tool_class->button_press   = gimp_measure_tool_button_press;
+  tool_class->button_release = gimp_measure_tool_button_release;
+  tool_class->motion         = gimp_measure_tool_motion;
+  tool_class->key_press      = gimp_measure_tool_key_press;
+  tool_class->oper_update    = gimp_measure_tool_oper_update;
+  tool_class->cursor_update  = gimp_measure_tool_cursor_update;
 }
 
 static void
@@ -235,8 +229,6 @@ gimp_measure_tool_button_press (GimpTool            *tool,
 
       gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), measure->compass);
 
-      gimp_tool_widget_hover (measure->compass, coords, state, TRUE);
-
       g_signal_connect (measure->compass, "changed",
                         G_CALLBACK (gimp_measure_tool_compass_changed),
                         measure);
@@ -250,6 +242,8 @@ gimp_measure_tool_button_press (GimpTool            *tool,
       tool->display = display;
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (measure), display);
+
+      gimp_tool_widget_hover (measure->compass, coords, state, TRUE);
     }
 
   if (gimp_tool_widget_button_press (measure->compass, coords, time, state,
@@ -335,22 +329,6 @@ gimp_measure_tool_key_press (GimpTool    *tool,
     }
 
   return FALSE;
-}
-
-static void
-gimp_measure_tool_active_modifier_key (GimpTool        *tool,
-                                       GdkModifierType  key,
-                                       gboolean         press,
-                                       GdkModifierType  state,
-                                       GimpDisplay     *display)
-{
-  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
-
-  if (measure->grab_widget)
-    {
-      gimp_tool_widget_motion_modifier (measure->grab_widget,
-                                        key, press, state);
-    }
 }
 
 static void

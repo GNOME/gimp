@@ -75,6 +75,17 @@ static gboolean      gimp_draw_tool_key_press     (GimpTool         *tool,
 static gboolean      gimp_draw_tool_key_release   (GimpTool         *tool,
                                                    GdkEventKey      *kevent,
                                                    GimpDisplay      *display);
+static void          gimp_draw_tool_modifier_key  (GimpTool         *tool,
+                                                   GdkModifierType   key,
+                                                   gboolean          press,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *display);
+static void          gimp_draw_tool_active_modifier_key
+                                                  (GimpTool         *tool,
+                                                   GdkModifierType   key,
+                                                   gboolean          press,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *display);
 static void          gimp_draw_tool_oper_update   (GimpTool         *tool,
                                                    const GimpCoords *coords,
                                                    GdkModifierType   state,
@@ -116,16 +127,18 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
 
-  object_class->dispose   = gimp_draw_tool_dispose;
+  object_class->dispose           = gimp_draw_tool_dispose;
 
-  tool_class->has_display = gimp_draw_tool_has_display;
-  tool_class->has_image   = gimp_draw_tool_has_image;
-  tool_class->control     = gimp_draw_tool_control;
-  tool_class->key_press   = gimp_draw_tool_key_press;
-  tool_class->key_release = gimp_draw_tool_key_release;
-  tool_class->oper_update = gimp_draw_tool_oper_update;
+  tool_class->has_display         = gimp_draw_tool_has_display;
+  tool_class->has_image           = gimp_draw_tool_has_image;
+  tool_class->control             = gimp_draw_tool_control;
+  tool_class->key_press           = gimp_draw_tool_key_press;
+  tool_class->key_release         = gimp_draw_tool_key_release;
+  tool_class->modifier_key        = gimp_draw_tool_modifier_key;
+  tool_class->active_modifier_key = gimp_draw_tool_active_modifier_key;
+  tool_class->oper_update         = gimp_draw_tool_oper_update;
 
-  klass->draw             = gimp_draw_tool_real_draw;
+  klass->draw                     = gimp_draw_tool_real_draw;
 }
 
 static void
@@ -237,6 +250,42 @@ gimp_draw_tool_key_release (GimpTool    *tool,
     }
 
   return GIMP_TOOL_CLASS (parent_class)->key_release (tool, kevent, display);
+}
+
+static void
+gimp_draw_tool_modifier_key (GimpTool        *tool,
+                             GdkModifierType  key,
+                             gboolean         press,
+                             GdkModifierType  state,
+                             GimpDisplay     *display)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (draw_tool->widget && display == draw_tool->display)
+    {
+      gimp_tool_widget_hover_modifier (draw_tool->widget, key, press, state);
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+                                                display);
+}
+
+static void
+gimp_draw_tool_active_modifier_key (GimpTool        *tool,
+                                    GdkModifierType  key,
+                                    gboolean         press,
+                                    GdkModifierType  state,
+                                    GimpDisplay     *display)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (draw_tool->widget && display == draw_tool->display)
+    {
+      gimp_tool_widget_motion_modifier (draw_tool->widget, key, press, state);
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press, state,
+                                                       display);
 }
 
 static void
