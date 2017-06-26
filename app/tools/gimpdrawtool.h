@@ -52,6 +52,7 @@ struct _GimpDrawTool
   guint64         last_draw_time; /*  time of last draw(), monotonically      */
 
   GimpToolWidget *widget;
+  gchar          *default_status;
   GimpCanvasItem *preview;
   GimpCanvasItem *item;
   GList          *group_stack;
@@ -93,6 +94,8 @@ gdouble          gimp_draw_tool_calc_distance_square (GimpDrawTool     *draw_too
 
 void             gimp_draw_tool_set_widget           (GimpDrawTool     *draw_tool,
                                                       GimpToolWidget   *widget);
+void             gimp_draw_tool_set_default_status   (GimpDrawTool     *draw_tool,
+                                                      const gchar      *status);
 
 void             gimp_draw_tool_add_preview          (GimpDrawTool     *draw_tool,
                                                       GimpCanvasItem   *item);

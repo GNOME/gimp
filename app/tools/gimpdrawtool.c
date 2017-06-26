@@ -161,6 +161,9 @@ gimp_draw_tool_dispose (GObject *object)
       draw_tool->draw_timeout = 0;
     }
 
+  gimp_draw_tool_set_widget (draw_tool, NULL);
+  gimp_draw_tool_set_default_status (draw_tool, NULL);
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -300,6 +303,14 @@ gimp_draw_tool_oper_update (GimpTool         *tool,
   if (draw_tool->widget && display == draw_tool->display)
     {
       gimp_tool_widget_hover (draw_tool->widget, coords, state, proximity);
+    }
+  else if (proximity && draw_tool->default_status)
+    {
+      gimp_tool_replace_status (tool, display, "%s", draw_tool->default_status);
+    }
+  else if (! proximity)
+    {
+      gimp_tool_pop_status (tool, display);
     }
   else
     {
@@ -666,6 +677,18 @@ gimp_draw_tool_set_widget (GimpDrawTool   *draw_tool,
                         G_CALLBACK (gimp_draw_tool_widget_snap_offsets),
                         draw_tool);
     }
+}
+
+void
+gimp_draw_tool_set_default_status (GimpDrawTool *draw_tool,
+                                   const gchar  *status)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (draw_tool->default_status)
+    g_free (draw_tool->default_status);
+
+  draw_tool->default_status = g_strdup (status);
 }
 
 void
