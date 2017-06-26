@@ -110,7 +110,7 @@ struct _GimpToolWidgetClass
                                 GdkModifierType        state,
                                 GimpCursorType        *cursor,
                                 GimpToolCursorType    *tool_cursor,
-                                GimpCursorModifier    *cursor_modifier);
+                                GimpCursorModifier    *modifier);
 };
 
 
@@ -261,7 +261,7 @@ gboolean   gimp_tool_widget_get_cursor      (GimpToolWidget        *widget,
                                              GdkModifierType        state,
                                              GimpCursorType        *cursor,
                                              GimpToolCursorType    *tool_cursor,
-                                             GimpCursorModifier    *cursor_modifier);
+                                             GimpCursorModifier    *modifier);
 
 
 #endif /* __GIMP_TOOL_WIDGET_H__ */

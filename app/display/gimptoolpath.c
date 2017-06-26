@@ -162,7 +162,7 @@ static gboolean gimp_tool_path_get_cursor      (GimpToolWidget        *widget,
                                                 GdkModifierType        state,
                                                 GimpCursorType        *cursor,
                                                 GimpToolCursorType    *tool_cursor,
-                                                GimpCursorModifier    *cursor_modifier);
+                                                GimpCursorModifier    *modifier);
 
 static void     gimp_tool_path_update_status   (GimpToolPath          *path,
                                                 GdkModifierType        state,
@@ -1339,13 +1339,13 @@ gimp_tool_path_get_cursor (GimpToolWidget     *widget,
                            GdkModifierType     state,
                            GimpCursorType     *cursor,
                            GimpToolCursorType *tool_cursor,
-                           GimpCursorModifier *cursor_modifier)
+                           GimpCursorModifier *modifier)
 {
   GimpToolPath        *path    = GIMP_TOOL_PATH (widget);
   GimpToolPathPrivate *private = path->private;
 
-  *tool_cursor     = GIMP_TOOL_CURSOR_PATHS;
-  *cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
+  *tool_cursor = GIMP_TOOL_CURSOR_PATHS;
+  *modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   switch (private->function)
     {
@@ -1355,62 +1355,62 @@ gimp_tool_path_get_cursor (GimpToolWidget     *widget,
 
     case VECTORS_CREATE_VECTOR:
     case VECTORS_CREATE_STROKE:
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_CONTROL;
+      *modifier = GIMP_CURSOR_MODIFIER_CONTROL;
       break;
 
     case VECTORS_ADD_ANCHOR:
     case VECTORS_INSERT_ANCHOR:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_PLUS;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
+      *modifier    = GIMP_CURSOR_MODIFIER_PLUS;
       break;
 
     case VECTORS_DELETE_ANCHOR:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
+      *modifier    = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case VECTORS_DELETE_SEGMENT:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
+      *modifier    = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case VECTORS_MOVE_HANDLE:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_CONTROL;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_CONTROL;
+      *modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_CONVERT_EDGE:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_CONTROL;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_CONTROL;
+      *modifier    = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case VECTORS_MOVE_ANCHOR:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
+      *modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_MOVE_CURVE:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
+      *modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_MOVE_STROKE:
     case VECTORS_MOVE_VECTORS:
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *modifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_MOVE_ANCHORSET:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_ANCHOR;
+      *modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case VECTORS_CONNECT_STROKES:
-      *tool_cursor     = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_JOIN;
+      *tool_cursor = GIMP_TOOL_CURSOR_PATHS_SEGMENT;
+      *modifier    = GIMP_CURSOR_MODIFIER_JOIN;
       break;
 
     default:
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_BAD;
+      *modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
     }
 

@@ -806,7 +806,7 @@ gimp_tool_widget_get_cursor (GimpToolWidget      *widget,
                              GdkModifierType      state,
                              GimpCursorType      *cursor,
                              GimpToolCursorType  *tool_cursor,
-                             GimpCursorModifier  *cursor_modifier)
+                             GimpCursorModifier  *modifier)
 
 {
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), FALSE);
@@ -816,21 +816,21 @@ gimp_tool_widget_get_cursor (GimpToolWidget      *widget,
     {
       GimpCursorType     my_cursor;
       GimpToolCursorType my_tool_cursor;
-      GimpCursorModifier my_cursor_modifier;
+      GimpCursorModifier my_modifier;
 
-      if (cursor)          my_cursor          = *cursor;
-      if (tool_cursor)     my_tool_cursor     = *tool_cursor;
-      if (cursor_modifier) my_cursor_modifier = *cursor_modifier;
+      if (cursor)      my_cursor      = *cursor;
+      if (tool_cursor) my_tool_cursor = *tool_cursor;
+      if (modifier)    my_modifier    = *modifier;
 
       if (GIMP_TOOL_WIDGET_GET_CLASS (widget)->get_cursor (widget, coords,
                                                            state,
                                                            &my_cursor,
                                                            &my_tool_cursor,
-                                                           &my_cursor_modifier))
+                                                           &my_modifier))
         {
-          if (cursor)          *cursor          = my_cursor;
-          if (tool_cursor)     *tool_cursor     = my_tool_cursor;
-          if (cursor_modifier) *cursor_modifier = my_cursor_modifier;
+          if (cursor)      *cursor      = my_cursor;
+          if (tool_cursor) *tool_cursor = my_tool_cursor;
+          if (modifier)    *modifier    = my_modifier;
 
           return TRUE;
         }

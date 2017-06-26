@@ -142,7 +142,7 @@ static gboolean gimp_tool_compass_get_cursor      (GimpToolWidget        *widget
                                                    GdkModifierType        state,
                                                    GimpCursorType        *cursor,
                                                    GimpToolCursorType    *tool_cursor,
-                                                   GimpCursorModifier    *cursor_modifier);
+                                                   GimpCursorModifier    *modifier);
 
 static void     gimp_tool_compass_update_hilight  (GimpToolCompass       *compass);
 
@@ -933,7 +933,7 @@ gimp_tool_compass_get_cursor (GimpToolWidget     *widget,
                               GdkModifierType     state,
                               GimpCursorType     *cursor,
                               GimpToolCursorType *tool_cursor,
-                              GimpCursorModifier *cursor_modifier)
+                              GimpCursorModifier *modifier)
 {
   GimpToolCompass        *compass = GIMP_TOOL_COMPASS (widget);
   GimpToolCompassPrivate *private = compass->private;
@@ -965,12 +965,12 @@ gimp_tool_compass_get_cursor (GimpToolWidget     *widget,
                ! ((private->point == 0) &&
                   (private->n_points == 3)))
         {
-          *cursor_modifier = GIMP_CURSOR_MODIFIER_PLUS;
+          *modifier = GIMP_CURSOR_MODIFIER_PLUS;
           return TRUE;
         }
       else
         {
-          *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+          *modifier = GIMP_CURSOR_MODIFIER_MOVE;
           return TRUE;
         }
     }
@@ -978,7 +978,7 @@ gimp_tool_compass_get_cursor (GimpToolWidget     *widget,
     {
       if ((private->n_points > 1) && (state & GDK_MOD1_MASK))
         {
-          *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+          *modifier = GIMP_CURSOR_MODIFIER_MOVE;
           return TRUE;
         }
     }

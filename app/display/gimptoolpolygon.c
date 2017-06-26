@@ -186,7 +186,7 @@ static gboolean gimp_tool_polygon_get_cursor      (GimpToolWidget        *widget
                                                    GdkModifierType        state,
                                                    GimpCursorType        *cursor,
                                                    GimpToolCursorType    *tool_cursor,
-                                                   GimpCursorModifier    *cursor_modifier);
+                                                   GimpCursorModifier    *modifier);
 
 
 G_DEFINE_TYPE (GimpToolPolygon, gimp_tool_polygon, GIMP_TYPE_TOOL_WIDGET)
@@ -1375,7 +1375,7 @@ gimp_tool_polygon_get_cursor (GimpToolWidget     *widget,
                               GdkModifierType     state,
                               GimpCursorType     *cursor,
                               GimpToolCursorType *tool_cursor,
-                              GimpCursorModifier *cursor_modifier)
+                              GimpCursorModifier *modifier)
 {
   GimpToolPolygon *polygon = GIMP_TOOL_POLYGON (widget);
 
@@ -1384,7 +1384,7 @@ gimp_tool_polygon_get_cursor (GimpToolWidget     *widget,
                                         NO_CLICK_TIME_AVAILABLE,
                                         coords))
     {
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *modifier = GIMP_CURSOR_MODIFIER_MOVE;
 
       return TRUE;
     }

@@ -129,7 +129,7 @@ static gboolean gimp_tool_line_get_cursor      (GimpToolWidget        *widget,
                                                 GdkModifierType        state,
                                                 GimpCursorType        *cursor,
                                                 GimpToolCursorType    *tool_cursor,
-                                                GimpCursorModifier    *cursor_modifier);
+                                                GimpCursorModifier    *modifier);
 
 static gboolean gimp_tool_line_point_motion    (GimpToolLine          *line,
                                                 gboolean               constrain_angle);
@@ -496,14 +496,14 @@ gimp_tool_line_get_cursor (GimpToolWidget     *widget,
                            GdkModifierType     state,
                            GimpCursorType     *cursor,
                            GimpToolCursorType *tool_cursor,
-                           GimpCursorModifier *cursor_modifier)
+                           GimpCursorModifier *modifier)
 {
   GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
   GimpToolLinePrivate *private = line->private;
 
   if (private->point == POINT_BOTH)
     {
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *modifier = GIMP_CURSOR_MODIFIER_MOVE;
 
       return TRUE;
     }

@@ -175,7 +175,7 @@ static gboolean gimp_tool_transform_grid_get_cursor     (GimpToolWidget        *
                                                          GdkModifierType        state,
                                                          GimpCursorType        *cursor,
                                                          GimpToolCursorType    *tool_cursor,
-                                                         GimpCursorModifier    *cursor_modifier);
+                                                         GimpCursorModifier    *modifier);
 
 static void     gimp_tool_transform_grid_update_hilight (GimpToolTransformGrid *grid);
 static void     gimp_tool_transform_grid_update_box     (GimpToolTransformGrid *grid);
@@ -1910,7 +1910,7 @@ gimp_tool_transform_grid_get_cursor (GimpToolWidget     *widget,
                                      GdkModifierType     state,
                                      GimpCursorType     *cursor,
                                      GimpToolCursorType *tool_cursor,
-                                     GimpCursorModifier *cursor_modifier)
+                                     GimpCursorModifier *modifier)
 {
   GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
   GimpToolTransformGridPrivate *private = grid->private;
@@ -2085,7 +2085,7 @@ gimp_tool_transform_grid_get_cursor (GimpToolWidget     *widget,
 
     case GIMP_TRANSFORM_HANDLE_PIVOT:
       *tool_cursor = GIMP_TOOL_CURSOR_ROTATE;
-      *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *modifier    = GIMP_CURSOR_MODIFIER_MOVE;
       break;
 
     case GIMP_TRANSFORM_HANDLE_N_S:

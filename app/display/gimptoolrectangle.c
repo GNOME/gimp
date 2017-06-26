@@ -294,7 +294,7 @@ static gboolean gimp_tool_rectangle_get_cursor      (GimpToolWidget        *widg
                                                      GdkModifierType        state,
                                                      GimpCursorType        *cursor,
                                                      GimpToolCursorType    *tool_cursor,
-                                                     GimpCursorModifier    *cursor_modifier);
+                                                     GimpCursorModifier    *modifier);
 
 static void     gimp_tool_rectangle_change_complete (GimpToolRectangle     *rectangle);
 

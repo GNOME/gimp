@@ -123,7 +123,7 @@ static gboolean gimp_tool_handle_grid_get_cursor   (GimpToolWidget        *widge
                                                     GdkModifierType        state,
                                                     GimpCursorType        *cursor,
                                                     GimpToolCursorType    *tool_cursor,
-                                                    GimpCursorModifier    *cursor_modifier);
+                                                    GimpCursorModifier    *modifier);
 
 static void     gimp_tool_handle_grid_update_hilight (GimpToolHandleGrid  *grid);
 static void     gimp_tool_handle_grid_update_matrix  (GimpToolHandleGrid  *grid);
@@ -894,14 +894,14 @@ gimp_tool_handle_grid_get_cursor (GimpToolWidget     *widget,
                                   GdkModifierType     state,
                                   GimpCursorType     *cursor,
                                   GimpToolCursorType *tool_cursor,
-                                  GimpCursorModifier *cursor_modifier)
+                                  GimpCursorModifier *modifier)
 {
   GimpToolHandleGrid        *grid    = GIMP_TOOL_HANDLE_GRID (widget);
   GimpToolHandleGridPrivate *private = grid->private;
 
-  *cursor          = GIMP_CURSOR_CROSSHAIR_SMALL;
-  *tool_cursor     = GIMP_TOOL_CURSOR_NONE;
-  *cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
+  *cursor      = GIMP_CURSOR_CROSSHAIR_SMALL;
+  *tool_cursor = GIMP_TOOL_CURSOR_NONE;
+  *modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
   switch (private->handle_mode)
     {
@@ -927,24 +927,24 @@ gimp_tool_handle_grid_get_cursor (GimpToolWidget     *widget,
       else
         {
           if (private->n_handles < 4)
-            *cursor_modifier = GIMP_CURSOR_MODIFIER_PLUS;
+            *modifier = GIMP_CURSOR_MODIFIER_PLUS;
           else
-            *cursor_modifier = GIMP_CURSOR_MODIFIER_BAD;
+            *modifier = GIMP_CURSOR_MODIFIER_BAD;
         }
       break;
 
     case GIMP_HANDLE_MODE_MOVE:
       if (private->handle > 0)
-        *cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
+        *modifier = GIMP_CURSOR_MODIFIER_MOVE;
       else
-        *cursor_modifier = GIMP_CURSOR_MODIFIER_BAD;
+        *modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
 
     case GIMP_HANDLE_MODE_REMOVE:
       if (private->handle > 0)
-        *cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
+        *modifier = GIMP_CURSOR_MODIFIER_MINUS;
       else
-        *cursor_modifier = GIMP_CURSOR_MODIFIER_BAD;
+        *modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
     }
 
