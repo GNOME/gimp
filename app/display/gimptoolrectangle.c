@@ -42,6 +42,7 @@
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpcanvasarc.h"
 #include "gimpcanvascorner.h"
 #include "gimpcanvashandle.h"
 #include "gimpcanvasitem-utils.h"
@@ -74,6 +75,7 @@ enum
   PROP_CONSTRAINT,
   PROP_PRECISION,
   PROP_NARROW_MODE,
+  PROP_DRAW_ELLIPSE,
 
   PROP_HIGHLIGHT,
   PROP_GUIDE,
@@ -201,6 +203,9 @@ struct _GimpToolRectanglePrivate
    */
   gboolean                narrow_mode;
 
+  /* Whether or not to draw an ellipse inside the rectangle */
+  gboolean                draw_ellipse;
+
   /* For what scale the handle sizes is calculated. We must cache this
    * so that we can differentiate between when the tool is resumed
    * because of zoom level just has changed or because the highlight
@@ -243,6 +248,7 @@ struct _GimpToolRectanglePrivate
 
   GimpCanvasItem         *guides;
   GimpCanvasItem         *rectangle;
+  GimpCanvasItem         *ellipse;
   GimpCanvasItem         *center;
   GimpCanvasItem         *creating_corners[4];
   GimpCanvasItem         *handles[GIMP_N_TOOL_RECTANGLE_FUNCTIONS];
@@ -497,6 +503,13 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_DRAW_ELLIPSE,
+                                   g_param_spec_boolean ("draw-ellipse",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_HIGHLIGHT,
                                    g_param_spec_boolean ("highlight",
                                                          NULL, NULL,
@@ -654,6 +667,11 @@ gimp_tool_rectangle_constructed (GObject *object)
                                                        0, 0, 10, 10,
                                                        FALSE);
 
+  private->ellipse = gimp_tool_widget_add_arc (widget,
+                                               0, 0, 10, 10,
+                                               0.0, 2 * G_PI,
+                                               FALSE);
+
   gimp_tool_widget_pop_group (widget);
 
   private->center = gimp_tool_widget_add_handle (widget,
@@ -762,6 +780,9 @@ gimp_tool_rectangle_set_property (GObject      *object,
     case PROP_NARROW_MODE:
       private->narrow_mode = g_value_get_boolean (value);
       break;
+    case PROP_DRAW_ELLIPSE:
+      private->draw_ellipse = g_value_get_boolean (value);
+      break;
 
     case PROP_HIGHLIGHT:
       private->highlight = g_value_get_boolean (value);
@@ -851,6 +872,9 @@ gimp_tool_rectangle_get_property (GObject    *object,
 
     case PROP_NARROW_MODE:
       g_value_set_boolean (value, private->narrow_mode);
+      break;
+    case PROP_DRAW_ELLIPSE:
+      g_value_set_boolean (value, private->draw_ellipse);
       break;
 
     case PROP_HIGHLIGHT:
@@ -1096,6 +1120,21 @@ gimp_tool_rectangle_changed (GimpToolWidget *widget)
                              x1, y1,
                              x2 - x1,
                              y2 - y1);
+
+  if (private->draw_ellipse)
+    {
+      gimp_canvas_arc_set (private->ellipse,
+                           (x1 + x2) / 2.0,
+                           (y1 + y2) / 2.0,
+                           (x2 - x1) / 2.0,
+                           (y2 - y1) / 2.0,
+                           0.0, 2 * G_PI);
+      gimp_canvas_item_set_visible (private->ellipse, TRUE);
+    }
+  else
+    {
+      gimp_canvas_item_set_visible (private->ellipse, FALSE);
+    }
 
   gimp_canvas_item_set_visible (private->center, FALSE);
 
