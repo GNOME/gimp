@@ -617,13 +617,13 @@ gimp_tool_widget_add_handle (GimpToolWidget   *widget,
 
 GimpCanvasItem *
 gimp_tool_widget_add_corner (GimpToolWidget   *widget,
-                             gdouble           x1,
-                             gdouble           y1,
-                             gdouble           x2,
-                             gdouble           y2,
+                             gdouble           x,
+                             gdouble           y,
+                             gdouble           width,
+                             gdouble           height,
                              GimpHandleAnchor  anchor,
-                             gint              width,
-                             gint              height,
+                             gint              corner_width,
+                             gint              corner_height,
                              gboolean          outside)
 {
   GimpCanvasItem *item;
@@ -631,8 +631,8 @@ gimp_tool_widget_add_corner (GimpToolWidget   *widget,
   g_return_val_if_fail (GIMP_IS_TOOL_WIDGET (widget), NULL);
 
   item = gimp_canvas_corner_new (widget->private->shell,
-                                 x1, y1, x2 - x1, y2 - y1,
-                                 anchor, width, height,
+                                 x, y, width, height,
+                                 anchor, corner_width, corner_height,
                                  outside);
 
   gimp_tool_widget_add_item (widget, item);

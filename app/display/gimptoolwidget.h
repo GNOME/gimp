@@ -193,13 +193,13 @@ GimpCanvasItem * gimp_tool_widget_add_handle    (GimpToolWidget       *widget,
                                                  gint                  height,
                                                  GimpHandleAnchor      anchor);
 GimpCanvasItem * gimp_tool_widget_add_corner    (GimpToolWidget       *widget,
-                                                 gdouble               x1,
-                                                 gdouble               y1,
-                                                 gdouble               x2,
-                                                 gdouble               y2,
+                                                 gdouble               x,
+                                                 gdouble               y,
+                                                 gdouble               width,
+                                                 gdouble               height,
                                                  GimpHandleAnchor      anchor,
-                                                 gint                  width,
-                                                 gint                  height,
+                                                 gint                  corner_width,
+                                                 gint                  corner_height,
                                                  gboolean              outside);
 
 GimpCanvasItem * gimp_tool_widget_add_rectangle_guides
