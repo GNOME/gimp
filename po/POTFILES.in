@@ -258,6 +258,7 @@ app/display/gimptoolcompass.c
 app/display/gimptoolhandlegrid.c
 app/display/gimptoolpath.c
 app/display/gimptoolpolygon.c
+app/display/gimptoolrectangle.c
 app/display/gimptooltransformgrid.c
 
 app/file/file-open.c
