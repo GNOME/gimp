@@ -206,14 +206,15 @@ animation_camera_set_keyframe (AnimationCamera *camera,
                                gint             x,
                                gint             y)
 {
+  GList  *iter;
   Offset *offset;
 
   g_return_if_fail (position >= 0 &&
                     position < animation_get_duration (camera->priv->animation));
 
-  offset = g_list_nth_data (camera->priv->offsets, position);
+  iter = g_list_nth (camera->priv->offsets, position);
 
-  if (! offset)
+  if (! iter)
     {
       gint length = g_list_length (camera->priv->offsets);
       gint i;
@@ -224,6 +225,14 @@ animation_camera_set_keyframe (AnimationCamera *camera,
         }
       offset = g_new (Offset, 1);
       camera->priv->offsets = g_list_append (camera->priv->offsets, offset);
+    }
+  else
+    {
+      if (! iter->data)
+        {
+          iter->data = g_new (Offset, 1);
+        }
+      offset = iter->data;
     }
 
   offset->x = x;
