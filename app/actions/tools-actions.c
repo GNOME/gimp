@@ -148,7 +148,7 @@ static const GimpEnumActionEntry tools_ink_blob_angle_actions[] =
 static const GimpEnumActionEntry tools_airbrush_rate_actions[] =
 {
   { "tools-airbrush-rate-set", GIMP_ICON_TOOL_AIRBRUSH,
-    NC_("tools-action", "Airbrush Rate: Set "), NULL, NULL,
+    NC_("tools-action", "Airbrush Rate: Set"), NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
   { "tools-airbrush-rate-minimum", GIMP_ICON_TOOL_AIRBRUSH,
@@ -269,7 +269,7 @@ static const GimpEnumActionEntry tools_opacity_actions[] =
     GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     NULL },
   { "tools-opacity-minimum", GIMP_ICON_DIALOG_TOOL_OPTIONS,
-    NC_("tools-action", "Tool's Opacity: Minimize "), NULL, NULL,
+    NC_("tools-action", "Tool's Opacity: Minimize"), NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
   { "tools-opacity-maximum", GIMP_ICON_DIALOG_TOOL_OPTIONS,

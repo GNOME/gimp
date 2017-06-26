@@ -364,7 +364,7 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     GIMP_HELP_FILTER_HIGH_PASS },
 
   { "filters-hue-chroma", GIMP_ICON_GEGL,
-    NC_("filters-action", "_Hue-_Chroma..."), NULL, NULL,
+    NC_("filters-action", "Hue-_Chroma..."), NULL, NULL,
     "gegl:hue-chroma",
     GIMP_HELP_FILTER_HUE_CHROMA },
 

@@ -202,7 +202,7 @@ static GimpEnumActionEntry context_colormap_background_actions[] =
     GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
   { "context-colormap-background-previous", GIMP_ICON_COLORMAP,
-    NC_("context-action", "Background: Use Previous Color From  Colormap"), NULL, NULL,
+    NC_("context-action", "Background: Use Previous Color From Colormap"), NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
   { "context-colormap-background-next", GIMP_ICON_COLORMAP,
@@ -210,11 +210,11 @@ static GimpEnumActionEntry context_colormap_background_actions[] =
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
   { "context-colormap-background-previous-skip", GIMP_ICON_COLORMAP,
-    NC_("context-action", "Background: Skip Back Color From  Colormap"), NULL, NULL,
+    NC_("context-action", "Background: Skip Back Color From Colormap"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
   { "context-colormap-background-next-skip", GIMP_ICON_COLORMAP,
-    NC_("context-action", "Background: Skip Forward Color From  Colormap"), NULL, NULL,
+    NC_("context-action", "Background: Skip Forward Color From Colormap"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL }
 };
