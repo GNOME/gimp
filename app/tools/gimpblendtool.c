@@ -107,6 +107,7 @@ static void   gimp_blend_tool_options_notify      (GimpTool              *tool,
                                                    const GParamSpec      *pspec);
 
 static void   gimp_blend_tool_start               (GimpBlendTool         *blend_tool,
+                                                   const GimpCoords      *coords,
                                                    GimpDisplay           *display);
 static void   gimp_blend_tool_halt                (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_commit              (GimpBlendTool         *blend_tool);
@@ -312,29 +313,7 @@ gimp_blend_tool_button_press (GimpTool            *tool,
 
   if (! blend_tool->line)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
-
-      blend_tool->start_x = coords->x;
-      blend_tool->start_y = coords->y;
-      blend_tool->end_x   = coords->x;
-      blend_tool->end_y   = coords->y;
-
-      blend_tool->line = gimp_tool_line_new (shell,
-                                             blend_tool->start_x,
-                                             blend_tool->start_y,
-                                             blend_tool->end_x,
-                                             blend_tool->end_y);
-
-      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), blend_tool->line);
-
-      g_signal_connect (blend_tool->line, "changed",
-                        G_CALLBACK (gimp_blend_tool_line_changed),
-                        blend_tool);
-      g_signal_connect (blend_tool->line, "response",
-                        G_CALLBACK (gimp_blend_tool_line_response),
-                        blend_tool);
-
-      gimp_blend_tool_start (blend_tool, display);
+      gimp_blend_tool_start (blend_tool, coords, display);
 
       gimp_tool_widget_hover (blend_tool->line, coords, state, TRUE);
     }
@@ -604,10 +583,12 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
 }
 
 static void
-gimp_blend_tool_start (GimpBlendTool *blend_tool,
-                       GimpDisplay   *display)
+gimp_blend_tool_start (GimpBlendTool    *blend_tool,
+                       const GimpCoords *coords,
+                       GimpDisplay      *display)
 {
   GimpTool         *tool     = GIMP_TOOL (blend_tool);
+  GimpDisplayShell *shell    = gimp_display_get_shell (display);
   GimpImage        *image    = gimp_display_get_image (display);
   GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
   GimpBlendOptions *options  = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
@@ -615,6 +596,26 @@ gimp_blend_tool_start (GimpBlendTool *blend_tool,
 
   tool->display  = display;
   tool->drawable = drawable;
+
+  blend_tool->start_x = coords->x;
+  blend_tool->start_y = coords->y;
+  blend_tool->end_x   = coords->x;
+  blend_tool->end_y   = coords->y;
+
+  blend_tool->line = gimp_tool_line_new (shell,
+                                         blend_tool->start_x,
+                                         blend_tool->start_y,
+                                         blend_tool->end_x,
+                                         blend_tool->end_y);
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), blend_tool->line);
+
+  g_signal_connect (blend_tool->line, "changed",
+                    G_CALLBACK (gimp_blend_tool_line_changed),
+                    blend_tool);
+  g_signal_connect (blend_tool->line, "response",
+                    G_CALLBACK (gimp_blend_tool_line_response),
+                    blend_tool);
 
   gimp_blend_tool_create_filter (blend_tool, drawable);
 
@@ -628,8 +629,7 @@ gimp_blend_tool_start (GimpBlendTool *blend_tool,
   if (gimp_blend_tool_is_shapeburst (blend_tool))
     gimp_blend_tool_precalc_shapeburst (blend_tool);
 
-  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
-    gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
 }
 
 static void
