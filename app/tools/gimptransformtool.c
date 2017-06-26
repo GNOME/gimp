@@ -91,11 +91,6 @@ static void      gimp_transform_tool_modifier_key        (GimpTool              
                                                           gboolean               press,
                                                           GdkModifierType        state,
                                                           GimpDisplay           *display);
-static void      gimp_transform_tool_oper_update         (GimpTool              *tool,
-                                                          const GimpCoords      *coords,
-                                                          GdkModifierType        state,
-                                                          gboolean               proximity,
-                                                          GimpDisplay           *display);
 static void      gimp_transform_tool_cursor_update       (GimpTool              *tool,
                                                           const GimpCoords      *coords,
                                                           GdkModifierType        state,
@@ -191,7 +186,6 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class->motion              = gimp_transform_tool_motion;
   tool_class->modifier_key        = gimp_transform_tool_modifier_key;
   tool_class->active_modifier_key = gimp_transform_tool_modifier_key;
-  tool_class->oper_update         = gimp_transform_tool_oper_update;
   tool_class->cursor_update       = gimp_transform_tool_cursor_update;
   tool_class->get_undo_desc       = gimp_transform_tool_get_undo_desc;
   tool_class->get_redo_desc       = gimp_transform_tool_get_redo_desc;
@@ -517,24 +511,6 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
       g_object_set (options,
                     "constrain-perspective", ! options->constrain_perspective,
                     NULL);
-    }
-}
-
-static void
-gimp_transform_tool_oper_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
-                                 GdkModifierType   state,
-                                 gboolean          proximity,
-                                 GimpDisplay      *display)
-{
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-
-  if (tr_tool->widget)
-    {
-      if (display == tool->display)
-        {
-          gimp_tool_widget_hover (tr_tool->widget, coords, state, proximity);
-        }
     }
 }
 

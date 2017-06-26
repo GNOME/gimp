@@ -93,11 +93,6 @@ static void     gimp_vector_tool_modifier_key    (GimpTool              *tool,
                                                   gboolean               press,
                                                   GdkModifierType        state,
                                                   GimpDisplay           *display);
-static void     gimp_vector_tool_oper_update     (GimpTool              *tool,
-                                                  const GimpCoords      *coords,
-                                                  GdkModifierType        state,
-                                                  gboolean               proximity,
-                                                  GimpDisplay           *display);
 static void     gimp_vector_tool_cursor_update   (GimpTool              *tool,
                                                   const GimpCoords      *coords,
                                                   GdkModifierType        state,
@@ -189,7 +184,6 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   tool_class->button_release = gimp_vector_tool_button_release;
   tool_class->motion         = gimp_vector_tool_motion;
   tool_class->modifier_key   = gimp_vector_tool_modifier_key;
-  tool_class->oper_update    = gimp_vector_tool_oper_update;
   tool_class->cursor_update  = gimp_vector_tool_cursor_update;
 }
 
@@ -355,21 +349,6 @@ gimp_vector_tool_modifier_key (GimpTool        *tool,
         {
           g_object_set (options, "vectors-edit-mode", button_mode, NULL);
         }
-    }
-}
-
-static void
-gimp_vector_tool_oper_update (GimpTool         *tool,
-                              const GimpCoords *coords,
-                              GdkModifierType   state,
-                              gboolean          proximity,
-                              GimpDisplay      *display)
-{
-  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
-
-  if (display == tool->display && vector_tool->path)
-    {
-      gimp_tool_widget_hover (vector_tool->path, coords, state, proximity);
     }
 }
 

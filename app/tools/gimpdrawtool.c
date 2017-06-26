@@ -74,6 +74,11 @@ static gboolean      gimp_draw_tool_key_press    (GimpTool         *tool,
 static gboolean      gimp_draw_tool_key_release  (GimpTool         *tool,
                                                   GdkEventKey      *kevent,
                                                   GimpDisplay      *display);
+static void          gimp_draw_tool_oper_update  (GimpTool         *tool,
+                                                  const GimpCoords *coords,
+                                                  GdkModifierType   state,
+                                                  gboolean          proximity,
+                                                  GimpDisplay      *display);
 
 static void          gimp_draw_tool_draw         (GimpDrawTool     *draw_tool);
 static void          gimp_draw_tool_undraw       (GimpDrawTool     *draw_tool);
@@ -98,6 +103,7 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
   tool_class->control     = gimp_draw_tool_control;
   tool_class->key_press   = gimp_draw_tool_key_press;
   tool_class->key_release = gimp_draw_tool_key_release;
+  tool_class->oper_update = gimp_draw_tool_oper_update;
 
   klass->draw             = gimp_draw_tool_real_draw;
 }
@@ -211,6 +217,26 @@ gimp_draw_tool_key_release (GimpTool    *tool,
     }
 
   return GIMP_TOOL_CLASS (parent_class)->key_release (tool, kevent, display);
+}
+
+static void
+gimp_draw_tool_oper_update (GimpTool         *tool,
+                            const GimpCoords *coords,
+                            GdkModifierType   state,
+                            gboolean          proximity,
+                            GimpDisplay      *display)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (draw_tool->widget && display == draw_tool->display)
+    {
+      gimp_tool_widget_hover (draw_tool->widget, coords, state, proximity);
+    }
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
+                                                   proximity, display);
+    }
 }
 
 #ifdef USE_TIMEOUT

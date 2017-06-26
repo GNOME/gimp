@@ -71,11 +71,6 @@ static void      gimp_crop_tool_active_modifier_key       (GimpTool             
                                                            gboolean              press,
                                                            GdkModifierType       state,
                                                            GimpDisplay          *display);
-static void      gimp_crop_tool_oper_update               (GimpTool             *tool,
-                                                           const GimpCoords     *coords,
-                                                           GdkModifierType       state,
-                                                           gboolean              proximity,
-                                                           GimpDisplay          *display);
 static void      gimp_crop_tool_cursor_update             (GimpTool             *tool,
                                                            const GimpCoords     *coords,
                                                            GdkModifierType       state,
@@ -161,7 +156,6 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   tool_class->button_release      = gimp_crop_tool_button_release;
   tool_class->motion              = gimp_crop_tool_motion;
   tool_class->active_modifier_key = gimp_crop_tool_active_modifier_key;
-  tool_class->oper_update         = gimp_crop_tool_oper_update;
   tool_class->cursor_update       = gimp_crop_tool_cursor_update;
   tool_class->options_notify      = gimp_crop_tool_options_notify;
 }
@@ -379,21 +373,6 @@ gimp_crop_tool_active_modifier_key (GimpTool        *tool,
     {
       gimp_tool_widget_motion_modifier (crop_tool->rectangle,
                                         key, press, state);
-    }
-}
-
-static void
-gimp_crop_tool_oper_update (GimpTool         *tool,
-                            const GimpCoords *coords,
-                            GdkModifierType   state,
-                            gboolean          proximity,
-                            GimpDisplay      *display)
-{
-  GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
-
-  if (crop_tool->rectangle && display == tool->display)
-    {
-      gimp_tool_widget_hover (crop_tool->rectangle, coords, state, proximity);
     }
 }
 
