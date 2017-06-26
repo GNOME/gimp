@@ -626,7 +626,7 @@ static const GimpEnumActionEntry context_background_saturation_actions[] =
     GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
   { "context-background-saturation-decrease-skip", GIMP_ICON_TOOL_HUE_SATURATION,
-    NC_("context-action", "Background Saturation :Decrease by 10%"), NULL, NULL,
+    NC_("context-action", "Background Saturation: Decrease by 10%"), NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
   { "context-background-saturation-increase-skip", GIMP_ICON_TOOL_HUE_SATURATION,
