@@ -721,6 +721,7 @@ animation_cel_animation_reset_defaults (Animation *animation)
   priv = ANIMATION_CEL_ANIMATION (animation)->priv;
   animation_cel_animation_cleanup (ANIMATION_CEL_ANIMATION (animation));
 
+  priv->camera = animation_camera_new (animation);
   /* Purely arbitrary value. User will anyway change it to suit one's needs. */
   priv->duration = 240;
 

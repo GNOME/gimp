@@ -147,7 +147,8 @@ animation_camera_class_init (AnimationCameraClass *klass)
                                    g_param_spec_object ("animation",
                                                         NULL, NULL,
                                                         ANIMATION_TYPE_ANIMATION,
-                                                        G_PARAM_READWRITE));
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (klass, sizeof (AnimationCameraPrivate));
 }
