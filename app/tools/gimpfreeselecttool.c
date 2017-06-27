@@ -244,6 +244,7 @@ gimp_free_select_tool_halt (GimpFreeSelectTool *fst)
 {
   GimpFreeSelectToolPrivate *private = fst->private;
 
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (fst), NULL);
   g_clear_object (&private->polygon);
 }
 

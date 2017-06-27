@@ -430,13 +430,15 @@ gimp_vector_tool_halt (GimpVectorTool *vector_tool)
 {
   GimpTool *tool = GIMP_TOOL (vector_tool);
 
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
 
   gimp_vector_tool_set_vectors (vector_tool, NULL);
+
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&vector_tool->path);
 
   tool->display = NULL;

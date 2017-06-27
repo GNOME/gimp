@@ -686,17 +686,14 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
-
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (blend_tool));
 
-  if (blend_tool->line)
-    {
-      g_object_unref (blend_tool->line);
-      blend_tool->line = NULL;
-    }
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
+  g_clear_object (&blend_tool->line);
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
 }
 
 static void

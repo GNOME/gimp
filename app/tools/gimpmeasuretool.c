@@ -420,13 +420,15 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
 {
   GimpTool *tool = GIMP_TOOL (measure);
 
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (measure)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
-
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
 
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (measure)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&measure->compass);
+
   g_clear_object (&measure->gui);
 
   tool->display = NULL;

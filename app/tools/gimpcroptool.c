@@ -493,6 +493,7 @@ gimp_crop_tool_halt (GimpCropTool *crop_tool)
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&crop_tool->rectangle);
 
   tool->display  = NULL;

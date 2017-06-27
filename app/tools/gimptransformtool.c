@@ -1078,6 +1078,7 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
 
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tr_tool), NULL);
   g_clear_object (&tr_tool->widget);
 
   if (tr_tool->gui)

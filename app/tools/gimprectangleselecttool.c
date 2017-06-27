@@ -853,6 +853,7 @@ gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&priv->rectangle);
 
   tool->display = NULL;
