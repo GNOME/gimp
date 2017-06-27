@@ -42,6 +42,7 @@
 static gchar   *get_executable_path  (const gchar      *suffix,
                                       gboolean         *search_path);
 
+static void     init                 (void);
 static void     query                (void);
 static void     run                  (const gchar      *name,
                                       gint              nparams,
@@ -60,7 +61,7 @@ static gint32   load_thumbnail_image (const gchar      *filename,
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
-  NULL,  /* init_proc */
+  init,  /* init_proc */
   NULL,  /* quit_proc */
   query, /* query proc */
   run,   /* run_proc */
@@ -126,7 +127,7 @@ get_executable_path (const gchar *suffix,
 }
 
 static void
-query (void)
+init (void)
 {
   static const GimpParamDef load_args[] =
   {
@@ -238,6 +239,17 @@ query (void)
 
       gimp_register_thumbnail_loader (format->load_proc, LOAD_THUMB_PROC);
     }
+}
+
+static void
+query (void)
+{
+  /* query() is run only the first time for efficiency. Yet this plugin
+   * is dependent on the presence of darktable which may be installed
+   * or uninstalled between GIMP startups. Therefore we should move the
+   * usual gimp_install_procedure() to init() so that the check is done
+   * at every startup instead.
+   */
 }
 
 static void
