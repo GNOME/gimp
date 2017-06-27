@@ -186,6 +186,36 @@ gimp_free_select_tool_finalize (GObject *object)
 }
 
 static void
+gimp_free_select_tool_start (GimpFreeSelectTool *fst,
+                             GimpDisplay        *display)
+{
+  GimpTool                  *tool    = GIMP_TOOL (fst);
+  GimpFreeSelectToolPrivate *private = fst->private;
+  GimpSelectionOptions      *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell          *shell   = gimp_display_get_shell (display);
+
+  tool->display = display;
+
+  /* We want to apply the selection operation that was current when
+   * the tool was started, so we save this information
+   */
+  private->operation_at_start = options->operation;
+
+  private->polygon = gimp_tool_polygon_new (shell);
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), private->polygon);
+
+  g_signal_connect (private->polygon, "changed",
+                    G_CALLBACK (gimp_free_select_tool_polygon_changed),
+                    fst);
+  g_signal_connect (private->polygon, "response",
+                    G_CALLBACK (gimp_free_select_tool_polygon_response),
+                    fst);
+
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+}
+
+static void
 gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
                               GimpDisplay        *display)
 {
@@ -302,18 +332,14 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
                                     GimpButtonPressType  press_type,
                                     GimpDisplay         *display)
 {
-  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
-  GimpFreeSelectTool        *fst       = GIMP_FREE_SELECT_TOOL (tool);
-  GimpFreeSelectToolPrivate *private   = fst->private;
-  GimpSelectionOptions      *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  GimpFreeSelectTool        *fst     = GIMP_FREE_SELECT_TOOL (tool);
+  GimpFreeSelectToolPrivate *private = fst->private;
 
   if (tool->display && tool->display != display)
     gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
 
   if (! private->polygon) /* not tool->display, we have a subclass */
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
-
       /* First of all handle delegation to the selection mask edit logic
        * if appropriate.
        */
@@ -323,36 +349,18 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
           return;
         }
 
-      tool->display = display;
-
-      /* We want to apply the selection operation that was current when
-       * the tool was started, so we save this information
-       */
-      private->operation_at_start = options->operation;
-
-      private->polygon = gimp_tool_polygon_new (shell);
-
-      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), private->polygon);
-
-      g_signal_connect (private->polygon, "changed",
-                        G_CALLBACK (gimp_free_select_tool_polygon_changed),
-                        fst);
-      g_signal_connect (private->polygon, "response",
-                        G_CALLBACK (gimp_free_select_tool_polygon_response),
-                        fst);
-
-      gimp_draw_tool_start (draw_tool, display);
+      gimp_free_select_tool_start (fst, display);
 
       gimp_tool_widget_hover (private->polygon, coords, state, TRUE);
     }
-
-  gimp_tool_control_activate (tool->control);
 
   if (gimp_tool_widget_button_press (private->polygon, coords, time, state,
                                      press_type))
     {
       private->grab_widget = private->polygon;
     }
+
+  gimp_tool_control_activate (tool->control);
 }
 
 static void

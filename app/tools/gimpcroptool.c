@@ -82,6 +82,8 @@ static void      gimp_crop_tool_rectangle_response        (GimpToolWidget       
 static void      gimp_crop_tool_rectangle_change_complete (GimpToolRectangle    *rectangle,
                                                            GimpCropTool         *crop_tool);
 
+static void      gimp_crop_tool_start                     (GimpCropTool         *crop_tool,
+                                                           GimpDisplay          *display);
 static void      gimp_crop_tool_commit                    (GimpCropTool         *crop_tool);
 static void      gimp_crop_tool_halt                      (GimpCropTool         *crop_tool);
 
@@ -215,61 +217,7 @@ gimp_crop_tool_button_press (GimpTool            *tool,
 
   if (! tool->display)
     {
-      static const gchar *properties[] =
-      {
-        "highlight",
-        "guide",
-        "x",
-        "y",
-        "width",
-        "height",
-        "fixed-rule-active",
-        "fixed-rule",
-        "desired-fixed-width",
-        "desired-fixed-height",
-        "desired-fixed-size-width",
-        "desired-fixed-size-height",
-        "aspect-numerator",
-        "aspect-denominator",
-        "fixed-center"
-      };
-
-      GimpDisplayShell *shell   = gimp_display_get_shell (display);
-      GimpCropOptions  *options = GIMP_CROP_TOOL_GET_OPTIONS (crop_tool);
-      GimpToolWidget   *widget;
-      gint              i;
-
-      tool->display = display;
-
-      crop_tool->rectangle = widget = gimp_tool_rectangle_new (shell);
-
-      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
-
-      for (i = 0; i < G_N_ELEMENTS (properties); i++)
-        g_object_bind_property (G_OBJECT (options), properties[i],
-                                G_OBJECT (widget),  properties[i],
-                                G_BINDING_SYNC_CREATE |
-                                G_BINDING_BIDIRECTIONAL);
-
-      g_signal_connect (widget, "changed",
-                        G_CALLBACK (gimp_crop_tool_rectangle_changed),
-                        crop_tool);
-      g_signal_connect (widget, "response",
-                        G_CALLBACK (gimp_crop_tool_rectangle_response),
-                        crop_tool);
-      g_signal_connect (widget, "change-complete",
-                        G_CALLBACK (gimp_crop_tool_rectangle_change_complete),
-                        crop_tool);
-
-      gimp_rectangle_options_connect (GIMP_RECTANGLE_OPTIONS (options),
-                                      gimp_display_get_image (shell->display),
-                                      G_CALLBACK (gimp_crop_tool_auto_shrink),
-                                      crop_tool);
-
-      gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (widget),
-                                          gimp_crop_tool_get_constraint (crop_tool));
-
-      gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+      gimp_crop_tool_start (crop_tool, display);
 
       gimp_tool_widget_hover (crop_tool->rectangle, coords, state, TRUE);
 
@@ -279,8 +227,6 @@ gimp_crop_tool_button_press (GimpTool            *tool,
        */
       gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (crop_tool->rectangle),
                                         GIMP_TOOL_RECTANGLE_CREATING);
-
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
     }
 
   if (gimp_tool_widget_button_press (crop_tool->rectangle, coords, time, state,
@@ -399,6 +345,70 @@ gimp_crop_tool_rectangle_change_complete (GimpToolRectangle *rectangle,
                                           GimpCropTool      *crop_tool)
 {
   gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+}
+
+static void
+gimp_crop_tool_start (GimpCropTool *crop_tool,
+                      GimpDisplay  *display)
+{
+  static const gchar *properties[] =
+  {
+    "highlight",
+    "guide",
+    "x",
+    "y",
+    "width",
+    "height",
+    "fixed-rule-active",
+    "fixed-rule",
+    "desired-fixed-width",
+    "desired-fixed-height",
+    "desired-fixed-size-width",
+    "desired-fixed-size-height",
+    "aspect-numerator",
+    "aspect-denominator",
+    "fixed-center"
+  };
+
+  GimpTool         *tool    = GIMP_TOOL (crop_tool);
+  GimpDisplayShell *shell   = gimp_display_get_shell (display);
+  GimpCropOptions  *options = GIMP_CROP_TOOL_GET_OPTIONS (crop_tool);
+  GimpToolWidget   *widget;
+  gint              i;
+
+  tool->display = display;
+
+  crop_tool->rectangle = widget = gimp_tool_rectangle_new (shell);
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
+
+  for (i = 0; i < G_N_ELEMENTS (properties); i++)
+    g_object_bind_property (G_OBJECT (options), properties[i],
+                            G_OBJECT (widget),  properties[i],
+                            G_BINDING_SYNC_CREATE |
+                            G_BINDING_BIDIRECTIONAL);
+
+  g_signal_connect (widget, "changed",
+                    G_CALLBACK (gimp_crop_tool_rectangle_changed),
+                    crop_tool);
+  g_signal_connect (widget, "response",
+                    G_CALLBACK (gimp_crop_tool_rectangle_response),
+                    crop_tool);
+  g_signal_connect (widget, "change-complete",
+                    G_CALLBACK (gimp_crop_tool_rectangle_change_complete),
+                    crop_tool);
+
+  gimp_rectangle_options_connect (GIMP_RECTANGLE_OPTIONS (options),
+                                  gimp_display_get_image (shell->display),
+                                  G_CALLBACK (gimp_crop_tool_auto_shrink),
+                                  crop_tool);
+
+  gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (widget),
+                                      gimp_crop_tool_get_constraint (crop_tool));
+
+  gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
 
 static void

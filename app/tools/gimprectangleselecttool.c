@@ -119,6 +119,8 @@ static void     gimp_rectangle_select_tool_rectangle_change_complete
                                                           (GimpToolWidget          *widget,
                                                            GimpRectangleSelectTool *rect_tool);
 
+static void     gimp_rectangle_select_tool_start          (GimpRectangleSelectTool *rect_tool,
+                                                           GimpDisplay             *display);
 static void     gimp_rectangle_select_tool_commit         (GimpRectangleSelectTool *rect_tool);
 static void     gimp_rectangle_select_tool_halt           (GimpRectangleSelectTool *rect_tool);
 
@@ -246,74 +248,16 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
 
   if (! tool->display)
     {
-      static const gchar *properties[] =
-      {
-        "highlight",
-        "guide",
-        "round-corners",
-        "corner-radius",
-        "x",
-        "y",
-        "width",
-        "height",
-        "fixed-rule-active",
-        "fixed-rule",
-        "desired-fixed-width",
-        "desired-fixed-height",
-        "desired-fixed-size-width",
-        "desired-fixed-size-height",
-        "aspect-numerator",
-        "aspect-denominator",
-        "fixed-center"
-      };
+      gimp_rectangle_select_tool_start (rect_tool, display);
 
-      GimpDisplayShell           *shell = gimp_display_get_shell (display);
-      GimpRectangleSelectOptions *options;
-      GimpToolWidget             *widget;
-      gint                        i;
-
-      options = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (rect_tool);
-
-      tool->display = display;
-
-      private->rectangle = widget = gimp_tool_rectangle_new (shell);
-
-      g_object_set (widget,
-                    "draw-ellipse", GIMP_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_tool)->draw_ellipse,
-                    NULL);
-
-      gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
-
-      for (i = 0; i < G_N_ELEMENTS (properties); i++)
-        g_object_bind_property (G_OBJECT (options), properties[i],
-                                G_OBJECT (widget),  properties[i],
-                                G_BINDING_SYNC_CREATE |
-                                G_BINDING_BIDIRECTIONAL);
-
-      g_signal_connect (widget, "response",
-                        G_CALLBACK (gimp_rectangle_select_tool_rectangle_response),
-                        rect_tool);
-      g_signal_connect (widget, "change-complete",
-                        G_CALLBACK (gimp_rectangle_select_tool_rectangle_change_complete),
-                        rect_tool);
-
-      gimp_rectangle_options_connect (GIMP_RECTANGLE_OPTIONS (options),
-                                      gimp_display_get_image (shell->display),
-                                      G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
-                                      rect_tool);
-
-      gimp_rectangle_select_tool_update_option_defaults (rect_tool, FALSE);
-
-      gimp_tool_widget_hover (widget, coords, state, TRUE);
+      gimp_tool_widget_hover (private->rectangle, coords, state, TRUE);
 
       /* HACK: force CREATING on a newly created rectangle; otherwise,
        * the above binding of properties would cause the rectangle to
        * start with the size from tool options.
        */
-      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (widget),
+      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (private->rectangle),
                                         GIMP_TOOL_RECTANGLE_CREATING);
-
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
     }
 
   private->saved_show_selection = gimp_display_shell_get_show_selection (shell);
@@ -686,6 +630,74 @@ gimp_rectangle_select_tool_rectangle_change_complete (GimpToolWidget          *w
   gimp_tool_control_pop_preserve (tool->control);
 
   gimp_rectangle_select_tool_update_option_defaults (rect_tool, FALSE);
+}
+
+static void
+gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
+                                  GimpDisplay             *display)
+{
+  static const gchar *properties[] =
+  {
+    "highlight",
+    "guide",
+    "round-corners",
+    "corner-radius",
+    "x",
+    "y",
+    "width",
+    "height",
+    "fixed-rule-active",
+    "fixed-rule",
+    "desired-fixed-width",
+    "desired-fixed-height",
+    "desired-fixed-size-width",
+    "desired-fixed-size-height",
+    "aspect-numerator",
+    "aspect-denominator",
+    "fixed-center"
+  };
+
+  GimpTool                       *tool    = GIMP_TOOL (rect_tool);
+  GimpRectangleSelectToolPrivate *private = rect_tool->private;
+  GimpDisplayShell               *shell   = gimp_display_get_shell (display);
+  GimpRectangleSelectOptions     *options;
+  GimpToolWidget                 *widget;
+  gint                            i;
+
+  options = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (rect_tool);
+
+  tool->display = display;
+
+  private->rectangle = widget = gimp_tool_rectangle_new (shell);
+
+  g_object_set (widget,
+                "draw-ellipse",
+                GIMP_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_tool)->draw_ellipse,
+                NULL);
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
+
+  for (i = 0; i < G_N_ELEMENTS (properties); i++)
+    g_object_bind_property (G_OBJECT (options), properties[i],
+                            G_OBJECT (widget),  properties[i],
+                            G_BINDING_SYNC_CREATE |
+                            G_BINDING_BIDIRECTIONAL);
+
+  g_signal_connect (widget, "response",
+                    G_CALLBACK (gimp_rectangle_select_tool_rectangle_response),
+                    rect_tool);
+  g_signal_connect (widget, "change-complete",
+                    G_CALLBACK (gimp_rectangle_select_tool_rectangle_change_complete),
+                    rect_tool);
+
+  gimp_rectangle_options_connect (GIMP_RECTANGLE_OPTIONS (options),
+                                  gimp_display_get_image (shell->display),
+                                  G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
+                                  rect_tool);
+
+  gimp_rectangle_select_tool_update_option_defaults (rect_tool, FALSE);
+
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
 
 /* This function is called if the user clicks and releases the left
