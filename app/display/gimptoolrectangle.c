@@ -76,6 +76,8 @@ enum
   PROP_PRECISION,
   PROP_NARROW_MODE,
   PROP_DRAW_ELLIPSE,
+  PROP_ROUND_CORNERS,
+  PROP_CORNER_RADIUS,
 
   PROP_HIGHLIGHT,
   PROP_GUIDE,
@@ -206,6 +208,10 @@ struct _GimpToolRectanglePrivate
   /* Whether or not to draw an ellipse inside the rectangle */
   gboolean                draw_ellipse;
 
+  /* Whether to draw round corners */
+  gboolean                round_corners;
+  gboolean                corner_radius;
+
   /* For what scale the handle sizes is calculated. We must cache this
    * so that we can differentiate between when the tool is resumed
    * because of zoom level just has changed or because the highlight
@@ -249,6 +255,7 @@ struct _GimpToolRectanglePrivate
   GimpCanvasItem         *guides;
   GimpCanvasItem         *rectangle;
   GimpCanvasItem         *ellipse;
+  GimpCanvasItem         *corners[4];
   GimpCanvasItem         *center;
   GimpCanvasItem         *creating_corners[4];
   GimpCanvasItem         *handles[GIMP_N_TOOL_RECTANGLE_FUNCTIONS];
@@ -510,6 +517,20 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
+  g_object_class_install_property (object_class, PROP_ROUND_CORNERS,
+                                   g_param_spec_boolean ("round-corners",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_CORNER_RADIUS,
+                                   g_param_spec_double ("corner-radius",
+                                                        NULL, NULL,
+                                                        0.0, 1000.0, 5.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_HIGHLIGHT,
                                    g_param_spec_boolean ("highlight",
                                                          NULL, NULL,
@@ -672,6 +693,12 @@ gimp_tool_rectangle_constructed (GObject *object)
                                                0.0, 2 * G_PI,
                                                FALSE);
 
+  for (i = 0; i < 4; i++)
+    private->corners[i] = gimp_tool_widget_add_arc (widget,
+                                                    0, 0, 10, 10,
+                                                    0.0, 2 * G_PI,
+                                                    FALSE);
+
   gimp_tool_widget_pop_group (widget);
 
   private->center = gimp_tool_widget_add_handle (widget,
@@ -783,6 +810,12 @@ gimp_tool_rectangle_set_property (GObject      *object,
     case PROP_DRAW_ELLIPSE:
       private->draw_ellipse = g_value_get_boolean (value);
       break;
+    case PROP_ROUND_CORNERS:
+      private->round_corners = g_value_get_boolean (value);
+      break;
+    case PROP_CORNER_RADIUS:
+      private->corner_radius = g_value_get_double (value);
+      break;
 
     case PROP_HIGHLIGHT:
       private->highlight = g_value_get_boolean (value);
@@ -875,6 +908,12 @@ gimp_tool_rectangle_get_property (GObject    *object,
       break;
     case PROP_DRAW_ELLIPSE:
       g_value_set_boolean (value, private->draw_ellipse);
+      break;
+    case PROP_ROUND_CORNERS:
+      g_value_set_boolean (value, private->round_corners);
+      break;
+    case PROP_CORNER_RADIUS:
+      g_value_set_double (value, private->corner_radius);
       break;
 
     case PROP_HIGHLIGHT:
@@ -1134,6 +1173,46 @@ gimp_tool_rectangle_changed (GimpToolWidget *widget)
   else
     {
       gimp_canvas_item_set_visible (private->ellipse, FALSE);
+    }
+
+  if (private->round_corners && private->corner_radius > 0.0)
+    {
+      gdouble radius;
+
+      radius = MIN (private->corner_radius,
+                    MIN ((x2 - x1) / 2.0, (y2 - y1) / 2.0));
+
+      gimp_canvas_arc_set (private->corners[0],
+                           x1 + radius,
+                           y1 + radius,
+                           radius, radius,
+                           G_PI / 2.0, G_PI / 2.0);
+
+      gimp_canvas_arc_set (private->corners[1],
+                           x2 - radius,
+                           y1 + radius,
+                           radius, radius,
+                           0.0, G_PI / 2.0);
+
+      gimp_canvas_arc_set (private->corners[2],
+                           x1 + radius,
+                           y2 - radius,
+                           radius, radius,
+                           G_PI, G_PI / 2.0);
+
+      gimp_canvas_arc_set (private->corners[3],
+                           x2 - radius,
+                           y2 - radius,
+                           radius, radius,
+                           G_PI * 1.5, G_PI / 2.0);
+
+      for (i = 0; i < 4; i++)
+        gimp_canvas_item_set_visible (private->corners[i], TRUE);
+    }
+  else
+    {
+      for (i = 0; i < 4; i++)
+        gimp_canvas_item_set_visible (private->corners[i], FALSE);
     }
 
   gimp_canvas_item_set_visible (private->center, FALSE);
