@@ -16,7 +16,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	-I$(includedir)	\
-	$(GLIB_CFLAGS)	\
+	$(GTK_CFLAGS)	\
 	$(GEGL_CFLAGS)
 
 libexec_PROGRAMS = file-rawtherapee
