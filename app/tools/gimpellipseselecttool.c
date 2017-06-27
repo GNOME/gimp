@@ -38,8 +38,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_ellipse_select_tool_draw   (GimpDrawTool            *draw_tool);
-
 static void   gimp_ellipse_select_tool_select (GimpRectangleSelectTool *rect_tool,
                                                GimpChannelOps           operation,
                                                gint                     x,
@@ -74,12 +72,12 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_ellipse_select_tool_class_init (GimpEllipseSelectToolClass *klass)
 {
-  GimpDrawToolClass            *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
-  GimpRectangleSelectToolClass *rect_tool_class = GIMP_RECTANGLE_SELECT_TOOL_CLASS (klass);
+  GimpRectangleSelectToolClass *rect_tool_class;
 
-  draw_tool_class->draw   = gimp_ellipse_select_tool_draw;
+  rect_tool_class = GIMP_RECTANGLE_SELECT_TOOL_CLASS (klass);
 
-  rect_tool_class->select = gimp_ellipse_select_tool_select;
+  rect_tool_class->select       = gimp_ellipse_select_tool_select;
+  rect_tool_class->draw_ellipse = TRUE;
 }
 
 static void
@@ -89,27 +87,6 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_ELLIPSE_SELECT);
-}
-
-static void
-gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
-{
-  gint x1, y1, x2, y2;
-
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
-
-  g_object_get (draw_tool,
-                "x1", &x1,
-                "y1", &y1,
-                "x2", &x2,
-                "y2", &y2,
-                NULL);
-
-  gimp_draw_tool_add_arc (draw_tool,
-                          FALSE,
-                          x1, y1,
-                          x2 - x1, y2 - y1,
-                          0.0, 2 * G_PI);
 }
 
 static void

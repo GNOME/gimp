@@ -32,14 +32,15 @@
 #define GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS(t)  (GIMP_RECTANGLE_SELECT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 
-typedef struct _GimpRectangleSelectTool      GimpRectangleSelectTool;
-typedef struct _GimpRectangleSelectToolClass GimpRectangleSelectToolClass;
+typedef struct _GimpRectangleSelectTool        GimpRectangleSelectTool;
+typedef struct _GimpRectangleSelectToolPrivate GimpRectangleSelectToolPrivate;
+typedef struct _GimpRectangleSelectToolClass   GimpRectangleSelectToolClass;
 
 struct _GimpRectangleSelectTool
 {
-  GimpSelectionTool  parent_instance;
+  GimpSelectionTool               parent_instance;
 
-  gpointer           priv;
+  GimpRectangleSelectToolPrivate *private;
 };
 
 struct _GimpRectangleSelectToolClass
@@ -52,6 +53,8 @@ struct _GimpRectangleSelectToolClass
                    gint                     y,
                    gint                     w,
                    gint                     h);
+
+  gboolean draw_ellipse;
 };
 
 
