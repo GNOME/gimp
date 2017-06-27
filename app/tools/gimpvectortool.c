@@ -243,10 +243,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
 {
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
 
-  if (display != tool->display)
-    gimp_vector_tool_halt (vector_tool);
-
-  gimp_tool_control_activate (tool->control);
+  if (tool->display && display != tool->display)
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
 
   if (! tool->display)
     {
@@ -260,6 +258,8 @@ gimp_vector_tool_button_press (GimpTool            *tool,
     {
       vector_tool->grab_widget = vector_tool->path;
     }
+
+  gimp_tool_control_activate (tool->control);
 }
 
 static void
