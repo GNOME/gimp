@@ -204,7 +204,7 @@ gimp_vector_tool_dispose (GObject *object)
   GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (object);
 
   gimp_vector_tool_set_vectors (vector_tool, NULL);
-  g_clear_object (&vector_tool->path);
+  g_clear_object (&vector_tool->widget);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -250,13 +250,13 @@ gimp_vector_tool_button_press (GimpTool            *tool,
     {
       gimp_vector_tool_start (vector_tool, display);
 
-      gimp_tool_widget_hover (vector_tool->path, coords, state, TRUE);
+      gimp_tool_widget_hover (vector_tool->widget, coords, state, TRUE);
     }
 
-  if (gimp_tool_widget_button_press (vector_tool->path, coords, time, state,
+  if (gimp_tool_widget_button_press (vector_tool->widget, coords, time, state,
                                      press_type))
     {
-      vector_tool->grab_widget = vector_tool->path;
+      vector_tool->grab_widget = vector_tool->widget;
     }
 
   gimp_tool_control_activate (tool->control);
@@ -358,7 +358,7 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
   GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
   GimpDisplayShell *shell       = gimp_display_get_shell (display);
 
-  if (display != tool->display || ! vector_tool->path)
+  if (display != tool->display || ! vector_tool->widget)
     {
       GimpToolCursorType tool_cursor = GIMP_TOOL_CURSOR_PATHS;
 
@@ -389,7 +389,7 @@ gimp_vector_tool_start (GimpVectorTool *vector_tool,
 
   tool->display = display;
 
-  vector_tool->path = widget = gimp_tool_path_new (shell);
+  vector_tool->widget = widget = gimp_tool_path_new (shell);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
 
@@ -435,7 +435,7 @@ gimp_vector_tool_halt (GimpVectorTool *vector_tool)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
-  g_clear_object (&vector_tool->path);
+  g_clear_object (&vector_tool->widget);
 
   tool->display = NULL;
 }
@@ -646,7 +646,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   if (tool->display)
     {
-      gimp_tool_path_set_vectors (GIMP_TOOL_PATH (vector_tool->path), vectors);
+      gimp_tool_path_set_vectors (GIMP_TOOL_PATH (vector_tool->widget), vectors);
     }
   else
     {

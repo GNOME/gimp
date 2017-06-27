@@ -49,7 +49,7 @@ struct _GimpFreeSelectToolPrivate
   /* The selection operation active when the tool was started */
   GimpChannelOps  operation_at_start;
 
-  GimpToolWidget *polygon;
+  GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
 };
 
@@ -180,7 +180,7 @@ gimp_free_select_tool_finalize (GObject *object)
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (object);
   GimpFreeSelectToolPrivate *priv = fst->private;
 
-  g_clear_object (&priv->polygon);
+  g_clear_object (&priv->widget);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -201,14 +201,14 @@ gimp_free_select_tool_start (GimpFreeSelectTool *fst,
    */
   private->operation_at_start = options->operation;
 
-  private->polygon = gimp_tool_polygon_new (shell);
+  private->widget = gimp_tool_polygon_new (shell);
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), private->polygon);
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), private->widget);
 
-  g_signal_connect (private->polygon, "changed",
+  g_signal_connect (private->widget, "changed",
                     G_CALLBACK (gimp_free_select_tool_polygon_changed),
                     fst);
-  g_signal_connect (private->polygon, "response",
+  g_signal_connect (private->widget, "response",
                     G_CALLBACK (gimp_free_select_tool_polygon_response),
                     fst);
 
@@ -221,12 +221,12 @@ gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
 {
   GimpFreeSelectToolPrivate *private = fst->private;
 
-  if (private->polygon)
+  if (private->widget)
     {
       const GimpVector2 *points;
       gint               n_points;
 
-      gimp_tool_polygon_get_points (GIMP_TOOL_POLYGON (private->polygon),
+      gimp_tool_polygon_get_points (GIMP_TOOL_POLYGON (private->widget),
                                     &points, &n_points);
 
       if (n_points >= 3)
@@ -245,7 +245,7 @@ gimp_free_select_tool_halt (GimpFreeSelectTool *fst)
   GimpFreeSelectToolPrivate *private = fst->private;
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (fst), NULL);
-  g_clear_object (&private->polygon);
+  g_clear_object (&private->widget);
 }
 
 static void
@@ -290,9 +290,9 @@ gimp_free_select_tool_oper_update (GimpTool         *tool,
       return;
     }
 
-  if (priv->polygon)
+  if (priv->widget)
     {
-      gimp_tool_widget_hover (priv->polygon, coords, state, proximity);
+      gimp_tool_widget_hover (priv->widget, coords, state, proximity);
     }
 }
 
@@ -313,9 +313,9 @@ gimp_free_select_tool_cursor_update (GimpTool         *tool,
       return;
     }
 
-  if (priv->polygon && display == tool->display)
+  if (priv->widget && display == tool->display)
     {
-      gimp_tool_widget_get_cursor (priv->polygon, coords, state,
+      gimp_tool_widget_get_cursor (priv->widget, coords, state,
                                    NULL, NULL, &modifier);
     }
 
@@ -339,7 +339,7 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
   if (tool->display && tool->display != display)
     gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
 
-  if (! private->polygon) /* not tool->display, we have a subclass */
+  if (! private->widget) /* not tool->display, we have a subclass */
     {
       /* First of all handle delegation to the selection mask edit logic
        * if appropriate.
@@ -352,13 +352,13 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
 
       gimp_free_select_tool_start (fst, display);
 
-      gimp_tool_widget_hover (private->polygon, coords, state, TRUE);
+      gimp_tool_widget_hover (private->widget, coords, state, TRUE);
     }
 
-  if (gimp_tool_widget_button_press (private->polygon, coords, time, state,
+  if (gimp_tool_widget_button_press (private->widget, coords, time, state,
                                      press_type))
     {
-      private->grab_widget = private->polygon;
+      private->grab_widget = private->widget;
     }
 
   gimp_tool_control_activate (tool->control);
@@ -428,9 +428,9 @@ gimp_free_select_tool_key_press (GimpTool    *tool,
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv = fst->private;
 
-  if (priv->polygon && display == tool->display)
+  if (priv->widget && display == tool->display)
     {
-      return gimp_tool_widget_key_press (priv->polygon, kevent);
+      return gimp_tool_widget_key_press (priv->widget, kevent);
     }
 
   return FALSE;
@@ -446,9 +446,9 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv = fst->private;
 
-  if (priv->polygon && display == tool->display)
+  if (priv->widget && display == tool->display)
     {
-      gimp_tool_widget_hover_modifier (priv->polygon, key, press, state);
+      gimp_tool_widget_hover_modifier (priv->widget, key, press, state);
     }
 
   GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
@@ -465,9 +465,9 @@ gimp_free_select_tool_active_modifier_key (GimpTool        *tool,
   GimpFreeSelectTool        *fst  = GIMP_FREE_SELECT_TOOL (tool);
   GimpFreeSelectToolPrivate *priv = fst->private;
 
-  if (priv->polygon)
+  if (priv->widget)
     {
-      gimp_tool_widget_motion_modifier (priv->polygon, key, press, state);
+      gimp_tool_widget_motion_modifier (priv->widget, key, press, state);
 
       GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool,
                                                            key, press, state,

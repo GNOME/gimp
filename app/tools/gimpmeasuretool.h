@@ -39,7 +39,7 @@ struct _GimpMeasureTool
 {
   GimpDrawTool     parent_instance;
 
-  GimpToolWidget  *compass;
+  GimpToolWidget  *widget;
   GimpToolWidget  *grab_widget;
 
   gint             n_points;

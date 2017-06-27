@@ -41,7 +41,7 @@ struct _GimpCropTool
 
   GimpImage      *current_image;
 
-  GimpToolWidget *rectangle;
+  GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
 };
 

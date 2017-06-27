@@ -61,7 +61,7 @@ struct _GimpRectangleSelectToolPrivate
   gdouble            press_x;
   gdouble            press_y;
 
-  GimpToolWidget    *rectangle;
+  GimpToolWidget    *widget;
   GimpToolWidget    *grab_widget;
 };
 
@@ -250,13 +250,13 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
     {
       gimp_rectangle_select_tool_start (rect_tool, display);
 
-      gimp_tool_widget_hover (private->rectangle, coords, state, TRUE);
+      gimp_tool_widget_hover (private->widget, coords, state, TRUE);
 
       /* HACK: force CREATING on a newly created rectangle; otherwise,
        * the above binding of properties would cause the rectangle to
        * start with the size from tool options.
        */
-      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (private->rectangle),
+      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (private->widget),
                                         GIMP_TOOL_RECTANGLE_CREATING);
     }
 
@@ -268,14 +268,14 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
   if (state & (gimp_get_extend_selection_mask () |
                gimp_get_modify_selection_mask ()))
     {
-      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (private->rectangle),
+      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (private->widget),
                                         GIMP_TOOL_RECTANGLE_CREATING);
     }
 
-  if (gimp_tool_widget_button_press (private->rectangle, coords, time, state,
+  if (gimp_tool_widget_button_press (private->widget, coords, time, state,
                                      press_type))
     {
-      private->grab_widget = private->rectangle;
+      private->grab_widget = private->widget;
     }
 
   private->press_x = coords->x;
@@ -286,7 +286,7 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
    * unless the user has done something in the meantime
    */
   function =
-    gimp_tool_rectangle_get_function (GIMP_TOOL_RECTANGLE (private->rectangle));
+    gimp_tool_rectangle_get_function (GIMP_TOOL_RECTANGLE (private->widget));
 
   if (function == GIMP_TOOL_RECTANGLE_CREATING)
     {
@@ -419,9 +419,9 @@ gimp_rectangle_select_tool_key_press (GimpTool    *tool,
   GimpRectangleSelectTool        *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
   GimpRectangleSelectToolPrivate *priv      = rect_tool->private;
 
-  if (priv->rectangle && display == tool->display)
+  if (priv->widget && display == tool->display)
     {
-      if (gimp_tool_widget_key_press (priv->rectangle, kevent))
+      if (gimp_tool_widget_key_press (priv->widget, kevent))
         return TRUE;
     }
 
@@ -438,9 +438,9 @@ gimp_rectangle_select_tool_oper_update (GimpTool         *tool,
   GimpRectangleSelectTool        *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
   GimpRectangleSelectToolPrivate *priv      = rect_tool->private;
 
-  if (priv->rectangle && display == tool->display)
+  if (priv->widget && display == tool->display)
     {
-      gimp_tool_widget_hover (priv->rectangle, coords, state, proximity);
+      gimp_tool_widget_hover (priv->widget, coords, state, proximity);
     }
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
@@ -458,9 +458,9 @@ gimp_rectangle_select_tool_cursor_update (GimpTool         *tool,
   GimpCursorType                  cursor    = GIMP_CURSOR_CROSSHAIR_SMALL;
   GimpCursorModifier              modifier  = GIMP_CURSOR_MODIFIER_NONE;
 
-  if (private->rectangle && display == tool->display)
+  if (private->widget && display == tool->display)
     {
-      gimp_tool_widget_get_cursor (private->rectangle, coords, state,
+      gimp_tool_widget_get_cursor (private->widget, coords, state,
                                    &cursor, NULL, &modifier);
     }
 
@@ -668,7 +668,7 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
 
   tool->display = display;
 
-  private->rectangle = widget = gimp_tool_rectangle_new (shell);
+  private->widget = widget = gimp_tool_rectangle_new (shell);
 
   g_object_set (widget,
                 "draw-ellipse",
@@ -720,12 +720,12 @@ gimp_rectangle_select_tool_commit (GimpRectangleSelectTool *rect_tool)
   GimpTool                       *tool = GIMP_TOOL (rect_tool);
   GimpRectangleSelectToolPrivate *priv = rect_tool->private;
 
-  if (priv->rectangle)
+  if (priv->widget)
     {
       gdouble x1, y1, x2, y2;
       gint    w, h;
 
-      gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (priv->rectangle),
+      gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (priv->widget),
                                            &x1, &y1, &x2, &y2);
       w = x2 - x1;
       h = y2 - y1;
@@ -756,7 +756,7 @@ gimp_rectangle_select_tool_commit (GimpRectangleSelectTool *rect_tool)
 
               if (gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &w, &h))
                 {
-                  g_object_set (priv->rectangle,
+                  g_object_set (priv->widget,
                                 "x1", (gdouble) x,
                                 "y1", (gdouble) y,
                                 "x2", (gdouble) (x + w),
@@ -854,7 +854,7 @@ gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
-  g_clear_object (&priv->rectangle);
+  g_clear_object (&priv->widget);
 
   tool->display = NULL;
 }
@@ -891,7 +891,7 @@ gimp_rectangle_select_tool_update_option_defaults (GimpRectangleSelectTool *rect
 
   rect_options = GIMP_RECTANGLE_OPTIONS (gimp_tool_get_options (tool));
 
-  if (! priv->rectangle)
+  if (! priv->widget)
     return;
 
   if (tool->display != NULL && ! ignore_pending)
@@ -901,7 +901,7 @@ gimp_rectangle_select_tool_update_option_defaults (GimpRectangleSelectTool *rect
        * rectangle width/height.
        */
 
-      gimp_tool_rectangle_pending_size_set (GIMP_TOOL_RECTANGLE (priv->rectangle),
+      gimp_tool_rectangle_pending_size_set (GIMP_TOOL_RECTANGLE (priv->widget),
                                             G_OBJECT (rect_options),
                                             "default-aspect-numerator",
                                             "default-aspect-denominator");
@@ -933,6 +933,6 @@ gimp_rectangle_select_tool_auto_shrink (GimpRectangleSelectTool *rect_tool)
                 "shrink-merged", &shrink_merged,
                 NULL);
 
-  gimp_tool_rectangle_auto_shrink (GIMP_TOOL_RECTANGLE (private->rectangle),
+  gimp_tool_rectangle_auto_shrink (GIMP_TOOL_RECTANGLE (private->widget),
                                    shrink_merged);
 }

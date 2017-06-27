@@ -311,11 +311,11 @@ gimp_blend_tool_button_press (GimpTool            *tool,
   if (tool->display && display != tool->display)
     gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
 
-  if (! blend_tool->line)
+  if (! blend_tool->widget)
     {
       gimp_blend_tool_start (blend_tool, coords, display);
 
-      gimp_tool_widget_hover (blend_tool->line, coords, state, TRUE);
+      gimp_tool_widget_hover (blend_tool->widget, coords, state, TRUE);
     }
 
   /*  save the current line for undo, widget_button_press() might change it
@@ -325,10 +325,10 @@ gimp_blend_tool_button_press (GimpTool            *tool,
   end_x   = blend_tool->end_x;
   end_y   = blend_tool->end_y;
 
-  if (gimp_tool_widget_button_press (blend_tool->line, coords, time, state,
+  if (gimp_tool_widget_button_press (blend_tool->widget, coords, time, state,
                                      press_type))
     {
-      blend_tool->grab_widget = blend_tool->line;
+      blend_tool->grab_widget = blend_tool->widget;
 
       blend_tool->undo_stack =
         g_list_prepend (blend_tool->undo_stack,
@@ -426,7 +426,7 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
                             GIMP_CURSOR_MODIFIER_BAD);
       return;
     }
-  else if (display != tool->display || ! blend_tool->line)
+  else if (display != tool->display || ! blend_tool->widget)
     {
       gimp_tool_set_cursor (tool, display,
                             gimp_tool_control_get_cursor (tool->control),
@@ -482,7 +482,7 @@ gimp_blend_tool_undo (GimpTool    *tool,
 
   info = blend_tool->undo_stack->data;
 
-  g_object_set (blend_tool->line,
+  g_object_set (blend_tool->widget,
                 "x1", info->start_x,
                 "y1", info->start_y,
                 "x2", info->end_x,
@@ -513,7 +513,7 @@ gimp_blend_tool_redo (GimpTool    *tool,
 
   info = blend_tool->redo_stack->data;
 
-  g_object_set (blend_tool->line,
+  g_object_set (blend_tool->widget,
                 "x1", info->start_x,
                 "y1", info->start_y,
                 "x2", info->end_x,
@@ -601,18 +601,18 @@ gimp_blend_tool_start (GimpBlendTool    *blend_tool,
   blend_tool->end_x   = coords->x;
   blend_tool->end_y   = coords->y;
 
-  blend_tool->line = gimp_tool_line_new (shell,
-                                         blend_tool->start_x,
-                                         blend_tool->start_y,
-                                         blend_tool->end_x,
-                                         blend_tool->end_y);
+  blend_tool->widget = gimp_tool_line_new (shell,
+                                           blend_tool->start_x,
+                                           blend_tool->start_y,
+                                           blend_tool->end_x,
+                                           blend_tool->end_y);
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), blend_tool->line);
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), blend_tool->widget);
 
-  g_signal_connect (blend_tool->line, "changed",
+  g_signal_connect (blend_tool->widget, "changed",
                     G_CALLBACK (gimp_blend_tool_line_changed),
                     blend_tool);
-  g_signal_connect (blend_tool->line, "response",
+  g_signal_connect (blend_tool->widget, "response",
                     G_CALLBACK (gimp_blend_tool_line_response),
                     blend_tool);
 
@@ -689,7 +689,7 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (blend_tool));
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
-  g_clear_object (&blend_tool->line);
+  g_clear_object (&blend_tool->widget);
 
   tool->display  = NULL;
   tool->drawable = NULL;

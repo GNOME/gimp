@@ -45,7 +45,7 @@ struct _GimpVectorTool
   GimpVectors    *vectors;        /* the current Vector data           */
   GimpVectorMode  saved_mode;     /* used by modifier_key()            */
 
-  GimpToolWidget *path;
+  GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
 };
 

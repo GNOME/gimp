@@ -49,7 +49,7 @@ struct _GimpBlendTool
   GList              *undo_stack;
   GList              *redo_stack;
 
-  GimpToolWidget     *line;
+  GimpToolWidget     *widget;
   GimpToolWidget     *grab_widget;
 
   GeglNode           *graph;

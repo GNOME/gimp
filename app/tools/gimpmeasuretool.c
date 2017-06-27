@@ -194,17 +194,17 @@ gimp_measure_tool_button_press (GimpTool            *tool,
   if (tool->display && display != tool->display)
     gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
 
-  if (! measure->compass)
+  if (! measure->widget)
     {
       gimp_measure_tool_start (measure, display, coords);
 
-      gimp_tool_widget_hover (measure->compass, coords, state, TRUE);
+      gimp_tool_widget_hover (measure->widget, coords, state, TRUE);
     }
 
-  if (gimp_tool_widget_button_press (measure->compass, coords, time, state,
+  if (gimp_tool_widget_button_press (measure->widget, coords, time, state,
                                      press_type))
     {
-      measure->grab_widget = measure->compass;
+      measure->grab_widget = measure->widget;
     }
 
   /*  create the info window if necessary  */
@@ -360,27 +360,27 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
   measure->x[2]     = 0;
   measure->y[2]     = 0;
 
-  measure->compass = gimp_tool_compass_new (shell,
-                                            measure->n_points,
-                                            measure->x[0],
-                                            measure->y[0],
-                                            measure->x[1],
-                                            measure->y[1],
-                                            measure->x[2],
-                                            measure->y[2]);
+  measure->widget = gimp_tool_compass_new (shell,
+                                           measure->n_points,
+                                           measure->x[0],
+                                           measure->y[0],
+                                           measure->x[1],
+                                           measure->y[1],
+                                           measure->x[2],
+                                           measure->y[2]);
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), measure->compass);
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), measure->widget);
 
-  g_signal_connect (measure->compass, "changed",
+  g_signal_connect (measure->widget, "changed",
                     G_CALLBACK (gimp_measure_tool_compass_changed),
                     measure);
-  g_signal_connect (measure->compass, "response",
+  g_signal_connect (measure->widget, "response",
                     G_CALLBACK (gimp_measure_tool_compass_response),
                     measure);
-  g_signal_connect (measure->compass, "status",
+  g_signal_connect (measure->widget, "status",
                     G_CALLBACK (gimp_measure_tool_compass_status),
                     measure);
-  g_signal_connect (measure->compass, "create-guides",
+  g_signal_connect (measure->widget, "create-guides",
                     G_CALLBACK (gimp_measure_tool_compass_create_guides),
                     measure);
 
@@ -401,7 +401,7 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
-  g_clear_object (&measure->compass);
+  g_clear_object (&measure->widget);
 
   g_clear_object (&measure->gui);
 

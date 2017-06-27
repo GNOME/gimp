@@ -215,20 +215,20 @@ gimp_crop_tool_button_press (GimpTool            *tool,
     {
       gimp_crop_tool_start (crop_tool, display);
 
-      gimp_tool_widget_hover (crop_tool->rectangle, coords, state, TRUE);
+      gimp_tool_widget_hover (crop_tool->widget, coords, state, TRUE);
 
       /* HACK: force CREATING on a newly created rectangle; otherwise,
        * the above binding of properties would cause the rectangle to
        * start with the size from tool options.
        */
-      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (crop_tool->rectangle),
+      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (crop_tool->widget),
                                         GIMP_TOOL_RECTANGLE_CREATING);
     }
 
-  if (gimp_tool_widget_button_press (crop_tool->rectangle, coords, time, state,
+  if (gimp_tool_widget_button_press (crop_tool->widget, coords, time, state,
                                      press_type))
     {
-      crop_tool->grab_widget = crop_tool->rectangle;
+      crop_tool->grab_widget = crop_tool->widget;
     }
 
   gimp_tool_control_activate (tool->control);
@@ -278,12 +278,12 @@ gimp_crop_tool_options_notify (GimpTool         *tool,
 {
   GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
 
-  if (crop_tool->rectangle)
+  if (crop_tool->widget)
     {
       if (! strcmp (pspec->name, "layer-only") ||
           ! strcmp (pspec->name, "allow-growing"))
         {
-          gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (crop_tool->rectangle),
+          gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (crop_tool->widget),
                                               gimp_crop_tool_get_constraint (crop_tool));
         }
     }
@@ -352,7 +352,7 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
 
   tool->display = display;
 
-  crop_tool->rectangle = widget = gimp_tool_rectangle_new (shell);
+  crop_tool->widget = widget = gimp_tool_rectangle_new (shell);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
 
@@ -395,7 +395,7 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
   gdouble          x2, y2;
   gint             w, h;
 
-  gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (crop_tool->rectangle),
+  gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (crop_tool->widget),
                                        &x, &y, &x2, &y2);
 
   w = x2 - x;
@@ -468,7 +468,7 @@ gimp_crop_tool_halt (GimpCropTool *crop_tool)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
-  g_clear_object (&crop_tool->rectangle);
+  g_clear_object (&crop_tool->widget);
 
   tool->display  = NULL;
   tool->drawable = NULL;
@@ -487,7 +487,7 @@ gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
                                        gboolean      ignore_pending)
 {
   GimpTool             *tool      = GIMP_TOOL (crop_tool);
-  GimpToolRectangle    *rectangle = GIMP_TOOL_RECTANGLE (crop_tool->rectangle);
+  GimpToolRectangle    *rectangle = GIMP_TOOL_RECTANGLE (crop_tool->widget);
   GimpRectangleOptions *options;
 
   options = GIMP_RECTANGLE_OPTIONS (GIMP_TOOL_GET_OPTIONS (tool));
@@ -584,6 +584,6 @@ gimp_crop_tool_auto_shrink (GimpCropTool *crop_tool)
                 "shrink-merged", &shrink_merged,
                 NULL);
 
-  gimp_tool_rectangle_auto_shrink (GIMP_TOOL_RECTANGLE (crop_tool->rectangle),
+  gimp_tool_rectangle_auto_shrink (GIMP_TOOL_RECTANGLE (crop_tool->widget),
                                    shrink_merged);
 }
