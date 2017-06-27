@@ -24,6 +24,7 @@ plug-ins/file-fli
 plug-ins/file-ico
 plug-ins/file-jpeg
 plug-ins/file-psd
+plug-ins/file-rawtherapee
 plug-ins/file-sgi
 plug-ins/file-tiff
 plug-ins/file-uri
