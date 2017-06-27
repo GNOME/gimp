@@ -51,7 +51,12 @@ enum
 
 struct _AnimationLayerViewPrivate
 {
-  gint32 image_id;
+  gint32     image_id;
+
+  GtkWidget *tree_view;
+
+  gboolean   filter_active;
+  gchar     *filter;
 };
 
 /* GObject handlers */
@@ -81,8 +86,10 @@ static GtkTreePath * animation_layer_view_get_row (AnimationLayerView *view,
 /* Signal handlers */
 static void          on_selection_changed         (GtkTreeSelection   *selection,
                                                    AnimationLayerView *view);
+static void          on_filter_toggled            (GtkToggleButton    *button,
+                                                   AnimationLayerView *view);
 
-G_DEFINE_TYPE (AnimationLayerView, animation_layer_view, GTK_TYPE_TREE_VIEW)
+G_DEFINE_TYPE (AnimationLayerView, animation_layer_view, GTK_TYPE_VBOX)
 
 #define parent_class animation_layer_view_parent_class
 
@@ -136,17 +143,25 @@ animation_layer_view_class_init (AnimationLayerViewClass *klass)
 static void
 animation_layer_view_init (AnimationLayerView *view)
 {
+  GtkTreeStore *store;
+
   view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
                                             ANIMATION_TYPE_LAYER_VIEW,
                                             AnimationLayerViewPrivate);
 
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 0,
-                                               _("Layer"),
+  store = gtk_tree_store_new (COLUMN_SIZE, G_TYPE_INT, G_TYPE_STRING);
+  view->priv->tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+  g_object_unref (store);
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view->priv->tree_view),
+                                               0, _("Layer"),
                                                gtk_cell_renderer_text_new (),
                                                "text", COLUMN_LAYER_NAME,
                                                NULL);
-  gtk_tree_view_set_rubber_banding (GTK_TREE_VIEW (view), TRUE);
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
+  gtk_tree_view_set_rubber_banding (GTK_TREE_VIEW (view->priv->tree_view),
+                                    TRUE);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view->priv->tree_view), FALSE);
+  gtk_box_pack_start (GTK_BOX (view), view->priv->tree_view, TRUE, TRUE, 0);
+  gtk_widget_show (view->priv->tree_view);
 }
 
 /************ Public Functions ****************/
@@ -160,17 +175,11 @@ animation_layer_view_init (AnimationLayerView *view)
 GtkWidget *
 animation_layer_view_new (gint32 image_id)
 {
-  GtkWidget        *layer_view;
-  GtkTreeStore     *store;
-
-  store = gtk_tree_store_new (COLUMN_SIZE, G_TYPE_INT, G_TYPE_STRING);
+  GtkWidget *layer_view;
 
   layer_view = g_object_new (ANIMATION_TYPE_LAYER_VIEW,
                              "image", image_id,
-                             "model", store,
                              NULL);
-  g_object_unref (store);
-
   return layer_view;
 }
 
@@ -183,11 +192,65 @@ animation_layer_view_new (gint32 image_id)
 void
 animation_layer_view_refresh (AnimationLayerView *view)
 {
-  GtkTreeStore *store;
+  GtkTreeModel     *model;
+  GtkTreeSelection *selection;
+  GList            *rows;
+  GList            *iter;
+  GList            *tattoos = NULL;
 
-  store = GTK_TREE_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
-  gtk_tree_store_clear (store);
-  animation_layer_view_fill (view, store, 0, NULL);
+  model = gtk_tree_view_get_model (GTK_TREE_VIEW (view->priv->tree_view));
+
+  /* Save current selection. */
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view->priv->tree_view));
+  rows = gtk_tree_selection_get_selected_rows (selection, &model);
+  for (iter = rows; iter; iter = iter->next)
+    {
+      GtkTreeIter it;
+      gint        tattoo;
+
+      if (gtk_tree_model_get_iter (model, &it, iter->data))
+        {
+          gtk_tree_model_get (model, &it,
+                              COLUMN_LAYER_TATTOO, &tattoo, -1);
+          tattoos = g_list_prepend (tattoos, GINT_TO_POINTER (tattoo));
+        }
+    }
+  g_list_foreach (rows, (GFunc) gtk_tree_path_free, NULL);
+  g_list_free (rows);
+
+  /* Actual refresh. */
+  gtk_tree_store_clear (GTK_TREE_STORE (model));
+  animation_layer_view_fill (view, GTK_TREE_STORE (model), 0, NULL);
+
+  /* Restore the selected rows. */
+  for (iter = tattoos; iter; iter = iter->next)
+    {
+      gint         tattoo = GPOINTER_TO_INT (iter->data);
+      GtkTreePath *path;
+
+      path = animation_layer_view_get_row (view, tattoo, NULL);
+      if (path)
+        {
+          gtk_tree_selection_select_path (selection, path);
+          gtk_tree_path_free (path);
+        }
+    }
+  g_list_free (tattoos);
+}
+
+void
+animation_layer_view_filter (AnimationLayerView *view,
+                             const gchar        *filter)
+{
+  if (g_strcmp0 (view->priv->filter, filter) != 0)
+    {
+      if (view->priv->filter)
+        g_free (view->priv->filter);
+      view->priv->filter = g_strdup (filter);
+
+      if (view->priv->filter_active)
+        animation_layer_view_refresh (view);
+    }
 }
 
 /**
@@ -204,7 +267,7 @@ animation_layer_view_select (AnimationLayerView *view,
   GtkTreeSelection *selection;
   const GList      *layer;
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view->priv->tree_view));
   g_signal_handlers_block_by_func (selection,
                                    G_CALLBACK (on_selection_changed),
                                    view);
@@ -232,15 +295,24 @@ animation_layer_view_select (AnimationLayerView *view,
 static void
 animation_layer_view_constructed (GObject *object)
 {
-  GtkTreeView      *view = GTK_TREE_VIEW (object);
-  GtkTreeSelection *selection;
+  AnimationLayerView *view = ANIMATION_LAYER_VIEW (object);
+  GtkTreeView        *tree_view = GTK_TREE_VIEW (view->priv->tree_view);
+  GtkTreeSelection   *selection;
+  GtkWidget          *button;
 
-  selection = gtk_tree_view_get_selection (view);
+  selection = gtk_tree_view_get_selection (tree_view);
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
   g_signal_connect (selection, "changed",
                     G_CALLBACK (on_selection_changed),
                     view);
+
+  button = gtk_check_button_new_with_label (_("Filter by level title"));
+  gtk_box_pack_start (GTK_BOX (view), button, FALSE, FALSE, 0);
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (on_filter_toggled),
+                    view);
+  gtk_widget_show (button);
 }
 
 static void
@@ -287,7 +359,8 @@ static gboolean
 animation_layer_view_button_press (GtkWidget      *widget,
                                    GdkEventButton *event)
 {
-  GtkTreeView         *tree_view = GTK_TREE_VIEW (widget);
+  AnimationLayerView  *view = ANIMATION_LAYER_VIEW (widget);
+  GtkTreeView         *tree_view = GTK_TREE_VIEW (view->priv->tree_view);
   GtkTreeModel        *model;
   GtkTreeSelection    *selection;
   GtkTreeRowReference *reference = NULL;
@@ -377,10 +450,15 @@ animation_layer_view_fill (AnimationLayerView *view,
 
   for (i = 0; i < num_layers; i++)
     {
+      const gchar *name = gimp_item_get_name (layers[i]);
+
+      if (view->priv->filter_active && view->priv->filter &&
+          ! g_str_has_prefix (name, view->priv->filter))
+        continue;
       gtk_tree_store_insert (store, &iter, parent, i);
       gtk_tree_store_set (store, &iter,
                           COLUMN_LAYER_TATTOO, gimp_item_get_tattoo (layers[i]),
-                          COLUMN_LAYER_NAME, gimp_item_get_name (layers[i]),
+                          COLUMN_LAYER_NAME, name,
                           -1);
       if (gimp_item_is_group (layers[i]))
         {
@@ -407,7 +485,7 @@ animation_layer_view_get_row (AnimationLayerView *view,
   GtkTreeModel *model;
   GtkTreeIter   iter;
 
-  model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
+  model = gtk_tree_view_get_model (GTK_TREE_VIEW (view->priv->tree_view));
   if (! gtk_tree_model_iter_children (model, &iter, parent))
     return NULL;
 
@@ -447,7 +525,7 @@ static void
 on_selection_changed (GtkTreeSelection   *selection,
                       AnimationLayerView *view)
 {
-  GtkTreeView         *tree_view = GTK_TREE_VIEW (view);
+  GtkTreeView         *tree_view = GTK_TREE_VIEW (view->priv->tree_view);
   GList               *layers = NULL;
   GtkTreeModel        *model;
   GList               *rows;
@@ -485,4 +563,15 @@ on_selection_changed (GtkTreeSelection   *selection,
   g_signal_emit (view, animation_layer_view_signals[LAYER_SELECTION], 0,
                  layers);
   g_list_free (layers);
+}
+
+static void
+on_filter_toggled (GtkToggleButton    *button,
+                   AnimationLayerView *view)
+{
+  if (gtk_toggle_button_get_active (button) != view->priv->filter_active)
+    {
+      view->priv->filter_active = gtk_toggle_button_get_active (button);
+      animation_layer_view_refresh (view);
+    }
 }

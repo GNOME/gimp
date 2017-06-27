@@ -1648,6 +1648,20 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
         }
 
       /* Finally update the layer view. */
+      if (xsheet->priv->selected_track >= 0)
+        {
+          const gchar *title;
+
+          title = animation_cel_animation_get_track_title (xsheet->priv->animation,
+                                                           xsheet->priv->selected_track);
+          animation_layer_view_filter (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                       title);
+        }
+      else
+        {
+          animation_layer_view_filter (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
+                                       NULL);
+        }
       if (g_queue_is_empty (xsheet->priv->selected_frames))
         {
           animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),

@@ -34,14 +34,14 @@ typedef struct _AnimationLayerViewPrivate AnimationLayerViewPrivate;
 
 struct _AnimationLayerView
 {
-  GtkTreeView                parent_instance;
+  GtkVBox                    parent_instance;
 
   AnimationLayerViewPrivate *priv;
 };
 
 struct _AnimationLayerViewClass
 {
-  GtkTreeViewClass  parent_class;
+  GtkVBoxClass  parent_class;
 };
 
 GType       animation_layer_view_get_type (void) G_GNUC_CONST;
@@ -50,6 +50,8 @@ GtkWidget * animation_layer_view_new      (gint32              image_id);
 
 void        animation_layer_view_refresh  (AnimationLayerView *view);
 
+void        animation_layer_view_filter   (AnimationLayerView *view,
+                                           const gchar        *filter);
 void        animation_layer_view_select   (AnimationLayerView *view,
                                            const GList        *layers);
 #endif  /*  __ANIMATION_LAYER_VIEW_H__  */
