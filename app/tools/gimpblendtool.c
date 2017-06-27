@@ -412,29 +412,28 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
                                GdkModifierType   state,
                                GimpDisplay      *display)
 {
-  GimpBlendTool      *blend_tool = GIMP_BLEND_TOOL (tool);
-  GimpImage          *image      = gimp_display_get_image (display);
-  GimpDrawable       *drawable   = gimp_image_get_active_drawable (image);
-  GimpCursorModifier  modifier   = GIMP_CURSOR_MODIFIER_NONE;
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+  GimpImage     *image      = gimp_display_get_image (display);
+  GimpDrawable  *drawable   = gimp_image_get_active_drawable (image);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
       gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
       ! gimp_item_is_visible (GIMP_ITEM (drawable)))
     {
-      modifier = GIMP_CURSOR_MODIFIER_BAD;
+      gimp_tool_set_cursor (tool, display,
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            GIMP_CURSOR_MODIFIER_BAD);
+      return;
     }
   else if (display != tool->display || ! blend_tool->line)
     {
-      modifier = GIMP_CURSOR_MODIFIER_PLUS;
+      gimp_tool_set_cursor (tool, display,
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            GIMP_CURSOR_MODIFIER_PLUS);
+      return;
     }
-  else if (blend_tool->line)
-    {
-      gimp_tool_widget_get_cursor (blend_tool->line,
-                                   coords, state,
-                                   NULL, NULL, &modifier);
-    }
-
-  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

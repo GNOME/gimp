@@ -91,6 +91,10 @@ static void          gimp_draw_tool_oper_update   (GimpTool         *tool,
                                                    GdkModifierType   state,
                                                    gboolean          proximity,
                                                    GimpDisplay      *display);
+static void          gimp_draw_tool_cursor_update (GimpTool         *tool,
+                                                   const GimpCoords *coords,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *display);
 
 static void          gimp_draw_tool_widget_status (GimpToolWidget   *widget,
                                                    const gchar      *status,
@@ -137,6 +141,7 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
   tool_class->modifier_key        = gimp_draw_tool_modifier_key;
   tool_class->active_modifier_key = gimp_draw_tool_active_modifier_key;
   tool_class->oper_update         = gimp_draw_tool_oper_update;
+  tool_class->cursor_update       = gimp_draw_tool_cursor_update;
 
   klass->draw                     = gimp_draw_tool_real_draw;
 }
@@ -317,6 +322,37 @@ gimp_draw_tool_oper_update (GimpTool         *tool,
       GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                    proximity, display);
     }
+}
+
+static void
+gimp_draw_tool_cursor_update (GimpTool         *tool,
+                              const GimpCoords *coords,
+                              GdkModifierType   state,
+                              GimpDisplay      *display)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  if (draw_tool->widget && display == draw_tool->display)
+    {
+      GimpCursorType     cursor;
+      GimpToolCursorType tool_cursor;
+      GimpCursorModifier modifier;
+
+      cursor      = gimp_tool_control_get_cursor (tool->control);
+      tool_cursor = gimp_tool_control_get_tool_cursor (tool->control);
+      modifier    = gimp_tool_control_get_cursor_modifier (tool->control);
+
+      if (gimp_tool_widget_get_cursor (draw_tool->widget, coords, state,
+                                       &cursor, &tool_cursor, &modifier))
+        {
+          gimp_tool_set_cursor (tool, display,
+                                cursor, tool_cursor, modifier);
+          return;
+        }
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+                                                 display);
 }
 
 static void

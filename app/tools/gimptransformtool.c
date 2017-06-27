@@ -213,6 +213,8 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
                                      GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_precision   (tool->control,
                                      GIMP_CURSOR_PRECISION_SUBPIXEL);
+  gimp_tool_control_set_cursor      (tool->control,
+                                     GIMP_CURSOR_CROSSHAIR_SMALL);
 
   tr_tool->progress_text = _("Transforming");
 
@@ -511,28 +513,17 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
                                    GdkModifierType   state,
                                    GimpDisplay      *display)
 {
-  GimpTransformTool  *tr_tool     = GIMP_TRANSFORM_TOOL (tool);
-  GimpImage          *image       = gimp_display_get_image (display);
-  GimpCursorType      cursor      = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_NONE;
-  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
-
-  if (tr_tool->widget)
-    {
-      if (display == tool->display)
-        {
-          gimp_tool_widget_get_cursor (tr_tool->widget,
-                                       coords, state,
-                                       &cursor, &tool_cursor, &modifier);
-        }
-    }
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  GimpImage         *image   = gimp_display_get_image (display);
 
   if (! gimp_transform_tool_check_active_item (tr_tool, image, TRUE, NULL))
-    modifier = GIMP_CURSOR_MODIFIER_BAD;
-
-  gimp_tool_control_set_cursor          (tool->control, cursor);
-  gimp_tool_control_set_tool_cursor     (tool->control, tool_cursor);
-  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+    {
+      gimp_tool_set_cursor (tool, display,
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            GIMP_CURSOR_MODIFIER_BAD);
+      return;
+    }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }

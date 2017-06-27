@@ -72,10 +72,6 @@ static void     gimp_measure_tool_motion          (GimpTool              *tool,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
-static void     gimp_measure_tool_cursor_update   (GimpTool              *tool,
-                                                   const GimpCoords      *coords,
-                                                   GdkModifierType        state,
-                                                   GimpDisplay           *display);
 
 static void     gimp_measure_tool_compass_changed (GimpToolWidget        *widget,
                                                    GimpMeasureTool       *measure);
@@ -139,7 +135,6 @@ gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
   tool_class->button_press   = gimp_measure_tool_button_press;
   tool_class->button_release = gimp_measure_tool_button_release;
   tool_class->motion         = gimp_measure_tool_motion;
-  tool_class->cursor_update  = gimp_measure_tool_cursor_update;
 }
 
 static void
@@ -150,6 +145,8 @@ gimp_measure_tool_init (GimpMeasureTool *measure)
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_precision          (tool->control,
                                             GIMP_CURSOR_PRECISION_PIXEL_BORDER);
+  gimp_tool_control_set_cursor             (tool->control,
+                                            GIMP_CURSOR_CROSSHAIR_SMALL);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_MEASURE);
 
@@ -266,29 +263,6 @@ gimp_measure_tool_motion (GimpTool         *tool,
     {
       gimp_tool_widget_motion (measure->grab_widget, coords, time, state);
     }
-}
-
-static void
-gimp_measure_tool_cursor_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
-                                 GdkModifierType   state,
-                                 GimpDisplay      *display)
-{
-  GimpMeasureTool   *measure  = GIMP_MEASURE_TOOL (tool);
-  GimpCursorType     cursor   = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_NONE;
-
-  if (display == tool->display && measure->compass)
-    {
-      gimp_tool_widget_get_cursor (measure->compass,
-                                   coords, state,
-                                   &cursor, NULL, &modifier);
-    }
-
-  gimp_tool_control_set_cursor          (tool->control, cursor);
-  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
-
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void

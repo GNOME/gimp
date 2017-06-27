@@ -355,29 +355,25 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
                                 GdkModifierType   state,
                                 GimpDisplay      *display)
 {
-  GimpVectorTool     *vector_tool = GIMP_VECTOR_TOOL (tool);
-  GimpDisplayShell   *shell       = gimp_display_get_shell (display);
-  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_PATHS;
-  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
+  GimpVectorTool   *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpDisplayShell *shell       = gimp_display_get_shell (display);
 
-  if (display == tool->display && vector_tool->path)
+  if (display != tool->display || ! vector_tool->path)
     {
-      gimp_tool_widget_get_cursor (vector_tool->path,
-                                   coords, state,
-                                   NULL, &tool_cursor, &modifier);
-    }
-  else if (gimp_image_pick_vectors (gimp_display_get_image (display),
-                                    coords->x, coords->y,
-                                    FUNSCALEX (shell,
-                                               GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2),
-                                    FUNSCALEY (shell,
-                                               GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2)))
-    {
-      tool_cursor = GIMP_TOOL_CURSOR_HAND;
-    }
+      GimpToolCursorType tool_cursor = GIMP_TOOL_CURSOR_PATHS;
 
-  gimp_tool_control_set_tool_cursor     (tool->control, tool_cursor);
-  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+      if (gimp_image_pick_vectors (gimp_display_get_image (display),
+                                   coords->x, coords->y,
+                                   FUNSCALEX (shell,
+                                              GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2),
+                                   FUNSCALEY (shell,
+                                              GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2)))
+        {
+          tool_cursor = GIMP_TOOL_CURSOR_HAND;
+        }
+
+      gimp_tool_control_set_tool_cursor (tool->control, tool_cursor);
+    }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
