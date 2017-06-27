@@ -374,7 +374,7 @@ load_image (const gchar  *filename,
   if (g_spawn_sync (NULL,
                     argv,
                     NULL,
-//                     G_SPAWN_STDOUT_TO_DEV_NULL |
+                    /*G_SPAWN_STDOUT_TO_DEV_NULL |*/
                     G_SPAWN_STDERR_TO_DEV_NULL |
                     (search_path ? G_SPAWN_SEARCH_PATH : 0),
                     NULL,
@@ -389,7 +389,7 @@ load_image (const gchar  *filename,
         gimp_image_set_filename (image_ID, filename);
     }
 
-// if (darktable_stdout) printf ("%s\n", darktable_stdout);
+  /*if (darktable_stdout) printf ("%s\n", darktable_stdout);*/
   g_free(darktable_stdout);
 
   g_unlink (filename_out);
