@@ -212,14 +212,6 @@ struct _GimpToolRectanglePrivate
   gboolean                round_corners;
   gboolean                corner_radius;
 
-  /* For what scale the handle sizes is calculated. We must cache this
-   * so that we can differentiate between when the tool is resumed
-   * because of zoom level just has changed or because the highlight
-   * has just been updated.
-   */
-  gdouble                 scale_x_used_for_handle_size_calculations;
-  gdouble                 scale_y_used_for_handle_size_calculations;
-
   /* For saving in case of cancelation. */
   gdouble                 saved_x1;
   gdouble                 saved_y1;
@@ -981,8 +973,15 @@ gimp_tool_rectangle_notify (GObject    *object,
   if (G_OBJECT_CLASS (parent_class)->notify)
     G_OBJECT_CLASS (parent_class)->notify (object, pspec);
 
-  if (! strcmp  (pspec->name, "x") &&
-      ! PIXEL_FEQUAL (private->x1, private->x))
+  if (! strcmp (pspec->name, "x1") ||
+      ! strcmp (pspec->name, "y1") ||
+      ! strcmp (pspec->name, "x2") ||
+      ! strcmp (pspec->name, "y2"))
+    {
+      gimp_tool_rectangle_update_int_rect (rectangle);
+    }
+  else if (! strcmp  (pspec->name, "x") &&
+           ! PIXEL_FEQUAL (private->x1, private->x))
     {
       gimp_tool_rectangle_synthesize_motion (rectangle,
                                              GIMP_TOOL_RECTANGLE_MOVING,
@@ -1256,8 +1255,7 @@ gimp_tool_rectangle_changed (GimpToolWidget *widget)
         {
           gimp_canvas_corner_set (private->creating_corners[i],
                                   x1, y1, x2 - x1, y2 - y1,
-                                  private->corner_handle_w,
-                                  private->corner_handle_h,
+                                  handle_width, handle_height,
                                   private->narrow_mode);
           gimp_canvas_item_set_visible (private->creating_corners[i], TRUE);
         }
@@ -1265,13 +1263,11 @@ gimp_tool_rectangle_changed (GimpToolWidget *widget)
 
     case GIMP_TOOL_RECTANGLE_RESIZING_TOP:
     case GIMP_TOOL_RECTANGLE_RESIZING_BOTTOM:
-      handle_width  = private->top_and_bottom_handle_w;
-      handle_height = private->corner_handle_h;
+      handle_width = private->top_and_bottom_handle_w;
       break;
 
     case GIMP_TOOL_RECTANGLE_RESIZING_LEFT:
     case GIMP_TOOL_RECTANGLE_RESIZING_RIGHT:
-      handle_width  = private->corner_handle_w;
       handle_height = private->left_and_right_handle_h;
       break;
 
@@ -1279,8 +1275,8 @@ gimp_tool_rectangle_changed (GimpToolWidget *widget)
       break;
     }
 
-  if (handle_width  > 0                                            &&
-      handle_height > 0                                            &&
+  if (handle_width  >= 3                                           &&
+      handle_height >= 3                                           &&
       private->function >= GIMP_TOOL_RECTANGLE_RESIZING_UPPER_LEFT &&
       private->function <= GIMP_TOOL_RECTANGLE_RESIZING_BOTTOM)
     {
@@ -1350,8 +1346,6 @@ gimp_tool_rectangle_button_press (GimpToolWidget      *widget,
       private->x1 = private->x2 = snapped_x;
       private->y1 = private->y2 = snapped_y;
 
-      gimp_tool_rectangle_update_handle_sizes (rectangle);
-
       /* Created rectangles should not be started in narrow-mode */
       private->narrow_mode = FALSE;
 
@@ -1410,6 +1404,9 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
 
   g_object_ref (rectangle);
 
+  /* On button release, we are not rubber-banding the rectangle any longer. */
+  private->rect_adjusting = FALSE;
+
   gimp_tool_widget_set_snap_offsets (widget, 0, 0, 0, 0);
 
   switch (release_type)
@@ -1451,9 +1448,6 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
   /* We must update this. */
   private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
   private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
-
-  /* On button release, we are not rubber-banding the rectangle any longer. */
-  private->rect_adjusting = FALSE;
 
   gimp_tool_rectangle_update_options (rectangle);
 
@@ -2061,12 +2055,6 @@ gimp_tool_rectangle_update_handle_sizes (GimpToolRectangle *rectangle)
                                                 MIN_HANDLE_SIZE,
                                                 G_MAXINT);
     }
-
-  /* Keep track of when we need to calculate handle sizes because of a
-   * display shell change.
-   */
-  private->scale_x_used_for_handle_size_calculations = shell->scale_x;
-  private->scale_y_used_for_handle_size_calculations = shell->scale_y;
 }
 
 static void
@@ -2237,7 +2225,7 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
 {
   GimpToolRectanglePrivate *private = rectangle->private;
   GimpDisplayShell         *shell;
-  gdouble                   pub_x1, pub_y1, pub_x2, pub_y2;
+  gdouble                   x1, y1, x2, y2;
   gdouble                   rect_w, rect_h;
   gdouble                   handle_x          = 0;
   gdouble                   handle_y          = 0;
@@ -2248,17 +2236,16 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
 
   shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (rectangle));
 
-  gimp_tool_rectangle_get_public_rect (rectangle,
-                                       &pub_x1, &pub_y1, &pub_x2, &pub_y2);
+  gimp_tool_rectangle_get_public_rect (rectangle, &x1, &y1, &x2, &y2);
 
-  rect_w = pub_x2 - pub_x1;
-  rect_h = pub_y2 - pub_y1;
+  rect_w = x2 - x1;
+  rect_h = y2 - y1;
 
   switch (anchor)
     {
     case GIMP_HANDLE_ANCHOR_NORTH_WEST:
-      handle_x      = pub_x1;
-      handle_y      = pub_y1;
+      handle_x      = x1;
+      handle_y      = y1;
       handle_width  = private->corner_handle_w;
       handle_height = private->corner_handle_h;
 
@@ -2267,8 +2254,8 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
       break;
 
     case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
-      handle_x      = pub_x2;
-      handle_y      = pub_y2;
+      handle_x      = x2;
+      handle_y      = y2;
       handle_width  = private->corner_handle_w;
       handle_height = private->corner_handle_h;
 
@@ -2277,8 +2264,8 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
       break;
 
     case GIMP_HANDLE_ANCHOR_NORTH_EAST:
-      handle_x      = pub_x2;
-      handle_y      = pub_y1;
+      handle_x      = x2;
+      handle_y      = y1;
       handle_width  = private->corner_handle_w;
       handle_height = private->corner_handle_h;
 
@@ -2287,8 +2274,8 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
       break;
 
     case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
-      handle_x      = pub_x1;
-      handle_y      = pub_y2;
+      handle_x      = x1;
+      handle_y      = y2;
       handle_width  = private->corner_handle_w;
       handle_height = private->corner_handle_h;
 
@@ -2297,8 +2284,8 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
       break;
 
     case GIMP_HANDLE_ANCHOR_WEST:
-      handle_x      = pub_x1;
-      handle_y      = pub_y1 + rect_h / 2;
+      handle_x      = x1;
+      handle_y      = y1 + rect_h / 2;
       handle_width  = private->corner_handle_w;
       handle_height = private->left_and_right_handle_h;
 
@@ -2307,8 +2294,8 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
       break;
 
     case GIMP_HANDLE_ANCHOR_EAST:
-      handle_x      = pub_x2;
-      handle_y      = pub_y1 + rect_h / 2;
+      handle_x      = x2;
+      handle_y      = y1 + rect_h / 2;
       handle_width  = private->corner_handle_w;
       handle_height = private->left_and_right_handle_h;
 
@@ -2317,8 +2304,8 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
       break;
 
     case GIMP_HANDLE_ANCHOR_NORTH:
-      handle_x      = pub_x1 + rect_w / 2;
-      handle_y      = pub_y1;
+      handle_x      = x1 + rect_w / 2;
+      handle_y      = y1;
       handle_width  = private->top_and_bottom_handle_w;
       handle_height = private->corner_handle_h;
 
@@ -2327,8 +2314,8 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
       break;
 
     case GIMP_HANDLE_ANCHOR_SOUTH:
-      handle_x      = pub_x1 + rect_w / 2;
-      handle_y      = pub_y2;
+      handle_x      = x1 + rect_w / 2;
+      handle_y      = y2;
       handle_width  = private->top_and_bottom_handle_w;
       handle_height = private->corner_handle_h;
 
@@ -2337,8 +2324,8 @@ gimp_tool_rectangle_coord_on_handle (GimpToolRectangle *rectangle,
       break;
 
     case GIMP_HANDLE_ANCHOR_CENTER:
-      handle_x      = pub_x1 + rect_w / 2;
-      handle_y      = pub_y1 + rect_h / 2;
+      handle_x      = x1 + rect_w / 2;
+      handle_y      = y1 + rect_h / 2;
 
       if (private->narrow_mode)
         {
@@ -2411,17 +2398,17 @@ gimp_tool_rectangle_rect_rubber_banding_func (GimpToolRectangle *rectangle)
 
   switch (private->function)
     {
-      case GIMP_TOOL_RECTANGLE_CREATING:
-      case GIMP_TOOL_RECTANGLE_RESIZING_LEFT:
-      case GIMP_TOOL_RECTANGLE_RESIZING_RIGHT:
-      case GIMP_TOOL_RECTANGLE_RESIZING_TOP:
-      case GIMP_TOOL_RECTANGLE_RESIZING_BOTTOM:
-      case GIMP_TOOL_RECTANGLE_RESIZING_UPPER_LEFT:
-      case GIMP_TOOL_RECTANGLE_RESIZING_UPPER_RIGHT:
-      case GIMP_TOOL_RECTANGLE_RESIZING_LOWER_LEFT:
-      case GIMP_TOOL_RECTANGLE_RESIZING_LOWER_RIGHT:
-      case GIMP_TOOL_RECTANGLE_AUTO_SHRINK:
-        return TRUE;
+    case GIMP_TOOL_RECTANGLE_CREATING:
+    case GIMP_TOOL_RECTANGLE_RESIZING_LEFT:
+    case GIMP_TOOL_RECTANGLE_RESIZING_RIGHT:
+    case GIMP_TOOL_RECTANGLE_RESIZING_TOP:
+    case GIMP_TOOL_RECTANGLE_RESIZING_BOTTOM:
+    case GIMP_TOOL_RECTANGLE_RESIZING_UPPER_LEFT:
+    case GIMP_TOOL_RECTANGLE_RESIZING_UPPER_RIGHT:
+    case GIMP_TOOL_RECTANGLE_RESIZING_LOWER_LEFT:
+    case GIMP_TOOL_RECTANGLE_RESIZING_LOWER_RIGHT:
+    case GIMP_TOOL_RECTANGLE_AUTO_SHRINK:
+      return TRUE;
 
     case GIMP_TOOL_RECTANGLE_MOVING:
     case GIMP_TOOL_RECTANGLE_DEAD:
@@ -2640,15 +2627,13 @@ gimp_tool_rectangle_setup_snap_offsets (GimpToolRectangle *rectangle,
 {
   GimpToolWidget           *widget  = GIMP_TOOL_WIDGET (rectangle);
   GimpToolRectanglePrivate *private = rectangle->private;
-  gdouble                   pub_x1, pub_y1;
-  gdouble                   pub_x2, pub_y2;
-  gdouble                   pub_coord_x, pub_coord_y;
+  gdouble                   x1, y1, x2, y2;
+  gdouble                   coord_x, coord_y;
 
-  gimp_tool_rectangle_get_public_rect (rectangle,
-                                       &pub_x1, &pub_y1, &pub_x2, &pub_y2);
+  gimp_tool_rectangle_get_public_rect (rectangle, &x1, &y1, &x2, &y2);
   gimp_tool_rectangle_adjust_coord (rectangle,
                                     coords->x, coords->y,
-                                    &pub_coord_x, &pub_coord_y);
+                                    &coord_x, &coord_y);
 
   switch (private->function)
     {
@@ -2657,62 +2642,62 @@ gimp_tool_rectangle_setup_snap_offsets (GimpToolRectangle *rectangle,
 
     case GIMP_TOOL_RECTANGLE_RESIZING_UPPER_LEFT:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         pub_x1 - pub_coord_x,
-                                         pub_y1 - pub_coord_y,
+                                         x1 - coord_x,
+                                         y1 - coord_y,
                                          0, 0);
       break;
 
     case GIMP_TOOL_RECTANGLE_RESIZING_UPPER_RIGHT:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         pub_x2 - pub_coord_x,
-                                         pub_y1 - pub_coord_y,
+                                         x2 - coord_x,
+                                         y1 - coord_y,
                                          0, 0);
       break;
 
     case GIMP_TOOL_RECTANGLE_RESIZING_LOWER_LEFT:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         pub_x1 - pub_coord_x,
-                                         pub_y2 - pub_coord_y,
+                                         x1 - coord_x,
+                                         y2 - coord_y,
                                          0, 0);
       break;
 
     case GIMP_TOOL_RECTANGLE_RESIZING_LOWER_RIGHT:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         pub_x2 - pub_coord_x,
-                                         pub_y2 - pub_coord_y,
+                                         x2 - coord_x,
+                                         y2 - coord_y,
                                          0, 0);
       break;
 
     case GIMP_TOOL_RECTANGLE_RESIZING_LEFT:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         pub_x1 - pub_coord_x, 0,
+                                         x1 - coord_x, 0,
                                          0, 0);
       break;
 
     case GIMP_TOOL_RECTANGLE_RESIZING_RIGHT:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         pub_x2 - pub_coord_x, 0,
+                                         x2 - coord_x, 0,
                                          0, 0);
       break;
 
     case GIMP_TOOL_RECTANGLE_RESIZING_TOP:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         0, pub_y1 - pub_coord_y,
+                                         0, y1 - coord_y,
                                          0, 0);
       break;
 
     case GIMP_TOOL_RECTANGLE_RESIZING_BOTTOM:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         0, pub_y2 - pub_coord_y,
+                                         0, y2 - coord_y,
                                          0, 0);
       break;
 
     case GIMP_TOOL_RECTANGLE_MOVING:
       gimp_tool_widget_set_snap_offsets (widget,
-                                         pub_x1 - pub_coord_x,
-                                         pub_y1 - pub_coord_y,
-                                         pub_x2 - pub_x1,
-                                         pub_y2 - pub_y1);
+                                         x1 - coord_x,
+                                         y1 - coord_y,
+                                         x2 - x1,
+                                         y2 - y1);
       break;
 
     default:
@@ -3751,46 +3736,46 @@ gimp_tool_rectangle_get_constraint (GimpToolRectangle *rectangle)
 /**
  * gimp_tool_rectangle_get_public_rect:
  * @rectangle:
- * @pub_x1:
- * @pub_y1:
- * @pub_x2:
- * @pub_y2:
+ * @x1:
+ * @y1:
+ * @x2:
+ * @y2:
  *
  * This function returns the rectangle as it appears to be publicly
  * (based on integer or double precision-mode).
  **/
 void
 gimp_tool_rectangle_get_public_rect (GimpToolRectangle *rectangle,
-                                     gdouble           *pub_x1,
-                                     gdouble           *pub_y1,
-                                     gdouble           *pub_x2,
-                                     gdouble           *pub_y2)
+                                     gdouble           *x1,
+                                     gdouble           *y1,
+                                     gdouble           *x2,
+                                     gdouble           *y2)
 {
   GimpToolRectanglePrivate *priv;
 
   g_return_if_fail (GIMP_IS_TOOL_RECTANGLE (rectangle));
-  g_return_if_fail (pub_x1 != NULL);
-  g_return_if_fail (pub_y1 != NULL);
-  g_return_if_fail (pub_x2 != NULL);
-  g_return_if_fail (pub_y2 != NULL);
+  g_return_if_fail (x1 != NULL);
+  g_return_if_fail (y1 != NULL);
+  g_return_if_fail (x2 != NULL);
+  g_return_if_fail (y2 != NULL);
 
   priv = rectangle->private;
 
   switch (priv->precision)
     {
     case GIMP_RECTANGLE_PRECISION_INT:
-      *pub_x1 = priv->x1_int;
-      *pub_y1 = priv->y1_int;
-      *pub_x2 = priv->x1_int + priv->width_int;
-      *pub_y2 = priv->y1_int + priv->height_int;
+      *x1 = priv->x1_int;
+      *y1 = priv->y1_int;
+      *x2 = priv->x1_int + priv->width_int;
+      *y2 = priv->y1_int + priv->height_int;
       break;
 
     case GIMP_RECTANGLE_PRECISION_DOUBLE:
     default:
-      *pub_x1 = priv->x1;
-      *pub_y1 = priv->y1;
-      *pub_x2 = priv->x2;
-      *pub_y2 = priv->y2;
+      *x1 = priv->x1;
+      *y1 = priv->y1;
+      *x2 = priv->x2;
+      *y2 = priv->y2;
       break;
     }
 }
