@@ -1362,26 +1362,25 @@ MIME_TYPES="image/bmp;image/g3fax;image/gif;image/x-fits;image/x-pcx;image/x-por
 # Check for libtiff
 ###################
 
-have_libtiff=no
+libtiff_error=
 if test -z "$TIFF_LIBS"; then
-  have_libtiff=yes
   AC_CHECK_LIB(tiff, TIFFReadScanline,
     [AC_CHECK_HEADER(tiffio.h,
       FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff',
-      [have_libtiff="no (TIFF header files not found)"])],
+      [libtiff_error="TIFF header files not found"])],
     [AC_CHECK_LIB(tiff, TIFFWriteScanline,
       [AC_CHECK_HEADER(tiffio.h,
         FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff -ljpeg -lz',
-	[have_libtiff="no (TIFF header files not found)"])],
+	[libtiff_error="TIFF header files not found"])],
       [AC_CHECK_LIB(tiff34, TIFFFlushData,
 	[AC_CHECK_HEADER(tiffio.h,
           FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff34 -ljpeg -lz',
-	  [have_libtiff="no (TIFF header files not found)"])],
-      [have_libtiff="no (TIFF library not found)"], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
+	  [libtiff_error="TIFF header files not found"])],
+      [libtiff_error="TIFF library not found"], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
 fi
 
 if test -z "$TIFF_LIBS"; then
-  add_deps_error([libtiff], [Checks for TIFF library failed])
+  add_deps_error([libtiff], [Checks for TIFF library failed: $libtiff_error])
 fi
 
 MIME_TYPES="$MIME_TYPES;image/tiff"
