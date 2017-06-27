@@ -35,9 +35,6 @@ struct _FileFormat
   const gchar *load_help;
 };
 
-#define N_(s) s
-#define _(s) s
-
 static const FileFormat file_formats[] =
 {
   {

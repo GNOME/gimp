@@ -2523,6 +2523,7 @@ plug-ins/file-fli/Makefile
 plug-ins/file-ico/Makefile
 plug-ins/file-jpeg/Makefile
 plug-ins/file-psd/Makefile
+plug-ins/file-rawtherapee/Makefile
 plug-ins/file-sgi/Makefile
 plug-ins/file-tiff/Makefile
 plug-ins/file-webp/Makefile
