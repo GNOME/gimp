@@ -230,15 +230,6 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 {
   GimpTool *tool = GIMP_TOOL (text_tool);
 
-  text_tool->proxy   = NULL;
-  text_tool->pending = NULL;
-  text_tool->idle_id = 0;
-
-  text_tool->text    = NULL;
-  text_tool->layer   = NULL;
-  text_tool->image   = NULL;
-  text_tool->layout  = NULL;
-
   text_tool->buffer = gimp_text_buffer_new ();
 
   g_signal_connect (text_tool->buffer, "begin-user-action",
@@ -281,10 +272,6 @@ gimp_text_tool_constructed (GObject *object)
   g_signal_connect_object (text_tool->proxy, "notify",
                            G_CALLBACK (gimp_text_tool_proxy_notify),
                            text_tool, 0);
-
-  g_object_set (options,
-                "highlight", FALSE,
-                NULL);
 }
 
 static void
@@ -718,13 +705,14 @@ gimp_text_tool_oper_update (GimpTool         *tool,
                             gboolean          proximity,
                             GimpDisplay      *display)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpToolRectangle *rectangle = GIMP_TOOL_RECTANGLE (text_tool->widget);
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
                                                proximity, display);
 
   text_tool->moving = (text_tool->widget &&
-                       gimp_tool_rectangle_get_function (GIMP_TOOL_RECTANGLE (text_tool->widget)) ==
+                       gimp_tool_rectangle_get_function (rectangle) ==
                        GIMP_TOOL_RECTANGLE_MOVING &&
                        (state & GDK_MOD1_MASK));
 }
@@ -735,11 +723,12 @@ gimp_text_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpToolRectangle *rectangle = GIMP_TOOL_RECTANGLE (text_tool->widget);
 
-  if (text_tool->widget && tool->display == display)
+  if (rectangle && tool->display == display)
     {
-      if (gimp_tool_rectangle_point_in_rectangle (GIMP_TOOL_RECTANGLE (text_tool->widget),
+      if (gimp_tool_rectangle_point_in_rectangle (rectangle,
                                                   coords->x,
                                                   coords->y) &&
           ! text_tool->moving)
@@ -769,10 +758,11 @@ gimp_text_tool_get_popup (GimpTool         *tool,
                           GimpDisplay      *display,
                           const gchar     **ui_path)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpTextTool      *text_tool = GIMP_TEXT_TOOL (tool);
+  GimpToolRectangle *rectangle = GIMP_TOOL_RECTANGLE (text_tool->widget);
 
-  if (text_tool->widget &&
-      gimp_tool_rectangle_point_in_rectangle (GIMP_TOOL_RECTANGLE (text_tool->widget),
+  if (rectangle &&
+      gimp_tool_rectangle_point_in_rectangle (rectangle,
                                               coords->x,
                                               coords->y))
     {
