@@ -75,8 +75,11 @@ static gboolean animation_layer_view_button_press (GtkWidget          *widget,
                                                    GdkEventButton     *event);
 
 /* Utils */
+static gboolean   animation_layer_view_keep_group (AnimationLayerView *view,
+                                                   gint                parent_layer);
 static void          animation_layer_view_fill    (AnimationLayerView *view,
                                                    GtkTreeStore       *store,
+                                                   gboolean            ignore_filter,
                                                    gint                parent_layer,
                                                    GtkTreeIter        *parent);
 static GtkTreePath * animation_layer_view_get_row (AnimationLayerView *view,
@@ -220,7 +223,7 @@ animation_layer_view_refresh (AnimationLayerView *view)
 
   /* Actual refresh. */
   gtk_tree_store_clear (GTK_TREE_STORE (model));
-  animation_layer_view_fill (view, GTK_TREE_STORE (model), 0, NULL);
+  animation_layer_view_fill (view, GTK_TREE_STORE (model), FALSE, 0, NULL);
 
   /* Restore the selected rows. */
   for (iter = tattoos; iter; iter = iter->next)
@@ -418,9 +421,43 @@ animation_layer_view_button_press (GtkWidget      *widget,
   return TRUE;
 }
 
+static gboolean
+animation_layer_view_keep_group (AnimationLayerView *view,
+                                 gint                parent_layer)
+{
+  gint     *layers;
+  gint      num_layers;
+  gboolean  keep = FALSE;
+  gint      i;
+
+  g_return_val_if_fail (gimp_item_is_group (parent_layer), FALSE);
+
+  layers = gimp_item_get_children (parent_layer, &num_layers);
+  for (i = 0; i < num_layers; i++)
+    {
+      const gchar *name = gimp_item_get_name (layers[i]);
+
+      if (view->priv->filter_active && view->priv->filter &&
+          g_str_has_prefix (name, view->priv->filter))
+        {
+          keep = TRUE;
+          break;
+        }
+      if (gimp_item_is_group (layers[i]) &&
+          animation_layer_view_keep_group (view, layers[i]))
+        {
+          keep = TRUE;
+          break;
+        }
+    }
+  g_free (layers);
+  return keep;
+}
+
 /* animation_layer_view_fill:
  * @view: the #AnimationLayerView.
  * @store: the #GtkTreeStore to fill.
+ * @ignore_filter: insert all layers under @parent_layer.
  * @parent_layer: the parent #GimpLayer id. Set 0 for first call.
  * @parent: %NULL to search from the first call (used for recursivity).
  *
@@ -430,6 +467,7 @@ animation_layer_view_button_press (GtkWidget      *widget,
 static void
 animation_layer_view_fill (AnimationLayerView *view,
                            GtkTreeStore       *store,
+                           gboolean            ignore_filter,
                            gint                parent_layer,
                            GtkTreeIter        *parent)
 {
@@ -451,18 +489,39 @@ animation_layer_view_fill (AnimationLayerView *view,
   for (i = 0; i < num_layers; i++)
     {
       const gchar *name = gimp_item_get_name (layers[i]);
+      gboolean     keep_group;
 
-      if (view->priv->filter_active && view->priv->filter &&
+      if (! ignore_filter                  &&
+          view->priv->filter_active        &&
+          view->priv->filter               &&
+          ! gimp_item_is_group (layers[i]) &&
           ! g_str_has_prefix (name, view->priv->filter))
         continue;
-      gtk_tree_store_insert (store, &iter, parent, i);
-      gtk_tree_store_set (store, &iter,
-                          COLUMN_LAYER_TATTOO, gimp_item_get_tattoo (layers[i]),
-                          COLUMN_LAYER_NAME, name,
-                          -1);
-      if (gimp_item_is_group (layers[i]))
+
+      keep_group = gimp_item_is_group (layers[i]) &&
+        (ignore_filter                               ||
+         ! view->priv->filter_active                 ||
+         ! view->priv->filter                        ||
+         g_str_has_prefix (name, view->priv->filter) ||
+         animation_layer_view_keep_group (view, layers[i]));
+      if (! gimp_item_is_group (layers[i]) || keep_group)
         {
-          animation_layer_view_fill (view, store, layers[i], &iter);
+          gtk_tree_store_insert (store, &iter, parent, i);
+          gtk_tree_store_set (store, &iter,
+                              COLUMN_LAYER_TATTOO, gimp_item_get_tattoo (layers[i]),
+                              COLUMN_LAYER_NAME, name,
+                              -1);
+        }
+      if (gimp_item_is_group (layers[i]) && keep_group)
+        {
+          /* We ignore the filter for children if this group name passes
+           * the filter. */
+          animation_layer_view_fill (view, store,
+                                     ignore_filter ||
+                                     (view->priv->filter_active &&
+                                      view->priv->filter        &&
+                                      g_str_has_prefix (name, view->priv->filter)),
+                                     layers[i], &iter);
         }
     }
   g_free (layers);
