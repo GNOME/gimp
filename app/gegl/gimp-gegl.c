@@ -49,15 +49,9 @@ gimp_gegl_init (Gimp *gimp)
 
   config = GIMP_GEGL_CONFIG (gimp->config);
 
-#ifdef __GNUC__
-#warning not setting GeglConfig:threads
-#endif
-
   g_object_set (gegl_config (),
                 "tile-cache-size", (guint64) config->tile_cache_size,
-#if 0
                 "threads",         config->num_processors,
-#endif
                 "use-opencl",      config->use_opencl,
                 NULL);
 
@@ -87,11 +81,9 @@ gimp_gegl_notify_tile_cache_size (GimpGeglConfig *config)
 static void
 gimp_gegl_notify_num_processors (GimpGeglConfig *config)
 {
-#if 0
   g_object_set (gegl_config (),
                 "threads", config->num_processors,
                 NULL);
-#endif
 }
 
 static void

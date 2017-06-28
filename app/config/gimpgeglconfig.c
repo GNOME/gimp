@@ -139,9 +139,14 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 
   num_processors = MIN (num_processors, GIMP_MAX_NUM_THREADS);
 
+#ifdef __GNUC__
+#warning Defaulting # of threads to 1
+#endif
+  num_processors = 1;
+
   GIMP_CONFIG_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                          "num-processors",
-                         "Number of processors to use",
+                         "Number of threads to use",
                          NUM_PROCESSORS_BLURB,
                          1, GIMP_MAX_NUM_THREADS, num_processors,
                          GIMP_PARAM_STATIC_STRINGS);
