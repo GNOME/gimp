@@ -75,6 +75,7 @@ enum
   PROP_CONSTRAINT,
   PROP_PRECISION,
   PROP_NARROW_MODE,
+  PROP_FORCE_NARROW_MODE,
   PROP_DRAW_ELLIPSE,
   PROP_ROUND_CORNERS,
   PROP_CORNER_RADIUS,
@@ -204,6 +205,9 @@ struct _GimpToolRectanglePrivate
    * we put handles on the outside.
    */
   gboolean                narrow_mode;
+
+  /* This boolean allows to always set narrow mode */
+  gboolean                force_narrow_mode;
 
   /* Whether or not to draw an ellipse inside the rectangle */
   gboolean                draw_ellipse;
@@ -497,6 +501,13 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
 
   g_object_class_install_property (object_class, PROP_NARROW_MODE,
                                    g_param_spec_boolean ("narrow-mode",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_FORCE_NARROW_MODE,
+                                   g_param_spec_boolean ("force-narrow-mode",
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
@@ -799,6 +810,9 @@ gimp_tool_rectangle_set_property (GObject      *object,
     case PROP_NARROW_MODE:
       private->narrow_mode = g_value_get_boolean (value);
       break;
+    case PROP_FORCE_NARROW_MODE:
+      private->force_narrow_mode = g_value_get_boolean (value);
+      break;
     case PROP_DRAW_ELLIPSE:
       private->draw_ellipse = g_value_get_boolean (value);
       break;
@@ -897,6 +911,9 @@ gimp_tool_rectangle_get_property (GObject    *object,
 
     case PROP_NARROW_MODE:
       g_value_set_boolean (value, private->narrow_mode);
+      break;
+    case PROP_FORCE_NARROW_MODE:
+      g_value_set_boolean (value, private->force_narrow_mode);
       break;
     case PROP_DRAW_ELLIPSE:
       g_value_set_boolean (value, private->draw_ellipse);
@@ -1346,8 +1363,13 @@ gimp_tool_rectangle_button_press (GimpToolWidget      *widget,
       private->x1 = private->x2 = snapped_x;
       private->y1 = private->y2 = snapped_y;
 
-      /* Created rectangles should not be started in narrow-mode */
-      private->narrow_mode = FALSE;
+      /* Unless forced, created rectangles should not be started in
+       * narrow-mode
+       */
+      if (private->force_narrow_mode)
+        private->narrow_mode = TRUE;
+      else
+        private->narrow_mode = FALSE;
 
       /* If the rectangle is being modified we want the center on
        * fixed_center to be at the center of the currently existing
@@ -2008,8 +2030,11 @@ gimp_tool_rectangle_update_handle_sizes (GimpToolRectangle *rectangle)
                               &visible_rectangle_height);
 
     /* Determine if we are in narrow-mode or not. */
-    private->narrow_mode = (visible_rectangle_width  < NARROW_MODE_THRESHOLD ||
-                            visible_rectangle_height < NARROW_MODE_THRESHOLD);
+    if (private->force_narrow_mode)
+      private->narrow_mode = TRUE;
+    else
+      private->narrow_mode = (visible_rectangle_width  < NARROW_MODE_THRESHOLD ||
+                              visible_rectangle_height < NARROW_MODE_THRESHOLD);
   }
 
   if (private->narrow_mode)
