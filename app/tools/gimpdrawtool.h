@@ -136,12 +136,6 @@ GimpCanvasItem * gimp_draw_tool_add_rectangle        (GimpDrawTool     *draw_too
                                                       gdouble           y,
                                                       gdouble           width,
                                                       gdouble           height);
-GimpCanvasItem * gimp_draw_tool_add_rectangle_guides (GimpDrawTool     *draw_tool,
-                                                      GimpGuidesType    type,
-                                                      gdouble           x,
-                                                      gdouble           y,
-                                                      gdouble           width,
-                                                      gdouble           height);
 GimpCanvasItem * gimp_draw_tool_add_arc              (GimpDrawTool     *draw_tool,
                                                       gboolean          filled,
                                                       gdouble           x,
@@ -163,16 +157,6 @@ GimpCanvasItem * gimp_draw_tool_add_handle           (GimpDrawTool     *draw_too
                                                       GimpHandleType    type,
                                                       gdouble           x,
                                                       gdouble           y,
-                                                      gint              width,
-                                                      gint              height,
-                                                      GimpHandleAnchor  anchor);
-GimpCanvasItem * gimp_draw_tool_add_corner           (GimpDrawTool     *draw_tool,
-                                                      gboolean          highlight,
-                                                      gboolean          put_outside,
-                                                      gdouble           x1,
-                                                      gdouble           y1,
-                                                      gdouble           x2,
-                                                      gdouble           y2,
                                                       gint              width,
                                                       gint              height,
                                                       GimpHandleAnchor  anchor);

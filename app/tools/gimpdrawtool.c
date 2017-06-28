@@ -32,7 +32,6 @@
 #include "display/gimpcanvas.h"
 #include "display/gimpcanvasarc.h"
 #include "display/gimpcanvasboundary.h"
-#include "display/gimpcanvascorner.h"
 #include "display/gimpcanvasgroup.h"
 #include "display/gimpcanvasguide.h"
 #include "display/gimpcanvashandle.h"
@@ -41,7 +40,6 @@
 #include "display/gimpcanvaspen.h"
 #include "display/gimpcanvaspolygon.h"
 #include "display/gimpcanvasrectangle.h"
-#include "display/gimpcanvasrectangleguides.h"
 #include "display/gimpcanvassamplepoint.h"
 #include "display/gimpcanvastextcursor.h"
 #include "display/gimpcanvastransformpreview.h"
@@ -987,27 +985,6 @@ gimp_draw_tool_add_rectangle (GimpDrawTool *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_add_rectangle_guides (GimpDrawTool   *draw_tool,
-                                     GimpGuidesType  type,
-                                     gdouble         x,
-                                     gdouble         y,
-                                     gdouble         width,
-                                     gdouble         height)
-{
-  GimpCanvasItem *item;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
-
-  item = gimp_canvas_rectangle_guides_new (gimp_display_get_shell (draw_tool->display),
-                                           x, y, width, height, type, 4);
-
-  gimp_draw_tool_add_item (draw_tool, item);
-  g_object_unref (item);
-
-  return item;
-}
-
-GimpCanvasItem *
 gimp_draw_tool_add_arc (GimpDrawTool *draw_tool,
                         gboolean      filled,
                         gdouble       x,
@@ -1051,50 +1028,6 @@ gimp_draw_tool_add_handle (GimpDrawTool     *draw_tool,
 
   item = gimp_canvas_handle_new (gimp_display_get_shell (draw_tool->display),
                                  type, anchor, x, y, width, height);
-
-  gimp_draw_tool_add_item (draw_tool, item);
-  g_object_unref (item);
-
-  return item;
-}
-
-/**
- * gimp_draw_tool_add_corner:
- * @draw_tool:   the #GimpDrawTool
- * @highlight:
- * @put_outside: whether to put the handles on the outside of the rectangle
- * @x1:
- * @y1:
- * @x2:
- * @y2:
- * @width:       corner width
- * @height:      corner height
- * @anchor:      which corner to draw
- *
- * This function takes image space coordinates and transforms them to
- * screen window coordinates. It draws a corner into an already drawn
- * rectangle outline, taking care of not drawing over an already drawn line.
- **/
-GimpCanvasItem *
-gimp_draw_tool_add_corner (GimpDrawTool     *draw_tool,
-                           gboolean          highlight,
-                           gboolean          put_outside,
-                           gdouble           x1,
-                           gdouble           y1,
-                           gdouble           x2,
-                           gdouble           y2,
-                           gint              width,
-                           gint              height,
-                           GimpHandleAnchor  anchor)
-{
-  GimpCanvasItem *item;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
-
-  item = gimp_canvas_corner_new (gimp_display_get_shell (draw_tool->display),
-                                 x1, y1, x2 - x1, y2 - y1,
-                                 anchor, width, height, put_outside);
-  gimp_canvas_item_set_highlight (item, highlight);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
