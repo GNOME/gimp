@@ -3954,21 +3954,19 @@ gimp_tool_rectangle_frame_item (GimpToolRectangle *rectangle,
 
   gimp_item_get_offset (item, &offset_x, &offset_y);
 
-  gimp_tool_rectangle_set_function (rectangle,
-                                    GIMP_TOOL_RECTANGLE_CREATING);
+  gimp_tool_rectangle_set_function (rectangle, GIMP_TOOL_RECTANGLE_CREATING);
 
   g_object_set (rectangle,
-                "x1", offset_x,
-                "y1", offset_y,
-                "x2", offset_x + width,
-                "y2", offset_y + height,
+                "x1", (gdouble) offset_x,
+                "y1", (gdouble) offset_y,
+                "x2", (gdouble) (offset_x + width),
+                "y2", (gdouble) (offset_y + height),
                 NULL);
 
   /* kludge to force handle sizes to update.  This call may be harmful
    * if this function is ever moved out of the text tool code.
    */
-  gimp_tool_rectangle_set_constraint (rectangle,
-                                      GIMP_RECTANGLE_CONSTRAIN_NONE);
+  gimp_tool_rectangle_set_constraint (rectangle, GIMP_RECTANGLE_CONSTRAIN_NONE);
 }
 
 void
