@@ -54,6 +54,7 @@ struct _AnimationLayerViewPrivate
   gint32     image_id;
 
   GtkWidget *tree_view;
+  GtkWidget *filter_button;
 
   gboolean   filter_active;
   gchar     *filter;
@@ -281,6 +282,18 @@ animation_layer_view_select (AnimationLayerView *view,
       gint         tattoo = GPOINTER_TO_INT (layer->data);
 
       path = animation_layer_view_get_row (view, tattoo, NULL);
+      if (! path &&
+          gimp_image_get_layer_by_tattoo (view->priv->image_id,
+                                          tattoo))
+        {
+          /* The layer exists, but the row can't be found. We must be
+           * filtering. Remove the filter. */
+          GtkToggleButton *button;
+
+          button = GTK_TOGGLE_BUTTON (view->priv->filter_button);
+          gtk_toggle_button_set_active (button, FALSE);
+          path = animation_layer_view_get_row (view, tattoo, NULL);
+        }
       g_warn_if_fail (path != NULL);
       if (path)
         {
@@ -301,7 +314,6 @@ animation_layer_view_constructed (GObject *object)
   AnimationLayerView *view = ANIMATION_LAYER_VIEW (object);
   GtkTreeView        *tree_view = GTK_TREE_VIEW (view->priv->tree_view);
   GtkTreeSelection   *selection;
-  GtkWidget          *button;
 
   selection = gtk_tree_view_get_selection (tree_view);
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
@@ -310,12 +322,12 @@ animation_layer_view_constructed (GObject *object)
                     G_CALLBACK (on_selection_changed),
                     view);
 
-  button = gtk_check_button_new_with_label (_("Filter by level title"));
-  gtk_box_pack_start (GTK_BOX (view), button, FALSE, FALSE, 0);
-  g_signal_connect (button, "toggled",
+  view->priv->filter_button = gtk_check_button_new_with_label (_("Filter by level title"));
+  gtk_box_pack_start (GTK_BOX (view), view->priv->filter_button, FALSE, FALSE, 0);
+  g_signal_connect (view->priv->filter_button, "toggled",
                     G_CALLBACK (on_filter_toggled),
                     view);
-  gtk_widget_show (button);
+  gtk_widget_show (view->priv->filter_button);
 }
 
 static void
