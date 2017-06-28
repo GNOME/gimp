@@ -144,12 +144,12 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 #endif
   num_processors = 1;
 
-  GIMP_CONFIG_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
-                         "num-processors",
-                         "Number of threads to use",
-                         NUM_PROCESSORS_BLURB,
-                         1, GIMP_MAX_NUM_THREADS, num_processors,
-                         GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_INT (object_class, PROP_NUM_PROCESSORS,
+                        "num-processors",
+                        "Number of threads to use",
+                        NUM_PROCESSORS_BLURB,
+                        1, GIMP_MAX_NUM_THREADS, num_processors,
+                        GIMP_PARAM_STATIC_STRINGS);
 
   memory_size = gimp_get_physical_memory_size ();
 
@@ -224,7 +224,7 @@ gimp_gegl_config_set_property (GObject      *object,
       gegl_config->swap_path = g_value_dup_string (value);
       break;
     case PROP_NUM_PROCESSORS:
-      gegl_config->num_processors = g_value_get_uint (value);
+      gegl_config->num_processors = g_value_get_int (value);
       break;
     case PROP_TILE_CACHE_SIZE:
       gegl_config->tile_cache_size = g_value_get_uint64 (value);
@@ -260,7 +260,7 @@ gimp_gegl_config_get_property (GObject    *object,
       g_value_set_string (value, gegl_config->swap_path);
       break;
     case PROP_NUM_PROCESSORS:
-      g_value_set_uint (value, gegl_config->num_processors);
+      g_value_set_int (value, gegl_config->num_processors);
       break;
     case PROP_TILE_CACHE_SIZE:
       g_value_set_uint64 (value, gegl_config->tile_cache_size);
