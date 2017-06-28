@@ -34,8 +34,6 @@
 #include "text/gimptext.h"
 
 #include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptextbuffer.h"
@@ -45,14 +43,13 @@
 
 #include "gimptextoptions.h"
 #include "gimptooloptions-gui.h"
-#include "gimprectangleoptions.h"
 
 #include "gimp-intl.h"
 
 
 enum
 {
-  PROP_0 = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
+  PROP_0,
   PROP_FONT_SIZE,
   PROP_UNIT,
   PROP_ANTIALIAS,
@@ -103,9 +100,7 @@ static void  gimp_text_options_notify_text_color  (GimpText        *text,
 G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options,
                          GIMP_TYPE_TOOL_OPTIONS,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_text_options_config_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
-                                                NULL))
+                                                gimp_text_options_config_iface_init))
 
 #define parent_class gimp_text_options_parent_class
 
@@ -120,17 +115,6 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
   object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
-
-  /* The 'highlight' property is defined here because we want different
-   * default values for the Crop, Text and the Rectangle Select tools.
-   */
-  GIMP_CONFIG_PROP_BOOLEAN (object_class,
-                            GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
-                            "highlight",
-                            _("Highlight"),
-                            NULL,
-                            FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_UNIT (object_class, PROP_UNIT,
                          "font-size-unit",
@@ -238,8 +222,6 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                         GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                         GIMP_VIEW_SIZE_SMALL,
                         GIMP_PARAM_STATIC_STRINGS);
-
-  gimp_rectangle_options_install_properties (object_class);
 }
 
 static void
@@ -326,7 +308,7 @@ gimp_text_options_get_property (GObject    *object,
       break;
 
     default:
-      gimp_rectangle_options_get_property (object, property_id, value, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -388,7 +370,7 @@ gimp_text_options_set_property (GObject      *object,
       break;
 
     default:
-      gimp_rectangle_options_set_property (object, property_id, value, pspec);
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
