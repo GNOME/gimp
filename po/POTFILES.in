@@ -443,7 +443,6 @@ app/tools/gimpperspectivetool.c
 app/tools/gimprectangleoptions.c
 app/tools/gimprectangleselectoptions.c
 app/tools/gimprectangleselecttool.c
-app/tools/gimprectangletool.c
 app/tools/gimpregionselectoptions.c
 app/tools/gimpregionselecttool.c
 app/tools/gimprotatetool.c
