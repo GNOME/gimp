@@ -1388,9 +1388,6 @@ prefs_dialog_new (Gimp       *gimp,
       button = prefs_check_button_add (object, "playground-npd-tool",
                                        _("_N-Point Deformation tool"),
                                        GTK_BOX (vbox2));
-      button = prefs_check_button_add (object, "playground-handle-transform-tool",
-                                       _("_Handle Transform tool"),
-                                       GTK_BOX (vbox2));
       button = prefs_check_button_add (object, "playground-seamless-clone-tool",
                                        _("_Seamless Clone tool"),
                                        GTK_BOX (vbox2));
