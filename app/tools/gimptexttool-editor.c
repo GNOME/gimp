@@ -51,7 +51,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
-#include "gimprectangletool.h"
 #include "gimptextoptions.h"
 #include "gimptexttool.h"
 #include "gimptexttool-editor.h"
@@ -226,11 +225,11 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
       GimpTool         *tool    = GIMP_TOOL (text_tool);
       GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
       GtkRequisition    requisition;
-      gint              x, y;
+      gdouble           x, y;
 
       gtk_widget_size_request (text_tool->style_overlay, &requisition);
 
-      g_object_get (text_tool,
+      g_object_get (text_tool->widget,
                     "x1", &x,
                     "y1", &y,
                     NULL);
@@ -495,7 +494,6 @@ gimp_text_tool_editor_key_press (GimpTextTool *text_tool,
       break;
 
     case GDK_KEY_Escape:
-      gimp_rectangle_tool_cancel (GIMP_RECTANGLE_TOOL (text_tool));
       gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
                          GIMP_TOOL (text_tool)->display);
       break;
@@ -632,7 +630,7 @@ gimp_text_tool_editor_update_im_cursor (GimpTextTool *text_tool)
 {
   GimpDisplayShell *shell;
   PangoRectangle    rect = { 0, };
-  gint              off_x, off_y;
+  gdouble           off_x, off_y;
 
   g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
 
@@ -643,7 +641,11 @@ gimp_text_tool_editor_update_im_cursor (GimpTextTool *text_tool)
                                            text_tool->overwrite_mode,
                                            &rect);
 
-  g_object_get (text_tool, "x1", &off_x, "y1", &off_y, NULL);
+  g_object_get (text_tool->widget,
+                "x1", &off_x,
+                "y1", &off_y,
+                NULL);
+
   rect.x += off_x;
   rect.y += off_y;
 

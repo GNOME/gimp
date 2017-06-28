@@ -64,6 +64,9 @@ struct _GimpTextTool
   GimpTextLayout *layout;
   gboolean        drawing_blocked;
 
+  GimpToolWidget *widget;
+  GimpToolWidget *grab_widget;
+
   /* text editor state: */
 
   GtkWidget      *style_overlay;
