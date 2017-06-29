@@ -63,6 +63,7 @@ struct _GimpRectangleSelectToolPrivate
 
   GimpToolWidget    *widget;
   GimpToolWidget    *grab_widget;
+  GList             *bindings;
 };
 
 
@@ -678,10 +679,15 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
 
   for (i = 0; i < G_N_ELEMENTS (properties); i++)
-    g_object_bind_property (G_OBJECT (options), properties[i],
-                            G_OBJECT (widget),  properties[i],
-                            G_BINDING_SYNC_CREATE |
-                            G_BINDING_BIDIRECTIONAL);
+    {
+      GBinding *binding =
+        g_object_bind_property (G_OBJECT (options), properties[i],
+                                G_OBJECT (widget),  properties[i],
+                                G_BINDING_SYNC_CREATE |
+                                G_BINDING_BIDIRECTIONAL);
+
+      private->bindings = g_list_prepend (private->bindings, binding);
+    }
 
   g_signal_connect (widget, "response",
                     G_CALLBACK (gimp_rectangle_select_tool_rectangle_response),
@@ -821,9 +827,16 @@ gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
 
   if (tool->display)
     {
-      GimpImage     *image      = gimp_display_get_image (tool->display);
-      GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
-      GimpUndo      *undo       = gimp_undo_stack_peek (undo_stack);
+      GimpDisplayShell *shell      = gimp_display_get_shell (tool->display);
+      GimpImage        *image      = gimp_display_get_image (tool->display);
+      GimpUndoStack    *undo_stack = gimp_image_get_undo_stack (image);
+      GimpUndo         *undo       = gimp_undo_stack_peek (undo_stack);
+
+      gimp_display_shell_set_highlight (shell, NULL);
+
+      gimp_rectangle_options_disconnect (GIMP_RECTANGLE_OPTIONS (options),
+                                         G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
+                                         rect_tool);
 
       /* if we have an existing rectangle in the current display, then
        * we have already "executed", and need to undo at this point,
@@ -839,13 +852,7 @@ gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
 
           gimp_tool_control_pop_preserve (tool->control);
         }
-
-      gimp_rectangle_options_disconnect (GIMP_RECTANGLE_OPTIONS (options),
-                                         G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
-                                         rect_tool);
     }
-
-  gimp_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
 
   priv->undo = NULL;
   priv->redo = NULL;
@@ -853,10 +860,19 @@ gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
+  /*  disconnect bindings manually so they are really gone *now*, we
+   *  might be in the middle of a signal emission that keeps the
+   *  widget and its bindings alive.
+   */
+  g_list_free_full (priv->bindings, (GDestroyNotify) g_object_unref);
+  priv->bindings = NULL;
+
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&priv->widget);
 
   tool->display = NULL;
+
+  gimp_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
 }
 
 static GimpChannelOps
@@ -891,10 +907,7 @@ gimp_rectangle_select_tool_update_option_defaults (GimpRectangleSelectTool *rect
 
   rect_options = GIMP_RECTANGLE_OPTIONS (gimp_tool_get_options (tool));
 
-  if (! priv->widget)
-    return;
-
-  if (tool->display != NULL && ! ignore_pending)
+  if (priv->widget && ! ignore_pending)
     {
       /* There is a pending rectangle and we should not ignore it, so
        * set default Fixed: Size to the same as the current pending

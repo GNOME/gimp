@@ -43,6 +43,7 @@ struct _GimpCropTool
 
   GimpToolWidget *widget;
   GimpToolWidget *grab_widget;
+  GList          *bindings;
 };
 
 struct _GimpCropToolClass

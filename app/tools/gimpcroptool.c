@@ -218,8 +218,8 @@ gimp_crop_tool_button_press (GimpTool            *tool,
       gimp_tool_widget_hover (crop_tool->widget, coords, state, TRUE);
 
       /* HACK: force CREATING on a newly created rectangle; otherwise,
-       * the above binding of properties would cause the rectangle to
-       * start with the size from tool options.
+       * property bindings would cause the rectangle to start with the
+       * size from tool options.
        */
       gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (crop_tool->widget),
                                         GIMP_TOOL_RECTANGLE_CREATING);
@@ -357,10 +357,15 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
 
   for (i = 0; i < G_N_ELEMENTS (properties); i++)
-    g_object_bind_property (G_OBJECT (options), properties[i],
-                            G_OBJECT (widget),  properties[i],
-                            G_BINDING_SYNC_CREATE |
-                            G_BINDING_BIDIRECTIONAL);
+    {
+      GBinding *binding =
+        g_object_bind_property (G_OBJECT (options), properties[i],
+                                G_OBJECT (widget),  properties[i],
+                                G_BINDING_SYNC_CREATE |
+                                G_BINDING_BIDIRECTIONAL);
+
+      crop_tool->bindings = g_list_prepend (crop_tool->bindings, binding);
+    }
 
   g_signal_connect (widget, "changed",
                     G_CALLBACK (gimp_crop_tool_rectangle_changed),
@@ -466,6 +471,13 @@ gimp_crop_tool_halt (GimpCropTool *crop_tool)
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+  /*  disconnect bindings manually so they are really gone *now*, we
+   *  might be in the middle of a signal emission that keeps the
+   *  widget and its bindings alive.
+   */
+  g_list_free_full (crop_tool->bindings, (GDestroyNotify) g_object_unref);
+  crop_tool->bindings = NULL;
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
   g_clear_object (&crop_tool->widget);
