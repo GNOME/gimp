@@ -1420,11 +1420,10 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
 {
   GimpToolRectangle        *rectangle = GIMP_TOOL_RECTANGLE (widget);
   GimpToolRectanglePrivate *private   = rectangle->private;
+  gint                      response  = 0;
 
   if (private->function == GIMP_TOOL_RECTANGLE_EXECUTING)
     gimp_tool_widget_set_status (widget, NULL);
-
-  g_object_ref (rectangle);
 
   /* On button release, we are not rubber-banding the rectangle any longer. */
   private->rect_adjusting = FALSE;
@@ -1447,20 +1446,13 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
 
       /* If the first created rectangle was canceled, halt the tool */
       if (gimp_tool_rectangle_rectangle_is_new (rectangle))
-        {
-          gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_CANCEL);
-          return;
-        }
+        response = GIMP_TOOL_WIDGET_RESPONSE_CANCEL;
       break;
 
     case GIMP_BUTTON_RELEASE_CLICK:
-
       /* When a dead area is clicked, don't execute. */
       if (private->function != GIMP_TOOL_RECTANGLE_DEAD)
-        {
-          gimp_tool_widget_response (widget, GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
-          return;
-        }
+        response = GIMP_TOOL_WIDGET_RESPONSE_CONFIRM;
       break;
 
     case GIMP_BUTTON_RELEASE_NO_MOTION:
@@ -1475,7 +1467,11 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
 
   gimp_tool_rectangle_changed (widget);
 
-  g_object_unref (rectangle);
+  /*  emit response at the end, so everything is up to date even if
+   *  a signal handler decides hot to shut down the rectangle
+   */
+  if (response != 0)
+    gimp_tool_widget_response (widget, response);
 }
 
 void
