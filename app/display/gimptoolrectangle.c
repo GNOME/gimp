@@ -79,6 +79,7 @@ enum
   PROP_DRAW_ELLIPSE,
   PROP_ROUND_CORNERS,
   PROP_CORNER_RADIUS,
+  PROP_STATUS_TITLE,
 
   PROP_HIGHLIGHT,
   PROP_GUIDE,
@@ -222,6 +223,9 @@ struct _GimpToolRectanglePrivate
   gboolean                round_corners;
   gboolean                corner_radius;
 
+  /* The title for the statusbar coords */
+  gchar                  *status_title;
+
   /* For saving in case of cancelation. */
   gdouble                 saved_x1;
   gdouble                 saved_y1;
@@ -268,6 +272,7 @@ struct _GimpToolRectanglePrivate
 /*  local function prototypes  */
 
 static void     gimp_tool_rectangle_constructed     (GObject               *object);
+static void     gimp_tool_rectangle_finalize        (GObject               *object);
 static void     gimp_tool_rectangle_set_property    (GObject               *object,
                                                      guint                  property_id,
                                                      const GValue          *value,
@@ -432,6 +437,7 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
   GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
 
   object_class->constructed     = gimp_tool_rectangle_constructed;
+  object_class->finalize        = gimp_tool_rectangle_finalize;
   object_class->set_property    = gimp_tool_rectangle_set_property;
   object_class->get_property    = gimp_tool_rectangle_get_property;
   object_class->notify          = gimp_tool_rectangle_notify;
@@ -538,6 +544,13 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
                                    g_param_spec_double ("corner-radius",
                                                         NULL, NULL,
                                                         0.0, 1000.0, 5.0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_STATUS_TITLE,
+                                   g_param_spec_string ("status-title",
+                                                        NULL, NULL,
+                                                        _("Rectangle :"),
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -784,6 +797,21 @@ gimp_tool_rectangle_constructed (GObject *object)
 }
 
 static void
+gimp_tool_rectangle_finalize (GObject *object)
+{
+  GimpToolRectangle        *rectangle = GIMP_TOOL_RECTANGLE (object);
+  GimpToolRectanglePrivate *private   = rectangle->private;
+
+  if (private->status_title)
+    {
+      g_free (private->status_title);
+      private->status_title = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_tool_rectangle_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
@@ -828,6 +856,13 @@ gimp_tool_rectangle_set_property (GObject      *object,
       break;
     case PROP_CORNER_RADIUS:
       private->corner_radius = g_value_get_double (value);
+      break;
+
+    case PROP_STATUS_TITLE:
+      g_free (private->status_title);
+      private->status_title = g_value_dup_string (value);
+      if (! private->status_title)
+        private->status_title = g_strdup (_("Rectangle: "));
       break;
 
     case PROP_HIGHLIGHT:
@@ -930,6 +965,10 @@ gimp_tool_rectangle_get_property (GObject    *object,
       break;
     case PROP_CORNER_RADIUS:
       g_value_set_double (value, private->corner_radius);
+      break;
+
+    case PROP_STATUS_TITLE:
+      g_value_set_string (value, private->status_title);
       break;
 
     case PROP_HIGHLIGHT:
@@ -2121,7 +2160,7 @@ gimp_tool_rectangle_update_status (GimpToolRectangle *rectangle)
         }
 
       gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (rectangle),
-                                          _("Rectangle: "),
+                                          private->status_title,
                                           width, " × ", height,
                                           aspect_text);
       g_free (aspect_text);
