@@ -212,7 +212,7 @@ gimp_crop_tool_button_press (GimpTool            *tool,
   GimpCropTool *crop_tool = GIMP_CROP_TOOL (tool);
 
   if (tool->display && display != tool->display)
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
 
   if (! tool->display)
     {
