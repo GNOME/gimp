@@ -354,6 +354,10 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
 
   crop_tool->widget = widget = gimp_tool_rectangle_new (shell);
 
+  g_object_set (widget,
+                "status-title", _("Crop to: "),
+                NULL);
+
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
 
   for (i = 0; i < G_N_ELEMENTS (properties); i++)

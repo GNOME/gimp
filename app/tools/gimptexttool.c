@@ -948,6 +948,7 @@ gimp_text_tool_start (GimpTextTool *text_tool,
 
   g_object_set (widget,
                 "force-narrow-mode", TRUE,
+                "status-title",      _("Text box: "),
                 NULL);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);

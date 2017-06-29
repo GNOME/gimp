@@ -663,6 +663,7 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
   GimpDisplayShell               *shell   = gimp_display_get_shell (display);
   GimpRectangleSelectOptions     *options;
   GimpToolWidget                 *widget;
+  gboolean                        draw_ellipse;
   gint                            i;
 
   options = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (rect_tool);
@@ -671,9 +672,11 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
 
   private->widget = widget = gimp_tool_rectangle_new (shell);
 
+  draw_ellipse = GIMP_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_tool)->draw_ellipse;
+
   g_object_set (widget,
-                "draw-ellipse",
-                GIMP_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_tool)->draw_ellipse,
+                "draw-ellipse", draw_ellipse,
+                "status-title", draw_ellipse ? _("Ellipse: ") : _("Rectangle :"),
                 NULL);
 
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
