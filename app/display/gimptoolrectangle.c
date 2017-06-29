@@ -1649,16 +1649,15 @@ gimp_tool_rectangle_hover (GimpToolWidget   *widget,
                            GdkModifierType   state,
                            gboolean          proximity)
 {
-  GimpToolRectangle     *rectangle = GIMP_TOOL_RECTANGLE (widget);
-  GimpRectangleFunction  function  = GIMP_TOOL_RECTANGLE_DEAD;
+  GimpToolRectangle        *rectangle = GIMP_TOOL_RECTANGLE (widget);
+  GimpToolRectanglePrivate *private   = rectangle->private;
+  GimpRectangleFunction     function  = GIMP_TOOL_RECTANGLE_DEAD;
 
-#if 0
   if (private->suppress_updates)
     {
       private->suppress_updates--;
       return;
     }
-#endif
 
   if (! proximity)
     {
@@ -1830,13 +1829,11 @@ gimp_tool_rectangle_key_press (GimpToolWidget *widget,
 
   gimp_tool_rectangle_change_complete (rectangle);
 
-#if 0
   /*  Evil hack to suppress oper updates. We do this because we don't
    *  want the rectangle tool to change function while the rectangle
    *  is being resized or moved using the keyboard.
    */
   private->suppress_updates = 2;
-#endif
 
   return TRUE;
 }
