@@ -231,6 +231,8 @@ gimp_tools_exit (Gimp *gimp)
 
   g_object_set_data (G_OBJECT (gimp), "gimp-tools-default-order", NULL);
 
+  tool_manager_exit (gimp);
+
   for (list = gimp_get_tool_info_iter (gimp);
        list;
        list = g_list_next (list))
@@ -242,8 +244,6 @@ gimp_tools_exit (Gimp *gimp)
       gtk_widget_destroy (options_gui);
       gimp_tools_set_tool_options_gui (tool_info->tool_options, NULL);
     }
-
-  tool_manager_exit (gimp);
 }
 
 void
