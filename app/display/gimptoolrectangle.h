@@ -107,6 +107,8 @@ void     gimp_tool_rectangle_constraint_size_set
                                                const gchar            *width_property,
                                                const gchar            *height_property);
 
+gboolean gimp_tool_rectangle_rectangle_is_first
+                                              (GimpToolRectangle      *rectangle);
 gboolean gimp_tool_rectangle_rectangle_is_new (GimpToolRectangle      *rectangle);
 gboolean gimp_tool_rectangle_point_in_rectangle
                                               (GimpToolRectangle      *rectangle,

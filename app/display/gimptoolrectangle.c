@@ -134,6 +134,12 @@ struct _GimpToolRectanglePrivate
    * during gimp_tool_rectangle_button_press and then only read.
    */
 
+  /* Whether or not the rectangle currently being rubber-banded is the
+   * first one created with this instance, this determines if we can
+   * undo it on button_release.
+   */
+  gboolean                is_first;
+
   /* Whether or not the rectangle currently being rubber-banded was
    * created from scatch.
    */
@@ -1355,6 +1361,16 @@ gimp_tool_rectangle_button_press (GimpToolWidget      *widget,
   private->lastx = snapped_x;
   private->lasty = snapped_y;
 
+  if (private->x1 == private->x2 &&
+      private->y1 == private->y2)
+    {
+      private->is_first = TRUE;
+    }
+  else
+    {
+      private->is_first = FALSE;
+    }
+
   if (private->function == GIMP_TOOL_RECTANGLE_CREATING)
     {
       /* Remember that this rectangle was created from scratch. */
@@ -1433,11 +1449,33 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
   switch (release_type)
     {
     case GIMP_BUTTON_RELEASE_NO_MOTION:
-      /* Treat a long click without movement like a normal change */
+      /* If the first created rectangle was not expanded, halt the
+       * tool...
+       */
+      if (gimp_tool_rectangle_rectangle_is_first (rectangle))
+        {
+          response = GIMP_TOOL_WIDGET_RESPONSE_CANCEL;
+          break;
+        }
+
+      /* ...else fallthrough and treat a long click without movement
+       * like a normal change
+       */
 
     case GIMP_BUTTON_RELEASE_NORMAL:
-      gimp_tool_rectangle_change_complete (rectangle);
-      break;
+      /* If a normal click-drag-release actually created a rectangle
+       * with content...
+       */
+      if (private->x1 != private->x2 &&
+          private->y1 != private->y2)
+        {
+          gimp_tool_rectangle_change_complete (rectangle);
+          break;
+        }
+
+      /* ...else fallthrough and undo the operation, we can't have
+       * zero-extent rectangles
+       */
 
     case GIMP_BUTTON_RELEASE_CANCEL:
       private->x1 = private->saved_x1;
@@ -1448,7 +1486,7 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
       gimp_tool_rectangle_update_int_rect (rectangle);
 
       /* If the first created rectangle was canceled, halt the tool */
-      if (gimp_tool_rectangle_rectangle_is_new (rectangle))
+      if (gimp_tool_rectangle_rectangle_is_first (rectangle))
         response = GIMP_TOOL_WIDGET_RESPONSE_CANCEL;
       break;
 
@@ -3899,6 +3937,24 @@ gimp_tool_rectangle_constraint_size_set (GimpToolRectangle *rectangle,
                 width_property,  width,
                 height_property, height,
                 NULL);
+}
+
+/**
+ * gimp_tool_rectangle_rectangle_is_first:
+ * @rectangle:
+ *
+ * Returns: %TRUE if the user is creating the first rectangle with
+ * this instance from scratch, %FALSE if modifying an existing
+ * rectangle, or creating a new rectangle, discarding the existing
+ * one. This function is only meaningful in _motion and
+ * _button_release.
+ */
+gboolean
+gimp_tool_rectangle_rectangle_is_first (GimpToolRectangle *rectangle)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_RECTANGLE (rectangle), FALSE);
+
+  return rectangle->private->is_first;
 }
 
 /**
