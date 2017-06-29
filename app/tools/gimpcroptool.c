@@ -145,6 +145,9 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
                                      GIMP_CURSOR_PRECISION_PIXEL_BORDER);
   gimp_tool_control_set_cursor      (tool->control, GIMP_CURSOR_CROSSHAIR_SMALL);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
+
+  gimp_draw_tool_set_default_status (GIMP_DRAW_TOOL (tool),
+                                     _("Click-Drag to draw a crop rectangle"));
 }
 
 static void
@@ -246,14 +249,14 @@ gimp_crop_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  gimp_tool_push_status (tool, display, _("Click or press Enter to crop"));
-
   if (crop_tool->grab_widget)
     {
       gimp_tool_widget_button_release (crop_tool->grab_widget,
                                        coords, time, state, release_type);
       crop_tool->grab_widget = NULL;
     }
+
+  gimp_tool_push_status (tool, display, _("Click or press Enter to crop"));
 }
 
 static void
