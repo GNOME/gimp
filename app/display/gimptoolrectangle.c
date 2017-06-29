@@ -1432,6 +1432,9 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
 
   switch (release_type)
     {
+    case GIMP_BUTTON_RELEASE_NO_MOTION:
+      /* Treat a long click without movement like a normal change */
+
     case GIMP_BUTTON_RELEASE_NORMAL:
       gimp_tool_rectangle_change_complete (rectangle);
       break;
@@ -1453,9 +1456,6 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
       /* When a dead area is clicked, don't execute. */
       if (private->function != GIMP_TOOL_RECTANGLE_DEAD)
         response = GIMP_TOOL_WIDGET_RESPONSE_CONFIRM;
-      break;
-
-    case GIMP_BUTTON_RELEASE_NO_MOTION:
       break;
     }
 
