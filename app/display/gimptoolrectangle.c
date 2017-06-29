@@ -686,6 +686,7 @@ gimp_tool_rectangle_init (GimpToolRectangle *rectangle)
                                                     GimpToolRectanglePrivate);
 
   rectangle->private->function = GIMP_TOOL_RECTANGLE_CREATING;
+  rectangle->private->is_first = TRUE;
 }
 
 static void
@@ -1401,16 +1402,6 @@ gimp_tool_rectangle_button_press (GimpToolWidget      *widget,
   private->lastx = snapped_x;
   private->lasty = snapped_y;
 
-  if (private->x1 == private->x2 &&
-      private->y1 == private->y2)
-    {
-      private->is_first = TRUE;
-    }
-  else
-    {
-      private->is_first = FALSE;
-    }
-
   if (private->function == GIMP_TOOL_RECTANGLE_CREATING)
     {
       /* Remember that this rectangle was created from scratch. */
@@ -1545,6 +1536,8 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
   gimp_tool_rectangle_update_options (rectangle);
 
   gimp_tool_rectangle_changed (widget);
+
+  private->is_first = FALSE;
 
   /*  emit response at the end, so everything is up to date even if
    *  a signal handler decides hot to shut down the rectangle
