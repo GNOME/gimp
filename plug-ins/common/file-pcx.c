@@ -937,10 +937,11 @@ save_less_than_8 (FILE         *fp,
   gint        count         = 0;
   guchar      byte_to_write = 0x00;
   guchar     *line;
+  gint        x;
 
   line = (guchar *) g_malloc (((width + 7) / 8) * bpp);
 
-  for (gint x = 0; x < buf_size; x++)
+  for (x = 0; x < buf_size; x++)
     {
       byte_to_write |= (buf[x] << j);
       j -= bpp;
