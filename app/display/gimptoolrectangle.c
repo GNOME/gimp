@@ -316,6 +316,7 @@ static void     gimp_tool_rectangle_change_complete (GimpToolRectangle     *rect
 static void     gimp_tool_rectangle_update_options  (GimpToolRectangle     *rectangle);
 static void     gimp_tool_rectangle_update_handle_sizes
                                                     (GimpToolRectangle     *rectangle);
+static void     gimp_tool_rectangle_update_status   (GimpToolRectangle     *rectangle);
 
 static void     gimp_tool_rectangle_synthesize_motion
                                                     (GimpToolRectangle     *rectangle,
@@ -1424,6 +1425,8 @@ gimp_tool_rectangle_button_press (GimpToolWidget      *widget,
 
   gimp_tool_rectangle_changed (widget);
 
+  gimp_tool_rectangle_update_status (rectangle);
+
   return 1;
 }
 
@@ -1438,8 +1441,7 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
   GimpToolRectanglePrivate *private   = rectangle->private;
   gint                      response  = 0;
 
-  if (private->function == GIMP_TOOL_RECTANGLE_EXECUTING)
-    gimp_tool_widget_set_status (widget, NULL);
+  gimp_tool_widget_set_status (widget, NULL);
 
   /* On button release, we are not rubber-banding the rectangle any longer. */
   private->rect_adjusting = FALSE;
@@ -1541,32 +1543,7 @@ gimp_tool_rectangle_motion (GimpToolWidget   *widget,
   /* This is the core rectangle shape updating function: */
   gimp_tool_rectangle_update_with_coord (rectangle, snapped_x, snapped_y);
 
-  if (private->function != GIMP_TOOL_RECTANGLE_MOVING &&
-      private->function != GIMP_TOOL_RECTANGLE_EXECUTING)
-    {
-      gdouble x1, y1, x2, y2;
-      gint    width, height;
-
-      gimp_tool_widget_set_status (widget, NULL);
-
-      gimp_tool_rectangle_get_public_rect (rectangle, &x1, &y1, &x2, &y2);
-      width  = x2 - x1;
-      height = y2 - y1;
-
-      if (width > 0.0 && height > 0.0)
-        {
-          gchar *aspect_text;
-
-          aspect_text = g_strdup_printf ("  (%.2f:1)",
-                                         (gdouble) width / (gdouble) height);
-
-          gimp_tool_widget_set_status_coords (widget,
-                                              _("Rectangle: "),
-                                              width, " × ", height,
-                                              aspect_text);
-          g_free (aspect_text);
-        }
-    }
+  gimp_tool_rectangle_update_status (rectangle);
 
   if (private->function == GIMP_TOOL_RECTANGLE_CREATING)
     {
@@ -2113,6 +2090,41 @@ gimp_tool_rectangle_update_handle_sizes (GimpToolRectangle *rectangle)
       private->left_and_right_handle_h = CLAMP (private->left_and_right_handle_h,
                                                 MIN_HANDLE_SIZE,
                                                 G_MAXINT);
+    }
+}
+
+static void
+gimp_tool_rectangle_update_status (GimpToolRectangle *rectangle)
+{
+  GimpToolRectanglePrivate *private = rectangle->private;
+  gdouble                   x1, y1, x2, y2;
+
+  gimp_tool_rectangle_get_public_rect (rectangle, &x1, &y1, &x2, &y2);
+
+  if (private->function == GIMP_TOOL_RECTANGLE_MOVING)
+    {
+      gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (rectangle),
+                                          _("Position: "),
+                                          x1, ", ", y1,
+                                          NULL);
+    }
+  else
+    {
+      gchar *aspect_text = NULL;
+      gint   width       = x2 - x1;
+      gint   height      = y2 - y1;
+
+      if (width > 0.0 && height > 0.0)
+        {
+          aspect_text = g_strdup_printf ("  (%.2f:1)",
+                                         (gdouble) width / (gdouble) height);
+        }
+
+      gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (rectangle),
+                                          _("Rectangle: "),
+                                          width, " × ", height,
+                                          aspect_text);
+      g_free (aspect_text);
     }
 }
 
