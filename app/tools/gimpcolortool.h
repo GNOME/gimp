@@ -59,17 +59,17 @@ struct _GimpColorToolClass
                          const GimpCoords   *coords,
                          GimpDisplay        *display);
   gboolean (* pick)     (GimpColorTool      *tool,
-                         gint                x,
-                         gint                y,
+                         const GimpCoords   *coords,
+                         GimpDisplay        *display,
                          const Babl        **sample_format,
                          gpointer            pixel,
                          GimpRGB            *color);
 
   /*  signals  */
   void     (* picked)   (GimpColorTool      *tool,
+                         const GimpCoords   *coords,
+                         GimpDisplay        *display,
                          GimpColorPickState  pick_state,
-                         gdouble             x,
-                         gdouble             y,
                          const Babl         *sample_format,
                          gpointer            pixel,
                          const GimpRGB      *color);

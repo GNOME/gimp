@@ -112,15 +112,15 @@ static gboolean  gimp_filter_tool_can_pick_color (GimpColorTool       *color_too
                                                   const GimpCoords    *coords,
                                                   GimpDisplay         *display);
 static gboolean  gimp_filter_tool_pick_color     (GimpColorTool       *color_tool,
-                                                  gint                 x,
-                                                  gint                 y,
+                                                  const GimpCoords    *coords,
+                                                  GimpDisplay         *display,
                                                   const Babl         **sample_format,
                                                   gpointer             pixel,
                                                   GimpRGB             *color);
 static void      gimp_filter_tool_color_picked   (GimpColorTool       *color_tool,
+                                                  const GimpCoords    *coords,
+                                                  GimpDisplay         *display,
                                                   GimpColorPickState   pick_state,
-                                                  gdouble              x,
-                                                  gdouble              y,
                                                   const Babl          *sample_format,
                                                   gpointer             pixel,
                                                   const GimpRGB       *color);
@@ -804,12 +804,12 @@ gimp_filter_tool_can_pick_color (GimpColorTool    *color_tool,
 }
 
 static gboolean
-gimp_filter_tool_pick_color (GimpColorTool  *color_tool,
-                             gint            x,
-                             gint            y,
-                             const Babl    **sample_format,
-                             gpointer        pixel,
-                             GimpRGB        *color)
+gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
+                             const GimpCoords  *coords,
+                             GimpDisplay       *display,
+                             const Babl       **sample_format,
+                             gpointer           pixel,
+                             GimpRGB           *color)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
   gint            off_x, off_y;
@@ -820,8 +820,8 @@ gimp_filter_tool_pick_color (GimpColorTool  *color_tool,
   *sample_format = gimp_drawable_get_format (filter_tool->drawable);
 
   picked = gimp_pickable_pick_color (GIMP_PICKABLE (filter_tool->drawable),
-                                     x - off_x,
-                                     y - off_y,
+                                     coords->x - off_x,
+                                     coords->y - off_y,
                                      color_tool->options->sample_average,
                                      color_tool->options->average_radius,
                                      pixel, color);
@@ -841,20 +841,20 @@ gimp_filter_tool_pick_color (GimpColorTool  *color_tool,
 
 static void
 gimp_filter_tool_color_picked (GimpColorTool      *color_tool,
+                               const GimpCoords   *coords,
+                               GimpDisplay        *display,
                                GimpColorPickState  pick_state,
-                               gdouble             x,
-                               gdouble             y,
                                const Babl         *sample_format,
                                gpointer            pixel,
                                const GimpRGB      *color)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
 
-  GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->color_picked (
-    filter_tool,
-    filter_tool->pick_identifier,
-    x, y,
-    sample_format, color);
+  GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->color_picked (filter_tool,
+                                                          filter_tool->pick_identifier,
+                                                          coords->x,
+                                                          coords->y,
+                                                          sample_format, color);
 }
 
 static void
@@ -1544,8 +1544,8 @@ gimp_filter_tool_enable_color_picking (GimpFilterTool *filter_tool,
 
   gimp_filter_tool_disable_color_picking (filter_tool);
 
-  /* note that ownership over `identifier` is not transferred, and its lifetime
-   * should be managed by the caller.
+  /* note that ownership over 'identifier' is not transferred, and its
+   * lifetime should be managed by the caller.
    */
   filter_tool->pick_identifier = identifier;
   filter_tool->pick_abyss      = pick_abyss;
