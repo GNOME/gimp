@@ -340,9 +340,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
       gimp_paint_core_round_line (core, paint_options, constrain);
     }
 
-  /*  chain up to activate the tool  */
-  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                press_type, display);
+  tool->display  = display;
+  tool->drawable = drawable;
 
   /*  pause the current selection  */
   gimp_display_shell_selection_pause (shell);
@@ -367,6 +366,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   gimp_display_flush_now (display);
 
   gimp_draw_tool_start (draw_tool, display);
+
+  gimp_tool_control_activate (tool->control);
 }
 
 static void
@@ -392,6 +393,8 @@ gimp_paint_tool_button_release (GimpTool              *tool,
       return;
     }
 
+  gimp_tool_control_halt (tool->control);
+
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   /*  Let the specific painting function finish up  */
@@ -400,10 +403,6 @@ gimp_paint_tool_button_release (GimpTool              *tool,
 
   /*  resume the current selection  */
   gimp_display_shell_selection_resume (shell);
-
-  /*  chain up to halt the tool */
-  GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
-                                                  release_type, display);
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     gimp_paint_core_cancel (core, drawable);
@@ -948,7 +947,7 @@ gimp_paint_tool_set_draw_fallback (GimpPaintTool *tool,
   g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
 
   tool->draw_fallback = draw_fallback;
-  tool->fallback_size= fallback_size;
+  tool->fallback_size = fallback_size;
 }
 
 void
