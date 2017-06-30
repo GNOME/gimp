@@ -46,7 +46,7 @@ struct _GimpOperationScalarMultiply
 
 struct _GimpOperationScalarMultiplyClass
 {
-  GeglOperationPointComposerClass  parent_class;
+  GeglOperationPointFilterClass  parent_class;
 };
 
 
