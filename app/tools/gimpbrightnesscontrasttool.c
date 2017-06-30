@@ -213,8 +213,9 @@ gimp_brightness_contrast_tool_button_press (GimpTool            *tool,
       bc_tool->dx =   contrast   * 127.0;
       bc_tool->dy = - brightness * 127.0;
 
-      gimp_tool_control_activate (tool->control);
       tool->display = display;
+
+      gimp_tool_control_activate (tool->control);
     }
 }
 
@@ -235,9 +236,9 @@ gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
     }
   else
     {
-      bc_tool->dragging = FALSE;
-
       gimp_tool_control_halt (tool->control);
+
+      bc_tool->dragging = FALSE;
 
       if (bc_tool->dx == 0 && bc_tool->dy == 0)
         return;
