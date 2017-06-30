@@ -201,6 +201,8 @@ gimp_enums_init (void)
   g_type_set_qdata (GIMP_TYPE_LAYER_MODE, quark,
 		    (gpointer) gimp_layer_mode_effects_get_type ());
 
+  gimp_base_compat_enum_init ();
+
   enums_initialized = TRUE;
 }
 
