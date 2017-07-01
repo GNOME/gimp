@@ -64,6 +64,7 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimptoolgui.h"
+#include "display/gimptoolwidget.h"
 
 #include "gimpfilteroptions.h"
 #include "gimpfiltertool.h"
@@ -91,6 +92,17 @@ static void      gimp_filter_tool_button_press   (GimpTool            *tool,
                                                   guint32              time,
                                                   GdkModifierType      state,
                                                   GimpButtonPressType  press_type,
+                                                  GimpDisplay         *display);
+static void      gimp_filter_tool_button_release (GimpTool            *tool,
+                                                  const GimpCoords    *coords,
+                                                  guint32              time,
+                                                  GdkModifierType      state,
+                                                  GimpButtonReleaseType release_type,
+                                                  GimpDisplay         *display);
+static void      gimp_filter_tool_motion         (GimpTool            *tool,
+                                                  const GimpCoords    *coords,
+                                                  guint32              time,
+                                                  GdkModifierType      state,
                                                   GimpDisplay         *display);
 static gboolean  gimp_filter_tool_key_press      (GimpTool            *tool,
                                                   GdkEventKey         *kevent,
@@ -177,6 +189,8 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   tool_class->initialize     = gimp_filter_tool_initialize;
   tool_class->control        = gimp_filter_tool_control;
   tool_class->button_press   = gimp_filter_tool_button_press;
+  tool_class->button_release = gimp_filter_tool_button_release;
+  tool_class->motion         = gimp_filter_tool_motion;
   tool_class->key_press      = gimp_filter_tool_key_press;
   tool_class->oper_update    = gimp_filter_tool_oper_update;
   tool_class->cursor_update  = gimp_filter_tool_cursor_update;
@@ -339,8 +353,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
   gimp_filter_tool_disable_color_picking (filter_tool);
 
-  /*  set display so the dialog can be hidden on display destruction  */
-  tool->display = display;
+  tool->display  = display;
+  tool->drawable = drawable;
 
   if (filter_tool->config)
     gimp_config_reset (GIMP_CONFIG (filter_tool->config));
@@ -528,12 +542,7 @@ gimp_filter_tool_button_press (GimpTool            *tool,
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
 
-  if (! gimp_filter_tool_on_guide (filter_tool, coords, display))
-    {
-      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                    press_type, display);
-    }
-  else
+  if (gimp_filter_tool_on_guide (filter_tool, coords, display))
     {
       GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (tool);
 
@@ -560,6 +569,66 @@ gimp_filter_tool_button_press (GimpTool            *tool,
           gimp_guide_tool_start_edit (tool, display,
                                       filter_tool->preview_guide);
         }
+    }
+  else if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                    press_type, display);
+    }
+  else if (filter_tool->widget)
+    {
+      if (gimp_tool_widget_button_press (filter_tool->widget, coords, time,
+                                         state, press_type))
+        {
+          filter_tool->grab_widget = filter_tool->widget;
+
+          gimp_tool_control_activate (tool->control);
+        }
+    }
+}
+
+static void
+gimp_filter_tool_button_release (GimpTool              *tool,
+                                 const GimpCoords      *coords,
+                                 guint32                time,
+                                 GdkModifierType        state,
+                                 GimpButtonReleaseType  release_type,
+                                 GimpDisplay           *display)
+{
+  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
+
+  if (filter_tool->grab_widget)
+    {
+      gimp_tool_control_halt (tool->control);
+
+      gimp_tool_widget_button_release (filter_tool->grab_widget,
+                                       coords, time, state, release_type);
+      filter_tool->grab_widget = NULL;
+    }
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
+                                                      release_type, display);
+    }
+}
+
+static void
+gimp_filter_tool_motion (GimpTool         *tool,
+                         const GimpCoords *coords,
+                         guint32           time,
+                         GdkModifierType   state,
+                         GimpDisplay      *display)
+{
+  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
+
+  if (filter_tool->grab_widget)
+    {
+      gimp_tool_widget_motion (filter_tool->grab_widget, coords, time, state);
+    }
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state,
+                                              display);
     }
 }
 
@@ -596,7 +665,7 @@ gimp_filter_tool_key_press (GimpTool    *tool,
         }
     }
 
-  return FALSE;
+  return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
 }
 
 static void
@@ -610,12 +679,7 @@ gimp_filter_tool_oper_update (GimpTool         *tool,
 
   gimp_tool_pop_status (tool, display);
 
-  if (! gimp_filter_tool_on_guide (filter_tool, coords, display))
-    {
-      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
-                                                   proximity, display);
-    }
-  else
+  if (gimp_filter_tool_on_guide (filter_tool, coords, display))
     {
       GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
       GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
@@ -643,6 +707,11 @@ gimp_filter_tool_oper_update (GimpTool         *tool,
 
       g_free (status);
     }
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state,
+                                                   proximity, display);
+    }
 }
 
 static void
@@ -653,17 +722,17 @@ gimp_filter_tool_cursor_update (GimpTool         *tool,
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
 
-  if (! gimp_filter_tool_on_guide (filter_tool, coords, display))
-    {
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
-                                                     display);
-    }
-  else
+  if (gimp_filter_tool_on_guide (filter_tool, coords, display))
     {
       gimp_tool_set_cursor (tool, display,
                             GIMP_CURSOR_MOUSE,
                             GIMP_TOOL_CURSOR_HAND,
                             GIMP_CURSOR_MODIFIER_MOVE);
+    }
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
+                                                     display);
     }
 }
 
@@ -907,6 +976,12 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
       gimp_filter_tool_remove_guide (filter_tool);
     }
 
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+  gimp_filter_tool_set_widget (filter_tool, NULL);
+
+  tool->display  = NULL;
   tool->drawable = NULL;
 }
 
@@ -947,8 +1022,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool)
         }
     }
 
-  tool->display  = NULL;
-  tool->drawable = NULL;
+  gimp_filter_tool_halt (filter_tool);
 }
 
 static void
@@ -1050,7 +1124,7 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
   if (filter_tool->preview_guide)
     return;
 
-  item = GIMP_ITEM (filter_tool->drawable);
+  item  = GIMP_ITEM (filter_tool->drawable);
   image = gimp_item_get_image (item);
 
   if (options->preview_alignment == GIMP_ALIGN_LEFT ||
@@ -1635,4 +1709,35 @@ gimp_filter_tool_add_color_picker (GimpFilterTool *filter_tool,
                     filter_tool);
 
   return button;
+}
+
+void
+gimp_filter_tool_set_widget (GimpFilterTool *filter_tool,
+                             GimpToolWidget *widget)
+{
+  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
+  g_return_if_fail (widget == NULL || GIMP_IS_TOOL_WIDGET (widget));
+
+  if (widget == filter_tool->widget)
+    return;
+
+  if (filter_tool->widget)
+    {
+      if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (filter_tool)))
+        gimp_draw_tool_stop (GIMP_DRAW_TOOL (filter_tool));
+
+      g_object_unref (filter_tool->widget);
+    }
+
+  filter_tool->widget = widget;
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (filter_tool), widget);
+
+  if (filter_tool->widget)
+    {
+      g_object_ref (filter_tool->widget);
+
+      if (GIMP_TOOL (filter_tool)->display)
+        gimp_draw_tool_start (GIMP_DRAW_TOOL (filter_tool),
+                              GIMP_TOOL (filter_tool)->display);
+    }
 }

@@ -68,6 +68,10 @@ struct _GimpFilterTool
   GtkWidget             *settings_box;
   GtkWidget             *region_combo;
   GtkWidget             *active_picker;
+
+  /* widget */
+  GimpToolWidget        *widget;
+  GimpToolWidget        *grab_widget;
 };
 
 struct _GimpFilterToolClass
@@ -134,6 +138,8 @@ GtkWidget * gimp_filter_tool_add_color_picker      (GimpFilterTool   *filter_too
                                                     const gchar      *icon_name,
                                                     const gchar      *tooltip,
                                                     gboolean          pick_abyss);
+void        gimp_filter_tool_set_widget            (GimpFilterTool   *filter_tool,
+                                                    GimpToolWidget   *widget);
 
 
 #endif /* __GIMP_FILTER_TOOL_H__ */
