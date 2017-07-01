@@ -305,7 +305,9 @@ gimp_color_tool_oper_update (GimpTool         *tool,
 
       gimp_draw_tool_pause (draw_tool);
 
-      if (gimp_draw_tool_is_active (draw_tool) &&
+      if (! draw_tool->widget &&
+
+          gimp_draw_tool_is_active (draw_tool) &&
           (draw_tool->display != display ||
            ! proximity))
         {
@@ -332,7 +334,9 @@ gimp_color_tool_oper_update (GimpTool         *tool,
       color_tool->center_x = coords->x;
       color_tool->center_y = coords->y;
 
-      if (! gimp_draw_tool_is_active (draw_tool) &&
+      if (! draw_tool->widget &&
+
+          ! gimp_draw_tool_is_active (draw_tool) &&
           proximity)
         {
           gimp_draw_tool_start (draw_tool, display);
@@ -405,6 +409,8 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpColorTool *color_tool = GIMP_COLOR_TOOL (draw_tool);
 
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+
   if (color_tool->enabled)
     {
       if (color_tool->sample_point)
@@ -434,10 +440,6 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
                                         2 * radius + 1,
                                         2 * radius + 1);
         }
-    }
-  else
-    {
-      GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
     }
 }
 
