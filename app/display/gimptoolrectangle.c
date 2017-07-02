@@ -550,7 +550,7 @@ gimp_tool_rectangle_class_init (GimpToolRectangleClass *klass)
   g_object_class_install_property (object_class, PROP_STATUS_TITLE,
                                    g_param_spec_string ("status-title",
                                                         NULL, NULL,
-                                                        _("Rectangle :"),
+                                                        _("Rectangle: "),
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
