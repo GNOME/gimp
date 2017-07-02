@@ -216,6 +216,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
+      if (tool_type == GIMP_TYPE_PENCIL_TOOL)
+        gtk_widget_set_sensitive (hbox, FALSE);
+
       g_object_unref (link_group);
 
       button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
