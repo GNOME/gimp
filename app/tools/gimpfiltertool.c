@@ -1779,3 +1779,55 @@ gimp_filter_tool_set_widget (GimpFilterTool *filter_tool,
                               GIMP_TOOL (filter_tool)->display);
     }
 }
+
+gboolean
+gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
+                                    gint           *drawable_offset_x,
+                                    gint           *drawable_offset_y,
+                                    GeglRectangle  *drawable_area)
+{
+  GimpDrawable *drawable;
+
+  g_return_val_if_fail (GIMP_IS_FILTER_TOOL (filter_tool), FALSE);
+  g_return_val_if_fail (drawable_offset_x != NULL, FALSE);
+  g_return_val_if_fail (drawable_offset_y != NULL, FALSE);
+  g_return_val_if_fail (drawable_area != NULL, FALSE);
+
+  *drawable_offset_x = 0;
+  *drawable_offset_y = 0;
+
+  drawable_area->x      = 0;
+  drawable_area->y      = 0;
+  drawable_area->width  = 1;
+  drawable_area->height = 1;
+
+  drawable = filter_tool->drawable;
+
+  if (drawable)
+    {
+      GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+
+      gimp_item_get_offset (GIMP_ITEM (drawable),
+                            drawable_offset_x, drawable_offset_y);
+
+      switch (options->region)
+        {
+        case GIMP_FILTER_REGION_SELECTION:
+          gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                    &drawable_area->x,
+                                    &drawable_area->y,
+                                    &drawable_area->width,
+                                    &drawable_area->height);
+          break;
+
+        case GIMP_FILTER_REGION_DRAWABLE:
+          drawable_area->width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          drawable_area->height = gimp_item_get_height (GIMP_ITEM (drawable));
+          break;
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}

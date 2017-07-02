@@ -136,13 +136,20 @@ void        gimp_filter_tool_enable_color_picking  (GimpFilterTool   *filter_too
                                                     gpointer          identifier,
                                                     gboolean          pick_abyss);
 void        gimp_filter_tool_disable_color_picking (GimpFilterTool   *filter_tool);
+
 GtkWidget * gimp_filter_tool_add_color_picker      (GimpFilterTool   *filter_tool,
                                                     gpointer          identifier,
                                                     const gchar      *icon_name,
                                                     const gchar      *tooltip,
                                                     gboolean          pick_abyss);
+
 void        gimp_filter_tool_set_widget            (GimpFilterTool   *filter_tool,
                                                     GimpToolWidget   *widget);
+
+gboolean    gimp_filter_tool_get_drawable_area     (GimpFilterTool   *filter_tool,
+                                                    gint             *drawable_offset_x,
+                                                    gint             *drawable_offset_y,
+                                                    GeglRectangle    *drawable_area);
 
 
 #endif /* __GIMP_FILTER_TOOL_H__ */
