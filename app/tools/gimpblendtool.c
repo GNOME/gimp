@@ -607,6 +607,10 @@ gimp_blend_tool_start (GimpBlendTool    *blend_tool,
                                            blend_tool->end_x,
                                            blend_tool->end_y);
 
+  g_object_set (blend_tool->widget,
+                "status-title", _("Blend: "),
+                NULL);
+
   gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), blend_tool->widget);
 
   g_signal_connect (blend_tool->widget, "changed",

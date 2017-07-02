@@ -61,7 +61,8 @@ enum
   PROP_X1,
   PROP_Y1,
   PROP_X2,
-  PROP_Y2
+  PROP_Y2,
+  PROP_STATUS_TITLE,
 };
 
 struct _GimpToolLinePrivate
@@ -70,6 +71,7 @@ struct _GimpToolLinePrivate
   gdouble            y1;
   gdouble            x2;
   gdouble            y2;
+  gchar             *status_title;
 
   gdouble            saved_x1;
   gdouble            saved_y1;
@@ -92,6 +94,7 @@ struct _GimpToolLinePrivate
 /*  local function prototypes  */
 
 static void     gimp_tool_line_constructed     (GObject               *object);
+static void     gimp_tool_line_finalize        (GObject               *object);
 static void     gimp_tool_line_set_property    (GObject               *object,
                                                 guint                  property_id,
                                                 const GValue          *value,
@@ -153,6 +156,7 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
   GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
 
   object_class->constructed     = gimp_tool_line_constructed;
+  object_class->finalize        = gimp_tool_line_finalize;
   object_class->set_property    = gimp_tool_line_set_property;
   object_class->get_property    = gimp_tool_line_get_property;
 
@@ -189,6 +193,13 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
                                    g_param_spec_double ("y2", NULL, NULL,
                                                         -GIMP_MAX_IMAGE_SIZE,
                                                         GIMP_MAX_IMAGE_SIZE, 0,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_STATUS_TITLE,
+                                   g_param_spec_string ("status-title",
+                                                        NULL, NULL,
+                                                        _("Line: "),
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -260,6 +271,21 @@ gimp_tool_line_constructed (GObject *object)
 }
 
 static void
+gimp_tool_line_finalize (GObject *object)
+{
+  GimpToolLine        *line    = GIMP_TOOL_LINE (object);
+  GimpToolLinePrivate *private = line->private;
+
+  if (private->status_title)
+    {
+      g_free (private->status_title);
+      private->status_title = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_tool_line_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
@@ -281,6 +307,13 @@ gimp_tool_line_set_property (GObject      *object,
       break;
     case PROP_Y2:
       private->y2 = g_value_get_double (value);
+      break;
+
+    case PROP_STATUS_TITLE:
+      g_free (private->status_title);
+      private->status_title = g_value_dup_string (value);
+      if (! private->status_title)
+        private->status_title = g_strdup (_("Line: "));
       break;
 
     default:
@@ -311,6 +344,10 @@ gimp_tool_line_get_property (GObject    *object,
       break;
     case PROP_Y2:
       g_value_set_double (value, private->y2);
+      break;
+
+    case PROP_STATUS_TITLE:
+      g_value_set_string (value, private->status_title);
       break;
 
     default:
@@ -629,7 +666,7 @@ gimp_tool_line_update_status (GimpToolLine    *line,
                                 _("%s to move the whole line"));
 
       gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (line),
-                                          _("Blend: "),
+                                          private->status_title,
                                           private->x2 - private->x1,
                                           ", ",
                                           private->y2 - private->y1,
