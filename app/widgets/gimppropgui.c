@@ -264,14 +264,23 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
               if (HAS_KEY (pspec, "unit", "pixel-coordinate") ||
                   HAS_KEY (pspec, "unit", "pixel-distance"))
                 {
+                  gint off_x = 0;
+                  gint off_y = 0;
+
+                  if (HAS_KEY (pspec, "unit", "pixel-coordinate"))
+                    {
+                      off_x = area->x;
+                      off_y = area->y;
+                    }
+
                   if (HAS_KEY (pspec, "axis", "x"))
                     {
                       g_printerr ("XXX setting width %d on %s\n",
                                   area->width, pspec->name);
 
                       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
-                                                        area->x,
-                                                        area->x + area->width);
+                                                        off_x,
+                                                        off_x + area->width);
                     }
                   else if (HAS_KEY (pspec, "axis","y"))
                     {
@@ -279,8 +288,8 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
                                   area->height, pspec->name);
 
                       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
-                                                        area->y,
-                                                        area->y + area->height);
+                                                        off_y,
+                                                        off_y + area->height);
                     }
                 }
             }
