@@ -56,7 +56,7 @@ line_callback (GObject       *config,
   x        = x1 / area->width;
   y        = y1 / area->height;
   radius   = sqrt (SQR (x2 - x1) + SQR (y2 - y1));
-  rotation = atan2 (x2 - x1, y2 - y1) * 180 / G_PI;
+  rotation = atan2 (-(y2 - y1), x2 - x1) * 180 / G_PI;
 
   if (rotation < 0)
     rotation += 360.0;
@@ -93,8 +93,8 @@ config_notify (GObject          *config,
 
   x1 = x * area->width;
   y1 = y * area->height;
-  x2 = x1 + sin (rotation * (G_PI / 180.0)) * radius;
-  y2 = y1 + cos (rotation * (G_PI / 180.0)) * radius;
+  x2 = x1 + cos (rotation * (G_PI / 180.0)) * radius;
+  y2 = y1 - sin (rotation * (G_PI / 180.0)) * radius;
 
   set_func (set_data, area, x1, y1, x2, y2);
 }
