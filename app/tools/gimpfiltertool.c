@@ -78,7 +78,6 @@
 
 /*  local function prototypes  */
 
-static void      gimp_filter_tool_constructed    (GObject             *object);
 static void      gimp_filter_tool_finalize       (GObject             *object);
 
 static gboolean  gimp_filter_tool_initialize     (GimpTool            *tool,
@@ -183,7 +182,6 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
 
-  object_class->constructed  = gimp_filter_tool_constructed;
   object_class->finalize     = gimp_filter_tool_finalize;
 
   tool_class->initialize     = gimp_filter_tool_initialize;
@@ -220,16 +218,6 @@ gimp_filter_tool_init (GimpFilterTool *filter_tool)
                                      GIMP_DIRTY_IMAGE_STRUCTURE |
                                      GIMP_DIRTY_DRAWABLE        |
                                      GIMP_DIRTY_ACTIVE_DRAWABLE);
-}
-
-static void
-gimp_filter_tool_constructed (GObject *object)
-{
-  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (object);
-
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  gimp_filter_tool_get_operation (filter_tool);
 }
 
 static void
@@ -350,6 +338,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
                            _("The active layer is not visible."));
       return FALSE;
     }
+
+  gimp_filter_tool_get_operation (filter_tool);
 
   gimp_filter_tool_disable_color_picking (filter_tool);
 
@@ -965,7 +955,12 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
   GimpTool *tool = GIMP_TOOL (filter_tool);
 
   if (filter_tool->gui)
-    gimp_tool_gui_hide (filter_tool->gui);
+    {
+      g_object_unref (filter_tool->gui);
+      filter_tool->gui          = NULL;
+      filter_tool->settings_box = NULL;
+      filter_tool->region_combo = NULL;
+    }
 
   if (filter_tool->filter)
     {
@@ -974,6 +969,34 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
       filter_tool->filter = NULL;
 
       gimp_filter_tool_remove_guide (filter_tool);
+    }
+
+  if (filter_tool->operation)
+    {
+      g_object_unref (filter_tool->operation);
+      filter_tool->operation = NULL;
+    }
+
+  if (filter_tool->config)
+    {
+      g_signal_handlers_disconnect_by_func (filter_tool->config,
+                                            gimp_filter_tool_config_notify,
+                                            filter_tool);
+
+      g_object_unref (filter_tool->config);
+      filter_tool->config = NULL;
+    }
+
+  if (filter_tool->default_config)
+    {
+      g_object_unref (filter_tool->default_config);
+      filter_tool->default_config = NULL;
+    }
+
+  if (filter_tool->settings)
+    {
+      g_object_unref (filter_tool->settings);
+      filter_tool->settings = NULL;
     }
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
