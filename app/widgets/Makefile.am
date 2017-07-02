@@ -317,6 +317,8 @@ libappwidgets_a_sources = \
 	gimppropgui-generic.h		\
 	gimppropgui-hue-saturation.c	\
 	gimppropgui-hue-saturation.h	\
+	gimppropgui-spiral.c		\
+	gimppropgui-spiral.h		\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpradioaction.c		\

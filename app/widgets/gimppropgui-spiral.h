@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-channel-mixer.h
+ * gimppropgui-spiral.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROP_GUI_CHANNEL_MIXER_H__
-#define __GIMP_PROP_GUI_CHANNEL_MIXER_H__
+#ifndef __GIMP_PROP_GUI_SPIRAL_H__
+#define __GIMP_PROP_GUI_SPIRAL_H__
 
 
 GtkWidget *
-_gimp_prop_gui_new_channel_mixer (GObject                  *config,
-                                  GParamSpec              **param_specs,
-                                  guint                     n_param_specs,
-                                  GeglRectangle            *area,
-                                  GimpContext              *context,
-                                  GimpCreatePickerFunc      create_picker_func,
-                                  GimpCreateControllerFunc  create_controller_func,
-                                  gpointer                  creator);
+_gimp_prop_gui_new_spiral (GObject                  *config,
+                           GParamSpec              **param_specs,
+                           guint                     n_param_specs,
+                           GeglRectangle            *area,
+                           GimpContext              *context,
+                           GimpCreatePickerFunc      create_picker_func,
+                           GimpCreateControllerFunc  create_controller_func,
+                           gpointer                  creator);
 
 
-#endif /* __GIMP_PROP_GUI_CHANNEL_MIXER_H__ */
+#endif /* __GIMP_PROP_GUI_SPIRAL_H__ */

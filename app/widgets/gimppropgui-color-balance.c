@@ -70,13 +70,14 @@ create_levels_scale (GObject     *config,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_color_balance (GObject              *config,
-                                  GParamSpec          **param_specs,
-                                  guint                 n_param_specs,
-                                  GeglRectangle        *area,
-                                  GimpContext          *context,
-                                  GimpCreatePickerFunc  create_picker_func,
-                                  gpointer              picker_creator)
+_gimp_prop_gui_new_color_balance (GObject                  *config,
+                                  GParamSpec              **param_specs,
+                                  guint                     n_param_specs,
+                                  GeglRectangle            *area,
+                                  GimpContext              *context,
+                                  GimpCreatePickerFunc      create_picker_func,
+                                  GimpCreateControllerFunc  create_controller_func,
+                                  gpointer                  creator)
 {
   GtkWidget *main_vbox;
   GtkWidget *vbox;

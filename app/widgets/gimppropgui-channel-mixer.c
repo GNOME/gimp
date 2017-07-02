@@ -37,13 +37,14 @@
 
 
 GtkWidget *
-_gimp_prop_gui_new_channel_mixer (GObject              *config,
-                                  GParamSpec          **param_specs,
-                                  guint                 n_param_specs,
-                                  GeglRectangle        *area,
-                                  GimpContext          *context,
-                                  GimpCreatePickerFunc  create_picker_func,
-                                  gpointer              picker_creator)
+_gimp_prop_gui_new_channel_mixer (GObject                  *config,
+                                  GParamSpec              **param_specs,
+                                  guint                     n_param_specs,
+                                  GeglRectangle            *area,
+                                  GimpContext              *context,
+                                  GimpCreatePickerFunc      create_picker_func,
+                                  GimpCreateControllerFunc  create_controller_func,
+                                  gpointer                  creator)
 {
   GtkWidget   *main_vbox;
   GtkWidget   *frame;
@@ -68,17 +69,17 @@ _gimp_prop_gui_new_channel_mixer (GObject              *config,
   gtk_widget_show (vbox);
 
   scale = gimp_prop_widget_new (config, "rr-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "rg-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "rb-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -92,17 +93,17 @@ _gimp_prop_gui_new_channel_mixer (GObject              *config,
   gtk_widget_show (vbox);
 
   scale = gimp_prop_widget_new (config, "gr-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "gg-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "gb-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -116,23 +117,23 @@ _gimp_prop_gui_new_channel_mixer (GObject              *config,
   gtk_widget_show (vbox);
 
   scale = gimp_prop_widget_new (config, "br-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "bg-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "bb-gain",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
 
   checkbox = gimp_prop_widget_new (config, "preserve-luminosity",
-                                   area, context, NULL, NULL, &label);
+                                   area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (main_vbox), checkbox, FALSE, FALSE, 0);
   gtk_widget_show (checkbox);
 

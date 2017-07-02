@@ -131,13 +131,14 @@ convolution_matrix_rotate_flip (GtkWidget *button,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_convolution_matrix (GObject              *config,
-                                       GParamSpec          **param_specs,
-                                       guint                 n_param_specs,
-                                       GeglRectangle        *area,
-                                       GimpContext          *context,
-                                       GimpCreatePickerFunc  create_picker_func,
-                                       gpointer              picker_creator)
+_gimp_prop_gui_new_convolution_matrix (GObject                  *config,
+                                       GParamSpec              **param_specs,
+                                       guint                     n_param_specs,
+                                       GeglRectangle            *area,
+                                       GimpContext              *context,
+                                       GimpCreatePickerFunc      create_picker_func,
+                                       GimpCreateControllerFunc  create_controller_func,
+                                       gpointer                  creator)
 {
   GtkWidget   *main_vbox;
   GtkWidget   *vbox;
@@ -269,12 +270,12 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   gtk_widget_show (hbox);
 
   scale = gimp_prop_widget_new (config, "divisor",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
 
   scale = gimp_prop_widget_new (config, "offset",
-                                area, context, NULL, NULL, &label);
+                                area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
 
@@ -288,7 +289,9 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   vbox2 = _gimp_prop_gui_new_generic (config,
                                       param_specs + 27, 4,
                                       area, context,
-                                      create_picker_func, picker_creator);
+                                      create_picker_func,
+                                      create_controller_func,
+                                      creator);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 
@@ -296,7 +299,9 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
                                       param_specs + 31,
                                       n_param_specs - 31,
                                       area, context,
-                                      create_picker_func, picker_creator);
+                                      create_picker_func,
+                                      create_controller_func,
+                                      creator);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 

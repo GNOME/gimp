@@ -80,6 +80,8 @@ libapptools_a_sources = \
 	gimpfiltertool.h		\
 	gimpfiltertool-settings.c	\
 	gimpfiltertool-settings.h	\
+	gimpfiltertool-widgets.c	\
+	gimpfiltertool-widgets.h	\
 	gimpflipoptions.c		\
 	gimpflipoptions.h		\
 	gimpfliptool.c			\

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * gimppropgui.c
- * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2002-2017  Michael Natterer <mitch@gimp.org>
  *                          Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -48,6 +48,7 @@
 #include "gimppropgui-color-rotate.h"
 #include "gimppropgui-convolution-matrix.h"
 #include "gimppropgui-diffration-patterns.h"
+#include "gimppropgui-spiral.h"
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
@@ -78,13 +79,14 @@ static void          gimp_prop_free_label_ref          (GWeakRef       *label_re
 /*  public functions  */
 
 GtkWidget *
-gimp_prop_widget_new (GObject              *config,
-                      const gchar          *property_name,
-                      GeglRectangle        *area,
-                      GimpContext          *context,
-                      GimpCreatePickerFunc  create_picker_func,
-                      gpointer              picker_creator,
-                      const gchar         **label)
+gimp_prop_widget_new (GObject                  *config,
+                      const gchar              *property_name,
+                      GeglRectangle            *area,
+                      GimpContext              *context,
+                      GimpCreatePickerFunc      create_picker_func,
+                      GimpCreateControllerFunc  create_controller_func,
+                      gpointer                  creator,
+                      const gchar             **label)
 {
   GParamSpec *pspec;
 
@@ -94,18 +96,21 @@ gimp_prop_widget_new (GObject              *config,
                                         property_name);
 
   return gimp_prop_widget_new_from_pspec (config, pspec, area, context,
-                                          create_picker_func, picker_creator,
+                                          create_picker_func,
+                                          create_controller_func,
+                                          creator,
                                           label);
 }
 
 GtkWidget *
-gimp_prop_widget_new_from_pspec (GObject               *config,
-                                 GParamSpec            *pspec,
-                                 GeglRectangle         *area,
-                                 GimpContext           *context,
-                                 GimpCreatePickerFunc   create_picker_func,
-                                 gpointer               picker_creator,
-                                 const gchar          **label)
+gimp_prop_widget_new_from_pspec (GObject                  *config,
+                                 GParamSpec               *pspec,
+                                 GeglRectangle            *area,
+                                 GimpContext              *context,
+                                 GimpCreatePickerFunc      create_picker_func,
+                                 GimpCreateControllerFunc  create_controller_func,
+                                 gpointer                  creator,
+                                 const gchar             **label)
 {
   GtkWidget *widget = NULL;
 
@@ -370,7 +375,7 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
 
       if (create_picker_func)
         {
-          button = create_picker_func (picker_creator,
+          button = create_picker_func (creator,
                                        pspec->name,
                                        GIMP_ICON_COLOR_PICKER_GRAY,
                                        _("Pick color from the image"),
@@ -421,13 +426,14 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
 }
 
 
-typedef GtkWidget * (* GimpPropGuiNewFunc) (GObject              *config,
-                                            GParamSpec          **param_specs,
-                                            guint                 n_param_specs,
-                                            GeglRectangle        *area,
-                                            GimpContext          *context,
-                                            GimpCreatePickerFunc  create_picker_func,
-                                            gpointer              picker_creator);
+typedef GtkWidget * (* GimpPropGuiNewFunc) (GObject                  *config,
+                                            GParamSpec              **param_specs,
+                                            guint                     n_param_specs,
+                                            GeglRectangle            *area,
+                                            GimpContext              *context,
+                                            GimpCreatePickerFunc      create_picker_func,
+                                            GimpCreateControllerFunc  create_controller_func,
+                                            gpointer                  creator);
 
 static const struct
 {
@@ -449,19 +455,22 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_channel_mixer },
   { "GimpGegl-gegl-diffraction-patterns-config",
     _gimp_prop_gui_new_diffraction_patterns },
+  { "GimpGegl-gegl-spiral-config",
+    _gimp_prop_gui_new_spiral },
   { NULL,
     _gimp_prop_gui_new_generic }
 };
 
 
 GtkWidget *
-gimp_prop_gui_new (GObject              *config,
-                   GType                 owner_type,
-                   GParamFlags           flags,
-                   GeglRectangle        *area,
-                   GimpContext          *context,
-                   GimpCreatePickerFunc  create_picker_func,
-                   gpointer              picker_creator)
+gimp_prop_gui_new (GObject                  *config,
+                   GType                     owner_type,
+                   GParamFlags               flags,
+                   GeglRectangle            *area,
+                   GimpContext              *context,
+                   GimpCreatePickerFunc      create_picker_func,
+                   GimpCreateControllerFunc  create_controller_func,
+                   gpointer                  creator)
 {
   GtkWidget    *gui = NULL;
   GParamSpec  **param_specs;
@@ -512,7 +521,8 @@ gimp_prop_gui_new (GObject              *config,
                                                    area,
                                                    context,
                                                    create_picker_func,
-                                                   picker_creator);
+                                                   create_controller_func,
+                                                   creator);
               break;
             }
         }

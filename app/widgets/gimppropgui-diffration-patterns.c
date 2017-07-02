@@ -38,13 +38,14 @@
 
 
 GtkWidget *
-_gimp_prop_gui_new_diffraction_patterns (GObject              *config,
-                                         GParamSpec          **param_specs,
-                                         guint                 n_param_specs,
-                                         GeglRectangle        *area,
-                                         GimpContext          *context,
-                                         GimpCreatePickerFunc  create_picker_func,
-                                         gpointer              picker_creator)
+_gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
+                                         GParamSpec              **param_specs,
+                                         guint                     n_param_specs,
+                                         GeglRectangle            *area,
+                                         GimpContext              *context,
+                                         GimpCreatePickerFunc      create_picker_func,
+                                         GimpCreateControllerFunc  create_controller_func,
+                                         gpointer                  creator)
 {
   GtkWidget *notebook;
   GtkWidget *vbox;
@@ -59,7 +60,9 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 0, 3,
                                      area, context,
-                                     create_picker_func, picker_creator);
+                                     create_picker_func,
+                                     create_controller_func,
+                                     creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Frequencies")));
@@ -68,7 +71,9 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 3, 3,
                                      area, context,
-                                     create_picker_func, picker_creator);
+                                     create_picker_func,
+                                     create_controller_func,
+                                     creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Contours")));
@@ -77,7 +82,9 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 6, 3,
                                      area, context,
-                                     create_picker_func, picker_creator);
+                                     create_picker_func,
+                                     create_controller_func,
+                                     creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Sharp Edges")));
@@ -86,7 +93,9 @@ _gimp_prop_gui_new_diffraction_patterns (GObject              *config,
   vbox = _gimp_prop_gui_new_generic (config,
                                      param_specs + 9, 3,
                                      area, context,
-                                     create_picker_func, picker_creator);
+                                     create_picker_func,
+                                     create_controller_func,
+                                     creator);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
                             gtk_label_new (_("Other Options")));

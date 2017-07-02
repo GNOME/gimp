@@ -251,7 +251,7 @@ gimp_symmetry_editor_set_options (GimpSymmetryEditor *editor,
                                                gimp_image_get_width  (image),
                                                gimp_image_get_height (image)),
                                GIMP_IMAGE_EDITOR (editor)->context,
-                               NULL, NULL);
+                               NULL, NULL, NULL);
       gtk_box_pack_start (GTK_BOX (editor->p->options_vbox), gui,
                           FALSE, FALSE, 0);
       gtk_widget_show (gui);
