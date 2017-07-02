@@ -65,7 +65,6 @@
 
 /*  local function prototypes  */
 
-static void       gimp_levels_tool_constructed    (GObject          *object);
 static void       gimp_levels_tool_finalize       (GObject          *object);
 
 static gboolean   gimp_levels_tool_initialize     (GimpTool         *tool,
@@ -83,6 +82,9 @@ static gchar    * gimp_levels_tool_get_operation  (GimpFilterTool   *filter_tool
                                                    gchar           **export_dialog_title);
 static void       gimp_levels_tool_dialog         (GimpFilterTool   *filter_tool);
 static void       gimp_levels_tool_reset          (GimpFilterTool   *filter_tool);
+static void       gimp_levels_tool_config_notify  (GimpFilterTool   *filter_tool,
+                                                   GimpConfig       *config,
+                                                   const GParamSpec *pspec);
 static gboolean   gimp_levels_tool_settings_import(GimpFilterTool   *filter_tool,
                                                    GInputStream     *input,
                                                    GError          **error);
@@ -99,9 +101,6 @@ static void       gimp_levels_tool_color_picked   (GimpFilterTool   *filter_tool
 static void       gimp_levels_tool_export_setup   (GimpSettingsBox  *settings_box,
                                                    GtkFileChooserDialog *dialog,
                                                    gboolean          export,
-                                                   GimpLevelsTool   *tool);
-static void       gimp_levels_tool_config_notify  (GObject          *object,
-                                                   GParamSpec       *pspec,
                                                    GimpLevelsTool   *tool);
 
 static void       levels_update_input_bar         (GimpLevelsTool   *tool);
@@ -152,7 +151,6 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->constructed          = gimp_levels_tool_constructed;
   object_class->finalize             = gimp_levels_tool_finalize;
 
   tool_class->initialize             = gimp_levels_tool_initialize;
@@ -160,6 +158,7 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
   filter_tool_class->get_operation   = gimp_levels_tool_get_operation;
   filter_tool_class->dialog          = gimp_levels_tool_dialog;
   filter_tool_class->reset           = gimp_levels_tool_reset;
+  filter_tool_class->config_notify   = gimp_levels_tool_config_notify;
   filter_tool_class->settings_import = gimp_levels_tool_settings_import;
   filter_tool_class->settings_export = gimp_levels_tool_settings_export;
   filter_tool_class->color_picked    = gimp_levels_tool_color_picked;
@@ -169,16 +168,6 @@ static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
   tool->histogram = gimp_histogram_new (FALSE);
-}
-
-static void
-gimp_levels_tool_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  g_signal_connect_object (GIMP_FILTER_TOOL (object)->config, "notify",
-                           G_CALLBACK (gimp_levels_tool_config_notify),
-                           object, 0);
 }
 
 static void
@@ -653,6 +642,54 @@ gimp_levels_tool_reset (GimpFilterTool *filter_tool)
                 NULL);
 }
 
+static void
+gimp_levels_tool_config_notify (GimpFilterTool   *filter_tool,
+                                GimpConfig       *config,
+                                const GParamSpec *pspec)
+{
+  GimpLevelsTool   *levels_tool   = GIMP_LEVELS_TOOL (filter_tool);
+  GimpLevelsConfig *levels_config = GIMP_LEVELS_CONFIG (config);
+
+  GIMP_FILTER_TOOL_CLASS (parent_class)->config_notify (filter_tool,
+                                                        config, pspec);
+
+  if (! levels_tool->low_input)
+    return;
+
+  if (! strcmp (pspec->name, "channel"))
+    {
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (levels_tool->histogram_view),
+                                       levels_config->channel);
+      gimp_color_bar_set_channel (GIMP_COLOR_BAR (levels_tool->output_bar),
+                                  levels_config->channel);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (levels_tool->channel_menu),
+                                     levels_config->channel);
+    }
+  else if (! strcmp (pspec->name, "gamma")     ||
+           ! strcmp (pspec->name, "low-input") ||
+           ! strcmp (pspec->name, "high-input"))
+    {
+      gdouble low  = gtk_adjustment_get_value (levels_tool->low_input);
+      gdouble high = gtk_adjustment_get_value (levels_tool->high_input);
+      gdouble delta, mid, tmp, value;
+
+      gtk_adjustment_set_lower (levels_tool->high_input,   low);
+      gtk_adjustment_set_lower (levels_tool->gamma_linear, low);
+
+      gtk_adjustment_set_upper (levels_tool->low_input,    high);
+      gtk_adjustment_set_upper (levels_tool->gamma_linear, high);
+
+      levels_update_input_bar (levels_tool);
+
+      delta = (high - low) / 2.0;
+      mid   = low + delta;
+      tmp   = log10 (1.0 / levels_config->gamma[levels_config->channel]);
+      value = mid + delta * tmp;
+
+      gtk_adjustment_set_value (levels_tool->gamma_linear, value);
+    }
+}
+
 static gboolean
 gimp_levels_tool_settings_import (GimpFilterTool  *filter_tool,
                                   GInputStream    *input,
@@ -785,50 +822,6 @@ gimp_levels_tool_export_setup (GimpSettingsBox      *settings_box,
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tool->export_old_format);
-}
-
-static void
-gimp_levels_tool_config_notify (GObject        *object,
-                                GParamSpec     *pspec,
-                                GimpLevelsTool *tool)
-{
-  GimpLevelsConfig *config = GIMP_LEVELS_CONFIG (object);
-
-  if (! tool->low_input)
-    return;
-
-  if (! strcmp (pspec->name, "channel"))
-    {
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->histogram_view),
-                                       config->channel);
-      gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->output_bar),
-                                  config->channel);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
-                                     config->channel);
-    }
-  else if (! strcmp (pspec->name, "gamma")     ||
-           ! strcmp (pspec->name, "low-input") ||
-           ! strcmp (pspec->name, "high-input"))
-    {
-      gdouble low  = gtk_adjustment_get_value (tool->low_input);
-      gdouble high = gtk_adjustment_get_value (tool->high_input);
-      gdouble delta, mid, tmp, value;
-
-      gtk_adjustment_set_lower (tool->high_input,   low);
-      gtk_adjustment_set_lower (tool->gamma_linear, low);
-
-      gtk_adjustment_set_upper (tool->low_input,    high);
-      gtk_adjustment_set_upper (tool->gamma_linear, high);
-
-      levels_update_input_bar (tool);
-
-      delta = (high - low) / 2.0;
-      mid   = low + delta;
-      tmp   = log10 (1.0 / config->gamma[config->channel]);
-      value = mid + delta * tmp;
-
-      gtk_adjustment_set_value (tool->gamma_linear, value);
-    }
 }
 
 static void

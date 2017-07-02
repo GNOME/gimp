@@ -92,6 +92,9 @@ struct _GimpFilterToolClass
   void        (* reset)           (GimpFilterTool    *filter_tool);
   void        (* set_config)      (GimpFilterTool    *filter_tool,
                                    GimpConfig        *config);
+  void        (* config_notify)   (GimpFilterTool    *filter_tool,
+                                   GimpConfig        *config,
+                                   const GParamSpec  *pspec);
 
   gboolean    (* settings_import) (GimpFilterTool    *filter_tool,
                                    GInputStream      *input,

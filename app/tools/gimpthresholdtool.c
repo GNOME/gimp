@@ -45,7 +45,6 @@
 
 /*  local function prototypes  */
 
-static void       gimp_threshold_tool_constructed     (GObject           *object);
 static void       gimp_threshold_tool_finalize        (GObject           *object);
 
 static gboolean   gimp_threshold_tool_initialize      (GimpTool          *tool,
@@ -62,10 +61,9 @@ static gchar    * gimp_threshold_tool_get_operation   (GimpFilterTool    *filter
                                                        gchar            **import_dialog_title,
                                                        gchar            **export_dialog_title);
 static void       gimp_threshold_tool_dialog          (GimpFilterTool    *filter_tool);
-
-static void       gimp_threshold_tool_config_notify   (GObject           *object,
-                                                       GParamSpec        *pspec,
-                                                       GimpThresholdTool *t_tool);
+static void       gimp_threshold_tool_config_notify   (GimpFilterTool    *filter_tool,
+                                                       GimpConfig        *config,
+                                                       const GParamSpec  *pspec);
 
 static gboolean   gimp_threshold_tool_channel_sensitive
                                                       (gint               value,
@@ -108,29 +106,19 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
 
-  object_class->constructed        = gimp_threshold_tool_constructed;
   object_class->finalize           = gimp_threshold_tool_finalize;
 
   tool_class->initialize           = gimp_threshold_tool_initialize;
 
   filter_tool_class->get_operation = gimp_threshold_tool_get_operation;
   filter_tool_class->dialog        = gimp_threshold_tool_dialog;
+  filter_tool_class->config_notify = gimp_threshold_tool_config_notify;
 }
 
 static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
   t_tool->histogram = gimp_histogram_new (FALSE);
-}
-
-static void
-gimp_threshold_tool_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  g_signal_connect_object (GIMP_FILTER_TOOL (object)->config, "notify",
-                           G_CALLBACK (gimp_threshold_tool_config_notify),
-                           object, 0);
 }
 
 static void
@@ -295,10 +283,15 @@ gimp_threshold_tool_dialog (GimpFilterTool *filter_tool)
 }
 
 static void
-gimp_threshold_tool_config_notify (GObject           *object,
-                                   GParamSpec        *pspec,
-                                   GimpThresholdTool *t_tool)
+gimp_threshold_tool_config_notify (GimpFilterTool   *filter_tool,
+                                   GimpConfig       *config,
+                                   const GParamSpec *pspec)
 {
+  GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (filter_tool);
+
+  GIMP_FILTER_TOOL_CLASS (parent_class)->config_notify (filter_tool,
+                                                        config, pspec);
+
   if (! t_tool->histogram_box)
     return;
 
@@ -306,7 +299,7 @@ gimp_threshold_tool_config_notify (GObject           *object,
     {
       GimpHistogramChannel channel;
 
-      g_object_get (object,
+      g_object_get (config,
                     "channel", &channel,
                     NULL);
 
@@ -320,7 +313,7 @@ gimp_threshold_tool_config_notify (GObject           *object,
       gdouble high;
       gint    n_bins;
 
-      g_object_get (object,
+      g_object_get (config,
                     "low",  &low,
                     "high", &high,
                     NULL);

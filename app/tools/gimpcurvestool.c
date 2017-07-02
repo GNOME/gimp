@@ -62,8 +62,6 @@
 
 /*  local function prototypes  */
 
-static void       gimp_curves_tool_constructed     (GObject              *object);
-
 static gboolean   gimp_curves_tool_initialize      (GimpTool             *tool,
                                                     GimpDisplay          *display,
                                                     GError              **error);
@@ -93,6 +91,9 @@ static gchar    * gimp_curves_tool_get_operation   (GimpFilterTool       *filter
                                                     gchar               **export_dialog_title);
 static void       gimp_curves_tool_dialog          (GimpFilterTool       *filter_tool);
 static void       gimp_curves_tool_reset           (GimpFilterTool       *filter_tool);
+static void       gimp_curves_tool_config_notify   (GimpFilterTool       *filter_tool,
+                                                    GimpConfig           *config,
+                                                    const GParamSpec     *pspec);
 static gboolean   gimp_curves_tool_settings_import (GimpFilterTool       *filter_tool,
                                                     GInputStream         *input,
                                                     GError              **error);
@@ -111,9 +112,6 @@ static void       gimp_curves_tool_export_setup    (GimpSettingsBox      *settin
                                                     gboolean              export,
                                                     GimpCurvesTool       *tool);
 static void       gimp_curves_tool_update_channel  (GimpCurvesTool       *tool);
-static void       gimp_curves_tool_config_notify   (GObject              *object,
-                                                    GParamSpec           *pspec,
-                                                    GimpCurvesTool       *tool);
 
 static void       curves_channel_callback          (GtkWidget            *widget,
                                                     GimpCurvesTool       *tool);
@@ -161,11 +159,8 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 {
-  GObjectClass        *object_class      = G_OBJECT_CLASS (klass);
   GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
-
-  object_class->constructed          = gimp_curves_tool_constructed;
 
   tool_class->initialize             = gimp_curves_tool_initialize;
   tool_class->button_release         = gimp_curves_tool_button_release;
@@ -175,6 +170,7 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
   filter_tool_class->get_operation   = gimp_curves_tool_get_operation;
   filter_tool_class->dialog          = gimp_curves_tool_dialog;
   filter_tool_class->reset           = gimp_curves_tool_reset;
+  filter_tool_class->config_notify   = gimp_curves_tool_config_notify;
   filter_tool_class->settings_import = gimp_curves_tool_settings_import;
   filter_tool_class->settings_export = gimp_curves_tool_settings_export;
   filter_tool_class->color_picked    = gimp_curves_tool_color_picked;
@@ -187,16 +183,6 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
 
   for (i = 0; i < G_N_ELEMENTS (tool->picked_color); i++)
     tool->picked_color[i] = -1.0;
-}
-
-static void
-gimp_curves_tool_constructed (GObject *object)
-{
-  G_OBJECT_CLASS (parent_class)->constructed (object);
-
-  g_signal_connect_object (GIMP_FILTER_TOOL (object)->config, "notify",
-                           G_CALLBACK (gimp_curves_tool_config_notify),
-                           object, 0);
 }
 
 static gboolean
@@ -600,6 +586,32 @@ gimp_curves_tool_reset (GimpFilterTool *filter_tool)
     }
 }
 
+static void
+gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
+                                GimpConfig       *config,
+                                const GParamSpec *pspec)
+{
+  GimpCurvesTool   *curves_tool   = GIMP_CURVES_TOOL (filter_tool);
+  GimpCurvesConfig *curves_config = GIMP_CURVES_CONFIG (config);
+  GimpCurve        *curve         = curves_config->curve[curves_config->channel];
+
+  GIMP_FILTER_TOOL_CLASS (parent_class)->config_notify (filter_tool,
+                                                        config, pspec);
+
+  if (! curves_tool->xrange)
+    return;
+
+  if (! strcmp (pspec->name, "channel"))
+    {
+      gimp_curves_tool_update_channel (GIMP_CURVES_TOOL (filter_tool));
+    }
+  else if (! strcmp (pspec->name, "curve"))
+    {
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (curves_tool->curve_type),
+                                     curve->curve_type);
+    }
+}
+
 static gboolean
 gimp_curves_tool_settings_import (GimpFilterTool  *filter_tool,
                                   GInputStream    *input,
@@ -771,28 +783,6 @@ gimp_curves_tool_update_channel (GimpCurvesTool *tool)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->curve_type),
                                  curve->curve_type);
-}
-
-static void
-gimp_curves_tool_config_notify (GObject        *object,
-                                GParamSpec     *pspec,
-                                GimpCurvesTool *tool)
-{
-  GimpCurvesConfig *config = GIMP_CURVES_CONFIG (object);
-  GimpCurve        *curve  = config->curve[config->channel];
-
-  if (! tool->xrange)
-    return;
-
-  if (! strcmp (pspec->name, "channel"))
-    {
-      gimp_curves_tool_update_channel (GIMP_CURVES_TOOL (tool));
-    }
-  else if (! strcmp (pspec->name, "curve"))
-    {
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->curve_type),
-                                     curve->curve_type);
-    }
 }
 
 static void

@@ -137,8 +137,12 @@ static void      gimp_filter_tool_color_picked   (GimpColorTool       *color_too
                                                   const GimpRGB       *color);
 
 static void      gimp_filter_tool_real_reset     (GimpFilterTool      *filter_tool);
-static void     gimp_filter_tool_real_set_config (GimpFilterTool      *filter_tool,
+static void      gimp_filter_tool_real_set_config(GimpFilterTool      *filter_tool,
                                                   GimpConfig          *config);
+static void      gimp_filter_tool_real_config_notify
+                                                 (GimpFilterTool      *filter_tool,
+                                                  GimpConfig          *config,
+                                                  const GParamSpec    *pspec);
 
 static void      gimp_filter_tool_halt           (GimpFilterTool      *filter_tool);
 static void      gimp_filter_tool_commit         (GimpFilterTool      *filter_tool);
@@ -202,6 +206,7 @@ gimp_filter_tool_class_init (GimpFilterToolClass *klass)
   klass->dialog              = NULL;
   klass->reset               = gimp_filter_tool_real_reset;
   klass->set_config          = gimp_filter_tool_real_set_config;
+  klass->config_notify       = gimp_filter_tool_real_config_notify;
   klass->settings_import     = gimp_filter_tool_real_settings_import;
   klass->settings_export     = gimp_filter_tool_real_settings_export;
 }
@@ -950,6 +955,17 @@ gimp_filter_tool_real_set_config (GimpFilterTool *filter_tool,
 }
 
 static void
+gimp_filter_tool_real_config_notify (GimpFilterTool   *filter_tool,
+                                     GimpConfig       *config,
+                                     const GParamSpec *pspec)
+{
+  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
+
+  if (filter_tool->filter && options->preview)
+    gimp_drawable_filter_apply (filter_tool->filter, NULL);
+}
+
+static void
 gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 {
   GimpTool *tool = GIMP_TOOL (filter_tool);
@@ -1129,10 +1145,9 @@ gimp_filter_tool_config_notify (GObject          *object,
                                 const GParamSpec *pspec,
                                 GimpFilterTool   *filter_tool)
 {
-  GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
-
-  if (filter_tool->filter && options->preview)
-    gimp_drawable_filter_apply (filter_tool->filter, NULL);
+  GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->config_notify (filter_tool,
+                                                           GIMP_CONFIG (object),
+                                                           pspec);
 }
 
 static void
