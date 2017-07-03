@@ -37,21 +37,39 @@
 #include "gimp-intl.h"
 
 
-static void
-line_callback (GObject       *config,
-               GeglRectangle *area,
-               gdouble        x1,
-               gdouble        y1,
-               gdouble        x2,
-               gdouble        y2)
+typedef enum
 {
-  gdouble x, y;
-  gdouble radius;
-  gdouble rotation;
+  GEGL_SPIRAL_TYPE_LINEAR,
+  GEGL_SPIRAL_TYPE_LOGARITHMIC
+} GeglSpiralType;
+
+
+static void
+slider_line_callback (GObject                    *config,
+                      GeglRectangle              *area,
+                      gdouble                     x1,
+                      gdouble                     y1,
+                      gdouble                     x2,
+                      gdouble                     y2,
+                      const GimpControllerSlider *sliders,
+                      gint                        slider_count)
+{
+  GeglSpiralType type;
+  gdouble        x, y;
+  gdouble        radius;
+  gdouble        rotation;
+  gdouble        base;
+  gdouble        balance;
 
   g_object_set_data_full (G_OBJECT (config), "area",
                           g_memdup (area, sizeof (GeglRectangle)),
                           (GDestroyNotify) g_free);
+
+  g_object_get (config,
+                "type",    &type,
+                "base",    &base,
+                "balance", &balance,
+                NULL);
 
   x        = x1 / area->width;
   y        = y1 / area->height;
@@ -61,11 +79,37 @@ line_callback (GObject       *config,
   if (rotation < 0)
     rotation += 360.0;
 
+  switch (type)
+    {
+    case GEGL_SPIRAL_TYPE_LINEAR:
+      balance = 3.0 - 4.0 * sliders[0].value;
+
+      break;
+
+    case GEGL_SPIRAL_TYPE_LOGARITHMIC:
+      {
+        gdouble old_base = base;
+
+        base = 1.0 / sliders[0].value;
+        base = MIN (base, 1000000.0);
+
+        /* keep "balance" fixed when changing "base".  a bit ugly :P */
+        if (base == old_base)
+          {
+            balance = -4.0 * log (sliders[1].value) / log (base) - 1.0;
+            balance = CLAMP (balance, -1.0, 1.0);
+          }
+      }
+      break;
+    }
+
   g_object_set (config,
                 "x",        x,
                 "y",        y,
                 "radius",   radius,
+                "base",     base,
                 "rotation", rotation,
+                "balance",  balance,
                 NULL);
 }
 
@@ -74,21 +118,29 @@ config_notify (GObject          *config,
                const GParamSpec *pspec,
                gpointer          set_data)
 {
-  GimpControllerLineCallback  set_func;
-  GeglRectangle              *area;
-  gdouble                     x, y;
-  gdouble                     radius;
-  gdouble                     rotation;
-  gdouble                     x1, y1, x2, y2;
+  GimpControllerSliderLineCallback  set_func;
+  GeglRectangle                    *area;
+  GeglSpiralType                    type;
+  gdouble                           x, y;
+  gdouble                           radius;
+  gdouble                           rotation;
+  gdouble                           base;
+  gdouble                           balance;
+  gdouble                           x1, y1, x2, y2;
+  GimpControllerSlider              sliders[2];
+  gint                              slider_count = 0;
 
   set_func = g_object_get_data (G_OBJECT (config), "set-func");
   area     = g_object_get_data (G_OBJECT (config), "area");
 
   g_object_get (config,
+                "type",     &type,
                 "x",        &x,
                 "y",        &y,
                 "radius",   &radius,
                 "rotation", &rotation,
+                "base",     &base,
+                "balance",  &balance,
                 NULL);
 
   x1 = x * area->width;
@@ -96,7 +148,32 @@ config_notify (GObject          *config,
   x2 = x1 + cos (rotation * (G_PI / 180.0)) * radius;
   y2 = y1 - sin (rotation * (G_PI / 180.0)) * radius;
 
-  set_func (set_data, area, x1, y1, x2, y2);
+  switch (type)
+  {
+  case GEGL_SPIRAL_TYPE_LINEAR:
+    slider_count = 1;
+
+    sliders[0].min   = 0.5;
+    sliders[0].max   = 1.0;
+    sliders[0].value = 0.5 + (1.0 - balance) / 4.0;
+
+    break;
+
+  case GEGL_SPIRAL_TYPE_LOGARITHMIC:
+    slider_count = 2;
+
+    sliders[0].min   = 0.0;
+    sliders[0].max   = 1.0;
+    sliders[0].value = 1.0 / base;
+
+    sliders[1].min   = 1.0 / sqrt (base);
+    sliders[1].max   = 1.0;
+    sliders[1].value = pow (base, -(balance + 1.0) / 4.0);
+
+    break;
+  }
+
+  set_func (set_data, area, x1, y1, x2, y2, sliders, slider_count);
 }
 
 GtkWidget *
@@ -130,8 +207,8 @@ _gimp_prop_gui_new_spiral (GObject                  *config,
       gpointer  set_data;
 
       set_func = create_controller_func (creator,
-                                         GIMP_CONTROLLER_TYPE_LINE,
-                                         (GCallback) line_callback,
+                                         GIMP_CONTROLLER_TYPE_SLIDER_LINE,
+                                         (GCallback) slider_line_callback,
                                          config,
                                          &set_data);
 
