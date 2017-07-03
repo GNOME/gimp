@@ -369,6 +369,15 @@ app/plug-in/gimptemporaryprocedure.c
 app/plug-in/plug-in-enums.c
 app/plug-in/plug-in-rc.c
 
+app/propgui/gimppropgui-channel-mixer.c
+app/propgui/gimppropgui-color-balance.c
+app/propgui/gimppropgui-color-rotate.c
+app/propgui/gimppropgui-convolution-matrix.c
+app/propgui/gimppropgui-diffration-patterns.c
+app/propgui/gimppropgui-generic.c
+app/propgui/gimppropgui-hue-saturation.c
+app/propgui/gimppropgui.c
+
 app/text/gimpfont.c
 app/text/gimptext-compat.c
 app/text/gimptextlayer.c
@@ -544,14 +553,6 @@ app/widgets/gimppdbdialog.c
 app/widgets/gimppickablepopup.c
 app/widgets/gimppluginview.c
 app/widgets/gimpprogressdialog.c
-app/widgets/gimppropgui-channel-mixer.c
-app/widgets/gimppropgui-color-balance.c
-app/widgets/gimppropgui-color-rotate.c
-app/widgets/gimppropgui-convolution-matrix.c
-app/widgets/gimppropgui-diffration-patterns.c
-app/widgets/gimppropgui-generic.c
-app/widgets/gimppropgui-hue-saturation.c
-app/widgets/gimppropgui.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpsavedialog.c
 app/widgets/gimpsearchpopup.c

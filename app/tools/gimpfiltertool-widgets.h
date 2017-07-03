@@ -21,9 +21,6 @@
 #define __GIMP_FILTER_TOOL_WIDGETS_H__
 
 
-#include "widgets/gimppropgui.h" /* FIXME remove */
-
-
 GimpToolWidget * gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
                                                  GimpControllerType  controller_type,
                                                  GCallback           callback,

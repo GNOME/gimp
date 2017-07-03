@@ -25,14 +25,15 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets-types.h"
+#include "propgui/propgui-types.h" /* ugly, but what the heck */
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-symmetry.h"
 #include "core/gimpsymmetry.h"
 
+#include "propgui/gimppropgui.h"
+
 #include "gimpmenufactory.h"
-#include "gimppropgui.h"
 #include "gimpsymmetryeditor.h"
 
 #include "gimp-intl.h"

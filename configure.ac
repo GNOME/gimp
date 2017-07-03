@@ -2493,6 +2493,7 @@ app/menus/Makefile
 app/paint/Makefile
 app/pdb/Makefile
 app/plug-in/Makefile
+app/propgui/Makefile
 app/text/Makefile
 app/tools/Makefile
 app/vectors/Makefile

@@ -19,7 +19,7 @@
 #define __DISPLAY_TYPES_H__
 
 
-#include "widgets/widgets-types.h"
+#include "propgui/propgui-types.h"
 
 #include "display/display-enums.h"
 

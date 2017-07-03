@@ -24,16 +24,17 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets-types.h"
+#include "propgui-types.h"
 
 #include "operations/gimpcolorbalanceconfig.h"
 
 #include "core/gimpcontext.h"
 
+#include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
+
 #include "gimppropgui.h"
 #include "gimppropgui-color-balance.h"
-#include "gimppropwidgets.h"
-#include "gimpspinscale.h"
 
 #include "gimp-intl.h"
 

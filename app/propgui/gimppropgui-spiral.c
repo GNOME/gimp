@@ -26,7 +26,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets-types.h"
+#include "propgui-types.h"
 
 #include "core/gimpcontext.h"
 

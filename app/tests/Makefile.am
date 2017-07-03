@@ -89,6 +89,7 @@ LDADD = \
 	../actions/libappactions.a					\
 	../dialogs/libappdialogs.a					\
 	../display/libappdisplay.a					\
+	../propgui/libapppropgui.a					\
 	../widgets/libappwidgets.a					\
 	../xcf/libappxcf.a						\
 	../pdb/libappinternal-procs.a					\

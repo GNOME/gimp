@@ -45,7 +45,8 @@
 #include "widgets/gimpbuffersourcebox.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppickablebutton.h"
-#include "widgets/gimppropgui.h"
+
+#include "propgui/gimppropgui.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimptoolgui.h"

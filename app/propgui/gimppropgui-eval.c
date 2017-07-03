@@ -88,7 +88,7 @@
 #include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
-#include "widgets-types.h"
+#include "propgui-types.h"
 
 #include "gimppropgui-eval.h"
 

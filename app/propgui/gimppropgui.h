@@ -24,32 +24,6 @@
 
 /*  A view on all of an object's properties  */
 
-typedef enum
-{
-  GIMP_CONTROLLER_TYPE_LINE
-} GimpControllerType;
-
-typedef void (* GimpControllerLineCallback) (gpointer        data,
-                                             GeglRectangle  *area,
-                                             gdouble         x1,
-                                             gdouble         y1,
-                                             gdouble         x2,
-                                             gdouble         y2);
-
-
-typedef GtkWidget * (* GimpCreatePickerFunc)     (gpointer            creator,
-                                                  const gchar        *property_name,
-                                                  const gchar        *icon_name,
-                                                  const gchar        *tooltip,
-                                                  gboolean            pick_abyss);
-
-typedef GCallback   (* GimpCreateControllerFunc) (gpointer            creator,
-                                                  GimpControllerType  controller_type,
-                                                  GCallback           callback,
-                                                  gpointer            callback_data,
-                                                  gpointer           *set_func_data);
-
-
 GtkWidget * gimp_prop_widget_new            (GObject                 *config,
                                              const gchar             *property_name,
                                              GeglRectangle           *area,

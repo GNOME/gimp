@@ -33,15 +33,16 @@
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets-types.h"
+#include "propgui-types.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpcontext.h"
 
+#include "widgets/gimppropwidgets.h"
+
 #include "gimppropgui.h"
 #include "gimppropgui-generic.h"
-#include "gimppropwidgets.h"
 
 #include "gimp-intl.h"
 

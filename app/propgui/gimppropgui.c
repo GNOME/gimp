@@ -33,15 +33,18 @@
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "widgets-types.h"
+#include "propgui-types.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpcontext.h"
 
-#include "gimpcolorpanel.h"
-#include "gimpmessagebox.h"
-#include "gimpspinscale.h"
+#include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpspinscale.h"
+#include "widgets/gimppropwidgets.h"
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimppropgui.h"
 #include "gimppropgui-channel-mixer.h"
 #include "gimppropgui-color-balance.h"
@@ -52,8 +55,6 @@
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
-#include "gimppropwidgets.h"
-#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
