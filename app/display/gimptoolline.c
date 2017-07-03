@@ -926,19 +926,19 @@ gimp_tool_line_new (GimpDisplayShell *shell,
 void
 gimp_tool_line_set_sliders (GimpToolLine               *line,
                             const GimpControllerSlider *sliders,
-                            gint                        slider_count)
+                            gint                        n_sliders)
 {
   GimpToolLinePrivate *private;
 
   g_return_if_fail (GIMP_IS_TOOL_LINE (line));
-  g_return_if_fail (slider_count == 0 || (slider_count > 0 && sliders != NULL));
+  g_return_if_fail (n_sliders == 0 || (n_sliders > 0 && sliders != NULL));
 
   private = line->private;
 
-  g_array_set_size (private->sliders, slider_count);
+  g_array_set_size (private->sliders, n_sliders);
 
   memcpy (private->sliders->data, sliders,
-          slider_count * sizeof (GimpControllerSlider));
+          n_sliders * sizeof (GimpControllerSlider));
 
   g_object_set (line,
                 "sliders", private->sliders,
@@ -947,7 +947,7 @@ gimp_tool_line_set_sliders (GimpToolLine               *line,
 
 const GimpControllerSlider *
 gimp_tool_line_get_sliders (GimpToolLine *line,
-                            gint         *slider_count)
+                            gint         *n_sliders)
 {
   GimpToolLinePrivate *private;
 
@@ -955,7 +955,7 @@ gimp_tool_line_get_sliders (GimpToolLine *line,
 
   private = line->private;
 
-  if (slider_count) *slider_count = private->sliders->len;
+  if (n_sliders) *n_sliders = private->sliders->len;
 
   return (const GimpControllerSlider *) private->sliders->data;
 }

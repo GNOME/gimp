@@ -56,7 +56,7 @@ typedef void (* GimpControllerSliderLineCallback) (gpointer                    d
                                                    gdouble                     x2,
                                                    gdouble                     y2,
                                                    const GimpControllerSlider *sliders,
-                                                   gint                        slider_count);
+                                                   gint                        n_sliders);
 
 
 typedef GtkWidget * (* GimpCreatePickerFunc)     (gpointer            creator,

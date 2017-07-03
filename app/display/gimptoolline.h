@@ -60,9 +60,9 @@ GimpToolWidget             * gimp_tool_line_new         (GimpDisplayShell       
 
 void                         gimp_tool_line_set_sliders (GimpToolLine               *line,
                                                          const GimpControllerSlider *sliders,
-                                                         gint                        slider_count);
+                                                         gint                        n_sliders);
 const GimpControllerSlider * gimp_tool_line_get_sliders (GimpToolLine               *line,
-                                                         gint                       *slider_count);
+                                                         gint                       *n_sliders);
 
 
 #endif /* __GIMP_TOOL_LINE_H__ */

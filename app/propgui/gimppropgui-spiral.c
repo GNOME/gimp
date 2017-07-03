@@ -52,7 +52,7 @@ slider_line_callback (GObject                    *config,
                       gdouble                     x2,
                       gdouble                     y2,
                       const GimpControllerSlider *sliders,
-                      gint                        slider_count)
+                      gint                        n_sliders)
 {
   GeglSpiralType type;
   gdouble        x, y;
@@ -128,7 +128,7 @@ config_notify (GObject          *config,
   gdouble                           balance;
   gdouble                           x1, y1, x2, y2;
   GimpControllerSlider              sliders[2];
-  gint                              slider_count = 0;
+  gint                              n_sliders = 0;
 
   set_func = g_object_get_data (G_OBJECT (config), "set-func");
   area     = g_object_get_data (G_OBJECT (config), "area");
@@ -151,7 +151,7 @@ config_notify (GObject          *config,
   switch (type)
   {
   case GEGL_SPIRAL_TYPE_LINEAR:
-    slider_count = 1;
+    n_sliders = 1;
 
     sliders[0].min   = 0.5;
     sliders[0].max   = 1.0;
@@ -160,7 +160,7 @@ config_notify (GObject          *config,
     break;
 
   case GEGL_SPIRAL_TYPE_LOGARITHMIC:
-    slider_count = 2;
+    n_sliders = 2;
 
     sliders[0].min   = 0.0;
     sliders[0].max   = 1.0;
@@ -173,7 +173,7 @@ config_notify (GObject          *config,
     break;
   }
 
-  set_func (set_data, area, x1, y1, x2, y2, sliders, slider_count);
+  set_func (set_data, area, x1, y1, x2, y2, sliders, n_sliders);
 }
 
 GtkWidget *

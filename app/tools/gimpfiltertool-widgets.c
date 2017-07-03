@@ -64,7 +64,7 @@ static void   gimp_filter_tool_set_slider_line     (Controller                 *
                                                     gdouble                     x2,
                                                     gdouble                     y2,
                                                     const GimpControllerSlider *sliders,
-                                                    gint                        slider_count);
+                                                    gint                        n_sliders);
 static void   gimp_filter_tool_slider_line_changed (GimpToolWidget             *widget,
                                                     Controller                 *controller);
 
@@ -209,7 +209,7 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
                                   gdouble                     x2,
                                   gdouble                     y2,
                                   const GimpControllerSlider *sliders,
-                                  gint                        slider_count)
+                                  gint                        n_sliders)
 {
   GimpDrawable *drawable = controller->filter_tool->drawable;
 
@@ -237,7 +237,7 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
                 NULL);
 
   gimp_tool_line_set_sliders (GIMP_TOOL_LINE (controller->widget),
-                              sliders, slider_count);
+                              sliders, n_sliders);
 
   g_signal_handlers_unblock_by_func (controller->widget,
                                      gimp_filter_tool_slider_line_changed,
@@ -252,7 +252,7 @@ gimp_filter_tool_slider_line_changed (GimpToolWidget *widget,
   GimpControllerSliderLineCallback  slider_line_callback;
   gdouble                           x1, y1, x2, y2;
   const GimpControllerSlider       *sliders;
-  gint                              slider_count;
+  gint                              n_sliders;
   gint                              off_x, off_y;
   GeglRectangle                     area;
 
@@ -267,7 +267,7 @@ gimp_filter_tool_slider_line_changed (GimpToolWidget *widget,
                 NULL);
 
   sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (controller->widget),
-                                        &slider_count);
+                                        &n_sliders);
 
   gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
@@ -277,5 +277,5 @@ gimp_filter_tool_slider_line_changed (GimpToolWidget *widget,
   y2 -= off_y + area.y;
 
   slider_line_callback (controller->creator_data,
-                        &area, x1, y1, x2, y2, sliders, slider_count);
+                        &area, x1, y1, x2, y2, sliders, n_sliders);
 }
