@@ -26,18 +26,37 @@
 
 typedef enum
 {
-  GIMP_CONTROLLER_TYPE_LINE
+  GIMP_CONTROLLER_TYPE_LINE,
+  GIMP_CONTROLLER_TYPE_SLIDER_LINE
 } GimpControllerType;
+
+
+/*  structs  */
+
+typedef struct
+{
+  gdouble value;
+  gdouble min;
+  gdouble max;
+} GimpControllerSlider;
 
 
 /*  function types  */
 
-typedef void (* GimpControllerLineCallback) (gpointer        data,
-                                             GeglRectangle  *area,
-                                             gdouble         x1,
-                                             gdouble         y1,
-                                             gdouble         x2,
-                                             gdouble         y2);
+typedef void (* GimpControllerLineCallback)       (gpointer                    data,
+                                                   GeglRectangle              *area,
+                                                   gdouble                     x1,
+                                                   gdouble                     y1,
+                                                   gdouble                     x2,
+                                                   gdouble                     y2);
+typedef void (* GimpControllerSliderLineCallback) (gpointer                    data,
+                                                   GeglRectangle              *area,
+                                                   gdouble                     x1,
+                                                   gdouble                     y1,
+                                                   gdouble                     x2,
+                                                   gdouble                     y2,
+                                                   const GimpControllerSlider *sliders,
+                                                   gint                        slider_count);
 
 
 typedef GtkWidget * (* GimpCreatePickerFunc)     (gpointer            creator,

@@ -50,13 +50,19 @@ struct _GimpToolLineClass
 };
 
 
-GType            gimp_tool_line_get_type (void) G_GNUC_CONST;
+GType                        gimp_tool_line_get_type    (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_line_new      (GimpDisplayShell *shell,
-                                          gdouble           x1,
-                                          gdouble           y1,
-                                          gdouble           x2,
-                                          gdouble           y2);
+GimpToolWidget             * gimp_tool_line_new         (GimpDisplayShell           *shell,
+                                                         gdouble                     x1,
+                                                         gdouble                     y1,
+                                                         gdouble                     x2,
+                                                         gdouble                     y2);
+
+void                         gimp_tool_line_set_sliders (GimpToolLine               *line,
+                                                         const GimpControllerSlider *sliders,
+                                                         gint                        slider_count);
+const GimpControllerSlider * gimp_tool_line_get_sliders (GimpToolLine               *line,
+                                                         gint                       *slider_count);
 
 
 #endif /* __GIMP_TOOL_LINE_H__ */

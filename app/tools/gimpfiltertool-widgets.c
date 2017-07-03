@@ -48,14 +48,25 @@ struct _Controller
 
 /*  local function prototypes  */
 
-static void   gimp_filter_tool_set_line     (Controller     *controller,
-                                             GeglRectangle  *area,
-                                             gdouble         x1,
-                                             gdouble         y1,
-                                             gdouble         x2,
-                                             gdouble         y2);
-static void   gimp_filter_tool_line_changed (GimpToolWidget *widget,
-                                             Controller     *controller);
+static void   gimp_filter_tool_set_line            (Controller                 *controller,
+                                                    GeglRectangle              *area,
+                                                    gdouble                     x1,
+                                                    gdouble                     y1,
+                                                    gdouble                     x2,
+                                                    gdouble                     y2);
+static void   gimp_filter_tool_line_changed        (GimpToolWidget             *widget,
+                                                    Controller                 *controller);
+
+static void   gimp_filter_tool_set_slider_line     (Controller                 *controller,
+                                                    GeglRectangle              *area,
+                                                    gdouble                     x1,
+                                                    gdouble                     y1,
+                                                    gdouble                     x2,
+                                                    gdouble                     y2,
+                                                    const GimpControllerSlider *sliders,
+                                                    gint                        slider_count);
+static void   gimp_filter_tool_slider_line_changed (GimpToolWidget             *widget,
+                                                    Controller                 *controller);
 
 
 /*  public functions  */
@@ -97,6 +108,17 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
                         controller);
 
       *set_func      = (GCallback) gimp_filter_tool_set_line;
+      *set_func_data = controller;
+      break;
+
+    case GIMP_CONTROLLER_TYPE_SLIDER_LINE:
+      controller->widget = gimp_tool_line_new (shell, 100, 100, 500, 500);
+
+      g_signal_connect (controller->widget, "changed",
+                        G_CALLBACK (gimp_filter_tool_slider_line_changed),
+                        controller);
+
+      *set_func      = (GCallback) gimp_filter_tool_set_slider_line;
       *set_func_data = controller;
       break;
     }
@@ -177,4 +199,83 @@ gimp_filter_tool_line_changed (GimpToolWidget *widget,
 
   line_callback (controller->creator_data,
                  &area, x1, y1, x2, y2);
+}
+
+static void
+gimp_filter_tool_set_slider_line (Controller                 *controller,
+                                  GeglRectangle              *area,
+                                  gdouble                     x1,
+                                  gdouble                     y1,
+                                  gdouble                     x2,
+                                  gdouble                     y2,
+                                  const GimpControllerSlider *sliders,
+                                  gint                        slider_count)
+{
+  GimpDrawable *drawable = controller->filter_tool->drawable;
+
+  if (drawable)
+    {
+      gint off_x, off_y;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      x1 += off_x + area->x;
+      y1 += off_y + area->y;
+      x2 += off_x + area->x;
+      y2 += off_y + area->y;
+    }
+
+  g_signal_handlers_block_by_func (controller->widget,
+                                   gimp_filter_tool_slider_line_changed,
+                                   controller);
+
+  g_object_set (controller->widget,
+                "x1", x1,
+                "y1", y1,
+                "x2", x2,
+                "y2", y2,
+                NULL);
+
+  gimp_tool_line_set_sliders (GIMP_TOOL_LINE (controller->widget),
+                              sliders, slider_count);
+
+  g_signal_handlers_unblock_by_func (controller->widget,
+                                     gimp_filter_tool_slider_line_changed,
+                                     controller);
+}
+
+static void
+gimp_filter_tool_slider_line_changed (GimpToolWidget *widget,
+                                      Controller     *controller)
+{
+  GimpFilterTool                   *filter_tool = controller->filter_tool;
+  GimpControllerSliderLineCallback  slider_line_callback;
+  gdouble                           x1, y1, x2, y2;
+  const GimpControllerSlider       *sliders;
+  gint                              slider_count;
+  gint                              off_x, off_y;
+  GeglRectangle                     area;
+
+  slider_line_callback =
+    (GimpControllerSliderLineCallback) controller->creator_callback;
+
+  g_object_get (widget,
+                "x1", &x1,
+                "y1", &y1,
+                "x2", &x2,
+                "y2", &y2,
+                NULL);
+
+  sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (controller->widget),
+                                        &slider_count);
+
+  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+
+  x1 -= off_x + area.x;
+  y1 -= off_y + area.y;
+  x2 -= off_x + area.x;
+  y2 -= off_y + area.y;
+
+  slider_line_callback (controller->creator_data,
+                        &area, x1, y1, x2, y2, sliders, slider_count);
 }
