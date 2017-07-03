@@ -36,4 +36,6 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-hue-saturation.c		\
 	gimppropgui-hue-saturation.h		\
 	gimppropgui-spiral.c			\
-	gimppropgui-spiral.h
+	gimppropgui-spiral.h			\
+	gimppropgui-supernova.c			\
+	gimppropgui-supernova.h

@@ -51,10 +51,11 @@
 #include "gimppropgui-color-rotate.h"
 #include "gimppropgui-convolution-matrix.h"
 #include "gimppropgui-diffration-patterns.h"
-#include "gimppropgui-spiral.h"
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"
+#include "gimppropgui-spiral.h"
+#include "gimppropgui-supernova.h"
 
 #include "gimp-intl.h"
 
@@ -467,6 +468,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_diffraction_patterns },
   { "GimpGegl-gegl-spiral-config",
     _gimp_prop_gui_new_spiral },
+  { "GimpGegl-gegl-supernova-config",
+    _gimp_prop_gui_new_supernova },
   { NULL,
     _gimp_prop_gui_new_generic }
 };
