@@ -78,6 +78,9 @@ static gboolean    gimp_operation_tool_initialize      (GimpTool          *tool,
 static void        gimp_operation_tool_control         (GimpTool          *tool,
                                                         GimpToolAction     action,
                                                         GimpDisplay       *display);
+static void        gimp_operation_tool_options_notify  (GimpTool          *tool,
+                                                        GimpToolOptions   *options,
+                                                        const GParamSpec  *pspec);
 
 static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filter_tool,
                                                         gchar            **title,
@@ -102,7 +105,6 @@ static void        gimp_operation_tool_color_picked    (GimpFilterTool    *filte
 static void        gimp_operation_tool_halt            (GimpOperationTool *op_tool);
 
 static void        gimp_operation_tool_sync_op         (GimpOperationTool *op_tool,
-                                                        GimpDrawable      *drawable,
                                                         gboolean           sync_colors);
 static void        gimp_operation_tool_create_gui      (GimpOperationTool *tool);
 
@@ -149,6 +151,7 @@ gimp_operation_tool_class_init (GimpOperationToolClass *klass)
 
   tool_class->initialize           = gimp_operation_tool_initialize;
   tool_class->control              = gimp_operation_tool_control;
+  tool_class->options_notify       = gimp_operation_tool_options_notify;
 
   filter_tool_class->get_operation = gimp_operation_tool_get_operation;
   filter_tool_class->dialog        = gimp_operation_tool_dialog;
@@ -219,12 +222,10 @@ gimp_operation_tool_initialize (GimpTool     *tool,
     {
       GimpFilterTool    *filter_tool = GIMP_FILTER_TOOL (tool);
       GimpOperationTool *op_tool     = GIMP_OPERATION_TOOL (tool);
-      GimpImage         *image       = gimp_display_get_image (display);
-      GimpDrawable      *drawable    = gimp_image_get_active_drawable (image);
 
       if (filter_tool->config)
         {
-          gimp_operation_tool_sync_op (op_tool, drawable, TRUE);
+          gimp_operation_tool_sync_op (op_tool, TRUE);
 
           if (! op_tool->options_gui)
             gimp_operation_tool_create_gui (op_tool);
@@ -258,6 +259,35 @@ gimp_operation_tool_control (GimpTool       *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+}
+
+static void
+gimp_operation_tool_options_notify (GimpTool         *tool,
+                                    GimpToolOptions  *options,
+                                    const GParamSpec *pspec)
+{
+  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (tool);
+
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+
+  if (! strcmp (pspec->name, "region"))
+    {
+      GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
+
+      /* when the region changes, do we want the operation's on-canvas
+       * controller to move to a new position, or the operation to
+       * change its properties to match the on-canvas controller?
+       *
+       * decided to leave the on-canvas controler where it is and
+       * pretend it has changed, so the operation is updated
+       * accordingly...
+       */
+      if (filter_tool->widget)
+        g_signal_emit_by_name (filter_tool->widget, "changed");
+
+      if (filter_tool->config && tool->drawable)
+        gimp_operation_tool_sync_op (op_tool, FALSE);
+    }
 }
 
 static gchar *
@@ -330,7 +360,7 @@ gimp_operation_tool_reset (GimpFilterTool *filter_tool)
   GIMP_FILTER_TOOL_CLASS (parent_class)->reset (filter_tool);
 
   if (filter_tool->config && GIMP_TOOL (tool)->drawable)
-    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable, TRUE);
+    gimp_operation_tool_sync_op (tool, TRUE);
 }
 
 static void
@@ -342,7 +372,7 @@ gimp_operation_tool_set_config (GimpFilterTool *filter_tool,
   GIMP_FILTER_TOOL_CLASS (parent_class)->set_config (filter_tool, config);
 
   if (filter_tool->config && GIMP_TOOL (tool)->drawable)
-    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable, FALSE);
+    gimp_operation_tool_sync_op (tool, FALSE);
 }
 
 static void
@@ -481,22 +511,17 @@ gimp_operation_tool_halt (GimpOperationTool *op_tool)
 
 static void
 gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
-                             GimpDrawable      *drawable,
                              gboolean           sync_colors)
 {
   GimpFilterTool   *filter_tool = GIMP_FILTER_TOOL (op_tool);
   GimpToolOptions  *options     = GIMP_TOOL_GET_OPTIONS (op_tool);
   GParamSpec      **pspecs;
   guint             n_pspecs;
-  gint              bounds_x;
-  gint              bounds_y;
-  gint              bounds_width;
-  gint              bounds_height;
+  gint              off_x, off_y;
+  GeglRectangle     area;
   gint              i;
 
-  gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                            &bounds_x, &bounds_y,
-                            &bounds_width, &bounds_height);
+  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
   pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (filter_tool->config),
                                            &n_pspecs);
@@ -522,12 +547,12 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
           else if (HAS_KEY (pspec, "unit", "pixel-distance") &&
                    HAS_KEY (pspec, "axis", "x"))
             {
-              g_object_set (filter_tool->config, pspec->name, bounds_width, NULL);
+              g_object_set (filter_tool->config, pspec->name, area.width, NULL);
             }
           else if (HAS_KEY (pspec, "unit", "pixel-distance") &&
                    HAS_KEY (pspec, "axis", "y"))
             {
-              g_object_set (filter_tool->config, pspec->name, bounds_height, NULL);
+              g_object_set (filter_tool->config, pspec->name, area.height, NULL);
             }
         }
       else if (sync_colors)
@@ -795,7 +820,7 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     g_object_unref (size_group);
 
   if (GIMP_TOOL (tool)->drawable)
-    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable, TRUE);
+    gimp_operation_tool_sync_op (tool, TRUE);
 
   if (filter_tool->config && GIMP_TOOL (tool)->display)
     gimp_operation_tool_create_gui (tool);
