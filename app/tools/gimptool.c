@@ -234,6 +234,24 @@ gimp_tool_finalize (GObject *object)
       tool->tool_info = NULL;
     }
 
+  if (tool->undo_desc)
+    {
+      g_free (tool->undo_desc);
+      tool->undo_desc = NULL;
+    }
+
+  if (tool->icon_name)
+    {
+      g_free (tool->icon_name);
+      tool->icon_name = NULL;
+    }
+
+  if (tool->help_id)
+    {
+      g_free (tool->help_id);
+      tool->help_id = NULL;
+    }
+
   if (tool->control)
     {
       g_object_unref (tool->control);
@@ -490,6 +508,69 @@ gimp_tool_get_options (GimpTool *tool)
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool->tool_info), NULL);
 
   return tool->tool_info->tool_options;
+}
+
+void
+gimp_tool_set_undo_desc (GimpTool    *tool,
+                         const gchar *undo_desc)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  g_free (tool->undo_desc);
+  tool->undo_desc = g_strdup (undo_desc);
+}
+
+const gchar *
+gimp_tool_get_undo_desc (GimpTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
+
+  if (tool->undo_desc)
+    return tool->undo_desc;
+
+  return tool->tool_info->blurb;
+}
+
+void
+gimp_tool_set_icon_name (GimpTool    *tool,
+                         const gchar *icon_name)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  g_free (tool->icon_name);
+  tool->icon_name = g_strdup (icon_name);
+}
+
+const gchar *
+gimp_tool_get_icon_name (GimpTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
+
+  if (tool->icon_name)
+    return tool->icon_name;
+
+  return gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool->tool_info));
+}
+
+void
+gimp_tool_set_help_id (GimpTool    *tool,
+                       const gchar *help_id)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  g_free (tool->help_id);
+  tool->help_id = g_strdup (help_id);
+}
+
+const gchar *
+gimp_tool_get_help_id (GimpTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
+
+  if (tool->help_id)
+    return tool->help_id;
+
+  return tool->tool_info->help_id;
 }
 
 gboolean
