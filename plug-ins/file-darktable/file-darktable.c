@@ -37,6 +37,10 @@
 #include <CoreServices/CoreServices.h>
 #endif
 
+#ifdef GDK_WINDOWING_WIN32
+#include <Windows.h>
+#endif
+
 #define LOAD_THUMB_PROC "file-darktable-load-thumb"
 
 static gchar   *get_executable_path  (const gchar      *suffix,
@@ -73,53 +77,93 @@ static gchar *
 get_executable_path (const gchar *suffix,
                      gboolean    *search_path)
 {
-  /* TODO: allow setting the location of the executable in preferences
+  /*
+   * First check for the environment variable DARKTABLE_EXECUTABLE.
+   * Next do platform specific checks (bundle lookup on Mac, registry stuff
+   * on Windows).
+   * Last resort is hoping for darktable to be in PATH.
    */
 
-#ifdef GDK_WINDOWING_QUARTZ
-  OSStatus status;
-  CFURLRef bundle_url = NULL;
+  /*
+   * Look for env variable. That can be set directly or via an environ file.
+   * We assume that just appendign the suffix to that value will work.
+   * That means that on Windows there should be no ".exe"!
+   */
+  const gchar *dt_env = g_getenv ("DARKTABLE_EXECUTABLE");
+  if (dt_env)
+    return g_strconcat (dt_env, suffix, NULL);
 
-  /* For macOS, attempt searching for a darktable app bundle first. */
-  status = LSFindApplicationForInfo (kLSUnknownCreator,
-                                     CFSTR ("org.darktable"),
-                                     NULL, NULL, &bundle_url);
+#if defined (GDK_WINDOWING_QUARTZ)
+  {
+    OSStatus status;
+    CFURLRef bundle_url = NULL;
 
-  if (status >= 0)
-    {
-      CFBundleRef bundle;
-      CFURLRef exec_url, absolute_url;
-      CFStringRef path;
-      gchar *ret;
-      CFIndex len;
+    /* For macOS, attempt searching for a darktable app bundle first. */
+    status = LSFindApplicationForInfo (kLSUnknownCreator,
+                                      CFSTR ("org.darktable"),
+                                      NULL, NULL, &bundle_url);
 
-      bundle = CFBundleCreate (kCFAllocatorDefault, bundle_url);
-      CFRelease (bundle_url);
+    if (status >= 0)
+      {
+        CFBundleRef bundle;
+        CFURLRef exec_url, absolute_url;
+        CFStringRef path;
+        gchar *ret;
+        CFIndex len;
 
-      exec_url = CFBundleCopyExecutableURL (bundle);
-      absolute_url = CFURLCopyAbsoluteURL (exec_url);
-      path = CFURLCopyFileSystemPath (absolute_url, kCFURLPOSIXPathStyle);
+        bundle = CFBundleCreate (kCFAllocatorDefault, bundle_url);
+        CFRelease (bundle_url);
 
-      /* This gets us the length in UTF16 characters, we multiply by 2
-       * to make sure we have a buffer big enough to fit the UTF8 string.
-       */
-      len = CFStringGetLength (path);
-      ret = g_malloc0 (len * 2 * sizeof (gchar));
-      if (!CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
-                               kCFStringEncodingUTF8))
-        ret = NULL;
+        exec_url = CFBundleCopyExecutableURL (bundle);
+        absolute_url = CFURLCopyAbsoluteURL (exec_url);
+        path = CFURLCopyFileSystemPath (absolute_url, kCFURLPOSIXPathStyle);
 
-      CFRelease (path);
-      CFRelease (absolute_url);
-      CFRelease (exec_url);
-      CFRelease (bundle);
+        /* This gets us the length in UTF16 characters, we multiply by 2
+        * to make sure we have a buffer big enough to fit the UTF8 string.
+        */
+        len = CFStringGetLength (path);
+        ret = g_malloc0 (len * 2 * sizeof (gchar));
+        if (!CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
+                                kCFStringEncodingUTF8))
+          ret = NULL;
 
-      if (ret)
-        return ret;
-    }
-  /* else, app bundle was not found, try path search as last resort. */
+        CFRelease (path);
+        CFRelease (absolute_url);
+        CFRelease (exec_url);
+        CFRelease (bundle);
+
+        if (ret)
+          return ret;
+      }
+    /* else, app bundle was not found, try path search as last resort. */
+  }
+#elif defined (GDK_WINDOWING_WIN32)
+  {
+    /* Look for darktable in the Windows registry. */
+
+    char *registry_key;
+    const char *registry_key_base = "SOFTWARE\\Microsoft\\Windows\\"
+                                    "CurrentVersion\\App Paths\\darktable";
+    char path[MAX_PATH];
+    DWORD buffer_size = sizeof (path);
+    long status;
+
+    if (suffix)
+      registry_key = g_strconcat (registry_key_base, suffix, ".exe", NULL);
+    else
+      registry_key = g_strconcat (registry_key_base, ".exe", NULL);
+
+    status = RegGetValue (HKEY_LOCAL_MACHINE, registry_key, "", RRF_RT_ANY,
+                          NULL, (PVOID)&path, &buffer_size);
+
+    g_free (registry_key);
+
+    if (status == ERROR_SUCCESS)
+      return g_strdup (path);
+  }
 #endif
 
+  /* Finally, the last resort. */
   *search_path = TRUE;
   if (suffix)
     return g_strconcat ("darktable", suffix, NULL);
@@ -160,20 +204,23 @@ init (void)
   gchar    *exec_path        = get_executable_path (NULL, &search_path);
   gchar    *argv[]           = { exec_path, "--version", NULL };
   gchar    *darktable_stdout = NULL;
+  gchar    *darktable_stderr = NULL;
   gboolean  have_darktable   = FALSE;
+  GError   *error            = NULL;
   gint      i;
+
+  printf ("[%s] trying to call '%s'\n", __FILE__, exec_path);
 
   if (g_spawn_sync (NULL,
                     argv,
                     NULL,
-                    G_SPAWN_STDERR_TO_DEV_NULL |
                     (search_path ? G_SPAWN_SEARCH_PATH : 0),
                     NULL,
                     NULL,
                     &darktable_stdout,
+                    &darktable_stderr,
                     NULL,
-                    NULL,
-                    NULL))
+                    &error))
     {
       gint major, minor, patch;
 
@@ -190,10 +237,23 @@ init (void)
                 }
             }
         }
-
-      g_free (darktable_stdout);
     }
+  else
+    printf ("[%s] g_spawn_sync failed\n", __FILE__);
 
+  if (error)
+    {
+      printf ("[%s] error: %s\n", __FILE__, error->message);
+      g_error_free (error);
+    }
+  if (darktable_stdout && *darktable_stdout)
+    printf ("[%s] stdout:\n%s\n", __FILE__, darktable_stdout);
+  if (darktable_stderr && *darktable_stderr)
+    printf ("[%s] stderr:\n%s\n", __FILE__, darktable_stderr);
+  printf ("[%s] have_darktable: %d\n", __FILE__, have_darktable);
+
+  g_free (darktable_stdout);
+  g_free (darktable_stderr);
   g_free (exec_path);
 
   if (! have_darktable)
