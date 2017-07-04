@@ -400,60 +400,63 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
 static void
 gimp_crop_tool_commit (GimpCropTool *crop_tool)
 {
-  GimpTool        *tool    = GIMP_TOOL (crop_tool);
-  GimpCropOptions *options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
-  GimpImage       *image   = gimp_display_get_image (tool->display);
-  gdouble          x, y;
-  gdouble          x2, y2;
-  gint             w, h;
+  GimpTool *tool = GIMP_TOOL (crop_tool);
 
-  gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (crop_tool->widget),
-                                       &x, &y, &x2, &y2);
-
-  w = x2 - x;
-  h = y2 - y;
-
-  gimp_tool_pop_status (tool, tool->display);
-
-  /* if rectangle exists, crop it */
-  if (w > 0 && h > 0)
+  if (tool->display)
     {
-      if (options->layer_only)
-        {
-          GimpLayer *layer = gimp_image_get_active_layer (image);
-          gint       off_x, off_y;
+      GimpCropOptions *options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
+      GimpImage       *image   = gimp_display_get_image (tool->display);
+      gdouble          x, y;
+      gdouble          x2, y2;
+      gint             w, h;
 
-          if (! layer)
+      gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (crop_tool->widget),
+                                           &x, &y, &x2, &y2);
+      w = x2 - x;
+      h = y2 - y;
+
+      gimp_tool_pop_status (tool, tool->display);
+
+      /* if rectangle exists, crop it */
+      if (w > 0 && h > 0)
+        {
+          if (options->layer_only)
             {
-              gimp_tool_message_literal (tool, tool->display,
-                                         _("There is no active layer to crop."));
-              return;
+              GimpLayer *layer = gimp_image_get_active_layer (image);
+              gint       off_x, off_y;
+
+              if (! layer)
+                {
+                  gimp_tool_message_literal (tool, tool->display,
+                                             _("There is no active layer to crop."));
+                  return;
+                }
+
+              if (gimp_item_is_content_locked (GIMP_ITEM (layer)))
+                {
+                  gimp_tool_message_literal (tool, tool->display,
+                                             _("The active layer's pixels are locked."));
+                  return;
+                }
+
+              gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+
+              off_x -= x;
+              off_y -= y;
+
+              gimp_item_resize (GIMP_ITEM (layer),
+                                GIMP_CONTEXT (options), options->fill_type,
+                                w, h, off_x, off_y);
+            }
+          else
+            {
+              gimp_image_crop (image,
+                               GIMP_CONTEXT (options), GIMP_FILL_TRANSPARENT,
+                               x, y, w, h, TRUE);
             }
 
-          if (gimp_item_is_content_locked (GIMP_ITEM (layer)))
-            {
-              gimp_tool_message_literal (tool, tool->display,
-                                         _("The active layer's pixels are locked."));
-              return;
-            }
-
-          gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-
-          off_x -= x;
-          off_y -= y;
-
-          gimp_item_resize (GIMP_ITEM (layer),
-                            GIMP_CONTEXT (options), options->fill_type,
-                            w, h, off_x, off_y);
+          gimp_image_flush (image);
         }
-      else
-        {
-          gimp_image_crop (image,
-                           GIMP_CONTEXT (options), GIMP_FILL_TRANSPARENT,
-                           x, y, w, h, TRUE);
-        }
-
-      gimp_image_flush (image);
     }
 
   gimp_crop_tool_halt (crop_tool);
