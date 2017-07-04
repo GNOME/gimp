@@ -86,9 +86,6 @@ static void        gimp_operation_tool_options_notify  (GimpTool          *tool,
 static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filter_tool,
                                                         gchar            **title,
                                                         gchar            **description,
-                                                        gchar            **undo_desc,
-                                                        gchar            **icon_name,
-                                                        gchar            **help_id,
                                                         gboolean          *has_settings);
 static void        gimp_operation_tool_dialog          (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_reset           (GimpFilterTool    *filter_tool);
@@ -187,24 +184,6 @@ gimp_operation_tool_finalize (GObject *object)
       tool->description = NULL;
     }
 
-  if (tool->undo_desc)
-    {
-      g_free (tool->undo_desc);
-      tool->undo_desc = NULL;
-    }
-
-  if (tool->icon_name)
-    {
-      g_free (tool->icon_name);
-      tool->icon_name = NULL;
-    }
-
-  if (tool->help_id)
-    {
-      g_free (tool->help_id);
-      tool->help_id = NULL;
-    }
-
   g_list_free_full (tool->aux_inputs,
                     (GDestroyNotify) gimp_operation_tool_aux_input_free);
   tool->aux_inputs = NULL;
@@ -293,19 +272,13 @@ static gchar *
 gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
                                    gchar          **title,
                                    gchar          **description,
-                                   gchar          **undo_desc,
-                                   gchar          **icon_name,
-                                   gchar          **help_id,
                                    gboolean        *has_settings)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (filter_tool);
 
-  *title               = g_strdup (tool->title);
-  *description         = g_strdup (tool->description);
-  *undo_desc           = g_strdup (tool->undo_desc);
-  *icon_name           = g_strdup (tool->icon_name);
-  *help_id             = g_strdup (tool->help_id);
-  *has_settings        = FALSE;
+  *title        = g_strdup (tool->title);
+  *description  = g_strdup (tool->description);
+  *has_settings = FALSE;
 
   return g_strdup (tool->operation);
 }
@@ -477,24 +450,6 @@ gimp_operation_tool_halt (GimpOperationTool *op_tool)
     {
       g_free (op_tool->description);
       op_tool->description = NULL;
-    }
-
-  if (op_tool->undo_desc)
-    {
-      g_free (op_tool->undo_desc);
-      op_tool->undo_desc = NULL;
-    }
-
-  if (op_tool->icon_name)
-    {
-      g_free (op_tool->icon_name);
-      op_tool->icon_name = NULL;
-    }
-
-  if (op_tool->help_id)
-    {
-      g_free (op_tool->help_id);
-      op_tool->help_id = NULL;
     }
 
   g_list_foreach (op_tool->aux_inputs,
@@ -727,21 +682,13 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   if (tool->description)
     g_free (tool->description);
 
-  if (tool->undo_desc)
-    g_free (tool->undo_desc);
-
-  if (tool->icon_name)
-    g_free (tool->icon_name);
-
-  if (tool->help_id)
-    g_free (tool->help_id);
-
   tool->operation   = g_strdup (operation);
   tool->title       = g_strdup (title);
   tool->description = g_strdup (description);
-  tool->undo_desc   = g_strdup (undo_desc);
-  tool->icon_name   = g_strdup (icon_name);
-  tool->help_id     = g_strdup (help_id);
+
+  gimp_tool_set_undo_desc (GIMP_TOOL (tool), undo_desc);
+  gimp_tool_set_icon_name (GIMP_TOOL (tool), icon_name);
+  gimp_tool_set_help_id   (GIMP_TOOL (tool), help_id);
 
   g_list_free_full (tool->aux_inputs,
                     (GDestroyNotify) gimp_operation_tool_aux_input_free);

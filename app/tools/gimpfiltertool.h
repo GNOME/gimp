@@ -47,9 +47,6 @@ struct _GimpFilterTool
 
   gchar                 *title;
   gchar                 *description;
-  gchar                 *undo_desc;
-  gchar                 *icon_name;
-  gchar                 *help_id;
 
   gboolean               has_settings;
 
@@ -80,9 +77,6 @@ struct _GimpFilterToolClass
   gchar     * (* get_operation)   (GimpFilterTool    *filter_tool,
                                    gchar            **title,
                                    gchar            **description,
-                                   gchar            **undo_desc,
-                                   gchar            **icon_name,
-                                   gchar            **help_id,
                                    gboolean          *has_settings);
   void        (* dialog)          (GimpFilterTool    *filter_tool);
   void        (* reset)           (GimpFilterTool    *filter_tool);

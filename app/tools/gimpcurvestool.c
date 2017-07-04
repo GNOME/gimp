@@ -83,9 +83,6 @@ static void       gimp_curves_tool_oper_update     (GimpTool             *tool,
 static gchar    * gimp_curves_tool_get_operation   (GimpFilterTool       *filter_tool,
                                                     gchar               **title,
                                                     gchar               **description,
-                                                    gchar               **undo_desc,
-                                                    gchar               **icon_name,
-                                                    gchar               **help_id,
                                                     gboolean             *has_settings);
 static void       gimp_curves_tool_dialog          (GimpFilterTool       *filter_tool);
 static void       gimp_curves_tool_reset           (GimpFilterTool       *filter_tool);
@@ -349,13 +346,10 @@ static gchar *
 gimp_curves_tool_get_operation (GimpFilterTool  *filter_tool,
                                 gchar          **title,
                                 gchar          **description,
-                                gchar          **undo_desc,
-                                gchar          **icon_name,
-                                gchar          **help_id,
                                 gboolean        *has_settings)
 {
-  *description         = g_strdup (_("Adjust Color Curves"));
-  *has_settings        = TRUE;
+  *description  = g_strdup (_("Adjust Color Curves"));
+  *has_settings = TRUE;
 
   return g_strdup ("gimp:curves");
 }

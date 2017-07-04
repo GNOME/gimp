@@ -78,7 +78,7 @@ gimp_filter_tool_get_settings_box (GimpFilterTool *filter_tool)
                                filter_tool->settings,
                                import_title,
                                export_title,
-                               filter_tool->help_id,
+                               gimp_tool_get_help_id (GIMP_TOOL (filter_tool)),
                                settings_folder,
                                NULL);
 

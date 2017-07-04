@@ -40,9 +40,6 @@ struct _GimpOperationTool
   gchar          *operation;
   gchar          *title;
   gchar          *description;
-  gchar          *undo_desc;
-  gchar          *icon_name;
-  gchar          *help_id;
 
   GList          *aux_inputs;
 

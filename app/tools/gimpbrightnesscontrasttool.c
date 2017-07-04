@@ -75,9 +75,6 @@ static gchar *
               gimp_brightness_contrast_tool_get_operation  (GimpFilterTool        *filter_tool,
                                                             gchar                **title,
                                                             gchar                **description,
-                                                            gchar                **undo_desc,
-                                                            gchar                **icon_name,
-                                                            gchar                **help_id,
                                                             gboolean              *has_settings);
 static void   gimp_brightness_contrast_tool_dialog         (GimpFilterTool        *filter_tool);
 
@@ -163,13 +160,10 @@ static gchar *
 gimp_brightness_contrast_tool_get_operation (GimpFilterTool  *filter_tool,
                                              gchar          **title,
                                              gchar          **description,
-                                             gchar          **undo_desc,
-                                             gchar          **icon_name,
-                                             gchar          **help_id,
                                              gboolean        *has_settings)
 {
-  *description         = g_strdup (_("Adjust Brightness and Contrast"));
-  *has_settings        = TRUE;
+  *description  = g_strdup (_("Adjust Brightness and Contrast"));
+  *has_settings = TRUE;
 
   return g_strdup ("gimp:brightness-contrast");
 }
