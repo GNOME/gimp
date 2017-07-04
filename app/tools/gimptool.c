@@ -114,9 +114,9 @@ static void            gimp_tool_real_cursor_update  (GimpTool         *tool,
                                                       const GimpCoords *coords,
                                                       GdkModifierType   state,
                                                       GimpDisplay      *display);
-static const gchar   * gimp_tool_real_get_undo_desc  (GimpTool         *tool,
+static const gchar   * gimp_tool_real_can_undo       (GimpTool         *tool,
                                                       GimpDisplay      *display);
-static const gchar   * gimp_tool_real_get_redo_desc  (GimpTool         *tool,
+static const gchar   * gimp_tool_real_can_redo       (GimpTool         *tool,
                                                       GimpDisplay      *display);
 static gboolean        gimp_tool_real_undo           (GimpTool         *tool,
                                                       GimpDisplay      *display);
@@ -170,8 +170,8 @@ gimp_tool_class_init (GimpToolClass *klass)
   klass->active_modifier_key = gimp_tool_real_active_modifier_key;
   klass->oper_update         = gimp_tool_real_oper_update;
   klass->cursor_update       = gimp_tool_real_cursor_update;
-  klass->get_undo_desc       = gimp_tool_real_get_undo_desc;
-  klass->get_redo_desc       = gimp_tool_real_get_redo_desc;
+  klass->can_undo            = gimp_tool_real_can_undo;
+  klass->can_redo            = gimp_tool_real_can_redo;
   klass->undo                = gimp_tool_real_undo;
   klass->redo                = gimp_tool_real_redo;
   klass->get_popup           = gimp_tool_real_get_popup;
@@ -434,15 +434,15 @@ gimp_tool_real_cursor_update (GimpTool         *tool,
 }
 
 static const gchar *
-gimp_tool_real_get_undo_desc (GimpTool    *tool,
-                              GimpDisplay *display)
+gimp_tool_real_can_undo (GimpTool    *tool,
+                         GimpDisplay *display)
 {
   return NULL;
 }
 
 static const gchar *
-gimp_tool_real_get_redo_desc (GimpTool    *tool,
-                              GimpDisplay *display)
+gimp_tool_real_can_redo (GimpTool    *tool,
+                         GimpDisplay *display)
 {
   return NULL;
 }
@@ -1056,27 +1056,27 @@ gimp_tool_cursor_update (GimpTool         *tool,
 }
 
 const gchar *
-gimp_tool_get_undo_desc (GimpTool    *tool,
-                         GimpDisplay *display)
+gimp_tool_can_undo (GimpTool    *tool,
+                    GimpDisplay *display)
 {
   g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
   if (display == tool->display)
-    return GIMP_TOOL_GET_CLASS (tool)->get_undo_desc (tool, display);
+    return GIMP_TOOL_GET_CLASS (tool)->can_undo (tool, display);
 
   return NULL;
 }
 
 const gchar *
-gimp_tool_get_redo_desc (GimpTool    *tool,
-                         GimpDisplay *display)
+gimp_tool_can_redo (GimpTool    *tool,
+                    GimpDisplay *display)
 {
   g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
   if (display == tool->display)
-    return GIMP_TOOL_GET_CLASS (tool)->get_redo_desc (tool, display);
+    return GIMP_TOOL_GET_CLASS (tool)->can_redo (tool, display);
 
   return NULL;
 }

@@ -149,9 +149,9 @@ static void          gimp_iscissors_tool_cursor_update  (GimpTool              *
 static gboolean      gimp_iscissors_tool_key_press      (GimpTool              *tool,
                                                          GdkEventKey           *kevent,
                                                          GimpDisplay           *display);
-static const gchar * gimp_iscissors_tool_get_undo_desc  (GimpTool              *tool,
+static const gchar * gimp_iscissors_tool_can_undo       (GimpTool              *tool,
                                                          GimpDisplay           *display);
-static const gchar * gimp_iscissors_tool_get_redo_desc  (GimpTool              *tool,
+static const gchar * gimp_iscissors_tool_can_redo       (GimpTool              *tool,
                                                          GimpDisplay           *display);
 static gboolean      gimp_iscissors_tool_undo           (GimpTool              *tool,
                                                          GimpDisplay           *display);
@@ -316,8 +316,8 @@ gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
   tool_class->key_press      = gimp_iscissors_tool_key_press;
   tool_class->oper_update    = gimp_iscissors_tool_oper_update;
   tool_class->cursor_update  = gimp_iscissors_tool_cursor_update;
-  tool_class->get_undo_desc  = gimp_iscissors_tool_get_undo_desc;
-  tool_class->get_redo_desc  = gimp_iscissors_tool_get_redo_desc;
+  tool_class->can_undo       = gimp_iscissors_tool_can_undo;
+  tool_class->can_redo       = gimp_iscissors_tool_can_redo;
   tool_class->undo           = gimp_iscissors_tool_undo;
   tool_class->redo           = gimp_iscissors_tool_redo;
 
@@ -1108,8 +1108,8 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
 }
 
 static const gchar *
-gimp_iscissors_tool_get_undo_desc (GimpTool    *tool,
-                                   GimpDisplay *display)
+gimp_iscissors_tool_can_undo (GimpTool    *tool,
+                              GimpDisplay *display)
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
 
@@ -1120,8 +1120,8 @@ gimp_iscissors_tool_get_undo_desc (GimpTool    *tool,
 }
 
 static const gchar *
-gimp_iscissors_tool_get_redo_desc (GimpTool    *tool,
-                                   GimpDisplay *display)
+gimp_iscissors_tool_can_redo (GimpTool    *tool,
+                              GimpDisplay *display)
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
 
@@ -1137,7 +1137,7 @@ gimp_iscissors_tool_undo (GimpTool    *tool,
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
 
-  if (! gimp_iscissors_tool_get_undo_desc (tool, display))
+  if (! gimp_iscissors_tool_can_undo (tool, display))
     return FALSE;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -1168,7 +1168,7 @@ gimp_iscissors_tool_redo (GimpTool    *tool,
 {
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
 
-  if (! gimp_iscissors_tool_get_redo_desc (tool, display))
+  if (! gimp_iscissors_tool_can_redo (tool, display))
     return FALSE;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));

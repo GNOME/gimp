@@ -480,8 +480,8 @@ tool_manager_cursor_update_active (Gimp             *gimp,
 }
 
 const gchar *
-tool_manager_get_undo_desc_active (Gimp        *gimp,
-                                   GimpDisplay *display)
+tool_manager_can_undo_active (Gimp        *gimp,
+                              GimpDisplay *display)
 {
   GimpToolManager *tool_manager;
 
@@ -491,16 +491,16 @@ tool_manager_get_undo_desc_active (Gimp        *gimp,
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_get_undo_desc (tool_manager->active_tool,
-                                      display);
+      return gimp_tool_can_undo (tool_manager->active_tool,
+                                 display);
     }
 
   return NULL;
 }
 
 const gchar *
-tool_manager_get_redo_desc_active (Gimp        *gimp,
-                                   GimpDisplay *display)
+tool_manager_can_redo_active (Gimp        *gimp,
+                              GimpDisplay *display)
 {
   GimpToolManager *tool_manager;
 
@@ -510,8 +510,8 @@ tool_manager_get_redo_desc_active (Gimp        *gimp,
 
   if (tool_manager->active_tool)
     {
-      return gimp_tool_get_redo_desc (tool_manager->active_tool,
-                                      display);
+      return gimp_tool_can_redo (tool_manager->active_tool,
+                                 display);
     }
 
   return NULL;

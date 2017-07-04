@@ -122,10 +122,10 @@ static void   gimp_foreground_select_tool_cursor_update  (GimpTool         *tool
                                                           const GimpCoords *coords,
                                                           GdkModifierType   state,
                                                           GimpDisplay      *display);
-static const gchar * gimp_foreground_select_tool_get_undo_desc
+static const gchar * gimp_foreground_select_tool_can_undo
                                                          (GimpTool         *tool,
                                                           GimpDisplay      *display);
-static const gchar * gimp_foreground_select_tool_get_redo_desc
+static const gchar * gimp_foreground_select_tool_can_redo
                                                          (GimpTool         *tool,
                                                           GimpDisplay      *display);
 static gboolean   gimp_foreground_select_tool_undo       (GimpTool         *tool,
@@ -216,8 +216,8 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
   tool_class->active_modifier_key = gimp_foreground_select_tool_active_modifier_key;
   tool_class->oper_update         = gimp_foreground_select_tool_oper_update;
   tool_class->cursor_update       = gimp_foreground_select_tool_cursor_update;
-  tool_class->get_undo_desc       = gimp_foreground_select_tool_get_undo_desc;
-  tool_class->get_redo_desc       = gimp_foreground_select_tool_get_redo_desc;
+  tool_class->can_undo            = gimp_foreground_select_tool_can_undo;
+  tool_class->can_redo            = gimp_foreground_select_tool_can_redo;
   tool_class->undo                = gimp_foreground_select_tool_undo;
   tool_class->redo                = gimp_foreground_select_tool_redo;
   tool_class->options_notify      = gimp_foreground_select_tool_options_notify;
@@ -667,8 +667,8 @@ gimp_foreground_select_tool_cursor_update (GimpTool         *tool,
 }
 
 static const gchar *
-gimp_foreground_select_tool_get_undo_desc (GimpTool    *tool,
-                                           GimpDisplay *display)
+gimp_foreground_select_tool_can_undo (GimpTool    *tool,
+                                      GimpDisplay *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 
@@ -688,8 +688,8 @@ gimp_foreground_select_tool_get_undo_desc (GimpTool    *tool,
 }
 
 static const gchar *
-gimp_foreground_select_tool_get_redo_desc (GimpTool    *tool,
-                                           GimpDisplay *display)
+gimp_foreground_select_tool_can_redo (GimpTool    *tool,
+                                      GimpDisplay *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 

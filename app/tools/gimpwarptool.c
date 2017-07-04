@@ -88,9 +88,9 @@ static void       gimp_warp_tool_cursor_update      (GimpTool              *tool
                                                      const GimpCoords      *coords,
                                                      GdkModifierType        state,
                                                      GimpDisplay           *display);
-const gchar     * gimp_warp_tool_get_undo_desc      (GimpTool              *tool,
+const gchar     * gimp_warp_tool_can_undo           (GimpTool              *tool,
                                                      GimpDisplay           *display);
-const gchar     * gimp_warp_tool_get_redo_desc      (GimpTool              *tool,
+const gchar     * gimp_warp_tool_can_redo           (GimpTool              *tool,
                                                      GimpDisplay           *display);
 static gboolean   gimp_warp_tool_undo               (GimpTool              *tool,
                                                      GimpDisplay           *display);
@@ -173,8 +173,8 @@ gimp_warp_tool_class_init (GimpWarpToolClass *klass)
   tool_class->key_press      = gimp_warp_tool_key_press;
   tool_class->oper_update    = gimp_warp_tool_oper_update;
   tool_class->cursor_update  = gimp_warp_tool_cursor_update;
-  tool_class->get_undo_desc  = gimp_warp_tool_get_undo_desc;
-  tool_class->get_redo_desc  = gimp_warp_tool_get_redo_desc;
+  tool_class->can_undo       = gimp_warp_tool_can_undo;
+  tool_class->can_redo       = gimp_warp_tool_can_redo;
   tool_class->undo           = gimp_warp_tool_undo;
   tool_class->redo           = gimp_warp_tool_redo;
   tool_class->options_notify = gimp_warp_tool_options_notify;
@@ -469,8 +469,8 @@ gimp_warp_tool_cursor_update (GimpTool         *tool,
 }
 
 const gchar *
-gimp_warp_tool_get_undo_desc (GimpTool    *tool,
-                              GimpDisplay *display)
+gimp_warp_tool_can_undo (GimpTool    *tool,
+                         GimpDisplay *display)
 {
   GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
   GeglNode     *to_delete;
@@ -489,8 +489,8 @@ gimp_warp_tool_get_undo_desc (GimpTool    *tool,
 }
 
 const gchar *
-gimp_warp_tool_get_redo_desc (GimpTool    *tool,
-                              GimpDisplay *display)
+gimp_warp_tool_can_redo (GimpTool    *tool,
+                         GimpDisplay *display)
 {
   GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
 
@@ -1095,7 +1095,7 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
   GtkWidget       *widget;
   gint             i;
 
-  if (! gimp_warp_tool_get_undo_desc (tool, tool->display))
+  if (! gimp_warp_tool_can_undo (tool, tool->display))
     {
       gimp_tool_message_literal (tool, tool->display,
                                  _("Please add some warp strokes first."));

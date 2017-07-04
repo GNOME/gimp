@@ -94,9 +94,9 @@ static void   gimp_blend_tool_cursor_update       (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
-static const gchar * gimp_blend_tool_get_undo_desc(GimpTool              *tool,
+static const gchar * gimp_blend_tool_can_undo     (GimpTool              *tool,
                                                    GimpDisplay           *display);
-static const gchar * gimp_blend_tool_get_redo_desc(GimpTool              *tool,
+static const gchar * gimp_blend_tool_can_redo     (GimpTool              *tool,
                                                    GimpDisplay           *display);
 static gboolean  gimp_blend_tool_undo             (GimpTool              *tool,
                                                    GimpDisplay           *display);
@@ -121,7 +121,7 @@ static void   gimp_blend_tool_line_response       (GimpToolWidget        *widget
 static void   gimp_blend_tool_precalc_shapeburst  (GimpBlendTool         *blend_tool);
 
 static void   gimp_blend_tool_create_graph        (GimpBlendTool         *blend_tool);
-static void   gimp_blend_tool_update_graph        (GimpBlendTool       *blend_tool);
+static void   gimp_blend_tool_update_graph        (GimpBlendTool         *blend_tool);
 
 static void   gimp_blend_tool_gradient_dirty      (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_set_gradient        (GimpBlendTool         *blend_tool,
@@ -181,8 +181,8 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   tool_class->button_release = gimp_blend_tool_button_release;
   tool_class->motion         = gimp_blend_tool_motion;
   tool_class->cursor_update  = gimp_blend_tool_cursor_update;
-  tool_class->get_undo_desc  = gimp_blend_tool_get_undo_desc;
-  tool_class->get_redo_desc  = gimp_blend_tool_get_redo_desc;
+  tool_class->can_undo       = gimp_blend_tool_can_undo;
+  tool_class->can_redo       = gimp_blend_tool_can_redo;
   tool_class->undo           = gimp_blend_tool_undo;
   tool_class->redo           = gimp_blend_tool_redo;
   tool_class->options_notify = gimp_blend_tool_options_notify;
@@ -439,8 +439,8 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
 }
 
 static const gchar *
-gimp_blend_tool_get_undo_desc (GimpTool    *tool,
-                               GimpDisplay *display)
+gimp_blend_tool_can_undo (GimpTool    *tool,
+                          GimpDisplay *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
   GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
@@ -452,8 +452,8 @@ gimp_blend_tool_get_undo_desc (GimpTool    *tool,
 }
 
 static const gchar *
-gimp_blend_tool_get_redo_desc (GimpTool    *tool,
-                               GimpDisplay *display)
+gimp_blend_tool_can_redo (GimpTool    *tool,
+                          GimpDisplay *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
   GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
@@ -471,7 +471,7 @@ gimp_blend_tool_undo (GimpTool    *tool,
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
   BlendInfo     *info;
 
-  if (! gimp_blend_tool_get_undo_desc (tool, display))
+  if (! gimp_blend_tool_can_undo (tool, display))
     return FALSE;
 
   info = blend_info_new (blend_tool->start_x,
@@ -502,7 +502,7 @@ gimp_blend_tool_redo (GimpTool    *tool,
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
   BlendInfo     *info;
 
-  if (! gimp_blend_tool_get_redo_desc (tool, display))
+  if (! gimp_blend_tool_can_redo (tool, display))
     return FALSE;
 
   info = blend_info_new (blend_tool->start_x,

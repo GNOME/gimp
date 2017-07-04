@@ -135,9 +135,9 @@ struct _GimpToolClass
                                            GdkModifierType        state,
                                            GimpDisplay           *display);
 
-  const gchar   * (* get_undo_desc)       (GimpTool              *tool,
+  const gchar   * (* can_undo)            (GimpTool              *tool,
                                            GimpDisplay           *display);
-  const gchar   * (* get_redo_desc)       (GimpTool              *tool,
+  const gchar   * (* can_redo)            (GimpTool              *tool,
                                            GimpDisplay           *display);
   gboolean        (* undo)                (GimpTool              *tool,
                                            GimpDisplay           *display);
@@ -214,9 +214,9 @@ void              gimp_tool_cursor_update       (GimpTool            *tool,
                                                  GdkModifierType      state,
                                                  GimpDisplay         *display);
 
-const gchar     * gimp_tool_get_undo_desc       (GimpTool            *tool,
+const gchar     * gimp_tool_can_undo            (GimpTool            *tool,
                                                  GimpDisplay         *display);
-const gchar     * gimp_tool_get_redo_desc       (GimpTool            *tool,
+const gchar     * gimp_tool_can_redo            (GimpTool            *tool,
                                                  GimpDisplay         *display);
 gboolean          gimp_tool_undo                (GimpTool            *tool,
                                                  GimpDisplay         *display);

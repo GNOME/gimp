@@ -305,10 +305,8 @@ edit_actions_update (GimpActionGroup *group,
 
           if (display)
             {
-              tool_undo = tool_manager_get_undo_desc_active (image->gimp,
-                                                             display);
-              tool_redo = tool_manager_get_redo_desc_active (image->gimp,
-                                                             display);
+              tool_undo = tool_manager_can_undo_active (image->gimp, display);
+              tool_redo = tool_manager_can_redo_active (image->gimp, display);
             }
 
           if (tool_undo)
