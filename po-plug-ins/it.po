@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-07 21:21+0200\n"
-"PO-Revision-Date: 2017-05-07 21:22+0200\n"
+"POT-Creation-Date: 2017-07-04 19:04+0200\n"
+"PO-Revision-Date: 2017-07-04 19:04+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -47,7 +47,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:934 ../plug-ins/common/file-gif-save.c:1089
 #: ../plug-ins/common/file-pdf-load.c:1089
-#: ../plug-ins/common/file-pdf-save.c:930 ../plug-ins/common/file-ps.c:3421
+#: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3421
 #: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/file-svg.c:726
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
@@ -433,8 +433,8 @@ msgstr "_Verticale"
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
-#: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
-#: ../plug-ins/common/file-pcx.c:444 ../plug-ins/common/file-pix.c:400
+#: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
+#: ../plug-ins/common/file-pcx.c:452 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1162
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
@@ -830,7 +830,7 @@ msgstr "A_pri"
 #. The Save button
 #: ../plug-ins/common/cml-explorer.c:1277
 #: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:1500
-#: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:929
+#: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:1008
 #: ../plug-ins/common/qbist.c:766 ../plug-ins/common/qbist.c:896
 #: ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:475
@@ -1026,8 +1026,8 @@ msgstr "Salva parametri Esploratore CML"
 
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
-#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:736
-#: ../plug-ins/common/file-pdf-save.c:432 ../plug-ins/common/file-png.c:1560
+#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:852
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1560
 #: ../plug-ins/common/file-raw-data.c:977
 #: ../plug-ins/common/file-raw-data.c:1005 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1475
@@ -1058,7 +1058,7 @@ msgstr "Carica parametri Esploratore CML"
 #: ../plug-ins/common/file-gif-load.c:361
 #: ../plug-ins/common/file-jp2-load.c:234
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:913
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:913
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3370
 #: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:374
 #: ../plug-ins/common/file-raw-data.c:1086 ../plug-ins/common/file-sunras.c:436
@@ -2179,7 +2179,7 @@ msgstr ""
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:678
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
-#: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
+#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:1079 ../plug-ins/common/file-sunras.c:429
@@ -2187,10 +2187,11 @@ msgstr ""
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-darktable/file-darktable.c:305
+#: ../plug-ins/file-darktable/file-darktable.c:383
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:664
 #: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-rawtherapee/file-rawtherapee.c:285
 #: ../plug-ins/file-sgi/sgi.c:325 ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
@@ -2271,7 +2272,7 @@ msgstr ""
 #: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:690
 #: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1304
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:534
-#: ../plug-ins/common/file-pcx.c:662 ../plug-ins/common/file-pix.c:536
+#: ../plug-ins/common/file-pcx.c:741 ../plug-ins/common/file-pix.c:536
 #: ../plug-ins/common/file-png.c:1553 ../plug-ins/common/file-pnm.c:1245
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
@@ -2980,80 +2981,81 @@ msgstr "Stringa UTF-8 non valida nel file motivi '%s'."
 msgid "Pattern"
 msgstr "Motivo"
 
-#: ../plug-ins/common/file-pcx.c:134 ../plug-ins/common/file-pcx.c:153
+#: ../plug-ins/common/file-pcx.c:144 ../plug-ins/common/file-pcx.c:163
 msgid "ZSoft PCX image"
 msgstr "Immagine PCX ZSoft"
 
-#: ../plug-ins/common/file-pcx.c:375
+#: ../plug-ins/common/file-pcx.c:383
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Impossibile leggere l'intestazione da '%s'"
 
-#: ../plug-ins/common/file-pcx.c:386
+#: ../plug-ins/common/file-pcx.c:394
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "'%s' non è un file PCX"
 
-#: ../plug-ins/common/file-pcx.c:402 ../plug-ins/file-bmp/bmp-load.c:723
+#: ../plug-ins/common/file-pcx.c:410 ../plug-ins/file-bmp/bmp-load.c:723
 #: ../plug-ins/file-psd/psd-load.c:306
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Larghezza immagine non supportata o non valida: %d"
 
-#: ../plug-ins/common/file-pcx.c:408 ../plug-ins/file-bmp/bmp-load.c:729
+#: ../plug-ins/common/file-pcx.c:416 ../plug-ins/file-bmp/bmp-load.c:729
 #: ../plug-ins/file-psd/psd-load.c:298
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altezza immagine non supportata o non valida: %d"
 
-#: ../plug-ins/common/file-pcx.c:414
+#: ../plug-ins/common/file-pcx.c:422
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Numero di byte per riga nell'intestazione PCX non valido"
 
-#: ../plug-ins/common/file-pcx.c:421
+#: ../plug-ins/common/file-pcx.c:429
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr "Risoluzione fuori dai bordi nell'intestazione XCX, uso 72x72"
 
-#: ../plug-ins/common/file-pcx.c:429
+#: ../plug-ins/common/file-pcx.c:437
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Dimensioni immagine troppo ampie: larghezza %d × altezza %d"
 
-#: ../plug-ins/common/file-pcx.c:484
+#: ../plug-ins/common/file-pcx.c:526
 msgid "Unusual PCX flavour, giving up"
 msgstr "Tipo PCX strano, abbandono"
 
-#: ../plug-ins/common/file-pcx.c:697 ../plug-ins/common/file-pnm.c:1241
+#: ../plug-ins/common/file-pcx.c:807 ../plug-ins/common/file-pnm.c:1241
 msgid "Cannot export images with alpha channel."
 msgstr "Impossibile esportare immagini con canali alfa."
 
-#: ../plug-ins/common/file-pcx.c:709
+#: ../plug-ins/common/file-pcx.c:825
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Spostamento X non valido: %d"
 
-#: ../plug-ins/common/file-pcx.c:715
+#: ../plug-ins/common/file-pcx.c:831
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Spostamento Y non valido: %d"
 
-#: ../plug-ins/common/file-pcx.c:721
+#: ../plug-ins/common/file-pcx.c:837
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Bordo destro fuori dai limiti (deve essere < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:728
+#: ../plug-ins/common/file-pcx.c:844
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Bordo inferiore fuori dai limiti (deve essere < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:795
+#: ../plug-ins/common/file-pcx.c:918
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:319
+#: ../plug-ins/common/file-pdf-save.c:338
+#: ../plug-ins/common/file-pdf-save.c:355
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
@@ -3110,15 +3112,15 @@ msgstr "Usa l'_antialiasing"
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:334
+#: ../plug-ins/common/file-pdf-save.c:370
 msgid "_Create multipage PDF..."
 msgstr "_Crea PDF multipagina..."
 
-#: ../plug-ins/common/file-pdf-save.c:417
+#: ../plug-ins/common/file-pdf-save.c:453
 msgid "You must select a file to save!"
 msgstr "È necessario selezionare un file da salvare!"
 
-#: ../plug-ins/common/file-pdf-save.c:443
+#: ../plug-ins/common/file-pdf-save.c:479
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3131,59 +3133,67 @@ msgstr ""
 "Assicurarsi di aver inserito un nome file valido e che la posizione scelta "
 "consenta la scrittura!"
 
-#: ../plug-ins/common/file-pdf-save.c:854
-#: ../plug-ins/common/file-pdf-save.c:977
+#: ../plug-ins/common/file-pdf-save.c:907
+#: ../plug-ins/common/file-pdf-save.c:1056
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omettere livelli invisibili e con opacità a zero"
 
-#: ../plug-ins/common/file-pdf-save.c:859
-#: ../plug-ins/common/file-pdf-save.c:982
+#: ../plug-ins/common/file-pdf-save.c:912
+#: ../plug-ins/common/file-pdf-save.c:1061
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Convertire le bitmap in grafica vettoriale ove possibile"
 
-#: ../plug-ins/common/file-pdf-save.c:864
-#: ../plug-ins/common/file-pdf-save.c:987
+#: ../plug-ins/common/file-pdf-save.c:917
+#: ../plug-ins/common/file-pdf-save.c:1066
 msgid "Apply layer masks before saving"
 msgstr "Applica le maschere di livello prima di salvare"
 
-#: ../plug-ins/common/file-pdf-save.c:868
-#: ../plug-ins/common/file-pdf-save.c:991
+#: ../plug-ins/common/file-pdf-save.c:921
+#: ../plug-ins/common/file-pdf-save.c:1070
 msgid "Keeping the masks will not change the output"
 msgstr "Mantenendo le maschere non verrà modificato il risultato"
 
-#: ../plug-ins/common/file-pdf-save.c:921
+#: ../plug-ins/common/file-pdf-save.c:923
+msgid "Reverse the pages order"
+msgstr "Inverti l'ordine delle pagine"
+
+#: ../plug-ins/common/file-pdf-save.c:928
+msgid "Layers as pages"
+msgstr "Livelli come pagine"
+
+#: ../plug-ins/common/file-pdf-save.c:1000
 msgid "Save to:"
 msgstr "Salva in:"
 
-#: ../plug-ins/common/file-pdf-save.c:925
+#: ../plug-ins/common/file-pdf-save.c:1004
 msgid "Browse..."
 msgstr "Sfoglia..."
 
-#: ../plug-ins/common/file-pdf-save.c:926
+#: ../plug-ins/common/file-pdf-save.c:1005
 msgid "Multipage PDF export"
 msgstr "Esportazione PDF multipagina"
 
-#: ../plug-ins/common/file-pdf-save.c:962
+#: ../plug-ins/common/file-pdf-save.c:1041
 msgid "Remove the selected pages"
 msgstr "Rimuovi le pagine selezionate"
 
-#: ../plug-ins/common/file-pdf-save.c:972
+#: ../plug-ins/common/file-pdf-save.c:1051
 msgid "Add this image"
 msgstr "Aggiungi questa immagine"
 
-#: ../plug-ins/common/file-pdf-save.c:1080
-#: ../plug-ins/common/file-pdf-save.c:1148
-#: ../plug-ins/common/file-pdf-save.c:1246 ../plug-ins/common/file-ps.c:1915
+#: ../plug-ins/common/file-pdf-save.c:1159
+#: ../plug-ins/common/file-pdf-save.c:1227
+#: ../plug-ins/common/file-pdf-save.c:1325 ../plug-ins/common/file-ps.c:1915
 #: ../plug-ins/file-tiff/file-tiff-load.c:925
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1117
+#: ../plug-ins/common/file-pdf-save.c:1196
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Errore! Per salvare il file, deve essere aggiunta almeno un'immagine!"
 
-#: ../plug-ins/common/file-pdf-save.c:1290
+#: ../plug-ins/common/file-pdf-save.c:1372
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
@@ -6580,110 +6590,136 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
 
-#: ../plug-ins/file-darktable/file-darktable.c:374
+#: ../plug-ins/file-darktable/file-darktable.c:455
 #: ../plug-ins/file-ico/ico-load.c:742 ../plug-ins/file-jpeg/jpeg-load.c:503
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
+#: ../plug-ins/file-rawtherapee/file-rawtherapee.c:393
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Apertura miniatura per '%s'"
 
 #: ../plug-ins/file-darktable/file-formats.h:46
+#: ../plug-ins/file-rawtherapee/file-formats.h:41
 msgid "Raw Canon"
 msgstr "Raw Canon"
 
 #: ../plug-ins/file-darktable/file-formats.h:61
+#: ../plug-ins/file-rawtherapee/file-formats.h:52
 msgid "Raw Nikon"
 msgstr "Raw Nikon"
 
 #: ../plug-ins/file-darktable/file-formats.h:72
+#: ../plug-ins/file-rawtherapee/file-formats.h:63
 msgid "Raw Hasselblad"
 msgstr "Raw Hasselblad"
 
 #: ../plug-ins/file-darktable/file-formats.h:83
+#: ../plug-ins/file-rawtherapee/file-formats.h:74
 msgid "Raw Sony"
 msgstr "Raw Sony"
 
 #: ../plug-ins/file-darktable/file-formats.h:94
+#: ../plug-ins/file-rawtherapee/file-formats.h:85
 msgid "Raw Casio BAY"
 msgstr "Raw Casio BAY"
 
 #: ../plug-ins/file-darktable/file-formats.h:105
+#: ../plug-ins/file-rawtherapee/file-formats.h:96
 msgid "Raw Phantom Software CINE"
 msgstr "Raw Phantom Software CINE"
 
 #: ../plug-ins/file-darktable/file-formats.h:116
+#: ../plug-ins/file-rawtherapee/file-formats.h:107
 msgid "Raw Sinar"
 msgstr "Raw Sinar"
 
 #: ../plug-ins/file-darktable/file-formats.h:127
+#: ../plug-ins/file-rawtherapee/file-formats.h:118
 msgid "Raw Kodak"
 msgstr "Raw Kodak"
 
 #: ../plug-ins/file-darktable/file-formats.h:139
+#: ../plug-ins/file-rawtherapee/file-formats.h:129
 msgid "Raw Adobe DNG Digital Negative"
 msgstr "Raw Adobe DNG Digital Negative"
 
 #: ../plug-ins/file-darktable/file-formats.h:150
+#: ../plug-ins/file-rawtherapee/file-formats.h:140
 msgid "Raw Epson ERF"
 msgstr "Raw Epson ERF"
 
 #: ../plug-ins/file-darktable/file-formats.h:161
+#: ../plug-ins/file-rawtherapee/file-formats.h:151
 msgid "Raw Phase One"
 msgstr "Raw Phase One"
 
 #: ../plug-ins/file-darktable/file-formats.h:172
+#: ../plug-ins/file-rawtherapee/file-formats.h:162
 msgid "Raw Minolta"
 msgstr "Raw Minolta"
 
 #: ../plug-ins/file-darktable/file-formats.h:183
+#: ../plug-ins/file-rawtherapee/file-formats.h:173
 msgid "Raw Mamiya MEF"
 msgstr "Raw Mamiya MEF"
 
 #: ../plug-ins/file-darktable/file-formats.h:193
+#: ../plug-ins/file-rawtherapee/file-formats.h:183
 msgid "Raw Leaf MOS"
 msgstr "Raw Leaf MOS"
 
 #: ../plug-ins/file-darktable/file-formats.h:204
+#: ../plug-ins/file-rawtherapee/file-formats.h:194
 msgid "Raw Olympus ORF"
 msgstr "Raw Olympus ORF"
 
 #: ../plug-ins/file-darktable/file-formats.h:215
+#: ../plug-ins/file-rawtherapee/file-formats.h:205
 msgid "Raw Pentax PEF"
 msgstr "Raw Pentax PEF"
 
 #: ../plug-ins/file-darktable/file-formats.h:226
+#: ../plug-ins/file-rawtherapee/file-formats.h:216
 msgid "Raw Logitech PXN"
 msgstr "Raw Logitech PXN"
 
 #: ../plug-ins/file-darktable/file-formats.h:237
+#: ../plug-ins/file-rawtherapee/file-formats.h:227
 msgid "Raw Apple QuickTake QTK"
 msgstr "Raw Apple QuickTake QTK"
 
 #: ../plug-ins/file-darktable/file-formats.h:248
+#: ../plug-ins/file-rawtherapee/file-formats.h:238
 msgid "Raw Fujifilm RAF"
 msgstr "Raw Fujifilm RAF"
 
 #: ../plug-ins/file-darktable/file-formats.h:259
+#: ../plug-ins/file-rawtherapee/file-formats.h:249
 msgid "Raw Panasonic"
 msgstr "Raw Panasonic"
 
 #: ../plug-ins/file-darktable/file-formats.h:270
+#: ../plug-ins/file-rawtherapee/file-formats.h:260
 msgid "Raw Digital Foto Maker RDC"
 msgstr "Raw Digital Foto Maker RDC"
 
 #: ../plug-ins/file-darktable/file-formats.h:281
+#: ../plug-ins/file-rawtherapee/file-formats.h:271
 msgid "Raw Leica RWL"
 msgstr "Raw Leica RWL"
 
 #: ../plug-ins/file-darktable/file-formats.h:292
+#: ../plug-ins/file-rawtherapee/file-formats.h:282
 msgid "Raw Samsung SRW"
 msgstr "Raw Samsung SRW"
 
 #: ../plug-ins/file-darktable/file-formats.h:303
+#: ../plug-ins/file-rawtherapee/file-formats.h:293
 msgid "Raw Sigma X3F"
 msgstr "Raw Sigma X3F"
 
 #: ../plug-ins/file-darktable/file-formats.h:314
+#: ../plug-ins/file-rawtherapee/file-formats.h:304
 msgid "Raw Arriflex ARI"
 msgstr "Raw Arriflex ARI"
 
