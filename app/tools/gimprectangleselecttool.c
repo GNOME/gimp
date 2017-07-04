@@ -463,6 +463,9 @@ gimp_rectangle_select_tool_cursor_update (GimpTool         *tool,
     {
       gimp_tool_widget_get_cursor (private->widget, coords, state,
                                    &cursor, NULL, &modifier);
+
+      gimp_tool_control_set_cursor          (tool->control, cursor);
+      gimp_tool_control_set_cursor_modifier (tool->control, modifier);
     }
 
   /* override the previous if shift or ctrl are down */
