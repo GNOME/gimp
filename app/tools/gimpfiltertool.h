@@ -52,8 +52,6 @@ struct _GimpFilterTool
   gchar                 *help_id;
 
   gboolean               has_settings;
-  gchar                 *import_dialog_title;
-  gchar                 *export_dialog_title;
 
   GimpDrawableFilter    *filter;
 
@@ -85,9 +83,7 @@ struct _GimpFilterToolClass
                                    gchar            **undo_desc,
                                    gchar            **icon_name,
                                    gchar            **help_id,
-                                   gboolean          *has_settings,
-                                   gchar            **import_dialog_title,
-                                   gchar            **export_dialog_title);
+                                   gboolean          *has_settings);
   void        (* dialog)          (GimpFilterTool    *filter_tool);
   void        (* reset)           (GimpFilterTool    *filter_tool);
   void        (* set_config)      (GimpFilterTool    *filter_tool,

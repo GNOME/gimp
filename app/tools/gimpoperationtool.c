@@ -89,9 +89,7 @@ static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filte
                                                         gchar            **undo_desc,
                                                         gchar            **icon_name,
                                                         gchar            **help_id,
-                                                        gboolean          *has_settings,
-                                                        gchar            **import_dialog_title,
-                                                        gchar            **export_dialog_title);
+                                                        gboolean          *has_settings);
 static void        gimp_operation_tool_dialog          (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_reset           (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_set_config      (GimpFilterTool    *filter_tool,
@@ -298,9 +296,7 @@ gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
                                    gchar          **undo_desc,
                                    gchar          **icon_name,
                                    gchar          **help_id,
-                                   gboolean        *has_settings,
-                                   gchar          **import_dialog_title,
-                                   gchar          **export_dialog_title)
+                                   gboolean        *has_settings)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (filter_tool);
 
@@ -310,10 +306,6 @@ gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
   *icon_name           = g_strdup (tool->icon_name);
   *help_id             = g_strdup (tool->help_id);
   *has_settings        = FALSE;
-  *import_dialog_title = g_strdup_printf (_("Import '%s' Settings"),
-                                          tool->title);
-  *export_dialog_title = g_strdup_printf (_("Export '%s' Settings"),
-                                          tool->title);
 
   return g_strdup (tool->operation);
 }

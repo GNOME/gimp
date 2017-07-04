@@ -77,9 +77,7 @@ static gchar    * gimp_levels_tool_get_operation  (GimpFilterTool   *filter_tool
                                                    gchar           **undo_desc,
                                                    gchar           **icon_name,
                                                    gchar           **help_id,
-                                                   gboolean         *has_settings,
-                                                   gchar           **import_dialog_title,
-                                                   gchar           **export_dialog_title);
+                                                   gboolean         *has_settings);
 static void       gimp_levels_tool_dialog         (GimpFilterTool   *filter_tool);
 static void       gimp_levels_tool_reset          (GimpFilterTool   *filter_tool);
 static void       gimp_levels_tool_config_notify  (GimpFilterTool   *filter_tool,
@@ -248,14 +246,10 @@ gimp_levels_tool_get_operation (GimpFilterTool  *filter_tool,
                                 gchar          **undo_desc,
                                 gchar          **icon_name,
                                 gchar          **help_id,
-                                gboolean        *has_settings,
-                                gchar          **import_dialog_title,
-                                gchar          **export_dialog_title)
+                                gboolean        *has_settings)
 {
   *description         = g_strdup (_("Adjust Color Levels"));
   *has_settings        = TRUE;
-  *import_dialog_title = g_strdup (_("Import Levels"));
-  *export_dialog_title = g_strdup (_("Export Levels"));
 
   return g_strdup ("gimp:levels");
 }

@@ -284,18 +284,6 @@ gimp_filter_tool_finalize (GObject *object)
       filter_tool->help_id = NULL;
     }
 
-  if (filter_tool->import_dialog_title)
-    {
-      g_free (filter_tool->import_dialog_title);
-      filter_tool->import_dialog_title = NULL;
-    }
-
-  if (filter_tool->export_dialog_title)
-    {
-      g_free (filter_tool->export_dialog_title);
-      filter_tool->export_dialog_title = NULL;
-    }
-
   if (filter_tool->gui)
     {
       g_object_unref (filter_tool->gui);
@@ -1404,27 +1392,13 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
       filter_tool->help_id = NULL;
     }
 
-  if (filter_tool->import_dialog_title)
-    {
-      g_free (filter_tool->import_dialog_title);
-      filter_tool->import_dialog_title = NULL;
-    }
-
-  if (filter_tool->export_dialog_title)
-    {
-      g_free (filter_tool->export_dialog_title);
-      filter_tool->export_dialog_title = NULL;
-    }
-
   operation_name = klass->get_operation (filter_tool,
                                          &filter_tool->title,
                                          &filter_tool->description,
                                          &filter_tool->undo_desc,
                                          &filter_tool->icon_name,
                                          &filter_tool->help_id,
-                                         &filter_tool->has_settings,
-                                         &filter_tool->import_dialog_title,
-                                         &filter_tool->export_dialog_title);
+                                         &filter_tool->has_settings);
 
   if (! operation_name)
     operation_name = g_strdup ("gegl:nop");
@@ -1527,19 +1501,29 @@ gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
           GQuark  quark = g_quark_from_static_string ("settings-folder");
           GType   type  = G_TYPE_FROM_INSTANCE (filter_tool->config);
           GFile  *settings_folder;
+          gchar  *import_title;
+          gchar  *export_title;
 
           settings_folder = g_type_get_qdata (type, quark);
+
+          import_title = g_strdup_printf (_("Import '%s' Settings"),
+                                          filter_tool->title);
+          export_title = g_strdup_printf (_("Export '%s' Settings"),
+                                          filter_tool->title);
 
           g_object_set (filter_tool->settings_box,
                         "visible",        TRUE,
                         "config",         filter_tool->config,
                         "container",      filter_tool->settings,
                         "help-id",        filter_tool->help_id,
-                        "import-title",   filter_tool->import_dialog_title,
-                        "export-title",   filter_tool->export_dialog_title,
+                        "import-title",   import_title,
+                        "export-title",   export_title,
                         "default-folder", settings_folder,
                         "last-file",      NULL,
                         NULL);
+
+          g_free (import_title);
+          g_free (export_title);
         }
       else
         {
