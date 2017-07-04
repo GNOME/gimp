@@ -119,10 +119,10 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
   if (! title)
-    title = tool_info->blurb;
+    title = tool_info->label;
 
   if (! description)
-    description = tool_info->help;
+    description = tool_info->tooltip;
 
   if (! help_id)
     help_id = tool_info->help_id;

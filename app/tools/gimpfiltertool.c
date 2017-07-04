@@ -1367,7 +1367,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
     operation_name = g_strdup ("gegl:nop");
 
   if (! filter_tool->title)
-    filter_tool->title = g_strdup (tool->tool_info->blurb);
+    filter_tool->title = g_strdup (tool->tool_info->label);
 
   if (! filter_tool->description)
     filter_tool->description = g_strdup (filter_tool->title);

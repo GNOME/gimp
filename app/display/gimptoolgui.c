@@ -262,10 +262,10 @@ gimp_tool_gui_new (GimpToolInfo *tool_info,
   private = GET_PRIVATE (gui);
 
   if (! title)
-    title = tool_info->blurb;
+    title = tool_info->label;
 
   if (! description)
-    description = tool_info->blurb;
+    description = tool_info->label;
 
   if (! icon_name)
     icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
@@ -317,7 +317,7 @@ gimp_tool_gui_set_title (GimpToolGui *gui,
   private->title = g_strdup (title);
 
   if (! title)
-    title = private->tool_info->blurb;
+    title = private->tool_info->label;
 
   g_object_set (private->dialog, "title", title, NULL);
 }
@@ -339,7 +339,7 @@ gimp_tool_gui_set_description (GimpToolGui *gui,
   private->description = g_strdup (description);
 
   if (! description)
-    description = private->tool_info->help;
+    description = private->tool_info->tooltip;
 
   if (private->overlay)
     {

@@ -484,7 +484,7 @@ gimp_overlay_dialog_new (GimpToolInfo *tool_info,
   icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
   dialog = g_object_new (GIMP_TYPE_OVERLAY_DIALOG,
-                         "title",     tool_info->blurb,
+                         "title",     tool_info->label,
                          "icon-name", icon_name,
                          NULL);
 

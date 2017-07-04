@@ -528,7 +528,7 @@ gimp_tool_get_undo_desc (GimpTool *tool)
   if (tool->undo_desc)
     return tool->undo_desc;
 
-  return tool->tool_info->blurb;
+  return tool->tool_info->label;
 }
 
 void

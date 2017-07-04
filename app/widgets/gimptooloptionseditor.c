@@ -340,7 +340,7 @@ gimp_tool_options_editor_get_title (GimpDocked *docked)
 
   tool_info = gimp_context_get_tool (context);
 
-  return tool_info ? g_strdup (tool_info->blurb) : NULL;
+  return tool_info ? g_strdup (tool_info->label) : NULL;
 }
 
 static gboolean

@@ -778,7 +778,7 @@ tools_actions_setup (GimpActionGroup *group)
           entry.icon_name   = icon_name;
           entry.label       = tool_info->menu_label;
           entry.accelerator = tool_info->menu_accel;
-          entry.tooltip     = tool_info->help;
+          entry.tooltip     = tool_info->tooltip;
           entry.help_id     = tool_info->help_id;
           entry.value       = identifier;
 

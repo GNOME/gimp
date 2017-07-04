@@ -42,8 +42,8 @@ struct _GimpToolInfo
   GType                tool_options_type;
   GimpContextPropMask  context_props;
 
-  gchar               *blurb;
-  gchar               *help;
+  gchar               *label;
+  gchar               *tooltip;
 
   gchar               *menu_label;
   gchar               *menu_accel;
@@ -71,8 +71,8 @@ GimpToolInfo * gimp_tool_info_new          (Gimp                *gimp,
                                             GType                tool_options_type,
                                             GimpContextPropMask  context_props,
                                             const gchar         *identifier,
-                                            const gchar         *blurb,
-                                            const gchar         *help,
+                                            const gchar         *label,
+                                            const gchar         *tooltip,
                                             const gchar         *menu_label,
                                             const gchar         *menu_accel,
                                             const gchar         *help_domain,

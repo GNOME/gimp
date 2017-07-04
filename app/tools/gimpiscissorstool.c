@@ -1295,7 +1295,7 @@ gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
   if (iscissors->curve->closed && iscissors->mask)
     {
       gimp_channel_select_channel (gimp_image_get_mask (image),
-                                   tool->tool_info->blurb,
+                                   gimp_tool_get_undo_desc (tool),
                                    iscissors->mask,
                                    0, 0,
                                    options->operation,

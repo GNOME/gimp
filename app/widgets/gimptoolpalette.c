@@ -279,7 +279,7 @@ gimp_tool_palette_hierarchy_changed (GtkWidget *widget,
             gimp_widget_set_accel_help (GTK_WIDGET (item), action);
           else
             gimp_help_set_help_data (GTK_WIDGET (item),
-                                     tool_info->help, tool_info->help_id);
+                                     tool_info->tooltip, tool_info->help_id);
 
           /* Make sure the toolbox buttons won't grab focus, which has
            * nearly no practical use, and prevents various actions until

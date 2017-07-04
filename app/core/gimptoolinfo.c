@@ -88,24 +88,6 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
 static void
 gimp_tool_info_init (GimpToolInfo *tool_info)
 {
-  tool_info->gimp              = NULL;
-
-  tool_info->tool_type         = G_TYPE_NONE;
-  tool_info->tool_options_type = G_TYPE_NONE;
-  tool_info->context_props     = 0;
-
-  tool_info->blurb             = NULL;
-  tool_info->help              = NULL;
-
-  tool_info->menu_label        = NULL;
-  tool_info->menu_accel        = NULL;
-
-  tool_info->help_domain       = NULL;
-  tool_info->help_id           = NULL;
-
-  tool_info->visible           = TRUE;
-  tool_info->tool_options      = NULL;
-  tool_info->paint_info        = NULL;
 }
 
 static void
@@ -134,15 +116,15 @@ gimp_tool_info_finalize (GObject *object)
 {
   GimpToolInfo *tool_info = GIMP_TOOL_INFO (object);
 
-  if (tool_info->blurb)
+  if (tool_info->label)
     {
-      g_free (tool_info->blurb);
-      tool_info->blurb = NULL;
+      g_free (tool_info->label);
+      tool_info->label = NULL;
     }
-  if (tool_info->help)
+  if (tool_info->tooltip)
     {
-      g_free (tool_info->help);
-      tool_info->help = NULL;
+      g_free (tool_info->tooltip);
+      tool_info->tooltip = NULL;
     }
 
   if (tool_info->menu_label)
@@ -214,7 +196,9 @@ gimp_tool_info_get_description (GimpViewable  *viewable,
 {
   GimpToolInfo *tool_info = GIMP_TOOL_INFO (viewable);
 
-  return g_strdup (tool_info->blurb);
+  *tooltip = g_strdup (tool_info->tooltip);
+
+  return g_strdup (tool_info->label);
 }
 
 static gboolean
@@ -233,8 +217,8 @@ gimp_tool_info_new (Gimp                *gimp,
                     GType                tool_options_type,
                     GimpContextPropMask  context_props,
                     const gchar         *identifier,
-                    const gchar         *blurb,
-                    const gchar         *help,
+                    const gchar         *label,
+                    const gchar         *tooltip,
                     const gchar         *menu_label,
                     const gchar         *menu_accel,
                     const gchar         *help_domain,
@@ -247,8 +231,8 @@ gimp_tool_info_new (Gimp                *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
-  g_return_val_if_fail (blurb != NULL, NULL);
-  g_return_val_if_fail (help != NULL, NULL);
+  g_return_val_if_fail (label != NULL, NULL);
+  g_return_val_if_fail (tooltip != NULL, NULL);
   g_return_val_if_fail (menu_label != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (paint_core_name != NULL, NULL);
@@ -269,8 +253,8 @@ gimp_tool_info_new (Gimp                *gimp,
   tool_info->tool_options_type = tool_options_type;
   tool_info->context_props     = context_props;
 
-  tool_info->blurb             = g_strdup (blurb);
-  tool_info->help              = g_strdup (help);
+  tool_info->label             = g_strdup (label);
+  tool_info->tooltip           = g_strdup (tooltip);
 
   tool_info->menu_label        = g_strdup (menu_label);
   tool_info->menu_accel        = g_strdup (menu_accel);

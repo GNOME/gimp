@@ -63,8 +63,8 @@ tool_preset_editor_save_cmd_callback (GtkAction *action,
                         G_OBJECT (editor), GIMP_MESSAGE_WARNING,
                         _("Can't save '%s' tool options to an "
                           "existing '%s' tool preset."),
-                        tool_info->blurb,
-                        preset_tool->blurb);
+                        tool_info->label,
+                        preset_tool->label);
           return;
         }
 
