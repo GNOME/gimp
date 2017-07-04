@@ -45,7 +45,6 @@ struct _GimpFilterTool
   GObject               *default_config;
   GimpContainer         *settings;
 
-  gchar                 *title;
   gchar                 *description;
 
   gboolean               has_settings;
@@ -75,7 +74,6 @@ struct _GimpFilterToolClass
 
   /* virtual functions */
   gchar     * (* get_operation)   (GimpFilterTool    *filter_tool,
-                                   gchar            **title,
                                    gchar            **description,
                                    gboolean          *has_settings);
   void        (* dialog)          (GimpFilterTool    *filter_tool);

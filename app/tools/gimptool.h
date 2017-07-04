@@ -40,6 +40,7 @@ struct _GimpTool
 
   GimpToolInfo    *tool_info;
 
+  gchar           *label;
   gchar           *undo_desc;
   gchar           *icon_name;
   gchar           *help_id;
@@ -163,6 +164,10 @@ struct _GimpToolClass
 GType             gimp_tool_get_type            (void) G_GNUC_CONST;
 
 GimpToolOptions * gimp_tool_get_options         (GimpTool            *tool);
+
+void              gimp_tool_set_label           (GimpTool            *tool,
+                                                 const gchar         *label);
+const gchar     * gimp_tool_get_label           (GimpTool            *tool);
 
 void              gimp_tool_set_undo_desc       (GimpTool            *tool,
                                                  const gchar         *undo_desc);

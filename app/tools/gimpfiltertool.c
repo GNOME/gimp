@@ -254,12 +254,6 @@ gimp_filter_tool_finalize (GObject *object)
       filter_tool->settings = NULL;
     }
 
-  if (filter_tool->title)
-    {
-      g_free (filter_tool->title);
-      filter_tool->title = NULL;
-    }
-
   if (filter_tool->description)
     {
       g_free (filter_tool->description);
@@ -340,7 +334,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
 
       filter_tool->gui =
         gimp_tool_gui_new (tool_info,
-                           filter_tool->title,
+                           gimp_tool_get_label (tool),
                            filter_tool->description,
                            gimp_tool_get_icon_name (tool),
                            gimp_tool_get_help_id (tool),
@@ -455,7 +449,8 @@ gimp_filter_tool_initialize (GimpTool     *tool,
     }
   else
     {
-      gimp_tool_gui_set_title       (filter_tool->gui, filter_tool->title);
+      gimp_tool_gui_set_title       (filter_tool->gui,
+                                     gimp_tool_get_label (tool));
       gimp_tool_gui_set_description (filter_tool->gui, filter_tool->description);
       gimp_tool_gui_set_icon_name   (filter_tool->gui,
                                      gimp_tool_get_icon_name (tool));
@@ -1346,12 +1341,6 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
       filter_tool->settings = NULL;
     }
 
-  if (filter_tool->title)
-    {
-      g_free (filter_tool->title);
-      filter_tool->title = NULL;
-    }
-
   if (filter_tool->description)
     {
       g_free (filter_tool->description);
@@ -1359,18 +1348,14 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
     }
 
   operation_name = klass->get_operation (filter_tool,
-                                         &filter_tool->title,
                                          &filter_tool->description,
                                          &filter_tool->has_settings);
 
   if (! operation_name)
     operation_name = g_strdup ("gegl:nop");
 
-  if (! filter_tool->title)
-    filter_tool->title = g_strdup (tool->tool_info->label);
-
   if (! filter_tool->description)
-    filter_tool->description = g_strdup (filter_tool->title);
+    filter_tool->description = g_strdup (gimp_tool_get_label (tool));
 
   filter_tool->operation = gegl_node_new_child (NULL,
                                                 "operation", operation_name,
@@ -1396,7 +1381,8 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
 
   if (filter_tool->gui)
     {
-      gimp_tool_gui_set_title       (filter_tool->gui, filter_tool->title);
+      gimp_tool_gui_set_title       (filter_tool->gui,
+                                     gimp_tool_get_label (tool));
       gimp_tool_gui_set_description (filter_tool->gui, filter_tool->description);
       gimp_tool_gui_set_icon_name   (filter_tool->gui,
                                      gimp_tool_get_icon_name (tool));
@@ -1463,9 +1449,9 @@ gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
           settings_folder = g_type_get_qdata (type, quark);
 
           import_title = g_strdup_printf (_("Import '%s' Settings"),
-                                          filter_tool->title);
+                                          gimp_tool_get_label (tool));
           export_title = g_strdup_printf (_("Export '%s' Settings"),
-                                          filter_tool->title);
+                                          gimp_tool_get_label (tool));
 
           g_object_set (filter_tool->settings_box,
                         "visible",        TRUE,

@@ -84,7 +84,6 @@ static void        gimp_operation_tool_options_notify  (GimpTool          *tool,
                                                         const GParamSpec  *pspec);
 
 static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filter_tool,
-                                                        gchar            **title,
                                                         gchar            **description,
                                                         gboolean          *has_settings);
 static void        gimp_operation_tool_dialog          (GimpFilterTool    *filter_tool);
@@ -170,12 +169,6 @@ gimp_operation_tool_finalize (GObject *object)
     {
       g_free (tool->operation);
       tool->operation = NULL;
-    }
-
-  if (tool->title)
-    {
-      g_free (tool->title);
-      tool->title = NULL;
     }
 
   if (tool->description)
@@ -270,13 +263,11 @@ gimp_operation_tool_options_notify (GimpTool         *tool,
 
 static gchar *
 gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
-                                   gchar          **title,
                                    gchar          **description,
                                    gboolean        *has_settings)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (filter_tool);
 
-  *title        = g_strdup (tool->title);
   *description  = g_strdup (tool->description);
   *has_settings = FALSE;
 
@@ -438,12 +429,6 @@ gimp_operation_tool_halt (GimpOperationTool *op_tool)
     {
       g_free (op_tool->operation);
       op_tool->operation = NULL;
-    }
-
-  if (op_tool->title)
-    {
-      g_free (op_tool->title);
-      op_tool->title = NULL;
     }
 
   if (op_tool->description)
@@ -676,16 +661,13 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   if (tool->operation)
     g_free (tool->operation);
 
-  if (tool->title)
-    g_free (tool->title);
-
   if (tool->description)
     g_free (tool->description);
 
   tool->operation   = g_strdup (operation);
-  tool->title       = g_strdup (title);
   tool->description = g_strdup (description);
 
+  gimp_tool_set_label     (GIMP_TOOL (tool), title);
   gimp_tool_set_undo_desc (GIMP_TOOL (tool), undo_desc);
   gimp_tool_set_icon_name (GIMP_TOOL (tool), icon_name);
   gimp_tool_set_help_id   (GIMP_TOOL (tool), help_id);

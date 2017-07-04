@@ -234,6 +234,12 @@ gimp_tool_finalize (GObject *object)
       tool->tool_info = NULL;
     }
 
+  if (tool->label)
+    {
+      g_free (tool->label);
+      tool->label = NULL;
+    }
+
   if (tool->undo_desc)
     {
       g_free (tool->undo_desc);
@@ -508,6 +514,27 @@ gimp_tool_get_options (GimpTool *tool)
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool->tool_info), NULL);
 
   return tool->tool_info->tool_options;
+}
+
+void
+gimp_tool_set_label (GimpTool    *tool,
+                     const gchar *label)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  g_free (tool->label);
+  tool->label = g_strdup (label);
+}
+
+const gchar *
+gimp_tool_get_label (GimpTool *tool)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
+
+  if (tool->label)
+    return tool->label;
+
+  return tool->tool_info->label;
 }
 
 void

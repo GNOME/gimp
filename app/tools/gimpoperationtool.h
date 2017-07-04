@@ -38,7 +38,6 @@ struct _GimpOperationTool
   GimpFilterTool  parent_instance;
 
   gchar          *operation;
-  gchar          *title;
   gchar          *description;
 
   GList          *aux_inputs;

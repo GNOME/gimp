@@ -52,7 +52,6 @@ static gboolean   gimp_threshold_tool_initialize      (GimpTool          *tool,
                                                        GError           **error);
 
 static gchar    * gimp_threshold_tool_get_operation   (GimpFilterTool    *filter_tool,
-                                                       gchar            **title,
                                                        gchar            **description,
                                                        gboolean          *has_settings);
 static void       gimp_threshold_tool_dialog          (GimpFilterTool    *filter_tool);
@@ -153,7 +152,6 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
 
 static gchar *
 gimp_threshold_tool_get_operation (GimpFilterTool  *filter_tool,
-                                   gchar          **title,
                                    gchar          **description,
                                    gboolean        *has_settings)
 {

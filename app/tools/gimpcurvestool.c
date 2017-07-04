@@ -81,7 +81,6 @@ static void       gimp_curves_tool_oper_update     (GimpTool             *tool,
                                                     GimpDisplay          *display);
 
 static gchar    * gimp_curves_tool_get_operation   (GimpFilterTool       *filter_tool,
-                                                    gchar               **title,
                                                     gchar               **description,
                                                     gboolean             *has_settings);
 static void       gimp_curves_tool_dialog          (GimpFilterTool       *filter_tool);
@@ -344,7 +343,6 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
 
 static gchar *
 gimp_curves_tool_get_operation (GimpFilterTool  *filter_tool,
-                                gchar          **title,
                                 gchar          **description,
                                 gboolean        *has_settings)
 {
