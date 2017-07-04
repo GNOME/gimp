@@ -23,6 +23,7 @@
 
 GimpToolWidget * gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
                                                  GimpControllerType  controller_type,
+                                                 const gchar        *status_title,
                                                  GCallback           callback,
                                                  gpointer            callback_data,
                                                  GCallback          *set_func,

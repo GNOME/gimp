@@ -208,6 +208,7 @@ _gimp_prop_gui_new_spiral (GObject                  *config,
 
       set_func = create_controller_func (creator,
                                          GIMP_CONTROLLER_TYPE_SLIDER_LINE,
+                                         _("Spiral: "),
                                          (GCallback) slider_line_callback,
                                          config,
                                          &set_data);

@@ -74,6 +74,7 @@ static void   gimp_filter_tool_slider_line_changed (GimpToolWidget             *
 GimpToolWidget *
 gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
                                 GimpControllerType  controller_type,
+                                const gchar        *status_title,
                                 GCallback           callback,
                                 gpointer            callback_data,
                                 GCallback          *set_func,
@@ -103,6 +104,10 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
     case GIMP_CONTROLLER_TYPE_LINE:
       controller->widget = gimp_tool_line_new (shell, 100, 100, 500, 500);
 
+      g_object_set (controller->widget,
+                    "status-title", status_title,
+                    NULL);
+
       g_signal_connect (controller->widget, "changed",
                         G_CALLBACK (gimp_filter_tool_line_changed),
                         controller);
@@ -113,6 +118,10 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
 
     case GIMP_CONTROLLER_TYPE_SLIDER_LINE:
       controller->widget = gimp_tool_line_new (shell, 100, 100, 500, 500);
+
+      g_object_set (controller->widget,
+                    "status-title", status_title,
+                    NULL);
 
       g_signal_connect (controller->widget, "changed",
                         G_CALLBACK (gimp_filter_tool_slider_line_changed),

@@ -67,6 +67,7 @@ typedef GtkWidget * (* GimpCreatePickerFunc)     (gpointer            creator,
 
 typedef GCallback   (* GimpCreateControllerFunc) (gpointer            creator,
                                                   GimpControllerType  controller_type,
+                                                  const gchar        *status_title,
                                                   GCallback           callback,
                                                   gpointer            callback_data,
                                                   gpointer           *set_func_data);

@@ -33,6 +33,8 @@
 #include "gimppropgui-generic.h"
 #include "gimppropgui-supernova.h"
 
+#include "gimp-intl.h"
+
 
 static void
 line_callback (GObject       *config,
@@ -120,6 +122,7 @@ _gimp_prop_gui_new_supernova (GObject                  *config,
 
       set_func = create_controller_func (creator,
                                          GIMP_CONTROLLER_TYPE_LINE,
+                                         _("Supernova: "),
                                          (GCallback) line_callback,
                                          config,
                                          &set_data);

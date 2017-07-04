@@ -581,6 +581,7 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
 static GCallback
 gimp_operation_tool_add_controller (GimpOperationTool  *op_tool,
                                     GimpControllerType  controller_type,
+                                    const gchar        *status_title,
                                     GCallback           callback,
                                     gpointer            callback_data,
                                     gpointer           *set_func_data)
@@ -591,6 +592,7 @@ gimp_operation_tool_add_controller (GimpOperationTool  *op_tool,
 
   widget = gimp_filter_tool_create_widget (filter_tool,
                                            controller_type,
+                                           status_title,
                                            callback,
                                            callback_data,
                                            &set_func,

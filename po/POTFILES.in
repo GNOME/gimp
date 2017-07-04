@@ -376,6 +376,8 @@ app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffration-patterns.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
+app/propgui/gimppropgui-spiral.c
+app/propgui/gimppropgui-supernova.c
 app/propgui/gimppropgui.c
 
 app/text/gimpfont.c
