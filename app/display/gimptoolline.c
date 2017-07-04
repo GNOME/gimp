@@ -731,28 +731,39 @@ gimp_tool_line_point_motion (GimpToolLine *line,
 
     case POINT_SLIDER:
       {
-        GimpControllerSlider *slider;
-        gdouble               t;
+        gdouble length_sqr;
 
-        slider = &g_array_index (private->sliders,
-                                 GimpControllerSlider, private->slider_index);
+        length_sqr = SQR (private->x2 - private->x1) +
+                     SQR (private->y2 - private->y1);
 
-        /* project the cursor position onto the line */
-        t  = (private->x2 - private->x1) * (x - private->x1) +
-             (private->y2 - private->y1) * (y - private->y1);
-        t /= SQR (private->x2 - private->x1) + SQR (private->y2 - private->y1);
+        /* don't change slider values of 0-length lines, since we'll just get
+         * NaN.
+         */
+        if (length_sqr > 0.0)
+          {
+            GimpControllerSlider *slider;
+            gdouble               t;
 
-        t = CLAMP (t, slider->min, slider->max);
-        t = CLAMP (t, 0.0, 1.0);
+            slider = &g_array_index (private->sliders, GimpControllerSlider,
+                                     private->slider_index);
 
-        if (constrain)
-          t = RINT (24.0 * t) / 24.0;
+            /* project the cursor position onto the line */
+            t  = (private->x2 - private->x1) * (x - private->x1) +
+                 (private->y2 - private->y1) * (y - private->y1);
+            t /= length_sqr;
 
-        slider->value = t;
+            t = CLAMP (t, slider->min, slider->max);
+            t = CLAMP (t, 0.0, 1.0);
 
-        g_object_set (line,
-                      "sliders", private->sliders,
-                      NULL);
+            if (constrain)
+              t = RINT (24.0 * t) / 24.0;
+
+            slider->value = t;
+
+            g_object_set (line,
+                          "sliders", private->sliders,
+                          NULL);
+          }
 
         return TRUE;
       }
