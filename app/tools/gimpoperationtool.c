@@ -645,14 +645,9 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   if (tool->options_gui)
     {
-      gtk_widget_destroy (tool->options_gui);
-      tool->options_gui = NULL;
+      gimp_filter_tool_disable_color_picking (filter_tool);
 
-      if (filter_tool->active_picker)
-        {
-          filter_tool->active_picker = NULL;
-          gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
-        }
+      gtk_widget_destroy (tool->options_gui);
     }
 
   if (! operation)
