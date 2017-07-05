@@ -406,6 +406,9 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
     gimp_enum_combo_box_new_with_model (GIMP_ENUM_STORE (store));
   g_object_unref (store);
 
+  g_object_add_weak_pointer (G_OBJECT (tool->channel_menu),
+                             (gpointer) &tool->channel_menu);
+
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
                                  config->channel);
   gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (tool->channel_menu),
@@ -584,7 +587,7 @@ gimp_curves_tool_config_notify (GimpFilterTool   *filter_tool,
   GIMP_FILTER_TOOL_CLASS (parent_class)->config_notify (filter_tool,
                                                         config, pspec);
 
-  if (! curves_tool->xrange)
+  if (! curves_tool->channel_menu)
     return;
 
   if (! strcmp (pspec->name, "channel"))
