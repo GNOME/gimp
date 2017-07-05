@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <sys/time.h>
 
 #include <gtk/gtk.h>
 #include <gexiv2/gexiv2.h>
@@ -30,6 +31,12 @@
 #include "gimpimagemetadata.h"
 
 #include "libgimp-intl.h"
+
+typedef struct
+{
+  gchar *tag;
+  gint  type;
+} xmpstructs;
 
 
 static void        gimp_image_metadata_rotate        (gint32             image_ID,
@@ -78,28 +85,6 @@ gimp_image_metadata_load_prepare (gint32        image_ID,
 
   if (metadata)
     {
-#if 0
-      {
-        gchar *xml = gimp_metadata_serialize (metadata);
-        GimpMetadata *new = gimp_metadata_deserialize (xml);
-        gchar *xml2 = gimp_metadata_serialize (new);
-
-        FILE *f = fopen ("/tmp/gimp-test-xml1", "w");
-        fprintf (f, "%s", xml);
-        fclose (f);
-
-        f = fopen ("/tmp/gimp-test-xml2", "w");
-        fprintf (f, "%s", xml2);
-        fclose (f);
-
-        system ("diff -u /tmp/gimp-test-xml1 /tmp/gimp-test-xml2");
-
-        g_free (xml);
-        g_free (xml2);
-        g_object_unref (new);
-      }
-#endif
-
       gexiv2_metadata_erase_exif_thumbnail (GEXIV2_METADATA (metadata));
     }
 
@@ -377,6 +362,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
   return metadata;
 }
 
+
 /**
  * gimp_image_metadata_save_finish:
  * @image_ID:  The image
@@ -456,7 +442,72 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
   if ((flags & GIMP_METADATA_SAVE_XMP) && support_xmp)
     {
-      gchar **xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
+      gchar         **xmp_data;
+      struct timeval  timer_usec;
+      long long int   timestamp_usec;
+      gchar           ts[1024];
+
+      gimp_metadata_register_xmp_namespaces ();
+      gettimeofday(&timer_usec, NULL);
+      timestamp_usec = ((long long int) timer_usec.tv_sec) * 1000000ll +
+                        (long long int) timer_usec.tv_usec;
+      sprintf((gchar*)&ts, "%lld", timestamp_usec);
+
+      gimp_metadata_add_xmp_history (GEXIV2_METADATA (metadata),
+                                     "");
+
+      gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                      "Xmp.GIMP.TimeStamp",
+                                      ts);
+
+      gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                      "Xmp.xmp.CreatorTool",
+                                      N_("GIMP 2.9/2.10"));
+
+      gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                      "Xmp.GIMP.Version",
+                                      GIMP_VERSION);
+
+      gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                      "Xmp.GIMP.API",
+                                      GIMP_API_VERSION);
+
+      gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                      "Xmp.GIMP.Platform",
+#if defined(_WIN32) || defined(__CYGWIN__) || defined(__MINGW32__)
+                                      "Windows");
+#elif defined(__linux__)
+                                      "Linux");
+#elif defined(__APPLE__) && defined(__MACH__)
+                                      "Mac OS");
+#elif defined(unix) || defined(__unix__) || defined(__unix)
+                                      "Unix");
+#else
+                                      "Unknown");
+#endif
+
+      xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
+
+      /* Patch necessary structures */
+      xmpstructs structlist[] =
+        {
+          { "Xmp.iptcExt.LocationCreated", GEXIV2_STRUCTURE_XA_BAG },
+          { "Xmp.iptcExt.LocationShown", GEXIV2_STRUCTURE_XA_BAG },
+          { "Xmp.iptcExt.ArtworkOrObject", GEXIV2_STRUCTURE_XA_BAG },
+          { "Xmp.iptcExt.RegistryId", GEXIV2_STRUCTURE_XA_BAG },
+          { "Xmp.xmpMM.History", GEXIV2_STRUCTURE_XA_SEQ },
+          { "Xmp.plus.ImageSupplier", GEXIV2_STRUCTURE_XA_SEQ },
+          { "Xmp.plus.ImageCreator", GEXIV2_STRUCTURE_XA_SEQ },
+          { "Xmp.plus.CopyrightOwner", GEXIV2_STRUCTURE_XA_SEQ },
+          { "Xmp.plus.Licensor", GEXIV2_STRUCTURE_XA_SEQ }
+        };
+
+      for (i = 0; i < 9; i++)
+        {
+          gexiv2_metadata_set_xmp_tag_struct(GEXIV2_METADATA (new_g2metadata),
+                                             structlist[i].tag,
+                                             structlist[i].type);
+        }
 
       for (i = 0; xmp_data[i] != NULL; i++)
         {

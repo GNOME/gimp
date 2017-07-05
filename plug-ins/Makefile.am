@@ -56,6 +56,7 @@ SUBDIRS = \
 	imagemap		\
 	lighting		\
 	map-object		\
+	metadata		\
 	pagecurl		\
 	$(print)		\
 	screenshot		\

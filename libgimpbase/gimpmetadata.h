@@ -66,6 +66,10 @@ GimpMetadata * gimp_metadata_duplicate           (GimpMetadata           *metada
 
 GimpMetadata * gimp_metadata_deserialize         (const gchar            *metadata_xml);
 gchar        * gimp_metadata_serialize           (GimpMetadata           *metadata);
+gchar        * gimp_metadata_get_guid            (void);
+
+void           gimp_metadata_add_xmp_history     (GimpMetadata           *metadata,
+                                                  gchar                  *state_status);
 
 GimpMetadata * gimp_metadata_load_from_file      (GFile                  *file,
                                                   GError                **error);
@@ -76,6 +80,10 @@ gboolean       gimp_metadata_save_to_file        (GimpMetadata           *metada
 gboolean       gimp_metadata_set_from_exif       (GimpMetadata           *metadata,
                                                   const guchar           *exif_data,
                                                   gint                    exif_data_length,
+                                                  GError                **error);
+gboolean       gimp_metadata_set_from_iptc       (GimpMetadata           *metadata,
+                                                  const guchar           *iptc_data,
+                                                  gint                    iptc_data_length,
                                                   GError                **error);
 gboolean       gimp_metadata_set_from_xmp        (GimpMetadata           *metadata,
                                                   const guchar           *xmp_data,
@@ -104,6 +112,11 @@ void           gimp_metadata_set_colorspace      (GimpMetadata           *metada
 
 gboolean       gimp_metadata_is_tag_supported    (const gchar            *tag,
                                                   const gchar            *mime_type);
+
+void           gimp_metadata_register_xmp_namespace  (const gchar*           nspace,
+                                                      const gchar*           prefix);
+
+void           gimp_metadata_register_xmp_namespaces (void);
 
 G_END_DECLS
 

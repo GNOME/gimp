@@ -73,7 +73,6 @@ plug-ins/common/hot.c
 plug-ins/common/jigsaw.c
 plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
-plug-ins/common/metadata.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
 plug-ins/common/oilify.c
@@ -222,6 +221,8 @@ plug-ins/lighting/lighting-ui.c
 plug-ins/map-object/map-object-apply.c
 plug-ins/map-object/map-object-main.c
 plug-ins/map-object/map-object-ui.c
+plug-ins/metadata/metadata-editor.c
+plug-ins/metadata/metadata-viewer.c
 plug-ins/pagecurl/pagecurl.c
 plug-ins/print/print-draw-page.c
 plug-ins/print/print-page-layout.c

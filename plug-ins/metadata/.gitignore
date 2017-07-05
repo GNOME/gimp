@@ -1,0 +1,9 @@
+/Makefile.in
+/Makefile
+/.deps
+/_libs
+/.libs
+/metadata-editor
+/metadata-editor.exe
+/metadata-viewer
+/metadata-viewer.exe

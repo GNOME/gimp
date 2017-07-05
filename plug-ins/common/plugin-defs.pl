@@ -69,7 +69,6 @@
     'jigsaw' => { ui => 1 },
     'mail' => { ui => 1, optional => 1 },
     'max-rgb' => { ui => 1 },
-    'metadata' => { ui => 1, libs => 'GEXIV2_LIBS', cflags => 'GEXIV2_CFLAGS' },
     'newsprint' => { ui => 1 },
     'nl-filter' => { ui => 1 },
     'oilify' => { ui => 1 },

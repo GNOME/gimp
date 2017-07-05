@@ -68,7 +68,6 @@ hot_RC = hot.rc.o
 jigsaw_RC = jigsaw.rc.o
 mail_RC = mail.rc.o
 max_rgb_RC = max-rgb.rc.o
-metadata_RC = metadata.rc.o
 newsprint_RC = newsprint.rc.o
 nl_filter_RC = nl-filter.rc.o
 oilify_RC = oilify.rc.o
