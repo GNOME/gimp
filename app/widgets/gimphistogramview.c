@@ -51,7 +51,7 @@ enum
 };
 
 
-static void     gimp_histogram_view_finalize       (GObject        *object);
+static void     gimp_histogram_view_dispose        (GObject        *object);
 static void     gimp_histogram_view_set_property   (GObject        *object,
                                                     guint           property_id,
                                                     const GValue   *value,
@@ -117,7 +117,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
 
-  object_class->finalize             = gimp_histogram_view_finalize;
+  object_class->dispose              = gimp_histogram_view_dispose;
   object_class->get_property         = gimp_histogram_view_get_property;
   object_class->set_property         = gimp_histogram_view_set_property;
 
@@ -170,23 +170,14 @@ gimp_histogram_view_init (GimpHistogramView *view)
 }
 
 static void
-gimp_histogram_view_finalize (GObject *object)
+gimp_histogram_view_dispose (GObject *object)
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
 
-  if (view->histogram)
-    {
-      g_object_unref (view->histogram);
-      view->histogram = NULL;
-    }
+  gimp_histogram_view_set_histogram (view, NULL);
+  gimp_histogram_view_set_background (view, NULL);
 
-  if (view->bg_histogram)
-    {
-      g_object_unref (view->bg_histogram);
-      view->bg_histogram = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
