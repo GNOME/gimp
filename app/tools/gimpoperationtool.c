@@ -425,20 +425,12 @@ gimp_operation_tool_color_picked (GimpFilterTool  *filter_tool,
 static void
 gimp_operation_tool_halt (GimpOperationTool *op_tool)
 {
-  if (op_tool->operation)
-    {
-      g_free (op_tool->operation);
-      op_tool->operation = NULL;
-    }
-
-  if (op_tool->description)
-    {
-      g_free (op_tool->description);
-      op_tool->description = NULL;
-    }
+  /*  don't reset op_tool->operation and op_tool->description so the
+   *  tool can be properly restarted by clicking on an image
+   */
 
   g_list_foreach (op_tool->aux_inputs,
-                  (GFunc) gimp_operation_tool_aux_input_free, NULL);
+                  (GFunc) gimp_operation_tool_aux_input_clear, NULL);
   op_tool->aux_inputs = NULL;
 }
 
@@ -654,7 +646,6 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   gint            aux;
 
   g_return_if_fail (GIMP_IS_OPERATION_TOOL (tool));
-  g_return_if_fail (operation != NULL);
 
   filter_tool = GIMP_FILTER_TOOL (tool);
 
@@ -678,8 +669,6 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   gimp_filter_tool_set_widget (filter_tool, NULL);
 
-  gimp_filter_tool_get_operation (filter_tool);
-
   if (tool->options_gui)
     {
       gtk_widget_destroy (tool->options_gui);
@@ -691,6 +680,11 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
           gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
         }
     }
+
+  if (! operation)
+    return;
+
+  gimp_filter_tool_get_operation (filter_tool);
 
   for (aux = 1; ; aux++)
     {

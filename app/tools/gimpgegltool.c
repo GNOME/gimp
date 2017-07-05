@@ -49,10 +49,16 @@ enum
 
 /*  local function prototypes  */
 
+static void   gimp_gegl_tool_control           (GimpTool       *tool,
+                                                GimpToolAction  action,
+                                                GimpDisplay    *display);
+
 static void   gimp_gegl_tool_dialog            (GimpFilterTool *filter_tool);
 
+static void   gimp_gegl_tool_halt              (GimpGeglTool   *gegl_tool);
+
 static void   gimp_gegl_tool_operation_changed (GtkWidget      *widget,
-                                                GimpGeglTool   *tool);
+                                                GimpGeglTool   *gegl_tool);
 
 
 G_DEFINE_TYPE (GimpGeglTool, gimp_gegl_tool, GIMP_TYPE_OPERATION_TOOL)
@@ -80,7 +86,10 @@ gimp_gegl_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_gegl_tool_class_init (GimpGeglToolClass *klass)
 {
+  GimpToolClass       *tool_class        = GIMP_TOOL_CLASS (klass);
   GimpFilterToolClass *filter_tool_class = GIMP_FILTER_TOOL_CLASS (klass);
+
+  tool_class->control       = gimp_gegl_tool_control;
 
   filter_tool_class->dialog = gimp_gegl_tool_dialog;
 }
@@ -88,6 +97,30 @@ gimp_gegl_tool_class_init (GimpGeglToolClass *klass)
 static void
 gimp_gegl_tool_init (GimpGeglTool *tool)
 {
+}
+
+static void
+gimp_gegl_tool_control (GimpTool       *tool,
+                        GimpToolAction  action,
+                        GimpDisplay    *display)
+{
+  GimpGeglTool *gegl_tool = GIMP_GEGL_TOOL (tool);
+
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      gimp_gegl_tool_halt (gegl_tool);
+      break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static gboolean
@@ -449,6 +482,15 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   gtk_container_add (GTK_CONTAINER (o_tool->options_box),
                      o_tool->options_gui);
   gtk_widget_show (o_tool->options_gui);
+}
+
+static void
+gimp_gegl_tool_halt (GimpGeglTool *gegl_tool)
+{
+  GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (gegl_tool);
+
+  gimp_operation_tool_set_operation (op_tool, NULL,
+                                     NULL, NULL, NULL, NULL, NULL);
 }
 
 static void
