@@ -69,6 +69,7 @@
 #include "gimpfilteroptions.h"
 #include "gimpfiltertool.h"
 #include "gimpfiltertool-settings.h"
+#include "gimpfiltertool-widgets.h"
 #include "gimpguidetool.h"
 #include "gimptoolcontrol.h"
 #include "tool_manager.h"
@@ -1673,6 +1674,35 @@ gimp_filter_tool_add_color_picker (GimpFilterTool *filter_tool,
                     filter_tool);
 
   return button;
+}
+
+GCallback
+gimp_filter_tool_add_controller (GimpFilterTool     *filter_tool,
+                                 GimpControllerType  controller_type,
+                                 const gchar        *status_title,
+                                 GCallback           callback,
+                                 gpointer            callback_data,
+                                 gpointer           *set_func_data)
+{
+  GimpToolWidget *widget;
+  GCallback       set_func;
+
+  g_return_val_if_fail (GIMP_IS_FILTER_TOOL (filter_tool), NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
+  g_return_val_if_fail (callback_data != NULL, NULL);
+  g_return_val_if_fail (set_func_data != NULL, NULL);
+
+  widget = gimp_filter_tool_create_widget (filter_tool,
+                                           controller_type,
+                                           status_title,
+                                           callback,
+                                           callback_data,
+                                           &set_func,
+                                           set_func_data);
+  gimp_filter_tool_set_widget (filter_tool, widget);
+  g_object_unref (widget);
+
+  return set_func;
 }
 
 void

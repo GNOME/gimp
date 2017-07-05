@@ -130,6 +130,12 @@ GtkWidget * gimp_filter_tool_add_color_picker      (GimpFilterTool   *filter_too
                                                     const gchar      *icon_name,
                                                     const gchar      *tooltip,
                                                     gboolean          pick_abyss);
+GCallback   gimp_filter_tool_add_controller        (GimpFilterTool   *filter_tool,
+                                                    GimpControllerType controller_type,
+                                                    const gchar      *status_title,
+                                                    GCallback         callback,
+                                                    gpointer          callback_data,
+                                                    gpointer         *set_func_data);
 
 void        gimp_filter_tool_set_widget            (GimpFilterTool   *filter_tool,
                                                     GimpToolWidget   *widget);

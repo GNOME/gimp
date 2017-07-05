@@ -52,7 +52,6 @@
 #include "display/gimptoolgui.h"
 
 #include "gimpfilteroptions.h"
-#include "gimpfiltertool-widgets.h"
 #include "gimpoperationtool.h"
 
 #include "gimp-intl.h"
@@ -502,31 +501,6 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
   g_free (pspecs);
 }
 
-static GCallback
-gimp_operation_tool_add_controller (GimpOperationTool  *op_tool,
-                                    GimpControllerType  controller_type,
-                                    const gchar        *status_title,
-                                    GCallback           callback,
-                                    gpointer            callback_data,
-                                    gpointer           *set_func_data)
-{
-  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (op_tool);
-  GimpToolWidget *widget;
-  GCallback       set_func;
-
-  widget = gimp_filter_tool_create_widget (filter_tool,
-                                           controller_type,
-                                           status_title,
-                                           callback,
-                                           callback_data,
-                                           &set_func,
-                                           set_func_data);
-  gimp_filter_tool_set_widget (filter_tool, widget);
-  g_object_unref (widget);
-
-  return set_func;
-}
-
 static void
 gimp_operation_tool_create_gui (GimpOperationTool *tool)
 {
@@ -542,7 +516,7 @@ gimp_operation_tool_create_gui (GimpOperationTool *tool)
                        &area,
                        GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)),
                        (GimpCreatePickerFunc) gimp_filter_tool_add_color_picker,
-                       (GimpCreateControllerFunc) gimp_operation_tool_add_controller,
+                       (GimpCreateControllerFunc) gimp_filter_tool_add_controller,
                        tool);
 
   g_object_add_weak_pointer (G_OBJECT (tool->options_gui),
