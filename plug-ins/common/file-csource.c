@@ -426,7 +426,7 @@ save_image (Config  *config,
       n_bytes = drawable->width * drawable->height * bpp;
       pad = drawable->width * drawable->bpp;
       if (use_rle)
-        pad = MAX (pa++d, 130 + n_bytes / 127);
+        pad = MAX (pad, 130 + n_bytes / 127);
 
       data = g_new (guint8, pad + n_bytes);
       p = data + pad;
