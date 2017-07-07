@@ -32,11 +32,12 @@
 
 #include "libgimp-intl.h"
 
+
 typedef struct
 {
   gchar *tag;
   gint  type;
-} xmpstructs;
+} XmpStructs;
 
 
 static void        gimp_image_metadata_rotate        (gint32             image_ID,
@@ -442,19 +443,32 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
 
   if ((flags & GIMP_METADATA_SAVE_XMP) && support_xmp)
     {
+      static const XmpStructs structlist[] =
+      {
+        { "Xmp.iptcExt.LocationCreated", GEXIV2_STRUCTURE_XA_BAG },
+        { "Xmp.iptcExt.LocationShown",   GEXIV2_STRUCTURE_XA_BAG },
+        { "Xmp.iptcExt.ArtworkOrObject", GEXIV2_STRUCTURE_XA_BAG },
+        { "Xmp.iptcExt.RegistryId",      GEXIV2_STRUCTURE_XA_BAG },
+        { "Xmp.xmpMM.History",           GEXIV2_STRUCTURE_XA_SEQ },
+        { "Xmp.plus.ImageSupplier",      GEXIV2_STRUCTURE_XA_SEQ },
+        { "Xmp.plus.ImageCreator",       GEXIV2_STRUCTURE_XA_SEQ },
+        { "Xmp.plus.CopyrightOwner",     GEXIV2_STRUCTURE_XA_SEQ },
+        { "Xmp.plus.Licensor",           GEXIV2_STRUCTURE_XA_SEQ }
+      };
+
       gchar         **xmp_data;
       struct timeval  timer_usec;
-      long long int   timestamp_usec;
-      gchar           ts[1024];
+      gint64          timestamp_usec;
+      gchar           ts[128];
 
       gimp_metadata_register_xmp_namespaces ();
-      gettimeofday(&timer_usec, NULL);
-      timestamp_usec = ((long long int) timer_usec.tv_sec) * 1000000ll +
-                        (long long int) timer_usec.tv_usec;
-      sprintf((gchar*)&ts, "%lld", timestamp_usec);
 
-      gimp_metadata_add_xmp_history (GEXIV2_METADATA (metadata),
-                                     "");
+      gettimeofday (&timer_usec, NULL);
+      timestamp_usec = ((gint64) timer_usec.tv_sec) * 1000000ll +
+                        (gint64) timer_usec.tv_usec;
+      g_snprintf (ts, sizeof (ts), "%" G_GINT64_FORMAT, timestamp_usec);
+
+      gimp_metadata_add_xmp_history (metadata, "");
 
       gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                       "Xmp.GIMP.TimeStamp",
@@ -489,24 +503,11 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
       xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
 
       /* Patch necessary structures */
-      xmpstructs structlist[] =
-        {
-          { "Xmp.iptcExt.LocationCreated", GEXIV2_STRUCTURE_XA_BAG },
-          { "Xmp.iptcExt.LocationShown", GEXIV2_STRUCTURE_XA_BAG },
-          { "Xmp.iptcExt.ArtworkOrObject", GEXIV2_STRUCTURE_XA_BAG },
-          { "Xmp.iptcExt.RegistryId", GEXIV2_STRUCTURE_XA_BAG },
-          { "Xmp.xmpMM.History", GEXIV2_STRUCTURE_XA_SEQ },
-          { "Xmp.plus.ImageSupplier", GEXIV2_STRUCTURE_XA_SEQ },
-          { "Xmp.plus.ImageCreator", GEXIV2_STRUCTURE_XA_SEQ },
-          { "Xmp.plus.CopyrightOwner", GEXIV2_STRUCTURE_XA_SEQ },
-          { "Xmp.plus.Licensor", GEXIV2_STRUCTURE_XA_SEQ }
-        };
-
       for (i = 0; i < 9; i++)
         {
-          gexiv2_metadata_set_xmp_tag_struct(GEXIV2_METADATA (new_g2metadata),
-                                             structlist[i].tag,
-                                             structlist[i].type);
+          gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (new_g2metadata),
+                                              structlist[i].tag,
+                                              structlist[i].type);
         }
 
       for (i = 0; xmp_data[i] != NULL; i++)
@@ -514,7 +515,8 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
           if (! gexiv2_metadata_has_tag (new_g2metadata, xmp_data[i]) &&
               gimp_metadata_is_tag_supported (xmp_data[i], mime_type))
             {
-              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata), xmp_data[i]);
+              value = gexiv2_metadata_get_tag_string (GEXIV2_METADATA (metadata),
+                                                      xmp_data[i]);
               gexiv2_metadata_set_tag_string (new_g2metadata, xmp_data[i],
                                               value);
               g_free (value);
