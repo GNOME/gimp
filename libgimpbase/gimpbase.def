@@ -85,9 +85,11 @@ EXPORTS
 	gimp_memsize_to_string
 	gimp_merge_type_get_type
 	gimp_message_handler_type_get_type
+	gimp_metadata_add_xmp_history
 	gimp_metadata_deserialize
 	gimp_metadata_duplicate
 	gimp_metadata_get_colorspace
+	gimp_metadata_get_guid
 	gimp_metadata_get_resolution
 	gimp_metadata_get_type
 	gimp_metadata_is_tag_supported
@@ -98,6 +100,7 @@ EXPORTS
 	gimp_metadata_set_bits_per_sample
 	gimp_metadata_set_colorspace
 	gimp_metadata_set_from_exif
+	gimp_metadata_set_from_iptc
 	gimp_metadata_set_from_xmp
 	gimp_metadata_set_pixel_size
 	gimp_metadata_set_resolution
