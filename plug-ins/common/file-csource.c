@@ -232,6 +232,12 @@ run (const gchar      *name,
 }
 
 static gboolean
+diff2_rgb565 (guint8 *ip)
+{
+  return ip[0] != ip[2] || ip[1] != ip[3];
+}
+
+static gboolean
 diff2_rgb (guint8 *ip)
 {
   return ip[0] != ip[3] || ip[1] != ip[4] || ip[2] != ip[5];
@@ -247,10 +253,18 @@ static guint8 *
 rl_encode_rgbx (guint8 *bp,
                 guint8 *ip,
                 guint8 *limit,
-                guint   n_ch)
+                guint   bpp)
 {
-  gboolean (*diff2_pix) (guint8 *) = n_ch > 3 ? diff2_rgba : diff2_rgb;
-  guint8 *ilimit = limit - n_ch;
+  gboolean (*diff2_pix) (guint8 *);
+  guint8 *ilimit = limit - bpp;
+
+  switch (bpp)
+    {
+    case 2: diff2_pix = diff2_rgb565; break;
+    case 3: diff2_pix = diff2_rgb; break;
+    case 4: diff2_pix = diff2_rgba; break;
+    default: g_assert_not_reached ();
+    }
 
   while (ip < limit)
     {
@@ -261,33 +275,33 @@ rl_encode_rgbx (guint8 *bp,
           guint8 *s_ip = ip;
           guint l = 1;
 
-          ip += n_ch;
+          ip += bpp;
           while (l < 127 && ip < ilimit && diff2_pix (ip))
-            { ip += n_ch; l += 1; }
+            { ip += bpp; l += 1; }
           if (ip == ilimit && l < 127)
-            { ip += n_ch; l += 1; }
+            { ip += bpp; l += 1; }
           *(bp++) = l;
-          memcpy (bp, s_ip, l * n_ch);
-          bp += l * n_ch;
+          memcpy (bp, s_ip, l * bpp);
+          bp += l * bpp;
         }
       else
         {
           guint l = 2;
 
-          ip += n_ch;
+          ip += bpp;
           while (l < 127 && ip < ilimit && !diff2_pix (ip))
-            { ip += n_ch; l += 1; }
+            { ip += bpp; l += 1; }
           *(bp++) = l | 128;
-          memcpy (bp, ip, n_ch);
-          ip += n_ch;
-          bp += n_ch;
+          memcpy (bp, ip, bpp);
+          ip += bpp;
+          bp += bpp;
         }
       if (ip == ilimit)
         {
           *(bp++) = 1;
-          memcpy (bp, ip, n_ch);
-          ip += n_ch;
-          bp += n_ch;
+          memcpy (bp, ip, bpp);
+          ip += bpp;
+          bp += bpp;
         }
     }
 
@@ -321,7 +335,7 @@ save_rle_decoder (GOutputStream  *output,
                   const gchar    *macro_name,
                   const gchar    *s_uint,
                   const gchar    *s_uint_8,
-                  guint           n_ch,
+                  guint           bpp,
                   GError        **error)
 {
   return
@@ -341,13 +355,21 @@ save_rle_decoder (GOutputStream  *output,
            "        do { memcpy (__ip, __rd, 4); __ip += 4; } while (--__l); __rd += 4; \\\n"
            "      } else { __l *= 4; memcpy (__ip, __rd, __l); \\\n"
            "               __ip += __l; __rd += __l; } } \\\n"
-           "  } else { /* RGB */ \\\n"
+           "  } else if (__bpp == 3) { /* RGB */ \\\n"
            "    while (__ip < __il) { %s __l = *(__rd++); \\\n",
            s_uint) &&
     print (output, error,
            "      if (__l & 128) { __l = __l - 128; \\\n"
            "        do { memcpy (__ip, __rd, 3); __ip += 3; } while (--__l); __rd += 3; \\\n"
            "      } else { __l *= 3; memcpy (__ip, __rd, __l); \\\n"
+           "               __ip += __l; __rd += __l; } } \\\n"
+           "  } else { /* RGB16 */ \\\n"
+           "    while (__ip < __il) { %s __l = *(__rd++); \\\n",
+           s_uint) &&
+    print (output, error,
+           "      if (__l & 128) { __l = __l - 128; \\\n"
+           "        do { memcpy (__ip, __rd, 2); __ip += 2; } while (--__l); __rd += 2; \\\n"
+           "      } else { __l *= 2; memcpy (__ip, __rd, __l); \\\n"
            "               __ip += __l; __rd += __l; } } \\\n"
            "  } } while (0)\n");
 }
@@ -594,7 +616,7 @@ save_image (GFile   *file,
                               macro_name,
                               config->glib_types ? "guint" : "unsigned int",
                               config->glib_types ? "guint8" : "unsigned char",
-                              config->alpha ? 4 : 3,
+                              bpp,
                               error))
         goto fail;
     }
@@ -748,7 +770,7 @@ save_image (GFile   *file,
                                   macro_name,
                                   s_uint,
                                   s_uint_8,
-                                  config->alpha ? 4 : 3,
+                                  bpp,
                                   error))
             goto fail;
         }
@@ -846,10 +868,6 @@ rgb565_toggle_button_update (GtkWidget *toggle,
   widget = g_object_get_data (G_OBJECT (toggle), "set-insensitive-1");
   if (widget)
     gtk_widget_set_sensitive (widget, ! active);
-
-  widget = g_object_get_data (G_OBJECT (toggle), "set-insensitive-2");
-  if (widget)
-    gtk_widget_set_sensitive (widget, ! active);
 }
 
 static gboolean
@@ -861,7 +879,6 @@ run_save_dialog (Config *config)
   GtkWidget *prefixed_name;
   GtkWidget *centry;
   GtkWidget *toggle;
-  GtkWidget *rle_toggle;
   GtkWidget *alpha_toggle;
   GtkObject *adj;
   gboolean   run;
@@ -937,7 +954,7 @@ run_save_dialog (Config *config)
 
   /* Use RLE
    */
-  rle_toggle = toggle =
+  toggle =
     gtk_check_button_new_with_mnemonic (_("Use _1 byte Run-Length-Encoding"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -966,9 +983,8 @@ run_save_dialog (Config *config)
   toggle = gtk_check_button_new_with_mnemonic (_("Save as _RGB565 (16-bit)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
-  /* RLE and alpha settings are not used with RGB-565 */
-  g_object_set_data (G_OBJECT (toggle), "set-insensitive-1", rle_toggle);
-  g_object_set_data (G_OBJECT (toggle), "set-insensitive-2", alpha_toggle);
+  /* Alpha setting is not used with RGB-565 */
+  g_object_set_data (G_OBJECT (toggle), "set-insensitive-1", alpha_toggle);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (rgb565_toggle_button_update),
