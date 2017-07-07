@@ -3935,7 +3935,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
   g_metadata = gimp_image_get_metadata (image_id);
 
-  gimp_metadata_add_xmp_history(GEXIV2_METADATA (g_metadata), "metadata");
+  gimp_metadata_add_xmp_history (g_metadata, "metadata");
 
   /* DO ORG IMG NAME (LISTSTORE) */
 

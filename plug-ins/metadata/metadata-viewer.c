@@ -155,7 +155,7 @@ run (const gchar      *name,
           gimp_image_set_metadata (image_ID, metadata);
         }
 
-      metadata_viewer_dialog (image_ID, metadata);
+      metadata_viewer_dialog (image_ID, GEXIV2_METADATA (metadata));
 
       status = GIMP_PDB_SUCCESS;
     }
