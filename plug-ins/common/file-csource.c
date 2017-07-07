@@ -393,13 +393,14 @@ save_image (Config  *config,
   GimpDrawable *drawable      = gimp_drawable_get (drawable_ID);
   GimpImageType drawable_type = gimp_drawable_type (drawable_ID);
   GimpPixelRgn pixel_rgn;
-  gchar  *s_uint_8, *s_uint, *s_char, *s_null;
-  FILE   *fp;
-  guint   c;
-  gchar  *macro_name;
-  guint8 *img_buffer, *img_buffer_end;
-  gchar  *basename;
-  gint    bpp;
+  gchar    *s_uint_8, *s_uint, *s_char, *s_null;
+  FILE     *fp;
+  guint     c;
+  gchar    *macro_name;
+  guint8   *img_buffer, *img_buffer_end;
+  gchar    *basename;
+  gint      bpp;
+  gboolean  use_rle;
 
   fp = g_fopen (config->file_name, "w");
   if (! fp)
@@ -414,7 +415,8 @@ save_image (Config  *config,
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
-  bpp = config->rgb565 ? 2 : (config->alpha ? 4 : 3);
+  bpp     = config->rgb565 ? 2 : (config->alpha ? 4 : 3);
+  use_rle = config->use_rle && bpp > 2;
 
   if (1)
     {
@@ -423,8 +425,8 @@ save_image (Config  *config,
 
       n_bytes = drawable->width * drawable->height * bpp;
       pad = drawable->width * drawable->bpp;
-      if (config->use_rle)
-        pad = MAX (pad, 130 + n_bytes / 127);
+      if (use_rle)
+        pad = MAX (pa++d, 130 + n_bytes / 127);
 
       data = g_new (guint8, pad + n_bytes);
       p = data + pad;
@@ -478,7 +480,7 @@ save_image (Config  *config,
         }
 
       img_buffer = data + pad;
-      if (config->use_rle)
+      if (use_rle)
         {
           img_buffer_end = rl_encode_rgbx (data, img_buffer,
                                            img_buffer + n_bytes, bpp);
@@ -525,12 +527,12 @@ save_image (Config  *config,
 
   fprintf (fp, "/* GIMP %s C-Source image dump %s(%s) */\n\n",
            config->alpha ? "RGBA" : "RGB",
-           config->use_rle ? "1-byte-run-length-encoded " : "",
+           use_rle ? "1-byte-run-length-encoded " : "",
            basename);
 
   g_free (basename);
 
-  if (config->use_rle && !config->use_macros)
+  if (use_rle && !config->use_macros)
     save_rle_decoder (fp,
                       macro_name,
                       config->glib_types ? "guint" : "unsigned int",
@@ -548,8 +550,8 @@ save_image (Config  *config,
         fprintf (fp, "  %s\t*comment;\n", s_char);
       fprintf (fp, "  %s\t %spixel_data[",
                s_uint_8,
-               config->use_rle ? "rle_" : "");
-      if (config->use_rle)
+               use_rle ? "rle_" : "");
+      if (use_rle)
         fprintf (fp, "%u + 1];\n", (guint) (img_buffer_end - img_buffer));
       else
         fprintf (fp, "%u * %u * %u + 1];\n",
@@ -614,11 +616,11 @@ save_image (Config  *config,
     {
       fprintf (fp, "#define %s_%sPIXEL_DATA ((%s*) %s_%spixel_data)\n",
                macro_name,
-               config->use_rle ? "RLE_" : "",
+               use_rle ? "RLE_" : "",
                s_uint_8,
                macro_name,
-               config->use_rle ? "rle_" : "");
-      if (config->use_rle)
+               use_rle ? "rle_" : "");
+      if (use_rle)
         save_rle_decoder (fp,
                           macro_name,
                           s_uint,
@@ -627,8 +629,8 @@ save_image (Config  *config,
       fprintf (fp, "static const %s %s_%spixel_data[",
                s_uint_8,
                macro_name,
-               config->use_rle ? "rle_" : "");
-      if (config->use_rle)
+               use_rle ? "rle_" : "");
+      if (use_rle)
         fprintf (fp, "%u] =\n", (guint) (img_buffer_end - img_buffer));
       else
         fprintf (fp, "%u * %u * %u + 1] =\n",
