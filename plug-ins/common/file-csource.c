@@ -399,6 +399,7 @@ save_image (Config  *config,
   gchar  *macro_name;
   guint8 *img_buffer, *img_buffer_end;
   gchar  *basename;
+  gint    bpp;
 
   fp = g_fopen (config->file_name, "w");
   if (! fp)
@@ -413,12 +414,13 @@ save_image (Config  *config,
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
+  bpp = config->rgb565 ? 2 : (config->alpha ? 4 : 3);
+
   if (1)
     {
       guint8 *data, *p;
-      gint x, y, pad, n_bytes, bpp;
+      gint x, y, pad, n_bytes;
 
-      bpp = config->rgb565 ? 2 : (config->alpha ? 4 : 3);
       n_bytes = drawable->width * drawable->height * bpp;
       pad = drawable->width * drawable->bpp;
       if (config->use_rle)
@@ -533,7 +535,7 @@ save_image (Config  *config,
                       macro_name,
                       config->glib_types ? "guint" : "unsigned int",
                       config->glib_types ? "guint8" : "unsigned char",
-                      config->alpha ? 4 : 3);
+                      bpp);
 
   if (!config->use_macros)
     {
@@ -553,12 +555,12 @@ save_image (Config  *config,
         fprintf (fp, "%u * %u * %u + 1];\n",
                  drawable->width,
                  drawable->height,
-                 config->rgb565 ? 2 : (config->alpha ? 4 : 3));
+                 bpp);
       fprintf (fp, "} %s = {\n", config->prefixed_name);
       fprintf (fp, "  %u, %u, %u,\n",
                drawable->width,
                drawable->height,
-               config->rgb565 ? 2 : (config->alpha ? 4 : 3));
+               bpp);
     }
   else /* use macros */
     {
@@ -566,8 +568,8 @@ save_image (Config  *config,
                macro_name, drawable->width);
       fprintf (fp, "#define %s_HEIGHT (%u)\n",
                macro_name, drawable->height);
-      fprintf (fp, "#define %s_BYTES_PER_PIXEL (%u) /* 3:RGB, 4:RGBA */\n",
-               macro_name, config->alpha ? 4 : 3);
+      fprintf (fp, "#define %s_BYTES_PER_PIXEL (%u) /* 2:RGB16, 3:RGB, 4:RGBA */\n",
+               macro_name, bpp);
     }
   if (config->use_comment && !config->comment)
     {
@@ -621,7 +623,7 @@ save_image (Config  *config,
                           macro_name,
                           s_uint,
                           s_uint_8,
-                          config->alpha ? 4 : 3);
+                          bpp);
       fprintf (fp, "static const %s %s_%spixel_data[",
                s_uint_8,
                macro_name,
@@ -632,7 +634,7 @@ save_image (Config  *config,
         fprintf (fp, "%u * %u * %u + 1] =\n",
                  drawable->width,
                  drawable->height,
-                 config->alpha ? 4 : 3);
+                 bpp);
       fprintf (fp, "(\"");
       c = 2;
     }
