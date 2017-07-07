@@ -161,7 +161,8 @@ plug-ins/gimpressionist/utils.c
 [type: gettext/glade]plug-ins/ui/plug-in-file-png.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-raw.ui
 [type: gettext/glade]plug-ins/ui/plug-in-file-tiff.ui
-[type: gettext/glade]plug-ins/ui/plug-in-metadata.ui
+[type: gettext/glade]plug-ins/ui/plug-in-metadata-editor.ui
+[type: gettext/glade]plug-ins/ui/plug-in-metadata-viewer.ui
 plug-ins/gradient-flare/gradient-flare.c
 plug-ins/help-browser/dialog.c
 plug-ins/help-browser/help-browser.c
