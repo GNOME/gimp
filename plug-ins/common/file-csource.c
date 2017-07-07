@@ -634,7 +634,7 @@ save_image (GFile   *file,
                        "%u * %u * %u + 1];\n",
                        width,
                        height,
-                       config->rgb565 ? 2 : (config->alpha ? 4 : 3)))
+                       bpp))
             goto fail;
         }
 
@@ -645,7 +645,7 @@ save_image (GFile   *file,
                    "  %u, %u, %u,\n",
                    width,
                    height,
-                   config->rgb565 ? 2 : (config->alpha ? 4 : 3)))
+                   bpp))
         goto fail;
     }
   else /* use macros */
@@ -653,10 +653,10 @@ save_image (GFile   *file,
       if (! print (output, error,
                    "#define %s_WIDTH (%u)\n"
                    "#define %s_HEIGHT (%u)\n"
-                   "#define %s_BYTES_PER_PIXEL (%u) /* 3:RGB, 4:RGBA */\n",
+                   "#define %s_BYTES_PER_PIXEL (%u) /* 2:RGB16, 3:RGB, 4:RGBA */\n",
                    macro_name, width,
                    macro_name, height,
-                   macro_name, config->alpha ? 4 : 3))
+                   macro_name, bpp))
         {
           goto fail;
         }
@@ -773,7 +773,7 @@ save_image (GFile   *file,
                        "%u * %u * %u + 1] =\n",
                        width,
                        height,
-                       config->alpha ? 4 : 3))
+                       bpp))
             goto fail;
         }
 
