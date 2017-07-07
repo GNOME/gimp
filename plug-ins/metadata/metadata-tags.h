@@ -404,7 +404,6 @@ static const TranslateTag imageSupplierInfoTags[] =
 
 /* Plus and IPTC extension tags */
 
-static const int licensor_items = 8;
 static const gchar *licensor_header = "Xmp.plus.Licensor";
 static const gchar *licensor[] =
 {
@@ -419,7 +418,6 @@ static const gchar *licensor[] =
 };
 
 #ifdef USE_TAGS
-static const int imagesupplier_items = 2;
 static const gchar *imagesupplier_header = "Xmp.plus.ImageSupplier";
 static const gchar *imagesupplier[] =
 {
@@ -428,7 +426,6 @@ static const gchar *imagesupplier[] =
 };
 #endif
 
-static const int imagecreator_items = 2;
 static const gchar *imagecreator_header = "Xmp.plus.ImageCreator";
 static const gchar *imagecreator[] =
 {
@@ -436,7 +433,6 @@ static const gchar *imagecreator[] =
   "/plus:ImageCreatorID"
 };
 
-static const int copyrightowner_items = 2;
 static const gchar *copyrightowner_header = "Xmp.plus.CopyrightOwner";
 static const gchar *copyrightowner[] =
 {
@@ -444,7 +440,6 @@ static const gchar *copyrightowner[] =
   "/plus:CopyrightOwnerID"
 };
 
-static const int registryid_items = 2;
 static const gchar *registryid_header = "Xmp.iptcExt.RegistryId";
 static const gchar *registryid[] =
 {
@@ -452,7 +447,6 @@ static const gchar *registryid[] =
   "/Iptc4xmpExt:RegItemId"
 };
 
-static const int artworkorobject_items = 6;
 static const gchar *artworkorobject_header = "Xmp.iptcExt.ArtworkOrObject";
 static const gchar *artworkorobject[] =
 {
@@ -464,7 +458,6 @@ static const gchar *artworkorobject[] =
   "/Iptc4xmpExt:AOCreator"
 };
 
-static const int locationshown_items = 6;
 static const gchar *locationshown_header = "Xmp.iptcExt.LocationShown";
 static const gchar *locationshown[] =
 {
@@ -477,7 +470,6 @@ static const gchar *locationshown[] =
 };
 
 #ifdef USE_TAGS
-static const int locationcreated_items = 6;
 static const gchar *locationcreated_header = "Xmp.iptcExt.LocationCreated";
 static const gchar *locationcreated[] =
 {

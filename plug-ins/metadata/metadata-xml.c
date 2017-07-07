@@ -235,7 +235,7 @@ set_tag_ui (metadata_editor *args, int index,
                                   COL_LICENSOR_EMAIL, list_tag_data[row][7],
                                   COL_LICENSOR_WEB, list_tag_data[row][8],
                                   -1);
-              for (item = 1; item < licensor_items+1; item++)
+              for (item = 1; item < G_N_ELEMENTS (licensor) + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -272,7 +272,7 @@ set_tag_ui (metadata_editor *args, int index,
                                   COL_IMG_CR8_NAME, list_tag_data[row][1],
                                   COL_IMG_CR8_ID, list_tag_data[row][2],
                                   -1);
-              for (item = 1; item < imagecreator_items+1; item++)
+              for (item = 1; item < G_N_ELEMENTS (imagecreator) + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -307,7 +307,7 @@ set_tag_ui (metadata_editor *args, int index,
                                   COL_AOO_SRC_INV_ID, list_tag_data[row][5],
                                   COL_AOO_CR_NOT, list_tag_data[row][6],
                                   -1);
-              for (item = 1; item < artworkorobject_items+1; item++)
+              for (item = 1; item < G_N_ELEMENTS (artworkorobject) + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -342,7 +342,7 @@ set_tag_ui (metadata_editor *args, int index,
                                   COL_REGSITRY_ORG_ID, list_tag_data[row][1],
                                   COL_REGSITRY_ITEM_ID, list_tag_data[row][2],
                                   -1);
-              for (item = 1; item < registryid_items+1; item++)
+              for (item = 1; item < G_N_ELEMENTS (registryid) + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
@@ -375,7 +375,7 @@ set_tag_ui (metadata_editor *args, int index,
                                       COL_CR_OWNER_NAME, list_tag_data[row][1],
                                       COL_CR_OWNER_ID, list_tag_data[row][2],
                                       -1);
-                  for (item = 1; item < copyrightowner_items+1; item++)
+                  for (item = 1; item < G_N_ELEMENTS (copyrightowner) + 1; item++)
                     {
                       if (list_tag_data[row][item])
                         {
@@ -411,7 +411,7 @@ set_tag_ui (metadata_editor *args, int index,
                                   COL_LOC_SHO_CNTRY_ISO, list_tag_data[row][5],
                                   COL_LOC_SHO_CNTRY_WRLD_REG, list_tag_data[row][6],
                                   -1);
-              for (item = 1; item < locationshown_items+1; item++)
+              for (item = 1; item < G_N_ELEMENTS (locationshown) + 1; item++)
                 {
                   if (list_tag_data[row][item])
                     {
