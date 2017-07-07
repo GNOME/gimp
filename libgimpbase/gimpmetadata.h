@@ -113,11 +113,6 @@ void           gimp_metadata_set_colorspace      (GimpMetadata           *metada
 gboolean       gimp_metadata_is_tag_supported    (const gchar            *tag,
                                                   const gchar            *mime_type);
 
-void           gimp_metadata_register_xmp_namespace  (const gchar*           nspace,
-                                                      const gchar*           prefix);
-
-void           gimp_metadata_register_xmp_namespaces (void);
-
 G_END_DECLS
 
 #endif /* __GIMP_METADATA_H__ */

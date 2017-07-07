@@ -461,8 +461,6 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
       gint64          timestamp_usec;
       gchar           ts[128];
 
-      gimp_metadata_register_xmp_namespaces ();
-
       gettimeofday (&timer_usec, NULL);
       timestamp_usec = ((gint64) timer_usec.tv_sec) * 1000000ll +
                         (gint64) timer_usec.tv_usec;
