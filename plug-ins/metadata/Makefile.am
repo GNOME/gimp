@@ -29,12 +29,17 @@ libexec_PROGRAMS = \
 	metadata-viewer
 
 metadata_editor_SOURCES = \
-	metadata-impexp.c		\
+	metadata-editor.c	\
+	metadata-editor.h	\
+	metadata-impexp.c	\
+	metadata-impexp.h	\
+	metadata-misc.h		\
+	metadata-tags.h		\
 	metadata-xml.c		\
-	metadata-editor.c
+	metadata-xml.h
 
 metadata_viewer_SOURCES = \
-  metadata-viewer.c
+	metadata-viewer.c
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
