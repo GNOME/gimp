@@ -957,9 +957,24 @@ gimp_path_parse (const gchar  *path,
         exists = g_file_test (dir->str, G_FILE_TEST_IS_DIR);
 
       if (exists)
-        list = g_list_prepend (list, g_strdup (dir->str));
+        {
+          GList *dup;
+
+          /*  check for duplicate entries, see bug #784502  */
+          for (dup = list; dup; dup = g_list_next (dup))
+            {
+              if (! strcmp (dir->str, dup->data))
+                break;
+            }
+
+          /*  only add to the list if it's not a duplicate  */
+          if (! dup)
+            list = g_list_prepend (list, g_strdup (dir->str));
+        }
       else if (check_failed)
-        fail_list = g_list_prepend (fail_list, g_strdup (dir->str));
+        {
+          fail_list = g_list_prepend (fail_list, g_strdup (dir->str));
+        }
 
       g_string_free (dir, TRUE);
     }
