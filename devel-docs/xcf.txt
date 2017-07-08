@@ -714,8 +714,9 @@ PROP_COMPRESSION (essential)
   byte    comp     Compression indicator; one of
                      0: No compression
                      1: RLE encoding
-                     2: (Never used, but reserved for zlib compression)
+                     2: zlib compression
                      3: (Never used, but reserved for some fractal compression)
+                     4: Delta-encoded zlib compression
 
   PROP_COMPRESSION defines the encoding of pixels in tile data blocks in the
   entire XCF file. See chapter 7 for details.
@@ -724,11 +725,9 @@ PROP_COMPRESSION (essential)
   small integer, PROP_COMPRESSION does _not_ pad the value to a full
   32-bit integer.
 
-  Contemporary GIMP versions always write files with comp=1. It is unknown to
+  Contemporary GIMP versions always write files with comp>=1. It is unknown to
   the author of this document whether versions that wrote completely
   uncompressed (comp=0) files ever existed.
-  TODO: Why do we use zlib compression to compress only the whole file (.xcf.gz)
-  if it is a built-in feature?
 
 PROP_GUIDES (editing state)
   uint32  18       Type identification
@@ -1229,8 +1228,8 @@ Ceil(x) is the smallest integer not smaller than x.
 The format of the data blocks pointed to by the tile pointers in the
 level structure of hierarchy differs according to the value of the
 PROP_COMPRESSION property of the main image structure. Current
-GIMP versions always use RLE compression, but readers should nevertheless
-be prepared to meet the older uncompressed format.
+GIMP versions always use at least RLE compression, but readers should
+nevertheless be prepared to meet the older uncompressed format.
 
 Both formats assume the width, height and byte depth of the tile are
 known from the context (namely, they are stored explicitly in the
@@ -1289,8 +1288,7 @@ The RLE encoding can cause degenerated encodings in which the original
 data stream may double in size (or grow to arbitrarily large sizes if
 (128,0,0) operations are inserted). Such encodings must be avoided, as
 GIMP's XCF reader expects that the size of an encoded tile is
-never more than 24 KB, which is only 1.5 times the unencoded size of a
-64x64 RGBA tile.
+never more than 1.5 times the unencoded size of a 64x64 RGBA tile.
 
 A simple way for an XCF creator to avoid overflow is
  a) never using opcode 0 (but instead opcode 255)
@@ -1298,9 +1296,37 @@ A simple way for an XCF creator to avoid overflow is
  c) never emitting two "different bytes" opcodes next to each other
     in the encoding of a single stream.
 
-TODO: If each tile has a maximum of 64 pixels (resulting in a maximum of 64
-bytes for each color in this tile), do values>64 and long runs apply at all?
+zlib compressed tile data
+-------------------------
 
+In the zlib compressed format the raw tile data is compressed using the
+DEFLATE algorithm.
+
+Delta-encoded zlib compressed tile data
+---------------------------------------
+
+In the delta-encoded zlib compressed format the tile data is delta-encoded,
+and the result is compressed using the DEFLATE algorithm.
+
+The tile data is a sequence of pixels, manipulated arithmetically
+componentwise, as unsigned integers; in particular, for floating-point
+formats, the raw value representation is manipulated using integer
+arithmeic. Delta encoding stores the sequence using its n-th-order
+(discrete) derivative, rather than the original sequence (unless n = 0).
+The n-th derivative of a sequence A of length m is defined as follows:
+
+  - if n = 0, the derivative is A;
+
+  - if n > 0, the derivative is [B[0], ..., B[n-1], B[n] - B[n-1], ...,
+    B[m-1] - B[m-2]], where B is the (n-1)-th derivative of A.
+
+A delta-encoded zlib compressed tile begins with a (noncompressed) field
+specifying the order of the derivative:
+
+  uint32   order   Order of the tile-data derivative
+
+Following this field is the actual derivative of the tile data. The
+derivative is compressed using the DEFLATE algorithm.
 
 8. MISCELLANEOUS
 ================
