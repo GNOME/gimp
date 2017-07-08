@@ -422,6 +422,7 @@
       <menu action="image-guides-menu" name="Guides">
       </menu>
       <menuitem action="image-configure-grid" />
+      <separator />
       <menuitem action="image-properties" />
       <menu action="image-metadata-menu" name="Metadata">
       </menu>

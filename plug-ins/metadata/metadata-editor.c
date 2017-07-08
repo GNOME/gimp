@@ -413,7 +413,7 @@ query (void)
                           "Ben Touchette",
                           "Ben Touchette",
                           "2017",
-                          N_("Edit metadata"),
+                          N_("Edit Metadata"),
                           "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (metadata_args), 0,
