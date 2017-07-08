@@ -1068,7 +1068,7 @@ gimp_tool_transform_grid_changed (GimpToolWidget *widget)
                     0.25);
   t[2] = scalemult (vectoradd (           o[1]      , scalemult (o[3], 3.0)),
                     0.25);
-  t[3] = scalemult (vectoradd (scalemult (o[2], 3.0),            o[0]      ),
+  t[3] = scalemult (vectoradd (scalemult (o[0], 3.0),            o[2]      ),
                     0.25);
 
   for (i = 0; i < 4; i++)
