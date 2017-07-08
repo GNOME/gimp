@@ -4277,10 +4277,25 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                         "Xmp.DICOM.SeriesDateTime"));
 }
 
+
 /* ============================================================================
  * ==[ WRITE METADATA ]========================================================
  * ============================================================================
  */
+
+static void
+set_tag_string (GimpMetadata *metadata,
+                const gchar  *name,
+                const gchar  *value)
+{
+  gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), name);
+
+  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
+                                        name, value))
+    {
+      g_printerr ("metadata-editor: failed to set tag [%s]\n", name);
+    }
+}
 
 void
 metadata_editor_write_callback (GtkWidget  *dialog,
@@ -4332,15 +4347,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
         }
     }
 
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             "Xmp.iptcExt.OrganisationInImageName");
-
-  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                        "Xmp.iptcExt.OrganisationInImageName",
-                                        output_data))
-    {
-      g_printerr("failed to set tag [Xmp.iptcExt.OrganisationInImageName]\n");
-    }
+  set_tag_string (g_metadata,
+                  "Xmp.iptcExt.OrganisationInImageName",
+                  output_data);
 
   /* DO ORG IMG CODE (LISTSTORE) */
 
@@ -4368,15 +4377,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
         }
     }
 
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             "Xmp.iptcExt.OrganisationInImageCode");
-
-  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                        "Xmp.iptcExt.OrganisationInImageCode",
-                                        output_data))
-    {
-      g_printerr ("failed to set tag [Xmp.iptcExt.OrganisationInImageCode]\n");
-    }
+  set_tag_string (g_metadata,
+                  "Xmp.iptcExt.OrganisationInImageCode",
+                  output_data);
 
   /* DO MODEL RELEASE (LISTSTORE) */
 
@@ -4403,15 +4406,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
         }
     }
 
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             "Xmp.plus.ModelReleaseID");
-
-  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                        "Xmp.plus.ModelReleaseID",
-                                        output_data))
-    {
-      g_printerr ("failed to set tag [Xmp.plus.ModelReleaseID]\n");
-    }
+  set_tag_string (g_metadata,
+                  "Xmp.plus.ModelReleaseID",
+                  output_data);
 
   /* DO PROPERTY RELEASE (LISTSTORE) */
 
@@ -4438,15 +4435,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
         }
     }
 
-  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                             "Xmp.plus.PropertyReleaseID");
-
-  if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                        "Xmp.plus.PropertyReleaseID",
-                                        output_data))
-    {
-      g_printerr ("failed to set tag [Xmp.plus.PropertyReleaseID]\n");
-    }
+  set_tag_string (g_metadata,
+                  "Xmp.plus.PropertyReleaseID",
+                  output_data);
 
   /* DO LOCATION SHOWN (LISTSTORE) */
 
@@ -4493,13 +4484,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       locationshown_header, counter, locationshown[0]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LOC_SHO_CITY, &tag_data,
@@ -4508,13 +4494,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       locationshown_header, counter, locationshown[1]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LOC_SHO_STATE_PROV, &tag_data,
@@ -4523,13 +4504,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       locationshown_header, counter, locationshown[2]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LOC_SHO_CNTRY, &tag_data,
@@ -4538,13 +4514,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       locationshown_header, counter, locationshown[3]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LOC_SHO_CNTRY_ISO, &tag_data,
@@ -4553,13 +4524,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       locationshown_header, counter, locationshown[4]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LOC_SHO_CNTRY_WRLD_REG, &tag_data,
@@ -4568,13 +4534,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       locationshown_header, counter, locationshown[5]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           counter++;
         }
@@ -4627,13 +4588,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       artworkorobject_header, counter, artworkorobject[0]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_AOO_DATE_CREAT, &tag_data,
@@ -4642,28 +4598,18 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       artworkorobject_header, counter, artworkorobject[1]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_AOO_CREATOR, &tag_data,
                               -1);
 
-          g_sprintf((gchar*)&tag, "%s[%d]%s",
-                  artworkorobject_header, counter, artworkorobject[2]);
+          g_snprintf (tag, sizeof (tag), "%s[%d]%s",
+                      artworkorobject_header, counter, artworkorobject[2]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_AOO_SOURCE, &tag_data,
@@ -4672,13 +4618,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       artworkorobject_header, counter, artworkorobject[3]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_AOO_SRC_INV_ID, &tag_data,
@@ -4687,13 +4628,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       artworkorobject_header, counter, artworkorobject[4]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_AOO_CR_NOT, &tag_data,
@@ -4702,13 +4638,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       artworkorobject_header, counter, artworkorobject[5]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           counter++;
         }
@@ -4761,13 +4692,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       registryid_header, counter, registryid[0]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_REGSITRY_ITEM_ID, &tag_data,
@@ -4776,13 +4702,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       registryid_header, counter, registryid[1]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           counter++;
         }
@@ -4835,13 +4756,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       imagecreator_header, counter, imagecreator[0]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_IMG_CR8_ID, &tag_data,
@@ -4850,13 +4766,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       imagecreator_header, counter, imagecreator[1]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           counter++;
         }
@@ -4909,13 +4820,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       copyrightowner_header, counter, copyrightowner[0]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_CR_OWNER_ID, &tag_data,
@@ -4924,13 +4830,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       copyrightowner_header, counter, copyrightowner[1]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           counter++;
         }
@@ -4986,13 +4887,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       licensor_header, counter, licensor[0]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LICENSOR_ID, &tag_data,
@@ -5001,13 +4897,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       licensor_header, counter, licensor[1]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LICENSOR_PHONE1, &tag_data,
@@ -5016,13 +4907,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       licensor_header, counter, licensor[2]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LICENSOR_PHONE_TYPE1, &tag_data,
@@ -5042,13 +4928,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 }
             }
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, type1))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, type1);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LICENSOR_PHONE2, &tag_data,
@@ -5057,13 +4937,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       licensor_header, counter, licensor[4]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LICENSOR_PHONE_TYPE2, &tag_data,
@@ -5083,13 +4958,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
                 }
             }
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, type2))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, type2);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LICENSOR_EMAIL, &tag_data,
@@ -5098,13 +4967,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       licensor_header, counter, licensor[6]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           gtk_tree_model_get (treemodel, &iter,
                               COL_LICENSOR_WEB, &tag_data,
@@ -5113,13 +4977,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
           g_snprintf (tag, sizeof (tag), "%s[%d]%s",
                       licensor_header, counter, licensor[7]);
 
-          gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata), tag);
-
-          if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                tag, tag_data))
-            {
-              g_printerr ("failed to set tag [%s]\n", tag);
-            }
+          set_tag_string (g_metadata, tag, tag_data);
+          g_free (tag_data);
 
           counter++;
         }
@@ -5146,9 +5005,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               GtkEntry *entry = GTK_ENTRY (object);
 
-              if (!gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
-                                                   creatorContactInfoTags[i].tag,
-                                                   gtk_entry_get_text (entry)))
+              if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (g_metadata),
+                                                    creatorContactInfoTags[i].tag,
+                                                    gtk_entry_get_text (entry)))
                 {
                   g_printerr ("failed to set tag [%s]\n",
                               creatorContactInfoTags[i].tag);
