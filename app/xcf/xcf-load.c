@@ -685,10 +685,11 @@ xcf_load_image_props (XcfInfo   *info,
 
             xcf_read_int8 (info, (guint8 *) &compression, 1);
 
-            if ((compression != COMPRESS_NONE) &&
-                (compression != COMPRESS_RLE) &&
-                (compression != COMPRESS_ZLIB) &&
-                (compression != COMPRESS_FRACTAL))
+            if ((compression != COMPRESS_NONE)    &&
+                (compression != COMPRESS_RLE)     &&
+                (compression != COMPRESS_ZLIB)    &&
+                (compression != COMPRESS_FRACTAL) &&
+                (compression != COMPRESS_ZLIB_DELTA))
               {
                 gimp_message (info->gimp, G_OBJECT (info->progress),
                               GIMP_MESSAGE_ERROR,
@@ -2004,6 +2005,7 @@ xcf_load_level (XcfInfo    *info,
             fail = TRUE;
           break;
         case COMPRESS_ZLIB:
+        case COMPRESS_ZLIB_DELTA:
           if (!xcf_load_tile_zlib (info, buffer, &rect, format,
                                    offset2 - offset))
             fail = TRUE;
@@ -2244,6 +2246,7 @@ xcf_load_tile_zlib (XcfInfo       *info,
   guchar   *tile_data = g_alloca (tile_size);
   gsize     bytes_read;
   guchar   *xcfdata;
+  guint32   order;
 
   /* Workaround for bug #357809: avoid crashing on g_malloc() and skip
    * this tile (return TRUE without storing data) as if it did not
@@ -2251,8 +2254,24 @@ xcf_load_tile_zlib (XcfInfo       *info,
    * skip the whole hierarchy while there may still be some valid
    * tiles in the file.
    */
-  if (data_length <= 0)
-    return TRUE;
+  if (data_length <= 0 ||
+      (info->compression == COMPRESS_ZLIB_DELTA && data_length <= 4))
+    {
+      gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            _("Invalid tile data length in XCF file.\n"
+                              "Skipping tile."));
+
+      return TRUE;
+    }
+
+  if (info->compression == COMPRESS_ZLIB_DELTA)
+    {
+      /* read the derivative order of a delta-encoded tile. */
+      xcf_read_int32 (info, &order, 1);
+
+      data_length -= 4;
+    }
 
   xcfdata = g_alloca (data_length);
 
@@ -2298,13 +2317,13 @@ xcf_load_tile_zlib (XcfInfo       *info,
         }
       else if (status == Z_BUF_ERROR)
         {
-          g_printerr ("xcf: decompressed tile bigger than the expected size.");
+          g_printerr ("xcf: decompressed tile bigger than the expected size.\n");
           inflateEnd (&strm);
           return FALSE;
         }
       else if (status != Z_OK)
         {
-          g_printerr ("xcf: tile decompression failed: %s", zError (status));
+          g_printerr ("xcf: tile decompression failed: %s\n", zError (status));
           inflateEnd (&strm);
           return FALSE;
         }
@@ -2318,6 +2337,17 @@ xcf_load_tile_zlib (XcfInfo       *info,
 
           xcf_read_from_be (bpp / n_components, tile_data,
                             tile_size / bpp * n_components);
+        }
+
+      if (info->compression == COMPRESS_ZLIB_DELTA)
+        {
+          /* integrate the data, to get the original back. */
+          if (! xcf_data_integrate (tile_data, tile_data, tile_size / bpp, format,
+                                    order, 0))
+            {
+              g_printerr ("xcf: tile integration failed\n");
+              return FALSE;
+            }
         }
 
       gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,

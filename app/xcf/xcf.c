@@ -80,7 +80,8 @@ static GimpXcfLoaderFunc * const xcf_loaders[] =
   xcf_load_image,   /* version 10 */
   xcf_load_image,   /* version 11 */
   xcf_load_image,   /* version 12 */
-  xcf_load_image    /* version 13 */
+  xcf_load_image,   /* version 13 */
+  xcf_load_image    /* version 14 */
 };
 
 
@@ -367,13 +368,13 @@ xcf_save_stream (Gimp           *gimp,
   info.file             = output_file;
 
   if (gimp_image_get_xcf_compression (image))
-    info.compression = COMPRESS_ZLIB;
+    info.compression = COMPRESS_ZLIB_DELTA;
   else
     info.compression = COMPRESS_RLE;
 
   info.file_version = gimp_image_get_xcf_version (image,
                                                   info.compression ==
-                                                  COMPRESS_ZLIB,
+                                                  COMPRESS_ZLIB_DELTA,
                                                   NULL, NULL);
 
   if (info.file_version >= 11)

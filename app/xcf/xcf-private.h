@@ -70,8 +70,9 @@ typedef enum
 {
   COMPRESS_NONE              =  0,
   COMPRESS_RLE               =  1,
-  COMPRESS_ZLIB              =  2,  /* unused */
-  COMPRESS_FRACTAL           =  3   /* unused */
+  COMPRESS_ZLIB              =  2,
+  COMPRESS_FRACTAL           =  3,  /* unused */
+  COMPRESS_ZLIB_DELTA        =  4
 } XcfCompressionType;
 
 typedef enum

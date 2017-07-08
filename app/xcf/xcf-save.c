@@ -66,9 +66,23 @@
 #include "xcf-read.h"
 #include "xcf-save.h"
 #include "xcf-seek.h"
+#include "xcf-utils.h"
 #include "xcf-write.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
+
+
+/* the ratio between the test data size and the tile data size, for delta-
+ * encoded zlib compressed tiles.  bigger values result in better and slower
+ * compression.  see xcf_save_tile_zlib().
+ */
+#define XCF_SAVE_ZLIB_DELTA_TEST_SIZE_RATIO (1.0 / 2.0)
+
+/* the maximal derivative order that may be used for delta-encoded zlib
+ * compressed tiles.  see xcf_save_tile_zlib().
+ */
+#define XCF_SAVE_ZLIB_DELTA_MAX_ORDER       2
 
 
 static gboolean xcf_save_image_props   (XcfInfo           *info,
@@ -111,6 +125,14 @@ static gboolean xcf_save_tile_rle      (XcfInfo           *info,
                                         GeglRectangle     *tile_rect,
                                         const Babl        *format,
                                         guchar            *rlebuf,
+                                        GError           **error);
+static gboolean xcf_save_data_zlib     (XcfInfo           *info,
+                                        const Babl        *format,
+                                        const guchar      *data,
+                                        gint               size,
+                                        gboolean           write,
+                                        gint               max_compressed_size,
+                                        gint              *compressed_size,
                                         GError           **error);
 static gboolean xcf_save_tile_zlib     (XcfInfo           *info,
                                         GeglBuffer        *buffer,
@@ -1590,6 +1612,7 @@ xcf_save_level (XcfInfo     *info,
                                               rlebuf, error));
           break;
         case COMPRESS_ZLIB:
+        case COMPRESS_ZLIB_DELTA:
           xcf_check_error (xcf_save_tile_zlib (info, buffer, &rect, format,
                                                error));
           break;
@@ -1787,31 +1810,36 @@ xcf_save_tile_rle (XcfInfo        *info,
 }
 
 static gboolean
-xcf_save_tile_zlib (XcfInfo        *info,
-                    GeglBuffer     *buffer,
-                    GeglRectangle  *tile_rect,
-                    const Babl     *format,
-                    GError        **error)
+xcf_save_data_zlib (XcfInfo       *info,
+                    const Babl    *format,
+                    const guchar  *data,
+                    gint           size,
+                    gboolean       write,
+                    gint           max_compressed_size,
+                    gint          *compressed_size,
+                    GError       **error)
 {
-  gint      bpp       = babl_format_get_bytes_per_pixel (format);
-  gint      tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar   *tile_data = g_alloca (tile_size);
   /* The buffer for compressed data. */
-  guchar   *buf       = g_alloca (tile_size);
-  GError   *tmp_error = NULL;
+  guchar   *buf            = g_alloca (size);
   z_stream  strm;
   int       action;
   int       status;
-
-  gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
-                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+  gint      remaining_size = max_compressed_size;
+  GError   *tmp_error      = NULL;
 
   if (info->file_version >= 12)
     {
-      gint n_components = babl_format_get_n_components (format);
+      gint    bpp          = babl_format_get_bytes_per_pixel (format);
+      gint    n_components = babl_format_get_n_components (format);
+      guchar *be_data      = g_alloca (size);
 
-      xcf_write_to_be (bpp / n_components, tile_data,
-                       tile_size / bpp * n_components);
+      /* don't overwrite 'data'; the caller expects it not to change */
+      memcpy (be_data, data, size);
+
+      xcf_write_to_be (bpp / n_components, be_data,
+                       size / bpp * n_components);
+
+      data = be_data;
     }
 
   /* allocate deflate state */
@@ -1823,14 +1851,17 @@ xcf_save_tile_zlib (XcfInfo        *info,
   if (status != Z_OK)
     return FALSE;
 
-  strm.next_in   = tile_data;
-  strm.avail_in  = tile_size;
+  strm.next_in   = (guchar *) data;
+  strm.avail_in  = size;
   strm.next_out  = buf;
-  strm.avail_out = tile_size;
+  strm.avail_out = size;
 
   action = Z_NO_FLUSH;
 
-  while (status == Z_OK || status == Z_BUF_ERROR)
+  if (compressed_size)
+    *compressed_size = 0;
+
+  while ((status == Z_OK || status == Z_BUF_ERROR) && remaining_size > 0)
     {
       if (strm.avail_in == 0)
         {
@@ -1842,24 +1873,134 @@ xcf_save_tile_zlib (XcfInfo        *info,
 
       if (status == Z_STREAM_END || status == Z_BUF_ERROR)
         {
-          size_t write_size = tile_size - strm.avail_out;
+          gint write_size = size - strm.avail_out;
 
-          xcf_write_int8_check_error (info, buf, write_size);
+          if (compressed_size)
+            *compressed_size += write_size;
+
+          if (write)
+            xcf_write_int8_check_error (info, buf, write_size);
 
           /* Reset next_out and avail_out. */
           strm.next_out  = buf;
-          strm.avail_out = tile_size;
+          strm.avail_out = size;
+
+          remaining_size -= write_size;
         }
       else if (status != Z_OK)
         {
-          g_printerr ("xcf: tile compression failed: %s", zError (status));
+          g_printerr ("xcf: tile compression failed: %s\n",
+                      zError (status));
           deflateEnd (&strm);
           return FALSE;
         }
     }
 
   deflateEnd (&strm);
+
   return TRUE;
+}
+
+static gboolean
+xcf_save_tile_zlib (XcfInfo        *info,
+                    GeglBuffer     *buffer,
+                    GeglRectangle  *tile_rect,
+                    const Babl     *format,
+                    GError        **error)
+{
+  gint      bpp       = babl_format_get_bytes_per_pixel (format);
+  gint      tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar   *tile_data = g_alloca (tile_size);
+  GError   *tmp_error = NULL;
+
+  gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  if (info->compression == COMPRESS_ZLIB_DELTA)
+    {
+      GeglRectangle test_rect;
+      gint          test_size;
+      guint32       order;
+      gint          prev_compressed_size = G_MAXINT;
+
+      /* we repeatedly differentiate a small portion of the tile data,
+       * referred to as the test data, and compress it, with the intention of
+       * finding the derivative order which minimizes the compressed data size.
+       */
+
+      test_rect         = *tile_rect;
+      test_rect.height *= XCF_SAVE_ZLIB_DELTA_TEST_SIZE_RATIO;
+      test_rect.height  = MAX (test_rect.height, 1);
+
+      test_size = bpp * test_rect.width * test_rect.height;
+
+      g_assert (test_size <= tile_size);
+
+      for (order = 0; order <= XCF_SAVE_ZLIB_DELTA_MAX_ORDER; order++)
+        {
+          gint compressed_size;
+
+          /* do a dummy compression, that isn't actually written anywhere, to
+           * find the size of the compressed test data.
+           */
+          if (! xcf_save_data_zlib (info, format, tile_data, test_size, FALSE,
+                                    prev_compressed_size, &compressed_size,
+                                    error))
+            {
+              return FALSE;
+            }
+
+          /* if the compressed data size has increased, compared to the
+           * previous iteration, stop looking and use the derivative order of
+           * the previous iteration.
+           */
+          if (compressed_size >= prev_compressed_size)
+            {
+              order--;
+
+              break;
+            }
+
+          /* otherwise, try to differentiate the data, so that we compress the
+           * next-order derivative on the next iteration.  if this fails, or if
+           * we reached the max order, break and use the current order.
+           */
+          if (order == XCF_SAVE_ZLIB_DELTA_MAX_ORDER ||
+              ! xcf_data_differentiate (tile_data, tile_data, test_size / bpp,
+                                        format, order, order + 1))
+            {
+              break;
+            }
+
+          prev_compressed_size = compressed_size;
+        }
+
+      /* we've overwritten the first test_size bytes of the tile data; reread
+       * them.
+       */
+      gegl_buffer_get (buffer, &test_rect, 1.0, format, tile_data,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      /* calculate the derivative of the determined order of the tile data; if
+       * this fails, use the 0-th derivative (i.e., the original data).
+       */
+      if (! xcf_data_differentiate (tile_data, tile_data, tile_size / bpp,
+                                    format, 0, order))
+        {
+          order = 0;
+
+          gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+        }
+
+      /* write the derivative order before the actual data */
+      xcf_write_int32_check_error (info, &order, 1);
+
+      GIMP_LOG (XCF, "delta encoding order: %d", order);
+    }
+
+  return xcf_save_data_zlib (info, format, tile_data, tile_size, TRUE,
+                             G_MAXINT, NULL, error);
 }
 
 static gboolean

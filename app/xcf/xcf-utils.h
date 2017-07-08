@@ -19,8 +19,21 @@
 #define __XCF_UTILS_H__
 
 
-gboolean   xcf_data_is_zero (const void *data,
-                             gint        size);
+gboolean   xcf_data_is_zero       (const void *data,
+                                   gint        size);
+
+gboolean   xcf_data_differentiate (void       *dest,
+                                   const void *src,
+                                   gint        n_pixels,
+                                   const Babl *format,
+                                   gint        from_order,
+                                   gint        to_order);
+gboolean   xcf_data_integrate     (void       *dest,
+                                   const void *src,
+                                   gint        n_pixels,
+                                   const Babl *format,
+                                   gint        from_order,
+                                   gint        to_order);
 
 
 #endif  /* __XCF_UTILS_H__ */
