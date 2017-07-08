@@ -347,6 +347,7 @@ xcf_save_stream (Gimp           *gimp,
   const gchar *filename;
   gboolean     success  = FALSE;
   GError      *my_error = NULL;
+  gboolean     zlib_compression;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -367,14 +368,21 @@ xcf_save_stream (Gimp           *gimp,
   info.progress         = progress;
   info.file             = output_file;
 
-  if (gimp_image_get_xcf_compression (image))
-    info.compression = COMPRESS_ZLIB_DELTA;
-  else
-    info.compression = COMPRESS_RLE;
+  zlib_compression = gimp_image_get_xcf_compression (image);
 
-  info.file_version = gimp_image_get_xcf_version (image,
-                                                  info.compression ==
-                                                  COMPRESS_ZLIB_DELTA,
+  if (zlib_compression)
+    {
+      if (g_getenv ("GIMP_XCF_NO_DELTA_COMPRESSION"))
+        info.compression = COMPRESS_ZLIB;
+      else
+        info.compression = COMPRESS_ZLIB_DELTA;
+    }
+  else
+    {
+      info.compression = COMPRESS_RLE;
+    }
+
+  info.file_version = gimp_image_get_xcf_version (image, zlib_compression,
                                                   NULL, NULL);
 
   if (info.file_version >= 11)
