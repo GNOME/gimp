@@ -198,7 +198,7 @@ metadata_viewer_dialog (gint32          image_id,
   g_free (ui_file);
 
   name = gimp_image_get_name (image_id);
-  title = g_strdup_printf ("Metadata Viewer: %s", name);
+  title = g_strdup_printf (_("Metadata Viewer: %s"), name);
   g_free (name);
 
   dialog = gimp_dialog_new (title,

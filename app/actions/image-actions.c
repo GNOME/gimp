@@ -62,6 +62,7 @@ static const GimpActionEntry image_actions[] =
                                              "Color Ma_nagement")          },
   { "image-transform-menu",        NULL, NC_("image-action", "_Transform") },
   { "image-guides-menu",           NULL, NC_("image-action", "_Guides")    },
+  { "image-metadata-menu",           NULL, NC_("image-action", "Meta_data")    },
 
   { "colors-menu",              NULL, NC_("image-action", "_Colors")       },
   { "colors-info-menu",         NULL, NC_("image-action", "I_nfo")         },

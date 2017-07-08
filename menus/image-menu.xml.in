@@ -423,6 +423,8 @@
       </menu>
       <menuitem action="image-configure-grid" />
       <menuitem action="image-properties" />
+      <menu action="image-metadata-menu" name="Metadata">
+      </menu>
       <separator />
     </menu>
 

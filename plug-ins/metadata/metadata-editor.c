@@ -405,15 +405,15 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Edit metadata"),
+                          N_("Edit metadata (IPTC, GPS, DICOM)"),
                           "Edit metadata information attached to the "
-                          "current image.   Some or all of this metadata "
+                          "current image. Some or all of this metadata "
                           "will be saved in the file, depending on the output "
                           "file format.",
                           "Ben Touchette",
                           "Ben Touchette",
                           "2017",
-                          N_("Edit Metadata"),
+                          N_("Edit metadata"),
                           "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (metadata_args), 0,
@@ -536,7 +536,7 @@ metadata_editor_dialog (gint32        image_id,
   g_free (ui_file);
 
   name = gimp_image_get_name (image_id);
-  title = g_strdup_printf ("Metadata Editor: %s", name);
+  title = g_strdup_printf (_("Metadata Editor: %s"), name);
   if (name)
     g_free (name);
 
