@@ -4290,6 +4290,10 @@ set_tag_string (GimpMetadata *metadata,
 {
   gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), name);
 
+  if (metadata == NULL) return;
+  if (name == NULL) return;
+  if (value == NULL) return;
+
   if (! gexiv2_metadata_set_tag_string (GEXIV2_METADATA (metadata),
                                         name, value))
     {
@@ -4919,12 +4923,15 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
           strcpy (type1, phone_types[0].data);
 
-          for (types = 0; types < 6; types++)
+          if (tag_data != NULL)
             {
-              if (! strcmp (tag_data, phone_types[types].display))
+              for (types = 0; types < 6; types++)
                 {
-                  strcpy (type1, phone_types[types].data);
-                  break;
+                  if (! strcmp (tag_data, phone_types[types].display))
+                    {
+                      strcpy (type1, phone_types[types].data);
+                      break;
+                    }
                 }
             }
 
@@ -4949,15 +4956,19 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
           strcpy (type2, phone_types[0].data);
 
-          for (types = 0; types < 6; types++)
+          if (tag_data != NULL)
             {
-              if (! strcmp (tag_data, phone_types[types].display))
+              for (types = 0; types < 6; types++)
                 {
-                  strcpy (type2, phone_types[types].data);
-                  break;
+                  g_print("%d %s %s\n", types, tag_data, phone_types[types].display);
+                  if (! strcmp (tag_data, phone_types[types].display))
+                    {
+                      g_print("%d %s \n", types, phone_types[types].data);
+                      strcpy (type2, phone_types[types].data);
+                      break;
+                    }
                 }
             }
-
           set_tag_string (g_metadata, tag, type2);
 
           gtk_tree_model_get (treemodel, &iter,
@@ -5403,12 +5414,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               if (value == 0)
                 {
-                  if (! gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                   default_metadata_tags[i].tag))
-                    {
-                      g_printerr ("failed to clear tag [%s]\n",
-                                  default_metadata_tags[i].tag);
-                    }
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
                 }
               else
                 {
@@ -5428,12 +5435,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
               switch (value)
                 {
                 case 0:
-                  if (! gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                   default_metadata_tags[i].tag))
-                    {
-                      g_printerr ("failed to clear tag [%s]\n",
-                                  default_metadata_tags[i].tag);
-                    }
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
                   break;
 
                 case 1:
@@ -5473,12 +5476,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
               switch (value)
                 {
                 case 0:
-                  if (! gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                   default_metadata_tags[i].tag))
-                    {
-                      g_printerr ("failed to clear tag [%s]\n",
-                                  default_metadata_tags[i].tag);
-                    }
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
                   break;
 
                 case 1:
@@ -5500,12 +5499,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
               switch (value)
                 {
                 case 0:
-                  if (! gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                   default_metadata_tags[i].tag))
-                    {
-                      g_printerr ("failed to clear tag [%s]\n",
-                                  default_metadata_tags[i].tag);
-                    }
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
                   break;
 
                 case 1:
@@ -5527,12 +5522,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
               switch (value)
                 {
                 case 0:
-                  if (! gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                   default_metadata_tags[i].tag))
-                    {
-                      g_printerr ("failed to clear tag [%s]\n",
-                                  default_metadata_tags[i].tag);
-                    }
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
                   break;
 
                 case 1:
@@ -5560,12 +5551,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               if (value == 0)
                 {
-                  if (! gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                   default_metadata_tags[i].tag))
-                    {
-                      g_printerr ("failed to clear tag [%s]\n",
-                                  default_metadata_tags[i].tag);
-                    }
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
                 }
               else
                 {
@@ -5579,12 +5566,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               if (value == 0)
                 {
-                  if (! gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
-                                                   default_metadata_tags[i].tag))
-                    {
-                      g_printerr ("failed to clear tag [%s]\n",
-                                  default_metadata_tags[i].tag);
-                    }
+                  gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
+                                             default_metadata_tags[i].tag);
                 }
               else
                 {
