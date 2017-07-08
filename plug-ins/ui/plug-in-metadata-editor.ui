@@ -138,7 +138,7 @@
                             <property name="border_width">6</property>
                             <property name="n_rows">7</property>
                             <property name="n_columns">2</property>
-                            <property name="column_spacing">3</property>
+                            <property name="column_spacing">9</property>
                             <property name="row_spacing">3</property>
                             <child>
                               <object class="GtkLabel" id="l_title">
@@ -397,7 +397,7 @@
                             <property name="border_width">6</property>
                             <property name="n_rows">3</property>
                             <property name="n_columns">2</property>
-                            <property name="column_spacing">28</property>
+                            <property name="column_spacing">29</property>
                             <property name="row_spacing">3</property>
                             <child>
                               <object class="GtkLabel" id="l_copyright_status">
@@ -548,7 +548,7 @@
                             <property name="border_width">6</property>
                             <property name="n_rows">5</property>
                             <property name="n_columns">2</property>
-                            <property name="column_spacing">31</property>
+                            <property name="column_spacing">37</property>
                             <property name="row_spacing">3</property>
                             <child>
                               <object class="GtkLabel" id="l_address">
@@ -877,7 +877,7 @@
                             <property name="border_width">6</property>
                             <property name="n_rows">3</property>
                             <property name="n_columns">2</property>
-                            <property name="column_spacing">16</property>
+                            <property name="column_spacing">23</property>
                             <property name="row_spacing">3</property>
                             <child>
                               <object class="GtkLabel" id="l_iptc_creation_date1">
@@ -1040,7 +1040,7 @@
                             <property name="border_width">6</property>
                             <property name="n_rows">5</property>
                             <property name="n_columns">2</property>
-                            <property name="column_spacing">19</property>
+                            <property name="column_spacing">23</property>
                             <property name="row_spacing">3</property>
                             <child>
                               <object class="GtkLabel" id="l_iptc_sublocation1">
@@ -1232,7 +1232,7 @@
                             <property name="border_width">6</property>
                             <property name="n_rows">3</property>
                             <property name="n_columns">2</property>
-                            <property name="column_spacing">16</property>
+                            <property name="column_spacing">20</property>
                             <property name="row_spacing">3</property>
                             <child>
                               <object class="GtkLabel" id="l_iptc_subject_code1">
@@ -1359,7 +1359,7 @@
                             <property name="border_width">6</property>
                             <property name="n_rows">5</property>
                             <property name="n_columns">2</property>
-                            <property name="column_spacing">45</property>
+                            <property name="column_spacing">42</property>
                             <property name="row_spacing">3</property>
                             <child>
                               <object class="GtkLabel" id="l_iptc_job_identifier">
@@ -2804,7 +2804,7 @@
                             <property name="border_width">6</property>
                             <property name="n_rows">7</property>
                             <property name="n_columns">2</property>
-                            <property name="column_spacing">54</property>
+                            <property name="column_spacing">51</property>
                             <property name="row_spacing">3</property>
                             <child>
                               <object class="GtkLabel" id="l_image_supplier_id">
