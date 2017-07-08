@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Plug-Ins 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-18 01:26+0300\n"
-"PO-Revision-Date: 2017-02-18 01:24+0300\n"
+"POT-Creation-Date: 2017-07-08 03:17+0300\n"
+"PO-Revision-Date: 2017-07-08 03:22+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -53,7 +53,8 @@ msgstr "Выровнять видимые слои"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:934 ../plug-ins/common/file-gif-save.c:1089
-#: ../plug-ins/common/file-pdf-load.c:1089 ../plug-ins/common/file-ps.c:3421
+#: ../plug-ins/common/file-pdf-load.c:1089
+#: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3421
 #: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/file-svg.c:726
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
@@ -77,6 +78,7 @@ msgstr "Выровнять видимые слои"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1679
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:761
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1116
 #: ../plug-ins/gfig/gfig-dialog.c:290 ../plug-ins/gfig/gfig-dialog.c:638
 #: ../plug-ins/gfig/gfig-dialog.c:687 ../plug-ins/gimpressionist/brush.c:256
@@ -85,6 +87,7 @@ msgstr "Выровнять видимые слои"
 #: ../plug-ins/gimpressionist/presets.c:642
 #: ../plug-ins/gimpressionist/sizemap.c:401
 #: ../plug-ins/gradient-flare/gradient-flare.c:2360
+#: ../plug-ins/gradient-flare/gradient-flare.c:3210
 #: ../plug-ins/gradient-flare/gradient-flare.c:3323
 #: ../plug-ins/ifs-compose/ifs-compose.c:763
 #: ../plug-ins/ifs-compose/ifs-compose.c:2530
@@ -438,9 +441,9 @@ msgstr "По _вертикали"
 #: ../plug-ins/common/decompose.c:607 ../plug-ins/common/file-cel.c:441
 #: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:611
 #: ../plug-ins/common/file-gegl.c:414 ../plug-ins/common/file-gif-load.c:980
-#: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
-#: ../plug-ins/common/file-pcx.c:444 ../plug-ins/common/file-pix.c:400
-#: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:671
+#: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
+#: ../plug-ins/common/file-pcx.c:452 ../plug-ins/common/file-pix.c:400
+#: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1162
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
@@ -779,7 +782,8 @@ msgstr "Насыщенность"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:186
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/ui/plug-in-metadata.ui.h:2
+#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "Значение"
 
@@ -814,6 +818,43 @@ msgstr "Фикс.зерно"
 #: ../plug-ins/common/cml-explorer.c:1254
 msgid "Random Seed"
 msgstr "Случайное зерно"
+
+#. The Load button
+#: ../plug-ins/common/cml-explorer.c:1269
+#: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
+#: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:935
+#: ../plug-ins/common/file-raw-data.c:1555 ../plug-ins/common/qbist.c:724
+#: ../plug-ins/common/qbist.c:888 ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1150
+#: ../plug-ins/file-fli/fli-gimp.c:870 ../plug-ins/flame/flame.c:475
+#: ../plug-ins/flame/flame.c:1045
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:805
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1642
+#: ../plug-ins/gfig/gfig-dialog.c:639 ../plug-ins/ifs-compose/ifs-compose.c:760
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
+#: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
+#: ../plug-ins/lighting/lighting-ui.c:600
+#: ../plug-ins/lighting/lighting-ui.c:1307
+msgid "_Open"
+msgstr "_Открыть"
+
+#. The Save button
+#: ../plug-ins/common/cml-explorer.c:1277
+#: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:1500
+#: ../plug-ins/common/curve-bend.c:2101 ../plug-ins/common/file-pdf-save.c:1008
+#: ../plug-ins/common/qbist.c:766 ../plug-ins/common/qbist.c:896
+#: ../plug-ins/common/sphere-designer.c:2210
+#: ../plug-ins/common/sphere-designer.c:2618 ../plug-ins/flame/flame.c:475
+#: ../plug-ins/flame/flame.c:1053
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:822
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1680
+#: ../plug-ins/gfig/gfig-dialog.c:688 ../plug-ins/gimpressionist/brush.c:257
+#: ../plug-ins/ifs-compose/ifs-compose.c:761
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
+#: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:593
+#: ../plug-ins/lighting/lighting-ui.c:1163
+msgid "_Save"
+msgstr "_Сохранить"
 
 #: ../plug-ins/common/cml-explorer.c:1296 ../plug-ins/common/filter-pack.c:700
 #: ../plug-ins/common/van-gogh-lic.c:674
@@ -975,11 +1016,12 @@ msgstr "График текущих параметров"
 
 #: ../plug-ins/common/cml-explorer.c:1856
 #: ../plug-ins/common/color-cube-analyze.c:364
-#: ../plug-ins/common/metadata.c:251 ../plug-ins/common/plugin-browser.c:550
+#: ../plug-ins/common/plugin-browser.c:550
 #: ../plug-ins/common/procedure-browser.c:129
 #: ../plug-ins/common/sample-colorize.c:1331
 #: ../plug-ins/common/unit-editor.c:417 ../plug-ins/gfig/gfig-dialog.c:291
-#: ../plug-ins/gfig/gfig-dialog.c:1245 ../plug-ins/gfig/gfig-dialog.c:1393
+#: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/gfig/gfig-dialog.c:1245
+#: ../plug-ins/gfig/gfig-dialog.c:1393
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
 msgid "_Close"
 msgstr "_Закрыть"
@@ -992,27 +1034,16 @@ msgstr "Внимание: источник и назначение в одном
 msgid "Save CML Explorer Parameters"
 msgstr "Сохранить параметры CML Explorer"
 
-#: ../plug-ins/common/cml-explorer.c:1987 ../plug-ins/common/curve-bend.c:2101
-#: ../plug-ins/common/qbist.c:766 ../plug-ins/common/sphere-designer.c:2210
-#: ../plug-ins/flame/flame.c:475
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1680
-#: ../plug-ins/gfig/gfig-dialog.c:688 ../plug-ins/gimpressionist/brush.c:257
-#: ../plug-ins/ifs-compose/ifs-compose.c:761
-#: ../plug-ins/ifs-compose/ifs-compose.c:2531
-#: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:1163
-msgid "_Save"
-msgstr "_Сохранить"
-
 #: ../plug-ins/common/cml-explorer.c:2038 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
-#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:736
-#: ../plug-ins/common/file-pdf-save.c:432 ../plug-ins/common/file-png.c:1560
+#: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:852
+#: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1560
 #: ../plug-ins/common/file-raw-data.c:977
 #: ../plug-ins/common/file-raw-data.c:1005 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1475
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1079
+#: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1081
 #: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1574
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
@@ -1031,26 +1062,13 @@ msgstr "Параметры были сохранены в '%s'"
 msgid "Load CML Explorer Parameters"
 msgstr "Загрузить параметры CML Explorer"
 
-#: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:2066
-#: ../plug-ins/common/file-cel.c:935 ../plug-ins/common/file-raw-data.c:1555
-#: ../plug-ins/common/qbist.c:724 ../plug-ins/common/sphere-designer.c:2210
-#: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:870
-#: ../plug-ins/flame/flame.c:475
-#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1642
-#: ../plug-ins/gfig/gfig-dialog.c:639 ../plug-ins/ifs-compose/ifs-compose.c:760
-#: ../plug-ins/ifs-compose/ifs-compose.c:2568
-#: ../plug-ins/imagemap/imap_browse.c:81 ../plug-ins/imagemap/imap_file.c:72
-#: ../plug-ins/lighting/lighting-ui.c:1307
-msgid "_Open"
-msgstr "_Открыть"
-
 #: ../plug-ins/common/cml-explorer.c:2211 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
 #: ../plug-ins/common/file-cel.c:580 ../plug-ins/common/file-dicom.c:342
 #: ../plug-ins/common/file-gif-load.c:361
 #: ../plug-ins/common/file-jp2-load.c:234
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:913
+#: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:913
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3370
 #: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:374
 #: ../plug-ins/common/file-raw-data.c:1086 ../plug-ins/common/file-sunras.c:436
@@ -1213,10 +1231,14 @@ msgstr "Сбросить порядок"
 msgid "Rearrange Colormap"
 msgstr "Перестроить цветовую карту"
 
-#: ../plug-ins/common/colormap-remap.c:620
+#. The Reset button
+#: ../plug-ins/common/colormap-remap.c:620 ../plug-ins/common/curve-bend.c:1471
 #: ../plug-ins/common/filter-pack.c:1205
 #: ../plug-ins/common/sample-colorize.c:1329
 #: ../plug-ins/common/sphere-designer.c:2560
+#: ../plug-ins/common/tile-small.c:452
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:813
+#: ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:762
 #: ../plug-ins/selection-to-path/selection-to-path.c:308
 msgid "_Reset"
@@ -1633,7 +1655,7 @@ msgstr "Кривая для края:"
 msgid "_Upper"
 msgstr "В_ерхнего"
 
-#: ../plug-ins/common/curve-bend.c:1404
+#: ../plug-ins/common/curve-bend.c:1404 ../plug-ins/gfig/gfig-dialog.c:905
 msgid "_Lower"
 msgstr "_Нижнего"
 
@@ -1651,6 +1673,7 @@ msgstr "_Свободная"
 
 #. The Copy button
 #: ../plug-ins/common/curve-bend.c:1434
+#: ../plug-ins/gradient-flare/gradient-flare.c:2928
 msgid "_Copy"
 msgstr "Ско_пировать"
 
@@ -2163,20 +2186,21 @@ msgstr "Ошибка при чтении '%s'. %s"
 #.
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
-#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:669
+#: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:678
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
-#: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
+#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
-#: ../plug-ins/common/file-pnm.c:564 ../plug-ins/common/file-ps.c:1092
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:1079 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-darktable/file-darktable.c:302
+#: ../plug-ins/file-darktable/file-darktable.c:443
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:664
 #: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-rawtherapee/file-rawtherapee.c:285
 #: ../plug-ins/file-sgi/sgi.c:325 ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
@@ -2250,15 +2274,15 @@ msgstr ""
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:690
-#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1295
+#: ../plug-ins/common/file-gif-save.c:865 ../plug-ins/common/file-gih.c:1304
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:534
-#: ../plug-ins/common/file-pcx.c:662 ../plug-ins/common/file-pix.c:536
-#: ../plug-ins/common/file-png.c:1553 ../plug-ins/common/file-pnm.c:1208
+#: ../plug-ins/common/file-pcx.c:741 ../plug-ins/common/file-pix.c:536
+#: ../plug-ins/common/file-png.c:1553 ../plug-ins/common/file-pnm.c:1245
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-xbm.c:1033
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1073
+#: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1075
 #: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1567
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
@@ -2269,49 +2293,49 @@ msgstr "Выполняется экспорт \"%s\""
 msgid "C source code"
 msgstr "Исходный код на С"
 
-#: ../plug-ins/common/file-csource.c:869
+#: ../plug-ins/common/file-csource.c:886
 msgid "C-Source"
 msgstr "Исходный код на C"
 
-#: ../plug-ins/common/file-csource.c:887
+#: ../plug-ins/common/file-csource.c:904
 msgid "_Prefixed name:"
 msgstr "_Префиксное имя:"
 
-#: ../plug-ins/common/file-csource.c:896
+#: ../plug-ins/common/file-csource.c:913
 msgid "Co_mment:"
 msgstr "Ко_мментарий:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:903
+#: ../plug-ins/common/file-csource.c:920
 msgid "_Save comment to file"
 msgstr "_Сохранить комментарий в файл"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:915
+#: ../plug-ins/common/file-csource.c:932
 msgid "_Use GLib types (guint8*)"
 msgstr "_Использовать типы GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:928
+#: ../plug-ins/common/file-csource.c:945
 msgid "Us_e macros instead of struct"
 msgstr "Использовать _макросы вместо структур"
 
-#: ../plug-ins/common/file-csource.c:941
+#: ../plug-ins/common/file-csource.c:958
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Использовать 1-_байтное RLE"
 
-#: ../plug-ins/common/file-csource.c:954
+#: ../plug-ins/common/file-csource.c:971
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Сохранить _альфа-канал (RGBA/RGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:966
+#: ../plug-ins/common/file-csource.c:983
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Сохранить как _RGB565 (16-bit)"
 
-#: ../plug-ins/common/file-csource.c:989
+#: ../plug-ins/common/file-csource.c:1005
 msgid "Op_acity:"
 msgstr "Н_епрозрачность:"
 
@@ -2398,8 +2422,8 @@ msgstr "Ошибка в файле кисти GIMP \"%s\""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ошибочная строка UTF-8 в файле кисти '%s'"
 
-#: ../plug-ins/common/file-gbr.c:476 ../plug-ins/common/file-gih.c:499
-#: ../plug-ins/common/file-gih.c:1197
+#: ../plug-ins/common/file-gbr.c:476 ../plug-ins/common/file-gih.c:508
+#: ../plug-ins/common/file-gih.c:1206
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Безымянное"
@@ -2408,7 +2432,7 @@ msgstr "Безымянное"
 msgid "Brush"
 msgstr "Кисть"
 
-#: ../plug-ins/common/file-gbr.c:808 ../plug-ins/common/file-gih.c:923
+#: ../plug-ins/common/file-gbr.c:808 ../plug-ins/common/file-gih.c:932
 #: ../plug-ins/common/file-pat.c:623 ../plug-ins/gimpressionist/presets.c:665
 msgid "Description:"
 msgstr "Описание:"
@@ -2565,55 +2589,55 @@ msgstr "Комментарий по умолчанию ограничен дли
 msgid "GIMP brush (animated)"
 msgstr "Кисть GIMP (анимированная)"
 
-#: ../plug-ins/common/file-gih.c:575
+#: ../plug-ins/common/file-gih.c:584
 msgid "GIMP brush file appears to be corrupted."
 msgstr "Похоже, файл кисти GIMP поврежден."
 
-#: ../plug-ins/common/file-gih.c:905
+#: ../plug-ins/common/file-gih.c:914
 msgid "Brush Pipe"
 msgstr "Анимационная кисть"
 
-#: ../plug-ins/common/file-gih.c:938
+#: ../plug-ins/common/file-gih.c:947
 msgid "Spacing (percent):"
 msgstr "Интервал (проценты):"
 
-#: ../plug-ins/common/file-gih.c:993
+#: ../plug-ins/common/file-gih.c:1002
 msgid "Pixels"
 msgstr "Точки растра"
 
-#: ../plug-ins/common/file-gih.c:998
+#: ../plug-ins/common/file-gih.c:1007
 msgid "Cell size:"
 msgstr "Размер ячейки:"
 
-#: ../plug-ins/common/file-gih.c:1011
+#: ../plug-ins/common/file-gih.c:1020
 msgid "Number of cells:"
 msgstr "Число ячеек:"
 
-#: ../plug-ins/common/file-gih.c:1036
+#: ../plug-ins/common/file-gih.c:1045
 msgid " Rows of "
 msgstr " строк "
 
-#: ../plug-ins/common/file-gih.c:1048
+#: ../plug-ins/common/file-gih.c:1057
 msgid " Columns on each layer"
 msgstr " столбцов на каждом слое"
 
-#: ../plug-ins/common/file-gih.c:1052
+#: ../plug-ins/common/file-gih.c:1061
 msgid " (Width Mismatch!) "
 msgstr " (ошибочная ширина!) "
 
-#: ../plug-ins/common/file-gih.c:1056
+#: ../plug-ins/common/file-gih.c:1065
 msgid " (Height Mismatch!) "
 msgstr " (ошибочная высота!) "
 
-#: ../plug-ins/common/file-gih.c:1061
+#: ../plug-ins/common/file-gih.c:1070
 msgid "Display as:"
 msgstr "Показать как:"
 
-#: ../plug-ins/common/file-gih.c:1072
+#: ../plug-ins/common/file-gih.c:1081
 msgid "Dimension:"
 msgstr "Размер:"
 
-#: ../plug-ins/common/file-gih.c:1148
+#: ../plug-ins/common/file-gih.c:1157
 msgid "Ranks:"
 msgstr "Количество кадров:"
 
@@ -2969,83 +2993,84 @@ msgstr "Ошибочная строка UTF-8 в файле текстуры '%s
 msgid "Pattern"
 msgstr "Текстура"
 
-#: ../plug-ins/common/file-pcx.c:134 ../plug-ins/common/file-pcx.c:153
+#: ../plug-ins/common/file-pcx.c:144 ../plug-ins/common/file-pcx.c:163
 msgid "ZSoft PCX image"
 msgstr "Изображение ZSoft PCX"
 
-#: ../plug-ins/common/file-pcx.c:375
+#: ../plug-ins/common/file-pcx.c:383
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Невозможно прочесть заголовок из '%s'"
 
-#: ../plug-ins/common/file-pcx.c:386
+#: ../plug-ins/common/file-pcx.c:394
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "'%s' не является файлом PCX"
 
-#: ../plug-ins/common/file-pcx.c:402 ../plug-ins/file-bmp/bmp-load.c:723
+#: ../plug-ins/common/file-pcx.c:410 ../plug-ins/file-bmp/bmp-load.c:723
 #: ../plug-ins/file-psd/psd-load.c:306
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Неподдерживаемая ширина изображения: %d"
 
-#: ../plug-ins/common/file-pcx.c:408 ../plug-ins/file-bmp/bmp-load.c:729
+#: ../plug-ins/common/file-pcx.c:416 ../plug-ins/file-bmp/bmp-load.c:729
 #: ../plug-ins/file-psd/psd-load.c:298
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Неподдерживаемая высота изображения: %d"
 
-#: ../plug-ins/common/file-pcx.c:414
+#: ../plug-ins/common/file-pcx.c:422
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Некорректное число байтов на строку в заголовке PCX"
 
-#: ../plug-ins/common/file-pcx.c:421
+#: ../plug-ins/common/file-pcx.c:429
 msgid "Resolution out of bounds in XCX header, using 72x72"
 msgstr ""
 
-#: ../plug-ins/common/file-pcx.c:429
+#: ../plug-ins/common/file-pcx.c:437
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Слишком большое изображение: ширина %d × высота %d"
 
-#: ../plug-ins/common/file-pcx.c:484
+#: ../plug-ins/common/file-pcx.c:526
 msgid "Unusual PCX flavour, giving up"
 msgstr "Необычный вид файла PCX. Выход."
 
-#: ../plug-ins/common/file-pcx.c:697 ../plug-ins/common/file-pnm.c:1204
+#: ../plug-ins/common/file-pcx.c:807 ../plug-ins/common/file-pnm.c:1241
 #, fuzzy
 msgid "Cannot export images with alpha channel."
 msgstr "Невозможно сохранить изображения с альфа-каналом."
 
-#: ../plug-ins/common/file-pcx.c:709
+#: ../plug-ins/common/file-pcx.c:825
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Некорректное смещение по X: %d"
 
-#: ../plug-ins/common/file-pcx.c:715
+#: ../plug-ins/common/file-pcx.c:831
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Некорректное смещение по Y: %d"
 
-#: ../plug-ins/common/file-pcx.c:721
+#: ../plug-ins/common/file-pcx.c:837
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr ""
 "Правая граница находится за допустимыми пределами (должна быть < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:728
+#: ../plug-ins/common/file-pcx.c:844
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr ""
 "Нижняя граница находится за допустимыми пределами (должна быть < %d): %d"
 
-#: ../plug-ins/common/file-pcx.c:795
+#: ../plug-ins/common/file-pcx.c:918
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ошибка при записи файла '%s': %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:319
+#: ../plug-ins/common/file-pdf-save.c:338
+#: ../plug-ins/common/file-pdf-save.c:355
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -3102,15 +3127,15 @@ msgstr "_Использовать сглаживание"
 msgid "pixels/%a"
 msgstr "точек растра/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:334
+#: ../plug-ins/common/file-pdf-save.c:370
 msgid "_Create multipage PDF..."
 msgstr "Создать _многостраничный PDF…"
 
-#: ../plug-ins/common/file-pdf-save.c:417
+#: ../plug-ins/common/file-pdf-save.c:453
 msgid "You must select a file to save!"
 msgstr "Необходимо указать имя файла для сохранения!"
 
-#: ../plug-ins/common/file-pdf-save.c:443
+#: ../plug-ins/common/file-pdf-save.c:479
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3119,59 +3144,68 @@ msgid ""
 "read only!"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:854
-#: ../plug-ins/common/file-pdf-save.c:976
+#: ../plug-ins/common/file-pdf-save.c:907
+#: ../plug-ins/common/file-pdf-save.c:1056
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Пропустить скрытые и полностью прозрачные слои"
 
-#: ../plug-ins/common/file-pdf-save.c:859
-#: ../plug-ins/common/file-pdf-save.c:981
+#: ../plug-ins/common/file-pdf-save.c:912
+#: ../plug-ins/common/file-pdf-save.c:1061
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "При возможности конвертировать растр в векторные объекты"
 
-#: ../plug-ins/common/file-pdf-save.c:864
-#: ../plug-ins/common/file-pdf-save.c:986
+#: ../plug-ins/common/file-pdf-save.c:917
+#: ../plug-ins/common/file-pdf-save.c:1066
 msgid "Apply layer masks before saving"
 msgstr "Применить маски слоёв перед сохранением"
 
-#: ../plug-ins/common/file-pdf-save.c:868
-#: ../plug-ins/common/file-pdf-save.c:990
+#: ../plug-ins/common/file-pdf-save.c:921
+#: ../plug-ins/common/file-pdf-save.c:1070
 msgid "Keeping the masks will not change the output"
 msgstr "В случае сохранения масок вид документа не изменится"
 
-#: ../plug-ins/common/file-pdf-save.c:921
+#: ../plug-ins/common/file-pdf-save.c:923
+#, fuzzy
+msgid "Reverse the pages order"
+msgstr "Обратный порядок"
+
+#: ../plug-ins/common/file-pdf-save.c:928
+msgid "Layers as pages"
+msgstr ""
+
+#: ../plug-ins/common/file-pdf-save.c:1000
 msgid "Save to:"
 msgstr "Сохранить в:"
 
-#: ../plug-ins/common/file-pdf-save.c:925
+#: ../plug-ins/common/file-pdf-save.c:1004
 msgid "Browse..."
 msgstr "Просмотр…"
 
-#: ../plug-ins/common/file-pdf-save.c:926
+#: ../plug-ins/common/file-pdf-save.c:1005
 msgid "Multipage PDF export"
 msgstr "Экспорт многостраничных документов PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:961
+#: ../plug-ins/common/file-pdf-save.c:1041
 msgid "Remove the selected pages"
 msgstr "Удалить выбранные страницы"
 
-#: ../plug-ins/common/file-pdf-save.c:971
+#: ../plug-ins/common/file-pdf-save.c:1051
 msgid "Add this image"
 msgstr "Добавить это изображение"
 
-#: ../plug-ins/common/file-pdf-save.c:1079
-#: ../plug-ins/common/file-pdf-save.c:1147
-#: ../plug-ins/common/file-pdf-save.c:1245 ../plug-ins/common/file-ps.c:1915
+#: ../plug-ins/common/file-pdf-save.c:1159
+#: ../plug-ins/common/file-pdf-save.c:1227
+#: ../plug-ins/common/file-pdf-save.c:1325 ../plug-ins/common/file-ps.c:1915
 #: ../plug-ins/file-tiff/file-tiff-load.c:925
 #, c-format
 msgid "Page %d"
 msgstr "Страница %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1116
+#: ../plug-ins/common/file-pdf-save.c:1196
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Для сохранения файла нужно добавить хотя бы одно изображение."
 
-#: ../plug-ins/common/file-pdf-save.c:1289
+#: ../plug-ins/common/file-pdf-save.c:1372
 #: ../plug-ins/print/print-draw-page.c:123
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
@@ -3260,89 +3294,89 @@ msgstr "Ошибка при загрузке файла описания инт�
 msgid "Unknown error"
 msgstr "Ошибка по неизвестной причине"
 
-#: ../plug-ins/common/file-pnm.c:264
+#: ../plug-ins/common/file-pnm.c:265
 msgid "PNM Image"
 msgstr "Изображение PNM"
 
-#: ../plug-ins/common/file-pnm.c:286
+#: ../plug-ins/common/file-pnm.c:287
 msgid "PNM image"
 msgstr "Изображение PNM"
 
-#: ../plug-ins/common/file-pnm.c:298
+#: ../plug-ins/common/file-pnm.c:299
 msgid "PBM image"
 msgstr "Изображение PPM"
 
-#: ../plug-ins/common/file-pnm.c:310
+#: ../plug-ins/common/file-pnm.c:311
 msgid "PGM image"
 msgstr "Изображение PGM"
 
-#: ../plug-ins/common/file-pnm.c:322
+#: ../plug-ins/common/file-pnm.c:323
 msgid "PPM image"
 msgstr "Изображение PPM"
 
-#: ../plug-ins/common/file-pnm.c:334
+#: ../plug-ins/common/file-pnm.c:335
 msgid "PFM image"
 msgstr "Изображение PFM"
 
-#: ../plug-ins/common/file-pnm.c:597 ../plug-ins/common/file-pnm.c:620
-#: ../plug-ins/common/file-pnm.c:629 ../plug-ins/common/file-pnm.c:642
-#: ../plug-ins/common/file-pnm.c:654 ../plug-ins/common/file-pnm.c:736
-#: ../plug-ins/common/file-pnm.c:825 ../plug-ins/common/file-pnm.c:920
-#: ../plug-ins/common/file-pnm.c:981
+#: ../plug-ins/common/file-pnm.c:599 ../plug-ins/common/file-pnm.c:622
+#: ../plug-ins/common/file-pnm.c:631 ../plug-ins/common/file-pnm.c:644
+#: ../plug-ins/common/file-pnm.c:657 ../plug-ins/common/file-pnm.c:759
+#: ../plug-ins/common/file-pnm.c:854 ../plug-ins/common/file-pnm.c:939
+#: ../plug-ins/common/file-pnm.c:1000
 msgid "Premature end of file."
 msgstr "Преждевременный конец файла."
 
-#: ../plug-ins/common/file-pnm.c:599
+#: ../plug-ins/common/file-pnm.c:601
 msgid "Invalid file."
 msgstr "Испорченный файл."
 
-#: ../plug-ins/common/file-pnm.c:614
+#: ../plug-ins/common/file-pnm.c:616
 msgid "File not in a supported format."
 msgstr "Файл неподдерживаемого формата."
 
-#: ../plug-ins/common/file-pnm.c:623
+#: ../plug-ins/common/file-pnm.c:625
 msgid "Invalid X resolution."
 msgstr "Неправильное разрешение по X."
 
-#: ../plug-ins/common/file-pnm.c:625
+#: ../plug-ins/common/file-pnm.c:627
 msgid "Image width is larger than GIMP can handle."
 msgstr "GIMP не справится с изображением такой ширины"
 
-#: ../plug-ins/common/file-pnm.c:632
+#: ../plug-ins/common/file-pnm.c:634
 msgid "Invalid Y resolution."
 msgstr "Неправильное разрешение по Y."
 
-#: ../plug-ins/common/file-pnm.c:634
+#: ../plug-ins/common/file-pnm.c:636
 msgid "Image height is larger than GIMP can handle."
 msgstr "GIMP не справится с изображением такой высоты"
 
-#: ../plug-ins/common/file-pnm.c:646
+#: ../plug-ins/common/file-pnm.c:648
 msgid "Bogus scale factor."
 msgstr ""
 
-#: ../plug-ins/common/file-pnm.c:648
+#: ../plug-ins/common/file-pnm.c:650
 #, fuzzy
 msgid "Unsupported scale factor."
 msgstr "Неподдерживаемый формат кисти"
 
-#: ../plug-ins/common/file-pnm.c:658
+#: ../plug-ins/common/file-pnm.c:661
 msgid "Unsupported maximum value."
 msgstr "Не поддерживаемое максимальное значение."
 
-#: ../plug-ins/common/file-pnm.c:1520
+#: ../plug-ins/common/file-pnm.c:1601
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1523
+#: ../plug-ins/common/file-pnm.c:1604
 msgid "Data formatting"
 msgstr "Форматирование данных"
 
-#: ../plug-ins/common/file-pnm.c:1527
+#: ../plug-ins/common/file-pnm.c:1608
 msgid "Raw"
 msgstr "Необработанный"
 
-#: ../plug-ins/common/file-pnm.c:1528
+#: ../plug-ins/common/file-pnm.c:1609
 msgid "ASCII"
 msgstr "Текстовый (ASCII)"
 
@@ -3416,14 +3450,14 @@ msgstr "Окрашивание"
 msgid "B/W"
 msgstr "Ч/Б"
 
-#: ../plug-ins/common/file-ps.c:3562 ../plug-ins/imagemap/imap_menu.c:212
+#: ../plug-ins/common/file-ps.c:3562 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Серый"
 
 #: ../plug-ins/common/file-ps.c:3563 ../plug-ins/common/file-xpm.c:480
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
-#: ../plug-ins/imagemap/imap_menu.c:211
+#: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Цвет"
 
@@ -4326,6 +4360,14 @@ msgstr "Доступные:"
 msgid "On film:"
 msgstr "На плёнку:"
 
+#: ../plug-ins/common/film.c:931 ../plug-ins/common/unit-editor.c:210
+msgid "_Add"
+msgstr "_Добавить"
+
+#: ../plug-ins/common/film.c:931 ../plug-ins/imagemap/imap_polygon.c:530
+msgid "_Remove"
+msgstr "_Удалить"
+
 #. Create selection
 #: ../plug-ins/common/film.c:966 ../plug-ins/imagemap/imap_selection.c:338
 #: ../plug-ins/selection-to-path/selection-to-path.c:437
@@ -4417,6 +4459,10 @@ msgstr "И_нтервал между отверстиями:"
 #: ../plug-ins/common/film.c:1226
 msgid "_Number height:"
 msgstr "Высота _чисел:"
+
+#: ../plug-ins/common/film.c:1239
+msgid "Re_set"
+msgstr ""
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
@@ -4688,7 +4734,7 @@ msgid "Drawing grid"
 msgstr "Рисование сетки"
 
 #: ../plug-ins/common/grid.c:642 ../plug-ins/gfig/gfig-dialog.c:1390
-#: ../plug-ins/imagemap/imap_menu.c:207
+#: ../plug-ins/imagemap/imap_menu.c:223
 msgid "Grid"
 msgstr "Сетка"
 
@@ -4928,28 +4974,6 @@ msgstr "Сохранять _максимальные каналы"
 #: ../plug-ins/common/max-rgb.c:294
 msgid "Ho_ld the minimal channels"
 msgstr "Сохранять м_инимальные каналы"
-
-#: ../plug-ins/common/metadata.c:148
-msgid "View and edit metadata (Exif, IPTC, XMP)"
-msgstr "Просмотр и редактирование метаданных (EXIF, IPTC, XMP)"
-
-#: ../plug-ins/common/metadata.c:157
-msgid "Image Metadata"
-msgstr "Метаданные изображения"
-
-#: ../plug-ins/common/metadata.c:198
-msgid "This image has no metadata attached to it."
-msgstr "Это изображение не содержит метаданных."
-
-#: ../plug-ins/common/metadata.c:426
-#, c-format
-msgid "(%lu more character(s))"
-msgstr ""
-
-#: ../plug-ins/common/metadata.c:458
-#, c-format
-msgid "(%llu more byte(s))"
-msgstr ""
 
 #: ../plug-ins/common/newsprint.c:118
 msgid "Round"
@@ -5193,7 +5217,8 @@ msgid "Display information about plug-ins"
 msgstr "Отобразить информацию о расширениях"
 
 #: ../plug-ins/common/plugin-browser.c:144
-msgid "_Plug-In Browser"
+#, fuzzy
+msgid "_Plug-in Browser"
 msgstr "Просмотрщик _расширений GIMP"
 
 #: ../plug-ins/common/plugin-browser.c:363
@@ -5225,10 +5250,12 @@ msgid "No matches"
 msgstr "Совпадений нет"
 
 #: ../plug-ins/common/plugin-browser.c:546
-msgid "Plug-In Browser"
+#, fuzzy
+msgid "Plug-in Browser"
 msgstr "Просмотрщик расширений"
 
 #: ../plug-ins/common/plugin-browser.c:589
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:42
 msgid "Name"
 msgstr "Имя"
 
@@ -5290,6 +5317,13 @@ msgstr "Сохранить файл QBE"
 #: ../plug-ins/common/qbist.c:815
 msgid "G-Qbist"
 msgstr "G-Q-бист"
+
+#: ../plug-ins/common/qbist.c:880
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:690
+#: ../plug-ins/gfig/gfig-dialog.c:885
+#: ../plug-ins/ifs-compose/ifs-compose.c:1035
+msgid "_Undo"
+msgstr "О_тменить"
 
 #: ../plug-ins/common/ripple.c:126
 msgid "Displace pixels in a ripple pattern"
@@ -5366,7 +5400,10 @@ msgid "Get _Sample Colors"
 msgstr "Получить цвета образца"
 
 #: ../plug-ins/common/sample-colorize.c:1332
+#: ../plug-ins/common/tile-small.c:561
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1070
 #: ../plug-ins/gimpressionist/orientmap.c:527
+#: ../plug-ins/gimpressionist/presets.c:1060
 #: ../plug-ins/gimpressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
@@ -5706,6 +5743,27 @@ msgstr "Сохранить файл"
 msgid "Sphere Designer"
 msgstr "Создание сферы"
 
+#: ../plug-ins/common/sphere-designer.c:2668
+#: ../plug-ins/gradient-flare/gradient-flare.c:2926
+#: ../plug-ins/ifs-compose/ifs-compose.c:1027
+msgid "_New"
+msgstr ""
+
+#: ../plug-ins/common/sphere-designer.c:2674
+msgid "D_uplicate"
+msgstr ""
+
+#: ../plug-ins/common/sphere-designer.c:2680
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:761
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1082
+#: ../plug-ins/gimpressionist/presets.c:1067
+#: ../plug-ins/gradient-flare/gradient-flare.c:2929
+#: ../plug-ins/gradient-flare/gradient-flare.c:3210
+#: ../plug-ins/ifs-compose/ifs-compose.c:1031
+#, fuzzy
+msgid "_Delete"
+msgstr "Удалить"
+
 #: ../plug-ins/common/sphere-designer.c:2690
 msgid "Properties"
 msgstr "Сво_йства"
@@ -5988,10 +6046,6 @@ msgstr "_Единицы измерения..."
 msgid "Add a New Unit"
 msgstr "Создать новую единицу"
 
-#: ../plug-ins/common/unit-editor.c:210
-msgid "_Add"
-msgstr "_Добавить"
-
 #: ../plug-ins/common/unit-editor.c:234
 msgid "_ID:"
 msgstr "_Идентификатор:"
@@ -6032,7 +6086,11 @@ msgstr "Заполните все поля"
 msgid "Unit Editor"
 msgstr "Редактор единиц"
 
+#. destroy model automatically with view
+#. Put buttons in
 #: ../plug-ins/common/unit-editor.c:416
+#: ../plug-ins/fractal-explorer/fractal-explorer.c:1058
+#: ../plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
 msgstr ""
 
@@ -6348,55 +6406,55 @@ msgstr "Создать из веб-страницы"
 msgid "Cre_ate"
 msgstr ""
 
-#: ../plug-ins/common/web-page.c:263
+#: ../plug-ins/common/web-page.c:264
 msgid "Enter location (URI):"
 msgstr "Введите расположение (URI):"
 
-#: ../plug-ins/common/web-page.c:286
+#: ../plug-ins/common/web-page.c:287
 msgid "Width (pixels):"
 msgstr "Ширина (точек растра):"
 
-#: ../plug-ins/common/web-page.c:307
+#: ../plug-ins/common/web-page.c:308
 msgid "Font size:"
 msgstr "Кегль шрифта:"
 
-#: ../plug-ins/common/web-page.c:314
+#: ../plug-ins/common/web-page.c:315
 msgid "Huge"
 msgstr "Огромный"
 
-#: ../plug-ins/common/web-page.c:315
+#: ../plug-ins/common/web-page.c:316
 msgid "Large"
 msgstr "Большой"
 
-#: ../plug-ins/common/web-page.c:316
+#: ../plug-ins/common/web-page.c:317
 msgctxt "web-page"
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../plug-ins/common/web-page.c:317
+#: ../plug-ins/common/web-page.c:318
 msgid "Small"
 msgstr "Маленький"
 
-#: ../plug-ins/common/web-page.c:318
+#: ../plug-ins/common/web-page.c:319
 msgid "Tiny"
 msgstr "Крохотный"
 
-#: ../plug-ins/common/web-page.c:442
+#: ../plug-ins/common/web-page.c:443
 #, c-format
 msgid "No URL was specified"
 msgstr "URL не был указан"
 
-#: ../plug-ins/common/web-page.c:509
+#: ../plug-ins/common/web-page.c:510
 #, c-format
 msgid "Downloading webpage '%s'"
 msgstr "Скачивается веб-страница \"%s\""
 
-#: ../plug-ins/common/web-page.c:526
+#: ../plug-ins/common/web-page.c:527
 #, c-format
 msgid "Transferring webpage image for '%s'"
 msgstr "Передаётся изображение веб-страницы для \"%s\""
 
-#: ../plug-ins/common/web-page.c:535
+#: ../plug-ins/common/web-page.c:536
 msgid "Webpage"
 msgstr "Веб-страница"
 
@@ -6501,110 +6559,136 @@ msgstr "32 разряда"
 msgid "Windows BMP image"
 msgstr "Изображение Windows BMP"
 
-#: ../plug-ins/file-darktable/file-darktable.c:371
+#: ../plug-ins/file-darktable/file-darktable.c:515
 #: ../plug-ins/file-ico/ico-load.c:742 ../plug-ins/file-jpeg/jpeg-load.c:503
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
+#: ../plug-ins/file-rawtherapee/file-rawtherapee.c:393
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Открывается пред.просмотр для '%s'"
 
 #: ../plug-ins/file-darktable/file-formats.h:46
+#: ../plug-ins/file-rawtherapee/file-formats.h:41
 msgid "Raw Canon"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:61
+#: ../plug-ins/file-rawtherapee/file-formats.h:52
 msgid "Raw Nikon"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:72
+#: ../plug-ins/file-rawtherapee/file-formats.h:63
 msgid "Raw Hasselblad"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:83
+#: ../plug-ins/file-rawtherapee/file-formats.h:74
 msgid "Raw Sony"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:94
+#: ../plug-ins/file-rawtherapee/file-formats.h:85
 msgid "Raw Casio BAY"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:105
+#: ../plug-ins/file-rawtherapee/file-formats.h:96
 msgid "Raw Phantom Software CINE"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:116
+#: ../plug-ins/file-rawtherapee/file-formats.h:107
 msgid "Raw Sinar"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:127
+#: ../plug-ins/file-rawtherapee/file-formats.h:118
 msgid "Raw Kodak"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:139
+#: ../plug-ins/file-rawtherapee/file-formats.h:129
 msgid "Raw Adobe DNG Digital Negative"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:150
+#: ../plug-ins/file-rawtherapee/file-formats.h:140
 msgid "Raw Epson ERF"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:161
+#: ../plug-ins/file-rawtherapee/file-formats.h:151
 msgid "Raw Phase One"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:172
+#: ../plug-ins/file-rawtherapee/file-formats.h:162
 msgid "Raw Minolta"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:183
+#: ../plug-ins/file-rawtherapee/file-formats.h:173
 msgid "Raw Mamiya MEF"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:193
+#: ../plug-ins/file-rawtherapee/file-formats.h:183
 msgid "Raw Leaf MOS"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:204
+#: ../plug-ins/file-rawtherapee/file-formats.h:194
 msgid "Raw Olympus ORF"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:215
+#: ../plug-ins/file-rawtherapee/file-formats.h:205
 msgid "Raw Pentax PEF"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:226
+#: ../plug-ins/file-rawtherapee/file-formats.h:216
 msgid "Raw Logitech PXN"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:237
+#: ../plug-ins/file-rawtherapee/file-formats.h:227
 msgid "Raw Apple QuickTake QTK"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:248
+#: ../plug-ins/file-rawtherapee/file-formats.h:238
 msgid "Raw Fujifilm RAF"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:259
+#: ../plug-ins/file-rawtherapee/file-formats.h:249
 msgid "Raw Panasonic"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:270
+#: ../plug-ins/file-rawtherapee/file-formats.h:260
 msgid "Raw Digital Foto Maker RDC"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:281
+#: ../plug-ins/file-rawtherapee/file-formats.h:271
 msgid "Raw Leica RWL"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:292
+#: ../plug-ins/file-rawtherapee/file-formats.h:282
 msgid "Raw Samsung SRW"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:303
+#: ../plug-ins/file-rawtherapee/file-formats.h:293
 msgid "Raw Sigma X3F"
 msgstr ""
 
 #: ../plug-ins/file-darktable/file-formats.h:314
+#: ../plug-ins/file-rawtherapee/file-formats.h:304
 msgid "Raw Arriflex ARI"
 msgstr ""
 
@@ -7559,6 +7643,13 @@ msgstr "Сохранить пламя"
 msgid "Flame"
 msgstr "Пламя"
 
+#: ../plug-ins/flame/flame.c:1037 ../plug-ins/gimpressionist/orientation.c:197
+#: ../plug-ins/gimpressionist/size.c:202
+#: ../plug-ins/gradient-flare/gradient-flare.c:2927
+#: ../plug-ins/imagemap/imap_menu.c:160
+msgid "_Edit"
+msgstr "_Правка"
+
 #: ../plug-ins/flame/flame.c:1068
 msgid "_Rendering"
 msgstr "_Визуализация"
@@ -7642,9 +7733,25 @@ msgstr "Если включено, просмотр будет обновлят�
 msgid "R_edraw preview"
 msgstr "_Обновить просмотр"
 
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
+#, fuzzy
+msgid "Zoom _In"
+msgstr "Приблизить"
+
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:677
+#, fuzzy
+msgid "Zoom _Out"
+msgstr "Отдалить"
+
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:694
 msgid "Undo last zoom change"
 msgstr "Отменить последнее изменение масштаба"
+
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:700
+#: ../plug-ins/ifs-compose/ifs-compose.c:1039
+#, fuzzy
+msgid "_Redo"
+msgstr "Повторить"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:704
 msgid "Redo last zoom change"
@@ -8051,17 +8158,30 @@ msgstr "Сохранить рисунок Gfig"
 msgid "First Gfig"
 msgstr "Первый Gfig"
 
-#: ../plug-ins/gfig/gfig-dialog.c:885
-msgid "_Undo"
-msgstr "О_тменить"
+#: ../plug-ins/gfig/gfig-dialog.c:871 ../plug-ins/imagemap/imap_menu.c:148
+msgid "_Open..."
+msgstr "_Открыть"
+
+#: ../plug-ins/gfig/gfig-dialog.c:875 ../plug-ins/imagemap/imap_menu.c:151
+msgid "_Save..."
+msgstr "_Сохранить..."
 
 #: ../plug-ins/gfig/gfig-dialog.c:889
 msgid "_Clear"
 msgstr "О_чистить"
 
-#: ../plug-ins/gfig/gfig-dialog.c:893 ../plug-ins/imagemap/imap_menu.c:207
+#: ../plug-ins/gfig/gfig-dialog.c:893 ../plug-ins/imagemap/imap_menu.c:223
 msgid "_Grid"
 msgstr "_Сетка"
+
+#: ../plug-ins/gfig/gfig-dialog.c:897
+#, fuzzy
+msgid "_Preferences..."
+msgstr "Параметры"
+
+#: ../plug-ins/gfig/gfig-dialog.c:901
+msgid "_Raise"
+msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:901
 msgid "Raise selected object"
@@ -8072,20 +8192,45 @@ msgid "Lower selected object"
 msgstr "Опустить выделенный объект"
 
 #: ../plug-ins/gfig/gfig-dialog.c:909
+#, fuzzy
+msgid "Raise to _top"
+msgstr "точек растра св_ерху"
+
+#: ../plug-ins/gfig/gfig-dialog.c:909
 msgid "Raise selected object to top"
 msgstr "Поднять выбранный объект на передний план"
+
+#: ../plug-ins/gfig/gfig-dialog.c:913
+#, fuzzy
+msgid "Lower to _bottom"
+msgstr "Вн_из"
 
 #: ../plug-ins/gfig/gfig-dialog.c:913
 msgid "Lower selected object to bottom"
 msgstr "Опустить выбранный объект до самого низа"
 
 #: ../plug-ins/gfig/gfig-dialog.c:917
+#, fuzzy
+msgid "_Previous"
+msgstr "_Предыдущее"
+
+#: ../plug-ins/gfig/gfig-dialog.c:917
 msgid "Show previous object"
 msgstr "Показать предыдущий объект"
 
 #: ../plug-ins/gfig/gfig-dialog.c:921
+#, fuzzy
+msgid "_Next"
+msgstr "_Следующее"
+
+#: ../plug-ins/gfig/gfig-dialog.c:921
 msgid "Show next object"
 msgstr "Показать следующий объект"
+
+#: ../plug-ins/gfig/gfig-dialog.c:925
+#, fuzzy
+msgid "Show _all"
+msgstr "Показать все объекты"
 
 #: ../plug-ins/gfig/gfig-dialog.c:925 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Show all objects"
@@ -8174,7 +8319,7 @@ msgstr "Передний план"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1323 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
-#: ../plug-ins/imagemap/imap_menu.c:158
+#: ../plug-ins/imagemap/imap_menu.c:168
 msgid "Copy"
 msgstr "Скопировать"
 
@@ -8210,7 +8355,7 @@ msgstr "Секторы полярной сетки:"
 msgid "Polar grid radius interval:"
 msgstr "Интервал радиусов пол. сетки:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1477 ../plug-ins/imagemap/imap_menu.c:218
+#: ../plug-ins/gfig/gfig-dialog.c:1477 ../plug-ins/imagemap/imap_menu.c:234
 msgid "Rectangle"
 msgstr "Прямоугольник"
 
@@ -8345,8 +8490,14 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Изменить гамму (яркость) выбранной кисти"
 
 #: ../plug-ins/gimpressionist/brush.c:570
+#: ../plug-ins/metadata/metadata-editor.c:570
 msgid "Select:"
 msgstr "Выбор:"
+
+#: ../plug-ins/gimpressionist/brush.c:586
+#, fuzzy
+msgid "Save _as"
+msgstr "Сохранить _как..."
 
 #: ../plug-ins/gimpressionist/brush.c:599
 msgid "Aspect ratio:"
@@ -9138,130 +9289,469 @@ msgstr "Сохранить данные IPTC"
 msgid "save thumbnail"
 msgstr "Сохранить миниатюру"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:1
-msgid "Exif Tag"
-msgstr "Запись Exif"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
+msgid "Document Title"
+msgstr "Название документа"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:3
-msgid "Exif"
-msgstr "Exif"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:4
-msgid "XMP Tag"
-msgstr "Запись XMP"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:5
-msgid "XMP"
-msgstr "XMP"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:6
-msgid "Title"
-msgstr "Название"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:7
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:2
 msgid "Author"
 msgstr "Автор"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:8
-msgid "Authortitle"
-msgstr ""
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:9
-msgid "Copyright"
-msgstr "Авторские права"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:10
-msgid "Caption"
-msgstr ""
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:11
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:3
 #, fuzzy
-msgid "Captionwriter"
-msgstr "Заголовок"
+msgid "Author Title"
+msgstr "Автор"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:12
-msgid "Headline"
-msgstr "Заголовок"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:13
-msgid ""
-"Special\n"
-"Instructions"
-msgstr ""
-"Особые\n"
-"инструкции"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:15
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:4
 msgid "Description"
 msgstr "Описание"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:16
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
+#, fuzzy
+msgid "Description Writer\t"
+msgstr "Описание"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
+msgid "Rating"
+msgstr "Оценка"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
 msgid "Keywords"
 msgstr "Ключевые слова"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:17
-msgid "Category"
-msgstr "Категория"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:8
+msgid "Copyright Status"
+msgstr "Статус авторских прав"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:18
-msgid ""
-"Supplemental\n"
-"Category"
-msgstr ""
-"Дополнительная\n"
-"категория"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:9
+#, fuzzy
+msgid "Copyright Notice"
+msgstr "Авторские права"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:20
-msgid "Urgency"
-msgstr "Срочность"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:10
+#, fuzzy
+msgid "Copyright URL"
+msgstr "Авторские права"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:21
-msgid "Keywords/Categories"
-msgstr "Ключевые слова и категории"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:22
-msgid "Credit"
-msgstr "Авторы"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:23
-msgid "Source"
-msgstr "Источник"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:24
-msgid ""
-"Transmission\n"
-"reference"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:11
+msgid "Address"
 msgstr ""
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:26
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:12
 msgid "City"
 msgstr "Город"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:27
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:13
+msgid "Postal Code\t"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:14
+#, fuzzy
+msgid "State / Province"
+msgstr "/Вращение\\/Масштаб"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:15
+msgid "Country"
+msgstr "Страна"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:16
+#, fuzzy
+msgid "Phone(s)"
+msgstr "Фонг"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:17
+msgid "Email(s)"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:18
+msgid "Website(s)"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:19
+#, fuzzy
+msgid "Creation Date"
+msgstr "Дата установки"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:20
+msgid "Intellectual Genre"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:21
+msgid "IPTC Scene Code"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
+#, fuzzy
+msgid "Sublocation\t"
+msgstr "Местоположение"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:23
+#, fuzzy
+msgid "ISO Country Code"
+msgstr "Страна"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:24
+msgid "IPTC Subject Code"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
+msgid "Headline"
+msgstr "Заголовок"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:26
+msgid "Urgency"
+msgstr "Срочность"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:27
+msgid "Job Identifier\t"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
+msgid "Instructions"
+msgstr "Инструкции"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:29
+#, fuzzy
+msgid "Credit Line"
+msgstr "Авторы"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
+msgid "Source"
+msgstr "Источник"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
+#, fuzzy
+msgid "Usage Terms"
+msgstr "Типы изображений"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:32
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:7
+msgid "IPTC"
+msgstr "IPTC"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
 msgid "Sublocation"
 msgstr "Местоположение"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:28
-msgid "Province/State"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:34
+#, fuzzy
+msgid "Province / Sate"
 msgstr ""
 "Провинция\n"
 "или штат"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:29
-msgid "Country"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:35
+msgid "Person Shown"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:36
+msgid "Country Name"
+msgstr "Название страны"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:37
+#, fuzzy
+msgid "Country ISO-Code"
 msgstr "Страна"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:30
-msgid "Credits/Origin"
-msgstr "Авторы и происхождение"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:38
+#, fuzzy
+msgid "World Region"
+msgstr "Выделить область"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:31
-msgid "Write IPTC Data"
-msgstr "Записать данные IPTC"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:39
+msgid "Location Shown"
+msgstr ""
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:32
-msgid "IPTC"
-msgstr "IPTC"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:40
+msgid "Featured Organisation"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:41
+msgid "Event"
+msgstr "Событие"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:43
+msgid "Add an entry"
+msgstr "Добавить запись"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:44
+msgid "Remove an entry"
+msgstr "Удалить запись"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:45
+msgid "Code"
+msgstr "Код"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:46
+msgid "Province / State"
+msgstr "Провинция или штат"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
+msgid "Country ISO Code"
+msgstr "ISO-код страны"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:48
+#, fuzzy
+msgid "Artwork or Object"
+msgstr "Проекция"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:49
+msgid "Title"
+msgstr "Название"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:50
+msgid "Date Created"
+msgstr "Дата создания"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:51
+msgid "Creator"
+msgstr "Создатель"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:52
+msgid "Source Inventory ID"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:53
+#, fuzzy
+msgid "Model Age"
+msgstr "Режим _1"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:54
+msgid "Minor Model Age Disclosure"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
+msgid "Model Release Status"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:56
+#, fuzzy
+msgid "Additional Model Info"
+msgstr "Добавить дополнительные направляющие"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:57
+msgid "Model Release Identifier"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:58
+#, fuzzy
+msgid "Image Supplier ID"
+msgstr "Размер изображения"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:59
+msgid "Supplier's Image ID"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:60
+msgid "Registry Entry"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:61
+#, fuzzy
+msgid "Image Supplier Name"
+msgstr "Размер изображения"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:62
+msgid "Max. Available Width"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:63
+#, fuzzy
+msgid "Max. Available Height"
+msgstr "Доступные:"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:64
+#, fuzzy
+msgid "Digital Source Type"
+msgstr "Тип освещения:"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:65
+msgid "Organization Identifier"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:66
+msgid "Item Identifier"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:67
+msgid "Copyright Owner"
+msgstr "Владелец авторских прав"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:68
+#, fuzzy
+msgid "Licensor"
+msgstr "_Лицензия:"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
+msgid "Property Release Status"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:70
+msgid "Image Creator"
+msgstr "Создатель изображения"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:71
+msgid "Identifier"
+msgstr "Идентификатор"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:72
+msgid "Phone Number 1"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:73
+msgid "Phone Type 1"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:74
+msgid "Phone Number 2"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:75
+msgid "Phone Type 2"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:76
+msgid "Email Address"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
+msgid "Web Address"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
+msgid "Property Release Identifier"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:79
+msgid "IPTC Extension"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:80
+#, fuzzy
+msgid "Supplemental Category"
+msgstr ""
+"Дополнительная\n"
+"категория"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:81
+msgid "Category"
+msgstr "Категория"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:82
+msgid "Categories"
+msgstr "Категории"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:83
+msgid "Longitude Reference"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:84
+msgid "Longitude"
+msgstr "Долгота"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:85
+msgid "Altitude"
+msgstr "Высота"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:86
+msgid "Latitude"
+msgstr "Широта"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:87
+msgid "Latitude Reference"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:88
+msgid "Altitude Reference"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:89
+msgid "GPS"
+msgstr "GPS"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:90
+msgid "Patient"
+msgstr "Пациент"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:91
+msgid "Patient ID"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:92
+msgid "Date of Birth"
+msgstr "Дата рождения"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:93
+msgid "Patient Sex"
+msgstr "Пол пациента"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
+msgid "Study ID"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:95
+#, fuzzy
+msgid "Referring Physician"
+msgstr "Отображение ветра"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:96
+msgid "Study Date"
+msgstr "Дата исследования"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:97
+msgid "Study Description"
+msgstr "Описание исследования"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:98
+#, fuzzy
+msgid "Series Number"
+msgstr "Выбрать цвет цифр"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:99
+msgid "Modality"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
+msgid "Series Date"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:101
+#, fuzzy
+msgid "Series Description"
+msgstr "Описание"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:102
+msgid "Equipment Institution"
+msgstr ""
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
+msgid "Equipment Manufacturer"
+msgstr "Производитель оборудования"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:104
+msgid "DICOM"
+msgstr "DICOM"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
+msgid "Exif Tag"
+msgstr "Запись Exif"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
+msgid "Exif"
+msgstr "Exif"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:4
+msgid "XMP Tag"
+msgstr "Запись XMP"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:5
+msgid "XMP"
+msgstr "XMP"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:6
+#, fuzzy
+msgid "IPTC Tag"
+msgstr "Запись XMP"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -9528,12 +10018,12 @@ msgid "Shape of Second Flares"
 msgstr "Форма второй вспышки"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3887
-#: ../plug-ins/imagemap/imap_menu.c:220
+#: ../plug-ins/imagemap/imap_menu.c:236
 msgid "Circle"
 msgstr "Круг"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3904
-#: ../plug-ins/imagemap/imap_menu.c:222
+#: ../plug-ins/imagemap/imap_menu.c:238
 msgid "Polygon"
 msgstr "Многоугольник"
 
@@ -9605,19 +10095,25 @@ msgstr "Переключить видимость боковой панели"
 msgid "Visit the GIMP documentation website"
 msgstr "Посетите сайт документации GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:1148
+#: ../plug-ins/help-browser/dialog.c:1147
 msgid "Find:"
 msgstr "Искать:"
 
-#: ../plug-ins/help-browser/dialog.c:1165
+#: ../plug-ins/help-browser/dialog.c:1164
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Предыдущее"
 
-#: ../plug-ins/help-browser/dialog.c:1177
+#: ../plug-ins/help-browser/dialog.c:1176
 msgctxt "search"
 msgid "_Next"
 msgstr "_Следующее"
+
+#: ../plug-ins/help-browser/dialog.c:1188
+#, fuzzy
+msgctxt "search"
+msgid "_Close"
+msgstr "_Закрыть"
 
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
@@ -9760,7 +10256,7 @@ msgid "Relative probability:"
 msgstr "Относительная вероятность:"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1043
-#: ../plug-ins/imagemap/imap_menu.c:161
+#: ../plug-ins/imagemap/imap_menu.c:174
 msgid "Select _All"
 msgstr "Выделить _все"
 
@@ -9843,7 +10339,8 @@ msgid "Open IFS Fractal file"
 msgstr "Открыть файл IFS"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-msgid "Image Map Plug-In"
+#, fuzzy
+msgid "Image Map Plug-in"
 msgstr "Карта изображения"
 
 #: ../plug-ins/imagemap/imap_about.c:46
@@ -9889,17 +10386,17 @@ msgstr "Создать"
 
 #: ../plug-ins/imagemap/imap_cmd_cut.c:54
 #: ../plug-ins/imagemap/imap_cmd_cut_object.c:50
-#: ../plug-ins/imagemap/imap_menu.c:157
+#: ../plug-ins/imagemap/imap_menu.c:166
 msgid "Cut"
 msgstr "Вырезать"
 
 #: ../plug-ins/imagemap/imap_cmd_delete.c:56
-#: ../plug-ins/imagemap/imap_menu.c:160
+#: ../plug-ins/imagemap/imap_menu.c:172
 msgid "Delete"
 msgstr "Удалить"
 
 #: ../plug-ins/imagemap/imap_cmd_delete_point.c:60
-#: ../plug-ins/imagemap/imap_menu.c:177
+#: ../plug-ins/imagemap/imap_menu.c:193
 msgid "Delete Point"
 msgstr "Удалить точку"
 
@@ -10006,13 +10503,13 @@ msgid "Guides"
 msgstr "Направляющие"
 
 #: ../plug-ins/imagemap/imap_cmd_insert_point.c:61
-#: ../plug-ins/imagemap/imap_menu.c:176
+#: ../plug-ins/imagemap/imap_menu.c:192
 msgid "Insert Point"
 msgstr "Вставить точку"
 
 #: ../plug-ins/imagemap/imap_cmd_move_down.c:52
 #: ../plug-ins/imagemap/imap_cmd_object_down.c:54
-#: ../plug-ins/imagemap/imap_menu.c:174
+#: ../plug-ins/imagemap/imap_menu.c:190
 msgid "Move Down"
 msgstr "Переместить вниз"
 
@@ -10030,12 +10527,12 @@ msgstr "Переместить вперед"
 
 #: ../plug-ins/imagemap/imap_cmd_move_up.c:52
 #: ../plug-ins/imagemap/imap_cmd_object_up.c:54
-#: ../plug-ins/imagemap/imap_menu.c:173
+#: ../plug-ins/imagemap/imap_menu.c:189
 msgid "Move Up"
 msgstr "Переместить вверх"
 
 #: ../plug-ins/imagemap/imap_cmd_paste.c:50
-#: ../plug-ins/imagemap/imap_menu.c:159
+#: ../plug-ins/imagemap/imap_menu.c:170
 msgid "Paste"
 msgstr "Вставить"
 
@@ -10275,151 +10772,139 @@ msgstr "_Отменить %s"
 msgid "_Redo %s"
 msgstr "По_вторить %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:144
+#: ../plug-ins/imagemap/imap_menu.c:146
 msgid "_File"
 msgstr "_Файл"
 
-#: ../plug-ins/imagemap/imap_menu.c:145
-msgid "_Open..."
-msgstr "_Открыть"
-
-#: ../plug-ins/imagemap/imap_menu.c:145
+#: ../plug-ins/imagemap/imap_menu.c:148
 msgid "Open"
 msgstr "Открыть"
 
-#: ../plug-ins/imagemap/imap_menu.c:147
-msgid "_Save..."
-msgstr "_Сохранить..."
-
-#: ../plug-ins/imagemap/imap_menu.c:147
+#: ../plug-ins/imagemap/imap_menu.c:151
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../plug-ins/imagemap/imap_menu.c:149
+#: ../plug-ins/imagemap/imap_menu.c:154
 msgid "Save _As..."
 msgstr "Сохранить _как..."
 
-#: ../plug-ins/imagemap/imap_menu.c:154
-msgid "_Edit"
-msgstr "_Правка"
-
-#: ../plug-ins/imagemap/imap_menu.c:155
+#: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Undo"
 msgstr "Отменить"
 
-#: ../plug-ins/imagemap/imap_menu.c:156
+#: ../plug-ins/imagemap/imap_menu.c:164
 msgid "Redo"
 msgstr "Повторить"
 
-#: ../plug-ins/imagemap/imap_menu.c:162
+#: ../plug-ins/imagemap/imap_menu.c:176
 msgid "D_eselect All"
 msgstr "Снять _выделение"
 
-#: ../plug-ins/imagemap/imap_menu.c:164
+#: ../plug-ins/imagemap/imap_menu.c:179
 msgid "Edit Area _Info..."
 msgstr "_Изменить информацию об области..."
 
-#: ../plug-ins/imagemap/imap_menu.c:165
+#: ../plug-ins/imagemap/imap_menu.c:180
 msgid "Edit selected area info"
 msgstr "Изменить данные о выделенной области"
 
-#: ../plug-ins/imagemap/imap_menu.c:166
+#: ../plug-ins/imagemap/imap_menu.c:182
 msgid "Preferences"
 msgstr "Параметры"
 
-#: ../plug-ins/imagemap/imap_menu.c:168
+#: ../plug-ins/imagemap/imap_menu.c:184
 msgid "Move Area to Front"
 msgstr "Переместить область на передний план"
 
-#: ../plug-ins/imagemap/imap_menu.c:170
+#: ../plug-ins/imagemap/imap_menu.c:186
 msgid "Move Area to Bottom"
 msgstr "Переместить область на задний план"
 
-#: ../plug-ins/imagemap/imap_menu.c:172
+#: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Delete Area"
 msgstr "Удалить область"
 
-#: ../plug-ins/imagemap/imap_menu.c:179
+#: ../plug-ins/imagemap/imap_menu.c:195
 msgid "_View"
 msgstr "_Вид"
 
-#: ../plug-ins/imagemap/imap_menu.c:180
+#: ../plug-ins/imagemap/imap_menu.c:196
 msgid "Source..."
 msgstr "Источник..."
 
-#: ../plug-ins/imagemap/imap_menu.c:181
+#: ../plug-ins/imagemap/imap_menu.c:197
 msgid "Zoom in"
 msgstr "Приблизить"
 
-#: ../plug-ins/imagemap/imap_menu.c:182
+#: ../plug-ins/imagemap/imap_menu.c:198
 msgid "Zoom out"
 msgstr "Отдалить"
 
-#: ../plug-ins/imagemap/imap_menu.c:183
+#: ../plug-ins/imagemap/imap_menu.c:199
 msgid "_Zoom To"
 msgstr "_Масштаб до..."
 
-#: ../plug-ins/imagemap/imap_menu.c:185
+#: ../plug-ins/imagemap/imap_menu.c:201
 msgid "_Mapping"
 msgstr "_Карта"
 
-#: ../plug-ins/imagemap/imap_menu.c:186
+#: ../plug-ins/imagemap/imap_menu.c:202
 msgid "Edit Map Info..."
 msgstr "Правка информации о карте..."
 
-#: ../plug-ins/imagemap/imap_menu.c:187
+#: ../plug-ins/imagemap/imap_menu.c:203
 msgid "Edit Map Info"
 msgstr "Правка информации о карте"
 
-#: ../plug-ins/imagemap/imap_menu.c:189
+#: ../plug-ins/imagemap/imap_menu.c:205
 msgid "_Tools"
 msgstr "С_ервис"
 
-#: ../plug-ins/imagemap/imap_menu.c:190
+#: ../plug-ins/imagemap/imap_menu.c:206
 msgid "Grid Settings..."
 msgstr "Параметры сетки..."
 
-#: ../plug-ins/imagemap/imap_menu.c:192
+#: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Use GIMP Guides..."
 msgstr "Использовать направляющие GIMP..."
 
-#: ../plug-ins/imagemap/imap_menu.c:194
+#: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
 msgstr "Создать направляющие..."
 
-#: ../plug-ins/imagemap/imap_menu.c:197
+#: ../plug-ins/imagemap/imap_menu.c:213
 msgid "_Help"
 msgstr "_Справка"
 
-#: ../plug-ins/imagemap/imap_menu.c:198
+#: ../plug-ins/imagemap/imap_menu.c:214
 msgid "_Contents"
 msgstr "_Содержание"
 
-#: ../plug-ins/imagemap/imap_menu.c:201
+#: ../plug-ins/imagemap/imap_menu.c:217
 msgid "_Zoom"
 msgstr "_Масштаб"
 
-#: ../plug-ins/imagemap/imap_menu.c:206
+#: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Area List"
 msgstr "Список областей"
 
-#: ../plug-ins/imagemap/imap_menu.c:216
+#: ../plug-ins/imagemap/imap_menu.c:232
 msgid "Arrow"
 msgstr "Стрелка"
 
-#: ../plug-ins/imagemap/imap_menu.c:217
+#: ../plug-ins/imagemap/imap_menu.c:233
 msgid "Select existing area"
 msgstr "Выбрать существующую область"
 
-#: ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/imagemap/imap_menu.c:235
 msgid "Define Rectangle area"
 msgstr "Определить область прямоугольника"
 
-#: ../plug-ins/imagemap/imap_menu.c:221
+#: ../plug-ins/imagemap/imap_menu.c:237
 msgid "Define Circle/Oval area"
 msgstr "Определить область окружности/овала"
 
-#: ../plug-ins/imagemap/imap_menu.c:223
+#: ../plug-ins/imagemap/imap_menu.c:239
 msgid "Define Polygon area"
 msgstr "Определить область многоугольника"
 
@@ -10442,10 +10927,6 @@ msgstr "_Вставка"
 #: ../plug-ins/imagemap/imap_polygon.c:524
 msgid "A_ppend"
 msgstr "_Присоединить"
-
-#: ../plug-ins/imagemap/imap_polygon.c:530
-msgid "_Remove"
-msgstr "_Удалить"
 
 #: ../plug-ins/imagemap/imap_preferences.c:247
 msgid "Couldn't save resource file:"
@@ -11173,6 +11654,58 @@ msgstr "Показать _каркас"
 msgid "Update preview _live"
 msgstr "О_бновить предпросмотр"
 
+#: ../plug-ins/metadata/metadata-editor.c:408
+msgid "Edit metadata (IPTC, GPS, DICOM)"
+msgstr "Изменить метаданные (IPTC, GPS, DICOM)"
+
+#: ../plug-ins/metadata/metadata-editor.c:416
+msgid "Edit metadata"
+msgstr "Изменить метаданные"
+
+#: ../plug-ins/metadata/metadata-editor.c:539
+#, c-format
+msgid "Metadata Editor: %s"
+msgstr "Правка метаданных: %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:548
+#, fuzzy
+msgid "Write Metadata"
+msgstr "Метаданные изображения"
+
+#: ../plug-ins/metadata/metadata-editor.c:572
+#, fuzzy
+msgid "Import metadata"
+msgstr "Метаданные изображения"
+
+#: ../plug-ins/metadata/metadata-editor.c:574
+msgid "Export metadata"
+msgstr ""
+
+#: ../plug-ins/metadata/metadata-editor.c:757
+msgid "Calendar Date:"
+msgstr ""
+
+#: ../plug-ins/metadata/metadata-editor.c:761
+msgid "Set Date"
+msgstr ""
+
+#: ../plug-ins/metadata/metadata-editor.c:1611
+msgid "Unrated"
+msgstr ""
+
+#: ../plug-ins/metadata/metadata-viewer.c:104
+msgid "View metadata (Exif, IPTC, XMP)"
+msgstr "Просмотреть метаданные (Exif, IPTC, XMP)"
+
+#: ../plug-ins/metadata/metadata-viewer.c:111
+msgid "View Metadata"
+msgstr "Просмотреть метаданные"
+
+#: ../plug-ins/metadata/metadata-viewer.c:201
+#, c-format
+msgid "Metadata Viewer: %s"
+msgstr "Просмотр метаданных: %s"
+
 #: ../plug-ins/pagecurl/pagecurl.c:203
 msgid "Curl up one of the image corners"
 msgstr "Завернуть один из углов изображения"
@@ -11659,6 +12192,29 @@ msgstr "_Сканер/Камера..."
 msgid "Transferring data from scanner/camera"
 msgstr "Получение данных со сканера/камеры"
 
+#, fuzzy
+#~ msgid "Edit image metadata"
+#~ msgstr "Изменить метаданные"
+
+#~ msgid "Edit Metadata"
+#~ msgstr "Изменить метаданные"
+
+#~ msgid "This image has no metadata attached to it."
+#~ msgstr "Это изображение не содержит метаданных."
+
+#, fuzzy
+#~ msgid "Captionwriter"
+#~ msgstr "Заголовок"
+
+#~ msgid "Keywords/Categories"
+#~ msgstr "Ключевые слова и категории"
+
+#~ msgid "Credits/Origin"
+#~ msgstr "Авторы и происхождение"
+
+#~ msgid "Write IPTC Data"
+#~ msgstr "Записать данные IPTC"
+
 #~ msgid "Indexed Palette Type"
 #~ msgstr "Тип индексированной палитры"
 
@@ -11887,9 +12443,6 @@ msgstr "Получение данных со сканера/камеры"
 
 #~ msgid "Rendering blast"
 #~ msgstr "Отображение порыва ветра"
-
-#~ msgid "Rendering wind"
-#~ msgstr "Отображение ветра"
 
 #~ msgid "Wind"
 #~ msgstr "Ветер"
@@ -12596,9 +13149,6 @@ msgstr "Получение данных со сканера/камеры"
 #~ msgid "Prewitt compass"
 #~ msgstr "По Превитту"
 
-#~ msgid "Gradient"
-#~ msgstr "Градиент"
-
 #~ msgid "Roberts"
 #~ msgstr "По Робертсу"
 
@@ -12671,9 +13221,6 @@ msgstr "Получение данных со сканера/камеры"
 
 #~ msgid "_Divisions:"
 #~ msgstr "_Деление:"
-
-#~ msgid "Mode _1"
-#~ msgstr "Режим _1"
 
 #~ msgid "Mode _2"
 #~ msgstr "Режим _2"
@@ -13164,9 +13711,6 @@ msgstr "Получение данных со сканера/камеры"
 #~ msgid "Sorry, channels and masks can not be rotated."
 #~ msgstr "Извините, каналы и маски не могут быть повернуты."
 
-#~ msgid "Rotating"
-#~ msgstr "Вращение"
-
 #~ msgid "Replace partial transparency with the current background color"
 #~ msgstr "Заменить частичную прозрачность текущим цветом фона"
 
@@ -13457,9 +14001,6 @@ msgstr "Получение данных со сканера/камеры"
 
 #~ msgid "To _top"
 #~ msgstr "Вв_ерх"
-
-#~ msgid "To _bottom"
-#~ msgstr "Вн_из"
 
 #~ msgid "Propagating _alpha channel"
 #~ msgstr "Распространение а_льфа-канала"
@@ -13927,9 +14468,6 @@ msgstr "Получение данных со сканера/камеры"
 
 #~ msgid "Or_igin at bottom left"
 #~ msgstr "Начало внизу слева"
-
-#~ msgid "Document not found"
-#~ msgstr "Документ не найден"
 
 #~ msgid "The requested URL could not be loaded:"
 #~ msgstr "Невозможно открыть запрашиваемый URL:"
