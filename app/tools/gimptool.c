@@ -1202,7 +1202,7 @@ gimp_tool_undo (GimpTool    *tool,
   g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
 
-  if (display == tool->display)
+  if (gimp_tool_can_undo (tool, display))
     return GIMP_TOOL_GET_CLASS (tool)->undo (tool, display);
 
   return FALSE;
@@ -1215,7 +1215,7 @@ gimp_tool_redo (GimpTool    *tool,
   g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
 
-  if (display == tool->display)
+  if (gimp_tool_can_redo (tool, display))
     return GIMP_TOOL_GET_CLASS (tool)->redo (tool, display);
 
   return FALSE;

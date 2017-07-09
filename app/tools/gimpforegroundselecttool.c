@@ -713,25 +713,19 @@ gimp_foreground_select_tool_undo (GimpTool    *tool,
                                   GimpDisplay *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  StrokeUndo               *undo      = fg_select->undo_stack->data;
 
-  if (fg_select->undo_stack)
-    {
-      StrokeUndo *undo = fg_select->undo_stack->data;
+  gimp_foreground_select_undo_pop (undo, fg_select->trimap);
 
-      gimp_foreground_select_undo_pop (undo, fg_select->trimap);
+  fg_select->undo_stack = g_list_remove (fg_select->undo_stack, undo);
+  fg_select->redo_stack = g_list_prepend (fg_select->redo_stack, undo);
 
-      fg_select->undo_stack = g_list_remove (fg_select->undo_stack, undo);
-      fg_select->redo_stack = g_list_prepend (fg_select->redo_stack, undo);
+  if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+    gimp_foreground_select_tool_preview (fg_select);
+  else
+    gimp_foreground_select_tool_set_trimap (fg_select);
 
-      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_preview (fg_select);
-      else
-        gimp_foreground_select_tool_set_trimap (fg_select);
-
-      return TRUE;
-    }
-
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
@@ -739,25 +733,19 @@ gimp_foreground_select_tool_redo (GimpTool    *tool,
                                   GimpDisplay *display)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  StrokeUndo               *undo      = fg_select->redo_stack->data;
 
-  if (fg_select->redo_stack)
-    {
-      StrokeUndo *undo = fg_select->redo_stack->data;
+  gimp_foreground_select_undo_pop (undo, fg_select->trimap);
 
-      gimp_foreground_select_undo_pop (undo, fg_select->trimap);
+  fg_select->redo_stack = g_list_remove (fg_select->redo_stack, undo);
+  fg_select->undo_stack = g_list_prepend (fg_select->undo_stack, undo);
 
-      fg_select->redo_stack = g_list_remove (fg_select->redo_stack, undo);
-      fg_select->undo_stack = g_list_prepend (fg_select->undo_stack, undo);
+  if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+    gimp_foreground_select_tool_preview (fg_select);
+  else
+    gimp_foreground_select_tool_set_trimap (fg_select);
 
-      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_preview (fg_select);
-      else
-        gimp_foreground_select_tool_set_trimap (fg_select);
-
-      return TRUE;
-    }
-
-  return FALSE;
+  return TRUE;
 }
 
 static void

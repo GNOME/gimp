@@ -504,16 +504,8 @@ gimp_warp_tool_undo (GimpTool    *tool,
   GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
   GeglNode     *to_delete;
   GeglNode     *prev_node;
-  const gchar  *type;
-
-  if (! wt->render_node)
-    return FALSE;
 
   to_delete = gegl_node_get_producer (wt->render_node, "aux", NULL);
-  type = gegl_node_get_operation (to_delete);
-
-  if (strcmp (type, "gegl:warp"))
-    return FALSE;
 
   wt->redo_stack = g_list_prepend (wt->redo_stack, to_delete);
 
@@ -538,9 +530,6 @@ gimp_warp_tool_redo (GimpTool    *tool,
 {
   GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
   GeglNode     *to_add;
-
-  if (! wt->render_node || ! wt->redo_stack)
-    return FALSE;
 
   to_add = wt->redo_stack->data;
 

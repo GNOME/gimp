@@ -519,11 +519,9 @@ static const gchar *
 gimp_transform_tool_can_undo (GimpTool    *tool,
                               GimpDisplay *display)
 {
-  GimpTransformTool *tr_tool   = GIMP_TRANSFORM_TOOL (tool);
-  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  if (display != draw_tool->display || ! tr_tool->undo_list ||
-      ! tr_tool->undo_list->next)
+  if (! tr_tool->undo_list || ! tr_tool->undo_list->next)
     return NULL;
 
   return _("Transform Step");
@@ -533,10 +531,9 @@ static const gchar *
 gimp_transform_tool_can_redo (GimpTool    *tool,
                               GimpDisplay *display)
 {
-  GimpTransformTool *tr_tool   = GIMP_TRANSFORM_TOOL (tool);
-  GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
 
-  if (display != draw_tool->display || ! tr_tool->redo_list)
+  if (! tr_tool->redo_list)
     return NULL;
 
   return _("Transform Step");
@@ -548,9 +545,6 @@ gimp_transform_tool_undo (GimpTool    *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GList             *item;
-
-  if (! gimp_transform_tool_can_undo (tool, display))
-    return FALSE;
 
   item = g_list_next (tr_tool->undo_list);
 
@@ -581,9 +575,6 @@ gimp_transform_tool_redo (GimpTool    *tool,
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GList             *item;
-
-  if (! gimp_transform_tool_can_redo (tool, display))
-    return FALSE;
 
   item = tr_tool->redo_list;
 
