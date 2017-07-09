@@ -44,7 +44,7 @@ metadata_viewer_SOURCES = \
 AM_CPPFLAGS = \
 	-I$(top_srcdir)	\
 	$(GTK_CFLAGS)	\
-	$(GEGL_CFLAGS) \
+	$(GEGL_CFLAGS)	\
 	-I$(includedir)
 
 metadata_viewer_LDADD = \
