@@ -1426,9 +1426,9 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                                   GIMP_TYPE_SETTINGS),
                   NULL);
 
-  gimp_operation_config_sync_node (GIMP_OBJECT (filter_tool->config),
+  gimp_operation_config_sync_node (filter_tool->config,
                                    filter_tool->operation);
-  gimp_operation_config_connect_node (GIMP_OBJECT (filter_tool->config),
+  gimp_operation_config_connect_node (filter_tool->config,
                                       filter_tool->operation);
 
   filter_tool->settings =
@@ -1438,7 +1438,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   g_object_ref (filter_tool->settings);
 
   pspecs =
-    gimp_operation_config_list_properties (GIMP_OBJECT (filter_tool->config),
+    gimp_operation_config_list_properties (filter_tool->config,
                                            G_TYPE_FROM_INSTANCE (filter_tool->config),
                                            0, NULL);
 

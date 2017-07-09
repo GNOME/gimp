@@ -494,7 +494,7 @@ gimp_prop_gui_new (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  param_specs = gimp_operation_config_list_properties (GIMP_OBJECT (config),
+  param_specs = gimp_operation_config_list_properties (config,
                                                        owner_type, flags,
                                                        &n_param_specs);
 

@@ -238,18 +238,18 @@ gimp_gegl_procedure_execute (GimpProcedure   *procedure,
 {
   GimpImage    *image;
   GimpDrawable *drawable;
-  GimpObject   *settings;
+  GObject      *config;
   GeglNode     *node;
 
   image    = gimp_value_get_image    (gimp_value_array_index (args, 1), gimp);
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
-  settings = g_value_get_object      (gimp_value_array_index (args, 3));
+  config   = g_value_get_object      (gimp_value_array_index (args, 3));
 
   node = gegl_node_new_child (NULL,
                               "operation", procedure->original_name,
                               NULL);
-  if (settings)
-    gimp_operation_config_sync_node (settings, node);
+  if (config)
+    gimp_operation_config_sync_node (config, node);
 
   gimp_drawable_apply_operation (drawable, progress,
                                  gimp_procedure_get_label (procedure),

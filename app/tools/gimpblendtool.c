@@ -615,7 +615,7 @@ gimp_blend_tool_start (GimpBlendTool    *blend_tool,
   gimp_blend_tool_create_filter (blend_tool, drawable);
 
   /* Initially sync all of the properties */
-  gimp_operation_config_sync_node (GIMP_OBJECT (options),
+  gimp_operation_config_sync_node (G_OBJECT (options),
                                    blend_tool->render_node);
 
   /* Connect signal handlers for the gradient */

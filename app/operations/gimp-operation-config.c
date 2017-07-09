@@ -477,15 +477,15 @@ gimp_operation_config_deserialize (Gimp          *gimp,
 }
 
 void
-gimp_operation_config_sync_node (GimpObject *config,
-                                 GeglNode   *node)
+gimp_operation_config_sync_node (GObject  *config,
+                                 GeglNode *node)
 {
   GParamSpec **pspecs;
   gchar       *operation;
   guint        n_pspecs;
   gint         i;
 
-  g_return_if_fail (GIMP_IS_OBJECT (config));
+  g_return_if_fail (G_IS_OBJECT (config));
   g_return_if_fail (GEGL_IS_NODE (node));
 
   gegl_node_get (node,
@@ -555,15 +555,15 @@ gimp_operation_config_sync_node (GimpObject *config,
 }
 
 void
-gimp_operation_config_connect_node (GimpObject *config,
-                                    GeglNode   *node)
+gimp_operation_config_connect_node (GObject  *config,
+                                    GeglNode *node)
 {
   GParamSpec **pspecs;
   gchar       *operation;
   guint        n_pspecs;
   gint         i;
 
-  g_return_if_fail (GIMP_IS_OBJECT (config));
+  g_return_if_fail (G_IS_OBJECT (config));
   g_return_if_fail (GEGL_IS_NODE (node));
 
   gegl_node_get (node,
@@ -619,7 +619,7 @@ gimp_operation_config_connect_node (GimpObject *config,
 }
 
 GParamSpec **
-gimp_operation_config_list_properties (GimpObject  *config,
+gimp_operation_config_list_properties (GObject     *config,
                                        GType        owner_type,
                                        GParamFlags  flags,
                                        guint       *n_pspecs)
@@ -628,7 +628,7 @@ gimp_operation_config_list_properties (GimpObject  *config,
   guint        n_param_specs;
   gint         i, j;
 
-  g_return_val_if_fail (GIMP_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
 
   param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
                                                 &n_param_specs);
@@ -671,7 +671,7 @@ gimp_operation_config_config_sync (GObject          *config,
                                    const GParamSpec *gimp_pspec,
                                    GeglNode         *node)
 {
-  gimp_operation_config_sync_node (GIMP_OBJECT (config), node);
+  gimp_operation_config_sync_node (config, node);
 }
 
 static void
