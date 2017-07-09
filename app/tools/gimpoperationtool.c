@@ -97,15 +97,18 @@ static void        gimp_operation_tool_color_picked    (GimpFilterTool    *filte
                                                         const GimpRGB     *color);
 
 static void        gimp_operation_tool_halt            (GimpOperationTool *op_tool);
+static void        gimp_operation_tool_commit          (GimpOperationTool *op_tool);
 
 static void        gimp_operation_tool_sync_op         (GimpOperationTool *op_tool,
                                                         gboolean           sync_colors);
 static void        gimp_operation_tool_create_gui      (GimpOperationTool *tool);
+static void        gimp_operation_tool_add_gui         (GimpOperationTool *tool);
 
 static AuxInput *  gimp_operation_tool_aux_input_new   (GimpOperationTool *tool,
                                                         GeglNode          *operation,
                                                         const gchar       *input_pad,
                                                         const gchar       *label);
+static void        gimp_operation_tool_aux_input_detach(AuxInput          *input);
 static void        gimp_operation_tool_aux_input_clear (AuxInput          *input);
 static void        gimp_operation_tool_aux_input_free  (AuxInput          *input);
 
@@ -198,7 +201,10 @@ gimp_operation_tool_initialize (GimpTool     *tool,
           gimp_operation_tool_sync_op (op_tool, TRUE);
 
           if (! op_tool->options_gui)
-            gimp_operation_tool_create_gui (op_tool);
+            {
+              gimp_operation_tool_create_gui (op_tool);
+              gimp_operation_tool_add_gui (op_tool);
+            }
         }
 
       return TRUE;
@@ -225,6 +231,7 @@ gimp_operation_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
+      gimp_operation_tool_commit (op_tool);
       break;
     }
 
@@ -278,7 +285,6 @@ gimp_operation_tool_dialog (GimpFilterTool *filter_tool)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (filter_tool);
   GtkWidget         *main_vbox;
-  GList             *list;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
@@ -291,21 +297,8 @@ gimp_operation_tool_dialog (GimpFilterTool *filter_tool)
   g_object_add_weak_pointer (G_OBJECT (tool->options_box),
                              (gpointer) &tool->options_box);
 
-  for (list = tool->aux_inputs; list; list = g_list_next (list))
-    {
-      AuxInput *input = list->data;
-
-      gtk_box_pack_start (GTK_BOX (tool->options_box), input->box,
-                          FALSE, FALSE, 0);
-      gtk_widget_show (input->box);
-    }
-
   if (tool->options_gui)
-    {
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_gui,
-                          TRUE, TRUE, 0);
-      gtk_widget_show (tool->options_gui);
-    }
+    gimp_operation_tool_add_gui (tool);
 }
 
 static void
@@ -428,9 +421,20 @@ gimp_operation_tool_halt (GimpOperationTool *op_tool)
    *  tool can be properly restarted by clicking on an image
    */
 
-  g_list_foreach (op_tool->aux_inputs,
-                  (GFunc) gimp_operation_tool_aux_input_clear, NULL);
+  g_list_free_full (op_tool->aux_inputs,
+                    (GDestroyNotify) gimp_operation_tool_aux_input_free);
   op_tool->aux_inputs = NULL;
+}
+
+static void
+gimp_operation_tool_commit (GimpOperationTool *op_tool)
+{
+  /*  remove the aux input boxes from the dialog, so they don't get
+   *  destroyed when the parent class runs its commit()
+   */
+
+  g_list_foreach (op_tool->aux_inputs,
+                  (GFunc) gimp_operation_tool_aux_input_detach, NULL);
 }
 
 static void
@@ -507,6 +511,7 @@ gimp_operation_tool_create_gui (GimpOperationTool *tool)
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
   gint            off_x, off_y;
   GeglRectangle   area;
+  gint            aux;
 
   gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
@@ -526,12 +531,71 @@ gimp_operation_tool_create_gui (GimpOperationTool *tool)
   gimp_filter_tool_set_has_settings (filter_tool,
                                      ! GTK_IS_LABEL (tool->options_gui));
 
-  if (tool->options_box)
+  for (aux = 1; ; aux++)
     {
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_gui,
-                          TRUE, TRUE, 0);
-      gtk_widget_show (tool->options_gui);
+      gchar pad[32];
+      gchar label[32];
+
+      if (aux == 1)
+        {
+          g_snprintf (pad,   sizeof (pad),   "aux");
+          /* don't translate "Aux" */
+          g_snprintf (label, sizeof (label), _("Aux Input"));
+        }
+      else
+        {
+          g_snprintf (pad,   sizeof (pad),   "aux%d", aux);
+          /* don't translate "Aux" */
+          g_snprintf (label, sizeof (label), _("Aux%d Input"), aux);
+        }
+
+      if (gegl_node_has_pad (filter_tool->operation, pad))
+        {
+          AuxInput *input;
+
+          input = gimp_operation_tool_aux_input_new (tool,
+                                                     filter_tool->operation, pad,
+                                                     label);
+
+          tool->aux_inputs = g_list_append (tool->aux_inputs, input);
+        }
+      else
+        {
+          break;
+        }
     }
+}
+
+static void
+gimp_operation_tool_add_gui (GimpOperationTool *tool)
+{
+  GtkSizeGroup *size_group  = NULL;
+  GList        *list;
+
+  for (list = tool->aux_inputs; list; list = g_list_next (list))
+    {
+      AuxInput  *input = list->data;
+      GtkWidget *toggle;
+
+      if (! size_group)
+        size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+      toggle =
+        gimp_buffer_source_box_get_toggle (GIMP_BUFFER_SOURCE_BOX (input->box));
+
+      gtk_size_group_add_widget (size_group, toggle);
+
+      gtk_box_pack_start (GTK_BOX (tool->options_box), input->box,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (input->box);
+    }
+
+  if (size_group)
+    g_object_unref (size_group);
+
+  gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_gui,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (tool->options_gui);
 }
 
 
@@ -542,13 +606,16 @@ gimp_operation_tool_aux_input_notify (GimpBufferSourceBox *box,
                                       const GParamSpec    *pspec,
                                       AuxInput            *input)
 {
+  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (input->tool);
+
   /* emit "notify" so GimpFilterTool will update its preview
    *
    * FIXME: this is a bad hack that should go away once GimpImageMap
    * and GimpFilterTool are refactored to be more filter-ish.
    */
-  g_signal_emit_by_name (GIMP_FILTER_TOOL (input->tool)->config,
-                         "notify", NULL);
+  if (filter_tool->config)
+    g_signal_emit_by_name (filter_tool->config,
+                           "notify", NULL);
 }
 
 static AuxInput *
@@ -573,6 +640,9 @@ gimp_operation_tool_aux_input_new (GimpOperationTool *tool,
 
   input->box = gimp_buffer_source_box_new (context, input->node, label);
 
+  /* make AuxInput owner of the box */
+  g_object_ref_sink (input->box);
+
   g_signal_connect (input->box, "notify::pickable",
                     G_CALLBACK (gimp_operation_tool_aux_input_notify),
                     input);
@@ -584,8 +654,19 @@ gimp_operation_tool_aux_input_new (GimpOperationTool *tool,
 }
 
 static void
+gimp_operation_tool_aux_input_detach (AuxInput *input)
+{
+  GtkWidget *parent = gtk_widget_get_parent (input->box);
+
+  if (parent)
+    gtk_container_remove (GTK_CONTAINER (parent), input->box);
+}
+
+static void
 gimp_operation_tool_aux_input_clear (AuxInput *input)
 {
+  gimp_operation_tool_aux_input_detach (input);
+
   g_object_set (input->box,
                 "pickable", NULL,
                 NULL);
@@ -598,7 +679,7 @@ gimp_operation_tool_aux_input_free (AuxInput *input)
 
   g_free (input->pad);
   g_object_unref (input->node);
-  gtk_widget_destroy (input->box);
+  g_object_unref (input->box);
 
   g_slice_free (AuxInput, input);
 }
@@ -616,8 +697,6 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *help_id)
 {
   GimpFilterTool *filter_tool;
-  GtkSizeGroup   *size_group = NULL;
-  gint            aux;
 
   g_return_if_fail (GIMP_IS_OPERATION_TOOL (tool));
 
@@ -655,60 +734,14 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   gimp_filter_tool_get_operation (filter_tool);
 
-  for (aux = 1; ; aux++)
-    {
-      gchar pad[32];
-      gchar label[32];
-
-      if (aux == 1)
-        {
-          g_snprintf (pad,   sizeof (pad),   "aux");
-          /* don't translate "Aux" */
-          g_snprintf (label, sizeof (label), _("Aux Input"));
-        }
-      else
-        {
-          g_snprintf (pad,   sizeof (pad),   "aux%d", aux);
-          /* don't translate "Aux" */
-          g_snprintf (label, sizeof (label), _("Aux%d Input"), aux);
-        }
-
-      if (gegl_node_has_pad (filter_tool->operation, pad))
-        {
-          AuxInput  *input;
-          GtkWidget *toggle;
-
-          if (! size_group)
-            size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-          input = gimp_operation_tool_aux_input_new (tool,
-                                                     filter_tool->operation, pad,
-                                                     label);
-
-          tool->aux_inputs = g_list_append (tool->aux_inputs, input);
-
-          toggle = gimp_buffer_source_box_get_toggle (GIMP_BUFFER_SOURCE_BOX (input->box));
-          gtk_size_group_add_widget (size_group, toggle);
-
-          if (tool->options_box)
-            {
-              gtk_box_pack_start (GTK_BOX (tool->options_box), input->box,
-                                  FALSE, FALSE, 0);
-              gtk_widget_show (input->box);
-            }
-        }
-      else
-        {
-          break;
-        }
-    }
-
-  if (size_group)
-    g_object_unref (size_group);
-
   if (GIMP_TOOL (tool)->drawable)
     gimp_operation_tool_sync_op (tool, TRUE);
 
   if (filter_tool->config && GIMP_TOOL (tool)->display)
-    gimp_operation_tool_create_gui (tool);
+    {
+      gimp_operation_tool_create_gui (tool);
+
+      if (tool->options_box)
+        gimp_operation_tool_add_gui (tool);
+    }
 }
