@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-21 17:39+0200\n"
-"PO-Revision-Date: 2017-05-21 17:40+0200\n"
+"POT-Creation-Date: 2017-07-09 18:29+0200\n"
+"PO-Revision-Date: 2017-07-09 18:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -169,7 +169,7 @@ msgid "Confirm Save"
 msgstr "Potwierdzenie zapisu"
 
 #: ../libgimp/gimpexport.c:445 ../libgimp/gimpexport.c:527
-#: ../libgimp/gimpexport.c:1019 ../libgimpwidgets/gimpcolorbutton.c:540
+#: ../libgimp/gimpexport.c:1019 ../libgimpwidgets/gimpcolorbutton.c:588
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:152
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:162
 #: ../libgimpwidgets/gimpfileentry.c:443 ../libgimpwidgets/gimpquerybox.c:274
@@ -239,47 +239,51 @@ msgstr "Wybór czcionki"
 msgid "Gradient Selection"
 msgstr "Wybór gradientu"
 
-#: ../libgimp/gimpimagemetadata.c:610
+#: ../libgimp/gimpimagemetadata.c:477
+msgid "GIMP 2.9/2.10"
+msgstr "GIMP 2.9/2.10"
+
+#: ../libgimp/gimpimagemetadata.c:661
 msgid "Background"
 msgstr "Tło"
 
-#: ../libgimp/gimpimagemetadata.c:799
+#: ../libgimp/gimpimagemetadata.c:850
 #, c-format
 msgid "Rotate %s?"
 msgstr "Obrócić %s?"
 
-#: ../libgimp/gimpimagemetadata.c:805
+#: ../libgimp/gimpimagemetadata.c:856
 msgid "_Keep Original"
 msgstr "_Zachowaj oryginał"
 
-#: ../libgimp/gimpimagemetadata.c:806 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:274
 msgid "_Rotate"
 msgstr "O_bróć"
 
-#: ../libgimp/gimpimagemetadata.c:847
+#: ../libgimp/gimpimagemetadata.c:898
 msgid "Original"
 msgstr "Oryginał"
 
-#: ../libgimp/gimpimagemetadata.c:863
+#: ../libgimp/gimpimagemetadata.c:914
 msgid "Rotated"
 msgstr "Obrócono"
 
-#: ../libgimp/gimpimagemetadata.c:881
+#: ../libgimp/gimpimagemetadata.c:932
 msgid "This image contains Exif orientation metadata."
 msgstr "Ten obraz zawiera metadane ułożenia Exif."
 
-#: ../libgimp/gimpimagemetadata.c:899
+#: ../libgimp/gimpimagemetadata.c:950
 msgid "Would you like to rotate the image?"
 msgstr "Obrócić obraz?"
 
-#: ../libgimp/gimpimagemetadata.c:911
+#: ../libgimp/gimpimagemetadata.c:962
 msgid "_Don't ask me again"
 msgstr "_Bez pytania ponownie"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:251
+#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:252
 msgid "(Empty)"
 msgstr "(Puste)"
 
@@ -1304,22 +1308,27 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Kadrowanie z proporcjami"
 
-#: ../libgimpbase/gimpmetadata.c:575
+#: ../libgimpbase/gimpmetadata.c:843
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Można wczytywać metadane tylko z plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:635
+#: ../libgimpbase/gimpmetadata.c:903
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Można zapisywać metadane tylko do plików lokalnych"
 
-#: ../libgimpbase/gimpmetadata.c:711
+#: ../libgimpbase/gimpmetadata.c:979
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Przetworzenie danych Exif się nie powiodło."
 
-#: ../libgimpbase/gimpmetadata.c:762
+#: ../libgimpbase/gimpmetadata.c:1030
+#, c-format
+msgid "Parsing IPTC data failed."
+msgstr "Przetworzenie danych IPTC się nie powiodło."
+
+#: ../libgimpbase/gimpmetadata.c:1079
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Przetworzenie danych XMP się nie powiodło."
@@ -1366,21 +1375,21 @@ msgstr "Dane nie są profilem kolorów ICC"
 msgid "Could not save color profile to memory"
 msgstr "Nie można zapisać profilu kolorów w pamięci"
 
-#: ../libgimpcolor/gimpcolorprofile.c:590
+#: ../libgimpcolor/gimpcolorprofile.c:589
 msgid "(unnamed profile)"
 msgstr "(profil bez nazwy)"
 
-#: ../libgimpcolor/gimpcolorprofile.c:632
+#: ../libgimpcolor/gimpcolorprofile.c:631
 #, c-format
 msgid "Model: %s"
 msgstr "Model: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:641
+#: ../libgimpcolor/gimpcolorprofile.c:640
 #, c-format
 msgid "Manufacturer: %s"
 msgstr "Producent: %s"
 
-#: ../libgimpcolor/gimpcolorprofile.c:650
+#: ../libgimpcolor/gimpcolorprofile.c:649
 #, c-format
 msgid "Copyright: %s"
 msgstr "Prawa autorskie: %s"
@@ -1597,20 +1606,20 @@ msgstr "Wyróżnienie kolorów spoza skali"
 msgid "Out of gamut warning color"
 msgstr "Kolor ostrzeżenia kolorów spoza skali"
 
-#: ../libgimpconfig/gimpcolorconfig.c:659
-#: ../libgimpconfig/gimpcolorconfig.c:843
+#: ../libgimpconfig/gimpcolorconfig.c:660
+#: ../libgimpconfig/gimpcolorconfig.c:844
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:701
-#: ../libgimpconfig/gimpcolorconfig.c:893
+#: ../libgimpconfig/gimpcolorconfig.c:702
+#: ../libgimpconfig/gimpcolorconfig.c:894
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów szarości."
 
-#: ../libgimpconfig/gimpcolorconfig.c:743
-#: ../libgimpconfig/gimpcolorconfig.c:943
+#: ../libgimpconfig/gimpcolorconfig.c:744
+#: ../libgimpconfig/gimpcolorconfig.c:944
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Profil kolorów „%s” nie jest dla przestrzeni kolorów CMYK."
@@ -1645,7 +1654,7 @@ msgstr "podczas przetwarzania tokenu „%s”: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:658
 #: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:742
 #: ../libgimpconfig/gimpscanner.c:824
-#: ../libgimpwidgets/gimpcolorprofilestore.c:712
+#: ../libgimpwidgets/gimpcolorprofilestore.c:714
 msgid "fatal parse error"
 msgstr "krytyczny błąd podczas przetwarzania"
 
@@ -1680,7 +1689,7 @@ msgid "invalid UTF-8 string"
 msgstr "nieprawidłowy tekst UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:606
+#: ../libgimpconfig/gimpscanner.c:617
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "oczekiwano wartości „yes” lub „no” tokenu logicznego, otrzymano „%s”"
@@ -1741,27 +1750,27 @@ msgstr "Nie można utworzyć miniatury dla „%s”: %s"
 msgid "_Search:"
 msgstr "Wy_szukiwanie:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:137
+#: ../libgimpwidgets/gimpcolorbutton.c:152
 msgid "_Foreground Color"
 msgstr "_Kolor pierwszoplanowy"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:141
+#: ../libgimpwidgets/gimpcolorbutton.c:156
 msgid "_Background Color"
 msgstr "Kolor _tła"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:145
+#: ../libgimpwidgets/gimpcolorbutton.c:160
 msgid "Blac_k"
 msgstr "_Czarny"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:149
+#: ../libgimpwidgets/gimpcolorbutton.c:164
 msgid "_White"
 msgstr "_Biały"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:539 ../libgimpwidgets/gimpicons.c:68
+#: ../libgimpwidgets/gimpcolorbutton.c:587 ../libgimpwidgets/gimpicons.c:68
 msgid "_Reset"
 msgstr "_Przywróć"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:541
+#: ../libgimpwidgets/gimpcolorbutton.c:589
 #: ../libgimpwidgets/gimpfileentry.c:444 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:334 ../libgimpwidgets/gimpquerybox.c:398
 #: ../libgimpwidgets/gimpquerybox.c:472 ../libgimpwidgets/gimpunitmenu.c:497
@@ -1793,11 +1802,11 @@ msgstr "Katalog"
 msgid "Not a regular file."
 msgstr "Nie jest zwykłym plikiem."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:145
+#: ../libgimpwidgets/gimpcolorprofilestore.c:147
 msgid "Select color profile from disk..."
 msgstr "Wybierz profil kolorów z dysku…"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:317
+#: ../libgimpwidgets/gimpcolorprofilestore.c:319
 msgctxt "profile"
 msgid "None"
 msgstr "Brak"
@@ -1814,15 +1823,15 @@ msgstr "Prawa autorskie: "
 msgid "Scales"
 msgstr "Skale"
 
-#: ../libgimpwidgets/gimpcolorselection.c:221
+#: ../libgimpwidgets/gimpcolorselection.c:222
 msgid "Current:"
 msgstr "Bieżący:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:230
+#: ../libgimpwidgets/gimpcolorselection.c:231
 msgid "Old:"
 msgstr "Poprzedni:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:315
+#: ../libgimpwidgets/gimpcolorselection.c:316
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1830,11 +1839,11 @@ msgstr ""
 "Szesnastkowy zapis koloru jest używany w językach HTML i CSS. To pole "
 "dopuszcza również nazwy kolorów CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:321
+#: ../libgimpwidgets/gimpcolorselection.c:322
 msgid "HTML _notation:"
 msgstr "_Zapis języka HTML:"
 
-#: ../libgimpwidgets/gimpdialog.c:176
+#: ../libgimpwidgets/gimpdialog.c:182
 msgid "_Help"
 msgstr "Pomo_c"
 
@@ -1919,23 +1928,23 @@ msgstr "Odstępy między_wierszowe"
 msgid "Re_size"
 msgstr "Zmień _rozmiar"
 
-#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:272
+#: ../libgimpwidgets/gimpicons.c:140 ../libgimpwidgets/gimpicons.c:275
 msgid "_Scale"
 msgstr "Prze_skaluj"
 
-#: ../libgimpwidgets/gimpicons.c:247
+#: ../libgimpwidgets/gimpicons.c:250
 msgid "Cr_op"
 msgstr "K_adruj"
 
-#: ../libgimpwidgets/gimpicons.c:255
+#: ../libgimpwidgets/gimpicons.c:258
 msgid "_Select"
 msgstr "_Zaznacz"
 
-#: ../libgimpwidgets/gimpicons.c:267
+#: ../libgimpwidgets/gimpicons.c:270
 msgid "_Transform"
 msgstr "_Przekształć"
 
-#: ../libgimpwidgets/gimpicons.c:273
+#: ../libgimpwidgets/gimpicons.c:276
 msgid "_Shear"
 msgstr "_Zetnij"
 
@@ -1952,35 +1961,35 @@ msgid "Gigabytes"
 msgstr "GB"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:270
-#: ../libgimpwidgets/gimppageselector.c:1067
+#: ../libgimpwidgets/gimppageselector.c:274
+#: ../libgimpwidgets/gimppageselector.c:1071
 msgid "Nothing selected"
 msgstr "Nic nie zaznaczono"
 
-#: ../libgimpwidgets/gimppageselector.c:288
+#: ../libgimpwidgets/gimppageselector.c:292
 msgid "Select _All"
 msgstr "Z_aznacz wszystko"
 
-#: ../libgimpwidgets/gimppageselector.c:308
+#: ../libgimpwidgets/gimppageselector.c:312
 msgid "Select _range:"
 msgstr "_Zaznaczenie zakresu:"
 
-#: ../libgimpwidgets/gimppageselector.c:320
+#: ../libgimpwidgets/gimppageselector.c:324
 msgid "Open _pages as"
 msgstr "Otwórz _strony jako"
 
-#: ../libgimpwidgets/gimppageselector.c:449
-#: ../libgimpwidgets/gimppageselector.c:647
+#: ../libgimpwidgets/gimppageselector.c:453
+#: ../libgimpwidgets/gimppageselector.c:651
 #, c-format
 msgid "Page %d"
 msgstr "%d. strona"
 
-#: ../libgimpwidgets/gimppageselector.c:1072
+#: ../libgimpwidgets/gimppageselector.c:1076
 msgid "One page selected"
 msgstr "Zaznaczono jedną stronę"
 
-#: ../libgimpwidgets/gimppageselector.c:1079
 #: ../libgimpwidgets/gimppageselector.c:1083
+#: ../libgimpwidgets/gimppageselector.c:1087
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -2017,7 +2026,7 @@ msgstr ""
 "kolor."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:291
+#: ../libgimpwidgets/gimppreview.c:293
 msgid "_Preview"
 msgstr "_Podgląd"
 
@@ -2025,11 +2034,11 @@ msgstr "_Podgląd"
 msgid "Check Size"
 msgstr "Rozmiar szachownicy"
 
-#: ../libgimpwidgets/gimppreviewarea.c:133
+#: ../libgimpwidgets/gimppreviewarea.c:134
 msgid "Check Style"
 msgstr "Wygląd szachownicy"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2142
+#: ../libgimpwidgets/gimppropwidgets.c:2143
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2075,17 +2084,17 @@ msgstr ""
 msgid "_Randomize"
 msgstr "Wy_losuj"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:47
+#: ../libgimpwidgets/gimpwidgets-private.c:50
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Wyłączone"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:48
+#: ../libgimpwidgets/gimpwidgets-private.c:51
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Ekran"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:49
+#: ../libgimpwidgets/gimpwidgets-private.c:52
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Okno"

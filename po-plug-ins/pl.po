@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-25 19:32+0200\n"
-"PO-Revision-Date: 2017-06-25 19:33+0200\n"
+"POT-Creation-Date: 2017-07-09 18:29+0200\n"
+"PO-Revision-Date: 2017-07-09 18:30+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -776,7 +776,8 @@ msgstr "Nasycenie"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:186
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/ui/plug-in-metadata.ui.h:2
+#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "Wartość"
 
@@ -1008,13 +1009,14 @@ msgstr "Wykres bieżących ustawień"
 
 #: ../plug-ins/common/cml-explorer.c:1856
 #: ../plug-ins/common/color-cube-analyze.c:364
-#: ../plug-ins/common/metadata.c:251 ../plug-ins/common/plugin-browser.c:550
+#: ../plug-ins/common/plugin-browser.c:550
 #: ../plug-ins/common/procedure-browser.c:129
 #: ../plug-ins/common/sample-colorize.c:1331
 #: ../plug-ins/common/unit-editor.c:417 ../plug-ins/gfig/gfig-dialog.c:291
 #: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/gfig/gfig-dialog.c:1245
 #: ../plug-ins/gfig/gfig-dialog.c:1393
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
+#: ../plug-ins/metadata/metadata-viewer.c:224
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -2187,10 +2189,11 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-darktable/file-darktable.c:371
+#: ../plug-ins/file-darktable/file-darktable.c:443
 #: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:664
 #: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-rawtherapee/file-rawtherapee.c:285
 #: ../plug-ins/file-sgi/sgi.c:325 ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
@@ -2285,49 +2288,49 @@ msgstr "Eksportowanie „%s”"
 msgid "C source code"
 msgstr "Kod źródłowy języka C"
 
-#: ../plug-ins/common/file-csource.c:869
+#: ../plug-ins/common/file-csource.c:886
 msgid "C-Source"
 msgstr "Kod źródłowy języka C"
 
-#: ../plug-ins/common/file-csource.c:887
+#: ../plug-ins/common/file-csource.c:904
 msgid "_Prefixed name:"
 msgstr "_Przedrostek nazw:"
 
-#: ../plug-ins/common/file-csource.c:896
+#: ../plug-ins/common/file-csource.c:913
 msgid "Co_mment:"
 msgstr "Kom_entarz:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:903
+#: ../plug-ins/common/file-csource.c:920
 msgid "_Save comment to file"
 msgstr "Zapisanie ko_mentarza w pliku"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:915
+#: ../plug-ins/common/file-csource.c:932
 msgid "_Use GLib types (guint8*)"
 msgstr "Użycie typów z _biblioteki GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:928
+#: ../plug-ins/common/file-csource.c:945
 msgid "Us_e macros instead of struct"
 msgstr "_Makra zamiast struktur"
 
-#: ../plug-ins/common/file-csource.c:941
+#: ../plug-ins/common/file-csource.c:958
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "_1-bajtowe kodowanie RLE (Run-Length-Encoding)"
 
-#: ../plug-ins/common/file-csource.c:954
+#: ../plug-ins/common/file-csource.c:971
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Zapisanie ka_nału alfa (RGBA/RGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:966
+#: ../plug-ins/common/file-csource.c:983
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Zapisanie jako _RGB565 (16-bitowy)"
 
-#: ../plug-ins/common/file-csource.c:989
+#: ../plug-ins/common/file-csource.c:1005
 msgid "Op_acity:"
 msgstr "_Krycie:"
 
@@ -4972,28 +4975,6 @@ msgstr "Pozostawienie ma_ksymalnych kanałów"
 msgid "Ho_ld the minimal channels"
 msgstr "Pozostawienie mi_nimalnych kanałów"
 
-#: ../plug-ins/common/metadata.c:148
-msgid "View and edit metadata (Exif, IPTC, XMP)"
-msgstr "Wyświetla i modyfikuje metadane (Exif, IPTC, XMP)"
-
-#: ../plug-ins/common/metadata.c:157
-msgid "Image Metadata"
-msgstr "Metadane obrazu"
-
-#: ../plug-ins/common/metadata.c:198
-msgid "This image has no metadata attached to it."
-msgstr "Ten obraz nie ma załączonych metadanych."
-
-#: ../plug-ins/common/metadata.c:426
-#, c-format
-msgid "(%lu more character(s))"
-msgstr "(więcej znaków: %lu)"
-
-#: ../plug-ins/common/metadata.c:458
-#, c-format
-msgid "(%llu more byte(s))"
-msgstr "(więcej bajtów: %llu)"
-
 #: ../plug-ins/common/newsprint.c:118
 msgid "Round"
 msgstr "Kółka"
@@ -5269,6 +5250,7 @@ msgid "Plug-in Browser"
 msgstr "Przeglądarka wtyczek"
 
 #: ../plug-ins/common/plugin-browser.c:589
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:42
 msgid "Name"
 msgstr "Nazwa"
 
@@ -6570,110 +6552,136 @@ msgstr "32 bity"
 msgid "Windows BMP image"
 msgstr "Obraz BMP systemu Windows"
 
-#: ../plug-ins/file-darktable/file-darktable.c:443
+#: ../plug-ins/file-darktable/file-darktable.c:515
 #: ../plug-ins/file-ico/ico-load.c:742 ../plug-ins/file-jpeg/jpeg-load.c:503
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
+#: ../plug-ins/file-rawtherapee/file-rawtherapee.c:393
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Otwieranie miniatury dla „%s”"
 
 #: ../plug-ins/file-darktable/file-formats.h:46
+#: ../plug-ins/file-rawtherapee/file-formats.h:41
 msgid "Raw Canon"
 msgstr "Obraz Raw firmy Canon"
 
 #: ../plug-ins/file-darktable/file-formats.h:61
+#: ../plug-ins/file-rawtherapee/file-formats.h:52
 msgid "Raw Nikon"
 msgstr "Obraz Raw firmy Nikon"
 
 #: ../plug-ins/file-darktable/file-formats.h:72
+#: ../plug-ins/file-rawtherapee/file-formats.h:63
 msgid "Raw Hasselblad"
 msgstr "Obraz Raw firmy Hasselblad"
 
 #: ../plug-ins/file-darktable/file-formats.h:83
+#: ../plug-ins/file-rawtherapee/file-formats.h:74
 msgid "Raw Sony"
 msgstr "Obraz Raw firmy Sony"
 
 #: ../plug-ins/file-darktable/file-formats.h:94
+#: ../plug-ins/file-rawtherapee/file-formats.h:85
 msgid "Raw Casio BAY"
 msgstr "Obraz Raw BAY firmy Casio"
 
 #: ../plug-ins/file-darktable/file-formats.h:105
+#: ../plug-ins/file-rawtherapee/file-formats.h:96
 msgid "Raw Phantom Software CINE"
 msgstr "Obraz Raw CINE firmy Phantom Software"
 
 #: ../plug-ins/file-darktable/file-formats.h:116
+#: ../plug-ins/file-rawtherapee/file-formats.h:107
 msgid "Raw Sinar"
 msgstr "Obraz Raw firmy Sinar"
 
 #: ../plug-ins/file-darktable/file-formats.h:127
+#: ../plug-ins/file-rawtherapee/file-formats.h:118
 msgid "Raw Kodak"
 msgstr "Obraz Raw firmy Kodak"
 
 #: ../plug-ins/file-darktable/file-formats.h:139
+#: ../plug-ins/file-rawtherapee/file-formats.h:129
 msgid "Raw Adobe DNG Digital Negative"
 msgstr "Cyfrowy negatyw Raw DNG firmy Adobe"
 
 #: ../plug-ins/file-darktable/file-formats.h:150
+#: ../plug-ins/file-rawtherapee/file-formats.h:140
 msgid "Raw Epson ERF"
 msgstr "Obraz Raw ERF firmy Epson"
 
 #: ../plug-ins/file-darktable/file-formats.h:161
+#: ../plug-ins/file-rawtherapee/file-formats.h:151
 msgid "Raw Phase One"
 msgstr "Obraz Raw firmy Phase One"
 
 #: ../plug-ins/file-darktable/file-formats.h:172
+#: ../plug-ins/file-rawtherapee/file-formats.h:162
 msgid "Raw Minolta"
 msgstr "Obraz Raw firmy Minolta"
 
 #: ../plug-ins/file-darktable/file-formats.h:183
+#: ../plug-ins/file-rawtherapee/file-formats.h:173
 msgid "Raw Mamiya MEF"
 msgstr "Obraz Raw MEF firmy Mamiya"
 
 #: ../plug-ins/file-darktable/file-formats.h:193
+#: ../plug-ins/file-rawtherapee/file-formats.h:183
 msgid "Raw Leaf MOS"
 msgstr "Obraz Raw MOS firmy Leaf"
 
 #: ../plug-ins/file-darktable/file-formats.h:204
+#: ../plug-ins/file-rawtherapee/file-formats.h:194
 msgid "Raw Olympus ORF"
 msgstr "Obraz Raw ORF firmy Olympus"
 
 #: ../plug-ins/file-darktable/file-formats.h:215
+#: ../plug-ins/file-rawtherapee/file-formats.h:205
 msgid "Raw Pentax PEF"
 msgstr "Obraz Raw PEF firmy Pentax"
 
 #: ../plug-ins/file-darktable/file-formats.h:226
+#: ../plug-ins/file-rawtherapee/file-formats.h:216
 msgid "Raw Logitech PXN"
 msgstr "Obraz Raw PXN firmy Logitech"
 
 #: ../plug-ins/file-darktable/file-formats.h:237
+#: ../plug-ins/file-rawtherapee/file-formats.h:227
 msgid "Raw Apple QuickTake QTK"
 msgstr "Obraz Raw QTK QuickTake firmy Apple"
 
 #: ../plug-ins/file-darktable/file-formats.h:248
+#: ../plug-ins/file-rawtherapee/file-formats.h:238
 msgid "Raw Fujifilm RAF"
 msgstr "Obraz Raw RAF firmy Fujifilm"
 
 #: ../plug-ins/file-darktable/file-formats.h:259
+#: ../plug-ins/file-rawtherapee/file-formats.h:249
 msgid "Raw Panasonic"
 msgstr "Obraz Raw firmy Panasonic"
 
 #: ../plug-ins/file-darktable/file-formats.h:270
+#: ../plug-ins/file-rawtherapee/file-formats.h:260
 msgid "Raw Digital Foto Maker RDC"
 msgstr "Obraz Raw RDC firmy Digital Foto Maker"
 
 #: ../plug-ins/file-darktable/file-formats.h:281
+#: ../plug-ins/file-rawtherapee/file-formats.h:271
 msgid "Raw Leica RWL"
 msgstr "Obraz Raw RWL firmy Leica"
 
 #: ../plug-ins/file-darktable/file-formats.h:292
+#: ../plug-ins/file-rawtherapee/file-formats.h:282
 msgid "Raw Samsung SRW"
 msgstr "Obraz Raw SRW firmy Samsung"
 
 #: ../plug-ins/file-darktable/file-formats.h:303
+#: ../plug-ins/file-rawtherapee/file-formats.h:293
 msgid "Raw Sigma X3F"
 msgstr "Obraz Raw X3F firmy Sigma"
 
 #: ../plug-ins/file-darktable/file-formats.h:314
+#: ../plug-ins/file-rawtherapee/file-formats.h:304
 msgid "Raw Arriflex ARI"
 msgstr "Obraz Raw ARI firmy Arriflex"
 
@@ -8445,6 +8453,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Zmienia wartość gamma (jasność) wybranego pędzla"
 
 #: ../plug-ins/gimpressionist/brush.c:570
+#: ../plug-ins/metadata/metadata-editor.c:570
 msgid "Select:"
 msgstr "Wybór:"
 
@@ -9237,129 +9246,438 @@ msgstr "Zapisanie danych IPTC"
 msgid "save thumbnail"
 msgstr "Zapisanie miniatury"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:1
-msgid "Exif Tag"
-msgstr "Etykieta Exif"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
+msgid "Document Title"
+msgstr "Tytuł dokumentu"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:3
-msgid "Exif"
-msgstr "Exif"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:4
-msgid "XMP Tag"
-msgstr "Etykieta XMP"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:5
-msgid "XMP"
-msgstr "XMP"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:6
-msgid "Title"
-msgstr "Tytuł"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:7
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:2
 msgid "Author"
 msgstr "Autor"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:8
-msgid "Authortitle"
-msgstr "Autor tytułu"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:3
+msgid "Author Title"
+msgstr "Tytuł autora"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:9
-msgid "Copyright"
-msgstr "Prawa autorskie"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:10
-msgid "Caption"
-msgstr "Podpis"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:11
-msgid "Captionwriter"
-msgstr "Autor podpisu"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:12
-msgid "Headline"
-msgstr "Nagłówek"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:13
-msgid ""
-"Special\n"
-"Instructions"
-msgstr ""
-"Specjalne\n"
-"instrukcje"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:15
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:4
 msgid "Description"
 msgstr "Opis"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:16
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
+msgid "Description Writer\t"
+msgstr "Autor opisu\t"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
+msgid "Rating"
+msgstr "Ocena"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
 msgid "Keywords"
 msgstr "Słowa kluczowe"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:17
-msgid "Category"
-msgstr "Kategoria"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:8
+msgid "Copyright Status"
+msgstr "Stan praw autorskich"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:18
-msgid ""
-"Supplemental\n"
-"Category"
-msgstr ""
-"Dodatkowa\n"
-"kategoria"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:9
+msgid "Copyright Notice"
+msgstr "Uwaga o prawach autorskich"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:20
-msgid "Urgency"
-msgstr "Ważność"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:10
+msgid "Copyright URL"
+msgstr "Adres URL praw autorskich"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:21
-msgid "Keywords/Categories"
-msgstr "Słowa kluczowe/kategorie"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:11
+msgid "Address"
+msgstr "Adres"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:22
-msgid "Credit"
-msgstr "Twórcy"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:23
-msgid "Source"
-msgstr "Źródło"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:24
-msgid ""
-"Transmission\n"
-"reference"
-msgstr ""
-"Odniesienie\n"
-"przesyłania"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:26
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:12
 msgid "City"
 msgstr "Miasto"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:27
-msgid "Sublocation"
-msgstr "Podlokalizacja"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:13
+msgid "Postal Code\t"
+msgstr "Kod pocztowy\t"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:28
-msgid "Province/State"
-msgstr "Prowincja/stan"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:14
+msgid "State / Province"
+msgstr "Stan/województwo"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:29
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:15
 msgid "Country"
 msgstr "Kraj"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:30
-msgid "Credits/Origin"
-msgstr "Twórcy/pochodzenie"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:16
+msgid "Phone(s)"
+msgstr "Telefony"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:31
-msgid "Write IPTC Data"
-msgstr "Zapisanie danych IPTC"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:17
+msgid "Email(s)"
+msgstr "Adresy e-mail"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:32
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:18
+msgid "Website(s)"
+msgstr "Strony WWW"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:19
+msgid "Creation Date"
+msgstr "Data utworzenia"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:20
+msgid "Intellectual Genre"
+msgstr "Gatunek"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:21
+msgid "IPTC Scene Code"
+msgstr "Kod sceny IPTC"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
+msgid "Sublocation\t"
+msgstr "Podlokalizacja\t"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:23
+msgid "ISO Country Code"
+msgstr "Kod ISO kraju"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:24
+msgid "IPTC Subject Code"
+msgstr "Kod IPTC przedmiotu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
+msgid "Headline"
+msgstr "Nagłówek"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:26
+msgid "Urgency"
+msgstr "Ważność"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:27
+msgid "Job Identifier\t"
+msgstr "Identyfikator zawodu\t"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
+msgid "Instructions"
+msgstr "Instrukcje"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:29
+msgid "Credit Line"
+msgstr "Wiersz autora"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
+msgid "Source"
+msgstr "Źródło"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
+msgid "Usage Terms"
+msgstr "Warunki używania"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:32
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:7
 msgid "IPTC"
 msgstr "IPTC"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
+msgid "Sublocation"
+msgstr "Podlokalizacja"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:34
+msgid "Province / Sate"
+msgstr "Województwo/stan"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:35
+msgid "Person Shown"
+msgstr "Widoczna osoba"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:36
+msgid "Country Name"
+msgstr "Nazwa kraju"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:37
+msgid "Country ISO-Code"
+msgstr "Kod ISO kraju"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:38
+msgid "World Region"
+msgstr "Region świata"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:39
+msgid "Location Shown"
+msgstr "Widoczne położenie"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:40
+msgid "Featured Organisation"
+msgstr "Widoczna organizacja"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:41
+msgid "Event"
+msgstr "Wydarzenie"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:43
+msgid "Add an entry"
+msgstr "Dodaje wpis"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:44
+msgid "Remove an entry"
+msgstr "Usuwa wpis"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:45
+msgid "Code"
+msgstr "Kod"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:46
+msgid "Province / State"
+msgstr "Województwo/stan"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
+msgid "Country ISO Code"
+msgstr "Kod ISO kraju"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:48
+msgid "Artwork or Object"
+msgstr "Ilustracja lub obiekt"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:49
+msgid "Title"
+msgstr "Tytuł"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:50
+msgid "Date Created"
+msgstr "Data utworzenia"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:51
+msgid "Creator"
+msgstr "Autor"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:52
+msgid "Source Inventory ID"
+msgstr "Identyfikator ewidencji źródłowej"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:53
+msgid "Model Age"
+msgstr "Wiek modelów"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:54
+msgid "Minor Model Age Disclosure"
+msgstr "Informacja o nieletnich modelach"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
+msgid "Model Release Status"
+msgstr "Stan publikacji modelów"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:56
+msgid "Additional Model Info"
+msgstr "Dodatkowe informacje o modelach"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:57
+msgid "Model Release Identifier"
+msgstr "Identyfikator publikacji modelów"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:58
+msgid "Image Supplier ID"
+msgstr "Identyfikator dostawcy obrazu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:59
+msgid "Supplier's Image ID"
+msgstr "Identyfikator obrazu dostawcy"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:60
+msgid "Registry Entry"
+msgstr "Wpis rejestru"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:61
+msgid "Image Supplier Name"
+msgstr "Nazwa dostawcy obrazu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:62
+msgid "Max. Available Width"
+msgstr "Maksymalna dostępna szerokość"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:63
+msgid "Max. Available Height"
+msgstr "Maksymalna dostępna wysokość"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:64
+msgid "Digital Source Type"
+msgstr "Typ źródła cyfrowego"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:65
+msgid "Organization Identifier"
+msgstr "Identyfikator organizacji"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:66
+msgid "Item Identifier"
+msgstr "Identyfikator elementu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:67
+msgid "Copyright Owner"
+msgstr "Właściciel praw autorskich"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:68
+msgid "Licensor"
+msgstr "Licencjodawca"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
+msgid "Property Release Status"
+msgstr "Stan publikacji własności"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:70
+msgid "Image Creator"
+msgstr "Autor obrazu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:71
+msgid "Identifier"
+msgstr "Identyfikator"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:72
+msgid "Phone Number 1"
+msgstr "1. numer telefonu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:73
+msgid "Phone Type 1"
+msgstr "1. typ telefonu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:74
+msgid "Phone Number 2"
+msgstr "2. numer telefonu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:75
+msgid "Phone Type 2"
+msgstr "2. typ telefonu"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:76
+msgid "Email Address"
+msgstr "Adres e-mail"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
+msgid "Web Address"
+msgstr "Adres WWW"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
+msgid "Property Release Identifier"
+msgstr "Identyfikator publikacji własności"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:79
+msgid "IPTC Extension"
+msgstr "Rozszerzenie IPTC"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:80
+msgid "Supplemental Category"
+msgstr "Dodatkowa kategoria"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:81
+msgid "Category"
+msgstr "Kategoria"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:82
+msgid "Categories"
+msgstr "Kategorie"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:83
+msgid "Longitude Reference"
+msgstr "Odwołanie długości geograficznej"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:84
+msgid "Longitude"
+msgstr "Długość geograficzna"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:85
+msgid "Altitude"
+msgstr "Wysokość geograficzna"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:86
+msgid "Latitude"
+msgstr "Szerokość geograficzna"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:87
+msgid "Latitude Reference"
+msgstr "Odwołanie szerokości geograficznej"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:88
+msgid "Altitude Reference"
+msgstr "Odwołanie wysokości geograficznej"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:89
+msgid "GPS"
+msgstr "GPS"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:90
+msgid "Patient"
+msgstr "Pacjent"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:91
+msgid "Patient ID"
+msgstr "Identyfikator pacjenta"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:92
+msgid "Date of Birth"
+msgstr "Data urodzenia"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:93
+msgid "Patient Sex"
+msgstr "Płeć pacjenta"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
+msgid "Study ID"
+msgstr "Identyfikator badania"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:95
+msgid "Referring Physician"
+msgstr "Lekarz kierujący"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:96
+msgid "Study Date"
+msgstr "Data badania"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:97
+msgid "Study Description"
+msgstr "Opis badania"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:98
+msgid "Series Number"
+msgstr "Numer serii"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:99
+msgid "Modality"
+msgstr "Procedura"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
+msgid "Series Date"
+msgstr "Data serii"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:101
+msgid "Series Description"
+msgstr "Opis serii"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:102
+msgid "Equipment Institution"
+msgstr "Instytucja aparatury"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
+msgid "Equipment Manufacturer"
+msgstr "Producent aparatury"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:104
+msgid "DICOM"
+msgstr "DICOM"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
+msgid "Exif Tag"
+msgstr "Etykieta Exif"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
+msgid "Exif"
+msgstr "Exif"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:4
+msgid "XMP Tag"
+msgstr "Etykieta XMP"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:5
+msgid "XMP"
+msgstr "XMP"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:6
+msgid "IPTC Tag"
+msgstr "Etykieta IPTC"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -11261,6 +11579,66 @@ msgstr "Wyświetlanie _szkieletu podglądu"
 #: ../plug-ins/map-object/map-object-ui.c:1422
 msgid "Update preview _live"
 msgstr "_Odświeżanie podgląd na żywo"
+
+#: ../plug-ins/metadata/metadata-editor.c:408
+msgid "Edit metadata (IPTC, GPS, DICOM)"
+msgstr "Modyfikuje metadane (IPTC, GPS, DICOM)"
+
+#: ../plug-ins/metadata/metadata-editor.c:416
+msgid "Edit Metadata"
+msgstr "Modyfikuj metadane"
+
+#: ../plug-ins/metadata/metadata-editor.c:539
+#, c-format
+msgid "Metadata Editor: %s"
+msgstr "Edytor metadanych: %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:548
+msgid "Write Metadata"
+msgstr "Zapisz metadane"
+
+#: ../plug-ins/metadata/metadata-editor.c:572
+msgid "Import metadata"
+msgstr "Import metadanych"
+
+#: ../plug-ins/metadata/metadata-editor.c:574
+msgid "Export metadata"
+msgstr "Eksport metadanych"
+
+#: ../plug-ins/metadata/metadata-editor.c:757
+msgid "Calendar Date:"
+msgstr "Data kalendarzowa:"
+
+#: ../plug-ins/metadata/metadata-editor.c:761
+msgid "Set Date"
+msgstr "Ustaw datę"
+
+#: ../plug-ins/metadata/metadata-editor.c:1611
+msgid "Unrated"
+msgstr "Bez oceny"
+
+#: ../plug-ins/metadata/metadata-viewer.c:120
+msgid "View metadata (Exif, IPTC, XMP)"
+msgstr "Wyświetla metadane (Exif, IPTC, XMP)"
+
+#: ../plug-ins/metadata/metadata-viewer.c:127
+msgid "View Metadata"
+msgstr "Wyświetl metadane"
+
+#: ../plug-ins/metadata/metadata-viewer.c:217
+#, c-format
+msgid "Metadata Viewer: %s"
+msgstr "Przeglądarka metadanych: %s"
+
+#: ../plug-ins/metadata/metadata-viewer.c:364
+#, c-format
+msgid "(%lu more character(s))"
+msgstr "(więcej znaków: %lu)"
+
+#: ../plug-ins/metadata/metadata-viewer.c:396
+#, c-format
+msgid "(%llu more byte(s))"
+msgstr "(więcej bajtów: %llu)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:203
 msgid "Curl up one of the image corners"
