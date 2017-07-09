@@ -37,6 +37,8 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "operations/gimp-operation-config.h"
+
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpcolorpanel.h"
@@ -488,37 +490,18 @@ gimp_prop_gui_new (GObject                  *config,
   GtkWidget    *gui = NULL;
   GParamSpec  **param_specs;
   guint         n_param_specs;
-  gint          i, j;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
-                                                &n_param_specs);
+  param_specs = gimp_operation_config_list_properties (GIMP_OBJECT (config),
+                                                       owner_type, flags,
+                                                       &n_param_specs);
 
-  for (i = 0, j = 0; i < n_param_specs; i++)
-    {
-      GParamSpec *pspec = param_specs[i];
-
-      /*  ignore properties of parent classes of owner_type  */
-      if (! g_type_is_a (pspec->owner_type, owner_type))
-        continue;
-
-      if (flags && ((pspec->flags & flags) != flags))
-        continue;
-
-      if (HAS_KEY (pspec, "role", "output-extent"))
-        continue;
-
-      param_specs[j] = param_specs[i];
-      j++;
-    }
-
-  n_param_specs = j;
-
-  if (n_param_specs > 0)
+  if (param_specs)
     {
       const gchar *config_type_name = G_OBJECT_TYPE_NAME (config);
+      gint         i;
 
       for (i = 0; i < G_N_ELEMENTS (gui_new_funcs); i++)
         {
@@ -539,6 +522,8 @@ gimp_prop_gui_new (GObject                  *config,
               break;
             }
         }
+
+      g_free (param_specs);
     }
   else
     {
@@ -548,8 +533,6 @@ gimp_prop_gui_new (GObject                  *config,
                                  -1);
       gtk_misc_set_padding (GTK_MISC (gui), 0, 4);
     }
-
-  g_free (param_specs);
 
   return gui;
 }

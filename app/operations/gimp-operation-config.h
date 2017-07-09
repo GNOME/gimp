@@ -44,5 +44,10 @@ void            gimp_operation_config_sync_node     (GimpObject    *config,
 void            gimp_operation_config_connect_node  (GimpObject    *config,
                                                      GeglNode      *node);
 
+GParamSpec ** gimp_operation_config_list_properties (GimpObject   *config,
+                                                     GType         owner_type,
+                                                     GParamFlags   flags,
+                                                     guint        *n_pspecs);
+
 
 #endif /* __GIMP_OPERATION_CONFIG_H__ */
