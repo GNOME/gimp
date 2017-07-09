@@ -1899,6 +1899,7 @@ xcf_load_level (XcfInfo    *info,
   goffset     saved_pos;
   goffset     offset;
   goffset     offset2;
+  goffset     max_data_length;
   gint        n_tile_rows;
   gint        n_tile_cols;
   guint       ntiles;
@@ -1916,6 +1917,13 @@ xcf_load_level (XcfInfo    *info,
   if (width  != gegl_buffer_get_width (buffer) ||
       height != gegl_buffer_get_height (buffer))
     return FALSE;
+
+  /* maximal allowable size of on-disk tile data.  make it somewhat bigger than
+   * the uncompressed tile size, to allow for the possibility of negative
+   * compression.
+   */
+  max_data_length = XCF_TILE_WIDTH * XCF_TILE_HEIGHT * bpp *
+                    XCF_TILE_MAX_DATA_LENGTH_FACTOR /* = 1.5, currently */;
 
   /* read in the first tile offset.
    *  if it is '0', then this tile level is empty
@@ -1957,13 +1965,20 @@ xcf_load_level (XcfInfo    *info,
        * allowing for negative compression
        */
       if (offset2 == 0)
-        offset2 = offset + XCF_TILE_WIDTH * XCF_TILE_WIDTH * bpp * 1.5;
-                                        /* 1.5 is probably more
-                                           than we need to allow */
+        offset2 = offset + max_data_length;
 
       /* seek to the tile offset */
       if (! xcf_seek_pos (info, offset, NULL))
         return FALSE;
+
+      if (offset2 < offset || offset2 - offset > max_data_length)
+        {
+          gimp_message (info->gimp, G_OBJECT (info->progress),
+                        GIMP_MESSAGE_ERROR,
+                        "invalid tile data length: %" G_GOFFSET_FORMAT,
+                        offset2 - offset);
+          return FALSE;
+        }
 
       /* get the tile from the tile manager */
       gimp_gegl_buffer_get_tile_rect (buffer,

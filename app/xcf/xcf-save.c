@@ -1501,6 +1501,7 @@ xcf_save_level (XcfInfo     *info,
   goffset    *next_offset;
   goffset     saved_pos;
   goffset     offset;
+  goffset     max_data_length;
   guint32     width;
   guint32     height;
   gint        bpp;
@@ -1522,11 +1523,18 @@ xcf_save_level (XcfInfo     *info,
 
   saved_pos = info->cp;
 
+  /* maximal allowable size of on-disk tile data.  make it somewhat bigger than
+   * the uncompressed tile size, to allow for the possibility of negative
+   * compression.  xcf_load_level() enforces this limit.
+   */
+  max_data_length = XCF_TILE_WIDTH * XCF_TILE_HEIGHT * bpp *
+                    XCF_TILE_MAX_DATA_LENGTH_FACTOR /* = 1.5, currently */;
+
   /* allocate a temporary buffer to store the rle data before it is
    * written to disk
    */
   if (info->compression == COMPRESS_RLE)
-    rlebuf = g_alloca (XCF_TILE_WIDTH * XCF_TILE_HEIGHT * bpp * 1.5);
+    rlebuf = g_alloca (max_data_length);
 
   n_tile_rows = gimp_gegl_buffer_get_n_tile_rows (buffer, XCF_TILE_HEIGHT);
   n_tile_cols = gimp_gegl_buffer_get_n_tile_cols (buffer, XCF_TILE_WIDTH);
@@ -1578,6 +1586,16 @@ xcf_save_level (XcfInfo     *info,
           break;
         case COMPRESS_FRACTAL:
           g_warning ("xcf: fractal compression unimplemented");
+          return FALSE;
+        }
+
+      /* make sure the on-disk tile data didn't end up being too big.
+       * xcf_load_level() would refuse to load the file if it did.
+       */
+      if (info->cp < offset || info->cp - offset > max_data_length)
+        {
+          g_message ("xcf: invalid tile data length: %" G_GOFFSET_FORMAT,
+                     info->cp - offset);
           return FALSE;
         }
 

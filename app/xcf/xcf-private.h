@@ -19,8 +19,9 @@
 #define __XCF_PRIVATE_H__
 
 
-#define XCF_TILE_WIDTH  64
-#define XCF_TILE_HEIGHT 64
+#define XCF_TILE_WIDTH                  64
+#define XCF_TILE_HEIGHT                 64
+#define XCF_TILE_MAX_DATA_LENGTH_FACTOR 1.5
 
 typedef enum
 {
