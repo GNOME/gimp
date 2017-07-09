@@ -568,7 +568,25 @@ gimp_rectangle_select_tool_rectangle_response (GimpToolWidget          *widget,
   switch (response_id)
     {
     case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+      {
+        gdouble x1, y1, x2, y2;
+
+        gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (widget),
+                                             &x1, &y1, &x2, &y2);
+        if (x1 == x2 && y1 == y2)
+          {
+            /*  if there are no extents, we got here because of a
+             *  click, call commit() directly because we might want to
+             *  reconfigure the rectangle and continue, instead of
+             *  HALTing it like calling COMMIT would do
+             */
+            gimp_rectangle_select_tool_commit (rect_tool);
+          }
+        else
+          {
+            gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+          }
+      }
       break;
 
     case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
