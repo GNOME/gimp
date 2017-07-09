@@ -126,6 +126,8 @@ static void      gimp_transform_tool_widget_response     (GimpToolWidget        
                                                           GimpTransformTool     *tr_tool);
 
 static void      gimp_transform_tool_halt                (GimpTransformTool     *tr_tool);
+static void      gimp_transform_tool_commit              (GimpTransformTool     *tr_tool);
+
 static gboolean  gimp_transform_tool_bounds              (GimpTransformTool     *tr_tool,
                                                           GimpDisplay           *display);
 static void      gimp_transform_tool_dialog              (GimpTransformTool     *tr_tool);
@@ -134,8 +136,6 @@ static void      gimp_transform_tool_prepare             (GimpTransformTool     
                                                           GimpDisplay           *display);
 static GimpToolWidget *
                  gimp_transform_tool_get_widget          (GimpTransformTool     *tr_tool);
-static void      gimp_transform_tool_transform           (GimpTransformTool     *tr_tool,
-                                                          GimpDisplay           *display);
 
 static void      gimp_transform_tool_response            (GimpToolGui           *gui,
                                                           gint                   response_id,
@@ -253,65 +253,52 @@ gimp_transform_tool_initialize (GimpTool     *tool,
   GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
   GimpItem          *item;
 
-  if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
-    {
-      return FALSE;
-    }
-
   item = gimp_transform_tool_check_active_item (tr_tool, image, FALSE, error);
 
   if (! item)
     return FALSE;
 
-  if (display != tool->display)
+  /*  Find the transform bounds for some tools (like scale,
+   *  perspective) that actually need the bounds for initializing
+   */
+  if (! gimp_transform_tool_bounds (tr_tool, display))
     {
-      gimp_transform_tool_halt (tr_tool);
-
-      /*  Find the transform bounds for some tools (like scale,
-       *  perspective) that actually need the bounds for initializing
-       */
-      if (! gimp_transform_tool_bounds (tr_tool, display))
-        {
-          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                       _("The selection does not intersect with the layer."));
-          return FALSE;
-        }
-
-      /*  Set the pointer to the active display  */
-      tool->display  = display;
-      tool->drawable = drawable;
-
-      /*  Initialize the transform tool dialog */
-      if (! tr_tool->gui)
-        gimp_transform_tool_dialog (tr_tool);
-
-      /*  Inizialize the tool-specific trans_info, and adjust the
-       *  tool dialog
-       */
-      gimp_transform_tool_prepare (tr_tool, display);
-
-      /*  Recalculate the transform tool  */
-      gimp_transform_tool_recalc_matrix (tr_tool, NULL);
-
-      /*  Get the on-canvas gui  */
-      tr_tool->widget = gimp_transform_tool_get_widget (tr_tool);
-
-      gimp_transform_tool_hide_active_item (tr_tool, item);
-
-      /*  start drawing the bounding box and handles...  */
-      gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
-
-      /* Initialize undo and redo lists */
-      tr_tool->undo_list = g_list_prepend (NULL, trans_info_new ());
-      tr_tool->redo_list = NULL;
-      tr_tool->old_trans_info = g_list_last (tr_tool->undo_list)->data;
-      tr_tool->prev_trans_info = g_list_first (tr_tool->undo_list)->data;
-      gimp_transform_tool_update_sensitivity (tr_tool);
-
-      /*  Save the current transformation info  */
-      memcpy (tr_tool->prev_trans_info, tr_tool->trans_info,
-              sizeof (TransInfo));
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("The selection does not intersect with the layer."));
+      return FALSE;
     }
+
+  tool->display  = display;
+  tool->drawable = drawable;
+
+  /*  Initialize the transform tool dialog  */
+  if (! tr_tool->gui)
+    gimp_transform_tool_dialog (tr_tool);
+
+  /*  Inizialize the tool-specific trans_info, and adjust the tool dialog  */
+  gimp_transform_tool_prepare (tr_tool, display);
+
+  /*  Recalculate the transform tool  */
+  gimp_transform_tool_recalc_matrix (tr_tool, NULL);
+
+  /*  Get the on-canvas gui  */
+  tr_tool->widget = gimp_transform_tool_get_widget (tr_tool);
+
+  gimp_transform_tool_hide_active_item (tr_tool, item);
+
+  /*  start drawing the bounding box and handles...  */
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+
+  /* Initialize undo and redo lists */
+  tr_tool->undo_list = g_list_prepend (NULL, trans_info_new ());
+  tr_tool->redo_list = NULL;
+  tr_tool->old_trans_info = g_list_last (tr_tool->undo_list)->data;
+  tr_tool->prev_trans_info = g_list_first (tr_tool->undo_list)->data;
+  gimp_transform_tool_update_sensitivity (tr_tool);
+
+  /*  Save the current transformation info  */
+  memcpy (tr_tool->prev_trans_info, tr_tool->trans_info,
+          sizeof (TransInfo));
 
   return TRUE;
 }
@@ -338,7 +325,7 @@ gimp_transform_tool_control (GimpTool       *tool,
      break;
 
     case GIMP_TOOL_ACTION_COMMIT:
-      gimp_transform_tool_transform (tr_tool, display);
+      gimp_transform_tool_commit (tr_tool);
       break;
     }
 
@@ -860,12 +847,116 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
 }
 
 static void
-gimp_transform_tool_transform (GimpTransformTool *tr_tool,
-                               GimpDisplay       *display)
+gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
+                                    GimpTransformTool *tr_tool)
+{
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpMatrix3           matrix  = tr_tool->transform;
+  gint                  i;
+
+  if (options->direction == GIMP_TRANSFORM_BACKWARD)
+    gimp_matrix3_invert (&matrix);
+
+  if (tr_tool->preview)
+    {
+      gimp_canvas_item_begin_change (tr_tool->preview);
+      g_object_set (tr_tool->preview,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tr_tool->preview);
+    }
+
+  if (tr_tool->boundary_in)
+    {
+      gimp_canvas_item_begin_change (tr_tool->boundary_in);
+      g_object_set (tr_tool->boundary_in,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tr_tool->boundary_in);
+    }
+
+  if (tr_tool->boundary_out)
+    {
+      gimp_canvas_item_begin_change (tr_tool->boundary_out);
+      g_object_set (tr_tool->boundary_out,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (tr_tool->boundary_out);
+    }
+
+  for (i = 0; i < tr_tool->strokes->len; i++)
+    {
+      GimpCanvasItem *item = g_ptr_array_index (tr_tool->strokes, i);
+
+      gimp_canvas_item_begin_change (item);
+      g_object_set (item,
+                    "transform", &matrix,
+                    NULL);
+      gimp_canvas_item_end_change (item);
+    }
+}
+
+static void
+gimp_transform_tool_widget_response (GimpToolWidget    *widget,
+                                     gint               response_id,
+                                     GimpTransformTool *tr_tool)
+{
+  switch (response_id)
+    {
+    case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
+      gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
+      break;
+
+    case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
+      gimp_transform_tool_response (NULL, GTK_RESPONSE_CANCEL, tr_tool);
+      break;
+
+    case GIMP_TOOL_WIDGET_RESPONSE_RESET:
+      gimp_transform_tool_response (NULL, RESPONSE_RESET, tr_tool);
+      break;
+    }
+}
+
+static void
+gimp_transform_tool_halt (GimpTransformTool *tr_tool)
+{
+  GimpTool *tool = GIMP_TOOL (tr_tool);
+
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tr_tool), NULL);
+  g_clear_object (&tr_tool->widget);
+
+  if (tr_tool->gui)
+    gimp_tool_gui_hide (tr_tool->gui);
+
+  if (tr_tool->redo_list)
+    {
+      g_list_free_full (tr_tool->redo_list, (GDestroyNotify) trans_info_free);
+      tr_tool->redo_list = NULL;
+    }
+
+  if (tr_tool->undo_list)
+    {
+      g_list_free_full (tr_tool->undo_list, (GDestroyNotify) trans_info_free);
+      tr_tool->undo_list = NULL;
+      tr_tool->prev_trans_info = NULL;
+    }
+
+  gimp_transform_tool_show_active_item (tr_tool);
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
+ }
+
+static void
+gimp_transform_tool_commit (GimpTransformTool *tr_tool)
 {
   GimpTool             *tool           = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options        = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpContext          *context        = GIMP_CONTEXT (options);
+  GimpDisplay          *display        = tool->display;
   GimpImage            *image          = gimp_display_get_image (display);
   GimpItem             *active_item;
   GeglBuffer           *orig_buffer    = NULL;
@@ -989,110 +1080,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 
   gimp_image_flush (image);
 }
-
-static void
-gimp_transform_tool_widget_changed (GimpToolWidget    *widget,
-                                    GimpTransformTool *tr_tool)
-{
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-  GimpMatrix3           matrix  = tr_tool->transform;
-  gint                  i;
-
-  if (options->direction == GIMP_TRANSFORM_BACKWARD)
-    gimp_matrix3_invert (&matrix);
-
-  if (tr_tool->preview)
-    {
-      gimp_canvas_item_begin_change (tr_tool->preview);
-      g_object_set (tr_tool->preview,
-                    "transform", &matrix,
-                    NULL);
-      gimp_canvas_item_end_change (tr_tool->preview);
-    }
-
-  if (tr_tool->boundary_in)
-    {
-      gimp_canvas_item_begin_change (tr_tool->boundary_in);
-      g_object_set (tr_tool->boundary_in,
-                    "transform", &matrix,
-                    NULL);
-      gimp_canvas_item_end_change (tr_tool->boundary_in);
-    }
-
-  if (tr_tool->boundary_out)
-    {
-      gimp_canvas_item_begin_change (tr_tool->boundary_out);
-      g_object_set (tr_tool->boundary_out,
-                    "transform", &matrix,
-                    NULL);
-      gimp_canvas_item_end_change (tr_tool->boundary_out);
-    }
-
-  for (i = 0; i < tr_tool->strokes->len; i++)
-    {
-      GimpCanvasItem *item = g_ptr_array_index (tr_tool->strokes, i);
-
-      gimp_canvas_item_begin_change (item);
-      g_object_set (item,
-                    "transform", &matrix,
-                    NULL);
-      gimp_canvas_item_end_change (item);
-    }
-}
-
-static void
-gimp_transform_tool_widget_response (GimpToolWidget    *widget,
-                                     gint               response_id,
-                                     GimpTransformTool *tr_tool)
-{
-  switch (response_id)
-    {
-    case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
-      gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
-      break;
-
-    case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
-      gimp_transform_tool_response (NULL, GTK_RESPONSE_CANCEL, tr_tool);
-      break;
-
-    case GIMP_TOOL_WIDGET_RESPONSE_RESET:
-      gimp_transform_tool_response (NULL, RESPONSE_RESET, tr_tool);
-      break;
-    }
-}
-
-static void
-gimp_transform_tool_halt (GimpTransformTool *tr_tool)
-{
-  GimpTool *tool = GIMP_TOOL (tr_tool);
-
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
-
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tr_tool), NULL);
-  g_clear_object (&tr_tool->widget);
-
-  if (tr_tool->gui)
-    gimp_tool_gui_hide (tr_tool->gui);
-
-  if (tr_tool->redo_list)
-    {
-      g_list_free_full (tr_tool->redo_list, (GDestroyNotify) trans_info_free);
-      tr_tool->redo_list = NULL;
-    }
-
-  if (tr_tool->undo_list)
-    {
-      g_list_free_full (tr_tool->undo_list, (GDestroyNotify) trans_info_free);
-      tr_tool->undo_list = NULL;
-      tr_tool->prev_trans_info = NULL;
-    }
-
-  gimp_transform_tool_show_active_item (tr_tool);
-
-  tool->display  = NULL;
-  tool->drawable = NULL;
- }
 
 static gboolean
 gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
@@ -1361,7 +1348,7 @@ gimp_transform_tool_response (GimpToolGui       *gui,
     case GTK_RESPONSE_OK:
       g_return_if_fail (display != NULL);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-     break;
+      break;
 
     default:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
