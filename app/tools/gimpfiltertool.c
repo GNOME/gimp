@@ -174,6 +174,9 @@ static void      gimp_filter_tool_response       (GimpToolGui         *gui,
                                                   gint                 response_id,
                                                   GimpFilterTool      *filter_tool);
 
+static void    gimp_filter_tool_set_has_settings (GimpFilterTool      *filter_tool,
+                                                  gboolean             has_settings);
+
 
 G_DEFINE_TYPE (GimpFilterTool, gimp_filter_tool, GIMP_TYPE_COLOR_TOOL)
 
@@ -1290,15 +1293,72 @@ gimp_filter_tool_response (GimpToolGui    *gui,
     }
 }
 
+static void
+gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
+                                   gboolean        has_settings)
+{
+  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
+
+  filter_tool->has_settings = has_settings;
+
+  if (! filter_tool->settings_box)
+    return;
+
+  if (filter_tool->has_settings)
+    {
+      GimpTool *tool  = GIMP_TOOL (filter_tool);
+      GQuark    quark = g_quark_from_static_string ("settings-folder");
+      GType     type  = G_TYPE_FROM_INSTANCE (filter_tool->config);
+      GFile    *settings_folder;
+      gchar    *import_title;
+      gchar    *export_title;
+
+      settings_folder = g_type_get_qdata (type, quark);
+
+      import_title = g_strdup_printf (_("Import '%s' Settings"),
+                                      gimp_tool_get_label (tool));
+      export_title = g_strdup_printf (_("Export '%s' Settings"),
+                                      gimp_tool_get_label (tool));
+
+      g_object_set (filter_tool->settings_box,
+                    "visible",        TRUE,
+                    "config",         filter_tool->config,
+                    "container",      filter_tool->settings,
+                    "help-id",        gimp_tool_get_help_id (tool),
+                    "import-title",   import_title,
+                    "export-title",   export_title,
+                    "default-folder", settings_folder,
+                    "last-file",      NULL,
+                    NULL);
+
+      g_free (import_title);
+      g_free (export_title);
+    }
+  else
+    {
+      g_object_set (filter_tool->settings_box,
+                    "visible",        FALSE,
+                    "config",         NULL,
+                    "container",      NULL,
+                    "help-id",        NULL,
+                    "import-title",   NULL,
+                    "export-title",   NULL,
+                    "default-folder", NULL,
+                    "last-file",      NULL,
+                    NULL);
+    }
+}
+
 
 /*  public functions  */
 
 void
 gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
 {
-  GimpTool            *tool;
-  GimpFilterToolClass *klass;
-  gchar               *operation_name;
+  GimpTool             *tool;
+  GimpFilterToolClass  *klass;
+  gchar                *operation_name;
+  GParamSpec          **pspecs;
 
   g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
 
@@ -1347,8 +1407,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
     }
 
   operation_name = klass->get_operation (filter_tool,
-                                         &filter_tool->description,
-                                         &filter_tool->has_settings);
+                                         &filter_tool->description);
 
   if (! operation_name)
     operation_name = g_strdup ("gegl:nop");
@@ -1378,6 +1437,15 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                                          (GCompareFunc) gimp_settings_compare);
   g_object_ref (filter_tool->settings);
 
+  pspecs =
+    gimp_operation_config_list_properties (GIMP_OBJECT (filter_tool->config),
+                                           G_TYPE_FROM_INSTANCE (filter_tool->config),
+                                           0, NULL);
+
+  gimp_filter_tool_set_has_settings (filter_tool, (pspecs != NULL));
+
+  g_free (pspecs);
+
   if (filter_tool->gui)
     {
       gimp_tool_gui_set_title       (filter_tool->gui,
@@ -1388,9 +1456,6 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
       gimp_tool_gui_set_help_id     (filter_tool->gui,
                                      gimp_tool_get_help_id (tool));
     }
-
-  gimp_filter_tool_set_has_settings (filter_tool,
-                                     filter_tool->has_settings);
 
   if (gegl_operation_get_key (operation_name, "position-dependent"))
     {
@@ -1420,66 +1485,6 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
 
   if (GIMP_TOOL (filter_tool)->drawable)
     gimp_filter_tool_create_filter (filter_tool);
-}
-
-/*  this function should better not exist, but we determine whether an
- *  op has settings by checking if gimp_prop_gui_new() returns a
- *  GtkLabel, which happens after get_operation() is called.
- */
-void
-gimp_filter_tool_set_has_settings (GimpFilterTool *filter_tool,
-                                   gboolean        has_settings)
-{
-  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
-
-  filter_tool->has_settings = has_settings;
-
-  if (filter_tool->settings_box)
-    {
-      if (filter_tool->has_settings)
-        {
-          GimpTool *tool  = GIMP_TOOL (filter_tool);
-          GQuark    quark = g_quark_from_static_string ("settings-folder");
-          GType     type  = G_TYPE_FROM_INSTANCE (filter_tool->config);
-          GFile    *settings_folder;
-          gchar    *import_title;
-          gchar    *export_title;
-
-          settings_folder = g_type_get_qdata (type, quark);
-
-          import_title = g_strdup_printf (_("Import '%s' Settings"),
-                                          gimp_tool_get_label (tool));
-          export_title = g_strdup_printf (_("Export '%s' Settings"),
-                                          gimp_tool_get_label (tool));
-
-          g_object_set (filter_tool->settings_box,
-                        "visible",        TRUE,
-                        "config",         filter_tool->config,
-                        "container",      filter_tool->settings,
-                        "help-id",        gimp_tool_get_help_id (tool),
-                        "import-title",   import_title,
-                        "export-title",   export_title,
-                        "default-folder", settings_folder,
-                        "last-file",      NULL,
-                        NULL);
-
-          g_free (import_title);
-          g_free (export_title);
-        }
-      else
-        {
-          g_object_set (filter_tool->settings_box,
-                        "visible",        FALSE,
-                        "config",         NULL,
-                        "container",      NULL,
-                        "help-id",        NULL,
-                        "import-title",   NULL,
-                        "export-title",   NULL,
-                        "default-folder", NULL,
-                        "last-file",      NULL,
-                        NULL);
-        }
-    }
 }
 
 void

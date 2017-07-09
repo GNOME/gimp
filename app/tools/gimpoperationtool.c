@@ -83,8 +83,7 @@ static void        gimp_operation_tool_options_notify  (GimpTool          *tool,
                                                         const GParamSpec  *pspec);
 
 static gchar     * gimp_operation_tool_get_operation   (GimpFilterTool    *filter_tool,
-                                                        gchar            **description,
-                                                        gboolean          *has_settings);
+                                                        gchar            **description);
 static void        gimp_operation_tool_dialog          (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_reset           (GimpFilterTool    *filter_tool);
 static void        gimp_operation_tool_set_config      (GimpFilterTool    *filter_tool,
@@ -269,13 +268,11 @@ gimp_operation_tool_options_notify (GimpTool         *tool,
 
 static gchar *
 gimp_operation_tool_get_operation (GimpFilterTool  *filter_tool,
-                                   gchar          **description,
-                                   gboolean        *has_settings)
+                                   gchar          **description)
 {
   GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
 
-  *description  = g_strdup (op_tool->description);
-  *has_settings = FALSE;
+  *description = g_strdup (op_tool->description);
 
   return g_strdup (op_tool->operation);
 }
@@ -526,10 +523,6 @@ gimp_operation_tool_create_gui (GimpOperationTool *op_tool)
 
   g_object_add_weak_pointer (G_OBJECT (op_tool->options_gui),
                              (gpointer) &op_tool->options_gui);
-
-  /*  ugly, see comment in the function  */
-  gimp_filter_tool_set_has_settings (filter_tool,
-                                     ! GTK_IS_LABEL (op_tool->options_gui));
 
   for (aux = 1; ; aux++)
     {

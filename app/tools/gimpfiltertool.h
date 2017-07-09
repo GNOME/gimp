@@ -74,8 +74,7 @@ struct _GimpFilterToolClass
 
   /* virtual functions */
   gchar     * (* get_operation)   (GimpFilterTool    *filter_tool,
-                                   gchar            **description,
-                                   gboolean          *has_settings);
+                                   gchar            **description);
   void        (* dialog)          (GimpFilterTool    *filter_tool);
   void        (* reset)           (GimpFilterTool    *filter_tool);
   void        (* set_config)      (GimpFilterTool    *filter_tool,
@@ -103,9 +102,6 @@ struct _GimpFilterToolClass
 GType       gimp_filter_tool_get_type              (void) G_GNUC_CONST;
 
 void        gimp_filter_tool_get_operation         (GimpFilterTool   *filter_tool);
-
-void        gimp_filter_tool_set_has_settings      (GimpFilterTool   *filter_tool,
-                                                    gboolean          has_settings);
 
 void        gimp_filter_tool_set_config            (GimpFilterTool   *filter_tool,
                                                     GimpConfig       *config);

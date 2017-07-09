@@ -73,8 +73,7 @@ static void   gimp_brightness_contrast_tool_motion         (GimpTool            
 
 static gchar *
               gimp_brightness_contrast_tool_get_operation  (GimpFilterTool        *filter_tool,
-                                                            gchar                **description,
-                                                            gboolean              *has_settings);
+                                                            gchar                **description);
 static void   gimp_brightness_contrast_tool_dialog         (GimpFilterTool        *filter_tool);
 
 static void   brightness_contrast_to_levels_callback       (GtkWidget             *widget,
@@ -157,11 +156,9 @@ gimp_brightness_contrast_tool_initialize (GimpTool     *tool,
 
 static gchar *
 gimp_brightness_contrast_tool_get_operation (GimpFilterTool  *filter_tool,
-                                             gchar          **description,
-                                             gboolean        *has_settings)
+                                             gchar          **description)
 {
-  *description  = g_strdup (_("Adjust Brightness and Contrast"));
-  *has_settings = TRUE;
+  *description = g_strdup (_("Adjust Brightness and Contrast"));
 
   return g_strdup ("gimp:brightness-contrast");
 }

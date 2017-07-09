@@ -52,8 +52,7 @@ static gboolean   gimp_threshold_tool_initialize      (GimpTool          *tool,
                                                        GError           **error);
 
 static gchar    * gimp_threshold_tool_get_operation   (GimpFilterTool    *filter_tool,
-                                                       gchar            **description,
-                                                       gboolean          *has_settings);
+                                                       gchar            **description);
 static void       gimp_threshold_tool_dialog          (GimpFilterTool    *filter_tool);
 static void       gimp_threshold_tool_config_notify   (GimpFilterTool    *filter_tool,
                                                        GimpConfig        *config,
@@ -152,11 +151,9 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
 
 static gchar *
 gimp_threshold_tool_get_operation (GimpFilterTool  *filter_tool,
-                                   gchar          **description,
-                                   gboolean        *has_settings)
+                                   gchar          **description)
 {
-  *description  = g_strdup (_("Apply Threshold"));
-  *has_settings = TRUE;
+  *description = g_strdup (_("Apply Threshold"));
 
   return g_strdup ("gimp:threshold");
 }
