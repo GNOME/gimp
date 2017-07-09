@@ -22,8 +22,17 @@
  * SECTION:xcf-private
  * @Short_description:Common definitions for the XCF functions
  *
- * Common enum and struct definitions for the XCF functions
+ * Common macro, enum and struct definitions for the XCF functions
  */
+
+
+/**
+ * XCF_TILE_MAX_DATA_LENGTH_FACTOR:
+ *
+ * The ratio between the maximal allowable on-disk tile data size, and the
+ * uncompressed tile data size.
+ */
+#define XCF_TILE_MAX_DATA_LENGTH_FACTOR 1.5
 
 
 /**

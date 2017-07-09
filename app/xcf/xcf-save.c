@@ -1388,6 +1388,7 @@ xcf_save_level (XcfInfo      *info,
   guint32 *next_offset;
   guint32  saved_pos;
   guint32  offset;
+  guint32  max_data_length;
   guint32  width;
   guint32  height;
   guint    ntiles;
@@ -1402,10 +1403,16 @@ xcf_save_level (XcfInfo      *info,
   xcf_write_int32_check_error (info, (guint32 *) &width, 1);
   xcf_write_int32_check_error (info, (guint32 *) &height, 1);
 
+  /* maximal allowable size of on-disk tile data.  make it somewhat bigger than
+   * the uncompressed tile size, to allow for the possibility of negative
+   * compression.
+   */
+  max_data_length = TILE_WIDTH * TILE_HEIGHT * tile_manager_bpp (level) *
+                    XCF_TILE_MAX_DATA_LENGTH_FACTOR /* = 1.5, currently */;
+
   /* allocate a temporary buffer to store the rle data before it is
      written to disk */
-  rlebuf =
-    g_malloc (TILE_WIDTH * TILE_HEIGHT * tile_manager_bpp (level) * 1.5);
+  rlebuf = g_malloc (max_data_length);
 
   ntiles = level->ntile_rows * level->ntile_cols;
 
@@ -1449,6 +1456,16 @@ xcf_save_level (XcfInfo      *info,
             case COMPRESS_FRACTAL:
               g_error ("xcf: fractal compression unimplemented");
               break;
+            }
+
+          /* make sure the on-disk tile data didn't end up being too big.
+           * xcf_load_level() would refuse to load the file if it did.
+           */
+          if (info->cp < offset || info->cp - offset > max_data_length)
+            {
+              g_error ("xcf: invalid tile data length: %u",
+                       info->cp - offset);
+              return FALSE;
             }
 
           /* the next tile's offset is after the tile we just wrote */
