@@ -563,7 +563,8 @@ gimp_rectangle_select_tool_rectangle_response (GimpToolWidget          *widget,
                                                gint                     response_id,
                                                GimpRectangleSelectTool *rect_tool)
 {
-  GimpTool *tool = GIMP_TOOL (rect_tool);
+  GimpTool                       *tool = GIMP_TOOL (rect_tool);
+  GimpRectangleSelectToolPrivate *priv = rect_tool->private;
 
   switch (response_id)
     {
@@ -590,7 +591,31 @@ gimp_rectangle_select_tool_rectangle_response (GimpToolWidget          *widget,
       break;
 
     case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+      {
+        GimpImage     *image      = gimp_display_get_image (tool->display);
+        GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
+        GimpUndo      *undo       = gimp_undo_stack_peek (undo_stack);
+
+        /* if we have an existing rectangle in the current display, then
+         * we have already "executed", and need to undo at this point,
+         * unless the user has done something in the meantime
+         */
+        if (undo && priv->undo == undo)
+          {
+            /* prevent this change from halting the tool */
+            gimp_tool_control_push_preserve (tool->control, TRUE);
+
+            gimp_image_undo (image);
+            gimp_image_flush (image);
+
+            gimp_tool_control_pop_preserve (tool->control);
+          }
+
+        priv->undo = NULL;
+        priv->redo = NULL;
+
+        gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+      }
       break;
     }
 }
@@ -849,31 +874,13 @@ gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
 
   if (tool->display)
     {
-      GimpDisplayShell *shell      = gimp_display_get_shell (tool->display);
-      GimpImage        *image      = gimp_display_get_image (tool->display);
-      GimpUndoStack    *undo_stack = gimp_image_get_undo_stack (image);
-      GimpUndo         *undo       = gimp_undo_stack_peek (undo_stack);
+      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
 
       gimp_display_shell_set_highlight (shell, NULL);
 
       gimp_rectangle_options_disconnect (GIMP_RECTANGLE_OPTIONS (options),
                                          G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
                                          rect_tool);
-
-      /* if we have an existing rectangle in the current display, then
-       * we have already "executed", and need to undo at this point,
-       * unless the user has done something in the meantime
-       */
-      if (undo && priv->undo == undo)
-        {
-          /* prevent this change from halting the tool */
-          gimp_tool_control_push_preserve (tool->control, TRUE);
-
-          gimp_image_undo (image);
-          gimp_image_flush (image);
-
-          gimp_tool_control_pop_preserve (tool->control);
-        }
     }
 
   priv->undo = NULL;
