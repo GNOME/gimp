@@ -1361,7 +1361,6 @@ gimp_transform_tool_response (GimpToolGui       *gui,
     case GTK_RESPONSE_OK:
       g_return_if_fail (display != NULL);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
      break;
 
     default:

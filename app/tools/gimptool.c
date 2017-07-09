@@ -708,7 +708,13 @@ gimp_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
+      /*  always HALT after COMMIT here and not in each tool individually;
+       *  some tools interact with their subclasses (e.g. filter tool
+       *  and operation tool), and it's essential that COMMIT runs
+       *  through the entire class hierarchy before HALT
+       */
       GIMP_TOOL_GET_CLASS (tool)->control (tool, action, display);
+      GIMP_TOOL_GET_CLASS (tool)->control (tool, GIMP_TOOL_ACTION_HALT, display);
       break;
     }
 }

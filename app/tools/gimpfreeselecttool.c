@@ -216,6 +216,15 @@ gimp_free_select_tool_start (GimpFreeSelectTool *fst,
 }
 
 static void
+gimp_free_select_tool_halt (GimpFreeSelectTool *fst)
+{
+  GimpFreeSelectToolPrivate *private = fst->private;
+
+  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (fst), NULL);
+  g_clear_object (&private->widget);
+}
+
+static void
 gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
                               GimpDisplay        *display)
 {
@@ -237,15 +246,6 @@ gimp_free_select_tool_commit (GimpFreeSelectTool *fst,
     }
 
   gimp_image_flush (gimp_display_get_image (display));
-}
-
-static void
-gimp_free_select_tool_halt (GimpFreeSelectTool *fst)
-{
-  GimpFreeSelectToolPrivate *private = fst->private;
-
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (fst), NULL);
-  g_clear_object (&private->widget);
 }
 
 static void
@@ -515,7 +515,12 @@ gimp_free_select_tool_polygon_response (GimpToolWidget     *polygon,
   switch (response_id)
     {
     case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+      /*  don't gimp_tool_control(COMMIT) here because we don't always
+       *  want to HALT the tool after committing because we have a
+       *  subclass, we do that in the default implementation of
+       *  select().
+       */
+      gimp_free_select_tool_commit (fst, tool->display);
       break;
 
     case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:

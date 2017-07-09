@@ -1028,8 +1028,6 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool)
                                          config->filter_tool_max_recent);
         }
     }
-
-  gimp_filter_tool_halt (filter_tool);
 }
 
 static void

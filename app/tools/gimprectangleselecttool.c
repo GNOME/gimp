@@ -818,8 +818,6 @@ gimp_rectangle_select_tool_commit (GimpRectangleSelectTool *rect_tool)
   /* Reset the automatic undo/redo mechanism */
   priv->undo = NULL;
   priv->redo = NULL;
-
-  gimp_rectangle_select_tool_halt (rect_tool);
 }
 
 static void

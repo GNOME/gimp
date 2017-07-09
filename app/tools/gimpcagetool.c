@@ -605,7 +605,6 @@ gimp_cage_tool_key_press (GimpTool    *tool,
       else if (ct->tool_state == DEFORM_STATE_WAIT)
         {
           gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
         }
       return TRUE;
 

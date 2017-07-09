@@ -468,7 +468,6 @@ gimp_n_point_deformation_tool_key_press (GimpTool    *tool,
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       break;
 
     case GDK_KEY_Escape:

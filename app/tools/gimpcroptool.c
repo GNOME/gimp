@@ -458,8 +458,6 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
           gimp_image_flush (image);
         }
     }
-
-  gimp_crop_tool_halt (crop_tool);
 }
 
 static void

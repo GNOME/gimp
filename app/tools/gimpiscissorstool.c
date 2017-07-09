@@ -486,7 +486,6 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
                                              iscissors->y))
         {
           gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
         }
       else if (! iscissors->curve->closed)
         {
@@ -1093,7 +1092,6 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
       if (iscissors->curve->closed && iscissors->mask)
         {
           gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
           return TRUE;
         }
       return FALSE;
