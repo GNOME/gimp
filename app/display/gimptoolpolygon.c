@@ -97,6 +97,9 @@ struct _GimpToolPolygonPrivate
   /* The number of segment indices actually in use */
   gint               n_segment_indices;
 
+  /* Is the polygon closed? */
+  gboolean           polygon_closed;
+
   /* The selection operation active when the tool was started */
   GimpChannelOps     operation_at_start;
 
@@ -124,6 +127,7 @@ struct _GimpToolPolygonPrivate
 
   GimpCanvasItem    *polygon;
   GimpCanvasItem    *pending_line;
+  GimpCanvasItem    *closing_line;
   GPtrArray         *handles;
 };
 
@@ -238,6 +242,7 @@ gimp_tool_polygon_constructed (GObject *object)
                                                    NULL, 0, FALSE);
 
   private->pending_line = gimp_tool_widget_add_line (widget, 0, 0, 0, 0);
+  private->closing_line = gimp_tool_widget_add_line (widget, 0, 0, 0, 0);
 
   gimp_tool_widget_pop_group (widget);
 
@@ -331,8 +336,10 @@ gimp_tool_polygon_should_close (GimpToolPolygon  *polygon,
   gboolean                double_click = FALSE;
   gdouble                 dist;
 
-  if (priv->polygon_modified ||
-      priv->n_segment_indices <= 0)
+  if (priv->polygon_modified      ||
+      priv->n_segment_indices < 1 ||
+      priv->n_points          < 3 ||
+      priv->polygon_closed)
     return FALSE;
 
   dist = gimp_canvas_item_transform_distance_square (priv->polygon,
@@ -388,6 +395,15 @@ static void
 gimp_tool_polygon_remove_last_segment (GimpToolPolygon *polygon)
 {
   GimpToolPolygonPrivate *priv = polygon->private;
+
+  if (priv->polygon_closed)
+    {
+      priv->polygon_closed = FALSE;
+
+      gimp_tool_polygon_changed (GIMP_TOOL_WIDGET (polygon));
+
+      return;
+    }
 
   if (priv->n_segment_indices > 0)
     {
@@ -848,12 +864,16 @@ gimp_tool_polygon_status_update (GimpToolPolygon  *polygon,
                                               NO_CLICK_TIME_AVAILABLE,
                                               coords))
             {
-              status_text = _("Click to complete selection");
+              status_text = _("Click to close shape");
             }
           else
             {
               status_text = _("Click-Drag to move segment vertex");
             }
+        }
+      else if (priv->polygon_closed)
+        {
+          status_text = _("Return commits, Escape cancels, Backspace re-opens shape");
         }
       else if (priv->n_segment_indices >= 3)
         {
@@ -903,6 +923,19 @@ gimp_tool_polygon_changed (GimpToolWidget *widget)
 
   gimp_canvas_item_set_visible (private->pending_line,
                                 private->show_pending_point);
+
+  if (private->polygon_closed)
+    {
+      GimpVector2 first = private->points[0];
+      GimpVector2 last  = private->points[private->n_points - 1];
+
+      gimp_canvas_line_set (private->closing_line,
+                            first.x, first.y,
+                            last.x,  last.y);
+    }
+
+  gimp_canvas_item_set_visible (private->closing_line,
+                                private->polygon_closed);
 
   hovering_first_point =
     gimp_tool_polygon_should_close (polygon,
@@ -1003,11 +1036,13 @@ gimp_tool_polygon_button_press (GimpToolWidget      *widget,
   GimpToolPolygon        *polygon = GIMP_TOOL_POLYGON (widget);
   GimpToolPolygonPrivate *priv    = polygon->private;
 
-  priv->button_down = TRUE;
-
   if (gimp_tool_polygon_is_point_grabbed (polygon))
     {
       gimp_tool_polygon_prepare_for_move (polygon);
+    }
+  else if (priv->polygon_closed)
+    {
+      return 0;
     }
   else
     {
@@ -1037,6 +1072,8 @@ gimp_tool_polygon_button_press (GimpToolWidget      *widget,
                                    point_to_add.y);
       gimp_tool_polygon_add_segment_index (polygon, priv->n_points - 1);
     }
+
+  priv->button_down = TRUE;
 
   gimp_tool_polygon_changed (widget);
 
@@ -1082,8 +1119,7 @@ gimp_tool_polygon_button_release (GimpToolWidget        *widget,
            */
           gimp_tool_polygon_revert_to_saved_state (polygon);
 
-          gimp_tool_widget_response (widget,
-                                     GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
+          priv->polygon_closed = TRUE;
         }
 
       priv->last_click_time  = time;
@@ -1103,8 +1139,7 @@ gimp_tool_polygon_button_release (GimpToolWidget        *widget,
                                           NO_CLICK_TIME_AVAILABLE,
                                           coords))
         {
-          gimp_tool_widget_response (widget,
-                                     GIMP_TOOL_WIDGET_RESPONSE_CONFIRM);
+          priv->polygon_closed = TRUE;
         }
       break;
 
@@ -1185,14 +1220,16 @@ gimp_tool_polygon_hover (GimpToolWidget   *widget,
         }
     }
 
-  hovering_first_point = gimp_tool_polygon_should_close (polygon,
-                                                         NO_CLICK_TIME_AVAILABLE,
-                                                         coords);
+  hovering_first_point =
+    gimp_tool_polygon_should_close (polygon,
+                                    NO_CLICK_TIME_AVAILABLE,
+                                    coords);
 
   priv->last_coords.x = coords->x;
   priv->last_coords.y = coords->y;
 
-  if (priv->n_points == 0 ||
+  if (priv->n_points == 0  ||
+      priv->polygon_closed ||
       (gimp_tool_polygon_is_point_grabbed (polygon) &&
        ! hovering_first_point) ||
       ! proximity)
