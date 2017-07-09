@@ -80,7 +80,7 @@ static void       run                              (const gchar      *name,
                                                     GimpParam       **return_vals);
 
 static gboolean   metadata_viewer_dialog           (gint32          image_id,
-                                                    GExiv2Metadata *metadata);
+                                                    GimpMetadata   *g_metadata);
 static void       metadata_dialog_set_metadata     (GExiv2Metadata *metadata,
                                                     GtkBuilder     *builder);
 static void       metadata_dialog_append_tags      (GExiv2Metadata  *metadata,
@@ -123,7 +123,7 @@ query (void)
                           "XMP information.",
                           "Hartmut Kuhse, Michael Natterer, Ben Touchette",
                           "Hartmut Kuhse, Michael Natterer, Ben Touchette",
-                          "2013, 2016",
+                          "2013, 2017",
                           N_("View Metadata"),
                           "*",
                           GIMP_PLUGIN,
@@ -171,7 +171,7 @@ run (const gchar      *name,
           gimp_image_set_metadata (image_ID, metadata);
         }
 
-      metadata_viewer_dialog (image_ID, GEXIV2_METADATA (metadata));
+      metadata_viewer_dialog (image_ID, metadata);
 
       status = GIMP_PDB_SUCCESS;
     }
@@ -184,17 +184,20 @@ run (const gchar      *name,
 }
 
 static gboolean
-metadata_viewer_dialog (gint32          image_id,
-                        GExiv2Metadata *metadata)
+metadata_viewer_dialog (gint32        image_id,
+                        GimpMetadata *g_metadata)
 {
-  GtkBuilder    *builder;
-  GtkWidget     *dialog;
-  GtkWidget     *metadata_vbox;
-  GtkWidget     *content_area;
-  gchar         *ui_file;
-  gchar         *title;
-  gchar         *name;
-  GError        *error = NULL;
+  GtkBuilder     *builder;
+  GtkWidget      *dialog;
+  GtkWidget      *metadata_vbox;
+  GtkWidget      *content_area;
+  gchar          *ui_file;
+  gchar          *title;
+  gchar          *name;
+  GError         *error = NULL;
+  GExiv2Metadata *metadata;
+
+  metadata = GEXIV2_METADATA(g_metadata);
 
   builder = gtk_builder_new ();
 
@@ -293,14 +296,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
 
   while ((tag = *tags++))
     {
-      const gchar *tag_label;
       gchar       *value;
-
-      tag_label = gexiv2_metadata_get_tag_label (tag);
-
-      /* skip private tags */
-      if (g_strcmp0 (tag_label, "") == 0 || g_strcmp0 (tag_label, NULL) == 0)
-        continue;
 
       gtk_list_store_append (store, &iter);
 
