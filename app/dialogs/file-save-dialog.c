@@ -337,6 +337,8 @@ file_save_dialog_check_file (GtkWidget            *dialog,
           if (ext)
             {
               gchar *ext_basename;
+              gchar *dirname;
+              gchar *filename;
               gchar *utf8;
 
               GIMP_LOG (SAVE_DIALOG, "appending .%s to basename", ext);
@@ -346,10 +348,16 @@ file_save_dialog_check_file (GtkWidget            *dialog,
               g_free (basename);
               basename = ext_basename;
 
-              utf8 = g_filename_to_utf8 (basename, -1, NULL, NULL, NULL);
+              dirname  = g_path_get_dirname (gimp_file_get_utf8_name (file));
+              filename = g_build_filename (dirname, basename, NULL);
+              g_free (dirname);
+
+              utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
               gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
                                                  utf8);
               g_free (utf8);
+
+              g_free (filename);
 
               GIMP_LOG (SAVE_DIALOG,
                         "set basename to %s, rerunning response and bailing out",
