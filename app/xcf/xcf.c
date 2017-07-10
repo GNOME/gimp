@@ -389,7 +389,7 @@ xcf_save_stream (Gimp           *gimp,
       success = g_output_stream_close (info.output, NULL, &my_error);
     }
 
-  if (! success)
+  if (! success && my_error)
     g_propagate_prefixed_error (error, my_error,
                                 _("Error writing '%s': "), filename);
 
