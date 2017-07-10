@@ -902,7 +902,7 @@ static gboolean
 levels_menu_sensitivity (gint      value,
                          gpointer  data)
 {
-  GimpDrawable         *drawable = GIMP_FILTER_TOOL (data)->drawable;
+  GimpDrawable         *drawable = GIMP_TOOL (data)->drawable;
   GimpHistogramChannel  channel  = value;
 
   if (!drawable)
@@ -933,13 +933,14 @@ levels_menu_sensitivity (gint      value,
 
 static void
 levels_stretch_callback (GtkWidget      *widget,
-                         GimpLevelsTool *tool)
+                         GimpLevelsTool *levels_tool)
 {
-  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (tool);
+  GimpTool       *tool        = GIMP_TOOL (levels_tool);
+  GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (levels_tool);
 
   gimp_levels_config_stretch (GIMP_LEVELS_CONFIG (filter_tool->config),
-                              tool->histogram,
-                              gimp_drawable_is_rgb (filter_tool->drawable));
+                              levels_tool->histogram,
+                              gimp_drawable_is_rgb (tool->drawable));
 }
 
 static void

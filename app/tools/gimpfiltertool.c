@@ -465,7 +465,6 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   gimp_tool_gui_set_shell (filter_tool->gui, shell);
   gimp_tool_gui_set_viewable (filter_tool->gui, GIMP_VIEWABLE (drawable));
 
-  filter_tool->drawable = drawable;
   gimp_tool_gui_show (filter_tool->gui);
 
   gimp_filter_tool_create_filter (filter_tool);
@@ -518,7 +517,7 @@ gimp_filter_tool_button_press (GimpTool            *tool,
         }
       else if (state & gimp_get_toggle_behavior_mask ())
         {
-          GimpItem *item = GIMP_ITEM (filter_tool->drawable);
+          GimpItem *item = GIMP_ITEM (tool->drawable);
           gdouble   pos_x;
           gdouble   pos_y;
 
@@ -734,7 +733,7 @@ gimp_filter_tool_options_notify (GimpTool         *tool,
       if (filter_options->preview_split)
         {
           GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-          GimpItem         *item  = GIMP_ITEM (filter_tool->drawable);
+          GimpItem         *item  = GIMP_ITEM (tool->drawable);
           gint              x, y, width, height;
 
           gimp_display_shell_untransform_viewport (shell,
@@ -827,10 +826,11 @@ gimp_filter_tool_can_pick_color (GimpColorTool    *color_tool,
                                  const GimpCoords *coords,
                                  GimpDisplay      *display)
 {
+  GimpTool       *tool        = GIMP_TOOL (color_tool);
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
   GimpImage      *image       = gimp_display_get_image (display);
 
-  if (gimp_image_get_active_drawable (image) != filter_tool->drawable)
+  if (gimp_image_get_active_drawable (image) != tool->drawable)
     return FALSE;
 
   return filter_tool->pick_abyss ||
@@ -846,15 +846,16 @@ gimp_filter_tool_pick_color (GimpColorTool     *color_tool,
                              gpointer           pixel,
                              GimpRGB           *color)
 {
+  GimpTool       *tool        = GIMP_TOOL (color_tool);
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
   gint            off_x, off_y;
   gboolean        picked;
 
-  gimp_item_get_offset (GIMP_ITEM (filter_tool->drawable), &off_x, &off_y);
+  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
 
-  *sample_format = gimp_drawable_get_format (filter_tool->drawable);
+  *sample_format = gimp_drawable_get_format (tool->drawable);
 
-  picked = gimp_pickable_pick_color (GIMP_PICKABLE (filter_tool->drawable),
+  picked = gimp_pickable_pick_color (GIMP_PICKABLE (tool->drawable),
                                      coords->x - off_x,
                                      coords->y - off_y,
                                      color_tool->options->sample_average,
@@ -1076,7 +1077,7 @@ gimp_filter_tool_create_filter (GimpFilterTool *filter_tool)
 
   g_assert (filter_tool->operation);
 
-  filter_tool->filter = gimp_drawable_filter_new (filter_tool->drawable,
+  filter_tool->filter = gimp_drawable_filter_new (tool->drawable,
                                                   gimp_tool_get_undo_desc (tool),
                                                   filter_tool->operation,
                                                   gimp_tool_get_icon_name (tool));
@@ -1123,6 +1124,7 @@ gimp_filter_tool_config_notify (GObject          *object,
 static void
 gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
 {
+  GimpTool            *tool    = GIMP_TOOL (filter_tool);
   GimpFilterOptions   *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
   GimpItem            *item;
   GimpImage           *image;
@@ -1132,7 +1134,7 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
   if (filter_tool->preview_guide)
     return;
 
-  item  = GIMP_ITEM (filter_tool->drawable);
+  item  = GIMP_ITEM (tool->drawable);
   image = gimp_item_get_image (item);
 
   if (options->preview_alignment == GIMP_ALIGN_LEFT ||
@@ -1171,12 +1173,13 @@ gimp_filter_tool_add_guide (GimpFilterTool *filter_tool)
 static void
 gimp_filter_tool_remove_guide (GimpFilterTool *filter_tool)
 {
+  GimpTool  *tool = GIMP_TOOL (filter_tool);
   GimpImage *image;
 
   if (! filter_tool->preview_guide)
     return;
 
-  image = gimp_item_get_image (GIMP_ITEM (filter_tool->drawable));
+  image = gimp_item_get_image (GIMP_ITEM (tool->drawable));
 
   gimp_image_remove_guide (image, filter_tool->preview_guide, FALSE);
 }
@@ -1184,6 +1187,7 @@ gimp_filter_tool_remove_guide (GimpFilterTool *filter_tool)
 static void
 gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
 {
+  GimpTool            *tool    = GIMP_TOOL (filter_tool);
   GimpFilterOptions   *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
   GimpItem            *item;
   GimpOrientationType  orientation;
@@ -1192,7 +1196,7 @@ gimp_filter_tool_move_guide (GimpFilterTool *filter_tool)
   if (! filter_tool->preview_guide)
     return;
 
-  item = GIMP_ITEM (filter_tool->drawable);
+  item = GIMP_ITEM (tool->drawable);
 
   if (options->preview_alignment == GIMP_ALIGN_LEFT ||
       options->preview_alignment == GIMP_ALIGN_RIGHT)
@@ -1247,8 +1251,9 @@ gimp_filter_tool_guide_moved (GimpGuide        *guide,
                               const GParamSpec *pspec,
                               GimpFilterTool   *filter_tool)
 {
+  GimpTool          *tool    = GIMP_TOOL (filter_tool);
   GimpFilterOptions *options = GIMP_FILTER_TOOL_GET_OPTIONS (filter_tool);
-  GimpItem          *item    = GIMP_ITEM (filter_tool->drawable);
+  GimpItem          *item    = GIMP_ITEM (tool->drawable);
   gdouble            position;
 
   if (options->preview_alignment == GIMP_ALIGN_LEFT ||
@@ -1483,7 +1488,7 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
                            G_CALLBACK (gimp_filter_tool_config_notify),
                            G_OBJECT (filter_tool), 0);
 
-  if (GIMP_TOOL (filter_tool)->drawable)
+  if (tool->drawable)
     gimp_filter_tool_create_filter (filter_tool);
 }
 
@@ -1745,12 +1750,15 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
                                     gint           *drawable_offset_y,
                                     GeglRectangle  *drawable_area)
 {
+  GimpTool     *tool;
   GimpDrawable *drawable;
 
   g_return_val_if_fail (GIMP_IS_FILTER_TOOL (filter_tool), FALSE);
   g_return_val_if_fail (drawable_offset_x != NULL, FALSE);
   g_return_val_if_fail (drawable_offset_y != NULL, FALSE);
   g_return_val_if_fail (drawable_area != NULL, FALSE);
+
+  tool = GIMP_TOOL (filter_tool);
 
   *drawable_offset_x = 0;
   *drawable_offset_y = 0;
@@ -1760,7 +1768,7 @@ gimp_filter_tool_get_drawable_area (GimpFilterTool *filter_tool,
   drawable_area->width  = 1;
   drawable_area->height = 1;
 
-  drawable = filter_tool->drawable;
+  drawable = tool->drawable;
 
   if (drawable)
     {

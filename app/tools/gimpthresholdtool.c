@@ -313,7 +313,7 @@ static gboolean
 gimp_threshold_tool_channel_sensitive (gint     value,
                                        gpointer data)
 {
-  GimpDrawable         *drawable = GIMP_FILTER_TOOL (data)->drawable;
+  GimpDrawable         *drawable = GIMP_TOOL (data)->drawable;
   GimpHistogramChannel  channel  = value;
 
   if (!drawable)

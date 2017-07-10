@@ -150,7 +150,8 @@ gimp_filter_tool_set_line (Controller    *controller,
                            gdouble        x2,
                            gdouble        y2)
 {
-  GimpDrawable *drawable = controller->filter_tool->drawable;
+  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
+  GimpDrawable *drawable = tool->drawable;
 
   if (drawable)
     {
@@ -220,7 +221,8 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
                                   const GimpControllerSlider *sliders,
                                   gint                        n_sliders)
 {
-  GimpDrawable *drawable = controller->filter_tool->drawable;
+  GimpTool     *tool     = GIMP_TOOL (controller->filter_tool);
+  GimpDrawable *drawable = tool->drawable;
 
   if (drawable)
     {

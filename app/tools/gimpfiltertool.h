@@ -36,36 +36,34 @@ typedef struct _GimpFilterToolClass GimpFilterToolClass;
 
 struct _GimpFilterTool
 {
-  GimpColorTool          parent_instance;
+  GimpColorTool       parent_instance;
 
-  GimpDrawable          *drawable;
+  GeglNode           *operation;
+  GObject            *config;
+  GObject            *default_config;
+  GimpContainer      *settings;
 
-  GeglNode              *operation;
-  GObject               *config;
-  GObject               *default_config;
-  GimpContainer         *settings;
+  gchar              *description;
 
-  gchar                 *description;
+  gboolean            has_settings;
 
-  gboolean               has_settings;
+  GimpDrawableFilter *filter;
 
-  GimpDrawableFilter    *filter;
+  GimpGuide          *preview_guide;
 
-  GimpGuide             *preview_guide;
-
-  gpointer               pick_identifier;
-  gboolean               pick_abyss;
+  gpointer            pick_identifier;
+  gboolean            pick_abyss;
 
   /* dialog */
-  gboolean               overlay;
-  GimpToolGui           *gui;
-  GtkWidget             *settings_box;
-  GtkWidget             *region_combo;
-  GtkWidget             *active_picker;
+  gboolean            overlay;
+  GimpToolGui        *gui;
+  GtkWidget          *settings_box;
+  GtkWidget          *region_combo;
+  GtkWidget          *active_picker;
 
   /* widget */
-  GimpToolWidget        *widget;
-  GimpToolWidget        *grab_widget;
+  GimpToolWidget     *widget;
+  GimpToolWidget     *grab_widget;
 };
 
 struct _GimpFilterToolClass

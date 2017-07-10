@@ -649,11 +649,9 @@ gimp_curves_tool_color_picked (GimpFilterTool *filter_tool,
                                const Babl     *sample_format,
                                const GimpRGB  *color)
 {
-  GimpCurvesTool   *tool   = GIMP_CURVES_TOOL (filter_tool);
-  GimpCurvesConfig *config = GIMP_CURVES_CONFIG (filter_tool->config);
-  GimpDrawable     *drawable;
-
-  drawable = GIMP_FILTER_TOOL (tool)->drawable;
+  GimpCurvesTool   *tool     = GIMP_CURVES_TOOL (filter_tool);
+  GimpCurvesConfig *config   = GIMP_CURVES_CONFIG (filter_tool->config);
+  GimpDrawable     *drawable = GIMP_TOOL (tool)->drawable;
 
   tool->picked_color[GIMP_HISTOGRAM_RED]   = color->r;
   tool->picked_color[GIMP_HISTOGRAM_GREEN] = color->g;
@@ -802,7 +800,7 @@ static gboolean
 curves_menu_sensitivity (gint      value,
                          gpointer  data)
 {
-  GimpDrawable         *drawable = GIMP_FILTER_TOOL (data)->drawable;
+  GimpDrawable         *drawable = GIMP_TOOL (data)->drawable;
   GimpHistogramChannel  channel  = value;
 
   if (!drawable)
