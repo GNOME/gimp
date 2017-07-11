@@ -392,7 +392,7 @@ gimp_crop_tool_start (GimpCropTool *crop_tool,
   gimp_tool_rectangle_set_constraint (GIMP_TOOL_RECTANGLE (widget),
                                       gimp_crop_tool_get_constraint (crop_tool));
 
-  gimp_crop_tool_update_option_defaults (crop_tool, FALSE);
+  gimp_crop_tool_update_option_defaults (crop_tool, TRUE);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
