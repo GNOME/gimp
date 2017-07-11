@@ -90,6 +90,7 @@ gimp_operation_grow_class_init (GimpOperationGrowClass *klass)
   operation_class->prepare                 = gimp_operation_grow_prepare;
   operation_class->get_required_for_output = gimp_operation_grow_get_required_for_output;
   operation_class->get_cached_region       = gimp_operation_grow_get_cached_region;
+  operation_class->threaded                = FALSE;
 
   filter_class->process                    = gimp_operation_grow_process;
 

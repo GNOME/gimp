@@ -91,6 +91,7 @@ gimp_operation_border_class_init (GimpOperationBorderClass *klass)
   operation_class->prepare                 = gimp_operation_border_prepare;
   operation_class->get_required_for_output = gimp_operation_border_get_required_for_output;
   operation_class->get_cached_region       = gimp_operation_border_get_cached_region;
+  operation_class->threaded                = FALSE;
 
   filter_class->process                    = gimp_operation_border_process;
 
