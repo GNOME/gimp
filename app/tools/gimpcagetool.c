@@ -44,6 +44,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 
 #include "gimpcagetool.h"
@@ -822,7 +823,8 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   /* Draw the cage with handles. */
   for (i = 0; i < n_vertices; i++)
     {
-      GimpVector2 point1, point2;
+      GimpCanvasItem *item;
+      GimpVector2     point1, point2;
 
       point1 = gimp_cage_config_get_point_coordinate (ct->config,
                                                       options->cage_mode,
@@ -845,40 +847,54 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
           point2.x += ct->offset_x;
           point2.y += ct->offset_y;
 
-          gimp_draw_tool_push_group (draw_tool, stroke_group);
+          if (i != ct->hovering_edge ||
+              gimp_cage_tool_is_complete (ct))
+            {
+              gimp_draw_tool_push_group (draw_tool, stroke_group);
+            }
 
-          gimp_draw_tool_add_line (draw_tool,
-                                   point1.x,
-                                   point1.y,
-                                   point2.x,
-                                   point2.y);
+          item = gimp_draw_tool_add_line (draw_tool,
+                                          point1.x,
+                                          point1.y,
+                                          point2.x,
+                                          point2.y);
 
-          gimp_draw_tool_pop_group (draw_tool);
+          if (i == ct->hovering_edge &&
+              ! gimp_cage_tool_is_complete (ct))
+            {
+              gimp_canvas_item_set_highlight (item, TRUE);
+            }
+          else
+            {
+              gimp_draw_tool_pop_group (draw_tool);
+            }
         }
-
-      if (i == ct->hovering_handle)
-        handle = GIMP_HANDLE_FILLED_CIRCLE;
-      else
-        handle = GIMP_HANDLE_CIRCLE;
-
-      gimp_draw_tool_add_handle (draw_tool,
-                                 handle,
-                                 point1.x,
-                                 point1.y,
-                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
 
       if (gimp_cage_config_point_is_selected (ct->config, i))
         {
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_SQUARE,
-                                     point1.x,
-                                     point1.y,
-                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+          if (i == ct->hovering_handle)
+            handle = GIMP_HANDLE_FILLED_SQUARE;
+          else
+            handle = GIMP_HANDLE_SQUARE;
         }
+      else
+        {
+          if (i == ct->hovering_handle)
+            handle = GIMP_HANDLE_FILLED_CIRCLE;
+          else
+            handle = GIMP_HANDLE_CIRCLE;
+        }
+
+      item = gimp_draw_tool_add_handle (draw_tool,
+                                        handle,
+                                        point1.x,
+                                        point1.y,
+                                        GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                        GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                        GIMP_HANDLE_ANCHOR_CENTER);
+
+      if (i == ct->hovering_handle)
+        gimp_canvas_item_set_highlight (item, TRUE);
     }
 
   if (ct->tool_state == DEFORM_STATE_SELECTING ||
