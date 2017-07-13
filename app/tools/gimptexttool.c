@@ -866,7 +866,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 {
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
   GtkTextBuffer   *buffer    = GTK_TEXT_BUFFER (text_tool->buffer);
-  GimpCanvasGroup *fill_group;
+  GimpCanvasGroup *group;
   PangoLayout     *layout;
   gint             offset_x;
   gint             offset_y;
@@ -876,8 +876,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   gint             min, max;
   gint             i;
 
-  fill_group = gimp_draw_tool_add_fill_group (draw_tool);
-  gimp_canvas_item_set_highlight (GIMP_CANVAS_ITEM (fill_group), TRUE);
+  group = gimp_draw_tool_add_stroke_group (draw_tool);
+  gimp_canvas_item_set_highlight (GIMP_CANVAS_ITEM (group), TRUE);
 
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
@@ -894,7 +894,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 
   iter = pango_layout_get_iter (layout);
 
-  gimp_draw_tool_push_group (draw_tool, fill_group);
+  gimp_draw_tool_push_group (draw_tool, group);
 
   do
     {
@@ -921,7 +921,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
           rect.x += offset_x;
           rect.y += offset_y;
 
-          gimp_draw_tool_add_rectangle (draw_tool, TRUE,
+          gimp_draw_tool_add_rectangle (draw_tool, FALSE,
                                         rect.x, rect.y,
                                         rect.width, rect.height);
         }
