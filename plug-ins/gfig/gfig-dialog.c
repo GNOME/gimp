@@ -1901,7 +1901,7 @@ load_file_chooser_response (GtkFileChooser *chooser,
 void
 paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
 {
-  GimpBucketFillMode fill_mode = FILL_NONE;
+  GimpBucketFillMode fill_mode = GIMP_BUCKET_FILL_FG;
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();

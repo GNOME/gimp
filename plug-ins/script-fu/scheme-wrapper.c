@@ -78,7 +78,7 @@ typedef struct
   gint         value;
 } NamedConstant;
 
-static const NamedConstant const script_constants[] =
+static const NamedConstant script_constants[] =
 {
   /* Useful values from libgimpbase/gimplimits.h */
   { "MIN-IMAGE-SIZE", GIMP_MIN_IMAGE_SIZE },

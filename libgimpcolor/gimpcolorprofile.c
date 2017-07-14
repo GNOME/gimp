@@ -852,7 +852,7 @@ gimp_color_profile_new_from_color_profile (GimpColorProfile *profile,
 {
   GimpColorProfile *new_profile;
   cmsHPROFILE       target_profile;
-  GimpMatrix3       matrix = { 0, };
+  GimpMatrix3       matrix = { { { 0, } } };
   cmsCIEXYZ        *whitepoint;
   cmsToneCurve     *curve;
   const gchar      *model;

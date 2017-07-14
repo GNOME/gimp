@@ -312,7 +312,7 @@ pluginCore (piArgs *argp)
   gint          nl      = 0;
   gint          y, i;
   gint          Y, I, Q;
-  guint         width, height, bpp;
+  gint          width, height, bpp;
   gint          sel_x1, sel_x2, sel_y1, sel_y2;
   gint          prog_interval;
   guchar       *src, *s, *dst, *d;

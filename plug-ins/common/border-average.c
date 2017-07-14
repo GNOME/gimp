@@ -121,7 +121,7 @@ run (const gchar      *name,
   static GimpParam   values[3];
   gint32             image_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRGB            result_color;
+  GimpRGB            result_color = { 0.0, };
   GimpRunMode        run_mode;
   gint32             drawable_id;
   GeglBuffer        *buffer;

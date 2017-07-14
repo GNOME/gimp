@@ -1041,7 +1041,7 @@ gimp_hsv_to_rgb4 (guchar  *rgb,
     {
       hue        = value;
       saturation = value;
-      value      = value;
+      /*value      = value;*/
     }
   else
     {

@@ -375,20 +375,17 @@ send_image (const gchar *filename,
   mailcmd[1] = "--attach";
   mailcmd[2] = filepath;
   i = 3;
-  if (mail_info.subject &&
-      strlen (mail_info.subject) > 0)
+  if (strlen (mail_info.subject) > 0)
     {
       mailcmd[i++] = "--subject";
       mailcmd[i++] = mail_info.subject;
     }
-  if (mail_info.comment &&
-      strlen (mail_info.comment) > 0)
+  if (strlen (mail_info.comment) > 0)
     {
       mailcmd[i++] = "--body";
       mailcmd[i++] = mail_info.comment;
     }
-  if (mail_info.receipt &&
-      strlen (mail_info.receipt) > 0)
+  if (strlen (mail_info.receipt) > 0)
     {
       mailcmd[i++] = mail_info.receipt;
     }

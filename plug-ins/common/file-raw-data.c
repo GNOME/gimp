@@ -1068,8 +1068,8 @@ load_image (const gchar  *filename,
 {
   RawGimpData       *data;
   gint32             layer_id = -1;
-  GimpImageType      ltype    = GIMP_RGB;
-  GimpImageBaseType  itype    = GIMP_RGB_IMAGE;
+  GimpImageType      ltype    = GIMP_RGB_IMAGE;
+  GimpImageBaseType  itype    = GIMP_RGB;
   goffset            size;
   gint               bpp = 0;
   gint               bitspp = 8;

@@ -284,7 +284,7 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
               gimp_plug_in_manager_add_from_file (manager, child, mtime);
             }
           else if (g_file_query_file_type (child,
-                                           G_FILE_CREATE_NONE,
+                                           G_FILE_QUERY_INFO_NONE,
                                            NULL) == G_FILE_TYPE_DIRECTORY)
             {
               /* Search in subdirectory the first executable file with
