@@ -5263,7 +5263,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
               alt_d = atof (gtk_entry_get_text (entry));
               if (msr == 1)
-                alt_d = (alt_d * 12 * 2.54d) / 100;
+                alt_d = (alt_d * 12 * 2.54) / 100;
               alt_d *= 10.f;
 
               g_snprintf(alt_str, sizeof (alt_str), "%d/10", (gint) alt_d);
@@ -5716,7 +5716,7 @@ gpsaltsys_combo_callback (GtkComboBoxText *combo,
       if (last_gpsaltsys_sel != 0)
         {
           alt_d = atof (gtk_entry_get_text (GTK_ENTRY (entry)));
-          alt_d = (alt_d * (12 * 2.54d)) / 100;
+          alt_d = (alt_d * (12 * 2.54)) / 100;
 
           g_snprintf (alt_str, sizeof (alt_str), "%2f", (float)alt_d);
 
@@ -5728,7 +5728,7 @@ gpsaltsys_combo_callback (GtkComboBoxText *combo,
       if (last_gpsaltsys_sel != 1)
         {
           alt_d = atof (gtk_entry_get_text (GTK_ENTRY (entry)));
-          alt_d = alt_d * 3.28d;
+          alt_d = alt_d * 3.28;
 
           g_snprintf (alt_str, sizeof (alt_str), "%2f", (float)alt_d);
 

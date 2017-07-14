@@ -220,7 +220,7 @@ static const metadata_tag default_metadata_tags[] =
 
 };
 
-static const metadata_tag const equivalent_metadata_tags[] =
+static const metadata_tag equivalent_metadata_tags[] =
 {
   { "Iptc.Application2.DateCreated",             "single", 10,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  0
   { "Iptc.Application2.TransmissionReference",   "single", 12,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  1

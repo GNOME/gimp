@@ -98,7 +98,7 @@ import_file_metadata(metadata_editor *args)
  * ============================================================================
  */
 void
-export_file_metadata(metadata_editor *args)
+export_file_metadata (metadata_editor *args)
 {
   GError *error = NULL;
   FILE   *file;
@@ -135,6 +135,8 @@ export_file_metadata(metadata_editor *args)
       if (!strcmp("single", default_metadata_tags[index].mode) ||
           !strcmp("multi", default_metadata_tags[index].mode))
         {
+          const gchar *value;
+
           value = get_tag_ui_text (args, default_metadata_tags[index].tag,
                                    default_metadata_tags[index].mode);
 
@@ -176,6 +178,8 @@ export_file_metadata(metadata_editor *args)
       if (!strcmp("single", default_metadata_tags[i].mode) ||
           !strcmp("multi", default_metadata_tags[i].mode))
         {
+          const gchar *value;
+
           xmldata = g_strconcat (xmldata, "\t\t<tag-value>", NULL);
           value = get_tag_ui_text (args, default_metadata_tags[i].tag,
                                    default_metadata_tags[i].mode);
@@ -191,6 +195,7 @@ export_file_metadata(metadata_editor *args)
       else if (!strcmp("combo", default_metadata_tags[i].mode))
         {
           gint data;
+
           xmldata = g_strconcat (xmldata, "\t\t<tag-value>", NULL);
 
           data = get_tag_ui_combo (args, default_metadata_tags[i].tag,
@@ -204,7 +209,8 @@ export_file_metadata(metadata_editor *args)
         }
       else if (!strcmp("list", default_metadata_tags[i].mode))
         {
-          gchar* data;
+          gchar *data;
+
           xmldata = g_strconcat (xmldata, "\t\t<tag-list-value>\n", NULL);
 
           data = get_tag_ui_list (args, default_metadata_tags[i].tag,

@@ -161,8 +161,11 @@ xml_parser_data (GMarkupParseContext *context,
 }
 
 void
-set_tag_ui (metadata_editor *args, int index,
-            gchar *name, gchar *value, gchar* mode)
+set_tag_ui (metadata_editor *args,
+            gint             index,
+            gchar           *name,
+            gchar           *value,
+            gchar*           mode)
 {
   GtkWidget *widget;
   gchar *value_utf;
@@ -197,11 +200,9 @@ set_tag_ui (metadata_editor *args, int index,
     }
   else if (!strcmp ("list", mode))
     {
-      GtkTreePath   *path;
       GtkTreeModel  *treemodel;
       GtkListStore  *liststore;
       GtkTreeIter    iter;
-      gchar          tag[1024];
       gint           number_of_rows;
       gint           row;
       gint           item;
@@ -544,8 +545,10 @@ set_tag_ui (metadata_editor *args, int index,
     }
 }
 
-gchar *
-get_tag_ui_text (metadata_editor *args, gchar *name, gchar *mode)
+const gchar *
+get_tag_ui_text (metadata_editor *args,
+                 gchar           *name,
+                 gchar           *mode)
 {
   GObject *object;
 
@@ -647,8 +650,6 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
               if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0) ||
                   (tagdata[row][1] != NULL && strlen(tagdata[row][1]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
                   xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
@@ -781,8 +782,6 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 
               if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
                   xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
@@ -800,8 +799,6 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 
               if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
                   xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
@@ -819,8 +816,6 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 
               if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
                   xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);
@@ -838,8 +833,6 @@ get_tag_ui_list (metadata_editor *args, gchar *name, gchar *mode)
 
               if ((tagdata[row][0] != NULL && strlen(tagdata[row][0]) > 0))
                 {
-                  gint  types;
-
                   has_data = TRUE;
 
                   xmldata = g_strconcat (xmldata, "\t\t\t<list-element>\n", NULL);

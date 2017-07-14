@@ -51,7 +51,7 @@ set_tag_ui                                   (metadata_editor      *args,
                                               gchar                *value,
                                               gchar                *mode);
 
-gchar *
+const gchar *
 get_tag_ui_text                              (metadata_editor      *args,
                                               gchar                *name,
                                               gchar                *mode);
