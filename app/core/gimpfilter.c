@@ -138,11 +138,7 @@ gimp_filter_finalize (GObject *object)
 {
   GimpFilterPrivate *private = GET_PRIVATE (object);
 
-  if (private->node)
-    {
-      g_object_unref (private->node);
-      private->node = NULL;
-    }
+  g_clear_object (&private->node);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

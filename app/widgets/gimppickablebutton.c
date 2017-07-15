@@ -179,11 +179,7 @@ gimp_pickable_button_finalize (GObject *object)
 {
   GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
 
-  if (button->private->context)
-    {
-      g_object_unref (button->private->context);
-      button->private->context = NULL;
-    }
+  g_clear_object (&button->private->context);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

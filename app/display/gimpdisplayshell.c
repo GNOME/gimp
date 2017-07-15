@@ -819,47 +819,22 @@ gimp_display_shell_dispose (GObject *object)
       shell->filter_idle_id = 0;
     }
 
-  if (shell->mask_surface)
-    {
-      cairo_surface_destroy (shell->mask_surface);
-      shell->mask_surface = NULL;
-    }
-
-  if (shell->checkerboard)
-    {
-      cairo_pattern_destroy (shell->checkerboard);
-      shell->checkerboard = NULL;
-    }
+  g_clear_pointer (&shell->mask_surface, cairo_surface_destroy);
+  g_clear_pointer (&shell->checkerboard, cairo_pattern_destroy);
 
   gimp_display_shell_profile_finalize (shell);
 
-  if (shell->filter_buffer)
-    {
-      g_object_unref (shell->filter_buffer);
-      shell->filter_buffer = NULL;
-      shell->filter_data   = NULL;
-      shell->filter_stride = 0;
-    }
+  g_clear_object (&shell->filter_buffer);
+  shell->filter_data   = NULL;
+  shell->filter_stride = 0;
 
-  if (shell->mask)
-    {
-      g_object_unref (shell->mask);
-      shell->mask = NULL;
-    }
+  g_clear_object (&shell->mask);
 
   gimp_display_shell_items_free (shell);
 
-  if (shell->motion_buffer)
-    {
-      g_object_unref (shell->motion_buffer);
-      shell->motion_buffer = NULL;
-    }
+  g_clear_object (&shell->motion_buffer);
 
-  if (shell->zoom_focus_pointer_queue)
-    {
-      g_queue_free (shell->zoom_focus_pointer_queue);
-      shell->zoom_focus_pointer_queue = NULL;
-    }
+  g_clear_pointer (&shell->zoom_focus_pointer_queue, g_queue_free);
 
   if (shell->title_idle_id)
     {
@@ -873,11 +848,7 @@ gimp_display_shell_dispose (GObject *object)
       shell->fill_idle_id = 0;
     }
 
-  if (shell->nav_popup)
-    {
-      gtk_widget_destroy (shell->nav_popup);
-      shell->nav_popup = NULL;
-    }
+  g_clear_pointer (&shell->nav_popup, gtk_widget_destroy);
 
   if (shell->blink_timeout_id)
     {
@@ -895,31 +866,15 @@ gimp_display_shell_finalize (GObject *object)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
 
-  g_object_unref (shell->zoom);
-
-  if (shell->rotate_transform)
-    g_free (shell->rotate_transform);
-
-  if (shell->rotate_untransform)
-    g_free (shell->rotate_untransform);
-
-  if (shell->options)
-    g_object_unref (shell->options);
-
-  if (shell->fullscreen_options)
-    g_object_unref (shell->fullscreen_options);
-
-  if (shell->no_image_options)
-    g_object_unref (shell->no_image_options);
-
-  if (shell->title)
-    g_free (shell->title);
-
-  if (shell->status)
-    g_free (shell->status);
-
-  if (shell->icon)
-    g_object_unref (shell->icon);
+  g_clear_object (&shell->zoom);
+  g_clear_pointer (&shell->rotate_transform,   g_free);
+  g_clear_pointer (&shell->rotate_untransform, g_free);
+  g_clear_object (&shell->options);
+  g_clear_object (&shell->fullscreen_options);
+  g_clear_object (&shell->no_image_options);
+  g_clear_pointer (&shell->title,  g_free);
+  g_clear_pointer (&shell->status, g_free);
+  g_clear_object (&shell->icon);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

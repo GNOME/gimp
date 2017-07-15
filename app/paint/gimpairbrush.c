@@ -96,11 +96,7 @@ gimp_airbrush_finalize (GObject *object)
       airbrush->timeout_id = 0;
     }
 
-  if (airbrush->sym)
-    {
-      g_object_unref (airbrush->sym);
-      airbrush->sym = NULL;
-    }
+  g_clear_object (&airbrush->sym);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -171,16 +167,12 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
-      if (airbrush->sym)
-        {
-          g_object_unref (airbrush->sym);
-          airbrush->sym = NULL;
-        }
-
       GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
                                                    paint_options,
                                                    sym,
                                                    paint_state, time);
+
+      g_clear_object (&airbrush->sym);
       break;
     }
 }

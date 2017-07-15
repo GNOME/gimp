@@ -247,23 +247,10 @@ gimp_device_info_finalize (GObject *object)
 {
   GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
 
-  if (info->axes)
-    {
-      g_free (info->axes);
-      info->axes = NULL;
-    }
+  g_clear_pointer (&info->axes, g_free);
+  g_clear_pointer (&info->keys, g_free);
 
-  if (info->keys)
-    {
-      g_free (info->keys);
-      info->keys = NULL;
-    }
-
-  if (info->pressure_curve)
-    {
-      g_object_unref (info->pressure_curve);
-      info->pressure_curve = NULL;
-    }
+  g_clear_object (&info->pressure_curve);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

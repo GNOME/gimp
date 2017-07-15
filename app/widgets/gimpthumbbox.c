@@ -157,11 +157,7 @@ gimp_thumb_box_finalize (GObject *object)
 
   gimp_thumb_box_take_files (box, NULL);
 
-  if (box->imagefile)
-    {
-      g_object_unref (box->imagefile);
-      box->imagefile = NULL;
-    }
+  g_clear_object (&box->imagefile);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

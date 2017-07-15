@@ -341,11 +341,7 @@ gimp_controller_list_finalize (GObject *object)
 {
   GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
 
-  if (list->gimp)
-    {
-      g_object_unref (list->gimp);
-      list->gimp = NULL;
-    }
+  g_clear_object (&list->gimp);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

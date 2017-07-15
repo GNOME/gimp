@@ -108,11 +108,7 @@ gimp_procedure_action_finalize (GObject *object)
 {
   GimpProcedureAction *action = GIMP_PROCEDURE_ACTION (object);
 
-  if (action->procedure)
-    {
-      g_object_unref (action->procedure);
-      action->procedure = NULL;
-    }
+  g_clear_object (&action->procedure);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -58,11 +58,7 @@ gimp_operation_point_filter_finalize (GObject *object)
 {
   GimpOperationPointFilter *self = GIMP_OPERATION_POINT_FILTER (object);
 
-  if (self->config)
-    {
-      g_object_unref (self->config);
-      self->config = NULL;
-    }
+  g_clear_object (&self->config);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

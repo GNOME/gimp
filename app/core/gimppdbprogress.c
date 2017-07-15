@@ -196,23 +196,9 @@ gimp_pdb_progress_finalize (GObject *object)
 {
   GimpPdbProgress *progress = GIMP_PDB_PROGRESS (object);
 
-  if (progress->pdb)
-    {
-      g_object_unref (progress->pdb);
-      progress->pdb = NULL;
-    }
-
-  if (progress->context)
-    {
-      g_object_unref (progress->context);
-      progress->context = NULL;
-    }
-
-  if (progress->callback_name)
-    {
-      g_free (progress->callback_name);
-      progress->callback_name = NULL;
-    }
+  g_clear_object (&progress->pdb);
+  g_clear_object (&progress->context);
+  g_clear_pointer (&progress->callback_name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

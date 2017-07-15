@@ -243,8 +243,7 @@ gimp_tag_entry_dispose (GObject *object)
       g_signal_handlers_disconnect_by_func (entry->container,
                                             gimp_tag_entry_container_changed,
                                             entry);
-      g_object_unref (entry->container);
-      entry->container = NULL;
+      g_clear_object (&entry->container);
     }
 
   if (entry->mask)
@@ -803,7 +802,7 @@ gimp_tag_entry_assign_tags (GimpTagEntry *tag_entry)
         }
     }
 
-  g_list_free_full (add_list, (GDestroyNotify) g_object_unref);
+  g_list_free_full (add_list,    (GDestroyNotify) g_object_unref);
   g_list_free_full (remove_list, (GDestroyNotify) g_object_unref);
 
   /* common tags list with changes applied. */

@@ -517,10 +517,9 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
               cairo_region_destroy (region);
             }
         }
-      else if (private->change_region)
+      else
         {
-          cairo_region_destroy (private->change_region);
-          private->change_region = NULL;
+          g_clear_pointer (&private->change_region, cairo_region_destroy);
         }
     }
 }

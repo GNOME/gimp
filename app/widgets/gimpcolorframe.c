@@ -215,11 +215,7 @@ gimp_color_frame_finalize (GObject *object)
 {
   GimpColorFrame *frame = GIMP_COLOR_FRAME (object);
 
-  if (frame->number_layout)
-    {
-      g_object_unref (frame->number_layout);
-      frame->number_layout = NULL;
-    }
+  g_clear_object (&frame->number_layout);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -304,11 +300,7 @@ gimp_color_frame_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  if (frame->number_layout)
-    {
-      g_object_unref (frame->number_layout);
-      frame->number_layout = NULL;
-    }
+  g_clear_object (&frame->number_layout);
 }
 
 static gboolean
@@ -952,11 +944,7 @@ gimp_color_frame_create_transform (GimpColorFrame *frame)
 static void
 gimp_color_frame_destroy_transform (GimpColorFrame *frame)
 {
-  if (frame->transform)
-    {
-      g_object_unref (frame->transform);
-      frame->transform = NULL;
-    }
+  g_clear_object (&frame->transform);
 
   gimp_color_frame_update (frame);
 }

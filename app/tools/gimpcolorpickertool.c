@@ -154,15 +154,10 @@ gimp_color_picker_tool_dispose (GObject *object)
 {
   GimpColorPickerTool *picker_tool = GIMP_COLOR_PICKER_TOOL (object);
 
-  if (picker_tool->gui)
-    {
-      g_object_unref (picker_tool->gui);
-
-      picker_tool->gui          = NULL;
-      picker_tool->color_area   = NULL;
-      picker_tool->color_frame1 = NULL;
-      picker_tool->color_frame2 = NULL;
-    }
+  g_clear_object (&picker_tool->gui);
+  picker_tool->color_area   = NULL;
+  picker_tool->color_frame1 = NULL;
+  picker_tool->color_frame2 = NULL;
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

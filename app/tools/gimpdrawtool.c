@@ -480,15 +480,13 @@ gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
       if (draw_tool->preview)
         {
           gimp_display_shell_remove_preview_item (shell, draw_tool->preview);
-          g_object_unref (draw_tool->preview);
-          draw_tool->preview = NULL;
+          g_clear_object (&draw_tool->preview);
         }
 
       if (draw_tool->item)
         {
           gimp_display_shell_remove_tool_item (shell, draw_tool->item);
-          g_object_unref (draw_tool->item);
-          draw_tool->item = NULL;
+          g_clear_object (&draw_tool->item);
         }
     }
 }

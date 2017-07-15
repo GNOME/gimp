@@ -350,23 +350,9 @@ gimp_item_prop_undo_free (GimpUndo     *undo,
 {
   GimpItemPropUndo *item_prop_undo = GIMP_ITEM_PROP_UNDO (undo);
 
-  if (item_prop_undo->name)
-    {
-      g_free (item_prop_undo->name);
-      item_prop_undo->name = NULL;
-    }
-
-  if (item_prop_undo->parasite_name)
-    {
-      g_free (item_prop_undo->parasite_name);
-      item_prop_undo->parasite_name = NULL;
-    }
-
-  if (item_prop_undo->parasite)
-    {
-      gimp_parasite_free (item_prop_undo->parasite);
-      item_prop_undo->parasite = NULL;
-    }
+  g_clear_pointer (&item_prop_undo->name,          g_free);
+  g_clear_pointer (&item_prop_undo->parasite_name, g_free);
+  g_clear_pointer (&item_prop_undo->parasite,      gimp_parasite_free);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

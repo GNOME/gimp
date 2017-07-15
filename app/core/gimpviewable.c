@@ -230,29 +230,10 @@ gimp_viewable_finalize (GObject *object)
 {
   GimpViewablePrivate *private = GET_PRIVATE (object);
 
-  if (private->icon_name)
-    {
-      g_free (private->icon_name);
-      private->icon_name = NULL;
-    }
-
-  if (private->icon_pixbuf)
-    {
-      g_object_unref (private->icon_pixbuf);
-      private->icon_pixbuf = NULL;
-    }
-
-  if (private->preview_temp_buf)
-    {
-      gimp_temp_buf_unref (private->preview_temp_buf);
-      private->preview_temp_buf = NULL;
-    }
-
-  if (private->preview_pixbuf)
-    {
-      g_object_unref (private->preview_pixbuf);
-      private->preview_pixbuf = NULL;
-    }
+  g_clear_pointer (&private->icon_name, g_free);
+  g_clear_object (&private->icon_pixbuf);
+  g_clear_pointer (&private->preview_temp_buf, gimp_temp_buf_unref);
+  g_clear_object (&private->preview_pixbuf);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -341,17 +322,8 @@ gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
 {
   GimpViewablePrivate *private = GET_PRIVATE (viewable);
 
-  if (private->preview_temp_buf)
-    {
-      gimp_temp_buf_unref (private->preview_temp_buf);
-      private->preview_temp_buf = NULL;
-    }
-
-  if (private->preview_pixbuf)
-    {
-      g_object_unref (private->preview_pixbuf);
-      private->preview_pixbuf = NULL;
-    }
+  g_clear_pointer (&private->preview_temp_buf, gimp_temp_buf_unref);
+  g_clear_object (&private->preview_pixbuf);
 }
 
 static void
@@ -848,8 +820,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
           return private->preview_temp_buf;
         }
 
-      gimp_temp_buf_unref (private->preview_temp_buf);
-      private->preview_temp_buf = NULL;
+      g_clear_pointer (&private->preview_temp_buf, gimp_temp_buf_unref);
     }
 
   if (viewable_class->get_new_preview)
@@ -1006,8 +977,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
           return private->preview_pixbuf;
         }
 
-      g_object_unref (private->preview_pixbuf);
-      private->preview_pixbuf = NULL;
+      g_clear_object (&private->preview_pixbuf);
     }
 
   if (viewable_class->get_new_pixbuf)

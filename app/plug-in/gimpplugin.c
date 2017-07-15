@@ -168,7 +168,7 @@ gimp_plug_in_finalize (GObject *object)
 {
   GimpPlugIn *plug_in = GIMP_PLUG_IN (object);
 
-  g_object_unref (plug_in->file);
+  g_clear_object (&plug_in->file);
 
   gimp_plug_in_proc_frame_dispose (&plug_in->main_proc_frame, plug_in);
 
@@ -378,11 +378,8 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
       goto cleanup;
     }
 
-  g_io_channel_unref (plug_in->his_read);
-  plug_in->his_read = NULL;
-
-  g_io_channel_unref (plug_in->his_write);
-  plug_in->his_write = NULL;
+  g_clear_pointer (&plug_in->his_read,  g_io_channel_unref);
+  g_clear_pointer (&plug_in->his_write, g_io_channel_unref);
 
   if (! synchronous)
     {
@@ -513,26 +510,10 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
     }
 
   /* Close the pipes. */
-  if (plug_in->my_read != NULL)
-    {
-      g_io_channel_unref (plug_in->my_read);
-      plug_in->my_read = NULL;
-    }
-  if (plug_in->my_write != NULL)
-    {
-      g_io_channel_unref (plug_in->my_write);
-      plug_in->my_write = NULL;
-    }
-  if (plug_in->his_read != NULL)
-    {
-      g_io_channel_unref (plug_in->his_read);
-      plug_in->his_read = NULL;
-    }
-  if (plug_in->his_write != NULL)
-    {
-      g_io_channel_unref (plug_in->his_write);
-      plug_in->his_write = NULL;
-    }
+  g_clear_pointer (&plug_in->my_read,   g_io_channel_unref);
+  g_clear_pointer (&plug_in->my_write,  g_io_channel_unref);
+  g_clear_pointer (&plug_in->his_read,  g_io_channel_unref);
+  g_clear_pointer (&plug_in->his_write, g_io_channel_unref);
 
   gimp_wire_clear_error ();
 
@@ -754,11 +735,8 @@ gimp_plug_in_prep_for_exec (gpointer data)
 {
   GimpPlugIn *plug_in = data;
 
-  g_io_channel_unref (plug_in->my_read);
-  plug_in->my_read  = NULL;
-
-  g_io_channel_unref (plug_in->my_write);
-  plug_in->my_write  = NULL;
+  g_clear_pointer (&plug_in->my_read,  g_io_channel_unref);
+  g_clear_pointer (&plug_in->my_write, g_io_channel_unref);
 }
 
 #endif
@@ -830,8 +808,7 @@ gimp_plug_in_main_loop (GimpPlugIn *plug_in)
   g_main_loop_run (proc_frame->main_loop);
   gimp_threads_enter (plug_in->manager->gimp);
 
-  g_main_loop_unref (proc_frame->main_loop);
-  proc_frame->main_loop = NULL;
+  g_clear_pointer (&proc_frame->main_loop, g_main_loop_unref);
 }
 
 void

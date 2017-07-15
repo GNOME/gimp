@@ -186,23 +186,9 @@ gimp_buffer_source_box_finalize (GObject *object)
 {
   GimpBufferSourceBox *box = GIMP_BUFFER_SOURCE_BOX (object);
 
-  if (box->priv->context)
-    {
-      g_object_unref (box->priv->context);
-      box->priv->context = NULL;
-    }
-
-  if (box->priv->source_node)
-    {
-      g_object_unref (box->priv->source_node);
-      box->priv->source_node = NULL;
-    }
-
-  if (box->priv->name)
-    {
-      g_free (box->priv->name);
-      box->priv->name = NULL;
-    }
+  g_clear_object (&box->priv->context);
+  g_clear_object (&box->priv->source_node);
+  g_clear_pointer (&box->priv->name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

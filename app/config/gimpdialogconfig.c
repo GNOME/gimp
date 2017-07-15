@@ -558,35 +558,12 @@ gimp_dialog_config_finalize (GObject *object)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (object);
 
-  if (config->layer_new_name)
-    {
-      g_free (config->layer_new_name);
-      config->layer_new_name = NULL;
-    }
+  g_clear_pointer (&config->layer_new_name,   g_free);
+  g_clear_pointer (&config->channel_new_name, g_free);
+  g_clear_pointer (&config->vectors_new_name, g_free);
 
-  if (config->channel_new_name)
-    {
-      g_free (config->channel_new_name);
-      config->channel_new_name = NULL;
-    }
-
-  if (config->vectors_new_name)
-    {
-      g_free (config->vectors_new_name);
-      config->vectors_new_name = NULL;
-    }
-
-  if (config->fill_options)
-    {
-      g_object_unref (config->fill_options);
-      config->fill_options = NULL;
-    }
-
-  if (config->stroke_options)
-    {
-      g_object_unref (config->stroke_options);
-      config->stroke_options = NULL;
-    }
+  g_clear_object (&config->fill_options);
+  g_clear_object (&config->stroke_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

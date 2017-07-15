@@ -126,11 +126,8 @@ gimp_image_colormap_free (GimpImage *image)
   g_return_if_fail (private->colormap != NULL);
   g_return_if_fail (GIMP_IS_PALETTE (private->palette));
 
-  g_free (private->colormap);
-  private->colormap = NULL;
-
-  g_object_unref (private->palette);
-  private->palette = NULL;
+  g_clear_pointer (&private->colormap, g_free);
+  g_clear_object (&private->palette);
 
   /* don't touch the image's babl_palettes because we might still have
    * buffers with that palette on the undo stack, and on undoing the

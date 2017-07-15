@@ -130,11 +130,7 @@ gimp_tagged_container_dispose (GObject *object)
       tagged_container->filter = NULL;
     }
 
-  if (tagged_container->tag_ref_counts)
-    {
-      g_hash_table_unref (tagged_container->tag_ref_counts);
-      tagged_container->tag_ref_counts = NULL;
-    }
+  g_clear_pointer (&tagged_container->tag_ref_counts, g_hash_table_unref);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

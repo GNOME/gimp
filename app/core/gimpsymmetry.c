@@ -158,11 +158,9 @@ gimp_symmetry_finalize (GObject *object)
 {
   GimpSymmetry *sym = GIMP_SYMMETRY (object);
 
-  if (sym->drawable)
-    g_object_unref (sym->drawable);
+  g_clear_object (&sym->drawable);
 
-  g_free (sym->origin);
-  sym->origin = NULL;
+  g_clear_pointer (&sym->origin, g_free);
 
   g_list_free_full (sym->strokes, g_free);
   sym->strokes = NULL;

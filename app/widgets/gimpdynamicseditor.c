@@ -193,11 +193,7 @@ gimp_dynamics_editor_finalize (GObject *object)
 {
   GimpDynamicsEditor *editor = GIMP_DYNAMICS_EDITOR (object);
 
-  if (editor->dynamics_model)
-    {
-      g_object_unref (editor->dynamics_model);
-      editor->dynamics_model = NULL;
-    }
+  g_clear_object (&editor->dynamics_model);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

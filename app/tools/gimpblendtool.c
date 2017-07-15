@@ -634,9 +634,7 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 
   if (blend_tool->graph)
     {
-      g_object_unref (blend_tool->graph);
-      blend_tool->graph = NULL;
-
+      g_clear_object (&blend_tool->graph);
       blend_tool->render_node    = NULL;
 #if 0
       blend_tool->subtract_node  = NULL;
@@ -645,11 +643,7 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
       blend_tool->dist_node      = NULL;
     }
 
-  if (blend_tool->dist_buffer)
-    {
-      g_object_unref (blend_tool->dist_buffer);
-      blend_tool->dist_buffer = NULL;
-    }
+  g_clear_object (&blend_tool->dist_buffer);
 
   if (blend_tool->filter)
     {
@@ -702,8 +696,7 @@ gimp_blend_tool_commit (GimpBlendTool *blend_tool)
 
       gimp_drawable_filter_commit (blend_tool->filter,
                                    GIMP_PROGRESS (tool), FALSE);
-      g_object_unref (blend_tool->filter);
-      blend_tool->filter = NULL;
+      g_clear_object (&blend_tool->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
 

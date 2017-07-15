@@ -327,15 +327,10 @@ gimp_undo_editor_clear (GimpUndoEditor *editor)
     {
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->view),
                                          NULL);
-      g_object_unref (editor->container);
-      editor->container = NULL;
+      g_clear_object (&editor->container);
     }
 
-  if (editor->base_item)
-    {
-      g_object_unref (editor->base_item);
-      editor->base_item = NULL;
-    }
+  g_clear_object (&editor->base_item);
 }
 
 static void

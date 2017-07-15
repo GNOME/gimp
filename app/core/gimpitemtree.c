@@ -168,17 +168,8 @@ gimp_item_tree_finalize (GObject *object)
   GimpItemTree        *tree    = GIMP_ITEM_TREE (object);
   GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
-  if (private->name_hash)
-    {
-      g_hash_table_unref (private->name_hash);
-      private->name_hash = NULL;
-    }
-
-  if (tree->container)
-    {
-      g_object_unref (tree->container);
-      tree->container = NULL;
-    }
+  g_clear_pointer (&private->name_hash, g_hash_table_unref);
+  g_clear_object (&tree->container);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

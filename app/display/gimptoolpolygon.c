@@ -262,11 +262,7 @@ gimp_tool_polygon_finalize (GObject *object)
   g_free (private->saved_points_lower_segment);
   g_free (private->saved_points_higher_segment);
 
-  if (private->handles)
-    {
-      g_ptr_array_unref (private->handles);
-      private->handles = NULL;
-    }
+  g_clear_pointer (&private->handles, g_ptr_array_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -135,11 +135,7 @@ gimp_vectors_mod_undo_free (GimpUndo     *undo,
 {
   GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (undo);
 
-  if (vectors_mod_undo->vectors)
-    {
-      g_object_unref (vectors_mod_undo->vectors);
-      vectors_mod_undo->vectors = NULL;
-    }
+  g_clear_object (&vectors_mod_undo->vectors);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

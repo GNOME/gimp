@@ -202,25 +202,12 @@ gimp_mirror_finalize (GObject *object)
 {
   GimpMirror *mirror = GIMP_MIRROR (object);
 
-  if (mirror->horizontal_guide)
-    g_object_unref (mirror->horizontal_guide);
-  mirror->horizontal_guide = NULL;
+  g_clear_object (&mirror->horizontal_guide);
+  g_clear_object (&mirror->vertical_guide);
 
-  if (mirror->vertical_guide)
-    g_object_unref (mirror->vertical_guide);
-  mirror->vertical_guide = NULL;
-
-  if (mirror->horizontal_op)
-    g_object_unref (mirror->horizontal_op);
-  mirror->horizontal_op = NULL;
-
-  if (mirror->vertical_op)
-    g_object_unref (mirror->vertical_op);
-  mirror->vertical_op = NULL;
-
-  if (mirror->central_op)
-    g_object_unref (mirror->central_op);
-  mirror->central_op = NULL;
+  g_clear_object (&mirror->horizontal_op);
+  g_clear_object (&mirror->vertical_op);
+  g_clear_object (&mirror->central_op);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

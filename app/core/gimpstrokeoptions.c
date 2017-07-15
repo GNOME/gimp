@@ -259,11 +259,7 @@ gimp_stroke_options_finalize (GObject *object)
       private->dash_info = NULL;
     }
 
-  if (private->paint_options)
-    {
-      g_object_unref (private->paint_options);
-      private->paint_options = NULL;
-    }
+  g_clear_object (&private->paint_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

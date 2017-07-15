@@ -106,11 +106,7 @@ gimp_tool_options_dispose (GObject *object)
 {
   GimpToolOptions *options = GIMP_TOOL_OPTIONS (object);
 
-  if (options->tool_info)
-    {
-      g_object_unref (options->tool_info);
-      options->tool_info = NULL;
-    }
+  g_clear_object (&options->tool_info);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

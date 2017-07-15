@@ -279,17 +279,8 @@ gimp_text_tool_finalize (GObject *object)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
 
-  if (text_tool->proxy)
-    {
-      g_object_unref (text_tool->proxy);
-      text_tool->proxy = NULL;
-    }
-
-  if (text_tool->buffer)
-    {
-      g_object_unref (text_tool->buffer);
-      text_tool->buffer = NULL;
-    }
+  g_clear_object (&text_tool->proxy);
+  g_clear_object (&text_tool->buffer);
 
   gimp_text_tool_editor_finalize (text_tool);
 
@@ -1133,8 +1124,7 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
           if (text_tool->pending)
             gimp_text_tool_apply (text_tool, TRUE);
 
-          g_object_unref (text_tool->text);
-          text_tool->text = NULL;
+          g_clear_object (&text_tool->text);
 
           g_object_set (text_tool->proxy,
                         "text",   NULL,
@@ -1804,11 +1794,7 @@ gimp_text_tool_buffer_end_edit (GimpTextBuffer *buffer,
 void
 gimp_text_tool_clear_layout (GimpTextTool *text_tool)
 {
-  if (text_tool->layout)
-    {
-      g_object_unref (text_tool->layout);
-      text_tool->layout = NULL;
-    }
+  g_clear_object (&text_tool->layout);
 }
 
 gboolean

@@ -285,41 +285,13 @@ gimp_icon_picker_finalize (GObject *object)
 {
   GimpIconPickerPrivate *private = GET_PRIVATE (object);
 
-  if (private->icon_name)
-    {
-      g_free (private->icon_name);
-      private->icon_name = NULL;
-    }
+  g_clear_pointer (&private->icon_name, g_free);
 
-  if (private->icon_name_container)
-    {
-      g_object_unref (private->icon_name_container);
-      private->icon_name_container = NULL;
-    }
-
-  if (private->icon_name_context)
-    {
-      g_object_unref (private->icon_name_context);
-      private->icon_name_context = NULL;
-    }
-
-  if (private->icon_pixbuf)
-    {
-      g_object_unref (private->icon_pixbuf);
-      private->icon_pixbuf = NULL;
-    }
-
-  if (private->preview)
-    {
-      g_object_unref (private->preview);
-      private->preview = NULL;
-    }
-
-  if (private->null_template_object)
-    {
-      g_object_unref (private->null_template_object);
-      private->null_template_object = NULL;
-    }
+  g_clear_object (&private->icon_name_container);
+  g_clear_object (&private->icon_name_context);
+  g_clear_object (&private->icon_pixbuf);
+  g_clear_object (&private->preview);
+  g_clear_object (&private->null_template_object);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

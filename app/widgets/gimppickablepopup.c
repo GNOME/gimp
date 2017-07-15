@@ -266,17 +266,8 @@ gimp_pickable_popup_finalize (GObject *object)
 {
   GimpPickablePopup *popup = GIMP_PICKABLE_POPUP (object);
 
-  if (popup->priv->pickable)
-    {
-      g_object_unref (popup->priv->pickable);
-      popup->priv->pickable = NULL;
-    }
-
-  if (popup->priv->context)
-    {
-      g_object_unref (popup->priv->context);
-      popup->priv->context = NULL;
-    }
+  g_clear_object (&popup->priv->pickable);
+  g_clear_object (&popup->priv->context);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

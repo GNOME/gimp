@@ -270,8 +270,7 @@ actions_exit (Gimp *gimp)
   g_return_if_fail (global_action_factory != NULL);
   g_return_if_fail (global_action_factory->gimp == gimp);
 
-  g_object_unref (global_action_factory);
-  global_action_factory = NULL;
+  g_clear_object (&global_action_factory);
 }
 
 Gimp *

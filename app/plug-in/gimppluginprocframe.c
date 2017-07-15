@@ -100,11 +100,7 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
     {
       gimp_plug_in_progress_end (plug_in, proc_frame);
 
-      if (proc_frame->progress)
-        {
-          g_object_unref (proc_frame->progress);
-          proc_frame->progress = NULL;
-        }
+      g_clear_object (&proc_frame->progress);
     }
 
   if (proc_frame->context_stack)
@@ -114,32 +110,14 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
       proc_frame->context_stack = NULL;
     }
 
-  if (proc_frame->main_context)
-    {
-      g_object_unref (proc_frame->main_context);
-      proc_frame->main_context = NULL;
-    }
-
-  if (proc_frame->return_vals)
-    {
-      gimp_value_array_unref (proc_frame->return_vals);
-      proc_frame->return_vals = NULL;
-    }
-
-  if (proc_frame->main_loop)
-    {
-      g_main_loop_unref (proc_frame->main_loop);
-      proc_frame->main_loop = NULL;
-    }
+  g_clear_object (&proc_frame->main_context);
+  g_clear_pointer (&proc_frame->return_vals, gimp_value_array_unref);
+  g_clear_pointer (&proc_frame->main_loop, g_main_loop_unref);
 
   if (proc_frame->image_cleanups || proc_frame->item_cleanups)
     gimp_plug_in_cleanup (plug_in, proc_frame);
 
-  if (proc_frame->procedure)
-    {
-      g_object_unref (proc_frame->procedure);
-      proc_frame->procedure = NULL;
-    }
+  g_clear_object (&proc_frame->procedure);
 }
 
 GimpPlugInProcFrame *

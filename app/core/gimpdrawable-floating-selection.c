@@ -254,11 +254,8 @@ gimp_drawable_remove_fs_filter (GimpDrawable *drawable)
                                 fs->layer_offset_node, "input");
         }
 
-      g_object_unref (private->fs_filter);
-      private->fs_filter = NULL;
-
-      g_object_unref (private->fs_applicator);
-      private->fs_applicator = NULL;
+      g_clear_object (&private->fs_filter);
+      g_clear_object (&private->fs_applicator);
 
       private->fs_crop_node = NULL;
     }

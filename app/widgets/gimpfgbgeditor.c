@@ -178,17 +178,8 @@ gimp_fg_bg_editor_dispose (GObject *object)
   if (editor->context)
     gimp_fg_bg_editor_set_context (editor, NULL);
 
-  if (editor->default_icon)
-    {
-      g_object_unref (editor->default_icon);
-      editor->default_icon = NULL;
-    }
-
-  if (editor->swap_icon)
-    {
-      g_object_unref (editor->swap_icon);
-      editor->swap_icon = NULL;
-    }
+  g_clear_object (&editor->default_icon);
+  g_clear_object (&editor->swap_icon);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -245,17 +236,8 @@ gimp_fg_bg_editor_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  if (editor->default_icon)
-    {
-      g_object_unref (editor->default_icon);
-      editor->default_icon = NULL;
-    }
-
-  if (editor->swap_icon)
-    {
-      g_object_unref (editor->swap_icon);
-      editor->swap_icon = NULL;
-    }
+  g_clear_object (&editor->default_icon);
+  g_clear_object (&editor->swap_icon);
 }
 
 static gboolean
@@ -614,8 +596,7 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
           g_signal_handlers_disconnect_by_func (editor->color_config,
                                                 gimp_fg_bg_editor_destroy_transform,
                                                 editor);
-          g_object_unref (editor->color_config);
-          editor->color_config = NULL;
+          g_clear_object (&editor->color_config);
         }
 
       editor->context = context;
@@ -729,11 +710,7 @@ gimp_fg_bg_editor_create_transform (GimpFgBgEditor *editor)
 static void
 gimp_fg_bg_editor_destroy_transform (GimpFgBgEditor *editor)
 {
-  if (editor->transform)
-    {
-      g_object_unref (editor->transform);
-      editor->transform = NULL;
-    }
+  g_clear_object (&editor->transform);
 
   gtk_widget_queue_draw (GTK_WIDGET (editor));
 }

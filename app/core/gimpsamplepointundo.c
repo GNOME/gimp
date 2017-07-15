@@ -181,11 +181,7 @@ gimp_sample_point_undo_free (GimpUndo     *undo,
 {
   GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (undo);
 
-  if (sample_point_undo->sample_point)
-    {
-      gimp_sample_point_unref (sample_point_undo->sample_point);
-      sample_point_undo->sample_point = NULL;
-    }
+  g_clear_pointer (&sample_point_undo->sample_point, gimp_sample_point_unref);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

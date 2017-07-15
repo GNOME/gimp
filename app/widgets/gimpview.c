@@ -197,11 +197,7 @@ gimp_view_dispose (GObject *object)
   if (view->viewable)
     gimp_view_set_viewable (view, NULL);
 
-  if (view->renderer)
-    {
-      g_object_unref (view->renderer);
-      view->renderer = NULL;
-    }
+  g_clear_object (&view->renderer);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

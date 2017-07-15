@@ -567,8 +567,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                             gimp_vector_tool_vectors_removed,
                                             vector_tool);
 
-      g_object_unref (vector_tool->vectors);
-      vector_tool->vectors = NULL;
+      g_clear_object (&vector_tool->vectors);
 
       if (options->to_selection_button)
         {

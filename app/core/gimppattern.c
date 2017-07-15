@@ -101,11 +101,7 @@ gimp_pattern_finalize (GObject *object)
 {
   GimpPattern *pattern = GIMP_PATTERN (object);
 
-  if (pattern->mask)
-    {
-      gimp_temp_buf_unref (pattern->mask);
-      pattern->mask = NULL;
-    }
+  g_clear_pointer (&pattern->mask, gimp_temp_buf_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

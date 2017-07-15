@@ -76,11 +76,7 @@ gimp_sub_progress_finalize (GObject *object)
 {
   GimpSubProgress *sub = GIMP_SUB_PROGRESS (object);
 
-  if (sub->progress)
-    {
-      g_object_unref (sub->progress);
-      sub->progress = NULL;
-    }
+  g_clear_object (&sub->progress);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

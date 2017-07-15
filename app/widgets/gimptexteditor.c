@@ -118,11 +118,8 @@ gimp_text_editor_finalize (GObject *object)
 {
   GimpTextEditor *editor = GIMP_TEXT_EDITOR (object);
 
-  if (editor->font_name)
-    g_free (editor->font_name);
-
-  if (editor->ui_manager)
-    g_object_unref (editor->ui_manager);
+  g_clear_pointer (&editor->font_name, g_free);
+  g_clear_object (&editor->ui_manager);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

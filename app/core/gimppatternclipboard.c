@@ -181,11 +181,7 @@ gimp_pattern_clipboard_changed (Gimp        *gimp,
   GimpObject *paste;
   GeglBuffer *buffer = NULL;
 
-  if (pattern->mask)
-    {
-      gimp_temp_buf_unref (pattern->mask);
-      pattern->mask = NULL;
-    }
+  g_clear_pointer (&pattern->mask, gimp_temp_buf_unref);
 
   paste = gimp_get_clipboard_object (gimp);
 

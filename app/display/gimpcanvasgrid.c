@@ -123,11 +123,7 @@ gimp_canvas_grid_finalize (GObject *object)
 {
   GimpCanvasGridPrivate *private = GET_PRIVATE (object);
 
-  if (private->grid)
-    {
-      g_object_unref (private->grid);
-      private->grid = NULL;
-    }
+  g_clear_object (&private->grid);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

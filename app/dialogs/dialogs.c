@@ -562,11 +562,7 @@ dialogs_exit (Gimp *gimp)
       gimp_dialog_factory_set_singleton (NULL);
     }
 
-  if (global_recent_docks)
-    {
-      g_object_unref (global_recent_docks);
-      global_recent_docks = NULL;
-    }
+  g_clear_object (&global_recent_docks);
 }
 
 static void

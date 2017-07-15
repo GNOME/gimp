@@ -198,11 +198,7 @@ gimp_undo_finalize (GObject *object)
       undo->preview_idle_id = 0;
     }
 
-  if (undo->preview)
-    {
-      gimp_temp_buf_unref (undo->preview);
-      undo->preview = NULL;
-    }
+  g_clear_pointer (&undo->preview, gimp_temp_buf_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -513,8 +509,7 @@ gimp_undo_refresh_preview (GimpUndo    *undo,
 
   if (undo->preview)
     {
-      gimp_temp_buf_unref (undo->preview);
-      undo->preview = NULL;
+      g_clear_pointer (&undo->preview, gimp_temp_buf_unref);
       gimp_undo_create_preview (undo, context, FALSE);
     }
 }

@@ -295,11 +295,7 @@ gimp_dynamics_output_editor_finalize (GObject *object)
 {
   GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
 
-  if (private->output)
-    {
-      g_object_unref (private->output);
-      private->output = NULL;
-    }
+  g_clear_object (&private->output);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

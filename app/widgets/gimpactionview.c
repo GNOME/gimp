@@ -106,8 +106,7 @@ gimp_action_view_dispose (GObject *object)
                                                 view);
         }
 
-      g_object_unref (view->manager);
-      view->manager = NULL;
+      g_clear_object (&view->manager);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -118,11 +117,7 @@ gimp_action_view_finalize (GObject *object)
 {
   GimpActionView *view = GIMP_ACTION_VIEW (object);
 
-  if (view->filter)
-    {
-      g_free (view->filter);
-      view->filter = NULL;
-    }
+  g_clear_pointer (&view->filter, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

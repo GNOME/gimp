@@ -150,11 +150,7 @@ gimp_fill_editor_finalize (GObject *object)
 {
   GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
 
-  if (editor->options)
-    {
-      g_object_unref (editor->options);
-      editor->options = NULL;
-    }
+  g_clear_object (&editor->options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

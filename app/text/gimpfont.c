@@ -142,17 +142,8 @@ gimp_font_finalize (GObject *object)
 {
   GimpFont *font = GIMP_FONT (object);
 
-  if (font->pango_context)
-    {
-      g_object_unref (font->pango_context);
-      font->pango_context = NULL;
-    }
-
-  if (font->popup_layout)
-    {
-      g_object_unref (font->popup_layout);
-      font->popup_layout = NULL;
-    }
+  g_clear_object (&font->pango_context);
+  g_clear_object (&font->popup_layout);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

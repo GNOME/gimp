@@ -142,17 +142,8 @@ gimp_dash_editor_finalize (GObject *object)
 {
   GimpDashEditor *editor = GIMP_DASH_EDITOR (object);
 
-  if (editor->stroke_options)
-    {
-      g_object_unref (editor->stroke_options);
-      editor->stroke_options = NULL;
-    }
-
-  if (editor->segments)
-    {
-      g_free (editor->segments);
-      editor->segments = NULL;
-    }
+  g_clear_object (&editor->stroke_options);
+  g_clear_pointer (&editor->segments, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

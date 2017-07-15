@@ -170,17 +170,8 @@ gimp_controller_info_finalize (GObject *object)
 {
   GimpControllerInfo *info = GIMP_CONTROLLER_INFO (object);
 
-  if (info->controller)
-    {
-      g_object_unref (info->controller);
-      info->controller = NULL;
-    }
-
-  if (info->mapping)
-    {
-      g_hash_table_unref (info->mapping);
-      info->mapping = NULL;
-    }
+  g_clear_object (&info->controller);
+  g_clear_pointer (&info->mapping, g_hash_table_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

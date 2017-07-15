@@ -182,46 +182,14 @@ gimp_brush_finalize (GObject *object)
 {
   GimpBrush *brush = GIMP_BRUSH (object);
 
-  if (brush->priv->mask)
-    {
-      gimp_temp_buf_unref (brush->priv->mask);
-      brush->priv->mask = NULL;
-    }
+  g_clear_pointer (&brush->priv->mask,          gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->pixmap,        gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blured_mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blured_pixmap, gimp_temp_buf_unref);
 
-  if (brush->priv->pixmap)
-    {
-      gimp_temp_buf_unref (brush->priv->pixmap);
-      brush->priv->pixmap = NULL;
-    }
-  if (brush->priv->blured_mask)
-    {
-      gimp_temp_buf_unref (brush->priv->blured_mask);
-      brush->priv->blured_mask = NULL;
-    }
-
-  if (brush->priv->blured_pixmap)
-    {
-      gimp_temp_buf_unref (brush->priv->blured_pixmap);
-      brush->priv->blured_pixmap = NULL;
-    }
-
-  if (brush->priv->mask_cache)
-    {
-      g_object_unref (brush->priv->mask_cache);
-      brush->priv->mask_cache = NULL;
-    }
-
-  if (brush->priv->pixmap_cache)
-    {
-      g_object_unref (brush->priv->pixmap_cache);
-      brush->priv->pixmap_cache = NULL;
-    }
-
-  if (brush->priv->boundary_cache)
-    {
-      g_object_unref (brush->priv->boundary_cache);
-      brush->priv->boundary_cache = NULL;
-    }
+  g_clear_object (&brush->priv->mask_cache);
+  g_clear_object (&brush->priv->pixmap_cache);
+  g_clear_object (&brush->priv->boundary_cache);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -429,17 +397,8 @@ gimp_brush_dirty (GimpData *data)
   if (brush->priv->boundary_cache)
     gimp_brush_cache_clear (brush->priv->boundary_cache);
 
-   if (brush->priv->blured_mask)
-    {
-      gimp_temp_buf_unref (brush->priv->blured_mask);
-      brush->priv->blured_mask = NULL;
-    }
-
-  if (brush->priv->blured_pixmap)
-    {
-      gimp_temp_buf_unref (brush->priv->blured_pixmap);
-      brush->priv->blured_pixmap = NULL;
-    }
+  g_clear_pointer (&brush->priv->blured_mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blured_pixmap, gimp_temp_buf_unref);
 
   GIMP_DATA_CLASS (parent_class)->dirty (data);
 }
@@ -466,26 +425,12 @@ gimp_brush_real_begin_use (GimpBrush *brush)
 static void
 gimp_brush_real_end_use (GimpBrush *brush)
 {
-  g_object_unref (brush->priv->mask_cache);
-  brush->priv->mask_cache = NULL;
+  g_clear_object (&brush->priv->mask_cache);
+  g_clear_object (&brush->priv->pixmap_cache);
+  g_clear_object (&brush->priv->boundary_cache);
 
-  g_object_unref (brush->priv->pixmap_cache);
-  brush->priv->pixmap_cache = NULL;
-
-  g_object_unref (brush->priv->boundary_cache);
-  brush->priv->boundary_cache = NULL;
-
-  if (brush->priv->blured_mask)
-    {
-      gimp_temp_buf_unref (brush->priv->blured_mask);
-      brush->priv->blured_mask = NULL;
-    }
-
-  if (brush->priv->blured_pixmap)
-    {
-      gimp_temp_buf_unref (brush->priv->blured_pixmap);
-      brush->priv->blured_pixmap = NULL;
-    }
+  g_clear_pointer (&brush->priv->blured_mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blured_pixmap, gimp_temp_buf_unref);
 }
 
 static GimpBrush *
@@ -911,17 +856,8 @@ void
 gimp_brush_flush_blur_caches (GimpBrush *brush)
 {
 #if 0
-  if (brush->priv->blured_mask)
-    {
-      gimp_temp_buf_unref (brush->priv->blured_mask);
-      brush->priv->blured_mask = NULL;
-    }
-
-  if (brush->priv->blured_pixmap)
-    {
-      gimp_temp_buf_unref (brush->priv->blured_pixmap);
-      brush->priv->blured_pixmap = NULL;
-    }
+  g_clear_pointer (&brush->priv->blured_mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->blured_pixmap, gimp_temp_buf_unref);
 
   if (brush->priv->mask_cache)
     gimp_brush_cache_clear (brush->priv->mask_cache);
@@ -946,14 +882,13 @@ gint
 gimp_brush_get_width (GimpBrush *brush)
 {
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
+
   if (brush->priv->blured_mask)
-    {
-      return gimp_temp_buf_get_width (brush->priv->blured_mask);
-    }
+    return gimp_temp_buf_get_width (brush->priv->blured_mask);
+
   if (brush->priv->blured_pixmap)
-    {
-      return gimp_temp_buf_get_width (brush->priv->blured_pixmap);
-    }
+    return gimp_temp_buf_get_width (brush->priv->blured_pixmap);
+
   return gimp_temp_buf_get_width (brush->priv->mask);
 }
 
@@ -963,14 +898,11 @@ gimp_brush_get_height (GimpBrush *brush)
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
 
   if (brush->priv->blured_mask)
-  {
     return gimp_temp_buf_get_height (brush->priv->blured_mask);
-  }
 
   if (brush->priv->blured_pixmap)
-  {
     return gimp_temp_buf_get_height (brush->priv->blured_pixmap);
-  }
+
   return gimp_temp_buf_get_height (brush->priv->mask);
 }
 

@@ -127,8 +127,7 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
       gimp_view_renderer_set_context (GIMP_VIEW (select->view)->renderer,
                                       NULL);
 
-      g_object_unref (select->context);
-      select->context = NULL;
+      g_clear_object (&select->context);
     }
 
   if (config)

@@ -170,17 +170,8 @@ gimp_plug_in_manager_finalize (GObject *object)
       manager->plug_in_defs = NULL;
     }
 
-  if (manager->environ_table)
-    {
-      g_object_unref (manager->environ_table);
-      manager->environ_table = NULL;
-    }
-
-  if (manager->interpreter_db)
-    {
-      g_object_unref (manager->interpreter_db);
-      manager->interpreter_db = NULL;
-    }
+  g_clear_object (&manager->environ_table);
+  g_clear_object (&manager->interpreter_db);
 
   if (manager->debug)
     {

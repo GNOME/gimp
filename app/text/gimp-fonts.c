@@ -77,8 +77,7 @@ gimp_fonts_exit (Gimp *gimp)
                                               G_CALLBACK (gimp_fonts_load),
                                               gimp);
 
-      g_object_unref (gimp->fonts);
-      gimp->fonts = NULL;
+      g_clear_object (&gimp->fonts);
     }
 }
 

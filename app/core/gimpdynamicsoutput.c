@@ -252,13 +252,13 @@ gimp_dynamics_output_finalize (GObject *object)
 {
   GimpDynamicsOutputPrivate *private = GET_PRIVATE (object);
 
-  g_object_unref (private->pressure_curve);
-  g_object_unref (private->velocity_curve);
-  g_object_unref (private->direction_curve);
-  g_object_unref (private->tilt_curve);
-  g_object_unref (private->wheel_curve);
-  g_object_unref (private->random_curve);
-  g_object_unref (private->fade_curve);
+  g_clear_object (&private->pressure_curve);
+  g_clear_object (&private->velocity_curve);
+  g_clear_object (&private->direction_curve);
+  g_clear_object (&private->tilt_curve);
+  g_clear_object (&private->wheel_curve);
+  g_clear_object (&private->random_curve);
+  g_clear_object (&private->fade_curve);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

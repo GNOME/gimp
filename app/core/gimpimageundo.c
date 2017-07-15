@@ -533,35 +533,11 @@ gimp_image_undo_free (GimpUndo     *undo,
 {
   GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (undo);
 
-  if (image_undo->grid)
-    {
-      g_object_unref (image_undo->grid);
-      image_undo->grid = NULL;
-    }
-
-  if (image_undo->colormap)
-    {
-      g_free (image_undo->colormap);
-      image_undo->colormap = NULL;
-    }
-
-  if (image_undo->metadata)
-    {
-      g_object_unref (image_undo->metadata);
-      image_undo->metadata = NULL;
-    }
-
-  if (image_undo->parasite_name)
-    {
-      g_free (image_undo->parasite_name);
-      image_undo->parasite_name = NULL;
-    }
-
-  if (image_undo->parasite)
-    {
-      gimp_parasite_free (image_undo->parasite);
-      image_undo->parasite = NULL;
-    }
+  g_clear_object (&image_undo->grid);
+  g_clear_pointer (&image_undo->colormap, g_free);
+  g_clear_object (&image_undo->metadata);
+  g_clear_pointer (&image_undo->parasite_name, g_free);
+  g_clear_pointer (&image_undo->parasite, gimp_parasite_free);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

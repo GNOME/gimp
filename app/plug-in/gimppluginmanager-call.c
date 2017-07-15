@@ -263,8 +263,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
           /*  main_loop is quit in gimp_plug_in_handle_extension_ack()  */
 
-          g_main_loop_unref (plug_in->ext_main_loop);
-          plug_in->ext_main_loop = NULL;
+          g_clear_pointer (&plug_in->ext_main_loop, g_main_loop_unref);
         }
 
       /* If this plug-in is requested to run synchronously,
@@ -282,8 +281,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
 
           /*  main_loop is quit in gimp_plug_in_handle_proc_return()  */
 
-          g_main_loop_unref (proc_frame->main_loop);
-          proc_frame->main_loop = NULL;
+          g_clear_pointer (&proc_frame->main_loop, g_main_loop_unref);
 
           return_vals = gimp_plug_in_proc_frame_get_return_values (proc_frame);
         }

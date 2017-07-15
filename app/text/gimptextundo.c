@@ -292,11 +292,7 @@ gimp_text_undo_free (GimpUndo     *undo,
 {
   GimpTextUndo *text_undo = GIMP_TEXT_UNDO (undo);
 
-  if (text_undo->text)
-    {
-      g_object_unref (text_undo->text);
-      text_undo->text = NULL;
-    }
+  g_clear_object (&text_undo->text);
 
   if (text_undo->pspec)
     {

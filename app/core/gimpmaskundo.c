@@ -280,11 +280,7 @@ gimp_mask_undo_free (GimpUndo     *undo,
 {
   GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (undo);
 
-  if (mask_undo->buffer)
-    {
-      g_object_unref (mask_undo->buffer);
-      mask_undo->buffer = NULL;
-    }
+  g_clear_object (&mask_undo->buffer);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

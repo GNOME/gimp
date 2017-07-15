@@ -89,11 +89,8 @@ gimp_tree_handler_dispose (GObject *object)
       if (! gimp_container_frozen (handler->container))
         gimp_tree_handler_remove_container (handler, handler->container);
 
-      g_object_unref (handler->container);
-      handler->container = NULL;
-
-      g_free (handler->signal_name);
-      handler->signal_name = NULL;
+      g_clear_object (&handler->container);
+      g_clear_pointer (&handler->signal_name, g_free);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);

@@ -183,8 +183,7 @@ gimp_imagefile_dispose (GObject *object)
   if (private->icon_cancellable)
     {
       g_cancellable_cancel (private->icon_cancellable);
-      g_object_unref (private->icon_cancellable);
-      private->icon_cancellable = NULL;
+      g_clear_object (&private->icon_cancellable);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -203,23 +202,9 @@ gimp_imagefile_finalize (GObject *object)
       private->description = NULL;
     }
 
-  if (private->thumbnail)
-    {
-      g_object_unref (private->thumbnail);
-      private->thumbnail = NULL;
-    }
-
-  if (private->icon)
-    {
-      g_object_unref (private->icon);
-      private->icon = NULL;
-    }
-
-  if (private->file)
-    {
-      g_object_unref (private->file);
-      private->file = NULL;
-    }
+  g_clear_object (&private->thumbnail);
+  g_clear_object (&private->icon);
+  g_clear_object (&private->file);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -234,11 +219,7 @@ gimp_imagefile_name_changed (GimpObject *object)
 
   gimp_thumbnail_set_uri (private->thumbnail, gimp_object_get_name (object));
 
-  if (private->file)
-    {
-      g_object_unref (private->file);
-      private->file = NULL;
-    }
+  g_clear_object (&private->file);
 
   if (gimp_object_get_name (object))
     private->file = g_file_new_for_uri (gimp_object_get_name (object));
@@ -680,11 +661,8 @@ gimp_imagefile_info_changed (GimpImagefile *imagefile)
 
       private->description = NULL;
     }
-  if (private->icon)
-    {
-      g_object_unref (GET_PRIVATE (imagefile)->icon);
-      private->icon = NULL;
-    }
+
+  g_clear_object (&private->icon);
 
   g_signal_emit (imagefile, gimp_imagefile_signals[INFO_CHANGED], 0);
 }
@@ -740,11 +718,7 @@ gimp_imagefile_icon_callback (GObject      *source_object,
       g_object_unref (file_info);
     }
 
-  if (private->icon_cancellable)
-    {
-      g_object_unref (private->icon_cancellable);
-      private->icon_cancellable = NULL;
-    }
+  g_clear_object (&private->icon_cancellable);
 
   if (private->icon)
     gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));

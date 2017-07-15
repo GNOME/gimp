@@ -168,11 +168,7 @@ gimp_filtered_container_finalize (GObject *object)
 {
   GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
 
-  if (filtered_container->src_container)
-    {
-      g_object_unref (filtered_container->src_container);
-      filtered_container->src_container = NULL;
-    }
+  g_clear_object (&filtered_container->src_container);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

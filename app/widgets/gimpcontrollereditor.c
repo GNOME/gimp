@@ -400,15 +400,10 @@ gimp_controller_editor_finalize (GObject *object)
     {
       gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
 
-      g_object_unref (editor->info);
-      editor->info = NULL;
+      g_clear_object (&editor->info);
     }
 
-  if (editor->context)
-    {
-      g_object_unref (editor->context);
-      editor->context = NULL;
-    }
+  g_clear_object (&editor->context);
 
   if (editor->edit_dialog)
     gtk_widget_destroy (editor->edit_dialog);

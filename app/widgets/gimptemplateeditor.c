@@ -485,11 +485,7 @@ gimp_template_editor_finalize (GObject *object)
 {
   GimpTemplateEditorPrivate *private = GET_PRIVATE (object);
 
-  if (private->template)
-    {
-      g_object_unref (private->template);
-      private->template = NULL;
-    }
+  g_clear_object (&private->template);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

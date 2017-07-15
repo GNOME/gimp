@@ -173,23 +173,9 @@ gimp_drawable_filter_finalize (GObject *object)
 {
   GimpDrawableFilter *drawable_filter = GIMP_DRAWABLE_FILTER (object);
 
-  if (drawable_filter->operation)
-    {
-      g_object_unref (drawable_filter->operation);
-      drawable_filter->operation = NULL;
-    }
-
-  if (drawable_filter->applicator)
-    {
-      g_object_unref (drawable_filter->applicator);
-      drawable_filter->applicator = NULL;
-    }
-
-  if (drawable_filter->drawable)
-    {
-      g_object_unref (drawable_filter->drawable);
-      drawable_filter->drawable = NULL;
-    }
+  g_clear_object (&drawable_filter->operation);
+  g_clear_object (&drawable_filter->applicator);
+  g_clear_object (&drawable_filter->drawable);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

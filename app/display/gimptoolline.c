@@ -226,7 +226,7 @@ static void
 gimp_tool_line_init (GimpToolLine *line)
 {
   GimpToolLinePrivate *private;
-  
+
   private = line->private = G_TYPE_INSTANCE_GET_PRIVATE (line,
                                                          GIMP_TYPE_TOOL_LINE,
                                                          GimpToolLinePrivate);
@@ -301,29 +301,10 @@ gimp_tool_line_finalize (GObject *object)
   GimpToolLine        *line    = GIMP_TOOL_LINE (object);
   GimpToolLinePrivate *private = line->private;
 
-  if (private->sliders)
-    {
-      g_array_unref (private->sliders);
-      private->sliders = NULL;
-    }
-
-  if (private->status_title)
-    {
-      g_free (private->status_title);
-      private->status_title = NULL;
-    }
-
-  if (private->slider_handle_circles)
-    {
-      g_array_unref (private->slider_handle_circles);
-      private->slider_handle_circles = NULL;
-    }
-
-  if (private->slider_handle_grips)
-    {
-      g_array_unref (private->slider_handle_grips);
-      private->slider_handle_grips = NULL;
-    }
+  g_clear_pointer (&private->sliders, g_array_unref);
+  g_clear_pointer (&private->status_title, g_free);
+  g_clear_pointer (&private->slider_handle_circles, g_array_unref);
+  g_clear_pointer (&private->slider_handle_grips, g_array_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -368,23 +368,9 @@ gimp_tag_popup_dispose (GObject *object)
 
   gimp_tag_popup_remove_scroll_timeout (popup);
 
-  if (popup->combo_entry)
-    {
-      g_object_unref (popup->combo_entry);
-      popup->combo_entry = NULL;
-    }
-
-  if (popup->layout)
-    {
-      g_object_unref (popup->layout);
-      popup->layout = NULL;
-    }
-
-  if (popup->context)
-    {
-      g_object_unref (popup->context);
-      popup->context = NULL;
-    }
+  g_clear_object (&popup->combo_entry);
+  g_clear_object (&popup->layout);
+  g_clear_object (&popup->context);
 
   if (popup->tag_data)
     {

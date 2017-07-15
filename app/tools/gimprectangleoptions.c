@@ -328,8 +328,8 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
 static void
 gimp_rectangle_options_private_finalize (GimpRectangleOptionsPrivate *private)
 {
-  g_object_unref (private->aspect_history);
-  g_object_unref (private->size_history);
+  g_clear_object (&private->aspect_history);
+  g_clear_object (&private->size_history);
 
   g_slice_free (GimpRectangleOptionsPrivate, private);
 }

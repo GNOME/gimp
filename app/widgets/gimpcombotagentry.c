@@ -119,11 +119,7 @@ gimp_combo_tag_entry_dispose (GObject *object)
 {
   GimpComboTagEntry *combo_entry = GIMP_COMBO_TAG_ENTRY (object);
 
-  if (combo_entry->arrow_pixbuf)
-    {
-      g_object_unref (combo_entry->arrow_pixbuf);
-      combo_entry->arrow_pixbuf = NULL;
-    }
+  g_clear_object (&combo_entry->arrow_pixbuf);
 
   if (combo_entry->normal_item_attr)
     {
@@ -233,11 +229,7 @@ gimp_combo_tag_entry_style_set (GtkWidget *widget,
 
   entry->selected_item_color = style->base[GTK_STATE_SELECTED];
 
-  if (entry->arrow_pixbuf)
-    {
-      g_object_unref (entry->arrow_pixbuf);
-      entry->arrow_pixbuf = NULL;
-    }
+  g_clear_object (&entry->arrow_pixbuf);
 }
 
 /**

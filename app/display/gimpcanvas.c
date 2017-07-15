@@ -148,11 +148,7 @@ gimp_canvas_unrealize (GtkWidget *widget)
 {
   GimpCanvas *canvas = GIMP_CANVAS (widget);
 
-  if (canvas->layout)
-    {
-      g_object_unref (canvas->layout);
-      canvas->layout = NULL;
-    }
+  g_clear_object (&canvas->layout);
 
   GTK_WIDGET_CLASS (parent_class)->unrealize (widget);
 }
@@ -165,11 +161,7 @@ gimp_canvas_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  if (canvas->layout)
-    {
-      g_object_unref (canvas->layout);
-      canvas->layout = NULL;
-    }
+  g_clear_object (&canvas->layout);
 }
 
 static gboolean

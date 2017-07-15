@@ -175,11 +175,7 @@ gimp_circle_dispose (GObject *object)
 {
   GimpCircle *circle = GIMP_CIRCLE (object);
 
-  if (circle->priv->surface)
-    {
-      cairo_surface_destroy (circle->priv->surface);
-      circle->priv->surface = NULL;
-    }
+  g_clear_pointer (&circle->priv->surface, cairo_surface_destroy);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -206,11 +202,7 @@ gimp_circle_set_property (GObject      *object,
 
     case PROP_BACKGROUND:
       circle->priv->background = g_value_get_enum (value);
-      if (circle->priv->surface)
-        {
-          cairo_surface_destroy (circle->priv->surface);
-          circle->priv->surface = NULL;
-        }
+      g_clear_pointer (&circle->priv->surface, cairo_surface_destroy);
       gtk_widget_queue_draw (GTK_WIDGET (circle));
       break;
 
@@ -343,11 +335,7 @@ gimp_circle_size_allocate (GtkWidget     *widget,
                             allocation->width,
                             allocation->height);
 
-  if (circle->priv->surface)
-    {
-      cairo_surface_destroy (circle->priv->surface);
-      circle->priv->surface = NULL;
-    }
+  g_clear_pointer (&circle->priv->surface, cairo_surface_destroy);
 }
 
 static gboolean

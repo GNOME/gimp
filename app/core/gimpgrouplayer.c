@@ -311,21 +311,11 @@ gimp_group_layer_finalize (GObject *object)
                                             gimp_group_layer_stack_update,
                                             object);
 
-      g_object_unref (private->children);
-      private->children = NULL;
+      g_clear_object (&private->children);
     }
 
-  if (private->projection)
-    {
-      g_object_unref (private->projection);
-      private->projection = NULL;
-    }
-
-  if (private->graph)
-    {
-      g_object_unref (private->graph);
-      private->graph = NULL;
-    }
+  g_clear_object (&private->projection);
+  g_clear_object (&private->graph);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

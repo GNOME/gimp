@@ -105,17 +105,10 @@ gimp_operation_equalize_finalize (GObject *object)
 {
   GimpOperationEqualize *self = GIMP_OPERATION_EQUALIZE (object);
 
-  if (self->values)
-    {
-      g_free (self->values);
-      self->values = NULL;
-    }
+  g_clear_pointer (&self->values, g_free);
+  g_clear_object (&self->histogram);
 
-  if (self->histogram)
-    {
-      g_object_unref (self->histogram);
-      self->histogram = NULL;
-    }
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

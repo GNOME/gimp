@@ -272,11 +272,7 @@ gimp_colormap_editor_finalize (GObject *object)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
 
-  if (editor->layout)
-    {
-      g_object_unref (editor->layout);
-      editor->layout = NULL;
-    }
+  g_clear_object (&editor->layout);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

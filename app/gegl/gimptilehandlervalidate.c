@@ -114,14 +114,8 @@ gimp_tile_handler_validate_finalize (GObject *object)
 {
   GimpTileHandlerValidate *validate = GIMP_TILE_HANDLER_VALIDATE (object);
 
-  if (validate->graph)
-    {
-      g_object_unref (validate->graph);
-      validate->graph = NULL;
-    }
-
-  cairo_region_destroy (validate->dirty_region);
-  validate->dirty_region = NULL;
+  g_clear_object (&validate->graph);
+  g_clear_pointer (&validate->dirty_region, cairo_region_destroy);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

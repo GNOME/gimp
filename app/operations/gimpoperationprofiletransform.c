@@ -150,23 +150,9 @@ gimp_operation_profile_transform_finalize (GObject *object)
 {
   GimpOperationProfileTransform *self = GIMP_OPERATION_PROFILE_TRANSFORM (object);
 
-  if (self->src_profile)
-    {
-      g_object_unref (self->src_profile);
-      self->src_profile = NULL;
-    }
-
-  if (self->dest_profile)
-    {
-      g_object_unref (self->dest_profile);
-      self->dest_profile = NULL;
-    }
-
-  if (self->transform)
-    {
-      g_object_unref (self->transform);
-      self->transform = NULL;
-    }
+  g_clear_object (&self->src_profile);
+  g_clear_object (&self->dest_profile);
+  g_clear_object (&self->transform);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -260,11 +246,7 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
 {
   GimpOperationProfileTransform *self = GIMP_OPERATION_PROFILE_TRANSFORM (operation);
 
-  if (self->transform)
-    {
-      g_object_unref (self->transform);
-      self->transform = NULL;
-    }
+  g_clear_object (&self->transform);
 
   if (! self->src_format)
     self->src_format = babl_format ("RGBA float");

@@ -401,25 +401,13 @@ selection_generate_segs (Selection *selection)
 static void
 selection_free_segs (Selection *selection)
 {
-  if (selection->segs_in)
-    {
-      g_free (selection->segs_in);
-      selection->segs_in   = NULL;
-      selection->n_segs_in = 0;
-    }
+  g_clear_pointer (&selection->segs_in, g_free);
+  selection->n_segs_in = 0;
 
-  if (selection->segs_out)
-    {
-      g_free (selection->segs_out);
-      selection->segs_out   = NULL;
-      selection->n_segs_out = 0;
-    }
+  g_clear_pointer (&selection->segs_out, g_free);
+  selection->segs_out = NULL;
 
-  if (selection->segs_in_mask)
-    {
-      cairo_pattern_destroy (selection->segs_in_mask);
-      selection->segs_in_mask = NULL;
-    }
+  g_clear_pointer (&selection->segs_in_mask, cairo_pattern_destroy);
 }
 
 static gboolean

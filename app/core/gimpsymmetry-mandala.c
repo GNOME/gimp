@@ -176,13 +176,8 @@ gimp_mandala_finalize (GObject *object)
 {
   GimpMandala  *mandala = GIMP_MANDALA (object);
 
-  if (mandala->horizontal_guide)
-    g_object_unref (mandala->horizontal_guide);
-  mandala->horizontal_guide = NULL;
-
-  if (mandala->vertical_guide)
-    g_object_unref (mandala->vertical_guide);
-  mandala->vertical_guide = NULL;
+  g_clear_object (&mandala->horizontal_guide);
+  g_clear_object (&mandala->vertical_guide);
 
   if (mandala->ops)
     {
@@ -523,6 +518,7 @@ gimp_mandala_get_operation (GimpSymmetry *sym,
                   if (iter->data)
                     g_object_unref (G_OBJECT (iter->data));
                 }
+
               g_list_free (mandala->ops);
               mandala->ops = NULL;
             }

@@ -503,11 +503,7 @@ gimp_device_info_editor_finalize (GObject *object)
 
   private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (object);
 
-  if (private->info)
-    {
-      g_object_unref (private->info);
-      private->info = NULL;
-    }
+  g_clear_object (&private->info);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -362,11 +362,7 @@ gimp_item_finalize (GObject *object)
       private->image = NULL;
     }
 
-  if (private->parasites)
-    {
-      g_object_unref (private->parasites);
-      private->parasites = NULL;
-    }
+  g_clear_object (&private->parasites);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

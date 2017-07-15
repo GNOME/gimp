@@ -97,11 +97,7 @@ gimp_plug_in_view_finalize (GObject *object)
 {
   GimpPlugInView *view = GIMP_PLUG_IN_VIEW (object);
 
-  if (view->plug_in_hash)
-    {
-      g_hash_table_unref (view->plug_in_hash);
-      view->plug_in_hash = NULL;
-    }
+  g_clear_pointer (&view->plug_in_hash, g_hash_table_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

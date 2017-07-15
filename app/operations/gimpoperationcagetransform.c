@@ -141,11 +141,7 @@ gimp_operation_cage_transform_finalize (GObject *object)
 {
   GimpOperationCageTransform *self = GIMP_OPERATION_CAGE_TRANSFORM (object);
 
-  if (self->config)
-    {
-      g_object_unref (self->config);
-      self->config = NULL;
-    }
+  g_clear_object (&self->config);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -118,18 +118,10 @@ gimp_region_select_tool_finalize (GObject *object)
 {
   GimpRegionSelectTool *region_sel = GIMP_REGION_SELECT_TOOL (object);
 
-  if (region_sel->region_mask)
-    {
-      g_object_unref (region_sel->region_mask);
-      region_sel->region_mask = NULL;
-    }
+  g_clear_object (&region_sel->region_mask);
 
-  if (region_sel->segs)
-    {
-      g_free (region_sel->segs);
-      region_sel->segs   = NULL;
-      region_sel->n_segs = 0;
-    }
+  g_clear_pointer (&region_sel->segs, g_free);
+  region_sel->n_segs = 0;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -233,18 +225,10 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
         }
     }
 
-  if (region_sel->region_mask)
-    {
-      g_object_unref (region_sel->region_mask);
-      region_sel->region_mask = NULL;
-    }
+  g_clear_object (&region_sel->region_mask);
 
-  if (region_sel->segs)
-    {
-      g_free (region_sel->segs);
-      region_sel->segs   = NULL;
-      region_sel->n_segs = 0;
-    }
+  g_clear_pointer (&region_sel->segs, g_free);
+  region_sel->n_segs = 0;
 
   /*  Restore the original threshold  */
   g_object_set (options,
@@ -362,12 +346,8 @@ gimp_region_select_tool_get_mask (GimpRegionSelectTool *region_sel,
 
   gimp_display_shell_set_override_cursor (shell, (GimpCursorType) GDK_WATCH);
 
-  if (region_sel->segs)
-    {
-      g_free (region_sel->segs);
-      region_sel->segs   = NULL;
-      region_sel->n_segs = 0;
-    }
+  g_clear_pointer (&region_sel->segs, g_free);
+  region_sel->n_segs = 0;
 
   if (region_sel->region_mask)
     g_object_unref (region_sel->region_mask);

@@ -120,8 +120,7 @@ gimp_display_shell_items_free (GimpDisplayShell *shell)
                                             gimp_display_shell_item_update,
                                             shell);
 
-      g_object_unref (shell->canvas_item);
-      shell->canvas_item = NULL;
+      g_clear_object (&shell->canvas_item);
 
       shell->passe_partout  = NULL;
       shell->preview_items  = NULL;
@@ -139,8 +138,7 @@ gimp_display_shell_items_free (GimpDisplayShell *shell)
                                             gimp_display_shell_unrotated_item_update,
                                             shell);
 
-      g_object_unref (shell->unrotated_item);
-      shell->unrotated_item = NULL;
+      g_clear_object (&shell->unrotated_item);
 
       shell->cursor = NULL;
     }

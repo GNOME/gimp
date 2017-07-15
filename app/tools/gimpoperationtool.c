@@ -166,17 +166,8 @@ gimp_operation_tool_finalize (GObject *object)
 {
   GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (object);
 
-  if (op_tool->operation)
-    {
-      g_free (op_tool->operation);
-      op_tool->operation = NULL;
-    }
-
-  if (op_tool->description)
-    {
-      g_free (op_tool->description);
-      op_tool->description = NULL;
-    }
+  g_clear_pointer (&op_tool->operation,   g_free);
+  g_clear_pointer (&op_tool->description, g_free);
 
   g_list_free_full (op_tool->aux_inputs,
                     (GDestroyNotify) gimp_operation_tool_aux_input_free);
@@ -697,11 +688,8 @@ gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
   tool        = GIMP_TOOL (op_tool);
   filter_tool = GIMP_FILTER_TOOL (op_tool);
 
-  if (op_tool->operation)
-    g_free (op_tool->operation);
-
-  if (op_tool->description)
-    g_free (op_tool->description);
+  g_free (op_tool->operation);
+  g_free (op_tool->description);
 
   op_tool->operation   = g_strdup (operation);
   op_tool->description = g_strdup (description);

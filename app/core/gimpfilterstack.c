@@ -96,11 +96,7 @@ gimp_filter_stack_finalize (GObject *object)
 {
   GimpFilterStack *stack = GIMP_FILTER_STACK (object);
 
-  if (stack->graph)
-    {
-      g_object_unref (stack->graph);
-      stack->graph = NULL;
-    }
+  g_clear_object (&stack->graph);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

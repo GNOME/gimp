@@ -212,11 +212,7 @@ gimp_tool_preset_editor_finalize (GObject *object)
 {
   GimpToolPresetEditor *editor = GIMP_TOOL_PRESET_EDITOR (object);
 
-  if (editor->priv->tool_preset_model)
-    {
-      g_object_unref (editor->priv->tool_preset_model);
-      editor->priv->tool_preset_model = NULL;
-    }
+  g_clear_object (&editor->priv->tool_preset_model);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

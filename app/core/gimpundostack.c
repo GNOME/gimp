@@ -71,11 +71,7 @@ gimp_undo_stack_finalize (GObject *object)
 {
   GimpUndoStack *stack = GIMP_UNDO_STACK (object);
 
-  if (stack->undos)
-    {
-      g_object_unref (stack->undos);
-      stack->undos = NULL;
-    }
+  g_clear_object (&stack->undos);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -241,29 +241,11 @@ gimp_curve_view_finalize (GObject *object)
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (object);
 
-  if (view->layout)
-    {
-      g_object_unref (view->layout);
-      view->layout = NULL;
-    }
+  g_clear_object (&view->layout);
+  g_clear_object (&view->cursor_layout);
 
-  if (view->cursor_layout)
-    {
-      g_object_unref (view->cursor_layout);
-      view->cursor_layout = NULL;
-    }
-
-  if (view->x_axis_label)
-    {
-      g_free (view->x_axis_label);
-      view->x_axis_label = NULL;
-    }
-
-  if (view->y_axis_label)
-    {
-      g_free (view->y_axis_label);
-      view->y_axis_label = NULL;
-    }
+  g_clear_pointer (&view->x_axis_label, g_free);
+  g_clear_pointer (&view->y_axis_label, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -357,17 +339,8 @@ gimp_curve_view_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  if (view->layout)
-    {
-      g_object_unref (view->layout);
-      view->layout = NULL;
-    }
-
-  if (view->cursor_layout)
-    {
-      g_object_unref (view->cursor_layout);
-      view->cursor_layout = NULL;
-    }
+  g_clear_object (&view->layout);
+  g_clear_object (&view->cursor_layout);
 }
 
 static void

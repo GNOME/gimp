@@ -250,53 +250,14 @@ gimp_data_factories_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimp->brush_factory)
-    {
-      g_object_unref (gimp->brush_factory);
-      gimp->brush_factory = NULL;
-    }
-
-  if (gimp->dynamics_factory)
-    {
-      g_object_unref (gimp->dynamics_factory);
-      gimp->dynamics_factory = NULL;
-    }
-
-  if (gimp->mybrush_factory)
-    {
-      g_object_unref (gimp->mybrush_factory);
-      gimp->mybrush_factory = NULL;
-    }
-
-  if (gimp->pattern_factory)
-    {
-      g_object_unref (gimp->pattern_factory);
-      gimp->pattern_factory = NULL;
-    }
-
-  if (gimp->gradient_factory)
-    {
-      g_object_unref (gimp->gradient_factory);
-      gimp->gradient_factory = NULL;
-    }
-
-  if (gimp->palette_factory)
-    {
-      g_object_unref (gimp->palette_factory);
-      gimp->palette_factory = NULL;
-    }
-
-  if (gimp->tool_preset_factory)
-    {
-      g_object_unref (gimp->tool_preset_factory);
-      gimp->tool_preset_factory = NULL;
-    }
-
-  if (gimp->tag_cache)
-    {
-      g_object_unref (gimp->tag_cache);
-      gimp->tag_cache = NULL;
-    }
+  g_clear_object (&gimp->brush_factory);
+  g_clear_object (&gimp->dynamics_factory);
+  g_clear_object (&gimp->mybrush_factory);
+  g_clear_object (&gimp->pattern_factory);
+  g_clear_object (&gimp->gradient_factory);
+  g_clear_object (&gimp->palette_factory);
+  g_clear_object (&gimp->tool_preset_factory);
+  g_clear_object (&gimp->tag_cache);
 }
 
 gint64

@@ -206,29 +206,10 @@ gimp_view_renderer_finalize (GObject *object)
 {
   GimpViewRenderer *renderer = GIMP_VIEW_RENDERER (object);
 
-  if (renderer->priv->pattern)
-    {
-      cairo_pattern_destroy (renderer->priv->pattern);
-      renderer->priv->pattern = NULL;
-    }
-
-  if (renderer->surface)
-    {
-      cairo_surface_destroy (renderer->surface);
-      renderer->surface = NULL;
-    }
-
-  if (renderer->priv->pixbuf)
-    {
-      g_object_unref (renderer->priv->pixbuf);
-      renderer->priv->pixbuf = NULL;
-    }
-
-  if (renderer->priv->bg_icon_name)
-    {
-      g_free (renderer->priv->bg_icon_name);
-      renderer->priv->bg_icon_name = NULL;
-    }
+  g_clear_pointer (&renderer->priv->pattern, cairo_pattern_destroy);
+  g_clear_pointer (&renderer->surface, cairo_surface_destroy);
+  g_clear_object (&renderer->priv->pixbuf);
+  g_clear_pointer (&renderer->priv->bg_icon_name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -348,17 +329,8 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
   if (viewable == renderer->viewable)
     return;
 
-  if (renderer->surface)
-    {
-      cairo_surface_destroy (renderer->surface);
-      renderer->surface = NULL;
-    }
-
-  if (renderer->priv->pixbuf)
-    {
-      g_object_unref (renderer->priv->pixbuf);
-      renderer->priv->pixbuf = NULL;
-    }
+  g_clear_pointer (&renderer->surface, cairo_surface_destroy);
+  g_clear_object (&renderer->priv->pixbuf);
 
   gimp_view_renderer_free_color_transform (renderer);
 
@@ -473,11 +445,7 @@ gimp_view_renderer_set_size_full (GimpViewRenderer *renderer,
       renderer->height       = height;
       renderer->border_width = border_width;
 
-      if (renderer->surface)
-        {
-          cairo_surface_destroy (renderer->surface);
-          renderer->surface = NULL;
-        }
+      g_clear_pointer (&renderer->surface, cairo_surface_destroy);
 
       if (renderer->viewable)
         gimp_view_renderer_invalidate (renderer);
@@ -557,11 +525,7 @@ gimp_view_renderer_set_background (GimpViewRenderer *renderer,
 
   renderer->priv->bg_icon_name = g_strdup (icon_name);
 
-  if (renderer->priv->pattern)
-    {
-      g_object_unref (renderer->priv->pattern);
-      renderer->priv->pattern = NULL;
-    }
+  g_clear_object (&renderer->priv->pattern);
 }
 
 void
@@ -938,11 +902,7 @@ gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
                                     GimpViewBG        inside_bg,
                                     GimpViewBG        outside_bg)
 {
-  if (renderer->priv->pixbuf)
-    {
-      g_object_unref (renderer->priv->pixbuf);
-      renderer->priv->pixbuf = NULL;
-    }
+  g_clear_object (&renderer->priv->pixbuf);
 
   if (! renderer->surface)
     renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
@@ -971,11 +931,7 @@ gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
   GimpColorTransform *transform;
   const Babl         *format;
 
-  if (renderer->surface)
-    {
-      cairo_surface_destroy (renderer->surface);
-      renderer->surface = NULL;
-    }
+  g_clear_pointer (&renderer->surface, cairo_surface_destroy);
 
   format = gimp_pixbuf_get_format (pixbuf);
 
@@ -1038,17 +994,8 @@ gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (icon_name != NULL);
 
-  if (renderer->priv->pixbuf)
-    {
-      g_object_unref (renderer->priv->pixbuf);
-      renderer->priv->pixbuf = NULL;
-    }
-
-  if (renderer->surface)
-    {
-      cairo_surface_destroy (renderer->surface);
-      renderer->surface = NULL;
-    }
+  g_clear_object (&renderer->priv->pixbuf);
+  g_clear_pointer (&renderer->surface, cairo_surface_destroy);
 
   pixbuf = gimp_widget_load_icon (widget, icon_name,
                                   MIN (renderer->width, renderer->height));
@@ -1133,11 +1080,7 @@ gimp_view_renderer_free_color_transform (GimpViewRenderer *renderer)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
 
-  if (renderer->priv->profile_transform)
-    {
-      g_object_unref (renderer->priv->profile_transform);
-      renderer->priv->profile_transform = NULL;
-    }
+  g_clear_object (&renderer->priv->profile_transform);
 
   gimp_view_renderer_invalidate (renderer);
 }

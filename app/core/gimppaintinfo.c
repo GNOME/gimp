@@ -68,8 +68,7 @@ gimp_paint_info_dispose (GObject *object)
   if (paint_info->paint_options)
     {
       g_object_run_dispose (G_OBJECT (paint_info->paint_options));
-      g_object_unref (paint_info->paint_options);
-      paint_info->paint_options = NULL;
+      g_clear_object (&paint_info->paint_options);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -80,11 +79,7 @@ gimp_paint_info_finalize (GObject *object)
 {
   GimpPaintInfo *paint_info = GIMP_PAINT_INFO (object);
 
-  if (paint_info->blurb)
-    {
-      g_free (paint_info->blurb);
-      paint_info->blurb = NULL;
-    }
+  g_clear_pointer (&paint_info->blurb, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -254,11 +254,7 @@ gimp_data_finalize (GObject *object)
 {
   GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
 
-  if (private->file)
-    {
-      g_object_unref (private->file);
-      private->file = NULL;
-    }
+  g_clear_object (&private->file);
 
   if (private->tags)
     {
@@ -266,11 +262,7 @@ gimp_data_finalize (GObject *object)
       private->tags = NULL;
     }
 
-  if (private->identifier)
-    {
-      g_free (private->identifier);
-      private->identifier = NULL;
-    }
+  g_clear_pointer (&private->identifier, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1106,11 +1098,7 @@ gimp_data_duplicate (GimpData *data)
                     "deletable", TRUE,
                     NULL);
 
-      if (private->file)
-        {
-          g_object_unref (private->file);
-          private->file = NULL;
-        }
+      g_clear_object (&private->file);
 
       return new;
     }
@@ -1140,11 +1128,7 @@ gimp_data_make_internal (GimpData    *data,
 
   private = GIMP_DATA_GET_PRIVATE (data);
 
-  if (private->file)
-    {
-      g_object_unref (private->file);
-      private->file = NULL;
-    }
+  g_clear_object (&private->file);
 
   private->identifier = g_strdup (identifier);
   private->writable   = FALSE;

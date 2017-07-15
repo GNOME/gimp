@@ -628,11 +628,7 @@ _gimp_image_free_color_profile (GimpImage *image)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->color_profile)
-    {
-      g_object_unref (private->color_profile);
-      private->color_profile = NULL;
-    }
+  g_clear_object (&private->color_profile);
 
   _gimp_image_free_color_transforms (image);
 }
@@ -642,29 +638,10 @@ _gimp_image_free_color_transforms (GimpImage *image)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->transform_to_srgb_u8)
-    {
-      g_object_unref (private->transform_to_srgb_u8);
-      private->transform_to_srgb_u8 = NULL;
-    }
-
-  if (private->transform_from_srgb_u8)
-    {
-      g_object_unref (private->transform_from_srgb_u8);
-      private->transform_from_srgb_u8 = NULL;
-    }
-
-  if (private->transform_to_srgb_double)
-    {
-      g_object_unref (private->transform_to_srgb_double);
-      private->transform_to_srgb_double = NULL;
-    }
-
-  if (private->transform_from_srgb_double)
-    {
-      g_object_unref (private->transform_from_srgb_double);
-      private->transform_from_srgb_double = NULL;
-    }
+  g_clear_object (&private->transform_to_srgb_u8);
+  g_clear_object (&private->transform_from_srgb_u8);
+  g_clear_object (&private->transform_to_srgb_double);
+  g_clear_object (&private->transform_from_srgb_double);
 
   private->color_transforms_created = FALSE;
 }

@@ -844,29 +844,10 @@ gimp_clipboard_get (Gimp *gimp)
 static void
 gimp_clipboard_clear (GimpClipboard *gimp_clip)
 {
-  if (gimp_clip->image)
-    {
-      g_object_unref (gimp_clip->image);
-      gimp_clip->image = NULL;
-    }
-
-  if (gimp_clip->buffer)
-    {
-      g_object_unref (gimp_clip->buffer);
-      gimp_clip->buffer = NULL;
-    }
-
-  if (gimp_clip->svg)
-    {
-      g_free (gimp_clip->svg);
-      gimp_clip->svg = NULL;
-    }
-
-  if (gimp_clip->curve)
-    {
-      g_object_unref (gimp_clip->curve);
-      gimp_clip->curve = NULL;
-    }
+  g_clear_object (&gimp_clip->image);
+  g_clear_object (&gimp_clip->buffer);
+  g_clear_pointer (&gimp_clip->svg, g_free);
+  g_clear_object (&gimp_clip->curve);
 }
 
 static void

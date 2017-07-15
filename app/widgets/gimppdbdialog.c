@@ -215,35 +215,13 @@ gimp_pdb_dialog_dispose (GObject *object)
 
   klass->dialogs = g_list_remove (klass->dialogs, object);
 
-  if (dialog->pdb)
-    {
-      g_object_unref (dialog->pdb);
-      dialog->pdb = NULL;
-    }
+  g_clear_object (&dialog->pdb);
+  g_clear_object (&dialog->caller_context);
+  g_clear_object (&dialog->context);
 
-  if (dialog->caller_context)
-    {
-      g_object_unref (dialog->caller_context);
-      dialog->caller_context = NULL;
-    }
+  g_clear_pointer (&dialog->callback_name, g_free);
 
-  if (dialog->context)
-    {
-      g_object_unref (dialog->context);
-      dialog->context = NULL;
-    }
-
-  if (dialog->callback_name)
-    {
-      g_free (dialog->callback_name);
-      dialog->callback_name = NULL;
-    }
-
-  if (dialog->menu_factory)
-    {
-      g_object_unref (dialog->menu_factory);
-      dialog->menu_factory = NULL;
-    }
+  g_clear_object (&dialog->menu_factory);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

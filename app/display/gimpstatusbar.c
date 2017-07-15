@@ -309,27 +309,14 @@ gimp_statusbar_finalize (GObject *object)
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (object);
 
-  if (statusbar->icon)
-    {
-      g_object_unref (statusbar->icon);
-      statusbar->icon = NULL;
-    }
-
-  if (statusbar->icon_hash)
-    {
-      g_hash_table_unref (statusbar->icon_hash);
-      statusbar->icon_hash = NULL;
-    }
+  g_clear_object (&statusbar->icon);
+  g_clear_pointer (&statusbar->icon_hash, g_hash_table_unref);
 
   g_slist_free_full (statusbar->messages,
                      (GDestroyNotify) gimp_statusbar_msg_free);
   statusbar->messages = NULL;
 
-  if (statusbar->context_ids)
-    {
-      g_hash_table_destroy (statusbar->context_ids);
-      statusbar->context_ids = NULL;
-    }
+  g_clear_pointer (&statusbar->context_ids, g_hash_table_destroy);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -343,11 +330,7 @@ gimp_statusbar_screen_changed (GtkWidget *widget,
   if (GTK_WIDGET_CLASS (parent_class)->screen_changed)
     GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous);
 
-  if (statusbar->icon_hash)
-    {
-      g_hash_table_unref (statusbar->icon_hash);
-      statusbar->icon_hash = NULL;
-    }
+  g_clear_pointer (&statusbar->icon_hash, g_hash_table_unref);
 }
 
 static void
@@ -358,11 +341,7 @@ gimp_statusbar_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  if (statusbar->icon_hash)
-    {
-      g_hash_table_unref (statusbar->icon_hash);
-      statusbar->icon_hash = NULL;
-    }
+  g_clear_pointer (&statusbar->icon_hash, g_hash_table_unref);
 }
 
 static void
@@ -656,11 +635,7 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
     }
   else
     {
-      if (statusbar->icon)
-        {
-          g_object_unref (statusbar->icon);
-          statusbar->icon = NULL;
-        }
+      g_clear_object (&statusbar->icon);
 
       if (icon_name)
         statusbar->icon = gimp_statusbar_load_icon (statusbar, icon_name);

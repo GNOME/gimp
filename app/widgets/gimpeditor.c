@@ -265,32 +265,19 @@ gimp_editor_dispose (GObject *object)
 {
   GimpEditor *editor = GIMP_EDITOR (object);
 
-  if (editor->priv->menu_factory)
-    {
-      g_object_unref (editor->priv->menu_factory);
-      editor->priv->menu_factory = NULL;
-    }
+  g_clear_object (&editor->priv->menu_factory);
 
-  if (editor->priv->menu_identifier)
-    {
-      g_free (editor->priv->menu_identifier);
-      editor->priv->menu_identifier = NULL;
-    }
+  g_clear_pointer (&editor->priv->menu_identifier, g_free);
 
   if (editor->priv->ui_manager)
     {
       g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
                                             G_CALLBACK (gimp_editor_config_size_changed),
                                             editor);
-      g_object_unref (editor->priv->ui_manager);
-      editor->priv->ui_manager = NULL;
+      g_clear_object (&editor->priv->ui_manager);
     }
 
-  if (editor->priv->ui_path)
-    {
-      g_free (editor->priv->ui_path);
-      editor->priv->ui_path = NULL;
-    }
+  g_clear_pointer (&editor->priv->ui_path, g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

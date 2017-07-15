@@ -130,17 +130,9 @@ gimp_language_entry_finalize (GObject *object)
 {
   GimpLanguageEntry *entry = GIMP_LANGUAGE_ENTRY (object);
 
-  if (entry->store)
-    {
-      g_object_unref (entry->store);
-      entry->store = NULL;
-    }
+  g_clear_object (&entry->store);
 
-  if (entry->code)
-    {
-      g_free (entry->code);
-      entry->code = NULL;
-    }
+  g_clear_pointer (&entry->code, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

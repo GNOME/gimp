@@ -170,8 +170,7 @@ gimp_plug_in_progress_end (GimpPlugIn          *plug_in,
       if (proc_frame->progress_created)
         {
           gimp_free_progress (plug_in->manager->gimp, proc_frame->progress);
-          g_object_unref (proc_frame->progress);
-          proc_frame->progress = NULL;
+          g_clear_object (&proc_frame->progress);
         }
     }
 }
@@ -275,11 +274,7 @@ gimp_plug_in_progress_install (GimpPlugIn  *plug_in,
     {
       gimp_plug_in_progress_end (plug_in, proc_frame);
 
-      if (proc_frame->progress)
-        {
-          g_object_unref (proc_frame->progress);
-          proc_frame->progress = NULL;
-        }
+      g_clear_object (&proc_frame->progress);
     }
 
   proc_frame->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
@@ -307,8 +302,8 @@ gimp_plug_in_progress_uninstall (GimpPlugIn  *plug_in,
   if (GIMP_IS_PDB_PROGRESS (proc_frame->progress))
     {
       gimp_plug_in_progress_end (plug_in, proc_frame);
-      g_object_unref (proc_frame->progress);
-      proc_frame->progress = NULL;
+
+      g_clear_object (&proc_frame->progress);
 
       return TRUE;
     }

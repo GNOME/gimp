@@ -162,8 +162,7 @@ gimp_paint_core_finalize (GObject *object)
 
   gimp_paint_core_cleanup (core);
 
-  g_free (core->undo_desc);
-  core->undo_desc = NULL;
+  g_clear_pointer (&core->undo_desc, g_free);
 
   if (core->stroke_buffer)
     {
@@ -394,11 +393,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
   core->undo_buffer = gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
 
   /*  Allocate the saved proj structure  */
-  if (core->saved_proj_buffer)
-    {
-      g_object_unref (core->saved_proj_buffer);
-      core->saved_proj_buffer = NULL;
-    }
+  g_clear_object (&core->saved_proj_buffer);
 
   if (core->use_saved_proj)
     {
@@ -466,11 +461,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
     }
   else
     {
-      if (core->comp_buffer)
-        {
-          g_object_unref (core->comp_buffer);
-          core->comp_buffer = NULL;
-        }
+      g_clear_object (&core->comp_buffer);
 
       /* Allocate the scratch buffer if there's a component mask */
       if (gimp_drawable_get_active_mask (drawable) != GIMP_COMPONENT_MASK_ALL)
@@ -507,11 +498,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  if (core->applicator)
-    {
-      g_object_unref (core->applicator);
-      core->applicator = NULL;
-    }
+  g_clear_object (&core->applicator);
 
   if (core->stroke_buffer)
     {
@@ -519,17 +506,8 @@ gimp_paint_core_finish (GimpPaintCore *core,
       core->stroke_buffer = NULL;
     }
 
-  if (core->mask_buffer)
-    {
-      g_object_unref (core->mask_buffer);
-      core->mask_buffer = NULL;
-    }
-
-  if (core->comp_buffer)
-    {
-      g_object_unref (core->comp_buffer);
-      core->comp_buffer = NULL;
-    }
+  g_clear_object (&core->mask_buffer);
+  g_clear_object (&core->comp_buffer);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -576,14 +554,8 @@ gimp_paint_core_finish (GimpPaintCore *core,
       gimp_image_undo_group_end (image);
     }
 
-  g_object_unref (core->undo_buffer);
-  core->undo_buffer = NULL;
-
-  if (core->saved_proj_buffer)
-    {
-      g_object_unref (core->saved_proj_buffer);
-      core->saved_proj_buffer = NULL;
-    }
+  g_clear_object (&core->undo_buffer);
+  g_clear_object (&core->saved_proj_buffer);
 
   gimp_viewable_preview_thaw (GIMP_VIEWABLE (drawable));
 }
@@ -620,14 +592,8 @@ gimp_paint_core_cancel (GimpPaintCore *core,
                         GEGL_RECTANGLE (x, y, width, height));
     }
 
-  g_object_unref (core->undo_buffer);
-  core->undo_buffer = NULL;
-
-  if (core->saved_proj_buffer)
-    {
-      g_object_unref (core->saved_proj_buffer);
-      core->saved_proj_buffer = NULL;
-    }
+  g_clear_object (&core->undo_buffer);
+  g_clear_object (&core->saved_proj_buffer);
 
   gimp_drawable_update (drawable, x, y, width, height);
 
@@ -639,29 +605,10 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
 
-  if (core->undo_buffer)
-    {
-      g_object_unref (core->undo_buffer);
-      core->undo_buffer = NULL;
-    }
-
-  if (core->saved_proj_buffer)
-    {
-      g_object_unref (core->saved_proj_buffer);
-      core->saved_proj_buffer = NULL;
-    }
-
-  if (core->canvas_buffer)
-    {
-      g_object_unref (core->canvas_buffer);
-      core->canvas_buffer = NULL;
-    }
-
-  if (core->paint_buffer)
-    {
-      g_object_unref (core->paint_buffer);
-      core->paint_buffer = NULL;
-    }
+  g_clear_object (&core->undo_buffer);
+  g_clear_object (&core->saved_proj_buffer);
+  g_clear_object (&core->canvas_buffer);
+  g_clear_object (&core->paint_buffer);
 }
 
 void

@@ -133,11 +133,7 @@ gimp_item_undo_free (GimpUndo     *undo,
 {
   GimpItemUndo *item_undo = GIMP_ITEM_UNDO (undo);
 
-  if (item_undo->item)
-    {
-      g_object_unref (item_undo->item);
-      item_undo->item = NULL;
-    }
+  g_clear_object (&item_undo->item);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

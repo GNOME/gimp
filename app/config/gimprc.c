@@ -130,17 +130,8 @@ gimp_rc_finalize (GObject *object)
 {
   GimpRc *rc = GIMP_RC (object);
 
-  if (rc->system_gimprc)
-    {
-      g_object_unref (rc->system_gimprc);
-      rc->system_gimprc = NULL;
-    }
-
-  if (rc->user_gimprc)
-    {
-      g_object_unref (rc->user_gimprc);
-      rc->user_gimprc = NULL;
-    }
+  g_clear_object (&rc->system_gimprc);
+  g_clear_object (&rc->user_gimprc);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

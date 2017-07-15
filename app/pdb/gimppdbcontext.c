@@ -260,17 +260,8 @@ gimp_pdb_context_finalize (GObject *object)
 {
   GimpPDBContext *context = GIMP_PDB_CONTEXT (object);
 
-  if (context->paint_options_list)
-    {
-      g_object_unref (context->paint_options_list);
-      context->paint_options_list = NULL;
-    }
-
-  if (context->stroke_options)
-    {
-      g_object_unref (context->stroke_options);
-      context->stroke_options = NULL;
-    }
+  g_clear_object (&context->paint_options_list);
+  g_clear_object (&context->stroke_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

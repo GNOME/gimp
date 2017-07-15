@@ -367,26 +367,13 @@ gimp_n_point_deformation_tool_halt (GimpNPointDeformationTool *npd_tool)
 
   gimp_n_point_deformation_tool_clear_selected_points_list (npd_tool);
 
-  if (npd_tool->graph)
-    {
-      g_object_unref (npd_tool->graph);
-      npd_tool->graph = NULL;
-      npd_tool->source = NULL;
-      npd_tool->npd_node = NULL;
-      npd_tool->sink = NULL;
-    }
+  g_clear_object (&npd_tool->graph);
+  npd_tool->source   = NULL;
+  npd_tool->npd_node = NULL;
+  npd_tool->sink     = NULL;
 
-  if (npd_tool->preview_buffer)
-    {
-      g_object_unref (npd_tool->preview_buffer);
-      npd_tool->preview_buffer = NULL;
-    }
-
-  if (npd_tool->lattice_points)
-    {
-      g_free (npd_tool->lattice_points);
-      npd_tool->lattice_points = NULL;
-    }
+  g_clear_object (&npd_tool->preview_buffer);
+  g_clear_pointer (&npd_tool->lattice_points, g_free);
 
   tool->display  = NULL;
   tool->drawable = NULL;

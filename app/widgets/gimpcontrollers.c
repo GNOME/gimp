@@ -300,8 +300,8 @@ gimp_controller_manager_free (GimpControllerManager *manager)
   gimp_container_remove_handler (manager->controllers,
                                  manager->event_mapped_id);
 
-  g_object_unref (manager->controllers);
-  g_object_unref (manager->ui_manager);
+  g_clear_object (&manager->controllers);
+  g_clear_object (&manager->ui_manager);
 
   g_slice_free (GimpControllerManager, manager);
 }

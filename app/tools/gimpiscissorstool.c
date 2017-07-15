@@ -1242,17 +1242,8 @@ gimp_iscissors_tool_halt (GimpIscissorsTool *iscissors,
       iscissors->redo_stack = NULL;
     }
 
-  if (iscissors->gradient_map)
-    {
-      g_object_unref (iscissors->gradient_map);
-      iscissors->gradient_map = NULL;
-    }
-
-  if (iscissors->mask)
-    {
-      g_object_unref (iscissors->mask);
-      iscissors->mask = NULL;
-    }
+  g_clear_object (&iscissors->gradient_map);
+  g_clear_object (&iscissors->mask);
 }
 
 static void

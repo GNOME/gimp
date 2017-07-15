@@ -305,8 +305,7 @@ gimp_warp_tool_button_release (GimpTool              *tool,
   g_printerr ("%s\n", gegl_path_to_string (wt->current_stroke));
 #endif
 
-  g_object_unref (wt->current_stroke);
-  wt->current_stroke = NULL;
+  g_clear_object (&wt->current_stroke);
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
@@ -712,24 +711,15 @@ gimp_warp_tool_halt (GimpWarpTool *wt)
   GimpTool        *tool    = GIMP_TOOL (wt);
   GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
 
-  if (wt->coords_buffer)
-    {
-      g_object_unref (wt->coords_buffer);
-      wt->coords_buffer = NULL;
-    }
+  g_clear_object (&wt->coords_buffer);
 
-  if (wt->graph)
-    {
-      g_object_unref (wt->graph);
-      wt->graph       = NULL;
-      wt->render_node = NULL;
-    }
+  g_clear_object (&wt->graph);
+  wt->render_node = NULL;
 
   if (wt->filter)
     {
       gimp_drawable_filter_abort (wt->filter);
-      g_object_unref (wt->filter);
-      wt->filter = NULL;
+      g_clear_object (&wt->filter);
 
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
@@ -768,8 +758,7 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
       gimp_warp_tool_set_sampler (wt, /* commit = */ TRUE);
 
       gimp_drawable_filter_commit (wt->filter, GIMP_PROGRESS (tool), FALSE);
-      g_object_unref (wt->filter);
-      wt->filter = NULL;
+      g_clear_object (&wt->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -1092,8 +1081,7 @@ gimp_warp_tool_animate (GimpWarpTool *wt)
   if (wt->filter)
     {
       gimp_drawable_filter_abort (wt->filter);
-      g_object_unref (wt->filter);
-      wt->filter = NULL;
+      g_clear_object (&wt->filter);
     }
 
   gimp_warp_tool_set_sampler (wt, /* commit = */ TRUE);

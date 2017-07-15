@@ -188,11 +188,7 @@ gimp_spin_scale_dispose (GObject *object)
 
   gimp_spin_scale_setup_mnemonic (GIMP_SPIN_SCALE (object), keyval);
 
-  if (private->layout)
-    {
-      g_object_unref (private->layout);
-      private->layout = NULL;
-    }
+  g_clear_object (&private->layout);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -202,23 +198,9 @@ gimp_spin_scale_finalize (GObject *object)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (object);
 
-  if (private->label)
-    {
-      g_free (private->label);
-      private->label = NULL;
-    }
-
-  if (private->label_text)
-    {
-      g_free (private->label_text);
-      private->label_text = NULL;
-    }
-
-  if (private->label_pattern)
-    {
-      g_free (private->label_pattern);
-      private->label_pattern = NULL;
-    }
+  g_clear_pointer (&private->label,         g_free);
+  g_clear_pointer (&private->label_text,    g_free);
+  g_clear_pointer (&private->label_pattern, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -308,11 +290,7 @@ gimp_spin_scale_style_set (GtkWidget *widget,
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
-  if (private->layout)
-    {
-      g_object_unref (private->layout);
-      private->layout = NULL;
-    }
+  g_clear_object (&private->layout);
 }
 
 static PangoAttrList *
@@ -769,11 +747,7 @@ gimp_spin_scale_screen_changed (GtkWidget *widget,
   GimpSpinScalePrivate *private = GET_PRIVATE (scale);
   GtkSettings          *settings;
 
-  if (private->layout)
-    {
-      g_object_unref (private->layout);
-      private->layout = NULL;
-    }
+  g_clear_object (&private->layout);
 
   if (old_screen)
     {
@@ -856,11 +830,7 @@ gimp_spin_scale_mnemonics_notify (GtkWindow        *window,
     {
       private->mnemonics_visible = mnemonics_visible;
 
-      if (private->layout)
-        {
-          g_object_unref (private->layout);
-          private->layout = NULL;
-        }
+      g_clear_object (&private->layout);
 
       gtk_widget_queue_draw (GTK_WIDGET (scale));
     }
@@ -1032,11 +1002,7 @@ gimp_spin_scale_set_label (GimpSpinScale *scale,
       gimp_spin_scale_setup_mnemonic (scale, previous);
     }
 
-  if (private->layout)
-    {
-      g_object_unref (private->layout);
-      private->layout = NULL;
-    }
+  g_clear_object (&private->layout);
 
   gtk_widget_queue_resize (GTK_WIDGET (scale));
 

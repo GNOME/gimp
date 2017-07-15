@@ -270,17 +270,17 @@ gimp_dynamics_finalize (GObject *object)
 {
   GimpDynamicsPrivate *private = GET_PRIVATE (object);
 
-  g_object_unref (private->opacity_output);
-  g_object_unref (private->force_output);
-  g_object_unref (private->hardness_output);
-  g_object_unref (private->rate_output);
-  g_object_unref (private->flow_output);
-  g_object_unref (private->size_output);
-  g_object_unref (private->aspect_ratio_output);
-  g_object_unref (private->color_output);
-  g_object_unref (private->angle_output);
-  g_object_unref (private->jitter_output);
-  g_object_unref (private->spacing_output);
+  g_clear_object (&private->opacity_output);
+  g_clear_object (&private->force_output);
+  g_clear_object (&private->hardness_output);
+  g_clear_object (&private->rate_output);
+  g_clear_object (&private->flow_output);
+  g_clear_object (&private->size_output);
+  g_clear_object (&private->aspect_ratio_output);
+  g_clear_object (&private->color_output);
+  g_clear_object (&private->angle_output);
+  g_clear_object (&private->jitter_output);
+  g_clear_object (&private->spacing_output);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

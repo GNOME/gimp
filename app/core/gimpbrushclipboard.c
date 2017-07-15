@@ -210,17 +210,8 @@ gimp_brush_clipboard_changed (Gimp      *gimp,
   gint        width;
   gint        height;
 
-  if (brush->priv->mask)
-    {
-      gimp_temp_buf_unref (brush->priv->mask);
-      brush->priv->mask = NULL;
-    }
-
-  if (brush->priv->pixmap)
-    {
-      gimp_temp_buf_unref (brush->priv->pixmap);
-      brush->priv->pixmap = NULL;
-    }
+  g_clear_pointer (&brush->priv->mask,   gimp_temp_buf_unref);
+  g_clear_pointer (&brush->priv->pixmap, gimp_temp_buf_unref);
 
   paste = gimp_get_clipboard_object (gimp);
 

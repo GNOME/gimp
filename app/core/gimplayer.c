@@ -643,11 +643,7 @@ gimp_layer_finalize (GObject *object)
 {
   GimpLayer *layer = GIMP_LAYER (object);
 
-  if (layer->mask)
-    {
-      g_object_unref (layer->mask);
-      layer->mask = NULL;
-    }
+  g_clear_object (&layer->mask);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

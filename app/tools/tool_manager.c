@@ -151,11 +151,8 @@ tool_manager_exit (Gimp *gimp)
   gimp_container_remove_handler (gimp->images,
                                  tool_manager->image_dirty_handler_id);
 
-  if (tool_manager->active_tool)
-    g_object_unref (tool_manager->active_tool);
-
-  if (tool_manager->shared_paint_options)
-    g_object_unref (tool_manager->shared_paint_options);
+  g_clear_object (&tool_manager->active_tool);
+  g_clear_object (&tool_manager->shared_paint_options);
 
   g_slice_free (GimpToolManager, tool_manager);
 }

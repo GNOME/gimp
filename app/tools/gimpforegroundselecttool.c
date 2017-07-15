@@ -254,12 +254,8 @@ gimp_foreground_select_tool_finalize (GObject *object)
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (object);
 
-  if (fg_select->gui)
-    {
-      g_object_unref (fg_select->gui);
-      fg_select->gui            = NULL;
-      fg_select->preview_toggle = NULL;
-    }
+  g_clear_object (&fg_select->gui);
+  fg_select->preview_toggle = NULL;
 
   if (fg_select->stroke)
     g_warning ("%s: stroke should be NULL at this point", G_STRLOC);
@@ -912,17 +908,8 @@ gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
 {
   GimpTool *tool = GIMP_TOOL (fg_select);
 
-  if (fg_select->trimap)
-    {
-      g_object_unref (fg_select->trimap);
-      fg_select->trimap = NULL;
-    }
-
-  if (fg_select->mask)
-    {
-      g_object_unref (fg_select->mask);
-      fg_select->mask = NULL;
-    }
+  g_clear_object (&fg_select->trimap);
+  g_clear_object (&fg_select->mask);
 
   if (fg_select->undo_stack)
     {
@@ -1054,11 +1041,7 @@ gimp_foreground_select_tool_preview (GimpForegroundSelectTool *fg_select)
 
   options  = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
-  if (fg_select->mask)
-    {
-      g_object_unref (fg_select->mask);
-      fg_select->mask = NULL;
-    }
+  g_clear_object (&fg_select->mask);
 
   fg_select->mask = gimp_drawable_foreground_extract (drawable,
                                                       options->engine,
@@ -1307,11 +1290,7 @@ gimp_foreground_select_undo_pop (StrokeUndo *undo,
 static void
 gimp_foreground_select_undo_free (StrokeUndo *undo)
 {
-  if (undo->saved_trimap)
-    {
-      g_object_unref (undo->saved_trimap);
-      undo->saved_trimap = NULL;
-    }
+  g_clear_object (&undo->saved_trimap);
 
   g_slice_free (StrokeUndo, undo);
 }

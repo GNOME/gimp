@@ -96,11 +96,7 @@ gimp_canvas_proxy_group_finalize (GObject *object)
 {
   GimpCanvasProxyGroupPrivate *private = GET_PRIVATE (object);
 
-  if (private->proxy_hash)
-    {
-      g_hash_table_unref (private->proxy_hash);
-      private->proxy_hash = NULL;
-    }
+  g_clear_pointer (&private->proxy_hash, g_hash_table_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

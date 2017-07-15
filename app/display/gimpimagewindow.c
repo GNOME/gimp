@@ -528,11 +528,7 @@ gimp_image_window_dispose (GObject *object)
       private->dialog_factory = NULL;
     }
 
-  if (private->menubar_manager)
-    {
-      g_object_unref (private->menubar_manager);
-      private->menubar_manager = NULL;
-    }
+  g_clear_object (&private->menubar_manager);
 
   if (private->update_ui_manager_idle_id)
     {

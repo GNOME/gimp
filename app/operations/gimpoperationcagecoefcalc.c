@@ -100,11 +100,7 @@ gimp_operation_cage_coef_calc_finalize (GObject *object)
 {
   GimpOperationCageCoefCalc *self = GIMP_OPERATION_CAGE_COEF_CALC (object);
 
-  if (self->config)
-    {
-      g_object_unref (self->config);
-      self->config = NULL;
-    }
+  g_clear_object (&self->config);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

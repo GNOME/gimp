@@ -123,11 +123,7 @@ gimp_buffer_finalize (GObject *object)
 {
   GimpBuffer *buffer = GIMP_BUFFER (object);
 
-  if (buffer->buffer)
-    {
-      g_object_unref (buffer->buffer);
-      buffer->buffer = NULL;
-    }
+  g_clear_object (&buffer->buffer);
 
   gimp_buffer_set_color_profile (buffer, NULL);
 
@@ -528,16 +524,10 @@ gimp_buffer_set_color_profile (GimpBuffer       *buffer,
 
   if (profile != buffer->color_profile)
     {
-      if (buffer->color_profile)
-        {
-          g_object_unref (buffer->color_profile);
-          buffer->color_profile = NULL;
-        }
+      g_clear_object (&buffer->color_profile);
 
       if (profile)
-        {
-          buffer->color_profile = g_object_ref (profile);
-        }
+        buffer->color_profile = g_object_ref (profile);
     }
 }
 

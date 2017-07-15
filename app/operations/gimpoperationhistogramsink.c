@@ -113,11 +113,7 @@ gimp_operation_histogram_sink_finalize (GObject *object)
 {
   GimpOperationHistogramSink *sink = GIMP_OPERATION_HISTOGRAM_SINK (object);
 
-  if (sink->histogram)
-    {
-      g_object_unref (sink->histogram);
-      sink->histogram = NULL;
-    }
+  g_clear_object (&sink->histogram);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

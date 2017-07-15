@@ -144,29 +144,11 @@ gimp_data_factory_finalize (GObject *object)
 {
   GimpDataFactory *factory = GIMP_DATA_FACTORY (object);
 
-  if (factory->priv->container)
-    {
-      g_object_unref (factory->priv->container);
-      factory->priv->container = NULL;
-    }
+  g_clear_object (&factory->priv->container);
+  g_clear_object (&factory->priv->container_obsolete);
 
-  if (factory->priv->container_obsolete)
-    {
-      g_object_unref (factory->priv->container_obsolete);
-      factory->priv->container_obsolete = NULL;
-    }
-
-  if (factory->priv->path_property_name)
-    {
-      g_free (factory->priv->path_property_name);
-      factory->priv->path_property_name = NULL;
-    }
-
-  if (factory->priv->writable_property_name)
-    {
-      g_free (factory->priv->writable_property_name);
-      factory->priv->writable_property_name = NULL;
-    }
+  g_clear_pointer (&factory->priv->path_property_name,     g_free);
+  g_clear_pointer (&factory->priv->writable_property_name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -372,7 +354,7 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
                                         list->data);
     }
 
-  g_list_free_full (path, (GDestroyNotify) g_object_unref);
+  g_list_free_full (path,          (GDestroyNotify) g_object_unref);
   g_list_free_full (writable_path, (GDestroyNotify) g_object_unref);
 }
 
@@ -789,7 +771,7 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
                    _("You don't have any writable data folder configured."));
     }
 
-  g_list_free_full (path, (GDestroyNotify) g_object_unref);
+  g_list_free_full (path,          (GDestroyNotify) g_object_unref);
   g_list_free_full (writable_path, (GDestroyNotify) g_object_unref);
 
   return writable_dir;

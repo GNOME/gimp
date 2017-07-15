@@ -168,11 +168,7 @@ gimp_levels_tool_finalize (GObject *object)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (object);
 
-  if (tool->histogram)
-    {
-      g_object_unref (tool->histogram);
-      tool->histogram = NULL;
-    }
+  g_clear_object (&tool->histogram);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

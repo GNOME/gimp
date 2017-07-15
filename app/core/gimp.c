@@ -343,25 +343,12 @@ gimp_dispose (GObject *object)
 
   gimp_filter_history_clear (gimp);
 
-  if (gimp->edit_config)
-    {
-      g_object_unref (gimp->edit_config);
-      gimp->edit_config = NULL;
-    }
-
-  if (gimp->config)
-    {
-      g_object_unref (gimp->config);
-      gimp->config = NULL;
-    }
+  g_clear_object (&gimp->edit_config);
+  g_clear_object (&gimp->config);
 
   gimp_contexts_exit (gimp);
 
-  if (gimp->image_new_last_template)
-    {
-      g_object_unref (gimp->image_new_last_template);
-      gimp->image_new_last_template = NULL;
-    }
+  g_clear_object (&gimp->image_new_last_template);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -388,17 +375,8 @@ gimp_finalize (GObject *object)
   standards = g_list_prepend (standards,
                               gimp_palette_get_standard (gimp->user_context));
 
-  if (gimp->templates)
-    {
-      g_object_unref (gimp->templates);
-      gimp->templates = NULL;
-    }
-
-  if (gimp->documents)
-    {
-      g_object_unref (gimp->documents);
-      gimp->documents = NULL;
-    }
+  g_clear_object (&gimp->templates);
+  g_clear_object (&gimp->documents);
 
   gimp_tool_info_set_standard (gimp, NULL);
 
@@ -406,92 +384,35 @@ gimp_finalize (GObject *object)
     {
       gimp_container_foreach (gimp->tool_info_list,
                               (GFunc) g_object_run_dispose, NULL);
-      g_object_unref (gimp->tool_info_list);
-      gimp->tool_info_list = NULL;
+      g_clear_object (&gimp->tool_info_list);
     }
 
   xcf_exit (gimp);
 
-  if (gimp->pdb)
-    {
-      g_object_unref (gimp->pdb);
-      gimp->pdb = NULL;
-    }
+  g_clear_object (&gimp->pdb);
 
   gimp_data_factories_exit (gimp);
 
   gimp_fonts_exit (gimp);
 
-  if (gimp->named_buffers)
-    {
-      g_object_unref (gimp->named_buffers);
-      gimp->named_buffers = NULL;
-    }
-
-  if (gimp->clipboard_buffer)
-    {
-      g_object_unref (gimp->clipboard_buffer);
-      gimp->clipboard_buffer = NULL;
-    }
-
-  if (gimp->clipboard_image)
-    {
-      g_object_unref (gimp->clipboard_image);
-      gimp->clipboard_image = NULL;
-    }
-
-  if (gimp->displays)
-    {
-      g_object_unref (gimp->displays);
-      gimp->displays = NULL;
-    }
-
-  if (gimp->item_table)
-    {
-      g_object_unref (gimp->item_table);
-      gimp->item_table = NULL;
-    }
-
-  if (gimp->image_table)
-    {
-      g_object_unref (gimp->image_table);
-      gimp->image_table = NULL;
-    }
-
-  if (gimp->images)
-    {
-      g_object_unref (gimp->images);
-      gimp->images = NULL;
-    }
-
-  if (gimp->plug_in_manager)
-    {
-      g_object_unref (gimp->plug_in_manager);
-      gimp->plug_in_manager = NULL;
-    }
+  g_clear_object (&gimp->named_buffers);
+  g_clear_object (&gimp->clipboard_buffer);
+  g_clear_object (&gimp->clipboard_image);
+  g_clear_object (&gimp->displays);
+  g_clear_object (&gimp->item_table);
+  g_clear_object (&gimp->image_table);
+  g_clear_object (&gimp->images);
+  g_clear_object (&gimp->plug_in_manager);
 
   if (gimp->module_db)
     gimp_modules_exit (gimp);
 
   gimp_paint_exit (gimp);
 
-  if (gimp->parasites)
-    {
-      g_object_unref (gimp->parasites);
-      gimp->parasites = NULL;
-    }
+  g_clear_object (&gimp->parasites);
+  g_clear_object (&gimp->default_folder);
 
-  if (gimp->default_folder)
-    {
-      g_object_unref (gimp->default_folder);
-      gimp->default_folder = NULL;
-    }
-
-  if (gimp->session_name)
-    {
-      g_free (gimp->session_name);
-      gimp->session_name = NULL;
-    }
+  g_clear_pointer (&gimp->session_name, g_free);
 
   if (gimp->context_list)
     {
@@ -1005,14 +926,8 @@ gimp_set_clipboard_image (Gimp      *gimp,
   if (image)
     g_object_ref (image);
 
-  if (gimp->clipboard_buffer)
-    {
-      g_object_unref (gimp->clipboard_buffer);
-      gimp->clipboard_buffer = NULL;
-    }
-
-  if (gimp->clipboard_image)
-    g_object_unref (gimp->clipboard_image);
+  g_clear_object (&gimp->clipboard_buffer);
+  g_clear_object (&gimp->clipboard_image);
 
   gimp->clipboard_image = image;
 
@@ -1038,14 +953,8 @@ gimp_set_clipboard_buffer (Gimp       *gimp,
   if (buffer)
     g_object_ref (buffer);
 
-  if (gimp->clipboard_image)
-    {
-      g_object_unref (gimp->clipboard_image);
-      gimp->clipboard_image = NULL;
-    }
-
-  if (gimp->clipboard_buffer)
-    g_object_unref (gimp->clipboard_buffer);
+  g_clear_object (&gimp->clipboard_image);
+  g_clear_object (&gimp->clipboard_buffer);
 
   gimp->clipboard_buffer = buffer;
 

@@ -208,11 +208,7 @@ gimp_drawable_mod_undo_free (GimpUndo     *undo,
 {
   GimpDrawableModUndo *drawable_mod_undo = GIMP_DRAWABLE_MOD_UNDO (undo);
 
-  if (drawable_mod_undo->buffer)
-    {
-      g_object_unref (drawable_mod_undo->buffer);
-      drawable_mod_undo->buffer = NULL;
-    }
+  g_clear_object (&drawable_mod_undo->buffer);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

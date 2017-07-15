@@ -318,23 +318,10 @@ gimp_data_factory_view_dispose (GObject *object)
 {
   GimpDataFactoryView *factory_view = GIMP_DATA_FACTORY_VIEW (object);
 
-  if (factory_view->priv->tagged_container)
-    {
-      g_object_unref (factory_view->priv->tagged_container);
-      factory_view->priv->tagged_container = NULL;
-    }
+  g_clear_object (&factory_view->priv->tagged_container);
+  g_clear_object (&factory_view->priv->factory);
 
-  if (factory_view->priv->factory)
-    {
-      g_object_unref (factory_view->priv->factory);
-      factory_view->priv->factory = NULL;
-    }
-
-  if (factory_view->priv->action_group)
-    {
-      g_free (factory_view->priv->action_group);
-      factory_view->priv->action_group = NULL;
-    }
+  g_clear_pointer (&factory_view->priv->action_group, g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

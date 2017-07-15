@@ -262,11 +262,7 @@ gimp_fg_bg_view_create_transform (GimpFgBgView *view)
 static void
 gimp_fg_bg_view_destroy_transform (GimpFgBgView *view)
 {
-  if (view->transform)
-    {
-      g_object_unref (view->transform);
-      view->transform = NULL;
-    }
+  g_clear_object (&view->transform);
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
@@ -298,14 +294,12 @@ gimp_fg_bg_view_set_context (GimpFgBgView *view,
           g_signal_handlers_disconnect_by_func (view->context,
                                                 gtk_widget_queue_draw,
                                                 view);
-          g_object_unref (view->context);
-          view->context = NULL;
+          g_clear_object (&view->context);
 
           g_signal_handlers_disconnect_by_func (view->color_config,
                                                 gimp_fg_bg_view_destroy_transform,
                                                 view);
-          g_object_unref (view->color_config);
-          view->color_config = NULL;
+          g_clear_object (&view->color_config);
         }
 
       view->context = context;

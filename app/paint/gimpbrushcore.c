@@ -245,33 +245,17 @@ gimp_brush_core_finalize (GObject *object)
   GimpBrushCore *core = GIMP_BRUSH_CORE (object);
   gint           i, j;
 
-  if (core->pressure_brush)
-    {
-      gimp_temp_buf_unref (core->pressure_brush);
-      core->pressure_brush = NULL;
-    }
+  g_clear_pointer (&core->pressure_brush, gimp_temp_buf_unref);
 
   for (i = 0; i < BRUSH_CORE_SOLID_SUBSAMPLE; i++)
     for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
-      if (core->solid_brushes[i][j])
-        {
-          gimp_temp_buf_unref (core->solid_brushes[i][j]);
-          core->solid_brushes[i][j] = NULL;
-        }
+      g_clear_pointer (&core->solid_brushes[i][j], gimp_temp_buf_unref);
 
-  if (core->rand)
-    {
-      g_rand_free (core->rand);
-      core->rand = NULL;
-    }
+  g_clear_pointer (&core->rand, g_rand_free);
 
   for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
     for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
-      if (core->subsample_brushes[i][j])
-        {
-          gimp_temp_buf_unref (core->subsample_brushes[i][j]);
-          core->subsample_brushes[i][j] = NULL;
-        }
+      g_clear_pointer (&core->subsample_brushes[i][j], gimp_temp_buf_unref);
 
   if (core->main_brush)
     {
@@ -279,15 +263,10 @@ gimp_brush_core_finalize (GObject *object)
                                             gimp_brush_core_invalidate_cache,
                                             core);
       gimp_brush_end_use (core->main_brush);
-      g_object_unref (core->main_brush);
-      core->main_brush = NULL;
+      g_clear_object (&core->main_brush);
     }
 
-  if (core->dynamics)
-    {
-      g_object_unref (core->dynamics);
-      core->dynamics = NULL;
-    }
+  g_clear_object (&core->dynamics);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -884,8 +863,7 @@ gimp_brush_core_get_paint_buffer (GimpPaintCore    *paint_core,
       *paint_buffer_x = x1;
       *paint_buffer_y = y1;
 
-      if (paint_core->paint_buffer)
-        g_object_unref (paint_core->paint_buffer);
+      g_clear_object (&paint_core->paint_buffer);
 
       paint_core->paint_buffer = gimp_temp_buf_create_buffer (temp_buf);
 
@@ -910,8 +888,7 @@ gimp_brush_core_real_set_brush (GimpBrushCore *core,
                                             gimp_brush_core_invalidate_cache,
                                             core);
       gimp_brush_end_use (core->main_brush);
-      g_object_unref (core->main_brush);
-      core->main_brush = NULL;
+      g_clear_object (&core->main_brush);
     }
 
   core->main_brush = brush;
@@ -933,13 +910,10 @@ gimp_brush_core_real_set_dynamics (GimpBrushCore *core,
   if (dynamics == core->dynamics)
     return;
 
-  if (core->dynamics)
-    g_object_unref (core->dynamics);
+  g_clear_object (&core->dynamics);
 
-  core->dynamics = dynamics;
-
-  if (core->dynamics)
-    g_object_ref (core->dynamics);
+  if (dynamics)
+    core->dynamics = g_object_ref (dynamics);
 }
 
 void
@@ -1158,11 +1132,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore     *core,
     {
       for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
         for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
-          if (core->subsample_brushes[i][j])
-            {
-              gimp_temp_buf_unref (core->subsample_brushes[i][j]);
-              core->subsample_brushes[i][j] = NULL;
-            }
+          g_clear_pointer (&core->subsample_brushes[i][j], gimp_temp_buf_unref);
 
       core->last_subsample_brush_mask = mask;
       core->subsample_cache_invalid   = FALSE;
@@ -1249,8 +1219,7 @@ gimp_brush_core_pressurize_mask (GimpBrushCore     *core,
   if ((gint) (pressure * 100 + 0.5) == 50)
     return subsample_mask;
 
-  if (core->pressure_brush)
-    gimp_temp_buf_unref (core->pressure_brush);
+  g_clear_pointer (&core->pressure_brush, gimp_temp_buf_unref);
 
   core->pressure_brush =
     gimp_temp_buf_new (gimp_temp_buf_get_width  (brush_mask) + 2,
@@ -1388,11 +1357,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore     *core,
     {
       for (i = 0; i < BRUSH_CORE_SOLID_SUBSAMPLE; i++)
         for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
-          if (core->solid_brushes[i][j])
-            {
-              gimp_temp_buf_unref (core->solid_brushes[i][j]);
-              core->solid_brushes[i][j] = NULL;
-            }
+          g_clear_pointer (&core->solid_brushes[i][j], gimp_temp_buf_unref);
 
       core->last_solid_brush_mask = brush_mask;
       core->solid_cache_invalid   = FALSE;

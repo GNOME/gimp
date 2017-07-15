@@ -192,11 +192,7 @@ gimp_text_layer_finalize (GObject *object)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (object);
 
-  if (layer->text)
-    {
-      g_object_unref (layer->text);
-      layer->text = NULL;
-    }
+  g_clear_object (&layer->text);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -472,8 +468,7 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
                                             G_CALLBACK (gimp_text_layer_text_changed),
                                             layer);
 
-      g_object_unref (layer->text);
-      layer->text = NULL;
+      g_clear_object (&layer->text);
     }
 
   if (text)

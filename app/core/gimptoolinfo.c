@@ -98,15 +98,10 @@ gimp_tool_info_dispose (GObject *object)
   if (tool_info->tool_options)
     {
       g_object_run_dispose (G_OBJECT (tool_info->tool_options));
-      g_object_unref (tool_info->tool_options);
-      tool_info->tool_options = NULL;
+      g_clear_object (&tool_info->tool_options);
     }
 
-  if (tool_info->presets)
-    {
-      g_object_unref (tool_info->presets);
-      tool_info->presets = NULL;
-    }
+  g_clear_object (&tool_info->presets);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -116,38 +111,12 @@ gimp_tool_info_finalize (GObject *object)
 {
   GimpToolInfo *tool_info = GIMP_TOOL_INFO (object);
 
-  if (tool_info->label)
-    {
-      g_free (tool_info->label);
-      tool_info->label = NULL;
-    }
-  if (tool_info->tooltip)
-    {
-      g_free (tool_info->tooltip);
-      tool_info->tooltip = NULL;
-    }
-
-  if (tool_info->menu_label)
-    {
-      g_free (tool_info->menu_label);
-      tool_info->menu_label = NULL;
-    }
-  if (tool_info->menu_accel)
-    {
-      g_free (tool_info->menu_accel);
-      tool_info->menu_accel = NULL;
-    }
-
-  if (tool_info->help_domain)
-    {
-      g_free (tool_info->help_domain);
-      tool_info->help_domain = NULL;
-    }
-  if (tool_info->help_id)
-    {
-      g_free (tool_info->help_id);
-      tool_info->help_id = NULL;
-    }
+  g_clear_pointer (&tool_info->label,       g_free);
+  g_clear_pointer (&tool_info->tooltip,     g_free);
+  g_clear_pointer (&tool_info->menu_label,  g_free);
+  g_clear_pointer (&tool_info->menu_accel,  g_free);
+  g_clear_pointer (&tool_info->help_domain, g_free);
+  g_clear_pointer (&tool_info->help_id,     g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

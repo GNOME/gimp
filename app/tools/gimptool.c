@@ -228,41 +228,12 @@ gimp_tool_finalize (GObject *object)
 {
   GimpTool *tool = GIMP_TOOL (object);
 
-  if (tool->tool_info)
-    {
-      g_object_unref (tool->tool_info);
-      tool->tool_info = NULL;
-    }
-
-  if (tool->label)
-    {
-      g_free (tool->label);
-      tool->label = NULL;
-    }
-
-  if (tool->undo_desc)
-    {
-      g_free (tool->undo_desc);
-      tool->undo_desc = NULL;
-    }
-
-  if (tool->icon_name)
-    {
-      g_free (tool->icon_name);
-      tool->icon_name = NULL;
-    }
-
-  if (tool->help_id)
-    {
-      g_free (tool->help_id);
-      tool->help_id = NULL;
-    }
-
-  if (tool->control)
-    {
-      g_object_unref (tool->control);
-      tool->control = NULL;
-    }
+  g_clear_object (&tool->tool_info);
+  g_clear_object (&tool->control);
+  g_clear_pointer (&tool->label,     g_free);
+  g_clear_pointer (&tool->undo_desc, g_free);
+  g_clear_pointer (&tool->icon_name, g_free);
+  g_clear_pointer (&tool->help_id,   g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

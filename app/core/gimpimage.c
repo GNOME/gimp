@@ -1027,18 +1027,9 @@ gimp_image_finalize (GObject *object)
   GimpImage        *image   = GIMP_IMAGE (object);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  if (private->projection)
-    {
-      g_object_unref (private->projection);
-      private->projection = NULL;
-    }
-
-  if (private->graph)
-    {
-      g_object_unref (private->graph);
-      private->graph = NULL;
-      private->visible_mask = NULL;
-    }
+  g_clear_object (&private->projection);
+  g_clear_object (&private->graph);
+  private->visible_mask = NULL;
 
   if (private->colormap)
     gimp_image_colormap_free (image);
@@ -1046,74 +1037,24 @@ gimp_image_finalize (GObject *object)
   if (private->color_profile)
     _gimp_image_free_color_profile (image);
 
-  if (private->metadata)
-    {
-      g_object_unref (private->metadata);
-      private->metadata = NULL;
-    }
+  g_clear_object (&private->metadata);
+  g_clear_object (&private->file);
+  g_clear_object (&private->imported_file);
+  g_clear_object (&private->exported_file);
+  g_clear_object (&private->save_a_copy_file);
+  g_clear_object (&private->untitled_file);
+  g_clear_object (&private->layers);
+  g_clear_object (&private->channels);
+  g_clear_object (&private->vectors);
 
-  if (private->file)
-    {
-      g_object_unref (private->file);
-      private->file = NULL;
-    }
-
-  if (private->imported_file)
-    {
-      g_object_unref (private->imported_file);
-      private->imported_file = NULL;
-    }
-
-  if (private->exported_file)
-    {
-      g_object_unref (private->exported_file);
-      private->exported_file = NULL;
-    }
-
-  if (private->save_a_copy_file)
-    {
-      g_object_unref (private->save_a_copy_file);
-      private->save_a_copy_file = NULL;
-    }
-
-  if (private->untitled_file)
-    {
-      g_object_unref (private->untitled_file);
-      private->untitled_file = NULL;
-    }
-
-  if (private->layers)
-    {
-      g_object_unref (private->layers);
-      private->layers = NULL;
-    }
-  if (private->channels)
-    {
-      g_object_unref (private->channels);
-      private->channels = NULL;
-    }
-  if (private->vectors)
-    {
-      g_object_unref (private->vectors);
-      private->vectors = NULL;
-    }
   if (private->layer_stack)
     {
       g_slist_free (private->layer_stack);
       private->layer_stack = NULL;
     }
 
-  if (private->selection_mask)
-    {
-      g_object_unref (private->selection_mask);
-      private->selection_mask = NULL;
-    }
-
-  if (private->parasites)
-    {
-      g_object_unref (private->parasites);
-      private->parasites = NULL;
-    }
+  g_clear_object (&private->selection_mask);
+  g_clear_object (&private->parasites);
 
   if (private->guides)
     {
@@ -1127,11 +1068,7 @@ gimp_image_finalize (GObject *object)
       private->symmetries = NULL;
     }
 
-  if (private->grid)
-    {
-      g_object_unref (private->grid);
-      private->grid = NULL;
-    }
+  g_clear_object (&private->grid);
 
   if (private->sample_points)
     {
@@ -1140,16 +1077,8 @@ gimp_image_finalize (GObject *object)
       private->sample_points = NULL;
     }
 
-  if (private->undo_stack)
-    {
-      g_object_unref (private->undo_stack);
-      private->undo_stack = NULL;
-    }
-  if (private->redo_stack)
-    {
-      g_object_unref (private->redo_stack);
-      private->redo_stack = NULL;
-    }
+  g_clear_object (&private->undo_stack);
+  g_clear_object (&private->redo_stack);
 
   if (image->gimp && image->gimp->image_table)
     {
@@ -1157,17 +1086,8 @@ gimp_image_finalize (GObject *object)
       image->gimp = NULL;
     }
 
-  if (private->display_name)
-    {
-      g_free (private->display_name);
-      private->display_name = NULL;
-    }
-
-  if (private->display_path)
-    {
-      g_free (private->display_path);
-      private->display_path = NULL;
-    }
+  g_clear_pointer (&private->display_name, g_free);
+  g_clear_pointer (&private->display_path, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1182,17 +1102,8 @@ gimp_image_name_changed (GimpObject *object)
   if (GIMP_OBJECT_CLASS (parent_class)->name_changed)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
-  if (private->display_name)
-    {
-      g_free (private->display_name);
-      private->display_name = NULL;
-    }
-
-  if (private->display_path)
-    {
-      g_free (private->display_path);
-      private->display_path = NULL;
-    }
+  g_clear_pointer (&private->display_name, g_free);
+  g_clear_pointer (&private->display_path, g_free);
 
   /* We never want the empty string as a name, so change empty strings
    * to NULL strings (without emitting the "name-changed" signal
@@ -1205,11 +1116,7 @@ gimp_image_name_changed (GimpObject *object)
       name = NULL;
     }
 
-  if (private->file)
-    {
-      g_object_unref (private->file);
-      private->file = NULL;
-    }
+  g_clear_object (&private->file);
 
   if (name)
     private->file = g_file_new_for_uri (name);

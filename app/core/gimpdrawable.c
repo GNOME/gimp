@@ -312,25 +312,12 @@ gimp_drawable_finalize (GObject *object)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (object);
 
-  if (drawable->private->buffer)
-    {
-      g_object_unref (drawable->private->buffer);
-      drawable->private->buffer = NULL;
-    }
+  g_clear_object (&drawable->private->buffer);
 
   gimp_drawable_free_shadow_buffer (drawable);
 
-  if (drawable->private->source_node)
-    {
-      g_object_unref (drawable->private->source_node);
-      drawable->private->source_node = NULL;
-    }
-
-  if (drawable->private->filter_stack)
-    {
-      g_object_unref (drawable->private->filter_stack);
-      drawable->private->filter_stack = NULL;
-    }
+  g_clear_object (&drawable->private->source_node);
+  g_clear_object (&drawable->private->filter_stack);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

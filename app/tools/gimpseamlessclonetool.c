@@ -344,26 +344,16 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
     {
       sc->tool_state = SC_STATE_INIT;
 
-      if (sc->paste)
-        {
-          g_object_unref (sc->paste);
-          sc->paste = NULL;
-        }
-
-      if (sc->render_node)
-        {
-          g_object_unref (sc->render_node);
-          sc->render_node = NULL;
-          sc->sc_node     = NULL;
-        }
+      g_clear_object (&sc->paste);
+      g_clear_object (&sc->render_node);
+      sc->sc_node = NULL;
     }
 
   /* This should always happen, even when we just switch a display */
   if (sc->filter)
     {
       gimp_drawable_filter_abort (sc->filter);
-      g_object_unref (sc->filter);
-      sc->filter = NULL;
+      g_clear_object (&sc->filter);
 
       if (GIMP_TOOL (sc)->display)
         gimp_image_flush (gimp_display_get_image (GIMP_TOOL (sc)->display));
@@ -382,8 +372,7 @@ gimp_seamless_clone_tool_commit (GimpSeamlessCloneTool *sc)
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
       gimp_drawable_filter_commit (sc->filter, GIMP_PROGRESS (tool), FALSE);
-      g_object_unref (sc->filter);
-      sc->filter = NULL;
+      g_clear_object (&sc->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -532,8 +521,7 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
            *       invalidating and re-rendering all now (expensive and
            *       perhaps useless */
           gimp_drawable_filter_commit (sct->filter, GIMP_PROGRESS (tool), FALSE);
-          g_object_unref (sct->filter);
-          sct->filter = NULL;
+          g_clear_object (&sct->filter);
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 

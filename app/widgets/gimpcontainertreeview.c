@@ -335,11 +335,7 @@ gimp_container_tree_view_finalize (GObject *object)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
 
-  if (tree_view->model)
-    {
-      g_object_unref (tree_view->model);
-      tree_view->model = NULL;
-    }
+  g_clear_object (&tree_view->model);
 
   if (tree_view->priv->toggle_cells)
     {

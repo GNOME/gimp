@@ -495,12 +495,11 @@ gimp_tool_preset_set_options (GimpToolPreset  *preset,
                                             gimp_tool_preset_options_notify,
                                             preset);
 
-       g_signal_handlers_disconnect_by_func (preset->tool_options,
-                                             gimp_tool_preset_options_prop_name_changed,
-                                             preset);
+      g_signal_handlers_disconnect_by_func (preset->tool_options,
+                                            gimp_tool_preset_options_prop_name_changed,
+                                            preset);
 
-      g_object_unref (preset->tool_options);
-      preset->tool_options = NULL;
+      g_clear_object (&preset->tool_options);
     }
 
   if (options)

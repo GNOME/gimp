@@ -403,29 +403,10 @@ gimp_text_style_editor_finalize (GObject *object)
 {
   GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (object);
 
-  if (editor->context)
-    {
-      g_object_unref (editor->context);
-      editor->context = NULL;
-    }
-
-  if (editor->text)
-    {
-      g_object_unref (editor->text);
-      editor->text = NULL;
-    }
-
-  if (editor->buffer)
-    {
-      g_object_unref (editor->buffer);
-      editor->buffer = NULL;
-    }
-
-  if (editor->fonts)
-    {
-      g_object_unref (editor->fonts);
-      editor->fonts = NULL;
-    }
+  g_clear_object (&editor->context);
+  g_clear_object (&editor->text);
+  g_clear_object (&editor->buffer);
+  g_clear_object (&editor->fonts);
 
   if (editor->toggles)
     {

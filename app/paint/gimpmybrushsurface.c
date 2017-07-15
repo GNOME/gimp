@@ -508,10 +508,11 @@ gimp_mypaint_surface_end_atomic (MyPaintSurface   *base_surface,
                                  MyPaintRectangle *roi)
 {
   GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
-  roi->x = surface->dirty.x;
-  roi->y = surface->dirty.y;
-  roi->width = surface->dirty.width;
-  roi->height = surface->dirty.height;
+
+  roi->x         = surface->dirty.x;
+  roi->y         = surface->dirty.y;
+  roi->width     = surface->dirty.width;
+  roi->height    = surface->dirty.height;
   surface->dirty = *GEGL_RECTANGLE (0, 0, 0, 0);
 }
 
@@ -519,11 +520,9 @@ static void
 gimp_mypaint_surface_destroy (MyPaintSurface *base_surface)
 {
   GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
-  g_object_unref (surface->buffer);
-  surface->buffer = NULL;
-  if (surface->paint_mask)
-    g_object_unref (surface->paint_mask);
-  surface->paint_mask = NULL;
+
+  g_clear_object (&surface->buffer);
+  g_clear_object (&surface->paint_mask);
 }
 
 GimpMybrushSurface *
@@ -534,21 +533,22 @@ gimp_mypaint_surface_new (GeglBuffer        *buffer,
                           gint               paint_mask_y)
 {
   GimpMybrushSurface *surface = g_malloc0 (sizeof (GimpMybrushSurface));
+
   mypaint_surface_init ((MyPaintSurface *)surface);
-  surface->surface.get_color = gimp_mypaint_surface_get_color;
-  surface->surface.draw_dab = gimp_mypaint_surface_draw_dab;
+
+  surface->surface.get_color    = gimp_mypaint_surface_get_color;
+  surface->surface.draw_dab     = gimp_mypaint_surface_draw_dab;
   surface->surface.begin_atomic = gimp_mypaint_surface_begin_atomic;
-  surface->surface.end_atomic = gimp_mypaint_surface_end_atomic;
-  surface->surface.destroy = gimp_mypaint_surface_destroy;
-  surface->component_mask = component_mask;
-  surface->buffer = g_object_ref (buffer);
+  surface->surface.end_atomic   = gimp_mypaint_surface_end_atomic;
+  surface->surface.destroy      = gimp_mypaint_surface_destroy;
+  surface->component_mask       = component_mask;
+  surface->buffer               = g_object_ref (buffer);
   if (paint_mask)
-    surface->paint_mask = g_object_ref (paint_mask);
-  else
-    surface->paint_mask = NULL;
-  surface->paint_mask_x = paint_mask_x;
-  surface->paint_mask_y = paint_mask_y;
-  surface->dirty = *GEGL_RECTANGLE (0, 0, 0, 0);
+    surface->paint_mask         = g_object_ref (paint_mask);
+
+  surface->paint_mask_x         = paint_mask_x;
+  surface->paint_mask_y         = paint_mask_y;
+  surface->dirty                = *GEGL_RECTANGLE (0, 0, 0, 0);
 
   return surface;
 }

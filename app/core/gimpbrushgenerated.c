@@ -254,8 +254,7 @@ gimp_brush_generated_dirty (GimpData *data)
   GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (data);
   GimpBrush          *gbrush = GIMP_BRUSH (brush);
 
-  if (gbrush->priv->mask)
-    gimp_temp_buf_unref (gbrush->priv->mask);
+  g_clear_pointer (&gbrush->priv->mask, gimp_temp_buf_unref);
 
   gbrush->priv->mask = gimp_brush_generated_calc (brush,
                                                   brush->shape,

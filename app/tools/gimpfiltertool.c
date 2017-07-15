@@ -234,43 +234,14 @@ gimp_filter_tool_finalize (GObject *object)
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (object);
 
-  if (filter_tool->operation)
-    {
-      g_object_unref (filter_tool->operation);
-      filter_tool->operation = NULL;
-    }
-
-  if (filter_tool->config)
-    {
-      g_object_unref (filter_tool->config);
-      filter_tool->config = NULL;
-    }
-
-  if (filter_tool->default_config)
-    {
-      g_object_unref (filter_tool->default_config);
-      filter_tool->default_config = NULL;
-    }
-
-  if (filter_tool->settings)
-    {
-      g_object_unref (filter_tool->settings);
-      filter_tool->settings = NULL;
-    }
-
-  if (filter_tool->description)
-    {
-      g_free (filter_tool->description);
-      filter_tool->description = NULL;
-    }
-
-  if (filter_tool->gui)
-    {
-      g_object_unref (filter_tool->gui);
-      filter_tool->gui          = NULL;
-      filter_tool->settings_box = NULL;
-      filter_tool->region_combo = NULL;
-    }
+  g_clear_object (&filter_tool->operation);
+  g_clear_object (&filter_tool->config);
+  g_clear_object (&filter_tool->default_config);
+  g_clear_object (&filter_tool->settings);
+  g_clear_pointer (&filter_tool->description, g_free);
+  g_clear_object (&filter_tool->gui);
+  filter_tool->settings_box = NULL;
+  filter_tool->region_combo = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -942,50 +913,30 @@ gimp_filter_tool_halt (GimpFilterTool *filter_tool)
 {
   GimpTool *tool = GIMP_TOOL (filter_tool);
 
-  if (filter_tool->gui)
-    {
-      g_object_unref (filter_tool->gui);
-      filter_tool->gui          = NULL;
-      filter_tool->settings_box = NULL;
-      filter_tool->region_combo = NULL;
-    }
+  g_clear_object (&filter_tool->gui);
+  filter_tool->settings_box = NULL;
+  filter_tool->region_combo = NULL;
 
   if (filter_tool->filter)
     {
       gimp_drawable_filter_abort (filter_tool->filter);
-      g_object_unref (filter_tool->filter);
-      filter_tool->filter = NULL;
+      g_clear_object (&filter_tool->filter);
 
       gimp_filter_tool_remove_guide (filter_tool);
     }
 
-  if (filter_tool->operation)
-    {
-      g_object_unref (filter_tool->operation);
-      filter_tool->operation = NULL;
-    }
+  g_clear_object (&filter_tool->operation);
 
   if (filter_tool->config)
     {
       g_signal_handlers_disconnect_by_func (filter_tool->config,
                                             gimp_filter_tool_config_notify,
                                             filter_tool);
-
-      g_object_unref (filter_tool->config);
-      filter_tool->config = NULL;
+      g_clear_object (&filter_tool->config);
     }
 
-  if (filter_tool->default_config)
-    {
-      g_object_unref (filter_tool->default_config);
-      filter_tool->default_config = NULL;
-    }
-
-  if (filter_tool->settings)
-    {
-      g_object_unref (filter_tool->settings);
-      filter_tool->settings = NULL;
-    }
+  g_clear_object (&filter_tool->default_config);
+  g_clear_object (&filter_tool->settings);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -1015,8 +966,7 @@ gimp_filter_tool_commit (GimpFilterTool *filter_tool)
 
       gimp_drawable_filter_commit (filter_tool->filter,
                                    GIMP_PROGRESS (tool), TRUE);
-      g_object_unref (filter_tool->filter);
-      filter_tool->filter = NULL;
+      g_clear_object (&filter_tool->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -1238,8 +1188,7 @@ gimp_filter_tool_guide_removed (GimpGuide      *guide,
                                         gimp_filter_tool_guide_moved,
                                         filter_tool);
 
-  g_object_unref (filter_tool->preview_guide);
-  filter_tool->preview_guide = NULL;
+  g_clear_object (&filter_tool->preview_guide);
 
   g_object_set (options,
                 "preview-split", FALSE,
@@ -1373,43 +1322,22 @@ gimp_filter_tool_get_operation (GimpFilterTool *filter_tool)
   if (filter_tool->filter)
     {
       gimp_drawable_filter_abort (filter_tool->filter);
-      g_object_unref (filter_tool->filter);
-      filter_tool->filter = NULL;
+      g_clear_object (&filter_tool->filter);
     }
 
-  if (filter_tool->operation)
-    {
-      g_object_unref (filter_tool->operation);
-      filter_tool->operation = NULL;
-    }
+  g_clear_object (&filter_tool->operation);
 
   if (filter_tool->config)
     {
       g_signal_handlers_disconnect_by_func (filter_tool->config,
                                             gimp_filter_tool_config_notify,
                                             filter_tool);
-
-      g_object_unref (filter_tool->config);
-      filter_tool->config = NULL;
+      g_clear_object (&filter_tool->config);
     }
 
-  if (filter_tool->default_config)
-    {
-      g_object_unref (filter_tool->default_config);
-      filter_tool->default_config = NULL;
-    }
-
-  if (filter_tool->settings)
-    {
-      g_object_unref (filter_tool->settings);
-      filter_tool->settings = NULL;
-    }
-
-  if (filter_tool->description)
-    {
-      g_free (filter_tool->description);
-      filter_tool->description = NULL;
-    }
+  g_clear_object (&filter_tool->default_config);
+  g_clear_object (&filter_tool->settings);
+  g_clear_pointer (&filter_tool->description, g_free);
 
   operation_name = klass->get_operation (filter_tool,
                                          &filter_tool->description);

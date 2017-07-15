@@ -228,17 +228,8 @@ gimp_transform_tool_finalize (GObject *object)
 {
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (object);
 
-  if (tr_tool->gui)
-    {
-      g_object_unref (tr_tool->gui);
-      tr_tool->gui = NULL;
-     }
-
-  if (tr_tool->strokes)
-    {
-      g_ptr_array_unref (tr_tool->strokes);
-      tr_tool->strokes = NULL;
-    }
+  g_clear_object (&tr_tool->gui);
+  g_clear_pointer (&tr_tool->strokes, g_ptr_array_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

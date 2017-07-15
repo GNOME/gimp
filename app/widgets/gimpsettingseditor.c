@@ -224,17 +224,8 @@ gimp_settings_editor_finalize (GObject *object)
 {
   GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
 
-  if (private->config)
-    {
-      g_object_unref (private->config);
-      private->config = NULL;
-    }
-
-  if (private->container)
-    {
-      g_object_unref (private->container);
-      private->container = NULL;
-    }
+  g_clear_object (&private->config);
+  g_clear_object (&private->container);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

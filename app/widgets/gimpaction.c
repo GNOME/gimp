@@ -159,23 +159,9 @@ gimp_action_finalize (GObject *object)
 {
   GimpAction *action = GIMP_ACTION (object);
 
-  if (action->context)
-    {
-      g_object_unref (action->context);
-      action->context = NULL;
-    }
-
-  if (action->color)
-    {
-      g_free (action->color);
-      action->color = NULL;
-    }
-
-  if (action->viewable)
-    {
-      g_object_unref (action->viewable);
-      action->viewable = NULL;
-    }
+  g_clear_object (&action->context);
+  g_clear_pointer (&action->color, g_free);
+  g_clear_object (&action->viewable);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

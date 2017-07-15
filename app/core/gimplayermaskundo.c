@@ -189,11 +189,7 @@ gimp_layer_mask_undo_free (GimpUndo     *undo,
 {
   GimpLayerMaskUndo *layer_mask_undo = GIMP_LAYER_MASK_UNDO (undo);
 
-  if (layer_mask_undo->layer_mask)
-    {
-      g_object_unref (layer_mask_undo->layer_mask);
-      layer_mask_undo->layer_mask = NULL;
-    }
+  g_clear_object (&layer_mask_undo->layer_mask);
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

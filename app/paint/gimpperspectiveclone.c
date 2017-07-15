@@ -331,14 +331,10 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
-      if (clone->node)
-        {
-          g_object_unref (clone->node);
-          clone->node           = NULL;
-          clone->crop           = NULL;
-          clone->transform_node = NULL;
-          clone->dest_node      = NULL;
-        }
+      g_clear_object (&clone->node);
+      clone->crop           = NULL;
+      clone->transform_node = NULL;
+      clone->dest_node      = NULL;
       break;
 
     default:

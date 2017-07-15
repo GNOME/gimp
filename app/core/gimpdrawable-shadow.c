@@ -71,11 +71,7 @@ gimp_drawable_free_shadow_buffer (GimpDrawable *drawable)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (drawable->private->shadow)
-    {
-      g_object_unref (drawable->private->shadow);
-      drawable->private->shadow = NULL;
-    }
+  g_clear_object (&drawable->private->shadow);
 }
 
 void

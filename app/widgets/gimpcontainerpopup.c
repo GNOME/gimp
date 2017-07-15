@@ -97,29 +97,11 @@ gimp_container_popup_finalize (GObject *object)
 {
   GimpContainerPopup *popup = GIMP_CONTAINER_POPUP (object);
 
-  if (popup->context)
-    {
-      g_object_unref (popup->context);
-      popup->context = NULL;
-    }
+  g_clear_object (&popup->context);
 
-  if (popup->dialog_identifier)
-    {
-      g_free (popup->dialog_identifier);
-      popup->dialog_identifier = NULL;
-    }
-
-  if (popup->dialog_icon_name)
-    {
-      g_free (popup->dialog_icon_name);
-      popup->dialog_icon_name = NULL;
-    }
-
-  if (popup->dialog_tooltip)
-    {
-      g_free (popup->dialog_tooltip);
-      popup->dialog_tooltip = NULL;
-    }
+  g_clear_pointer (&popup->dialog_identifier, g_free);
+  g_clear_pointer (&popup->dialog_icon_name,  g_free);
+  g_clear_pointer (&popup->dialog_tooltip,    g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

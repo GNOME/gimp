@@ -155,20 +155,12 @@ gimp_tool_gui_dispose (GObject *object)
 {
   GimpToolGuiPrivate *private = GET_PRIVATE (object);
 
-  if (private->tool_info)
-    {
-      g_object_unref (private->tool_info);
-      private->tool_info = NULL;
-    }
+  g_clear_object (&private->tool_info);
 
   if (private->shell)
     gimp_tool_gui_set_shell (GIMP_TOOL_GUI (object), NULL);
 
-  if (private->vbox)
-    {
-      g_object_unref (private->vbox);
-      private->vbox = NULL;
-    }
+  g_clear_object (&private->vbox);
 
   if (private->dialog)
     {
@@ -191,29 +183,10 @@ gimp_tool_gui_finalize (GObject *object)
 {
   GimpToolGuiPrivate *private = GET_PRIVATE (object);
 
-  if (private->title)
-    {
-      g_free (private->title);
-      private->title = NULL;
-    }
-
-  if (private->description)
-    {
-      g_free (private->description);
-      private->description = NULL;
-    }
-
-  if (private->icon_name)
-    {
-      g_free (private->icon_name);
-      private->icon_name = NULL;
-    }
-
-  if (private->help_id)
-    {
-      g_free (private->help_id);
-      private->help_id = NULL;
-    }
+  g_clear_pointer (&private->title,       g_free);
+  g_clear_pointer (&private->description, g_free);
+  g_clear_pointer (&private->icon_name,   g_free);
+  g_clear_pointer (&private->help_id,     g_free);
 
   if (private->response_entries)
     {

@@ -375,29 +375,10 @@ gimp_settings_box_finalize (GObject *object)
 {
   GimpSettingsBoxPrivate *private = GET_PRIVATE (object);
 
-  if (private->config)
-    {
-      g_object_unref (private->config);
-      private->config = NULL;
-    }
-
-  if (private->container)
-    {
-      g_object_unref (private->container);
-      private->container = NULL;
-    }
-
-  if (private->last_file)
-    {
-      g_object_unref (private->last_file);
-      private->last_file = NULL;
-    }
-
-  if (private->default_folder)
-    {
-      g_object_unref (private->default_folder);
-      private->default_folder = NULL;
-    }
+  g_clear_object (&private->config);
+  g_clear_object (&private->container);
+  g_clear_object (&private->last_file);
+  g_clear_object (&private->default_folder);
 
   g_free (private->help_id);
   g_free (private->import_title);

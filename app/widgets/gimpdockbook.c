@@ -333,15 +333,12 @@ gimp_dockbook_finalize (GObject *object)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (object);
 
-  if (dockbook->p->ui_manager)
-    {
-      g_object_unref (dockbook->p->ui_manager);
-      dockbook->p->ui_manager = NULL;
-    }
+  g_clear_object (&dockbook->p->ui_manager);
+
   if (dockbook->p->dock)
     {
       g_signal_handlers_disconnect_by_func (gimp_dock_get_context (dockbook->p->dock)->gimp->config,
-                                            G_CALLBACK (gimp_dockbook_config_size_changed),
+                                            gimp_dockbook_config_size_changed,
                                             dockbook);
       dockbook->p->dock = NULL;
     }

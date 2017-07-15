@@ -493,23 +493,9 @@ gimp_dock_window_dispose (GObject *object)
       dock_window->p->image_flush_handler_id = 0;
     }
 
-  if (dock_window->p->ui_manager)
-    {
-      g_object_unref (dock_window->p->ui_manager);
-      dock_window->p->ui_manager = NULL;
-    }
-
-  if (dock_window->p->dialog_factory)
-    {
-      g_object_unref (dock_window->p->dialog_factory);
-      dock_window->p->dialog_factory = NULL;
-    }
-
-  if (dock_window->p->context)
-    {
-      g_object_unref (dock_window->p->context);
-      dock_window->p->context = NULL;
-    }
+  g_clear_object (&dock_window->p->ui_manager);
+  g_clear_object (&dock_window->p->dialog_factory);
+  g_clear_object (&dock_window->p->context);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -519,11 +505,7 @@ gimp_dock_window_finalize (GObject *object)
 {
   GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
 
-  if (dock_window->p->ui_manager_name)
-    {
-      g_free (dock_window->p->ui_manager_name);
-      dock_window->p->ui_manager_name = NULL;
-    }
+  g_clear_pointer (&dock_window->p->ui_manager_name, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

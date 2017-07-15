@@ -920,32 +920,22 @@ gimp_cage_tool_start (GimpCageTool *ct,
   tool->display  = display;
   tool->drawable = drawable;
 
-  if (ct->config)
-    {
-      g_object_unref (ct->config);
-      ct->config = NULL;
-    }
+  g_clear_object (&ct->config);
 
-  if (ct->coef)
-    {
-      g_object_unref (ct->coef);
-      ct->dirty_coef = TRUE;
-      ct->coef = NULL;
-    }
+  g_clear_object (&ct->coef);
+  ct->dirty_coef = TRUE;
 
   if (ct->filter)
     {
       gimp_drawable_filter_abort (ct->filter);
-      g_object_unref (ct->filter);
-      ct->filter = NULL;
+      g_clear_object (&ct->filter);
     }
 
   if (ct->render_node)
     {
-      g_object_unref (ct->render_node);
-      ct->render_node = NULL;
-      ct->coef_node   = NULL;
-      ct->cage_node   = NULL;
+      g_clear_object (&ct->render_node);
+      ct->coef_node = NULL;
+      ct->cage_node = NULL;
     }
 
   ct->config          = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
@@ -967,33 +957,18 @@ gimp_cage_tool_halt (GimpCageTool *ct)
 {
   GimpTool *tool = GIMP_TOOL (ct);
 
-  if (ct->config)
-    {
-      g_object_unref (ct->config);
-      ct->config = NULL;
-    }
-
-  if (ct->coef)
-    {
-      g_object_unref (ct->coef);
-      ct->coef = NULL;
-    }
-
-  if (ct->render_node)
-    {
-      g_object_unref (ct->render_node);
-      ct->render_node = NULL;
-      ct->coef_node   = NULL;
-      ct->cage_node   = NULL;
-    }
+  g_clear_object (&ct->config);
+  g_clear_object (&ct->coef);
+  g_clear_object (&ct->render_node);
+  ct->coef_node = NULL;
+  ct->cage_node = NULL;
 
   if (ct->filter)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
       gimp_drawable_filter_abort (ct->filter);
-      g_object_unref (ct->filter);
-      ct->filter = NULL;
+      g_clear_object (&ct->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -1019,8 +994,7 @@ gimp_cage_tool_commit (GimpCageTool *ct)
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
       gimp_drawable_filter_commit (ct->filter, GIMP_PROGRESS (tool), FALSE);
-      g_object_unref (ct->filter);
-      ct->filter = NULL;
+      g_clear_object (&ct->filter);
 
       gimp_tool_control_pop_preserve (tool->control);
 
@@ -1158,11 +1132,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct)
   progress = gimp_progress_start (GIMP_PROGRESS (ct), FALSE,
                                   _("Computing Cage Coefficients"));
 
-  if (ct->coef)
-    {
-      g_object_unref (ct->coef);
-      ct->coef = NULL;
-    }
+  g_clear_object (&ct->coef);
 
   format = babl_format_n (babl_type ("float"),
                           gimp_cage_config_get_n_points (config) * 2);

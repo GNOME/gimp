@@ -76,11 +76,7 @@ gimp_display_shell_profile_init (GimpDisplayShell *shell)
 void
 gimp_display_shell_profile_finalize (GimpDisplayShell *shell)
 {
-  if (shell->color_config)
-    {
-      g_object_unref (shell->color_config);
-      shell->color_config = NULL;
-    }
+  g_clear_object (&shell->color_config);
 
   gimp_display_shell_profile_free (shell);
 }
@@ -187,19 +183,10 @@ gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
 static void
 gimp_display_shell_profile_free (GimpDisplayShell *shell)
 {
-  if (shell->profile_transform)
-    {
-      g_object_unref (shell->profile_transform);
-      shell->profile_transform = NULL;
-    }
-
-  if (shell->profile_buffer)
-    {
-      g_object_unref (shell->profile_buffer);
-      shell->profile_buffer = NULL;
-      shell->profile_data   = NULL;
-      shell->profile_stride = 0;
-    }
+  g_clear_object (&shell->profile_transform);
+  g_clear_object (&shell->profile_buffer);
+  shell->profile_data   = NULL;
+  shell->profile_stride = 0;
 }
 
 static void

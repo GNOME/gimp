@@ -303,35 +303,12 @@ gimp_container_editor_dispose (GObject *object)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (object);
 
-  if (editor->priv->container)
-    {
-      g_object_unref (editor->priv->container);
-      editor->priv->container = NULL;
-    }
+  g_clear_object (&editor->priv->container);
+  g_clear_object (&editor->priv->context);
+  g_clear_object (&editor->priv->menu_factory);
 
-  if (editor->priv->context)
-    {
-      g_object_unref (editor->priv->context);
-      editor->priv->context = NULL;
-    }
-
-  if (editor->priv->menu_factory)
-    {
-      g_object_unref (editor->priv->menu_factory);
-      editor->priv->menu_factory = NULL;
-    }
-
-  if (editor->priv->menu_identifier)
-    {
-      g_free (editor->priv->menu_identifier);
-      editor->priv->menu_identifier = NULL;
-    }
-
-  if (editor->priv->ui_path)
-    {
-      g_free (editor->priv->ui_path);
-      editor->priv->ui_path = NULL;
-    }
+  g_clear_pointer (&editor->priv->menu_identifier, g_free);
+  g_clear_pointer (&editor->priv->ui_path,         g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

@@ -726,14 +726,9 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->plug_in_rc_path);
   g_free (core_config->import_raw_plug_in);
 
-  if (core_config->default_image)
-    g_object_unref (core_config->default_image);
-
-  if (core_config->default_grid)
-    g_object_unref (core_config->default_grid);
-
-  if (core_config->color_management)
-    g_object_unref (core_config->color_management);
+  g_clear_object (&core_config->default_image);
+  g_clear_object (&core_config->default_grid);
+  g_clear_object (&core_config->color_management);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

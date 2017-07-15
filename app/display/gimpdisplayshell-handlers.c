@@ -976,11 +976,7 @@ gimp_display_shell_check_notify_handler (GObject          *config,
   GimpCanvasPaddingMode padding_mode;
   GimpRGB               padding_color;
 
-  if (shell->checkerboard)
-    {
-      cairo_pattern_destroy (shell->checkerboard);
-      shell->checkerboard = NULL;
-    }
+  g_clear_pointer (&shell->checkerboard, cairo_pattern_destroy);
 
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
 
@@ -1011,11 +1007,7 @@ gimp_display_shell_nav_size_notify_handler (GObject          *config,
                                             GParamSpec       *param_spec,
                                             GimpDisplayShell *shell)
 {
-  if (shell->nav_popup)
-    {
-      gtk_widget_destroy (shell->nav_popup);
-      shell->nav_popup = NULL;
-    }
+  g_clear_pointer (&shell->nav_popup, gtk_widget_destroy);
 }
 
 static void

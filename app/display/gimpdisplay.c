@@ -650,11 +650,7 @@ gimp_display_set_image (GimpDisplay *display,
 
       gimp_display_disconnect (display);
 
-      if (private->update_region)
-        {
-          cairo_region_destroy (private->update_region);
-          private->update_region = NULL;
-        }
+      g_clear_pointer (&private->update_region, cairo_region_destroy);
 
       gimp_image_dec_display_count (private->image);
 
@@ -851,8 +847,7 @@ gimp_display_flush_whenever (GimpDisplay *display,
                                    rect.height);
         }
 
-      cairo_region_destroy (private->update_region);
-      private->update_region = NULL;
+      g_clear_pointer (&private->update_region, cairo_region_destroy);
     }
 
   if (now)

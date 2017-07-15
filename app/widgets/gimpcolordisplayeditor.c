@@ -347,23 +347,9 @@ gimp_color_display_editor_dispose (GObject *object)
       editor->selected = NULL;
     }
 
-  if (editor->stack)
-    {
-      g_object_unref (editor->stack);
-      editor->stack = NULL;
-    }
-
-  if (editor->config)
-    {
-      g_object_unref (editor->config);
-      editor->config = NULL;
-    }
-
-  if (editor->managed)
-    {
-      g_object_unref (editor->managed);
-      editor->managed = NULL;
-    }
+  g_clear_object (&editor->stack);
+  g_clear_object (&editor->config);
+  g_clear_object (&editor->managed);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

@@ -247,17 +247,8 @@ gimp_grid_editor_finalize (GObject *object)
 {
   GimpGridEditor *editor = GIMP_GRID_EDITOR (object);
 
-  if (editor->grid)
-    {
-      g_object_unref (editor->grid);
-      editor->grid = NULL;
-    }
-
-  if (editor->context)
-    {
-      g_object_unref (editor->context);
-      editor->context = NULL;
-    }
+  g_clear_object (&editor->grid);
+  g_clear_object (&editor->context);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

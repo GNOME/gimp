@@ -367,11 +367,8 @@ gimp_display_config_finalize (GObject *object)
   g_free (display_config->image_title_format);
   g_free (display_config->image_status_format);
 
-  if (display_config->default_view)
-    g_object_unref (display_config->default_view);
-
-  if (display_config->default_fullscreen_view)
-    g_object_unref (display_config->default_fullscreen_view);
+  g_clear_object (&display_config->default_view);
+  g_clear_object (&display_config->default_fullscreen_view);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
