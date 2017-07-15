@@ -90,7 +90,7 @@ SelectItVals selvals =
     TRUE,                 /* show control points           */
     0.0,                  /* grid_radius_min               */
     10.0,                 /* grid_radius_interval          */
-    0.0,	          /* grid_rotation                 */
+    0.0,                  /* grid_rotation                 */
     5.0,                  /* grid_granularity              */
     120                   /* grid_sectors_desired          */
   },
