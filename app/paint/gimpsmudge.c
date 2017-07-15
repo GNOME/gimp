@@ -97,8 +97,8 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
 
   paint_core_class->paint = gimp_smudge_paint;
 
-  brush_core_class->handles_changing_brush = TRUE;
-  brush_core_class->handles_transforming_brush = TRUE;
+  brush_core_class->handles_changing_brush             = TRUE;
+  brush_core_class->handles_transforming_brush         = TRUE;
   brush_core_class->handles_dynamic_transforming_brush = TRUE;
 }
 
@@ -120,8 +120,10 @@ gimp_smudge_finalize (GObject *object)
         {
           if (iter->data)
             g_object_unref (iter->data);
-          smudge->accum_buffers = NULL;
         }
+
+      g_list_free (smudge->accum_buffers);
+      smudge->accum_buffers = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -158,9 +160,12 @@ gimp_smudge_paint (GimpPaintCore    *paint_core,
             {
               if (iter->data)
                 g_object_unref (iter->data);
-              smudge->accum_buffers = NULL;
             }
+
+          g_list_free (smudge->accum_buffers);
+          smudge->accum_buffers = NULL;
         }
+
       smudge->initialized = FALSE;
       break;
 
@@ -260,6 +265,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
                                         paint_buffer_y - y,
                                         0, 0));
     }
+
   smudge->accum_buffers = g_list_reverse (smudge->accum_buffers);
 
   return TRUE;
@@ -355,6 +361,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
        */
 
       accum_buffer = g_list_nth_data (smudge->accum_buffers, i);
+
       gimp_gegl_smudge_blend (accum_buffer,
                               GEGL_RECTANGLE (paint_buffer_x - x,
                                               paint_buffer_y - y,
@@ -411,6 +418,7 @@ gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
   GeglBuffer *accum_buffer;
 
   accum_buffer = g_list_nth_data (smudge->accum_buffers, stroke);
+
   *x = (gint) coords->x - gegl_buffer_get_width  (accum_buffer) / 2;
   *y = (gint) coords->y - gegl_buffer_get_height (accum_buffer) / 2;
 }
