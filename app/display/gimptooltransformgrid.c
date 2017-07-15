@@ -34,6 +34,8 @@
 #include "core/gimp-transform-utils.h"
 #include "core/gimp-utils.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpcanvashandle.h"
 #include "gimpcanvastransformguides.h"
 #include "gimpdisplayshell.h"
@@ -170,6 +172,14 @@ static void     gimp_tool_transform_grid_hover          (GimpToolWidget        *
                                                          const GimpCoords      *coords,
                                                          GdkModifierType        state,
                                                          gboolean               proximity);
+static void     gimp_tool_transform_grid_motion_modifier(GimpToolWidget        *widget,
+                                                         GdkModifierType        key,
+                                                         gboolean               press,
+                                                         GdkModifierType        state);
+static void     gimp_tool_transform_grid_hover_modifier (GimpToolWidget        *widget,
+                                                         GdkModifierType        key,
+                                                         gboolean               press,
+                                                         GdkModifierType        state);
 static gboolean gimp_tool_transform_grid_get_cursor     (GimpToolWidget        *widget,
                                                          const GimpCoords      *coords,
                                                          GdkModifierType        state,
@@ -206,6 +216,8 @@ gimp_tool_transform_grid_class_init (GimpToolTransformGridClass *klass)
   widget_class->button_release  = gimp_tool_transform_grid_button_release;
   widget_class->motion          = gimp_tool_transform_grid_motion;
   widget_class->hover           = gimp_tool_transform_grid_hover;
+  widget_class->motion_modifier = gimp_tool_transform_grid_motion_modifier;
+  widget_class->hover_modifier  = gimp_tool_transform_grid_hover_modifier;
   widget_class->get_cursor      = gimp_tool_transform_grid_get_cursor;
 
   g_object_class_install_property (object_class, PROP_TRANSFORM,
@@ -1902,6 +1914,61 @@ gimp_tool_transform_grid_hover (GimpToolWidget   *widget,
   private->handle = handle;
 
   gimp_tool_transform_grid_update_hilight (grid);
+}
+
+static void
+gimp_tool_transform_grid_modifier (GimpToolWidget  *widget,
+                                   GdkModifierType  key)
+{
+  GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
+  GimpToolTransformGridPrivate *private = grid->private;
+
+  if (key == gimp_get_constrain_behavior_mask ())
+    {
+      g_object_set (widget,
+                    "frompivot-scale",       ! private->frompivot_scale,
+                    "frompivot-shear",       ! private->frompivot_shear,
+                    "frompivot-perspective", ! private->frompivot_perspective,
+                    NULL);
+    }
+  else if (key == gimp_get_extend_selection_mask ())
+    {
+      g_object_set (widget,
+                    "cornersnap",            ! private->cornersnap,
+                    "constrain-move",        ! private->constrain_move,
+                    "constrain-scale",       ! private->constrain_scale,
+                    "constrain-rotate",      ! private->constrain_rotate,
+                    "constrain-shear",       ! private->constrain_shear,
+                    "constrain-perspective", ! private->constrain_perspective,
+                    NULL);
+    }
+}
+
+static void
+gimp_tool_transform_grid_motion_modifier (GimpToolWidget  *widget,
+                                          GdkModifierType  key,
+                                          gboolean         press,
+                                          GdkModifierType  state)
+{
+  GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
+  GimpToolTransformGridPrivate *private = grid->private;
+  GimpCoords                    coords  = { 0.0, };
+
+  gimp_tool_transform_grid_modifier (widget, key);
+
+  /*  send a non-motion to update the grid with the new constraints  */
+  coords.x = private->curx;
+  coords.y = private->cury;
+  gimp_tool_transform_grid_motion (widget, &coords, 0, state);
+}
+
+static void
+gimp_tool_transform_grid_hover_modifier (GimpToolWidget  *widget,
+                                         GdkModifierType  key,
+                                         gboolean         press,
+                                         GdkModifierType  state)
+{
+  gimp_tool_transform_grid_modifier (widget, key);
 }
 
 static gboolean

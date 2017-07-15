@@ -91,6 +91,11 @@ static void      gimp_transform_tool_modifier_key        (GimpTool              
                                                           gboolean               press,
                                                           GdkModifierType        state,
                                                           GimpDisplay           *display);
+static void      gimp_transform_tool_active_modifier_key (GimpTool              *tool,
+                                                          GdkModifierType        key,
+                                                          gboolean               press,
+                                                          GdkModifierType        state,
+                                                          GimpDisplay           *display);
 static void      gimp_transform_tool_cursor_update       (GimpTool              *tool,
                                                           const GimpCoords      *coords,
                                                           GdkModifierType        state,
@@ -176,7 +181,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class->button_release      = gimp_transform_tool_button_release;
   tool_class->motion              = gimp_transform_tool_motion;
   tool_class->modifier_key        = gimp_transform_tool_modifier_key;
-  tool_class->active_modifier_key = gimp_transform_tool_modifier_key;
+  tool_class->active_modifier_key = gimp_transform_tool_active_modifier_key;
   tool_class->cursor_update       = gimp_transform_tool_cursor_update;
   tool_class->can_undo            = gimp_transform_tool_can_undo;
   tool_class->can_redo            = gimp_transform_tool_can_redo;
@@ -440,11 +445,8 @@ gimp_transform_tool_motion (GimpTool         *tool,
 }
 
 static void
-gimp_transform_tool_modifier_key (GimpTool        *tool,
-                                  GdkModifierType  key,
-                                  gboolean         press,
-                                  GdkModifierType  state,
-                                  GimpDisplay     *display)
+gimp_transform_tool_modifier (GimpTool        *tool,
+                              GdkModifierType  key)
 {
   GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
 
@@ -466,6 +468,46 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
                     "constrain-shear",       ! options->constrain_shear,
                     "constrain-perspective", ! options->constrain_perspective,
                     NULL);
+    }
+}
+
+static void
+gimp_transform_tool_modifier_key (GimpTool        *tool,
+                                  GdkModifierType  key,
+                                  gboolean         press,
+                                  GdkModifierType  state,
+                                  GimpDisplay     *display)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  if (tr_tool->widget)
+    {
+      GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press,
+                                                    state, display);
+    }
+  else
+    {
+      gimp_transform_tool_modifier (tool, key);
+    }
+}
+
+static void
+gimp_transform_tool_active_modifier_key (GimpTool        *tool,
+                                         GdkModifierType  key,
+                                         gboolean         press,
+                                         GdkModifierType  state,
+                                         GimpDisplay     *display)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  if (tr_tool->widget)
+    {
+      GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press,
+                                                           state, display);
+    }
+  else
+    {
+      gimp_transform_tool_modifier (tool, key);
     }
 }
 
