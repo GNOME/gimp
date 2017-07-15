@@ -451,35 +451,19 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
   if (key == gimp_get_constrain_behavior_mask ())
     {
       g_object_set (options,
-                    "frompivot-scale", ! options->frompivot_scale,
-                    NULL);
-      g_object_set (options,
-                    "frompivot-shear", ! options->frompivot_shear,
-                    NULL);
-      g_object_set (options,
+                    "frompivot-scale",       ! options->frompivot_scale,
+                    "frompivot-shear",       ! options->frompivot_shear,
                     "frompivot-perspective", ! options->frompivot_perspective,
                     NULL);
     }
-
-  if (key == gimp_get_extend_selection_mask ())
+  else if (key == gimp_get_extend_selection_mask ())
     {
       g_object_set (options,
-                    "cornersnap", ! options->cornersnap,
-                    NULL);
-
-      g_object_set (options,
-                    "constrain-move", ! options->constrain_move,
-                    NULL);
-      g_object_set (options,
-                    "constrain-scale", ! options->constrain_scale,
-                    NULL);
-      g_object_set (options,
-                    "constrain-rotate", ! options->constrain_rotate,
-                    NULL);
-      g_object_set (options,
-                    "constrain-shear", ! options->constrain_shear,
-                    NULL);
-      g_object_set (options,
+                    "cornersnap",            ! options->cornersnap,
+                    "constrain-move",        ! options->constrain_move,
+                    "constrain-scale",       ! options->constrain_scale,
+                    "constrain-rotate",      ! options->constrain_rotate,
+                    "constrain-shear",       ! options->constrain_shear,
                     "constrain-perspective", ! options->constrain_perspective,
                     NULL);
     }
