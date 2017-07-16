@@ -279,21 +279,19 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 
                   if (HAS_KEY (pspec, "axis", "x"))
                     {
-                      g_printerr ("XXX setting width %d on %s\n",
-                                  area->width, pspec->name);
+                      gint min = MAX (lower, off_x);
+                      gint max = MIN (upper, off_x + area->width);
 
                       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
-                                                        off_x,
-                                                        off_x + area->width);
+                                                        min, max);
                     }
                   else if (HAS_KEY (pspec, "axis","y"))
                     {
-                      g_printerr ("XXX setting height %d on %s\n",
-                                  area->height, pspec->name);
+                      gint min = MAX (lower, off_y);
+                      gint max = MIN (upper, off_y + area->height);
 
                       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
-                                                        off_y,
-                                                        off_y + area->height);
+                                                        min, max);
                     }
                 }
             }
