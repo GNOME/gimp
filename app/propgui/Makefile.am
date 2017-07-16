@@ -38,4 +38,6 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-spiral.c			\
 	gimppropgui-spiral.h			\
 	gimppropgui-supernova.c			\
-	gimppropgui-supernova.h
+	gimppropgui-supernova.h			\
+	gimppropgui-utils.c			\
+	gimppropgui-utils.h

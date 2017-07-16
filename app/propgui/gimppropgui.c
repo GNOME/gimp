@@ -22,14 +22,12 @@
 #include "config.h"
 
 #include <string.h>
-#include <stdlib.h>
 
 #include <gegl.h>
 #include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -45,7 +43,6 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpspinscale.h"
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimppropgui.h"
 #include "gimppropgui-channel-mixer.h"
@@ -58,6 +55,7 @@
 #include "gimppropgui-hue-saturation.h"
 #include "gimppropgui-spiral.h"
 #include "gimppropgui-supernova.h"
+#include "gimppropgui-utils.h"
 
 #include "gimp-intl.h"
 
@@ -65,10 +63,6 @@
 #define HAS_KEY(p,k,v) gimp_gegl_param_spec_has_key (p, k, v)
 
 
-static GtkWidget   * gimp_prop_kelvin_presets_new      (GObject        *config,
-                                                        const gchar    *property_name);
-static void          gimp_prop_widget_new_seed_clicked (GtkButton      *button,
-                                                        GtkAdjustment  *adj);
 static gboolean      gimp_prop_string_to_boolean       (GBinding       *binding,
                                                         const GValue   *from_value,
                                                         GValue         *to_value,
@@ -127,26 +121,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 
   if (GEGL_IS_PARAM_SPEC_SEED (pspec))
     {
-      GtkAdjustment *adj;
-      GtkWidget     *spin;
-      GtkWidget     *button;
-
-      widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-
-      spin = gimp_prop_spin_button_new (config, pspec->name,
-                                        1.0, 10.0, 0);
-      gtk_box_pack_start (GTK_BOX (widget), spin, TRUE, TRUE, 0);
-      gtk_widget_show (spin);
-
-      button = gtk_button_new_with_label (_("New Seed"));
-      gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin));
-
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_prop_widget_new_seed_clicked),
-                        adj);
+      widget = gimp_prop_random_seed_new (config, pspec->name);
 
       *label = g_param_spec_get_nick (pspec);
     }
@@ -451,7 +426,6 @@ static const struct
   const gchar        *config_type;
   GimpPropGuiNewFunc  gui_new_func;
 }
-
 gui_new_funcs[] =
 {
   { "GimpColorBalanceConfig",
@@ -593,132 +567,6 @@ gimp_prop_gui_bind_tooltip (GtkWidget *source,
 
 
 /*  private functions  */
-
-static void
-gimp_prop_kelvin_presets_menu_position (GtkMenu  *menu,
-                                        gint     *x,
-                                        gint     *y,
-                                        gboolean *push_in,
-                                        gpointer  user_data)
-{
-  gimp_button_menu_position (user_data, menu, GTK_POS_LEFT, x, y);
-}
-
-static gboolean
-gimp_prop_kelvin_presets_button_press (GtkWidget      *widget,
-                                       GdkEventButton *bevent,
-                                       GtkMenu        *menu)
-{
-  if (bevent->type == GDK_BUTTON_PRESS)
-    {
-      gtk_menu_popup (menu,
-                      NULL, NULL,
-                      gimp_prop_kelvin_presets_menu_position, widget,
-                      bevent->button, bevent->time);
-    }
-
-  return TRUE;
-}
-
-static void
-gimp_prop_kelvin_presets_activate (GtkWidget *widget,
-                                   GObject   *config)
-{
-  const gchar *property_name;
-  gdouble     *kelvin;
-
-  property_name = g_object_get_data (G_OBJECT (widget), "property-name");
-  kelvin        = g_object_get_data (G_OBJECT (widget), "kelvin");
-
-  if (property_name && kelvin)
-    g_object_set (config, property_name, *kelvin, NULL);
-}
-
-static GtkWidget *
-gimp_prop_kelvin_presets_new (GObject     *config,
-                              const gchar *property_name)
-{
-  GtkWidget *button;
-  GtkWidget *menu;
-  gint       i;
-
-  const struct
-  {
-    gdouble      kelvin;
-    const gchar *label;
-  }
-  kelvin_presets[] =
-  {
-    { 1700, N_("1,700 K – Match flame") },
-    { 1850, N_("1,850 K – Candle flame, sunset/sunrise") },
-    { 3000, N_("3,000 K – Soft (or warm) white compact fluorescent lamps") },
-    { 3000, N_("3,300 K – Incandescent lamps") },
-    { 3200, N_("3,200 K – Studio lamps, photofloods, etc.") },
-    { 3350, N_("3,350 K – Studio \"CP\" light") },
-    { 4100, N_("4,100 K – Moonlight") },
-    { 5000, N_("5,000 K – D50") },
-    { 5000, N_("5,000 K – Cool white/daylight compact fluorescent lamps") },
-    { 5000, N_("5,000 K – Horizon daylight") },
-    { 5500, N_("5,500 K – D55") },
-    { 5500, N_("5,500 K – Vertical daylight, electronic flash") },
-    { 6200, N_("6,200 K – Xenon short-arc lamp") },
-    { 6500, N_("6,500 K – D65") },
-    { 6500, N_("6,500 K – Daylight, overcast") },
-    { 7500, N_("7,500 K – D75") },
-    { 9300, N_("9,300 K") }
-  };
-
-  button = gtk_button_new ();
-  gtk_widget_set_can_focus (button, FALSE);
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-
-  gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
-                                                      GTK_ICON_SIZE_MENU));
-
-  menu = gtk_menu_new ();
-  gtk_menu_attach_to_widget (GTK_MENU (menu), button, NULL);
-
-  g_signal_connect (button, "button-press-event",
-                    G_CALLBACK (gimp_prop_kelvin_presets_button_press),
-                    menu);
-
-  for (i = 0; i < G_N_ELEMENTS (kelvin_presets); i++)
-    {
-      GtkWidget *item;
-      gdouble   *kelvin;
-
-      item = gtk_menu_item_new_with_label (gettext (kelvin_presets[i].label));
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-      gtk_widget_show (item);
-
-      g_object_set_data_full (G_OBJECT (item), "property-name",
-                              g_strdup (property_name), (GDestroyNotify) g_free);
-
-      kelvin = g_new (gdouble, 1);
-      *kelvin = kelvin_presets[i].kelvin;
-
-      g_object_set_data_full (G_OBJECT (item), "kelvin",
-                              kelvin, (GDestroyNotify) g_free);
-
-      g_signal_connect (item, "activate",
-                        G_CALLBACK (gimp_prop_kelvin_presets_activate),
-                        config);
-
-    }
-
-  return button;
-}
-
-static void
-gimp_prop_widget_new_seed_clicked (GtkButton     *button,
-                                   GtkAdjustment *adj)
-{
-  guint32 value = g_random_int_range (gtk_adjustment_get_lower (adj),
-                                      gtk_adjustment_get_upper (adj));
-
-  gtk_adjustment_set_value (adj, value);
-}
 
 static gboolean
 gimp_prop_string_to_boolean (GBinding     *binding,
