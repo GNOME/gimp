@@ -206,29 +206,20 @@ gimp_metadata_init (GimpMetadata *metadata)
 gchar *
 gimp_metadata_get_guid (void)
 {
-  const int DALLOC = 36;
-  struct    timespec ts;
-  long      time;
-  gint      shake;
-  gint      bake;
-  gchar    *GUID;
-  gchar    *szHex;
+  GRand       *rand;
+  gint         bake;
+  gchar       *GUID;
+  const gchar *szHex = "0123456789abcdef-";
 
-  for (shake = 0; shake < 10; shake++)
-    {
-      timespec_get (&ts, TIME_UTC);
-      time = ts.tv_nsec / 1000;
-      srand (time);
-    }
+  rand = g_rand_new ();
+
+#define DALLOC 36
 
   GUID = g_malloc0 (DALLOC);
 
-  bake  = 0;
-  szHex = "0123456789abcdef-";
-
   for (bake = 0; bake < DALLOC; bake++)
     {
-      gint  r = rand () % 16;
+      gint  r = g_rand_int (rand) % 16;
       gchar c = ' ';
 
       switch (bake)
@@ -255,6 +246,8 @@ gimp_metadata_get_guid (void)
 
       GUID[bake] = (bake < DALLOC) ? c : 0x00;
     }
+
+  g_rand_free (rand);
 
   return GUID;
 }
