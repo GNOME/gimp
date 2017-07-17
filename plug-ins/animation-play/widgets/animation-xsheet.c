@@ -1648,28 +1648,15 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
         }
 
       /* Finally update the layer view. */
-      if (xsheet->priv->selected_track >= 0)
-        {
-          const gchar *title;
-
-          title = animation_cel_animation_get_track_title (xsheet->priv->animation,
-                                                           xsheet->priv->selected_track);
-          animation_layer_view_filter (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                       title);
-        }
-      else
-        {
-          animation_layer_view_filter (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                       NULL);
-        }
       if (g_queue_is_empty (xsheet->priv->selected_frames))
         {
           animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                       NULL);
+                                       NULL, NULL);
         }
       else
         {
           const GList *layers;
+          const gchar *filter = NULL;
 
           /* When several frames are selected, show layers of the first selected. */
           position = g_queue_peek_tail (xsheet->priv->selected_frames);
@@ -1677,8 +1664,14 @@ animation_xsheet_cel_clicked (GtkWidget       *button,
           layers = animation_cel_animation_get_layers (xsheet->priv->animation,
                                                        GPOINTER_TO_INT (track_num),
                                                        GPOINTER_TO_INT (position));
+
+          if (xsheet->priv->selected_track >= 0)
+            {
+              filter = animation_cel_animation_get_track_title (xsheet->priv->animation,
+                                                                xsheet->priv->selected_track);
+            }
           animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                       layers);
+                                       layers, filter);
         }
     }
   /* Middle click */
@@ -2299,8 +2292,13 @@ create_suite (gint       *key,
       if (xsheet->priv->selected_track == data->level &&
           selected_pos == pos)
         {
+          const gchar *filter = NULL;
+
+          /* Filter with level title. */
+          filter = animation_cel_animation_get_track_title (xsheet->priv->animation,
+                                                            data->level);
           animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                       layers);
+                                       layers, filter);
         }
     }
 
@@ -2413,17 +2411,21 @@ animation_xsheet_select_all (AnimationXSheet *xsheet,
   if (g_queue_is_empty (xsheet->priv->selected_frames))
     {
       animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                   NULL);
+                                   NULL, NULL);
     }
   else
     {
       const GList *layers;
+      const gchar *filter = NULL;
 
       /* Show layers of position 0. */
       layers = animation_cel_animation_get_layers (xsheet->priv->animation,
                                                    level, 0);
+      /* Filter with level title. */
+      filter = animation_cel_animation_get_track_title (xsheet->priv->animation,
+                                                        level);
       animation_layer_view_select (ANIMATION_LAYER_VIEW (xsheet->priv->layer_view),
-                                   layers);
+                                   layers, filter);
     }
 }
 

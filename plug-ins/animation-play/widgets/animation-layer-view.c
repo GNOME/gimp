@@ -261,20 +261,39 @@ animation_layer_view_filter (AnimationLayerView *view,
  * animation_layer_view_select:
  * @view: the #AnimationLayerView.
  * @layers: a #GList of #GimpLayer ids.
+ * @filter: the viewing filter.
  *
  * Selects the rows for all @layers in @view.
  */
 void
 animation_layer_view_select (AnimationLayerView *view,
-                             const GList        *layers)
+                             const GList        *layers,
+                             const gchar        *filter)
 {
   GtkTreeSelection *selection;
   const GList      *layer;
+  GtkToggleButton  *filter_button;
+  gboolean          filter_was_active;
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view->priv->tree_view));
   g_signal_handlers_block_by_func (selection,
                                    G_CALLBACK (on_selection_changed),
                                    view);
+
+  filter_button = GTK_TOGGLE_BUTTON (view->priv->filter_button);
+  filter_was_active = view->priv->filter_active;
+  /* Deactivate the filtering. */
+  if (filter_was_active)
+    gtk_toggle_button_set_active (filter_button, FALSE);
+
+  /* Change the filter but do *not* refresh the GUI. */
+  if (g_strcmp0 (view->priv->filter, filter) != 0)
+    {
+      if (view->priv->filter)
+        g_free (view->priv->filter);
+      view->priv->filter = g_strdup (filter);
+    }
+
   gtk_tree_selection_unselect_all (selection);
   for (layer = layers; layer; layer = layer->next)
     {
@@ -282,18 +301,6 @@ animation_layer_view_select (AnimationLayerView *view,
       gint         tattoo = GPOINTER_TO_INT (layer->data);
 
       path = animation_layer_view_get_row (view, tattoo, NULL);
-      if (! path &&
-          gimp_image_get_layer_by_tattoo (view->priv->image_id,
-                                          tattoo))
-        {
-          /* The layer exists, but the row can't be found. We must be
-           * filtering. Remove the filter. */
-          GtkToggleButton *button;
-
-          button = GTK_TOGGLE_BUTTON (view->priv->filter_button);
-          gtk_toggle_button_set_active (button, FALSE);
-          path = animation_layer_view_get_row (view, tattoo, NULL);
-        }
       g_warn_if_fail (path != NULL);
       if (path)
         {
@@ -301,6 +308,10 @@ animation_layer_view_select (AnimationLayerView *view,
           gtk_tree_path_free (path);
         }
     }
+  /* Reactivate the filtering. */
+  if (filter_was_active)
+    gtk_toggle_button_set_active (filter_button, TRUE);
+
   g_signal_handlers_unblock_by_func (selection,
                                      G_CALLBACK (on_selection_changed),
                                      view);

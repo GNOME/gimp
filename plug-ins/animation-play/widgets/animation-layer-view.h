@@ -53,6 +53,7 @@ void        animation_layer_view_refresh  (AnimationLayerView *view);
 void        animation_layer_view_filter   (AnimationLayerView *view,
                                            const gchar        *filter);
 void        animation_layer_view_select   (AnimationLayerView *view,
-                                           const GList        *layers);
+                                           const GList        *layers,
+                                           const gchar        *filter);
 #endif  /*  __ANIMATION_LAYER_VIEW_H__  */
 
