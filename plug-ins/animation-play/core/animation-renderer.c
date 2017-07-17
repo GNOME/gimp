@@ -171,6 +171,7 @@ animation_renderer_finalize (GObject *object)
   /* Clean remaining data. */
   if (renderer->priv->idle_id)
     g_source_remove (renderer->priv->idle_id);
+  renderer->priv->idle_id = 0;
   g_mutex_lock (&renderer->priv->lock);
   for (i = 0; i < animation_get_duration (animation); i++)
     {
@@ -183,7 +184,9 @@ animation_renderer_finalize (GObject *object)
   g_free (renderer->priv->hashes);
 
   g_async_queue_unref (renderer->priv->queue);
+  renderer->priv->queue = NULL;
   g_async_queue_unref (renderer->priv->ack_queue);
+  renderer->priv->ack_queue = NULL;
   g_hash_table_destroy (renderer->priv->cache_table);
   g_mutex_unlock (&renderer->priv->lock);
   g_mutex_clear (&renderer->priv->lock);
@@ -321,7 +324,7 @@ static gboolean
 animation_renderer_idle_update (AnimationRenderer *renderer)
 {
   gpointer p;
-  gboolean retval;
+  gboolean retval = G_SOURCE_CONTINUE;;
 
   while ((p = g_async_queue_try_pop (renderer->priv->ack_queue)))
     {
@@ -335,15 +338,12 @@ animation_renderer_idle_update (AnimationRenderer *renderer)
   /* If nothing is being rendered (negative queue length, meaning the
    * renderer is waiting), nor is there anything in the ACK queue, just
    * stop the idle source. */
-  if (g_async_queue_length (renderer->priv->queue) < 0 &&
+  if (renderer->priv && renderer->priv->queue &&
+      g_async_queue_length (renderer->priv->queue) < 0 &&
       g_async_queue_length (renderer->priv->ack_queue) == 0)
     {
       retval = G_SOURCE_REMOVE;
       renderer->priv->idle_id = 0;
-    }
-  else
-    {
-      retval = G_SOURCE_CONTINUE;
     }
 
   return retval;
