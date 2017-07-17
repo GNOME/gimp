@@ -301,7 +301,7 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (box), private->combo, TRUE, TRUE, 0);
   gtk_widget_show (private->combo);
 
-  gimp_help_set_help_data (private->combo, _("Pick a setting from the list"),
+  gimp_help_set_help_data (private->combo, _("Pick a preset from the list"),
                            NULL);
 
   g_signal_connect_after (private->combo, "select-item",
@@ -324,7 +324,9 @@ gimp_settings_box_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
-  gimp_help_set_help_data (button, _("Add settings to favorites"), NULL);
+  gimp_help_set_help_data (button,
+                           _("Save the current settings as named preset"),
+                           NULL);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (gimp_settings_box_favorite_activate),
@@ -341,6 +343,8 @@ gimp_settings_box_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (button), arrow);
   gtk_widget_show (arrow);
 
+  gimp_help_set_help_data (button, _("Manage presets"), NULL);
+
   g_signal_connect (button, "button-press-event",
                     G_CALLBACK (gimp_settings_box_menu_press),
                     box);
@@ -353,20 +357,20 @@ gimp_settings_box_constructed (GObject *object)
   private->import_item =
     gimp_settings_box_menu_item_add (box,
                                      GIMP_ICON_DOCUMENT_OPEN,
-                                     _("_Import Settings from File..."),
+                                     _("_Import Current Settings from File..."),
                                      G_CALLBACK (gimp_settings_box_import_activate));
 
   private->export_item =
     gimp_settings_box_menu_item_add (box,
                                      GIMP_ICON_DOCUMENT_SAVE,
-                                     _("_Export Settings to File..."),
+                                     _("_Export Current Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 
   gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
 
   gimp_settings_box_menu_item_add (box,
                                    GIMP_ICON_EDIT,
-                                   _("_Manage Settings..."),
+                                   _("_Manage Saved Presets..."),
                                    G_CALLBACK (gimp_settings_box_manage_activate));
 }
 
@@ -606,10 +610,10 @@ gimp_settings_box_favorite_activate (GtkWidget       *widget,
   GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
   GtkWidget *dialog;
 
-  dialog = gimp_query_string_box (_("Add Settings to Favorites"),
+  dialog = gimp_query_string_box (_("Save Settings as Named Preset"),
                                   toplevel,
                                   gimp_standard_help_func, NULL,
-                                  _("Enter a name for the settings"),
+                                  _("Enter a name for the preset"),
                                   _("Saved Settings"),
                                   G_OBJECT (toplevel), "hide",
                                   gimp_settings_box_favorite_callback, box);
@@ -651,7 +655,7 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
 
-  private->editor_dialog = gimp_dialog_new (_("Manage Saved Settings"),
+  private->editor_dialog = gimp_dialog_new (_("Manage Saved Presets"),
                                             "gimp-settings-editor-dialog",
                                             toplevel, 0,
                                             NULL, NULL,
