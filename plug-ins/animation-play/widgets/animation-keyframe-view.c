@@ -196,9 +196,10 @@ animation_keyframe_view_hide (AnimationKeyFrameView *view)
   g_signal_handlers_disconnect_by_func (view->priv->offset_entry,
                                         G_CALLBACK (on_offset_entry_changed),
                                         view);
-  g_signal_handlers_disconnect_by_func (view->priv->camera,
-                                        G_CALLBACK (on_offsets_changed),
-                                        view);
+  if (view->priv->camera)
+    g_signal_handlers_disconnect_by_func (view->priv->camera,
+                                          G_CALLBACK (on_offsets_changed),
+                                          view);
 }
 
 /************ Private Functions ****************/
