@@ -215,7 +215,7 @@ gimp_metadata_get_guid (void)
 
 #define DALLOC 36
 
-  GUID = g_malloc0 (DALLOC);
+  GUID = g_malloc0 (DALLOC + 1);
 
   for (bake = 0; bake < DALLOC; bake++)
     {
