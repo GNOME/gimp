@@ -97,6 +97,10 @@ gimp_prop_kelvin_presets_new (GObject     *config,
   menu = gtk_menu_new ();
   gtk_menu_attach_to_widget (GTK_MENU (menu), button, NULL);
 
+  gimp_help_set_help_data (button,
+                           _("Choose from a list of common "
+                             "color temperatures"), NULL);
+
   g_signal_connect (button, "button-press-event",
                     G_CALLBACK (gimp_prop_kelvin_presets_button_press),
                     menu);
