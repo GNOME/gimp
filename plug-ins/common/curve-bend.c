@@ -1400,8 +1400,8 @@ bender_new_dialog (GimpDrawable *drawable)
                                     G_CALLBACK (bender_border_callback),
                                     &cd->outline, cd->outline,
 
-                                    _("_Upper"), OUTLINE_UPPER, &upper,
-                                    _("_Lower"), OUTLINE_LOWER, &lower,
+                                    C_("curve-border", "_Upper"), OUTLINE_UPPER, &upper,
+                                    C_("curve-border", "_Lower"), OUTLINE_LOWER, &lower,
 
                                     NULL);
 
