@@ -94,6 +94,8 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
         mode = "-iwo";
       else
         mode = "-iw";
+      if (shootvals->show_cursor)
+        cursor = "-C";
       break;
 
     case SHOOT_ROOT:

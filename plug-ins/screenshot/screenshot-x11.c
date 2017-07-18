@@ -672,7 +672,8 @@ screenshot_x11_shoot (ScreenshotValues  *shootvals,
   /* FIXME: Some time might have passed until we get here.
    *        The cursor image should be grabbed together with the screenshot.
    */
-  if (shootvals->shoot_type == SHOOT_ROOT && shootvals->show_cursor)
+  if ((shootvals->shoot_type == SHOOT_ROOT ||
+       shootvals->shoot_type == SHOOT_WINDOW) && shootvals->show_cursor)
     add_cursor_image (*image_ID, display);
 
   profile = gimp_screen_get_color_profile (screen, monitor);

@@ -416,6 +416,7 @@ shoot_dialog (GdkScreen **screen)
   GSList        *radio_group = NULL;
   GtkAdjustment *adj;
   gboolean       run;
+  GtkWidget     *cursor_toggle = NULL;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -456,7 +457,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  /*  Aingle window  */
+  /*  Single window  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
                                                _("Take a screenshot of "
                                                  "a single _window"));
@@ -492,6 +493,28 @@ shoot_dialog (GdkScreen **screen)
                               toggle, "sensitive",
                               G_BINDING_SYNC_CREATE);
     }
+  /*  Mouse pointer  */
+  if (capabilities & SCREENSHOT_CAN_SHOOT_POINTER)
+    {
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      cursor_toggle = gtk_check_button_new_with_mnemonic (_("Include _mouse pointer"));
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cursor_toggle),
+                                    shootvals.show_cursor);
+      gtk_box_pack_start (GTK_BOX (hbox), cursor_toggle, TRUE, TRUE, 24);
+      gtk_widget_show (cursor_toggle);
+
+      g_signal_connect (cursor_toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &shootvals.show_cursor);
+
+      g_object_bind_property (button, "active",
+                              cursor_toggle, "sensitive",
+                              G_BINDING_SYNC_CREATE);
+    }
+
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 shootvals.shoot_type == SHOOT_WINDOW);
@@ -528,6 +551,12 @@ shoot_dialog (GdkScreen **screen)
                         G_CALLBACK (gimp_toggle_button_update),
                         &shootvals.show_cursor);
 
+      if (cursor_toggle)
+        {
+          g_object_bind_property (cursor_toggle, "active",
+                                  toggle, "active",
+                                  G_BINDING_BIDIRECTIONAL);
+        }
       g_object_bind_property (button, "active",
                               toggle, "sensitive",
                               G_BINDING_SYNC_CREATE);
