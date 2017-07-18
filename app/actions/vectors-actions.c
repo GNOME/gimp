@@ -301,28 +301,28 @@ static const GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
 static const GimpEnumActionEntry vectors_select_actions[] =
 {
   { "vectors-select-top", NULL,
-    NC_("vectors-action", "Select _Top Vectors"), NULL,
-    NC_("vectors-action", "Select the topmost vector"),
+    NC_("vectors-action", "Select _Top Path"), NULL,
+    NC_("vectors-action", "Select the topmost path"),
     GIMP_ACTION_SELECT_FIRST, FALSE,
-    GIMP_HELP_VECTORS_TOP },
+    GIMP_HELP_PATH_TOP },
 
   { "vectors-select-bottom", NULL,
-    NC_("vectors-action", "Select _Bottom Vectors"), NULL,
-    NC_("vectors-action", "Select the bottommost vector"),
+    NC_("vectors-action", "Select _Bottom Path"), NULL,
+    NC_("vectors-action", "Select the bottommost path"),
     GIMP_ACTION_SELECT_LAST, FALSE,
-    GIMP_HELP_VECTORS_BOTTOM },
+    GIMP_HELP_PATH_BOTTOM },
 
   { "vectors-select-previous", NULL,
-    NC_("vectors-action", "Select _Previous Vectors"), NULL,
-    NC_("vectors-action", "Select the vector above the current vector"),
+    NC_("vectors-action", "Select _Previous Path"), NULL,
+    NC_("vectors-action", "Select the path above the current path"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
-    GIMP_HELP_VECTORS_PREVIOUS },
+    GIMP_HELP_PATH_PREVIOUS },
 
   { "vectors-select-next", NULL,
-    NC_("vectors-action", "Select _Next Vector"), NULL,
-    NC_("vectors-action", "Select the vector below the current vector"),
+    NC_("vectors-action", "Select _Next Path"), NULL,
+    NC_("vectors-action", "Select the vector below the current path"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
-    GIMP_HELP_VECTORS_NEXT }
+    GIMP_HELP_PATH_NEXT }
 };
 
 void
@@ -355,7 +355,7 @@ vectors_actions_setup (GimpActionGroup *group)
                                       vectors_select_actions,
                                       G_N_ELEMENTS (vectors_select_actions),
                                       G_CALLBACK (vectors_select_cmd_callback));
-                                      
+
   items_actions_setup (group, "vectors");
 }
 
@@ -372,13 +372,9 @@ vectors_actions_update (GimpActionGroup *group,
   gboolean      dr_children   = FALSE;
   GList        *next          = NULL;
   GList        *prev          = NULL;
-  gboolean      fs            = FALSE;    /*  floating sel           */
-  gboolean      ac            = FALSE;    /*  active channel         */
 
   if (image)
     {
-      fs      = (gimp_image_get_floating_selection (image) != NULL);
-      ac      = (gimp_image_get_active_channel (image) != NULL);
       n_vectors  = gimp_image_get_n_vectors (image);
       mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
@@ -455,12 +451,12 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-selection-from-vectors", vectors);
   SET_SENSITIVE ("vectors-selection-add",          vectors);
   SET_SENSITIVE ("vectors-selection-subtract",     vectors);
-  SET_SENSITIVE ("vectors-selection-intersect",    vectors);  
+  SET_SENSITIVE ("vectors-selection-intersect",    vectors);
 
-  SET_SENSITIVE ("vectors-select-top",       vectors && !fs && !ac && prev);
-  SET_SENSITIVE ("vectors-select-bottom",    vectors && !fs && !ac && next);
-  SET_SENSITIVE ("vectors-select-previous",  vectors && !fs && !ac && prev);
-  SET_SENSITIVE ("vectors-select-next",      vectors && !fs && !ac && next);
+  SET_SENSITIVE ("vectors-select-top",       vectors && prev);
+  SET_SENSITIVE ("vectors-select-bottom",    vectors && next);
+  SET_SENSITIVE ("vectors-select-previous",  vectors && prev);
+  SET_SENSITIVE ("vectors-select-next",      vectors && next);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

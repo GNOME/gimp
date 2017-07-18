@@ -222,11 +222,6 @@
 #define GIMP_HELP_LAYER_CROP                      "gimp-layer-crop"
 #define GIMP_HELP_LAYER_EDIT                      "gimp-layer-edit"
 
-#define GIMP_HELP_VECTORS_PREVIOUS                "gimp-vector-previous"
-#define GIMP_HELP_VECTORS_NEXT                    "gimp-vector-next"
-#define GIMP_HELP_VECTORS_TOP                     "gimp-vector-top"
-#define GIMP_HELP_VECTORS_BOTTOM                  "gimp-vector-bottom"
-
 #define GIMP_HELP_CHANNEL_DIALOG                  "gimp-channel-dialog"
 #define GIMP_HELP_CHANNEL_NEW                     "gimp-channel-new"
 #define GIMP_HELP_CHANNEL_RAISE                   "gimp-channel-raise"
@@ -253,6 +248,10 @@
 
 #define GIMP_HELP_PATH_DIALOG                     "gimp-path-dialog"
 #define GIMP_HELP_PATH_NEW                        "gimp-path-new"
+#define GIMP_HELP_PATH_PREVIOUS                   "gimp-path-previous"
+#define GIMP_HELP_PATH_NEXT                       "gimp-path-next"
+#define GIMP_HELP_PATH_TOP                        "gimp-path-top"
+#define GIMP_HELP_PATH_BOTTOM                     "gimp-path-bottom"
 #define GIMP_HELP_PATH_RAISE                      "gimp-path-raise"
 #define GIMP_HELP_PATH_RAISE_TO_TOP               "gimp-path-raise-to-top"
 #define GIMP_HELP_PATH_LOWER                      "gimp-path-lower"
