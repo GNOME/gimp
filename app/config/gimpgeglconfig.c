@@ -38,7 +38,8 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_MAX_NUM_THREADS 64
+#define GIMP_MAX_NUM_THREADS G_PARAM_SPEC_INT (g_object_class_find_property (G_OBJECT_GET_CLASS (gegl_config()), \
+                                                                             "threads"))->maximum
 #define GIMP_MAX_MEM_PROCESS (MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE))
 
 enum
