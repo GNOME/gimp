@@ -38,7 +38,7 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_MAX_NUM_THREADS 16
+#define GIMP_MAX_NUM_THREADS 64
 #define GIMP_MAX_MEM_PROCESS (MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE))
 
 enum
