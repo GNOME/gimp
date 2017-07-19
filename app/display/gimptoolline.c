@@ -25,6 +25,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -141,6 +142,8 @@ static void     gimp_tool_line_hover           (GimpToolWidget        *widget,
                                                 const GimpCoords      *coords,
                                                 GdkModifierType        state,
                                                 gboolean               proximity);
+static gboolean gimp_tool_line_key_press       (GimpToolWidget        *widget,
+                                                GdkEventKey           *kevent);
 static void     gimp_tool_line_motion_modifier (GimpToolWidget        *widget,
                                                 GdkModifierType        key,
                                                 gboolean               press,
@@ -198,6 +201,7 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
   widget_class->button_release  = gimp_tool_line_button_release;
   widget_class->motion          = gimp_tool_line_motion;
   widget_class->hover           = gimp_tool_line_hover;
+  widget_class->key_press       = gimp_tool_line_key_press;
   widget_class->motion_modifier = gimp_tool_line_motion_modifier;
   widget_class->get_cursor      = gimp_tool_line_get_cursor;
 
@@ -687,6 +691,130 @@ gimp_tool_line_hover (GimpToolWidget   *widget,
 
   gimp_tool_line_update_handles (line);
   gimp_tool_line_update_status (line, state, proximity);
+}
+
+static gboolean
+gimp_tool_line_key_press (GimpToolWidget *widget,
+                          GdkEventKey    *kevent)
+{
+  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
+  GimpToolLinePrivate *private = line->private;
+  GimpDisplayShell    *shell;
+  gdouble              pixels  = 1.0;
+  gboolean             move_line;
+
+  move_line = kevent->state & GRAB_LINE_MASK;
+
+  if (private->selection == GIMP_TOOL_LINE_HANDLE_NONE && ! move_line)
+    return GIMP_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
+
+  shell = gimp_tool_widget_get_shell (widget);
+
+  if (kevent->state & gimp_get_extend_selection_mask ())
+    pixels = 10.0;
+
+  if (kevent->state & gimp_get_toggle_behavior_mask ())
+    pixels = 50.0;
+
+  switch (kevent->keyval)
+    {
+    case GDK_KEY_Left:
+    case GDK_KEY_Right:
+    case GDK_KEY_Up:
+    case GDK_KEY_Down:
+      /* move an endpoint (or both endpoints) */
+      if (private->selection < 0 || move_line)
+        {
+          gdouble xdist, ydist;
+          gdouble dx,    dy;
+
+          xdist = FUNSCALEX (shell, pixels);
+          ydist = FUNSCALEY (shell, pixels);
+
+          dx = 0.0;
+          dy = 0.0;
+
+          switch (kevent->keyval)
+            {
+            case GDK_KEY_Left:  dx = -xdist; break;
+            case GDK_KEY_Right: dx = +xdist; break;
+            case GDK_KEY_Up:    dy = -ydist; break;
+            case GDK_KEY_Down:  dy = +ydist; break;
+            }
+
+          if (private->selection == GIMP_TOOL_LINE_HANDLE_START || move_line)
+            {
+              g_object_set (line,
+                            "x1", private->x1 + dx,
+                            "y1", private->y1 + dy,
+                            NULL);
+            }
+
+          if (private->selection == GIMP_TOOL_LINE_HANDLE_END || move_line)
+            {
+              g_object_set (line,
+                            "x2", private->x2 + dx,
+                            "y2", private->y2 + dy,
+                            NULL);
+            }
+        }
+      /* move a slider */
+      else
+        {
+          gdouble dist;
+          gdouble dvalue;
+
+          dist = gimp_canvas_item_transform_distance (private->line,
+                                                      private->x1, private->y1,
+                                                      private->x2, private->y2);
+
+          if (dist > 0.0)
+            dist = pixels / dist;
+
+          dvalue = 0.0;
+
+          switch (kevent->keyval)
+            {
+            case GDK_KEY_Left:
+              if      (private->x1 < private->x2) dvalue = -dist;
+              else if (private->x1 > private->x2) dvalue = +dist;
+              break;
+
+            case GDK_KEY_Right:
+              if      (private->x1 < private->x2) dvalue = +dist;
+              else if (private->x1 > private->x2) dvalue = -dist;
+              break;
+
+            case GDK_KEY_Up:
+              if      (private->y1 < private->y2) dvalue = -dist;
+              else if (private->y1 > private->y2) dvalue = +dist;
+              break;
+
+            case GDK_KEY_Down:
+              if      (private->y1 < private->y2) dvalue = +dist;
+              else if (private->y1 > private->y2) dvalue = -dist;
+              break;
+            }
+
+          if (dvalue != 0.0)
+            {
+              GimpControllerSlider *slider;
+
+              slider = gimp_tool_line_get_slider (line, private->selection);
+
+              slider->value += dvalue;
+              slider->value  = CLAMP (slider->value, slider->min, slider->max);
+              slider->value  = CLAMP (slider->value, 0.0, 1.0);
+
+              g_object_set (line,
+                            "sliders", private->sliders,
+                            NULL);
+            }
+        }
+      return TRUE;
+    }
+
+  return GIMP_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
 }
 
 static void
