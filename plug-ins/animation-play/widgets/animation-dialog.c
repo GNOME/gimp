@@ -2391,7 +2391,8 @@ da_button_press (GtkWidget       *widget,
                       event->time);
       return TRUE;
     }
-  else if (event->type == GDK_BUTTON_PRESS)
+  else if (event->type == GDK_BUTTON_PRESS &&
+           ANIMATION_IS_CEL_ANIMATION (priv->animation))
     {
       CursorOffset *p = g_object_get_data (G_OBJECT (widget),
                                            "cursor-offset");
@@ -2420,16 +2421,20 @@ da_button_released (GtkWidget       *widget,
                     AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  AnimationCelAnimation  *animation;
-  AnimationCamera        *camera;
 
-  animation = ANIMATION_CEL_ANIMATION (priv->animation);
-  camera = ANIMATION_CAMERA (animation_cel_animation_get_main_camera (animation));
-  animation_camera_apply_preview (camera);
+  if (ANIMATION_IS_CEL_ANIMATION (priv->animation))
+    {
+      AnimationCelAnimation  *animation;
+      AnimationCamera        *camera;
 
-  gtk_grab_remove (widget);
-  gdk_display_pointer_ungrab (gtk_widget_get_display (widget), 0);
-  gdk_flush ();
+      animation = ANIMATION_CEL_ANIMATION (priv->animation);
+      camera = ANIMATION_CAMERA (animation_cel_animation_get_main_camera (animation));
+      animation_camera_apply_preview (camera);
+
+      gtk_grab_remove (widget);
+      gdk_display_pointer_ungrab (gtk_widget_get_display (widget), 0);
+      gdk_flush ();
+    }
 
   return FALSE;
 }
@@ -2440,6 +2445,9 @@ da_button_motion (GtkWidget       *widget,
                   AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+
+  if (! ANIMATION_IS_CEL_ANIMATION (priv->animation))
+    return FALSE;
 
   /* if a button is still held by the time we process this event... */
   if (event->state & GDK_BUTTON1_MASK)
