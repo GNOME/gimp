@@ -215,11 +215,15 @@ animation_animatic_set_panel_duration (AnimationAnimatic *animatic,
   AnimationAnimaticPrivate *priv           = GET_PRIVATE (animatic);
   Animation                *animation      = ANIMATION (animatic);
   gint                      duration;
+  gint                      first_changed_frame;
 
   g_return_if_fail (panel_duration >= 0  &&
                     panel_num >= 0 &&
                     panel_num < priv->n_panels);
 
+  first_changed_frame = animation_animatic_get_position (animatic,
+                                                         panel_num) +
+                        MIN (priv->durations[panel_num], panel_num);
   priv->durations[panel_num] = panel_duration;
   duration = animation_get_duration (animation);
 
@@ -227,6 +231,9 @@ animation_animatic_set_panel_duration (AnimationAnimatic *animatic,
                  panel_num, panel_duration);
   g_signal_emit_by_name (animation, "duration-changed",
                          duration);
+  g_signal_emit_by_name (animation, "frames-changed",
+                         first_changed_frame,
+                         animation_get_duration (animation) - first_changed_frame);
 }
 
 gint
