@@ -364,7 +364,8 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   gtk_widget_show (checkbox);
 
   /* Color UI */
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       inner_frame = gimp_frame_new (_("Color Options"));
       gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);

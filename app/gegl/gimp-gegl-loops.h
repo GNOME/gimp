@@ -43,13 +43,15 @@ void   gimp_gegl_dodgeburn             (GeglBuffer               *src_buffer,
                                         GimpDodgeBurnType         type,
                                         GimpTransferMode          mode);
 
-void   gimp_gegl_smudge_blend          (GeglBuffer               *top_buffer,
-                                        const GeglRectangle      *top_rect,
-                                        GeglBuffer               *bottom_buffer,
-                                        const GeglRectangle      *bottom_rect,
-                                        GeglBuffer               *dest_buffer,
-                                        const GeglRectangle      *dest_rect,
-                                        gdouble                   blend);
+void   gimp_gegl_smudge_with_paint     (GeglBuffer               *accum_buffer,
+                                        const GeglRectangle      *accum_rect,
+                                        GeglBuffer               *canvas_buffer,
+                                        const GeglRectangle      *canvas_rect,
+                                        const GimpRGB            *brush_color,
+                                        GeglBuffer               *paint_buffer,
+                                        gboolean                  no_erasing,
+                                        gdouble                   flow,
+                                        gdouble                   rate);
 
 void   gimp_gegl_apply_mask            (GeglBuffer               *mask_buffer,
                                         const GeglRectangle      *mask_rect,

@@ -49,7 +49,8 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_SMUDGE_TOOL,
                 GIMP_TYPE_SMUDGE_OPTIONS,
                 gimp_smudge_options_gui,
-                GIMP_PAINT_OPTIONS_CONTEXT_MASK,
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK |
+                GIMP_CONTEXT_PROP_MASK_GRADIENT,
                 "gimp-smudge-tool",
                 _("Smudge"),
                 _("Smudge Tool: Smudge selectively using a brush"),
@@ -86,9 +87,19 @@ gimp_smudge_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *scale;
+  GtkWidget *button;
+
+  button = gimp_prop_check_button_new (config, "no-erasing", NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  the rate scale  */
   scale = gimp_prop_spin_scale_new (config, "rate", NULL,
+                                    1.0, 10.0, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_spin_scale_new (config, "flow", NULL,
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
