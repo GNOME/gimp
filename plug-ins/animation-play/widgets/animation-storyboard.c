@@ -896,5 +896,7 @@ animation_storyboard_move (AnimationStoryboard *storyboard,
           g_object_set_data (G_OBJECT (iter->data), "panel-num",
                              GINT_TO_POINTER (i));
         }
+      animation_animatic_move_panel (storyboard->priv->animation,
+                                     from_panel, to_panel);
     }
 }

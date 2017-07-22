@@ -376,6 +376,69 @@ animation_animatic_get_position (AnimationAnimatic *animation,
   return pos;
 }
 
+void
+animation_animatic_move_panel (AnimationAnimatic *animation,
+                               gint               panel,
+                               gint               new_panel)
+{
+  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
+
+  g_return_if_fail (panel >= 0  && new_panel >= 0 &&
+                    panel < priv->n_panels && new_panel < priv->n_panels);
+
+  if (panel != new_panel)
+    {
+      gint       tattoo;
+      gint       duration;
+      gboolean   combine;
+      gchar     *comment;
+      gint       changed_frame;
+      gint       changed_duration;
+
+      tattoo   = priv->tattoos[panel];
+      duration = priv->durations[panel];
+      combine  = priv->combine[panel];
+      comment  = priv->comments[panel];
+      if (panel < new_panel)
+        {
+          memmove (&priv->tattoos[panel], &priv->tattoos[panel + 1],
+                   (new_panel - panel) * sizeof (priv->tattoos[panel]));
+          memmove (&priv->durations[panel], &priv->durations[panel + 1],
+                   (new_panel - panel) * sizeof (priv->tattoos[panel]));
+          memmove (&priv->combine[panel], &priv->combine[panel + 1],
+                   (new_panel - panel) * sizeof (priv->tattoos[panel]));
+          memmove (&priv->comments[panel], &priv->comments[panel + 1],
+                   (new_panel - panel) * sizeof (priv->tattoos[panel]));
+        }
+      else
+        {
+          memmove (&priv->tattoos[new_panel + 1], &priv->tattoos[new_panel],
+                   (panel - new_panel) * sizeof (priv->comments[panel]));
+          memmove (&priv->durations[new_panel + 1], &priv->durations[new_panel],
+                   (panel - new_panel) * sizeof (priv->comments[panel]));
+          memmove (&priv->combine[new_panel + 1], &priv->combine[new_panel],
+                   (panel - new_panel) * sizeof (priv->comments[panel]));
+          memmove (&priv->comments[new_panel + 1], &priv->comments[new_panel],
+                   (panel - new_panel) * sizeof (priv->comments[panel]));
+        }
+      priv->tattoos[new_panel]   = tattoo;
+      priv->durations[new_panel] = duration;
+      priv->combine[new_panel]   = combine;
+      priv->comments[new_panel]  = comment;
+
+      /* Update renders. */
+      changed_frame = animation_animatic_get_position (animation,
+                                                       MIN (panel, new_panel));
+      changed_duration = animation_animatic_get_position (animation,
+                                                          MAX (panel, new_panel)) +
+                         animation_animatic_get_panel_duration (animation,
+                                                                MAX (panel, new_panel)) -
+                         changed_frame;
+      g_signal_emit_by_name (animation, "frames-changed",
+                             changed_frame, changed_duration);
+    }
+}
+
 /**** Virtual methods ****/
 
 static gint

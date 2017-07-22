@@ -68,4 +68,7 @@ gint             animation_animatic_get_panel          (AnimationAnimatic *anima
 gint             animation_animatic_get_position       (AnimationAnimatic *animation,
                                                         gint               panel);
 
+void             animation_animatic_move_panel         (AnimationAnimatic *animatic,
+                                                        gint               panel,
+                                                        gint               new_panel);
 #endif  /*  __ANIMATION_ANIMATIC_H__  */
