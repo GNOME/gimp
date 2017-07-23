@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-09 18:29+0200\n"
-"PO-Revision-Date: 2017-07-09 18:30+0200\n"
+"POT-Creation-Date: 2017-07-23 16:44+0200\n"
+"PO-Revision-Date: 2017-07-23 16:45+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -57,7 +57,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:646 ../plug-ins/common/hot.c:593
-#: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:502
+#: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
 #: ../plug-ins/common/max-rgb.c:261 ../plug-ins/common/newsprint.c:1183
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
 #: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:723
@@ -97,7 +97,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:426
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:427
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "_Anuluj"
@@ -1645,10 +1645,12 @@ msgid "Curve for Border"
 msgstr "Krzywa do krawędzi"
 
 #: ../plug-ins/common/curve-bend.c:1403
+msgctxt "curve-border"
 msgid "_Upper"
 msgstr "_Górnej"
 
-#: ../plug-ins/common/curve-bend.c:1404 ../plug-ins/gfig/gfig-dialog.c:905
+#: ../plug-ins/common/curve-bend.c:1404
+msgctxt "curve-border"
 msgid "_Lower"
 msgstr "_Dolnej"
 
@@ -4912,37 +4914,37 @@ msgstr "Wysyła obraz przez e-mail"
 msgid "Send by E_mail..."
 msgstr "Wyślij przez e-_mail…"
 
-#: ../plug-ins/common/mail.c:498
+#: ../plug-ins/common/mail.c:495
 msgid "Send by Email"
 msgstr "Wysłanie przez e-mail"
 
-#: ../plug-ins/common/mail.c:503
+#: ../plug-ins/common/mail.c:500
 msgid "_Send"
 msgstr "_Nadawca"
 
-#: ../plug-ins/common/mail.c:535
+#: ../plug-ins/common/mail.c:532
 msgid "_Filename:"
 msgstr "_Nazwa pliku:"
 
-#: ../plug-ins/common/mail.c:549
+#: ../plug-ins/common/mail.c:546
 msgctxt "email-address"
 msgid "_To:"
 msgstr "_Do:"
 
-#: ../plug-ins/common/mail.c:563
+#: ../plug-ins/common/mail.c:560
 msgctxt "email-address"
 msgid "_From:"
 msgstr "O_d:"
 
-#: ../plug-ins/common/mail.c:575
+#: ../plug-ins/common/mail.c:572
 msgid "S_ubject:"
 msgstr "_Temat:"
 
-#: ../plug-ins/common/mail.c:640
+#: ../plug-ins/common/mail.c:637
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "błędne rozszerzenie pliku lub jego brak"
 
-#: ../plug-ins/common/mail.c:824
+#: ../plug-ins/common/mail.c:821
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Nie można uruchomić programu sendmail (%s)"
@@ -8155,6 +8157,10 @@ msgstr "_Podwyższ"
 #: ../plug-ins/gfig/gfig-dialog.c:901
 msgid "Raise selected object"
 msgstr "Podwyższa zaznaczony obiekt"
+
+#: ../plug-ins/gfig/gfig-dialog.c:905
+msgid "_Lower"
+msgstr "_Obniż"
 
 #: ../plug-ins/gfig/gfig-dialog.c:905
 msgid "Lower selected object"
@@ -11787,77 +11793,78 @@ msgstr "Tworzy obraz z obszaru ekranu"
 msgid "_Screenshot..."
 msgstr "_Zrzut ekranu…"
 
-#: ../plug-ins/screenshot/screenshot.c:422
+#: ../plug-ins/screenshot/screenshot.c:423
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Zrzut ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:427
+#: ../plug-ins/screenshot/screenshot.c:428
 msgid "S_nap"
 msgstr "_Przechwyć"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:451
+#: ../plug-ins/screenshot/screenshot.c:452
 msgid "Area"
 msgstr "Obszar"
 
-#: ../plug-ins/screenshot/screenshot.c:461
+#: ../plug-ins/screenshot/screenshot.c:462
 msgid "Take a screenshot of a single _window"
 msgstr "Wykonanie zrzutu ekranu pojedynczego o_kna"
 
-#: ../plug-ins/screenshot/screenshot.c:481
+#: ../plug-ins/screenshot/screenshot.c:482
 msgid "Include window _decoration"
 msgstr "Wraz z _dekoracją okna"
 
-#: ../plug-ins/screenshot/screenshot.c:501
-msgid "Take a screenshot of the entire _screen"
-msgstr "Wykonanie zrzutu całego _ekranu"
-
-#: ../plug-ins/screenshot/screenshot.c:521
+#: ../plug-ins/screenshot/screenshot.c:503
+#: ../plug-ins/screenshot/screenshot.c:544
 msgid "Include _mouse pointer"
 msgstr "Wraz z kursorem _myszy"
 
-#: ../plug-ins/screenshot/screenshot.c:543
+#: ../plug-ins/screenshot/screenshot.c:524
+msgid "Take a screenshot of the entire _screen"
+msgstr "Wykonanie zrzutu całego _ekranu"
+
+#: ../plug-ins/screenshot/screenshot.c:572
 msgid "Select a _region to grab"
 msgstr "Wybór _obszaru do przechwycenia"
 
 #. Delay
-#: ../plug-ins/screenshot/screenshot.c:559
+#: ../plug-ins/screenshot/screenshot.c:588
 msgid "Delay"
 msgstr "Opóźnienie"
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:584
+#: ../plug-ins/screenshot/screenshot.c:613
 msgid "seconds"
 msgstr "s"
 
-#: ../plug-ins/screenshot/screenshot.c:593
+#: ../plug-ins/screenshot/screenshot.c:622
 msgid "After the delay, the screenshot is taken."
 msgstr "Po podanym czasie zostanie wykonany zrzut ekranu."
 
-#: ../plug-ins/screenshot/screenshot.c:595
+#: ../plug-ins/screenshot/screenshot.c:624
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Po podanym czasie należy przesunąć mysz, aby wybrać obszar dla zrzutu ekranu."
 
-#: ../plug-ins/screenshot/screenshot.c:599
+#: ../plug-ins/screenshot/screenshot.c:628
 msgid "Click in a window to snap it after delay."
 msgstr "Należy kliknąć okno do przechwycenia po podanym czasie."
 
-#: ../plug-ins/screenshot/screenshot.c:602
+#: ../plug-ins/screenshot/screenshot.c:631
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Po podanym czasie należy kliknąć okno do przechwycenia."
 
-#: ../plug-ins/screenshot/screenshot.c:609
+#: ../plug-ins/screenshot/screenshot.c:638
 msgid "Color Profile"
 msgstr "Profil kolorów"
 
-#: ../plug-ins/screenshot/screenshot.c:614
+#: ../plug-ins/screenshot/screenshot.c:643
 msgid "Tag image with _monitor profile"
 msgstr "O_znaczenie obrazu profilem monitora"
 
-#: ../plug-ins/screenshot/screenshot.c:618
+#: ../plug-ins/screenshot/screenshot.c:647
 msgid "Convert image to sR_GB"
 msgstr "Konwersja obrazu do sR_GB"
 

@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-16 17:40+0200\n"
-"PO-Revision-Date: 2017-07-16 17:42+0200\n"
+"POT-Creation-Date: 2017-07-23 16:44+0200\n"
+"PO-Revision-Date: 2017-07-23 16:45+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3045,7 +3045,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/widgets/gimpdeviceeditor.c:508 ../app/widgets/gimpdnd-xds.c:228
 #: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:386
 #: ../app/widgets/gimphelp.c:725 ../app/widgets/gimpiconpicker.c:488
-#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:730
+#: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
 msgid "_Cancel"
 msgstr "_Anuluj"
 
@@ -3670,7 +3670,7 @@ msgstr "Zapis dziennika błędów do pliku"
 #: ../app/dialogs/input-devices-dialog.c:63
 #: ../app/dialogs/vectors-export-dialog.c:84
 #: ../app/display/gimpdisplayshell-close.c:177
-#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:732
+#: ../app/widgets/gimpsavedialog.c:143 ../app/widgets/gimpsettingsbox.c:736
 msgid "_Save"
 msgstr "_Zapisz"
 
@@ -7306,7 +7306,7 @@ msgstr "Otwiera plik tekstowy (UTF-8)"
 #: ../app/dialogs/file-open-location-dialog.c:81
 #: ../app/dialogs/vectors-import-dialog.c:89
 #: ../app/widgets/gimpiconpicker.c:489 ../app/widgets/gimpopendialog.c:69
-#: ../app/widgets/gimpsettingsbox.c:732
+#: ../app/widgets/gimpsettingsbox.c:736
 msgid "_Open"
 msgstr "_Otwórz"
 
@@ -8412,6 +8412,46 @@ msgstr "Z_aznaczenie na ścieżkę (zaawansowane)"
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Zaawansowane opcje"
+
+#: ../app/actions/vectors-actions.c:304
+msgctxt "vectors-action"
+msgid "Select _Top Path"
+msgstr "Naj_wyższa ścieżka"
+
+#: ../app/actions/vectors-actions.c:305
+msgctxt "vectors-action"
+msgid "Select the topmost path"
+msgstr "Zaznacza najwyższą ścieżkę"
+
+#: ../app/actions/vectors-actions.c:310
+msgctxt "vectors-action"
+msgid "Select _Bottom Path"
+msgstr "N_ajniższa ścieżka"
+
+#: ../app/actions/vectors-actions.c:311
+msgctxt "vectors-action"
+msgid "Select the bottommost path"
+msgstr "Zaznacza najniższą ścieżkę"
+
+#: ../app/actions/vectors-actions.c:316
+msgctxt "vectors-action"
+msgid "Select _Previous Path"
+msgstr "Poprz_ednia ścieżka"
+
+#: ../app/actions/vectors-actions.c:317
+msgctxt "vectors-action"
+msgid "Select the path above the current path"
+msgstr "Zaznacza ścieżkę znajdującą się nad bieżącą ścieżką"
+
+#: ../app/actions/vectors-actions.c:322
+msgctxt "vectors-action"
+msgid "Select _Next Path"
+msgstr "_Następna ścieżka"
+
+#: ../app/actions/vectors-actions.c:323
+msgctxt "vectors-action"
+msgid "Select the vector below the current path"
+msgstr "Zaznacza wektor znajdujący się pod bieżącą ścieżką"
 
 #: ../app/actions/vectors-commands.c:162 ../app/actions/vectors-commands.c:719
 msgid "Path Attributes"
@@ -11753,7 +11793,7 @@ msgid "Pattern"
 msgstr "Deseń"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:374
+#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:375
 msgid "Gradient"
 msgstr "Gradient"
 
@@ -12962,6 +13002,11 @@ msgstr "Oderwanie zaznaczenia"
 msgid "Floated Layer"
 msgstr "Oderwana warstwa"
 
+#: ../app/core/gimpsettings.c:151
+#, c-format
+msgid "Last used: %s"
+msgstr "Ostatnio używane: %s"
+
 #: ../app/core/gimpstrokeoptions.c:156
 msgid "Method"
 msgstr "Metoda"
@@ -13837,7 +13882,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
 #: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:348
 #: ../app/tools/gimpmeasuretool.c:649 ../app/widgets/gimpcontrollerlist.c:640
-#: ../app/widgets/gimppdbdialog.c:175 ../app/widgets/gimpsettingsbox.c:659
+#: ../app/widgets/gimppdbdialog.c:175 ../app/widgets/gimpsettingsbox.c:663
 #: ../app/widgets/gimptexteditor.c:162
 msgid "_Close"
 msgstr "Za_mknij"
@@ -17539,14 +17584,36 @@ msgstr "Ołówek"
 msgid "Perspective Clone"
 msgstr "Klon perspektywy"
 
-#: ../app/paint/gimpsmudge.c:85 ../app/tools/gimpsmudgetool.c:54
+#: ../app/paint/gimpsmudge.c:85 ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge"
 msgstr "Rozsmarowywanie"
 
-#: ../app/paint/gimpsmudgeoptions.c:66
+#: ../app/paint/gimpsmudgeoptions.c:70
 msgctxt "smudge-tool"
 msgid "Rate"
 msgstr "Tempo"
+
+#: ../app/paint/gimpsmudgeoptions.c:71
+msgid "The strength of smudging"
+msgstr "Siła rozsmarowywania"
+
+#: ../app/paint/gimpsmudgeoptions.c:77
+msgctxt "smudge-tool"
+msgid "Flow"
+msgstr "Strumień"
+
+#: ../app/paint/gimpsmudgeoptions.c:78
+msgid "The amount of brush color to blend"
+msgstr "Ilość kolorów pędzla do mieszania"
+
+#: ../app/paint/gimpsmudgeoptions.c:84
+msgctxt "smudge-tool"
+msgid "No erasing effect"
+msgstr "Bez efektu wycierania"
+
+#: ../app/paint/gimpsmudgeoptions.c:85
+msgid "Never decrease alpha of existing pixels"
+msgstr "Bez zmniejszania alfy istniejących pikseli"
 
 #: ../app/paint/gimpsourcecore.c:239
 msgid "Set a source image first."
@@ -18772,85 +18839,89 @@ msgstr "Spirala: "
 msgid "Supernova: "
 msgstr "Supernowa: "
 
-#: ../app/propgui/gimppropgui.c:141
-msgid "New Seed"
-msgstr "Nowe ziarno"
-
-#: ../app/propgui/gimppropgui.c:392
-msgid "Pick color from the image"
-msgstr "Proszę wybrać kolor z obrazu"
-
-#: ../app/propgui/gimppropgui.c:528
-msgid "This operation has no editable properties"
-msgstr "To działanie nie ma modyfikowalnych właściwości"
-
-#: ../app/propgui/gimppropgui.c:652
+#: ../app/propgui/gimppropgui-utils.c:70
 msgid "1,700 K – Match flame"
 msgstr "1,700 K – płomień zapałki"
 
-#: ../app/propgui/gimppropgui.c:653
+#: ../app/propgui/gimppropgui-utils.c:71
 msgid "1,850 K – Candle flame, sunset/sunrise"
 msgstr "1,850 K – płomień świecy, zachód/wschód słońca"
 
-#: ../app/propgui/gimppropgui.c:654
+#: ../app/propgui/gimppropgui-utils.c:72
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr "3,000 K – miękkie (lub ciepłe) białe, kompaktowe lampy fluorescencyjne"
 
-#: ../app/propgui/gimppropgui.c:655
+#: ../app/propgui/gimppropgui-utils.c:73
 msgid "3,300 K – Incandescent lamps"
 msgstr "3,300 K – żarówki żarzeniowe"
 
-#: ../app/propgui/gimppropgui.c:656
+#: ../app/propgui/gimppropgui-utils.c:74
 msgid "3,200 K – Studio lamps, photofloods, etc."
 msgstr "3,200 K – oświetlenie studyjne, fotograficzne itp."
 
-#: ../app/propgui/gimppropgui.c:657
+#: ../app/propgui/gimppropgui-utils.c:75
 msgid "3,350 K – Studio \"CP\" light"
 msgstr "3,350 K – studyjne oświetlenie „CP”"
 
-#: ../app/propgui/gimppropgui.c:658
+#: ../app/propgui/gimppropgui-utils.c:76
 msgid "4,100 K – Moonlight"
 msgstr "4,100 K – światło księżyca"
 
-#: ../app/propgui/gimppropgui.c:659
+#: ../app/propgui/gimppropgui-utils.c:77
 msgid "5,000 K – D50"
 msgstr "5,000 K – D50"
 
-#: ../app/propgui/gimppropgui.c:660
+#: ../app/propgui/gimppropgui-utils.c:78
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
 msgstr "5,000 K – zimne, białe/dzienne, kompaktowe lampy fluorescencyjne"
 
-#: ../app/propgui/gimppropgui.c:661
+#: ../app/propgui/gimppropgui-utils.c:79
 msgid "5,000 K – Horizon daylight"
 msgstr "5,000 K – horyzontalne światło dzienne"
 
-#: ../app/propgui/gimppropgui.c:662
+#: ../app/propgui/gimppropgui-utils.c:80
 msgid "5,500 K – D55"
 msgstr "5,500 K – D55"
 
-#: ../app/propgui/gimppropgui.c:663
+#: ../app/propgui/gimppropgui-utils.c:81
 msgid "5,500 K – Vertical daylight, electronic flash"
 msgstr "5,500 K – wertykalne światło dzienne, elektroniczne światło błyskowe"
 
-#: ../app/propgui/gimppropgui.c:664
+#: ../app/propgui/gimppropgui-utils.c:82
 msgid "6,200 K – Xenon short-arc lamp"
 msgstr "6,200 K – ksenonowa lampa łukowa"
 
-#: ../app/propgui/gimppropgui.c:665
+#: ../app/propgui/gimppropgui-utils.c:83
 msgid "6,500 K – D65"
 msgstr "6,500 K – D65"
 
-#: ../app/propgui/gimppropgui.c:666
+#: ../app/propgui/gimppropgui-utils.c:84
 msgid "6,500 K – Daylight, overcast"
 msgstr "6,500 K – dzienne światło w pochmurny dzień"
 
-#: ../app/propgui/gimppropgui.c:667
+#: ../app/propgui/gimppropgui-utils.c:85
 msgid "7,500 K – D75"
 msgstr "7,500 K – D75"
 
-#: ../app/propgui/gimppropgui.c:668
+#: ../app/propgui/gimppropgui-utils.c:86
 msgid "9,300 K"
 msgstr "9,300 K"
+
+#: ../app/propgui/gimppropgui-utils.c:101
+msgid "Choose from a list of common color temperatures"
+msgstr "Wybiera z listy często używanych temperatur kolorów"
+
+#: ../app/propgui/gimppropgui-utils.c:152
+msgid "New Seed"
+msgstr "Nowe ziarno"
+
+#: ../app/propgui/gimppropgui.c:367
+msgid "Pick color from the image"
+msgstr "Proszę wybrać kolor z obrazu"
+
+#: ../app/propgui/gimppropgui.c:502
+msgid "This operation has no editable properties"
+msgstr "To działanie nie ma modyfikowalnych właściwości"
 
 #. This is a so-called pangram; it's supposed to
 #. contain all characters found in the alphabet.
@@ -19100,7 +19171,7 @@ msgstr "Maksymalna głębia"
 msgid "Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:379
+#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:380
 msgid "Edit this gradient"
 msgstr "Modyfikuje ten gradient"
 
@@ -20455,11 +20526,11 @@ msgstr "Blokuje rozmiar pędzla do powiększenia"
 msgid "Fade Options"
 msgstr "Opcje zanikania"
 
-#: ../app/tools/gimppaintoptions-gui.c:369
+#: ../app/tools/gimppaintoptions-gui.c:370
 msgid "Color Options"
 msgstr "Opcje kolorów"
 
-#: ../app/tools/gimppaintoptions-gui.c:621
+#: ../app/tools/gimppaintoptions-gui.c:622
 msgid "Link to brush default"
 msgstr "Wiąże z domyślną wartością pędzla"
 
@@ -20862,19 +20933,19 @@ msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
 msgstr "Nachylenie poziome o %-3.3g, pionowe o %-3.3g"
 
-#: ../app/tools/gimpsmudgetool.c:55
+#: ../app/tools/gimpsmudgetool.c:56
 msgid "Smudge Tool: Smudge selectively using a brush"
 msgstr "Rozsmarowywanie: wybiórczo rozsmarowuje za pomocą pędzla"
 
-#: ../app/tools/gimpsmudgetool.c:56
+#: ../app/tools/gimpsmudgetool.c:57
 msgid "_Smudge"
 msgstr "Roz_smarowanie"
 
-#: ../app/tools/gimpsmudgetool.c:75
+#: ../app/tools/gimpsmudgetool.c:76
 msgid "Click to smudge"
 msgstr "Kliknięcie rozsmaruje"
 
-#: ../app/tools/gimpsmudgetool.c:76
+#: ../app/tools/gimpsmudgetool.c:77
 msgid "Click to smudge the line"
 msgstr "Kliknięcie rozsmaruje linię"
 
@@ -22849,52 +22920,56 @@ msgid "Invalid UTF-8"
 msgstr "Nieprawidłowe UTF-8"
 
 #: ../app/widgets/gimpsettingsbox.c:304
-msgid "Pick a setting from the list"
-msgstr "Pobierz ustawienia z listy"
+msgid "Pick a preset from the list"
+msgstr "Wybiera ustawienia z listy"
 
-#: ../app/widgets/gimpsettingsbox.c:327
-msgid "Add settings to favorites"
-msgstr "Dodaj ustawienia do ulubionych"
+#: ../app/widgets/gimpsettingsbox.c:328
+msgid "Save the current settings as named preset"
+msgstr "Zapisuje bieżące ustawienia"
 
-#: ../app/widgets/gimpsettingsbox.c:356
-msgid "_Import Settings from File..."
-msgstr "Za_importuj ustawienia z pliku…"
+#: ../app/widgets/gimpsettingsbox.c:346
+msgid "Manage presets"
+msgstr "Zarządza ustawieniami"
 
-#: ../app/widgets/gimpsettingsbox.c:362
-msgid "_Export Settings to File..."
-msgstr "Wy_eksportuj ustawienia do pliku…"
+#: ../app/widgets/gimpsettingsbox.c:360
+msgid "_Import Current Settings from File..."
+msgstr "Za_importuj bieżące ustawienia z pliku…"
 
-#: ../app/widgets/gimpsettingsbox.c:369
-msgid "_Manage Settings..."
-msgstr "_Zarządzaj ustawieniami…"
+#: ../app/widgets/gimpsettingsbox.c:366
+msgid "_Export Current Settings to File..."
+msgstr "Wy_eksportuj bieżące ustawienia do pliku…"
 
-#: ../app/widgets/gimpsettingsbox.c:609
-msgid "Add Settings to Favorites"
-msgstr "Dodaj ustawienia do ulubionych"
-
-#: ../app/widgets/gimpsettingsbox.c:612
-msgid "Enter a name for the settings"
-msgstr "Nazwa ustawień"
+#: ../app/widgets/gimpsettingsbox.c:373
+msgid "_Manage Saved Presets..."
+msgstr "_Zarządzaj zapisanymi ustawieniami…"
 
 #: ../app/widgets/gimpsettingsbox.c:613
+msgid "Save Settings as Named Preset"
+msgstr "Zapisanie ustawień"
+
+#: ../app/widgets/gimpsettingsbox.c:616
+msgid "Enter a name for the preset"
+msgstr "Nazwa ustawień"
+
+#: ../app/widgets/gimpsettingsbox.c:617
 msgid "Saved Settings"
 msgstr "Zapisane ustawienia"
 
-#: ../app/widgets/gimpsettingsbox.c:654
-msgid "Manage Saved Settings"
+#: ../app/widgets/gimpsettingsbox.c:658
+msgid "Manage Saved Presets"
 msgstr "Zarządzanie zapisanymi ustawieniami"
 
 #: ../app/widgets/gimpsettingseditor.c:195
-msgid "Import settings from a file"
-msgstr "Importowanie ustawień z pliku"
+msgid "Import presets from a file"
+msgstr "Importuje ustawienia z pliku"
 
 #: ../app/widgets/gimpsettingseditor.c:204
-msgid "Export the selected settings to a file"
-msgstr "Eksportowanie zaznaczonych ustawień do pliku"
+msgid "Export the selected presets to a file"
+msgstr "Eksportuje zaznaczone ustawienia do pliku"
 
 #: ../app/widgets/gimpsettingseditor.c:213
-msgid "Delete the selected settings"
-msgstr "Usunięcie wybranego ustawienia"
+msgid "Delete the selected preset"
+msgstr "Usuwa zaznaczone ustawienia"
 
 #: ../app/widgets/gimpsizebox.c:458
 #, c-format
