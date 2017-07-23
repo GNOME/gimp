@@ -76,7 +76,7 @@ m4_define([openexr_required_version], [1.6.1])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([intltool_required_version], [0.40.1])
 m4_define([python2_required_version], [2.5.0])
-m4_define([webp_required_version], [0.5.1])
+m4_define([webp_required_version], [0.6.0])
 m4_define([webpmux_required_version], [0.5.1])
 m4_define([webpdemux_required_version], [0.5.1])
 
