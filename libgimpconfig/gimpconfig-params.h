@@ -89,6 +89,18 @@ G_BEGIN_DECLS
                                    min, max, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
+#define GIMP_CONFIG_PROP_INT64(class, id, name, nick, blurb, min, max, default, flags) \
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_int64 (name, nick, blurb,\
+                                   min, max, default,\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+
+#define GIMP_CONFIG_PROP_UINT64(class, id, name, nick, blurb, min, max, default, flags) \
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_uint64 (name, nick, blurb,\
+                                   min, max, default,\
+                                   flags | GIMP_CONFIG_PARAM_FLAGS))
+
 #define GIMP_CONFIG_PROP_UNIT(class, id, name, nick, blurb, pixels, percent, default, flags) \
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_unit (name, nick, blurb,\
