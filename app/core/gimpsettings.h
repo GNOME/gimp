@@ -39,7 +39,7 @@ struct _GimpSettings
 {
   GimpViewable  parent_instance;
 
-  guint         time;
+  gint64        time;
 };
 
 struct _GimpSettingsClass
