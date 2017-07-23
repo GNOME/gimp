@@ -405,7 +405,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Edit metadata (IPTC, GPS, DICOM)"),
+                          N_("Edit metadata (IPTC, EXIF, XMP)"),
                           "Edit metadata information attached to the "
                           "current image. Some or all of this metadata "
                           "will be saved in the file, depending on the output "
@@ -1623,7 +1623,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 3; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      marked[i].display);
+                                      gettext (marked[i].display));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
@@ -1631,7 +1631,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 9; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      urgency[i]);
+                                      gettext (urgency[i]));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
@@ -1639,7 +1639,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 13; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      minormodelagedisclosure[i].display);
+                                      gettext (minormodelagedisclosure[i].display));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
@@ -1647,7 +1647,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 4; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      modelreleasestatus[i].display);
+                                      gettext (modelreleasestatus[i].display));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
   gtk_widget_get_size_request (combo_widget, &width, &height);
@@ -1657,7 +1657,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 4; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      digitalsourcetype[i].display);
+                                      gettext (digitalsourcetype[i].display));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
@@ -1665,7 +1665,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 4; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      propertyreleasestatus[i].display);
+                                      gettext (propertyreleasestatus[i].display));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
   gtk_widget_get_size_request (combo_widget, &width, &height);
@@ -1675,7 +1675,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 4; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      dicom[i].display);
+                                      gettext (dicom[i].display));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
@@ -1683,7 +1683,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 3; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gpslatref[i]);
+                                      gettext (gpslatref[i]));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
@@ -1691,7 +1691,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 3; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gpslngref[i]);
+                                      gettext (gpslngref[i]));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
@@ -1699,7 +1699,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 3; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gpsaltref[i]);
+                                      gettext (gpsaltref[i]));
     }
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
 
@@ -1707,7 +1707,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
   for (i = 0; i < 2; i++)
     {
       gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_widget),
-                                      gpsaltsys[i]);
+                                      gettext (gpsaltsys[i]));
     }
 
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_widget), 0);
@@ -2962,7 +2962,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                           break;
                         }
 
-                      if (! strcmp (modelreleasestatus[loop].display, value))
+                      if (! strcmp (gettext (modelreleasestatus[loop].display),
+                                    value))
                         {
                           gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
                           break;
@@ -2982,7 +2983,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                           break;
                         }
 
-                      if (! strcmp (digitalsourcetype[loop].display, value))
+                      if (! strcmp (gettext (digitalsourcetype[loop].display),
+                                    value))
                         {
                           gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
                           break;
@@ -3002,7 +3004,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                           break;
                         }
 
-                      if (! strcmp (propertyreleasestatus[loop].display, value))
+                      if (! strcmp (gettext (propertyreleasestatus[loop].display),
+                                    value))
                         {
                           gtk_combo_box_set_active (GTK_COMBO_BOX (widget), loop);
                           break;
@@ -3062,7 +3065,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                     {
                       gtk_list_store_append (phonestore, &phoneiter);
                       gtk_list_store_set (phonestore, &phoneiter,
-                                          0, phone_types[i].display, -1);
+                                          0, gettext (phone_types[i].display),
+                                          -1);
                     }
                   phonemodel = GTK_TREE_MODEL (phonestore);
 
@@ -3253,21 +3257,23 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                           gchar type2[256];
                           gint  types;
 
-                          strcpy (type1, phone_types[0].display);
-                          strcpy (type2, phone_types[0].display);
+                          strcpy (type1, gettext (phone_types[0].display));
+                          strcpy (type2, gettext (phone_types[0].display));
 
                           for (types = 0; types < 6; types++)
                             {
                               if (! strcmp (tagdata[item][3],
                                             phone_types[types].data))
                                 {
-                                  strcpy (type1, phone_types[types].display);
+                                  strcpy (type1,
+                                          gettext (phone_types[types].display));
                                 }
 
                               if (! strcmp (tagdata[item][5],
                                             phone_types[types].data))
                                 {
-                                  strcpy (type2, phone_types[types].display);
+                                  strcpy (type2,
+                                          gettext (phone_types[types].display));
                                 }
                             }
 
@@ -3295,9 +3301,9 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                                               COL_LICENSOR_NAME, NULL,
                                               COL_LICENSOR_ID, NULL,
                                               COL_LICENSOR_PHONE1, NULL,
-                                              COL_LICENSOR_PHONE_TYPE1, phone_types[0].display,
+                                              COL_LICENSOR_PHONE_TYPE1, gettext (phone_types[0].display),
                                               COL_LICENSOR_PHONE2, NULL,
-                                              COL_LICENSOR_PHONE_TYPE1, phone_types[0].display,
+                                              COL_LICENSOR_PHONE_TYPE1, gettext (phone_types[0].display),
                                               COL_LICENSOR_EMAIL, NULL,
                                               COL_LICENSOR_WEB, NULL,
                                               -1);
@@ -4927,7 +4933,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               for (types = 0; types < 6; types++)
                 {
-                  if (! strcmp (tag_data, phone_types[types].display))
+                  if (! strcmp (tag_data, gettext (phone_types[types].display)))
                     {
                       strcpy (type1, phone_types[types].data);
                       break;
@@ -4960,8 +4966,9 @@ metadata_editor_write_callback (GtkWidget  *dialog,
             {
               for (types = 0; types < 6; types++)
                 {
-                  g_print("%d %s %s\n", types, tag_data, phone_types[types].display);
-                  if (! strcmp (tag_data, phone_types[types].display))
+                  g_print ("%d %s %s\n", types, tag_data,
+                           gettext (phone_types[types].display));
+                  if (! strcmp (tag_data, gettext (phone_types[types].display)))
                     {
                       g_print("%d %s \n", types, phone_types[types].data);
                       strcpy (type2, phone_types[types].data);

@@ -223,6 +223,7 @@ plug-ins/map-object/map-object-apply.c
 plug-ins/map-object/map-object-main.c
 plug-ins/map-object/map-object-ui.c
 plug-ins/metadata/metadata-editor.c
+plug-ins/metadata/metadata-tags.h
 plug-ins/metadata/metadata-viewer.c
 plug-ins/pagecurl/pagecurl.c
 plug-ins/print/print-draw-page.c

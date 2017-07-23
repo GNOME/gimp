@@ -247,11 +247,11 @@ static const metadata_tag equivalent_metadata_tags[] =
  */
 static const combobox_str_tag digitalsourcetype[] =
 {
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture", "Original digital capture of a real life scene"    },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/negativeFilm",   "Digitised from a negative on film"                },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/positiveFilm",   "Digitised from a positive on film"                },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/print",          "Digitised from a print on non-transparent medium" },
-  { "http://cv.iptc.org/newscodes/digitalsourcetype/softwareImage",  "Created by software"                              }
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/digitalCapture", N_("Original digital capture of a real life scene")    },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/negativeFilm",   N_("Digitised from a negative on film")                },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/positiveFilm",   N_("Digitised from a positive on film")                },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/print",          N_("Digitised from a print on non-transparent medium") },
+  { "http://cv.iptc.org/newscodes/digitalsourcetype/softwareImage",  N_("Created by software")                              }
 };
 
 /* Model Release Status Combobox Items
@@ -259,10 +259,10 @@ static const combobox_str_tag digitalsourcetype[] =
  */
 static const combobox_str_tag modelreleasestatus[] =
 {
-  { "http://ns.useplus.org/ldf/vocab/MR-NON", "None"                                 },
-  { "http://ns.useplus.org/ldf/vocab/MR-NAP", "Not Applicable"                       },
-  { "http://ns.useplus.org/ldf/vocab/MR-NAP", "Unlimited Model Releases"             },
-  { "http://ns.useplus.org/ldf/vocab/MR-LPR", "Limited or Incomplete Model Releases" }
+  { "http://ns.useplus.org/ldf/vocab/MR-NON", N_("None")                                 },
+  { "http://ns.useplus.org/ldf/vocab/MR-NAP", N_("Not Applicable")                       },
+  { "http://ns.useplus.org/ldf/vocab/MR-NAP", N_("Unlimited Model Releases")             },
+  { "http://ns.useplus.org/ldf/vocab/MR-LPR", N_("Limited or Incomplete Model Releases") }
 };
 
 /* Property Release Status Combobox Items
@@ -270,10 +270,10 @@ static const combobox_str_tag modelreleasestatus[] =
  */
 static const combobox_str_tag propertyreleasestatus[] =
 {
-  { "http://ns.useplus.org/ldf/vocab/PR-NON", "None"                                    },
-  { "http://ns.useplus.org/ldf/vocab/PR-NAP", "Not Applicable"                          },
-  { "http://ns.useplus.org/ldf/vocab/PR-NAP", "Unlimited Property Releases"             },
-  { "http://ns.useplus.org/ldf/vocab/PR-LPR", "Limited or Incomplete Property Releases" }
+  { "http://ns.useplus.org/ldf/vocab/PR-NON", N_("None")                                    },
+  { "http://ns.useplus.org/ldf/vocab/PR-NAP", N_("Not Applicable")                          },
+  { "http://ns.useplus.org/ldf/vocab/PR-NAP", N_("Unlimited Property Releases")             },
+  { "http://ns.useplus.org/ldf/vocab/PR-LPR", N_("Limited or Incomplete Property Releases") }
 };
 
 /* Minor Model Age Disclosure Combobox Items
@@ -281,44 +281,44 @@ static const combobox_str_tag propertyreleasestatus[] =
  */
 static const combobox_str_tag minormodelagedisclosure[] =
 {
-  { "http://ns.useplus.org/ldf/vocab/AG-UNK", "Age Unknown"     },
-  { "http://ns.useplus.org/ldf/vocab/AG-A25", "Age 25 or Over"  },
-  { "http://ns.useplus.org/ldf/vocab/AG-A24", "Age 24"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A23", "Age 23"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A22", "Age 22"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A21", "Age 21"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A20", "Age 20"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A19", "Age 19"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A18", "Age 18"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A17", "Age 17"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A16", "Age 16"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-A15", "Age 15"          },
-  { "http://ns.useplus.org/ldf/vocab/AG-U14", "Age 14 or Under" }
+  { "http://ns.useplus.org/ldf/vocab/AG-UNK", N_("Age Unknown")     },
+  { "http://ns.useplus.org/ldf/vocab/AG-A25", N_("Age 25 or Over")  },
+  { "http://ns.useplus.org/ldf/vocab/AG-A24", N_("Age 24")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A23", N_("Age 23")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A22", N_("Age 22")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A21", N_("Age 21")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A20", N_("Age 20")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A19", N_("Age 19")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A18", N_("Age 18")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A17", N_("Age 17")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A16", N_("Age 16")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-A15", N_("Age 15")          },
+  { "http://ns.useplus.org/ldf/vocab/AG-U14", N_("Age 14 or Under") }
 };
 
 /* Urgency */
 static const gchar *urgency[] =
 {
-  "None", "High", "2", "3", "4", "Normal", "6", "7", "Low"
+  N_("None"), N_("High"), N_("2"), N_("3"), N_("4"), N_("Normal"), N_("6"), N_("7"), N_("Low")
 };
 
 /* Marked */
 static const combobox_int_tag marked[] =
 {
-  { -1,     "Unknown"       }, // DO NOT SAVE
-  {  TRUE,  "Copyrighted"   }, // TRUE
-  {  FALSE, "Public Domain" }, // FALSE
+  { -1,     N_("Unknown")       }, // DO NOT SAVE
+  {  TRUE,  N_("Copyrighted")   }, // TRUE
+  {  FALSE, N_("Public Domain") }, // FALSE
 };
 
 /* Phone Types */
 static const combobox_str_tag phone_types[] =
 {
-  { "",                                      "Select a value" },
-  { "http://ns.useplus.org/ldf/vocab/work",  "Work"  },
-  { "http://ns.useplus.org/ldf/vocab/cell",  "Cell"  },
-  { "http://ns.useplus.org/ldf/vocab/fax",   "Fax"   },
-  { "http://ns.useplus.org/ldf/vocab/home",  "Home"  },
-  { "http://ns.useplus.org/ldf/vocab/pager", "Pager" }
+  { "",                                      N_("Select a value") },
+  { "http://ns.useplus.org/ldf/vocab/work",  N_("Work")  },
+  { "http://ns.useplus.org/ldf/vocab/cell",  N_("Cell")  },
+  { "http://ns.useplus.org/ldf/vocab/fax",   N_("Fax")   },
+  { "http://ns.useplus.org/ldf/vocab/home",  N_("Home")  },
+  { "http://ns.useplus.org/ldf/vocab/pager", N_("Pager") }
 };
 
 /* DICOM Patient Sex
@@ -329,28 +329,28 @@ static const combobox_str_tag phone_types[] =
  */
 static const combobox_str_tag dicom[] =
 {
-  { "",        "Select a value" },
-  { "male",    "Male"    },
-  { "female",  "Female"  },
-  { "other",   "Other"   },
+  { "",        N_("Select a value") },
+  { "male",    N_("Male")    },
+  { "female",  N_("Female")  },
+  { "other",   N_("Other")   },
 };
 
 /* GPS Altitute Ref */
 static const gchar *gpsaltref[] =
 {
-  "Unknown", "Above Sea Level", "Below Sea Level"
+  N_("Unknown"), N_("Above Sea Level"), N_("Below Sea Level")
 };
 
 /* GPS Latitute Ref */
 static const gchar *gpslatref[] =
 {
-  "Unknown", "North", "South"
+  N_("Unknown"), N_("North"), N_("South")
 };
 
 /* GPS Longitute Ref */
 static const gchar *gpslngref[] =
 {
-  "Unknown", "East", "West"
+  N_("Unknown"), N_("East"), N_("West")
 };
 
 /* GPS Measurement System */
