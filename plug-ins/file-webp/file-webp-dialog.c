@@ -32,11 +32,14 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static void           save_dialog_toggle_scale   (GtkWidget  *widget,
-                                                  gpointer    data);
+static void           save_dialog_toggle_scale   (GtkWidget     *widget,
+                                                  gpointer       data);
 
-static void           save_dialog_toggle_minsize (GtkWidget  *widget,
-                                                  gpointer    data);
+static void           save_dialog_toggle_minsize (GtkWidget     *widget,
+                                                  gpointer       data);
+
+static void           show_maxkeyframe_hints     (GtkAdjustment *adj,
+                                                  GtkLabel      *label);
 
 
 static void
@@ -53,6 +56,27 @@ save_dialog_toggle_minsize (GtkWidget *widget,
 {
   gtk_widget_set_sensitive (GTK_WIDGET (data),
                             ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
+}
+
+static void
+show_maxkeyframe_hints (GtkAdjustment *adj,
+                        GtkLabel      *label)
+{
+  gint kmax;
+
+  kmax = (gint) gtk_adjustment_get_value (adj);
+  if (kmax == 0)
+    {
+      gtk_label_set_text (label, _("(no keyframes)"));
+    }
+  else if (kmax == 1)
+    {
+      gtk_label_set_text (label, _("(all frames are keyframes)"));
+    }
+  else
+    {
+      gtk_label_set_text (label, "");
+    }
 }
 
 gboolean
@@ -178,14 +202,16 @@ save_dialog (WebPSaveParams *params,
 
   if (animation_supported)
     {
-      GtkWidget     *animation_box;
-      GtkAdjustment *adj;
-      GtkWidget     *delay;
-      GtkWidget     *hbox;
-      GtkWidget     *label_kf;
-      GtkAdjustment *adj_kf;
-      GtkWidget     *kf_distance;
-      GtkWidget     *hbox_kf;
+      GtkWidget      *animation_box;
+      GtkAdjustment  *adj;
+      GtkWidget      *delay;
+      GtkWidget      *hbox;
+      GtkWidget      *label_kf;
+      GtkAdjustment  *adj_kf;
+      GtkWidget      *kf_distance;
+      GtkWidget      *hbox_kf;
+      PangoAttrList  *attrs;
+      PangoAttribute *attr;
 
       vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
       gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
@@ -251,7 +277,8 @@ save_dialog (WebPSaveParams *params,
 
       /* key-frame distance entry */
       adj_kf = (GtkAdjustment *) gtk_adjustment_new (params->kf_distance,
-                                                     1, 10000, 1, 10, 0);
+                                                     0.0, 10000.0,
+                                                     1.0, 10.0, 0.0);
       kf_distance = gtk_spin_button_new (adj_kf, 1, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (kf_distance), TRUE);
       gtk_box_pack_start (GTK_BOX (hbox_kf), kf_distance, FALSE, FALSE, 0);
@@ -260,6 +287,21 @@ save_dialog (WebPSaveParams *params,
       g_signal_connect (adj_kf, "value-changed",
                         G_CALLBACK (gimp_int_adjustment_update),
                         &params->kf_distance);
+
+      /* Add some hinting text for special values of key-frame distance. */
+      label_kf = gtk_label_new (NULL);
+      gtk_box_pack_start (GTK_BOX (hbox_kf), label_kf, FALSE, FALSE, 0);
+      gtk_widget_show (label_kf);
+
+      attrs = pango_attr_list_new ();
+      attr  = pango_attr_style_new (PANGO_STYLE_ITALIC);
+      pango_attr_list_insert (attrs, attr);
+      gtk_label_set_attributes (GTK_LABEL (label_kf), attrs);
+      pango_attr_list_unref (attrs);
+
+      g_signal_connect (adj_kf, "value-changed",
+                        G_CALLBACK (show_maxkeyframe_hints),
+                        label_kf);
 
       /* minimize-size checkbox */
       toggle_minsize = gtk_check_button_new_with_label (_("Minimize output size (slower)"));
