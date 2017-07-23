@@ -438,7 +438,7 @@ sanity_check_gexiv2 (void)
 
 #define GEXIV2_REQUIRED_MAJOR 0
 #define GEXIV2_REQUIRED_MINOR 10
-#define GEXIV2_REQUIRED_MICRO 3
+#define GEXIV2_REQUIRED_MICRO 6
 
   gint gexiv2_version = gexiv2_get_version ();
 
