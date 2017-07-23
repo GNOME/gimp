@@ -88,6 +88,7 @@ enum
   PREPARE_TO_REMOVE_SLIDER,
   REMOVE_SLIDER,
   SELECTION_CHANGED,
+  HANDLE_CLICKED,
   LAST_SIGNAL
 };
 
@@ -272,6 +273,18 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
                   NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  line_signals[HANDLE_CLICKED] =
+    g_signal_new ("handle-clicked",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpToolLineClass, handle_clicked),
+                  NULL, NULL,
+                  gimp_marshal_BOOLEAN__INT_UINT_ENUM,
+                  G_TYPE_BOOLEAN, 3,
+                  G_TYPE_INT,
+                  G_TYPE_UINT,
+                  GIMP_TYPE_BUTTON_PRESS_TYPE);
 
   g_object_class_install_property (object_class, PROP_X1,
                                    g_param_spec_double ("x1", NULL, NULL,
@@ -602,6 +615,7 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
 {
   GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
   GimpToolLinePrivate *private = line->private;
+  gboolean             result  = FALSE;
 
   private->grab          = GRAB_NONE;
   private->remove_slider = FALSE;
@@ -611,43 +625,64 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
   private->saved_x2 = private->x2;
   private->saved_y2 = private->y2;
 
-  if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->hover))
+  if (press_type         != GIMP_BUTTON_PRESS_NORMAL   &&
+      private->hover      > GIMP_TOOL_LINE_HANDLE_NONE &&
+      private->selection  > GIMP_TOOL_LINE_HANDLE_NONE)
     {
-      private->saved_slider_value =
-        gimp_tool_line_get_slider (line, private->hover)->value;
+      g_signal_emit (line, line_signals[HANDLE_CLICKED], 0,
+                     private->selection, state, press_type, &result);
+
+      if (! result)
+        gimp_tool_widget_hover (widget, coords, state, TRUE);
     }
 
-  if (private->hover > GIMP_TOOL_LINE_HANDLE_NONE)
+  if (press_type == GIMP_BUTTON_PRESS_NORMAL || ! result)
     {
-      gimp_tool_line_set_selection (line, private->hover);
+      private->saved_x1 = private->x1;
+      private->saved_y1 = private->y1;
+      private->saved_x2 = private->x2;
+      private->saved_y2 = private->y2;
 
-      private->grab = GRAB_SELECTION;
-    }
-  else if (private->hover == HOVER_NEW_SLIDER)
-    {
-      gint slider;
-
-      g_signal_emit (line, line_signals[ADD_SLIDER], 0,
-                     private->new_slider_value, &slider);
-
-      g_return_val_if_fail (slider < (gint) private->sliders->len, FALSE);
-
-      if (slider >= 0)
+      if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->hover))
         {
-          gimp_tool_line_set_selection (line, slider);
-
           private->saved_slider_value =
-            gimp_tool_line_get_slider (line, private->selection)->value;
+            gimp_tool_line_get_slider (line, private->hover)->value;
+        }
+
+      if (private->hover > GIMP_TOOL_LINE_HANDLE_NONE)
+        {
+          gimp_tool_line_set_selection (line, private->hover);
 
           private->grab = GRAB_SELECTION;
         }
-    }
-  else if (state & GRAB_LINE_MASK)
-    {
-      private->grab = GRAB_LINE;
+      else if (private->hover == HOVER_NEW_SLIDER)
+        {
+          gint slider;
+
+          g_signal_emit (line, line_signals[ADD_SLIDER], 0,
+                         private->new_slider_value, &slider);
+
+          g_return_val_if_fail (slider < (gint) private->sliders->len, FALSE);
+
+          if (slider >= 0)
+            {
+              gimp_tool_line_set_selection (line, slider);
+
+              private->saved_slider_value =
+                gimp_tool_line_get_slider (line, private->selection)->value;
+
+              private->grab = GRAB_SELECTION;
+            }
+        }
+      else if (state & GRAB_LINE_MASK)
+        {
+          private->grab = GRAB_LINE;
+        }
+
+      result = (private->grab != GRAB_NONE);
     }
 
-  if (grab == GRAB_NONE)
+  if (! result)
     {
       private->hover = GIMP_TOOL_LINE_HANDLE_NONE;
 
@@ -657,7 +692,7 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
   gimp_tool_line_update_handles (line);
   gimp_tool_line_update_status (line, state, TRUE);
 
-  return private->grab != GRAB_NONE;
+  return result;
 }
 
 void
@@ -700,12 +735,23 @@ gimp_tool_line_button_release (GimpToolWidget        *widget,
                         NULL);
         }
     }
-  else if (grab == GRAB_SELECTION && private->remove_slider)
+  else if (grab == GRAB_SELECTION)
     {
-      private->remove_slider = FALSE;
+      if (private->remove_slider)
+        {
+          private->remove_slider = FALSE;
 
-      g_signal_emit (line, line_signals[REMOVE_SLIDER], 0,
-                     private->selection);
+          g_signal_emit (line, line_signals[REMOVE_SLIDER], 0,
+                         private->selection);
+        }
+      else if (release_type == GIMP_BUTTON_RELEASE_CLICK)
+        {
+          gboolean result;
+
+          g_signal_emit (line, line_signals[HANDLE_CLICKED], 0,
+                         private->selection, state, GIMP_BUTTON_PRESS_NORMAL,
+                         &result);
+        }
     }
 }
 
