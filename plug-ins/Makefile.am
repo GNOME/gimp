@@ -5,7 +5,6 @@ help_browser = help-browser
 endif
 
 if HAVE_OPENEXR
-file_darktable = file-darktable
 file_exr = file-exr
 endif
 
@@ -41,6 +40,7 @@ SUBDIRS = \
 	file-ico		\
 	file-jpeg		\
 	file-psd		\
+	file-raw		\
 	file-rawtherapee	\
 	file-sgi		\
 	file-tiff		\

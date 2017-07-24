@@ -99,8 +99,6 @@ plug-ins/common/web-page.c
 plug-ins/file-bmp/bmp-load.c
 plug-ins/file-bmp/bmp-save.c
 plug-ins/file-bmp/bmp.c
-plug-ins/file-darktable/file-darktable.c
-plug-ins/file-darktable/file-formats.h
 plug-ins/file-exr/file-exr.c
 plug-ins/file-faxg3/faxg3.c
 plug-ins/file-fits/fits.c
@@ -118,6 +116,8 @@ plug-ins/file-psd/psd-save.c
 plug-ins/file-psd/psd-thumb-load.c
 plug-ins/file-psd/psd-util.c
 plug-ins/file-psd/psd.c
+plug-ins/file-raw/file-darktable.c
+plug-ins/file-raw/file-formats.h
 plug-ins/file-rawtherapee/file-formats.h
 plug-ins/file-rawtherapee/file-rawtherapee.c
 plug-ins/file-sgi/sgi.c
