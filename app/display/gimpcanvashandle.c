@@ -35,6 +35,11 @@
 #include "gimpdisplayshell.h"
 
 
+#define N_DASHES       8
+#define DASH_ON_RATIO  0.3
+#define DASH_OFF_RATIO 0.7
+
+
 enum
 {
   PROP_0,
@@ -261,6 +266,7 @@ gimp_canvas_handle_transform (GimpCanvasItem *item,
   switch (private->type)
     {
     case GIMP_HANDLE_SQUARE:
+    case GIMP_HANDLE_DASHED_SQUARE:
     case GIMP_HANDLE_FILLED_SQUARE:
       gimp_canvas_item_shift_to_north_west (private->anchor,
                                             *x, *y,
@@ -270,10 +276,12 @@ gimp_canvas_handle_transform (GimpCanvasItem *item,
       break;
 
     case GIMP_HANDLE_CIRCLE:
+    case GIMP_HANDLE_DASHED_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
     case GIMP_HANDLE_CROSSHAIR:
     case GIMP_HANDLE_DIAMOND:
+    case GIMP_HANDLE_DASHED_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
       gimp_canvas_item_shift_to_center (private->anchor,
                                         *x, *y,
@@ -306,8 +314,10 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
   switch (private->type)
     {
     case GIMP_HANDLE_SQUARE:
+    case GIMP_HANDLE_DASHED_SQUARE:
     case GIMP_HANDLE_FILLED_SQUARE:
     case GIMP_HANDLE_DIAMOND:
+    case GIMP_HANDLE_DASHED_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
     case GIMP_HANDLE_CROSS:
       cairo_save (cr);
@@ -318,8 +328,27 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
       switch (private->type)
         {
         case GIMP_HANDLE_SQUARE:
+        case GIMP_HANDLE_DASHED_SQUARE:
+          if (private->type == GIMP_HANDLE_DASHED_SQUARE)
+            {
+              gdouble circ;
+              gdouble dashes[2];
+
+              cairo_save (cr);
+
+              circ = 2.0 * ((private->width - 1.0) + (private->height - 1.0));
+
+              dashes[0] = (circ / N_DASHES) * DASH_ON_RATIO;
+              dashes[1] = (circ / N_DASHES) * DASH_OFF_RATIO;
+
+              cairo_set_dash (cr, dashes, 2, dashes[0] / 2.0);
+            }
+
           cairo_rectangle (cr, x, y, private->width - 1.0, private->height - 1.0);
           _gimp_canvas_item_stroke (item, cr);
+
+          if (private->type == GIMP_HANDLE_DASHED_SQUARE)
+            cairo_restore (cr);
           break;
 
         case GIMP_HANDLE_FILLED_SQUARE:
@@ -328,16 +357,37 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
           break;
 
         case GIMP_HANDLE_DIAMOND:
+        case GIMP_HANDLE_DASHED_DIAMOND:
         case GIMP_HANDLE_FILLED_DIAMOND:
+          if (private->type == GIMP_HANDLE_DASHED_DIAMOND)
+            {
+              gdouble circ;
+              gdouble dashes[2];
+
+              cairo_save (cr);
+
+              circ = 4.0 * hypot ((gdouble) private->width  / 2.0,
+                                  (gdouble) private->height / 2.0);
+
+              dashes[0] = (circ / N_DASHES) * DASH_ON_RATIO;
+              dashes[1] = (circ / N_DASHES) * DASH_OFF_RATIO;
+
+              cairo_set_dash (cr, dashes, 2, dashes[0] / 2.0);
+            }
+
           cairo_move_to (cr, x, y - (gdouble) private->height / 2.0);
           cairo_line_to (cr, x + (gdouble) private->width / 2.0, y);
           cairo_line_to (cr, x, y + (gdouble) private->height / 2.0);
           cairo_line_to (cr, x - (gdouble) private->width / 2.0, y);
           cairo_line_to (cr, x, y - (gdouble) private->height / 2.0);
-          if (private->type == GIMP_HANDLE_DIAMOND)
+          if (private->type == GIMP_HANDLE_DIAMOND ||
+              private->type == GIMP_HANDLE_DASHED_DIAMOND)
             _gimp_canvas_item_stroke (item, cr);
           else
             _gimp_canvas_item_fill (item, cr);
+
+          if (private->type == GIMP_HANDLE_DASHED_SQUARE)
+            cairo_restore (cr);
           break;
 
         case GIMP_HANDLE_CROSS:
@@ -356,11 +406,30 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
       break;
 
     case GIMP_HANDLE_CIRCLE:
+    case GIMP_HANDLE_DASHED_CIRCLE:
+      if (private->type == GIMP_HANDLE_DASHED_CIRCLE)
+        {
+          gdouble circ;
+          gdouble dashes[2];
+
+          cairo_save (cr);
+
+          circ = 2.0 * G_PI * (private->width / 2);
+
+          dashes[0] = (circ / N_DASHES) * DASH_ON_RATIO;
+          dashes[1] = (circ / N_DASHES) * DASH_OFF_RATIO;
+
+          cairo_set_dash (cr, dashes, 2, dashes[0] / 2.0);
+        }
+
       gimp_cairo_add_arc (cr, x, y, private->width / 2,
                           private->start_angle,
                           private->slice_angle);
 
       _gimp_canvas_item_stroke (item, cr);
+
+      if (private->type == GIMP_HANDLE_DASHED_CIRCLE)
+        cairo_restore (cr);
       break;
 
     case GIMP_HANDLE_FILLED_CIRCLE:
@@ -407,6 +476,7 @@ gimp_canvas_handle_get_extents (GimpCanvasItem *item)
   switch (private->type)
     {
     case GIMP_HANDLE_SQUARE:
+    case GIMP_HANDLE_DASHED_SQUARE:
     case GIMP_HANDLE_FILLED_SQUARE:
       w = private->width * (sqrt(2) - 1) / 2;
       h = private->height * (sqrt(2) - 1) / 2;
@@ -417,10 +487,12 @@ gimp_canvas_handle_get_extents (GimpCanvasItem *item)
       break;
 
     case GIMP_HANDLE_CIRCLE:
+    case GIMP_HANDLE_DASHED_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
     case GIMP_HANDLE_CROSSHAIR:
     case GIMP_HANDLE_DIAMOND:
+    case GIMP_HANDLE_DASHED_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
       rectangle.x      = x - private->width  / 2 - 2.0;
       rectangle.y      = y - private->height / 2 - 2.0;
@@ -456,11 +528,13 @@ gimp_canvas_handle_hit (GimpCanvasItem *item,
   switch (private->type)
     {
     case GIMP_HANDLE_DIAMOND:
+    case GIMP_HANDLE_DASHED_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
       angle -= G_PI / 4.0;
       diamond_offset_x = private->width / 2.0;
       diamond_offset_y = private->height / 2.0;
     case GIMP_HANDLE_SQUARE:
+    case GIMP_HANDLE_DASHED_SQUARE:
     case GIMP_HANDLE_FILLED_SQUARE:
       gimp_canvas_item_transform_xy_f (item,
                                        private->x, private->y,
@@ -472,6 +546,7 @@ gimp_canvas_handle_hit (GimpCanvasItem *item,
              my > handle_ty && my < handle_ty + private->height;
 
     case GIMP_HANDLE_CIRCLE:
+    case GIMP_HANDLE_DASHED_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
     case GIMP_HANDLE_CROSSHAIR:
