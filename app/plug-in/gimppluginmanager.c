@@ -132,29 +132,10 @@ gimp_plug_in_manager_finalize (GObject *object)
 {
   GimpPlugInManager *manager = GIMP_PLUG_IN_MANAGER (object);
 
-  if (manager->load_procs)
-    {
-      g_slist_free (manager->load_procs);
-      manager->load_procs = NULL;
-    }
-
-  if (manager->save_procs)
-    {
-      g_slist_free (manager->save_procs);
-      manager->save_procs = NULL;
-    }
-
-  if (manager->export_procs)
-    {
-      g_slist_free (manager->export_procs);
-      manager->export_procs = NULL;
-    }
-
-  if (manager->raw_load_procs)
-    {
-      g_slist_free (manager->raw_load_procs);
-      manager->raw_load_procs = NULL;
-    }
+  g_clear_pointer (&manager->load_procs,     g_slist_free);
+  g_clear_pointer (&manager->save_procs,     g_slist_free);
+  g_clear_pointer (&manager->export_procs,   g_slist_free);
+  g_clear_pointer (&manager->raw_load_procs, g_slist_free);
 
   if (manager->plug_in_procedures)
     {
@@ -173,11 +154,7 @@ gimp_plug_in_manager_finalize (GObject *object)
   g_clear_object (&manager->environ_table);
   g_clear_object (&manager->interpreter_db);
 
-  if (manager->debug)
-    {
-      gimp_plug_in_debug_free (manager->debug);
-      manager->debug = NULL;
-    }
+  g_clear_pointer (&manager->debug, gimp_plug_in_debug_free);
 
   gimp_plug_in_manager_menu_branch_exit (manager);
   gimp_plug_in_manager_locale_domain_exit (manager);
