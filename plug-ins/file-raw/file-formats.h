@@ -44,13 +44,10 @@ static const FileFormat file_formats[] =
 {
   {
     N_("Raw Canon"),
-    "image/x-canon-cr2,image/x-canon-crw,image/tiff",
-    "cr2,crw,tif,tiff",
-    "0,string,II*\\0\\020\\0\\0\\0CR,"             /* cr2  */
-    "0,string,II\\024\\0\\0\\0HEAPCCDR,"           /* crw  */
-    "0,string,MM\\0*\\0\\0\\0\\020\\0272\\0260,"   /* tiff */
-    "0,string,MM\\0*\\0\\0\\021\\064\\0\\04,"      /* tiff */
-    "0,string,II*\\0\\0\\03\\0\\0\\0377\\01",      /* tiff */
+    "image/x-canon-cr2,image/x-canon-crw",
+    "cr2,crw",
+    "0,string,II*\\0\\020\\0\\0\\0CR,"   /* cr2  */
+    "0,string,II\\024\\0\\0\\0HEAPCCDR", /* crw  */
 
     "file-%s-canon-load",
     "Load files in the Canon raw formats via %s",
@@ -125,10 +122,9 @@ static const FileFormat file_formats[] =
 
   {
     N_("Raw Kodak"),
-    "image/x-kodak-dc2,image/x-kodak-dcr,image/x-kodak-kdc,image/x-kodak-k25,image/x-kodak-kc2,image/tiff",
-    "dc2,dcr,kdc,k25,kc2,tif,tiff",
-    "0,string,MM\\0*\\0\\0\\021\\0166\\0\\04,"    /* tiff */
-    "0,string,II*\\0\\0\\03\\0\\0\\0174\\01",     /* tiff */
+    "image/x-kodak-dc2,image/x-kodak-dcr,image/x-kodak-kdc,image/x-kodak-k25,image/x-kodak-kc2",
+    "dc2,dcr,kdc,k25,kc2",
+    NULL,
 
     "file-%s-kodak-load",
     "Load files in the Kodak raw formats via %s",
