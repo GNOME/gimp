@@ -411,8 +411,8 @@ load_image (const gchar  *filename,
             GError      **error)
 {
   gint32  image_ID        = -1;
-  GFile  *lua_file        = gimp_data_directory_file ("file-darktable",
-                                                      "export-on-exit.lua",
+  GFile  *lua_file        = gimp_data_directory_file ("file-raw",
+                                                      "file-darktable-export-on-exit.lua",
                                                       NULL);
   gchar  *lua_script      = g_file_get_path (lua_file);
   gchar  *lua_quoted      = g_shell_quote (lua_script);
@@ -485,8 +485,8 @@ load_thumbnail_image (const gchar   *filename,
   gint32  image_ID         = -1;
   gchar  *filename_out     = gimp_temp_name ("jpg");
   gchar  *size             = g_strdup_printf ("%d", thumb_size);
-  GFile  *lua_file         = gimp_data_directory_file ("file-darktable",
-                                                       "get-size.lua",
+  GFile  *lua_file         = gimp_data_directory_file ("file-raw",
+                                                       "file-darktable-get-size.lua",
                                                        NULL);
   gchar  *lua_script       = g_file_get_path (lua_file);
   gchar  *lua_quoted       = g_shell_quote (lua_script);

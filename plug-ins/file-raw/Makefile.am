@@ -3,7 +3,7 @@
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
-filedarktabledatadir = $(gimpdatadir)/file-darktable
+filerawdatadir = $(gimpdatadir)/file-raw
 
 if OS_WIN32
 mwindows = -mwindows
@@ -39,8 +39,8 @@ file_darktable_LDADD = \
 	$(INTLLIBS)		\
 	$(file_darktable_RC)
 
-filedarktabledata_DATA = \
-	export-on-exit.lua	\
-	get-size.lua
+filerawdata_DATA = \
+	file-darktable-export-on-exit.lua	\
+	file-darktable-get-size.lua
 
-EXTRA_DIST = $(filedarktabledata_DATA)
+EXTRA_DIST = $(filerawdata_DATA)
