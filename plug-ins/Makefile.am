@@ -41,7 +41,6 @@ SUBDIRS = \
 	file-jpeg		\
 	file-psd		\
 	file-raw		\
-	file-rawtherapee	\
 	file-sgi		\
 	file-tiff		\
 	$(file_webp)		\

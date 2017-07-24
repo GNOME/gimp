@@ -140,10 +140,17 @@ init (void)
   for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
     {
       const FileFormat *format = &file_formats[i];
+      gchar            *load_proc;
+      gchar            *load_blurb;
+      gchar            *load_help;
 
-      gimp_install_procedure (format->load_proc,
-                              format->load_blurb,
-                              format->load_help,
+      load_proc  = g_strdup_printf (format->load_proc_format,  "rawtherapee");
+      load_blurb = g_strdup_printf (format->load_blurb_format, "rawtherapee");
+      load_help  = g_strdup_printf (format->load_help_format,  "rawtherapee");
+
+      gimp_install_procedure (load_proc,
+                              load_blurb,
+                              load_help,
                               "Alberto Griggio",
                               "Alberto Griggio",
                               "2017",
@@ -154,15 +161,19 @@ init (void)
                               G_N_ELEMENTS (load_return_vals),
                               load_args, load_return_vals);
 
-      gimp_register_file_handler_mime (format->load_proc,
+      gimp_register_file_handler_mime (load_proc,
                                        format->mime_type);
-      gimp_register_file_handler_raw (format->load_proc);
-      gimp_register_magic_load_handler (format->load_proc,
+      gimp_register_file_handler_raw (load_proc);
+      gimp_register_magic_load_handler (load_proc,
                                         format->extensions,
                                         "",
                                         format->magic);
 
-      gimp_register_thumbnail_loader (format->load_proc, LOAD_THUMB_PROC);
+      gimp_register_thumbnail_loader (load_proc, LOAD_THUMB_PROC);
+
+      g_free (load_proc);
+      g_free (load_blurb);
+      g_free (load_help);
     }
 }
 
@@ -204,9 +215,13 @@ run (const gchar      *name,
   /* check if the format passed is actually supported & load */
   for (i = 0; i < G_N_ELEMENTS (file_formats); i++)
     {
-      const FileFormat *format = &file_formats[i];
+      const FileFormat *format    = &file_formats[i];
+      gchar            *load_proc = NULL;
 
-      if (format->load_proc && ! strcmp (name, format->load_proc))
+      if (format->load_proc_format)
+        load_proc = g_strdup_printf (format->load_proc_format, "rawtherapee");
+
+      if (load_proc && ! strcmp (name, load_proc))
         {
           image_ID = load_image (param[1].data.d_string, run_mode, &error);
 

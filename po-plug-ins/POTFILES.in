@@ -118,8 +118,7 @@ plug-ins/file-psd/psd-util.c
 plug-ins/file-psd/psd.c
 plug-ins/file-raw/file-darktable.c
 plug-ins/file-raw/file-formats.h
-plug-ins/file-rawtherapee/file-formats.h
-plug-ins/file-rawtherapee/file-rawtherapee.c
+plug-ins/file-raw/file-rawtherapee.c
 plug-ins/file-sgi/sgi.c
 plug-ins/file-tiff/file-tiff.c
 plug-ins/file-tiff/file-tiff-load.c
