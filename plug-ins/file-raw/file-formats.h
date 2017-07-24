@@ -29,9 +29,9 @@ struct _FileFormat
   const gchar *extensions;
   const gchar *magic;
 
-  const gchar *load_proc;
-  const gchar *load_blurb;
-  const gchar *load_help;
+  const gchar *load_proc_format;
+  const gchar *load_blurb_format;
+  const gchar *load_help_format;
 };
 
 /* some magic numbers taken from
@@ -52,9 +52,9 @@ static const FileFormat file_formats[] =
     "0,string,MM\\0*\\0\\0\\021\\064\\0\\04,"      /* tiff */
     "0,string,II*\\0\\0\\03\\0\\0\\0377\\01",      /* tiff */
 
-    "file-darktable-canon-load",
-    "Load files in the Canon raw formats via darktable",
-    "This plug-in loads files in Canon's raw formats by calling darktable."
+    "file-%s-canon-load",
+    "Load files in the Canon raw formats via %s",
+    "This plug-in loads files in Canon's raw formats by calling %s."
   },
 
   {
@@ -63,9 +63,9 @@ static const FileFormat file_formats[] =
     "nef,nrw",
     NULL,
 
-    "file-darktable-nikon-load",
-    "Load files in the Nikon raw formats via darktable",
-    "This plug-in loads files in Nikon's raw formats by calling darktable."
+    "file-%s-nikon-load",
+    "Load files in the Nikon raw formats via %s",
+    "This plug-in loads files in Nikon's raw formats by calling %s."
   },
 
   {
@@ -74,9 +74,9 @@ static const FileFormat file_formats[] =
     "3fr,fff",
     NULL,
 
-    "file-darktable-hasselblad-load",
-    "Load files in the Hasselblad raw formats via darktable",
-    "This plug-in loads files in Hasselblad's raw formats by calling darktable."
+    "file-%s-hasselblad-load",
+    "Load files in the Hasselblad raw formats via %s",
+    "This plug-in loads files in Hasselblad's raw formats by calling %s."
   },
 
   {
@@ -85,9 +85,9 @@ static const FileFormat file_formats[] =
     "arw,srf,sr2",
     NULL,
 
-    "file-darktable-sony-load",
-    "Load files in the Sony raw formats via darktable",
-    "This plug-in loads files in Sony's raw formats by calling darktable."
+    "file-%s-sony-load",
+    "Load files in the Sony raw formats via %s",
+    "This plug-in loads files in Sony's raw formats by calling %s."
   },
 
   {
@@ -96,9 +96,9 @@ static const FileFormat file_formats[] =
     "bay",
     NULL,
 
-    "file-darktable-bay-load",
-    "Load files in the BAY raw format via darktable",
-    "This plug-in loads files in Casio's raw BAY format by calling darktable."
+    "file-%s-bay-load",
+    "Load files in the BAY raw format via %s",
+    "This plug-in loads files in Casio's raw BAY format by calling %s."
   },
 
   {
@@ -107,9 +107,9 @@ static const FileFormat file_formats[] =
     "cine,cin",
     NULL,
 
-    "file-darktable-cine-load",
-    "Load files in the CINE raw format via darktable",
-    "This plug-in loads files in Phantom Software's raw CINE format by calling darktable."
+    "file-%s-cine-load",
+    "Load files in the CINE raw format via %s",
+    "This plug-in loads files in Phantom Software's raw CINE format by calling %s."
   },
 
   {
@@ -118,9 +118,9 @@ static const FileFormat file_formats[] =
     "cs1,ia,sti",
     NULL,
 
-    "file-darktable-sinar-load",
-    "Load files in the Sinar raw formats via darktable",
-    "This plug-in loads files in Sinar's raw formats by calling darktable."
+    "file-%s-sinar-load",
+    "Load files in the Sinar raw formats via %s",
+    "This plug-in loads files in Sinar's raw formats by calling %s."
   },
 
   {
@@ -130,9 +130,9 @@ static const FileFormat file_formats[] =
     "0,string,MM\\0*\\0\\0\\021\\0166\\0\\04,"    /* tiff */
     "0,string,II*\\0\\0\\03\\0\\0\\0174\\01",     /* tiff */
 
-    "file-darktable-kodak-load",
-    "Load files in the Kodak raw formats via darktable",
-    "This plug-in loads files in Kodak's raw formats by calling darktable."
+    "file-%s-kodak-load",
+    "Load files in the Kodak raw formats via %s",
+    "This plug-in loads files in Kodak's raw formats by calling %s."
   },
 
   {
@@ -141,9 +141,9 @@ static const FileFormat file_formats[] =
     "dng",
     NULL,
 
-    "file-darktable-dng-load",
-    "Load files in the DNG raw format via darktable",
-    "This plug-in loads files in the Adobe Digital Negative DNG format by calling darktable."
+    "file-%s-dng-load",
+    "Load files in the DNG raw format via %s",
+    "This plug-in loads files in the Adobe Digital Negative DNG format by calling %s."
   },
 
   {
@@ -152,9 +152,9 @@ static const FileFormat file_formats[] =
     "erf",
     NULL,
 
-    "file-darktable-erf-load",
-    "Load files in the ERF raw format via darktable",
-    "This plug-in loads files in Epson's raw ERF format by calling darktable."
+    "file-%s-erf-load",
+    "Load files in the ERF raw format via %s",
+    "This plug-in loads files in Epson's raw ERF format by calling %s."
   },
 
   {
@@ -163,9 +163,9 @@ static const FileFormat file_formats[] =
     "cap,iiq",
     NULL,
 
-    "file-darktable-phaseone-load",
-    "Load files in the Phase One raw formats via darktable",
-    "This plug-in loads files in Phase One's raw formats by calling darktable."
+    "file-%s-phaseone-load",
+    "Load files in the Phase One raw formats via %s",
+    "This plug-in loads files in Phase One's raw formats by calling %s."
   },
 
   {
@@ -174,9 +174,9 @@ static const FileFormat file_formats[] =
     "mdc,mrw",
     NULL,
 
-    "file-darktable-minolta-load",
-    "Load files in the Minolta raw formats via darktable",
-    "This plug-in loads files in Minolta's raw formats by calling darktable."
+    "file-%s-minolta-load",
+    "Load files in the Minolta raw formats via %s",
+    "This plug-in loads files in Minolta's raw formats by calling %s."
   },
 
   {
@@ -184,9 +184,9 @@ static const FileFormat file_formats[] =
     "image/x-mamiya-mef",
     "mef", NULL,
 
-    "file-darktable-mef-load",
-    "Load files in the MEF raw format via darktable",
-    "This plug-in loads files in Mamiya's raw MEF format by calling darktable."
+    "file-%s-mef-load",
+    "Load files in the MEF raw format via %s",
+    "This plug-in loads files in Mamiya's raw MEF format by calling %s."
   },
 
   {
@@ -195,9 +195,9 @@ static const FileFormat file_formats[] =
     "mos",
     NULL,
 
-    "file-darktable-mos-load",
-    "Load files in the MOS raw format via darktable",
-    "This plug-in loads files in Leaf's raw MOS format by calling darktable."
+    "file-%s-mos-load",
+    "Load files in the MOS raw format via %s",
+    "This plug-in loads files in Leaf's raw MOS format by calling %s."
   },
 
   {
@@ -206,9 +206,9 @@ static const FileFormat file_formats[] =
     "orf",
     "0,string,IIRO,0,string,MMOR,0,string,IIRS",
 
-    "file-darktable-orf-load",
-    "Load files in the ORF raw format via darktable",
-    "This plug-in loads files in Olympus' raw ORF format by calling darktable."
+    "file-%s-orf-load",
+    "Load files in the ORF raw format via %s",
+    "This plug-in loads files in Olympus' raw ORF format by calling %s."
   },
 
   {
@@ -217,9 +217,9 @@ static const FileFormat file_formats[] =
     "pef,raw",
     NULL,
 
-    "file-darktable-pef-load",
-    "Load files in the PEF raw format via darktable",
-    "This plug-in loads files in Pentax' raw PEF format by calling darktable."
+    "file-%s-pef-load",
+    "Load files in the PEF raw format via %s",
+    "This plug-in loads files in Pentax' raw PEF format by calling %s."
   },
 
   {
@@ -228,9 +228,9 @@ static const FileFormat file_formats[] =
     "pxn",
     NULL,
 
-    "file-darktable-pxn-load",
-    "Load files in the PXN raw format via darktable",
-    "This plug-in loads files in Logitech's raw PXN format by calling darktable."
+    "file-%s-pxn-load",
+    "Load files in the PXN raw format via %s",
+    "This plug-in loads files in Logitech's raw PXN format by calling %s."
   },
 
   {
@@ -239,9 +239,9 @@ static const FileFormat file_formats[] =
     "qtk",
     NULL,
 
-    "file-darktable-qtk-load",
-    "Load files in the QTK raw format via darktable",
-    "This plug-in loads files in Apple's QuickTake QTK raw format by calling darktable."
+    "file-%s-qtk-load",
+    "Load files in the QTK raw format via %s",
+    "This plug-in loads files in Apple's QuickTake QTK raw format by calling %s."
   },
 
   {
@@ -250,9 +250,9 @@ static const FileFormat file_formats[] =
     "raf",
     "0,string,FUJIFILMCCD-RAW",
 
-    "file-darktable-raf-load",
-    "Load files in the RAF raw format via darktable",
-    "This plug-in loads files in Fujifilm's raw RAF format by calling darktable."
+    "file-%s-raf-load",
+    "Load files in the RAF raw format via %s",
+    "This plug-in loads files in Fujifilm's raw RAF format by calling %s."
   },
 
   {
@@ -261,9 +261,9 @@ static const FileFormat file_formats[] =
     "raw,rw2",
     "0,string,IIU\\0",
 
-    "file-darktable-panasonic-load",
-    "Load files in the Panasonic raw formats via darktable",
-    "This plug-in loads files in Panasonic's raw formats by calling darktable."
+    "file-%s-panasonic-load",
+    "Load files in the Panasonic raw formats via %s",
+    "This plug-in loads files in Panasonic's raw formats by calling %s."
   },
 
   {
@@ -272,9 +272,9 @@ static const FileFormat file_formats[] =
     "rdc",
     NULL,
 
-    "file-darktable-rdc-load",
-    "Load files in the RDC raw format via darktable",
-    "This plug-in loads files in Digital Foto Maker's raw RDC format by calling darktable."
+    "file-%s-rdc-load",
+    "Load files in the RDC raw format via %s",
+    "This plug-in loads files in Digital Foto Maker's raw RDC format by calling %s."
   },
 
   {
@@ -283,9 +283,9 @@ static const FileFormat file_formats[] =
     "rwl",
     NULL,
 
-    "file-darktable-rwl-load",
-    "Load files in the RWL raw format via darktable",
-    "This plug-in loads files in Leica's raw RWL format by calling darktable."
+    "file-%s-rwl-load",
+    "Load files in the RWL raw format via %s",
+    "This plug-in loads files in Leica's raw RWL format by calling %s."
   },
 
   {
@@ -294,9 +294,9 @@ static const FileFormat file_formats[] =
     "srw",
     NULL,
 
-    "file-darktable-srw-load",
-    "Load files in the SRW raw format via darktable",
-    "This plug-in loads files in Samsung's raw SRW format by calling darktable."
+    "file-%s-srw-load",
+    "Load files in the SRW raw format via %s",
+    "This plug-in loads files in Samsung's raw SRW format by calling %s."
   },
 
   {
@@ -305,9 +305,9 @@ static const FileFormat file_formats[] =
     "x3f",
     "0,string,FOVb",
 
-    "file-darktable-x3f-load",
-    "Load files in the X3F raw format via darktable",
-    "This plug-in loads files in Sigma's raw X3F format by calling darktable."
+    "file-%s-x3f-load",
+    "Load files in the X3F raw format via %s",
+    "This plug-in loads files in Sigma's raw X3F format by calling %s."
   },
 
   {
@@ -316,8 +316,8 @@ static const FileFormat file_formats[] =
     "ari",
     NULL,
 
-    "file-darktable-ari-load",
-    "Load files in the ARI raw format via darktable",
-    "This plug-in loads files in Arriflex' raw ARI format by calling darktable."
+    "file-%s-ari-load",
+    "Load files in the ARI raw format via %s",
+    "This plug-in loads files in Arriflex' raw ARI format by calling %s."
   }
 };
