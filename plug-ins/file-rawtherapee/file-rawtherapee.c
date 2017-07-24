@@ -109,14 +109,13 @@ init (void)
                     NULL,
                     NULL))
     {
-      char *rtversion = NULL;
+      int rtmajor = 0, rtminor = 0;
 
       if (sscanf (rawtherapee_stdout,
-                  "RawTherapee, version %ms",
-                  &rtversion) == 1)
+                  "RawTherapee, version %d.%d",
+                  &rtmajor, &rtminor) == 2 && rtmajor >= 5 && rtminor >= 2)
         {
           have_rawtherapee = TRUE;
-          free (rtversion);
         }
 
       g_free (rawtherapee_stdout);
