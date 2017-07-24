@@ -13,6 +13,7 @@ endif
 # include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
 # file_darktable_RC = file-darktable.rc.o
 # file_rawtherapee_RC = file-rawtherapee.rc.o
+# file_raw_placeholder_RC = file-raw-placeholder.rc.o
 # endif
 
 AM_LDFLAGS = $(mwindows)
@@ -26,8 +27,9 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)
 
 libexec_PROGRAMS = \
-	file-darktable	\
-	file-rawtherapee
+	file-darktable		\
+	file-rawtherapee	\
+	file-raw-placeholder
 
 file_darktable_SOURCES = \
 	file-darktable.c	\
@@ -35,6 +37,10 @@ file_darktable_SOURCES = \
 
 file_rawtherapee_SOURCES = \
 	file-rawtherapee.c	\
+	file-formats.h
+
+file_raw_placeholder_SOURCES = \
+	file-raw-placeholder.c	\
 	file-formats.h
 
 file_darktable_LDADD = \
@@ -54,6 +60,15 @@ file_rawtherapee_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_rawtherapee_RC)
+
+file_raw_placeholder_LDADD = \
+	$(libgimp)		\
+	$(libgimpbase)		\
+	$(CAIRO_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(file_raw_placeholder_RC)
 
 filerawdata_DATA = \
 	file-darktable-export-on-exit.lua	\

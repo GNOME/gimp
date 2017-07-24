@@ -879,8 +879,13 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
 
 
   if (config->import_raw_plug_in)
-    config_plug_in = gimp_file_new_for_config_path (config->import_raw_plug_in,
-                                                    NULL);
+    {
+      /* remember the configured raw loader, unless it's the placeholder */
+      if (! strstr (config->import_raw_plug_in, "file-raw-placeholder"))
+        config_plug_in =
+          gimp_file_new_for_config_path (config->import_raw_plug_in,
+                                         NULL);
+    }
 
   /* make the list of raw loaders, and remember the one configured in
    * config if found
@@ -911,16 +916,37 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
     g_object_unref (config_plug_in);
 
   /* if no raw loader was configured, or the configured raw loader
-   * wasn't found, default to the first loader, if any
+   * wasn't found, default to the first loader that is not the
+   * placeolder, if any
    */
   if (! raw_plug_in && manager->raw_load_procs)
     {
       gchar *path;
 
-      raw_plug_in =
-        gimp_plug_in_procedure_get_file (manager->raw_load_procs->data);
+      for (list = manager->raw_load_procs; list; list = g_slist_next (list))
+        {
+          GimpPlugInProcedure *file_proc = list->data;
 
-      path = gimp_file_get_config_path (raw_plug_in, NULL);
+          raw_plug_in = gimp_plug_in_procedure_get_file (file_proc);
+
+          path = gimp_file_get_config_path (raw_plug_in, NULL);
+
+          if (! strstr (path, "file-raw-placeholder"))
+            break;
+
+          g_free (path);
+          path = NULL;
+
+          raw_plug_in = NULL;
+        }
+
+      if (! raw_plug_in)
+        {
+          raw_plug_in =
+            gimp_plug_in_procedure_get_file (manager->raw_load_procs->data);
+
+          path = gimp_file_get_config_path (raw_plug_in, NULL);
+        }
 
       g_object_set (config,
                     "import-raw-plug-in", path,
