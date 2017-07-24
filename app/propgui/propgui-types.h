@@ -19,6 +19,8 @@
 #define __PROPGUI_TYPES_H__
 
 
+#include "display/display-enums.h"
+
 #include "widgets/widgets-types.h"
 
 
@@ -35,10 +37,40 @@ typedef enum
 
 typedef struct
 {
-  gdouble value;
-  gdouble min;
-  gdouble max;
+  gdouble        value;           /*  slider value                           */
+  gdouble        min;             /*  minimal allowable slider value         */
+  gdouble        max;             /*  maximal allowable slider value         */
+
+  gboolean       visible    : 1;  /*  slider is visible                      */
+  gboolean       selectable : 1;  /*  slider is selectable                   */
+  gboolean       movable    : 1;  /*  slider movable                         */
+  gboolean       removable  : 1;  /*  slider is removable                    */
+
+  gboolean       autohide   : 1;  /*  whether to autohide the slider         */
+  GimpHandleType type;            /*  slider handle type                     */
+  gdouble        size;            /*  slider handle size, as a fraction of   *
+                                   *  the default size                       */
+
+  gpointer       data;            /*  user data                              */
 } GimpControllerSlider;
+
+#define GIMP_CONTROLLER_SLIDER_DEFAULT                                         \
+  ((const GimpControllerSlider) {                                              \
+    .value      = 0.0,                                                         \
+    .min        = 0.0,                                                         \
+    .max        = 1.0,                                                         \
+                                                                               \
+    .visible    = TRUE,                                                        \
+    .selectable = TRUE,                                                        \
+    .movable    = TRUE,                                                        \
+    .removable  = FALSE,                                                       \
+                                                                               \
+    .autohide   = FALSE,                                                       \
+    .type       = GIMP_HANDLE_FILLED_DIAMOND,                                  \
+    .size       = 1.0,                                                         \
+                                                                               \
+    .data       = NULL                                                         \
+  })
 
 
 /*  function types  */

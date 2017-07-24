@@ -157,6 +157,7 @@ config_notify (GObject          *config,
     n_sliders = 1;
 
     /* balance */
+    sliders[0]       = GIMP_CONTROLLER_SLIDER_DEFAULT;
     sliders[0].min   = 0.5;
     sliders[0].max   = 1.0;
     sliders[0].value = 0.5 + (1.0 - balance) / 4.0;
@@ -167,11 +168,13 @@ config_notify (GObject          *config,
     n_sliders = 2;
 
     /* balance */
+    sliders[0]       = GIMP_CONTROLLER_SLIDER_DEFAULT;
     sliders[0].min   = 1.0 / sqrt (base);
     sliders[0].max   = 1.0;
     sliders[0].value = pow (base, -(balance + 1.0) / 4.0);
 
     /* base */
+    sliders[1]       = GIMP_CONTROLLER_SLIDER_DEFAULT;
     sliders[1].min   = 0.0;
     sliders[1].max   = 1.0;
     sliders[1].value = 1.0 / base;
