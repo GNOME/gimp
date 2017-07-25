@@ -29,8 +29,8 @@
 # 
 # (swap-path "${gimp_dir}")
 
-# Sets how many processors GIMP should try to use simultaneously.  This is an
-# integer value.
+# Sets how many threads GIMP should use for operations that support it.  This
+# is an integer value.
 # 
 # (num-processors 1)
 
@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6118966k)
+# (tile-cache-size 6118834k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -223,17 +223,17 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 610)
-#     (height 377)
+#     (width 2001)
+#     (height 1984)
 #     (unit pixels)
-#     (xresolution 72.000000)
-#     (yresolution 72.000000)
+#     (xresolution 300.000000)
+#     (yresolution 300.000000)
 #     (resolution-unit inches)
 #     (image-type rgb)
 #     (precision u8-gamma)
 #     (color-managed yes)
 #     (color-profile NULL)
-#     (fill-type background-fill)
+#     (fill-type background)
 #     (comment "Created with GIMP"))
 
 # Specify a default image grid.  This is a parameter list.
@@ -262,7 +262,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1566455296)
+# (undo-size 1566421504)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -316,13 +316,8 @@
 #     (simulation-use-black-point-compensation no)
 #     (simulation-optimize yes)
 #     (simulation-gamut-check no)
-#     (out-of-gamut-color (color-rgb 0.501961 0.501961 0.501961))
+#     (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000))
 #     (display-module "CdisplayLcms"))
-
-# How to handle embedded color profiles when opening a file.  Possible values
-# are ask, keep and convert.
-# 
-# (color-profile-policy ask)
 
 # Keep a permanent record of all opened and saved files in the Recent
 # Documents list.  Possible values are yes and no.
@@ -334,6 +329,27 @@
 # range of 0.0 to 1.0.
 # 
 # (quick-mask-color (color-rgba 1.000000 0.000000 0.000000 0.500000))
+
+# Promote imported images to floating point precision. Does not apply to
+# indexed images.  Possible values are yes and no.
+# 
+# (import-promote-float no)
+
+# When promoting imported images to floating point precision, also add
+# minimal noise in order do distribute color values a bit.  Possible values
+# are yes and no.
+# 
+# (import-promote-dither yes)
+
+# Add an alpha channel to all layers of imported images.  Possible values are
+# yes and no.
+# 
+# (import-add-alpha no)
+
+# Which plug-in to use for importing raw digital camera files.  This is a
+# single filename.
+# 
+# (import-raw-plug-in "")
 
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.
@@ -565,10 +581,15 @@
 # 
 # (move-tool-changes-active no)
 
-# How many recent settings to keep around in filter tools  This is an integer
-# value.
+# How many recent settings to keep around in filter tools.  This is an
+# integer value.
 # 
 # (filter-tool-max-recent 10)
+
+# Show advanced color options in filter tools.  Possible values are yes and
+# no.
+# 
+# (filter-tool-show-color-options no)
 
 # When enabled, GIMP will not save an image if it has not been changed since
 # it was opened.  Possible values are yes and no.
@@ -579,6 +600,12 @@
 # Possible values are yes and no.
 # 
 # (save-device-status no)
+
+# When enabled, the same tool and tool options will be used for all input
+# devices. No tool switching will occur when the input device changes. 
+# Possible values are yes and no.
+# 
+# (devices-share-tool no)
 
 # Save the positions and sizes of the main dialogs when GIMP exits.  Possible
 # values are yes and no.
@@ -676,6 +703,11 @@
 # 
 # (icon-theme "Symbolic")
 
+# The size of the icons to use.  Possible values are auto, theme, small,
+# medium, large and huge.
+# 
+# (icon-size auto)
+
 # When enabled, pressing F1 will open the help browser.  Possible values are
 # yes and no.
 # 
@@ -734,13 +766,264 @@
 # 
 # (playground-npd-tool no)
 
-# Enable the Handle Transform tool.  Possible values are yes and no.
-# 
-# (playground-handle-transform-tool no)
-
 # Enable the Seamless Clone tool.  Possible values are yes and no.
 # 
 # (playground-seamless-clone-tool no)
+
+# How to handle embedded color profiles when opening a file.  Possible values
+# are ask, keep and convert.
+# 
+# (color-profile-policy ask)
+
+# Sets the default rendering intent for the 'Convert to Color Profile'
+# dialog.  Possible values are perceptual, relative-colorimetric, saturation
+# and absolute-colorimetric.
+# 
+# (image-convert-profile-intent relative-colorimetric)
+
+# Sets the default 'Black Point Compensation' state for the 'Convert to Color
+# Profile' dialog.  Possible values are yes and no.
+# 
+# (image-convert-profile-black-point-compensation yes)
+
+# Sets the default layer dithering method for the 'Convert Precision' dialog.
+#  Possible values are none, floyd-steinberg, bayer, random,
+# random-covariant, add, add-covariant, xor and xor-covariant.
+# 
+# (image-convert-precision-layer-dither-method none)
+
+# Sets the default text layer dithering method for the 'Convert Precision'
+# dialog.  Possible values are none, floyd-steinberg, bayer, random,
+# random-covariant, add, add-covariant, xor and xor-covariant.
+# 
+# (image-convert-precision-text-layer-dither-method none)
+
+# Sets the default channel dithering method for the 'Convert Precision'
+# dialog.  Possible values are none, floyd-steinberg, bayer, random,
+# random-covariant, add, add-covariant, xor and xor-covariant.
+# 
+# (image-convert-precision-channel-dither-method none)
+
+# Sets the default palette type for the 'Convert to Indexed' dialog. 
+# Possible values are generate, web, mono and custom.
+# 
+# (image-convert-indexed-palette-type generate)
+
+# Sets the default maximum number of colors for the 'Convert to Indexed'
+# dialog.  This is an integer value.
+# 
+# (image-convert-indexed-max-colors 256)
+
+# Sets the default 'Remove duplicate colors' state for the 'Convert to
+# Indexed' dialog.  Possible values are yes and no.
+# 
+# (image-convert-indexed-remove-duplicates yes)
+
+# Sets the default dithering type for the 'Convert to Indexed' dialog. 
+# Possible values are none, fs, fs-lowbleed and fixed.
+# 
+# (image-convert-indexed-dither-type none)
+
+# Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog. 
+# Possible values are yes and no.
+# 
+# (image-convert-indexed-dither-alpha no)
+
+# Sets the default 'Dither text layers' state for the 'Convert to Indexed'
+# dialog.  Possible values are yes and no.
+# 
+# (image-convert-indexed-dither-text-layers no)
+
+# Sets the default fill type for the 'Canvas Size' dialog.  Possible values
+# are foreground, background, white, transparent and pattern.
+# 
+# (image-resize-fill-type transparent)
+
+# Sets the default set of layers to resize for the 'Canvas Size' dialog. 
+# Possible values are none, all, image-sized, visible and linked.
+# 
+# (image-resize-layer-set none)
+
+# Sets the default 'Resize text layers' state for the 'Canvas Size' dialog. 
+# Possible values are yes and no.
+# 
+# (image-resize-resize-text-layers no)
+
+# Sets the default layer name for the 'New Layer' dialog.  This is a string
+# value.
+# 
+# (layer-new-name "Layer")
+
+# Sets the default mode for the 'New Layer' dialog.  Possible values are
+# normal-legacy, dissolve, behind-legacy, multiply-legacy, screen-legacy,
+# overlay-legacy, difference-legacy, addition-legacy, subtract-legacy,
+# darken-only-legacy, lighten-only-legacy, hsv-hue-legacy,
+# hsv-saturation-legacy, hsl-color-legacy, hsv-value-legacy, divide-legacy,
+# dodge-legacy, burn-legacy, hardlight-legacy, softlight-legacy,
+# grain-extract-legacy, grain-merge-legacy, color-erase-legacy, overlay,
+# lch-hue, lch-chroma, lch-color, lch-lightness, normal, behind, multiply,
+# screen, difference, addition, subtract, darken-only, lighten-only, hsv-hue,
+# hsv-saturation, hsl-color, hsv-value, divide, dodge, burn, hardlight,
+# softlight, grain-extract, grain-merge, vivid-light, pin-light,
+# linear-light, hard-mix, exclusion, linear-burn, luma-darken-only,
+# luma-lighten-only, luminance, color-erase, erase, merge, split, replace and
+# anti-erase.
+# 
+# (layer-new-mode normal-legacy)
+
+# Sets the default blend space for the 'New Layer' dialog.  Possible values
+# are auto, rgb-linear, rgb-perceptual and lab.
+# 
+# (layer-new-blend-space auto)
+
+# Sets the default composite space for the 'New Layer' dialog.  Possible
+# values are auto, rgb-linear, rgb-perceptual and lab.
+# 
+# (layer-new-composite-space auto)
+
+# Sets the default composite mode for the 'New Layer' dialog.  Possible
+# values are auto, src-over, src-atop, dst-atop and src-in.
+# 
+# (layer-new-composite-mode auto)
+
+# Sets the default opacity for the 'New Layer' dialog.  This is a float
+# value.
+# 
+# (layer-new-opacity 1.000000)
+
+# Sets the default fill type for the 'New Layer' dialog.  Possible values are
+# foreground, background, white, transparent and pattern.
+# 
+# (layer-new-fill-type transparent)
+
+# Sets the default fill type for the 'Layer Boundary Size' dialog.  Possible
+# values are foreground, background, white, transparent and pattern.
+# 
+# (layer-resize-fill-type transparent)
+
+# Sets the default mask for the 'Add Layer Mask' dialog.  Possible values are
+# white, black, alpha, alpha-transfer, selection, copy and channel.
+# 
+# (layer-add-mask-type white)
+
+# Sets the default 'invert mask' state for the 'Add Layer Mask' dialog. 
+# Possible values are yes and no.
+# 
+# (layer-add-mask-invert no)
+
+# Sets the default merge type for the 'Merge Visible Layers' dialog. 
+# Possible values are expand-as-necessary, clip-to-image,
+# clip-to-bottom-layer and flatten-image.
+# 
+# (layer-merge-type expand-as-necessary)
+
+# Sets the default 'Active group only' for the 'Merge Visible Layers' dialog.
+#  Possible values are yes and no.
+# 
+# (layer-merge-active-group-only yes)
+
+# Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog.
+#  Possible values are yes and no.
+# 
+# (layer-merge-discard-invisible no)
+
+# Sets the default channel name for the 'New Channel' dialog.  This is a
+# string value.
+# 
+# (channel-new-name "Channel")
+
+# Sets the default color and opacity for the 'New Channel' dialog.  The color
+# is specified in the form (color-rgba red green blue alpha) with channel
+# values as floats in the range of 0.0 to 1.0.
+# 
+# (channel-new-color (color-rgba 0.000000 0.000000 0.000000 0.500000))
+
+# Sets the default path name for the 'New Path' dialog.  This is a string
+# value.
+# 
+# (path-new-name "Path")
+
+# Sets the default folder path for the 'Export Path' dialog.  This is a
+# single filename.
+# 
+# 
+
+# Sets the default 'Export the active path' state for the 'Export Path'
+# dialog.  Possible values are yes and no.
+# 
+# (path-export-active-only yes)
+
+# Sets the default folder path for the 'Import Path' dialog.  This is a
+# single filename.
+# 
+# 
+
+# Sets the default 'Merge imported paths' state for the 'Import Path' dialog.
+#  Possible values are yes and no.
+# 
+# (path-import-merge no)
+
+# Sets the default 'Scale imported paths to fit size' state for the 'Import
+# Path' dialog.  Possible values are yes and no.
+# 
+# (path-import-scale no)
+
+# Sets the default feather radius for the 'Feather Selection' dialog.  This
+# is a float value.
+# 
+# (selection-feather-radius 5.000000)
+
+# Sets the default grow radius for the 'Grow Selection' dialog.  This is a
+# float value.
+# 
+# (selection-grow-radius 1.000000)
+
+# Sets the default shrink radius for the 'Shrink Selection' dialog.  This is
+# a float value.
+# 
+# (selection-shrink-radius 1.000000)
+
+# Sets the default 'Selected areas continue outside the image' setting for
+# the 'Shrink Selection' dialog.  Possible values are yes and no.
+# 
+# (selection-shrink-edge-lock no)
+
+# Sets the default border radius for the 'Border Selection' dialog.  This is
+# a float value.
+# 
+# (selection-border-radius 5.000000)
+
+# Sets the default border style for the 'Border Selection' dialog.  Possible
+# values are hard, smooth and feathered.
+# 
+# (selection-border-style smooth)
+
+# Sets the default 'Selected areas continue outside the image' setting for
+# the 'Border Selection' dialog.  Possible values are yes and no.
+# 
+# (selection-border-edge-lock no)
+
+# The default fill options for the fill dialogs.  This is a parameter list.
+# 
+# (fill-options
+#     (style solid)
+#     (antialias yes))
+
+# The default stroke options for the stroke dialogs.  This is a parameter
+# list.
+# 
+# (stroke-options
+#     (style solid)
+#     (antialias yes)
+#     (method line)
+#     (width 6.000000)
+#     (unit pixels)
+#     (cap-style butt)
+#     (join-style miter)
+#     (miter-limit 10.000000)
+#     (dash-offset 0.000000)
+#     (dash-info 0)
+#     (emulate-brush-dynamics no))
 
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
 # a colon-separated list of folders to search.

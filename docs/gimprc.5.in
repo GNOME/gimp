@@ -56,11 +56,11 @@ to put your swap file in "/tmp".  This is a single folder.
 .TP
 (num-processors 1)
 
-Sets how many processors GIMP should try to use simultaneously.  This is an
-integer value.
+Sets how many threads GIMP should use for operations that support it.  This is
+an integer value.
 
 .TP
-(tile-cache-size 6118966k)
+(tile-cache-size 6118834k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -283,17 +283,17 @@ are yes and no.
 
 .TP
 (default-image
-    (width 610)
-    (height 377)
+    (width 2001)
+    (height 1984)
     (unit pixels)
-    (xresolution 72.000000)
-    (yresolution 72.000000)
+    (xresolution 300.000000)
+    (yresolution 300.000000)
     (resolution-unit inches)
     (image-type rgb)
     (precision u8-gamma)
     (color-managed yes)
     (color-profile NULL)
-    (fill-type background-fill)
+    (fill-type background)
     (comment "Created with GIMP"))
 
 Sets the default image in the "File/New" dialog.  This is a parameter list.
@@ -320,7 +320,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1566455296)
+(undo-size 1566421504)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -386,16 +386,10 @@ is specified the size defaults to being specified in kilobytes.
     (simulation-use-black-point-compensation no)
     (simulation-optimize yes)
     (simulation-gamut-check no)
-    (out-of-gamut-color (color-rgb 0.501961 0.501961 0.501961))
+    (out-of-gamut-color (color-rgb 1.000000 0.000000 1.000000))
     (display-module "CdisplayLcms"))
 
 Defines the color management behavior.  This is a parameter list.
-
-.TP
-(color-profile-policy ask)
-
-How to handle embedded color profiles when opening a file.  Possible values
-are ask, keep and convert.
 
 .TP
 (save-document-history yes)
@@ -409,6 +403,31 @@ list.  Possible values are yes and no.
 Sets the default quick mask color.  The color is specified in the form
 (color-rgba red green blue alpha) with channel values as floats in the range
 of 0.0 to 1.0.
+
+.TP
+(import-promote-float no)
+
+Promote imported images to floating point precision. Does not apply to indexed
+images.  Possible values are yes and no.
+
+.TP
+(import-promote-dither yes)
+
+When promoting imported images to floating point precision, also add minimal
+noise in order do distribute color values a bit.  Possible values are yes and
+no.
+
+.TP
+(import-add-alpha no)
+
+Add an alpha channel to all layers of imported images.  Possible values are
+yes and no.
+
+.TP
+(import-raw-plug-in "")
+
+Which plug-in to use for importing raw digital camera files.  This is a single
+filename.
 
 .TP
 (transparency-size medium-checks)
@@ -732,8 +751,13 @@ no.
 .TP
 (filter-tool-max-recent 10)
 
-How many recent settings to keep around in filter tools  This is an integer
+How many recent settings to keep around in filter tools.  This is an integer
 value.
+
+.TP
+(filter-tool-show-color-options no)
+
+Show advanced color options in filter tools.  Possible values are yes and no.
 
 .TP
 (trust-dirty-flag no)
@@ -746,6 +770,13 @@ was opened.  Possible values are yes and no.
 
 Remember the current tool, pattern, color, and brush across GIMP sessions. 
 Possible values are yes and no.
+
+.TP
+(devices-share-tool no)
+
+When enabled, the same tool and tool options will be used for all input
+devices. No tool switching will occur when the input device changes.  Possible
+values are yes and no.
 
 .TP
 (save-session-info yes)
@@ -863,6 +894,12 @@ search.
 The name of the icon theme to use.  This is a string value.
 
 .TP
+(icon-size auto)
+
+The size of the icons to use.  Possible values are auto, theme, small, medium,
+large and huge.
+
+.TP
 (use-help yes)
 
 When enabled, pressing F1 will open the help browser.  Possible values are yes
@@ -931,14 +968,303 @@ right.
 Enable the N-Point Deformation tool.  Possible values are yes and no.
 
 .TP
-(playground-handle-transform-tool no)
-
-Enable the Handle Transform tool.  Possible values are yes and no.
-
-.TP
 (playground-seamless-clone-tool no)
 
 Enable the Seamless Clone tool.  Possible values are yes and no.
+
+.TP
+(color-profile-policy ask)
+
+How to handle embedded color profiles when opening a file.  Possible values
+are ask, keep and convert.
+
+.TP
+(image-convert-profile-intent relative-colorimetric)
+
+Sets the default rendering intent for the 'Convert to Color Profile' dialog. 
+Possible values are perceptual, relative-colorimetric, saturation and
+absolute-colorimetric.
+
+.TP
+(image-convert-profile-black-point-compensation yes)
+
+Sets the default 'Black Point Compensation' state for the 'Convert to Color
+Profile' dialog.  Possible values are yes and no.
+
+.TP
+(image-convert-precision-layer-dither-method none)
+
+Sets the default layer dithering method for the 'Convert Precision' dialog. 
+Possible values are none, floyd-steinberg, bayer, random, random-covariant,
+add, add-covariant, xor and xor-covariant.
+
+.TP
+(image-convert-precision-text-layer-dither-method none)
+
+Sets the default text layer dithering method for the 'Convert Precision'
+dialog.  Possible values are none, floyd-steinberg, bayer, random,
+random-covariant, add, add-covariant, xor and xor-covariant.
+
+.TP
+(image-convert-precision-channel-dither-method none)
+
+Sets the default channel dithering method for the 'Convert Precision' dialog. 
+Possible values are none, floyd-steinberg, bayer, random, random-covariant,
+add, add-covariant, xor and xor-covariant.
+
+.TP
+(image-convert-indexed-palette-type generate)
+
+Sets the default palette type for the 'Convert to Indexed' dialog.  Possible
+values are generate, web, mono and custom.
+
+.TP
+(image-convert-indexed-max-colors 256)
+
+Sets the default maximum number of colors for the 'Convert to Indexed' dialog.
+ This is an integer value.
+
+.TP
+(image-convert-indexed-remove-duplicates yes)
+
+Sets the default 'Remove duplicate colors' state for the 'Convert to Indexed'
+dialog.  Possible values are yes and no.
+
+.TP
+(image-convert-indexed-dither-type none)
+
+Sets the default dithering type for the 'Convert to Indexed' dialog.  Possible
+values are none, fs, fs-lowbleed and fixed.
+
+.TP
+(image-convert-indexed-dither-alpha no)
+
+Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog. 
+Possible values are yes and no.
+
+.TP
+(image-convert-indexed-dither-text-layers no)
+
+Sets the default 'Dither text layers' state for the 'Convert to Indexed'
+dialog.  Possible values are yes and no.
+
+.TP
+(image-resize-fill-type transparent)
+
+Sets the default fill type for the 'Canvas Size' dialog.  Possible values are
+foreground, background, white, transparent and pattern.
+
+.TP
+(image-resize-layer-set none)
+
+Sets the default set of layers to resize for the 'Canvas Size' dialog. 
+Possible values are none, all, image-sized, visible and linked.
+
+.TP
+(image-resize-resize-text-layers no)
+
+Sets the default 'Resize text layers' state for the 'Canvas Size' dialog. 
+Possible values are yes and no.
+
+.TP
+(layer-new-name "Layer")
+
+Sets the default layer name for the 'New Layer' dialog.  This is a string
+value.
+
+.TP
+(layer-new-mode normal-legacy)
+
+Sets the default mode for the 'New Layer' dialog.  Possible values are
+normal-legacy, dissolve, behind-legacy, multiply-legacy, screen-legacy,
+overlay-legacy, difference-legacy, addition-legacy, subtract-legacy,
+darken-only-legacy, lighten-only-legacy, hsv-hue-legacy,
+hsv-saturation-legacy, hsl-color-legacy, hsv-value-legacy, divide-legacy,
+dodge-legacy, burn-legacy, hardlight-legacy, softlight-legacy,
+grain-extract-legacy, grain-merge-legacy, color-erase-legacy, overlay,
+lch-hue, lch-chroma, lch-color, lch-lightness, normal, behind, multiply,
+screen, difference, addition, subtract, darken-only, lighten-only, hsv-hue,
+hsv-saturation, hsl-color, hsv-value, divide, dodge, burn, hardlight,
+softlight, grain-extract, grain-merge, vivid-light, pin-light, linear-light,
+hard-mix, exclusion, linear-burn, luma-darken-only, luma-lighten-only,
+luminance, color-erase, erase, merge, split, replace and anti-erase.
+
+.TP
+(layer-new-blend-space auto)
+
+Sets the default blend space for the 'New Layer' dialog.  Possible values are
+auto, rgb-linear, rgb-perceptual and lab.
+
+.TP
+(layer-new-composite-space auto)
+
+Sets the default composite space for the 'New Layer' dialog.  Possible values
+are auto, rgb-linear, rgb-perceptual and lab.
+
+.TP
+(layer-new-composite-mode auto)
+
+Sets the default composite mode for the 'New Layer' dialog.  Possible values
+are auto, src-over, src-atop, dst-atop and src-in.
+
+.TP
+(layer-new-opacity 1.000000)
+
+Sets the default opacity for the 'New Layer' dialog.  This is a float value.
+
+.TP
+(layer-new-fill-type transparent)
+
+Sets the default fill type for the 'New Layer' dialog.  Possible values are
+foreground, background, white, transparent and pattern.
+
+.TP
+(layer-resize-fill-type transparent)
+
+Sets the default fill type for the 'Layer Boundary Size' dialog.  Possible
+values are foreground, background, white, transparent and pattern.
+
+.TP
+(layer-add-mask-type white)
+
+Sets the default mask for the 'Add Layer Mask' dialog.  Possible values are
+white, black, alpha, alpha-transfer, selection, copy and channel.
+
+.TP
+(layer-add-mask-invert no)
+
+Sets the default 'invert mask' state for the 'Add Layer Mask' dialog. 
+Possible values are yes and no.
+
+.TP
+(layer-merge-type expand-as-necessary)
+
+Sets the default merge type for the 'Merge Visible Layers' dialog.  Possible
+values are expand-as-necessary, clip-to-image, clip-to-bottom-layer and
+flatten-image.
+
+.TP
+(layer-merge-active-group-only yes)
+
+Sets the default 'Active group only' for the 'Merge Visible Layers' dialog. 
+Possible values are yes and no.
+
+.TP
+(layer-merge-discard-invisible no)
+
+Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog. 
+Possible values are yes and no.
+
+.TP
+(channel-new-name "Channel")
+
+Sets the default channel name for the 'New Channel' dialog.  This is a string
+value.
+
+.TP
+(channel-new-color (color-rgba 0.000000 0.000000 0.000000 0.500000))
+
+Sets the default color and opacity for the 'New Channel' dialog.  The color is
+specified in the form (color-rgba red green blue alpha) with channel values as
+floats in the range of 0.0 to 1.0.
+
+.TP
+(path-new-name "Path")
+
+Sets the default path name for the 'New Path' dialog.  This is a string value.
+
+.TP
+
+Sets the default folder path for the 'Export Path' dialog.  This is a single
+filename.
+
+.TP
+(path-export-active-only yes)
+
+Sets the default 'Export the active path' state for the 'Export Path' dialog. 
+Possible values are yes and no.
+
+.TP
+
+Sets the default folder path for the 'Import Path' dialog.  This is a single
+filename.
+
+.TP
+(path-import-merge no)
+
+Sets the default 'Merge imported paths' state for the 'Import Path' dialog. 
+Possible values are yes and no.
+
+.TP
+(path-import-scale no)
+
+Sets the default 'Scale imported paths to fit size' state for the 'Import
+Path' dialog.  Possible values are yes and no.
+
+.TP
+(selection-feather-radius 5.000000)
+
+Sets the default feather radius for the 'Feather Selection' dialog.  This is a
+float value.
+
+.TP
+(selection-grow-radius 1.000000)
+
+Sets the default grow radius for the 'Grow Selection' dialog.  This is a float
+value.
+
+.TP
+(selection-shrink-radius 1.000000)
+
+Sets the default shrink radius for the 'Shrink Selection' dialog.  This is a
+float value.
+
+.TP
+(selection-shrink-edge-lock no)
+
+Sets the default 'Selected areas continue outside the image' setting for the
+\&'Shrink Selection' dialog.  Possible values are yes and no.
+
+.TP
+(selection-border-radius 5.000000)
+
+Sets the default border radius for the 'Border Selection' dialog.  This is a
+float value.
+
+.TP
+(selection-border-style smooth)
+
+Sets the default border style for the 'Border Selection' dialog.  Possible
+values are hard, smooth and feathered.
+
+.TP
+(selection-border-edge-lock no)
+
+Sets the default 'Selected areas continue outside the image' setting for the
+\&'Border Selection' dialog.  Possible values are yes and no.
+
+.TP
+(fill-options
+    (style solid)
+    (antialias yes))
+
+The default fill options for the fill dialogs.  This is a parameter list.
+
+.TP
+(stroke-options
+    (style solid)
+    (antialias yes)
+    (method line)
+    (width 6.000000)
+    (unit pixels)
+    (cap-style butt)
+    (join-style miter)
+    (miter-limit 10.000000)
+    (dash-offset 0.000000)
+    (dash-info 0)
+    (emulate-brush-dynamics no))
+
+The default stroke options for the stroke dialogs.  This is a parameter list.
 
 .TP
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
@@ -991,7 +1317,7 @@ environment variable GIMP2_DATADIR or to the compiled-in default value
 @gimpdatadir@.
 .TP
 .I gimp_plug_in_dir
-Base to paths for architecture-specific plugins and modules, which is set
+Base to paths for architecture-specific plug-ins and modules, which is set
 to the value of the environment variable GIMP2_PLUGINDIR or to the
 compiled-in default value @gimpplugindir@.
 .TP
