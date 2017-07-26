@@ -145,6 +145,9 @@ static gboolean gimp_tool_line_get_cursor      (GimpToolWidget        *widget,
                                                 GimpToolCursorType    *tool_cursor,
                                                 GimpCursorModifier    *modifier);
 
+static GimpControllerSlider *
+                gimp_tool_line_get_slider      (GimpToolLine          *line,
+                                                gint                   slider);
 static gboolean gimp_tool_line_point_motion    (GimpToolLine          *line,
                                                 gboolean               constrain);
 
@@ -440,7 +443,7 @@ gimp_tool_line_changed (GimpToolWidget *widget)
       GimpCanvasItem **circle;
       GimpCanvasItem **grip;
 
-      t = g_array_index (private->sliders, GimpControllerSlider, i).value;
+      t = gimp_tool_line_get_slider (line, i)->value;
 
       x = private->x1 + (private->x2 - private->x1) * t;
       y = private->y1 + (private->y2 - private->y1) * t;
@@ -498,8 +501,7 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
       if (private->point == POINT_SLIDER)
         {
           private->saved_slider_value =
-            g_array_index (private->sliders,
-                           GimpControllerSlider, private->slider_index).value;
+            gimp_tool_line_get_slider (line, private->slider_index)->value;
         }
 
       private->point_grabbed = TRUE;
@@ -529,8 +531,7 @@ gimp_tool_line_button_release (GimpToolWidget        *widget,
     {
       if (private->point == POINT_SLIDER)
         {
-          g_array_index (private->sliders,
-                         GimpControllerSlider, private->slider_index).value =
+          gimp_tool_line_get_slider (line, private->slider_index)->value =
             private->saved_slider_value;
         }
 
@@ -676,6 +677,17 @@ gimp_tool_line_get_cursor (GimpToolWidget     *widget,
   return FALSE;
 }
 
+static GimpControllerSlider *
+gimp_tool_line_get_slider (GimpToolLine *line,
+                           gint          slider)
+{
+  GimpToolLinePrivate *private = line->private;
+
+  g_assert (slider >= 0 && slider < private->sliders->len);
+
+  return &g_array_index (private->sliders, GimpControllerSlider, slider);
+}
+
 static gboolean
 gimp_tool_line_point_motion (GimpToolLine *line,
                              gboolean      constrain)
@@ -725,8 +737,7 @@ gimp_tool_line_point_motion (GimpToolLine *line,
             GimpControllerSlider *slider;
             gdouble               t;
 
-            slider = &g_array_index (private->sliders, GimpControllerSlider,
-                                     private->slider_index);
+            slider = gimp_tool_line_get_slider (line, private->slider_index);
 
             /* project the cursor position onto the line */
             t  = (private->x2 - private->x1) * (x - private->x1) +
