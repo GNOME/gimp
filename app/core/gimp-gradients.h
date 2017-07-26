@@ -24,6 +24,7 @@
 
 void           gimp_gradients_init               (Gimp *gimp);
 
+GimpGradient * gimp_gradients_get_custom         (Gimp *gimp);
 GimpGradient * gimp_gradients_get_fg_bg_rgb      (Gimp *gimp);
 GimpGradient * gimp_gradients_get_fg_bg_hsv_ccw  (Gimp *gimp);
 GimpGradient * gimp_gradients_get_fg_bg_hsv_cw   (Gimp *gimp);
