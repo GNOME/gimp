@@ -437,16 +437,16 @@ gimp_tool_line_changed (GimpToolWidget *widget)
 
   for (i = 0; i < private->sliders->len; i++)
     {
-      gdouble          t;
+      gdouble          value;
       gdouble          x;
       gdouble          y;
       GimpCanvasItem **circle;
       GimpCanvasItem **grip;
 
-      t = gimp_tool_line_get_slider (line, i)->value;
+      value = gimp_tool_line_get_slider (line, i)->value;
 
-      x = private->x1 + (private->x2 - private->x1) * t;
-      y = private->y1 + (private->y2 - private->y1) * t;
+      x = private->x1 + (private->x2 - private->x1) * value;
+      y = private->y1 + (private->y2 - private->y1) * value;
 
       circle = &g_array_index (private->slider_handle_circles,
                                GimpCanvasItem *, i);
@@ -735,24 +735,24 @@ gimp_tool_line_point_motion (GimpToolLine *line,
         if (length_sqr > 0.0)
           {
             GimpControllerSlider *slider;
-            gdouble               t;
+            gdouble               value;
 
             slider = gimp_tool_line_get_slider (line, private->slider_index);
 
             /* project the cursor position onto the line */
-            t  = (private->x2 - private->x1) * (x - private->x1) +
-                 (private->y2 - private->y1) * (y - private->y1);
-            t /= length_sqr;
+            value  = (private->x2 - private->x1) * (x - private->x1) +
+                     (private->y2 - private->y1) * (y - private->y1);
+            value /= length_sqr;
 
             if (constrain)
-              t = RINT (12.0 * t) / 12.0;
+              value = RINT (12.0 * value) / 12.0;
 
-            t = CLAMP (t, slider->min, slider->max);
-            t = CLAMP (t, 0.0, 1.0);
+            value = CLAMP (value, slider->min, slider->max);
+            value = CLAMP (value, 0.0, 1.0);
 
-            t = fabs (t); /* avoid negative zero */
+            value = fabs (value); /* avoid negative zero */
 
-            slider->value = t;
+            slider->value = value;
 
             g_object_set (line,
                           "sliders", private->sliders,
