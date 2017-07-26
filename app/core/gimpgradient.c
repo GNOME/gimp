@@ -61,8 +61,10 @@ static GimpTempBuf * gimp_gradient_get_new_preview   (GimpViewable        *viewa
                                                       GimpContext         *context,
                                                       gint                 width,
                                                       gint                 height);
+
 static const gchar * gimp_gradient_get_extension     (GimpData            *data);
-static GimpData    * gimp_gradient_duplicate         (GimpData            *data);
+static void          gimp_gradient_copy              (GimpData            *data,
+                                                      GimpData            *src_data);
 
 static gchar       * gimp_gradient_get_checksum      (GimpTagged          *tagged);
 
@@ -110,7 +112,7 @@ gimp_gradient_class_init (GimpGradientClass *klass)
 
   data_class->save                  = gimp_gradient_save;
   data_class->get_extension         = gimp_gradient_get_extension;
-  data_class->duplicate             = gimp_gradient_duplicate;
+  data_class->copy                  = gimp_gradient_copy;
 }
 
 static void
@@ -232,16 +234,24 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
   return temp_buf;
 }
 
-static GimpData *
-gimp_gradient_duplicate (GimpData *data)
+static void
+gimp_gradient_copy (GimpData *data,
+                    GimpData *src_data)
 {
-  GimpGradient        *gradient;
+  GimpGradient        *gradient     = GIMP_GRADIENT (data);
+  GimpGradient        *src_gradient = GIMP_GRADIENT (src_data);
   GimpGradientSegment *head, *prev, *cur, *orig;
 
-  gradient = g_object_new (GIMP_TYPE_GRADIENT, NULL);
+  gimp_data_freeze (GIMP_DATA (gradient));
+
+  if (gradient->segments)
+    {
+      gimp_gradient_segments_free (gradient->segments);
+      gradient->segments = NULL;
+    }
 
   prev = NULL;
-  orig = GIMP_GRADIENT (data)->segments;
+  orig = GIMP_GRADIENT (src_gradient)->segments;
   head = NULL;
 
   while (orig)
@@ -264,7 +274,7 @@ gimp_gradient_duplicate (GimpData *data)
 
   gradient->segments = head;
 
-  return GIMP_DATA (gradient);
+  gimp_data_thaw (GIMP_DATA (gradient));
 }
 
 static gchar *
