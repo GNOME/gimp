@@ -64,6 +64,8 @@ struct _GimpDataClass
   void          (* copy)          (GimpData       *data,
                                    GimpData       *src_data);
   GimpData    * (* duplicate)     (GimpData       *data);
+  gint          (* compare)       (GimpData       *data1,
+                                   GimpData       *data2);
 };
 
 
