@@ -65,6 +65,8 @@ static GimpTempBuf * gimp_gradient_get_new_preview   (GimpViewable        *viewa
 static const gchar * gimp_gradient_get_extension     (GimpData            *data);
 static void          gimp_gradient_copy              (GimpData            *data,
                                                       GimpData            *src_data);
+static gint          gimp_gradient_compare           (GimpData            *data1,
+                                                      GimpData            *data2);
 
 static gchar       * gimp_gradient_get_checksum      (GimpTagged          *tagged);
 
@@ -113,6 +115,7 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   data_class->save                  = gimp_gradient_save;
   data_class->get_extension         = gimp_gradient_get_extension;
   data_class->copy                  = gimp_gradient_copy;
+  data_class->compare               = gimp_gradient_compare;
 }
 
 static void
@@ -275,6 +278,37 @@ gimp_gradient_copy (GimpData *data,
   gradient->segments = head;
 
   gimp_data_thaw (GIMP_DATA (gradient));
+}
+
+static gint
+gimp_gradient_compare (GimpData *data1,
+                       GimpData *data2)
+{
+  gboolean is_custom1;
+  gboolean is_custom2;
+
+  /* check whether data1 and data2 are the custom gradient, which is the only
+   * writable internal gradient.
+   */
+  is_custom1 = gimp_data_is_internal (data1) && gimp_data_is_writable (data1);
+  is_custom2 = gimp_data_is_internal (data2) && gimp_data_is_writable (data2);
+
+  /* order the custom gradient before all the other gradients; use the default
+   * ordering for the rest.
+   */
+  if (is_custom1)
+    {
+      if (is_custom2)
+        return 0;
+      else
+        return -1;
+    }
+  else if (is_custom2)
+    {
+      return +1;
+    }
+  else
+    return GIMP_DATA_CLASS (parent_class)->compare (data1, data2);
 }
 
 static gchar *
