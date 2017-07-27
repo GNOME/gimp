@@ -395,12 +395,16 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
 
       if (strlen (name) && strcmp (old_name, name))
         {
-          guint t;
+          gint64 t;
 
-          g_object_get (object, "time", &t, NULL);
+          g_object_get (object,
+                        "time", &t,
+                        NULL);
 
           if (t > 0)
-            g_object_set (object, "time", 0, NULL);
+            g_object_set (object,
+                          "time", (gint64) 0,
+                          NULL);
 
           /*  set name after time so the object is reordered correctly  */
           gimp_object_take_name (object, name);

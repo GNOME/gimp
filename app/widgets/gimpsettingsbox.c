@@ -866,7 +866,7 @@ gimp_settings_box_truncate_list (GimpSettingsBox *box,
   while (list)
     {
       GimpConfig *config = list->data;
-      guint       t;
+      gint64      t;
 
       list = g_list_next (list);
 
@@ -944,7 +944,7 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
        list;
        list = g_list_next (list))
     {
-      guint t;
+      gint64 t;
 
       config = list->data;
 
@@ -955,19 +955,27 @@ gimp_settings_box_add_current (GimpSettingsBox *box,
       if (t > 0 && gimp_config_is_equal_to (config,
                                             GIMP_CONFIG (private->config)))
         {
+          GDateTime *now = g_date_time_new_now_utc ();
+
           g_object_set (config,
-                        "time", (guint) time (NULL),
+                        "time", g_date_time_to_unix (now),
                         NULL);
+          g_date_time_unref (now);
+
           break;
         }
     }
 
   if (! list)
     {
+      GDateTime *now = g_date_time_new_now_utc ();
+
       config = gimp_config_duplicate (GIMP_CONFIG (private->config));
+
       g_object_set (config,
-                    "time", (guint) time (NULL),
+                    "time", g_date_time_to_unix (now),
                     NULL);
+      g_date_time_unref (now);
 
       gimp_container_insert (private->container, GIMP_OBJECT (config), 0);
       g_object_unref (config);

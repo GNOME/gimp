@@ -894,7 +894,9 @@ gimp_filter_tool_real_set_config (GimpFilterTool *filter_tool,
    *  will be considered to be among the automatically stored recently
    *  used settings
    */
-  g_object_set (filter_tool->config, "time", 0, NULL);
+  g_object_set (filter_tool->config,
+                "time", (gint64) 0,
+                NULL);
 }
 
 static void
