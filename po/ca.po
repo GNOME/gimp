@@ -341,7 +341,7 @@ msgstr "Canals"
 #: ../app/actions/actions.c:122 ../app/dialogs/convert-indexed-dialog.c:174
 #: ../app/dialogs/dialogs.c:375
 msgid "Colormap"
-msgstr "Mapa de colors"
+msgstr "Mapa de color"
 
 #: ../app/actions/actions.c:125
 msgid "Context"
@@ -985,7 +985,7 @@ msgstr "Còpia del canal %s"
 #: ../app/actions/colormap-actions.c:45
 msgctxt "colormap-action"
 msgid "Colormap Menu"
-msgstr "Menú del mapa de colors"
+msgstr "Menú del mapa de color"
 
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
@@ -1194,12 +1194,12 @@ msgstr "Primer pla: usa el color següent de la paleta"
 #: ../app/actions/context-actions.c:117
 msgctxt "context-action"
 msgid "Foreground: Skip Back Palette Color"
-msgstr "Primer pla: omet el color negre de la paleta"
+msgstr "Primer pla: vés cap enrere en la paleta de colors"
 
 #: ../app/actions/context-actions.c:121
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Palette Color"
-msgstr ""
+msgstr "Primer pla: vés cap endavant en la paleta de colors"
 
 #: ../app/actions/context-actions.c:129
 msgctxt "context-action"
@@ -1212,113 +1212,99 @@ msgid "Background: Use First Palette Color"
 msgstr "Fons: usa el primer color de la paleta"
 
 #: ../app/actions/context-actions.c:137
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Background Color"
 msgctxt "context-action"
 msgid "Background: Use Last Palette Color"
-msgstr "Color de _fons"
+msgstr "Fons: usa l'últim color de la paleta"
 
 #: ../app/actions/context-actions.c:141
 msgctxt "context-action"
 msgid "Background: Use Previous Palette Color"
-msgstr ""
+msgstr "Fons: usa el color previ de la paleta"
 
 #: ../app/actions/context-actions.c:145
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Background Color"
 msgctxt "context-action"
 msgid "Background: Use Next Palette Color"
-msgstr "Color de _fons"
+msgstr "Fons: usa el color següent de la paleta"
 
 #: ../app/actions/context-actions.c:149
-#, fuzzy
-#| msgid "Background color"
 msgctxt "context-action"
 msgid "Background: Skip Back Palette Color"
-msgstr "Color de fons"
+msgstr "Fons: vés cap enrere en la paleta de colors"
 
 #: ../app/actions/context-actions.c:153
 msgctxt "context-action"
 msgid "Background: Skip Forward Palette Color"
-msgstr ""
+msgstr "Fons: vés cap endavant en la paleta de colors"
 
 #: ../app/actions/context-actions.c:161
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Add Color to Colormap"
 msgctxt "context-action"
 msgid "Foreground: Set Color From Colormap"
-msgstr "Afegeix el color al mapa de color"
+msgstr "Primer pla: defineix el color des del mapa de color"
 
 #: ../app/actions/context-actions.c:165
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Colormap"
-msgstr ""
+msgstr "Primer pla: usa el primer color del mapa de color"
 
 #: ../app/actions/context-actions.c:169
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Colormap"
-msgstr ""
+msgstr "Primer pla: usar l'últim color del mapa de color"
 
 #: ../app/actions/context-actions.c:173
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr ""
+msgstr "Primer pla: vés al color anterior del mapa de color"
 
 #: ../app/actions/context-actions.c:177
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Colormap"
-msgstr ""
+msgstr "Primer pla: vés al color següent del mapa de color"
 
 #: ../app/actions/context-actions.c:181
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr ""
+msgstr "Primer pla: vés al color anterior del mapa de color"
 
 #: ../app/actions/context-actions.c:185
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Colormap"
-msgstr ""
+msgstr "Primer pla: vés al color següent del mapa de color"
 
 #: ../app/actions/context-actions.c:193
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Add Color to Colormap"
 msgctxt "context-action"
 msgid "Background: Set Color From Colormap"
-msgstr "Afegeix el color al mapa de color"
+msgstr "Fons: defineix el color des del mapa de color"
 
 #: ../app/actions/context-actions.c:197
 msgctxt "context-action"
 msgid "Background: Use First Color From Colormap"
-msgstr ""
+msgstr "Fons: usa el primer color del mapa de color"
 
 #: ../app/actions/context-actions.c:201
 msgctxt "context-action"
 msgid "Background: Use Last Color From Colormap"
-msgstr ""
+msgstr "Fons: usa el darrer color del mapa de color"
 
 #: ../app/actions/context-actions.c:205
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Colormap"
-msgstr ""
+msgstr "Fons: usa el color previ del mapa de color"
 
 #: ../app/actions/context-actions.c:209
 msgctxt "context-action"
 msgid "Background: Use Next Color From Colormap"
-msgstr ""
+msgstr "Fons: usa el color següent del mapa de color"
 
 #: ../app/actions/context-actions.c:213
 msgctxt "context-action"
 msgid "Background: Skip Back Color From Colormap"
-msgstr ""
+msgstr "Fons: vés un color enrere en el mapa de color"
 
 #: ../app/actions/context-actions.c:217
 msgctxt "context-action"
 msgid "Background: Skip Forward Color From Colormap"
-msgstr ""
+msgstr "Fons: vés un color endavant en el mapa de color"
 
 #: ../app/actions/context-actions.c:225
 #, fuzzy
@@ -1399,250 +1385,214 @@ msgid "Background: Skip Color Forward From Swatch"
 msgstr ""
 
 #: ../app/actions/context-actions.c:289
-#, fuzzy
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Red: Set"
-msgstr "Selecció del primer pla"
+msgstr "Vermell en primer pla: estableix"
 
 #: ../app/actions/context-actions.c:293
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "Color de primer pla definit:"
+msgstr "Vermell en primer pla: estableix al mínim"
 
 #: ../app/actions/context-actions.c:297
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "Color de primer pla definit:"
+msgstr "Vermell en primer pla: estableix al màxim"
 
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 1%"
-msgstr ""
+msgstr "Vermell en primer pla: disminueix un 1%"
 
 #: ../app/actions/context-actions.c:305
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 1%"
-msgstr ""
+msgstr "Vermell en primer pla: incrementa un 1%"
 
 #: ../app/actions/context-actions.c:309
 msgctxt "context-action"
 msgid "Foreground Red: Decrease by 10%"
-msgstr ""
+msgstr "Vermell en primer pla: disminueix un 10%"
 
 #: ../app/actions/context-actions.c:313
 msgctxt "context-action"
 msgid "Foreground Red: Increase by 10%"
-msgstr ""
+msgstr "Vermell en primer pla: incrementa un 10%"
 
 #: ../app/actions/context-actions.c:321
-#, fuzzy
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Green: Set"
-msgstr "Selecció del primer pla"
+msgstr "Verd en primer pla: estableix"
 
 #: ../app/actions/context-actions.c:325
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "Color de primer pla definit:"
+msgstr "Verd en primer pla: estableix al mínim"
 
 #: ../app/actions/context-actions.c:329
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "Color de primer pla definit:"
+msgstr "Verd en primer pla: estableix al màxim"
 
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 1%"
-msgstr ""
+msgstr "Verd en primer pla: disminueix un 1%"
 
 #: ../app/actions/context-actions.c:337
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 1%"
-msgstr ""
+msgstr "Verd en primer pla: incrementa un 1%"
 
 #: ../app/actions/context-actions.c:341
 msgctxt "context-action"
 msgid "Foreground Green: Decrease by 10%"
-msgstr ""
+msgstr "Verd en primer pla: disminueix un 10%"
 
 #: ../app/actions/context-actions.c:345
 msgctxt "context-action"
 msgid "Foreground Green: Increase by 10%"
-msgstr ""
+msgstr "Verd en primer pla: incrementa un 10%"
 
 #: ../app/actions/context-actions.c:353
-#, fuzzy
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
-msgstr "Selecció del primer pla"
+msgstr "Blau en primer pla: estableix"
 
 #: ../app/actions/context-actions.c:357
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "Color de primer pla definit:"
+msgstr "Blau en primer pla: estableix al mínim"
 
 #: ../app/actions/context-actions.c:361
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "Color de primer pla definit:"
+msgstr "Blau en primer pla: estableix al màxim"
 
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 1%"
-msgstr ""
+msgstr "Blau en primer pla: disminueix un 1%"
 
 #: ../app/actions/context-actions.c:369
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 1%"
-msgstr ""
+msgstr "Blau en primer pla: incrementa un 1%"
 
 #: ../app/actions/context-actions.c:373
 msgctxt "context-action"
 msgid "Foreground Blue: Decrease by 10%"
-msgstr ""
+msgstr "Blau en primer pla: disminueix un 10%"
 
 #: ../app/actions/context-actions.c:377
 msgctxt "context-action"
 msgid "Foreground Blue: Increase by 10%"
-msgstr ""
+msgstr "Blau en primer pla: incrementa un 10%"
 
 #: ../app/actions/context-actions.c:385
-#, fuzzy
-#| msgid "Background"
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "Fons"
+msgstr "Fons vermell: estableix"
 
 #: ../app/actions/context-actions.c:389
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "Color de fons definit:"
+msgstr "Fons Vermell: estableix al mínim"
 
 #: ../app/actions/context-actions.c:393
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "Color de fons definit:"
+msgstr "Fons Vermell: estableix al màxim"
 
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
 msgid "Background Red: Decrease by 1%"
-msgstr ""
+msgstr "Fons Vermell: disminueix un 1%"
 
 #: ../app/actions/context-actions.c:401
 msgctxt "context-action"
 msgid "Background Red: Increase by 1%"
-msgstr ""
+msgstr "Fons vermell: incrementa un 1%"
 
 #: ../app/actions/context-actions.c:405
 msgctxt "context-action"
 msgid "Background Red: Decrease by 10%"
-msgstr ""
+msgstr "Fons Vermell: disminueix un 10%"
 
 #: ../app/actions/context-actions.c:409
 msgctxt "context-action"
 msgid "Background Red: Increase by 10%"
-msgstr ""
+msgstr "Fons vermell: incrementa un 10%"
 
 #: ../app/actions/context-actions.c:417
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "Color de fons definit:"
+msgstr "Fons verd: estableix"
 
 #: ../app/actions/context-actions.c:421
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "Color de fons definit:"
+msgstr "Fons verd: estableix al mínim"
 
 #: ../app/actions/context-actions.c:425
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "Color de fons definit:"
+msgstr "Fons verd: estableix al màxim"
 
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
 msgid "Background Green: Decrease by 1%"
-msgstr ""
+msgstr "Fons verd: disminueix un 1%"
 
 #: ../app/actions/context-actions.c:433
 msgctxt "context-action"
 msgid "Background Green: Increase by 1%"
-msgstr ""
+msgstr "Fons verd: incrementa un 1%"
 
 #: ../app/actions/context-actions.c:437
 msgctxt "context-action"
 msgid "Background Green: Decrease by 10%"
-msgstr ""
+msgstr "Fons verd: disminueix un 10%"
 
 #: ../app/actions/context-actions.c:441
 msgctxt "context-action"
 msgid "Background Green: Increase by 10%"
-msgstr ""
+msgstr "Fons verd: incrementa un 10%"
 
 #: ../app/actions/context-actions.c:449
-#, fuzzy
-#| msgid "_Background color:"
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "Color de _fons:"
+msgstr "Fons blau: estableix"
 
 #: ../app/actions/context-actions.c:453
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "Color de fons definit:"
+msgstr "Fons blau: estableix al mínim"
 
 #: ../app/actions/context-actions.c:457
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "Color de fons definit:"
+msgstr "Fons blau: estableix al màxim"
 
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 1%"
-msgstr ""
+msgstr "Fons blau: disminueix un 1%"
 
 #: ../app/actions/context-actions.c:465
 msgctxt "context-action"
 msgid "Background Blue: Increase by 1%"
-msgstr ""
+msgstr "Fons blau: incrementa un 1%"
 
 #: ../app/actions/context-actions.c:469
 msgctxt "context-action"
 msgid "Background Blue: Decrease by 10%"
-msgstr ""
+msgstr "Fons blau: disminueix un 10%"
 
 #: ../app/actions/context-actions.c:473
 msgctxt "context-action"
 msgid "Background Blue: Increase by 10%"
-msgstr ""
+msgstr "Fons blau: incrementa un 10%"
 
 #: ../app/actions/context-actions.c:481
 #, fuzzy
@@ -2541,12 +2491,12 @@ msgstr "Mostra el diàleg dels camins"
 #: ../app/actions/dialogs-actions.c:89
 msgctxt "dialogs-action"
 msgid "Color_map"
-msgstr "_Mapa de colors"
+msgstr "_Mapa de color"
 
 #: ../app/actions/dialogs-actions.c:90
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "Mostra el diàleg del mapa de colors"
+msgstr "Mostra el diàleg del mapa de color"
 
 #: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
@@ -5051,10 +5001,6 @@ msgstr "Ajusta"
 msgid "_Blending Function for Segment"
 msgstr "_Tipus de degradat per al segment"
 
-#: ../app/actions/gradient-editor-actions.c:779
-msgid "Coloring _Type for Segment"
-msgstr "_Mapa de colors"
-
 #: ../app/actions/gradient-editor-actions.c:782
 msgid "_Flip Segment"
 msgstr "_Capgira el segment"
@@ -5086,10 +5032,6 @@ msgstr "Redistribueix els tirador_s en el segment"
 #: ../app/actions/gradient-editor-actions.c:799
 msgid "_Blending Function for Selection"
 msgstr "_Tipus de degradat per a la selecció"
-
-#: ../app/actions/gradient-editor-actions.c:801
-msgid "Coloring _Type for Selection"
-msgstr "_Mapa de colors"
 
 #: ../app/actions/gradient-editor-actions.c:804
 msgid "_Flip Selection"
@@ -8690,12 +8632,9 @@ msgid "Advanced options"
 msgstr "Opcions avançades"
 
 #: ../app/actions/vectors-actions.c:304
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Select _Top Layer"
 msgctxt "vectors-action"
 msgid "Select _Top Path"
-msgstr "Selecciona la capa del capdamun_t"
+msgstr "Selecciona el camí del capdamun_t"
 
 #: ../app/actions/vectors-actions.c:305
 #, fuzzy
@@ -9150,22 +9089,19 @@ msgid "Toggle fullscreen view"
 msgstr "Commuta la vista en pantalla completa"
 
 #: ../app/actions/view-actions.c:315
-#, fuzzy
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Set zoom factor"
-msgstr "Defineix un factor d'ampliació personalitzat"
+msgstr "Defineix un factor d'ampliació"
 
 #: ../app/actions/view-actions.c:320
 msgctxt "view-action"
 msgid "Zoom out as far as possible"
-msgstr ""
+msgstr "Redueix al màxim possible"
 
 #: ../app/actions/view-actions.c:325
 msgctxt "view-action"
 msgid "Zoom in as far as possible"
-msgstr ""
+msgstr "Amplia al màxim possible"
 
 #: ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
@@ -13870,7 +13806,7 @@ msgstr "Nombre _màxim de colors:"
 
 #: ../app/dialogs/convert-indexed-dialog.c:219
 msgid "_Remove unused and duplicate colors from colormap"
-msgstr "Sup_rimeix els colors no utilitzats i duplicats del mapa de colors"
+msgstr "Sup_rimeix els colors no utilitzats i duplicats del mapa de color"
 
 #: ../app/dialogs/convert-indexed-dialog.c:248
 msgid "Color _dithering:"
@@ -15209,7 +15145,7 @@ msgstr "Diàleg Conversió a colors indexats"
 
 #: ../app/dialogs/preferences-dialog.c:1972
 msgid "Colormap:"
-msgstr "Mapa de colors:"
+msgstr "Mapa de color:"
 
 #: ../app/dialogs/preferences-dialog.c:1975
 msgid "Maximum number of colors:"
@@ -15217,7 +15153,7 @@ msgstr "Nombre màxim de colors:"
 
 #: ../app/dialogs/preferences-dialog.c:1979
 msgid "Remove unused and duplicate colors from colormap"
-msgstr "Suprimeix els colors no utilitzats i duplicats del mapa de colors"
+msgstr "Suprimeix els colors no utilitzats i duplicats del mapa de color"
 
 #: ../app/dialogs/preferences-dialog.c:1985
 msgid "Color dithering:"
@@ -19943,11 +19879,8 @@ msgid "Click or press Enter to crop"
 msgstr "Feu clic o premeu la tecla de retorn per a escapçar"
 
 #: ../app/tools/gimpcroptool.c:361
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Crop to C_ontent"
 msgid "Crop to: "
-msgstr "Escapça al c_ontingut"
+msgstr "Escapça a: "
 
 #: ../app/tools/gimpcroptool.c:431
 msgid "There is no active layer to crop."
@@ -21093,10 +21026,8 @@ msgid "_Rectangle Select"
 msgstr "Selecció _rectangular"
 
 #: ../app/tools/gimprectangleselecttool.c:725
-#, fuzzy
-#| msgid "Ellipse Select"
 msgid "Ellipse: "
-msgstr "Selecció el·líptica"
+msgstr "El·lipse: "
 
 #: ../app/tools/gimpregionselectoptions.c:89
 msgid "Select transparent areas"
@@ -21447,10 +21378,8 @@ msgid "Te_xt"
 msgstr "Te_xt"
 
 #: ../app/tools/gimptexttool.c:942
-#, fuzzy
-#| msgid "Text Tool"
 msgid "Text box: "
-msgstr "Eina Text"
+msgstr "Quadre de text: "
 
 #: ../app/tools/gimptexttool.c:1073
 msgid "Reshape Text Layer"
@@ -21739,10 +21668,8 @@ msgid "Pat_hs"
 msgstr "Ca_mins"
 
 #: ../app/tools/gimpvectortool.c:733
-#, fuzzy
-#| msgid "There is no active layer or channel to fill."
 msgid "There is no active layer or channel to fill"
-msgstr "No hi ha cap capa ni canal actiu per omplir."
+msgstr "No hi ha cap capa ni canal actiu per omplir"
 
 #: ../app/tools/gimpvectortool.c:805
 msgid "There is no active layer or channel to stroke to"
