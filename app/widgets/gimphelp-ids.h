@@ -421,6 +421,7 @@
 #define GIMP_HELP_FILTER_SLIC                     "gimp-filter-slic"
 #define GIMP_HELP_FILTER_SNN_MEAN                 "gimp-filter-snn-mean"
 #define GIMP_HELP_FILTER_SOFTGLOW                 "gimp-filter-softglow"
+#define GIMP_HELP_FILTER_SPIRAL                   "gimp-filter-spiral"
 #define GIMP_HELP_FILTER_STRETCH_CONTRAST         "gimp-filter-stretch-contrast"
 #define GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV     "gimp-filter-stretch-contrast-hsv"
 #define GIMP_HELP_FILTER_STRESS                   "gimp-filter-stress"

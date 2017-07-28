@@ -588,6 +588,11 @@ static const GimpStringActionEntry filters_interactive_actions[] =
     "gegl:softglow",
     GIMP_HELP_FILTER_SOFTGLOW },
 
+  { "filters-spiral", GIMP_ICON_GEGL,
+    NC_("filters-action", "S_piral..."), NULL, NULL,
+    "gegl:spiral",
+    GIMP_HELP_FILTER_SPIRAL },
+
   { "filters-stretch-contrast", GIMP_ICON_GEGL,
     NC_("filters-action", "_Stretch Contrast..."), NULL, NULL,
     "gegl:stretch-contrast",
@@ -880,6 +885,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-slic",                    writable);
   SET_SENSITIVE ("filters-snn-mean",                writable);
   SET_SENSITIVE ("filters-softglow",                writable);
+  SET_SENSITIVE ("filters-spiral",                  writable);
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
   SET_SENSITIVE ("filters-stress",                  writable);
