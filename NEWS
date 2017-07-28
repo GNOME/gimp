@@ -58,8 +58,8 @@ On-canvas interaction changes:
   - Refactor on-canvas interaction code out of some of the tools and
     make it reusable.
   - Update tools accordingly.
-  - Make on-canvas interaction accessible to GEGL-based plug-ins and
-    use it in the Spiral and Supernova plug-ins as a test case.
+  - Make on-canvas interaction accessible to GEGL-based filters and
+    use it in the Spiral and Supernova filters as a test case.
 
 GUI and usability:
 
@@ -239,12 +239,15 @@ Plug-ins:
   - Enhance the raw (not the digital negative) files plugin:
     introduce exporting settings and remember them across sessions,
     make the plugin invokable non-interactively, and more.
-  - Add GEGL-based plug-ins: Neon (Edge detection), Wavelet Decompose,
+
+Filters:
+
+  - Add GEGL-based filters: Neon (Edge detection), Wavelet Decompose,
     Image Gradient, Symmetric Nearest Neighbor, Extract Component,
     RGB Clip, Simple Linear Iterative Clustering, Waterpixels, Spiral.
-  - Add rotate/flip buttons to the Convolution Matrix plug-in's GUI
+  - Add rotate/flip buttons to the Convolution Matrix filter's GUI
     to rotate/flip the matrix.
-  - For GEGL-based tools, use a new metadata language to dynamically
+  - For GEGL-based filters, use a new metadata language to dynamically
     control UI attributes based on context (e.g. auto-disable
     unapplicable options).
   - Allow filter actions to have hardcoded default operation settings
