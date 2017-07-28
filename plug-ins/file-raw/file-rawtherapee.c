@@ -120,7 +120,8 @@ init (void)
 
       if (sscanf (rawtherapee_stdout,
                   "RawTherapee, version %d.%d",
-                  &rtmajor, &rtminor) == 2 && rtmajor >= 5 && rtminor >= 2)
+                  &rtmajor, &rtminor) == 2 &&
+          ((rtmajor == 5 && rtminor >= 2) || rtmajor >= 6))
         {
           have_rawtherapee = TRUE;
         }
