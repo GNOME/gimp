@@ -15,6 +15,10 @@ Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 
 Core:
 
+  - Make it possible to use multithreading in GEGL and raise max amount
+    of threads to 64. Given how unstable this feature is, any value
+    above 1 should be currently treated as a step inside an industrial
+    microwave oven with the on/off swith on the outside.
   - New clipboard implementation allows copying/pasting layers and
     layer groups.
   - Color tags simplify managing large projects with a lot of layers
@@ -35,7 +39,8 @@ Layers and compositing:
 
   - Layer modes' code is now refactored to separate gamma-corrected
     variations from the linear light ones, legacy modes have been
-    preserved to support older XCF files.
+    preserved to support older XCF files. UI to switch between the two
+    is experimental and should be treated as a temporary design.
   - Blending and compositing of layers are configurable separately for
     more flexibility now, compositing can be linear TRC, perceptual TRC
     or CIE LAB.
@@ -48,6 +53,13 @@ Layers and compositing:
   - Rename "Color (HSV)" mode to "Color (HSL)" to indicate the actual
     color space being used.
 
+On-canvas interaction changes:
+
+  - Refactor on-canvas interaction code out of some of the tools and
+    make it reusable.
+  - Update tools accordingly.
+  - Make on-canvas interaction accessible to GEGL-based plug-ins and
+    use it in the Spiral and Supernova plug-ins as a test case.
 
 GUI and usability:
 
@@ -112,13 +124,17 @@ Configurability:
     display switching.
   - Icons size is now a configurable option, not a theme feature.
     The icon size is also auto-guessed from monitor resolution now.
+  - It is now possible to have keybindings for previous/next/top/bottom
+    vectors.
 
 Tools:
 
+  - Complete the Handle Transform tool and make it available by default.
   - Add Hue-Chroma operation/tool that operates in CIE LCH color space.
   - Replace Color Balance, Colorize and Hue-Saturation with GEGL-based
     filters with a custom user interface to ease future transition to
-    non-destructive editing planned for v3.2.
+    non-destructive editing planned for v3.2. Remove the "Image -> 
+    Tools -> Color Tools" submenu.
   - The Move tool now shows relative coordinates when moving guides
     and sample points.
   - The Measure tool has better digit precision now (before that, at
@@ -151,6 +167,10 @@ Tools:
 
 Painting:
 
+  - The Smudge tool now has a Flow control that allows mixing in both
+    constant and gradient color while smudging. There's another new
+    option to never decrease alpha of existing pixels while smudging
+    in the tools options now as well.
   - Rulers, scrollbars, and the Navigation dialog follow canvas
     rotation now.
   - Canvas rotation is now snappier in certain cases.
@@ -160,20 +180,28 @@ Painting:
   - Allow painting on transparent layers with modes other than normal.
   - Add a specialized convolution algorithm for the hardness blur
     to make it faster.
-  - New dynamics "Pressure Size".
+  - Make the Force option insensitive for the Pencil tool.
+  - Add new "Pressure Size" dynamics.
 
-File Formats
+File Formats:
 
+  - Make the default raw (DSLR) image importer configurable.
+  - Add RawTherapee plug-in to pre-process varios raw (DSLR) images,
+    RawTehrapee v5.2 is the minimum requirement.
+  - Add new file-raw-placeholder plug-in that registers itself for
+    loading all raw formats from file-raw/file-formats.h, but does
+    nothing except returning an error message pointing to darktable
+    and RawTherapee.
   - Add native WebP loader/exporter with support for ICC profiles,
     animation, metadata.
   - The TIFF loader will not generate warnings about private tags
     anymore.
   - Handle linear gamma PNG files correctly, provide a combo box for
-    specifying PNG bitdepth/variant at exporting time.
-  - Load PSD files with layers which contain additional information
-    with a length that is not divisible by 4.
+    specifying PNG bit depth / variant at exporting time.
   - Add support for linear burn, linear light, vivid light, pin light,
     and hard mix layer modes in PSD (importing and exporting).
+  - Load PSD files with layers which contain additional information
+    with a length that is not divisible by 4.
   - Add support to import/export layer color tags from/to PSD files.
   - Optionally convert all imported (not XCF) images to 32-bit linear
     floating point, and optionally add a little noise in order to
@@ -181,20 +209,29 @@ File Formats
   - Optionally add alpha channel to layers of imported images
     (configurable in Preferences > Import).
   - Support writing PNM files with 16-bit image precision.
-  - Make the default raw (DLSR) image importer configurable.
   - Improve support for PCX files:
     * saving 1bpp and 4bpp images (according to palette size).
     * loading 2bpp, 2 planes/1bpp, 3 planes/1bpp and 4bpp images.
     * non-Black&White monochrome PCX files (any 2 colors according to
       the palette).
-  - Add support for exporting multi-page PDF from image layers.
+  - Add support for exporting multi-page PDF from image layers, with
+    optional reversed order.
+  - Add RLE support for RGB565 to in file-csource.
 
-Printing
+Metadata:
+
+  - Add new metadata viewer that uses Exiv2 to display Exif, XMP, IPTC,
+    and DICOM metadata (the latter is displayed on the XMP tab).
+  - Add metadata editor that supports adding/editing writing XMP, IPTC,
+    DICOM, and GPS/Exif metadata, as well as loading/exporting metadata
+    from/to XMP files.
+
+Printing:
 
   - Print resolution can now be reset to defaults, new values for the
     same image is actually used now without reloading the image.
 
-Plug-ins
+Plug-ins:
 
   - The Screenshot plug-in now assigns either monitors profile or
     converts to sRGB.
@@ -202,9 +239,9 @@ Plug-ins
   - Enhance the raw (not the digital negative) files plugin:
     introduce exporting settings and remember them across sessions,
     make the plugin invokable non-interactively, and more.
-  - Add GEGL-based plug-ins: Neon (Edge detection), Wavelet decompose,
+  - Add GEGL-based plug-ins: Neon (Edge detection), Wavelet Decompose,
     Image Gradient, Symmetric Nearest Neighbor, Extract Component,
-    RGB Clip, Simple Linear Iterative Clustering, Waterpixels.
+    RGB Clip, Simple Linear Iterative Clustering, Waterpixels, Spiral.
   - Add rotate/flip buttons to the Convolution Matrix plug-in's GUI
     to rotate/flip the matrix.
   - For GEGL-based tools, use a new metadata language to dynamically
@@ -214,12 +251,12 @@ Plug-ins
     by encoding them directly in the string attached to all filter
     actions.
 
-Color Palettes
+Color Palettes:
 
   - Merge Palettes command is available for multiple selected color
     palettes now.
 
-Assets / Resources
+Assets / Resources:
 
   - Some basic presets are available for the Crop tool now: 2x3,
     3x4, 16:10, 16x9, and square.
@@ -440,7 +477,7 @@ Plug-ins/GEGL Filters:
   - bring dialog titles and help IDs to GEGL filter dialogs
 
   File Plug-Ins:
-  - add darktable plug-in top pre-process varios raw images
+  - add darktable plug-in to pre-process varios raw images
   - port file-gif-save and file-tiff to GIO
   - TIFF support:
     - make libtiff a hard dependency
