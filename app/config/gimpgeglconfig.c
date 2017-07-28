@@ -38,9 +38,8 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_MAX_NUM_THREADS G_PARAM_SPEC_INT (g_object_class_find_property (G_OBJECT_GET_CLASS (gegl_config()), \
-                                                                             "threads"))->maximum
 #define GIMP_MAX_MEM_PROCESS (MIN (G_MAXSIZE, GIMP_MAX_MEMSIZE))
+
 
 enum
 {
@@ -105,7 +104,8 @@ static void
 gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  gint          num_processors;
+  gint          n_threads;
+  gint          max_n_threads;
   guint64       memory_size;
 
   parent_class = g_type_class_peek_parent (klass);
@@ -132,24 +132,28 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
                          GIMP_PARAM_STATIC_STRINGS |
                          GIMP_CONFIG_PARAM_RESTART);
 
-  num_processors = g_get_num_processors ();
+  n_threads = g_get_num_processors ();
 
 #ifdef GIMP_UNSTABLE
-  num_processors = num_processors * 2;
+  n_threads *= 2;
 #endif
 
-  num_processors = MIN (num_processors, GIMP_MAX_NUM_THREADS);
+  max_n_threads =
+    G_PARAM_SPEC_INT (g_object_class_find_property (G_OBJECT_GET_CLASS (gegl_config ()),
+                                                    "threads"))->maximum;
+
+  n_threads = MIN (n_threads, max_n_threads);
 
 #ifdef __GNUC__
 #warning Defaulting # of threads to 1
 #endif
-  num_processors = 1;
+  n_threads = 1;
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_NUM_PROCESSORS,
                         "num-processors",
                         "Number of threads to use",
                         NUM_PROCESSORS_BLURB,
-                        1, GIMP_MAX_NUM_THREADS, num_processors,
+                        1, max_n_threads, n_threads,
                         GIMP_PARAM_STATIC_STRINGS);
 
   memory_size = gimp_get_physical_memory_size ();
