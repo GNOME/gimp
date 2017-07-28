@@ -35,6 +35,8 @@
 #include "gimppluginmanager-file-procedure.h"
 #include "gimppluginprocedure.h"
 
+#include "gimp-log.h"
+
 #include "gimp-intl.h"
 
 
@@ -159,9 +161,10 @@ file_procedure_find (GSList  *procs,
                     }
                   else if (match_val != FILE_MATCH_NONE)
                     {
-                      g_printerr ("magic match %d on %s\n",
-                                  match_val,
-                                  gimp_object_get_name (file_proc));
+                      GIMP_LOG (MAGIC_MATCH,
+                                "magic match %d on %s\n",
+                                match_val,
+                                gimp_object_get_name (file_proc));
 
                       if (match_val > best_match_val)
                         {
@@ -178,8 +181,10 @@ file_procedure_find (GSList  *procs,
 
       if (best_file_proc)
         {
-          g_printerr ("best magic match on %s\n",
-                      gimp_object_get_name (best_file_proc));
+          GIMP_LOG (MAGIC_MATCH,
+                    "best magic match on %s\n",
+                    gimp_object_get_name (best_file_proc));
+
           return best_file_proc;
         }
     }

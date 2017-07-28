@@ -41,7 +41,8 @@ typedef enum
   GIMP_LOG_RECTANGLE_TOOL     = 1 << 17,
   GIMP_LOG_BRUSH_CACHE        = 1 << 18,
   GIMP_LOG_PROJECTION         = 1 << 19,
-  GIMP_LOG_XCF                = 1 << 20
+  GIMP_LOG_XCF                = 1 << 20,
+  GIMP_LOG_MAGIC_MATCH        = 1 << 21
 } GimpLogFlags;
 
 
