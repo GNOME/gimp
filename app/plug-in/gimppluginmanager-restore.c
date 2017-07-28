@@ -917,7 +917,7 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
 
   /* if no raw loader was configured, or the configured raw loader
    * wasn't found, default to the first loader that is not the
-   * placeolder, if any
+   * placeholder, if any
    */
   if (! raw_plug_in && manager->raw_load_procs)
     {
