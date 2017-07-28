@@ -93,8 +93,6 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 
   image = gimp_display_get_image (shell->display);
 
-  g_printerr ("gimp_display_shell_profile_update\n");
-
   if (! image)
     return;
 
@@ -115,12 +113,14 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
       dest_format = babl_format ("R'G'B'A u8");
     }
 
+#if 0
   g_printerr ("src_profile: %s\n"
               "src_format:  %s\n"
               "dest_format: %s\n",
               gimp_color_profile_get_label (src_profile),
               babl_get_name (src_format),
               babl_get_name (dest_format));
+#endif
 
   shell->profile_transform =
     gimp_widget_get_color_transform (gtk_widget_get_toplevel (GTK_WIDGET (shell)),
