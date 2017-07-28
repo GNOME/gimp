@@ -190,7 +190,7 @@ _("Promote imported images to floating point precision. Does not apply " \
 
 #define IMPORT_PROMOTE_DITHER_BLURB \
 _("When promoting imported images to floating point precision, also add " \
-  "minimal noise in order do distribute color values a bit.")
+  "minimal noise in order to distribute color values a bit.")
 
 #define IMPORT_ADD_ALPHA_BLURB \
 _("Add an alpha channel to all layers of imported images.")

@@ -414,7 +414,7 @@ images.  Possible values are yes and no.
 (import-promote-dither yes)
 
 When promoting imported images to floating point precision, also add minimal
-noise in order do distribute color values a bit.  Possible values are yes and
+noise in order to distribute color values a bit.  Possible values are yes and
 no.
 
 .TP
