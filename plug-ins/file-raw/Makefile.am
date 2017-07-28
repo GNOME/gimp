@@ -33,10 +33,14 @@ libexec_PROGRAMS = \
 
 file_darktable_SOURCES = \
 	file-darktable.c	\
+	file-raw-utils.c	\
+	file-raw-utils.h	\
 	file-formats.h
 
 file_rawtherapee_SOURCES = \
 	file-rawtherapee.c	\
+	file-raw-utils.c	\
+	file-raw-utils.h	\
 	file-formats.h
 
 file_raw_placeholder_SOURCES = \

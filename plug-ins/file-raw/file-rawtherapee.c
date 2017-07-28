@@ -32,6 +32,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "file-formats.h"
+#include "file-raw-utils.h"
 
 
 #define LOAD_THUMB_PROC "file-rawtherapee-load-thumb"
@@ -92,7 +93,13 @@ init (void)
   /* check if rawtherapee is installed
    * TODO: allow setting the location of the executable in preferences
    */
-  gchar    *argv[]           = { "rawtherapee", "-v", NULL };
+  gboolean  search_path      = FALSE;
+  gchar    *exec_path        = file_raw_get_executable_path ("rawtherapee", NULL,
+                                                             "RAWTHERAPEE_EXECUTABLE",
+                                                             "com.rawtherapee.rawtherapee",
+                                                             NULL,
+                                                             &search_path);
+  gchar    *argv[]             = { exec_path, "-v", NULL };
   gchar    *rawtherapee_stdout = NULL;
   gboolean  have_rawtherapee   = FALSE;
   gint      i;
@@ -100,8 +107,8 @@ init (void)
   if (g_spawn_sync (NULL,
                     argv,
                     NULL,
-                    G_SPAWN_STDERR_TO_DEV_NULL |
-                    G_SPAWN_SEARCH_PATH,
+                    (search_path ? G_SPAWN_SEARCH_PATH : 0) |
+                    G_SPAWN_STDERR_TO_DEV_NULL,
                     NULL,
                     NULL,
                     &rawtherapee_stdout,
@@ -120,6 +127,7 @@ init (void)
 
       g_free (rawtherapee_stdout);
     }
+  g_free (exec_path);
 
   if (! have_rawtherapee)
     return;
@@ -281,15 +289,21 @@ load_image (const gchar  *filename,
             GimpRunMode   run_mode,
             GError      **error)
 {
-  gint32  image_ID        = -1;
-  gchar  *filename_out    = gimp_temp_name ("tif");
+  gint32    image_ID           = -1;
+  gchar    *filename_out       = gimp_temp_name ("tif");
+  gchar    *rawtherapee_stdout = NULL;
 
-  gchar *rawtherapee_stdout = NULL;
+  gboolean  search_path        = FALSE;
+  gchar    *exec_path          = file_raw_get_executable_path ("rawtherapee", NULL,
+                                                               "RAWTHERAPEE_EXECUTABLE",
+                                                               "com.rawtherapee.rawtherapee",
+                                                               NULL,
+                                                               &search_path);
 
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gchar *argv[] =
     {
-      "rawtherapee",
+      exec_path,
       "-gimp",
       (gchar *) filename,
       filename_out,
@@ -304,7 +318,7 @@ load_image (const gchar  *filename,
                     NULL,
                     /*G_SPAWN_STDOUT_TO_DEV_NULL |*/
                     G_SPAWN_STDERR_TO_DEV_NULL |
-                    G_SPAWN_SEARCH_PATH,
+                    (search_path ? G_SPAWN_SEARCH_PATH : 0),
                     NULL,
                     NULL,
                     &rawtherapee_stdout,
@@ -319,6 +333,7 @@ load_image (const gchar  *filename,
 
   /*if (rawtherapee_stdout) printf ("%s\n", rawtherapee_stdout);*/
   g_free (rawtherapee_stdout);
+  g_free (exec_path);
 
   g_unlink (filename_out);
   g_free (filename_out);
@@ -384,9 +399,15 @@ load_thumbnail_image (const gchar   *filename,
     "Method=fast\n";
 
 
+  gboolean  search_path = FALSE;
+  gchar    *exec_path   = file_raw_get_executable_path ("rawtherapee", "-cli",
+                                                        "RAWTHERAPEE_EXECUTABLE",
+                                                        "com.rawtherapee.rawtherapee",
+                                                        NULL,
+                                                        &search_path);
   gchar *argv[] =
     {
-      "rawtherapee-cli",
+      exec_path,
       "-o", filename_out,
       "-d",
       "-s",
@@ -412,7 +433,7 @@ load_thumbnail_image (const gchar   *filename,
                     argv,
                     NULL,
                     G_SPAWN_STDERR_TO_DEV_NULL |
-                    G_SPAWN_SEARCH_PATH,
+                    (search_path ? G_SPAWN_SEARCH_PATH : 0),
                     NULL,
                     NULL,
                     &rawtherapee_stdout,
@@ -441,6 +462,7 @@ load_thumbnail_image (const gchar   *filename,
   g_free (filename_out);
   g_free (thumb_pp3);
   g_free (rawtherapee_stdout);
+  g_free (exec_path);
 
   return image_ID;
 }

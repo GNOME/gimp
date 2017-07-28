@@ -32,19 +32,11 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "file-formats.h"
+#include "file-raw-utils.h"
 
-#ifdef GDK_WINDOWING_QUARTZ
-#include <CoreServices/CoreServices.h>
-#endif
-
-#ifdef GDK_WINDOWING_WIN32
-#include <Windows.h>
-#endif
 
 #define LOAD_THUMB_PROC "file-darktable-load-thumb"
-
-static gchar   *get_executable_path  (const gchar      *suffix,
-                                      gboolean         *search_path);
+#define REGISTRY_KEY_BASE "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\darktable"
 
 static void     init                 (void);
 static void     query                (void);
@@ -72,103 +64,6 @@ const GimpPlugInInfo PLUG_IN_INFO =
 };
 
 MAIN ()
-
-static gchar *
-get_executable_path (const gchar *suffix,
-                     gboolean    *search_path)
-{
-  /*
-   * First check for the environment variable DARKTABLE_EXECUTABLE.
-   * Next do platform specific checks (bundle lookup on Mac, registry stuff
-   * on Windows).
-   * Last resort is hoping for darktable to be in PATH.
-   */
-
-  /*
-   * Look for env variable. That can be set directly or via an environ file.
-   * We assume that just appendign the suffix to that value will work.
-   * That means that on Windows there should be no ".exe"!
-   */
-  const gchar *dt_env = g_getenv ("DARKTABLE_EXECUTABLE");
-  if (dt_env)
-    return g_strconcat (dt_env, suffix, NULL);
-
-#if defined (GDK_WINDOWING_QUARTZ)
-  {
-    OSStatus status;
-    CFURLRef bundle_url = NULL;
-
-    /* For macOS, attempt searching for a darktable app bundle first. */
-    status = LSFindApplicationForInfo (kLSUnknownCreator,
-                                       CFSTR ("org.darktable"),
-                                       NULL, NULL, &bundle_url);
-
-    if (status >= 0)
-      {
-        CFBundleRef bundle;
-        CFURLRef exec_url, absolute_url;
-        CFStringRef path;
-        gchar *ret;
-        CFIndex len;
-
-        bundle = CFBundleCreate (kCFAllocatorDefault, bundle_url);
-        CFRelease (bundle_url);
-
-        exec_url = CFBundleCopyExecutableURL (bundle);
-        absolute_url = CFURLCopyAbsoluteURL (exec_url);
-        path = CFURLCopyFileSystemPath (absolute_url, kCFURLPOSIXPathStyle);
-
-        /* This gets us the length in UTF16 characters, we multiply by 2
-        * to make sure we have a buffer big enough to fit the UTF8 string.
-        */
-        len = CFStringGetLength (path);
-        ret = g_malloc0 (len * 2 * sizeof (gchar));
-        if (!CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
-                                 kCFStringEncodingUTF8))
-          ret = NULL;
-
-        CFRelease (path);
-        CFRelease (absolute_url);
-        CFRelease (exec_url);
-        CFRelease (bundle);
-
-        if (ret)
-          return ret;
-      }
-    /* else, app bundle was not found, try path search as last resort. */
-  }
-#elif defined (GDK_WINDOWING_WIN32)
-  {
-    /* Look for darktable in the Windows registry. */
-
-    char *registry_key;
-    const char *registry_key_base = "SOFTWARE\\Microsoft\\Windows\\"
-                                    "CurrentVersion\\App Paths\\darktable";
-    char path[MAX_PATH];
-    DWORD buffer_size = sizeof (path);
-    long status;
-
-    if (suffix)
-      registry_key = g_strconcat (registry_key_base, suffix, ".exe", NULL);
-    else
-      registry_key = g_strconcat (registry_key_base, ".exe", NULL);
-
-    status = RegGetValue (HKEY_LOCAL_MACHINE, registry_key, "", RRF_RT_ANY,
-                          NULL, (PVOID)&path, &buffer_size);
-
-    g_free (registry_key);
-
-    if (status == ERROR_SUCCESS)
-      return g_strdup (path);
-  }
-#endif
-
-  /* Finally, the last resort. */
-  *search_path = TRUE;
-  if (suffix)
-    return g_strconcat ("darktable", suffix, NULL);
-  return g_strdup ("darktable");
-}
 
 static void
 init (void)
@@ -201,7 +96,11 @@ init (void)
   /* check if darktable is installed
    */
   gboolean  search_path      = FALSE;
-  gchar    *exec_path        = get_executable_path (NULL, &search_path);
+  gchar    *exec_path        = file_raw_get_executable_path ("darktable", NULL,
+                                                             "DARKTABLE_EXECUTABLE",
+                                                             "org.darktable",
+                                                             REGISTRY_KEY_BASE,
+                                                             &search_path);
   gchar    *argv[]           = { exec_path, "--version", NULL };
   gchar    *darktable_stdout = NULL;
   gchar    *darktable_stderr = NULL;
@@ -439,7 +338,11 @@ load_image (const gchar  *filename,
 
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gboolean  search_path      = FALSE;
-  gchar    *exec_path        = get_executable_path (NULL, &search_path);
+  gchar    *exec_path        = file_raw_get_executable_path ("darktable", NULL,
+                                                             "DARKTABLE_EXECUTABLE",
+                                                             "org.darktable",
+                                                             REGISTRY_KEY_BASE,
+                                                             &search_path);
   gchar    *argv[] =
     {
       exec_path,
@@ -509,7 +412,11 @@ load_thumbnail_image (const gchar   *filename,
   gchar  *darktable_stdout = NULL;
 
   gboolean  search_path      = FALSE;
-  gchar    *exec_path        = get_executable_path ("-cli", &search_path);
+  gchar    *exec_path        = file_raw_get_executable_path ("darktable", "-cli",
+                                                             "DARKTABLE_EXECUTABLE",
+                                                             "org.darktable",
+                                                             REGISTRY_KEY_BASE,
+                                                             &search_path);
   gchar    *argv[] =
     {
       exec_path,
