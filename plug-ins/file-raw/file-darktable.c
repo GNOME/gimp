@@ -100,8 +100,8 @@ get_executable_path (const gchar *suffix,
 
     /* For macOS, attempt searching for a darktable app bundle first. */
     status = LSFindApplicationForInfo (kLSUnknownCreator,
-                                      CFSTR ("org.darktable"),
-                                      NULL, NULL, &bundle_url);
+                                       CFSTR ("org.darktable"),
+                                       NULL, NULL, &bundle_url);
 
     if (status >= 0)
       {
@@ -124,7 +124,7 @@ get_executable_path (const gchar *suffix,
         len = CFStringGetLength (path);
         ret = g_malloc0 (len * 2 * sizeof (gchar));
         if (!CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
-                                kCFStringEncodingUTF8))
+                                 kCFStringEncodingUTF8))
           ret = NULL;
 
         CFRelease (path);
@@ -440,7 +440,7 @@ load_image (const gchar  *filename,
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = get_executable_path (NULL, &search_path);
-  gchar *argv[] =
+  gchar    *argv[] =
     {
       exec_path,
       "--library", ":memory:",
@@ -510,7 +510,7 @@ load_thumbnail_image (const gchar   *filename,
 
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = get_executable_path ("-cli", &search_path);
-  gchar *argv[] =
+  gchar    *argv[] =
     {
       exec_path,
       (gchar *) filename, filename_out,
