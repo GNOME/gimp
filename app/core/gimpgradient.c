@@ -74,6 +74,10 @@ static GimpGradientSegment *
               gimp_gradient_get_segment_at_internal  (GimpGradient        *gradient,
                                                       GimpGradientSegment *seg,
                                                       gdouble              pos);
+static void          gimp_gradient_get_flat_color    (GimpContext         *context,
+                                                      const GimpRGB       *color,
+                                                      GimpGradientColor    color_type,
+                                                      GimpRGB             *flat_color);
 
 
 static inline gdouble  gimp_gradient_calc_linear_factor            (gdouble  middle,
@@ -490,51 +494,11 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
 
   /* Get left/right colors */
 
-  switch (seg->left_color_type)
-    {
-    case GIMP_GRADIENT_COLOR_FIXED:
-      left_color = seg->left_color;
-      break;
+  gimp_gradient_segment_get_left_flat_color (gradient,
+                                             context, seg, &left_color);
 
-    case GIMP_GRADIENT_COLOR_FOREGROUND:
-    case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-      gimp_context_get_foreground (context, &left_color);
-
-      if (seg->left_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
-        gimp_rgb_set_alpha (&left_color, 0.0);
-      break;
-
-    case GIMP_GRADIENT_COLOR_BACKGROUND:
-    case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-      gimp_context_get_background (context, &left_color);
-
-      if (seg->left_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-        gimp_rgb_set_alpha (&left_color, 0.0);
-      break;
-    }
-
-  switch (seg->right_color_type)
-    {
-    case GIMP_GRADIENT_COLOR_FIXED:
-      right_color = seg->right_color;
-      break;
-
-    case GIMP_GRADIENT_COLOR_FOREGROUND:
-    case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-      gimp_context_get_foreground (context, &right_color);
-
-      if (seg->right_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
-        gimp_rgb_set_alpha (&right_color, 0.0);
-      break;
-
-    case GIMP_GRADIENT_COLOR_BACKGROUND:
-    case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-      gimp_context_get_background (context, &right_color);
-
-      if (seg->right_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-        gimp_rgb_set_alpha (&right_color, 0.0);
-      break;
-    }
+  gimp_gradient_segment_get_right_flat_color (gradient,
+                                              context, seg, &right_color);
 
   /* Calculate color components */
 
@@ -641,51 +605,15 @@ gimp_gradient_flatten (GimpGradient *gradient,
 
   for (seg = flat->segments; seg; seg = seg->next)
     {
-      switch (seg->left_color_type)
-        {
-        case GIMP_GRADIENT_COLOR_FIXED:
-          break;
-
-        case GIMP_GRADIENT_COLOR_FOREGROUND:
-        case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-          gimp_context_get_foreground (context, &seg->left_color);
-
-          if (seg->left_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
-            gimp_rgb_set_alpha (&seg->left_color, 0.0);
-          break;
-
-        case GIMP_GRADIENT_COLOR_BACKGROUND:
-        case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-          gimp_context_get_background (context, &seg->left_color);
-
-          if (seg->left_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-            gimp_rgb_set_alpha (&seg->left_color, 0.0);
-          break;
-        }
+      gimp_gradient_segment_get_left_flat_color (gradient,
+                                                 context, seg,
+                                                 &seg->left_color);
 
       seg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
 
-      switch (seg->right_color_type)
-        {
-        case GIMP_GRADIENT_COLOR_FIXED:
-          break;
-
-        case GIMP_GRADIENT_COLOR_FOREGROUND:
-        case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
-          gimp_context_get_foreground (context, &seg->right_color);
-
-          if (seg->right_color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
-            gimp_rgb_set_alpha (&seg->right_color, 0.0);
-          break;
-
-        case GIMP_GRADIENT_COLOR_BACKGROUND:
-        case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
-          gimp_context_get_background (context, &seg->right_color);
-
-          if (seg->right_color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
-            gimp_rgb_set_alpha (&seg->right_color, 0.0);
-          break;
-        }
+      gimp_gradient_segment_get_right_flat_color (gradient,
+                                                  context, seg,
+                                                  &seg->right_color);
 
       seg->right_color_type = GIMP_GRADIENT_COLOR_FIXED;
     }
@@ -1050,6 +978,36 @@ gimp_gradient_segment_set_right_color_type (GimpGradient        *gradient,
   seg->right_color_type = color_type;
 
   gimp_data_thaw (GIMP_DATA (gradient));
+}
+
+void
+gimp_gradient_segment_get_left_flat_color (GimpGradient        *gradient,
+                                           GimpContext         *context,
+                                           GimpGradientSegment *seg,
+                                           GimpRGB             *color)
+{
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (seg != NULL);
+  g_return_if_fail (color != NULL);
+
+  gimp_gradient_get_flat_color (context,
+                                &seg->left_color, seg->left_color_type,
+                                color);
+}
+
+void
+gimp_gradient_segment_get_right_flat_color (GimpGradient        *gradient,
+                                            GimpContext         *context,
+                                            GimpGradientSegment *seg,
+                                            GimpRGB             *color)
+{
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (seg != NULL);
+  g_return_if_fail (color != NULL);
+
+  gimp_gradient_get_flat_color (context,
+                                &seg->right_color, seg->right_color_type,
+                                color);
 }
 
 gdouble
@@ -2042,6 +2000,36 @@ gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
   g_warning ("%s: no matching segment for position %0.15f", G_STRFUNC, pos);
 
   return NULL;
+}
+
+static void
+gimp_gradient_get_flat_color (GimpContext       *context,
+                              const GimpRGB     *color,
+                              GimpGradientColor  color_type,
+                              GimpRGB           *flat_color)
+{
+  switch (color_type)
+    {
+    case GIMP_GRADIENT_COLOR_FIXED:
+      *flat_color = *color;
+      break;
+
+    case GIMP_GRADIENT_COLOR_FOREGROUND:
+    case GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT:
+      gimp_context_get_foreground (context, flat_color);
+
+      if (color_type == GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT)
+        gimp_rgb_set_alpha (flat_color, 0.0);
+      break;
+
+    case GIMP_GRADIENT_COLOR_BACKGROUND:
+    case GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT:
+      gimp_context_get_background (context, flat_color);
+
+      if (color_type == GIMP_GRADIENT_COLOR_BACKGROUND_TRANSPARENT)
+        gimp_rgb_set_alpha (flat_color, 0.0);
+      break;
+    }
 }
 
 static inline gdouble

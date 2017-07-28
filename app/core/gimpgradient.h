@@ -147,6 +147,20 @@ gimp_gradient_segment_set_right_color_type    (GimpGradient         *gradient,
                                                GimpGradientColor     color_type);
 
 
+void
+gimp_gradient_segment_get_left_flat_color     (GimpGradient         *gradient,
+                                               GimpContext          *context,
+                                               GimpGradientSegment  *seg,
+                                               GimpRGB              *color);
+
+
+void
+gimp_gradient_segment_get_right_flat_color    (GimpGradient         *gradient,
+                                               GimpContext          *context,
+                                               GimpGradientSegment  *seg,
+                                               GimpRGB              *color);
+
+
 /* Position Setting/Getting Routines */
 /* (Setters return the position after it was set) */
 gdouble gimp_gradient_segment_get_left_pos    (GimpGradient         *gradient,
