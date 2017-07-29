@@ -150,6 +150,8 @@ Tools:
     the linear sampler to ensure crisp lines after an erase.
   - Select by Color and Color Picker tools work now correctly in color
     spaces other than sRGB.
+  - Free Select tool now waits for Enter being pressed to confirm
+    selection, which enables you to tweak positions of polygonal selection.
   - Color Picker doesn't snap to anything when picking colors anymore,
     always draws the outline of the averaged region (not only while the
     mouse is being pressed), and supports arbitrary range of values
