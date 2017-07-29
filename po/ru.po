@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-23 23:56+0300\n"
-"PO-Revision-Date: 2017-07-24 00:39+0300\n"
+"POT-Creation-Date: 2017-07-29 02:40+0300\n"
+"PO-Revision-Date: 2017-07-29 18:24+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -4600,117 +4600,122 @@ msgstr "_Мягкое свечение..."
 
 #: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
+msgid "S_piral..."
+msgstr "Сп_ираль…"
+
+#: ../app/actions/filters-actions.c:597
+msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "Растянуть _контраст..."
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 #, fuzzy
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Кривые..."
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Свер_хновая..."
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "Поро_г альфа-канала..."
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "Стеклянные _блоки..."
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Разрез бумаги..."
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Без швов..."
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Нерезкая маска..."
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "_Распространение значений..."
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Видеофильтр"
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Виньетирование..."
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:652
 #, fuzzy
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Волны..."
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Волны..."
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "В_ихрь и щипок..."
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "В_етер..."
 
-#: ../app/actions/filters-actions.c:670
+#: ../app/actions/filters-actions.c:675
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Повторить последний"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "Применить последний использованный фильтр или сценарий с теми же параметрами"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "П_овторить с изменениями"
 
-#: ../app/actions/filters-actions.c:678
+#: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Открыть диалог последнего использованного фильтра или сценария"
 
-#: ../app/actions/filters-actions.c:995
+#: ../app/actions/filters-actions.c:1001
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "По_вторить «%s»"
 
-#: ../app/actions/filters-actions.c:996
+#: ../app/actions/filters-actions.c:1002
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторить с настройкой «%s»"
 
-#: ../app/actions/filters-actions.c:1034
+#: ../app/actions/filters-actions.c:1040
 msgid "Repeat Last"
 msgstr "Повторить последний"
 
-#: ../app/actions/filters-actions.c:1036
+#: ../app/actions/filters-actions.c:1042
 msgid "Re-Show Last"
 msgstr "Повторить с настройкой последний"
 
@@ -5075,9 +5080,8 @@ msgid "Split Gradient Segments Uniformly"
 msgstr "Равномерно разделить сегменты градиента"
 
 #: ../app/actions/gradient-editor-commands.c:585
-#, fuzzy
 msgid "_Split"
-msgstr "Разделить"
+msgstr "_Разделить"
 
 #: ../app/actions/gradient-editor-commands.c:607
 msgid ""
@@ -6773,11 +6777,11 @@ msgstr "У_меньшить масштаб"
 msgid "Zoom _All"
 msgstr "_До размера окна"
 
-#: ../app/actions/palette-editor-commands.c:69
+#: ../app/actions/palette-editor-commands.c:70
 msgid "Edit Palette Color"
 msgstr "Правка цвета палитры"
 
-#: ../app/actions/palette-editor-commands.c:71
+#: ../app/actions/palette-editor-commands.c:72
 msgid "Edit Color Palette Entry"
 msgstr "Правка цвета палитры"
 
@@ -9976,7 +9980,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:192
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
-"noise in order do distribute color values a bit."
+"noise in order to distribute color values a bit."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:196
@@ -14956,7 +14960,7 @@ msgstr "Параметры по умолчанию"
 
 #: ../app/dialogs/preferences-dialog.c:1916
 msgid "Reset Dialog Defaults"
-msgstr "ОБнулить параметры диалогов по умолчанию"
+msgstr "Обнулить параметры диалогов по умолчанию"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:1924
@@ -16748,7 +16752,7 @@ msgstr "RGB"
 #: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338
 #: ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-альфа"
 
 #: ../app/gegl/gimp-babl.c:342 ../app/gegl/gimp-babl.c:343
 #: ../app/gegl/gimp-babl.c:344 ../app/gegl/gimp-babl.c:345
@@ -16843,7 +16847,7 @@ msgstr "RGB (нелинейно)"
 #: ../app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
 msgid "LAB"
-msgstr ""
+msgstr "LAB"
 
 #: ../app/operations/operations-enums.c:59
 msgctxt "layer-composite-mode"
@@ -18743,11 +18747,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Отменено"
 
-#: ../app/plug-in/gimppluginmanager.c:255
+#: ../app/plug-in/gimppluginmanager.c:232
 msgid "Plug-in Interpreters"
 msgstr "Интерпретаторы плагинов"
 
-#: ../app/plug-in/gimppluginmanager.c:261
+#: ../app/plug-in/gimppluginmanager.c:238
 #, fuzzy
 msgid "Plug-in Environment"
 msgstr "Окружение расширений"
@@ -18759,7 +18763,7 @@ msgstr "Окружение расширений"
 msgid "Failed to run plug-in \"%s\""
 msgstr "Не удалось запустить расширение \"%s\""
 
-#: ../app/plug-in/gimppluginmanager-file-procedure.c:203
+#: ../app/plug-in/gimppluginmanager-file-procedure.c:208
 msgid "Unknown file type"
 msgstr "Неизвестный тип файлов"
 
@@ -19002,12 +19006,11 @@ msgstr "Восстановить _цвет"
 
 #: ../app/propgui/gimppropgui-spiral.c:211
 msgid "Spiral: "
-msgstr ""
+msgstr "Спираль: "
 
 #: ../app/propgui/gimppropgui-supernova.c:125
-#, fuzzy
 msgid "Supernova: "
-msgstr "Сверхновая"
+msgstr "Сверхновая: "
 
 #: ../app/propgui/gimppropgui-utils.c:70
 msgid "1,700 K – Match flame"
@@ -19951,12 +19954,12 @@ msgstr "%s: поменять местами оригинал и обработк
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: горизонталь/вертикаль"
 
-#: ../app/tools/gimpfiltertool.c:1272 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1274 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Импортировать параметры '%s'"
 
-#: ../app/tools/gimpfiltertool.c:1274 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1276 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Экспортировать параметры '%s'"
@@ -20176,8 +20179,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Выделение смежных областей"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:531
-#: ../app/tools/gimpgegltool.c:532 ../app/tools/gimpoperationtool.c:131
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:532
+#: ../app/tools/gimpgegltool.c:533 ../app/tools/gimpoperationtool.c:131
 msgid "GEGL Operation"
 msgstr "Операция GEGL"
 
@@ -20189,7 +20192,7 @@ msgstr "Инструмент GEGL: выполнение произвольной
 msgid "_GEGL Operation..."
 msgstr "Опера_ция GEGL..."
 
-#: ../app/tools/gimpgegltool.c:477
+#: ../app/tools/gimpgegltool.c:478
 msgid "Select an operation from the list above"
 msgstr "Выберите операцию из списка вверху"
 
@@ -20657,11 +20660,11 @@ msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:181
 msgid "Reset aspect ratio to brush's native aspect ratio"
-msgstr ""
+msgstr "Вернуть исходное сооношение сторон кисти"
 
 #: ../app/tools/gimppaintoptions-gui.c:189
 msgid "Reset angle to brush's native angle"
-msgstr ""
+msgstr "Вернуть исходный угол кисти"
 
 #: ../app/tools/gimppaintoptions-gui.c:197
 msgid "Reset spacing to brush's native spacing"
@@ -20875,9 +20878,8 @@ msgid "_Rectangle Select"
 msgstr "Пр_ямоугольное выделение"
 
 #: ../app/tools/gimprectangleselecttool.c:725
-#, fuzzy
 msgid "Ellipse: "
-msgstr "Эллиптическое выделение"
+msgstr "Эллипс: "
 
 #: ../app/tools/gimpregionselectoptions.c:89
 msgid "Select transparent areas"
@@ -22277,9 +22279,8 @@ msgid "Remove Controller?"
 msgstr "Удалить контроллер?"
 
 #: ../app/widgets/gimpcontrollerlist.c:563
-#, fuzzy
 msgid "_Disable Controller"
-msgstr "Отключить контроллер"
+msgstr "Отклю_чить контроллер"
 
 #: ../app/widgets/gimpcontrollerlist.c:565
 msgid "_Remove Controller"
@@ -23121,9 +23122,8 @@ msgid "Save Settings as Named Preset"
 msgstr "Сохранённые параметры"
 
 #: ../app/widgets/gimpsettingsbox.c:616
-#, fuzzy
 msgid "Enter a name for the preset"
-msgstr "Дайте имя сохраняемым параметрам"
+msgstr "Дайте имя предустановке"
 
 #: ../app/widgets/gimpsettingsbox.c:617
 msgid "Saved Settings"
@@ -23134,14 +23134,12 @@ msgid "Manage Saved Presets"
 msgstr "Управление предустановками"
 
 #: ../app/widgets/gimpsettingseditor.c:195
-#, fuzzy
 msgid "Import presets from a file"
-msgstr "Импортировать профили из файла"
+msgstr "Импортировать предустановки из файла"
 
 #: ../app/widgets/gimpsettingseditor.c:204
-#, fuzzy
 msgid "Export the selected presets to a file"
-msgstr "Экспортировать выбранные профили в файл"
+msgstr "Экспортировать выбранные предустановки в файл"
 
 #: ../app/widgets/gimpsettingseditor.c:213
 #, fuzzy
