@@ -18,7 +18,7 @@ Core:
   - Make it possible to use multithreading in GEGL and raise max amount
     of threads to 64. Given how unstable this feature is, any value
     above 1 should be currently treated as a step inside an industrial
-    microwave oven with the on/off swith on the outside.
+    microwave oven with the on/off switch on the outside.
   - New clipboard implementation allows copying/pasting layers and
     layer groups.
   - Color tags simplify managing large projects with a lot of layers
@@ -47,7 +47,7 @@ Layers and compositing:
   - Layer blending color space and compositing color space are
     configurable now.
   - New layer modes: linear burn, vivid light, linear light, pin light,
-    exclusion, merge, split, luminance (rgb).
+    hard mix, exclusion, merge, split, luminance (rgb).
   - Make erase mode an ordinary layer/paint mode.
   - Better performance of HSV-based layer modes.
   - Rename "Color (HSV)" mode to "Color (HSL)" to indicate the actual
