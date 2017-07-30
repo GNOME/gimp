@@ -90,7 +90,7 @@ slider_line_callback (GObject                    *config,
       {
         gdouble old_base = base;
 
-        base = 1.0 / sliders[0].value;
+        base = 1.0 / sliders[1].value;
         base = MIN (base, 1000000.0);
 
         /* keep "balance" fixed when changing "base", or when "base" is 1, in
@@ -99,7 +99,7 @@ slider_line_callback (GObject                    *config,
          */
         if (base == old_base && base > 1.0)
           {
-            balance = -4.0 * log (sliders[1].value) / log (base) - 1.0;
+            balance = -4.0 * log (sliders[0].value) / log (base) - 1.0;
             balance = CLAMP (balance, -1.0, 1.0);
           }
       }
@@ -156,6 +156,7 @@ config_notify (GObject          *config,
   case GEGL_SPIRAL_TYPE_LINEAR:
     n_sliders = 1;
 
+    /* balance */
     sliders[0].min   = 0.5;
     sliders[0].max   = 1.0;
     sliders[0].value = 0.5 + (1.0 - balance) / 4.0;
@@ -165,13 +166,15 @@ config_notify (GObject          *config,
   case GEGL_SPIRAL_TYPE_LOGARITHMIC:
     n_sliders = 2;
 
-    sliders[0].min   = 0.0;
+    /* balance */
+    sliders[0].min   = 1.0 / sqrt (base);
     sliders[0].max   = 1.0;
-    sliders[0].value = 1.0 / base;
+    sliders[0].value = pow (base, -(balance + 1.0) / 4.0);
 
-    sliders[1].min   = 1.0 / sqrt (base);
+    /* base */
+    sliders[1].min   = 0.0;
     sliders[1].max   = 1.0;
-    sliders[1].value = pow (base, -(balance + 1.0) / 4.0);
+    sliders[1].value = 1.0 / base;
 
     break;
   }
