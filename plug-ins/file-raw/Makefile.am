@@ -33,19 +33,19 @@ libexec_PROGRAMS = \
 
 file_darktable_SOURCES = \
 	file-darktable.c	\
+	file-raw-formats.h	\
 	file-raw-utils.c	\
-	file-raw-utils.h	\
-	file-formats.h
+	file-raw-utils.h
 
 file_rawtherapee_SOURCES = \
 	file-rawtherapee.c	\
+	file-raw-formats.h	\
 	file-raw-utils.c	\
-	file-raw-utils.h	\
-	file-formats.h
+	file-raw-utils.h
 
 file_raw_placeholder_SOURCES = \
-	file-raw-placeholder.c	\
-	file-formats.h
+	file-raw-formats.h	\
+	file-raw-placeholder.c
 
 file_darktable_LDADD = \
 	$(libgimp)		\

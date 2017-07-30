@@ -18,9 +18,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef __FILE_RAW_UTILS_H__
+#define __FILE_RAW_UTILS_H__
+
 gchar  * file_raw_get_executable_path  (const gchar *main_executable,
                                         const gchar *suffix,
                                         const gchar *env_variable,
                                         const gchar *mac_bundle_id,
                                         const gchar *win32_registry_key_base,
                                         gboolean    *search_path);
+
+#endif /* __FILE_RAW_UTILS_H__ */

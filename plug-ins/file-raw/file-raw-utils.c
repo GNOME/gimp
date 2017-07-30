@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <file-raw-utils.h>
-
 #ifdef GDK_WINDOWING_QUARTZ
 #include <CoreServices/CoreServices.h>
 #endif
@@ -30,6 +27,11 @@
 #ifdef GDK_WINDOWING_WIN32
 #include <Windows.h>
 #endif
+
+#include <libgimp/gimp.h>
+
+#include "file-raw-utils.h"
+
 
 gchar *
 file_raw_get_executable_path (const gchar *main_executable,

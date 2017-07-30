@@ -27,7 +27,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "file-formats.h"
+#include "file-raw-formats.h"
 
 
 static void   query (void);

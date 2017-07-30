@@ -31,7 +31,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "file-formats.h"
+#include "file-raw-formats.h"
 #include "file-raw-utils.h"
 
 
