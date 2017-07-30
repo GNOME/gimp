@@ -188,8 +188,8 @@ Painting:
 File Formats:
 
   - Make the default raw (DSLR) image importer configurable.
-  - Add RawTherapee plug-in to pre-process varios raw (DSLR) images,
-    RawTehrapee v5.2 is the minimum requirement.
+  - Add RawTherapee plug-in to pre-process various raw (DSLR) images,
+    RawTherapee v5.2 is the minimum requirement.
   - Add new file-raw-placeholder plug-in that registers itself for
     loading all raw formats from file-raw/file-formats.h, but does
     nothing except returning an error message pointing to darktable
@@ -237,6 +237,9 @@ Plug-ins:
 
   - The Screenshot plug-in now assigns either monitors profile or
     converts to sRGB.
+  - The Screenshot plug-in can now take screenshots of a single window
+    and include the mouse pointer in the same time (if the desktop/OS
+    allows it).
   - Port smooth-palette to GEGL.
   - Enhance the raw (not the digital negative) files plugin:
     introduce exporting settings and remember them across sessions,
@@ -281,6 +284,7 @@ Build:
   - Depend on libpng 1.6.25+ to avoid warnings about known incorrect
     sRGB profiles, also avoid various vulnerabilities.
   - Depend on glib-networking now for HTTPS support.
+  - Depend on librsvg 2.40.6 which fixes rendering bugs.
   - Add a flatpak-builder manifest.
 
 OS-specific changes:
@@ -482,7 +486,7 @@ Plug-ins/GEGL Filters:
   - bring dialog titles and help IDs to GEGL filter dialogs
 
   File Plug-Ins:
-  - add darktable plug-in to pre-process varios raw images
+  - add darktable plug-in to pre-process various raw images
   - port file-gif-save and file-tiff to GIO
   - TIFF support:
     - make libtiff a hard dependency
