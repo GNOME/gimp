@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-23 16:44+0200\n"
-"PO-Revision-Date: 2017-07-23 16:45+0200\n"
+"POT-Creation-Date: 2017-07-30 16:04+0200\n"
+"PO-Revision-Date: 2017-07-30 16:05+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -4526,114 +4526,119 @@ msgstr "_Lekki żar…"
 
 #: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
+msgid "S_piral..."
+msgstr "S_pirala…"
+
+#: ../app/actions/filters-actions.c:597
+msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "_Rozciągnij kontrast…"
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_STRESS…"
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nowa…"
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Próg alfy…"
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Szklane płytki…"
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Kawałki papieru…"
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "_Bezszwowe kafelki…"
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Maska wyostrzająca…"
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Rozprowadzanie _wartości…"
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradacja wideo…"
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Winieta…"
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Piksele wody…"
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Fale…"
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "S_kręć i zaciśnij…"
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "W_iatr…"
 
-#: ../app/actions/filters-actions.c:670
+#: ../app/actions/filters-actions.c:675
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "_Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr "Uruchamia ponownie ostatnio używany filtr z tymi samymi ustawieniami"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "_Wyświetl ponownie ostatni"
 
-#: ../app/actions/filters-actions.c:678
+#: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Wyświetla jeszcze raz okno ostatnio używanego filtru"
 
-#: ../app/actions/filters-actions.c:995
+#: ../app/actions/filters-actions.c:1001
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Powtórz „%s”"
 
-#: ../app/actions/filters-actions.c:996
+#: ../app/actions/filters-actions.c:1002
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "_Wyświetl „%s” ponownie"
 
-#: ../app/actions/filters-actions.c:1034
+#: ../app/actions/filters-actions.c:1040
 msgid "Repeat Last"
 msgstr "Powtórz ostatni"
 
-#: ../app/actions/filters-actions.c:1036
+#: ../app/actions/filters-actions.c:1042
 msgid "Re-Show Last"
 msgstr "Wyświetl ponownie ostatni"
 
@@ -6660,11 +6665,11 @@ msgstr "_Dalej"
 msgid "Zoom _All"
 msgstr "_Całość"
 
-#: ../app/actions/palette-editor-commands.c:69
+#: ../app/actions/palette-editor-commands.c:70
 msgid "Edit Palette Color"
 msgstr "Modyfikacja koloru z palety"
 
-#: ../app/actions/palette-editor-commands.c:71
+#: ../app/actions/palette-editor-commands.c:72
 msgid "Edit Color Palette Entry"
 msgstr "Modyfikacja koloru elementu palety"
 
@@ -9793,7 +9798,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:192
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
-"noise in order do distribute color values a bit."
+"noise in order to distribute color values a bit."
 msgstr ""
 "Dodawanie minimalnego szumu podczas konwertowania importowanych obrazów do "
 "dokładności zmiennoprzecinkowej, aby nieco rozłożyć wartości kolorów."
@@ -18575,11 +18580,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Anulowano"
 
-#: ../app/plug-in/gimppluginmanager.c:255
+#: ../app/plug-in/gimppluginmanager.c:232
 msgid "Plug-in Interpreters"
 msgstr "Interpretery wtyczek"
 
-#: ../app/plug-in/gimppluginmanager.c:261
+#: ../app/plug-in/gimppluginmanager.c:238
 msgid "Plug-in Environment"
 msgstr "Środowisko wtyczek"
 
@@ -18590,7 +18595,7 @@ msgstr "Środowisko wtyczek"
 msgid "Failed to run plug-in \"%s\""
 msgstr "Uruchomienie wtyczki „%s” się nie powiodło"
 
-#: ../app/plug-in/gimppluginmanager-file-procedure.c:203
+#: ../app/plug-in/gimppluginmanager-file-procedure.c:208
 msgid "Unknown file type"
 msgstr "Nieznany typ pliku"
 
@@ -18831,7 +18836,7 @@ msgstr "_Nasycenie"
 msgid "R_eset Color"
 msgstr "P_rzywróć kolor"
 
-#: ../app/propgui/gimppropgui-spiral.c:211
+#: ../app/propgui/gimppropgui-spiral.c:217
 msgid "Spiral: "
 msgstr "Spirala: "
 
@@ -19790,12 +19795,12 @@ msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:1272 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1274 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1274 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1276 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
@@ -20014,8 +20019,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Różdżka"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:531
-#: ../app/tools/gimpgegltool.c:532 ../app/tools/gimpoperationtool.c:131
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:532
+#: ../app/tools/gimpgegltool.c:533 ../app/tools/gimpoperationtool.c:131
 msgid "GEGL Operation"
 msgstr "Działanie biblioteki GEGL"
 
@@ -20027,7 +20032,7 @@ msgstr "GEGL: wykonuje wybrane działanie biblioteki GEGL"
 msgid "_GEGL Operation..."
 msgstr "Działanie biblioteki _GEGL…"
 
-#: ../app/tools/gimpgegltool.c:477
+#: ../app/tools/gimpgegltool.c:478
 msgid "Select an operation from the list above"
 msgstr "Proszę wybrać działanie z powyższej listy"
 
