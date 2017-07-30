@@ -733,11 +733,13 @@ gimp_tool_line_point_motion (GimpToolLine *line,
                  (private->y2 - private->y1) * (y - private->y1);
             t /= length_sqr;
 
+            if (constrain)
+              t = RINT (12.0 * t) / 12.0;
+
             t = CLAMP (t, slider->min, slider->max);
             t = CLAMP (t, 0.0, 1.0);
 
-            if (constrain)
-              t = RINT (24.0 * t) / 24.0;
+            t = fabs (t); /* avoid negative zero */
 
             slider->value = t;
 
