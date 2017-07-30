@@ -93,8 +93,11 @@ slider_line_callback (GObject                    *config,
         base = 1.0 / sliders[0].value;
         base = MIN (base, 1000000.0);
 
-        /* keep "balance" fixed when changing "base".  a bit ugly :P */
-        if (base == old_base)
+        /* keep "balance" fixed when changing "base", or when "base" is 1, in
+         * which case there's no inverse mapping for the slider value, and we
+         * can get NaN.
+         */
+        if (base == old_base && base > 1.0)
           {
             balance = -4.0 * log (sliders[1].value) / log (base) - 1.0;
             balance = CLAMP (balance, -1.0, 1.0);
