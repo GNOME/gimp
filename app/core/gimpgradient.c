@@ -591,6 +591,73 @@ gimp_gradient_has_fg_bg_segments (GimpGradient *gradient)
   return FALSE;
 }
 
+void
+gimp_gradient_split_at (GimpGradient         *gradient,
+                        GimpContext          *context,
+                        GimpGradientSegment  *seg,
+                        gdouble               pos,
+                        GimpGradientSegment **newl,
+                        GimpGradientSegment **newr)
+{
+  GimpRGB              color;
+  GimpGradientSegment *newseg;
+
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+
+  gimp_data_freeze (GIMP_DATA (gradient));
+
+  pos = CLAMP (pos, 0.0, 1.0);
+  seg = gimp_gradient_get_segment_at_internal (gradient, seg, pos);
+
+  /* Get color at pos */
+  gimp_gradient_get_color_at (gradient, context, seg, pos,
+                              FALSE, &color);
+
+  /* Create a new segment and insert it in the list */
+
+  newseg = gimp_gradient_segment_new ();
+
+  newseg->prev = seg;
+  newseg->next = seg->next;
+
+  seg->next = newseg;
+
+  if (newseg->next)
+    newseg->next->prev = newseg;
+
+  /* Set coordinates of new segment */
+
+  newseg->left   = pos;
+  newseg->right  = seg->right;
+  newseg->middle = (newseg->left + newseg->right) / 2.0;
+
+  /* Set coordinates of original segment */
+
+  seg->right  = newseg->left;
+  seg->middle = (seg->left + seg->right) / 2.0;
+
+  /* Set colors of both segments */
+
+  newseg->right_color_type = seg->right_color_type;
+  newseg->right_color      = seg->right_color;
+
+  seg->right_color_type = newseg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
+  seg->right_color      = newseg->left_color      = color;
+
+  /* Set parameters of new segment */
+
+  newseg->type  = seg->type;
+  newseg->color = seg->color;
+
+  /* Done */
+
+  if (newl) *newl = seg;
+  if (newr) *newr = newseg;
+
+  gimp_data_thaw (GIMP_DATA (gradient));
+}
+
 GimpGradient *
 gimp_gradient_flatten (GimpGradient *gradient,
                        GimpContext  *context)
@@ -720,63 +787,13 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
                                       GimpGradientSegment **newl,
                                       GimpGradientSegment **newr)
 {
-  GimpRGB              color;
-  GimpGradientSegment *newseg;
-
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (lseg != NULL);
   g_return_if_fail (newl != NULL);
   g_return_if_fail (newr != NULL);
 
-  gimp_data_freeze (GIMP_DATA (gradient));
-
-  /* Get color at original segment's midpoint */
-  gimp_gradient_get_color_at (gradient, context, lseg, lseg->middle,
-                              FALSE, &color);
-
-  /* Create a new segment and insert it in the list */
-
-  newseg = gimp_gradient_segment_new ();
-
-  newseg->prev = lseg;
-  newseg->next = lseg->next;
-
-  lseg->next = newseg;
-
-  if (newseg->next)
-    newseg->next->prev = newseg;
-
-  /* Set coordinates of new segment */
-
-  newseg->left   = lseg->middle;
-  newseg->right  = lseg->right;
-  newseg->middle = (newseg->left + newseg->right) / 2.0;
-
-  /* Set coordinates of original segment */
-
-  lseg->right  = newseg->left;
-  lseg->middle = (lseg->left + lseg->right) / 2.0;
-
-  /* Set colors of both segments */
-
-  newseg->right_color_type = lseg->right_color_type;
-  newseg->right_color      = lseg->right_color;
-
-  lseg->right_color_type = newseg->left_color_type = GIMP_GRADIENT_COLOR_FIXED;
-  lseg->right_color      = newseg->left_color      = color;
-
-  /* Set parameters of new segment */
-
-  newseg->type  = lseg->type;
-  newseg->color = lseg->color;
-
-  /* Done */
-
-  *newl = lseg;
-  *newr = newseg;
-
-  gimp_data_thaw (GIMP_DATA (gradient));
+  gimp_gradient_split_at (gradient, context, lseg, lseg->middle, newl, newr);
 }
 
 void

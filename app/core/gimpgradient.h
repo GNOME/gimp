@@ -79,6 +79,12 @@ GimpGradientSegment * gimp_gradient_get_color_at   (GimpGradient        *gradien
                                                     GimpRGB             *color);
 GimpGradientSegment * gimp_gradient_get_segment_at (GimpGradient  *grad,
                                                     gdouble        pos);
+void                  gimp_gradient_split_at       (GimpGradient         *gradient,
+                                                    GimpContext          *context,
+                                                    GimpGradientSegment  *seg,
+                                                    gdouble               pos,
+                                                    GimpGradientSegment **newl,
+                                                    GimpGradientSegment **newr);
 
 gboolean          gimp_gradient_has_fg_bg_segments (GimpGradient  *gradient);
 GimpGradient    * gimp_gradient_flatten            (GimpGradient  *gradient,
