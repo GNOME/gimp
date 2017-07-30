@@ -1792,6 +1792,70 @@ gimp_gradient_segment_range_delete (GimpGradient         *gradient,
 }
 
 void
+gimp_gradient_segment_range_merge (GimpGradient         *gradient,
+                                   GimpGradientSegment  *start_seg,
+                                   GimpGradientSegment  *end_seg,
+                                   GimpGradientSegment **final_start_seg,
+                                   GimpGradientSegment **final_end_seg)
+{
+  GimpGradientSegment *seg;
+
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
+
+  if (! end_seg)
+    end_seg = gimp_gradient_segment_get_last (start_seg);
+
+  gimp_data_freeze (GIMP_DATA (gradient));
+
+  /* Copy the end segment's right position and color to the start segment */
+
+  start_seg->right            = end_seg->right;
+  start_seg->right_color_type = end_seg->right_color_type;
+  start_seg->right_color      = end_seg->right_color;
+
+  /* Center the start segment's midpoint */
+
+  start_seg->middle = (start_seg->left + start_seg->right) / 2.0;
+
+  /* Remove range segments past the start segment from the segment list */
+
+  start_seg->next = end_seg->next;
+
+  if (start_seg->next)
+    start_seg->next->prev = start_seg;
+
+  /* Merge the range's blend function and coloring type, and free the rest of
+   * the segments.
+   */
+
+  seg = end_seg;
+
+  while (seg != start_seg)
+    {
+      GimpGradientSegment *prev = seg->prev;
+
+      /* If the blend function and/or coloring type aren't uniform, reset them. */
+
+      if (seg->type != start_seg->type)
+        start_seg->type = GIMP_GRADIENT_SEGMENT_LINEAR;
+
+      if (seg->color != start_seg->color)
+        start_seg->color = GIMP_GRADIENT_SEGMENT_RGB;
+
+      gimp_gradient_segment_free (seg);
+
+      seg = prev;
+    }
+
+  if (final_start_seg)
+    *final_start_seg = start_seg;
+  if (final_end_seg)
+    *final_end_seg = start_seg;
+
+  gimp_data_thaw (GIMP_DATA (gradient));
+}
+
+void
 gimp_gradient_segment_range_recenter_handles (GimpGradient        *gradient,
                                               GimpGradientSegment *start_seg,
                                               GimpGradientSegment *end_seg)

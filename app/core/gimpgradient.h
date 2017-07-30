@@ -265,6 +265,12 @@ void    gimp_gradient_segment_range_delete    (GimpGradient         *gradient,
                                                GimpGradientSegment **final_start_seg,
                                                GimpGradientSegment **final_end_seg);
 
+void    gimp_gradient_segment_range_merge     (GimpGradient         *gradient,
+                                               GimpGradientSegment  *start_seg,
+                                               GimpGradientSegment  *end_seg,
+                                               GimpGradientSegment **final_start_seg,
+                                               GimpGradientSegment **final_end_seg);
+
 void    gimp_gradient_segment_range_recenter_handles
                                               (GimpGradient         *gradient,
                                                GimpGradientSegment  *start_seg,
