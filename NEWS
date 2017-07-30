@@ -98,6 +98,8 @@ GUI and usability:
   - Quit dialog now exits when all the images in the list have been
     saved.
   - The built-in error dialog now displays errors outputted by GEGL.
+  - Shift-clicking the visibility icon of a layer in a layer group now
+    toggles its exclusive visibility within this layer group.
 
 Color selection and management:
 
