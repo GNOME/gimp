@@ -441,6 +441,91 @@ on_frames_changed (Animation         *animation,
 }
 
 static void
+on_invalidate_cache (Animation         *animation,
+                     gint               position,
+                     gint               length,
+                     AnimationRenderer *renderer)
+{
+  GList *update = NULL;
+  GList *iter;
+  gint   i;
+
+  if (renderer->priv->idle_id)
+    {
+      g_source_remove (renderer->priv->idle_id);
+      renderer->priv->idle_id = 0;
+    }
+  /* Stop any rendering temporarily. */
+  for (i = 0; i < animation_get_duration (animation); i++)
+    {
+      if (g_async_queue_remove (renderer->priv->queue, GINT_TO_POINTER (i + 1)))
+        update = g_list_insert_sorted_with_data (update, GINT_TO_POINTER (i + 1),
+                                                 (GCompareDataFunc) compare_int_from,
+                                                 /* TODO: right now I am sorting the render
+                                                  * queue in common order. I will have to test
+                                                  * sorting it from the current position.
+                                                  */
+                                                 0);
+    }
+  /* Delete the cache. */
+  g_mutex_lock (&renderer->priv->lock);
+  for (i = position; i < position + length; i++)
+    {
+      gint j;
+
+      if (renderer->priv->cache[i])
+        {
+          /* Delete this frame and all others which share the same cache. */
+          GeglBuffer *tmp = g_object_ref (renderer->priv->cache[i]);
+          for (j = 0; j < animation_get_duration (animation); j++)
+            {
+              if (renderer->priv->cache[j] == tmp)
+                {
+                  g_object_unref (renderer->priv->cache[j]);
+                  renderer->priv->cache[j] = NULL;
+                  g_free (renderer->priv->hashes[j]);
+                  renderer->priv->hashes[j] = NULL;
+                  if (g_list_index (update, GINT_TO_POINTER (j + 1)) == -1)
+                    update = g_list_insert_sorted_with_data (update, GINT_TO_POINTER (j + 1),
+                                                             (GCompareDataFunc) compare_int_from,
+                                                             /* TODO: right now I am sorting the render
+                                                              * queue in common order. I will have to test
+                                                              * sorting it from the current position.
+                                                              */
+                                                             0);
+                }
+            }
+          g_object_unref (tmp);
+        }
+      if (g_list_index (update, GINT_TO_POINTER (i + 1)) == -1)
+        update = g_list_insert_sorted_with_data (update, GINT_TO_POINTER (i + 1),
+                                                 (GCompareDataFunc) compare_int_from,
+                                                 /* TODO: right now I am sorting the render
+                                                  * queue in common order. I will have to test
+                                                  * sorting it from the current position.
+                                                  */
+                                                 0);
+    }
+  g_mutex_unlock (&renderer->priv->lock);
+  /* Queue the invalidated part of the animation. */
+  for (iter = update; iter; iter = iter->next)
+    {
+      g_async_queue_push_sorted (renderer->priv->queue,
+                                 iter->data,
+                                 (GCompareDataFunc) compare_int_from,
+                                 /* TODO: right now I am sorting the render
+                                  * queue in common order. I will have to test
+                                  * sorting it from the current position.
+                                  */
+                                 0);
+    }
+  g_list_free (update);
+  renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
+                                             (GSourceFunc) animation_renderer_idle_update,
+                                             renderer, NULL);
+}
+
+static void
 on_duration_changed (Animation         *animation,
                      gint               duration,
                      AnimationRenderer *renderer)
@@ -526,6 +611,8 @@ animation_renderer_new (GObject *playback)
                     G_CALLBACK (on_size_changed), renderer);
   g_signal_connect (animation, "frames-changed",
                     G_CALLBACK (on_frames_changed), renderer);
+  g_signal_connect (animation, "invalidate-cache",
+                    G_CALLBACK (on_invalidate_cache), renderer);
   g_signal_connect (animation, "duration-changed",
                     G_CALLBACK (on_duration_changed), renderer);
   g_signal_connect (animation, "loaded",

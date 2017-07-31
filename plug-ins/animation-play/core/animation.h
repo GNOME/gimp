@@ -51,6 +51,9 @@ struct _AnimationClass
   void         (*frames_changed)     (Animation    *animation,
                                       gint          position,
                                       gint          length);
+  void         (*invalidate_cache)   (Animation    *animation,
+                                      gint          position,
+                                      gint          length);
   void         (*duration_changed)   (Animation    *animation,
                                       gint          duration);
   void         (*framerate_changed)  (Animation    *animation,

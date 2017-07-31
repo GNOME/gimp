@@ -47,6 +47,7 @@ enum
   LOADED,
   SIZE_CHANGED,
   FRAMES_CHANGED,
+  INVALIDATE_CACHE,
   DURATION_CHANGED,
   FRAMERATE_CHANGED,
   LAST_SIGNAL
@@ -182,6 +183,29 @@ animation_class_init (AnimationClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
   /**
+   * Animation::invalidate-cache:
+   * @animation: the animation.
+   * @position: the first frame position whose contents changed.
+   * @length: the number of changed frames from @position.
+   *
+   * The ::invalidate-cache signal must be emitted when one or more
+   * successive frames have to be updated. This is similar to
+   * ::frames-changed except that it forces the cache update even if the
+   * contents apparently did not change. It will also invalidate cache
+   * for similar frames, even when not in the given range.
+   */
+  animation_signals[INVALIDATE_CACHE] =
+    g_signal_new ("invalidate-cache",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (AnimationClass, invalidate_cache),
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_NONE,
+                  2,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
+  /**
    * Animation::duration:
    * @animation: the animation.
    * @duration: the new duration of @animation in number of frames.
@@ -303,7 +327,7 @@ animation_load (Animation *animation)
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
 
   priv->loaded = FALSE;
-  g_signal_emit (animation, animation_signals[FRAMES_CHANGED], 0,
+  g_signal_emit (animation, animation_signals[INVALIDATE_CACHE], 0,
                  0, animation_get_duration (animation));
   priv->loaded = TRUE;
   g_signal_emit (animation, animation_signals[LOADED], 0);
