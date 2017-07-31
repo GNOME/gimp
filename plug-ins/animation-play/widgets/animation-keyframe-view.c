@@ -190,23 +190,19 @@ animation_keyframe_view_show (AnimationKeyFrameView *view,
     }
 }
 
-void
-animation_keyframe_view_hide (AnimationKeyFrameView *view)
-{
-  g_signal_handlers_disconnect_by_func (view->priv->offset_entry,
-                                        G_CALLBACK (on_offset_entry_changed),
-                                        view);
-  if (view->priv->camera)
-    g_signal_handlers_disconnect_by_func (view->priv->camera,
-                                          G_CALLBACK (on_offsets_changed),
-                                          view);
-}
-
 /************ Private Functions ****************/
 
 static void animation_keyframe_view_dispose (GObject *object)
 {
-  animation_keyframe_view_hide (ANIMATION_KEYFRAME_VIEW (object));
+  AnimationKeyFrameView *view = ANIMATION_KEYFRAME_VIEW (object);
+
+  if (view->priv->camera)
+    {
+      g_signal_handlers_disconnect_by_func (view->priv->camera,
+                                            G_CALLBACK (on_offsets_changed),
+                                            view);
+      view->priv->camera = NULL;
+    }
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 

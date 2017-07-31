@@ -51,6 +51,5 @@ GtkWidget * animation_keyframe_view_new      (void);
 void        animation_keyframe_view_show     (AnimationKeyFrameView *view,
                                               AnimationCelAnimation *animation,
                                               gint                   position);
-void        animation_keyframe_view_hide     (AnimationKeyFrameView *view);
 
 #endif  /*  __ANIMATION_KEYFRAME_VIEW_H__  */
