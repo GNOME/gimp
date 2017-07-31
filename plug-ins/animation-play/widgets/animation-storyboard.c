@@ -315,6 +315,9 @@ animation_storyboard_load (Animation           *animation,
 
   /* Cleaning previous loads. */
   gtk_container_foreach (GTK_CONTAINER (layout),
+                         (GtkCallback) gtk_widget_set_sensitive,
+                         FALSE);
+  gtk_container_foreach (GTK_CONTAINER (layout),
                          (GtkCallback) gtk_widget_destroy,
                          NULL);
   if (view->priv->panel_buttons)
