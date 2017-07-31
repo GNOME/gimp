@@ -579,8 +579,6 @@ animation_animatic_reset_defaults (Animation *animation)
       priv->tattoos[i]   = gimp_item_get_tattoo (layers[priv->n_panels - (i + 1)]);
       priv->durations[i] = duration;
       priv->combine[i]   = combine;
-      /* Layer names are used as default comments. */
-      priv->comments[i]  = layer_name;
     }
   g_free (layers);
 }
