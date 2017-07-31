@@ -516,8 +516,12 @@ animation_animatic_create_frame (Animation *animation,
 
   if (panel > 0 && priv->combine[panel])
     {
+      gint prev_pos;
+
+      prev_pos = animation_animatic_get_position (ANIMATION_ANIMATIC (animation),
+                                                  panel - 1);
       backdrop = animation_renderer_get_buffer (ANIMATION_RENDERER (renderer),
-                                                panel - 1);
+                                                prev_pos);
     }
 
   buffer = normal_blend (preview_width, preview_height,
