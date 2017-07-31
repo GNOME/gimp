@@ -46,14 +46,14 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define LOAD_PROC              "file-raw-load"
-#define SAVE_PROC              "file-raw-save"
-#define SAVE_DEFAULTS_PROC     "file-raw-save-defaults"
-#define GET_DEFAULTS_PROC      "file-raw-get-defaults"
-#define SET_DEFAULTS_PROC      "file-raw-set-defaults"
-#define PLUG_IN_BINARY         "file-raw-data"
-#define PLUG_IN_ROLE           "gimp-file-raw-data"
-#define PREVIEW_SIZE           350
+#define LOAD_PROC         "file-raw-load"
+#define SAVE_PROC         "file-raw-save"
+#define SAVE_PROC2        "file-raw-save2"
+#define GET_DEFAULTS_PROC "file-raw-get-defaults"
+#define SET_DEFAULTS_PROC "file-raw-set-defaults"
+#define PLUG_IN_BINARY    "file-raw-data"
+#define PLUG_IN_ROLE      "gimp-file-raw-data"
+#define PREVIEW_SIZE      350
 
 #define RAW_DEFAULTS_PARASITE  "raw-save-defaults"
 
@@ -225,13 +225,13 @@ query (void)
 
   static const GimpParamDef save_args[] =
   {
-    COMMON_SAVE_ARGS,
-    CONFIG_ARGS
+    COMMON_SAVE_ARGS
   };
 
-  static const GimpParamDef save_args_defaults[] =
+  static const GimpParamDef save_args2[] =
   {
-    COMMON_SAVE_ARGS
+    COMMON_SAVE_ARGS,
+    CONFIG_ARGS
   };
 
   static const GimpParamDef save_get_defaults_return_vals[] =
@@ -261,7 +261,8 @@ query (void)
 
   gimp_install_procedure (SAVE_PROC,
                           "Dump images to disk in raw format",
-                          "Dump images to disk in raw format",
+                          "This plug-in dumps images to disk in raw format, "
+                          "using the default settings stored as a parasite.",
                           "timecop, pg@futureware.at",
                           "timecop, pg@futureware.at",
                           "Aug 2004",
@@ -271,22 +272,19 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler (SAVE_PROC, "data", "");
-
-  gimp_install_procedure (SAVE_DEFAULTS_PROC,
+  gimp_install_procedure (SAVE_PROC2,
                           "Dump images to disk in raw format",
-                          "This plug-in dumps images to disk in raw format, "
-                          "using the default settings stored as a parasite.",
+                          "Dump images to disk in raw format",
                           "Björn Kautler, Bjoern@Kautler.net",
                           "Björn Kautler, Bjoern@Kautler.net",
                           "April 2014",
                           N_("Raw image data"),
                           "INDEXED, GRAY, RGB, RGBA",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args_defaults), 0,
-                          save_args_defaults, NULL);
+                          G_N_ELEMENTS (save_args2), 0,
+                          save_args2, NULL);
 
-  gimp_register_save_handler (SAVE_DEFAULTS_PROC, "data,raw", "");
+  gimp_register_save_handler (SAVE_PROC2, "data,raw", "");
 
   gimp_install_procedure (GET_DEFAULTS_PROC,
                           "Get the current set of defaults used by the "
@@ -416,7 +414,7 @@ run (const gchar      *name,
       g_free (runtime);
     }
   else if (strcmp (name, SAVE_PROC) == 0 ||
-           strcmp (name, SAVE_DEFAULTS_PROC) == 0)
+           strcmp (name, SAVE_PROC2) == 0)
     {
       run_mode    = param[0].data.d_int32;
       image_id    = param[1].data.d_int32;
