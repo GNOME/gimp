@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -43,18 +44,24 @@
 #include "gimp-intl.h"
 
 
+#define EPSILON 2e-10
+
+
 /*  local function prototypes  */
 
-static gboolean   gimp_blend_tool_editor_is_gradient_editable (GimpBlendTool *blend_tool);
+static gboolean              gimp_blend_tool_editor_is_gradient_editable (GimpBlendTool *blend_tool);
 
-static void       gimp_blend_tool_editor_block_handlers       (GimpBlendTool *blend_tool);
-static void       gimp_blend_tool_editor_unblock_handlers     (GimpBlendTool *blend_tool);
-static gboolean   gimp_blend_tool_editor_are_handlers_blocked (GimpBlendTool *blend_tool);
+static GimpGradientSegment * gimp_blend_tool_editor_handle_get_segment   (GimpBlendTool *blend_tool,
+                                                                          gint           handle);
 
-static void       gimp_blend_tool_editor_freeze_gradient      (GimpBlendTool *blend_tool);
-static void       gimp_blend_tool_editor_thaw_gradient        (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_block_handlers       (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_unblock_handlers     (GimpBlendTool *blend_tool);
+static gboolean              gimp_blend_tool_editor_are_handlers_blocked (GimpBlendTool *blend_tool);
 
-static void       gimp_blend_tool_editor_update_sliders       (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_freeze_gradient      (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_thaw_gradient        (GimpBlendTool *blend_tool);
+
+static void                  gimp_blend_tool_editor_update_sliders       (GimpBlendTool *blend_tool);
 
 
 /*  private functions  */
@@ -67,6 +74,37 @@ gimp_blend_tool_editor_is_gradient_editable (GimpBlendTool *blend_tool)
 
   return ! options->modify_active ||
          gimp_data_is_writable (GIMP_DATA (blend_tool->gradient));
+}
+
+static GimpGradientSegment *
+gimp_blend_tool_editor_handle_get_segment (GimpBlendTool *blend_tool,
+                                           gint           handle)
+{
+  switch (handle)
+    {
+    case GIMP_TOOL_LINE_HANDLE_START:
+      return blend_tool->gradient->segments;
+
+    case GIMP_TOOL_LINE_HANDLE_END:
+      return gimp_gradient_segment_get_last (blend_tool->gradient->segments);
+
+    default:
+      {
+        const GimpControllerSlider *sliders;
+        gint                        n_sliders;
+        gint                        seg_i;
+
+        sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (blend_tool->widget),
+                                              &n_sliders);
+
+        g_assert (handle >= 0 && handle < n_sliders);
+
+        seg_i = GPOINTER_TO_INT (sliders[handle].data);
+
+        return gimp_gradient_segment_get_nth (blend_tool->gradient->segments,
+                                              seg_i);
+      }
+    }
 }
 
 static void
@@ -227,8 +265,13 @@ gimp_blend_tool_editor_update_sliders (GimpBlendTool *blend_tool)
       sliders[i].max   = (1.0 - offset) * sliders[i].max   + offset;
     }
 
+  /* avoid updating the gradient in gimp_blend_tool_editor_line_changed() */
+  gimp_blend_tool_editor_block_handlers (blend_tool);
+
   gimp_tool_line_set_sliders (GIMP_TOOL_LINE (blend_tool->widget),
                               sliders, n_sliders);
+
+  gimp_blend_tool_editor_unblock_handlers (blend_tool);
 
   g_free (sliders);
 }
@@ -277,6 +320,105 @@ gimp_blend_tool_editor_options_notify (GimpBlendTool    *blend_tool,
     {
       gimp_blend_tool_editor_update_sliders (blend_tool);
     }
+}
+
+void
+gimp_blend_tool_editor_line_changed (GimpBlendTool *blend_tool)
+{
+  GimpBlendOptions           *options       = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpPaintOptions           *paint_options = GIMP_PAINT_OPTIONS (options);
+  gdouble                     offset        = options->offset / 100.0;
+  const GimpControllerSlider *sliders;
+  gint                        n_sliders;
+  gint                        i;
+  GimpGradientSegment        *seg;
+  gboolean                    changed       = FALSE;
+
+  if (gimp_blend_tool_editor_are_handlers_blocked (blend_tool))
+    return;
+
+  if (! blend_tool->gradient || offset == 1.0)
+    return;
+
+  sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (blend_tool->widget),
+                                        &n_sliders);
+
+  if (n_sliders == 0)
+    return;
+
+  /* update the midpoints first, since moving the gradient stops may change the
+   * gradient's midpoints w.r.t. the sliders, but not the other way around.
+   */
+  for (seg = blend_tool->gradient->segments, i = n_sliders / 2;
+       seg;
+       seg = seg->next, i++)
+    {
+      gdouble value;
+
+      value = sliders[i].value;
+
+      /* adjust slider value according to the offset */
+      value = (value - offset) / (1.0 - offset);
+
+      /* flip the slider value, if necessary */
+      if (paint_options->gradient_options->gradient_reverse)
+        value = 1.0 - value;
+
+      if (fabs (value - seg->middle) > EPSILON)
+        {
+          if (! changed)
+            {
+              gimp_blend_tool_editor_freeze_gradient (blend_tool);
+
+              /* refetch the segment, since the gradient might have changed */
+              seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, i);
+
+              changed = TRUE;
+            }
+
+          seg->middle = value;
+        }
+    }
+
+  /* update the gradient stops */
+  for (seg = blend_tool->gradient->segments, i = 0;
+       seg->next;
+       seg = seg->next, i++)
+    {
+      gdouble value;
+
+      value = sliders[i].value;
+
+      /* adjust slider value according to the offset */
+      value = (value - offset) / (1.0 - offset);
+
+      /* flip the slider value, if necessary */
+      if (paint_options->gradient_options->gradient_reverse)
+        value = 1.0 - value;
+
+      if (fabs (value - seg->right) > EPSILON)
+        {
+          if (! changed)
+            {
+              gimp_blend_tool_editor_freeze_gradient (blend_tool);
+
+              /* refetch the segment, since the gradient might have changed */
+              seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, i);
+
+              changed = TRUE;
+            }
+
+          gimp_gradient_segment_range_compress (blend_tool->gradient,
+                                                seg, seg,
+                                                seg->left, value);
+          gimp_gradient_segment_range_compress (blend_tool->gradient,
+                                                seg->next, seg->next,
+                                                value, seg->next->right);
+        }
+    }
+
+  if (changed)
+    gimp_blend_tool_editor_thaw_gradient (blend_tool);
 }
 
 void

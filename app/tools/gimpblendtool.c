@@ -749,6 +749,8 @@ gimp_blend_tool_line_changed (GimpToolWidget *widget,
 
   gimp_blend_tool_update_graph (blend_tool);
   gimp_drawable_filter_apply (blend_tool->filter, NULL);
+
+  gimp_blend_tool_editor_line_changed (blend_tool);
 }
 
 static void
