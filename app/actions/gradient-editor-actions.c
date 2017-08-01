@@ -491,33 +491,35 @@ gradient_editor_actions_update (GimpActionGroup *group,
       if (data_editor->data_editable)
         editable = TRUE;
 
-      gimp_gradient_get_color_at (gradient, data_editor->context,
-                                  editor->control_sel_l,
-                                  editor->control_sel_l->left, FALSE,
-                                  &left_color);
+      gimp_gradient_segment_get_left_flat_color (gradient,
+                                                 data_editor->context,
+                                                 editor->control_sel_l,
+                                                 &left_color);
 
       if (editor->control_sel_l->prev)
         left_seg = editor->control_sel_l->prev;
       else
         left_seg = gimp_gradient_segment_get_last (editor->control_sel_l);
 
-      gimp_gradient_get_color_at (gradient, data_editor->context,
-                                  left_seg, left_seg->right, FALSE,
-                                  &left_seg_color);
+      gimp_gradient_segment_get_right_flat_color (gradient,
+                                                  data_editor->context,
+                                                  left_seg,
+                                                  &left_seg_color);
 
-      gimp_gradient_get_color_at (gradient, data_editor->context,
-                                  editor->control_sel_r,
-                                  editor->control_sel_r->right, FALSE,
-                                  &right_color);
+      gimp_gradient_segment_get_right_flat_color (gradient,
+                                                  data_editor->context,
+                                                  editor->control_sel_r,
+                                                  &right_color);
 
       if (editor->control_sel_r->next)
         right_seg = editor->control_sel_r->next;
       else
         right_seg = gimp_gradient_segment_get_first (editor->control_sel_r);
 
-      gimp_gradient_get_color_at (gradient, data_editor->context,
-                                  right_seg, right_seg->left, FALSE,
-                                  &right_seg_color);
+      gimp_gradient_segment_get_left_flat_color (gradient,
+                                                 data_editor->context,
+                                                 right_seg,
+                                                 &right_seg_color);
 
       left_editable  = (editor->control_sel_l->left_color_type ==
                         GIMP_GRADIENT_COLOR_FIXED);

@@ -127,11 +127,9 @@ gradient_editor_left_color_type_cmd_callback (GtkAction *action,
     {
       GimpRGB color;
 
-      gimp_gradient_get_color_at (gradient,
-                                  GIMP_DATA_EDITOR (editor)->context,
-                                  editor->control_sel_l,
-                                  editor->control_sel_l->left, FALSE,
-                                  &color);
+      gimp_gradient_segment_get_left_flat_color (
+        gradient, GIMP_DATA_EDITOR (editor)->context, editor->control_sel_l,
+        &color);
 
       gimp_data_freeze (GIMP_DATA (gradient));
 
@@ -281,11 +279,9 @@ gradient_editor_right_color_type_cmd_callback (GtkAction *action,
     {
       GimpRGB color;
 
-      gimp_gradient_get_color_at (gradient,
-                                  GIMP_DATA_EDITOR (editor)->context,
-                                  editor->control_sel_r,
-                                  editor->control_sel_r->right, FALSE,
-                                  &color);
+      gimp_gradient_segment_get_right_flat_color (
+        gradient, GIMP_DATA_EDITOR (editor)->context, editor->control_sel_r,
+        &color);
 
       gimp_data_freeze (GIMP_DATA (gradient));
 
