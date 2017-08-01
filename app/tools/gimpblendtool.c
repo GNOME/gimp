@@ -200,22 +200,23 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
-  gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
-  gimp_tool_control_set_preserve        (tool->control, FALSE);
-  gimp_tool_control_set_dirty_mask      (tool->control,
-                                         GIMP_DIRTY_IMAGE           |
-                                         GIMP_DIRTY_IMAGE_STRUCTURE |
-                                         GIMP_DIRTY_DRAWABLE        |
-                                         GIMP_DIRTY_ACTIVE_DRAWABLE);
-  gimp_tool_control_set_wants_click     (tool->control, TRUE);
-  gimp_tool_control_set_precision       (tool->control,
-                                         GIMP_CURSOR_PRECISION_SUBPIXEL);
-  gimp_tool_control_set_tool_cursor     (tool->control,
-                                         GIMP_TOOL_CURSOR_BLEND);
-  gimp_tool_control_set_action_opacity  (tool->control,
-                                         "context/context-opacity-set");
-  gimp_tool_control_set_action_object_1 (tool->control,
-                                         "context/context-gradient-select-set");
+  gimp_tool_control_set_scroll_lock        (tool->control, TRUE);
+  gimp_tool_control_set_preserve           (tool->control, FALSE);
+  gimp_tool_control_set_dirty_mask         (tool->control,
+                                            GIMP_DIRTY_IMAGE           |
+                                            GIMP_DIRTY_IMAGE_STRUCTURE |
+                                            GIMP_DIRTY_DRAWABLE        |
+                                            GIMP_DIRTY_ACTIVE_DRAWABLE);
+  gimp_tool_control_set_wants_click        (tool->control, TRUE);
+  gimp_tool_control_set_wants_double_click (tool->control, TRUE);
+  gimp_tool_control_set_precision          (tool->control,
+                                            GIMP_CURSOR_PRECISION_SUBPIXEL);
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_TOOL_CURSOR_BLEND);
+  gimp_tool_control_set_action_opacity     (tool->control,
+                                            "context/context-opacity-set");
+  gimp_tool_control_set_action_object_1    (tool->control,
+                                            "context/context-gradient-select-set");
 
   gimp_draw_tool_set_default_status (GIMP_DRAW_TOOL (tool),
                                      _("Click-Drag to draw a gradient"));
@@ -342,7 +343,8 @@ gimp_blend_tool_button_press (GimpTool            *tool,
                         blend_info_new (start_x, start_y, end_x, end_y));
     }
 
-  gimp_tool_control_activate (tool->control);
+  if (press_type == GIMP_BUTTON_PRESS_NORMAL)
+    gimp_tool_control_activate (tool->control);
 }
 
 static void
