@@ -23,6 +23,8 @@ void   gimp_blend_tool_editor_options_notify   (GimpBlendTool    *blend_tool,
                                                 GimpToolOptions  *options,
                                                 const GParamSpec *pspec);
 
+void   gimp_blend_tool_editor_start            (GimpBlendTool    *blend_tool);
+
 void   gimp_blend_tool_editor_line_changed     (GimpBlendTool    *blend_tool);
 
 void   gimp_blend_tool_editor_gradient_dirty   (GimpBlendTool    *blend_tool);

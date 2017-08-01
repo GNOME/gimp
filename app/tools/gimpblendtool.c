@@ -653,6 +653,8 @@ gimp_blend_tool_start (GimpBlendTool    *blend_tool,
     gimp_blend_tool_precalc_shapeburst (blend_tool);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
+
+  gimp_blend_tool_editor_start (blend_tool);
 }
 
 static void

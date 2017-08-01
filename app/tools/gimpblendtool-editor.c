@@ -49,6 +49,13 @@
 
 /*  local function prototypes  */
 
+static gboolean              gimp_blend_tool_editor_line_can_add_slider  (GimpToolLine  *line,
+                                                                          gdouble        value,
+                                                                          GimpBlendTool *blend_tool);
+static gint                  gimp_blend_tool_editor_line_add_slider      (GimpToolLine  *line,
+                                                                          gdouble        value,
+                                                                          GimpBlendTool *blend_tool);
+
 static gboolean              gimp_blend_tool_editor_is_gradient_editable (GimpBlendTool *blend_tool);
 
 static GimpGradientSegment * gimp_blend_tool_editor_handle_get_segment   (GimpBlendTool *blend_tool,
@@ -66,6 +73,51 @@ static void                  gimp_blend_tool_editor_update_sliders       (GimpBl
 
 /*  private functions  */
 
+
+static gboolean
+gimp_blend_tool_editor_line_can_add_slider (GimpToolLine  *line,
+                                            gdouble        value,
+                                            GimpBlendTool *blend_tool)
+{
+  GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  gdouble           offset  = options->offset / 100.0;
+
+  return gimp_blend_tool_editor_is_gradient_editable (blend_tool) &&
+         value >= offset;
+}
+
+static gint
+gimp_blend_tool_editor_line_add_slider (GimpToolLine  *line,
+                                        gdouble        value,
+                                        GimpBlendTool *blend_tool)
+{
+  GimpBlendOptions    *options       = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpPaintOptions    *paint_options = GIMP_PAINT_OPTIONS (options);
+  gdouble              offset        = options->offset / 100.0;
+  GimpGradientSegment *seg;
+  gint                 slider;
+
+  gimp_blend_tool_editor_freeze_gradient (blend_tool);
+
+  /* adjust slider value according to the offset */
+  value = (value - offset) / (1.0 - offset);
+
+  /* flip the slider value, if necessary */
+  if (paint_options->gradient_options->gradient_reverse)
+    value = 1.0 - value;
+
+  gimp_gradient_split_at (blend_tool->gradient,
+                          GIMP_CONTEXT (options), NULL, value, &seg, NULL);
+
+  slider =
+    gimp_gradient_segment_range_get_n_segments (blend_tool->gradient,
+                                                blend_tool->gradient->segments,
+                                                seg) - 1;
+
+  gimp_blend_tool_editor_thaw_gradient (blend_tool);
+
+  return slider;
+}
 
 static gboolean
 gimp_blend_tool_editor_is_gradient_editable (GimpBlendTool *blend_tool)
@@ -320,6 +372,17 @@ gimp_blend_tool_editor_options_notify (GimpBlendTool    *blend_tool,
     {
       gimp_blend_tool_editor_update_sliders (blend_tool);
     }
+}
+
+void
+gimp_blend_tool_editor_start (GimpBlendTool *blend_tool)
+{
+  g_signal_connect (blend_tool->widget, "can-add-slider",
+                    G_CALLBACK (gimp_blend_tool_editor_line_can_add_slider),
+                    blend_tool);
+  g_signal_connect (blend_tool->widget, "add-slider",
+                    G_CALLBACK (gimp_blend_tool_editor_line_add_slider),
+                    blend_tool);
 }
 
 void
