@@ -72,6 +72,10 @@ struct _AnimationClass
   void         (*update_paint_view)  (Animation    *animation,
                                       gint          position);
 
+  /* Optional: to be implemented if there is anything to do else than
+   * refreshing the cache upon loading. */
+  void         (*load)               (Animation    *animation);
+
   /* Used by the renderer only. Must be implemented too. */
   gchar      * (*get_frame_hash)     (Animation    *animation,
                                       gint          position);

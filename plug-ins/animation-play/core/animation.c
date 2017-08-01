@@ -327,6 +327,8 @@ animation_load (Animation *animation)
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
 
   priv->loaded = FALSE;
+  if (ANIMATION_GET_CLASS (animation)->load)
+    ANIMATION_GET_CLASS (animation)->load (animation);
   g_signal_emit (animation, animation_signals[INVALIDATE_CACHE], 0,
                  0, animation_get_duration (animation));
   priv->loaded = TRUE;

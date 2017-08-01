@@ -93,6 +93,7 @@ static GeglBuffer * animation_animatic_create_frame   (Animation         *animat
                                                        gint               position,
                                                        gdouble            proxy_ratio);
 
+static void         animation_animatic_load           (Animation         *animation);
 static void         animation_animatic_reset_defaults (Animation         *animation);
 static gchar      * animation_animatic_serialize      (Animation         *animation,
                                                        const gchar       *playback_xml);
@@ -169,6 +170,7 @@ animation_animatic_class_init (AnimationAnimaticClass *klass)
   anim_class->get_frame_hash = animation_animatic_get_frame_hash;
   anim_class->create_frame   = animation_animatic_create_frame;
 
+  anim_class->load           = animation_animatic_load;
   anim_class->reset_defaults = animation_animatic_reset_defaults;
   anim_class->serialize      = animation_animatic_serialize;
   anim_class->deserialize    = animation_animatic_deserialize;
@@ -533,6 +535,126 @@ animation_animatic_create_frame (Animation *animation,
     g_object_unref (backdrop);
 
   return buffer;
+}
+
+static void
+animation_animatic_load (Animation *animation)
+{
+  AnimationAnimaticPrivate *priv = GET_PRIVATE (animation);
+  gint32                    image_id;
+  gint                     *layers;
+  gint                      n_layers;
+  gint                      i;
+
+  image_id = animation_get_image_id (animation);
+  layers = gimp_image_get_layers (image_id, &n_layers);
+  /* Size up if necessary. */
+  if (n_layers > priv->n_panels)
+    {
+      priv->tattoos   = g_try_realloc_n (priv->tattoos, n_layers,
+                                         sizeof (gint));
+      priv->durations = g_try_realloc_n (priv->durations, n_layers,
+                                         sizeof (gint));
+      priv->combine   = g_try_realloc_n (priv->combine, n_layers,
+                                         sizeof (gboolean));
+      priv->comments  = g_try_realloc_n (priv->comments, n_layers,
+                                         sizeof (gchar*));
+      for (i = priv->n_panels; i < n_layers; i++)
+        {
+          priv->tattoos[i] = 0;
+        }
+    }
+
+  /* Check if some layer have been removed. */
+  for (i = 0; i < priv->n_panels; i++)
+    {
+      gint32 layer;
+
+      layer = gimp_image_get_layer_by_tattoo (image_id,
+                                              priv->tattoos[i]);
+      if (layer == -1)
+        {
+          priv->tattoos[i] = 0;
+          g_free (priv->comments[i]);
+        }
+    }
+
+  /* Move panels around. */
+  for (i = 0; i < n_layers; i++)
+    {
+      gint tattoo = gimp_item_get_tattoo (layers[n_layers - i - 1]);
+
+      if (priv->tattoos[i] && priv->tattoos[i] == tattoo)
+        {
+          continue;
+        }
+      else
+        {
+          gboolean  found      = FALSE;
+          gint      last_empty = -1;
+          gint      j;
+          gint      tattoo_save   = priv->tattoos[i];
+          gint      duration_save = priv->durations[i];
+          gboolean  combine_save  = priv->combine[i];
+          gchar    *comment_save  = priv->comments[i];
+
+          for (j = i; j < MAX (priv->n_panels, n_layers); j++)
+            {
+              if (priv->tattoos[j] == 0)
+                {
+                  last_empty = j;
+                }
+              else if (priv->tattoos[j] == tattoo)
+                {
+                  found = TRUE;
+                  break;
+                }
+            }
+          g_return_if_fail (found || last_empty != -1);
+          if (found)
+            {
+              /* Swap panels i and j. */
+              priv->tattoos[i]   = priv->tattoos[j];
+              priv->durations[i] = priv->durations[j];
+              priv->combine[i]   = priv->combine[j];
+              priv->comments[i]  = priv->comments[j];
+            }
+          else
+            {
+              /* New panel. */
+              priv->tattoos[i]   = tattoo;
+              priv->durations[i] = parse_ms_tag (NULL, NULL);
+              priv->combine[i]   = FALSE;
+              priv->comments[i]  = NULL;
+              /* Save panel which was at this position in empty place. */
+              j = last_empty;
+            }
+
+          if (i != j)
+            {
+              priv->tattoos[j]   = tattoo_save;
+              priv->durations[j] = duration_save;
+              priv->combine[j]   = combine_save;
+              priv->comments[j]  = comment_save;
+            }
+        }
+    }
+
+  /* Size down if necessary. */
+  if (n_layers < priv->n_panels)
+    {
+      priv->tattoos   = g_try_realloc_n (priv->tattoos, n_layers,
+                                         sizeof (gint));
+      priv->durations = g_try_realloc_n (priv->durations, n_layers,
+                                         sizeof (gint));
+      priv->combine   = g_try_realloc_n (priv->combine, n_layers,
+                                         sizeof (gboolean));
+      priv->comments  = g_try_realloc_n (priv->comments, n_layers,
+                                         sizeof (gchar*));
+    }
+  priv->n_panels = n_layers;
+  g_signal_emit_by_name (animation, "duration-changed",
+                         animation_get_duration (animation));
 }
 
 static void
