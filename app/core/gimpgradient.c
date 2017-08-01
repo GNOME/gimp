@@ -1182,7 +1182,6 @@ gimp_gradient_segment_range_compress (GimpGradient        *gradient,
                                       gdouble              new_r)
 {
   gdouble              orig_l, orig_r;
-  gdouble              scale;
   GimpGradientSegment *seg, *aseg;
 
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
@@ -1196,24 +1195,54 @@ gimp_gradient_segment_range_compress (GimpGradient        *gradient,
   orig_l = range_l->left;
   orig_r = range_r->right;
 
-  scale = (new_r - new_l) / (orig_r - orig_l);
-
-  seg = range_l;
-
-  do
+  if (orig_r - orig_l > EPSILON)
     {
-      if (seg->prev)
-        seg->left   = new_l + (seg->left - orig_l) * scale;
-      seg->middle = new_l + (seg->middle - orig_l) * scale;
-      if (seg->next)
-        seg->right  = new_l + (seg->right - orig_l) * scale;
+      gdouble scale;
 
-      /* Next */
+      scale = (new_r - new_l) / (orig_r - orig_l);
 
-      aseg = seg;
-      seg  = seg->next;
+      seg = range_l;
+
+      do
+        {
+          if (seg->prev)
+            seg->left  = new_l + (seg->left - orig_l) * scale;
+          seg->middle  = new_l + (seg->middle - orig_l) * scale;
+          if (seg->next)
+            seg->right = new_l + (seg->right - orig_l) * scale;
+
+          /* Next */
+
+          aseg = seg;
+          seg  = seg->next;
+        }
+      while (aseg != range_r);
     }
-  while (aseg != range_r);
+  else
+    {
+      gint n;
+      gint i;
+
+      n = gimp_gradient_segment_range_get_n_segments (gradient,
+                                                      range_l, range_r);
+
+      for (i = 0, seg = range_l; i < n; i++, seg = seg->next)
+        {
+          if (seg->prev)
+            seg->left  = new_l + (new_r - new_l) * (i + 0.0) / n;
+          seg->middle  = new_l + (new_r - new_l) * (i + 0.5) / n;;
+          if (seg->next)
+            seg->right = new_l + (new_r - new_l) * (i + 1.0) / n;
+        }
+    }
+
+  /* Make sure that the left and right endpoints of the range are *exactly*
+   * equal to new_l and new_r; the above computations can introduce
+   * numerical inaccuracies.
+   */
+
+  range_l->left  = new_l;
+  range_l->right = new_r;
 
   gimp_data_thaw (GIMP_DATA (gradient));
 }
