@@ -77,8 +77,6 @@ m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([intltool_required_version], [0.40.1])
 m4_define([python2_required_version], [2.5.0])
 m4_define([webp_required_version], [0.6.0])
-m4_define([webpmux_required_version], [0.5.1])
-m4_define([webpdemux_required_version], [0.5.1])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
@@ -164,8 +162,6 @@ OPENEXR_REQUIRED_VERSION=openexr_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
-WEBPMUX_REQUIRED_VERSION=webpmux_required_version
-WEBPDEMUX_REQUIRED_VERSION=webpdemux_required_version
 XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
@@ -195,8 +191,6 @@ AC_SUBST(OPENEXR_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
-AC_SUBST(WEBPMUX_REQUIRED_VERSION)
-AC_SUBST(WEBPDEMUX_REQUIRED_VERSION)
 AC_SUBST(XGETTEXT_RECOMMENDED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
@@ -1623,13 +1617,15 @@ AC_ARG_WITH(webp, [  --without-webp       build without WebP support])
 have_webp=no
 if test "x$with_webp" != xno; then
   have_webp=yes
-  PKG_CHECK_MODULES(WEBP, libwebp >= webp_required_version,,
-    [have_webp="no (WebP not found)"])
-
-  PKG_CHECK_MODULES(WEBPMUX, libwebpmux >= webpmux_required_version,,
-    [have_webp="no (WebP not found)"])
-
-  PKG_CHECK_MODULES(WEBPDEMUX, libwebpdemux >= webpdemux_required_version,,
+  PKG_CHECK_MODULES(WEBP, libwebp >= webp_required_version,
+    [
+      PKG_CHECK_MODULES(WEBPMUX, libwebpmux >= webp_required_version,
+        [
+          PKG_CHECK_MODULES(WEBPDEMUX, libwebpdemux >= webp_required_version,,
+            [have_webp="no (WebP not built with libwebpdemux)"])
+        ],
+        [have_webp="no (WebP not built with libwebpmux)"])
+    ],
     [have_webp="no (WebP not found)"])
 fi
 
