@@ -395,6 +395,7 @@ app/tools/gimpalignoptions.c
 app/tools/gimpaligntool.c
 app/tools/gimpblendoptions.c
 app/tools/gimpblendtool.c
+app/tools/gimpblendtool-editor.c
 app/tools/gimpbrightnesscontrasttool.c
 app/tools/gimpbucketfilloptions.c
 app/tools/gimpbucketfilltool.c

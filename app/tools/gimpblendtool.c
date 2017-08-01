@@ -47,6 +47,7 @@
 
 #include "gimpblendoptions.h"
 #include "gimpblendtool.h"
+#include "gimpblendtool-editor.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
@@ -954,6 +955,8 @@ gimp_blend_tool_set_gradient (GimpBlendTool *blend_tool,
                        "gradient", blend_tool->gradient,
                        NULL);
     }
+
+  gimp_blend_tool_editor_gradient_changed (blend_tool);
 }
 
 static gboolean

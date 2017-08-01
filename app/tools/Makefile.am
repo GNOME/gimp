@@ -30,6 +30,8 @@ libapptools_a_sources = \
 	gimpblendoptions.h		\
 	gimpblendtool.c			\
 	gimpblendtool.h			\
+	gimpblendtool-editor.c		\
+	gimpblendtool-editor.h		\
 	gimpbrightnesscontrasttool.c	\
 	gimpbrightnesscontrasttool.h	\
 	gimpbrushtool.c			\
