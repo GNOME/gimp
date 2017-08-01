@@ -302,6 +302,7 @@ save_dialog (WebPSaveParams *params,
       g_signal_connect (adj_kf, "value-changed",
                         G_CALLBACK (show_maxkeyframe_hints),
                         label_kf);
+      show_maxkeyframe_hints (adj_kf, GTK_LABEL (label_kf));
 
       /* minimize-size checkbox */
       toggle_minsize = gtk_check_button_new_with_label (_("Minimize output size (slower)"));
