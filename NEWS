@@ -100,6 +100,8 @@ GUI and usability:
   - The built-in error dialog now displays errors outputted by GEGL.
   - Shift-clicking the visibility icon of a layer in a layer group now
     toggles its exclusive visibility within this layer group.
+  - New vectors-select-(top|bottom|previous|next) actions, similarly to
+    existing layers-select-*.
 
 Color selection and management:
 
@@ -122,6 +124,7 @@ Configurability:
   - Allow mouse to optionally configure tablet devices
   - Allow creating shortcuts containing the Cmd key + mouse wheel events.
   - Default to 300ppi and 1920x1080px for new documents.
+  - Default to 62px font size.
   - Do not allow Alt+[0-9] shortcuts, they are typically reserved for
     display switching.
   - Icons size is now a configurable option, not a theme feature.
@@ -246,6 +249,11 @@ Plug-ins:
   - Enhance the raw (not the digital negative) files plugin:
     introduce exporting settings and remember them across sessions,
     make the plugin invokable non-interactively, and more.
+  - Plug-ins can now be installed into first level directories of a
+    plug-ins/ folder. This is in particular to avoid the "DLL hell"
+    with shared libraries installed by a plug-in, interfering with other
+    unrelated plug-ins. The entry point file has to be named the same as
+    the directory (minus extension).
 
 Filters:
 
