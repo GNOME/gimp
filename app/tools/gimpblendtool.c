@@ -90,6 +90,11 @@ static void   gimp_blend_tool_motion              (GimpTool              *tool,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
+static void   gimp_blend_tool_modifier_key        (GimpTool              *tool,
+                                                   GdkModifierType        key,
+                                                   gboolean               press,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
 static void   gimp_blend_tool_cursor_update       (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    GdkModifierType        state,
@@ -180,6 +185,7 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   tool_class->button_press   = gimp_blend_tool_button_press;
   tool_class->button_release = gimp_blend_tool_button_release;
   tool_class->motion         = gimp_blend_tool_motion;
+  tool_class->modifier_key   = gimp_blend_tool_modifier_key;
   tool_class->cursor_update  = gimp_blend_tool_cursor_update;
   tool_class->can_undo       = gimp_blend_tool_can_undo;
   tool_class->can_redo       = gimp_blend_tool_can_redo;
@@ -346,7 +352,8 @@ gimp_blend_tool_button_release (GimpTool              *tool,
                                 GimpButtonReleaseType  release_type,
                                 GimpDisplay           *display)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+  GimpBlendTool    *blend_tool = GIMP_BLEND_TOOL (tool);
+  GimpBlendOptions *options    = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_pop_status (tool, display);
 
@@ -358,36 +365,39 @@ gimp_blend_tool_button_release (GimpTool              *tool,
                                        coords, time, state, release_type);
       blend_tool->grab_widget = NULL;
 
-      if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+      if (options->instant)
         {
-          /*  simply destroy the undo step we pushed in button_press(),
-           *  the tool widget restored the old position by itself
-           */
-          blend_info_free (blend_tool->undo_stack->data);
-          blend_tool->undo_stack = g_list_remove (blend_tool->undo_stack,
-                                                  blend_tool->undo_stack->data);
+          if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+            gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+          else
+            gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
         }
       else
         {
-          /*  blow the redo stack, we had an actual undoable movement
-           */
-          if (blend_tool->redo_stack)
+          if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
             {
-              g_list_free_full (blend_tool->redo_stack,
-                                (GDestroyNotify) blend_info_free);
-              blend_tool->redo_stack = NULL;
+              /*  simply destroy the undo step we pushed in button_press(),
+               *  the tool widget restored the old position by itself
+               */
+              blend_info_free (blend_tool->undo_stack->data);
+              blend_tool->undo_stack = g_list_remove (blend_tool->undo_stack,
+                                                      blend_tool->undo_stack->data);
             }
-        }
+          else
+            {
+              /*  blow the redo stack, we had an actual undoable movement
+               */
+              if (blend_tool->redo_stack)
+                {
+                  g_list_free_full (blend_tool->redo_stack,
+                                    (GDestroyNotify) blend_info_free);
+                  blend_tool->redo_stack = NULL;
+                }
+            }
 
-      /*  update the undo actions / menu items  */
-      gimp_image_flush (gimp_display_get_image (display));
-    }
-  else if (release_type == GIMP_BUTTON_RELEASE_CLICK ||
-           release_type == GIMP_BUTTON_RELEASE_NO_MOTION)
-    {
-      /*  a click outside any handle commits the tool
-       */
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+          /*  update the undo actions / menu items  */
+          gimp_image_flush (gimp_display_get_image (display));
+        }
     }
 }
 
@@ -403,6 +413,27 @@ gimp_blend_tool_motion (GimpTool         *tool,
   if (blend_tool->grab_widget)
     {
       gimp_tool_widget_motion (blend_tool->grab_widget, coords, time, state);
+    }
+}
+
+static void
+gimp_blend_tool_modifier_key (GimpTool        *tool,
+                              GdkModifierType  key,
+                              gboolean         press,
+                              GdkModifierType  state,
+                              GimpDisplay     *display)
+{
+  GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
+
+  if (key == gimp_get_extend_selection_mask ())
+    {
+      if (options->instant_toggle &&
+          gtk_widget_get_sensitive (options->instant_toggle))
+        {
+          g_object_set (options,
+                        "instant", ! options->instant,
+                        NULL);
+        }
     }
 }
 
@@ -576,6 +607,9 @@ gimp_blend_tool_start (GimpBlendTool    *blend_tool,
   GimpBlendOptions *options  = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
   GimpContext      *context  = GIMP_CONTEXT (options);
 
+  if (options->instant_toggle)
+    gtk_widget_set_sensitive (options->instant_toggle, FALSE);
+
   tool->display  = display;
   tool->drawable = drawable;
 
@@ -621,7 +655,8 @@ gimp_blend_tool_start (GimpBlendTool    *blend_tool,
 static void
 gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 {
-  GimpTool *tool = GIMP_TOOL (blend_tool);
+  GimpTool         *tool    = GIMP_TOOL (blend_tool);
+  GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
 
   if (blend_tool->graph)
     {
@@ -674,6 +709,9 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 
   tool->display  = NULL;
   tool->drawable = NULL;
+
+  if (options->instant_toggle)
+    gtk_widget_set_sensitive (options->instant_toggle, TRUE);
 }
 
 static void

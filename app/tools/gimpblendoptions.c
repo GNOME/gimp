@@ -29,6 +29,7 @@
 
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewablebox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpblendoptions.h"
 #include "gimppaintoptions-gui.h"
@@ -45,7 +46,8 @@ enum
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
   PROP_SUPERSAMPLE_THRESHOLD,
-  PROP_DITHER
+  PROP_DITHER,
+  PROP_INSTANT
 };
 
 
@@ -120,6 +122,13 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
                             NULL,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INSTANT,
+                            "instant",
+                            _("Instant mode"),
+                            _("Commit gradient instantly"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -160,6 +169,10 @@ gimp_blend_options_set_property (GObject      *object,
 
     case PROP_DITHER:
       options->dither = g_value_get_boolean (value);
+      break;
+
+    case PROP_INSTANT:
+      options->instant = g_value_get_boolean (value);
       break;
 
     default:
@@ -203,6 +216,10 @@ gimp_blend_options_get_property (GObject    *object,
       g_value_set_boolean (value, options->dither);
       break;
 
+    case PROP_INSTANT:
+      g_value_set_boolean (value, options->instant);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -212,13 +229,18 @@ gimp_blend_options_get_property (GObject    *object,
 GtkWidget *
 gimp_blend_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
-  GtkWidget *vbox2;
-  GtkWidget *frame;
-  GtkWidget *scale;
-  GtkWidget *combo;
-  GtkWidget *button;
+  GObject          *config  = G_OBJECT (tool_options);
+  GimpBlendOptions *options = GIMP_BLEND_OPTIONS (tool_options);
+  GtkWidget        *vbox    = gimp_paint_options_gui (tool_options);
+  GtkWidget        *vbox2;
+  GtkWidget        *frame;
+  GtkWidget        *scale;
+  GtkWidget        *combo;
+  GtkWidget        *button;
+  gchar            *str;
+  GdkModifierType   extend_mask;
+
+  extend_mask = gimp_get_extend_selection_mask ();
 
   /*  the gradient  */
   button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (tool_options),
@@ -280,6 +302,18 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
+
+  /* the instant toggle */
+  str = g_strdup_printf (_("Instant mode  (%s)"),
+                          gimp_get_mod_string (extend_mask));
+
+  button = gimp_prop_check_button_new (config, "instant", str);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_free (str);
+
+  options->instant_toggle = button;
 
   return vbox;
 }

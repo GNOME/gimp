@@ -45,6 +45,11 @@ struct _GimpBlendOptions
   gdouble           supersample_threshold;
 
   gboolean          dither;
+
+  gboolean          instant;
+
+  /*  options gui  */
+  GtkWidget        *instant_toggle;
 };
 
 
