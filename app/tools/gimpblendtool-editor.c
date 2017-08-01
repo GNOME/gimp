@@ -55,6 +55,9 @@ static gboolean              gimp_blend_tool_editor_line_can_add_slider  (GimpTo
 static gint                  gimp_blend_tool_editor_line_add_slider      (GimpToolLine  *line,
                                                                           gdouble        value,
                                                                           GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_line_remove_slider   (GimpToolLine  *line,
+                                                                          gint           slider,
+                                                                          GimpBlendTool *blend_tool);
 
 static gboolean              gimp_blend_tool_editor_is_gradient_editable (GimpBlendTool *blend_tool);
 
@@ -117,6 +120,23 @@ gimp_blend_tool_editor_line_add_slider (GimpToolLine  *line,
   gimp_blend_tool_editor_thaw_gradient (blend_tool);
 
   return slider;
+}
+
+static void
+gimp_blend_tool_editor_line_remove_slider (GimpToolLine  *line,
+                                           gint           slider,
+                                           GimpBlendTool *blend_tool)
+{
+  GimpGradientSegment *seg;
+
+  gimp_blend_tool_editor_freeze_gradient (blend_tool);
+
+  seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, slider);
+
+  gimp_gradient_segment_range_merge (blend_tool->gradient,
+                                     seg, seg->next, NULL, NULL);
+
+  gimp_blend_tool_editor_thaw_gradient (blend_tool);
 }
 
 static gboolean
@@ -258,13 +278,14 @@ gimp_blend_tool_editor_update_sliders (GimpBlendTool *blend_tool)
     {
       *slider = GIMP_CONTROLLER_SLIDER_DEFAULT;
 
-      slider->value   = seg->right;
-      slider->min     = seg->left;
-      slider->max     = seg->next->right;
+      slider->value     = seg->right;
+      slider->min       = seg->left;
+      slider->max       = seg->next->right;
 
-      slider->movable = editable;
+      slider->movable   = editable;
+      slider->removable = editable;
 
-      slider->data    = GINT_TO_POINTER (i);
+      slider->data      = GINT_TO_POINTER (i);
 
       slider++;
     }
@@ -382,6 +403,9 @@ gimp_blend_tool_editor_start (GimpBlendTool *blend_tool)
                     blend_tool);
   g_signal_connect (blend_tool->widget, "add-slider",
                     G_CALLBACK (gimp_blend_tool_editor_line_add_slider),
+                    blend_tool);
+  g_signal_connect (blend_tool->widget, "remove-slider",
+                    G_CALLBACK (gimp_blend_tool_editor_line_remove_slider),
                     blend_tool);
 }
 
