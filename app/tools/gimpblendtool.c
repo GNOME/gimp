@@ -594,6 +594,8 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
                                      GIMP_LAYER_COLOR_SPACE_AUTO,
                                      GIMP_LAYER_COMPOSITE_AUTO);
     }
+
+  gimp_blend_tool_editor_options_notify (blend_tool, options, pspec);
 }
 
 static void
@@ -909,6 +911,8 @@ gimp_blend_tool_gradient_dirty (GimpBlendTool *blend_tool)
 
   /* Update the filter */
   gimp_drawable_filter_apply (blend_tool->filter, NULL);
+
+  gimp_blend_tool_editor_gradient_dirty (blend_tool);
 }
 
 static void

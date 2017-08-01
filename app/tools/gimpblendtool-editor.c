@@ -54,6 +54,8 @@ static gboolean   gimp_blend_tool_editor_are_handlers_blocked (GimpBlendTool *bl
 static void       gimp_blend_tool_editor_freeze_gradient      (GimpBlendTool *blend_tool);
 static void       gimp_blend_tool_editor_thaw_gradient        (GimpBlendTool *blend_tool);
 
+static void       gimp_blend_tool_editor_update_sliders       (GimpBlendTool *blend_tool);
+
 
 /*  private functions  */
 
@@ -124,12 +126,173 @@ gimp_blend_tool_editor_thaw_gradient(GimpBlendTool *blend_tool)
 {
   gimp_data_thaw (GIMP_DATA (blend_tool->gradient));
 
+  gimp_blend_tool_editor_update_sliders (blend_tool);
+
   gimp_blend_tool_editor_unblock_handlers (blend_tool);
+}
+
+static void
+gimp_blend_tool_editor_update_sliders (GimpBlendTool *blend_tool)
+{
+  GimpBlendOptions     *options       = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpPaintOptions     *paint_options = GIMP_PAINT_OPTIONS (options);
+  gdouble               offset        = options->offset / 100.0;
+  gboolean              editable;
+  GimpControllerSlider *sliders;
+  gint                  n_sliders;
+  gint                  n_segments;
+  GimpGradientSegment  *seg;
+  GimpControllerSlider *slider;
+  gint                  i;
+
+  if (! blend_tool->widget || options->instant)
+    return;
+
+  editable = gimp_blend_tool_editor_is_gradient_editable (blend_tool);
+
+  n_segments = gimp_gradient_segment_range_get_n_segments (
+    blend_tool->gradient, blend_tool->gradient->segments, NULL);
+
+  n_sliders = (n_segments - 1) + /* gradient stops, between each adjacent
+                                  * pair of segments */
+              (n_segments);      /* midpoints, inside each segment */
+
+  sliders = g_new (GimpControllerSlider, n_sliders);
+
+  slider = sliders;
+
+  /* initialize the gradient-stop sliders */
+  for (seg = blend_tool->gradient->segments, i = 0;
+       seg->next;
+       seg = seg->next, i++)
+    {
+      *slider = GIMP_CONTROLLER_SLIDER_DEFAULT;
+
+      slider->value   = seg->right;
+      slider->min     = seg->left;
+      slider->max     = seg->next->right;
+
+      slider->movable = editable;
+
+      slider->data    = GINT_TO_POINTER (i);
+
+      slider++;
+    }
+
+  /* initialize the midpoint sliders */
+  for (seg = blend_tool->gradient->segments, i = 0;
+       seg;
+       seg = seg->next, i++)
+    {
+      *slider = GIMP_CONTROLLER_SLIDER_DEFAULT;
+
+      slider->value    = seg->middle;
+      slider->min      = seg->left;
+      slider->max      = seg->right;
+
+      /* hide midpoints of zero-length segments, since they'd otherwise
+       * prevent the segment's endpoints from being selected
+       */
+      slider->visible  = fabs (slider->max - slider->min) > EPSILON;
+      slider->movable  = editable;
+
+      slider->autohide = TRUE;
+      slider->type     = GIMP_HANDLE_FILLED_CIRCLE;
+      slider->size     = 0.6;
+
+      slider->data     = GINT_TO_POINTER (i);
+
+      slider++;
+    }
+
+  /* flip the slider limits and values, if necessary */
+  if (paint_options->gradient_options->gradient_reverse)
+    {
+      for (i = 0; i < n_sliders; i++)
+        {
+          gdouble temp;
+
+          sliders[i].value = 1.0 - sliders[i].value;
+          temp             = sliders[i].min;
+          sliders[i].min   = 1.0 - sliders[i].max;
+          sliders[i].max   = 1.0 - temp;
+        }
+    }
+
+  /* adjust the sliders according to the offset */
+  for (i = 0; i < n_sliders; i++)
+    {
+      sliders[i].value = (1.0 - offset) * sliders[i].value + offset;
+      sliders[i].min   = (1.0 - offset) * sliders[i].min   + offset;
+      sliders[i].max   = (1.0 - offset) * sliders[i].max   + offset;
+    }
+
+  gimp_tool_line_set_sliders (GIMP_TOOL_LINE (blend_tool->widget),
+                              sliders, n_sliders);
+
+  g_free (sliders);
 }
 
 
 /*  public functions  */
 
+
+void
+gimp_blend_tool_editor_options_notify (GimpBlendTool    *blend_tool,
+                                       GimpToolOptions  *options,
+                                       const GParamSpec *pspec)
+{
+  if (! strcmp (pspec->name, "modify-active"))
+    {
+      gimp_blend_tool_editor_update_sliders (blend_tool);
+    }
+  else if (! strcmp (pspec->name, "gradient-reverse"))
+    {
+      gimp_blend_tool_editor_update_sliders (blend_tool);
+
+      /* if an endpoint is selected, swap the selected endpoint */
+      if (blend_tool->widget)
+        {
+          gint selection;
+
+          selection =
+            gimp_tool_line_get_selection (GIMP_TOOL_LINE (blend_tool->widget));
+
+          switch (selection)
+            {
+            case GIMP_TOOL_LINE_HANDLE_START:
+              gimp_tool_line_set_selection (GIMP_TOOL_LINE (blend_tool->widget),
+                                            GIMP_TOOL_LINE_HANDLE_END);
+              break;
+
+            case GIMP_TOOL_LINE_HANDLE_END:
+              gimp_tool_line_set_selection (GIMP_TOOL_LINE (blend_tool->widget),
+                                            GIMP_TOOL_LINE_HANDLE_START);
+              break;
+            }
+        }
+    }
+  else if (blend_tool->render_node &&
+           gegl_node_find_property (blend_tool->render_node, pspec->name))
+    {
+      gimp_blend_tool_editor_update_sliders (blend_tool);
+    }
+}
+
+void
+gimp_blend_tool_editor_gradient_dirty (GimpBlendTool *blend_tool)
+{
+  if (gimp_blend_tool_editor_are_handlers_blocked (blend_tool))
+    return;
+
+  if (blend_tool->widget)
+    {
+      gimp_blend_tool_editor_update_sliders (blend_tool);
+
+      gimp_tool_line_set_selection (GIMP_TOOL_LINE (blend_tool->widget),
+                                    GIMP_TOOL_LINE_HANDLE_NONE);
+    }
+}
 
 void
 gimp_blend_tool_editor_gradient_changed (GimpBlendTool *blend_tool)
@@ -149,5 +312,16 @@ gimp_blend_tool_editor_gradient_changed (GimpBlendTool *blend_tool)
       gtk_widget_set_visible (options->modify_active_hint,
                               blend_tool->gradient &&
                               ! gimp_data_is_writable (GIMP_DATA (blend_tool->gradient)));
+    }
+
+  if (gimp_blend_tool_editor_are_handlers_blocked (blend_tool))
+    return;
+
+  if (blend_tool->widget)
+    {
+      gimp_blend_tool_editor_update_sliders (blend_tool);
+
+      gimp_tool_line_set_selection (GIMP_TOOL_LINE (blend_tool->widget),
+                                    GIMP_TOOL_LINE_HANDLE_NONE);
     }
 }
