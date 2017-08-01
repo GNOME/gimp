@@ -1155,6 +1155,25 @@ gimp_gradient_segment_get_coloring_type (GimpGradient        *gradient,
   return seg->color;
 }
 
+gint
+gimp_gradient_segment_range_get_n_segments (GimpGradient        *gradient,
+                                            GimpGradientSegment *range_l,
+                                            GimpGradientSegment *range_r)
+{
+  gint n_segments = 0;
+
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), 0);
+  g_return_val_if_fail (range_l != NULL, 0);
+
+  for (; range_l != range_r; range_l = range_l->next)
+    n_segments++;
+
+  if (range_r != NULL)
+    n_segments++;
+
+  return n_segments;
+}
+
 void
 gimp_gradient_segment_range_compress (GimpGradient        *gradient,
                                       GimpGradientSegment *range_l,

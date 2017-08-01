@@ -199,6 +199,11 @@ gimp_gradient_segment_get_coloring_type       (GimpGradient         *gradient,
  * If the second segment is NULL, these functions will process
  * until the end of the string.
  * */
+gint    gimp_gradient_segment_range_get_n_segments
+                                              (GimpGradient         *gradient,
+                                               GimpGradientSegment  *range_l,
+                                               GimpGradientSegment  *range_r);
+
 void    gimp_gradient_segment_range_compress  (GimpGradient         *gradient,
                                                GimpGradientSegment  *range_l,
                                                GimpGradientSegment  *range_r,
