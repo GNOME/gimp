@@ -665,6 +665,8 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
   GimpTool         *tool    = GIMP_TOOL (blend_tool);
   GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
 
+  gimp_blend_tool_editor_halt (blend_tool);
+
   if (blend_tool->graph)
     {
       g_clear_object (&blend_tool->graph);

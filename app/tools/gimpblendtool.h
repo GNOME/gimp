@@ -66,6 +66,8 @@ struct _GimpBlendTool
   /*  editor  */
 
   gint                block_handlers_count;
+
+  GimpToolGui        *gui;
 };
 
 struct _GimpBlendToolClass

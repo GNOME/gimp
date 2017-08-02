@@ -24,6 +24,7 @@ void   gimp_blend_tool_editor_options_notify   (GimpBlendTool    *blend_tool,
                                                 const GParamSpec *pspec);
 
 void   gimp_blend_tool_editor_start            (GimpBlendTool    *blend_tool);
+void   gimp_blend_tool_editor_halt             (GimpBlendTool    *blend_tool);
 
 void   gimp_blend_tool_editor_line_changed     (GimpBlendTool    *blend_tool);
 
