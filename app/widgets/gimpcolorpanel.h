@@ -40,19 +40,26 @@ struct _GimpColorPanel
 struct _GimpColorPanelClass
 {
   GimpColorButtonClass  parent_class;
+
+  /*  signals  */
+  void (* response) (GimpColorPanel       *panel,
+                     GimpColorDialogState  state);
 };
 
 
-GType       gimp_color_panel_get_type    (void) G_GNUC_CONST;
+GType       gimp_color_panel_get_type        (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_panel_new         (const gchar       *title,
-                                          const GimpRGB     *color,
-                                          GimpColorAreaType  type,
-                                          gint               width,
-                                          gint               height);
+GtkWidget * gimp_color_panel_new             (const gchar          *title,
+                                              const GimpRGB        *color,
+                                              GimpColorAreaType     type,
+                                              gint                  width,
+                                              gint                  height);
 
-void        gimp_color_panel_set_context (GimpColorPanel    *panel,
-                                          GimpContext       *context);
+void        gimp_color_panel_set_context     (GimpColorPanel       *panel,
+                                              GimpContext          *context);
+
+void        gimp_color_panel_dialog_response (GimpColorPanel       *panel,
+                                              GimpColorDialogState  state);
 
 
 #endif  /*  __GIMP_COLOR_PANEL_H__  */

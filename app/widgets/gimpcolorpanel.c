@@ -29,10 +29,18 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpaction.h"
 #include "gimpcolordialog.h"
 #include "gimpcolorpanel.h"
+
+
+enum
+{
+  RESPONSE,
+  LAST_SIGNAL
+};
 
 
 /*  local function prototypes  */
@@ -57,6 +65,8 @@ G_DEFINE_TYPE (GimpColorPanel, gimp_color_panel, GIMP_TYPE_COLOR_BUTTON)
 
 #define parent_class gimp_color_panel_parent_class
 
+static guint color_panel_signals[LAST_SIGNAL] = { 0, };
+
 
 static void
 gimp_color_panel_class_init (GimpColorPanelClass *klass)
@@ -74,6 +84,16 @@ gimp_color_panel_class_init (GimpColorPanelClass *klass)
 
   color_button_class->color_changed   = gimp_color_panel_color_changed;
   color_button_class->get_action_type = gimp_color_panel_get_action_type;
+
+  color_panel_signals[RESPONSE] =
+    g_signal_new ("response",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpColorPanelClass, response),
+                  NULL, NULL,
+                  gimp_marshal_VOID__ENUM,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_COLOR_DIALOG_STATE);
 }
 
 static void
@@ -258,6 +278,18 @@ gimp_color_panel_set_context (GimpColorPanel *panel,
                                         context->gimp->config->color_management);
 }
 
+void
+gimp_color_panel_dialog_response (GimpColorPanel       *panel,
+                                  GimpColorDialogState  state)
+{
+  g_return_if_fail (GIMP_IS_COLOR_PANEL (panel));
+  g_return_if_fail (state == GIMP_COLOR_DIALOG_OK ||
+                    state == GIMP_COLOR_DIALOG_CANCEL);
+
+  if (panel->color_dialog && gtk_widget_get_visible (panel->color_dialog))
+    gimp_color_panel_dialog_update (NULL, NULL, state, panel);
+}
+
 
 /*  private functions  */
 
@@ -278,12 +310,18 @@ gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
       if (! gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
         gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       gtk_widget_hide (panel->color_dialog);
+
+      g_signal_emit (panel, color_panel_signals[RESPONSE], 0,
+                     state);
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
       if (gimp_color_button_get_update (GIMP_COLOR_BUTTON (panel)))
         gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       gtk_widget_hide (panel->color_dialog);
+
+      g_signal_emit (panel, color_panel_signals[RESPONSE], 0,
+                     state);
       break;
     }
 }
