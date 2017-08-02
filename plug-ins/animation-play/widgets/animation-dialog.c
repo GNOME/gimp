@@ -82,6 +82,7 @@ struct _AnimationDialogPrivate
   GtkWidget         *zoomcombo;
   GtkWidget         *refresh;
   GtkWidget         *export;
+  gboolean           cancel_export;
 
   GtkWidget         *scrolled_drawing_area;
   GtkWidget         *drawing_area;
@@ -158,6 +159,8 @@ static gboolean    on_dialog_expose                (GtkWidget      *widget,
 static void        update_ui_sensitivity     (AnimationDialog  *dialog);
 
 /* UI callbacks */
+static void        on_cancel_export          (GtkToolButton    *button,
+                                              AnimationDialog  *dialog);
 static void        export_callback           (GtkAction        *action,
                                               AnimationDialog  *dialog);
 static void        close_callback            (GtkAction        *action,
@@ -226,8 +229,13 @@ static gboolean    popup_menu                (GtkWidget        *widget,
                                               AnimationDialog  *dialog);
 
 /* Animation Signals */
-static void        show_loading_progress     (Animation         *animation,
+static gboolean    show_loading_progress     (Animation         *animation,
                                               gdouble            load_rate,
+                                              const gchar       *label,
+                                              AnimationDialog   *dialog);
+static gboolean    check_cancel_loading      (Animation         *animation,
+                                              gdouble            load_rate,
+                                              const gchar       *label,
                                               AnimationDialog   *dialog);
 static void        playback_range_changed    (AnimationPlayback *playback,
                                               gint               playback_start,
@@ -290,11 +298,6 @@ static gboolean    on_progress_event         (GtkWidget        *widget,
 static void        show_playing_progress     (AnimationDialog  *dialog);
 
 /* Utils */
-static void        inactive_on_loading       (Animation       *animation,
-                                              gdouble          load_rate,
-                                              GtkWidget       *widget);
-static void        active_on_loaded          (Animation       *animation,
-                                              GtkWidget       *widget);
 static void        hide_on_animatic          (AnimationDialog  *dialog,
                                               GParamSpec       *param_spec,
                                               GtkWidget        *widget);
@@ -716,7 +719,7 @@ animation_dialog_constructed (GObject *object)
   gtk_widget_show (priv->zoomcombo);
 
   /* Export. */
-  priv->export = GTK_WIDGET (gtk_tool_button_new (NULL, N_("Export the animation")));
+  priv->export = GTK_WIDGET (gtk_tool_button_new (NULL, NULL));
 
   gtk_activatable_set_related_action (GTK_ACTIVATABLE (priv->export),
                                       gtk_action_group_get_action (priv->various_actions, "export"));
@@ -1003,18 +1006,6 @@ animation_dialog_set_property (GObject      *object,
     case PROP_ANIMATION:
       g_clear_object (&priv->animation);
       priv->animation = g_value_get_object (value);
-      g_signal_connect (priv->animation, "loading",
-                        (GCallback) inactive_on_loading,
-                        priv->settings);
-      g_signal_connect (priv->animation, "loaded",
-                        (GCallback) active_on_loaded,
-                        priv->settings);
-      g_signal_connect (priv->animation, "loading",
-                        (GCallback) inactive_on_loading,
-                        priv->upper_bar);
-      g_signal_connect (priv->animation, "loaded",
-                        (GCallback) active_on_loaded,
-                        priv->upper_bar);
       break;
 
     default:
@@ -1158,7 +1149,7 @@ ui_manager_new (AnimationDialog *dialog)
   static GtkActionEntry various_entries[] =
   {
     { "export", GIMP_ICON_DOCUMENT_SAVE,
-      NULL, "<control>e", N_("Export the video"),
+      NULL, "<control>e", N_("Export the animation"),
       G_CALLBACK (export_callback) },
 
     { "help", "help-browser",
@@ -1513,6 +1504,9 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   g_signal_connect (priv->animation, "loading",
                     (GCallback) show_loading_progress,
                     dialog);
+  g_signal_connect (priv->animation, "loading",
+                    (GCallback) check_cancel_loading,
+                    dialog);
   g_signal_connect_swapped (priv->animation, "loaded",
                             (GCallback) update_progress,
                             dialog);
@@ -1581,12 +1575,63 @@ update_ui_sensitivity (AnimationDialog *dialog)
 /**** UI CALLBACKS ****/
 
 static void
+on_cancel_export (GtkToolButton   *button,
+                  AnimationDialog *dialog)
+{
+  GET_PRIVATE (dialog)->cancel_export = TRUE;
+}
+
+static void
 export_callback (GtkAction       *action,
                  AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
 
-  animation_dialog_export (GTK_WINDOW (dialog), priv->playback);
+  if (! priv->cancel_export)
+    {
+      priv->cancel_export = FALSE;
+      /* Change the button icon and tooltip. */
+      gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (priv->export),
+                                     "process-stop");
+      gtk_widget_set_tooltip_text (priv->export, _("Stop the Export"));
+
+      /* Make all but this button sensitive. */
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->play_bar), FALSE);
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->right_pane), FALSE);
+      if (priv->xsheet)
+        gtk_widget_set_sensitive (GTK_WIDGET (priv->xsheet), FALSE);
+      gtk_container_foreach (GTK_CONTAINER (priv->upper_bar),
+                             (GtkCallback) gtk_widget_set_sensitive,
+                             GINT_TO_POINTER (FALSE));
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->export), TRUE);
+
+      /* Run the export. */
+      g_signal_connect (priv->export, "clicked",
+                        G_CALLBACK (on_cancel_export),
+                        dialog);
+      animation_dialog_export (GTK_WINDOW (dialog), priv->playback);
+      g_signal_handlers_disconnect_by_func (priv->export,
+                                            G_CALLBACK (on_cancel_export),
+                                            dialog);
+
+      /* Reset icon and tooltip. */
+      gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (priv->export),
+                                     GIMP_ICON_DOCUMENT_SAVE);
+      gtk_widget_set_tooltip_text (priv->export, _("Export the animation"));
+
+      /* Reset to normal sensitivity of the GUI. */
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->play_bar), TRUE);
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->right_pane), TRUE);
+      if (priv->xsheet)
+        gtk_widget_set_sensitive (GTK_WIDGET (priv->xsheet), TRUE);
+      gtk_container_foreach (GTK_CONTAINER (priv->upper_bar),
+                             (GtkCallback) gtk_widget_set_sensitive,
+                             GINT_TO_POINTER (TRUE));
+    }
+  else
+    {
+      priv->cancel_export = FALSE;
+    }
 }
 
 static void
@@ -2171,26 +2216,44 @@ popup_menu (GtkWidget       *widget,
   return TRUE;
 }
 
-static void
+static gboolean
 show_loading_progress (Animation       *animation,
                        gdouble          load_rate,
+                       const gchar     *label,
                        AnimationDialog *dialog)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
-  gchar *text;
+  const gchar            *progress_label;
+  gchar                  *text;
+
+  if (label)
+    progress_label = label;
+  else
+    progress_label = _("Loading animation");
 
   block_ui (dialog);
 
   /* update the dialog's progress bar */
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (priv->progress), load_rate);
 
-  text = g_strdup_printf (_("Loading animation %d %%"), (gint) (load_rate * 100));
+  text = g_strdup_printf ("%s %d %%", progress_label, (gint) (load_rate * 100));
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), text);
   g_free (text);
 
   /* Forcing the UI to update even with intensive computation. */
   while (gtk_events_pending ())
     gtk_main_iteration ();
+
+  return FALSE;
+}
+
+static gboolean
+check_cancel_loading (Animation       *animation,
+                      gdouble          load_rate,
+                      const gchar     *label,
+                      AnimationDialog *dialog)
+{
+  return GET_PRIVATE (dialog)->cancel_export;
 }
 
 static void
@@ -2965,21 +3028,6 @@ show_playing_progress (AnimationDialog *dialog)
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (priv->progress), text);
   g_free (text);
-}
-
-static void
-inactive_on_loading (Animation *animation,
-                     gdouble    load_rate,
-                     GtkWidget *widget)
-{
-  gtk_widget_set_sensitive (widget, FALSE);
-}
-
-static void
-active_on_loaded (Animation *animation,
-                  GtkWidget *widget)
-{
-  gtk_widget_set_sensitive (widget, TRUE);
 }
 
 static void

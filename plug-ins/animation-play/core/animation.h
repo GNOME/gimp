@@ -42,22 +42,23 @@ struct _AnimationClass
 
   /* Signals */
   void         (*loading)            (Animation    *animation,
-                                      gdouble       ratio);
+                                      gdouble       ratio,
+                                      const gchar  *label);
   void         (*loaded)             (Animation    *animation);
 
   void         (*size_changed)       (Animation    *animation,
                                       gint          width,
                                       gint          height);
+  void         (*duration_changed)   (Animation    *animation,
+                                      gint          duration);
+  void         (*framerate_changed)  (Animation    *animation,
+                                      gdouble       fps);
   void         (*frames_changed)     (Animation    *animation,
                                       gint          position,
                                       gint          length);
   void         (*invalidate_cache)   (Animation    *animation,
                                       gint          position,
                                       gint          length);
-  void         (*duration_changed)   (Animation    *animation,
-                                      gint          duration);
-  void         (*framerate_changed)  (Animation    *animation,
-                                      gdouble       fps);
 
   /* These virtual methods must be implemented by any subclass. */
   gint         (*get_duration)       (Animation    *animation);

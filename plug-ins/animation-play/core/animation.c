@@ -46,10 +46,10 @@ enum
   LOADING,
   LOADED,
   SIZE_CHANGED,
-  FRAMES_CHANGED,
-  INVALIDATE_CACHE,
   DURATION_CHANGED,
   FRAMERATE_CHANGED,
+  FRAMES_CHANGED,
+  INVALIDATE_CACHE,
   LAST_SIGNAL
 };
 
@@ -106,22 +106,27 @@ animation_class_init (AnimationClass *klass)
    * Animation::loading:
    * @animation: the animation loading.
    * @ratio: fraction loaded [0-1].
+   * @label: the text to show as progression message.
    *
-   * The ::loading signal must be emitted by a subclass of Animation.
-   * It can be used by a GUI to display a progress bar during loading.
+   * The ::loading signal must be emitted when a long process is taking
+   * place and you want the GUI to display a progress bar.
    * GUI widgets depending on a consistent state of @animation should
    * become unresponsive.
+   *
+   * Returns: TRUE is the loading should be stopped, FALSE otherwise.
+   * This allows long loading to be stopped.
    */
   animation_signals[LOADING] =
     g_signal_new ("loading",
                   G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
+                  G_SIGNAL_ACTION,
                   G_STRUCT_OFFSET (AnimationClass, loading),
                   NULL, NULL,
-                  g_cclosure_marshal_VOID__DOUBLE,
-                  G_TYPE_NONE,
-                  1,
-                  G_TYPE_DOUBLE);
+                  NULL,
+                  G_TYPE_BOOLEAN,
+                  2,
+                  G_TYPE_DOUBLE,
+                  G_TYPE_STRING);
   /**
    * Animation::loaded:
    * @animation: the animation loading.
@@ -156,49 +161,6 @@ animation_class_init (AnimationClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (AnimationClass, size_changed),
-                  NULL, NULL,
-                  NULL,
-                  G_TYPE_NONE,
-                  2,
-                  G_TYPE_INT,
-                  G_TYPE_INT);
-  /**
-   * Animation::frames-changed:
-   * @animation: the animation.
-   * @position: the first frame position whose contents changed.
-   * @length: the number of changed frames from @position.
-   *
-   * The ::frames-changed signal must be emitted when the contents
-   * of one or more successive frames change.
-   */
-  animation_signals[FRAMES_CHANGED] =
-    g_signal_new ("frames-changed",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (AnimationClass, frames_changed),
-                  NULL, NULL,
-                  NULL,
-                  G_TYPE_NONE,
-                  2,
-                  G_TYPE_INT,
-                  G_TYPE_INT);
-  /**
-   * Animation::invalidate-cache:
-   * @animation: the animation.
-   * @position: the first frame position whose contents changed.
-   * @length: the number of changed frames from @position.
-   *
-   * The ::invalidate-cache signal must be emitted when one or more
-   * successive frames have to be updated. This is similar to
-   * ::frames-changed except that it forces the cache update even if the
-   * contents apparently did not change. It will also invalidate cache
-   * for similar frames, even when not in the given range.
-   */
-  animation_signals[INVALIDATE_CACHE] =
-    g_signal_new ("invalidate-cache",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (AnimationClass, invalidate_cache),
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
@@ -241,6 +203,49 @@ animation_class_init (AnimationClass *klass)
                   G_TYPE_NONE,
                   1,
                   G_TYPE_DOUBLE);
+  /**
+   * Animation::frames-changed:
+   * @animation: the animation.
+   * @position: the first frame position whose contents changed.
+   * @length: the number of changed frames from @position.
+   *
+   * The ::frames-changed signal must be emitted when the contents
+   * of one or more successive frames change.
+   */
+  animation_signals[FRAMES_CHANGED] =
+    g_signal_new ("frames-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (AnimationClass, frames_changed),
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_NONE,
+                  2,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
+  /**
+   * Animation::invalidate-cache:
+   * @animation: the animation.
+   * @position: the first frame position whose contents changed.
+   * @length: the number of changed frames from @position.
+   *
+   * The ::invalidate-cache signal is emitted when one or more
+   * successive frames have to be updated. This is similar to
+   * ::frames-changed except that it forces the cache update even if the
+   * contents apparently did not change. It will also invalidate cache
+   * for similar frames, even when not in the given range.
+   */
+  animation_signals[INVALIDATE_CACHE] =
+    g_signal_new ("invalidate-cache",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (AnimationClass, invalidate_cache),
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_NONE,
+                  2,
+                  G_TYPE_INT,
+                  G_TYPE_INT);
 
   object_class->finalize     = animation_finalize;
   object_class->set_property = animation_set_property;

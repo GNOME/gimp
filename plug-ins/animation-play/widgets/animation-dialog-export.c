@@ -137,6 +137,8 @@ animation_dialog_export_video (AnimationPlayback *playback,
   GeglNode  *graph;
   GeglNode  *export;
   GeglNode  *input;
+  gchar     *label = g_strdup_printf(_("Exporting \"%s\""),
+                                     filename);
   gint       duration;
   gint       i;
 
@@ -158,14 +160,19 @@ animation_dialog_export_video (AnimationPlayback *playback,
   for (i = 0; i < duration; i++)
     {
       GeglBuffer *buffer;
+      gboolean    stops_loading;
 
       g_signal_emit_by_name (animation, "loading",
-                             (gdouble) i / ((gdouble) duration - 0.999));
+                             (gdouble) i / ((gdouble) duration - 0.999),
+                             label, &stops_loading);
+      if (stops_loading)
+        break;
       buffer = animation_playback_get_buffer (playback, i);
       gegl_node_set (input, "buffer", buffer, NULL);
       gegl_node_process (export);
       g_object_unref (buffer);
     }
+  g_free (label);
   g_object_unref (graph);
   g_signal_emit_by_name (animation, "loaded");
 }
@@ -202,9 +209,18 @@ animation_dialog_export_images (AnimationPlayback *playback,
     {
       GeglBuffer *buffer;
       gchar      *path;
+      gboolean    stops_loading;
+
+      /* Make sure GUI interactions are processed, so that one can
+       * cancel the export anytime. */
+      while (g_main_context_pending (NULL))
+        g_main_context_iteration (NULL, FALSE);
 
       g_signal_emit_by_name (animation, "loading",
-                             (gdouble) i / ((gdouble) duration - 0.999));
+                             (gdouble) i / ((gdouble) duration - 0.999),
+                             _("Exporting frames"), &stops_loading);
+      if (stops_loading)
+        break;
       path = g_strdup_printf ("%s-%.*d.%s",
                               filename,
                               (gint) floor (log10(duration)) + 1,
