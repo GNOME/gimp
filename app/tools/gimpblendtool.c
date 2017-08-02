@@ -412,9 +412,8 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
                                GdkModifierType   state,
                                GimpDisplay      *display)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  GimpImage     *image      = gimp_display_get_image (display);
-  GimpDrawable  *drawable   = gimp_image_get_active_drawable (image);
+  GimpImage    *image    = gimp_display_get_image (display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
       gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
@@ -424,14 +423,6 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
                             gimp_tool_control_get_cursor (tool->control),
                             gimp_tool_control_get_tool_cursor (tool->control),
                             GIMP_CURSOR_MODIFIER_BAD);
-      return;
-    }
-  else if (display != tool->display || ! blend_tool->widget)
-    {
-      gimp_tool_set_cursor (tool, display,
-                            gimp_tool_control_get_cursor (tool->control),
-                            gimp_tool_control_get_tool_cursor (tool->control),
-                            GIMP_CURSOR_MODIFIER_PLUS);
       return;
     }
 
