@@ -100,8 +100,6 @@ GUI and usability:
   - The built-in error dialog now displays errors outputted by GEGL.
   - Shift-clicking the visibility icon of a layer in a layer group now
     toggles its exclusive visibility within this layer group.
-  - New vectors-select-(top|bottom|previous|next) actions, similarly to
-    existing layers-select-*.
 
 Color selection and management:
 
