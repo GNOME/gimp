@@ -53,17 +53,6 @@
 #include "gimp-intl.h"
 
 
-typedef struct _BlendInfo BlendInfo;
-
-struct _BlendInfo
-{
-  gdouble start_x;
-  gdouble start_y;
-  gdouble end_x;
-  gdouble end_y;
-};
-
-
 /*  local function prototypes  */
 
 static void   gimp_blend_tool_dispose             (GObject               *object);
@@ -90,6 +79,9 @@ static void   gimp_blend_tool_motion              (GimpTool              *tool,
                                                    const GimpCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
+                                                   GimpDisplay           *display);
+static gboolean gimp_blend_tool_key_press         (GimpTool              *tool,
+                                                   GdkEventKey           *kevent,
                                                    GimpDisplay           *display);
 static void   gimp_blend_tool_modifier_key        (GimpTool              *tool,
                                                    GdkModifierType        key,
@@ -140,12 +132,6 @@ static void   gimp_blend_tool_create_filter       (GimpBlendTool         *blend_
 static void   gimp_blend_tool_filter_flush        (GimpDrawableFilter    *filter,
                                                    GimpTool              *tool);
 
-static BlendInfo * blend_info_new  (gdouble    start_x,
-                                    gdouble    start_y,
-                                    gdouble    end_x,
-                                    gdouble    end_y);
-static void        blend_info_free (BlendInfo *info);
-
 
 G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -186,6 +172,7 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   tool_class->button_press   = gimp_blend_tool_button_press;
   tool_class->button_release = gimp_blend_tool_button_release;
   tool_class->motion         = gimp_blend_tool_motion;
+  tool_class->key_press      = gimp_blend_tool_key_press;
   tool_class->modifier_key   = gimp_blend_tool_modifier_key;
   tool_class->cursor_update  = gimp_blend_tool_cursor_update;
   tool_class->can_undo       = gimp_blend_tool_can_undo;
@@ -310,11 +297,8 @@ gimp_blend_tool_button_press (GimpTool            *tool,
                               GimpButtonPressType  press_type,
                               GimpDisplay         *display)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  gdouble        start_x;
-  gdouble        start_y;
-  gdouble        end_x;
-  gdouble        end_y;
+  GimpBlendTool    *blend_tool = GIMP_BLEND_TOOL (tool);
+  GimpBlendOptions *options    = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
 
   if (tool->display && display != tool->display)
     gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
@@ -326,21 +310,18 @@ gimp_blend_tool_button_press (GimpTool            *tool,
       gimp_tool_widget_hover (blend_tool->widget, coords, state, TRUE);
     }
 
-  /*  save the current line for undo, widget_button_press() might change it
+  /* call start_edit() before widget_button_press(), because we need to record
+   * the undo state before widget_button_press() potentially changes it.  note
+   * that if widget_button_press() return FALSE, nothing changes and no undo
+   * step is created.
    */
-  start_x = blend_tool->start_x;
-  start_y = blend_tool->start_y;
-  end_x   = blend_tool->end_x;
-  end_y   = blend_tool->end_y;
+  if (press_type == GIMP_BUTTON_PRESS_NORMAL)
+    gimp_blend_tool_editor_start_edit (blend_tool);
 
   if (gimp_tool_widget_button_press (blend_tool->widget, coords, time, state,
                                      press_type))
     {
       blend_tool->grab_widget = blend_tool->widget;
-
-      blend_tool->undo_stack =
-        g_list_prepend (blend_tool->undo_stack,
-                        blend_info_new (start_x, start_y, end_x, end_y));
     }
 
   if (press_type == GIMP_BUTTON_PRESS_NORMAL)
@@ -375,32 +356,13 @@ gimp_blend_tool_button_release (GimpTool              *tool,
           else
             gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
         }
-      else
-        {
-          if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
-            {
-              /*  simply destroy the undo step we pushed in button_press(),
-               *  the tool widget restored the old position by itself
-               */
-              blend_info_free (blend_tool->undo_stack->data);
-              blend_tool->undo_stack = g_list_remove (blend_tool->undo_stack,
-                                                      blend_tool->undo_stack->data);
-            }
-          else
-            {
-              /*  blow the redo stack, we had an actual undoable movement
-               */
-              if (blend_tool->redo_stack)
-                {
-                  g_list_free_full (blend_tool->redo_stack,
-                                    (GDestroyNotify) blend_info_free);
-                  blend_tool->redo_stack = NULL;
-                }
-            }
+    }
 
-          /*  update the undo actions / menu items  */
-          gimp_image_flush (gimp_display_get_image (display));
-        }
+  if (! options->instant)
+    {
+      gimp_blend_tool_editor_end_edit (blend_tool,
+                                       release_type ==
+                                       GIMP_BUTTON_RELEASE_CANCEL);
     }
 }
 
@@ -417,6 +379,31 @@ gimp_blend_tool_motion (GimpTool         *tool,
     {
       gimp_tool_widget_motion (blend_tool->grab_widget, coords, time, state);
     }
+}
+
+static gboolean
+gimp_blend_tool_key_press (GimpTool    *tool,
+                           GdkEventKey *kevent,
+                           GimpDisplay *display)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
+  gboolean       result;
+
+  /* call start_edit() before widget_key_press(), because we need to record the
+   * undo state before widget_key_press() potentially changes it.  note that if
+   * widget_key_press() return FALSE, nothing changes and no undo step is
+   * created.
+   */
+  if (display == draw_tool->display)
+    gimp_blend_tool_editor_start_edit (blend_tool);
+
+  result = GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
+
+  if (display == draw_tool->display)
+    gimp_blend_tool_editor_end_edit (blend_tool, FALSE);
+
+  return result;
 }
 
 static void
@@ -467,80 +454,28 @@ static const gchar *
 gimp_blend_tool_can_undo (GimpTool    *tool,
                           GimpDisplay *display)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-
-  if (! blend_tool->undo_stack)
-    return NULL;
-
-  return _("Blend Step");
+  return gimp_blend_tool_editor_can_undo (GIMP_BLEND_TOOL (tool));
 }
 
 static const gchar *
 gimp_blend_tool_can_redo (GimpTool    *tool,
                           GimpDisplay *display)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-
-  if (! blend_tool->redo_stack)
-    return NULL;
-
-  return _("Blend Step");
+  return gimp_blend_tool_editor_can_redo (GIMP_BLEND_TOOL (tool));
 }
 
 static gboolean
 gimp_blend_tool_undo (GimpTool    *tool,
                       GimpDisplay *display)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  BlendInfo     *info;
-
-  info = blend_info_new (blend_tool->start_x,
-                         blend_tool->start_y,
-                         blend_tool->end_x,
-                         blend_tool->end_y);
-  blend_tool->redo_stack = g_list_prepend (blend_tool->redo_stack, info);
-
-  info = blend_tool->undo_stack->data;
-
-  g_object_set (blend_tool->widget,
-                "x1", info->start_x,
-                "y1", info->start_y,
-                "x2", info->end_x,
-                "y2", info->end_y,
-                NULL);
-
-  blend_tool->undo_stack = g_list_remove (blend_tool->undo_stack, info);
-  blend_info_free (info);
-
-  return TRUE;
+  return gimp_blend_tool_editor_undo (GIMP_BLEND_TOOL (tool));
 }
 
 static gboolean
 gimp_blend_tool_redo (GimpTool    *tool,
                       GimpDisplay *display)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  BlendInfo     *info;
-
-  info = blend_info_new (blend_tool->start_x,
-                         blend_tool->start_y,
-                         blend_tool->end_x,
-                         blend_tool->end_y);
-  blend_tool->undo_stack = g_list_prepend (blend_tool->undo_stack, info);
-
-  info = blend_tool->redo_stack->data;
-
-  g_object_set (blend_tool->widget,
-                "x1", info->start_x,
-                "y1", info->start_y,
-                "x2", info->end_x,
-                "y2", info->end_y,
-                NULL);
-
-  blend_tool->redo_stack = g_list_remove (blend_tool->redo_stack, info);
-  blend_info_free (info);
-
-  return TRUE;
+  return gimp_blend_tool_editor_redo (GIMP_BLEND_TOOL (tool));
 }
 
 static void
@@ -691,20 +626,6 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
       gimp_tool_control_pop_preserve (tool->control);
 
       gimp_image_flush (gimp_display_get_image (tool->display));
-    }
-
-  if (blend_tool->undo_stack)
-    {
-      g_list_free_full (blend_tool->undo_stack,
-                        (GDestroyNotify) blend_info_free);
-      blend_tool->undo_stack = NULL;
-    }
-
-  if (blend_tool->redo_stack)
-    {
-      g_list_free_full (blend_tool->redo_stack,
-                        (GDestroyNotify) blend_info_free);
-      blend_tool->redo_stack = NULL;
     }
 
   if (tool->display)
@@ -1023,28 +944,6 @@ gimp_blend_tool_filter_flush (GimpDrawableFilter *filter,
   GimpImage *image = gimp_display_get_image (tool->display);
 
   gimp_projection_flush (gimp_image_get_projection (image));
-}
-
-static BlendInfo *
-blend_info_new (gdouble start_x,
-                gdouble start_y,
-                gdouble end_x,
-                gdouble end_y)
-{
-  BlendInfo *info = g_slice_new0 (BlendInfo);
-
-  info->start_x = start_x;
-  info->start_y = start_y;
-  info->end_x   = end_x;
-  info->end_y   = end_y;
-
-  return info;
-}
-
-static void
-blend_info_free (BlendInfo *info)
-{
-  g_slice_free (BlendInfo, info);
 }
 
 

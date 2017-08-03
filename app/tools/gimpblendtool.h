@@ -47,9 +47,6 @@ struct _GimpBlendTool
   gdouble             end_x;      /*  ending x coord    */
   gdouble             end_y;      /*  ending y coord    */
 
-  GList              *undo_stack;
-  GList              *redo_stack;
-
   GimpToolWidget     *widget;
   GimpToolWidget     *grab_widget;
 
@@ -66,6 +63,12 @@ struct _GimpBlendTool
   /*  editor  */
 
   gint                block_handlers_count;
+
+  gint                edit_count;
+  GSList             *undo_stack;
+  GSList             *redo_stack;
+
+  guint               flush_idle_id;
 
   GimpToolGui        *gui;
   GtkWidget          *endpoint_editor;

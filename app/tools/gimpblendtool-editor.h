@@ -19,18 +19,28 @@
 #define  __GIMP_BLEND_TOOL_EDITOR_H__
 
 
-void   gimp_blend_tool_editor_options_notify   (GimpBlendTool    *blend_tool,
-                                                GimpToolOptions  *options,
-                                                const GParamSpec *pspec);
+void          gimp_blend_tool_editor_options_notify   (GimpBlendTool    *blend_tool,
+                                                       GimpToolOptions  *options,
+                                                       const GParamSpec *pspec);
 
-void   gimp_blend_tool_editor_start            (GimpBlendTool    *blend_tool);
-void   gimp_blend_tool_editor_halt             (GimpBlendTool    *blend_tool);
+void          gimp_blend_tool_editor_start            (GimpBlendTool    *blend_tool);
+void          gimp_blend_tool_editor_halt             (GimpBlendTool    *blend_tool);
 
-void   gimp_blend_tool_editor_line_changed     (GimpBlendTool    *blend_tool);
+void          gimp_blend_tool_editor_line_changed     (GimpBlendTool    *blend_tool);
 
-void   gimp_blend_tool_editor_gradient_dirty   (GimpBlendTool    *blend_tool);
+void          gimp_blend_tool_editor_gradient_dirty   (GimpBlendTool    *blend_tool);
 
-void   gimp_blend_tool_editor_gradient_changed (GimpBlendTool    *blend_tool);
+void          gimp_blend_tool_editor_gradient_changed (GimpBlendTool    *blend_tool);
+
+const gchar * gimp_blend_tool_editor_can_undo         (GimpBlendTool    *blend_tool);
+const gchar * gimp_blend_tool_editor_can_redo         (GimpBlendTool    *blend_tool);
+
+gboolean      gimp_blend_tool_editor_undo             (GimpBlendTool    *blend_tool);
+gboolean      gimp_blend_tool_editor_redo             (GimpBlendTool    *blend_tool);
+
+void          gimp_blend_tool_editor_start_edit       (GimpBlendTool    *blend_tool);
+void          gimp_blend_tool_editor_end_edit         (GimpBlendTool    *blend_tool,
+                                                       gboolean          cancel);
 
 
 #endif  /*  __GIMP_BLEND_TOOL_EDITOR_H__  */
