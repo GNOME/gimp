@@ -1627,6 +1627,8 @@ export_callback (GtkAction       *action,
       gtk_container_foreach (GTK_CONTAINER (priv->upper_bar),
                              (GtkCallback) gtk_widget_set_sensitive,
                              GINT_TO_POINTER (TRUE));
+      /* Set the progression bar to its position message. */
+      show_playing_progress (dialog);
     }
   else
     {
