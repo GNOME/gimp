@@ -28,6 +28,8 @@ void          gimp_blend_tool_editor_halt             (GimpBlendTool    *blend_t
 
 void          gimp_blend_tool_editor_line_changed     (GimpBlendTool    *blend_tool);
 
+void          gimp_blend_tool_editor_fg_bg_changed    (GimpBlendTool    *blend_tool);
+
 void          gimp_blend_tool_editor_gradient_dirty   (GimpBlendTool    *blend_tool);
 
 void          gimp_blend_tool_editor_gradient_changed (GimpBlendTool    *blend_tool);

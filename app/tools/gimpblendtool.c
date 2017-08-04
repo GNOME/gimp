@@ -121,6 +121,8 @@ static void   gimp_blend_tool_precalc_shapeburst  (GimpBlendTool         *blend_
 static void   gimp_blend_tool_create_graph        (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_update_graph        (GimpBlendTool         *blend_tool);
 
+static void   gimp_blend_tool_fg_bg_changed       (GimpBlendTool         *blend_tool);
+
 static void   gimp_blend_tool_gradient_dirty      (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_set_gradient        (GimpBlendTool         *blend_tool,
                                                    GimpGradient          *gradient);
@@ -297,8 +299,7 @@ gimp_blend_tool_button_press (GimpTool            *tool,
                               GimpButtonPressType  press_type,
                               GimpDisplay         *display)
 {
-  GimpBlendTool    *blend_tool = GIMP_BLEND_TOOL (tool);
-  GimpBlendOptions *options    = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
   if (tool->display && display != tool->display)
     gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
@@ -577,6 +578,13 @@ gimp_blend_tool_start (GimpBlendTool    *blend_tool,
                     G_CALLBACK (gimp_blend_tool_line_response),
                     blend_tool);
 
+  g_signal_connect_swapped (context, "background-changed",
+                            G_CALLBACK (gimp_blend_tool_fg_bg_changed),
+                            blend_tool);
+  g_signal_connect_swapped (context, "foreground-changed",
+                            G_CALLBACK (gimp_blend_tool_fg_bg_changed),
+                            blend_tool);
+
   gimp_blend_tool_create_filter (blend_tool, drawable);
 
   /* Initially sync all of the properties */
@@ -599,6 +607,7 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 {
   GimpTool         *tool    = GIMP_TOOL (blend_tool);
   GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpContext      *context = GIMP_CONTEXT (options);
 
   gimp_blend_tool_editor_halt (blend_tool);
 
@@ -627,6 +636,10 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
+
+  g_signal_handlers_disconnect_by_func (context,
+                                        G_CALLBACK (gimp_blend_tool_fg_bg_changed),
+                                        blend_tool);
 
   if (tool->display)
     gimp_tool_pop_status (tool, tool->display);
@@ -828,6 +841,26 @@ gimp_blend_tool_update_graph (GimpBlendTool *blend_tool)
 }
 
 static void
+gimp_blend_tool_fg_bg_changed (GimpBlendTool *blend_tool)
+{
+  if (! blend_tool->filter || ! blend_tool->gradient)
+    return;
+
+  if (gimp_gradient_has_fg_bg_segments (blend_tool->gradient))
+    {
+      /* Set a property on the node. Otherwise it will cache and refuse to update */
+      gegl_node_set (blend_tool->render_node,
+                     "gradient", blend_tool->gradient,
+                     NULL);
+
+      /* Update the filter */
+      gimp_drawable_filter_apply (blend_tool->filter, NULL);
+
+      gimp_blend_tool_editor_fg_bg_changed (blend_tool);
+    }
+}
+
+static void
 gimp_blend_tool_gradient_dirty (GimpBlendTool *blend_tool)
 {
   if (! blend_tool->filter)
@@ -851,15 +884,9 @@ static void
 gimp_blend_tool_set_gradient (GimpBlendTool *blend_tool,
                               GimpGradient  *gradient)
 {
-  GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
-  GimpContext      *context = GIMP_CONTEXT (options);
-
   if (blend_tool->gradient)
     {
       g_signal_handlers_disconnect_by_func (blend_tool->gradient,
-                                            G_CALLBACK (gimp_blend_tool_gradient_dirty),
-                                            blend_tool);
-      g_signal_handlers_disconnect_by_func (context,
                                             G_CALLBACK (gimp_blend_tool_gradient_dirty),
                                             blend_tool);
 
@@ -875,16 +902,6 @@ gimp_blend_tool_set_gradient (GimpBlendTool *blend_tool,
       g_signal_connect_swapped (blend_tool->gradient, "dirty",
                                 G_CALLBACK (gimp_blend_tool_gradient_dirty),
                                 blend_tool);
-
-      if (gimp_gradient_has_fg_bg_segments (blend_tool->gradient))
-        {
-          g_signal_connect_swapped (context, "background-changed",
-                                    G_CALLBACK (gimp_blend_tool_gradient_dirty),
-                                    blend_tool);
-          g_signal_connect_swapped (context, "foreground-changed",
-                                    G_CALLBACK (gimp_blend_tool_gradient_dirty),
-                                    blend_tool);
-        }
 
       if (blend_tool->render_node)
         gegl_node_set (blend_tool->render_node,
