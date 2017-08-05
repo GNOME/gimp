@@ -71,15 +71,9 @@ void              gimp_tile_handler_validate_assign     (GimpTileHandlerValidate
                                                          GeglBuffer                *buffer);
 
 void              gimp_tile_handler_validate_invalidate (GimpTileHandlerValidate *validate,
-                                                         gint                     x,
-                                                         gint                     y,
-                                                         gint                     width,
-                                                         gint                     height);
+                                                         GeglRectangle           *rect);
 void         gimp_tile_handler_validate_undo_invalidate (GimpTileHandlerValidate *validate,
-                                                         gint                     x,
-                                                         gint                     y,
-                                                         gint                     width,
-                                                         gint                     height);
+                                                         GeglRectangle           *rect);
 
 
 G_END_DECLS

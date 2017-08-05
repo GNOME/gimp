@@ -361,24 +361,23 @@ gimp_tile_handler_validate_assign (GimpTileHandlerValidate *validate,
 
 void
 gimp_tile_handler_validate_invalidate (GimpTileHandlerValidate *validate,
-                                       gint                     x,
-                                       gint                     y,
-                                       gint                     width,
-                                       gint                     height)
+                                       GeglRectangle           *rect)
 {
-  cairo_rectangle_int_t rect = { x, y, width, height };
-
   g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
+  g_return_if_fail (rect != NULL);
 
-  cairo_region_union_rectangle (validate->dirty_region, &rect);
+  cairo_region_union_rectangle (validate->dirty_region,
+                                (cairo_rectangle_int_t *) rect);
 
   if (validate->max_z > 0)
     {
       GeglTileSource *source  = GEGL_TILE_SOURCE (validate);
-      gint            tile_x1 = x / validate->tile_width;
-      gint            tile_y1 = y / validate->tile_height;
-      gint            tile_x2 = (x + width  - 1) / validate->tile_width + 1;
-      gint            tile_y2 = (y + height - 1) / validate->tile_height + 1;
+      gint            tile_x1 = rect->x / validate->tile_width;
+      gint            tile_y1 = rect->y / validate->tile_height;
+      gint            tile_x2 = (rect->x + rect->width  - 1) /
+                                validate->tile_width + 1;
+      gint            tile_y2 = (rect->y + rect->height - 1) /
+                                validate->tile_height + 1;
       gint            tile_x;
       gint            tile_y;
       gint            tile_z;
@@ -399,14 +398,11 @@ gimp_tile_handler_validate_invalidate (GimpTileHandlerValidate *validate,
 
 void
 gimp_tile_handler_validate_undo_invalidate (GimpTileHandlerValidate *validate,
-                                            gint                     x,
-                                            gint                     y,
-                                            gint                     width,
-                                            gint                     height)
+                                            GeglRectangle           *rect)
 {
-  cairo_rectangle_int_t rect = { x, y, width, height };
-
   g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
+  g_return_if_fail (rect != NULL);
 
-  cairo_region_subtract_rectangle (validate->dirty_region, &rect);
+  cairo_region_subtract_rectangle (validate->dirty_region,
+                                   (cairo_rectangle_int_t *) rect);
 }

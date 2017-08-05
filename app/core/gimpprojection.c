@@ -943,14 +943,14 @@ gimp_projection_paint_area (GimpProjection *proj,
     {
       if (proj->priv->validate_handler)
         gimp_tile_handler_validate_invalidate (proj->priv->validate_handler,
-                                               x, y, w, h);
+                                               GEGL_RECTANGLE (x, y, w, h));
       if (now)
         {
           GeglNode *graph = gimp_projectable_get_graph (proj->priv->projectable);
 
           if (proj->priv->validate_handler)
             gimp_tile_handler_validate_undo_invalidate (proj->priv->validate_handler,
-                                                        x, y, w, h);
+                                                        GEGL_RECTANGLE (x, y, w, h));
 
           gegl_node_blit_buffer (graph, proj->priv->buffer,
                                  GEGL_RECTANGLE (x, y, w, h), 0, GEGL_ABYSS_NONE);

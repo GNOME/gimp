@@ -1856,9 +1856,9 @@ gradient_map_new (GimpPickable *pickable)
                                      buffer);
 
   gimp_tile_handler_validate_invalidate (GIMP_TILE_HANDLER_VALIDATE (handler),
-                                         0, 0,
-                                         gegl_buffer_get_width  (buffer),
-                                         gegl_buffer_get_height (buffer));
+                                         GEGL_RECTANGLE (0, 0,
+                                                         gegl_buffer_get_width  (buffer),
+                                                         gegl_buffer_get_height (buffer)));
 
   g_object_unref (handler);
 
