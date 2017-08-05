@@ -361,7 +361,7 @@ gimp_tile_handler_validate_assign (GimpTileHandlerValidate *validate,
 
 void
 gimp_tile_handler_validate_invalidate (GimpTileHandlerValidate *validate,
-                                       GeglRectangle           *rect)
+                                       const GeglRectangle     *rect)
 {
   g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
   g_return_if_fail (rect != NULL);
@@ -398,7 +398,7 @@ gimp_tile_handler_validate_invalidate (GimpTileHandlerValidate *validate,
 
 void
 gimp_tile_handler_validate_undo_invalidate (GimpTileHandlerValidate *validate,
-                                            GeglRectangle           *rect)
+                                            const GeglRectangle     *rect)
 {
   g_return_if_fail (GIMP_IS_TILE_HANDLER_VALIDATE (validate));
   g_return_if_fail (rect != NULL);
