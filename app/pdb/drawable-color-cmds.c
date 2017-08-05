@@ -418,7 +418,7 @@ drawable_histogram_invoker (GimpProcedure         *procedure,
             linear = FALSE;
 
           histogram = gimp_histogram_new (linear);
-          gimp_drawable_calculate_histogram (drawable, histogram);
+          gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
 
           n_bins = gimp_histogram_n_bins (histogram);
 

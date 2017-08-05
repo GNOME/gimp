@@ -39,7 +39,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
 {
   GimpImage     *image;
   GimpChannel   *selection;
-  GimpHistogram *hist;
+  GimpHistogram *histogram;
   GeglNode      *equalize;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -48,12 +48,12 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
   selection = gimp_image_get_mask (image);
 
-  hist = gimp_histogram_new (FALSE);
-  gimp_drawable_calculate_histogram (drawable, hist);
+  histogram = gimp_histogram_new (FALSE);
+  gimp_drawable_calculate_histogram (drawable, histogram, FALSE);
 
   equalize = gegl_node_new_child (NULL,
                                   "operation", "gimp:equalize",
-                                  "histogram", hist,
+                                  "histogram", histogram,
                                   NULL);
 
   if (! mask_only)
@@ -67,5 +67,5 @@ gimp_drawable_equalize (GimpDrawable *drawable,
     gimp_selection_resume (GIMP_SELECTION (selection));
 
   g_object_unref (equalize);
-  g_object_unref (hist);
+  g_object_unref (histogram);
 }

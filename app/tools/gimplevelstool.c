@@ -191,7 +191,7 @@ gimp_levels_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_drawable_calculate_histogram (drawable, l_tool->histogram);
+  gimp_drawable_calculate_histogram (drawable, l_tool->histogram, FALSE);
   gimp_histogram_view_set_histogram (GIMP_HISTOGRAM_VIEW (l_tool->histogram_view),
                                      l_tool->histogram);
 

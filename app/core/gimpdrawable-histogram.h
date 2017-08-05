@@ -22,7 +22,8 @@
 
 
 void   gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
-                                          GimpHistogram *histogram);
+                                          GimpHistogram *histogram,
+                                          gboolean       with_filters);
 
 
 #endif /* __GIMP_HISTOGRAM_H__ */

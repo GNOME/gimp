@@ -133,12 +133,7 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
       N_("Percentile:")
     };
 
-  editor->drawable     = NULL;
-  editor->histogram    = NULL;
-  editor->bg_histogram = NULL;
-  editor->valid        = FALSE;
-  editor->idle_id      = 0;
-  editor->box          = gimp_histogram_box_new ();
+  editor->box = gimp_histogram_box_new ();
 
   gimp_editor_set_show_name (GIMP_EDITOR (editor), TRUE);
 
@@ -481,7 +476,8 @@ gimp_histogram_editor_validate (GimpHistogramEditor *editor)
             }
 
           gimp_drawable_calculate_histogram (editor->drawable,
-                                             editor->histogram);
+                                             editor->histogram,
+                                             TRUE);
         }
       else
         {

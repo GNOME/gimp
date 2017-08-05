@@ -142,7 +142,7 @@ gimp_threshold_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  gimp_drawable_calculate_histogram (drawable, t_tool->histogram);
+  gimp_drawable_calculate_histogram (drawable, t_tool->histogram, FALSE);
   gimp_histogram_view_set_histogram (t_tool->histogram_box->view,
                                      t_tool->histogram);
 

@@ -19,14 +19,17 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "core-types.h"
 
 #include "gegl/gimp-gegl-nodes.h"
+#include "gegl/gimptilehandlervalidate.h"
 
 #include "gimpchannel.h"
+#include "gimpdrawable-filters.h"
 #include "gimpdrawable-histogram.h"
 #include "gimphistogram.h"
 #include "gimpimage.h"
@@ -34,7 +37,8 @@
 
 void
 gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
-                                   GimpHistogram *histogram)
+                                   GimpHistogram *histogram,
+                                   gboolean       with_filters)
 {
   GimpImage   *image;
   GimpChannel *mask;
@@ -53,14 +57,21 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
   if (FALSE)
     {
       GeglNode      *node = gegl_node_new ();
-      GeglNode      *buffer_source;
+      GeglNode      *source;
       GeglNode      *histogram_sink;
       GeglProcessor *processor;
 
-      buffer_source =
-        gimp_gegl_add_buffer_source (node,
-                                     gimp_drawable_get_buffer (drawable),
-                                     0, 0);
+      if (with_filters)
+        {
+          source = gimp_drawable_get_source_node (drawable);
+        }
+      else
+        {
+          source =
+            gimp_gegl_add_buffer_source (node,
+                                         gimp_drawable_get_buffer (drawable),
+                                         0, 0);
+        }
 
       histogram_sink =
         gegl_node_new_child (node,
@@ -68,7 +79,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
                              "histogram", histogram,
                              NULL);
 
-      gegl_node_connect_to (buffer_source,  "output",
+      gegl_node_connect_to (source,         "output",
                             histogram_sink, "input");
 
       if (! gimp_channel_is_empty (mask))
@@ -99,14 +110,50 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
     }
   else
     {
+      GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
+
+      if (with_filters && gimp_drawable_has_filters (drawable))
+        {
+          GimpTileHandlerValidate *validate;
+          GeglNode                *node;
+
+          node = gimp_drawable_get_source_node (drawable);
+
+          buffer = gegl_buffer_new (gegl_buffer_get_extent (buffer),
+                                    gegl_buffer_get_format (buffer));
+
+          validate =
+            GIMP_TILE_HANDLER_VALIDATE (gimp_tile_handler_validate_new (node));
+
+          gimp_tile_handler_validate_assign (validate, buffer);
+
+          g_object_unref (validate);
+
+          gimp_tile_handler_validate_invalidate (validate,
+                                                 gegl_buffer_get_extent (buffer));
+
+#if 0
+          /*  this would keep the buffer updated across drawable or
+           *  filter changes, but the histogram is created in one go
+           *  and doesn't need the signal connection
+           */
+          g_signal_connect_object (node, "invalidated",
+                                   G_CALLBACK (gimp_tile_handler_validate_invalidate),
+                                   validate, G_CONNECT_SWAPPED);
+#endif
+        }
+      else
+        {
+          g_object_ref (buffer);
+        }
+
       if (! gimp_channel_is_empty (mask))
         {
           gint off_x, off_y;
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-          gimp_histogram_calculate (histogram,
-                                    gimp_drawable_get_buffer (drawable),
+          gimp_histogram_calculate (histogram, buffer,
                                     GEGL_RECTANGLE (x, y, width, height),
                                     gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                                     GEGL_RECTANGLE (x + off_x, y + off_y,
@@ -114,10 +161,11 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
         }
       else
         {
-          gimp_histogram_calculate (histogram,
-                                    gimp_drawable_get_buffer (drawable),
+          gimp_histogram_calculate (histogram, buffer,
                                     GEGL_RECTANGLE (x, y, width, height),
                                     NULL, NULL);
         }
+
+      g_object_unref (buffer);
     }
 }
