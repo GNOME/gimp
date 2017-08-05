@@ -48,6 +48,26 @@ gimp_drawable_get_filters (GimpDrawable *drawable)
   return drawable->private->filter_stack;
 }
 
+gboolean
+gimp_drawable_has_filters (GimpDrawable *drawable)
+{
+  GList *list;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
+  for (list = GIMP_LIST (drawable->private->filter_stack)->queue->head;
+       list;
+       list = g_list_next (list))
+    {
+      GimpFilter *filter = list->data;
+
+      if (gimp_filter_is_visible (filter))
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 void
 gimp_drawable_add_filter (GimpDrawable *drawable,
                           GimpFilter   *filter)

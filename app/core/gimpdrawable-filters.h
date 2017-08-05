@@ -23,6 +23,8 @@
 
 GimpContainer * gimp_drawable_get_filters   (GimpDrawable *drawable);
 
+gboolean        gimp_drawable_has_filters   (GimpDrawable *drawable);
+
 void            gimp_drawable_add_filter    (GimpDrawable *drawable,
                                              GimpFilter   *filter);
 void            gimp_drawable_remove_filter (GimpDrawable *drawable,
