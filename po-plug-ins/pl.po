@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-30 16:04+0200\n"
-"PO-Revision-Date: 2017-07-30 16:05+0200\n"
+"POT-Creation-Date: 2017-08-06 15:48+0200\n"
+"PO-Revision-Date: 2017-08-06 15:49+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -53,7 +53,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/file-cel.c:934 ../plug-ins/common/file-gif-save.c:1089
 #: ../plug-ins/common/file-pdf-load.c:1089
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3421
-#: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/file-svg.c:726
+#: ../plug-ins/common/file-raw-data.c:1552 ../plug-ins/common/file-svg.c:726
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:646 ../plug-ins/common/hot.c:593
@@ -441,7 +441,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:452 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1162
+#: ../plug-ins/common/file-raw-data.c:1160
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:258 ../plug-ins/common/tile.c:354
@@ -817,7 +817,7 @@ msgstr "Losowe ziarno"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:935
-#: ../plug-ins/common/file-raw-data.c:1555 ../plug-ins/common/qbist.c:724
+#: ../plug-ins/common/file-raw-data.c:1553 ../plug-ins/common/qbist.c:724
 #: ../plug-ins/common/qbist.c:888 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870 ../plug-ins/flame/flame.c:475
@@ -1016,7 +1016,7 @@ msgstr "Wykres bieżących ustawień"
 #: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/gfig/gfig-dialog.c:1245
 #: ../plug-ins/gfig/gfig-dialog.c:1393
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
-#: ../plug-ins/metadata/metadata-viewer.c:224
+#: ../plug-ins/metadata/metadata-viewer.c:227
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -1032,8 +1032,8 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:852
 #: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1560
-#: ../plug-ins/common/file-raw-data.c:977
-#: ../plug-ins/common/file-raw-data.c:1005 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-raw-data.c:975
+#: ../plug-ins/common/file-raw-data.c:1003 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1475
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
@@ -1064,8 +1064,8 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:913
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3370
-#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:374
-#: ../plug-ins/common/file-raw-data.c:1086 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:372
+#: ../plug-ins/common/file-raw-data.c:1084 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:710
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:841
@@ -1345,7 +1345,7 @@ msgid "_Redness cr709:"
 msgstr "_Czerwień cr709:"
 
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1602
+#: ../plug-ins/common/file-raw-data.c:1600
 msgid "RGB"
 msgstr "RGB"
 
@@ -1951,7 +1951,7 @@ msgstr "2. źródło:"
 msgid "O_verlap:"
 msgstr "_Nakładanie:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1630
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1628
 msgid "O_ffset:"
 msgstr "Prz_esunięcie:"
 
@@ -2020,7 +2020,7 @@ msgstr "Usunięcie pasków"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3496 ../plug-ins/common/file-ps.c:3701
-#: ../plug-ins/common/file-raw-data.c:1643
+#: ../plug-ins/common/file-raw-data.c:1641
 #: ../plug-ins/common/smooth-palette.c:453 ../plug-ins/common/tile.c:464
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2188,7 +2188,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:1079 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:1077 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
@@ -2743,7 +2743,7 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "Szerokość każdej komórki. Liczba lub procent."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3509
-#: ../plug-ins/common/file-ps.c:3713 ../plug-ins/common/file-raw-data.c:1659
+#: ../plug-ins/common/file-ps.c:3713 ../plug-ins/common/file-raw-data.c:1657
 #: ../plug-ins/common/film.c:1006 ../plug-ins/common/smooth-palette.c:458
 #: ../plug-ins/common/tile.c:468 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -2951,7 +2951,7 @@ msgstr "Domyślna przerwa między klatkami:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1546
-#: ../plug-ins/file-webp/file-webp-dialog.c:306
+#: ../plug-ins/file-webp/file-webp-dialog.c:349
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "ms"
@@ -3272,13 +3272,13 @@ msgstr "Błąd podczas tworzenia struktur zapisu PNG podczas eksportowania „%s
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Błąd podczas eksportowania pliku „%s”. Nie można wyeksportować obrazu."
 
-#: ../plug-ins/common/file-png.c:2338 ../plug-ins/common/file-raw-data.c:1785
+#: ../plug-ins/common/file-png.c:2338 ../plug-ins/common/file-raw-data.c:1783
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku interfejsu użytkownika „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:1786
+#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:1784
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Nieznany błąd"
@@ -3570,103 +3570,103 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: ../plug-ins/common/file-raw-data.c:253
-#: ../plug-ins/common/file-raw-data.c:268
-#: ../plug-ins/common/file-raw-data.c:283
+#: ../plug-ins/common/file-raw-data.c:269
+#: ../plug-ins/common/file-raw-data.c:281
 msgid "Raw image data"
 msgstr "Dane obrazu Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1550
+#: ../plug-ins/common/file-raw-data.c:1548
 msgid "Load Image from Raw Data"
 msgstr "Wczytanie obrazu z danych Raw"
 
-#: ../plug-ins/common/file-raw-data.c:1592
+#: ../plug-ins/common/file-raw-data.c:1590
 msgid "Image"
 msgstr "Obraz"
 
-#: ../plug-ins/common/file-raw-data.c:1603
+#: ../plug-ins/common/file-raw-data.c:1601
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1604
+#: ../plug-ins/common/file-raw-data.c:1602
 msgid "RGB565 Big Endian"
 msgstr "RGB565 (Big Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1605
+#: ../plug-ins/common/file-raw-data.c:1603
 msgid "RGB565 Little Endian"
 msgstr "RGB565 (Little Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1606
+#: ../plug-ins/common/file-raw-data.c:1604
 msgid "BGR565 Big Endian"
 msgstr "BGR565 (Big Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1607
+#: ../plug-ins/common/file-raw-data.c:1605
 msgid "BGR565 Little Endian"
 msgstr "BGR565 (Little Endian)"
 
-#: ../plug-ins/common/file-raw-data.c:1608
+#: ../plug-ins/common/file-raw-data.c:1606
 msgid "Planar RGB"
 msgstr "Płaski RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1609
+#: ../plug-ins/common/file-raw-data.c:1607
 msgid "B&W 1 bit"
 msgstr "Czarno-biały (1-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1610
+#: ../plug-ins/common/file-raw-data.c:1608
 msgid "Gray 2 bit"
 msgstr "Szary (2-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1611
+#: ../plug-ins/common/file-raw-data.c:1609
 msgid "Gray 4 bit"
 msgstr "Szary (4-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1612
+#: ../plug-ins/common/file-raw-data.c:1610
 msgid "Gray 8 bit"
 msgstr "Szary (8-bitowy)"
 
-#: ../plug-ins/common/file-raw-data.c:1613
+#: ../plug-ins/common/file-raw-data.c:1611
 msgid "Indexed"
 msgstr "Zindeksowany"
 
-#: ../plug-ins/common/file-raw-data.c:1614
+#: ../plug-ins/common/file-raw-data.c:1612
 msgid "Indexed Alpha"
 msgstr "Zindeksowana alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1619
+#: ../plug-ins/common/file-raw-data.c:1617
 msgid "Image _Type:"
 msgstr "_Typ obrazu:"
 
-#: ../plug-ins/common/file-raw-data.c:1675
+#: ../plug-ins/common/file-raw-data.c:1673
 msgid "Palette"
 msgstr "Deseń"
 
-#: ../plug-ins/common/file-raw-data.c:1685
+#: ../plug-ins/common/file-raw-data.c:1683
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
 msgid "R, G, B (normal)"
 msgstr "R, G, B (zwykły)"
 
-#: ../plug-ins/common/file-raw-data.c:1686
+#: ../plug-ins/common/file-raw-data.c:1684
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (format BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1691
+#: ../plug-ins/common/file-raw-data.c:1689
 msgid "_Palette Type:"
 msgstr "Typ _desenia:"
 
-#: ../plug-ins/common/file-raw-data.c:1702
+#: ../plug-ins/common/file-raw-data.c:1700
 msgid "Off_set:"
 msgstr "Prze_sunięcie:"
 
-#: ../plug-ins/common/file-raw-data.c:1714
+#: ../plug-ins/common/file-raw-data.c:1712
 msgid "Select Palette File"
 msgstr "Wybór pliku desenia"
 
-#: ../plug-ins/common/file-raw-data.c:1720
+#: ../plug-ins/common/file-raw-data.c:1718
 msgid "Pal_ette File:"
 msgstr "Plik d_esenia:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:1769
+#: ../plug-ins/common/file-raw-data.c:1767
 msgid "Raw Image"
 msgstr "Obraz Raw"
 
@@ -6535,8 +6535,8 @@ msgstr ""
 #. Advanced Options
 #. Advanced options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
-#: ../plug-ins/file-webp/file-webp-dialog.c:194
-#: ../plug-ins/file-webp/file-webp-dialog.c:323
+#: ../plug-ins/file-webp/file-webp-dialog.c:220
+#: ../plug-ins/file-webp/file-webp-dialog.c:366
 msgid "_Advanced Options"
 msgstr "Ustawienia za_awansowane"
 
@@ -6802,7 +6802,7 @@ msgstr "_Przyrostowy"
 
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
-#: ../plug-ins/file-webp/file-webp-dialog.c:340
+#: ../plug-ins/file-webp/file-webp-dialog.c:383
 msgid "Save _Exif data"
 msgstr "Zapisanie danych _Exif"
 
@@ -6812,7 +6812,7 @@ msgstr "Zapisanie _miniatury"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
-#: ../plug-ins/file-webp/file-webp-dialog.c:350
+#: ../plug-ins/file-webp/file-webp-dialog.c:393
 msgid "Save _XMP data"
 msgstr "Zapisanie danych _XMP"
 
@@ -7033,103 +7033,103 @@ msgstr "Nieoczekiwany koniec pliku"
 msgid "Photoshop image"
 msgstr "Obraz programu Photoshop"
 
-#: ../plug-ins/file-raw/file-formats.h:46
+#: ../plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
 msgstr "Obraz Raw firmy Canon"
 
-#: ../plug-ins/file-raw/file-formats.h:58
+#: ../plug-ins/file-raw/file-raw-formats.h:58
 msgid "Raw Nikon"
 msgstr "Obraz Raw firmy Nikon"
 
-#: ../plug-ins/file-raw/file-formats.h:69
+#: ../plug-ins/file-raw/file-raw-formats.h:69
 msgid "Raw Hasselblad"
 msgstr "Obraz Raw firmy Hasselblad"
 
-#: ../plug-ins/file-raw/file-formats.h:80
+#: ../plug-ins/file-raw/file-raw-formats.h:80
 msgid "Raw Sony"
 msgstr "Obraz Raw firmy Sony"
 
-#: ../plug-ins/file-raw/file-formats.h:91
+#: ../plug-ins/file-raw/file-raw-formats.h:91
 msgid "Raw Casio BAY"
 msgstr "Obraz Raw BAY firmy Casio"
 
-#: ../plug-ins/file-raw/file-formats.h:102
+#: ../plug-ins/file-raw/file-raw-formats.h:102
 msgid "Raw Phantom Software CINE"
 msgstr "Obraz Raw CINE firmy Phantom Software"
 
-#: ../plug-ins/file-raw/file-formats.h:113
+#: ../plug-ins/file-raw/file-raw-formats.h:113
 msgid "Raw Sinar"
 msgstr "Obraz Raw firmy Sinar"
 
-#: ../plug-ins/file-raw/file-formats.h:124
+#: ../plug-ins/file-raw/file-raw-formats.h:124
 msgid "Raw Kodak"
 msgstr "Obraz Raw firmy Kodak"
 
-#: ../plug-ins/file-raw/file-formats.h:135
+#: ../plug-ins/file-raw/file-raw-formats.h:135
 msgid "Raw Adobe DNG Digital Negative"
 msgstr "Cyfrowy negatyw Raw DNG firmy Adobe"
 
-#: ../plug-ins/file-raw/file-formats.h:146
+#: ../plug-ins/file-raw/file-raw-formats.h:146
 msgid "Raw Epson ERF"
 msgstr "Obraz Raw ERF firmy Epson"
 
-#: ../plug-ins/file-raw/file-formats.h:157
+#: ../plug-ins/file-raw/file-raw-formats.h:157
 msgid "Raw Phase One"
 msgstr "Obraz Raw firmy Phase One"
 
-#: ../plug-ins/file-raw/file-formats.h:168
+#: ../plug-ins/file-raw/file-raw-formats.h:168
 msgid "Raw Minolta"
 msgstr "Obraz Raw firmy Minolta"
 
-#: ../plug-ins/file-raw/file-formats.h:179
+#: ../plug-ins/file-raw/file-raw-formats.h:179
 msgid "Raw Mamiya MEF"
 msgstr "Obraz Raw MEF firmy Mamiya"
 
-#: ../plug-ins/file-raw/file-formats.h:189
+#: ../plug-ins/file-raw/file-raw-formats.h:189
 msgid "Raw Leaf MOS"
 msgstr "Obraz Raw MOS firmy Leaf"
 
-#: ../plug-ins/file-raw/file-formats.h:200
+#: ../plug-ins/file-raw/file-raw-formats.h:200
 msgid "Raw Olympus ORF"
 msgstr "Obraz Raw ORF firmy Olympus"
 
-#: ../plug-ins/file-raw/file-formats.h:211
+#: ../plug-ins/file-raw/file-raw-formats.h:211
 msgid "Raw Pentax PEF"
 msgstr "Obraz Raw PEF firmy Pentax"
 
-#: ../plug-ins/file-raw/file-formats.h:222
+#: ../plug-ins/file-raw/file-raw-formats.h:222
 msgid "Raw Logitech PXN"
 msgstr "Obraz Raw PXN firmy Logitech"
 
-#: ../plug-ins/file-raw/file-formats.h:233
+#: ../plug-ins/file-raw/file-raw-formats.h:233
 msgid "Raw Apple QuickTake QTK"
 msgstr "Obraz Raw QTK QuickTake firmy Apple"
 
-#: ../plug-ins/file-raw/file-formats.h:244
+#: ../plug-ins/file-raw/file-raw-formats.h:244
 msgid "Raw Fujifilm RAF"
 msgstr "Obraz Raw RAF firmy Fujifilm"
 
-#: ../plug-ins/file-raw/file-formats.h:255
+#: ../plug-ins/file-raw/file-raw-formats.h:255
 msgid "Raw Panasonic"
 msgstr "Obraz Raw firmy Panasonic"
 
-#: ../plug-ins/file-raw/file-formats.h:266
+#: ../plug-ins/file-raw/file-raw-formats.h:266
 msgid "Raw Digital Foto Maker RDC"
 msgstr "Obraz Raw RDC firmy Digital Foto Maker"
 
-#: ../plug-ins/file-raw/file-formats.h:277
+#: ../plug-ins/file-raw/file-raw-formats.h:277
 msgid "Raw Leica RWL"
 msgstr "Obraz Raw RWL firmy Leica"
 
-#: ../plug-ins/file-raw/file-formats.h:288
+#: ../plug-ins/file-raw/file-raw-formats.h:288
 msgid "Raw Samsung SRW"
 msgstr "Obraz Raw SRW firmy Samsung"
 
-#: ../plug-ins/file-raw/file-formats.h:299
+#: ../plug-ins/file-raw/file-raw-formats.h:299
 msgid "Raw Sigma X3F"
 msgstr "Obraz Raw X3F firmy Sigma"
 
-#: ../plug-ins/file-raw/file-formats.h:310
+#: ../plug-ins/file-raw/file-raw-formats.h:310
 msgid "Raw Arriflex ARI"
 msgstr "Obraz Raw ARI firmy Arriflex"
 
@@ -7300,67 +7300,75 @@ msgstr "Faks CCITT Group _4"
 msgid "WebP image"
 msgstr "Obraz WebP"
 
+#: ../plug-ins/file-webp/file-webp-dialog.c:70
+msgid "(no keyframes)"
+msgstr "(brak klatek kluczowych)"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:74
+msgid "(all frames are keyframes)"
+msgstr "(wszystkie klatki są kluczowe)"
+
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:83
+#: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:100
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
 msgid "Lossless"
 msgstr "Bezstratne"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:116
+#: ../plug-ins/file-webp/file-webp-dialog.c:140
 msgid "Image quality:"
 msgstr "Jakość obrazu:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
+#: ../plug-ins/file-webp/file-webp-dialog.c:148
 msgid "Image quality"
 msgstr "Jakość obrazu"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:135
+#: ../plug-ins/file-webp/file-webp-dialog.c:159
 msgid "Alpha quality:"
 msgstr "Jakość alfy:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:143
+#: ../plug-ins/file-webp/file-webp-dialog.c:167
 msgid "Alpha channel quality"
 msgstr "Jakość kanału alfa"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:168
+#: ../plug-ins/file-webp/file-webp-dialog.c:192
 msgid "Source type:"
 msgstr "Typ źródła:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:171
+#: ../plug-ins/file-webp/file-webp-dialog.c:195
 msgid "WebP encoder \"preset\""
 msgstr "Ustawienia kodera WebP"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:201
+#: ../plug-ins/file-webp/file-webp-dialog.c:227
 msgid "As A_nimation"
 msgstr "Jako a_nimacja"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:230
+#: ../plug-ins/file-webp/file-webp-dialog.c:256
 msgid "Loop forever"
 msgstr "Powtarzanie w nieskończoność"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:247
+#: ../plug-ins/file-webp/file-webp-dialog.c:273
 msgid "Max distance between key-frames:"
 msgstr "Maksymalna odległość między klatkami kluczowymi:"
 
 #. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:265
+#: ../plug-ins/file-webp/file-webp-dialog.c:308
 msgid "Minimize output size (slower)"
 msgstr "Minimalizowanie rozmiaru wyjściowego (wolniejsze)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:288
+#: ../plug-ins/file-webp/file-webp-dialog.c:331
 msgid "Delay between frames where unspecified:"
 msgstr "Opóźnienie między klatkami, jeśli nie podano:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:311
+#: ../plug-ins/file-webp/file-webp-dialog.c:354
 msgid "Use delay entered above for all frames"
 msgstr "Użycie opóźnienia podanego powyżej dla wszystkich klatek"
 
@@ -11822,17 +11830,17 @@ msgstr "Wyświetla metadane (Exif, IPTC, XMP)"
 msgid "View Metadata"
 msgstr "Wyświetl metadane"
 
-#: ../plug-ins/metadata/metadata-viewer.c:217
+#: ../plug-ins/metadata/metadata-viewer.c:220
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Przeglądarka metadanych: %s"
 
-#: ../plug-ins/metadata/metadata-viewer.c:364
+#: ../plug-ins/metadata/metadata-viewer.c:360
 #, c-format
 msgid "(%lu more character(s))"
 msgstr "(więcej znaków: %lu)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:396
+#: ../plug-ins/metadata/metadata-viewer.c:392
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(więcej bajtów: %llu)"
