@@ -47,7 +47,8 @@ Layers and compositing:
   - Layer blending color space and compositing color space are
     configurable now.
   - New layer modes: linear burn, vivid light, linear light, pin light,
-    hard mix, exclusion, merge, split, luminance (rgb).
+    hard mix, exclusion, merge, split, luminance (rgb), pass-through
+    (for layer groups only).
   - Make erase mode an ordinary layer/paint mode.
   - Better performance of HSV-based layer modes.
   - Rename "Color (HSV)" mode to "Color (HSL)" to indicate the actual
@@ -204,7 +205,8 @@ File Formats:
   - Handle linear gamma PNG files correctly, provide a combo box for
     specifying PNG bit depth / variant at exporting time.
   - Add support for linear burn, linear light, vivid light, pin light,
-    and hard mix layer modes in PSD (importing and exporting).
+    hard mix, and pass-through layer modes in PSD (importing and
+    exporting).
   - Load PSD files with layers which contain additional information
     with a length that is not divisible by 4.
   - Add support to import/export layer color tags from/to PSD files.
