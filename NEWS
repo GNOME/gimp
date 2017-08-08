@@ -205,8 +205,7 @@ File Formats:
   - Handle linear gamma PNG files correctly, provide a combo box for
     specifying PNG bit depth / variant at exporting time.
   - Add support for linear burn, linear light, vivid light, pin light,
-    hard mix, and pass-through layer modes in PSD (importing and
-    exporting).
+    and hard mix layer modes in PSD (importing and exporting).
   - Load PSD files with layers which contain additional information
     with a length that is not divisible by 4.
   - Add support to import/export layer color tags from/to PSD files.
