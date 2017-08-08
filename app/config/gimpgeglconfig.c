@@ -134,20 +134,11 @@ gimp_gegl_config_class_init (GimpGeglConfigClass *klass)
 
   n_threads = g_get_num_processors ();
 
-#ifdef GIMP_UNSTABLE
-  n_threads *= 2;
-#endif
-
   max_n_threads =
     G_PARAM_SPEC_INT (g_object_class_find_property (G_OBJECT_GET_CLASS (gegl_config ()),
                                                     "threads"))->maximum;
 
   n_threads = MIN (n_threads, max_n_threads);
-
-#ifdef __GNUC__
-#warning Defaulting # of threads to 1
-#endif
-  n_threads = 1;
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_NUM_PROCESSORS,
                         "num-processors",
