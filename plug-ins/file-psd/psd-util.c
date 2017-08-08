@@ -615,6 +615,9 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
    */
   if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_SRC_ATOP;
 
+  if (g_ascii_strncasecmp (psd_mode, "pass", 4) == 0)           /* Pass through (CS)*/
+      return GIMP_LAYER_MODE_PASS_THROUGH;
+
   if (g_ascii_strncasecmp (psd_mode, "norm", 4) == 0)           /* Normal (ps3) */
     {
       if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
@@ -774,6 +777,11 @@ gimp_to_psd_blend_mode (GimpLayerMode          layer_mode,
 
   switch (layer_mode)
     {
+
+    case GIMP_LAYER_MODE_PASS_THROUGH:
+      psd_mode = g_strndup ("pass", 4);                       /* Pass through (CS) */
+      break;
+
     case GIMP_LAYER_MODE_NORMAL_LEGACY:
       psd_mode = g_strndup ("norm", 4);                       /* Normal (ps3) */
       break;
@@ -984,6 +992,7 @@ gimp_layer_mode_effects_name (GimpLayerMode mode)
     "GRAIN EXTRACT",
     "GRAIN MERGE",
     "COLOR ERASE"
+    "PASS THROUGH"
   };
   static gchar *err_name = NULL;
   if (mode >= 0 && mode <= GIMP_LAYER_MODE_COLOR_ERASE_LEGACY)
