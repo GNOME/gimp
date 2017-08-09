@@ -559,7 +559,6 @@ load_resource_lsct (const PSDlayerres  *res_a,
 
       if (fread (signature,  4, 1, f) < 1 ||
           fread (blend_mode, 4, 1, f) < 1)
-
         {
           psd_set_error (feof (f), errno, error);
           return -1;
@@ -567,7 +566,7 @@ load_resource_lsct (const PSDlayerres  *res_a,
       if (memcmp (signature, "8BIM", 4) == 0)
         {
           memcpy (lyr_a->blend_mode, blend_mode, 4);
-          IFDBG(2) g_debug ("Section divider layer mode sig: %.4s, blend mode: %.4s",
+          IFDBG(3) g_debug ("Section divider layer mode sig: %.4s, blend mode: %.4s",
                             signature, blend_mode);
         }
       else
