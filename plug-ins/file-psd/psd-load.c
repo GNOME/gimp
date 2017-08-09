@@ -1412,6 +1412,11 @@ add_layers (gint32     image_id,
                       layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &layer_composite);
                       gimp_layer_set_mode (layer_id, layer_mode);
                       gimp_layer_set_composite_mode (layer_id, layer_composite);
+                      /* FIXME: use perceptual blending and compositing
+                       * unconditionally for now
+                       */
+                      gimp_layer_set_blend_space (layer_id, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
+                      gimp_layer_set_composite_space (layer_id, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
                       gimp_layer_set_opacity (layer_id,
                                               lyr_a[lidx]->opacity * 100 / 255);
                       gimp_item_set_name (layer_id, lyr_a[lidx]->name);
@@ -1469,6 +1474,11 @@ add_layers (gint32     image_id,
                                          image_type, lyr_a[lidx]->opacity * 100 / 255,
                                          layer_mode);
               gimp_layer_set_composite_mode (layer_id, layer_composite);
+              /* FIXME: use perceptual blending and compositing for all layers
+               * for now
+               */
+              gimp_layer_set_blend_space (layer_id, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
+              gimp_layer_set_composite_space (layer_id, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
               IFDBG(3) g_debug ("Layer tattoo: %d", layer_id);
               g_free (lyr_a[lidx]->name);
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);

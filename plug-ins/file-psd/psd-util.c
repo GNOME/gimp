@@ -613,15 +613,18 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
    * "union", effectively, only returning "auto" for modes that default to
    * "union", to reduce UI clutter.
    */
-  if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_SRC_ATOP;
+  if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_SRC_OVER;
 
   if (g_ascii_strncasecmp (psd_mode, "pass", 4) == 0)           /* Pass through (CS)*/
+    {
+      if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
       return GIMP_LAYER_MODE_PASS_THROUGH;
+    }
 
   if (g_ascii_strncasecmp (psd_mode, "norm", 4) == 0)           /* Normal (ps3) */
     {
       if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL_LEGACY;
+      return GIMP_LAYER_MODE_NORMAL;
     }
 
   if (g_ascii_strncasecmp (psd_mode, "dark", 4) == 0)           /* Darken (ps3) */
@@ -732,7 +735,7 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
                      mode_name);
         }
       if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL_LEGACY;
+      return GIMP_LAYER_MODE_NORMAL;
     }
 
   if (g_ascii_strncasecmp (psd_mode, "lgCl", 4) == 0)           /* Lighter Color */
@@ -744,7 +747,7 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
                      mode_name);
         }
       if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
-      return GIMP_LAYER_MODE_NORMAL_LEGACY;
+      return GIMP_LAYER_MODE_NORMAL;
     }
 
   if (CONVERSION_WARNINGS)
@@ -757,7 +760,7 @@ psd_to_gimp_blend_mode (const gchar            *psd_mode,
 
   if (layer_composite) *layer_composite = GIMP_LAYER_COMPOSITE_AUTO;
 
-  return GIMP_LAYER_MODE_NORMAL_LEGACY;
+  return GIMP_LAYER_MODE_NORMAL;
 }
 
 gchar *
