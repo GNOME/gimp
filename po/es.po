@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-08-08 19:41+0000\n"
-"PO-Revision-Date: 2017-08-09 15:03+0200\n"
+"POT-Creation-Date: 2017-08-10 07:07+0000\n"
+"PO-Revision-Date: 2017-08-11 13:01+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -88,7 +88,7 @@ msgstr "Archivos adicionales de GIMP"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.h:2
 msgid "Patterns, gradients, and other extra files for GIMP"
-msgstr ""
+msgstr "Patrones, degradados y otros archivos adicionales para GIMP"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -669,8 +669,6 @@ msgid "Paste the selected buffer as a new layer"
 msgstr "Pegar el búfer seleccionado como imagen nueva"
 
 #: ../app/actions/buffers-actions.c:64
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as _New"
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New Image"
 msgstr "Pegar búfer como imagen _nueva"
@@ -821,8 +819,6 @@ msgid "None"
 msgstr "Ninguno"
 
 #: ../app/actions/channels-actions.c:141
-#| msgctxt "channels-action"
-#| msgid "Color Tag"
 msgctxt "channels-action"
 msgid "Color Tag: Clear"
 msgstr "Etiqueta de color: limpiar"
@@ -833,8 +829,6 @@ msgid "Blue"
 msgstr "Azul"
 
 #: ../app/actions/channels-actions.c:147
-#| msgctxt "channels-action"
-#| msgid "Set color tag to blue"
 msgctxt "channels-action"
 msgid "Color Tag: Set to Blue"
 msgstr "Etiqueta de color: establecer a azul"
@@ -845,8 +839,6 @@ msgid "Green"
 msgstr "Verde"
 
 #: ../app/actions/channels-actions.c:153
-#| msgctxt "channels-action"
-#| msgid "Set color tag to green"
 msgctxt "channels-action"
 msgid "Color Tag: Set to Green"
 msgstr "Etiqueta de color: establecer a verde"
@@ -857,8 +849,6 @@ msgid "Yellow"
 msgstr "Amarillo"
 
 #: ../app/actions/channels-actions.c:159
-#| msgctxt "channels-action"
-#| msgid "Set color tag to yellow"
 msgctxt "channels-action"
 msgid "Color Tag: Set to Yellow"
 msgstr "Etiqueta de color: establecer a amarillo"
@@ -869,8 +859,6 @@ msgid "Orange"
 msgstr "Naranja"
 
 #: ../app/actions/channels-actions.c:165
-#| msgctxt "channels-action"
-#| msgid "Set color tag to orange"
 msgctxt "channels-action"
 msgid "Color Tag: Set to Orange"
 msgstr "Etiqueta de color: establecer a naranja"
@@ -881,8 +869,6 @@ msgid "Brown"
 msgstr "Marrón"
 
 #: ../app/actions/channels-actions.c:171
-#| msgctxt "channels-action"
-#| msgid "Set color tag to brown"
 msgctxt "channels-action"
 msgid "Color Tag: Set to Brown"
 msgstr "Etiqueta de color: establecer a marrón"
@@ -893,8 +879,6 @@ msgid "Red"
 msgstr "Rojo"
 
 #: ../app/actions/channels-actions.c:177
-#| msgctxt "channels-action"
-#| msgid "Set color tag to red"
 msgctxt "channels-action"
 msgid "Color Tag: Set to  Red"
 msgstr "Etiqueta de color: establecer a rojo"
@@ -905,8 +889,6 @@ msgid "Violet"
 msgstr "Violeta"
 
 #: ../app/actions/channels-actions.c:183
-#| msgctxt "channels-action"
-#| msgid "Set color tag to violet"
 msgctxt "channels-action"
 msgid "Color Tag: Set to Violet"
 msgstr "Etiqueta de color: establecer a violeta"
@@ -917,8 +899,6 @@ msgid "Gray"
 msgstr "Gris"
 
 #: ../app/actions/channels-actions.c:189
-#| msgctxt "filters-action"
-#| msgid "_Color to Gray..."
 msgctxt "channels-action"
 msgid "Color Tag: Set to Gray"
 msgstr "Etiqueta de color: establecer a gris"
@@ -988,8 +968,6 @@ msgid "New Channel"
 msgstr "Canal nuevo"
 
 #: ../app/actions/channels-commands.c:159
-#| msgctxt "channels-action"
-#| msgid "Create a new channel"
 msgid "Create a New Channel"
 msgstr "Crear un canal nuevo"
 
@@ -1262,7 +1240,7 @@ msgstr "Color del _fondo"
 #: ../app/actions/context-actions.c:141
 msgctxt "context-action"
 msgid "Background: Use Previous Palette Color"
-msgstr ""
+msgstr "Fondo: usar paleta de color anterior"
 
 #: ../app/actions/context-actions.c:145
 #, fuzzy
@@ -1439,19 +1417,16 @@ msgid "Background: Skip Color Forward From Swatch"
 msgstr ""
 
 #: ../app/actions/context-actions.c:289
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Red: Set"
 msgstr "Primer plano rojo: establecer"
 
 #: ../app/actions/context-actions.c:293
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
 msgstr "Primer plano rojo: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:297
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
 msgstr "Primer plano rojo: establecer al máximo"
@@ -1477,19 +1452,16 @@ msgid "Foreground Red: Increase by 10%"
 msgstr "Primer plano rojo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:321
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Green: Set"
 msgstr "Primer plano verde: establecer"
 
 #: ../app/actions/context-actions.c:325
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
 msgstr "Primer plano verde: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:329
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
 msgstr "Primer plano verde: establecer al máximo"
@@ -1515,19 +1487,16 @@ msgid "Foreground Green: Increase by 10%"
 msgstr "Primer plano verde: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:353
-#| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
 msgstr "Primer plano azul: establecer"
 
 #: ../app/actions/context-actions.c:357
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
 msgstr "Fondo verde: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:361
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
 msgstr "Fondo verde: establecer al máximo"
@@ -1553,19 +1522,16 @@ msgid "Foreground Blue: Increase by 10%"
 msgstr "Primer plano azul: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:385
-#| msgid "Background"
 msgctxt "context-action"
 msgid "Background Red: Set"
 msgstr "Fondo rojo: establecer"
 
 #: ../app/actions/context-actions.c:389
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
 msgstr "Fondo rojo: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:393
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
 msgstr "Fondo rojo: establecer al máximo"
@@ -1591,19 +1557,16 @@ msgid "Background Red: Increase by 10%"
 msgstr "Fondo rojo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:417
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set"
 msgstr "Fondo verde: establecer"
 
 #: ../app/actions/context-actions.c:421
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
 msgstr "Fondo verde: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:425
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
 msgstr "Fondo verde: establecer al máximo"
@@ -1629,19 +1592,16 @@ msgid "Background Green: Increase by 10%"
 msgstr "Fondo verde: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:449
-#| msgid "_Background color:"
 msgctxt "context-action"
 msgid "Background Blue: Set"
 msgstr "Fondo azul: establecer"
 
 #: ../app/actions/context-actions.c:453
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
 msgstr "Fondo azul: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:457
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
 msgstr "Fondo azul: establecer al máximo"
@@ -1690,22 +1650,22 @@ msgstr "Color de frente establecido a:"
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 1%"
-msgstr ""
+msgstr "Tono de primer plano: reducir un 1%"
 
 #: ../app/actions/context-actions.c:497
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 1%"
-msgstr ""
+msgstr "Tono de primer plano: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:501
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 10%"
-msgstr ""
+msgstr "Tono de primer plano: reducir un 10%"
 
 #: ../app/actions/context-actions.c:505
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 10%"
-msgstr ""
+msgstr "Tono de primer plano: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:513
 #, fuzzy
@@ -1780,22 +1740,22 @@ msgstr "Color de frente establecido a:"
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 1%"
-msgstr ""
+msgstr "Valor de primer plano: reducir un 1%"
 
 #: ../app/actions/context-actions.c:561
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 1%"
-msgstr ""
+msgstr "Valor de primer plano: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:565
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 10%"
-msgstr ""
+msgstr "Valor de primer plano: reducir un 10%"
 
 #: ../app/actions/context-actions.c:569
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 10%"
-msgstr ""
+msgstr "Valor de primer plano: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:577
 #, fuzzy
@@ -1821,22 +1781,22 @@ msgstr "Color de fondo establecido a:"
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 1%"
-msgstr ""
+msgstr "Tono de fondo: reducir un 1%"
 
 #: ../app/actions/context-actions.c:593
 msgctxt "context-action"
 msgid "Background Hue: Increase by 1%"
-msgstr ""
+msgstr "Tono de fondo: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:597
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 10%"
-msgstr ""
+msgstr "Tono de fondo: reducir un 10%"
 
 #: ../app/actions/context-actions.c:601
 msgctxt "context-action"
 msgid "Background Hue: Increase by 10%"
-msgstr ""
+msgstr "Tono de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:609
 #, fuzzy
@@ -1848,32 +1808,32 @@ msgstr "Color de fondo establecido a:"
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
 msgid "Background Saturation: Set to Minimum"
-msgstr ""
+msgstr "Saturación de fondo: establecer al mínimo"
 
 #: ../app/actions/context-actions.c:617
 msgctxt "context-action"
 msgid "Background Saturation: Set to Maximum"
-msgstr ""
+msgstr "Saturación de fondo: establecer al máximo"
 
 #: ../app/actions/context-actions.c:621
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 1%"
-msgstr ""
+msgstr "Saturación de fondo: reducir un 1%"
 
 #: ../app/actions/context-actions.c:625
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 1%"
-msgstr ""
+msgstr "Saturación de fondo: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:629
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 10%"
-msgstr ""
+msgstr "Saturación de fondo: reducir un 10%"
 
 #: ../app/actions/context-actions.c:633
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 10%"
-msgstr ""
+msgstr "Saturación de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:641
 #, fuzzy
@@ -1899,22 +1859,22 @@ msgstr "Color de fondo establecido a:"
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
 msgid "Background Value: Decrease by 1%"
-msgstr ""
+msgstr "Valor de fondo: reducir un 1%"
 
 #: ../app/actions/context-actions.c:657
 msgctxt "context-action"
 msgid "Background Value: Increase by 1%"
-msgstr ""
+msgstr "Valor de fondo: aumentar un 1%"
 
 #: ../app/actions/context-actions.c:661
 msgctxt "context-action"
 msgid "Background Value: Decrease by 10%"
-msgstr ""
+msgstr "Valor de fondo: reducir un 1o%"
 
 #: ../app/actions/context-actions.c:665
 msgctxt "context-action"
 msgid "Background Value: Increase by 10%"
-msgstr ""
+msgstr "Valor de fondo: aumentar un 10%"
 
 #: ../app/actions/context-actions.c:673
 #, fuzzy
@@ -1927,12 +1887,12 @@ msgstr "Rellenar con transparencia"
 #: ../app/actions/context-actions.c:677
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Transparent"
-msgstr ""
+msgstr "Opacidad de la herramienta: hacer totalmente transparente"
 
 #: ../app/actions/context-actions.c:681
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Opaque"
-msgstr ""
+msgstr "Opacidad de la herramienta: hacer totalmente opaca"
 
 #: ../app/actions/context-actions.c:685
 msgctxt "context-action"
@@ -2012,12 +1972,12 @@ msgstr ""
 #: ../app/actions/context-actions.c:749
 msgctxt "context-action"
 msgid "Brush Selection: Select by Index"
-msgstr ""
+msgstr "Selección de pincel: seleccionar por índice"
 
 #: ../app/actions/context-actions.c:753
 msgctxt "context-action"
 msgid "Brush Selection: Switch to First"
-msgstr ""
+msgstr "Selección de pincel: cambiar al primero"
 
 #: ../app/actions/context-actions.c:757
 #, fuzzy
@@ -2030,12 +1990,12 @@ msgstr "Selección a ruta"
 #: ../app/actions/context-actions.c:761
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Previous"
-msgstr ""
+msgstr "Selección de pincel: cambiar al anterior"
 
 #: ../app/actions/context-actions.c:765
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Next"
-msgstr ""
+msgstr "Selección de pincel: cambiar al siguiente"
 
 #: ../app/actions/context-actions.c:773
 msgctxt "context-action"
@@ -2108,12 +2068,12 @@ msgstr "Sustituir la selección con este canal"
 #: ../app/actions/context-actions.c:821
 msgctxt "context-action"
 msgid "Gradient Selection: Select by Index"
-msgstr ""
+msgstr "Selección de degradado: seleccionar por índice"
 
 #: ../app/actions/context-actions.c:825
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to First"
-msgstr ""
+msgstr "Selección de degradado: cambiar al primero"
 
 #: ../app/actions/context-actions.c:829
 #, fuzzy
@@ -2126,12 +2086,12 @@ msgstr "Selección flotante a capa"
 #: ../app/actions/context-actions.c:833
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Previous"
-msgstr ""
+msgstr "Selección de degradado: cambiar al anterior"
 
 #: ../app/actions/context-actions.c:837
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Next"
-msgstr ""
+msgstr "Selección de degradado: cambiar al siguiente"
 
 #: ../app/actions/context-actions.c:845
 #, fuzzy
@@ -2183,32 +2143,32 @@ msgstr "Espaciado del pincel"
 #: ../app/actions/context-actions.c:873
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set to Minimum"
-msgstr ""
+msgstr "Espaciado del pincel (editor): establecer al mínimo"
 
 #: ../app/actions/context-actions.c:877
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set to Maximum"
-msgstr ""
+msgstr "Espaciado del pincel (editor): establecer al máximo"
 
 #: ../app/actions/context-actions.c:881
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Decrease by 1"
-msgstr ""
+msgstr "Espaciado del pincel (editor): reducir 1"
 
 #: ../app/actions/context-actions.c:885
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Increase by 1"
-msgstr ""
+msgstr "Espaciado del pincel (editor): aumentar  1"
 
 #: ../app/actions/context-actions.c:889
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Decrease by 10"
-msgstr ""
+msgstr "Espaciado del pincel (editor): reducir 10"
 
 #: ../app/actions/context-actions.c:893
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Increase by 10"
-msgstr ""
+msgstr "Espaciado del pincel (editor): aumentar 10"
 
 #: ../app/actions/context-actions.c:901
 msgctxt "context-action"
@@ -2239,52 +2199,52 @@ msgstr "Menú del editor de pinceles"
 #: ../app/actions/context-actions.c:921
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set to Minimum"
-msgstr ""
+msgstr "Radio del pincel (editor): establecer al mínimo"
 
 #: ../app/actions/context-actions.c:925
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set to Maximum"
-msgstr ""
+msgstr "Radio del pincel (editor): establecer al máximo"
 
 #: ../app/actions/context-actions.c:929
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Radio del pincel (editor): reducir 0.1"
 
 #: ../app/actions/context-actions.c:933
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Radio del pincel (editor): aumentar 0.1"
 
 #: ../app/actions/context-actions.c:937
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 1"
-msgstr ""
+msgstr "Radio del pincel (editor): reducir 1"
 
 #: ../app/actions/context-actions.c:941
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 1"
-msgstr ""
+msgstr "Radio del pincel (editor): aumentar 1"
 
 #: ../app/actions/context-actions.c:945
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 10"
-msgstr ""
+msgstr "Radio del pincel (editor): reducir 10"
 
 #: ../app/actions/context-actions.c:949
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 10"
-msgstr ""
+msgstr "Radio del pincel (editor): aumentar 10"
 
 #: ../app/actions/context-actions.c:953
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease Relative"
-msgstr ""
+msgstr "Radio del pincel (editor): reducción relativa"
 
 #: ../app/actions/context-actions.c:957
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase Relative"
-msgstr ""
+msgstr "Radio del pincel (editor): aumento relativo"
 
 #: ../app/actions/context-actions.c:965
 #, fuzzy
@@ -2334,32 +2294,32 @@ msgstr "Dureza del pincel"
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set to Minimum"
-msgstr ""
+msgstr "Dureza del pincel (editor): establecer al mínimo"
 
 #: ../app/actions/context-actions.c:1005
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set to Maximum"
-msgstr ""
+msgstr "Dureza del pincel (editor): establecer al máximo"
 
 #: ../app/actions/context-actions.c:1009
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Decrease by 0.01"
-msgstr ""
+msgstr "Dureza del pincel (editor): reducir 0.01"
 
 #: ../app/actions/context-actions.c:1013
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Increase by 0.01"
-msgstr ""
+msgstr "Dureza del pincel (editor): aumentar 0.01"
 
 #: ../app/actions/context-actions.c:1017
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Dureza del pincel (editor): reducir 0.1"
 
 #: ../app/actions/context-actions.c:1021
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Dureza del pincel (editor): aumentar 0.1"
 
 #: ../app/actions/context-actions.c:1029
 #, fuzzy
@@ -4775,8 +4735,6 @@ msgid "_Softglow..."
 msgstr "Brillo _suave…"
 
 #: ../app/actions/filters-actions.c:592
-#| msgctxt "filters-action"
-#| msgid "_Hurl..."
 msgctxt "filters-action"
 msgid "S_piral..."
 msgstr "Es_piral…"
@@ -6329,11 +6287,10 @@ msgstr ""
 "Añadir una máscara que permita la edición no destructiva de la transparencia"
 
 #: ../app/actions/layers-actions.c:264
-#, fuzzy
 #| msgid "Add Layer Mask"
 msgctxt "layers-action"
 msgid "Add La_yer Mask"
-msgstr "Añadir máscara de capa"
+msgstr "Añadir má_scara de capa"
 
 #: ../app/actions/layers-actions.c:266
 #, fuzzy
@@ -6514,8 +6471,6 @@ msgid "Blue"
 msgstr "Azul"
 
 #: ../app/actions/layers-actions.c:412
-#| msgctxt "layers-action"
-#| msgid "Set color tag to blue"
 msgctxt "layers-action"
 msgid "Color Tag: Set to Blue"
 msgstr "Etiqueta de color: establecer a azul"
@@ -6526,8 +6481,6 @@ msgid "Green"
 msgstr "Verde"
 
 #: ../app/actions/layers-actions.c:418
-#| msgctxt "layers-action"
-#| msgid "Set color tag to green"
 msgctxt "layers-action"
 msgid "Color Tag: Set to Green"
 msgstr "Etiqueta de color: establecer a verde"
@@ -6538,8 +6491,6 @@ msgid "Yellow"
 msgstr "Amarillo"
 
 #: ../app/actions/layers-actions.c:424
-#| msgctxt "layers-action"
-#| msgid "Set color tag to yellow"
 msgctxt "layers-action"
 msgid "Color Tag: Set to Yellow"
 msgstr "Etiqueta de color: establecer a amarillo"
@@ -6550,8 +6501,6 @@ msgid "Orange"
 msgstr "Naranja"
 
 #: ../app/actions/layers-actions.c:430
-#| msgctxt "layers-action"
-#| msgid "Set color tag to orange"
 msgctxt "layers-action"
 msgid "Color Tag: Set to Orange"
 msgstr "Etiqueta de color: establecer a naranja"
@@ -6562,8 +6511,6 @@ msgid "Brown"
 msgstr "Marrón"
 
 #: ../app/actions/layers-actions.c:436
-#| msgctxt "layers-action"
-#| msgid "Set color tag to brown"
 msgctxt "layers-action"
 msgid "Color Tag: Set to Brown"
 msgstr "Etiqueta de color: establecer a marrón"
@@ -6574,8 +6521,6 @@ msgid "Red"
 msgstr "Rojo"
 
 #: ../app/actions/layers-actions.c:442
-#| msgctxt "layers-action"
-#| msgid "Set color tag to red"
 msgctxt "layers-action"
 msgid "Color Tag: Set to red"
 msgstr "Etiqueta de color: establecer a rojo"
@@ -6586,8 +6531,6 @@ msgid "Violet"
 msgstr "Violeta"
 
 #: ../app/actions/layers-actions.c:448
-#| msgctxt "layers-action"
-#| msgid "Set color tag to violet"
 msgctxt "layers-action"
 msgid "Color Tag: Set to violet"
 msgstr "Etiqueta de color: establecer a violeta"
@@ -6598,8 +6541,6 @@ msgid "Gray"
 msgstr "Gris"
 
 #: ../app/actions/layers-actions.c:454
-#| msgctxt "layers-action"
-#| msgid "Set color tag to gray"
 msgctxt "layers-action"
 msgid "Color Tag: Set to gray"
 msgstr "Etiqueta de color: establecer a gris"
@@ -8674,8 +8615,6 @@ msgid "Blue"
 msgstr "Azul"
 
 #: ../app/actions/vectors-actions.c:200
-#| msgctxt "vectors-action"
-#| msgid "Set color tag to blue"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Blue"
 msgstr "Etiqueta de color: establecer a azul"
@@ -8686,8 +8625,6 @@ msgid "Green"
 msgstr "Verde"
 
 #: ../app/actions/vectors-actions.c:206
-#| msgctxt "vectors-action"
-#| msgid "Set color tag to green"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Green"
 msgstr "Etiqueta de color: establecer a verde"
@@ -8698,8 +8635,6 @@ msgid "Yellow"
 msgstr "Amarillo"
 
 #: ../app/actions/vectors-actions.c:212
-#| msgctxt "vectors-action"
-#| msgid "Set color tag to yellow"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Yellow"
 msgstr "Etiqueta de color: establecer a amarillo"
@@ -8710,8 +8645,6 @@ msgid "Orange"
 msgstr "Naranja"
 
 #: ../app/actions/vectors-actions.c:218
-#| msgctxt "vectors-action"
-#| msgid "Set color tag to orange"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Orange"
 msgstr "Etiqueta de color: establecer a naranja"
@@ -8722,8 +8655,6 @@ msgid "Brown"
 msgstr "Marrón"
 
 #: ../app/actions/vectors-actions.c:224
-#| msgctxt "vectors-action"
-#| msgid "Set color tag to brown"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Brown"
 msgstr "Etiqueta de color: establecer a marrón"
@@ -8734,8 +8665,6 @@ msgid "Red"
 msgstr "Rojo"
 
 #: ../app/actions/vectors-actions.c:230
-#| msgctxt "vectors-action"
-#| msgid "Set color tag to red"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Red"
 msgstr "Etiqueta de color: establecer a rojo"
@@ -8746,8 +8675,6 @@ msgid "Violet"
 msgstr "Violeta"
 
 #: ../app/actions/vectors-actions.c:236
-#| msgctxt "vectors-action"
-#| msgid "Set color tag to violet"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Violet"
 msgstr "Etiqueta de color: establecer a violeta"
@@ -8758,8 +8685,6 @@ msgid "Gray"
 msgstr "Gris"
 
 #: ../app/actions/vectors-actions.c:242
-#| msgctxt "vectors-action"
-#| msgid "Set color tag to gray"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to gray"
 msgstr "Etiqueta de color: establecer a gris"
@@ -8916,8 +8841,6 @@ msgid "New Path"
 msgstr "Nueva ruta"
 
 #: ../app/actions/vectors-commands.c:206
-#| msgctxt "vectors-action"
-#| msgid "Create a new path..."
 msgid "Create a New Path"
 msgstr "Crear una ruta nueva"
 
@@ -9308,8 +9231,6 @@ msgid "Toggle fullscreen view"
 msgstr "Activa o desactiva la vista de pantalla completa"
 
 #: ../app/actions/view-actions.c:315
-#| msgctxt "view-zoom-action"
-#| msgid "Set a custom zoom factor"
 msgctxt "view-action"
 msgid "Set zoom factor"
 msgstr "Establece factor de ampliación"
@@ -9355,13 +9276,11 @@ msgid "Zoom In"
 msgstr "Ampliar"
 
 #: ../app/actions/view-actions.c:354
-#| msgid "Zoom out"
 msgctxt "view-action"
 msgid "Zoom out a lot"
 msgstr "Reducir mucho"
 
 #: ../app/actions/view-actions.c:359
-#| msgid "Zoom in"
 msgctxt "view-action"
 msgid "Zoom in a lot"
 msgstr "Ampliar mucho"
@@ -9677,37 +9596,31 @@ msgid "Set horizontal scroll offset"
 msgstr ""
 
 #: ../app/actions/view-actions.c:618
-#| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Desplazar al borde izquierdo"
 
 #: ../app/actions/view-actions.c:623
-#| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Desplazar al borde derecho"
 
 #: ../app/actions/view-actions.c:628
-#| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Desplazar a la izquierda"
 
 #: ../app/actions/view-actions.c:633
-#| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Desplazar a la derecha"
 
 #: ../app/actions/view-actions.c:638
-#| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Desplazar página a la izquierda"
 
 #: ../app/actions/view-actions.c:643
-#| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Desplazar página a la derecha"
@@ -9718,38 +9631,31 @@ msgid "Set vertical scroll offset"
 msgstr ""
 
 #: ../app/actions/view-actions.c:656
-#| msgctxt "channels-action"
-#| msgid "Set color tag to orange"
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Desplazar al borde superior"
 
 #: ../app/actions/view-actions.c:661
-#| msgid "Clipped to bottom layer"
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Desplazar al borde inferior"
 
 #: ../app/actions/view-actions.c:666
-#| msgid "Scroll Up"
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Desplazar arriba"
 
 #: ../app/actions/view-actions.c:671
-#| msgid "Scroll Down"
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Desplazar abajo"
 
 #: ../app/actions/view-actions.c:676
-#| msgid "Scroll Up"
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Desplazar página hacia arriba"
 
 #: ../app/actions/view-actions.c:681
-#| msgid "Scroll Down"
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Desplazar página hacia abajo"
@@ -13945,7 +13851,6 @@ msgid "_Select"
 msgstr "_Seleccionar"
 
 #: ../app/dialogs/color-profile-dialog.c:212
-#| msgid "Color Profile"
 msgid "New Color Profile"
 msgstr "Perfil de color nuevo"
 
@@ -14418,7 +14323,6 @@ msgid "Configure Input Devices"
 msgstr "Configurar los dispositivos de entrada"
 
 #: ../app/dialogs/item-options-dialog.c:198
-#| msgid "Color:"
 msgid "Color tag:"
 msgstr "Etiqueta de color:"
 
@@ -14764,7 +14668,6 @@ msgid "The selected source contains no colors."
 msgstr "La fuente seleccionada no contiene colores."
 
 #: ../app/dialogs/palette-import-dialog.c:466
-#| msgid "There is no path to move."
 msgid "There is no palette to import."
 msgstr "No hay ninguna paleta que importar."
 
@@ -14915,7 +14818,6 @@ msgid "Maximum _new image size:"
 msgstr "Tamaño máximo de la imagen _nueva:"
 
 #: ../app/dialogs/preferences-dialog.c:1083
-#| msgid "Number of _processors to use:"
 msgid "Number of _threads to use:"
 msgstr "Número de _hilos que usar:"
 
@@ -15105,7 +15007,6 @@ msgstr "Editor de imagen"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1332
-#| msgid "Policies"
 msgid "Import Policies"
 msgstr "Importar políticas"
 
@@ -15388,7 +15289,6 @@ msgid "Convert to Color Profile Dialog"
 msgstr "Convertir a perfil de color ICC"
 
 #: ../app/dialogs/preferences-dialog.c:1938
-#| msgid "_Rendering intent:"
 msgid "Rendering intent:"
 msgstr "Prueba de renderizado:"
 
@@ -15406,12 +15306,10 @@ msgid "Precision Conversion Dialog"
 msgstr "Precisión de la conversión"
 
 #: ../app/dialogs/preferences-dialog.c:1953
-#| msgid "Drop layers"
 msgid "Dither layers:"
 msgstr "Difuminar capas:"
 
 #: ../app/dialogs/preferences-dialog.c:1958
-#| msgid "Resize _text layers"
 msgid "Dither text layers:"
 msgstr "Difuminar capas de texto:"
 
@@ -15446,7 +15344,6 @@ msgid "Remove unused and duplicate colors from colormap"
 msgstr "_Eliminar los colores sin usar de la paleta final"
 
 #: ../app/dialogs/preferences-dialog.c:1985
-#| msgid "Color _dithering:"
 msgid "Color dithering:"
 msgstr "Difuminar el color:"
 
@@ -15465,17 +15362,14 @@ msgstr "Tamaño del lienzo"
 
 #: ../app/dialogs/preferences-dialog.c:2001
 #: ../app/dialogs/preferences-dialog.c:2030
-#| msgid "_Fill with:"
 msgid "Fill with:"
 msgstr "Rellenar con:"
 
 #: ../app/dialogs/preferences-dialog.c:2004
-#| msgid "Resize _layers:"
 msgid "Resize layers:"
 msgstr "Redimensionar capas:"
 
 #: ../app/dialogs/preferences-dialog.c:2008
-#| msgid "Resize _text layers"
 msgid "Resize text layers"
 msgstr "Redimensionar capas de texto"
 
@@ -15487,7 +15381,6 @@ msgid "New Layer Dialog"
 msgstr "Capa nueva"
 
 #: ../app/dialogs/preferences-dialog.c:2017
-#| msgid "Layer _name:"
 msgid "Layer name:"
 msgstr "Nombre de la capa:"
 
@@ -15510,12 +15403,10 @@ msgid "Add Layer Mask Dialog"
 msgstr "Añadir máscara de capa"
 
 #: ../app/dialogs/preferences-dialog.c:2039
-#| msgid "Layer Fill Type"
 msgid "Layer mask type:"
 msgstr "Tipo de máscara de capa:"
 
 #: ../app/dialogs/preferences-dialog.c:2043
-#| msgid "In_vert mask"
 msgid "Invert mask"
 msgstr "Invertir máscara"
 
@@ -15553,7 +15444,6 @@ msgid "New Channel Dialog"
 msgstr "Canal de color nuevo"
 
 #: ../app/dialogs/preferences-dialog.c:2070
-#| msgid "Channel _name:"
 msgid "Channel name:"
 msgstr "Nombre del canal:"
 
@@ -15658,8 +15548,6 @@ msgid "Grow Selection Dialog"
 msgstr "Agrandar selección"
 
 #: ../app/dialogs/preferences-dialog.c:2134
-#| msgctxt "warp-behavior"
-#| msgid "Grow area"
 msgid "Grow radius:"
 msgstr "Agrandar radio:"
 
@@ -15672,8 +15560,6 @@ msgstr "Encoger selección"
 
 # //R Creo que hace esto
 #: ../app/dialogs/preferences-dialog.c:2143
-#| msgctxt "warp-behavior"
-#| msgid "Shrink area"
 msgid "Shrink radius:"
 msgstr "Encoger radio:"
 
@@ -16149,12 +16035,10 @@ msgid "Select MyPaint Brush Folders"
 msgstr "Seleccionar las carpetas de pinceles MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:2889
-#| msgid "Plug-In Folders"
 msgid "Plug-in Folders"
 msgstr "Carpetas de complementos"
 
 #: ../app/dialogs/preferences-dialog.c:2891
-#| msgid "Select Plug-In Folders"
 msgid "Select plug-in Folders"
 msgstr "Seleccionar las carpetas de complementos"
 
@@ -16558,25 +16442,21 @@ msgid "Line spacing"
 msgstr "Espaciado de las líneas"
 
 #: ../app/display/display-enums.c:307
-#| msgid "Aspect ratio"
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Proporción de aspecto"
 
 #: ../app/display/display-enums.c:308
-#| msgid "Width"
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "Anchura"
 
 #: ../app/display/display-enums.c:309
-#| msgid "Height"
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "Altura"
 
 #: ../app/display/display-enums.c:310
-#| msgid "Size"
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
 msgstr "Tamaño"
@@ -16955,8 +16835,6 @@ msgid "Click-Drag to remove this handle"
 msgstr "Pulse y arrastre para mover el tirador"
 
 #: ../app/display/gimptoolline.c:218 ../app/display/gimptoolline.c:347
-#| msgctxt "dash-preset"
-#| msgid "Line"
 msgid "Line: "
 msgstr "Línea: "
 
@@ -17150,7 +17028,6 @@ msgid "Rectangle: "
 msgstr "Rectángulo: "
 
 #: ../app/display/gimptoolrectangle.c:2136
-#| msgid "Position:"
 msgid "Position: "
 msgstr "Posición: "
 
@@ -17351,8 +17228,6 @@ msgid "RGB (linear)"
 msgstr "RGB (lineal)"
 
 #: ../app/operations/operations-enums.c:27
-#| msgctxt "view-action"
-#| msgid "_Perceptual"
 msgctxt "layer-color-space"
 msgid "RGB (perceptual)"
 msgstr "RGB (porcentual)"
@@ -17360,7 +17235,7 @@ msgstr "RGB (porcentual)"
 #: ../app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
 msgid "LAB"
-msgstr ""
+msgstr "LAB"
 
 #: ../app/operations/operations-enums.c:59
 msgctxt "layer-composite-mode"
@@ -17401,15 +17276,11 @@ msgid "Normal (legacy)"
 msgstr "Normal (heredado)"
 
 #: ../app/operations/operations-enums.c:154
-#| msgctxt "layer-mode-effects"
-#| msgid "Dissolve"
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "Disolver"
 
 #: ../app/operations/operations-enums.c:155
-#| msgctxt "layer-mode"
-#| msgid "Addition (legacy)"
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
 msgstr "Detrás (heredado)"
@@ -17422,7 +17293,7 @@ msgstr "Multiplicar (heredado)"
 #: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
-msgstr ""
+msgstr "Pantalla (heredado)"
 
 #: ../app/operations/operations-enums.c:158
 #, fuzzy
@@ -17616,8 +17487,6 @@ msgid "Divide"
 msgstr "Dividir"
 
 #: ../app/operations/operations-enums.c:195
-#| msgctxt "layer-mode-effects"
-#| msgid "Dodge"
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "Blanquear"
@@ -17673,8 +17542,6 @@ msgid "Hard mix"
 msgstr "Claridad fuerte"
 
 #: ../app/operations/operations-enums.c:205
-#| msgctxt "undo-type"
-#| msgid "Illusion"
 msgctxt "layer-mode"
 msgid "Exclusion"
 msgstr "Exclusión"
@@ -17700,15 +17567,11 @@ msgid "Luma/Luminance lighten only"
 msgstr "Clarear sólo"
 
 #: ../app/operations/operations-enums.c:209
-#| msgctxt "histogram-channel"
-#| msgid "Luminance"
 msgctxt "layer-mode"
 msgid "Luminance"
 msgstr "Luminosidad"
 
 #: ../app/operations/operations-enums.c:210
-#| msgctxt "layer-mode-effects"
-#| msgid "Color erase"
 msgctxt "layer-mode"
 msgid "Color erase"
 msgstr "Borrado de color"
@@ -17744,7 +17607,6 @@ msgid "Anti erase"
 msgstr "Antiborrado"
 
 #: ../app/operations/operations-enums.c:244
-#| msgid "Default Grid"
 msgctxt "layer-mode-group"
 msgid "Default"
 msgstr "Predeterminado"
@@ -18313,7 +18175,6 @@ msgid "The strength of smudging"
 msgstr ""
 
 #: ../app/paint/gimpsmudgeoptions.c:77
-#| msgid "Flow"
 msgctxt "smudge-tool"
 msgid "Flow"
 msgstr "Flujo"
@@ -18431,7 +18292,6 @@ msgid "Threshold"
 msgstr "Umbral"
 
 #: ../app/pdb/drawable-cmds.c:524
-#| msgid "Plug-In"
 msgid "Plug-in"
 msgstr "Complemento"
 
@@ -19296,12 +19156,10 @@ msgid "Cancelled"
 msgstr "Cancelado"
 
 #: ../app/plug-in/gimppluginmanager.c:232
-#| msgid "Plug-In Interpreters"
 msgid "Plug-in Interpreters"
 msgstr "Intérpretes de complementos"
 
 #: ../app/plug-in/gimppluginmanager.c:238
-#| msgid "Plug-In Environment"
 msgid "Plug-in Environment"
 msgstr "Entorno de complementos"
 
@@ -19317,7 +19175,6 @@ msgid "Unknown file type"
 msgstr "Tipo de archivo desconocido"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:230
-#| msgid "Searching Plug-Ins"
 msgid "Searching plug-ins"
 msgstr "Buscando complementos"
 
@@ -19562,8 +19419,6 @@ msgid "Spiral: "
 msgstr "Espiral: "
 
 #: ../app/propgui/gimppropgui-supernova.c:125
-#| msgctxt "undo-type"
-#| msgid "Supernova"
 msgid "Supernova: "
 msgstr "Supernova: "
 
@@ -21483,10 +21338,9 @@ msgid "_Rectangle Select"
 msgstr "Selección _rectangular"
 
 #: ../app/tools/gimprectangleselecttool.c:725
-#, fuzzy
 #| msgid "Ellipse Select"
 msgid "Ellipse: "
-msgstr "Selección elíptica"
+msgstr "Elipse: "
 
 #: ../app/tools/gimpregionselectoptions.c:89
 msgid "Select transparent areas"
@@ -22185,7 +22039,7 @@ msgstr ""
 
 #: ../app/tools/gimpwarpoptions.c:135
 msgid "High quality preview"
-msgstr ""
+msgstr "Vista previa de alta calidad"
 
 #: ../app/tools/gimpwarpoptions.c:136
 #, fuzzy
