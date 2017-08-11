@@ -276,6 +276,8 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
   gint   id_count;
   gint   found;
   gint   lastfound;
+  gint count;
+  int ii;
 
   static const gchar *tags[] =
   {
@@ -347,10 +349,10 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
 
   /* Find current number of entries for Xmp.xmpMM.History */
   found = 0;
-  for (gint count = 1; count < 65536; count++)
+  for (count = 1; count < 65536; count++)
     {
       lastfound = 0;
-      for (int ii = 0; ii < 5; ii++)
+      for (ii = 0; ii < 5; ii++)
         {
           g_snprintf (tagstr, sizeof (tagstr), "%s[%d]%s",
                       tags[3], count, history_tags[ii]);
