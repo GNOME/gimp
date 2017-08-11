@@ -410,6 +410,20 @@ view_flip_vertically_cmd_callback (GimpAction *action,
 }
 
 void
+view_flip_reset_cmd_callback (GimpAction *action,
+                              GVariant   *value,
+                              gpointer    data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+
+  return_if_no_display (display, data);
+
+  shell = gimp_display_get_shell (display);
+  gimp_display_shell_flip (shell, FALSE, FALSE);
+}
+
+void
 view_rotate_absolute_cmd_callback (GimpAction *action,
                                    GVariant   *value,
                                    gpointer    data)
@@ -431,9 +445,6 @@ view_rotate_absolute_cmd_callback (GimpAction *action,
                                TRUE);
 
   gimp_display_shell_rotate_to (shell, angle);
-
-  if (select_type == GIMP_ACTION_SELECT_SET_TO_DEFAULT)
-    gimp_display_shell_flip (shell, FALSE, FALSE);
 }
 
 void
@@ -472,6 +483,21 @@ view_rotate_other_cmd_callback (GimpAction *action,
   shell = gimp_display_get_shell (display);
 
   gimp_display_shell_rotate_dialog (shell);
+}
+
+void
+view_reset_cmd_callback (GimpAction *action,
+                         GVariant   *value,
+                         gpointer    data)
+{
+  GimpDisplay      *display;
+  GimpDisplayShell *shell;
+
+  return_if_no_display (display, data);
+
+  shell = gimp_display_get_shell (display);
+  gimp_display_shell_rotate_to (shell, 0.0);
+  gimp_display_shell_flip (shell, FALSE, FALSE);
 }
 
 void

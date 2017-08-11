@@ -132,6 +132,20 @@ static const GimpActionEntry view_actions[] =
     view_rotate_other_cmd_callback,
     GIMP_HELP_VIEW_ROTATE_OTHER },
 
+  { "view-flip-reset", GIMP_ICON_RESET,
+    NC_("view-action", "_Reset Flipping"), NULL,
+    NC_("view-action",
+        "Reset flipping to unflipped"),
+    view_flip_reset_cmd_callback,
+    GIMP_HELP_VIEW_FLIP_RESET },
+
+  { "view-reset", GIMP_ICON_RESET,
+    NC_("view-action", "_Reset Flip & Rotate"), "exclam",
+    NC_("view-action",
+        "Reset flipping to unflipped and the angle of rotation to 0°"),
+    view_reset_cmd_callback,
+    GIMP_HELP_VIEW_RESET },
+
   { "view-navigation-window", GIMP_ICON_DIALOG_NAVIGATION,
     NC_("view-action", "Na_vigation Window"), NULL,
     NC_("view-action", "Show an overview window for this image"),
@@ -499,9 +513,9 @@ static const GimpEnumActionEntry view_rotate_absolute_actions[] =
     NULL },
 
   { "view-rotate-reset", GIMP_ICON_RESET,
-    NC_("view-action", "_Reset Flip & Rotate"), "exclam",
+    NC_("view-action", "_Reset Rotate"), NULL,
     NC_("view-action",
-        "Reset flipping to unflipped and the angle of rotation to 0°"),
+        "Reset the angle of rotation to 0°"),
     GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     GIMP_HELP_VIEW_ROTATE_RESET },
 };
@@ -985,6 +999,7 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-flip-horizontally", image);
   SET_ACTIVE    ("view-flip-horizontally", flip_horizontally);
 
+  SET_SENSITIVE ("view-flip-reset",        image);
   SET_SENSITIVE ("view-flip-vertically",   image);
   SET_ACTIVE    ("view-flip-vertically",   flip_vertically);
 
@@ -995,6 +1010,8 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-rotate-180",        image);
   SET_SENSITIVE ("view-rotate-270",        image);
   SET_SENSITIVE ("view-rotate-other",      image);
+
+  SET_SENSITIVE ("view-reset",             image);
 
   if (image)
     {

@@ -74,6 +74,9 @@ void   view_flip_horizontally_cmd_callback          (GimpAction *action,
 void   view_flip_vertically_cmd_callback            (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
+void   view_flip_reset_cmd_callback                 (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 
 void   view_rotate_absolute_cmd_callback            (GimpAction *action,
                                                      GVariant   *value,
@@ -82,6 +85,10 @@ void   view_rotate_relative_cmd_callback            (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 void   view_rotate_other_cmd_callback               (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
+
+void   view_reset_cmd_callback                      (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 

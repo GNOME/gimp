@@ -284,7 +284,7 @@
         <menuitem action="view-zoom-other" />
       </menu>
       <menu action="view-rotate-menu" name="Rotate">
-        <menuitem action="view-rotate-reset" />
+        <menuitem action="view-reset" />
         <separator />
 	<menuitem action="view-flip-horizontally" />
 	<menuitem action="view-flip-vertically" />
