@@ -69,6 +69,15 @@ static gboolean     gimp_heal_start              (GimpPaintCore    *paint_core,
                                                   GimpPaintOptions *paint_options,
                                                   const GimpCoords *coords,
                                                   GError          **error);
+static GeglBuffer * gimp_heal_get_paint_buffer   (GimpPaintCore    *core,
+                                                  GimpDrawable     *drawable,
+                                                  GimpPaintOptions *paint_options,
+                                                  GimpLayerMode     paint_mode,
+                                                  const GimpCoords *coords,
+                                                  gint             *paint_buffer_x,
+                                                  gint             *paint_buffer_y,
+                                                  gint             *paint_width,
+                                                  gint             *paint_height);
 
 static void         gimp_heal_motion             (GimpSourceCore   *source_core,
                                                   GimpDrawable     *drawable,
@@ -113,9 +122,10 @@ gimp_heal_class_init (GimpHealClass *klass)
   GimpPaintCoreClass  *paint_core_class  = GIMP_PAINT_CORE_CLASS (klass);
   GimpSourceCoreClass *source_core_class = GIMP_SOURCE_CORE_CLASS (klass);
 
-  paint_core_class->start   = gimp_heal_start;
+  paint_core_class->start            = gimp_heal_start;
+  paint_core_class->get_paint_buffer = gimp_heal_get_paint_buffer;
 
-  source_core_class->motion = gimp_heal_motion;
+  source_core_class->motion          = gimp_heal_motion;
 }
 
 static void
@@ -147,6 +157,28 @@ gimp_heal_start (GimpPaintCore     *paint_core,
     }
 
   return TRUE;
+}
+
+static GeglBuffer *
+gimp_heal_get_paint_buffer (GimpPaintCore    *core,
+                            GimpDrawable     *drawable,
+                            GimpPaintOptions *paint_options,
+                            GimpLayerMode     paint_mode,
+                            const GimpCoords *coords,
+                            gint             *paint_buffer_x,
+                            gint             *paint_buffer_y,
+                            gint             *paint_width,
+                            gint             *paint_height)
+{
+  return GIMP_PAINT_CORE_CLASS (parent_class)->get_paint_buffer (core,
+                                                                 drawable,
+                                                                 paint_options,
+                                                                 GIMP_LAYER_MODE_NORMAL,
+                                                                 coords,
+                                                                 paint_buffer_x,
+                                                                 paint_buffer_y,
+                                                                 paint_width,
+                                                                 paint_height);
 }
 
 /* Subtract bottom from top and store in result as a float
