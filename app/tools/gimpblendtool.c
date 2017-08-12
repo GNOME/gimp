@@ -680,17 +680,40 @@ static void
 gimp_blend_tool_line_changed (GimpToolWidget *widget,
                               GimpBlendTool  *blend_tool)
 {
+  gdouble  start_x;
+  gdouble  start_y;
+  gdouble  end_x;
+  gdouble  end_y;
+  gboolean update = FALSE;
+
   g_object_get (widget,
-                "x1", &blend_tool->start_x,
-                "y1", &blend_tool->start_y,
-                "x2", &blend_tool->end_x,
-                "y2", &blend_tool->end_y,
+                "x1", &start_x,
+                "y1", &start_y,
+                "x2", &end_x,
+                "y2", &end_y,
                 NULL);
 
-  gimp_blend_tool_update_graph (blend_tool);
-  gimp_drawable_filter_apply (blend_tool->filter, NULL);
+  if (start_x != blend_tool->start_x ||
+      start_y != blend_tool->start_y ||
+      end_x   != blend_tool->end_x   ||
+      end_y   != blend_tool->end_y)
+    {
+      blend_tool->start_x = start_x;
+      blend_tool->start_y = start_y;
+      blend_tool->end_x   = end_x;
+      blend_tool->end_y   = end_y;
 
-  gimp_blend_tool_editor_line_changed (blend_tool);
+      update = TRUE;
+    }
+
+  if (gimp_blend_tool_editor_line_changed (blend_tool))
+    update = TRUE;
+
+  if (update)
+    {
+      gimp_blend_tool_update_graph (blend_tool);
+      gimp_drawable_filter_apply (blend_tool->filter, NULL);
+    }
 }
 
 static void

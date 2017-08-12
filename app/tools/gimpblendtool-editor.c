@@ -2123,7 +2123,7 @@ gimp_blend_tool_editor_halt (GimpBlendTool *blend_tool)
     }
 }
 
-void
+gboolean
 gimp_blend_tool_editor_line_changed (GimpBlendTool *blend_tool)
 {
   GimpBlendOptions           *options       = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
@@ -2136,16 +2136,16 @@ gimp_blend_tool_editor_line_changed (GimpBlendTool *blend_tool)
   gboolean                    changed       = FALSE;
 
   if (gimp_blend_tool_editor_are_handlers_blocked (blend_tool))
-    return;
+    return FALSE;
 
   if (! blend_tool->gradient || offset == 1.0)
-    return;
+    return FALSE;
 
   sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (blend_tool->widget),
                                         &n_sliders);
 
   if (n_sliders == 0)
-    return;
+    return FALSE;
 
   /* update the midpoints first, since moving the gradient stops may change the
    * gradient's midpoints w.r.t. the sliders, but not the other way around.
@@ -2227,6 +2227,8 @@ gimp_blend_tool_editor_line_changed (GimpBlendTool *blend_tool)
     }
 
   gimp_blend_tool_editor_update_gui (blend_tool);
+
+  return changed;
 }
 
 void

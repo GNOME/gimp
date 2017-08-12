@@ -26,7 +26,7 @@ void          gimp_blend_tool_editor_options_notify   (GimpBlendTool    *blend_t
 void          gimp_blend_tool_editor_start            (GimpBlendTool    *blend_tool);
 void          gimp_blend_tool_editor_halt             (GimpBlendTool    *blend_tool);
 
-void          gimp_blend_tool_editor_line_changed     (GimpBlendTool    *blend_tool);
+gboolean      gimp_blend_tool_editor_line_changed     (GimpBlendTool    *blend_tool);
 
 void          gimp_blend_tool_editor_fg_bg_changed    (GimpBlendTool    *blend_tool);
 
