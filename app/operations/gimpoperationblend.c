@@ -61,20 +61,22 @@ enum
 
 typedef struct
 {
-  GimpGradient     *gradient;
-  gboolean          reverse;
+  GimpGradient        *gradient;
+  gboolean             reverse;
 #ifdef USE_GRADIENT_CACHE
-  GimpRGB          *gradient_cache;
-  gint              gradient_cache_size;
+  GimpRGB             *gradient_cache;
+  gint                 gradient_cache_size;
+#else
+  GimpGradientSegment *last_seg;
 #endif
-  gdouble           offset;
-  gdouble           sx, sy;
-  GimpGradientType  gradient_type;
-  gdouble           dist;
-  gdouble           vec[2];
-  GimpRepeatMode    repeat;
-  GRand            *seed;
-  GeglBuffer       *dist_buffer;
+  gdouble              offset;
+  gdouble              sx, sy;
+  GimpGradientType     gradient_type;
+  gdouble              dist;
+  gdouble              vec[2];
+  GimpRepeatMode       repeat;
+  GRand               *seed;
+  GeglBuffer          *dist_buffer;
 } RenderBlendData;
 
 
@@ -922,8 +924,9 @@ gradient_render_pixel (gdouble   x,
 #ifdef USE_GRADIENT_CACHE
       *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
 #else
-      gimp_gradient_get_color_at (rbd->gradient, NULL, NULL,
-                                  factor, rbd->reverse, color);
+      rbd->last_seg = gimp_gradient_get_color_at (rbd->gradient, NULL,
+                                                  rbd->last_seg, factor,
+                                                  rbd->reverse, color);
 #endif
     }
 }
@@ -998,7 +1001,8 @@ gimp_operation_blend_process (GeglOperation       *operation,
 
 #ifdef USE_GRADIENT_CACHE
   {
-    gint i;
+    GimpGradientSegment *last_seg = NULL;
+    gint                 i;
 
     rbd.gradient_cache_size = ceil (sqrt (SQR (sx - ex) + SQR (sy - ey)));
     rbd.gradient_cache      = g_new0 (GimpRGB, rbd.gradient_cache_size);
@@ -1007,9 +1011,9 @@ gimp_operation_blend_process (GeglOperation       *operation,
       {
         gdouble factor = (gdouble) i / (gdouble) (rbd.gradient_cache_size - 1);
 
-        gimp_gradient_get_color_at (rbd.gradient, NULL, NULL,
-                                    factor, rbd.reverse,
-                                    rbd.gradient_cache + i);
+        last_seg = gimp_gradient_get_color_at (rbd.gradient, NULL, last_seg,
+                                               factor, rbd.reverse,
+                                               rbd.gradient_cache + i);
       }
   }
 #endif
