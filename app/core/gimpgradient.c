@@ -2077,29 +2077,19 @@ gimp_gradient_get_segment_at_internal (GimpGradient        *gradient,
   if (! seg)
     seg = gradient->segments;
 
-  while (seg)
+  if (pos >= seg->left)
     {
-      if (pos >= seg->left)
-        {
-          if (pos <= seg->right)
-            {
-              return seg;
-            }
-          else
-            {
-              seg = seg->next;
-            }
-        }
-      else
-        {
-          seg = seg->prev;
-        }
+      while (seg->next && pos >= seg->right)
+        seg = seg->next;
+    }
+  else
+    {
+      do
+        seg = seg->prev;
+      while (pos < seg->left);
     }
 
-  /* Oops: we should have found a segment, but we didn't */
-  g_warning ("%s: no matching segment for position %0.15f", G_STRFUNC, pos);
-
-  return NULL;
+  return seg;
 }
 
 static void
