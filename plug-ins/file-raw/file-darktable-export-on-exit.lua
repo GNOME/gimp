@@ -1,6 +1,6 @@
 --[[
   This file is part of GIMP,
-  copyright (c) 2015-2016 Tobias Ellinghaus
+  copyright (c) 2015-2017 Tobias Ellinghaus
 
   GIMP is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@ if dt.configuration.api_version_string < min_api_version then
   dt.print("the exit export script requires at least darktable version 1.7.0")
   dt.print_error("the exit export script requires at least darktable version 1.7.0")
   return
+else
+  dt.print("closing darktable will export the image and make GIMP load it")
 end
 
 local export_filename = dt.preferences.read("export_on_exit", "export_filename", "string")
