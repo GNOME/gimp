@@ -2179,9 +2179,11 @@ gimp_gradient_calc_curved_factor (gdouble middle,
                                   gdouble pos)
 {
   if (middle < EPSILON)
-    middle = EPSILON;
+    return 1.0;
+  else if (1.0 - middle < EPSILON)
+    return 0.0;
 
-  return pow (pos, log (0.5) / log (middle));
+  return exp (-G_LN2 * log (pos) / log (middle));
 }
 
 static inline gdouble
