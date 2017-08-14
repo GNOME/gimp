@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-29 02:40+0300\n"
-"PO-Revision-Date: 2017-07-29 18:24+0300\n"
+"POT-Creation-Date: 2017-08-15 00:30+0300\n"
+"PO-Revision-Date: 2017-08-15 00:56+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -65,11 +65,11 @@ msgstr "Редактирование фотографий в GIMP"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.h:1
 msgid "Extra files for GIMP"
-msgstr ""
+msgstr "Дополнительные файлы для GIMP"
 
 #: ../desktop/gimp-data-extras.metainfo.xml.in.h:2
 msgid "Patterns, gradients, and other extra files for GIMP"
-msgstr ""
+msgstr "Текстуры, градиенты и другие дополнительные файлы для GIMP"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -167,7 +167,6 @@ msgid "Do not show a splash screen"
 msgstr "Не показывать заставку при запуске"
 
 #: ../app/main.c:205
-#, fuzzy
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Не использовать разделяемую память между GIMP и его расширениями"
 
@@ -771,7 +770,6 @@ msgid "_Visible"
 msgstr "_Видимый"
 
 #: ../app/actions/channels-actions.c:119
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Linked"
 msgstr "С_вязанный"
@@ -783,7 +781,6 @@ msgid "L_ock pixels"
 msgstr "_Заблокировать пиксели"
 
 #: ../app/actions/channels-actions.c:131
-#, fuzzy
 msgctxt "channels-action"
 msgid "L_ock position"
 msgstr "Заблокировать _контур от изменений"
@@ -795,7 +792,6 @@ msgid "None"
 msgstr "Нет"
 
 #: ../app/actions/channels-actions.c:141
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Clear"
 msgstr "Цветовая метка"
@@ -806,7 +802,6 @@ msgid "Blue"
 msgstr "Синий"
 
 #: ../app/actions/channels-actions.c:147
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Set to Blue"
 msgstr "Назначить синюю цветовую метку"
@@ -817,7 +812,6 @@ msgid "Green"
 msgstr "Зеленый"
 
 #: ../app/actions/channels-actions.c:153
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Set to Green"
 msgstr "Назначить зелёную цветовую метку"
@@ -828,7 +822,6 @@ msgid "Yellow"
 msgstr "Жёлтый"
 
 #: ../app/actions/channels-actions.c:159
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Set to Yellow"
 msgstr "Назначить жёлтую цветовую метку"
@@ -839,7 +832,6 @@ msgid "Orange"
 msgstr "Оранжевый"
 
 #: ../app/actions/channels-actions.c:165
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Set to Orange"
 msgstr "Назначить оранжевую цветовую метку"
@@ -850,7 +842,6 @@ msgid "Brown"
 msgstr "Коричневый"
 
 #: ../app/actions/channels-actions.c:171
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Set to Brown"
 msgstr "Назначить коричневую цветовую метку"
@@ -861,7 +852,6 @@ msgid "Red"
 msgstr "Красный"
 
 #: ../app/actions/channels-actions.c:177
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Set to  Red"
 msgstr "Назначить красную цветовую метку"
@@ -872,7 +862,6 @@ msgid "Violet"
 msgstr "Фиолетовый"
 
 #: ../app/actions/channels-actions.c:183
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Set to Violet"
 msgstr "Назначить фиолетовую цветовую метку"
@@ -883,7 +872,6 @@ msgid "Gray"
 msgstr "Серый"
 
 #: ../app/actions/channels-actions.c:189
-#, fuzzy
 msgctxt "channels-action"
 msgid "Color Tag: Set to Gray"
 msgstr "_Цвет в градации серого..."
@@ -1039,7 +1027,6 @@ msgid "_Intersect with Selection"
 msgstr "_Пересечь с выделением"
 
 #: ../app/actions/colormap-actions.c:92
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
 msgstr "Пересечь этот канал с выделением"
@@ -1154,22 +1141,19 @@ msgid "Exchange foreground and background colors"
 msgstr "Поменять местами цвета переднего плана и фона"
 
 #: ../app/actions/context-actions.c:97
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Set Color From Palette"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:101
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use First Palette Color"
-msgstr "Правка цвета палитры"
+msgstr ""
 
 #: ../app/actions/context-actions.c:105
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use Last Palette Color"
-msgstr "Цвета _переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:109
 msgctxt "context-action"
@@ -1177,16 +1161,14 @@ msgid "Foreground: Use Previous Palette Color"
 msgstr ""
 
 #: ../app/actions/context-actions.c:113
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Use Next Palette Color"
-msgstr "Цвета _переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:117
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Skip Back Palette Color"
-msgstr "Цвет переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:121
 msgctxt "context-action"
@@ -1194,22 +1176,19 @@ msgid "Foreground: Skip Forward Palette Color"
 msgstr ""
 
 #: ../app/actions/context-actions.c:129
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Set Color From Palette"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:133
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Use First Palette Color"
-msgstr "Правка цвета палитры"
+msgstr ""
 
 #: ../app/actions/context-actions.c:137
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Use Last Palette Color"
-msgstr "Цвета _фона"
+msgstr ""
 
 #: ../app/actions/context-actions.c:141
 msgctxt "context-action"
@@ -1217,16 +1196,14 @@ msgid "Background: Use Previous Palette Color"
 msgstr ""
 
 #: ../app/actions/context-actions.c:145
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Use Next Palette Color"
-msgstr "Цвета _фона"
+msgstr ""
 
 #: ../app/actions/context-actions.c:149
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Skip Back Palette Color"
-msgstr "Цвет фона"
+msgstr ""
 
 #: ../app/actions/context-actions.c:153
 msgctxt "context-action"
@@ -1234,10 +1211,9 @@ msgid "Background: Skip Forward Palette Color"
 msgstr ""
 
 #: ../app/actions/context-actions.c:161
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Set Color From Colormap"
-msgstr "Добавление цвета в цветовую карту"
+msgstr ""
 
 #: ../app/actions/context-actions.c:165
 msgctxt "context-action"
@@ -1270,10 +1246,9 @@ msgid "Foreground: Skip Forward Color From Colormap"
 msgstr ""
 
 #: ../app/actions/context-actions.c:193
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Set Color From Colormap"
-msgstr "Добавление цвета в цветовую карту"
+msgstr ""
 
 #: ../app/actions/context-actions.c:197
 msgctxt "context-action"
@@ -1306,10 +1281,9 @@ msgid "Background: Skip Forward Color From Colormap"
 msgstr ""
 
 #: ../app/actions/context-actions.c:225
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Set Color From Swatch"
-msgstr "Цвета _переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:229
 msgctxt "context-action"
@@ -1332,10 +1306,9 @@ msgid "Foreground: Use Next Color From Swatch"
 msgstr ""
 
 #: ../app/actions/context-actions.c:245
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Swatch"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:249
 msgctxt "context-action"
@@ -1343,10 +1316,9 @@ msgid "Foreground: Skip Forward Color From Swatch"
 msgstr ""
 
 #: ../app/actions/context-actions.c:257
-#, fuzzy
 msgctxt "context-action"
 msgid "Background: Set Color From Swatch"
-msgstr "Цвета _фона"
+msgstr ""
 
 #: ../app/actions/context-actions.c:261
 msgctxt "context-action"
@@ -1379,22 +1351,19 @@ msgid "Background: Skip Color Forward From Swatch"
 msgstr ""
 
 #: ../app/actions/context-actions.c:289
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Red: Set"
-msgstr "Выделение переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:293
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:297
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
@@ -1417,22 +1386,19 @@ msgid "Foreground Red: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:321
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Green: Set"
-msgstr "Выделение переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:325
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:329
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
@@ -1455,22 +1421,19 @@ msgid "Foreground Green: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:353
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
-msgstr "Выделение переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:357
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:361
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
@@ -1493,22 +1456,19 @@ msgid "Foreground Blue: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:385
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "Фон"
+msgstr ""
 
 #: ../app/actions/context-actions.c:389
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:393
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
@@ -1531,22 +1491,19 @@ msgid "Background Red: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:417
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:421
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:425
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
@@ -1569,22 +1526,19 @@ msgid "Background Green: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:449
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "Цвет _фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:453
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:457
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
@@ -1607,22 +1561,19 @@ msgid "Background Blue: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:481
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "Выделение переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:485
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:489
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
@@ -1645,64 +1596,54 @@ msgid "Foreground Hue: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:513
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "Извлечение объекта переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:517
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "Извлечение объекта переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:521
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "Извлечение объекта переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:525
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "Извлечение объекта переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:529
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "Извлечение объекта переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:533
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "Извлечение объекта переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:537
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "Извлечение объекта переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:545
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "Выделение переднего плана"
+msgstr ""
 
 #: ../app/actions/context-actions.c:549
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:553
-#, fuzzy
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "Установить цвет переднего плана:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
@@ -1725,22 +1666,19 @@ msgid "Foreground Value: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:577
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "Фон"
+msgstr ""
 
 #: ../app/actions/context-actions.c:581
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:585
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
@@ -1763,10 +1701,9 @@ msgid "Background Hue: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:609
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
@@ -1799,22 +1736,19 @@ msgid "Background Saturation: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:641
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:645
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:649
-#, fuzzy
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "Установить цвет фона:"
+msgstr ""
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
@@ -1837,10 +1771,9 @@ msgid "Background Value: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:673
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Opacity: Set Transparency"
-msgstr "Заливка прозрачностью"
+msgstr ""
 
 #: ../app/actions/context-actions.c:677
 msgctxt "context-action"
@@ -1873,445 +1806,419 @@ msgid "Tool Opacity: Make 10% More Opaque"
 msgstr ""
 
 #: ../app/actions/context-actions.c:705
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select First"
-msgstr "Режим рисования: %s"
+msgstr "Режим рисования: выбрать первый"
 
 #: ../app/actions/context-actions.c:709
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Last"
-msgstr "Режим рисования: %s"
+msgstr "Режим рисования: выбрать последний"
 
 #: ../app/actions/context-actions.c:713
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Previous"
-msgstr ""
+msgstr "Режим рисования: выбрать предыдущий"
 
 #: ../app/actions/context-actions.c:717
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Next"
-msgstr ""
+msgstr "Режим рисования: выбрать следующий"
 
 #: ../app/actions/context-actions.c:725
 msgctxt "context-action"
 msgid "Tool Selection: Choose by Index"
-msgstr ""
+msgstr "Выбор инструмента: по индексу"
 
 #: ../app/actions/context-actions.c:729
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Selection: Switch to First"
-msgstr "Значок инструмента с перекрестьем"
+msgstr "Выбор инструмента: переключиться на первый"
 
 #: ../app/actions/context-actions.c:733
-#, fuzzy
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Last"
-msgstr "Превратить выделение в контур"
+msgstr "Выбор инструмента: переключиться на последний"
 
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr ""
+msgstr "Выбор инструмента: переключиться на предыдущий"
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Next"
-msgstr ""
+msgstr "Выбор инструмента: переключиться на следующий"
 
 #: ../app/actions/context-actions.c:749
 msgctxt "context-action"
 msgid "Brush Selection: Select by Index"
-msgstr ""
+msgstr "Выбор кисти: по индексу"
 
 #: ../app/actions/context-actions.c:753
 msgctxt "context-action"
 msgid "Brush Selection: Switch to First"
-msgstr ""
+msgstr "Выбор кисти: переключиться на первую"
 
 #: ../app/actions/context-actions.c:757
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Last"
-msgstr "Превратить выделение в контур"
+msgstr "Выбор кисти: переключиться на последнюю"
 
 #: ../app/actions/context-actions.c:761
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Previous"
-msgstr ""
+msgstr "Выбор кисти: переключиться на предыдущую"
 
 #: ../app/actions/context-actions.c:765
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Next"
-msgstr ""
+msgstr "Выбор кисти: переключиться на следующую"
 
 #: ../app/actions/context-actions.c:773
 msgctxt "context-action"
 msgid "Pattern Selection: Select by Index"
-msgstr ""
+msgstr "Выбор текстуры: по индексу"
 
 #: ../app/actions/context-actions.c:777
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to First"
-msgstr ""
+msgstr "Выбор текстуры: переключиться на первую"
 
 #: ../app/actions/context-actions.c:781
-#, fuzzy
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Last"
-msgstr "Плавающее выделение в слой"
+msgstr "Выбор текстуры: переключиться на последнюю"
 
 #: ../app/actions/context-actions.c:785
-#, fuzzy
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Previous"
-msgstr "Обвести выделенное с последними значениями"
+msgstr "Выбор текстуры: переключиться на предыдущую"
 
 #: ../app/actions/context-actions.c:789
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Next"
-msgstr ""
+msgstr "Выбор текстуры: переключиться на следующую"
 
 #: ../app/actions/context-actions.c:797
 msgctxt "context-action"
 msgid "Palette Selection: Select by Index"
-msgstr ""
+msgstr "Выбор палитры: по индексу"
 
 #: ../app/actions/context-actions.c:801
-#, fuzzy
 msgctxt "context-action"
 msgid "Palette Selection: Switch to First"
-msgstr "Преобразовать маску в выделение"
+msgstr "Выбор палитры: переключиться на первую"
 
 #: ../app/actions/context-actions.c:805
-#, fuzzy
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Last"
-msgstr "Создать из канала выделенную область"
+msgstr "Выбор палитры: переключиться на последнюю"
 
 #: ../app/actions/context-actions.c:809
-#, fuzzy
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Previous"
-msgstr "Обвести выделенное с последними значениями"
+msgstr "Выбор палитры: переключиться на предыдущую"
 
 #: ../app/actions/context-actions.c:813
-#, fuzzy
 msgctxt "context-action"
 msgid "Palette Selection: Switch to Next"
-msgstr "Создать из канала выделенную область"
+msgstr "Выбор палитры: переключиться на следующую"
 
 #: ../app/actions/context-actions.c:821
 msgctxt "context-action"
 msgid "Gradient Selection: Select by Index"
-msgstr ""
+msgstr "Выбор градиента: выбрать по индексу"
 
 #: ../app/actions/context-actions.c:825
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to First"
-msgstr ""
+msgstr "Выбор градиента: переключиться на первый"
 
 #: ../app/actions/context-actions.c:829
-#, fuzzy
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Last"
-msgstr "Плавающее выделение в слой"
+msgstr "Выбор градиента: переключиться на последний"
 
 #: ../app/actions/context-actions.c:833
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Previous"
-msgstr ""
+msgstr "Выбор градиента: переключиться на предыдущий"
 
 #: ../app/actions/context-actions.c:837
 msgctxt "context-action"
 msgid "Gradient Selection: Switch to Next"
-msgstr ""
+msgstr "Выбор градиента: переключиться на следующий"
 
 #: ../app/actions/context-actions.c:845
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Select by Index"
 msgstr "Плавающее выделение в слой"
 
 #: ../app/actions/context-actions.c:849
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Switch to First"
 msgstr "Плавающее выделение в слой"
 
 #: ../app/actions/context-actions.c:853
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Switch to Last"
 msgstr "Плавающее выделение в слой"
 
 #: ../app/actions/context-actions.c:857
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Switch to Previous"
 msgstr "Обвести выделенное с последними значениями"
 
 #: ../app/actions/context-actions.c:861
-#, fuzzy
 msgctxt "context-action"
 msgid "Font Selection: Switch to Next"
 msgstr "Плавающее выделение в слой"
 
 #: ../app/actions/context-actions.c:869
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set"
-msgstr "Интервал кисти"
+msgstr "Интервал кисти (редактор): установить"
 
 #: ../app/actions/context-actions.c:873
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set to Minimum"
-msgstr ""
+msgstr "Интервал кисти (редактор): сделать минимальным"
 
 #: ../app/actions/context-actions.c:877
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set to Maximum"
-msgstr ""
+msgstr "Интервал кисти (редактор): сделать максимальным"
 
 #: ../app/actions/context-actions.c:881
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Decrease by 1"
-msgstr ""
+msgstr "Интервал кисти (редактор): уменьшить на 1"
 
 #: ../app/actions/context-actions.c:885
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Increase by 1"
-msgstr ""
+msgstr "Интервал кисти (редактор): увеличить на 1"
 
 #: ../app/actions/context-actions.c:889
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Decrease by 10"
-msgstr ""
+msgstr "Интервал кисти (редактор): уменьшить на 10"
 
 #: ../app/actions/context-actions.c:893
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Increase by 10"
-msgstr ""
+msgstr "Интервал кисти (редактор): увеличить на 10"
 
 #: ../app/actions/context-actions.c:901
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Circular"
-msgstr ""
+msgstr "Форма кисти (редактор): окружность"
 
 #: ../app/actions/context-actions.c:905
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Square"
-msgstr "Меню редактора кистей"
+msgstr "Форма кисти (редактор): квадрат"
 
 #: ../app/actions/context-actions.c:909
 msgctxt "context-action"
 msgid "Brush Shape (Editor): Use Diamond"
-msgstr ""
+msgstr "Форма кисти (редактор): ромб"
 
 #: ../app/actions/context-actions.c:917
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set"
-msgstr "Меню редактора кистей"
+msgstr "Радиус кисти (редактор): установить"
 
 #: ../app/actions/context-actions.c:921
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set to Minimum"
-msgstr ""
+msgstr "Радиус кисти (редактор): сделать минимальным"
 
 #: ../app/actions/context-actions.c:925
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Set to Maximum"
-msgstr ""
+msgstr "Радиус кисти (редактор): сделать максимальным"
 
 #: ../app/actions/context-actions.c:929
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Радиус кисти (редактор): уменьшить на 0,1"
 
 #: ../app/actions/context-actions.c:933
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Радиус кисти (редактор): увеличить на 0,1"
 
 #: ../app/actions/context-actions.c:937
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 1"
-msgstr ""
+msgstr "Радиус кисти (редактор): уменьшить на 1"
 
 #: ../app/actions/context-actions.c:941
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 1"
-msgstr ""
+msgstr "Радиус кисти (редактор): увеличить на 1"
 
 #: ../app/actions/context-actions.c:945
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease by 10"
-msgstr ""
+msgstr "Радиус кисти (редактор): уменьшить на 10"
 
 #: ../app/actions/context-actions.c:949
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase by 10"
-msgstr ""
+msgstr "Радиус кисти (редактор): увеличить на 10"
 
 #: ../app/actions/context-actions.c:953
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Decrease Relative"
-msgstr ""
+msgstr "Радиус кисти (редактор): уменьшить относительно"
 
 #: ../app/actions/context-actions.c:957
 msgctxt "context-action"
 msgid "Brush Radius (Editor): Increase Relative"
-msgstr ""
+msgstr "Радиус кисти (редактор): увеличить относительно"
 
 #: ../app/actions/context-actions.c:965
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set"
-msgstr "Меню редактора кистей"
+msgstr "Кол-во лучей кисти (редактор): установить"
 
 #: ../app/actions/context-actions.c:969
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Minimum"
-msgstr ""
+msgstr "Кол-во лучей кисти (редактор): сделать минимальным"
 
 #: ../app/actions/context-actions.c:973
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Set to Maximum"
-msgstr ""
+msgstr "Кол-во лучей кисти (редактор): сделать максимальным"
 
 #: ../app/actions/context-actions.c:977
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 1"
-msgstr ""
+msgstr "Кол-во лучей кисти (редактор): уменьшить на 1"
 
 #: ../app/actions/context-actions.c:981
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 1"
-msgstr ""
+msgstr "Кол-во лучей кисти (редактор): увеличить на 1"
 
 #: ../app/actions/context-actions.c:985
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Decrease by 4"
-msgstr ""
+msgstr "Кол-во лучей кисти (редактор): уменьшить на 4"
 
 #: ../app/actions/context-actions.c:989
 msgctxt "context-action"
 msgid "Brush Spikes (Editor): Increase by 4"
-msgstr ""
+msgstr "Кол-во лучей кисти (редактор): увеличить на 4"
 
 #: ../app/actions/context-actions.c:997
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set"
-msgstr "Жесткость кисти"
+msgstr "Жёсткость кисти (редактор): установить"
 
 #: ../app/actions/context-actions.c:1001
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set to Minimum"
-msgstr ""
+msgstr "Жёсткость кисти (редактор): сделать минимальной"
 
 #: ../app/actions/context-actions.c:1005
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Set to Maximum"
-msgstr ""
+msgstr "Жёсткость кисти (редактор): сделать максимальной"
 
 #: ../app/actions/context-actions.c:1009
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Decrease by 0.01"
-msgstr ""
+msgstr "Жёсткость кисти (редактор): уменьшить на 0,01"
 
 #: ../app/actions/context-actions.c:1013
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Increase by 0.01"
-msgstr ""
+msgstr "Жёсткость кисти (редактор): увеличить на 0,01"
 
 #: ../app/actions/context-actions.c:1017
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Жёсткость кисти (редактор): уменьшить на 0,1"
 
 #: ../app/actions/context-actions.c:1021
 msgctxt "context-action"
 msgid "Brush Hardness (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Жёсткость кисти (редактор): увеличить на 0,1"
 
 #: ../app/actions/context-actions.c:1029
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set"
-msgstr "Соотношение сторон кисти"
+msgstr "Соотношение сторон кисти (редактор): установить"
 
 #: ../app/actions/context-actions.c:1033
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set to Minimum"
-msgstr ""
+msgstr "Соотношение сторон кисти (редактор): сделать минимальным"
 
 #: ../app/actions/context-actions.c:1037
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Set to Maximum"
-msgstr ""
+msgstr "Соотношение сторон кисти (редактор): сделать максимальным"
 
 #: ../app/actions/context-actions.c:1041
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 0.1"
-msgstr ""
+msgstr "Соотношение сторон кисти (редактор): уменьшить на 0,1"
 
 #: ../app/actions/context-actions.c:1045
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 0.1"
-msgstr ""
+msgstr "Соотношение сторон кисти (редактор): увеличить на 0,1"
 
 #: ../app/actions/context-actions.c:1049
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Decrease by 1"
-msgstr "Соотношение сторон кисти"
+msgstr "Соотношение сторон кисти (редактор): уменьшить на 1"
 
 #: ../app/actions/context-actions.c:1053
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Aspect Ratio (Editor): Increase by 1"
-msgstr "Соотношение сторон кисти"
+msgstr "Соотношение сторон кисти (редактор): увеличить на 1"
 
 #: ../app/actions/context-actions.c:1061
-#, fuzzy
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Set"
-msgstr "Меню редактора кистей"
+msgstr "Угол кисти (редактор): установить"
 
 #: ../app/actions/context-actions.c:1065
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Make Horizontal"
-msgstr ""
+msgstr "Угол кисти (редактор): сделать горизонтальной"
 
 #: ../app/actions/context-actions.c:1069
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Make Vertical"
-msgstr ""
+msgstr "Угол кисти (редактор): сделать вертикальной"
 
 #: ../app/actions/context-actions.c:1073
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Right by 1°"
-msgstr ""
+msgstr "Угол кисти (редактор): повернуть вправо на 1°"
 
 #: ../app/actions/context-actions.c:1077
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 1°"
-msgstr ""
+msgstr "Угол кисти (редактор): повернуть влево на 1°"
 
 #: ../app/actions/context-actions.c:1081
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Right by 15°"
-msgstr ""
+msgstr "Угол кисти (редактор): повернуть вправо на 15°"
 
 #: ../app/actions/context-actions.c:1085
 msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 15°"
-msgstr ""
+msgstr "Угол кисти (редактор): повернуть влево на 15°"
 
 #: ../app/actions/context-commands.c:411
 #, c-format
@@ -3207,7 +3114,6 @@ msgid "Flip _Horizontally"
 msgstr "Отразить по _горизонтали"
 
 #: ../app/actions/drawable-actions.c:101
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
 msgstr "Отразить изображение по горизонтали"
@@ -3218,7 +3124,6 @@ msgid "Flip _Vertically"
 msgstr "Отразить по _вертикали"
 
 #: ../app/actions/drawable-actions.c:107
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
 msgstr "Отразить изображение по вертикали"
@@ -3229,7 +3134,6 @@ msgid "Rotate 90° _clockwise"
 msgstr "Повернуть на 90° _по часовой стрелке"
 
 #: ../app/actions/drawable-actions.c:116
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the right"
 msgstr "Повернуть на 90° вправо"
@@ -3240,7 +3144,6 @@ msgid "Rotate _180°"
 msgstr "П_овернуть на 180°"
 
 #: ../app/actions/drawable-actions.c:122
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Turn drawable upside-down"
 msgstr "Повернуть вниз головой"
@@ -3251,7 +3154,6 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "Повернуть на 90° п_ротив часовой стрелки"
 
 #: ../app/actions/drawable-actions.c:128
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
 msgstr "Повернуть на 90° влево"
@@ -3908,7 +3810,6 @@ msgid "Export..."
 msgstr "Экспортировать..."
 
 #: ../app/actions/file-actions.c:160
-#, fuzzy
 msgctxt "file-action"
 msgid "Export the image"
 msgstr "Повторно экспортировать изображение"
@@ -4131,7 +4032,6 @@ msgid "_Antialias"
 msgstr "С_глаживание"
 
 #: ../app/actions/filters-actions.c:109
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Color Enhance"
 msgstr "_Максимальная цветность..."
@@ -4152,7 +4052,6 @@ msgid "_Value Invert"
 msgstr "Инвертировать _яркость"
 
 #: ../app/actions/filters-actions.c:129
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Stretch Contrast HSV"
 msgstr "Растягивание контраста в HSV"
@@ -4373,7 +4272,6 @@ msgid "_High Pass..."
 msgstr "_Высокочастотный фильтр..."
 
 #: ../app/actions/filters-actions.c:367
-#, fuzzy
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
 msgstr "Тон-_Цветность..."
@@ -4609,7 +4507,6 @@ msgid "_Stretch Contrast..."
 msgstr "Растянуть _контраст..."
 
 #: ../app/actions/filters-actions.c:602
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Кривые..."
@@ -4660,7 +4557,6 @@ msgid "_Vignette..."
 msgstr "_Виньетирование..."
 
 #: ../app/actions/filters-actions.c:652
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Волны..."
@@ -5043,7 +4939,6 @@ msgid "Replicate Gradient Selection"
 msgstr "Сделать копию выделения градиента"
 
 #: ../app/actions/gradient-editor-commands.c:483
-#, fuzzy
 msgid "_Replicate"
 msgstr "Создать копию"
 
@@ -5505,7 +5400,6 @@ msgid "8 bit integer"
 msgstr "8 бит, целочисленное"
 
 #: ../app/actions/image-actions.c:213
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Преобразовать изображение в индексированное"
@@ -5516,7 +5410,6 @@ msgid "16 bit integer"
 msgstr "16 бит, целочисленное"
 
 #: ../app/actions/image-actions.c:219
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Преобразовать изображение в индексированное"
@@ -5527,7 +5420,6 @@ msgid "32 bit integer"
 msgstr "32 бита, целочисленное"
 
 #: ../app/actions/image-actions.c:225
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Преобразовать изображение в индексированное"
@@ -5538,7 +5430,6 @@ msgid "16 bit floating point"
 msgstr "16 бит, с плавающей точкой"
 
 #: ../app/actions/image-actions.c:231
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Преобразовать изображение в индексированное"
@@ -5549,7 +5440,6 @@ msgid "32 bit floating point"
 msgstr "32 бита, с плавающей точкой"
 
 #: ../app/actions/image-actions.c:237
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Преобразовать изображение в индексированное"
@@ -5560,7 +5450,6 @@ msgid "64 bit floating point"
 msgstr "64 бита, с плавающей точкой"
 
 #: ../app/actions/image-actions.c:243
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
 msgstr "Преобразовать изображение в индексированное"
@@ -5571,7 +5460,6 @@ msgid "Perceptual gamma (sRGB)"
 msgstr "Пространство с гамма-коррекцией (sRGB)"
 
 #: ../app/actions/image-actions.c:252
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to preceptual (sRGB) gamma"
 msgstr "Преобразовать изображение в градации серого"
@@ -5688,14 +5576,12 @@ msgstr ""
 "что выделенная область пуста."
 
 #: ../app/actions/image-commands.c:884
-#, fuzzy
 msgid "Cannot crop because the image has no content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
 "что выделенная область пуста."
 
 #: ../app/actions/image-commands.c:890
-#, fuzzy
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
@@ -5785,7 +5671,6 @@ msgid "Delete this image"
 msgstr "Удалить это изображение"
 
 #: ../app/actions/items-commands.c:208 ../app/actions/items-commands.c:253
-#, fuzzy
 msgid "There is no active layer or channel to fill."
 msgstr "Нет активного слоя или канала для вырезания."
 
@@ -5860,13 +5745,11 @@ msgid "Layer _Mode"
 msgstr "Режим с_лоя"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
 msgctxt "layers-action"
 msgid "Default edit action"
 msgstr "_Интерполяция по умолчанию:"
 
 #: ../app/actions/layers-actions.c:90
-#, fuzzy
 msgctxt "layers-action"
 msgid "Activate the default edit action for this type of layer"
 msgstr "Использовать текстовый инструмент в этом текстовом слое"
@@ -6191,26 +6074,22 @@ msgid "Dismiss the effect of the layer mask"
 msgstr "Удалить эффект маски слоя"
 
 #: ../app/actions/layers-actions.c:306
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Visible"
 msgstr "_Видимый"
 
 #: ../app/actions/layers-actions.c:312
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Linked"
 msgstr "С_вязанный"
 
 #. GIMP_ICON_LOCK
 #: ../app/actions/layers-actions.c:318
-#, fuzzy
 msgctxt "layers-action"
 msgid "L_ock pixels"
 msgstr "_Заблокировать пикселы"
 
 #: ../app/actions/layers-actions.c:324
-#, fuzzy
 msgctxt "layers-action"
 msgid "L_ock position"
 msgstr "Заблокировать _контур от изменений"
@@ -6226,7 +6105,6 @@ msgid "Keep transparency information on this layer from being modified"
 msgstr "Предохранить прозрачность слоя от изменений"
 
 #: ../app/actions/layers-actions.c:341
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
 msgstr "Пространство смешивания"
@@ -6237,7 +6115,6 @@ msgid "Layer Blend Space: RGB (linear)"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:351
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
 msgstr "RGB (гамма-корректированный)"
@@ -6258,7 +6135,6 @@ msgid "Layer Composite Space: RGB (perceptual)"
 msgstr "Пространство совмещения слоя: RBG (нелинейное)"
 
 #: ../app/actions/layers-actions.c:377
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
 msgstr "Режим совмещения"
@@ -6274,7 +6150,6 @@ msgid "Layer Composite Mode: Source Atop"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:392
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Source In"
 msgstr "Режим совмещения"
@@ -6291,7 +6166,6 @@ msgid "None"
 msgstr "Нет"
 
 #: ../app/actions/layers-actions.c:406
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Clear"
 msgstr "Цветовая метка"
@@ -6302,7 +6176,6 @@ msgid "Blue"
 msgstr "Синий"
 
 #: ../app/actions/layers-actions.c:412
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Set to Blue"
 msgstr "Сохранить сообщения об ошибках в файл"
@@ -6313,7 +6186,6 @@ msgid "Green"
 msgstr "Зелёный"
 
 #: ../app/actions/layers-actions.c:418
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Set to Green"
 msgstr "Назначить зелёную цветовую метку"
@@ -6324,7 +6196,6 @@ msgid "Yellow"
 msgstr "Жёлтый"
 
 #: ../app/actions/layers-actions.c:424
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Set to Yellow"
 msgstr "Назначить жёлтую цветовую метку"
@@ -6335,7 +6206,6 @@ msgid "Orange"
 msgstr "Оранжевый"
 
 #: ../app/actions/layers-actions.c:430
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Set to Orange"
 msgstr "Указать заказной угол вращения"
@@ -6346,7 +6216,6 @@ msgid "Brown"
 msgstr "Коричневый"
 
 #: ../app/actions/layers-actions.c:436
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Set to Brown"
 msgstr "Назначить коричневую цветовую метку"
@@ -6357,7 +6226,6 @@ msgid "Red"
 msgstr "Красный"
 
 #: ../app/actions/layers-actions.c:442
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Set to red"
 msgstr "без управления цветом"
@@ -6368,7 +6236,6 @@ msgid "Violet"
 msgstr "Фиолетовый"
 
 #: ../app/actions/layers-actions.c:448
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Set to violet"
 msgstr "Не управлять цветом этого окна"
@@ -6379,7 +6246,6 @@ msgid "Gray"
 msgstr "Серый"
 
 #: ../app/actions/layers-actions.c:454
-#, fuzzy
 msgctxt "layers-action"
 msgid "Color Tag: Set to gray"
 msgstr "Обесцвечивание: перевод цветов в градации серого"
@@ -6627,14 +6493,12 @@ msgid "Crop Layer to Content"
 msgstr "Обрезать до содержимого"
 
 #: ../app/actions/layers-commands.c:855
-#, fuzzy
 msgid "Cannot crop because the active layer has no content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
 "что выделенная область пуста."
 
 #: ../app/actions/layers-commands.c:862
-#, fuzzy
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Не удалось вырезать из-за того,\n"
@@ -6876,7 +6740,6 @@ msgid "_Edit Palette..."
 msgstr "_Изменить палитру..."
 
 #: ../app/actions/palettes-actions.c:100
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Edit this palette"
 msgstr "Правка палитры"
@@ -7198,7 +7061,6 @@ msgid "_Fill Selection Outline..."
 msgstr "Залить вы_деление..."
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
 msgctxt "select-action"
 msgid "Fill the selection outline"
 msgstr "Показывать границу выделения"
@@ -7209,7 +7071,6 @@ msgid "_Fill Selection Outline"
 msgstr "Залить вы_деление"
 
 #: ../app/actions/select-actions.c:124
-#, fuzzy
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
 msgstr "Обвести выделенное с последними значениями"
@@ -7252,7 +7113,6 @@ msgstr "Уменьшить выделение на"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:230 ../app/actions/select-commands.c:356
-#, fuzzy
 msgid "_Selected areas continue outside the image"
 msgstr "Выделить одну смежную областей"
 
@@ -7366,7 +7226,6 @@ msgstr "Удалить шаблон"
 
 #: ../app/actions/templates-commands.c:245
 #: ../app/dialogs/data-delete-dialog.c:87 ../app/widgets/gimpdeviceeditor.c:509
-#, fuzzy
 msgid "_Delete"
 msgstr "_Удалить"
 
@@ -7580,25 +7439,21 @@ msgid "Tool Preset Editor Menu"
 msgstr "Меню редактора профилей инструментов"
 
 #: ../app/actions/tool-preset-editor-actions.c:48
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "_Save Tool Options to Preset"
 msgstr "_Сохранять параметры инструментов при выходе"
 
 #: ../app/actions/tool-preset-editor-actions.c:49
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Save the active tool options to this tool preset"
 msgstr "Сохранить параметры инструментов при выходе из GIMP."
 
 #: ../app/actions/tool-preset-editor-actions.c:55
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "_Restore Tool Preset"
 msgstr "_Восстановить профиль инструмента"
 
 #: ../app/actions/tool-preset-editor-actions.c:56
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Restore this tool preset"
 msgstr "Удалить этот профиль инструмента"
@@ -7660,25 +7515,21 @@ msgid "Show tool preset file location in the file manager"
 msgstr "Показать расположение файла профиля инструмента в файловом менеджере"
 
 #: ../app/actions/tool-presets-actions.c:74
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Save Tool Options to Preset"
 msgstr "_Сохранять параметры инструментов при выходе"
 
 #: ../app/actions/tool-presets-actions.c:75
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Save the active tool options to this tool preset"
 msgstr "Сохранить параметры инструментов при выходе из GIMP."
 
 #: ../app/actions/tool-presets-actions.c:81
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
 msgstr "_Восстановить профиль инструмента"
 
 #: ../app/actions/tool-presets-actions.c:82
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
 msgstr "Удалить этот профиль инструмента"
@@ -7759,7 +7610,6 @@ msgid "Rotate by an arbitrary angle"
 msgstr "Повернуть на произвольный угол"
 
 #: ../app/actions/tools-actions.c:151
-#, fuzzy
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
 msgstr "Аэрограф"
@@ -7795,7 +7645,6 @@ msgid "Airbrush Rate: Increase by 10"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:183
-#, fuzzy
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
 msgstr "Аэрограф"
@@ -7836,7 +7685,6 @@ msgid "Tool's Opacity: Set"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:268
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
 msgstr "_Восстановить исходные параметры инструментов"
@@ -7887,7 +7735,6 @@ msgid "Tool's Size: Set"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:312
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
 msgstr "Восстановить значения по умолчанию"
@@ -7933,13 +7780,11 @@ msgid "Tool's Size: Increase Relative"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:352
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set"
 msgstr "Соотношение сторон кисти"
 
 #: ../app/actions/tools-actions.c:356
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
 msgstr "_Восстановить исходные параметры инструментов"
@@ -8040,7 +7885,6 @@ msgid "Tool's Spacing: Set"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:444
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
 msgstr "_Восстановить исходные параметры инструментов"
@@ -8086,13 +7930,11 @@ msgid "Tool's Spacing: Increase Relative"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:484
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set"
 msgstr "Профиль инструмента"
 
 #: ../app/actions/tools-actions.c:488
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
 msgstr "Восстановить значения по умолчанию"
@@ -8138,13 +7980,11 @@ msgid "Tool's Hardness: Increase Relative"
 msgstr ""
 
 #: ../app/actions/tools-actions.c:528
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Force: Set"
 msgstr "Профиль инструмента"
 
 #: ../app/actions/tools-actions.c:532
-#, fuzzy
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
 msgstr "Восстановить значения по умолчанию"
@@ -8201,13 +8041,11 @@ msgid "Color Tag"
 msgstr "Цветовая метка"
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Edit Pa_th"
 msgstr "Изменить кисть MyPaint"
 
 #: ../app/actions/vectors-actions.c:55
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Edit the active path"
 msgstr "Экспортировать текущий контур"
@@ -8313,19 +8151,16 @@ msgid "Fill Path..."
 msgstr "Залить контур..."
 
 #: ../app/actions/vectors-actions.c:120
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Fill the path"
 msgstr "Обрисовать контур заданным образом"
 
 #: ../app/actions/vectors-actions.c:125
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Fill Path"
 msgstr "Отразить контур"
 
 #: ../app/actions/vectors-actions.c:126
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
 msgstr "Обрисовать контур с параметрами как в предыдущий раз"
@@ -8398,7 +8233,6 @@ msgid "None"
 msgstr "Нет"
 
 #: ../app/actions/vectors-actions.c:194
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Clear"
 msgstr "Цветовая метка"
@@ -8409,7 +8243,6 @@ msgid "Blue"
 msgstr "Синий"
 
 #: ../app/actions/vectors-actions.c:200
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Blue"
 msgstr "Сохранить сообщения об ошибках в файл"
@@ -8420,7 +8253,6 @@ msgid "Green"
 msgstr "Зелёный"
 
 #: ../app/actions/vectors-actions.c:206
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Green"
 msgstr "Назначить зелёную цветовую метку"
@@ -8431,7 +8263,6 @@ msgid "Yellow"
 msgstr "Жёлтый"
 
 #: ../app/actions/vectors-actions.c:212
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Yellow"
 msgstr "Назначить жёлтую цветовую метку"
@@ -8442,7 +8273,6 @@ msgid "Orange"
 msgstr "Оранжевый"
 
 #: ../app/actions/vectors-actions.c:218
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Orange"
 msgstr "Указать заказной угол вращения"
@@ -8453,7 +8283,6 @@ msgid "Brown"
 msgstr "Коричневый"
 
 #: ../app/actions/vectors-actions.c:224
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Brown"
 msgstr "Назначить коричневую цветовую метку"
@@ -8464,7 +8293,6 @@ msgid "Red"
 msgstr "Красный"
 
 #: ../app/actions/vectors-actions.c:230
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Red"
 msgstr "без управления цветом"
@@ -8475,7 +8303,6 @@ msgid "Violet"
 msgstr "Фиолетовый"
 
 #: ../app/actions/vectors-actions.c:236
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Violet"
 msgstr "Не управлять цветом этого окна"
@@ -8486,7 +8313,6 @@ msgid "Gray"
 msgstr "Серый"
 
 #: ../app/actions/vectors-actions.c:242
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Color Tag: Set to gray"
 msgstr "Обесцвечивание: перевод цветов в градации серого"
@@ -8567,49 +8393,41 @@ msgid "Advanced options"
 msgstr "Расширенные параметры"
 
 #: ../app/actions/vectors-actions.c:304
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select _Top Path"
 msgstr "Перейти на верхний _слой"
 
 #: ../app/actions/vectors-actions.c:305
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select the topmost path"
 msgstr "Перейти на самый верхний слой"
 
 #: ../app/actions/vectors-actions.c:310
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select _Bottom Path"
 msgstr "Перейти на _нижний слой"
 
 #: ../app/actions/vectors-actions.c:311
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select the bottommost path"
 msgstr "Перейти на самый низкий слой"
 
 #: ../app/actions/vectors-actions.c:316
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
 msgstr "Перейти на _предыдущий слой"
 
 #: ../app/actions/vectors-actions.c:317
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
 msgstr "Перейти на слой над текущим"
 
 #: ../app/actions/vectors-actions.c:322
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select _Next Path"
 msgstr "Перейти на _следующий слой"
 
 #: ../app/actions/vectors-actions.c:323
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "Перейти на слой ниже текущего"
@@ -8632,7 +8450,6 @@ msgstr "Создать контур"
 
 #: ../app/actions/vectors-commands.c:425 ../app/tools/gimpvectoroptions.c:202
 #: ../app/tools/gimpvectortool.c:740
-#, fuzzy
 msgid "Fill Path"
 msgstr "Отразить контур"
 
@@ -8864,7 +8681,6 @@ msgid "_Mark Out Of Gamut Colors"
 msgstr "_Помечать цвета вне охвата"
 
 #: ../app/actions/view-actions.c:207
-#, fuzzy
 msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
@@ -9014,7 +8830,6 @@ msgid "Toggle fullscreen view"
 msgstr "Переключиться в полноэкранный режим или выйти из него"
 
 #: ../app/actions/view-actions.c:315
-#, fuzzy
 msgctxt "view-action"
 msgid "Set zoom factor"
 msgstr "Указать другой коэффициент масштабирования"
@@ -9060,13 +8875,11 @@ msgid "Zoom In"
 msgstr "Увеличить"
 
 #: ../app/actions/view-actions.c:354
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom out a lot"
 msgstr "Уменьшить масштаб просмотра"
 
 #: ../app/actions/view-actions.c:359
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom in a lot"
 msgstr "Увеличить масштаб просмотра"
@@ -9177,7 +8990,6 @@ msgid "Flip Horizontally"
 msgstr "Отразить по горизонтали"
 
 #: ../app/actions/view-actions.c:461
-#, fuzzy
 msgctxt "view-action"
 msgid "Flip the view horizontally"
 msgstr "Отразить изображение по горизонтали"
@@ -9188,7 +9000,6 @@ msgid "Flip Vertically"
 msgstr "Отразить по вертикали"
 
 #: ../app/actions/view-actions.c:468
-#, fuzzy
 msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "Отразить изображение по вертикали"
@@ -9199,7 +9010,6 @@ msgid "_Reset Flip & Rotate"
 msgstr "С_бросить зеркалирование и вращение"
 
 #: ../app/actions/view-actions.c:484
-#, fuzzy
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "Сбросить параметров фильтров"
@@ -9210,7 +9020,6 @@ msgid "Rotate 15° _clockwise"
 msgstr "П_овернуть на 15° по часовой стрелке"
 
 #: ../app/actions/view-actions.c:493
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "Повернуть изображение на 90 градусов вправо"
@@ -9221,7 +9030,6 @@ msgid "Rotate 90° _clockwise"
 msgstr "Повернуть на 90° _по часовой стрелке"
 
 #: ../app/actions/view-actions.c:499
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "Повернуть изображение на 90 градусов вправо"
@@ -9232,7 +9040,6 @@ msgid "Rotate _180°"
 msgstr "П_овернуть на 180°"
 
 #: ../app/actions/view-actions.c:505
-#, fuzzy
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "Повернуть изображение вверх ногами"
@@ -9243,7 +9050,6 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "Повернуть на 90° п_ротив часовой стрелки"
 
 #: ../app/actions/view-actions.c:511
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "Повернуть изображение на 90 градусов влево"
@@ -9254,7 +9060,6 @@ msgid "Rotate 15° counter-clock_wise"
 msgstr "По_вернуть на 15° против часовой стрелки"
 
 #: ../app/actions/view-actions.c:517
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "Повернуть изображение на 90 градусов влево"
@@ -9265,7 +9070,6 @@ msgid "_Perceptual"
 msgstr "_Воспринимаемая"
 
 #: ../app/actions/view-actions.c:526
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "Тип _цветопередачи:"
@@ -9276,7 +9080,6 @@ msgid "_Relative Colorimetric"
 msgstr "_Относительная колориметрическая"
 
 #: ../app/actions/view-actions.c:532
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "_Цветопередача монитора:"
@@ -9287,7 +9090,6 @@ msgid "_Saturation"
 msgstr "_Насыщенная"
 
 #: ../app/actions/view-actions.c:538
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "Тип _цветопередачи:"
@@ -9298,7 +9100,6 @@ msgid "_Absolute Colorimetric"
 msgstr "_Абсолютная колориметрическая"
 
 #: ../app/actions/view-actions.c:544
-#, fuzzy
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "_Цветопередача монитора:"
@@ -9379,37 +9180,31 @@ msgid "Set horizontal scroll offset"
 msgstr ""
 
 #: ../app/actions/view-actions.c:618
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Прокрутка влево"
 
 #: ../app/actions/view-actions.c:623
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Прокрутка вправо"
 
 #: ../app/actions/view-actions.c:628
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Прокрутка влево"
 
 #: ../app/actions/view-actions.c:633
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Прокрутка вправо"
 
 #: ../app/actions/view-actions.c:638
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Прокрутка влево"
 
 #: ../app/actions/view-actions.c:643
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Прокрутка вправо"
@@ -9420,37 +9215,31 @@ msgid "Set vertical scroll offset"
 msgstr ""
 
 #: ../app/actions/view-actions.c:656
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Назначить оранжевую цветовую метку"
 
 #: ../app/actions/view-actions.c:661
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Отсечен по нижнему слою"
 
 #: ../app/actions/view-actions.c:666
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Прокрутка вверх"
 
 #: ../app/actions/view-actions.c:671
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Прокрутка вниз"
 
 #: ../app/actions/view-actions.c:676
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Прокрутка вверх"
 
 #: ../app/actions/view-actions.c:681
-#, fuzzy
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Прокрутка вниз"
@@ -9575,7 +9364,6 @@ msgid "Hide Docks"
 msgstr "Скрыть стыкуемые диалоги"
 
 #: ../app/actions/windows-actions.c:124
-#, fuzzy
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
@@ -9709,31 +9497,26 @@ msgid "Guess ideal size"
 msgstr "Угадать идеальный размер"
 
 #: ../app/config/config-enums.c:179
-#, fuzzy
 msgctxt "icon-size"
 msgid "Theme-set size"
 msgstr "Стили оформления"
 
 #: ../app/config/config-enums.c:180
-#, fuzzy
 msgctxt "icon-size"
 msgid "Small size"
 msgstr "Размер изображения"
 
 #: ../app/config/config-enums.c:181
-#, fuzzy
 msgctxt "icon-size"
 msgid "Medium size"
 msgstr "Средние тире"
 
 #: ../app/config/config-enums.c:182
-#, fuzzy
 msgctxt "icon-size"
 msgid "Large size"
 msgstr "Размер изображения"
 
 #: ../app/config/config-enums.c:183
-#, fuzzy
 msgctxt "icon-size"
 msgid "Huge size"
 msgstr "Размер изображения"
@@ -9954,7 +9737,6 @@ msgid "Sets the browser used by the help system."
 msgstr "Укажите, какой браузер должна использовать справочная система."
 
 #: ../app/config/gimprc-blurbs.h:176
-#, fuzzy
 msgid "How many recent settings to keep around in filter tools."
 msgstr "Количество названий ранее открывавшихся файлов, отображаемых в меню."
 
@@ -10067,7 +9849,6 @@ msgstr ""
 "изображения."
 
 #: ../app/config/gimprc-blurbs.h:256
-#, fuzzy
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr "Установить количество процессоров, используемых GIMP одновременно."
 
@@ -10092,7 +9873,6 @@ msgid "Sets the default quick mask color."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:290
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -10100,7 +9880,6 @@ msgid ""
 msgstr "Размер окна автоматически изменяется при масштабировании изображения."
 
 #: ../app/config/gimprc-blurbs.h:295
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
@@ -10323,86 +10102,72 @@ msgstr ""
 "другим пользователям права на просмотр и изменение этого каталога."
 
 #: ../app/config/gimprc-blurbs.h:449
-#, fuzzy
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:452
-#, fuzzy
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:456
-#, fuzzy
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:459
-#, fuzzy
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:462
-#, fuzzy
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:465
-#, fuzzy
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:468
-#, fuzzy
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:471
-#, fuzzy
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:474
-#, fuzzy
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:477
-#, fuzzy
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:480
-#, fuzzy
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:483
-#, fuzzy
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:486
-#, fuzzy
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:489
-#, fuzzy
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
@@ -10412,27 +10177,22 @@ msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:495
-#, fuzzy
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:498
-#, fuzzy
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:501
-#, fuzzy
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:504
-#, fuzzy
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:507
-#, fuzzy
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
@@ -10441,7 +10201,6 @@ msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:513
-#, fuzzy
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
@@ -10454,18 +10213,15 @@ msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:522
-#, fuzzy
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:525
-#, fuzzy
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:528
-#, fuzzy
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
@@ -10479,51 +10235,42 @@ msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:537
-#, fuzzy
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:540
-#, fuzzy
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:543
-#, fuzzy
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:546
-#, fuzzy
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:549
-#, fuzzy
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:552
-#, fuzzy
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:555
-#, fuzzy
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:558
-#, fuzzy
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
 #: ../app/config/gimprc-blurbs.h:561
-#, fuzzy
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
@@ -10534,7 +10281,6 @@ msgid ""
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:568
-#, fuzzy
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
@@ -10545,7 +10291,6 @@ msgid ""
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:575
-#, fuzzy
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr "Установить размер миниатюры в диалоге открытия файлов."
 
@@ -11366,13 +11111,11 @@ msgid "Use the entire layer as input"
 msgstr "Обрабатывать весь слой"
 
 #: ../app/core/core-enums.c:1157
-#, fuzzy
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Жёсткость"
 
 #: ../app/core/core-enums.c:1158
-#, fuzzy
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Сглаженная"
@@ -11448,7 +11191,6 @@ msgid "Updating tag cache"
 msgstr "Обновляется кэш меток"
 
 #: ../app/core/gimp-edit.c:90
-#, fuzzy
 msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Текстовый слой"
@@ -11623,12 +11365,10 @@ msgid "Brush Spacing"
 msgstr "Интервал кисти"
 
 #: ../app/core/gimpbrushclipboard.c:190
-#, fuzzy
 msgid "Clipboard Mask"
 msgstr "Буфер обмена"
 
 #: ../app/core/gimpbrushclipboard.c:192 ../app/core/gimppatternclipboard.c:169
-#, fuzzy
 msgid "Clipboard Image"
 msgstr "Буфер обмена"
 
@@ -11718,7 +11458,6 @@ msgid "Select by Color"
 msgstr "Выделение по цвету"
 
 #: ../app/core/gimpchannel-select.c:616
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Выделение по цвету"
@@ -11764,7 +11503,6 @@ msgid "Fill Channel"
 msgstr "Заливка канала"
 
 #: ../app/core/gimpchannel.c:300
-#, fuzzy
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Обвести канал"
@@ -11828,7 +11566,6 @@ msgid "Invert Channel"
 msgstr "Инвертирование канала"
 
 #: ../app/core/gimpchannel.c:336
-#, fuzzy
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Ограничить канал"
@@ -11844,13 +11581,11 @@ msgid "Shrink Channel"
 msgstr "Уменьшение канала"
 
 #: ../app/core/gimpchannel.c:339
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Отражение канала"
 
 #: ../app/core/gimpchannel.c:844
-#, fuzzy
 msgid "Cannot fill empty channel."
 msgstr "Невозможно обвести пустой канал"
 
@@ -12014,7 +11749,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:509
+#: ../app/core/gimpdrawable.c:508
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Масштабирование"
@@ -12062,7 +11797,6 @@ msgid "Levels"
 msgstr "Уровни"
 
 #: ../app/core/gimpdrawable-offset.c:249
-#, fuzzy
 msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Сдвиг изображения"
@@ -12156,13 +11890,13 @@ msgid "Corrupt segment %d."
 msgstr ""
 
 #: ../app/core/gimpgradient-load.c:214 ../app/core/gimpgradient-load.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Segments do not span the range 0-1."
 msgstr ""
 "Файл градиента '%s' повреждён: сегменты не находятся в промежутке от 0 до 1."
 
 #: ../app/core/gimpgradient-load.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "In line %d of gradient file: "
 msgstr "Некорректное пустое название градиента"
 
@@ -12210,7 +11944,6 @@ msgid "Vertical spacing of grid lines."
 msgstr "Расстояние между вертикальными линиями"
 
 #: ../app/core/gimpgrid.c:123
-#, fuzzy
 msgid "Spacing unit"
 msgstr "Интервал"
 
@@ -12239,41 +11972,41 @@ msgstr ""
 msgid "Offset unit"
 msgstr "Единица смещения"
 
-#: ../app/core/gimpgrouplayer.c:222
+#: ../app/core/gimpgrouplayer.c:242
 msgid "Layer Group"
 msgstr "Группа слоёв"
 
-#: ../app/core/gimpgrouplayer.c:223
+#: ../app/core/gimpgrouplayer.c:243
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Переименование группы слоёв"
 
-#: ../app/core/gimpgrouplayer.c:224
+#: ../app/core/gimpgrouplayer.c:244
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Перемещение группы слоёв"
 
-#: ../app/core/gimpgrouplayer.c:225
+#: ../app/core/gimpgrouplayer.c:245
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Масштабирование группы слоёв"
 
-#: ../app/core/gimpgrouplayer.c:226
+#: ../app/core/gimpgrouplayer.c:246
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Смена размера группы слоёв"
 
-#: ../app/core/gimpgrouplayer.c:227
+#: ../app/core/gimpgrouplayer.c:247
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Отражение группы слоёв"
 
-#: ../app/core/gimpgrouplayer.c:228
+#: ../app/core/gimpgrouplayer.c:248
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Вращение группы слоёв"
 
-#: ../app/core/gimpgrouplayer.c:229
+#: ../app/core/gimpgrouplayer.c:249
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Преобразование группы слоёв"
@@ -12294,63 +12027,63 @@ msgstr " (перезаписано)"
 msgid " (imported)"
 msgstr " (импортировано)"
 
-#: ../app/core/gimpimage.c:2486
+#: ../app/core/gimpimage.c:2487
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Смена разрешения изображения"
 
-#: ../app/core/gimpimage.c:2538
+#: ../app/core/gimpimage.c:2539
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Смена единицы измерения"
 
-#: ../app/core/gimpimage.c:3418
+#: ../app/core/gimpimage.c:3419
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: ../app/core/gimpimage.c:3470
+#: ../app/core/gimpimage.c:3471
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Присоединение паразита к изображению"
 
-#: ../app/core/gimpimage.c:3511
+#: ../app/core/gimpimage.c:3512
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Удаление паразита из изображения"
 
-#: ../app/core/gimpimage.c:4220
+#: ../app/core/gimpimage.c:4221
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Добавление слоя"
 
-#: ../app/core/gimpimage.c:4270 ../app/core/gimpimage.c:4290
+#: ../app/core/gimpimage.c:4271 ../app/core/gimpimage.c:4291
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Удаление слоя"
 
-#: ../app/core/gimpimage.c:4284
+#: ../app/core/gimpimage.c:4285
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Удаление плавающего выделения"
 
-#: ../app/core/gimpimage.c:4449
+#: ../app/core/gimpimage.c:4450
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Добавление канала"
 
-#: ../app/core/gimpimage.c:4487 ../app/core/gimpimage.c:4500
+#: ../app/core/gimpimage.c:4488 ../app/core/gimpimage.c:4501
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Удаление канала"
 
-#: ../app/core/gimpimage.c:4554
+#: ../app/core/gimpimage.c:4555
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Добавление контура"
 
-#: ../app/core/gimpimage.c:4585
+#: ../app/core/gimpimage.c:4586
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Удаление контура"
@@ -12407,7 +12140,6 @@ msgid "Set Colormap"
 msgstr "Установка цветовой карты"
 
 #: ../app/core/gimpimage-colormap.c:241
-#, fuzzy
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Установка цветовой карты"
@@ -12440,73 +12172,61 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Идёт преобразование в индексированные цвета (3 этап)..."
 
 #: ../app/core/gimpimage-convert-precision.c:83
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit linear integer"
 msgstr "Преобразование в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:86
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 8 bit gamma integer"
 msgstr "Преобразование в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:89
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear integer"
 msgstr "Преобразование в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:92
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma integer"
 msgstr "Преобразование в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:95
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear integer"
 msgstr "Преобразование в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:98
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma integer"
 msgstr "Преобразование в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:101
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit linear floating point"
 msgstr "Преобразовать изображение в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:104
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 16 bit gamma floating point"
 msgstr "Преобразовать изображение в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:107
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit linear floating point"
 msgstr "Преобразовать изображение в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:110
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 32 bit gamma floating point"
 msgstr "Преобразовать изображение в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:113
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit linear floating point"
 msgstr "Преобразовать изображение в индексированное"
 
 #: ../app/core/gimpimage-convert-precision.c:116
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to 64 bit gamma floating point"
 msgstr "Преобразовать изображение в индексированное"
@@ -12580,48 +12300,48 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Преобразование элементов"
 
-#: ../app/core/gimpimage-merge.c:134
+#: ../app/core/gimpimage-merge.c:135
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Сведение видимых слоев"
 
-#: ../app/core/gimpimage-merge.c:197
+#: ../app/core/gimpimage-merge.c:198
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Сведение изображения"
 
-#: ../app/core/gimpimage-merge.c:219
+#: ../app/core/gimpimage-merge.c:220
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Невозможно свести изображение без единого видимого слоя"
 
-#: ../app/core/gimpimage-merge.c:262
+#: ../app/core/gimpimage-merge.c:263
 msgid "Cannot merge down to a layer group."
 msgstr "Невозможно выполнить сведение в группу слоёв."
 
-#: ../app/core/gimpimage-merge.c:269
+#: ../app/core/gimpimage-merge.c:270
 msgid "The layer to merge down to is locked."
 msgstr "Слой, в который должно быть выполнено сведение, заперт"
 
-#: ../app/core/gimpimage-merge.c:281
+#: ../app/core/gimpimage-merge.c:282
 msgid "There is no visible layer to merge down to."
 msgstr "Нет видимого слоя, в который можно выполнить сведение."
 
-#: ../app/core/gimpimage-merge.c:291
+#: ../app/core/gimpimage-merge.c:292
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Сведение с предыдущим"
 
-#: ../app/core/gimpimage-merge.c:319
+#: ../app/core/gimpimage-merge.c:320
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Сведение группы слоёв"
 
-#: ../app/core/gimpimage-merge.c:372
+#: ../app/core/gimpimage-merge.c:373
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Сведение видимых контуров"
 
-#: ../app/core/gimpimage-merge.c:408
+#: ../app/core/gimpimage-merge.c:409
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Недостаточно видимых контуров для объединения. Должно быть хотя бы два."
@@ -12745,7 +12465,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Прикрепление плавающего выделения"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1009
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1001
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -12822,13 +12542,13 @@ msgstr "Cлой невозможно поднять выше."
 msgid "Layer cannot be lowered more."
 msgstr "Слой невозможно опустить ниже."
 
-#: ../app/core/gimplayer.c:722 ../app/core/gimplayer.c:1712
+#: ../app/core/gimplayer.c:708 ../app/core/gimplayer.c:1704
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
 
-#: ../app/core/gimplayer.c:761
+#: ../app/core/gimplayer.c:747
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -12837,62 +12557,62 @@ msgstr ""
 "Плавающее выделение\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1618
+#: ../app/core/gimplayer.c:1610
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не удалось добавить маску слоя, так как у слоя уже есть маска."
 
-#: ../app/core/gimplayer.c:1629
+#: ../app/core/gimplayer.c:1621
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Невозможно добавить маску слоя, отличающуюся\n"
 " размерами от указанного слоя."
 
-#: ../app/core/gimplayer.c:1635
+#: ../app/core/gimplayer.c:1627
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Добавление маски слоя"
 
-#: ../app/core/gimplayer.c:1763
+#: ../app/core/gimplayer.c:1755
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Создание маски из альфа-канала"
 
-#: ../app/core/gimplayer.c:1914
+#: ../app/core/gimplayer.c:1906
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Применение маски слоя"
 
-#: ../app/core/gimplayer.c:1915
+#: ../app/core/gimplayer.c:1907
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Удаление маски слоя"
 
-#: ../app/core/gimplayer.c:2017
+#: ../app/core/gimplayer.c:2009
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Включить маску слоя"
 
-#: ../app/core/gimplayer.c:2018
+#: ../app/core/gimplayer.c:2010
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Выключить маску слоя"
 
-#: ../app/core/gimplayer.c:2094
+#: ../app/core/gimplayer.c:2086
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Показывание маски слоя"
 
-#: ../app/core/gimplayer.c:2167
+#: ../app/core/gimplayer.c:2159
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Добавление альфа-канала"
 
-#: ../app/core/gimplayer.c:2199
+#: ../app/core/gimplayer.c:2191
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Удаление альфа-канала"
 
-#: ../app/core/gimplayer.c:2220
+#: ../app/core/gimplayer.c:2212
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Слой к размеру изображения"
@@ -12918,14 +12638,14 @@ msgid "MyPaint brush file is unreasonably large, skipping."
 msgstr ""
 
 #: ../app/core/gimpmybrush-load.c:93
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to deserialize MyPaint brush."
 msgstr "Применить сохранённую кисть"
 
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
 #: ../app/core/gimppalette-import.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "%s (occurs %u)"
 msgstr "%s (%s)"
 
@@ -12980,18 +12700,18 @@ msgstr ""
 "Загружается палитра '%s': значение RGB вне допустимого диапазона в строке %d."
 
 #: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:456
-#, fuzzy, c-format
+#, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 "Загружается палитра '%s': значение RGB вне допустимого диапазона в строке %d."
 
 #: ../app/core/gimppalette-load.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "In line %d of palette file: "
 msgstr "Неизвестный тип файла палитры: %s"
 
 #: ../app/core/gimppalette-load.c:429
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Невозможно прочесть заголовок из файла палитры '%s'"
 
@@ -13013,7 +12733,7 @@ msgid "Unknown pattern format version %d."
 msgstr "Неизвестная версия %d текстуры."
 
 #: ../app/core/gimppattern-load.c:86
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
@@ -13146,7 +12866,6 @@ msgid "Unit"
 msgstr "Единица измерения"
 
 #: ../app/core/gimpstrokeoptions.c:178
-#, fuzzy
 msgid "Cap style"
 msgstr "_Концы:"
 
@@ -13182,7 +12901,6 @@ msgid "None"
 msgstr "Нет"
 
 #: ../app/core/gimpsymmetry.c:145
-#, fuzzy
 msgid "Active"
 msgstr "Активный контур"
 
@@ -13239,7 +12957,6 @@ msgid "Central Symmetry"
 msgstr "Центральная симметрия"
 
 #: ../app/core/gimpsymmetry-mirror.c:147
-#, fuzzy
 msgid "Invert the initial stroke through a point"
 msgstr "Преобразовать изображение в индексированное"
 
@@ -13264,7 +12981,6 @@ msgid "Interval X"
 msgstr "Интервал по X"
 
 #: ../app/core/gimpsymmetry-tiling.c:108
-#, fuzzy
 msgid "Interval on the X axis (pixels)"
 msgstr "Интервалы по оси X (пиксели)"
 
@@ -13273,7 +12989,6 @@ msgid "Interval Y"
 msgstr "Интервал по Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:120
-#, fuzzy
 msgid "Interval on the Y axis (pixels)"
 msgstr "Интервалы по оси X (пиксели)"
 
@@ -13290,7 +13005,6 @@ msgid "Max strokes X"
 msgstr "Макс. штрихов по оси X"
 
 #: ../app/core/gimpsymmetry-tiling.c:144
-#, fuzzy
 msgid "Maximum number of strokes on the X axis"
 msgstr "_Максимальное число цветов:"
 
@@ -13299,7 +13013,6 @@ msgid "Max strokes Y"
 msgstr "Макс. штрихов по оси X"
 
 #: ../app/core/gimpsymmetry-tiling.c:152
-#, fuzzy
 msgid "Maximum number of strokes on the Y axis"
 msgstr "_Максимальное число цветов:"
 
@@ -13586,7 +13299,6 @@ msgid "Soft-Proof Profile"
 msgstr "Профиль для цветопробы"
 
 #: ../app/dialogs/color-profile-dialog.c:203
-#, fuzzy
 msgid "Select Soft-Proof Profile"
 msgstr "Выбор цветового профиля принтера"
 
@@ -15102,7 +14814,6 @@ msgid "Color and opacity:"
 msgstr "Цвет и непрозрачность:"
 
 #: ../app/dialogs/preferences-dialog.c:2075
-#, fuzzy
 msgid "Default New Channel Color and Opacity"
 msgstr "Изменить название канала, его цвет и прозрачность"
 
@@ -15125,7 +14836,6 @@ msgid "Export folder:"
 msgstr "Папка для экспорта файлов:"
 
 #: ../app/dialogs/preferences-dialog.c:2095
-#, fuzzy
 msgid "Select Default Folder for Exporting Paths"
 msgstr "Выберите каталог для временных файлов"
 
@@ -15143,7 +14853,6 @@ msgid "Import folder:"
 msgstr "Папка с файлами для импорта:"
 
 #: ../app/dialogs/preferences-dialog.c:2109
-#, fuzzy
 msgid "Select Default Folder for Importing Paths"
 msgstr "Выберите каталог для временных файлов"
 
@@ -15481,7 +15190,6 @@ msgid "Show image size"
 msgstr "Показать размер изображения"
 
 #: ../app/dialogs/preferences-dialog.c:2609
-#, fuzzy
 msgid "Show drawable size"
 msgstr "Показать размер изображения"
 
@@ -15633,7 +15341,6 @@ msgid "MyPaint Brush Folders"
 msgstr "Папки с файлами кистей MyPaint"
 
 #: ../app/dialogs/preferences-dialog.c:2887
-#, fuzzy
 msgid "Select MyPaint Brush Folders"
 msgstr "Выбрать папки с кистями"
 
@@ -15642,7 +15349,6 @@ msgid "Plug-in Folders"
 msgstr "Папки с файлами плагинов"
 
 #: ../app/dialogs/preferences-dialog.c:2891
-#, fuzzy
 msgid "Select plug-in Folders"
 msgstr "Выбрать папки с расширениями"
 
@@ -15711,7 +15417,6 @@ msgid "Icon Theme Folders"
 msgstr "Папки с темами значков"
 
 #: ../app/dialogs/preferences-dialog.c:2915
-#, fuzzy
 msgid "Select Icon Theme Folders"
 msgstr "Выбрать папки стилей оформления"
 
@@ -16045,25 +15750,21 @@ msgid "Line spacing"
 msgstr "Интервал между линиями"
 
 #: ../app/display/display-enums.c:307
-#, fuzzy
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Соотношение сторон"
 
 #: ../app/display/display-enums.c:308
-#, fuzzy
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "Ширина"
 
 #: ../app/display/display-enums.c:309
-#, fuzzy
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "Высота"
 
 #: ../app/display/display-enums.c:310
-#, fuzzy
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
 msgstr "Размер"
@@ -16412,38 +16113,31 @@ msgstr "Щёлкните и потащите, чтобы переместить 
 
 #: ../app/display/gimptoolhandlegrid.c:849
 #: ../app/display/gimptooltransformgrid.c:1719
-#, fuzzy
 msgid "Click-Drag to move"
 msgstr "Нажмите и потащите, чтобы переместить точку"
 
 #: ../app/display/gimptoolhandlegrid.c:852
-#, fuzzy
 msgid "Click-Drag to rotate and scale"
 msgstr "Нажмите и перетащите для создания нового выделения"
 
 #: ../app/display/gimptoolhandlegrid.c:855
-#, fuzzy
 msgid "Click-Drag to shear and scale"
 msgstr "Нажмите и перетащите для создания нового выделения"
 
 #: ../app/display/gimptoolhandlegrid.c:858
 #: ../app/display/gimptooltransformgrid.c:1707
-#, fuzzy
 msgid "Click-Drag to change perspective"
 msgstr "Щёлкните и потащите, чтобы изменить фигуру кривой"
 
 #: ../app/display/gimptoolhandlegrid.c:869
-#, fuzzy
 msgid "Click to add a handle"
 msgstr "Нажмите, чтобы залечить"
 
 #: ../app/display/gimptoolhandlegrid.c:875
-#, fuzzy
 msgid "Click-Drag to move this handle"
 msgstr "Щёлкните и потащите, чтобы переместить рычаг"
 
 #: ../app/display/gimptoolhandlegrid.c:880
-#, fuzzy
 msgid "Click-Drag to remove this handle"
 msgstr "Щёлкните и потащите, чтобы переместить рычаг"
 
@@ -16451,12 +16145,12 @@ msgstr "Щёлкните и потащите, чтобы переместить 
 msgid "Line: "
 msgstr "Линия: "
 
-#: ../app/display/gimptoolline.c:879 ../app/tools/gimppainttool.c:655
+#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:655
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для ограничения шага угла"
 
-#: ../app/display/gimptoolline.c:880
+#: ../app/display/gimptoolline.c:882
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s для смещения всей линии"
@@ -16607,7 +16301,6 @@ msgid "Delete Anchors"
 msgstr "Удалить узлы"
 
 #: ../app/display/gimptoolpolygon.c:863
-#, fuzzy
 msgid "Click to close shape"
 msgstr "Нажмите для увеличения резкости"
 
@@ -16616,7 +16309,6 @@ msgid "Click-Drag to move segment vertex"
 msgstr "Щёлкните и потащите, чтобы переместить вершину сегмента"
 
 #: ../app/display/gimptoolpolygon.c:872
-#, fuzzy
 msgid "Return commits, Escape cancels, Backspace re-opens shape"
 msgstr ""
 "Ввод завершает выделение, Escape отменяет его, Забой убирает последний "
@@ -16641,28 +16333,23 @@ msgid "Rectangle: "
 msgstr "Прямоугольник: "
 
 #: ../app/display/gimptoolrectangle.c:2136
-#, fuzzy
 msgid "Position: "
 msgstr "Позиция:"
 
 #: ../app/display/gimptooltransformgrid.c:1712
 #: ../app/display/gimptooltransformgrid.c:1717
-#, fuzzy
 msgid "Click-Drag to scale"
 msgstr "Нажмите для штамповки"
 
 #: ../app/display/gimptooltransformgrid.c:1721
-#, fuzzy
 msgid "Click-Drag to move the pivot point"
 msgstr "Нажмите и потащите, чтобы переместить точку"
 
 #: ../app/display/gimptooltransformgrid.c:1726
-#, fuzzy
 msgid "Click-Drag to shear"
 msgstr "Нажмите, чтобы залечить"
 
 #: ../app/display/gimptooltransformgrid.c:1728
-#, fuzzy
 msgid "Click-Drag to rotate"
 msgstr "Нажмите, чтобы стереть"
 
@@ -16698,7 +16385,6 @@ msgid "Mounting remote volume"
 msgstr "Подключение удалённого тома"
 
 #: ../app/file/file-remote.c:289
-#, fuzzy
 msgid "Opening remote file"
 msgstr "Открыть файл изображения"
 
@@ -16769,7 +16455,6 @@ msgstr "Градации серого"
 #: ../app/gegl/gimp-babl.c:361 ../app/gegl/gimp-babl.c:362
 #: ../app/gegl/gimp-babl.c:363 ../app/gegl/gimp-babl.c:364
 #: ../app/gegl/gimp-babl.c:365 ../app/gegl/gimp-babl.c:366
-#, fuzzy
 msgid "Grayscale-alpha"
 msgstr "Градации _серого"
 
@@ -16807,12 +16492,10 @@ msgid "Alpha component"
 msgstr "Компонент альфа-канала"
 
 #: ../app/gegl/gimp-babl.c:440
-#, fuzzy
 msgid "Indexed-alpha"
 msgstr "индексированное-пусто"
 
 #: ../app/gegl/gimp-babl.c:442
-#, fuzzy
 msgid "Indexed"
 msgstr "индексированное"
 
@@ -16822,7 +16505,6 @@ msgid "Create or adjust the cage"
 msgstr "Создать или изменить рамку"
 
 #: ../app/gegl/gimp-gegl-enums.c:25
-#, fuzzy
 msgctxt "cage-mode"
 msgid ""
 "Deform the cage\n"
@@ -16855,355 +16537,351 @@ msgid "Auto"
 msgstr "Авто"
 
 #: ../app/operations/operations-enums.c:60
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Source over"
 msgstr "Источник"
 
 #: ../app/operations/operations-enums.c:61
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Source atop"
 msgstr "Источник"
 
 #: ../app/operations/operations-enums.c:62
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Destination atop"
 msgstr "Конечный диапазон"
 
 #: ../app/operations/operations-enums.c:63
-#, fuzzy
 msgctxt "layer-composite-mode"
 msgid "Source in"
 msgstr "Источник"
 
-#: ../app/operations/operations-enums.c:152
+#: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
 msgid "Normal (legacy)"
-msgstr "Нормальный (устаревший)"
+msgstr "Нормальный (старый)"
 
-#: ../app/operations/operations-enums.c:153
+#: ../app/operations/operations-enums.c:154
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "Растворение"
 
-#: ../app/operations/operations-enums.c:154
-#, fuzzy
-msgctxt "layer-mode"
-msgid "Behind (legacy)"
-msgstr "Позади (устаревший)"
-
 #: ../app/operations/operations-enums.c:155
 msgctxt "layer-mode"
-msgid "Multiply (legacy)"
-msgstr "Умножение (устаревший)"
+msgid "Behind (legacy)"
+msgstr "Подложка (старый)"
 
 #: ../app/operations/operations-enums.c:156
 msgctxt "layer-mode"
-msgid "Screen (legacy)"
-msgstr "Экран (устаревший)"
+msgid "Multiply (legacy)"
+msgstr "Умножение (старый)"
 
 #: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
-msgid "Old broken Overlay"
-msgstr "Устаревшая версия Перекрытия"
+msgid "Screen (legacy)"
+msgstr "Экран (старый)"
 
 #: ../app/operations/operations-enums.c:158
 msgctxt "layer-mode"
-msgid "Difference (legacy)"
-msgstr "Разница (устаревший)"
+msgid "Old broken Overlay"
+msgstr "Перекрытие (старый, некорректный)"
 
 #: ../app/operations/operations-enums.c:159
 msgctxt "layer-mode"
-msgid "Addition (legacy)"
-msgstr "Добавление (устаревший)"
+msgid "Difference (legacy)"
+msgstr "Разница (старый)"
 
 #: ../app/operations/operations-enums.c:160
 msgctxt "layer-mode"
-msgid "Subtract (legacy)"
-msgstr "Вычитание (устаревший)"
+msgid "Addition (legacy)"
+msgstr "Добавление (старый)"
 
 #: ../app/operations/operations-enums.c:161
 msgctxt "layer-mode"
-msgid "Darken only (legacy)"
-msgstr "Только темное (устаревший)"
+msgid "Subtract (legacy)"
+msgstr "Вычитание (старый)"
 
 #: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
-msgid "Lighten only (legacy)"
-msgstr "Только светлое (устаревший)"
+msgid "Darken only (legacy)"
+msgstr "Только темное (старый)"
 
 #: ../app/operations/operations-enums.c:163
 msgctxt "layer-mode"
-msgid "Hue (HSV) (legacy)"
-msgstr "Тон (HSV) (устаревший)"
+msgid "Lighten only (legacy)"
+msgstr "Только светлое (старый)"
 
 #: ../app/operations/operations-enums.c:164
 msgctxt "layer-mode"
-msgid "Saturation (HSV) (legacy)"
-msgstr "Насыщенность (HSV) (устаревший)"
+msgid "Hue (HSV) (legacy)"
+msgstr "Тон (HSV) (старый)"
 
 #: ../app/operations/operations-enums.c:165
 msgctxt "layer-mode"
-msgid "Color (HSL) (legacy)"
-msgstr "Цвет (HSL) (устаревший)"
+msgid "Saturation (HSV) (legacy)"
+msgstr "Насыщенность (HSV) (старый)"
 
 #: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
-msgid "Value (HSV) (legacy)"
-msgstr "Значение (HSV) (устаревший)"
+msgid "Color (HSL) (legacy)"
+msgstr "Цвет (HSL) (старый)"
 
 #: ../app/operations/operations-enums.c:167
 msgctxt "layer-mode"
-msgid "Divide (legacy)"
-msgstr "Деление (устаревший)"
+msgid "Value (HSV) (legacy)"
+msgstr "Значение (HSV) (старый)"
 
 #: ../app/operations/operations-enums.c:168
 msgctxt "layer-mode"
-msgid "Dodge (legacy)"
-msgstr "Осветление (устаревший)"
+msgid "Divide (legacy)"
+msgstr "Деление (старый)"
 
 #: ../app/operations/operations-enums.c:169
 msgctxt "layer-mode"
-msgid "Burn (legacy)"
-msgstr "Затемнение (устаревший)"
+msgid "Dodge (legacy)"
+msgstr "Осветление (старый)"
 
 #: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
-msgid "Hard light (legacy)"
-msgstr "Направленный свет (устаревший)"
+msgid "Burn (legacy)"
+msgstr "Затемнение (старый)"
 
 #: ../app/operations/operations-enums.c:171
 msgctxt "layer-mode"
-msgid "Soft light (legacy)"
-msgstr "Рассеянный свет (устаревший)"
+msgid "Hard light (legacy)"
+msgstr "Направленный свет (старый)"
 
 #: ../app/operations/operations-enums.c:172
 msgctxt "layer-mode"
-msgid "Grain extract (legacy)"
-msgstr "Извлечение зерна (устаревший)"
+msgid "Soft light (legacy)"
+msgstr "Рассеянный свет (старый)"
 
 #: ../app/operations/operations-enums.c:173
 msgctxt "layer-mode"
-msgid "Grain merge (legacy)"
-msgstr "Объединение зерна (устаревший)"
+msgid "Grain extract (legacy)"
+msgstr "Извлечение зерна (старый)"
 
 #: ../app/operations/operations-enums.c:174
-#, fuzzy
 msgctxt "layer-mode"
-msgid "Color erase (legacy)"
-msgstr "Цвет (HSV) (устаревший)"
+msgid "Grain merge (legacy)"
+msgstr "Объединение зерна (старый)"
 
 #: ../app/operations/operations-enums.c:175
+msgctxt "layer-mode"
+msgid "Color erase (legacy)"
+msgstr "Цвет (HSV) (старый)"
+
+#: ../app/operations/operations-enums.c:176
 msgctxt "layer-mode"
 msgid "Overlay"
 msgstr "Перекрытие"
 
-#: ../app/operations/operations-enums.c:176
+#: ../app/operations/operations-enums.c:177
 msgctxt "layer-mode"
 msgid "Hue (LCH)"
 msgstr "Тон (LCH)"
 
-#: ../app/operations/operations-enums.c:177
+#: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
 msgid "Chroma (LCH)"
 msgstr "Насыщенность (LCH)"
 
-#: ../app/operations/operations-enums.c:178
+#: ../app/operations/operations-enums.c:179
 msgctxt "layer-mode"
 msgid "Color (LCH)"
 msgstr "Цвет (LCH)"
 
-#: ../app/operations/operations-enums.c:179
+#: ../app/operations/operations-enums.c:180
 msgctxt "layer-mode"
 msgid "Lightness (LCH)"
 msgstr "Светлота (LCH)"
 
-#: ../app/operations/operations-enums.c:180
+#: ../app/operations/operations-enums.c:181
 msgctxt "layer-mode"
 msgid "Normal"
 msgstr "Нормальный"
 
-#: ../app/operations/operations-enums.c:181
+#: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
 msgid "Behind"
 msgstr "Подложка"
 
-#: ../app/operations/operations-enums.c:182
+#: ../app/operations/operations-enums.c:183
 msgctxt "layer-mode"
 msgid "Multiply"
 msgstr "Умножение"
 
-#: ../app/operations/operations-enums.c:183
+#: ../app/operations/operations-enums.c:184
 msgctxt "layer-mode"
 msgid "Screen"
 msgstr "Экран"
 
-#: ../app/operations/operations-enums.c:184
+#: ../app/operations/operations-enums.c:185
 msgctxt "layer-mode"
 msgid "Difference"
 msgstr "Разница"
 
-#: ../app/operations/operations-enums.c:185
+#: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
 msgid "Addition"
 msgstr "Добавление"
 
-#: ../app/operations/operations-enums.c:186
+#: ../app/operations/operations-enums.c:187
 msgctxt "layer-mode"
 msgid "Subtract"
 msgstr "Вычитание"
 
-#: ../app/operations/operations-enums.c:187
+#: ../app/operations/operations-enums.c:188
 msgctxt "layer-mode"
 msgid "Darken only"
 msgstr "Только темное"
 
-#: ../app/operations/operations-enums.c:188
+#: ../app/operations/operations-enums.c:189
 msgctxt "layer-mode"
 msgid "Lighten only"
 msgstr "Только светлое"
 
-#: ../app/operations/operations-enums.c:189
+#: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
 msgid "Hue (HSV)"
 msgstr "Тон (HSV)"
 
-#: ../app/operations/operations-enums.c:190
+#: ../app/operations/operations-enums.c:191
 msgctxt "layer-mode"
 msgid "Saturation (HSV)"
 msgstr "Насыщенность (HSV)"
 
-#: ../app/operations/operations-enums.c:191
+#: ../app/operations/operations-enums.c:192
 msgctxt "layer-mode"
 msgid "Color (HSL)"
 msgstr "Цвет (HSL)"
 
-#: ../app/operations/operations-enums.c:192
+#: ../app/operations/operations-enums.c:193
 msgctxt "layer-mode"
 msgid "Value (HSV)"
 msgstr "Значение (HSV)"
 
-#: ../app/operations/operations-enums.c:193
+#: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
 msgid "Divide"
 msgstr "Деление"
 
-#: ../app/operations/operations-enums.c:194
+#: ../app/operations/operations-enums.c:195
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "Осветление"
 
-#: ../app/operations/operations-enums.c:195
+#: ../app/operations/operations-enums.c:196
 msgctxt "layer-mode"
 msgid "Burn"
 msgstr "Затемнение"
 
-#: ../app/operations/operations-enums.c:196
+#: ../app/operations/operations-enums.c:197
 msgctxt "layer-mode"
 msgid "Hard light"
 msgstr "Направленный свет"
 
-#: ../app/operations/operations-enums.c:197
+#: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
 msgid "Soft light"
 msgstr "Рассеянный свет"
 
-#: ../app/operations/operations-enums.c:198
+#: ../app/operations/operations-enums.c:199
 msgctxt "layer-mode"
 msgid "Grain extract"
 msgstr "Извлечение зерна"
 
-#: ../app/operations/operations-enums.c:199
+#: ../app/operations/operations-enums.c:200
 msgctxt "layer-mode"
 msgid "Grain merge"
 msgstr "Объединение зерна"
 
-#: ../app/operations/operations-enums.c:200
+#: ../app/operations/operations-enums.c:201
 msgctxt "layer-mode"
 msgid "Vivid light"
 msgstr "Яркий свет"
 
-#: ../app/operations/operations-enums.c:201
+#: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
 msgid "Pin light"
 msgstr "Точечный свет"
 
-#: ../app/operations/operations-enums.c:202
+#: ../app/operations/operations-enums.c:203
 msgctxt "layer-mode"
 msgid "Linear light"
 msgstr "Линейный свет"
 
-#: ../app/operations/operations-enums.c:203
+#: ../app/operations/operations-enums.c:204
 msgctxt "layer-mode"
 msgid "Hard mix"
 msgstr "Жёсткое смешивание"
 
-#: ../app/operations/operations-enums.c:204
+#: ../app/operations/operations-enums.c:205
 msgctxt "layer-mode"
 msgid "Exclusion"
 msgstr "Исключение"
 
-#: ../app/operations/operations-enums.c:205
+#: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
 msgid "Linear burn"
 msgstr "Линейное затемнение"
 
-#: ../app/operations/operations-enums.c:206
-#, fuzzy
+#: ../app/operations/operations-enums.c:207
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
 msgstr "Только темное"
 
-#: ../app/operations/operations-enums.c:207
-#, fuzzy
+#: ../app/operations/operations-enums.c:208
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
 msgstr "Только светлое"
 
-#: ../app/operations/operations-enums.c:208
+#: ../app/operations/operations-enums.c:209
 msgctxt "layer-mode"
 msgid "Luminance"
 msgstr "Светимость"
 
-#: ../app/operations/operations-enums.c:209
+#: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
 msgid "Color erase"
 msgstr "Очистка цвета"
 
-#: ../app/operations/operations-enums.c:210
-#, fuzzy
+#: ../app/operations/operations-enums.c:211
 msgctxt "layer-mode"
 msgid "Erase"
 msgstr "Ластик"
 
-#: ../app/operations/operations-enums.c:211
+#: ../app/operations/operations-enums.c:212
 msgctxt "layer-mode"
 msgid "Merge"
 msgstr "Объединение"
 
-#: ../app/operations/operations-enums.c:212
+#: ../app/operations/operations-enums.c:213
 msgctxt "layer-mode"
 msgid "Split"
 msgstr "Разделение"
 
-#: ../app/operations/operations-enums.c:213
+#: ../app/operations/operations-enums.c:214
+msgctxt "layer-mode"
+msgid "Pass through"
+msgstr "Пропуск"
+
+#: ../app/operations/operations-enums.c:215
 msgctxt "layer-mode"
 msgid "Replace"
 msgstr "Замена"
 
-#: ../app/operations/operations-enums.c:214
+#: ../app/operations/operations-enums.c:216
 msgctxt "layer-mode"
 msgid "Anti erase"
 msgstr "Антиластик"
 
-#: ../app/operations/operations-enums.c:242
+#: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode-group"
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../app/operations/operations-enums.c:243
+#: ../app/operations/operations-enums.c:245
 msgctxt "layer-mode-group"
 msgid "Legacy"
 msgstr "Устаревшие"
@@ -17345,7 +17023,6 @@ msgid ""
 msgstr ""
 
 #: ../app/operations/gimpoperationcagetransform.c:127
-#, fuzzy
 msgid "Fill with plain color"
 msgstr "Залить цветом _фона"
 
@@ -17358,12 +17035,10 @@ msgid "Adjust color distribution"
 msgstr "Коррекция распределения цвета"
 
 #: ../app/operations/gimpoperationcolorize.c:64
-#, fuzzy
 msgid "Colorize the image"
 msgstr "Тонирование изображения"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
-#, fuzzy
 msgid "Turn colors into shades of gray"
 msgstr "Обесцвечивание: перевод цветов в градации серого"
 
@@ -17374,17 +17049,14 @@ msgid "Mode"
 msgstr "Режим"
 
 #: ../app/operations/gimpoperationdesaturate.c:91
-#, fuzzy
 msgid "Choose shade of gray based on"
 msgstr "Основа оттенков серого:"
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
-#, fuzzy
 msgid "Adjust hue, saturation, and lightness"
 msgstr "Тон-Насыщенность: коррекция тона, насыщенности и светлоты"
 
 #: ../app/operations/gimpoperationposterize.c:82
-#, fuzzy
 msgid "Reduce to a limited set of colors"
 msgstr "Постеризация: уменьшение количества цветов"
 
@@ -17501,11 +17173,11 @@ msgstr "Ластик"
 msgid "Anti erase"
 msgstr "Антиластик"
 
-#: ../app/paint/gimpheal.c:106 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:115 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Лечебная кисть"
 
-#: ../app/paint/gimpheal.c:145
+#: ../app/paint/gimpheal.c:155
 msgid "Healing does not operate on indexed layers."
 msgstr "Выравнивание не действует на индексированные слои."
 
@@ -17590,7 +17262,6 @@ msgid "Brush Size"
 msgstr "Размер кисти"
 
 #: ../app/paint/gimppaintoptions.c:198
-#, fuzzy
 msgid "Brush Zoom"
 msgstr "Кисть"
 
@@ -17976,7 +17647,6 @@ msgid "Brush '%s' is not a generated brush"
 msgstr "Кисть '%s' не процедурная"
 
 #: ../app/pdb/gimppdb-utils.c:137
-#, fuzzy
 msgid "Invalid empty paint dynamics name"
 msgstr "Некорректное пустое название метода рисования"
 
@@ -17991,7 +17661,6 @@ msgid "Paint dynamics '%s' is not editable"
 msgstr "Файл кистевой динамики '%s' не редактируем"
 
 #: ../app/pdb/gimppdb-utils.c:172
-#, fuzzy
 msgid "Invalid empty MyPaint brush name"
 msgstr "Некорректное пустое название кисти"
 
@@ -18084,7 +17753,7 @@ msgstr ""
 "изображение"
 
 #: ../app/pdb/gimppdb-utils.c:427
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
@@ -18093,7 +17762,7 @@ msgstr ""
 "изображение"
 
 #: ../app/pdb/gimppdb-utils.c:455
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
@@ -18124,7 +17793,7 @@ msgstr ""
 "изменений"
 
 #: ../app/pdb/gimppdb-utils.c:542
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
 msgstr ""
@@ -18132,7 +17801,7 @@ msgstr ""
 "изменений"
 
 #: ../app/pdb/gimppdb-utils.c:562
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr "Невозможно изменить элемент '%s' (%d), потому что это группа объектов"
 
@@ -18155,12 +17824,12 @@ msgstr ""
 "'%s'"
 
 #: ../app/pdb/gimppdb-utils.c:667
-#, fuzzy, c-format
+#, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "Изображение '%s' (%d) уже относится к типу '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:687
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
 "expected"
@@ -18169,17 +17838,17 @@ msgstr ""
 "'%s'"
 
 #: ../app/pdb/gimppdb-utils.c:710
-#, fuzzy, c-format
+#, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Изображение '%s' (%d) уже относится к типу '%s'"
 
 #: ../app/pdb/gimppdb-utils.c:734 ../app/pdb/image-guides-cmds.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "Векторный объект %d не содержит обводку с ID %d"
 
 #: ../app/pdb/gimppdb-utils.c:757 ../app/pdb/image-sample-points-cmds.c:144
-#, fuzzy, c-format
+#, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "Векторный объект %d не содержит обводку с ID %d"
 
@@ -18214,17 +17883,14 @@ msgid "Feather radius Y"
 msgstr "Радиус растушёвки по Y"
 
 #: ../app/pdb/gimppdbcontext.c:134
-#, fuzzy
 msgid "Sample criterion"
 msgstr "Критерий выделения"
 
 #: ../app/pdb/gimppdbcontext.c:142
-#, fuzzy
 msgid "Sample threshold"
 msgstr "Применить порог"
 
 #: ../app/pdb/gimppdbcontext.c:149
-#, fuzzy
 msgid "Sample transparent"
 msgstr "Сделать _прозрачным"
 
@@ -18244,7 +17910,6 @@ msgid "Transform direction"
 msgstr "Направление преобразования"
 
 #: ../app/pdb/gimppdbcontext.c:179
-#, fuzzy
 msgid "Transform resize"
 msgstr "Преобразование элементов"
 
@@ -18550,7 +18215,6 @@ msgid "RGB Noise"
 msgstr "Шум в RGB"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3472
-#, fuzzy
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "_Шум"
@@ -18591,7 +18255,6 @@ msgid "Spread"
 msgstr "Рассеивание"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3900
-#, fuzzy
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Порог"
@@ -18665,23 +18328,19 @@ msgid "Translate path stroke"
 msgstr ""
 
 #: ../app/pdb/vectors-cmds.c:455
-#, fuzzy
 msgid "Scale path stroke"
 msgstr "Масштабирование контура"
 
 #: ../app/pdb/vectors-cmds.c:502
-#, fuzzy
 msgid "Rotate path stroke"
 msgstr "Вращать контур"
 
 #: ../app/pdb/vectors-cmds.c:547 ../app/pdb/vectors-cmds.c:596
-#, fuzzy
 msgid "Flip path stroke"
 msgstr "Отразить контур"
 
 #: ../app/pdb/vectors-cmds.c:727 ../app/pdb/vectors-cmds.c:851
 #: ../app/pdb/vectors-cmds.c:1081
-#, fuzzy
 msgid "Add path stroke"
 msgstr "Добавить контур"
 
@@ -18752,7 +18411,6 @@ msgid "Plug-in Interpreters"
 msgstr "Интерпретаторы плагинов"
 
 #: ../app/plug-in/gimppluginmanager.c:238
-#, fuzzy
 msgid "Plug-in Environment"
 msgstr "Окружение расширений"
 
@@ -18811,7 +18469,7 @@ msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Пропуск '%s': неправильная версия протокола GIMP."
 
 #: ../app/plug-in/plug-in-rc.c:238
-#, fuzzy, c-format
+#, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Пропуск '%s': неправильная версия протокола GIMP."
 
@@ -19004,7 +18662,7 @@ msgstr "_Насыщенность"
 msgid "R_eset Color"
 msgstr "Восстановить _цвет"
 
-#: ../app/propgui/gimppropgui-spiral.c:211
+#: ../app/propgui/gimppropgui-spiral.c:217
 msgid "Spiral: "
 msgstr "Спираль: "
 
@@ -19216,7 +18874,6 @@ msgid "Reference image object a layer will be aligned on"
 msgstr ""
 
 #: ../app/tools/gimpalignoptions.c:101
-#, fuzzy
 msgid "Horizontal offset for distribution"
 msgstr "Цветовой баланс: коррекция распределения цвета"
 
@@ -19341,7 +18998,6 @@ msgid "Threshold"
 msgstr "Порог"
 
 #: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:380
-#, fuzzy
 msgid "Edit this gradient"
 msgstr "Изменить градиент"
 
@@ -19358,7 +19014,6 @@ msgid "Blen_d"
 msgstr "_Градиентная заливка"
 
 #: ../app/tools/gimpblendtool.c:214
-#, fuzzy
 msgid "Click-Drag to draw a gradient"
 msgstr "Щёлкните или щёлкните и потащите для добавления узла"
 
@@ -19366,7 +19021,6 @@ msgstr "Щёлкните или щёлкните и потащите для до
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1438 ../app/tools/gimpwarptool.c:640
-#, fuzzy
 msgid "The active layer is not visible."
 msgstr "Точки растра активного слоя заблокированы от изменений"
 
@@ -19375,7 +19029,6 @@ msgid "No gradient available for use with this tool."
 msgstr "Нет градиентов, доступных для использования с этим инструментом."
 
 #: ../app/tools/gimpblendtool.c:450 ../app/tools/gimpblendtool.c:462
-#, fuzzy
 msgid "Blend Step"
 msgstr "Пространство смешивания"
 
@@ -19412,7 +19065,6 @@ msgid "Edit these Settings as Levels"
 msgstr "Изменить эти параметры как уровни"
 
 #: ../app/tools/gimpbucketfilloptions.c:102
-#, fuzzy
 msgid "Fill selection"
 msgstr "Плавающее выделение"
 
@@ -19511,7 +19163,6 @@ msgid "Select by Color"
 msgstr "Выделение по цвету"
 
 #: ../app/tools/gimpcageoptions.c:77
-#, fuzzy
 msgid ""
 "Fill the original position\n"
 "of the cage with a color"
@@ -19565,7 +19216,6 @@ msgid "Click to set a new clone source"
 msgstr "Нажмите для получения источника штампа"
 
 #: ../app/tools/gimpcoloroptions.c:70
-#, fuzzy
 msgid "Use merged color value from all composited visible layers"
 msgstr "Использовать все видимые слои при выделении области"
 
@@ -19574,7 +19224,6 @@ msgid "Sample average"
 msgstr "Выборочное среднее"
 
 #: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:70
-#, fuzzy
 msgid "Use averaged color value from nearby pixels"
 msgstr "Использовать все видимые слои при выделении области"
 
@@ -19736,7 +19385,6 @@ msgid "_Crop"
 msgstr "_Кадрирование"
 
 #: ../app/tools/gimpcroptool.c:150
-#, fuzzy
 msgid "Click-Drag to draw a crop rectangle"
 msgstr "Щёлкните или щёлкните и потащите для добавления узла"
 
@@ -19745,7 +19393,6 @@ msgid "Click or press Enter to crop"
 msgstr "Чтобы откадрировать, нажмите клавишу ввода"
 
 #: ../app/tools/gimpcroptool.c:361
-#, fuzzy
 msgid "Crop to: "
 msgstr "Обрезать до со_держимого"
 
@@ -19774,7 +19421,6 @@ msgid "Click to add control points to all channels"
 msgstr "Щёлкните, чтобы добавить контрольные точки ко всем каналам"
 
 #: ../app/tools/gimpcurvestool.c:327
-#, fuzzy
 msgid "Click to locate on curve"
 msgstr "Щёлкните для закрытия контура"
 
@@ -19974,7 +19620,6 @@ msgid "Settings saved to '%s'"
 msgstr "Настройки сохранены в '%s'"
 
 #: ../app/tools/gimpflipoptions.c:67
-#, fuzzy
 msgid "Flip Type"
 msgstr "Тип файла"
 
@@ -20222,12 +19867,10 @@ msgid "Add handles and transform the image"
 msgstr "Разместите регуляторы на холсте и трансформируйте изображение"
 
 #: ../app/tools/gimphandletransformoptions.c:172
-#, fuzzy
 msgid "Move transform handles"
 msgstr "Преобразование канала"
 
 #: ../app/tools/gimphandletransformoptions.c:177
-#, fuzzy
 msgid "Remove transform handles"
 msgstr "Удаление паразита из изображения"
 
@@ -20427,7 +20070,6 @@ msgid "Auto-resize window"
 msgstr "Изменять размер окна"
 
 #: ../app/tools/gimpmagnifyoptions.c:84
-#, fuzzy
 msgid "Resize image window to accommodate new zoom level"
 msgstr "Изменять размер окна при _масштабировании"
 
@@ -20470,7 +20112,6 @@ msgid "_Measure"
 msgstr "_Измеритель"
 
 #: ../app/tools/gimpmeasuretool.c:154
-#, fuzzy
 msgid "Click-Drag to create a line"
 msgstr "Потяните для создания линии"
 
@@ -20539,7 +20180,6 @@ msgid "There is no path to move."
 msgstr "Нет перемещаемого контура."
 
 #: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1465
-#, fuzzy
 msgid "The active path's position is locked."
 msgstr "Активный контур заблокирован от изменений"
 
@@ -20552,12 +20192,10 @@ msgid "There is no layer to move."
 msgstr "Нет перемещаемого слоя."
 
 #: ../app/tools/gimpmovetool.c:300 ../app/tools/gimpmovetool.c:326
-#, fuzzy
 msgid "The active layer's position is locked."
 msgstr "Точки растра активного слоя заблокированы от изменений"
 
 #: ../app/tools/gimpmovetool.c:313
-#, fuzzy
 msgid "The active channel's position is locked."
 msgstr "Активный контур заблокирован от изменений"
 
@@ -20671,7 +20309,6 @@ msgid "Reset spacing to brush's native spacing"
 msgstr ""
 
 #: ../app/tools/gimppaintoptions-gui.c:205
-#, fuzzy
 msgid "Reset hardness to brush's native hardness"
 msgstr "Восстановить значения по умолчанию"
 
@@ -21226,7 +20863,6 @@ msgid "Te_xt"
 msgstr "_Текст"
 
 #: ../app/tools/gimptexttool.c:942
-#, fuzzy
 msgid "Text box: "
 msgstr "Текст"
 
@@ -21458,7 +21094,6 @@ msgid "The active path's strokes are locked."
 msgstr "Элементы активного контура заблокированы от изменений"
 
 #: ../app/tools/gimptransformtool.c:1467
-#, fuzzy
 msgid "The active path has no strokes."
 msgstr "Активный контур заблокирован от изменений"
 
@@ -21514,7 +21149,6 @@ msgid "Pat_hs"
 msgstr "Ко_нтуры"
 
 #: ../app/tools/gimpvectortool.c:733
-#, fuzzy
 msgid "There is no active layer or channel to fill"
 msgstr "Нет активного слоя или канала для вырезания."
 
@@ -21543,7 +21177,6 @@ msgid "Effect Strength"
 msgstr "Сила эффекта"
 
 #: ../app/tools/gimpwarpoptions.c:113
-#, fuzzy
 msgid "Stroke Spacing"
 msgstr "Обвести выделенную область"
 
@@ -21560,7 +21193,6 @@ msgid "High quality preview"
 msgstr "Качественный предпросмотр"
 
 #: ../app/tools/gimpwarpoptions.c:136
-#, fuzzy
 msgid "Use an accurate but slower preview"
 msgstr "Использовать альтернативный пользовательский файл gimprc"
 
@@ -21631,7 +21263,6 @@ msgid "Cannot warp layer groups."
 msgstr "Невозможно применять деформацию к группе слоев."
 
 #: ../app/tools/gimpwarptool.c:652
-#, fuzzy
 msgid "No stroke events selected."
 msgstr "Фильтр не выбран"
 
@@ -21773,7 +21404,6 @@ msgid "Transform Path"
 msgstr "Преобразование контура"
 
 #: ../app/vectors/gimpvectors.c:231
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fill Path"
 msgstr "Отражение контура"
@@ -21895,7 +21525,6 @@ msgid "Conflicting Shortcuts"
 msgstr "Используемые клавиши"
 
 #: ../app/widgets/gimpactionview.c:670
-#, fuzzy
 msgid "_Reassign Shortcut"
 msgstr "Назначить"
 
@@ -22151,7 +21780,6 @@ msgid "Enabled"
 msgstr "Включено"
 
 #: ../app/widgets/gimpcontrollerinfo.c:119
-#, fuzzy
 msgid "Debug events"
 msgstr "_Захватить событие"
 
@@ -22264,7 +21892,6 @@ msgstr ""
 "В списке уже есть такой контроллер."
 
 #: ../app/widgets/gimpcontrollerlist.c:532
-#, fuzzy
 msgid ""
 "There can only be one active mouse controller.\n"
 "\n"
@@ -22574,7 +22201,6 @@ msgid "Auto"
 msgstr "Авто"
 
 #: ../app/widgets/gimpdockwindow.c:398
-#, fuzzy
 msgid ""
 "When enabled, the dialog automatically follows the image you are working on."
 msgstr ""
@@ -22863,7 +22489,7 @@ msgstr "Число:"
 msgid "Percentile:"
 msgstr "Процент:"
 
-#: ../app/widgets/gimphistogrameditor.c:165
+#: ../app/widgets/gimphistogrameditor.c:160
 msgid "Histogram channel"
 msgstr "Канал гистограммы"
 
@@ -23050,7 +22676,7 @@ msgid "All XCF images"
 msgstr "Все изображения XCF"
 
 #: ../app/widgets/gimpsavedialog.c:259
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The image uses features from %s, disabling compression won't make the XCF "
 "file readable by older GIMP versions."
@@ -23069,7 +22695,6 @@ msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "Метаданные не будут видны в GIMP 2.8 и более ранних версиях программы."
 
 #: ../app/widgets/gimpsavedialog.c:329
-#, fuzzy
 msgid "Save this XCF file with better but slower compression"
 msgstr "Сохранить этот файл XCF с максимальной совместимостью"
 
@@ -23089,12 +22714,10 @@ msgid "Invalid UTF-8"
 msgstr "недопустимая строка UTF-8"
 
 #: ../app/widgets/gimpsettingsbox.c:304
-#, fuzzy
 msgid "Pick a preset from the list"
 msgstr "Выберите параметр из списка"
 
 #: ../app/widgets/gimpsettingsbox.c:328
-#, fuzzy
 msgid "Save the current settings as named preset"
 msgstr "Сохранить параметры инструментов при выходе из GIMP."
 
@@ -23103,12 +22726,10 @@ msgid "Manage presets"
 msgstr "Управление предустановками"
 
 #: ../app/widgets/gimpsettingsbox.c:360
-#, fuzzy
 msgid "_Import Current Settings from File..."
 msgstr "_Импортировать параметры из файла..."
 
 #: ../app/widgets/gimpsettingsbox.c:366
-#, fuzzy
 msgid "_Export Current Settings to File..."
 msgstr "_Экспортировать параметры в файл..."
 
@@ -23117,7 +22738,6 @@ msgid "_Manage Saved Presets..."
 msgstr "_Управление предустановками…"
 
 #: ../app/widgets/gimpsettingsbox.c:613
-#, fuzzy
 msgid "Save Settings as Named Preset"
 msgstr "Сохранённые параметры"
 
@@ -23142,7 +22762,6 @@ msgid "Export the selected presets to a file"
 msgstr "Экспортировать выбранные предустановки в файл"
 
 #: ../app/widgets/gimpsettingseditor.c:213
-#, fuzzy
 msgid "Delete the selected preset"
 msgstr "Удалить выбранные профили"
 
@@ -23266,7 +22885,7 @@ msgid "Outermost element in text must be <markup> not <%s>"
 msgstr ""
 
 #: ../app/widgets/gimptextbuffer.c:1684
-#, fuzzy, c-format
+#, c-format
 msgid "Input file '%s' appears truncated: %s"
 msgstr ""
 "Неисправимая ошибка разбора файла текстуры '%s': вероятно, файл оборван."
@@ -23333,7 +22952,7 @@ msgid "Font \"%s\" unavailable on this system"
 msgstr "Шрифт \"%s\" недоступен в этой системе"
 
 #: ../app/widgets/gimpthumbbox.c:324
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Click to update preview\n"
 "%s-Click to force update even if preview is up-to-date"
@@ -23761,7 +23380,6 @@ msgid "Invalid UTF-8 string in XCF file"
 msgstr "Недопустимая строка UTF-8 в XCF файле."
 
 #: ../app/xcf/xcf-seek.c:45
-#, fuzzy
 msgid "Could not seek in XCF file: "
 msgstr "Не удалось открыть XCF файл: %s"
 
