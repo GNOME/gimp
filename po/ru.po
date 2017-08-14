@@ -11892,13 +11892,12 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:214 ../app/core/gimpgradient-load.c:224
 #, c-format
 msgid "Segments do not span the range 0-1."
-msgstr ""
-"Файл градиента '%s' повреждён: сегменты не находятся в промежутке от 0 до 1."
+msgstr "Cегменты не находятся в промежутке от 0 до 1."
 
 #: ../app/core/gimpgradient-load.c:239
 #, c-format
 msgid "In line %d of gradient file: "
-msgstr "Некорректное пустое название градиента"
+msgstr "В строке %d файла градиента: "
 
 #: ../app/core/gimpgradient-load.c:315
 #, c-format
@@ -12647,7 +12646,7 @@ msgstr "Применить сохранённую кисть"
 #: ../app/core/gimppalette-import.c:210
 #, c-format
 msgid "%s (occurs %u)"
-msgstr "%s (%s)"
+msgstr "%s (встречается %s раз)"
 
 #: ../app/core/gimppalette-import.c:423
 #, c-format
@@ -12702,13 +12701,12 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:456
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
-msgstr ""
-"Загружается палитра '%s': значение RGB вне допустимого диапазона в строке %d."
+msgstr "Загружается палитра '%s': чтение %d цветов из обрезанного файла: %s."
 
 #: ../app/core/gimppalette-load.c:233
 #, c-format
 msgid "In line %d of palette file: "
-msgstr "Неизвестный тип файла палитры: %s"
+msgstr "В строке %d файла палитры: "
 
 #: ../app/core/gimppalette-load.c:429
 #, c-format
@@ -12738,8 +12736,7 @@ msgid ""
 "Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Неисправимая ошибка разбора файла текстуры '%s': неподдерживаемая глубина "
-"%d.\n"
+"Неподдерживаемая глубина текстуры %d.\n"
 "Текстуры GIMP должны быть в оттенках серого или RGB."
 
 #: ../app/core/gimppattern-load.c:103 ../app/core/gimppattern-load.c:141
@@ -12835,8 +12832,8 @@ msgstr "Не удалось вырезать/скопировать: выдел�
 #: ../app/core/gimpselection.c:867
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
-"Невозможно создать плавающее выделение из-за того,\n"
-"что выделенная область пуста."
+"Невозможно создать плавающее выделение,\n"
+"потому что выделенная область пуста."
 
 #: ../app/core/gimpselection.c:874
 msgctxt "undo-type"
