@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-12 16:47+0200\n"
-"PO-Revision-Date: 2017-08-12 17:01+0200\n"
+"POT-Creation-Date: 2017-08-14 13:29+0200\n"
+"PO-Revision-Date: 2017-08-14 13:31+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -9830,7 +9830,10 @@ msgstr ""
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
-msgstr "Durante la promozione di immagini alla precisione in virgola mobile, aggiunge anche un disturbo minimo in modo da distribuire un po' i valori di colore."
+msgstr ""
+"Durante la promozione di immagini alla precisione in virgola mobile, "
+"aggiunge anche un disturbo minimo in modo da distribuire un po' i valori di "
+"colore."
 
 #: ../app/config/gimprc-blurbs.h:196
 msgid "Add an alpha channel to all layers of imported images."
@@ -17377,11 +17380,11 @@ msgstr "Gomma"
 msgid "Anti erase"
 msgstr "Anti cancella"
 
-#: ../app/paint/gimpheal.c:106 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:115 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Cerotto"
 
-#: ../app/paint/gimpheal.c:145
+#: ../app/paint/gimpheal.c:155
 msgid "Healing does not operate on indexed layers."
 msgstr "Il cerotto non agisce su livelli indicizzati."
 
@@ -20097,7 +20100,7 @@ msgstr "Aggiungi guida:"
 #: ../app/tools/gimphandletransformoptions.c:73
 #: ../app/tools/gimphandletransformoptions.c:74
 msgid "Handle mode"
-msgstr "Modalità appiglio"
+msgstr "Modalità appigli"
 
 #: ../app/tools/gimphandletransformoptions.c:167
 msgid "Add handles and transform the image"
@@ -20113,7 +20116,7 @@ msgstr "Rimuovi appigli di trasformazione"
 
 #: ../app/tools/gimphandletransformtool.c:116
 msgid "Handle Transform"
-msgstr "Trasformazione appiglio"
+msgstr "Trasformazione ad appigli"
 
 #: ../app/tools/gimphandletransformtool.c:117
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
@@ -20123,11 +20126,11 @@ msgstr ""
 
 #: ../app/tools/gimphandletransformtool.c:119
 msgid "_Handle Transform"
-msgstr "Trasformazione _appiglio"
+msgstr "Trasformazione ad _appigli"
 
 #: ../app/tools/gimphandletransformtool.c:146
 msgid "Handle transformation"
-msgstr "Trasformazione appigli"
+msgstr "Trasformazione ad appigli"
 
 #: ../app/tools/gimphandletransformtool.c:214
 #: ../app/tools/gimpperspectivetool.c:128
@@ -20137,7 +20140,7 @@ msgstr "Matrice di trasformazione"
 #: ../app/tools/gimphandletransformtool.c:381
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "Trasformazione appigli"
+msgstr "Trasformazione ad appigli"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
