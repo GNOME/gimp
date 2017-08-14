@@ -12646,7 +12646,7 @@ msgstr "Применить сохранённую кисть"
 #: ../app/core/gimppalette-import.c:210
 #, c-format
 msgid "%s (occurs %u)"
-msgstr "%s (встречается %s раз)"
+msgstr "%s (встречается %u раз)"
 
 #: ../app/core/gimppalette-import.c:423
 #, c-format
@@ -17764,8 +17764,8 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"Невозможно использовать элемент '%s' (%d), потому что он не добавлен в "
-"изображение"
+"Невозможно использовать элементы '%s' (%d) и '%s' (%d),\n"
+"потому что они не часть одного дерева объектов"
 
 #: ../app/pdb/gimppdb-utils.c:480
 #, c-format
@@ -17842,12 +17842,12 @@ msgstr "Изображение '%s' (%d) уже относится к типу '
 #: ../app/pdb/gimppdb-utils.c:734 ../app/pdb/image-guides-cmds.c:179
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
-msgstr "Векторный объект %d не содержит обводку с ID %d"
+msgstr "Изображение %s (%d) не содержит направляющую с ID %d"
 
 #: ../app/pdb/gimppdb-utils.c:757 ../app/pdb/image-sample-points-cmds.c:144
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
-msgstr "Векторный объект %d не содержит обводку с ID %d"
+msgstr "Изображение %s (%d) не содержит образцовую точку с ID %d"
 
 #: ../app/pdb/gimppdb-utils.c:785
 #, c-format
@@ -22885,7 +22885,7 @@ msgstr ""
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
 msgstr ""
-"Неисправимая ошибка разбора файла текстуры '%s': вероятно, файл оборван."
+"Похоже, что файл '%s' оборван: %s"
 
 #: ../app/widgets/gimptextbuffer.c:1702
 #, c-format
@@ -22955,7 +22955,7 @@ msgid ""
 "%s-Click to force update even if preview is up-to-date"
 msgstr ""
 "Нажмите, чтобы обновить просмотр\n"
-"%s%sкнопка мыши — чтобы принудительно обновить просмотр"
+"%s-щелчок для принудительного обновления просмотра"
 
 #: ../app/widgets/gimpthumbbox.c:341
 msgid "Pr_eview"
