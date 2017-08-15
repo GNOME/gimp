@@ -692,7 +692,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           /*  show distance and angle in statusbar  */
           if (shell->unit == GIMP_UNIT_PIXEL)
             {
-              gimp_tool_push_status (tool, display, "%.1f %s, %.2f\302\260.  %s",
+              gimp_tool_push_status (tool, display, "%.1f %s, %.2f\302\260. %s",
                                      pixel_dist, _("pixels"), angle, status_help);
             }
           else
@@ -711,7 +711,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
                 digits = gimp_unit_get_scaled_digits (shell->unit,
                                                       pixel_dist / inch_dist);
 
-              g_snprintf (format_str, sizeof (format_str), "%%.%df %s, %%.2f\302\260.  %%s",
+              g_snprintf (format_str, sizeof (format_str), "%%.%df %s, %%.2f\302\260. %%s",
                           digits, gimp_unit_get_symbol (shell->unit));
 
               gimp_tool_push_status (tool, display, format_str,
