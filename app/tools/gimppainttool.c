@@ -642,6 +642,9 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
           gchar   *status_help;
           gdouble  dx, dy, pixel_dist;
+          gdouble  xres;
+          gdouble  yres;
+          gdouble  angle;
 
           gimp_paint_core_round_line (core, paint_options,
                                       (state & constrain_mask) != 0);
@@ -657,23 +660,49 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
           pixel_dist = sqrt (SQR (dx) + SQR (dy));
 
-          /*  show distance in statusbar  */
           if (shell->unit == GIMP_UNIT_PIXEL)
+            xres = yres = 1.0;
+          else
+            gimp_image_get_resolution (image, &xres, &yres);
+
+          if (dx)
             {
-              gimp_tool_push_status (tool, display, "%.1f %s.  %s",
-                                     pixel_dist, _("pixels"), status_help);
+              angle = gimp_rad_to_deg (atan ((dy/yres) / (dx/xres)));
+              if (dx > 0)
+                {
+                  if (dy > 0)
+                    angle = 360.0 - angle;
+                  else if (dy < 0)
+                    angle = -angle;
+                }
+              else
+                {
+                  angle = 180.0 - angle;
+                }
+            }
+          else if (dy)
+            {
+              angle = dy > 0 ? 270.0 : 90.0;
             }
           else
             {
-              gdouble xres;
-              gdouble yres;
+              angle = 0.0;
+            }
+
+          /*  show distance and angle in statusbar  */
+          if (shell->unit == GIMP_UNIT_PIXEL)
+            {
+              gimp_tool_push_status (tool, display, "%.1f %s, %.2f\302\260.  %s",
+                                     pixel_dist, _("pixels"), angle, status_help);
+            }
+          else
+            {
               gdouble inch_dist;
               gdouble unit_dist;
               gint    digits = 0;
               gchar   format_str[64];
 
               /* The distance in unit. */
-              gimp_image_get_resolution (image, &xres, &yres);
               inch_dist = sqrt (SQR (dx / xres) + SQR (dy / yres));
               unit_dist = gimp_unit_get_factor (shell->unit) * inch_dist;
 
@@ -682,11 +711,11 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
                 digits = gimp_unit_get_scaled_digits (shell->unit,
                                                       pixel_dist / inch_dist);
 
-              g_snprintf (format_str, sizeof (format_str), "%%.%df %s.  %%s",
+              g_snprintf (format_str, sizeof (format_str), "%%.%df %s, %%.2f\302\260.  %%s",
                           digits, gimp_unit_get_symbol (shell->unit));
 
               gimp_tool_push_status (tool, display, format_str,
-                                     unit_dist, status_help);
+                                     unit_dist, angle, status_help);
             }
 
           g_free (status_help);
