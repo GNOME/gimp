@@ -284,6 +284,10 @@ Assets / Resources:
   - Documents templates have been updated and now feature popular,
     contemporary document presets for both print and digital media.
 
+Libgimp:
+
+  - libgimp calls are now thread-safe.
+
 PDB:
 
   - Rename *-paste-as-new to *-paste-as-new-image.
