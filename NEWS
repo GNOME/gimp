@@ -34,6 +34,7 @@ Core:
     some interactions.
   - Remove max size limitation of 4GB for XCF files.
   - Support clipboard images in the clipboard brush and pattern.
+  - libgimp calls are now thread-safe.
 
 Layers and compositing:
 
@@ -283,10 +284,6 @@ Assets / Resources:
     3x4, 16:10, 16x9, and square.
   - Documents templates have been updated and now feature popular,
     contemporary document presets for both print and digital media.
-
-Libgimp:
-
-  - libgimp calls are now thread-safe.
 
 PDB:
 
