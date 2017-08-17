@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-04 19:04+0200\n"
-"PO-Revision-Date: 2017-07-04 19:04+0200\n"
+"POT-Creation-Date: 2017-08-17 01:44+0200\n"
+"PO-Revision-Date: 2017-08-17 02:18+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -48,11 +48,11 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/file-cel.c:934 ../plug-ins/common/file-gif-save.c:1089
 #: ../plug-ins/common/file-pdf-load.c:1089
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3421
-#: ../plug-ins/common/file-raw-data.c:1554 ../plug-ins/common/file-svg.c:726
+#: ../plug-ins/common/file-raw-data.c:1552 ../plug-ins/common/file-svg.c:726
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1262
 #: ../plug-ins/common/filter-pack.c:1206 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:646 ../plug-ins/common/hot.c:593
-#: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:502
+#: ../plug-ins/common/jigsaw.c:2397 ../plug-ins/common/mail.c:499
 #: ../plug-ins/common/max-rgb.c:261 ../plug-ins/common/newsprint.c:1183
 #: ../plug-ins/common/nl-filter.c:1021 ../plug-ins/common/oilify.c:785
 #: ../plug-ins/common/photocopy.c:840 ../plug-ins/common/qbist.c:723
@@ -92,7 +92,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:426
+#: ../plug-ins/pagecurl/pagecurl.c:439 ../plug-ins/screenshot/screenshot.c:427
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "_Annulla"
@@ -436,7 +436,7 @@ msgstr "_Verticale"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:445
 #: ../plug-ins/common/file-pcx.c:452 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1065 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1162
+#: ../plug-ins/common/file-raw-data.c:1160
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:258 ../plug-ins/common/tile.c:354
@@ -444,7 +444,7 @@ msgstr "_Verticale"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1781 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1791 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:923
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:139
@@ -772,7 +772,8 @@ msgstr "Saturazione"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:186
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/ui/plug-in-metadata.ui.h:2
+#: ../plug-ins/gimpressionist/size.c:158
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "Valore"
 
@@ -812,7 +813,7 @@ msgstr "Seme Casuale"
 #: ../plug-ins/common/cml-explorer.c:1269
 #: ../plug-ins/common/cml-explorer.c:2120 ../plug-ins/common/curve-bend.c:1488
 #: ../plug-ins/common/curve-bend.c:2066 ../plug-ins/common/file-cel.c:935
-#: ../plug-ins/common/file-raw-data.c:1555 ../plug-ins/common/qbist.c:724
+#: ../plug-ins/common/file-raw-data.c:1553 ../plug-ins/common/qbist.c:724
 #: ../plug-ins/common/qbist.c:888 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870 ../plug-ins/flame/flame.c:475
@@ -1006,13 +1007,14 @@ msgstr "Grafico delle impostazioni correnti"
 
 #: ../plug-ins/common/cml-explorer.c:1856
 #: ../plug-ins/common/color-cube-analyze.c:364
-#: ../plug-ins/common/metadata.c:251 ../plug-ins/common/plugin-browser.c:550
+#: ../plug-ins/common/plugin-browser.c:550
 #: ../plug-ins/common/procedure-browser.c:129
 #: ../plug-ins/common/sample-colorize.c:1331
 #: ../plug-ins/common/unit-editor.c:417 ../plug-ins/gfig/gfig-dialog.c:291
 #: ../plug-ins/gfig/gfig-dialog.c:879 ../plug-ins/gfig/gfig-dialog.c:1245
 #: ../plug-ins/gfig/gfig-dialog.c:1393
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
+#: ../plug-ins/metadata/metadata-viewer.c:227
 msgid "_Close"
 msgstr "_Chiudi"
 
@@ -1028,13 +1030,13 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:852
 #: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1560
-#: ../plug-ins/common/file-raw-data.c:977
-#: ../plug-ins/common/file-raw-data.c:1005 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-raw-data.c:975
+#: ../plug-ins/common/file-raw-data.c:1003 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-xmc.c:1475
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:749 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1574
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1577
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1060,8 +1062,8 @@ msgstr "Carica parametri Esploratore CML"
 #: ../plug-ins/common/file-jp2-load.c:243 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:375 ../plug-ins/common/file-png.c:913
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3370
-#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:374
-#: ../plug-ins/common/file-raw-data.c:1086 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-psp.c:1738 ../plug-ins/common/file-raw-data.c:372
+#: ../plug-ins/common/file-raw-data.c:1084 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:710
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:841
@@ -1342,7 +1344,7 @@ msgid "_Redness cr709:"
 msgstr "Liv. _rosso cr709:"
 
 #: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:175
-#: ../plug-ins/common/file-raw-data.c:1602
+#: ../plug-ins/common/file-raw-data.c:1600
 msgid "RGB"
 msgstr "RGB"
 
@@ -1509,10 +1511,12 @@ msgid "Uniform"
 msgstr "Uniforme"
 
 #: ../plug-ins/common/contrast-retinex.c:322
+#: ../plug-ins/metadata/metadata-tags.h:302
 msgid "Low"
 msgstr "Basso"
 
 #: ../plug-ins/common/contrast-retinex.c:323
+#: ../plug-ins/metadata/metadata-tags.h:302
 msgid "High"
 msgstr "Alto"
 
@@ -1642,12 +1646,14 @@ msgid "Curve for Border"
 msgstr "Curva del bordo"
 
 #: ../plug-ins/common/curve-bend.c:1403
+msgctxt "curve-border"
 msgid "_Upper"
-msgstr "_Alto"
+msgstr "_Superiore"
 
-#: ../plug-ins/common/curve-bend.c:1404 ../plug-ins/gfig/gfig-dialog.c:905
+#: ../plug-ins/common/curve-bend.c:1404
+msgctxt "curve-border"
 msgid "_Lower"
-msgstr "_Basso"
+msgstr "_Inferiore"
 
 #: ../plug-ins/common/curve-bend.c:1414
 msgid "Curve Type"
@@ -1944,7 +1950,7 @@ msgstr "Sorgente 2:"
 msgid "O_verlap:"
 msgstr "So_vrapposizione:"
 
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1630
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1628
 msgid "O_ffset:"
 msgstr "_Compensazione:"
 
@@ -2013,7 +2019,7 @@ msgstr "Destriscia"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3496 ../plug-ins/common/file-ps.c:3701
-#: ../plug-ins/common/file-raw-data.c:1643
+#: ../plug-ins/common/file-raw-data.c:1641
 #: ../plug-ins/common/smooth-palette.c:453 ../plug-ins/common/tile.c:464
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2182,17 +2188,17 @@ msgstr ""
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:1079 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:1077 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:984
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:354 ../plug-ins/common/file-xwd.c:448
-#: ../plug-ins/file-bmp/bmp-load.c:218
-#: ../plug-ins/file-darktable/file-darktable.c:383
-#: ../plug-ins/file-exr/file-exr.c:185 ../plug-ins/file-faxg3/faxg3.c:218
-#: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:664
-#: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
-#: ../plug-ins/file-rawtherapee/file-rawtherapee.c:285
-#: ../plug-ins/file-sgi/sgi.c:325 ../plug-ins/file-tiff/file-tiff-load.c:236
+#: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:185
+#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-ico/ico-load.c:664 ../plug-ins/file-jpeg/jpeg-load.c:90
+#: ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-raw/file-darktable.c:361
+#: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
@@ -2279,7 +2285,7 @@ msgstr ""
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:717 ../plug-ins/file-ico/ico-save.c:1075
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1567
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1570
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -2289,49 +2295,49 @@ msgstr "Esportazione di \"%s\""
 msgid "C source code"
 msgstr "Codice sorgente C"
 
-#: ../plug-ins/common/file-csource.c:869
+#: ../plug-ins/common/file-csource.c:886
 msgid "C-Source"
 msgstr "Sorgente C"
 
-#: ../plug-ins/common/file-csource.c:887
+#: ../plug-ins/common/file-csource.c:904
 msgid "_Prefixed name:"
 msgstr "Nome con _prefisso:"
 
-#: ../plug-ins/common/file-csource.c:896
+#: ../plug-ins/common/file-csource.c:913
 msgid "Co_mment:"
 msgstr "Co_mmento:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:903
+#: ../plug-ins/common/file-csource.c:920
 msgid "_Save comment to file"
 msgstr "_Salva commento nel file"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:915
+#: ../plug-ins/common/file-csource.c:932
 msgid "_Use GLib types (guint8*)"
 msgstr "_Usa tipi GLib (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:928
+#: ../plug-ins/common/file-csource.c:945
 msgid "Us_e macros instead of struct"
 msgstr "Us_a le macro invece delle struct"
 
-#: ../plug-ins/common/file-csource.c:941
+#: ../plug-ins/common/file-csource.c:958
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Usa codifica run-length a _1 byte"
 
-#: ../plug-ins/common/file-csource.c:954
+#: ../plug-ins/common/file-csource.c:971
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Sal_va canale alfa (RGBA/RGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:966
+#: ../plug-ins/common/file-csource.c:983
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Salva come _RGB565 (16-bit)"
 
-#: ../plug-ins/common/file-csource.c:989
+#: ../plug-ins/common/file-csource.c:1005
 msgid "Op_acity:"
 msgstr "Op_acità:"
 
@@ -2741,7 +2747,7 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "La larghezza di ogni cella. Può essere un numero o una percentuale."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3509
-#: ../plug-ins/common/file-ps.c:3713 ../plug-ins/common/file-raw-data.c:1659
+#: ../plug-ins/common/file-ps.c:3713 ../plug-ins/common/file-raw-data.c:1657
 #: ../plug-ins/common/film.c:1006 ../plug-ins/common/smooth-palette.c:458
 #: ../plug-ins/common/tile.c:468 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -2951,7 +2957,7 @@ msgstr "Ritardo predefinito fotogrammi:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1546
-#: ../plug-ins/file-webp/file-webp-dialog.c:306
+#: ../plug-ins/file-webp/file-webp-dialog.c:349
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "millisecondi"
@@ -3277,13 +3283,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 "Errore durante l'esportazione di \"%s\". Impossibile esportare l'immagine."
 
-#: ../plug-ins/common/file-png.c:2338 ../plug-ins/common/file-raw-data.c:1785
+#: ../plug-ins/common/file-png.c:2338 ../plug-ins/common/file-raw-data.c:1783
 #: ../plug-ins/file-tiff/file-tiff-save.c:958
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Errore di caricamento file IU \"%s\": %s"
 
-#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:1786
+#: ../plug-ins/common/file-png.c:2339 ../plug-ins/common/file-raw-data.c:1784
 #: ../plug-ins/file-tiff/file-tiff-save.c:959
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
@@ -3575,103 +3581,103 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: ../plug-ins/common/file-raw-data.c:253
-#: ../plug-ins/common/file-raw-data.c:268
-#: ../plug-ins/common/file-raw-data.c:283
+#: ../plug-ins/common/file-raw-data.c:269
+#: ../plug-ins/common/file-raw-data.c:281
 msgid "Raw image data"
 msgstr "Dati immagine raw"
 
-#: ../plug-ins/common/file-raw-data.c:1550
+#: ../plug-ins/common/file-raw-data.c:1548
 msgid "Load Image from Raw Data"
 msgstr "Carica immagine da dati raw"
 
-#: ../plug-ins/common/file-raw-data.c:1592
+#: ../plug-ins/common/file-raw-data.c:1590
 msgid "Image"
 msgstr "Immagine"
 
-#: ../plug-ins/common/file-raw-data.c:1603
+#: ../plug-ins/common/file-raw-data.c:1601
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1604
+#: ../plug-ins/common/file-raw-data.c:1602
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1605
+#: ../plug-ins/common/file-raw-data.c:1603
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1606
+#: ../plug-ins/common/file-raw-data.c:1604
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1607
+#: ../plug-ins/common/file-raw-data.c:1605
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1608
+#: ../plug-ins/common/file-raw-data.c:1606
 msgid "Planar RGB"
 msgstr "RGB planare"
 
-#: ../plug-ins/common/file-raw-data.c:1609
+#: ../plug-ins/common/file-raw-data.c:1607
 msgid "B&W 1 bit"
 msgstr "B&N 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1610
+#: ../plug-ins/common/file-raw-data.c:1608
 msgid "Gray 2 bit"
 msgstr "Grigio 2 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1611
+#: ../plug-ins/common/file-raw-data.c:1609
 msgid "Gray 4 bit"
 msgstr "Grigio 4 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1612
+#: ../plug-ins/common/file-raw-data.c:1610
 msgid "Gray 8 bit"
 msgstr "Grigio 8 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1613
+#: ../plug-ins/common/file-raw-data.c:1611
 msgid "Indexed"
 msgstr "Indicizzata"
 
-#: ../plug-ins/common/file-raw-data.c:1614
+#: ../plug-ins/common/file-raw-data.c:1612
 msgid "Indexed Alpha"
 msgstr "Alfa indicizzata"
 
-#: ../plug-ins/common/file-raw-data.c:1619
+#: ../plug-ins/common/file-raw-data.c:1617
 msgid "Image _Type:"
 msgstr "_Tipo immagine:"
 
-#: ../plug-ins/common/file-raw-data.c:1675
+#: ../plug-ins/common/file-raw-data.c:1673
 msgid "Palette"
 msgstr "Tavolozza"
 
-#: ../plug-ins/common/file-raw-data.c:1685
+#: ../plug-ins/common/file-raw-data.c:1683
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normale)"
 
-#: ../plug-ins/common/file-raw-data.c:1686
+#: ../plug-ins/common/file-raw-data.c:1684
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (stile bmp)"
 
-#: ../plug-ins/common/file-raw-data.c:1691
+#: ../plug-ins/common/file-raw-data.c:1689
 msgid "_Palette Type:"
 msgstr "_Tipo tavolozza:"
 
-#: ../plug-ins/common/file-raw-data.c:1702
+#: ../plug-ins/common/file-raw-data.c:1700
 msgid "Off_set:"
 msgstr "_Spostamento:"
 
-#: ../plug-ins/common/file-raw-data.c:1714
+#: ../plug-ins/common/file-raw-data.c:1712
 msgid "Select Palette File"
 msgstr "Seleziona il file tavolozza"
 
-#: ../plug-ins/common/file-raw-data.c:1720
+#: ../plug-ins/common/file-raw-data.c:1718
 msgid "Pal_ette File:"
 msgstr "Fil_e tavolozza:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:1769
+#: ../plug-ins/common/file-raw-data.c:1767
 msgid "Raw Image"
 msgstr "Immagine raw"
 
@@ -4928,37 +4934,37 @@ msgstr "Invia l'immagine per email"
 msgid "Send by E_mail..."
 msgstr "Invia per email..."
 
-#: ../plug-ins/common/mail.c:498
+#: ../plug-ins/common/mail.c:495
 msgid "Send by Email"
 msgstr "Invia per email"
 
-#: ../plug-ins/common/mail.c:503
+#: ../plug-ins/common/mail.c:500
 msgid "_Send"
 msgstr "_Spedisci"
 
-#: ../plug-ins/common/mail.c:535
+#: ../plug-ins/common/mail.c:532
 msgid "_Filename:"
 msgstr "_Nome file:"
 
-#: ../plug-ins/common/mail.c:549
+#: ../plug-ins/common/mail.c:546
 msgctxt "email-address"
 msgid "_To:"
 msgstr "_A:"
 
-#: ../plug-ins/common/mail.c:563
+#: ../plug-ins/common/mail.c:560
 msgctxt "email-address"
 msgid "_From:"
 msgstr "_Da:"
 
-#: ../plug-ins/common/mail.c:575
+#: ../plug-ins/common/mail.c:572
 msgid "S_ubject:"
 msgstr "_Oggetto:"
 
-#: ../plug-ins/common/mail.c:640
+#: ../plug-ins/common/mail.c:637
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "estensione del file errata o mancante"
 
-#: ../plug-ins/common/mail.c:824
+#: ../plug-ins/common/mail.c:821
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Impossibile eseguire sendmail (%s)"
@@ -4990,28 +4996,6 @@ msgstr "_Mantieni i canali massimi"
 #: ../plug-ins/common/max-rgb.c:294
 msgid "Ho_ld the minimal channels"
 msgstr "Man_tieni i canali minimi"
-
-#: ../plug-ins/common/metadata.c:148
-msgid "View and edit metadata (Exif, IPTC, XMP)"
-msgstr "Visualizza e modifica i metadati (EXIF, IPTC, XMP)"
-
-#: ../plug-ins/common/metadata.c:157
-msgid "Image Metadata"
-msgstr "Metadati immagine"
-
-#: ../plug-ins/common/metadata.c:198
-msgid "This image has no metadata attached to it."
-msgstr "Questa immagine non ha metadati associati."
-
-#: ../plug-ins/common/metadata.c:426
-#, c-format
-msgid "(%lu more character(s))"
-msgstr "(%lu più caratteri)"
-
-#: ../plug-ins/common/metadata.c:458
-#, c-format
-msgid "(%llu more byte(s))"
-msgstr "(%llu più byte)"
 
 #: ../plug-ins/common/newsprint.c:118
 msgid "Round"
@@ -5288,6 +5272,7 @@ msgid "Plug-in Browser"
 msgstr "Navigatore plug-in"
 
 #: ../plug-ins/common/plugin-browser.c:589
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:41
 msgid "Name"
 msgstr "Nome"
 
@@ -6569,8 +6554,8 @@ msgstr ""
 #. Advanced Options
 #. Advanced options
 #: ../plug-ins/file-bmp/bmp-save.c:951 ../plug-ins/file-jpeg/jpeg-save.c:814
-#: ../plug-ins/file-webp/file-webp-dialog.c:194
-#: ../plug-ins/file-webp/file-webp-dialog.c:323
+#: ../plug-ins/file-webp/file-webp-dialog.c:220
+#: ../plug-ins/file-webp/file-webp-dialog.c:366
 msgid "_Advanced Options"
 msgstr "Opzioni avanzate"
 
@@ -6589,139 +6574,6 @@ msgstr "32 bits"
 #: ../plug-ins/file-bmp/bmp.c:120 ../plug-ins/file-bmp/bmp.c:139
 msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
-
-#: ../plug-ins/file-darktable/file-darktable.c:455
-#: ../plug-ins/file-ico/ico-load.c:742 ../plug-ins/file-jpeg/jpeg-load.c:503
-#: ../plug-ins/file-psd/psd-thumb-load.c:74
-#: ../plug-ins/file-rawtherapee/file-rawtherapee.c:393
-#, c-format
-msgid "Opening thumbnail for '%s'"
-msgstr "Apertura miniatura per '%s'"
-
-#: ../plug-ins/file-darktable/file-formats.h:46
-#: ../plug-ins/file-rawtherapee/file-formats.h:41
-msgid "Raw Canon"
-msgstr "Raw Canon"
-
-#: ../plug-ins/file-darktable/file-formats.h:61
-#: ../plug-ins/file-rawtherapee/file-formats.h:52
-msgid "Raw Nikon"
-msgstr "Raw Nikon"
-
-#: ../plug-ins/file-darktable/file-formats.h:72
-#: ../plug-ins/file-rawtherapee/file-formats.h:63
-msgid "Raw Hasselblad"
-msgstr "Raw Hasselblad"
-
-#: ../plug-ins/file-darktable/file-formats.h:83
-#: ../plug-ins/file-rawtherapee/file-formats.h:74
-msgid "Raw Sony"
-msgstr "Raw Sony"
-
-#: ../plug-ins/file-darktable/file-formats.h:94
-#: ../plug-ins/file-rawtherapee/file-formats.h:85
-msgid "Raw Casio BAY"
-msgstr "Raw Casio BAY"
-
-#: ../plug-ins/file-darktable/file-formats.h:105
-#: ../plug-ins/file-rawtherapee/file-formats.h:96
-msgid "Raw Phantom Software CINE"
-msgstr "Raw Phantom Software CINE"
-
-#: ../plug-ins/file-darktable/file-formats.h:116
-#: ../plug-ins/file-rawtherapee/file-formats.h:107
-msgid "Raw Sinar"
-msgstr "Raw Sinar"
-
-#: ../plug-ins/file-darktable/file-formats.h:127
-#: ../plug-ins/file-rawtherapee/file-formats.h:118
-msgid "Raw Kodak"
-msgstr "Raw Kodak"
-
-#: ../plug-ins/file-darktable/file-formats.h:139
-#: ../plug-ins/file-rawtherapee/file-formats.h:129
-msgid "Raw Adobe DNG Digital Negative"
-msgstr "Raw Adobe DNG Digital Negative"
-
-#: ../plug-ins/file-darktable/file-formats.h:150
-#: ../plug-ins/file-rawtherapee/file-formats.h:140
-msgid "Raw Epson ERF"
-msgstr "Raw Epson ERF"
-
-#: ../plug-ins/file-darktable/file-formats.h:161
-#: ../plug-ins/file-rawtherapee/file-formats.h:151
-msgid "Raw Phase One"
-msgstr "Raw Phase One"
-
-#: ../plug-ins/file-darktable/file-formats.h:172
-#: ../plug-ins/file-rawtherapee/file-formats.h:162
-msgid "Raw Minolta"
-msgstr "Raw Minolta"
-
-#: ../plug-ins/file-darktable/file-formats.h:183
-#: ../plug-ins/file-rawtherapee/file-formats.h:173
-msgid "Raw Mamiya MEF"
-msgstr "Raw Mamiya MEF"
-
-#: ../plug-ins/file-darktable/file-formats.h:193
-#: ../plug-ins/file-rawtherapee/file-formats.h:183
-msgid "Raw Leaf MOS"
-msgstr "Raw Leaf MOS"
-
-#: ../plug-ins/file-darktable/file-formats.h:204
-#: ../plug-ins/file-rawtherapee/file-formats.h:194
-msgid "Raw Olympus ORF"
-msgstr "Raw Olympus ORF"
-
-#: ../plug-ins/file-darktable/file-formats.h:215
-#: ../plug-ins/file-rawtherapee/file-formats.h:205
-msgid "Raw Pentax PEF"
-msgstr "Raw Pentax PEF"
-
-#: ../plug-ins/file-darktable/file-formats.h:226
-#: ../plug-ins/file-rawtherapee/file-formats.h:216
-msgid "Raw Logitech PXN"
-msgstr "Raw Logitech PXN"
-
-#: ../plug-ins/file-darktable/file-formats.h:237
-#: ../plug-ins/file-rawtherapee/file-formats.h:227
-msgid "Raw Apple QuickTake QTK"
-msgstr "Raw Apple QuickTake QTK"
-
-#: ../plug-ins/file-darktable/file-formats.h:248
-#: ../plug-ins/file-rawtherapee/file-formats.h:238
-msgid "Raw Fujifilm RAF"
-msgstr "Raw Fujifilm RAF"
-
-#: ../plug-ins/file-darktable/file-formats.h:259
-#: ../plug-ins/file-rawtherapee/file-formats.h:249
-msgid "Raw Panasonic"
-msgstr "Raw Panasonic"
-
-#: ../plug-ins/file-darktable/file-formats.h:270
-#: ../plug-ins/file-rawtherapee/file-formats.h:260
-msgid "Raw Digital Foto Maker RDC"
-msgstr "Raw Digital Foto Maker RDC"
-
-#: ../plug-ins/file-darktable/file-formats.h:281
-#: ../plug-ins/file-rawtherapee/file-formats.h:271
-msgid "Raw Leica RWL"
-msgstr "Raw Leica RWL"
-
-#: ../plug-ins/file-darktable/file-formats.h:292
-#: ../plug-ins/file-rawtherapee/file-formats.h:282
-msgid "Raw Samsung SRW"
-msgstr "Raw Samsung SRW"
-
-#: ../plug-ins/file-darktable/file-formats.h:303
-#: ../plug-ins/file-rawtherapee/file-formats.h:293
-msgid "Raw Sigma X3F"
-msgstr "Raw Sigma X3F"
-
-#: ../plug-ins/file-darktable/file-formats.h:314
-#: ../plug-ins/file-rawtherapee/file-formats.h:304
-msgid "Raw Arriflex ARI"
-msgstr "Raw Arriflex ARI"
 
 #: ../plug-ins/file-exr/file-exr.c:193
 #, c-format
@@ -6886,6 +6738,14 @@ msgstr "L'icona #%d ha larghezza o altezza zero"
 msgid "Icon #%i"
 msgstr "Icona #%i"
 
+#: ../plug-ins/file-ico/ico-load.c:742 ../plug-ins/file-jpeg/jpeg-load.c:503
+#: ../plug-ins/file-psd/psd-thumb-load.c:74
+#: ../plug-ins/file-raw/file-darktable.c:437
+#: ../plug-ins/file-raw/file-rawtherapee.c:429
+#, c-format
+msgid "Opening thumbnail for '%s'"
+msgstr "Apertura miniatura per '%s'"
+
 #: ../plug-ins/file-ico/ico.c:102 ../plug-ins/file-ico/ico.c:136
 msgid "Microsoft Windows icon"
 msgstr "Icona Microsoft Windows"
@@ -6960,7 +6820,7 @@ msgstr "_Progressiva"
 
 #. Save EXIF data
 #: ../plug-ins/file-jpeg/jpeg-save.c:961
-#: ../plug-ins/file-webp/file-webp-dialog.c:340
+#: ../plug-ins/file-webp/file-webp-dialog.c:383
 msgid "Save _Exif data"
 msgstr "Salva dati _Exif"
 
@@ -6970,7 +6830,7 @@ msgstr "Salva minia_tura"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:997
-#: ../plug-ins/file-webp/file-webp-dialog.c:350
+#: ../plug-ins/file-webp/file-webp-dialog.c:393
 msgid "Save _XMP data"
 msgstr "Salva dati _XMP"
 
@@ -7131,26 +6991,26 @@ msgstr "Larghezza maschera di livello non supportata o non valida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensioni maschera di livello non supportate o non valide: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1347 ../plug-ins/file-psd/psd-load.c:1756
+#: ../plug-ins/file-psd/psd-load.c:1347 ../plug-ins/file-psd/psd-load.c:1766
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modalità di compressione non supportata: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1851
+#: ../plug-ins/file-psd/psd-load.c:1861
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2039
+#: ../plug-ins/file-psd/psd-load.c:2049
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensione canale non supportata o non valida."
 
-#: ../plug-ins/file-psd/psd-load.c:2108
+#: ../plug-ins/file-psd/psd-load.c:2118
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Fallita la decompressione dati"
 
-#: ../plug-ins/file-psd/psd-save.c:292
+#: ../plug-ins/file-psd/psd-save.c:295
 #, c-format
 msgid ""
 "Unable to export layer with mode '%s'.  Either the PSD file format or the "
@@ -7160,12 +7020,12 @@ msgstr ""
 "psd o il plug-in di salvataggio non lo supportano; in alternativa si fa uso "
 "della modalità normale."
 
-#: ../plug-ins/file-psd/psd-save.c:542
+#: ../plug-ins/file-psd/psd-save.c:545
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Errore: impossibile convertire l'immagine di tipo base GIMP in modalità PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1541
+#: ../plug-ins/file-psd/psd-save.c:1544
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7174,7 +7034,7 @@ msgstr ""
 "Impossibile esportare \"%s\". Il formato del file PSD non supporta immagini "
 "più larghe o alte di 30.000 pixel."
 
-#: ../plug-ins/file-psd/psd-save.c:1556
+#: ../plug-ins/file-psd/psd-save.c:1559
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7190,6 +7050,125 @@ msgstr "Fine del file prematura"
 #: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:145
 msgid "Photoshop image"
 msgstr "Immagine Photoshop"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:46
+msgid "Raw Canon"
+msgstr "Raw Canon"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:58
+msgid "Raw Nikon"
+msgstr "Raw Nikon"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:69
+msgid "Raw Hasselblad"
+msgstr "Raw Hasselblad"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:80
+msgid "Raw Sony"
+msgstr "Raw Sony"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:91
+msgid "Raw Casio BAY"
+msgstr "Raw Casio BAY"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:102
+msgid "Raw Phantom Software CINE"
+msgstr "Raw Phantom Software CINE"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:113
+msgid "Raw Sinar"
+msgstr "Raw Sinar"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:124
+msgid "Raw Kodak"
+msgstr "Raw Kodak"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:135
+msgid "Raw Adobe DNG Digital Negative"
+msgstr "Raw Adobe DNG Digital Negative"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:146
+msgid "Raw Epson ERF"
+msgstr "Raw Epson ERF"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:157
+msgid "Raw Phase One"
+msgstr "Raw Phase One"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:168
+msgid "Raw Minolta"
+msgstr "Raw Minolta"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:179
+msgid "Raw Mamiya MEF"
+msgstr "Raw Mamiya MEF"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:189
+msgid "Raw Leaf MOS"
+msgstr "Raw Leaf MOS"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:200
+msgid "Raw Olympus ORF"
+msgstr "Raw Olympus ORF"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:211
+msgid "Raw Pentax PEF"
+msgstr "Raw Pentax PEF"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:222
+msgid "Raw Logitech PXN"
+msgstr "Raw Logitech PXN"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:233
+msgid "Raw Apple QuickTake QTK"
+msgstr "Raw Apple QuickTake QTK"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:244
+msgid "Raw Fujifilm RAF"
+msgstr "Raw Fujifilm RAF"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:255
+msgid "Raw Panasonic"
+msgstr "Raw Panasonic"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:266
+msgid "Raw Digital Foto Maker RDC"
+msgstr "Raw Digital Foto Maker RDC"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:277
+msgid "Raw Leica RWL"
+msgstr "Raw Leica RWL"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:288
+msgid "Raw Samsung SRW"
+msgstr "Raw Samsung SRW"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:299
+msgid "Raw Sigma X3F"
+msgstr "Raw Sigma X3F"
+
+#: ../plug-ins/file-raw/file-raw-formats.h:310
+msgid "Raw Arriflex ARI"
+msgstr "Raw Arriflex ARI"
+
+#: ../plug-ins/file-raw/file-raw-placeholder.c:140
+#, c-format
+msgid ""
+"There is no RAW loader installed to open '%s' files.\n"
+"\n"
+"GIMP currently supports these RAW loaders:\n"
+"- darktable (http://www.darktable.org/), at least 1.7\n"
+"- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
+"\n"
+"Please install one of them in order to load RAW files."
+msgstr ""
+"Non c'è alcun caricatore RAW installato atto ad aprire file \"%s\".\n"
+"\n"
+"GIMP attualmente supporta questo caricatori RAW:\n"
+"- darktable (http://www.darktable.org/), almeno 1.7\n"
+"- RawTherapee (http://rawtherapee.com/), almeno 5.2\n"
+"\n"
+"Installare uno di questi per poter caricare i file RAW."
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -7339,67 +7318,75 @@ msgstr "Fax CCITT gruppo _4"
 msgid "WebP image"
 msgstr "Immagine WebP"
 
+#: ../plug-ins/file-webp/file-webp-dialog.c:70
+msgid "(no keyframes)"
+msgstr "(nessun quadro chiave)"
+
+#: ../plug-ins/file-webp/file-webp-dialog.c:74
+msgid "(all frames are keyframes)"
+msgstr "(tutti i quadri sono quadri chiave)"
+
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:83
+#: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:100
+#: ../plug-ins/file-webp/file-webp-dialog.c:124
 msgid "Lossless"
 msgstr "Senza perdite"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:116
+#: ../plug-ins/file-webp/file-webp-dialog.c:140
 msgid "Image quality:"
 msgstr "Qualità immagine:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:124
+#: ../plug-ins/file-webp/file-webp-dialog.c:148
 msgid "Image quality"
 msgstr "Qualità immagine"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:135
+#: ../plug-ins/file-webp/file-webp-dialog.c:159
 msgid "Alpha quality:"
 msgstr "Qualità alfa:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:143
+#: ../plug-ins/file-webp/file-webp-dialog.c:167
 msgid "Alpha channel quality"
 msgstr "La qualità del canale alfa"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:168
+#: ../plug-ins/file-webp/file-webp-dialog.c:192
 msgid "Source type:"
 msgstr "Tipo sorgente:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:171
+#: ../plug-ins/file-webp/file-webp-dialog.c:195
 msgid "WebP encoder \"preset\""
 msgstr "\"Preimpostazione\" encoder WebP"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:201
+#: ../plug-ins/file-webp/file-webp-dialog.c:227
 msgid "As A_nimation"
 msgstr "Come a_nimazione"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:230
+#: ../plug-ins/file-webp/file-webp-dialog.c:256
 msgid "Loop forever"
 msgstr "Ciclo perenne"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:247
+#: ../plug-ins/file-webp/file-webp-dialog.c:273
 msgid "Max distance between key-frames:"
 msgstr "Distanza massima tra quadri chiave:"
 
 #. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:265
+#: ../plug-ins/file-webp/file-webp-dialog.c:308
 msgid "Minimize output size (slower)"
 msgstr "Minimizza la dimensione risultante (più lento)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:288
+#: ../plug-ins/file-webp/file-webp-dialog.c:331
 msgid "Delay between frames where unspecified:"
 msgstr "Ritardo tra quadri ove non specificato:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:311
+#: ../plug-ins/file-webp/file-webp-dialog.c:354
 msgid "Use delay entered above for all frames"
 msgstr "Usa il ritardo inserito sopra per tutti i quadri"
 
@@ -8195,6 +8182,10 @@ msgid "Raise selected object"
 msgstr "Innalza gli oggetti selezionati"
 
 #: ../plug-ins/gfig/gfig-dialog.c:905
+msgid "_Lower"
+msgstr "_Basso"
+
+#: ../plug-ins/gfig/gfig-dialog.c:905
 msgid "Lower selected object"
 msgstr "Abbassa gli oggetti selezionati"
 
@@ -8372,6 +8363,7 @@ msgstr "Tipo di griglia:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1495
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
+#: ../plug-ins/metadata/metadata-tags.h:302
 msgid "Normal"
 msgstr "Normale"
 
@@ -8492,6 +8484,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Cambia la gamma (brillantezza) del pennello selezionato"
 
 #: ../plug-ins/gimpressionist/brush.c:570
+#: ../plug-ins/metadata/metadata-editor.c:570
 msgid "Select:"
 msgstr "Selezione:"
 
@@ -9290,129 +9283,434 @@ msgstr "Salva dati IPTC"
 msgid "save thumbnail"
 msgstr "salva miniatura"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:1
-msgid "Exif Tag"
-msgstr "Marcatura Exif"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
+msgid "Document Title"
+msgstr "Titolo documento"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:3
-msgid "Exif"
-msgstr "Exif"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:4
-msgid "XMP Tag"
-msgstr "Marcatura XMP"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:5
-msgid "XMP"
-msgstr "XMP"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:6
-msgid "Title"
-msgstr "Titolo"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:7
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:2
 msgid "Author"
 msgstr "Autore"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:8
-msgid "Authortitle"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:3
+msgid "Author Title"
 msgstr "Titolo dell'autore"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:9
-msgid "Copyright"
-msgstr "Copyright"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:10
-msgid "Caption"
-msgstr "Didascalia"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:11
-msgid "Captionwriter"
-msgstr "Autore didascalia"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:12
-msgid "Headline"
-msgstr "Intestazione"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:13
-msgid ""
-"Special\n"
-"Instructions"
-msgstr ""
-"Istruzioni\n"
-"Speciali"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:15
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:4
 msgid "Description"
 msgstr "Descrizione"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:16
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:5
+msgid "Description Writer\t"
+msgstr "Descrizione scrittore\t"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:6
+msgid "Rating"
+msgstr "Classificazione"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:7
 msgid "Keywords"
 msgstr "Parolechiave"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:17
-msgid "Category"
-msgstr "Categoria"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:8
+msgid "Copyright Status"
+msgstr "Stato del Copyright"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:18
-msgid ""
-"Supplemental\n"
-"Category"
-msgstr ""
-"Categoria\n"
-"Supplementale"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:9
+msgid "Copyright Notice"
+msgstr "Avviso di Copyright"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:20
-msgid "Urgency"
-msgstr "Urgenza"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:10
+msgid "Copyright URL"
+msgstr "Url del Copyright"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:21
-msgid "Keywords/Categories"
-msgstr "Parolechiave/Categorie"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:11
+msgid "Address"
+msgstr "Indirizzo"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:22
-msgid "Credit"
-msgstr "Crediti"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:23
-msgid "Source"
-msgstr "Sorgente"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:24
-msgid ""
-"Transmission\n"
-"reference"
-msgstr ""
-"Riferimento\n"
-"trasmissione"
-
-#: ../plug-ins/ui/plug-in-metadata.ui.h:26
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:12
 msgid "City"
 msgstr "Città"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:27
-msgid "Sublocation"
-msgstr "Località"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:13
+msgid "Postal Code\t"
+msgstr "Codice postale\t"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:28
-msgid "Province/State"
-msgstr "Provincia/Stato"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:14
+msgid "State / Province"
+msgstr "Stato / Provincia"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:29
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:15
 msgid "Country"
 msgstr "Paese"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:30
-msgid "Credits/Origin"
-msgstr "Crediti/Origine"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:16
+msgid "Phone(s)"
+msgstr "Telefono(i)"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:31
-msgid "Write IPTC Data"
-msgstr "Scrivi dati IPTC"
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:17
+msgid "Email(s)"
+msgstr "Email"
 
-#: ../plug-ins/ui/plug-in-metadata.ui.h:32
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:18
+msgid "Website(s)"
+msgstr "Sito(i) web"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:19
+msgid "Creation Date"
+msgstr "Data di creazione"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:20
+msgid "Intellectual Genre"
+msgstr "Genere"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:21
+msgid "IPTC Scene Code"
+msgstr "Codice scena IPTC"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:22
+msgid "Sublocation\t"
+msgstr "Località\t"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:23
+msgid "ISO Country Code"
+msgstr "Codice ISO del paese"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:24
+msgid "IPTC Subject Code"
+msgstr "Codice soggetto IPTC"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:25
+msgid "Headline"
+msgstr "Intestazione"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:26
+msgid "Urgency"
+msgstr "Urgenza"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:27
+msgid "Job Identifier\t"
+msgstr "Identificatore lavoro\t"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:28
+msgid "Instructions"
+msgstr "Istruzioni"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:29
+msgid "Credit Line"
+msgstr "Crediti"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:30
+msgid "Source"
+msgstr "Sorgente"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:31
+msgid "Usage Terms"
+msgstr "Termini d'uso"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:32
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:7
 msgid "IPTC"
 msgstr "IPTC"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:33
+msgid "Sublocation"
+msgstr "Località"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:34
+msgid "Person Shown"
+msgstr "Persona mostrata"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:35
+msgid "Country Name"
+msgstr "Nome del paese"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:36
+msgid "Country ISO-Code"
+msgstr "Codice ISO del paese"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:37
+msgid "World Region"
+msgstr "Regione del mondo"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:38
+msgid "Location Shown"
+msgstr "Posizione mostrata"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:39
+msgid "Featured Organisation"
+msgstr "Organizzazione presentata"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:40
+msgid "Event"
+msgstr "Evento"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:42
+msgid "Add an entry"
+msgstr "Aggiungi una voce"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:43
+msgid "Remove an entry"
+msgstr "Rimuovi una voce"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:44
+msgid "Code"
+msgstr "Codice"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:45
+msgid "Province / State"
+msgstr "Provincia / Stato"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:46
+msgid "Country ISO Code"
+msgstr "Codice ISO paese"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:47
+msgid "Artwork or Object"
+msgstr "Opera d'arte o oggetto"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:48
+msgid "Title"
+msgstr "Titolo"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:49
+msgid "Date Created"
+msgstr "Data di creazione"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:50
+msgid "Creator"
+msgstr "Creatore"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:51
+msgid "Source Inventory ID"
+msgstr "ID inventario sorgente"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:52
+msgid "Model Age"
+msgstr "Età del modello"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:53
+msgid "Minor Model Age Disclosure"
+msgstr "Divulgazione età modello minore"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:54
+msgid "Model Release Status"
+msgstr "Stato rilascio modello"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:55
+msgid "Additional Model Info"
+msgstr "Informazioni modello aggiuntive"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:56
+msgid "Model Release Identifier"
+msgstr "Identificatore versione modello"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:57
+msgid "Image Supplier ID"
+msgstr "ID fornitore immagine"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:58
+msgid "Supplier's Image ID"
+msgstr "ID immagine del fornitore"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:59
+msgid "Registry Entry"
+msgstr "Voce di registro"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:60
+msgid "Image Supplier Name"
+msgstr "Nome fornitore immagine"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:61
+msgid "Max. Available Width"
+msgstr "Larghezza disponibile massima"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:62
+msgid "Max. Available Height"
+msgstr "Altezza disponibile massima"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:63
+msgid "Digital Source Type"
+msgstr "Tipo di sorgente digitale"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:64
+msgid "Organization Identifier"
+msgstr "Identificatore organizzazione"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:65
+msgid "Item Identifier"
+msgstr "Identificatore elemento"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:66
+msgid "Copyright Owner"
+msgstr "Proprietario del Copyright"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:67
+msgid "Licensor"
+msgstr "Licenzatario"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:68
+msgid "Property Release Status"
+msgstr "Stato rilascio proprietà"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:69
+msgid "Image Creator"
+msgstr "Creatore immagine"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:70
+msgid "Identifier"
+msgstr "Identificatore"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:71
+msgid "Phone Number 1"
+msgstr "Numero telefono 1"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:72
+msgid "Phone Type 1"
+msgstr "Tipo telefono 1"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:73
+msgid "Phone Number 2"
+msgstr "Numero telefono 2"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:74
+msgid "Phone Type 2"
+msgstr "Tipo telefono 2"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:75
+msgid "Email Address"
+msgstr "Indirizzo Email"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:76
+msgid "Web Address"
+msgstr "Indirizzo Web"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:77
+msgid "Property Release Identifier"
+msgstr "Identificatore versione proprietà"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:78
+msgid "IPTC Extension"
+msgstr "Estensione IPTC"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:79
+msgid "Supplemental Category"
+msgstr "Categoria supplementale"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:80
+msgid "Category"
+msgstr "Categoria"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:81
+msgid "Categories"
+msgstr "Categorie"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:82
+msgid "Longitude Reference"
+msgstr "Riferimento longitudinale"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:83
+msgid "Longitude"
+msgstr "Longitudine"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:84
+msgid "Altitude"
+msgstr "Altitudine"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:85
+msgid "Latitude"
+msgstr "Latitudine"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:86
+msgid "Latitude Reference"
+msgstr "Riferimento latitudinale"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:87
+msgid "Altitude Reference"
+msgstr "Riferimento altitudinale"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:88
+msgid "GPS"
+msgstr "GPS"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:89
+msgid "Patient"
+msgstr "Paziente"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:90
+msgid "Patient ID"
+msgstr "ID paziente"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:91
+msgid "Date of Birth"
+msgstr "Data di nascita"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:92
+msgid "Patient Sex"
+msgstr "Sesso del paziente"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:93
+msgid "Study ID"
+msgstr "ID studio"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:94
+msgid "Referring Physician"
+msgstr "Medico di riferimento"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:95
+msgid "Study Date"
+msgstr "Data dello studio"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:96
+msgid "Study Description"
+msgstr "Descrizione dello studio"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:97
+msgid "Series Number"
+msgstr "Numero delle serie"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:98
+msgid "Modality"
+msgstr "Modalità"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:99
+msgid "Series Date"
+msgstr "Data delle serie"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:100
+msgid "Series Description"
+msgstr "Descrizione delle serie"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:101
+msgid "Equipment Institution"
+msgstr "Istituzione dell'equipaggiamento"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:102
+msgid "Equipment Manufacturer"
+msgstr "Fabbricante dell'equipaggiamento"
+
+#: ../plug-ins/ui/plug-in-metadata-editor.ui.h:103
+msgid "DICOM"
+msgstr "DICOM"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
+msgid "Exif Tag"
+msgstr "Marcatura Exif"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
+msgid "Exif"
+msgstr "Exif"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:4
+msgid "XMP Tag"
+msgstr "Marcatura XMP"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:5
+msgid "XMP"
+msgstr "XMP"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:6
+msgid "IPTC Tag"
+msgstr "Marcatura IPTC"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:552
 msgid "Addition"
@@ -11308,6 +11606,263 @@ msgstr "Mostra anteprima a sc_heletro"
 msgid "Update preview _live"
 msgstr "Aggiorna _l'anteprima in tempo reale"
 
+#: ../plug-ins/metadata/metadata-editor.c:408
+msgid "Edit metadata (IPTC, EXIF, XMP)"
+msgstr "Modifica i metadati (IPTC, EXIF, XMP)"
+
+#: ../plug-ins/metadata/metadata-editor.c:416
+msgid "Edit Metadata"
+msgstr "Modifica metadati"
+
+#: ../plug-ins/metadata/metadata-editor.c:539
+#, c-format
+msgid "Metadata Editor: %s"
+msgstr "Editor metadati: %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:548
+msgid "Write Metadata"
+msgstr "Scrivi metadati"
+
+#: ../plug-ins/metadata/metadata-editor.c:572
+msgid "Import metadata"
+msgstr "Importa metadati"
+
+#: ../plug-ins/metadata/metadata-editor.c:574
+msgid "Export metadata"
+msgstr "Esporta metadati"
+
+#: ../plug-ins/metadata/metadata-editor.c:757
+msgid "Calendar Date:"
+msgstr "Data del calendario:"
+
+#: ../plug-ins/metadata/metadata-editor.c:761
+msgid "Set Date"
+msgstr "Imposta data"
+
+#: ../plug-ins/metadata/metadata-editor.c:1611
+msgid "Unrated"
+msgstr "Non classificato"
+
+#: ../plug-ins/metadata/metadata-tags.h:250
+msgid "Original digital capture of a real life scene"
+msgstr "Istantanea digitale originale di una scena di vita reale"
+
+#: ../plug-ins/metadata/metadata-tags.h:251
+msgid "Digitised from a negative on film"
+msgstr "Digitalizzata da un negativo su pellicola"
+
+#: ../plug-ins/metadata/metadata-tags.h:252
+msgid "Digitised from a positive on film"
+msgstr "Digitalizzata da un positivo su pellicola"
+
+#: ../plug-ins/metadata/metadata-tags.h:253
+msgid "Digitised from a print on non-transparent medium"
+msgstr "Digitalizzata da una stampa su supporto non trasparente"
+
+#: ../plug-ins/metadata/metadata-tags.h:254
+msgid "Created by software"
+msgstr "Creato via software"
+
+#: ../plug-ins/metadata/metadata-tags.h:262
+#: ../plug-ins/metadata/metadata-tags.h:273
+#: ../plug-ins/metadata/metadata-tags.h:302
+msgid "None"
+msgstr "No"
+
+#: ../plug-ins/metadata/metadata-tags.h:263
+#: ../plug-ins/metadata/metadata-tags.h:274
+msgid "Not Applicable"
+msgstr "Non applicabile"
+
+#: ../plug-ins/metadata/metadata-tags.h:264
+msgid "Unlimited Model Releases"
+msgstr "Rilasci modello illimitati"
+
+#: ../plug-ins/metadata/metadata-tags.h:265
+msgid "Limited or Incomplete Model Releases"
+msgstr "Rilasci modello limitati o incompleti"
+
+#: ../plug-ins/metadata/metadata-tags.h:275
+msgid "Unlimited Property Releases"
+msgstr "Rilasci proprietà illimitati"
+
+#: ../plug-ins/metadata/metadata-tags.h:276
+msgid "Limited or Incomplete Property Releases"
+msgstr "Rilasci proprietà limitati o incompleti"
+
+#: ../plug-ins/metadata/metadata-tags.h:284
+msgid "Age Unknown"
+msgstr "Età sconosciuta"
+
+#: ../plug-ins/metadata/metadata-tags.h:285
+msgid "Age 25 or Over"
+msgstr "Età 25 o più anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:286
+msgid "Age 24"
+msgstr "Età 24 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:287
+msgid "Age 23"
+msgstr "Età 23 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:288
+msgid "Age 22"
+msgstr "Età 22 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:289
+msgid "Age 21"
+msgstr "Età 21 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:290
+msgid "Age 20"
+msgstr "Età 20 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:291
+msgid "Age 19"
+msgstr "Età 19 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:292
+msgid "Age 18"
+msgstr "Età 18 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:293
+msgid "Age 17"
+msgstr "Età 17 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:294
+msgid "Age 16"
+msgstr "Età 16 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:295
+msgid "Age 15"
+msgstr "Età 15 anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:296
+msgid "Age 14 or Under"
+msgstr "Età 14 o meno anni"
+
+#: ../plug-ins/metadata/metadata-tags.h:302
+msgid "2"
+msgstr "2"
+
+#: ../plug-ins/metadata/metadata-tags.h:302
+msgid "3"
+msgstr "3"
+
+#: ../plug-ins/metadata/metadata-tags.h:302
+msgid "4"
+msgstr "4"
+
+#: ../plug-ins/metadata/metadata-tags.h:302
+msgid "6"
+msgstr "6"
+
+#: ../plug-ins/metadata/metadata-tags.h:302
+msgid "7"
+msgstr "7"
+
+#: ../plug-ins/metadata/metadata-tags.h:308
+#: ../plug-ins/metadata/metadata-tags.h:341
+#: ../plug-ins/metadata/metadata-tags.h:347
+#: ../plug-ins/metadata/metadata-tags.h:353
+msgid "Unknown"
+msgstr "Sconosciuto"
+
+#. DO NOT SAVE
+#: ../plug-ins/metadata/metadata-tags.h:309
+msgid "Copyrighted"
+msgstr "Coperto da Copyright"
+
+#. TRUE
+#: ../plug-ins/metadata/metadata-tags.h:310
+msgid "Public Domain"
+msgstr "Pubblico dominio"
+
+#: ../plug-ins/metadata/metadata-tags.h:316
+#: ../plug-ins/metadata/metadata-tags.h:332
+msgid "Select a value"
+msgstr "Seleziona un valore"
+
+#: ../plug-ins/metadata/metadata-tags.h:317
+msgid "Work"
+msgstr "Lavoro"
+
+#: ../plug-ins/metadata/metadata-tags.h:318
+msgid "Cell"
+msgstr "Cell"
+
+#: ../plug-ins/metadata/metadata-tags.h:319
+msgid "Fax"
+msgstr "Fax"
+
+#: ../plug-ins/metadata/metadata-tags.h:320
+msgid "Home"
+msgstr "Casa"
+
+#: ../plug-ins/metadata/metadata-tags.h:321
+msgid "Pager"
+msgstr "Visualizzatore"
+
+#: ../plug-ins/metadata/metadata-tags.h:333
+msgid "Male"
+msgstr "Maschio"
+
+#: ../plug-ins/metadata/metadata-tags.h:334
+msgid "Female"
+msgstr "Femmina"
+
+#: ../plug-ins/metadata/metadata-tags.h:335
+msgid "Other"
+msgstr "Altro"
+
+#: ../plug-ins/metadata/metadata-tags.h:341
+msgid "Above Sea Level"
+msgstr "Sopra il livello del mare"
+
+#: ../plug-ins/metadata/metadata-tags.h:341
+msgid "Below Sea Level"
+msgstr "Sotto il livello del mare"
+
+#: ../plug-ins/metadata/metadata-tags.h:347
+msgid "North"
+msgstr "Nord"
+
+#: ../plug-ins/metadata/metadata-tags.h:347
+msgid "South"
+msgstr "Sud"
+
+#: ../plug-ins/metadata/metadata-tags.h:353
+msgid "East"
+msgstr "Est"
+
+#: ../plug-ins/metadata/metadata-tags.h:353
+msgid "West"
+msgstr "Ovest"
+
+#: ../plug-ins/metadata/metadata-viewer.c:120
+msgid "View metadata (Exif, IPTC, XMP)"
+msgstr "Visualizza i metadati (EXIF, IPTC, XMP)"
+
+#: ../plug-ins/metadata/metadata-viewer.c:127
+msgid "View Metadata"
+msgstr "Visualizza i metadati"
+
+#: ../plug-ins/metadata/metadata-viewer.c:220
+#, c-format
+msgid "Metadata Viewer: %s"
+msgstr "Visualizzatore metadati: %s"
+
+#: ../plug-ins/metadata/metadata-viewer.c:360
+#, c-format
+msgid "(%lu more character(s))"
+msgstr "(%lu più caratteri)"
+
+#: ../plug-ins/metadata/metadata-viewer.c:392
+#, c-format
+msgid "(%llu more byte(s))"
+msgstr "(%llu più byte)"
+
 #: ../plug-ins/pagecurl/pagecurl.c:203
 msgid "Curl up one of the image corners"
 msgstr "Piega uno degli angoli dell'immagine"
@@ -11455,77 +12010,78 @@ msgstr "Crea un'immagine da un'area dello schermo"
 msgid "_Screenshot..."
 msgstr "_Schermata..."
 
-#: ../plug-ins/screenshot/screenshot.c:422
+#: ../plug-ins/screenshot/screenshot.c:423
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Schermata"
 
-#: ../plug-ins/screenshot/screenshot.c:427
+#: ../plug-ins/screenshot/screenshot.c:428
 msgid "S_nap"
 msgstr "Cat_tura"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:451
+#: ../plug-ins/screenshot/screenshot.c:452
 msgid "Area"
 msgstr "Area"
 
-#: ../plug-ins/screenshot/screenshot.c:461
+#: ../plug-ins/screenshot/screenshot.c:462
 msgid "Take a screenshot of a single _window"
 msgstr "Cattura l'immagine di una _finestra singola"
 
-#: ../plug-ins/screenshot/screenshot.c:481
+#: ../plug-ins/screenshot/screenshot.c:482
 msgid "Include window _decoration"
 msgstr "Includi _decorazioni della finestra"
 
-#: ../plug-ins/screenshot/screenshot.c:501
-msgid "Take a screenshot of the entire _screen"
-msgstr "Cattura l'immagine di tutto lo _schermo"
-
-#: ../plug-ins/screenshot/screenshot.c:521
+#: ../plug-ins/screenshot/screenshot.c:503
+#: ../plug-ins/screenshot/screenshot.c:544
 msgid "Include _mouse pointer"
 msgstr "Includi il puntatore del _mouse"
 
-#: ../plug-ins/screenshot/screenshot.c:543
+#: ../plug-ins/screenshot/screenshot.c:524
+msgid "Take a screenshot of the entire _screen"
+msgstr "Cattura l'immagine di tutto lo _schermo"
+
+#: ../plug-ins/screenshot/screenshot.c:572
 msgid "Select a _region to grab"
 msgstr "Seleziona la _regione da catturare"
 
 #. Delay
-#: ../plug-ins/screenshot/screenshot.c:559
+#: ../plug-ins/screenshot/screenshot.c:588
 msgid "Delay"
 msgstr "Ritardo"
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:584
+#: ../plug-ins/screenshot/screenshot.c:613
 msgid "seconds"
 msgstr "secondi"
 
-#: ../plug-ins/screenshot/screenshot.c:593
+#: ../plug-ins/screenshot/screenshot.c:622
 msgid "After the delay, the screenshot is taken."
 msgstr "Dopo il ritardo verrà catturata la schermata."
 
-#: ../plug-ins/screenshot/screenshot.c:595
+#: ../plug-ins/screenshot/screenshot.c:624
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Dopo il ritardo, usare il mouse per selezionare la regione da catturare."
 
-#: ../plug-ins/screenshot/screenshot.c:599
+#: ../plug-ins/screenshot/screenshot.c:628
 msgid "Click in a window to snap it after delay."
 msgstr "Fare clic in una finestra per fotografarla dopo un ritardo."
 
-#: ../plug-ins/screenshot/screenshot.c:602
+#: ../plug-ins/screenshot/screenshot.c:631
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Alla fine del ritardo, fare clic in una finestra per catturarla."
 
-#: ../plug-ins/screenshot/screenshot.c:609
+#: ../plug-ins/screenshot/screenshot.c:638
 msgid "Color Profile"
 msgstr "Profilo colore"
 
-#: ../plug-ins/screenshot/screenshot.c:614
+#: ../plug-ins/screenshot/screenshot.c:643
 msgid "Tag image with _monitor profile"
 msgstr "Marca immagine con il profilo del _monitor"
 
-#: ../plug-ins/screenshot/screenshot.c:618
+#: ../plug-ins/screenshot/screenshot.c:647
 msgid "Convert image to sR_GB"
 msgstr "Converti immagine a sR_GB"
 

@@ -31,8 +31,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-05 21:20+0200\n"
-"PO-Revision-Date: 2017-07-05 21:19+0200\n"
+"POT-Creation-Date: 2017-08-15 20:34+0200\n"
+"PO-Revision-Date: 2017-08-15 20:35+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -264,40 +264,44 @@ msgstr "Selezione tipo di carattere"
 msgid "Gradient Selection"
 msgstr "Selezione gradiente"
 
-#: ../libgimp/gimpimagemetadata.c:610
+#: ../libgimp/gimpimagemetadata.c:477
+msgid "GIMP 2.9/2.10"
+msgstr "GIMP 2.9/2.10"
+
+#: ../libgimp/gimpimagemetadata.c:661
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../libgimp/gimpimagemetadata.c:799
+#: ../libgimp/gimpimagemetadata.c:850
 #, c-format
 msgid "Rotate %s?"
 msgstr "_Ruota %s?"
 
-#: ../libgimp/gimpimagemetadata.c:805
+#: ../libgimp/gimpimagemetadata.c:856
 msgid "_Keep Original"
 msgstr "_Mantieni l'originale"
 
-#: ../libgimp/gimpimagemetadata.c:806 ../libgimpwidgets/gimpicons.c:274
+#: ../libgimp/gimpimagemetadata.c:857 ../libgimpwidgets/gimpicons.c:274
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimp/gimpimagemetadata.c:847
+#: ../libgimp/gimpimagemetadata.c:898
 msgid "Original"
 msgstr "Originale"
 
-#: ../libgimp/gimpimagemetadata.c:863
+#: ../libgimp/gimpimagemetadata.c:914
 msgid "Rotated"
 msgstr "Ruotato"
 
-#: ../libgimp/gimpimagemetadata.c:881
+#: ../libgimp/gimpimagemetadata.c:932
 msgid "This image contains Exif orientation metadata."
 msgstr "Questa immagine contiene metadati Exif di orientamento."
 
-#: ../libgimp/gimpimagemetadata.c:899
+#: ../libgimp/gimpimagemetadata.c:950
 msgid "Would you like to rotate the image?"
 msgstr "Volete ruotare l'immagine?"
 
-#: ../libgimp/gimpimagemetadata.c:911
+#: ../libgimp/gimpimagemetadata.c:962
 msgid "_Don't ask me again"
 msgstr "Non chie_dere più"
 
@@ -1339,22 +1343,27 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Ritaglia all'aspetto"
 
-#: ../libgimpbase/gimpmetadata.c:575
+#: ../libgimpbase/gimpmetadata.c:838
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "È possibile caricare i metadati solo da file locali"
 
-#: ../libgimpbase/gimpmetadata.c:635
+#: ../libgimpbase/gimpmetadata.c:898
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "È possibile salvare i metadati sono su file locali"
 
-#: ../libgimpbase/gimpmetadata.c:711
+#: ../libgimpbase/gimpmetadata.c:974
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Fallita l'analisi dei dati Exif."
 
-#: ../libgimpbase/gimpmetadata.c:762
+#: ../libgimpbase/gimpmetadata.c:1025
+#, c-format
+msgid "Parsing IPTC data failed."
+msgstr "Fallita l'analisi dei dati IPTC."
+
+#: ../libgimpbase/gimpmetadata.c:1074
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Fallita l'analisi dei dati XMP."
