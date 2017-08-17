@@ -49,14 +49,16 @@ struct _AnimationPlaybackClass
   void       (*range)            (AnimationPlayback *playback,
                                   gint               start,
                                   gint               stop);
-  void       (*render)           (AnimationPlayback *playback,
+  void       (*position)         (AnimationPlayback *playback,
                                   gint               position,
                                   GeglBuffer        *buffer,
                                   gboolean           must_draw_null);
   void       (*low_framerate)    (AnimationPlayback *playback,
                                   gdouble            actual_fps);
-  void       (*proxy_changed)    (Animation         *animation,
+  void       (*proxy_changed)    (AnimationPlayback *animation,
                                   gdouble            ratio);
+  void       (*rendering)        (AnimationPlayback *renderer,
+                                  gboolean           has_render_queue);
 };
 
 GType         animation_playback_get_type (void);

@@ -80,6 +80,7 @@ struct _AnimationDialogPrivate
   /* Bar above the preview. */
   GtkWidget         *upper_bar;
   GtkWidget         *zoomcombo;
+  GtkWidget         *render_spinner;
   GtkWidget         *refresh;
   GtkWidget         *export;
   gboolean           cancel_export;
@@ -250,6 +251,9 @@ static void        framerate_changed         (Animation         *animation,
 static void        low_framerate_cb          (AnimationPlayback *playback,
                                               gdouble            real_framerate,
                                               AnimationDialog   *dialog);
+static void        playback_rendering        (AnimationPlayback *playback,
+                                              gboolean           is_rendering,
+                                              AnimationDialog   *dialog);
 
 /* Rendering/Playing Functions */
 static gboolean    repaint_da                (GtkWidget        *darea,
@@ -277,7 +281,7 @@ static gboolean    shape_released            (GtkWidget        *widget);
 static gboolean    shape_motion              (GtkWidget        *widget,
                                               GdkEventMotion   *event);
 
-static void        render_callback           (AnimationPlayback *animation,
+static void        position_callback         (AnimationPlayback *animation,
                                               gint              frame_number,
                                               GeglBuffer       *buffer,
                                               gboolean          must_draw_null,
@@ -745,6 +749,10 @@ animation_dialog_constructed (GObject *object)
 
   gtk_box_pack_end (GTK_BOX (priv->upper_bar), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
+
+  /* Status progress bar for render info. */
+  priv->render_spinner = gtk_spinner_new ();
+  gtk_box_pack_end (GTK_BOX (priv->upper_bar), priv->render_spinner, FALSE, FALSE, 0);
 
   /***********/
   /* Drawing */
@@ -1296,26 +1304,32 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   if (priv->animation)
     {
       g_signal_handlers_disconnect_by_func (priv->animation,
-                                            G_CALLBACK (proxy_changed),
-                                            dialog);
-      g_signal_handlers_disconnect_by_func (priv->animation,
                                             G_CALLBACK (framerate_changed),
                                             dialog);
-      g_signal_handlers_disconnect_by_func (priv->playback,
-                                            G_CALLBACK (playback_range_changed),
-                                            dialog);
-
       g_signal_handlers_disconnect_by_func (priv->animation,
                                             (GCallback) show_loading_progress,
                                             dialog);
       g_signal_handlers_disconnect_by_func (priv->animation,
-                                            (GCallback) update_progress,
+                                            (GCallback) check_cancel_loading,
                                             dialog);
       g_signal_handlers_disconnect_by_func (priv->animation,
-                                            G_CALLBACK (render_callback),
+                                            (GCallback) update_progress,
+                                            dialog);
+
+      g_signal_handlers_disconnect_by_func (priv->playback,
+                                            G_CALLBACK (proxy_changed),
+                                            dialog);
+      g_signal_handlers_disconnect_by_func (priv->playback,
+                                            G_CALLBACK (playback_range_changed),
+                                            dialog);
+      g_signal_handlers_disconnect_by_func (priv->playback,
+                                            G_CALLBACK (position_callback),
                                             dialog);
       g_signal_handlers_disconnect_by_func (priv->playback,
                                             G_CALLBACK (low_framerate_cb),
+                                            dialog);
+      g_signal_handlers_disconnect_by_func (priv->playback,
+                                            G_CALLBACK (playback_rendering),
                                             dialog);
     }
 
@@ -1497,10 +1511,6 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   g_signal_connect (priv->animation, "framerate-changed",
                     G_CALLBACK (framerate_changed),
                     dialog);
-  g_signal_connect (priv->playback, "range",
-                    G_CALLBACK (playback_range_changed),
-                    dialog);
-
   g_signal_connect (priv->animation, "loading",
                     (GCallback) show_loading_progress,
                     dialog);
@@ -1515,11 +1525,17 @@ animation_dialog_set_animation (AnimationDialog *dialog,
   g_signal_connect (priv->playback, "proxy-changed",
                     G_CALLBACK (proxy_changed),
                     dialog);
-  g_signal_connect (priv->playback, "render",
-                    G_CALLBACK (render_callback),
+  g_signal_connect (priv->playback, "range",
+                    G_CALLBACK (playback_range_changed),
+                    dialog);
+  g_signal_connect (priv->playback, "position",
+                    G_CALLBACK (position_callback),
                     dialog);
   g_signal_connect (priv->playback, "low-framerate",
                     G_CALLBACK (low_framerate_cb),
+                    dialog);
+  g_signal_connect (priv->playback, "rendering",
+                    G_CALLBACK (playback_rendering),
                     dialog);
 
   /* Set the playback and its default state. */
@@ -2398,6 +2414,25 @@ low_framerate_cb (AnimationPlayback *playback,
                                      dialog);
 }
 
+static void
+playback_rendering (AnimationPlayback *playback,
+                    gboolean           is_rendering,
+                    AnimationDialog   *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+
+  if (is_rendering)
+    {
+      gtk_widget_show (priv->render_spinner);
+      gtk_spinner_start (GTK_SPINNER (priv->render_spinner));
+    }
+  else
+    {
+      gtk_spinner_stop (GTK_SPINNER (priv->render_spinner));
+      gtk_widget_hide (priv->render_spinner);
+    }
+}
+
 /* Rendering Functions */
 
 static gboolean
@@ -2739,11 +2774,11 @@ shape_motion (GtkWidget      *widget,
 }
 
 static void
-render_callback (AnimationPlayback *playback,
-                 gint               frame_number,
-                 GeglBuffer        *buffer,
-                 gboolean           must_draw_null,
-                 AnimationDialog   *dialog)
+position_callback (AnimationPlayback *playback,
+                   gint               frame_number,
+                   GeglBuffer        *buffer,
+                   gboolean           must_draw_null,
+                   AnimationDialog   *dialog)
 {
   render_frame (dialog, buffer, must_draw_null);
 

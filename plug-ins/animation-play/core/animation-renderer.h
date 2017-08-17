@@ -45,6 +45,8 @@ struct _AnimationRendererClass
 
   void         (*cache_updated)  (AnimationRenderer *renderer,
                                   gint               position);
+  void         (*rendering)      (AnimationRenderer *renderer,
+                                  gboolean           has_render_queue);
 };
 
 GType       animation_renderer_get_type    (void);

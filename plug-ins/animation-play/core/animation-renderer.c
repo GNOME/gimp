@@ -32,6 +32,7 @@
 enum
 {
   CACHE_UPDATED,
+  RENDERING,
   LAST_SIGNAL
 };
 enum
@@ -102,8 +103,8 @@ animation_renderer_class_init (AnimationRendererClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   /**
-   * Animation::cache-updated:
-   * @animation: the animation.
+   * AnimationRenderer::cache-updated:
+   * @renderer: the #AnimationRenderer.
    * @position: the frame position whose cache was updated.
    *
    * The ::cache-updated signal will be emitted when the contents
@@ -119,6 +120,25 @@ animation_renderer_class_init (AnimationRendererClass *klass)
                   G_TYPE_NONE,
                   1,
                   G_TYPE_INT);
+  /**
+   * AnimationRenderer::rendering:
+   * @renderer: the #AnimationRenderer.
+   * @has_queue: whether there is more to render.
+   *
+   * The ::rendering signal will be emitted when the renderer has queued
+   * frames, and a last time with @has_queue as #TRUE when all is
+   * rendered.
+   */
+  signals[RENDERING] =
+    g_signal_new ("rendering",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (AnimationRendererClass, rendering),
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_NONE,
+                  1,
+                  G_TYPE_BOOLEAN);
 
   object_class->finalize     = animation_renderer_finalize;
   object_class->set_property = animation_renderer_set_property;
@@ -329,7 +349,7 @@ animation_renderer_idle_update (AnimationRenderer *renderer)
   while ((p = g_async_queue_try_pop (renderer->priv->ack_queue)))
     {
       gint frame = GPOINTER_TO_INT (p) - 1;
-      g_signal_emit_by_name (renderer, "cache-updated", frame);
+      g_signal_emit (renderer, signals[CACHE_UPDATED], 0, frame);
     }
   /* Make sure the UI gets updated regularly. */
   while (g_main_context_pending (NULL))
@@ -344,6 +364,11 @@ animation_renderer_idle_update (AnimationRenderer *renderer)
     {
       retval = G_SOURCE_REMOVE;
       renderer->priv->idle_id = 0;
+      g_signal_emit (renderer, signals[RENDERING], 0, FALSE);
+    }
+  else if (renderer->priv && renderer->priv->queue)
+    {
+      g_signal_emit (renderer, signals[RENDERING], 0, TRUE);
     }
 
   return retval;
@@ -395,6 +420,7 @@ on_proxy_changed (AnimationPlayback *playback,
                                   */
                                  0);
     }
+  g_signal_emit (renderer, signals[RENDERING], 0, TRUE);
   renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
                                              (GSourceFunc) animation_renderer_idle_update,
                                              renderer, NULL);
@@ -438,6 +464,7 @@ on_frames_changed (Animation         *animation,
                                                    (GSourceFunc) animation_renderer_idle_update,
                                                    renderer, NULL);
     }
+  g_signal_emit (renderer, signals[RENDERING], 0, TRUE);
 }
 
 static void
@@ -520,6 +547,7 @@ on_invalidate_cache (Animation         *animation,
                                  0);
     }
   g_list_free (update);
+  g_signal_emit (renderer, signals[RENDERING], 0, TRUE);
   renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
                                              (GSourceFunc) animation_renderer_idle_update,
                                              renderer, NULL);

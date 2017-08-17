@@ -34,9 +34,10 @@ enum
   START,
   STOP,
   RANGE,
-  RENDER,
+  POSITION,
   LOW_FRAMERATE,
   PROXY_CHANGED,
+  RENDERING,
   LAST_SIGNAL
 };
 
@@ -87,6 +88,9 @@ static void       on_duration_changed                       (Animation         *
                                                              AnimationPlayback *playback);
 static void       on_cache_updated                          (AnimationRenderer *renderer,
                                                              gint               position,
+                                                             AnimationPlayback *playback);
+static void       on_rendering                              (AnimationRenderer *renderer,
+                                                             gboolean           rendering,
                                                              AnimationPlayback *playback);
 
 /* Timer callback for playback. */
@@ -167,21 +171,22 @@ animation_playback_class_init (AnimationPlaybackClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
   /**
-   * AnimationPlayback::render:
+   * AnimationPlayback::position:
    * @playback: the #AnimationPlayback.
-   * @position: current position to be rendered.
+   * @position: current position to be displayed.
    * @buffer: the #GeglBuffer for the frame at @position.
    * @must_draw_null: meaning of a %NULL @buffer.
    * %TRUE means we have to draw an empty frame.
    * %FALSE means the new frame is same as the current frame.
    *
-   * Sends a request for render to the GUI.
+   * This signal indicates that playback position has changed so that
+   * the GUI can display it and process other updates.
    */
-  animation_playback_signals[RENDER] =
-    g_signal_new ("render",
+  animation_playback_signals[POSITION] =
+    g_signal_new ("position",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (AnimationPlaybackClass, render),
+                  G_STRUCT_OFFSET (AnimationPlaybackClass, position),
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
@@ -226,6 +231,27 @@ animation_playback_class_init (AnimationPlaybackClass *klass)
                   G_TYPE_NONE,
                   1,
                   G_TYPE_DOUBLE);
+
+  /**
+   * AnimationPlayback::rendering:
+   * @playback: the #AnimationPlayback.
+   * @has_queue: whether there is more to render.
+   *
+   * The ::rendering signal will be emitted when the renderer has queued
+   * frames, and a last time with @has_queue as #TRUE when all is
+   * rendered. It mostly passes along AnimationRenderer::rendering
+   * signal, since only @playback has access to the renderer object.
+   */
+  animation_playback_signals[RENDERING] =
+    g_signal_new ("rendering",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (AnimationRendererClass, rendering),
+                  NULL, NULL,
+                  NULL,
+                  G_TYPE_NONE,
+                  1,
+                  G_TYPE_BOOLEAN);
 
   object_class->finalize     = animation_playback_finalize;
   object_class->set_property = animation_playback_set_property;
@@ -416,7 +442,7 @@ animation_playback_next (AnimationPlayback *playback)
       buffer = animation_renderer_get_buffer (renderer,
                                               playback->priv->position);
     }
-  g_signal_emit (playback, animation_playback_signals[RENDER], 0,
+  g_signal_emit (playback, animation_playback_signals[POSITION], 0,
                  playback->priv->position, buffer, ! identical);
   if (buffer != NULL)
     {
@@ -452,7 +478,7 @@ animation_playback_prev (AnimationPlayback *playback)
     {
       buffer = animation_renderer_get_buffer (renderer, playback->priv->position);
     }
-  g_signal_emit (playback, animation_playback_signals[RENDER], 0,
+  g_signal_emit (playback, animation_playback_signals[POSITION], 0,
                  playback->priv->position, buffer, ! identical);
   if (buffer)
     g_object_unref (buffer);
@@ -484,7 +510,7 @@ animation_playback_jump (AnimationPlayback *playback,
     {
       buffer = animation_renderer_get_buffer (renderer, playback->priv->position);
     }
-  g_signal_emit (playback, animation_playback_signals[RENDER], 0,
+  g_signal_emit (playback, animation_playback_signals[POSITION], 0,
                  playback->priv->position, buffer, ! identical);
   if (buffer)
     g_object_unref (buffer);
@@ -663,6 +689,8 @@ animation_playback_set_property (GObject      *object,
           playback->priv->renderer = animation_renderer_new (object);
           g_signal_connect (playback->priv->renderer, "cache-updated",
                             G_CALLBACK (on_cache_updated), playback);
+          g_signal_connect (playback->priv->renderer, "rendering",
+                            G_CALLBACK (on_rendering), playback);
         }
       break;
 
@@ -733,13 +761,25 @@ on_cache_updated (AnimationRenderer *renderer,
 
       renderer = ANIMATION_RENDERER (playback->priv->renderer);
       buffer = animation_renderer_get_buffer (renderer, position);
-      g_signal_emit (playback, animation_playback_signals[RENDER], 0,
+      g_signal_emit (playback, animation_playback_signals[POSITION], 0,
                      position, buffer, TRUE);
       if (buffer)
         {
           g_object_unref (buffer);
         }
     }
+}
+
+static void
+on_rendering (AnimationRenderer *renderer,
+              gboolean           rendering,
+              AnimationPlayback *playback)
+{
+  /* Just transform the renderer's "rendering" signal into a playback's
+   * one to pass the information along to the GUI.
+   */
+  g_signal_emit (playback, animation_playback_signals[RENDERING], 0,
+                 rendering);
 }
 
 static gboolean

@@ -164,7 +164,7 @@ static void     on_camera_keyframe_deleted     (AnimationCamera   *camera,
 /* Callbacks on playback. */
 static void     on_playback_stopped            (AnimationPlayback *playback,
                                                 AnimationXSheet   *xsheet);
-static void     on_playback_rendered           (AnimationPlayback *animation,
+static void     on_playback_position           (AnimationPlayback *animation,
                                                 gint               frame_number,
                                                 GeglBuffer        *buffer,
                                                 gboolean           must_draw_null,
@@ -333,7 +333,7 @@ animation_xsheet_new (AnimationCelAnimation *animation,
                          NULL);
   ANIMATION_XSHEET (xsheet)->priv->playback = playback;
   g_signal_connect (ANIMATION_XSHEET (xsheet)->priv->playback,
-                    "render", G_CALLBACK (on_playback_rendered),
+                    "position", G_CALLBACK (on_playback_position),
                     xsheet);
   g_signal_connect (ANIMATION_XSHEET (xsheet)->priv->playback,
                     "stop", G_CALLBACK (on_playback_stopped),
@@ -449,7 +449,7 @@ animation_xsheet_finalize (GObject *object)
   AnimationXSheet *xsheet = ANIMATION_XSHEET (object);
 
   g_signal_handlers_disconnect_by_func (ANIMATION_XSHEET (xsheet)->priv->playback,
-                                        G_CALLBACK (on_playback_rendered),
+                                        G_CALLBACK (on_playback_position),
                                         xsheet);
   g_signal_handlers_disconnect_by_func (ANIMATION_XSHEET (xsheet)->priv->playback,
                                         G_CALLBACK (on_playback_stopped),
@@ -1339,7 +1339,7 @@ on_playback_stopped (AnimationPlayback *playback,
 }
 
 static void
-on_playback_rendered (AnimationPlayback *playback,
+on_playback_position (AnimationPlayback *playback,
                       gint               frame_number,
                       GeglBuffer        *buffer,
                       gboolean           must_draw_null,
