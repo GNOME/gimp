@@ -380,6 +380,7 @@ on_proxy_changed (AnimationPlayback *playback,
                   AnimationRenderer *renderer)
 {
   Animation *animation = animation_playback_get_animation (playback);
+  gint       current_pos;
   gint       i;
 
   if (renderer->priv->idle_id)
@@ -408,17 +409,18 @@ on_proxy_changed (AnimationPlayback *playback,
         }
     }
   g_mutex_unlock (&renderer->priv->lock);
+
   /* Queue the whole animation to be updated. */
+  current_pos = animation_playback_get_position (renderer->priv->playback);
+  g_async_queue_sort (renderer->priv->queue,
+                      (GCompareDataFunc) compare_int_from,
+                      GINT_TO_POINTER (current_pos + 1));
   for (i = 0; i < animation_get_duration (animation); i++)
     {
       g_async_queue_push_sorted (renderer->priv->queue,
                                  GINT_TO_POINTER (i + 1),
                                  (GCompareDataFunc) compare_int_from,
-                                 /* TODO: right now I am sorting the render
-                                  * queue in common order. I will have to test
-                                  * sorting it from the current position.
-                                  */
-                                 0);
+                                 GINT_TO_POINTER (current_pos + 1));
     }
   g_signal_emit (renderer, signals[RENDERING], 0, TRUE);
   renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
@@ -443,7 +445,12 @@ on_frames_changed (Animation         *animation,
                    AnimationRenderer *renderer)
 {
   gint i;
+  gint current_pos;
 
+  current_pos = animation_playback_get_position (renderer->priv->playback);
+  g_async_queue_sort (renderer->priv->queue,
+                      (GCompareDataFunc) compare_int_from,
+                      GINT_TO_POINTER (current_pos + 1));
   for (i = position; i < position + length; i++)
     {
       /* Remove if already present: don't process twice the same frames.
@@ -454,11 +461,7 @@ on_frames_changed (Animation         *animation,
       g_async_queue_push_sorted (renderer->priv->queue,
                                  GINT_TO_POINTER (i + 1),
                                  (GCompareDataFunc) compare_int_from,
-                                 /* TODO: right now I am sorting the render
-                                  * queue in common order. I will have to test
-                                  * sorting it from the current position.
-                                  */
-                                 0);
+                                 GINT_TO_POINTER (current_pos + 1));
       if (renderer->priv->idle_id == 0)
         renderer->priv->idle_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
                                                    (GSourceFunc) animation_renderer_idle_update,
@@ -475,6 +478,7 @@ on_invalidate_cache (Animation         *animation,
 {
   GList *update = NULL;
   GList *iter;
+  gint   current_pos;
   gint   i;
 
   if (renderer->priv->idle_id)
@@ -534,17 +538,18 @@ on_invalidate_cache (Animation         *animation,
                                                  0);
     }
   g_mutex_unlock (&renderer->priv->lock);
+
   /* Queue the invalidated part of the animation. */
+  current_pos = animation_playback_get_position (renderer->priv->playback);
+  g_async_queue_sort (renderer->priv->queue,
+                      (GCompareDataFunc) compare_int_from,
+                      GINT_TO_POINTER (current_pos + 1));
   for (iter = update; iter; iter = iter->next)
     {
       g_async_queue_push_sorted (renderer->priv->queue,
                                  iter->data,
                                  (GCompareDataFunc) compare_int_from,
-                                 /* TODO: right now I am sorting the render
-                                  * queue in common order. I will have to test
-                                  * sorting it from the current position.
-                                  */
-                                 0);
+                                 GINT_TO_POINTER (current_pos + 1));
     }
   g_list_free (update);
   g_signal_emit (renderer, signals[RENDERING], 0, TRUE);
