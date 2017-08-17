@@ -76,6 +76,11 @@ static gboolean animation_renderer_idle_update   (AnimationRenderer *renderer);
 static void     on_proxy_changed                 (AnimationPlayback *animation,
                                                   gdouble            ratio,
                                                   AnimationRenderer *renderer);
+static void     on_playback_position             (AnimationPlayback *animation,
+                                                  gint               frame_number,
+                                                  GeglBuffer        *buffer,
+                                                  gboolean           must_draw_null,
+                                                  AnimationRenderer *renderer);
 
 static void     on_size_changed                  (Animation         *animation,
                                                   gint               width,
@@ -429,6 +434,21 @@ on_proxy_changed (AnimationPlayback *playback,
 }
 
 static void
+on_playback_position (AnimationPlayback *animation,
+                      gint               frame_number,
+                      GeglBuffer        *buffer,
+                      gboolean           must_draw_null,
+                      AnimationRenderer *renderer)
+{
+  gint current_pos;
+
+  current_pos = animation_playback_get_position (renderer->priv->playback);
+  g_async_queue_sort (renderer->priv->queue,
+                      (GCompareDataFunc) compare_int_from,
+                      GINT_TO_POINTER (current_pos + 1));
+}
+
+static void
 on_size_changed (Animation         *animation,
                  gint               width,
                  gint               height,
@@ -652,6 +672,8 @@ animation_renderer_new (GObject *playback)
                     G_CALLBACK (on_animation_loaded), renderer);
   g_signal_connect (renderer->priv->playback, "proxy-changed",
                     G_CALLBACK (on_proxy_changed), renderer);
+  g_signal_connect (renderer->priv->playback, "position",
+                    G_CALLBACK (on_playback_position), renderer);
 
   return object;
 }
