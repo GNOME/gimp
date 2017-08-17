@@ -9,12 +9,14 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)			\
 	$(GEGL_CFLAGS)			\
 	$(GDK_PIXBUF_CFLAGS)		\
-	$(SSE2_EXTRA_CFLAGS)		\
 	-I$(includedir)
 
-noinst_LIBRARIES = libappgegl.a
+noinst_LIBRARIES = \
+	libappgegl-generic.a	\
+	libappgegl-sse2.a	\
+	libappgegl.a
 
-libappgegl_a_sources = \
+libappgegl_generic_a_sources = \
 	gimp-gegl-enums.h		\
 	gimp-gegl-types.h		\
 	gimp-babl.c			\
@@ -42,9 +44,28 @@ libappgegl_a_sources = \
 	gimptilehandlervalidate.c	\
 	gimptilehandlervalidate.h
 
-libappgegl_a_built_sources = gimp-gegl-enums.c
+libappgegl_generic_a_built_sources = gimp-gegl-enums.c
 
-libappgegl_a_SOURCES = $(libappgegl_a_built_sources) $(libappgegl_a_sources)
+libappgegl_sse2_a_sources = \
+	gimp-gegl-loops-sse2.c		\
+	gimp-gegl-loops-sse2.h
+
+libappgegl_generic_a_SOURCES = $(libappgegl_generic_a_built_sources) $(libappgegl_generic_a_sources)
+
+libappgegl_sse2_a_SOURCES = $(libappgegl_sse2_a_sources)
+
+libappgegl_sse2_a_CFLAGS = $(SSE2_EXTRA_CFLAGS)
+
+libappgegl_a_SOURCES =
+
+
+libappgegl.a: libappgegl-generic.a \
+	      libappgegl-sse2.a
+	$(AR) $(ARFLAGS) libappgegl.a \
+	  $(libappgegl_generic_a_OBJECTS) \
+	  $(libappgegl_sse2_a_OBJECTS)
+	$(RANLIB) libappgegl.a
+
 
 #
 # rules to generate built sources

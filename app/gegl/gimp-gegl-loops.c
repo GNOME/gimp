@@ -22,10 +22,6 @@
 
 #include <string.h>
 
-#if COMPILE_SSE2_INTRINISICS
-#include <emmintrin.h>
-#endif
-
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
@@ -38,6 +34,7 @@
 
 #include "gimp-babl.h"
 #include "gimp-gegl-loops.h"
+#include "gimp-gegl-loops-sse2.h"
 
 #include "core/gimpprogress.h"
 
@@ -354,68 +351,36 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
     }
 }
 
-/* helper function of gimp_gegl_smudge_with_paint()
+/* helper function of gimp_gegl_smudge_with_paint_process()
    src and dest can be the same address
  */
-static void
+static inline void
 gimp_gegl_smudge_with_paint_blend (const gfloat *src1,
                                    gfloat        src1_rate,
                                    const gfloat *src2,
                                    gfloat        src2_rate,
                                    gfloat       *dest,
-                                   gboolean      no_erasing_src2,
-                                   gboolean      sse)
+                                   gboolean      no_erasing_src2)
 {
   gfloat orginal_src2_alpha;
   gfloat src1_alpha;
   gfloat src2_alpha;
   gfloat result_alpha;
+  gint   b;
 
-/* 2017/4/13 shark0r : According to my test, SSE decreases about 25%
- * execution time
- */
+  orginal_src2_alpha = src2[3];
+  src1_alpha         = src1_rate * src1[3];
+  src2_alpha         = src2_rate * orginal_src2_alpha;
+  result_alpha       = src1_alpha + src2_alpha;
 
-#if defined COMPILE_SSE2_INTRINISICS
-  if (sse)
+  if (result_alpha == 0)
     {
-      __m128  v_src1 = _mm_loadu_ps (src1);
-      __m128  v_src2 = _mm_loadu_ps (src2);
-      __m128 *v_dest = (__v4sf *) dest;
-
-      orginal_src2_alpha = v_src2[3];
-      src1_alpha         = src1_rate * v_src1[3];
-      src2_alpha         = src2_rate * orginal_src2_alpha;
-      result_alpha       = src1_alpha + src2_alpha;
-
-      if (result_alpha == 0)
-        {
-          *v_dest = _mm_set1_ps (0);
-          return;
-        }
-
-      *v_dest = (v_src1 * _mm_set1_ps (src1_alpha) +
-                 v_src2 * _mm_set1_ps (src2_alpha)) /
-                _mm_set1_ps (result_alpha);
+      memset (dest, 0, sizeof (gfloat) * 4);
+      return;
     }
-  else
-#endif
-    {
-      gint b;
 
-      orginal_src2_alpha = src2[3];
-      src1_alpha         = src1_rate * src1[3];
-      src2_alpha         = src2_rate * orginal_src2_alpha;
-      result_alpha       = src1_alpha + src2_alpha;
-
-      if (result_alpha == 0)
-        {
-          memset (dest, 0, sizeof (gfloat) * 4);
-          return;
-        }
-
-      for (b = 0; b < 3; b++)
-        dest[b] = (src1[b] * src1_alpha + src2[b] * src2_alpha) / result_alpha;
-    }
+  for (b = 0; b < 3; b++)
+    dest[b] = (src1[b] * src1_alpha + src2[b] * src2_alpha) / result_alpha;
 
   if (no_erasing_src2)
     {
@@ -423,6 +388,43 @@ gimp_gegl_smudge_with_paint_blend (const gfloat *src1,
     }
 
   dest[3] = result_alpha;
+}
+
+/* helper function of gimp_gegl_smudge_with_paint() */
+static void
+gimp_gegl_smudge_with_paint_process (gfloat       *accum,
+                                     const gfloat *canvas,
+                                     gfloat       *paint,
+                                     gint          count,
+                                     const gfloat *brush_color,
+                                     gfloat        brush_a,
+                                     gboolean      no_erasing,
+                                     gfloat        flow,
+                                     gfloat        rate)
+{
+  while (count--)
+    {
+      /* blend accum_buffer and canvas_buffer to accum_buffer */
+      gimp_gegl_smudge_with_paint_blend (accum, rate, canvas, 1 - rate,
+                                         accum, no_erasing);
+
+      /* blend accum_buffer and brush color/pixmap to paint_buffer */
+      if (brush_a == 0) /* pure smudge */
+        {
+          memcpy (paint, accum, sizeof (gfloat) * 4);
+        }
+      else
+        {
+          const gfloat *src1 = brush_color ? brush_color : paint;
+
+          gimp_gegl_smudge_with_paint_blend (src1, flow, accum, 1 - flow,
+                                             paint, no_erasing);
+        }
+
+      accum  += 4;
+      canvas += 4;
+      paint  += 4;
+    }
 }
 
 /*  smudge painting calculation. Currently only smudge tool uses this function
@@ -449,6 +451,8 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
   GeglAccessMode      paint_buffer_access_mode = (brush_color ?
                                                   GEGL_ACCESS_WRITE :
                                                   GEGL_ACCESS_READWRITE);
+  gboolean            sse2 = (gimp_cpu_accel_get_support () &
+                              GIMP_CPU_ACCEL_X86_SSE2);
 
   iter = gegl_buffer_iterator_new (accum_buffer, accum_rect, 0,
                                    babl_format ("RGBA float"),
@@ -480,43 +484,27 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
       const gfloat *canvas     = iter->data[1];
       gfloat       *paint      = iter->data[2];
       gint          count      = iter->length;
-      gboolean      sse_canvas = FALSE;
-      gboolean      sse_brush  = FALSE;
 
-#if defined COMPILE_SSE2_INTRINISICS
-      if (gimp_cpu_accel_get_support () & GIMP_CPU_ACCEL_X86_SSE2)
+#if COMPILE_SSE2_INTRINISICS
+      if (sse2 && ((guintptr) accum                                     |
+                   (guintptr) canvas                                    |
+                   (guintptr) (brush_color ? brush_color_float : paint) |
+                   (guintptr) paint) % 16 == 0)
         {
-          sse_canvas = ((guintptr) accum |
-                        (guintptr) canvas) % 16 == 0;
-
-          sse_brush  = ((guintptr) (brush_color ? brush_color_float : paint) |
-                        (guintptr) accum                                     |
-                        (guintptr) paint) % 16 == 0;
+          gimp_gegl_smudge_with_paint_process_sse2 (accum, canvas, paint, count,
+                                                    brush_color ? brush_color_float :
+                                                                  NULL,
+                                                    brush_a,
+                                                    no_erasing, flow, rate);
         }
+      else
 #endif
-
-      while (count--)
         {
-          /* blend accum_buffer and canvas_buffer to accum_buffer */
-          gimp_gegl_smudge_with_paint_blend (accum, rate, canvas, 1 - rate,
-                                             accum, no_erasing, sse_canvas);
-
-          /* blend accum_buffer and brush color/pixmap to paint_buffer */
-          if (brush_a == 0) /* pure smudge */
-            {
-              memcpy (paint, accum, sizeof (gfloat) * 4);
-            }
-          else
-            {
-              gfloat *src1 = brush_color ? brush_color_float : paint;
-
-              gimp_gegl_smudge_with_paint_blend (src1, flow, accum, 1 - flow,
-                                                 paint, no_erasing, sse_brush);
-            }
-
-          accum  += 4;
-          canvas += 4;
-          paint  += 4;
+          gimp_gegl_smudge_with_paint_process (accum, canvas, paint, count,
+                                               brush_color ? brush_color_float :
+                                                             NULL,
+                                               brush_a,
+                                               no_erasing, flow, rate);
         }
     }
 }
