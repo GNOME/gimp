@@ -599,7 +599,6 @@ animation_cel_animation_cel_add (AnimationCelAnimation *animation,
         {
           GList *prev_cell;
 
-          i++;
           prev_cell = g_list_nth (track->frames, position - 1);
 
           if (prev_cell)

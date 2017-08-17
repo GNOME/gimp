@@ -149,6 +149,10 @@ static void     on_animation_loaded            (Animation         *animation,
 static void     on_animation_duration_changed  (Animation         *animation,
                                                 gint               duration,
                                                 AnimationXSheet   *xsheet);
+static void     on_animation_frames_changed    (Animation         *animation,
+                                                gint               position,
+                                                gint               length,
+                                                AnimationXSheet   *xsheet);
 /* Callbacks on camera. */
 static void     on_camera_keyframe_set         (AnimationCamera   *camera,
                                                 gint               position,
@@ -368,6 +372,10 @@ animation_xsheet_constructed (GObject *object)
   g_signal_connect_after (xsheet->priv->animation,
                           "duration-changed",
                           G_CALLBACK (on_animation_duration_changed),
+                          xsheet);
+  g_signal_connect_after (xsheet->priv->animation,
+                          "frames-changed",
+                          G_CALLBACK (on_animation_frames_changed),
                           xsheet);
 }
 
@@ -1259,6 +1267,23 @@ on_animation_duration_changed (Animation       *animation,
     {
       animation_xsheet_remove_frames (xsheet, duration,
                                       prev_duration - duration);
+    }
+}
+
+static void
+on_animation_frames_changed (Animation       *animation,
+                             gint             position,
+                             gint             length,
+                             AnimationXSheet *xsheet)
+{
+  GList *track;
+
+  for (track = xsheet->priv->cels; track; track = track->next)
+    {
+      GtkWidget *cel;
+
+      cel = g_list_nth_data (track->data, position);
+      animation_xsheet_rename_cel (xsheet, cel, TRUE, position + length);
     }
 }
 
