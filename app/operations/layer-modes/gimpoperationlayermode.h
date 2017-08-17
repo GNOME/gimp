@@ -35,20 +35,6 @@
 
 typedef struct _GimpOperationLayerModeClass GimpOperationLayerModeClass;
 
-struct _GimpOperationLayerModeClass
-{
-  GeglOperationPointComposer3Class  parent_class;
-
-  /*  virtual functions  */
-
-  /* Returns the composite region (any combination of the layer and the
-   * backdrop) that the layer mode affects.  Most modes only affect the
-   * overlapping region, which is what the function returns by default.
-   */
-  GimpLayerCompositeRegion (* get_affected_region) (GimpOperationLayerMode *layer_mode);
-};
-
-
 struct _GimpOperationLayerMode
 {
   GeglOperationPointComposer3  parent_instance;
@@ -58,8 +44,32 @@ struct _GimpOperationLayerMode
   GimpLayerColorSpace          blend_space;
   GimpLayerColorSpace          composite_space;
   GimpLayerCompositeMode       composite_mode;
-  GimpLayerModeFunc            func;
+
+  GimpLayerCompositeMode       real_composite_mode;
+  GimpLayerModeFunc            function;
+  GimpLayerModeBlendFunc       blend_function;
   gboolean                     is_last_node;
+};
+
+struct _GimpOperationLayerModeClass
+{
+  GeglOperationPointComposer3Class  parent_class;
+
+  /*  virtual functions  */
+  gboolean                 (* process)             (GeglOperation          *operation,
+                                                    void                   *in,
+                                                    void                   *aux,
+                                                    void                   *mask,
+                                                    void                   *out,
+                                                    glong                   samples,
+                                                    const GeglRectangle    *roi,
+                                                    gint                    level);
+
+  /* Returns the composite region (any combination of the layer and the
+   * backdrop) that the layer mode affects.  Most modes only affect the
+   * overlapping region, and don't need to override this function.
+   */
+  GimpLayerCompositeRegion (* get_affected_region) (GimpOperationLayerMode *layer_mode);
 };
 
 
@@ -67,14 +77,5 @@ GType                    gimp_operation_layer_mode_get_type            (void) G_
 
 GimpLayerCompositeRegion gimp_operation_layer_mode_get_affected_region (GimpOperationLayerMode *layer_mode);
 
-gboolean
-gimp_operation_layer_mode_process_pixels (GeglOperation       *operation,
-                                          void                *in,
-                                          void                *layer,
-                                          void                *mask,
-                                          void                *out,
-                                          glong                samples,
-                                          const GeglRectangle *roi,
-                                          gint                 level);
 
 #endif /* __GIMP_OPERATION_LAYER_MODE_H__ */

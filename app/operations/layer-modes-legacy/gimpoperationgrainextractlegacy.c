@@ -28,6 +28,16 @@
 #include "gimpoperationgrainextractlegacy.h"
 
 
+static gboolean   gimp_operation_grain_extract_legacy_process (GeglOperation       *op,
+                                                               void                *in,
+                                                               void                *layer,
+                                                               void                *mask,
+                                                               void                *out,
+                                                               glong                samples,
+                                                               const GeglRectangle *roi,
+                                                               gint                 level);
+
+
 G_DEFINE_TYPE (GimpOperationGrainExtractLegacy, gimp_operation_grain_extract_legacy,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -35,18 +45,15 @@ G_DEFINE_TYPE (GimpOperationGrainExtractLegacy, gimp_operation_grain_extract_leg
 static void
 gimp_operation_grain_extract_legacy_class_init (GimpOperationGrainExtractLegacyClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:grain-extract-legacy",
                                  "description", "GIMP grain extract mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_grain_extract_legacy_process;
+  layer_mode_class->process = gimp_operation_grain_extract_legacy_process;
 }
 
 static void
@@ -54,7 +61,7 @@ gimp_operation_grain_extract_legacy_init (GimpOperationGrainExtractLegacy *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_grain_extract_legacy_process (GeglOperation       *op,
                                              void                *in_p,
                                              void                *layer_p,

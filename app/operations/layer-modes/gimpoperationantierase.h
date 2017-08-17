@@ -47,16 +47,7 @@ struct _GimpOperationAntiEraseClass
 };
 
 
-GType    gimp_operation_anti_erase_get_type (void) G_GNUC_CONST;
-
-gboolean gimp_operation_anti_erase_process  (GeglOperation       *op,
-                                             void                *in,
-                                             void                *layer,
-                                             void                *mask,
-                                             void                *out,
-                                             glong                samples,
-                                             const GeglRectangle *roi,
-                                             gint                 level);
+GType   gimp_operation_anti_erase_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_OPERATION_ANTI_ERASE_H__ */

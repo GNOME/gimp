@@ -55,19 +55,19 @@ typedef struct _GimpCagePoint                   GimpCagePoint;
 
 /*  functions  */
 
-typedef gboolean (* GimpLayerModeFunc) (GeglOperation          *operation,
-                                        void                   *in,
-                                        void                   *aux,
-                                        void                   *mask,
-                                        void                   *out,
-                                        glong                   samples,
-                                        const GeglRectangle    *roi,
-                                        gint                    level);
+typedef gboolean (* GimpLayerModeFunc)      (GeglOperation          *operation,
+                                             void                   *in,
+                                             void                   *aux,
+                                             void                   *mask,
+                                             void                   *out,
+                                             glong                   samples,
+                                             const GeglRectangle    *roi,
+                                             gint                    level);
 
-typedef  void    (* GimpBlendFunc)     (const float            *dest,
-                                        const float            *src,
-                                        float                  *out,
-                                        gint                    samples);
+typedef  void    (* GimpLayerModeBlendFunc) (const gfloat           *in,
+                                             const gfloat           *layer,
+                                             gfloat                 *out,
+                                             gint                    samples);
 
 
 #endif /* __OPERATIONS_TYPES_H__ */

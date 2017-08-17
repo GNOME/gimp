@@ -305,21 +305,23 @@ do_layer_blend (GeglBuffer    *src_buffer,
   GeglBufferIterator     *iter;
   guint                   paint_stride;
   gfloat                 *paint_data;
-  GimpLayerModeFunc       apply_func;
-  GimpLayerColorSpace     blend_space;
-  GimpLayerColorSpace     composite_space;
-  GimpLayerCompositeMode  composite_mode;
+  GimpOperationLayerMode  layer_mode;
 
   paint_stride = gimp_temp_buf_get_width (paint_buf);
   paint_data   = (gfloat *) gimp_temp_buf_get_data (paint_buf);
 
-  apply_func      = gimp_layer_mode_get_function (paint_mode);
-  blend_space     = gimp_layer_mode_get_blend_space (paint_mode);
-  composite_space = gimp_layer_mode_get_composite_space (paint_mode);
-  composite_mode  = gimp_layer_mode_get_paint_composite_mode (paint_mode);
+  layer_mode.layer_mode          = paint_mode;
+  layer_mode.opacity             = opacity;
+  layer_mode.function            = gimp_layer_mode_get_function (paint_mode);
+  layer_mode.blend_function      = gimp_layer_mode_get_blend_function (paint_mode);
+  layer_mode.blend_space         = gimp_layer_mode_get_blend_space (paint_mode);
+  layer_mode.composite_space     = gimp_layer_mode_get_composite_space (paint_mode);
+  layer_mode.composite_mode      = gimp_layer_mode_get_paint_composite_mode (paint_mode);
+  layer_mode.real_composite_mode = layer_mode.composite_mode;
 
   iterator_format = gimp_layer_mode_get_format (paint_mode,
-                                                composite_space, blend_space,
+                                                layer_mode.composite_space,
+                                                layer_mode.blend_space,
                                                 gegl_buffer_get_format (src_buffer));
 
   roi.x = x_offset;
@@ -351,20 +353,13 @@ do_layer_blend (GeglBuffer    *src_buffer,
 
   while (gegl_buffer_iterator_next (iter))
     {
-      GimpOperationLayerMode  layer_data;
-      gfloat                 *out_pixel   = (gfloat *) iter->data[0];
-      gfloat                 *in_pixel    = (gfloat *) iter->data[1];
-      gfloat                 *mask_pixel  = NULL;
-      gfloat                 *paint_pixel;
-      gint                    iy;
+      gfloat *out_pixel  = (gfloat *) iter->data[0];
+      gfloat *in_pixel   = (gfloat *) iter->data[1];
+      gfloat *mask_pixel = NULL;
+      gfloat *paint_pixel;
+      gint    iy;
 
       paint_pixel = paint_data + ((iter->roi[0].y - roi.y) * paint_stride + iter->roi[0].x - roi.x) * 4;
-
-      layer_data.layer_mode      = paint_mode;
-      layer_data.opacity         = opacity;
-      layer_data.blend_space     = blend_space;
-      layer_data.composite_space = composite_space;
-      layer_data.composite_mode  = composite_mode;
 
       if (mask_buffer)
         mask_pixel  = (gfloat *)iter->data[2];
@@ -373,19 +368,18 @@ do_layer_blend (GeglBuffer    *src_buffer,
       process_roi.width  = iter->roi[0].width;
       process_roi.height = 1;
 
-
       for (iy = 0; iy < iter->roi[0].height; iy++)
         {
           process_roi.y = iter->roi[0].y + iy;
 
-          (*apply_func) ((GeglOperation*)&layer_data,
-                         in_pixel,
-                         paint_pixel,
-                         mask_pixel,
-                         out_pixel,
-                         iter->roi[0].width,
-                         &process_roi,
-                         0);
+          layer_mode.function ((GeglOperation*) &layer_mode,
+                               in_pixel,
+                               paint_pixel,
+                               mask_pixel,
+                               out_pixel,
+                               iter->roi[0].width,
+                               &process_roi,
+                               0);
 
           in_pixel    += iter->roi[0].width * 4;
           out_pixel   += iter->roi[0].width * 4;

@@ -48,16 +48,7 @@ struct _GimpOperationSplitClass
 };
 
 
-GType    gimp_operation_split_get_type (void) G_GNUC_CONST;
-
-gboolean gimp_operation_split_process  (GeglOperation       *op,
-                                        void                *in,
-                                        void                *layer,
-                                        void                *mask,
-                                        void                *out,
-                                        glong                samples,
-                                        const GeglRectangle *roi,
-                                        gint                 level);
+GType   gimp_operation_split_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_OPERATION_SPLIT_H__ */

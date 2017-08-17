@@ -9,7 +9,6 @@ AM_CPPFLAGS = \
 	$(CAIRO_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GDK_PIXBUF_CFLAGS)			\
-	$(SSE2_EXTRA_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = \
@@ -19,30 +18,36 @@ noinst_LIBRARIES = \
 	libapplayermodes.a
 
 libapplayermodes_generic_a_sources = \
-	gimp-layer-modes.c		\
-	gimp-layer-modes.h		\
+	gimp-layer-modes.c			\
+	gimp-layer-modes.h			\
 	\
-	gimpoperationlayermode.c	\
-	gimpoperationlayermode.h	\
+	gimpoperationlayermode.c		\
+	gimpoperationlayermode.h		\
+	gimpoperationlayermode-blend.c		\
+	gimpoperationlayermode-blend.h		\
+	gimpoperationlayermode-composite.c	\
+	gimpoperationlayermode-composite.h	\
 	\
-	gimpoperationantierase.c	\
-	gimpoperationantierase.h	\
-	gimpoperationbehind.c		\
-	gimpoperationbehind.h		\
-	gimpoperationdissolve.c		\
-	gimpoperationdissolve.h		\
-	gimpoperationerase.c		\
-	gimpoperationerase.h		\
-	gimpoperationmerge.c		\
-	gimpoperationmerge.h		\
-	gimpoperationnormal.c		\
-	gimpoperationnormal.h		\
-	gimpoperationreplace.c		\
-	gimpoperationreplace.h		\
-	gimpoperationsplit.c		\
+	gimpoperationantierase.c		\
+	gimpoperationantierase.h		\
+	gimpoperationbehind.c			\
+	gimpoperationbehind.h			\
+	gimpoperationdissolve.c			\
+	gimpoperationdissolve.h			\
+	gimpoperationerase.c			\
+	gimpoperationerase.h			\
+	gimpoperationmerge.c			\
+	gimpoperationmerge.h			\
+	gimpoperationnormal.c			\
+	gimpoperationnormal.h			\
+	gimpoperationreplace.c			\
+	gimpoperationreplace.h			\
+	gimpoperationsplit.c			\
 	gimpoperationsplit.h
 
 libapplayermodes_sse2_a_sources = \
+	gimpoperationlayermode-composite-sse2.c	\
+	\
 	gimpoperationnormal-sse2.c
 
 libapplayermodes_sse4_a_sources = \

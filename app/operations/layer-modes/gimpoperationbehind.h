@@ -49,14 +49,5 @@ struct _GimpOperationBehindClass
 
 GType    gimp_operation_behind_get_type (void) G_GNUC_CONST;
 
-gboolean gimp_operation_behind_process  (GeglOperation       *op,
-                                         void                *in,
-                                         void                *layer,
-                                         void                *mask,
-                                         void                *out,
-                                         glong                samples,
-                                         const GeglRectangle *roi,
-                                         gint                 level);
-
 
 #endif /* __GIMP_OPERATION_BEHIND_H__ */

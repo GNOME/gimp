@@ -32,55 +32,56 @@
 /* SSE2 */
 #include <emmintrin.h>
 
+
 gboolean
-gimp_operation_normal_process_sse2 (GeglOperation       *operation,
-                                    void                *in,
-                                    void                *aux,
+gimp_operation_normal_process_sse2 (GeglOperation       *op,
+                                    void                *in_p,
+                                    void                *layer_p,
                                     void                *mask_p,
-                                    void                *out,
+                                    void                *out_p,
                                     glong                samples,
                                     const GeglRectangle *roi,
                                     gint                 level)
 {
   /* check alignment */
-  if ((((uintptr_t)in) | ((uintptr_t)aux) | ((uintptr_t)out)) & 0x0F)
+  if ((((uintptr_t)in_p) | ((uintptr_t)layer_p) | ((uintptr_t)out_p)) & 0x0F)
     {
-      return gimp_operation_normal_process_core (operation, in, aux, mask_p, out,
-                                                 samples,
-                                                 roi, level);
+      return gimp_operation_normal_process (op,
+                                            in_p, layer_p, mask_p, out_p,
+                                            samples, roi, level);
     }
   else
     {
-      GimpOperationLayerMode *layer_mode    = (GimpOperationLayerMode *) operation;
-      gfloat                  opacity       = layer_mode->opacity;
-      gfloat                 *mask          = mask_p;
-      const                   __v4sf *v_in  = (const __v4sf*) in;
-      const                   __v4sf *v_aux = (const __v4sf*) aux;
-                              __v4sf *v_out = (      __v4sf*) out;
+      GimpOperationLayerMode *layer_mode      = (gpointer) op;
+      gfloat                  opacity         = layer_mode->opacity;
+      gfloat                 *mask            = mask_p;
+      const                   __v4sf *v_in    = (const __v4sf*) in_p;
+      const                   __v4sf *v_layer = (const __v4sf*) layer_p;
+                              __v4sf *v_out   = (      __v4sf*) out_p;
 
       const __v4sf one       = _mm_set1_ps (1.0f);
       const __v4sf v_opacity = _mm_set1_ps (opacity);
 
-      switch (layer_mode->composite_mode)
+      switch (layer_mode->real_composite_mode)
         {
         case GIMP_LAYER_COMPOSITE_SRC_OVER:
         case GIMP_LAYER_COMPOSITE_AUTO:
           while (samples--)
             {
-              __v4sf rgba_in, rgba_aux, alpha;
+              __v4sf rgba_in, rgba_layer, alpha;
 
-              rgba_in  = *v_in++;
-              rgba_aux = *v_aux++;
+              rgba_in    = *v_in++;
+              rgba_layer = *v_layer++;
 
               /* expand alpha */
-              alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_aux,
+              alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_layer,
                                                  _MM_SHUFFLE (3, 3, 3, 3));
 
               if (mask)
                 {
                   __v4sf mask_alpha;
 
-                  /* multiply aux's alpha by the mask */
+                  /* multiply layer's alpha by the mask */
                   mask_alpha = _mm_set1_ps (*mask++);
                   alpha = alpha * mask_alpha;
                 }
@@ -99,7 +100,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *operation,
                   a_term = dst_alpha * (one - alpha);
 
                   /* out(color) = src * src_a + dst * a_term */
-                  out_pixel = rgba_aux * alpha + rgba_in * a_term;
+                  out_pixel = rgba_layer * alpha + rgba_in * a_term;
 
                   /* out(alpha) = 1.0 * src_a + 1.0 * a_term */
                   out_alpha = alpha + a_term;
@@ -123,20 +124,20 @@ gimp_operation_normal_process_sse2 (GeglOperation       *operation,
         case GIMP_LAYER_COMPOSITE_SRC_ATOP:
           while (samples--)
             {
-              __v4sf rgba_in, rgba_aux, alpha;
+              __v4sf rgba_in, rgba_layer, alpha;
 
-              rgba_in  = *v_in++;
-              rgba_aux = *v_aux++;
+              rgba_in    = *v_in++;
+              rgba_layer = *v_layer++;
 
               /* expand alpha */
-              alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_aux,
+              alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_layer,
                                                  _MM_SHUFFLE (3, 3, 3, 3));
 
               if (mask)
                 {
                   __v4sf mask_alpha;
 
-                  /* multiply aux's alpha by the mask */
+                  /* multiply layer's alpha by the mask */
                   mask_alpha = _mm_set1_ps (*mask++);
                   alpha = alpha * mask_alpha;
                 }
@@ -152,7 +153,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *operation,
                                                          _MM_SHUFFLE (3, 3, 3, 3));
 
                   /* out(color) = dst * (1 - src_a) + src * src_a */
-                  out_pixel = rgba_in + (rgba_aux - rgba_in) * alpha;
+                  out_pixel = rgba_in + (rgba_layer - rgba_in) * alpha;
 
                   /* swap in the real alpha */
                   out_pixel_rbaa = _mm_shuffle_ps (out_pixel, dst_alpha, _MM_SHUFFLE (3, 3, 2, 0));
@@ -170,21 +171,21 @@ gimp_operation_normal_process_sse2 (GeglOperation       *operation,
         case GIMP_LAYER_COMPOSITE_DST_ATOP:
           while (samples--)
             {
-              __v4sf rgba_in, rgba_aux, alpha;
+              __v4sf rgba_in, rgba_layer, alpha;
               __v4sf out_pixel, out_pixel_rbaa;
 
-              rgba_in  = *v_in++;
-              rgba_aux = *v_aux++;
+              rgba_in    = *v_in++;
+              rgba_layer = *v_layer++;
 
               /* expand alpha */
-              alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_aux,
+              alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_layer,
                                                  _MM_SHUFFLE (3, 3, 3, 3));
 
               if (mask)
                 {
                   __v4sf mask_alpha;
 
-                  /* multiply aux's alpha by the mask */
+                  /* multiply layer's alpha by the mask */
                   mask_alpha = _mm_set1_ps (*mask++);
                   alpha = alpha * mask_alpha;
                 }
@@ -194,7 +195,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *operation,
               if (_mm_ucomigt_ss (alpha, _mm_setzero_ps ()))
                 {
                   /* out(color) = src */
-                  out_pixel = rgba_aux;
+                  out_pixel = rgba_layer;
                 }
               else
                 {
@@ -212,21 +213,21 @@ gimp_operation_normal_process_sse2 (GeglOperation       *operation,
         case GIMP_LAYER_COMPOSITE_SRC_IN:
           while (samples--)
             {
-              __v4sf rgba_in, rgba_aux, alpha;
+              __v4sf rgba_in, rgba_layer, alpha;
               __v4sf out_pixel, out_pixel_rbaa;
 
-              rgba_in  = *v_in++;
-              rgba_aux = *v_aux++;
+              rgba_in    = *v_in++;
+              rgba_layer = *v_layer++;
 
               /* expand alpha */
-              alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_aux,
+              alpha = (__v4sf)_mm_shuffle_epi32 ((__m128i)rgba_layer,
                                                  _MM_SHUFFLE (3, 3, 3, 3));
 
               if (mask)
                 {
                   __v4sf mask_alpha;
 
-                  /* multiply aux's alpha by the mask */
+                  /* multiply layer's alpha by the mask */
                   mask_alpha = _mm_set1_ps (*mask++);
                   alpha = alpha * mask_alpha;
                 }
@@ -240,7 +241,7 @@ gimp_operation_normal_process_sse2 (GeglOperation       *operation,
               if (_mm_ucomigt_ss (alpha, _mm_setzero_ps ()))
                 {
                   /* out(color) = src */
-                  out_pixel = rgba_aux;
+                  out_pixel = rgba_layer;
                 }
               else
                 {

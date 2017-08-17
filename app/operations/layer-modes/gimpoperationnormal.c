@@ -33,8 +33,6 @@
 G_DEFINE_TYPE (GimpOperationNormal, gimp_operation_normal,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
-#define parent_class gimp_operation_normal_parent_class
-
 
 static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "<gegl>"
@@ -52,17 +50,12 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "</node>"
 "</gegl>";
 
-static GimpLayerModeFunc _gimp_operation_normal_process = NULL;
-
 
 static void
 gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",                  "gimp:normal",
@@ -71,19 +64,17 @@ gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
                                  "reference-composition", reference_xml,
                                  NULL);
 
-  _gimp_operation_normal_process = gimp_operation_normal_process_core;
+  layer_mode_class->process = gimp_operation_normal_process;
 
 #if COMPILE_SSE2_INTRINISICS
   if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE2)
-    _gimp_operation_normal_process = gimp_operation_normal_process_sse2;
+    layer_mode_class->process = gimp_operation_normal_process_sse2;
 #endif /* COMPILE_SSE2_INTRINISICS */
 
 #if COMPILE_SSE4_1_INTRINISICS
   if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE4_1)
-    _gimp_operation_normal_process = gimp_operation_normal_process_sse4;
+    layer_mode_class->process = gimp_operation_normal_process_sse4;
 #endif /* COMPILE_SSE4_1_INTRINISICS */
-
-  point_class->process         = gimp_operation_normal_process;
 }
 
 static void
@@ -93,27 +84,13 @@ gimp_operation_normal_init (GimpOperationNormal *self)
 
 gboolean
 gimp_operation_normal_process (GeglOperation       *op,
-                               void                *in,
-                               void                *aux,
-                               void                *mask,
-                               void                *out,
+                               void                *in_p,
+                               void                *layer_p,
+                               void                *mask_p,
+                               void                *out_p,
                                glong                samples,
                                const GeglRectangle *roi,
                                gint                 level)
-{
-  return _gimp_operation_normal_process (op, in, aux, mask, out,
-                                         samples, roi, level);
-}
-
-gboolean
-gimp_operation_normal_process_core (GeglOperation       *op,
-                                    void                *in_p,
-                                    void                *layer_p,
-                                    void                *mask_p,
-                                    void                *out_p,
-                                    glong                samples,
-                                    const GeglRectangle *roi,
-                                    gint                 level)
 {
   GimpOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
@@ -123,7 +100,7 @@ gimp_operation_normal_process_core (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  switch (layer_mode->composite_mode)
+  switch (layer_mode->real_composite_mode)
     {
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
     case GIMP_LAYER_COMPOSITE_AUTO:

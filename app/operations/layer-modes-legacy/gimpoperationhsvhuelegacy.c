@@ -32,6 +32,16 @@
 #include "gimpoperationhsvhuelegacy.h"
 
 
+static gboolean   gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
+                                                         void                *in,
+                                                         void                *layer,
+                                                         void                *mask,
+                                                         void                *out,
+                                                         glong                samples,
+                                                         const GeglRectangle *roi,
+                                                         gint                 level);
+
+
 G_DEFINE_TYPE (GimpOperationHsvHueLegacy, gimp_operation_hsv_hue_legacy,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -39,18 +49,15 @@ G_DEFINE_TYPE (GimpOperationHsvHueLegacy, gimp_operation_hsv_hue_legacy,
 static void
 gimp_operation_hsv_hue_legacy_class_init (GimpOperationHsvHueLegacyClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:hsv-hue-legacy",
                                  "description", "GIMP hue mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_hsv_hue_legacy_process;
+  layer_mode_class->process = gimp_operation_hsv_hue_legacy_process;
 }
 
 static void
@@ -58,7 +65,7 @@ gimp_operation_hsv_hue_legacy_init (GimpOperationHsvHueLegacy *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_hsv_hue_legacy_process (GeglOperation       *op,
                                        void                *in_p,
                                        void                *layer_p,

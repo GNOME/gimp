@@ -47,16 +47,7 @@ struct _GimpOperationScreenLegacyClass
 };
 
 
-GType    gimp_operation_screen_legacy_get_type (void) G_GNUC_CONST;
-
-gboolean gimp_operation_screen_legacy_process  (GeglOperation       *op,
-                                                void                *in,
-                                                void                *layer,
-                                                void                *mask,
-                                                void                *out,
-                                                glong                samples,
-                                                const GeglRectangle *roi,
-                                                gint                 level);
+GType   gimp_operation_screen_legacy_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_OPERATION_SCREEN_LEGACY_H__ */

@@ -47,16 +47,7 @@ struct _GimpOperationLightenOnlyLegacyClass
 };
 
 
-GType    gimp_operation_lighten_only_legacy_get_type (void) G_GNUC_CONST;
-
-gboolean gimp_operation_lighten_only_legacy_process  (GeglOperation       *op,
-                                                      void                *in,
-                                                      void                *layer,
-                                                      void                *mask,
-                                                      void                *out,
-                                                      glong                samples,
-                                                      const GeglRectangle *roi,
-                                                      gint                 level);
+GType   gimp_operation_lighten_only_legacy_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_OPERATION_LIGHTEN_ONLY_LEGACY_H__ */

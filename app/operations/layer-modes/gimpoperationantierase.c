@@ -28,7 +28,16 @@
 #include "gimpoperationantierase.h"
 
 
-static GimpLayerCompositeRegion gimp_operation_anti_erase_get_affected_region (GimpOperationLayerMode *layer_mode);
+
+static gboolean                   gimp_operation_anti_erase_process             (GeglOperation          *op,
+                                                                                 void                   *in,
+                                                                                 void                   *layer,
+                                                                                 void                   *mask,
+                                                                                 void                   *out,
+                                                                                 glong                   samples,
+                                                                                 const GeglRectangle    *roi,
+                                                                                 gint                    level);
+static GimpLayerCompositeRegion   gimp_operation_anti_erase_get_affected_region (GimpOperationLayerMode *layer_mode);
 
 
 G_DEFINE_TYPE (GimpOperationAntiErase, gimp_operation_anti_erase,
@@ -38,21 +47,15 @@ G_DEFINE_TYPE (GimpOperationAntiErase, gimp_operation_anti_erase,
 static void
 gimp_operation_anti_erase_class_init (GimpOperationAntiEraseClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-  GimpOperationLayerModeClass      *layer_mode_class;
-
-  operation_class  = GEGL_OPERATION_CLASS (klass);
-  point_class      = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
-  layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:anti-erase",
                                  "description", "GIMP anti erase mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_anti_erase_process;
-
+  layer_mode_class->process             = gimp_operation_anti_erase_process;
   layer_mode_class->get_affected_region = gimp_operation_anti_erase_get_affected_region;
 }
 
@@ -61,7 +64,7 @@ gimp_operation_anti_erase_init (GimpOperationAntiErase *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_anti_erase_process (GeglOperation       *op,
                                    void                *in_p,
                                    void                *layer_p,
@@ -79,7 +82,7 @@ gimp_operation_anti_erase_process (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  switch (layer_mode->composite_mode)
+  switch (layer_mode->real_composite_mode)
     {
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
     case GIMP_LAYER_COMPOSITE_AUTO:

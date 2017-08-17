@@ -28,6 +28,16 @@
 #include "gimpoperationsoftlightlegacy.h"
 
 
+static gboolean   gimp_operation_softlight_legacy_process (GeglOperation       *op,
+                                                           void                *in,
+                                                           void                *layer,
+                                                           void                *mask,
+                                                           void                *out,
+                                                           glong                samples,
+                                                           const GeglRectangle *roi,
+                                                           gint                 level);
+
+
 G_DEFINE_TYPE (GimpOperationSoftlightLegacy, gimp_operation_softlight_legacy,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -52,11 +62,8 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 static void
 gimp_operation_softlight_legacy_class_init (GimpOperationSoftlightLegacyClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:softlight-legacy",
@@ -65,7 +72,7 @@ gimp_operation_softlight_legacy_class_init (GimpOperationSoftlightLegacyClass *k
                                  "reference-composition", reference_xml,
                                  NULL);
 
-  point_class->process = gimp_operation_softlight_legacy_process;
+  layer_mode_class->process = gimp_operation_softlight_legacy_process;
 }
 
 static void
@@ -73,7 +80,7 @@ gimp_operation_softlight_legacy_init (GimpOperationSoftlightLegacy *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_softlight_legacy_process (GeglOperation       *op,
                                          void                *in_p,
                                          void                *layer_p,

@@ -41,6 +41,7 @@ GimpLayerCompositeMode     gimp_layer_mode_get_paint_composite_mode   (GimpLayer
 const gchar              * gimp_layer_mode_get_operation              (GimpLayerMode           mode);
 
 GimpLayerModeFunc          gimp_layer_mode_get_function               (GimpLayerMode           mode);
+GimpLayerModeBlendFunc     gimp_layer_mode_get_blend_function         (GimpLayerMode           mode);
 
 GimpLayerModeContext       gimp_layer_mode_get_context                (GimpLayerMode           mode);
 
@@ -61,8 +62,6 @@ const Babl               * gimp_layer_mode_get_format                 (GimpLayer
                                                                        GimpLayerColorSpace     composite_space,
                                                                        GimpLayerColorSpace     blend_space,
                                                                        const Babl             *preferred_format);
-
-GimpLayerCompositeRegion   gimp_layer_mode_get_affected_region        (GimpLayerMode           mode);
 
 GimpLayerCompositeRegion   gimp_layer_mode_get_included_region        (GimpLayerMode           mode,
                                                                        GimpLayerCompositeMode  composite_mode);

@@ -27,7 +27,15 @@
 #include "gimpoperationreplace.h"
 
 
-static GimpLayerCompositeRegion gimp_operation_replace_get_affected_region (GimpOperationLayerMode *layer_mode);
+static gboolean                   gimp_operation_replace_process             (GeglOperation          *op,
+                                                                              void                   *in,
+                                                                              void                   *layer,
+                                                                              void                   *mask,
+                                                                              void                   *out,
+                                                                              glong                   samples,
+                                                                              const GeglRectangle    *roi,
+                                                                              gint                    level);
+static GimpLayerCompositeRegion   gimp_operation_replace_get_affected_region (GimpOperationLayerMode *layer_mode);
 
 
 G_DEFINE_TYPE (GimpOperationReplace, gimp_operation_replace,
@@ -37,21 +45,15 @@ G_DEFINE_TYPE (GimpOperationReplace, gimp_operation_replace,
 static void
 gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-  GimpOperationLayerModeClass      *layer_mode_class;
-
-  operation_class  = GEGL_OPERATION_CLASS (klass);
-  point_class      = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
-  layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:replace",
                                  "description", "GIMP replace mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_replace_process;
-
+  layer_mode_class->process             = gimp_operation_replace_process;
   layer_mode_class->get_affected_region = gimp_operation_replace_get_affected_region;
 }
 
@@ -60,7 +62,7 @@ gimp_operation_replace_init (GimpOperationReplace *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_replace_process (GeglOperation       *op,
                                 void                *in_p,
                                 void                *layer_p,
@@ -78,7 +80,7 @@ gimp_operation_replace_process (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  switch (layer_mode->composite_mode)
+  switch (layer_mode->real_composite_mode)
     {
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
     case GIMP_LAYER_COMPOSITE_AUTO:

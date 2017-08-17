@@ -32,7 +32,15 @@
 #define RANDOM_TABLE_SIZE 4096
 
 
-static GimpLayerCompositeRegion gimp_operation_dissolve_get_affected_region (GimpOperationLayerMode *layer_mode);
+static gboolean                   gimp_operation_dissolve_process             (GeglOperation          *op,
+                                                                               void                   *in,
+                                                                               void                   *layer,
+                                                                               void                   *mask,
+                                                                               void                   *out,
+                                                                               glong                   samples,
+                                                                               const GeglRectangle    *result,
+                                                                               gint                    level);
+static GimpLayerCompositeRegion   gimp_operation_dissolve_get_affected_region (GimpOperationLayerMode *layer_mode);
 
 
 G_DEFINE_TYPE (GimpOperationDissolve, gimp_operation_dissolve,
@@ -45,15 +53,10 @@ static gint32 random_table[RANDOM_TABLE_SIZE];
 static void
 gimp_operation_dissolve_class_init (GimpOperationDissolveClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_composer_class;
-  GimpOperationLayerModeClass      *layer_mode_class;
-  GRand                            *gr;
-  gint                              i;
-
-  operation_class      = GEGL_OPERATION_CLASS (klass);
-  point_composer_class = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
-  layer_mode_class     = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  GRand                       *gr;
+  gint                         i;
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:dissolve",
@@ -61,8 +64,7 @@ gimp_operation_dissolve_class_init (GimpOperationDissolveClass *klass)
                                  "categories",  "compositors",
                                  NULL);
 
-  point_composer_class->process = gimp_operation_dissolve_process;
-
+  layer_mode_class->process             = gimp_operation_dissolve_process;
   layer_mode_class->get_affected_region = gimp_operation_dissolve_get_affected_region;
 
   /* generate a table of random seeds */
@@ -78,7 +80,7 @@ gimp_operation_dissolve_init (GimpOperationDissolve *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_dissolve_process (GeglOperation       *op,
                                  void                *in_p,
                                  void                *layer_p,
@@ -118,8 +120,8 @@ gimp_operation_dissolve_process (GeglOperation       *op,
               out[1] = in[1];
               out[2] = in[2];
 
-              if (layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-                  layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
+              if (layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+                  layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_SRC_ATOP)
                 {
                   out[3] = in[3];
                 }
@@ -134,8 +136,8 @@ gimp_operation_dissolve_process (GeglOperation       *op,
               out[1] = layer[1];
               out[2] = layer[2];
 
-              if (layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
-                  layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP)
+              if (layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_SRC_OVER ||
+                  layer_mode->real_composite_mode == GIMP_LAYER_COMPOSITE_DST_ATOP)
                 {
                   out[3] = 1.0f;
                 }
@@ -159,7 +161,7 @@ gimp_operation_dissolve_process (GeglOperation       *op,
   return TRUE;
 }
 
-GimpLayerCompositeRegion
+static GimpLayerCompositeRegion
 gimp_operation_dissolve_get_affected_region (GimpOperationLayerMode *layer_mode)
 {
   return GIMP_LAYER_COMPOSITE_REGION_SOURCE;

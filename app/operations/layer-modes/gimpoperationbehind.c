@@ -28,6 +28,17 @@
 #include "gimpoperationbehind.h"
 
 
+
+static gboolean   gimp_operation_behind_process (GeglOperation       *op,
+                                                 void                *in,
+                                                 void                *layer,
+                                                 void                *mask,
+                                                 void                *out,
+                                                 glong                samples,
+                                                 const GeglRectangle *roi,
+                                                 gint                 level);
+
+
 G_DEFINE_TYPE (GimpOperationBehind, gimp_operation_behind,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -35,18 +46,15 @@ G_DEFINE_TYPE (GimpOperationBehind, gimp_operation_behind,
 static void
 gimp_operation_behind_class_init (GimpOperationBehindClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:behind",
                                  "description", "GIMP behind mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_behind_process;
+  layer_mode_class->process = gimp_operation_behind_process;
 }
 
 static void
@@ -54,7 +62,7 @@ gimp_operation_behind_init (GimpOperationBehind *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_behind_process (GeglOperation       *op,
                                void                *in_p,
                                void                *layer_p,
@@ -72,7 +80,7 @@ gimp_operation_behind_process (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  switch (layer_mode->composite_mode)
+  switch (layer_mode->real_composite_mode)
     {
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
     case GIMP_LAYER_COMPOSITE_AUTO:

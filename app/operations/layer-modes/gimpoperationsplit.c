@@ -28,6 +28,16 @@
 #include "gimpoperationsplit.h"
 
 
+static gboolean   gimp_operation_split_process (GeglOperation       *op,
+                                                void                *in,
+                                                void                *layer,
+                                                void                *mask,
+                                                void                *out,
+                                                glong                samples,
+                                                const GeglRectangle *roi,
+                                                gint                 level);
+
+
 G_DEFINE_TYPE (GimpOperationSplit, gimp_operation_split,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -35,18 +45,15 @@ G_DEFINE_TYPE (GimpOperationSplit, gimp_operation_split,
 static void
 gimp_operation_split_class_init (GimpOperationSplitClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:split",
                                  "description", "GIMP split mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_split_process;
+  layer_mode_class->process = gimp_operation_split_process;
 }
 
 static void
@@ -54,7 +61,7 @@ gimp_operation_split_init (GimpOperationSplit *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_split_process (GeglOperation       *op,
                               void                *in_p,
                               void                *layer_p,
@@ -72,7 +79,7 @@ gimp_operation_split_process (GeglOperation       *op,
   gfloat                  opacity    = layer_mode->opacity;
   const gboolean          has_mask   = mask != NULL;
 
-  switch (layer_mode->composite_mode)
+  switch (layer_mode->real_composite_mode)
     {
     case GIMP_LAYER_COMPOSITE_SRC_OVER:
       while (samples--)

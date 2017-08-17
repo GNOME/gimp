@@ -47,16 +47,7 @@ struct _GimpOperationDissolve
 };
 
 
-GType    gimp_operation_dissolve_get_type (void) G_GNUC_CONST;
-
-gboolean gimp_operation_dissolve_process  (GeglOperation       *op,
-                                           void                *in,
-                                           void                *layer,
-                                           void                *mask,
-                                           void                *out,
-                                           glong                samples,
-                                           const GeglRectangle *result,
-                                           gint                 level);
+GType   gimp_operation_dissolve_get_type (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_OPERATION_DISSOLVE_H__ */

@@ -28,6 +28,16 @@
 #include "gimpoperationsubtractlegacy.h"
 
 
+static gboolean   gimp_operation_subtract_legacy_process (GeglOperation       *op,
+                                                          void                *in,
+                                                          void                *layer,
+                                                          void                *mask,
+                                                          void                *out,
+                                                          glong                samples,
+                                                          const GeglRectangle *roi,
+                                                          gint                 level);
+
+
 G_DEFINE_TYPE (GimpOperationSubtractLegacy, gimp_operation_subtract_legacy,
                GIMP_TYPE_OPERATION_LAYER_MODE)
 
@@ -35,18 +45,15 @@ G_DEFINE_TYPE (GimpOperationSubtractLegacy, gimp_operation_subtract_legacy,
 static void
 gimp_operation_subtract_legacy_class_init (GimpOperationSubtractLegacyClass *klass)
 {
-  GeglOperationClass               *operation_class;
-  GeglOperationPointComposer3Class *point_class;
-
-  operation_class = GEGL_OPERATION_CLASS (klass);
-  point_class     = GEGL_OPERATION_POINT_COMPOSER3_CLASS (klass);
+  GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:subtract-legacy",
                                  "description", "GIMP subtract mode operation",
                                  NULL);
 
-  point_class->process = gimp_operation_subtract_legacy_process;
+  layer_mode_class->process = gimp_operation_subtract_legacy_process;
 }
 
 static void
@@ -54,7 +61,7 @@ gimp_operation_subtract_legacy_init (GimpOperationSubtractLegacy *self)
 {
 }
 
-gboolean
+static gboolean
 gimp_operation_subtract_legacy_process (GeglOperation       *op,
                                         void                *in_p,
                                         void                *layer_p,
