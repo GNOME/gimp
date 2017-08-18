@@ -214,25 +214,30 @@ static void     animation_xsheet_attach_cel          (AnimationXSheet        *xs
                                                       GtkWidget              *cel,
                                                       gint                    track,
                                                       gint                    pos);
-static void     animation_xsheet_extract_layer_suite (AnimationXSheet         *xsheet,
-                                                      GTree                  **suite,
-                                                      gboolean                 same_numbering,
-                                                      const gchar             *prefix,
-                                                      const gchar             *suffix,
-                                                      const gint              *lower_key);
-static gboolean create_suite                         (gint                    *key,
-                                                      GList                   *layers,
-                                                      CreateData              *data);
-static gboolean merge_suites                         (gint                    *key,
-                                                      GList                   *layers,
-                                                      MergeData               *data);
-static gint     compare_keys                         (gint                    *key1,
-                                                      gint                    *key2);
+static void animation_xsheet_extract_layer_suite_rec (AnimationXSheet        *xsheet,
+                                                      GTree                  *temp_suite,
+                                                      gint                    parent_layer,
+                                                      GRegex                 *regex,
+                                                      const gint             *lower_key);
+static void     animation_xsheet_extract_layer_suite (AnimationXSheet        *xsheet,
+                                                      GTree                 **suite,
+                                                      gboolean                same_numbering,
+                                                      const gchar            *prefix,
+                                                      const gchar            *suffix,
+                                                      const gint             *lower_key);
+static gboolean create_suite                         (gint                   *key,
+                                                      GList                  *layers,
+                                                      CreateData             *data);
+static gboolean merge_suites                         (gint                   *key,
+                                                      GList                  *layers,
+                                                      MergeData              *data);
+static gint     compare_keys                         (gint                   *key1,
+                                                      gint                   *key2);
 
-static void     animation_xsheet_select_all          (AnimationXSheet         *xsheet,
-                                                      gint                     level);
-static gboolean animation_xsheet_title_clicked       (GtkWidget               *title,
-                                                      gpointer                 user_data);
+static void     animation_xsheet_select_all          (AnimationXSheet        *xsheet,
+                                                      gint                    level);
+static gboolean animation_xsheet_title_clicked       (GtkWidget              *title,
+                                                      gpointer                user_data);
 
 G_DEFINE_TYPE (AnimationXSheet, animation_xsheet, GTK_TYPE_SCROLLED_WINDOW)
 
@@ -2174,52 +2179,27 @@ animation_xsheet_attach_cel (AnimationXSheet *xsheet,
 }
 
 static void
-animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
-                                      GTree           **suite,
-                                      gboolean          same_numbering,
-                                      const gchar      *prefix,
-                                      const gchar      *suffix,
-                                      const gint       *lower_key)
+animation_xsheet_extract_layer_suite_rec (AnimationXSheet *xsheet,
+                                          GTree           *temp_suite,
+                                          gint             parent_layer,
+                                          GRegex          *regex,
+                                          const gint      *lower_key)
 {
-  GRegex *regex;
-  GTree  *temp_suite;
-  gchar  *esc_prefix;
-  gchar  *esc_suffix;
-  gchar  *regex_string;
   gint   *layers;
   gint32  image_id;
   gint    num_layers;
   gint    i;
 
-  /* Create the suite if not done yet. */
-  if ((*suite) == NULL)
-    *suite = g_tree_new_full ((GCompareDataFunc) compare_keys,
-                              NULL,
-                              (GDestroyNotify) g_free,
-                              (GDestroyNotify) g_list_free);
-  if (same_numbering)
-    temp_suite = *suite;
-  else
-    /* Sequential numbering. */
-    temp_suite = g_tree_new_full ((GCompareDataFunc) compare_keys,
-                                  NULL,
-                                  (GDestroyNotify) g_free,
-                                  (GDestroyNotify) g_list_free);
-
-  /* Escape characters used in regular expressions. */
-  esc_prefix = g_regex_escape_string (prefix, -1);
-  esc_suffix = g_regex_escape_string (suffix, -1);
-
-  regex_string = g_strdup_printf ("^%s[ \t_-]*([0-9]*(([- _][0-9]+)*)?)[ \t]*%s[ \t]*$",
-                                  esc_prefix, esc_suffix);
-  regex = g_regex_new (regex_string, 0, 0, NULL);
-  g_free (esc_prefix);
-  g_free (esc_suffix);
-  g_free (regex_string);
-
   /* Loop through the image layers. */
   image_id = animation_get_image_id (ANIMATION (xsheet->priv->animation));
-  layers = gimp_image_get_layers (image_id, &num_layers);
+  if (parent_layer == 0)
+    {
+      layers = gimp_image_get_layers (image_id, &num_layers);
+    }
+  else
+    {
+      layers = gimp_item_get_children (parent_layer, &num_layers);
+    }
   for (i = 0; i < num_layers; i++)
     {
       GMatchInfo *match;
@@ -2264,11 +2244,61 @@ animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
           g_strfreev (tokens);
           g_free (num);
         }
+      else if (gimp_item_is_group (layers[i]))
+        {
+          animation_xsheet_extract_layer_suite_rec (xsheet, temp_suite, layers[i],
+                                                    regex, lower_key);
+        }
 
       g_free (layer_title);
       g_match_info_free (match);
     }
 
+  g_free (layers);
+}
+
+static void
+animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
+                                      GTree           **suite,
+                                      gboolean          same_numbering,
+                                      const gchar      *prefix,
+                                      const gchar      *suffix,
+                                      const gint       *lower_key)
+{
+  GRegex *regex;
+  GTree  *temp_suite;
+  gchar  *esc_prefix;
+  gchar  *esc_suffix;
+  gchar  *regex_string;
+
+  /* Create the suite if not done yet. */
+  if ((*suite) == NULL)
+    *suite = g_tree_new_full ((GCompareDataFunc) compare_keys,
+                              NULL,
+                              (GDestroyNotify) g_free,
+                              (GDestroyNotify) g_list_free);
+  if (same_numbering)
+    temp_suite = *suite;
+  else
+    /* Sequential numbering. */
+    temp_suite = g_tree_new_full ((GCompareDataFunc) compare_keys,
+                                  NULL,
+                                  (GDestroyNotify) g_free,
+                                  (GDestroyNotify) g_list_free);
+
+  /* Escape characters used in regular expressions. */
+  esc_prefix = g_regex_escape_string (prefix, -1);
+  esc_suffix = g_regex_escape_string (suffix, -1);
+
+  regex_string = g_strdup_printf ("^%s[ \t_-]*([0-9]*(([- _][0-9]+)*)?)[ \t]*%s[ \t]*$",
+                                  esc_prefix, esc_suffix);
+  regex = g_regex_new (regex_string, 0, 0, NULL);
+  g_free (esc_prefix);
+  g_free (esc_suffix);
+  g_free (regex_string);
+
+  animation_xsheet_extract_layer_suite_rec (xsheet, temp_suite, 0,
+                                            regex, lower_key);
   if (! same_numbering)
     {
       /* We ordered the layers first in a separate list, then later
@@ -2284,7 +2314,6 @@ animation_xsheet_extract_layer_suite (AnimationXSheet  *xsheet,
     }
 
   g_regex_unref (regex);
-  g_free (layers);
 }
 
 static gboolean
