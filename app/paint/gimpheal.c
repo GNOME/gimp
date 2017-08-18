@@ -196,9 +196,9 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
   gint                n_components = babl_format_get_n_components (format);
 
   if (n_components == 2)
-    format = babl_format ("Y'A float");
+    format = babl_format ("YA float");
   else if (n_components == 4)
-    format = babl_format ("R'G'B'A float");
+    format = babl_format ("RGBA float");
   else
     g_return_if_reached ();
 
@@ -239,9 +239,9 @@ gimp_heal_add (GeglBuffer          *first_buffer,
   gint                n_components = babl_format_get_n_components (format);
 
   if (n_components == 2)
-    format = babl_format ("Y'A float");
+    format = babl_format ("YA float");
   else if (n_components == 4)
-    format = babl_format ("R'G'B'A float");
+    format = babl_format ("RGBA float");
   else
     g_return_if_reached ();
 
@@ -552,11 +552,10 @@ gimp_heal_motion (GimpSourceCore   *source_core,
       return;
     }
 
-  /*  heal should work in perceptual space, use R'G'B' instead of RGB  */
   src_copy = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                               src_rect->width,
                                               src_rect->height),
-                              babl_format ("R'G'B'A float"));
+                              babl_format ("RGBA float"));
 
   gegl_buffer_copy (src_buffer, src_rect, GEGL_ABYSS_NONE,
                     src_copy,
