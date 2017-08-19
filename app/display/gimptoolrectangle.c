@@ -2737,6 +2737,7 @@ gimp_tool_rectangle_setup_snap_offsets (GimpToolRectangle *rectangle,
 
   switch (private->function)
     {
+    case GIMP_TOOL_RECTANGLE_CREATING:
       gimp_tool_widget_set_snap_offsets (widget, 0, 0, 0, 0);
       break;
 
