@@ -447,6 +447,7 @@ HELP
 
     @outargs = (
         { name => 'paint_mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
           desc => 'The paint mode' }
     );
 
@@ -470,6 +471,7 @@ HELP
 
     @inargs = (
         { name => 'paint_mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
           desc => 'The paint mode' }
     );
 

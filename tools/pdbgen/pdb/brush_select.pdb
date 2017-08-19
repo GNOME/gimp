@@ -36,6 +36,7 @@ sub brushes_popup {
 	  desc => 'The initial spacing of the brush (if < 0 then use brush
                    default spacing)' },
 	{ name => 'paint_mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
 	  desc => 'The initial paint mode' }
     );
 
@@ -101,6 +102,7 @@ sub brushes_set_popup {
 	  desc => 'The initial spacing of the brush (if < 0 then use brush
                    default spacing)' },
 	{ name => 'paint_mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
 	  desc => 'The initial paint mode' }
     );
 

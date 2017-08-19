@@ -157,6 +157,7 @@ sub brushes_get_brush_data {
 	{ name => 'spacing', type => '0 <= int32 <= 1000',
 	  desc => 'The brush spacing' },
 	{ name => 'paint_mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
 	  desc => 'The paint mode' },
 	{ name => 'width', type => 'int32',
 	  desc => 'The brush width' },

@@ -156,7 +156,7 @@ gimp_operation_layer_mode_class_init (GimpOperationLayerModeClass *klass)
                                    g_param_spec_enum ("layer-mode",
                                                       NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL_LEGACY,
+                                                      GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 

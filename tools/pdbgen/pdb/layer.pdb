@@ -44,6 +44,7 @@ HELP
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The layer opacity' },
 	{ name => 'mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
 	  desc => 'The layer combination mode' }
     );
 
@@ -1161,6 +1162,7 @@ sub layer_get_mode {
 
     @outargs = (
 	{ name => 'mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
 	  desc => 'The layer combination mode' }
     );
 
@@ -1183,6 +1185,7 @@ sub layer_set_mode {
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
 	{ name => 'mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
 	  desc => 'The new layer combination mode' }
     );
 

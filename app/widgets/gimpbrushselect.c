@@ -105,7 +105,7 @@ gimp_brush_select_class_init (GimpBrushSelectClass *klass)
   g_object_class_install_property (object_class, PROP_PAINT_MODE,
                                    g_param_spec_enum ("paint-mode", NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL_LEGACY,
+                                                      GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_WRITABLE |
                                                       G_PARAM_CONSTRUCT));
 

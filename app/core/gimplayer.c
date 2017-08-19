@@ -468,7 +468,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode", NULL, NULL,
                                                       GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL_LEGACY,
+                                                      GIMP_LAYER_MODE_NORMAL,
                                                       GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_BLEND_SPACE,
@@ -521,7 +521,7 @@ static void
 gimp_layer_init (GimpLayer *layer)
 {
   layer->opacity           = GIMP_OPACITY_OPAQUE;
-  layer->mode              = GIMP_LAYER_MODE_NORMAL_LEGACY;
+  layer->mode              = GIMP_LAYER_MODE_NORMAL;
   layer->blend_space       = GIMP_LAYER_COLOR_SPACE_AUTO;
   layer->composite_space   = GIMP_LAYER_COLOR_SPACE_AUTO;
   layer->composite_mode    = GIMP_LAYER_COMPOSITE_AUTO;
@@ -2381,7 +2381,7 @@ gimp_layer_set_mode (GimpLayer     *layer,
 GimpLayerMode
 gimp_layer_get_mode (GimpLayer *layer)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_MODE_NORMAL_LEGACY);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_LAYER_MODE_NORMAL);
 
   return layer->mode;
 }
