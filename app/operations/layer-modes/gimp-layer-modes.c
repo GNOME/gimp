@@ -357,6 +357,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
   { GIMP_LAYER_MODE_COLOR_ERASE_LEGACY,
 
     .op_name              = "gimp:layer-mode",
+    .blend_function       = gimp_operation_layer_mode_blend_color_erase,
     .flags                = GIMP_LAYER_MODE_FLAG_LEGACY                    |
                             GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE     |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_SPACE_IMMUTABLE |
