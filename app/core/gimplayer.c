@@ -661,10 +661,18 @@ gimp_layer_update_mode_node (GimpLayer *layer)
 
   if (layer->mask && layer->show_mask)
     {
-      visible_mode            = GIMP_LAYER_MODE_NORMAL_LEGACY;
+      visible_mode            = GIMP_LAYER_MODE_NORMAL;
       visible_blend_space     = GIMP_LAYER_COLOR_SPACE_AUTO;
-      visible_composite_space = GIMP_LAYER_COLOR_SPACE_AUTO;
+      visible_composite_space = layer->composite_space;
       visible_composite_mode  = GIMP_LAYER_COMPOSITE_AUTO;
+
+      /* This makes sure that masks of LEGACY-mode layers are
+       * composited in PERCEPTUAL space, and non-LEGACY layers in
+       * LINEAR space, or whatever composite space was chosen in the
+       * layer attributes dialog
+       */
+      if (visible_composite_space == GIMP_LAYER_COLOR_SPACE_AUTO)
+        visible_composite_space = gimp_layer_mode_get_composite_space (layer->mode);
     }
   else
     {
