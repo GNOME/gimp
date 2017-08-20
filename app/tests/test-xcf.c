@@ -58,6 +58,11 @@
 #include "gimp-app-test-utils.h"
 
 
+/* we continue to use LEGACY layers for testing, so we can use the
+ * same test image for all tests, including loading
+ * files/gimp-2-6-file.xcf which can't have any non-LEGACY modes
+ */
+
 #define GIMP_MAINIMAGE_WIDTH            100
 #define GIMP_MAINIMAGE_HEIGHT           90
 #define GIMP_MAINIMAGE_TYPE             GIMP_RGB
