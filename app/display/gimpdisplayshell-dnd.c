@@ -27,6 +27,8 @@
 
 #include "display-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
@@ -723,7 +725,7 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
                                 gimp_image_get_layer_format (image, has_alpha),
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE,
-                                GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                image->gimp->config->default_new_layer_mode);
 
   if (new_layer)
     {

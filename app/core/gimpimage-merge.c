@@ -27,6 +27,8 @@
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "gegl/gimp-babl-compat.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
@@ -527,7 +529,7 @@ gimp_image_merge_layers (GimpImage     *image,
                                     gimp_image_get_layer_format (image, FALSE),
                                     gimp_object_get_name (bottom_layer),
                                     GIMP_OPACITY_OPAQUE,
-                                    GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                    image->gimp->config->default_new_layer_mode);
 
       if (! merge_layer)
         {
@@ -557,7 +559,7 @@ gimp_image_merge_layers (GimpImage     *image,
                         gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (bottom_layer)),
                         gimp_object_get_name (bottom_layer),
                         GIMP_OPACITY_OPAQUE,
-                        GIMP_LAYER_MODE_NORMAL_LEGACY);
+                        image->gimp->config->default_new_layer_mode);
 
       if (! merge_layer)
         {

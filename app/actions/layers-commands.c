@@ -396,7 +396,7 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
       off_x   = 0;
       off_y   = 0;
       opacity = 1.0;
-      mode    = GIMP_LAYER_MODE_NORMAL_LEGACY;
+      mode    = image->gimp->config->default_new_layer_mode;
     }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
@@ -442,7 +442,7 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                                                         TRUE),
                                            _("Visible"),
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_LAYER_MODE_NORMAL_LEGACY,
+                                           image->gimp->config->default_new_layer_mode,
                                            profile);
 
   gimp_image_add_layer (image, layer, GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

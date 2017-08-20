@@ -156,7 +156,7 @@ HELP
                                                                         TRUE),
                                            name,
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_LAYER_MODE_NORMAL_LEGACY,
+                                           gimp->config->default_new_layer_mode,
                                            profile);
 }
 CODE
@@ -1357,6 +1357,7 @@ CODE
 @headers = qw(<cairo.h>
               "libgimpbase/gimpbase.h"
               "libgimpcolor/gimpcolor.h"
+              "config/gimpcoreconfig.h"
               "core/gimp.h"
               "core/gimpimage-color-profile.h"
               "core/gimpimage-undo.h"
