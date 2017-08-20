@@ -170,6 +170,27 @@ CODE
     );
 }
 
+sub get_default_new_layer_mode {
+    $blurb = 'Get the default mode for newly created layers.';
+    $help  = 'Returns the default mode for newly created layers.';
+
+    &mitch_pdb_misc('2017', '2.10');
+
+    @outargs = (
+	{ name => 'mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
+	  desc => 'The layer mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  mode = gimp->config->default_new_layer_mode;
+}
+CODE
+    );
+}
+
 sub get_theme_dir {
     $blurb = 'Get the directory of the current GUI theme.';
     $help  = 'Returns a copy of the current GUI theme dir.';
@@ -269,6 +290,7 @@ CODE
             get_default_comment
             get_default_unit
             get_monitor_resolution
+            get_default_new_layer_mode
             get_theme_dir
             get_icon_theme_dir
             get_color_configuration

@@ -174,6 +174,25 @@ get_monitor_resolution_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+get_default_new_layer_mode_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  GimpValueArray *return_vals;
+  gint32 mode = 0;
+
+  mode = gimp->config->default_new_layer_mode;
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), mode);
+
+  return return_vals;
+}
+
+static GimpValueArray *
 get_theme_dir_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -397,6 +416,30 @@ register_gimprc_procs (GimpPDB *pdb)
                                                         "Y resolution",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-get-default-new-layer-mode
+   */
+  procedure = gimp_procedure_new (get_default_new_layer_mode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-default-new-layer-mode");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-get-default-new-layer-mode",
+                                     "Get the default mode for newly created layers.",
+                                     "Returns the default mode for newly created layers.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("mode",
+                                                      "mode",
+                                                      "The layer mode",
+                                                      GIMP_TYPE_LAYER_MODE,
+                                                      GIMP_LAYER_MODE_NORMAL,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

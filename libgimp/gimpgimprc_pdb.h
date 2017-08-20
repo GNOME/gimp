@@ -32,17 +32,18 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar*                 gimp_gimprc_query             (const gchar *token);
-gboolean               gimp_gimprc_set               (const gchar *token,
-                                                      const gchar *value);
-gchar*                 gimp_get_default_comment      (void);
-GimpUnit               gimp_get_default_unit         (void);
-gboolean               gimp_get_monitor_resolution   (gdouble     *xres,
-                                                      gdouble     *yres);
-gchar*                 gimp_get_theme_dir            (void);
-gchar*                 gimp_get_icon_theme_dir       (void);
-G_GNUC_INTERNAL gchar* _gimp_get_color_configuration (void);
-gchar*                 gimp_get_module_load_inhibit  (void);
+gchar*                 gimp_gimprc_query               (const gchar *token);
+gboolean               gimp_gimprc_set                 (const gchar *token,
+                                                        const gchar *value);
+gchar*                 gimp_get_default_comment        (void);
+GimpUnit               gimp_get_default_unit           (void);
+gboolean               gimp_get_monitor_resolution     (gdouble     *xres,
+                                                        gdouble     *yres);
+GimpLayerMode          gimp_get_default_new_layer_mode (void);
+gchar*                 gimp_get_theme_dir              (void);
+gchar*                 gimp_get_icon_theme_dir         (void);
+G_GNUC_INTERNAL gchar* _gimp_get_color_configuration   (void);
+gchar*                 gimp_get_module_load_inhibit    (void);
 
 
 G_END_DECLS

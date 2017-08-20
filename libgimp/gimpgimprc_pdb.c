@@ -209,6 +209,36 @@ gimp_get_monitor_resolution (gdouble *xres,
 }
 
 /**
+ * gimp_get_default_new_layer_mode:
+ *
+ * Get the default mode for newly created layers.
+ *
+ * Returns the default mode for newly created layers.
+ *
+ * Returns: The layer mode.
+ *
+ * Since: 2.10
+ **/
+GimpLayerMode
+gimp_get_default_new_layer_mode (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpLayerMode mode = 0;
+
+  return_vals = gimp_run_procedure ("gimp-get-default-new-layer-mode",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    mode = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return mode;
+}
+
+/**
  * gimp_get_theme_dir:
  *
  * Get the directory of the current GUI theme.
