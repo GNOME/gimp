@@ -859,8 +859,8 @@ gimp_operation_layer_mode_blend_luminance (const gfloat *in,
   gfloat layer_Y[samples], *layer_Y_p;
   gfloat in_Y[samples], *in_Y_p;
 
-  babl_process (babl_fish ("RGBA gfloat", "Y gfloat"), layer, layer_Y, samples);
-  babl_process (babl_fish ("RGBA gfloat", "Y gfloat"), in, in_Y, samples);
+  babl_process (babl_fish ("RGBA float", "Y float"), layer, layer_Y, samples);
+  babl_process (babl_fish ("RGBA float", "Y float"), in, in_Y, samples);
 
   layer_Y_p = &layer_Y[0];
   in_Y_p = &in_Y[0];
