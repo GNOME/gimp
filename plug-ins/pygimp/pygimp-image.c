@@ -131,7 +131,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     gboolean alpha = TRUE;
     int pos = -1;
     double opacity = 100.0;
-    GimpLayerMode mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
+    GimpLayerMode mode = gimp_get_default_new_layer_mode ();
     GimpFillType fill_mode = -1;
 
     static char *kwlist[] = { "name", "width", "height", "offset_x", "offset_y",

@@ -232,7 +232,7 @@ load_image (const gchar  *filename,
                                          cinfo.output_width,
                                          cinfo.output_height,
                                          layer_type,
-                                         100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                         100, gimp_get_default_new_layer_mode ());
       layer_ID = preview_layer_ID;
     }
   else
@@ -241,7 +241,7 @@ load_image (const gchar  *filename,
                                  cinfo.output_width,
                                  cinfo.output_height,
                                  layer_type,
-                                 100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                 100, gimp_get_default_new_layer_mode ());
     }
 
   if (! preview)

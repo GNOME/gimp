@@ -1092,7 +1092,7 @@ ReadImage (FILE        *fp,
                              _("Background"),
                              info->width, info->height,
                              dtype,
-                             100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                             100, gimp_get_default_new_layer_mode ());
 
   gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 

@@ -1913,7 +1913,7 @@ lay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     unsigned int width, height;
     GimpImageType type = GIMP_RGB_IMAGE;
     double opacity = 100.0;
-    GimpLayerMode mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
+    GimpLayerMode mode = gimp_get_default_new_layer_mode ();
 
 
     if (!PyArg_ParseTuple(args, "O!sii|idi:gimp.Layer.__init__",
@@ -2017,7 +2017,7 @@ pygimp_layer_new(gint32 ID)
 
 #define GROUPLAYER_DOC ""                                \
 "gimp.GroupLayer(img, name="", opacity=100.0,   "        \
-"mode=gimp.LAYER_MODE_NORMAL_LEGACY)\n"                  \
+"mode=gimp.LAYER_MODE_NORMAL)\n"                         \
 "\n"                                                     \
 " Creates a new GroupLayer object that has to be \n"     \
 "subsequently added to an image. Use Image.add_layer \n" \
@@ -2071,7 +2071,7 @@ grouplay_init(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
     char *name = "Layer Group";
     GimpImageType type = GIMP_RGB_IMAGE;
     double opacity = 100.0;
-    GimpLayerMode mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
+    GimpLayerMode mode = gimp_get_default_new_layer_mode ();
 
 
     if (!PyArg_ParseTuple(args, "O!|sdi:gimp.Layer.__init__",

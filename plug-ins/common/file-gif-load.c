@@ -989,14 +989,14 @@ ReadImage (FILE        *fd,
           layer_ID = gimp_layer_new (*image_ID, framename,
                                      len, height,
                                      GIMP_INDEXED_IMAGE,
-                                     100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                     100, gimp_get_default_new_layer_mode ());
         }
       else
         {
           layer_ID = gimp_layer_new (*image_ID, framename,
                                      len, height,
                                      GIMP_INDEXEDA_IMAGE,
-                                     100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                     100, gimp_get_default_new_layer_mode ());
           alpha_frame=TRUE;
         }
 
@@ -1081,7 +1081,7 @@ ReadImage (FILE        *fd,
                                  len, height,
                                  promote_to_rgb ?
                                  GIMP_RGBA_IMAGE : GIMP_INDEXEDA_IMAGE,
-                                 100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                 100, gimp_get_default_new_layer_mode ());
       alpha_frame = TRUE;
       g_free (framename);
     }

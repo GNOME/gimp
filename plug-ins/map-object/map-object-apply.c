@@ -259,7 +259,7 @@ compute_image (void)
                                      GIMP_RGBA_IMAGE :
                                      GIMP_RGB_IMAGE,
                                      100.0,
-                                     GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                     gimp_get_default_new_layer_mode ());
 
       insert_layer = TRUE;
       output_drawable = gimp_drawable_get (new_layer_id);

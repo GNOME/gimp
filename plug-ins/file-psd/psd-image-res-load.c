@@ -1034,7 +1034,7 @@ load_resource_1033 (const PSDimageres  *res_a,
                              cinfo.output_width,
                              cinfo.output_height,
                              GIMP_RGB_IMAGE,
-                             100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                             100, gimp_get_default_new_layer_mode ());
   buffer = gimp_drawable_get_buffer (layer_id);
   format = babl_format ("R'G'B' u8");
 

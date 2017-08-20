@@ -913,7 +913,7 @@ load_image (GFile              *file,
           layer = gimp_layer_new (image, name,
                                   cols, rows,
                                   layer_type,
-                                  100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                  100, gimp_get_default_new_layer_mode ());
         }
       else
         {
@@ -927,7 +927,7 @@ load_image (GFile              *file,
           layer = gimp_layer_new (image, name,
                                   cols, rows,
                                   layer_type,
-                                  100, GIMP_LAYER_MODE_NORMAL_LEGACY);
+                                  100, gimp_get_default_new_layer_mode ());
           g_free (name);
         }
 
