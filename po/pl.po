@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-13 18:42+0200\n"
-"PO-Revision-Date: 2017-08-13 18:44+0200\n"
+"POT-Creation-Date: 2017-08-20 23:54+0200\n"
+"PO-Revision-Date: 2017-08-20 23:55+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -977,10 +977,10 @@ msgstr "Utworzenie nowego kanału"
 msgid "New Channel Color"
 msgstr "Kolor nowego kanału"
 
-#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:276
-#: ../app/display/gimpdisplayshell-dnd.c:670
+#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:278
+#: ../app/display/gimpdisplayshell-dnd.c:672
 #: ../app/widgets/gimpchanneltreeview.c:258
-#: ../app/widgets/gimplayertreeview.c:784
+#: ../app/widgets/gimplayertreeview.c:786
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kopia kanału %s"
@@ -2289,8 +2289,8 @@ msgstr "Używa połączonych kolorów wszystkich widocznych warstw"
 #: ../app/dialogs/file-open-dialog.c:253
 #: ../app/dialogs/file-open-location-dialog.c:218
 #: ../app/dialogs/file-open-location-dialog.c:228
-#: ../app/display/gimpdisplayshell-dnd.c:614
-#: ../app/widgets/gimplayertreeview.c:744 ../app/widgets/gimptoolbox.c:805
+#: ../app/display/gimpdisplayshell-dnd.c:616
+#: ../app/widgets/gimplayertreeview.c:746 ../app/widgets/gimptoolbox.c:805
 #: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
 msgid ""
@@ -3591,11 +3591,11 @@ msgstr "Skopiuj nazwany"
 msgid "Copy Visible Named "
 msgstr "Skopiuj widoczne nazwane "
 
-#: ../app/actions/edit-commands.c:569 ../app/display/gimpdisplayshell-dnd.c:479
+#: ../app/actions/edit-commands.c:569 ../app/display/gimpdisplayshell-dnd.c:481
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Wklejono jako nową warstwę, ponieważ to grupa warstw."
 
-#: ../app/actions/edit-commands.c:578 ../app/display/gimpdisplayshell-dnd.c:488
+#: ../app/actions/edit-commands.c:578 ../app/display/gimpdisplayshell-dnd.c:490
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Wklejono jako nową warstwę, ponieważ piksele są zablokowane."
 
@@ -5656,8 +5656,8 @@ msgstr "Skalowanie obrazu"
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
-#: ../app/pdb/item-transform-cmds.c:534 ../app/pdb/layer-cmds.c:401
-#: ../app/pdb/layer-cmds.c:448 ../app/pdb/transform-tools-cmds.c:346
+#: ../app/pdb/item-transform-cmds.c:534 ../app/pdb/layer-cmds.c:402
+#: ../app/pdb/layer-cmds.c:449 ../app/pdb/transform-tools-cmds.c:346
 #: ../app/tools/gimpscaletool.c:121
 msgid "Scaling"
 msgstr "Skalowanie"
@@ -6489,7 +6489,7 @@ msgstr "Modyfikacja atrybutów warstwy"
 
 #: ../app/actions/layers-commands.c:328 ../app/actions/layers-commands.c:403
 #: ../app/widgets/gimpdrawabletreeview.c:331
-#: ../app/widgets/gimplayertreeview.c:846
+#: ../app/widgets/gimplayertreeview.c:848
 msgid "New Layer"
 msgstr "Nowa warstwa"
 
@@ -9727,6 +9727,10 @@ msgstr ""
 "i siatka."
 
 #: ../app/config/gimprc-blurbs.h:109
+msgid "The default layer mode for newly created layers and images."
+msgstr "Domyślny tryb warstwy dla nowo utworzonych warstw i obrazów."
+
+#: ../app/config/gimprc-blurbs.h:112
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -9741,7 +9745,7 @@ msgstr ""
 "bieżącym i początkowym jest większa od pewnego progu. Ustawienie "
 "reprezentuje domyślną wartość progu."
 
-#: ../app/config/gimprc-blurbs.h:122
+#: ../app/config/gimprc-blurbs.h:125
 msgid ""
 "The window type hint that is set on dock windows and the toolbox window. "
 "This may affect the way your window manager decorates and handles these "
@@ -9750,44 +9754,44 @@ msgstr ""
 "Typ podpowiedzi powiązanych z oknami doków i oknem przybornika. Ustawienie "
 "to może wpłynąć na sposób, w jaki menedżer okien ozdabia i obsługuje te okna."
 
-#: ../app/config/gimprc-blurbs.h:142
+#: ../app/config/gimprc-blurbs.h:145
 msgid "When enabled, the selected brush will be used for all tools."
 msgstr "Powoduje użycie wybranego pędzla we wszystkich narzędziach."
 
-#: ../app/config/gimprc-blurbs.h:145
+#: ../app/config/gimprc-blurbs.h:148
 msgid "When enabled, the selected dynamics will be used for all tools."
 msgstr "Powoduje użycie wybranej dynamiki we wszystkich narzędziach."
 
-#: ../app/config/gimprc-blurbs.h:151
+#: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
 msgstr "Powoduje użycie wybranego gradientu we wszystkich narzędziach."
 
-#: ../app/config/gimprc-blurbs.h:154
+#: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected pattern will be used for all tools."
 msgstr "Powoduje użycie wybranego desenia we wszystkich narzędziach."
 
-#: ../app/config/gimprc-blurbs.h:168
+#: ../app/config/gimprc-blurbs.h:171
 msgid "Sets the browser used by the help system."
 msgstr "Ustawia przeglądarkę używaną przez system pomocy."
 
-#: ../app/config/gimprc-blurbs.h:176
+#: ../app/config/gimprc-blurbs.h:179
 msgid "How many recent settings to keep around in filter tools."
 msgstr ""
 "Liczba wyświetlanych ostatnio używanych ustawień w narzędziach filtrowania."
 
-#: ../app/config/gimprc-blurbs.h:179
+#: ../app/config/gimprc-blurbs.h:182
 msgid "Show advanced color options in filter tools."
 msgstr "Wyświetlanie zaawansowanych opcji kolorów w narzędziach filtrowania."
 
-#: ../app/config/gimprc-blurbs.h:182
+#: ../app/config/gimprc-blurbs.h:185
 msgid "Sets the text to appear in image window status bars."
 msgstr "Ustawia napis pojawiający się na pasku stanu okna z obrazem."
 
-#: ../app/config/gimprc-blurbs.h:185
+#: ../app/config/gimprc-blurbs.h:188
 msgid "Sets the text to appear in image window titles."
 msgstr "Ustawia napis pojawiający się na pasku tytułowym okna z obrazem."
 
-#: ../app/config/gimprc-blurbs.h:188
+#: ../app/config/gimprc-blurbs.h:191
 msgid ""
 "Promote imported images to floating point precision. Does not apply to "
 "indexed images."
@@ -9795,7 +9799,7 @@ msgstr ""
 "Konwertowanie importowanych obrazów do dokładności zmiennoprzecinkowej. Nie "
 "wpływa na obrazy indeksowane."
 
-#: ../app/config/gimprc-blurbs.h:192
+#: ../app/config/gimprc-blurbs.h:195
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
 "noise in order to distribute color values a bit."
@@ -9803,15 +9807,15 @@ msgstr ""
 "Dodawanie minimalnego szumu podczas konwertowania importowanych obrazów do "
 "dokładności zmiennoprzecinkowej, aby nieco rozłożyć wartości kolorów."
 
-#: ../app/config/gimprc-blurbs.h:196
+#: ../app/config/gimprc-blurbs.h:199
 msgid "Add an alpha channel to all layers of imported images."
 msgstr "Dodawanie kanału alfa do wszystkich warstw importowanych obrazów."
 
-#: ../app/config/gimprc-blurbs.h:199
+#: ../app/config/gimprc-blurbs.h:202
 msgid "Which plug-in to use for importing raw digital camera files."
 msgstr "Której wtyczki używać do importowania plików Raw aparatów cyfrowych."
 
-#: ../app/config/gimprc-blurbs.h:202
+#: ../app/config/gimprc-blurbs.h:205
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
@@ -9820,22 +9824,22 @@ msgstr ""
 "sposób, aby cały obraz był widoczny. Jeśli opcja nie jest włączona, skala "
 "ustawiana jest zawsze na 1∶1."
 
-#: ../app/config/gimprc-blurbs.h:206
+#: ../app/config/gimprc-blurbs.h:209
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Poziom interpolacji wykorzystywany przy skalowaniu i innych "
 "przekształceniach."
 
-#: ../app/config/gimprc-blurbs.h:213
+#: ../app/config/gimprc-blurbs.h:216
 msgid "Specifies the language to use for the user interface."
 msgstr "Ustawia język używany przez interfejs użytkownika."
 
-#: ../app/config/gimprc-blurbs.h:216
+#: ../app/config/gimprc-blurbs.h:219
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr "Liczba wyświetlanych ostatnio otwartych plików w menu „Plik”."
 
-#: ../app/config/gimprc-blurbs.h:219
+#: ../app/config/gimprc-blurbs.h:222
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -9843,7 +9847,7 @@ msgstr ""
 "Prędkość animacji obwódki widocznej wokół zaznaczonego obszaru. Wartość jest "
 "podana w milisekundach (krótszy czas oznacza szybszą animację)."
 
-#: ../app/config/gimprc-blurbs.h:223
+#: ../app/config/gimprc-blurbs.h:226
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -9851,7 +9855,7 @@ msgstr ""
 "Program GIMP wyświetli ostrzeżenie, jeżeli ilość pamięci niezbędna do "
 "utworzenia obrazu przekroczy podaną tutaj wartość."
 
-#: ../app/config/gimprc-blurbs.h:233
+#: ../app/config/gimprc-blurbs.h:236
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -9860,7 +9864,7 @@ msgstr ""
 "Ustala rozdzielczość poziomą monitora w punktach na cal. Jeżeli ustawione "
 "jest 0, wymusza zapytanie serwera X o rozdzielczość pionową i poziomą."
 
-#: ../app/config/gimprc-blurbs.h:238
+#: ../app/config/gimprc-blurbs.h:241
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -9869,7 +9873,7 @@ msgstr ""
 "Ustala rozdzielczość pionową monitora w punktach na cal. Jeżeli ustawione "
 "jest 0, wymusza zapytanie serwera X o rozdzielczość pionową i poziomą."
 
-#: ../app/config/gimprc-blurbs.h:243
+#: ../app/config/gimprc-blurbs.h:246
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -9878,7 +9882,7 @@ msgstr ""
 "jako aktywną. Zachowanie to występowało jako domyślne w starszych wersjach "
 "programu."
 
-#: ../app/config/gimprc-blurbs.h:252
+#: ../app/config/gimprc-blurbs.h:255
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -9886,13 +9890,13 @@ msgstr ""
 "Ustala rozmiar podglądu nawigacyjnego, widocznego w prawym dolnym rogu okna "
 "obrazu."
 
-#: ../app/config/gimprc-blurbs.h:256
+#: ../app/config/gimprc-blurbs.h:259
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
 "Określa liczbę wątków, jaką program GIMP może używać dla działań "
 "obsługujących wielowątkowość."
 
-#: ../app/config/gimprc-blurbs.h:278
+#: ../app/config/gimprc-blurbs.h:281
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -9902,7 +9906,7 @@ msgstr ""
 "Podglądy w oknie warstw i kanałów ułatwiają pracę, jednak przy pracy "
 "z dużymi obrazami mogą negatywnie wpłynąć na prędkość działania programu."
 
-#: ../app/config/gimprc-blurbs.h:283
+#: ../app/config/gimprc-blurbs.h:286
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -9910,11 +9914,11 @@ msgstr ""
 "Ustawia rozmiar podglądu warstw i kanałów w nowo utworzonych oknach "
 "dialogowych."
 
-#: ../app/config/gimprc-blurbs.h:287
+#: ../app/config/gimprc-blurbs.h:290
 msgid "Sets the default quick mask color."
 msgstr "Ustawia domyślny kolor szybkiej maski."
 
-#: ../app/config/gimprc-blurbs.h:290
+#: ../app/config/gimprc-blurbs.h:293
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -9924,7 +9928,7 @@ msgstr ""
 "fizycznych wymiarów obrazu. To ustawienie jest uwzględniane tylko w trybie "
 "wielu okien."
 
-#: ../app/config/gimprc-blurbs.h:295
+#: ../app/config/gimprc-blurbs.h:298
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
@@ -9933,13 +9937,13 @@ msgstr ""
 "powiększenia obrazu. To ustawienie jest uwzględniane tylko w trybie wielu "
 "okien."
 
-#: ../app/config/gimprc-blurbs.h:300
+#: ../app/config/gimprc-blurbs.h:303
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Powoduje, że przy każdym uruchomieniu programu GIMP przywracana jest "
 "poprzednia zapisana sesja."
 
-#: ../app/config/gimprc-blurbs.h:303
+#: ../app/config/gimprc-blurbs.h:306
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -9948,14 +9952,14 @@ msgstr ""
 "na którym były poprzednio otwarte. Wyłączenie powoduje, że okna będą "
 "otwierane na obecnie używanym monitorze."
 
-#: ../app/config/gimprc-blurbs.h:308
+#: ../app/config/gimprc-blurbs.h:311
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Powoduje zapamiętywanie aktywnego narzędzia, desenia, koloru oraz pędzla "
 "między sesjami programu GIMP."
 
-#: ../app/config/gimprc-blurbs.h:312
+#: ../app/config/gimprc-blurbs.h:315
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
@@ -9964,7 +9968,7 @@ msgstr ""
 "urządzenia wejściowe. Podczas zmiany urządzenia wejściowego narzędzie nie "
 "będzie przełączane."
 
-#: ../app/config/gimprc-blurbs.h:317
+#: ../app/config/gimprc-blurbs.h:320
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
@@ -9972,19 +9976,19 @@ msgstr ""
 "Zachowuje wszystkie wpisy otwartych i zapisanych plików na liście historii "
 "dokumentów."
 
-#: ../app/config/gimprc-blurbs.h:321
+#: ../app/config/gimprc-blurbs.h:324
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "Powoduje zapisywanie położeń i rozmiarów głównych okien dialogowych przed "
 "zakończeniem działania programu GIMP."
 
-#: ../app/config/gimprc-blurbs.h:324
+#: ../app/config/gimprc-blurbs.h:327
 msgid "Save the tool options when GIMP exits."
 msgstr ""
 "Powoduje zapisywanie opcji narzędzi przed zakończeniem działania program "
 "GIMP."
 
-#: ../app/config/gimprc-blurbs.h:330
+#: ../app/config/gimprc-blurbs.h:333
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -9992,7 +9996,7 @@ msgstr ""
 "Powoduje wyświetlanie podglądu kształtu aktywnego pędzla podczas używania "
 "któregokolwiek z narzędzi rysowania."
 
-#: ../app/config/gimprc-blurbs.h:334
+#: ../app/config/gimprc-blurbs.h:337
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -10002,14 +10006,14 @@ msgstr ""
 "dostęp do strony pomocy powiązanej z oknem. Przy wyłączonej opcji pomoc "
 "nadal będzie dostępna przez naciśnięcie klawisza F1."
 
-#: ../app/config/gimprc-blurbs.h:339
+#: ../app/config/gimprc-blurbs.h:342
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
 msgstr ""
 "Powoduje, że w czasie rysowania nad obrazem wyświetlany jest kursor myszy."
 
-#: ../app/config/gimprc-blurbs.h:343
+#: ../app/config/gimprc-blurbs.h:346
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -10017,7 +10021,7 @@ msgstr ""
 "Powoduje, że domyślnie pasek menu jest widoczny. Ustawienie można zmienić "
 "w dowolnej chwili za pomocą polecenia „Widok → Pasek menu”."
 
-#: ../app/config/gimprc-blurbs.h:347
+#: ../app/config/gimprc-blurbs.h:350
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -10025,7 +10029,7 @@ msgstr ""
 "Powoduje, że domyślnie linijki są widoczne. Ustawienie można zmienić "
 "w dowolnej chwili za pomocą polecenia „Widok → Linijki”."
 
-#: ../app/config/gimprc-blurbs.h:351
+#: ../app/config/gimprc-blurbs.h:354
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -10033,7 +10037,7 @@ msgstr ""
 "Powoduje, że domyślnie paski przewijania są widoczne. Ustawienie można "
 "zmienić w dowolnej chwili za pomocą polecenia „Widok → Paski przewijania”."
 
-#: ../app/config/gimprc-blurbs.h:355
+#: ../app/config/gimprc-blurbs.h:358
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -10041,7 +10045,7 @@ msgstr ""
 "Powoduje, że domyślnie pasek stanu jest widoczny. Ustawienie można zmienić "
 "w dowolnej chwili za pomocą polecenia „Widok → Pasek stanu”."
 
-#: ../app/config/gimprc-blurbs.h:359
+#: ../app/config/gimprc-blurbs.h:362
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -10049,7 +10053,7 @@ msgstr ""
 "Powoduje, że domyślnie zaznaczenie jest widoczne. Ustawienie można zmienić "
 "w dowolnej chwili za pomocą polecenia „Widok → Zaznaczenie”."
 
-#: ../app/config/gimprc-blurbs.h:363
+#: ../app/config/gimprc-blurbs.h:366
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -10057,7 +10061,7 @@ msgstr ""
 "Powoduje, że domyślnie granice warstwy są widoczne. Ustawienie można zmienić "
 "w dowolnej chwili za pomocą polecenia „Widok → Granice warstwy”."
 
-#: ../app/config/gimprc-blurbs.h:367
+#: ../app/config/gimprc-blurbs.h:370
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -10065,7 +10069,7 @@ msgstr ""
 "Powoduje, że domyślnie prowadnice są widoczne. Ustawienie można zmienić "
 "w dowolnej chwili za pomocą polecenia „Widok → Prowadnice”."
 
-#: ../app/config/gimprc-blurbs.h:371
+#: ../app/config/gimprc-blurbs.h:374
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -10073,7 +10077,7 @@ msgstr ""
 "Powoduje, że domyślnie siatka jest widoczna. Ustawienie można zmienić "
 "w dowolnej chwili za pomocą polecenia „Widok → Siatka”."
 
-#: ../app/config/gimprc-blurbs.h:375
+#: ../app/config/gimprc-blurbs.h:378
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -10081,43 +10085,43 @@ msgstr ""
 "Powoduje, że domyślnie punkty wzorcowe są widoczne. Ustawienie można zmienić "
 "w dowolnej chwili za pomocą polecenia „Widok → Punkty wzorcowe”."
 
-#: ../app/config/gimprc-blurbs.h:379
+#: ../app/config/gimprc-blurbs.h:382
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "Wyświetla podpowiedź, kiedy kursor jest nad narzędziem."
 
-#: ../app/config/gimprc-blurbs.h:382
+#: ../app/config/gimprc-blurbs.h:385
 msgid "Use GIMP in a single-window mode."
 msgstr "Uruchamia program GIMP w trybie jednego okna."
 
-#: ../app/config/gimprc-blurbs.h:385
+#: ../app/config/gimprc-blurbs.h:388
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr "Ukrywa doki oraz inne okna, zostawiając jedynie okna z obrazem."
 
-#: ../app/config/gimprc-blurbs.h:388
+#: ../app/config/gimprc-blurbs.h:391
 msgid "Enable the N-Point Deformation tool."
 msgstr "Włącza narzędzie zniekształcania za pomocą wielu punktów."
 
-#: ../app/config/gimprc-blurbs.h:391
+#: ../app/config/gimprc-blurbs.h:394
 msgid "Enable the Handle Transform tool."
 msgstr "Włącza narzędzie przekształcania za pomocą uchwytów."
 
-#: ../app/config/gimprc-blurbs.h:394
+#: ../app/config/gimprc-blurbs.h:397
 msgid "Enable symmetry on painting."
 msgstr "Włącza symetrię malowania."
 
-#: ../app/config/gimprc-blurbs.h:397
+#: ../app/config/gimprc-blurbs.h:400
 msgid "Enable the MyPaint Brush tool."
 msgstr "Włącza narzędzie pędzli programu MyPaint."
 
-#: ../app/config/gimprc-blurbs.h:400
+#: ../app/config/gimprc-blurbs.h:403
 msgid "Enable the Seamless Clone tool."
 msgstr "Włącza bezszwowe narzędzie klonowania."
 
-#: ../app/config/gimprc-blurbs.h:403
+#: ../app/config/gimprc-blurbs.h:406
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Określa co zrobić, gdy została wciśnięta spacja w oknie obrazu."
 
-#: ../app/config/gimprc-blurbs.h:406
+#: ../app/config/gimprc-blurbs.h:409
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -10134,11 +10138,11 @@ msgstr ""
 "przez NFS). W większości przypadków zaleca się umiejscowienie go w katalogu "
 "„/tmp”."
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:418
 msgid "When enabled, menus can be torn off."
 msgstr "Umożliwia odrywanie menu."
 
-#: ../app/config/gimprc-blurbs.h:418
+#: ../app/config/gimprc-blurbs.h:421
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -10147,19 +10151,19 @@ msgstr ""
 "przez naciśnięcie wybranej kombinacji klawiszy, kiedy dana pozycja jest "
 "aktywna."
 
-#: ../app/config/gimprc-blurbs.h:422
+#: ../app/config/gimprc-blurbs.h:425
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr ""
 "Powoduje zapisywanie skrótów klawiszowych przed zakończeniem działania "
 "programu GIMP."
 
-#: ../app/config/gimprc-blurbs.h:425
+#: ../app/config/gimprc-blurbs.h:428
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr ""
 "Powoduje przywracanie zapisanych skrótów klawiszowych przy uruchamianiu "
 "programu GIMP."
 
-#: ../app/config/gimprc-blurbs.h:428
+#: ../app/config/gimprc-blurbs.h:431
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -10172,14 +10176,14 @@ msgstr ""
 "istnieje możliwość, że część plików pozostanie, więc zaleca się, aby katalog "
 "ten nie był współdzielony z innymi użytkownikami."
 
-#: ../app/config/gimprc-blurbs.h:449
+#: ../app/config/gimprc-blurbs.h:452
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 "Ustawia domyślny sposób odwzorowania barw dla okna dialogowego „Konwersja na "
 "profil kolorów”."
 
-#: ../app/config/gimprc-blurbs.h:452
+#: ../app/config/gimprc-blurbs.h:455
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -10187,14 +10191,14 @@ msgstr ""
 "Ustawia domyślny stan opcji „Kompensacja czarnego punktu” dla okna "
 "dialogowego „Konwersja na profil kolorów”."
 
-#: ../app/config/gimprc-blurbs.h:456
+#: ../app/config/gimprc-blurbs.h:459
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "Ustawia domyślną metodę ditheringu warstw dla okna dialogowego „Konwersja "
 "dokładności”."
 
-#: ../app/config/gimprc-blurbs.h:459
+#: ../app/config/gimprc-blurbs.h:462
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -10202,20 +10206,20 @@ msgstr ""
 "Ustawia domyślną metodę ditheringu warstw tekstowych dla okna dialogowego "
 "„Konwersja dokładności”."
 
-#: ../app/config/gimprc-blurbs.h:462
+#: ../app/config/gimprc-blurbs.h:465
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "Ustawia domyślną metodę ditheringu kanałów dla okna dialogowego „Konwersja "
 "dokładności”."
 
-#: ../app/config/gimprc-blurbs.h:465
+#: ../app/config/gimprc-blurbs.h:468
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
 "Ustawia domyślny typ palety dla okna dialogowego „Konwersja do trybu "
 "indeksowanego”."
 
-#: ../app/config/gimprc-blurbs.h:468
+#: ../app/config/gimprc-blurbs.h:471
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
@@ -10223,7 +10227,7 @@ msgstr ""
 "Ustawia domyślną maksymalną liczbę kolorów dla okna dialogowego „Konwersja "
 "do trybu indeksowanego”."
 
-#: ../app/config/gimprc-blurbs.h:471
+#: ../app/config/gimprc-blurbs.h:474
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
@@ -10231,20 +10235,20 @@ msgstr ""
 "Ustawia domyślny stan opcji „Usuwanie podwójnych kolorów” dla okna "
 "dialogowego „Konwersja do trybu indeksowanego”."
 
-#: ../app/config/gimprc-blurbs.h:474
+#: ../app/config/gimprc-blurbs.h:477
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 "Ustawia domyślny typ ditheringu dla okna dialogowego „Konwersja do trybu "
 "indeksowanego”."
 
-#: ../app/config/gimprc-blurbs.h:477
+#: ../app/config/gimprc-blurbs.h:480
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 "Ustawia domyślny stan opcji „Dithering alfy” dla okna dialogowego „Konwersja "
 "do trybu indeksowanego”."
 
-#: ../app/config/gimprc-blurbs.h:480
+#: ../app/config/gimprc-blurbs.h:483
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
@@ -10252,127 +10256,127 @@ msgstr ""
 "Ustawia domyślny stan opcji „Dithering warstw tekstowych” dla okna "
 "dialogowego „Konwersja do trybu indeksowanego”."
 
-#: ../app/config/gimprc-blurbs.h:483
+#: ../app/config/gimprc-blurbs.h:486
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr ""
 "Ustawia domyślny typ wypełnienia dla okna dialogowego „Wymiary płótna”."
 
-#: ../app/config/gimprc-blurbs.h:486
+#: ../app/config/gimprc-blurbs.h:489
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "Ustawia domyślny zestaw warstw do zmiany wymiarów dla okna dialogowego "
 "„Wymiary płótna”."
 
-#: ../app/config/gimprc-blurbs.h:489
+#: ../app/config/gimprc-blurbs.h:492
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "Ustawia domyślny stan opcji „Zmiana wymiarów warstw tekstowych” dla okna "
 "dialogowego „Wymiary płótna”."
 
-#: ../app/config/gimprc-blurbs.h:492
+#: ../app/config/gimprc-blurbs.h:495
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "Ustawia domyślną nazwę warstwy dla okna dialogowego „Nowa warstwa”."
 
-#: ../app/config/gimprc-blurbs.h:495
+#: ../app/config/gimprc-blurbs.h:498
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "Ustawia domyślny tryb dla okna dialogowego „Nowa warstwa”."
 
-#: ../app/config/gimprc-blurbs.h:498
+#: ../app/config/gimprc-blurbs.h:501
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
 "Ustawia domyślną przestrzeń gradientu dla okna dialogowego „Nowa warstwa”."
 
-#: ../app/config/gimprc-blurbs.h:501
+#: ../app/config/gimprc-blurbs.h:504
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr ""
 "Ustawia domyślną przestrzeń mieszania dla okna dialogowego „Nowa warstwa”."
 
-#: ../app/config/gimprc-blurbs.h:504
+#: ../app/config/gimprc-blurbs.h:507
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "Ustawia domyślny tryb mieszania dla okna dialogowego „Nowa warstwa”."
 
-#: ../app/config/gimprc-blurbs.h:507
+#: ../app/config/gimprc-blurbs.h:510
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "Ustawia domyślną wartość krycia dla okna dialogowego „Nowa warstwa”."
 
-#: ../app/config/gimprc-blurbs.h:510
+#: ../app/config/gimprc-blurbs.h:513
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "Ustawia domyślny typ wypełnienia dla okna dialogowego „Nowa warstwa”."
 
-#: ../app/config/gimprc-blurbs.h:513
+#: ../app/config/gimprc-blurbs.h:516
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
 "Ustawia domyślny typ wypełnienia dla okna dialogowego „Wymiary granic "
 "warstwy”."
 
-#: ../app/config/gimprc-blurbs.h:516
+#: ../app/config/gimprc-blurbs.h:519
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "Ustawia domyślną maskę dla okna dialogowego „Dodanie maski warstwy”."
 
-#: ../app/config/gimprc-blurbs.h:519
+#: ../app/config/gimprc-blurbs.h:522
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "Ustawia domyślny stan „odwrócenia maski” dla okna dialogowego „Dodanie maski "
 "warstwy”."
 
-#: ../app/config/gimprc-blurbs.h:522
+#: ../app/config/gimprc-blurbs.h:525
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Ustawia domyślny typ łączenia dla okna dialogowego „Połączenie widocznych "
 "warstw”."
 
-#: ../app/config/gimprc-blurbs.h:525
+#: ../app/config/gimprc-blurbs.h:528
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Ustawia domyślną wartość opcji „Tylko aktywna grupa” dla okna dialogowego "
 "„Połączenie widocznych warstw”."
 
-#: ../app/config/gimprc-blurbs.h:528
+#: ../app/config/gimprc-blurbs.h:531
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Ustawia domyślną wartość opcji „Pomijanie niewidocznych” dla okna "
 "dialogowego „Połączenie widocznych warstw”."
 
-#: ../app/config/gimprc-blurbs.h:531
+#: ../app/config/gimprc-blurbs.h:534
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "Ustawia domyślną nazwę kanału dla okna dialogowego „Nowy kanał”."
 
-#: ../app/config/gimprc-blurbs.h:534
+#: ../app/config/gimprc-blurbs.h:537
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "Ustawia domyślny kolor i krycie dla okna dialogowego „Nowy kanał”."
 
-#: ../app/config/gimprc-blurbs.h:537
+#: ../app/config/gimprc-blurbs.h:540
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "Ustawia domyślną nazwę ścieżki dla okna dialogowego „Nowa ścieżka”."
 
-#: ../app/config/gimprc-blurbs.h:540
+#: ../app/config/gimprc-blurbs.h:543
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
 "Ustawia domyślną ścieżkę do katalogu dla okna dialogowego „Eksport ścieżki”."
 
-#: ../app/config/gimprc-blurbs.h:543
+#: ../app/config/gimprc-blurbs.h:546
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
 "Ustawia domyślny stan opcji „Eksport aktywnej ścieżki” dla okna dialogowego "
 "„Eksport ścieżki”."
 
-#: ../app/config/gimprc-blurbs.h:546
+#: ../app/config/gimprc-blurbs.h:549
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
 "Ustawia domyślną ścieżkę do katalogu dla okna dialogowego „Import ścieżki”."
 
-#: ../app/config/gimprc-blurbs.h:549
+#: ../app/config/gimprc-blurbs.h:552
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "Ustawia domyślny stan opcji „Połączenie zaimportowanych ścieżek” dla okna "
 "dialogowego „Import ścieżki”."
 
-#: ../app/config/gimprc-blurbs.h:552
+#: ../app/config/gimprc-blurbs.h:555
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -10380,25 +10384,25 @@ msgstr ""
 "Ustawia domyślny stan opcji „Przeskalowanie ścieżek do wymiarów obrazu” dla "
 "okna dialogowego „Import ścieżki”."
 
-#: ../app/config/gimprc-blurbs.h:555
+#: ../app/config/gimprc-blurbs.h:558
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr ""
 "Ustawia domyślny promień zmiękczenia dla okna dialogowego „Zmiękczenie "
 "zaznaczenia”."
 
-#: ../app/config/gimprc-blurbs.h:558
+#: ../app/config/gimprc-blurbs.h:561
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
 "Ustawia domyślny promień powiększenia dla okna dialogowego „Powiększenie "
 "zaznaczenia”."
 
-#: ../app/config/gimprc-blurbs.h:561
+#: ../app/config/gimprc-blurbs.h:564
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
 "Ustawia domyślny promień zmniejszenia dla okna dialogowego „Zmniejszenie "
 "zaznaczenia”."
 
-#: ../app/config/gimprc-blurbs.h:564
+#: ../app/config/gimprc-blurbs.h:567
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
@@ -10406,13 +10410,13 @@ msgstr ""
 "Ustawia domyślne ustawienie „Zaznaczone obszary znajdują się także poza "
 "obrazem” dla okna dialogowego „Zmniejszenie zaznaczenia”."
 
-#: ../app/config/gimprc-blurbs.h:568
+#: ../app/config/gimprc-blurbs.h:571
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
 "Ustawia domyślny promień obramowania dla okna dialogowego „Obramowanie "
 "zaznaczenia”."
 
-#: ../app/config/gimprc-blurbs.h:571
+#: ../app/config/gimprc-blurbs.h:574
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
@@ -10420,17 +10424,17 @@ msgstr ""
 "Ustawia domyślne ustawienie „Zaznaczone obszary znajdują się także poza "
 "obrazem” dla okna dialogowego „Obramowanie zaznaczenia”."
 
-#: ../app/config/gimprc-blurbs.h:575
+#: ../app/config/gimprc-blurbs.h:578
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
 "Ustawia domyślny styl obramowania dla okna dialogowego „Obramowanie "
 "zaznaczenia”."
 
-#: ../app/config/gimprc-blurbs.h:584
+#: ../app/config/gimprc-blurbs.h:587
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "Ustawia rozmiar miniatur w oknie wyboru pliku."
 
-#: ../app/config/gimprc-blurbs.h:587
+#: ../app/config/gimprc-blurbs.h:590
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -10439,7 +10443,7 @@ msgstr ""
 "mniejszy od podanej tutaj wartości, nastąpi automatyczne zaktualizowanie "
 "jego miniatury."
 
-#: ../app/config/gimprc-blurbs.h:591
+#: ../app/config/gimprc-blurbs.h:594
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -10451,29 +10455,29 @@ msgstr ""
 "niemieszczących się w pamięci. Jeżeli w komputerze jest dużą ilość pamięci "
 "RAM, to można zwiększyć tę wartość."
 
-#: ../app/config/gimprc-blurbs.h:597
+#: ../app/config/gimprc-blurbs.h:600
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr ""
 "Wyświetla bieżący kolor pierwszoplanowy oraz tła z kolorem tła w przyborniku."
 
-#: ../app/config/gimprc-blurbs.h:600
+#: ../app/config/gimprc-blurbs.h:603
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "Wyświetla obecnie zaznaczony pędzel, deseń i gradient w przyborniku."
 
-#: ../app/config/gimprc-blurbs.h:603
+#: ../app/config/gimprc-blurbs.h:606
 msgid "Show the currently active image in the toolbox."
 msgstr "Wyświetla obecnie aktywny obraz w przyborniku."
 
-#: ../app/config/gimprc-blurbs.h:609
+#: ../app/config/gimprc-blurbs.h:612
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Ustala sposób prezentowania przezroczystości w obrazie."
 
-#: ../app/config/gimprc-blurbs.h:612
+#: ../app/config/gimprc-blurbs.h:615
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr ""
 "Ustawia rozmiar szachownicy używanej dla zobrazowania przezroczystości."
 
-#: ../app/config/gimprc-blurbs.h:615
+#: ../app/config/gimprc-blurbs.h:618
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -10481,7 +10485,7 @@ msgstr ""
 "Powoduje, że program GIMP nie zapisuje obrazu, dopóki nie zostanie zmieniony "
 "(odkąd zostanie otwarty)."
 
-#: ../app/config/gimprc-blurbs.h:619
+#: ../app/config/gimprc-blurbs.h:622
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -10490,7 +10494,7 @@ msgstr ""
 "cofnięcia większej liczby działań istnieje do czasu osiągnięcia ograniczenia "
 "rozmiaru historii działań."
 
-#: ../app/config/gimprc-blurbs.h:623
+#: ../app/config/gimprc-blurbs.h:626
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -10501,15 +10505,15 @@ msgstr ""
 "gwarantuje jednak możliwość cofnięcia przynajmniej takiej liczby działań, "
 "jaką skonfigurowano jako minimalną."
 
-#: ../app/config/gimprc-blurbs.h:628
+#: ../app/config/gimprc-blurbs.h:631
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Ustawia rozmiar podglądów w historii działań."
 
-#: ../app/config/gimprc-blurbs.h:631
+#: ../app/config/gimprc-blurbs.h:634
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Powoduje uruchomienie przeglądarki pomocy po naciśnięciu klawisza F1."
 
-#: ../app/config/gimprc-blurbs.h:634
+#: ../app/config/gimprc-blurbs.h:637
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Kiedy jest włączone, używa OpenCL do wykonywania niektórych działań."
 
@@ -10935,12 +10939,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/core-enums.c:848 ../app/core/gimp-edit.c:440
+#: ../app/core/core-enums.c:848 ../app/core/gimp-edit.c:442
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Wklejenie"
 
-#: ../app/core/core-enums.c:849 ../app/core/gimp-edit.c:719
+#: ../app/core/core-enums.c:849 ../app/core/gimp-edit.c:721
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Wycięcie"
@@ -10951,7 +10955,7 @@ msgid "Text"
 msgstr "Tekst"
 
 #: ../app/core/core-enums.c:851 ../app/core/core-enums.c:900
-#: ../app/core/gimpdrawable-transform.c:682
+#: ../app/core/gimpdrawable-transform.c:684
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Przekształcenie"
@@ -11325,21 +11329,21 @@ msgstr "Historia kolorów"
 msgid "Updating tag cache"
 msgstr "Aktualizowanie pamięci podręcznej etykiet"
 
-#: ../app/core/gimp-edit.c:90
+#: ../app/core/gimp-edit.c:92
 msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Wycięta warstwa"
 
-#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:323
+#: ../app/core/gimp-edit.c:424 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
 msgstr "Wklejona warstwa"
 
-#: ../app/core/gimp-edit.c:614
+#: ../app/core/gimp-edit.c:616
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Wyczyść"
 
-#: ../app/core/gimp-edit.c:736
+#: ../app/core/gimp-edit.c:738
 msgid "Global Buffer"
 msgstr "Bufor globalny"
 
@@ -11638,7 +11642,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Obrót kanału"
 
-#: ../app/core/gimpchannel.c:298 ../app/core/gimpdrawable-transform.c:1003
+#: ../app/core/gimpchannel.c:298 ../app/core/gimpdrawable-transform.c:1005
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Przekształcenie kanału"
@@ -11653,7 +11657,7 @@ msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Rysowanie wzdłuż kanału"
 
-#: ../app/core/gimpchannel.c:301 ../app/core/gimpselection.c:654
+#: ../app/core/gimpchannel.c:301 ../app/core/gimpselection.c:656
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Kanał na zaznaczenie"
@@ -11749,7 +11753,7 @@ msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1923 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1923 ../app/core/gimpselection.c:170
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -11770,7 +11774,7 @@ msgid "Background color"
 msgstr "Kolor tła"
 
 #: ../app/core/gimpcontext.c:687 ../app/core/gimpcontext.c:688
-#: ../app/widgets/gimpbrushselect.c:175 ../app/widgets/gimplayertreeview.c:286
+#: ../app/widgets/gimpbrushselect.c:175 ../app/widgets/gimplayertreeview.c:288
 msgid "Opacity"
 msgstr "Krycie"
 
@@ -11958,22 +11962,22 @@ msgstr "Przesunięcie obszaru rysowania"
 msgid "Not enough points to stroke"
 msgstr "Niewystarczająca liczba punktów do narysowania"
 
-#: ../app/core/gimpdrawable-transform.c:771
+#: ../app/core/gimpdrawable-transform.c:773
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/core/gimpdrawable-transform.c:856
+#: ../app/core/gimpdrawable-transform.c:858
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Obracanie"
 
-#: ../app/core/gimpdrawable-transform.c:1001 ../app/core/gimplayer.c:423
+#: ../app/core/gimpdrawable-transform.c:1003 ../app/core/gimplayer.c:423
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Przekształcenie warstwy"
 
-#: ../app/core/gimpdrawable-transform.c:1014
+#: ../app/core/gimpdrawable-transform.c:1016
 msgid "Transformation"
 msgstr "Przekształcenie"
 
@@ -12458,48 +12462,48 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Przekształcanie obiektów"
 
-#: ../app/core/gimpimage-merge.c:135
+#: ../app/core/gimpimage-merge.c:137
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Połączenie widocznych warstw"
 
-#: ../app/core/gimpimage-merge.c:198
+#: ../app/core/gimpimage-merge.c:200
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Spłaszczenie obrazu"
 
-#: ../app/core/gimpimage-merge.c:220
+#: ../app/core/gimpimage-merge.c:222
 msgid "Cannot flatten an image without any visible layer."
 msgstr "Nie można spłaszczyć obrazu bez żadnej widocznej warstwy."
 
-#: ../app/core/gimpimage-merge.c:263
+#: ../app/core/gimpimage-merge.c:265
 msgid "Cannot merge down to a layer group."
 msgstr "Nie można połączyć w dół do grupy warstw."
 
-#: ../app/core/gimpimage-merge.c:270
+#: ../app/core/gimpimage-merge.c:272
 msgid "The layer to merge down to is locked."
 msgstr "Warstwa do połączenia w dół jest zablokowana."
 
-#: ../app/core/gimpimage-merge.c:282
+#: ../app/core/gimpimage-merge.c:284
 msgid "There is no visible layer to merge down to."
 msgstr "Nie ma widocznych warstw do połączenia w dół."
 
-#: ../app/core/gimpimage-merge.c:292
+#: ../app/core/gimpimage-merge.c:294
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Połączenie w dół"
 
-#: ../app/core/gimpimage-merge.c:320
+#: ../app/core/gimpimage-merge.c:322
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Połączenie grupy warstw"
 
-#: ../app/core/gimpimage-merge.c:373
+#: ../app/core/gimpimage-merge.c:375
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Połączenie widocznych ścieżek"
 
-#: ../app/core/gimpimage-merge.c:409
+#: ../app/core/gimpimage-merge.c:411
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "Niewystarczająca liczba widocznych ścieżek do połączenia. Potrzebne są co "
@@ -12624,7 +12628,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1001
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1009
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -12700,13 +12704,13 @@ msgstr "Nie można bardziej podnieść warstwy."
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:708 ../app/core/gimplayer.c:1704
+#: ../app/core/gimplayer.c:716 ../app/core/gimplayer.c:1712
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "Maska %s"
 
-#: ../app/core/gimplayer.c:747
+#: ../app/core/gimplayer.c:755
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -12715,60 +12719,60 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1610
+#: ../app/core/gimplayer.c:1618
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1621
+#: ../app/core/gimplayer.c:1629
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1627
+#: ../app/core/gimplayer.c:1635
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1755
+#: ../app/core/gimplayer.c:1763
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
 
-#: ../app/core/gimplayer.c:1906
+#: ../app/core/gimplayer.c:1914
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Zastosowanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1907
+#: ../app/core/gimplayer.c:1915
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Usunięcie maski warstwy"
 
-#: ../app/core/gimplayer.c:2009
+#: ../app/core/gimplayer.c:2017
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Włączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2010
+#: ../app/core/gimplayer.c:2018
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Wyłączenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2086
+#: ../app/core/gimplayer.c:2094
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Wyświetlenie maski warstwy"
 
-#: ../app/core/gimplayer.c:2159
+#: ../app/core/gimplayer.c:2167
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:2191
+#: ../app/core/gimplayer.c:2199
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:2212
+#: ../app/core/gimplayer.c:2220
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
@@ -12922,88 +12926,88 @@ msgstr ""
 "Nie można uruchomić wywołania %s. Być może przestała działać odpowiadająca "
 "jej wtyczka."
 
-#: ../app/core/gimpselection.c:169
+#: ../app/core/gimpselection.c:171
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Przesunięcie zaznaczenia"
 
-#: ../app/core/gimpselection.c:170
+#: ../app/core/gimpselection.c:172
 msgctxt "undo-type"
 msgid "Fill Selection"
 msgstr "Wypełnienie zaznaczenia"
 
-#: ../app/core/gimpselection.c:171
+#: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Rysowanie wzdłuż zaznaczenia"
 
-#: ../app/core/gimpselection.c:188
+#: ../app/core/gimpselection.c:190
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Zmiękczenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:189
+#: ../app/core/gimpselection.c:191
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Wyostrzenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:190
+#: ../app/core/gimpselection.c:192
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Rezygnacja z zaznaczenia"
 
-#: ../app/core/gimpselection.c:191
+#: ../app/core/gimpselection.c:193
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Zaznaczenie wszystkiego"
 
-#: ../app/core/gimpselection.c:192
+#: ../app/core/gimpselection.c:194
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Odwrócenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:193
+#: ../app/core/gimpselection.c:195
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Obramowanie zaznaczenia"
 
-#: ../app/core/gimpselection.c:194
+#: ../app/core/gimpselection.c:196
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Powiększenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:195
+#: ../app/core/gimpselection.c:197
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Zmniejszenie zaznaczenia"
 
-#: ../app/core/gimpselection.c:196
+#: ../app/core/gimpselection.c:198
 msgctxt "undo-type"
 msgid "Remove Holes"
 msgstr "Usunięcie luk"
 
-#: ../app/core/gimpselection.c:304
+#: ../app/core/gimpselection.c:306
 msgid "There is no selection to fill."
 msgstr "Brak zaznaczenia do wypełnienia."
 
-#: ../app/core/gimpselection.c:340
+#: ../app/core/gimpselection.c:342
 msgid "There is no selection to stroke."
 msgstr "Brak zaznaczenia do narysowania."
 
-#: ../app/core/gimpselection.c:749
+#: ../app/core/gimpselection.c:751
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nie można wyciąć lub skopiować, ponieważ zaznaczony obszar jest pusty."
 
-#: ../app/core/gimpselection.c:867
+#: ../app/core/gimpselection.c:869
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nie można oderwać zaznaczenia, ponieważ zaznaczony obszar jest pusty."
 
-#: ../app/core/gimpselection.c:874
+#: ../app/core/gimpselection.c:876
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Oderwanie zaznaczenia"
 
-#: ../app/core/gimpselection.c:892
+#: ../app/core/gimpselection.c:894
 msgid "Floated Layer"
 msgstr "Oderwana warstwa"
 
@@ -16132,52 +16136,52 @@ msgstr[2] ""
 msgid "The image has been exported to '%s'."
 msgstr "Wyeksportowano obraz do „%s”."
 
-#: ../app/display/gimpdisplayshell-dnd.c:246
-#: ../app/display/gimpdisplayshell-dnd.c:673
-#: ../app/display/gimpdisplayshell-dnd.c:733
+#: ../app/display/gimpdisplayshell-dnd.c:248
+#: ../app/display/gimpdisplayshell-dnd.c:675
+#: ../app/display/gimpdisplayshell-dnd.c:735
 msgid "Drop New Layer"
 msgstr "Upuszczenie nowej warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:289
+#: ../app/display/gimpdisplayshell-dnd.c:291
 msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
-#: ../app/display/gimpdisplayshell-dnd.c:360 ../app/tools/gimpblendtool.c:244
+#: ../app/display/gimpdisplayshell-dnd.c:362 ../app/tools/gimpblendtool.c:244
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
 #: ../app/tools/gimpfiltertool.c:268 ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
-#: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:251
+#: ../app/display/gimpdisplayshell-dnd.c:370 ../app/tools/gimpblendtool.c:251
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:438 ../app/tools/gimpfiltertool.c:275
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1430 ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimptransformtool.c:1430 ../app/tools/gimpwarptool.c:631
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
-#: ../app/display/gimpdisplayshell-dnd.c:411
+#: ../app/display/gimpdisplayshell-dnd.c:413
 #: ../app/widgets/gimpdrawabletreeview.c:247
 #: ../app/widgets/gimpdrawabletreeview.c:358
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Upuszczenie desenia do warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:433
+#: ../app/display/gimpdisplayshell-dnd.c:435
 #: ../app/widgets/gimpdrawabletreeview.c:277
 #: ../app/widgets/gimpdrawabletreeview.c:378
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Upuszczenie koloru do warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:569
-#: ../app/widgets/gimplayertreeview.c:735
+#: ../app/display/gimpdisplayshell-dnd.c:571
+#: ../app/widgets/gimplayertreeview.c:737
 msgid "Drop layers"
 msgstr "Upuszczone warstwy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:706
-#: ../app/display/gimpdisplayshell-dnd.c:724
-#: ../app/widgets/gimplayertreeview.c:810 ../app/widgets/gimptoolbox-dnd.c:272
+#: ../app/display/gimpdisplayshell-dnd.c:708
+#: ../app/display/gimpdisplayshell-dnd.c:726
+#: ../app/widgets/gimplayertreeview.c:812 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Upuszczony bufor"
 
@@ -16319,7 +16323,7 @@ msgstr "Kliknięcie i przeciągnięcie usunie ten uchwyt"
 msgid "Line: "
 msgstr "Linia: "
 
-#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:655
+#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:658
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
@@ -17220,7 +17224,7 @@ msgstr "Zamienia kolory na odcienie szarości"
 
 #: ../app/operations/gimpoperationdesaturate.c:90
 #: ../app/tools/gimppaintoptions-gui.c:119 ../app/widgets/gimpdeviceinfo.c:132
-#: ../app/widgets/gimplayertreeview.c:270
+#: ../app/widgets/gimplayertreeview.c:272
 msgid "Mode"
 msgstr "Tryb"
 
@@ -19204,7 +19208,7 @@ msgstr "Kliknięcie i przeciągnięcie rysuje gradient"
 #: ../app/tools/gimpblendtool.c:258 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1438 ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimptransformtool.c:1438 ../app/tools/gimpwarptool.c:642
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
@@ -19371,7 +19375,7 @@ msgstr ""
 msgid "_Cage Transform"
 msgstr "Przekształcenie za pomocą _klatki"
 
-#: ../app/tools/gimpcagetool.c:732 ../app/tools/gimpwarptool.c:329
+#: ../app/tools/gimpcagetool.c:732 ../app/tools/gimpwarptool.c:331
 msgid "Press ENTER to commit the transform"
 msgstr "Naciśnięcie klawisza Enter zatwierdzi przekształcenie"
 
@@ -20326,7 +20330,7 @@ msgstr "Dodanie prowadnic"
 
 #: ../app/tools/gimpmeasuretool.c:526 ../app/tools/gimpmeasuretool.c:679
 #: ../app/tools/gimpmeasuretool.c:735 ../app/tools/gimpmeasuretool.c:763
-#: ../app/tools/gimppainttool.c:664
+#: ../app/tools/gimppainttool.c:696
 msgid "pixels"
 msgstr "piksele"
 
@@ -20561,7 +20565,7 @@ msgstr "%s wybiera kolor"
 msgid "Cannot paint on layer groups."
 msgstr "Nie można narysować grup warstw."
 
-#: ../app/tools/gimppainttool.c:716
+#: ../app/tools/gimppainttool.c:745
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s rysuje prostą linię"
@@ -21454,49 +21458,49 @@ msgstr "Animacja"
 msgid "Create Animation"
 msgstr "Utwórz animację"
 
-#: ../app/tools/gimpwarptool.c:155
+#: ../app/tools/gimpwarptool.c:157
 msgid "Warp Transform"
 msgstr "Odkształcanie"
 
-#: ../app/tools/gimpwarptool.c:156
+#: ../app/tools/gimpwarptool.c:158
 msgid "Warp Transform: Deform with different tools"
 msgstr "Odkształcanie: zniekształcanie za pomocą innych narzędzi"
 
-#: ../app/tools/gimpwarptool.c:157
+#: ../app/tools/gimpwarptool.c:159
 msgid "_Warp Transform"
 msgstr "_Odkształcanie"
 
-#: ../app/tools/gimpwarptool.c:484 ../app/tools/gimpwarptool.c:496
+#: ../app/tools/gimpwarptool.c:486 ../app/tools/gimpwarptool.c:498
 msgid "Warp Tool Stroke"
 msgstr "Krzywa odkształcania"
 
-#: ../app/tools/gimpwarptool.c:618
+#: ../app/tools/gimpwarptool.c:620
 msgid "Cannot warp layer groups."
 msgstr "Nie można odkształcać grup warstw."
 
-#: ../app/tools/gimpwarptool.c:652
+#: ../app/tools/gimpwarptool.c:654
 msgid "No stroke events selected."
 msgstr "Nie zaznaczono zdarzeń krzywych."
 
-#: ../app/tools/gimpwarptool.c:863
+#: ../app/tools/gimpwarptool.c:865
 msgid "Warp transform"
 msgstr "Odkształcanie"
 
-#: ../app/tools/gimpwarptool.c:1076
+#: ../app/tools/gimpwarptool.c:1078
 msgid "Please add some warp strokes first."
 msgstr "Proszę najpierw dodać krzywe odkształcania."
 
-#: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1126
+#: ../app/tools/gimpwarptool.c:1092 ../app/tools/gimpwarptool.c:1128
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Renderowanie %d. klatki"
 
-#: ../app/tools/gimpwarptool.c:1105 ../app/tools/gimpwarptool.c:1134
+#: ../app/tools/gimpwarptool.c:1107 ../app/tools/gimpwarptool.c:1136
 #, c-format
 msgid "Frame %d"
 msgstr "%d. klatka"
 
-#: ../app/tools/gimpwarptool.c:1143
+#: ../app/tools/gimpwarptool.c:1145
 msgid "Frame"
 msgstr "Klatka"
 
@@ -22839,7 +22843,7 @@ msgstr "Język systemowy"
 msgid "Switch to another group of modes"
 msgstr "Przełącza na inną grupę trybów"
 
-#: ../app/widgets/gimplayertreeview.c:310
+#: ../app/widgets/gimplayertreeview.c:312
 msgid "Lock alpha channel"
 msgstr "Blokuje kanał alfa"
 
