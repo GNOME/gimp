@@ -419,6 +419,15 @@ typedef union
   CMGrayColor       gray;
 } CMColor;
 
+/* GIMP layer mode info */
+typedef struct
+{
+  GimpLayerMode          mode;
+  GimpLayerColorSpace    blend_space;
+  GimpLayerColorSpace    composite_space;
+  GimpLayerCompositeMode composite_mode;
+} LayerModeInfo;
+
 /* Image resolution data */
 typedef struct {
   Fixed         hRes;                   /* Horizontal resolution pixels/inch */

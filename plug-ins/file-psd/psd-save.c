@@ -73,6 +73,7 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
+#include "psd.h"
 #include "psd-util.h"
 #include "psd-save.h"
 
@@ -84,6 +85,8 @@
 
 /* 1: Normal debuggin, 2: Deep debuggin */
 #define DEBUG_LEVEL 2
+
+#undef IFDBG /* previously defined in psd.h */
 
 #define IFDBG if (DEBUG)
 #define IF_DEEP_DBG if (DEBUG && DEBUG_LEVEL == 2)
@@ -129,180 +132,78 @@ static PSD_Image_Data PSDImageData;
 /* Declare some local functions.
  */
 
-static void        psd_lmode_layer      (gint32               idLayer,
-                                         gchar               *psdMode);
+static const gchar * psd_lmode_layer      (gint32         idLayer);
 
-static void        reshuffle_cmap_write (guchar              *mapGimp);
+static void          reshuffle_cmap_write (guchar        *mapGimp);
 
-static void        save_header          (FILE                *fd,
-                                         gint32               image_id);
+static void          save_header          (FILE          *fd,
+                                           gint32         image_id);
 
-static void        save_color_mode_data (FILE                *fd,
-                                         gint32               image_id);
+static void          save_color_mode_data (FILE          *fd,
+                                           gint32         image_id);
 
-static void        save_resources       (FILE                *fd,
-                                         gint32               image_id);
+static void          save_resources       (FILE          *fd,
+                                           gint32         image_id);
 
-static void        save_layer_and_mask  (FILE                *fd,
-                                         gint32               image_id);
+static void          save_layer_and_mask  (FILE          *fd,
+                                           gint32         image_id);
 
-static void        save_data            (FILE                *fd,
-                                         gint32               image_id);
+static void          save_data            (FILE          *fd,
+                                           gint32         image_id);
 
-static void        xfwrite              (FILE                *fd,
-                                         gconstpointer        buf,
-                                         glong                len,
-                                         const gchar         *why);
+static void          xfwrite              (FILE          *fd,
+                                           gconstpointer  buf,
+                                           glong          len,
+                                           const gchar   *why);
 
-static void        write_pascalstring   (FILE               *fd,
-                                         const gchar        *val,
-                                         gint                padding,
-                                         const gchar        *why);
+static void          write_pascalstring   (FILE          *fd,
+                                           const gchar   *val,
+                                           gint           padding,
+                                           const gchar   *why);
 
-static void        write_string         (FILE               *fd,
-                                         const gchar        *val,
-                                         const gchar        *why);
+static void          write_string         (FILE          *fd,
+                                           const gchar   *val,
+                                           const gchar   *why);
 
-static void        write_gchar          (FILE               *fd,
-                                         guchar              val,
-                                         const gchar        *why);
+static void          write_gchar          (FILE          *fd,
+                                           guchar         val,
+                                           const gchar   *why);
 
-static void        write_gint16         (FILE               *fd,
-                                         gint16              val,
-                                         const gchar        *why);
+static void          write_gint16         (FILE          *fd,
+                                           gint16         val,
+                                           const gchar   *why);
 
-static void        write_gint32         (FILE               *fd,
-                                         gint32              val,
-                                         const gchar        *why);
+static void          write_gint32         (FILE          *fd,
+                                           gint32         val,
+                                           const gchar   *why);
 
-static void        write_datablock_luni (FILE               *fd,
-                                         const gchar        *val,
-                                         const gchar        *why);
+static void          write_datablock_luni (FILE          *fd,
+                                           const gchar   *val,
+                                           const gchar   *why);
 
 
-static void        write_pixel_data     (FILE               *fd,
-                                         gint32              drawableID,
-                                         glong              *ChanLenPosition,
-                                         gint32              rowlenOffset);
+static void          write_pixel_data     (FILE          *fd,
+                                           gint32         drawableID,
+                                           glong         *ChanLenPosition,
+                                           gint32         rowlenOffset);
 
-static gint32      create_merged_image  (gint32              imageID);
+static gint32        create_merged_image  (gint32         imageID);
 
-static const Babl* get_pixel_format     (gint32 drawableID);
-static const Babl* get_channel_format     (gint32 drawableID);
-static const Babl* get_mask_format     (gint32 drawableID);
+static const Babl  * get_pixel_format     (gint32         drawableID);
+static const Babl  * get_channel_format   (gint32         drawableID);
+static const Babl  * get_mask_format      (gint32         drawableID);
 
-static void
-psd_lmode_layer (gint32  idLayer,
-                 gchar  *psdMode)
+static const gchar *
+psd_lmode_layer (gint32 idLayer)
 {
-  switch (gimp_layer_get_mode (idLayer))
-    {
-    case GIMP_LAYER_MODE_NORMAL_LEGACY:
-      strcpy (psdMode, "norm");
-      break;
-    case GIMP_LAYER_MODE_DARKEN_ONLY:
-    case GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY:
-      strcpy (psdMode, "dark");
-      break;
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY:
-    case GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY:
-      strcpy (psdMode, "lite");
-      break;
-    case GIMP_LAYER_MODE_LCH_HUE:
-    case GIMP_LAYER_MODE_HSV_HUE_LEGACY:
-      strcpy (psdMode, "hue ");
-      break;
-    case GIMP_LAYER_MODE_LCH_CHROMA:
-    case GIMP_LAYER_MODE_HSV_SATURATION_LEGACY:
-      strcpy (psdMode, "sat ");
-      break;
-    case GIMP_LAYER_MODE_LCH_COLOR:
-    case GIMP_LAYER_MODE_HSL_COLOR_LEGACY:
-      strcpy (psdMode, "colr");
-      break;
-    case GIMP_LAYER_MODE_ADDITION:
-    case GIMP_LAYER_MODE_ADDITION_LEGACY:
-      strcpy (psdMode, "lddg");
-      break;
-    case GIMP_LAYER_MODE_MULTIPLY:
-    case GIMP_LAYER_MODE_MULTIPLY_LEGACY:
-      strcpy (psdMode, "mul ");
-      break;
-    case GIMP_LAYER_MODE_SCREEN:
-    case GIMP_LAYER_MODE_SCREEN_LEGACY:
-      strcpy (psdMode, "scrn");
-      break;
-    case GIMP_LAYER_MODE_DISSOLVE:
-      strcpy (psdMode, "diss");
-      break;
-    case GIMP_LAYER_MODE_DIFFERENCE:
-    case GIMP_LAYER_MODE_DIFFERENCE_LEGACY:
-      strcpy (psdMode, "diff");
-      break;
-    case GIMP_LAYER_MODE_LCH_LIGHTNESS:
-    case GIMP_LAYER_MODE_HSV_VALUE_LEGACY:                  /* ? */
-      strcpy (psdMode, "lum ");
-      break;
-    case GIMP_LAYER_MODE_HARDLIGHT:
-    case GIMP_LAYER_MODE_HARDLIGHT_LEGACY:
-      strcpy (psdMode, "hLit");
-      break;
-    case GIMP_LAYER_MODE_OVERLAY_LEGACY:
-    case GIMP_LAYER_MODE_SOFTLIGHT_LEGACY:
-      strcpy (psdMode, "sLit");
-      break;
-    case GIMP_LAYER_MODE_OVERLAY:
-      strcpy (psdMode, "over");
-      break;
-    case GIMP_LAYER_MODE_DODGE:
-    case GIMP_LAYER_MODE_DODGE_LEGACY:
-      strcpy (psdMode, "div");
-      break;
-    case GIMP_LAYER_MODE_EXCLUSION:
-      strcpy (psdMode, "smud");
-      break;
-    case GIMP_LAYER_MODE_BURN:
-    case GIMP_LAYER_MODE_BURN_LEGACY:
-      strcpy (psdMode, "idiv");
-      break;
-    case GIMP_LAYER_MODE_LINEAR_BURN:
-      strcpy (psdMode, "lbrn");
-      break;
-    case GIMP_LAYER_MODE_LINEAR_LIGHT:
-      strcpy (psdMode, "lLit");
-      break;
-    case GIMP_LAYER_MODE_PIN_LIGHT:
-      strcpy (psdMode, "pLit");
-      break;
-    case GIMP_LAYER_MODE_VIVID_LIGHT:
-      strcpy (psdMode, "vLit");
-      break;
-    case GIMP_LAYER_MODE_HARD_MIX:
-      strcpy (psdMode, "hMix");
-      break;
-    case GIMP_LAYER_MODE_PASS_THROUGH:
-      strcpy (psdMode, "pass");
-      break;
-      
-    default:
-      {
-        const gchar *nick = "?";
+  LayerModeInfo mode_info;
 
-        gimp_enum_get_value (GIMP_TYPE_LAYER_MODE,
-                             gimp_layer_get_mode (idLayer),
-                             NULL, &nick, NULL, NULL);
+  mode_info.mode            = gimp_layer_get_mode (idLayer);
+  mode_info.blend_space     = gimp_layer_get_blend_space (idLayer);
+  mode_info.composite_space = gimp_layer_get_composite_space (idLayer);
+  mode_info.composite_mode  = gimp_layer_get_composite_mode (idLayer);
 
-        g_message (_("Unable to export layer with mode '%s'.  Either the PSD "
-                     "file format or the export plug-in does not support that, "
-                     "using normal mode instead."), nick);
-
-        IFDBG printf ("PSD: Warning - unsupported layer-blend mode: %s, "
-                      "using normal mode\n", nick);
-
-        strcpy (psdMode, "norm");
-      }
-      break;
-    }
+  return gimp_to_psd_blend_mode (&mode_info);
 }
 
 static void
@@ -947,25 +848,25 @@ static void
 save_layer_and_mask (FILE   *fd,
                      gint32  image_id)
 {
-  gint     i,j;
-  gint     idChannel;
-  gint     offset_x;                    /* X offset for each layer */
-  gint     offset_y;                    /* Y offset for each layer */
-  gint32   layerWidth;                  /* Width of each layer */
-  gint32   layerHeight;                 /* Height of each layer */
-  gchar    blendMode[5];                /* Blending mode of the layer */
-  guchar   layerOpacity;                /* Opacity of the layer */
-  guchar   flags;                       /* Layer flags */
-  gint     nChannelsLayer;              /* Number of channels of a layer */
-  gint32   ChanSize;                    /* Data length for a channel */
-  gchar   *layerName;                   /* Layer name */
-  gint     mask;                        /* Layer mask */
+  gint          i,j;
+  gint          idChannel;
+  gint          offset_x;               /* X offset for each layer */
+  gint          offset_y;               /* Y offset for each layer */
+  gint32        layerWidth;             /* Width of each layer */
+  gint32        layerHeight;            /* Height of each layer */
+  const gchar  *blendMode;              /* Blending mode of the layer */
+  guchar        layerOpacity;           /* Opacity of the layer */
+  guchar        flags;                  /* Layer flags */
+  gint          nChannelsLayer;         /* Number of channels of a layer */
+  gint32        ChanSize;               /* Data length for a channel */
+  gchar        *layerName;              /* Layer name */
+  gint          mask;                   /* Layer mask */
 
-  glong    eof_pos;                     /* Position: End of file */
-  glong    ExtraDataPos;                /* Position: Extra data length */
-  glong    LayerMaskPos;                /* Position: Layer & Mask section length */
-  glong    LayerInfoPos;                /* Position: Layer info section length*/
-  glong  **ChannelLengthPos;            /* Position: Channel length */
+  glong         eof_pos;                /* Position: End of file */
+  glong         ExtraDataPos;           /* Position: Extra data length */
+  glong         LayerMaskPos;           /* Position: Layer & Mask section length */
+  glong         LayerInfoPos;           /* Position: Layer info section length*/
+  glong       **ChannelLengthPos;       /* Position: Channel length */
 
 
   IFDBG printf (" Function: save_layer_and_mask\n");
@@ -1060,7 +961,7 @@ save_layer_and_mask (FILE   *fd,
 
       xfwrite (fd, "8BIM", 4, "blend mode signature");
 
-      psd_lmode_layer (PSDImageData.lLayers[i], blendMode);
+      blendMode = psd_lmode_layer (PSDImageData.lLayers[i]);
       IFDBG printf ("\t\tBlend mode: %s\n", blendMode);
       xfwrite (fd, blendMode, 4, "blend mode key");
 
