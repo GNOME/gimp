@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6118834k)
+# (tile-cache-size 6118728k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -262,7 +262,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1566421504)
+# (undo-size 1529682k)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -336,7 +336,7 @@
 # (import-promote-float no)
 
 # When promoting imported images to floating point precision, also add
-# minimal noise in order do distribute color values a bit.  Possible values
+# minimal noise in order to distribute color values a bit.  Possible values
 # are yes and no.
 # 
 # (import-promote-dither yes)
@@ -866,8 +866,8 @@
 # hsv-saturation, hsl-color, hsv-value, divide, dodge, burn, hardlight,
 # softlight, grain-extract, grain-merge, vivid-light, pin-light,
 # linear-light, hard-mix, exclusion, linear-burn, luma-darken-only,
-# luma-lighten-only, luminance, color-erase, erase, merge, split, replace and
-# anti-erase.
+# luma-lighten-only, luminance, color-erase, erase, merge, split,
+# pass-through, replace and anti-erase.
 # 
 # (layer-new-mode normal-legacy)
 

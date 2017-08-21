@@ -60,7 +60,7 @@ Sets how many threads GIMP should use for operations that support it.  This is
 an integer value.
 
 .TP
-(tile-cache-size 6118834k)
+(tile-cache-size 6118728k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -320,7 +320,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1566421504)
+(undo-size 1529682k)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -1087,7 +1087,8 @@ screen, difference, addition, subtract, darken-only, lighten-only, hsv-hue,
 hsv-saturation, hsl-color, hsv-value, divide, dodge, burn, hardlight,
 softlight, grain-extract, grain-merge, vivid-light, pin-light, linear-light,
 hard-mix, exclusion, linear-burn, luma-darken-only, luma-lighten-only,
-luminance, color-erase, erase, merge, split, replace and anti-erase.
+luminance, color-erase, erase, merge, split, pass-through, replace and
+anti-erase.
 
 .TP
 (layer-new-blend-space auto)
