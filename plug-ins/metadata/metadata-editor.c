@@ -624,11 +624,13 @@ count_tags (GExiv2Metadata  *metadata,
 {
   int tagcount;
   gchar tag[256];
+  int oo;
+  int ii;
 
   tagcount = 0;
-  for (int oo = 1; oo < 256; oo++)
+  for (oo = 1; oo < 256; oo++)
     {
-      for (int ii = 0; ii < items; ii++)
+      for (ii = 0; ii < items; ii++)
         {
           g_sprintf((gchar*)&tag, "%s[%d]", header, oo);
           g_sprintf((gchar*)&tag, "%s%s", (gchar*)&tag, (gchar*)tags[ii]);
@@ -650,10 +652,12 @@ get_tags (GExiv2Metadata  *metadata,
           const gint       count)
 {
   gchar tag[256];
+  int ooo;
+  int iii;
 
-  for (int ooo = 1; ooo < count + 1; ooo++)
+  for (ooo = 1; ooo < count + 1; ooo++)
     {
-      for (int iii = 0; iii < items; iii++)
+      for (iii = 0; iii < items; iii++)
         {
           gchar *value;
           g_sprintf((gchar*)&tag, "%s[%d]", header, ooo);
@@ -3049,6 +3053,7 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   GtkTreeIter        iter;
                   GtkTreeIter        phoneiter;
                   gint               counter;
+                  gint               j;
 
                   counter = count_tags (metadata, licensor_header,
                                         licensor,
@@ -3061,11 +3066,11 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
                   phonestore = gtk_list_store_new(1, G_TYPE_STRING);
                   gtk_list_store_append (phonestore, &phoneiter);
                   gtk_list_store_set (phonestore, &phoneiter, 0, "Unknown", -1);
-                  for (int i=1; i < 6; i++)
+                  for (j=1; j < 6; j++)
                     {
                       gtk_list_store_append (phonestore, &phoneiter);
                       gtk_list_store_set (phonestore, &phoneiter,
-                                          0, gettext (phone_types[i].display),
+                                          0, gettext (phone_types[j].display),
                                           -1);
                     }
                   phonemodel = GTK_TREE_MODEL (phonestore);
