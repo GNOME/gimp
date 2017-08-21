@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-08-10 07:07+0000\n"
-"PO-Revision-Date: 2017-08-18 08:37+0000\n"
+"PO-Revision-Date: 2017-08-21 09:49+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -333,7 +333,7 @@ msgstr "Litrásir"
 #: ../app/actions/actions.c:122 ../app/dialogs/convert-indexed-dialog.c:174
 #: ../app/dialogs/dialogs.c:375
 msgid "Colormap"
-msgstr "Litakort"
+msgstr "Litavörpun"
 
 #: ../app/actions/actions.c:125
 msgid "Context"
@@ -837,7 +837,7 @@ msgstr "Blátt"
 #: ../app/actions/channels-actions.c:147
 msgctxt "channels-action"
 msgid "Color Tag: Set to Blue"
-msgstr ""
+msgstr "Litamerki: Setja sem blátt"
 
 #: ../app/actions/channels-actions.c:152
 #| msgid "Green"
@@ -848,7 +848,7 @@ msgstr "Grænt"
 #: ../app/actions/channels-actions.c:153
 msgctxt "channels-action"
 msgid "Color Tag: Set to Green"
-msgstr ""
+msgstr "Litamerki: Setja sem grænt"
 
 #: ../app/actions/channels-actions.c:158
 #| msgid "Yellow"
@@ -859,7 +859,7 @@ msgstr "Gult"
 #: ../app/actions/channels-actions.c:159
 msgctxt "channels-action"
 msgid "Color Tag: Set to Yellow"
-msgstr ""
+msgstr "Litamerki: Setja sem gult"
 
 #: ../app/actions/channels-actions.c:164
 #| msgid "Range"
@@ -868,11 +868,10 @@ msgid "Orange"
 msgstr "Appelsínugult"
 
 #: ../app/actions/channels-actions.c:165
-#, fuzzy
 #| msgid "Color manage this image"
 msgctxt "channels-action"
 msgid "Color Tag: Set to Orange"
-msgstr "Litstýra þessari mynd"
+msgstr "Litamerki: Setja sem appelsínugult"
 
 #: ../app/actions/channels-actions.c:170
 msgctxt "channels-action"
@@ -882,7 +881,7 @@ msgstr "Brúnt"
 #: ../app/actions/channels-actions.c:171
 msgctxt "channels-action"
 msgid "Color Tag: Set to Brown"
-msgstr ""
+msgstr "Litamerki: Setja sem brúnt"
 
 #: ../app/actions/channels-actions.c:176
 #| msgid "Red"
@@ -893,7 +892,7 @@ msgstr "Rautt"
 #: ../app/actions/channels-actions.c:177
 msgctxt "channels-action"
 msgid "Color Tag: Set to  Red"
-msgstr ""
+msgstr "Litamerki: Setja sem rautt"
 
 #: ../app/actions/channels-actions.c:182
 msgctxt "channels-action"
@@ -903,7 +902,7 @@ msgstr "Fjólublátt"
 #: ../app/actions/channels-actions.c:183
 msgctxt "channels-action"
 msgid "Color Tag: Set to Violet"
-msgstr ""
+msgstr "Litamerki: Setja sem fjólublátt"
 
 #: ../app/actions/channels-actions.c:188
 #| msgid "Grayscale"
@@ -912,12 +911,11 @@ msgid "Gray"
 msgstr "Grátt"
 
 #: ../app/actions/channels-actions.c:189
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Color to Gray..."
 msgctxt "channels-action"
 msgid "Color Tag: Set to Gray"
-msgstr "Litur í _grátt..."
+msgstr "Litamerki: Setja sem grátt"
 
 #: ../app/actions/channels-actions.c:197
 msgctxt "channels-action"
@@ -984,7 +982,6 @@ msgid "New Channel"
 msgstr "Ný litrás"
 
 #: ../app/actions/channels-commands.c:159
-#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Create a new channel"
 msgid "Create a New Channel"
@@ -1005,7 +1002,7 @@ msgstr "Afritun %s litrásar"
 #: ../app/actions/colormap-actions.c:45
 msgctxt "colormap-action"
 msgid "Colormap Menu"
-msgstr "Valmynd fyrir litakort"
+msgstr "Valmynd fyrir litavörpun"
 
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
@@ -1080,11 +1077,11 @@ msgstr "Skara alla mynddíla með þessum lit við núverandi myndval"
 #: ../app/actions/colormap-commands.c:74
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Breyta litaspjaldsfærslu #%d"
+msgstr "Breyta litavörpunarfærslu #%d"
 
 #: ../app/actions/colormap-commands.c:81
 msgid "Edit Colormap Entry"
-msgstr "Breyta litaspjaldsfærslu"
+msgstr "Breyta litavörpunarfærslu"
 
 #: ../app/actions/context-actions.c:47
 msgctxt "context-action"
@@ -1187,283 +1184,261 @@ msgid "Exchange foreground and background colors"
 msgstr "Víxla forgrunnslit og bakgrunnslit"
 
 #: ../app/actions/context-actions.c:97
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground: Set Color From Palette"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur: Setja lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:101
-#, fuzzy
 #| msgid "Edit Palette Color"
 msgctxt "context-action"
 msgid "Foreground: Use First Palette Color"
-msgstr "Breyta lit á spjaldi"
+msgstr "Forgrunnur: Nota fyrsta lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:105
-#, fuzzy
 #| msgctxt "gradient-editor-action"
 #| msgid "_Foreground Color"
 msgctxt "context-action"
 msgid "Foreground: Use Last Palette Color"
-msgstr "_Forgrunnslitur"
+msgstr "Forgrunnur: Nota síðasta lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:109
 msgctxt "context-action"
 msgid "Foreground: Use Previous Palette Color"
-msgstr ""
+msgstr "Forgrunnur: Nota fyrri lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:113
-#, fuzzy
 #| msgctxt "gradient-editor-action"
 #| msgid "_Foreground Color"
 msgctxt "context-action"
 msgid "Foreground: Use Next Palette Color"
-msgstr "_Forgrunnslitur"
+msgstr "Forgrunnur: Nota næsta lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:117
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Foreground color"
 msgctxt "context-action"
 msgid "Foreground: Skip Back Palette Color"
-msgstr "Forgrunnslitur"
+msgstr "Forgrunnur: Hoppa til baka um lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:121
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Palette Color"
-msgstr ""
+msgstr "Forgrunnur: Hoppa áfram um lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:129
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background: Set Color From Palette"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur: Setja lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:133
-#, fuzzy
 #| msgid "Edit Palette Color"
 msgctxt "context-action"
 msgid "Background: Use First Palette Color"
-msgstr "Breyta lit á spjaldi"
+msgstr "Bakgrunnur: Nota fyrsta lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:137
-#, fuzzy
 #| msgctxt "gradient-editor-action"
 #| msgid "_Background Color"
 msgctxt "context-action"
 msgid "Background: Use Last Palette Color"
-msgstr "_Bakgrunnslitur"
+msgstr "Bakgrunnur: Nota síðasta lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:141
 msgctxt "context-action"
 msgid "Background: Use Previous Palette Color"
-msgstr ""
+msgstr "Bakgrunnur: Nota fyrri lit úr litaspjaldi"
 
 #: ../app/actions/context-actions.c:145
-#, fuzzy
 #| msgctxt "gradient-editor-action"
 #| msgid "_Background Color"
 msgctxt "context-action"
 msgid "Background: Use Next Palette Color"
-msgstr "_Bakgrunnslitur"
+msgstr "Bakgrunnur: Nota næsta lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:149
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Background color"
 msgctxt "context-action"
 msgid "Background: Skip Back Palette Color"
-msgstr "Bakgrunnslitur"
+msgstr "Bakgrunnur: Hoppa til baka um lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:153
 msgctxt "context-action"
 msgid "Background: Skip Forward Palette Color"
-msgstr ""
+msgstr "Bakgrunnur: Hoppa áfram um lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:161
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Add Color to Colormap"
 msgctxt "context-action"
 msgid "Foreground: Set Color From Colormap"
-msgstr "Bæta lit í litavörpun"
+msgstr "Forgrunnur: Setja lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:165
-#, fuzzy
 #| msgid "_Remove unused colors from colormap"
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Colormap"
-msgstr "_Fjarlægja ónotaða liti úr litavörpun"
+msgstr "Forgrunnur: Nota fyrsta lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:169
-#, fuzzy
 #| msgid "_Remove unused colors from colormap"
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Colormap"
-msgstr "_Fjarlægja ónotaða liti úr litavörpun"
+msgstr "Forgrunnur: Nota síðasta lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:173
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr ""
+msgstr "Forgrunnur: Nota fyrri lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:177
-#, fuzzy
 #| msgid "_Remove unused colors from colormap"
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Colormap"
-msgstr "_Fjarlægja ónotaða liti úr litavörpun"
+msgstr "Forgrunnur: Nota næsta lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:181
-#, fuzzy
 #| msgid "_Remove unused colors from colormap"
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr "_Fjarlægja ónotaða liti úr litavörpun"
+msgstr "Forgrunnur: Hoppa til baka um lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:185
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Colormap"
-msgstr ""
+msgstr "Forgrunnur: Hoppa áfram um lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:193
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Add Color to Colormap"
 msgctxt "context-action"
 msgid "Background: Set Color From Colormap"
-msgstr "Bæta lit í litavörpun"
+msgstr "Bakgrunnur: Setja lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:197
 msgctxt "context-action"
 msgid "Background: Use First Color From Colormap"
-msgstr ""
+msgstr "Bakgrunnur: Nota fyrsta lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:201
 msgctxt "context-action"
 msgid "Background: Use Last Color From Colormap"
-msgstr ""
+msgstr "Bakgrunnur: Nota síðasta lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:205
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Colormap"
-msgstr ""
+msgstr "Bakgrunnur: Nota fyrri lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:209
 msgctxt "context-action"
 msgid "Background: Use Next Color From Colormap"
-msgstr ""
+msgstr "Bakgrunnur: Nota næsta lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:213
 msgctxt "context-action"
 msgid "Background: Skip Back Color From Colormap"
-msgstr ""
+msgstr "Bakgrunnur: Hoppa til baka um lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:217
 msgctxt "context-action"
 msgid "Background: Skip Forward Color From Colormap"
-msgstr ""
+msgstr "Bakgrunnur: Hoppa áfram um lit úr litavörpun"
 
 #: ../app/actions/context-actions.c:225
-#, fuzzy
 #| msgctxt "gradient-editor-action"
 #| msgid "_Foreground Color"
 msgctxt "context-action"
 msgid "Foreground: Set Color From Swatch"
-msgstr "_Forgrunnslitur"
+msgstr "Forgrunnur: Setja lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:229
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Swatch"
-msgstr ""
+msgstr "Forgrunnur: Nota fyrsta lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:233
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Swatch"
-msgstr ""
+msgstr "Forgrunnur: Nota síðasta lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:237
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Swatch"
-msgstr ""
+msgstr "Forgrunnur: Nota fyrri lit af litaspjaldi"
 
 #: ../app/actions/context-actions.c:241
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Swatch"
-msgstr ""
+msgstr "Forgrunnur: Nota næsta lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:245
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Swatch"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur: Hoppa til baka um lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:249
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Swatch"
-msgstr ""
+msgstr "Forgrunnur: Hoppa áfram um lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:257
-#, fuzzy
 #| msgctxt "gradient-editor-action"
 #| msgid "_Background Color"
 msgctxt "context-action"
 msgid "Background: Set Color From Swatch"
-msgstr "_Bakgrunnslitur"
+msgstr "Bakgrunnur: Setja lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:261
 msgctxt "context-action"
 msgid "Background: Use First Color From Swatch"
-msgstr ""
+msgstr "Bakgrunnur: Nota fyrsta lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:265
 msgctxt "context-action"
 msgid "Background: Use Last Color From Swatch"
-msgstr ""
+msgstr "Bakgrunnur: Nota síðasta lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:269
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Swatch"
-msgstr ""
+msgstr "Bakgrunnur: Nota fyrri lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:273
 msgctxt "context-action"
 msgid "Background: Use Next Color From Swatch"
-msgstr ""
+msgstr "Bakgrunnur: Nota næsta lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:277
 msgctxt "context-action"
 msgid "Background: Skip Color Back From Swatch"
-msgstr ""
+msgstr "Bakgrunnur: Hoppa til baka um lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:281
 msgctxt "context-action"
 msgid "Background: Skip Color Forward From Swatch"
-msgstr ""
+msgstr "Bakgrunnur: Hoppa áfram um lit af litaprufuspjaldi"
 
 #: ../app/actions/context-actions.c:289
-#, fuzzy
 #| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Red: Set"
-msgstr "Val forgrunns"
+msgstr "Forgrunnur rautt: Stilla"
 
 #: ../app/actions/context-actions.c:293
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Red: Set to Minimum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur rautt: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:297
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Red: Set to Maximum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur rautt: Setja á hámark"
 
 #: ../app/actions/context-actions.c:301
 msgctxt "context-action"
@@ -1486,25 +1461,22 @@ msgid "Foreground Red: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:321
-#, fuzzy
 #| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Green: Set"
-msgstr "Val forgrunns"
+msgstr "Forgrunnur grænt: Stilla"
 
 #: ../app/actions/context-actions.c:325
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Green: Set to Minimum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur grænt: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:329
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Green: Set to Maximum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur grænt: Setja á hámark"
 
 #: ../app/actions/context-actions.c:333
 msgctxt "context-action"
@@ -1527,25 +1499,22 @@ msgid "Foreground Green: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:353
-#, fuzzy
 #| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Blue: Set"
-msgstr "Val forgrunns"
+msgstr "Forgrunnur blátt: Stilla"
 
 #: ../app/actions/context-actions.c:357
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Minimum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur blátt: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:361
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Blue: Set to Maximum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur blátt: Setja á hámark"
 
 #: ../app/actions/context-actions.c:365
 msgctxt "context-action"
@@ -1568,25 +1537,22 @@ msgid "Foreground Blue: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:385
-#, fuzzy
 #| msgid "Background"
 msgctxt "context-action"
 msgid "Background Red: Set"
-msgstr "Bakgrunnur"
+msgstr "Bakgrunnur rautt: Stilla"
 
 #: ../app/actions/context-actions.c:389
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Red: Set to Minimum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur rautt: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:393
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Red: Set to Maximum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur rautt: Setja á hámark"
 
 #: ../app/actions/context-actions.c:397
 msgctxt "context-action"
@@ -1609,25 +1575,22 @@ msgid "Background Red: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:417
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur grænt: Stilla"
 
 #: ../app/actions/context-actions.c:421
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set to Minimum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur grænt: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:425
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Green: Set to Maximum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur grænt: Setja á hámark"
 
 #: ../app/actions/context-actions.c:429
 msgctxt "context-action"
@@ -1650,25 +1613,22 @@ msgid "Background Green: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:449
-#, fuzzy
 #| msgid "_Background color:"
 msgctxt "context-action"
 msgid "Background Blue: Set"
-msgstr "_Bakgrunnslitur:"
+msgstr "Bakgrunnur blátt: Stilla"
 
 #: ../app/actions/context-actions.c:453
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Blue: Set to Minimum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur blátt: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:457
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Blue: Set to Maximum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur blátt: Setja á hámark"
 
 #: ../app/actions/context-actions.c:461
 msgctxt "context-action"
@@ -1691,115 +1651,102 @@ msgid "Background Blue: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:481
-#, fuzzy
 #| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "Val forgrunns"
+msgstr "Forgrunnur litblær: Stilla"
 
 #: ../app/actions/context-actions.c:485
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur litblær: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:489
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur litblær: Setja á hámark"
 
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 1%"
-msgstr ""
+msgstr "Forgrunnur litblær: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:497
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 1%"
-msgstr ""
+msgstr "Forgrunnur litblær: Auka um 1%"
 
 #: ../app/actions/context-actions.c:501
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 10%"
-msgstr ""
+msgstr "Forgrunnur litblær: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:505
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 10%"
-msgstr ""
+msgstr "Forgrunnur litblær: Auka um 10%"
 
 #: ../app/actions/context-actions.c:513
-#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "Framköllun forgrunns"
+msgstr "Forgrunnur litmettun: Stilla"
 
 #: ../app/actions/context-actions.c:517
-#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "Framköllun forgrunns"
+msgstr "Forgrunnur litmettun: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:521
-#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "Framköllun forgrunns"
+msgstr "Forgrunnur litmettun: Setja á hámark"
 
 #: ../app/actions/context-actions.c:525
-#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "Framköllun forgrunns"
+msgstr "Forgrunnur litmettun: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:529
-#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "Framköllun forgrunns"
+msgstr "Forgrunnur litmettun: Auka um 1%"
 
 #: ../app/actions/context-actions.c:533
-#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "Framköllun forgrunns"
+msgstr "Forgrunnur litmettun: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:537
-#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "Framköllun forgrunns"
+msgstr "Forgrunnur litmettun: Auka um 10%"
 
 #: ../app/actions/context-actions.c:545
-#, fuzzy
 #| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "Val forgrunns"
+msgstr "Forgrunnur litgildi: Stilla"
 
 #: ../app/actions/context-actions.c:549
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur litgildi: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:553
-#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "Forgrunnslitur stilltur á:"
+msgstr "Forgrunnur litgildi: Setja á hámark"
 
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
@@ -1822,52 +1769,48 @@ msgid "Foreground Value: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:577
-#, fuzzy
 #| msgid "Background"
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "Bakgrunnur"
+msgstr "Bakgrunnur litblær: Stilla"
 
 #: ../app/actions/context-actions.c:581
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur litblær: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:585
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur litblær: Setja á hámark"
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 1%"
-msgstr ""
+msgstr "Bakgrunnur litblær: Minnka um 1%"
 
 #: ../app/actions/context-actions.c:593
 msgctxt "context-action"
 msgid "Background Hue: Increase by 1%"
-msgstr ""
+msgstr "Bakgrunnur litblær: Aukaa um 1%"
 
 #: ../app/actions/context-actions.c:597
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 10%"
-msgstr ""
+msgstr "Bakgrunnur litblær: Minnka um 10%"
 
 #: ../app/actions/context-actions.c:601
 msgctxt "context-action"
 msgid "Background Hue: Increase by 10%"
-msgstr ""
+msgstr "Bakgrunnur litblær: Aukaa um 10%"
 
 #: ../app/actions/context-actions.c:609
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur litmettun: Stilla"
 
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
@@ -1900,25 +1843,22 @@ msgid "Background Saturation: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:641
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur litgildi: Stilla"
 
 #: ../app/actions/context-actions.c:645
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur litgildi: Setja á lágmark"
 
 #: ../app/actions/context-actions.c:649
-#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "Bakgrunnslitur stilltur á:"
+msgstr "Bakgrunnur litgildi: Setja á hámark"
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
@@ -1941,12 +1881,11 @@ msgid "Background Value: Increase by 10%"
 msgstr ""
 
 #: ../app/actions/context-actions.c:673
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Fill with Transparency"
 msgctxt "context-action"
 msgid "Tool Opacity: Set Transparency"
-msgstr "Fylla með gegnsæi"
+msgstr "Ógegnsæi verkfæris: Stilla gegnsæi"
 
 #: ../app/actions/context-actions.c:677
 msgctxt "context-action"
@@ -1979,18 +1918,16 @@ msgid "Tool Opacity: Make 10% More Opaque"
 msgstr ""
 
 #: ../app/actions/context-actions.c:705
-#, fuzzy
 #| msgid "Paint Mode: %s"
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select First"
-msgstr "Málunarhamur: %s"
+msgstr "Málunarhamur: Velja fyrsta"
 
 #: ../app/actions/context-actions.c:709
-#, fuzzy
 #| msgid "Paint Mode: %s"
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Last"
-msgstr "Málunarhamur: %s"
+msgstr "Málunarhamur: Velja síðasta"
 
 #: ../app/actions/context-actions.c:713
 msgctxt "context-action"
@@ -2598,12 +2535,12 @@ msgstr "Opna valmynd fyrir ferla"
 #: ../app/actions/dialogs-actions.c:89
 msgctxt "dialogs-action"
 msgid "Color_map"
-msgstr "Lita_kort"
+msgstr "Litavör_pun"
 
 #: ../app/actions/dialogs-actions.c:90
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
-msgstr "Opna valmynd fyrir litakort"
+msgstr "Opna valmynd fyrir litavörpun"
 
 #: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
@@ -4750,12 +4687,11 @@ msgid "_Reinhard 2005..."
 msgstr "_Reinhard 2005..."
 
 #: ../app/actions/filters-actions.c:542
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_RGB Noise..."
 msgctxt "filters-action"
 msgid "RGB _Clip..."
-msgstr "_RGB suð..."
+msgstr "RGB afmör_kun..."
 
 #: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
@@ -5251,10 +5187,9 @@ msgid "Replicate Gradient Selection"
 msgstr "Endurgera litstigilsval"
 
 #: ../app/actions/gradient-editor-commands.c:483
-#, fuzzy
 #| msgid "Replicate"
 msgid "_Replicate"
-msgstr "Endurgera"
+msgstr "Endu_rgera"
 
 #: ../app/actions/gradient-editor-commands.c:504
 msgid ""
@@ -5289,10 +5224,9 @@ msgid "Split Gradient Segments Uniformly"
 msgstr "Kljúfa litstiglageira jafnt"
 
 #: ../app/actions/gradient-editor-commands.c:585
-#, fuzzy
 #| msgid "Split"
 msgid "_Split"
-msgstr "Kljúfa"
+msgstr "_Kljúfa"
 
 #: ../app/actions/gradient-editor-commands.c:607
 msgid ""
@@ -5391,12 +5325,11 @@ msgid "_Edit Gradient..."
 msgstr "Br_eyta litstigli..."
 
 #: ../app/actions/gradients-actions.c:94
-#, fuzzy
 #| msgctxt "gradients-action"
 #| msgid "Edit gradient"
 msgctxt "gradients-action"
 msgid "Edit this gradient"
-msgstr "Breyta litstigli"
+msgstr "Breyta þessum litstigli"
 
 #: ../app/actions/gradients-commands.c:72
 #, c-format
@@ -5484,11 +5417,10 @@ msgid "_Map"
 msgstr "_Vörpun"
 
 #: ../app/actions/image-actions.c:71
-#, fuzzy
 #| msgid "Snapping"
 msgctxt "image-action"
 msgid "_Tone Mapping"
-msgstr "Grip"
+msgstr "Vörpun lita_tóna"
 
 #: ../app/actions/image-actions.c:72
 msgctxt "image-action"
@@ -6000,27 +5932,24 @@ msgid "Layers Menu"
 msgstr "Lagskiptingarvalmynd"
 
 #: ../app/actions/layers-actions.c:56
-#, fuzzy
 #| msgid "Blend: "
 msgctxt "layers-action"
 msgid "Blend Space"
-msgstr "Blanda: "
+msgstr "Litrýmd blöndunar"
 
 #: ../app/actions/layers-actions.c:60
-#, fuzzy
 #| msgctxt "select-criterion"
 #| msgid "Composite"
 msgctxt "layers-action"
 msgid "Composite Space"
-msgstr "Samsett"
+msgstr "Litrýmd samsetningar"
 
 #: ../app/actions/layers-actions.c:64
-#, fuzzy
 #| msgctxt "select-criterion"
 #| msgid "Composite"
 msgctxt "layers-action"
 msgid "Composite Mode"
-msgstr "Samsett"
+msgstr "Samsetningarhamur"
 
 #. abused
 #: ../app/actions/layers-actions.c:68
@@ -6070,11 +5999,10 @@ msgid "Layer _Mode"
 msgstr "Lagha_mur"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
 #| msgid "Default _interpolation:"
 msgctxt "layers-action"
 msgid "Default edit action"
-msgstr "Sjálfgefin _brúun:"
+msgstr "Sjálfgefin breytingaaðgerð"
 
 #: ../app/actions/layers-actions.c:90
 #, fuzzy
@@ -6350,19 +6278,17 @@ msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr "Bæta við hulu (mask) sem leyfir afturkræfar breytingar á gegnsæi"
 
 #: ../app/actions/layers-actions.c:264
-#, fuzzy
 #| msgid "Add Layer Mask"
 msgctxt "layers-action"
 msgid "Add La_yer Mask"
-msgstr "Bæta inn laghulu"
+msgstr "Bæta inn la_ghulu"
 
 #: ../app/actions/layers-actions.c:266
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Create a new path with last used values"
 msgctxt "layers-action"
 msgid "Add a mask with last used values"
-msgstr "Búa til nýjan feril með síðast notuðum gildum"
+msgstr "Bæta við laghulu með síðast notuðum gildum"
 
 #: ../app/actions/layers-actions.c:271
 msgctxt "layers-action"
@@ -6451,37 +6377,37 @@ msgstr "Koma í veg fyrir að gegnsæisupplýsingum á þessu lagi sé breytt"
 #: ../app/actions/layers-actions.c:341
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
-msgstr ""
+msgstr "Litrýmd blöndunar laga: sjálfvirkt"
 
 #: ../app/actions/layers-actions.c:346
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (linear)"
-msgstr ""
+msgstr "Litrýmd blöndunar laga: RGB (línulegt)"
 
 #: ../app/actions/layers-actions.c:351
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
-msgstr ""
+msgstr "Litrýmd blöndunar laga: RGB (skynjanlegt)"
 
 #: ../app/actions/layers-actions.c:359
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
-msgstr ""
+msgstr "Litrýmd samsetningar laga: sjálfvirkt"
 
 #: ../app/actions/layers-actions.c:364
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
-msgstr ""
+msgstr "Litrýmd samsetningar laga: RGB (línulegt)"
 
 #: ../app/actions/layers-actions.c:369
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
-msgstr ""
+msgstr "Litrýmd samsetningar laga: RGB (skynjanlegt)"
 
 #: ../app/actions/layers-actions.c:377
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
-msgstr ""
+msgstr "Hamur samsetningar laga: sjálfvirkt"
 
 #: ../app/actions/layers-actions.c:382
 msgctxt "layers-action"
@@ -6525,7 +6451,7 @@ msgstr "Blátt"
 #: ../app/actions/layers-actions.c:412
 msgctxt "layers-action"
 msgid "Color Tag: Set to Blue"
-msgstr ""
+msgstr "Litamerki: Setja sem blátt"
 
 #: ../app/actions/layers-actions.c:417
 #| msgid "Green"
@@ -6536,7 +6462,7 @@ msgstr "Grænt"
 #: ../app/actions/layers-actions.c:418
 msgctxt "layers-action"
 msgid "Color Tag: Set to Green"
-msgstr ""
+msgstr "Litamerki: Setja sem grænt"
 
 #: ../app/actions/layers-actions.c:423
 #| msgid "Yellow"
@@ -6547,7 +6473,7 @@ msgstr "Gult"
 #: ../app/actions/layers-actions.c:424
 msgctxt "layers-action"
 msgid "Color Tag: Set to Yellow"
-msgstr ""
+msgstr "Litamerki: Setja sem gult"
 
 #: ../app/actions/layers-actions.c:429
 #| msgid "Range"
@@ -6556,11 +6482,10 @@ msgid "Orange"
 msgstr "Appelsínugult"
 
 #: ../app/actions/layers-actions.c:430
-#, fuzzy
 #| msgid "Color manage this image"
 msgctxt "layers-action"
 msgid "Color Tag: Set to Orange"
-msgstr "Litstýra þessari mynd"
+msgstr "Litamerki: Setja sem appelsínugult"
 
 #: ../app/actions/layers-actions.c:435
 msgctxt "layers-action"
@@ -6570,7 +6495,7 @@ msgstr "Brúnt"
 #: ../app/actions/layers-actions.c:436
 msgctxt "layers-action"
 msgid "Color Tag: Set to Brown"
-msgstr ""
+msgstr "Litamerki: Setja sem brúnt"
 
 #: ../app/actions/layers-actions.c:441
 #| msgid "Red"
@@ -6581,7 +6506,7 @@ msgstr "Rautt"
 #: ../app/actions/layers-actions.c:442
 msgctxt "layers-action"
 msgid "Color Tag: Set to red"
-msgstr ""
+msgstr "Litamerki: Setja sem rautt"
 
 #: ../app/actions/layers-actions.c:447
 msgctxt "layers-action"
@@ -6591,7 +6516,7 @@ msgstr "Fjólublátt"
 #: ../app/actions/layers-actions.c:448
 msgctxt "layers-action"
 msgid "Color Tag: Set to violet"
-msgstr ""
+msgstr "Litamerki: Setja sem fjólublátt"
 
 #: ../app/actions/layers-actions.c:453
 #| msgid "Grayscale"
@@ -6600,12 +6525,11 @@ msgid "Gray"
 msgstr "Grátt"
 
 #: ../app/actions/layers-actions.c:454
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Color to Gray..."
 msgctxt "layers-action"
 msgid "Color Tag: Set to gray"
-msgstr "Litur í _grátt..."
+msgstr "Litamerki: Setja sem grátt"
 
 #: ../app/actions/layers-actions.c:462
 msgctxt "layers-action"
@@ -7106,18 +7030,16 @@ msgid "_Edit Palette..."
 msgstr "Br_eyta litaspjaldi..."
 
 #: ../app/actions/palettes-actions.c:100
-#, fuzzy
 #| msgctxt "palettes-action"
 #| msgid "Edit palette"
 msgctxt "palettes-action"
 msgid "Edit this palette"
-msgstr "Breyta litaspjaldi"
+msgstr "Breyta þessu litaspjaldi"
 
 #: ../app/actions/palettes-commands.c:83
-#, fuzzy
 #| msgid "Merge Palette"
 msgid "Merge Palettes"
-msgstr "Samtvinna litaspjöld"
+msgstr "Sameina litaspjöld"
 
 #: ../app/actions/palettes-commands.c:87
 msgid "Enter a name for the merged palette"
@@ -8457,19 +8379,17 @@ msgid "Color Tag"
 msgstr "Litamerki"
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
 #| msgctxt "mypaint-brushes-action"
 #| msgid "Edit MyPaint brush"
 msgctxt "vectors-action"
 msgid "Edit Pa_th"
-msgstr "Breyta MyPaint-pensli"
+msgstr "Breyta _ferli"
 
 #: ../app/actions/vectors-actions.c:55
-#, fuzzy
 #| msgid "Export the active path"
 msgctxt "vectors-action"
 msgid "Edit the active path"
-msgstr "Flytja út virkan feril"
+msgstr "Breyta virka ferlinum"
 
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
@@ -8567,35 +8487,31 @@ msgid "Lower this path to the bottom"
 msgstr "Setja þennan feril neðst"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "_New Path..."
 msgctxt "vectors-action"
 msgid "Fill Path..."
-msgstr "_Nýr ferill..."
+msgstr "Fylla feril..."
 
 #: ../app/actions/vectors-actions.c:120
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Paint along the path"
 msgctxt "vectors-action"
 msgid "Fill the path"
-msgstr "Mála eftir ferlinum"
+msgstr "Fylla ferilinn"
 
 #: ../app/actions/vectors-actions.c:125
-#, fuzzy
 #| msgid "Flip Path"
 msgctxt "vectors-action"
 msgid "Fill Path"
-msgstr "Fletta ferli"
+msgstr "Fylla feril"
 
 #: ../app/actions/vectors-actions.c:126
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
 msgid "Fill the path with last values"
-msgstr "Mála eftir ferlinum með síðustu stillingum"
+msgstr "Fylla í ferilinn með síðustu stillingum"
 
 #: ../app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
@@ -8666,11 +8582,10 @@ msgid "None"
 msgstr "Ekkert"
 
 #: ../app/actions/vectors-actions.c:194
-#, fuzzy
 #| msgid "Color managed"
 msgctxt "vectors-action"
 msgid "Color Tag: Clear"
-msgstr "Litastýrt"
+msgstr "Litamerki: Hreint"
 
 #: ../app/actions/vectors-actions.c:199
 #| msgid "Blue"
@@ -8681,7 +8596,7 @@ msgstr "Blátt"
 #: ../app/actions/vectors-actions.c:200
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Blue"
-msgstr ""
+msgstr "Litamerki: Setja sem blátt"
 
 #: ../app/actions/vectors-actions.c:205
 #| msgid "Green"
@@ -8692,7 +8607,7 @@ msgstr "Grænt"
 #: ../app/actions/vectors-actions.c:206
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Green"
-msgstr ""
+msgstr "Litamerki: Setja sem grænt"
 
 #: ../app/actions/vectors-actions.c:211
 #| msgid "Yellow"
@@ -8703,7 +8618,7 @@ msgstr "Gult"
 #: ../app/actions/vectors-actions.c:212
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Yellow"
-msgstr ""
+msgstr "Litamerki: Setja sem gult"
 
 #: ../app/actions/vectors-actions.c:217
 #| msgid "Range"
@@ -8712,11 +8627,10 @@ msgid "Orange"
 msgstr "Appelsínugult"
 
 #: ../app/actions/vectors-actions.c:218
-#, fuzzy
 #| msgid "Color manage this image"
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Orange"
-msgstr "Litstýra þessari mynd"
+msgstr "Litamerki: Setja sem appelsínugult"
 
 #: ../app/actions/vectors-actions.c:223
 msgctxt "vectors-action"
@@ -8726,7 +8640,7 @@ msgstr "Brúnt"
 #: ../app/actions/vectors-actions.c:224
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Brown"
-msgstr ""
+msgstr "Litamerki: Setja sem brúnt"
 
 #: ../app/actions/vectors-actions.c:229
 #| msgid "Red"
@@ -8737,7 +8651,7 @@ msgstr "Rautt"
 #: ../app/actions/vectors-actions.c:230
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Red"
-msgstr ""
+msgstr "Litamerki: Setja sem rautt"
 
 #: ../app/actions/vectors-actions.c:235
 msgctxt "vectors-action"
@@ -8747,7 +8661,7 @@ msgstr "Fjólublátt"
 #: ../app/actions/vectors-actions.c:236
 msgctxt "vectors-action"
 msgid "Color Tag: Set to Violet"
-msgstr ""
+msgstr "Litamerki: Setja sem fjólublátt"
 
 #: ../app/actions/vectors-actions.c:241
 #| msgid "Grayscale"
@@ -8756,12 +8670,11 @@ msgid "Gray"
 msgstr "Grátt"
 
 #: ../app/actions/vectors-actions.c:242
-#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Color to Gray..."
 msgctxt "vectors-action"
 msgid "Color Tag: Set to gray"
-msgstr "Litur í _grátt..."
+msgstr "Litamerki: Setja sem grátt"
 
 #: ../app/actions/vectors-actions.c:250
 msgctxt "vectors-action"
@@ -8839,68 +8752,60 @@ msgid "Advanced options"
 msgstr "Ítarlegir valkostir"
 
 #: ../app/actions/vectors-actions.c:304
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Top Layer"
 msgctxt "vectors-action"
 msgid "Select _Top Path"
-msgstr "Velja efs_ta lag"
+msgstr "Velja efs_ta feril"
 
 #: ../app/actions/vectors-actions.c:305
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the topmost layer"
 msgctxt "vectors-action"
 msgid "Select the topmost path"
-msgstr "Velja efsta lagið"
+msgstr "Velja efsta ferilinn"
 
 #: ../app/actions/vectors-actions.c:310
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
 msgctxt "vectors-action"
 msgid "Select _Bottom Path"
-msgstr "Velja _neðsta lag"
+msgstr "Velja _neðsta feril"
 
 #: ../app/actions/vectors-actions.c:311
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the bottommost layer"
 msgctxt "vectors-action"
 msgid "Select the bottommost path"
-msgstr "Velja neðsta lagið"
+msgstr "Velja neðsta ferilinn"
 
 #: ../app/actions/vectors-actions.c:316
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Previous Layer"
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
-msgstr "Velja _fyrra lag"
+msgstr "Velja _fyrri feril"
 
 #: ../app/actions/vectors-actions.c:317
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer above the current layer"
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
-msgstr "Velja lagið sem er fyrir ofan lagið sem þú ert að vinna á núna"
+msgstr "Velja ferilinn sem er fyrir ofan ferilinn sem þú ert að vinna á núna"
 
 #: ../app/actions/vectors-actions.c:322
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Next Layer"
 msgctxt "vectors-action"
 msgid "Select _Next Path"
-msgstr "Velja _næsta lag"
+msgstr "Velja _næsta feril"
 
 #: ../app/actions/vectors-actions.c:323
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer below the current layer"
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
-msgstr "Velja lagið sem er fyrir neðan lagið sem þú ert að vinna á núna"
+msgstr "Velja ferilinn sem er fyrir neðan ferilinn sem þú ert að vinna á núna"
 
 #: ../app/actions/vectors-commands.c:162 ../app/actions/vectors-commands.c:719
 msgid "Path Attributes"
@@ -9073,12 +8978,11 @@ msgid "As in _Preferences"
 msgstr "Eins og í _kjörstillingum"
 
 #: ../app/actions/view-actions.c:145
-#, fuzzy
 #| msgctxt "view-padding-color"
 #| msgid "Reset padding color to what's configured in preferences"
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
-msgstr "Endursetja útvíkkunarlit á það sem tilgreint er í kjörstillingum"
+msgstr "Endursetja litstýringu á það sem tilgreint er í kjörstillingum"
 
 #: ../app/actions/view-actions.c:150
 #| msgid "_Soft-proofing profile:"
@@ -9136,12 +9040,11 @@ msgid "Use color management for this view"
 msgstr "Nota litastýringu fyrir þessa sýn"
 
 #: ../app/actions/view-actions.c:185
-#, fuzzy
 #| msgctxt "context-action"
 #| msgid "_Colors"
 msgctxt "view-action"
 msgid "_Proof Colors"
-msgstr "_Litir"
+msgstr "_Litir í próförk"
 
 #: ../app/actions/view-actions.c:186
 #| msgid "Use black _point compensation for softproofing"
@@ -9179,6 +9082,8 @@ msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
 "color space"
 msgstr ""
+"Við gerð sýndarprófarkar eru merktir þeir litir sem ekki er hægt að þýða yfir "
+"í úttakslitrýmd"
 
 #: ../app/actions/view-actions.c:214
 msgctxt "view-action"
@@ -9331,12 +9236,12 @@ msgstr "Stilla sérsniðinn aðdrátt"
 #: ../app/actions/view-actions.c:320
 msgctxt "view-action"
 msgid "Zoom out as far as possible"
-msgstr ""
+msgstr "Renna eins langt út og auðið er"
 
 #: ../app/actions/view-actions.c:325
 msgctxt "view-action"
 msgid "Zoom in as far as possible"
-msgstr ""
+msgstr "Renna eins langt inn og auðið er"
 
 #: ../app/actions/view-actions.c:330
 msgctxt "view-zoom-action"
@@ -9369,18 +9274,16 @@ msgid "Zoom In"
 msgstr "Renna að"
 
 #: ../app/actions/view-actions.c:354
-#, fuzzy
 #| msgid "Zoom out"
 msgctxt "view-action"
 msgid "Zoom out a lot"
-msgstr "Renna frá"
+msgstr "Renna langt frá"
 
 #: ../app/actions/view-actions.c:359
-#, fuzzy
 #| msgid "Zoom in"
 msgctxt "view-action"
 msgid "Zoom in a lot"
-msgstr "Renna að"
+msgstr "Renna mikið að"
 
 #: ../app/actions/view-actions.c:367 ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
@@ -9488,12 +9391,11 @@ msgid "Flip Horizontally"
 msgstr "Fletta lárétt"
 
 #: ../app/actions/view-actions.c:461
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image horizontally"
 msgctxt "view-action"
 msgid "Flip the view horizontally"
-msgstr "Spegla mynd lárétt"
+msgstr "Spegla sýninni lárétt"
 
 #: ../app/actions/view-actions.c:467
 msgctxt "view-action"
@@ -9501,12 +9403,11 @@ msgid "Flip Vertically"
 msgstr "Fletta lóðrétt"
 
 #: ../app/actions/view-actions.c:468
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image vertically"
 msgctxt "view-action"
 msgid "Flip the view vertically"
-msgstr "Spegla mynd lóðrétt"
+msgstr "Spegla sýninni lóðrétt"
 
 #: ../app/actions/view-actions.c:482
 msgctxt "view-action"
@@ -9524,12 +9425,11 @@ msgid "Rotate 15° _clockwise"
 msgstr "Snúa 15° _réttsælis"
 
 #: ../app/actions/view-actions.c:493
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the right"
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
-msgstr "Snúa myndinni 90 gráður til hægri"
+msgstr "Snúa sýninni 90 gráður til hægri"
 
 #: ../app/actions/view-actions.c:498
 msgctxt "view-action"
@@ -9537,12 +9437,11 @@ msgid "Rotate 90° _clockwise"
 msgstr "Snúa 90° _réttsælis"
 
 #: ../app/actions/view-actions.c:499
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the right"
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
-msgstr "Snúa myndinni 90 gráður til hægri"
+msgstr "Snúa sýninni 90 gráður til hægri"
 
 #: ../app/actions/view-actions.c:504
 msgctxt "view-action"
@@ -9550,12 +9449,11 @@ msgid "Rotate _180°"
 msgstr "Snúa _180°"
 
 #: ../app/actions/view-actions.c:505
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Turn the image upside-down"
 msgctxt "view-action"
 msgid "Turn the view upside-down"
-msgstr "Snúa myndinni á hvolf"
+msgstr "Snúa sýninni á hvolf"
 
 #: ../app/actions/view-actions.c:510
 msgctxt "view-action"
@@ -9563,12 +9461,11 @@ msgid "Rotate 90° counter-clock_wise"
 msgstr "Snúa 90° ran_gsælis"
 
 #: ../app/actions/view-actions.c:511
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
-msgstr "Snúa myndinni 90 gráður til vinstri"
+msgstr "Snúa sýninni 90 gráður til vinstri"
 
 #: ../app/actions/view-actions.c:516
 msgctxt "view-action"
@@ -9576,55 +9473,48 @@ msgid "Rotate 15° counter-clock_wise"
 msgstr "Snúa 15° ran_gsælis"
 
 #: ../app/actions/view-actions.c:517
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
-msgstr "Snúa myndinni 90 gráður til vinstri"
+msgstr "Snúa sýninni 15 gráður til vinstri"
 
 #: ../app/actions/view-actions.c:525 ../app/actions/view-actions.c:552
-#, fuzzy
 #| msgid "Percentile:"
 msgctxt "view-action"
 msgid "_Perceptual"
-msgstr "Hundraðshluti:"
+msgstr "S_kynjanlegt"
 
 #: ../app/actions/view-actions.c:526
-#, fuzzy
 #| msgid "_Display rendering intent:"
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
-msgstr "_Myndgerðarmarkmið fyrir skjá:"
+msgstr "Myndgerðarmarkmið fyrir skjá er skynjanlegt"
 
 #: ../app/actions/view-actions.c:531 ../app/actions/view-actions.c:558
-#, fuzzy
 #| msgctxt "palette-editor-action"
 #| msgid "_Delete Color"
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
-msgstr "_Eyða lit"
+msgstr "Afstæð lit_mæling"
 
 #: ../app/actions/view-actions.c:532
-#, fuzzy
 #| msgid "_Display rendering intent:"
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
-msgstr "_Myndgerðarmarkmið fyrir skjá:"
+msgstr "Myndgerðarmarkmið fyrir skjá er afstæð litmæling"
 
 #: ../app/actions/view-actions.c:537 ../app/actions/view-actions.c:564
-#, fuzzy
 #| msgid "_Saturation"
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "Litmett_un"
 
 #: ../app/actions/view-actions.c:538
-#, fuzzy
 #| msgid "_Display rendering intent:"
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
-msgstr "_Myndgerðarmarkmið fyrir skjá:"
+msgstr "Myndgerðarmarkmið fyrir skjá er litmettun"
 
 #: ../app/actions/view-actions.c:543 ../app/actions/view-actions.c:570
 msgctxt "view-action"
@@ -9632,39 +9522,34 @@ msgid "_Absolute Colorimetric"
 msgstr "_Algild litmæling"
 
 #: ../app/actions/view-actions.c:544
-#, fuzzy
 #| msgid "_Display rendering intent:"
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
-msgstr "_Myndgerðarmarkmið fyrir skjá:"
+msgstr "Myndgerðarmarkmið fyrir skjá er algild litmæling"
 
 #: ../app/actions/view-actions.c:553
-#, fuzzy
 #| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is perceptual"
-msgstr "_Myndgerðarmarkmið fyrir próförk:"
+msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er skynjanlegt"
 
 #: ../app/actions/view-actions.c:559
-#, fuzzy
 #| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "_Myndgerðarmarkmið fyrir próförk:"
+msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er afstæð litmæling"
 
 #: ../app/actions/view-actions.c:565
-#, fuzzy
 #| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is saturation"
-msgstr "_Myndgerðarmarkmið fyrir próförk:"
+msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er litmettun"
 
 #: ../app/actions/view-actions.c:571
-#, fuzzy
 #| msgid "_Softproof rendering intent:"
 msgctxt "view-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "_Myndgerðarmarkmið fyrir próförk:"
+msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er algild litmæling"
 
 #: ../app/actions/view-actions.c:579
 msgctxt "view-padding-color"
@@ -9697,12 +9582,11 @@ msgid "Use the dark check color"
 msgstr "Nota lit fyrir dökkar rúður"
 
 #: ../app/actions/view-actions.c:597
-#, fuzzy
 #| msgctxt "view-padding-color"
 #| msgid "Select _Custom Color..."
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
-msgstr "_Velja sérsniðinn lit..."
+msgstr "_Sérsniðinn litur..."
 
 #: ../app/actions/view-actions.c:598
 msgctxt "view-padding-color"
@@ -9722,94 +9606,83 @@ msgstr "Endursetja útvíkkunarlit á það sem tilgreint er í kjörstillingum"
 #: ../app/actions/view-actions.c:613
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
-msgstr ""
+msgstr "Stilla lárétta skrunhliðrun"
 
 #: ../app/actions/view-actions.c:618
-#, fuzzy
 #| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll to left border"
-msgstr "Renna til vinstri"
+msgstr "Skruna að vinstri jaðri"
 
 #: ../app/actions/view-actions.c:623
-#, fuzzy
 #| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll to right border"
-msgstr "Renna til hægri"
+msgstr "Skruna að hægri jaðri"
 
 #: ../app/actions/view-actions.c:628
-#, fuzzy
 #| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll left"
-msgstr "Renna til vinstri"
+msgstr "Skruna til vinstri"
 
 #: ../app/actions/view-actions.c:633
-#, fuzzy
 #| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll right"
-msgstr "Renna til hægri"
+msgstr "Skruna til hægri"
 
 #: ../app/actions/view-actions.c:638
-#, fuzzy
 #| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll page left"
-msgstr "Renna til vinstri"
+msgstr "Skruna síðu til vinstri"
 
 #: ../app/actions/view-actions.c:643
-#, fuzzy
 #| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll page right"
-msgstr "Renna til hægri"
+msgstr "Skruna síðu til hægri"
 
 #: ../app/actions/view-actions.c:651
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
-msgstr ""
+msgstr "Stillaóðrétta skrunhliðrun"
 
 #: ../app/actions/view-actions.c:656
 msgctxt "view-action"
 msgid "Scroll to top border"
-msgstr ""
+msgstr "Skruna að efri jaðri"
 
 #: ../app/actions/view-actions.c:661
-#, fuzzy
 #| msgid "Clipped to bottom layer"
 msgctxt "view-action"
 msgid "Scroll to bottom border"
-msgstr "Klemmt að botnlagi"
+msgstr "Skruna að neðri jaðri"
 
 #: ../app/actions/view-actions.c:666
-#, fuzzy
 #| msgid "Scroll Up"
 msgctxt "view-action"
 msgid "Scroll up"
-msgstr "Renna upp"
+msgstr "Skruna upp"
 
 #: ../app/actions/view-actions.c:671
-#, fuzzy
 #| msgid "Scroll Down"
 msgctxt "view-action"
 msgid "Scroll down"
-msgstr "Renna niður"
+msgstr "Skruna niður"
 
 #: ../app/actions/view-actions.c:676
-#, fuzzy
 #| msgid "Scroll Up"
 msgctxt "view-action"
 msgid "Scroll page up"
-msgstr "Renna upp"
+msgstr "Skruna síðu upp"
 
 #: ../app/actions/view-actions.c:681
-#, fuzzy
 #| msgid "Scroll Down"
 msgctxt "view-action"
 msgid "Scroll page down"
-msgstr "Renna niður"
+msgstr "Skruna síðu niður"
 
 #: ../app/actions/view-actions.c:903
 #, c-format
@@ -10062,14 +9935,13 @@ msgstr "Netvafri"
 #: ../app/config/config-enums.c:178
 msgctxt "icon-size"
 msgid "Guess ideal size"
-msgstr ""
+msgstr "Giska á bestu stærð"
 
 #: ../app/config/config-enums.c:179
-#, fuzzy
 #| msgid "Themes"
 msgctxt "icon-size"
 msgid "Theme-set size"
-msgstr "Þemu"
+msgstr "Stærð skilyrt af þema"
 
 #: ../app/config/config-enums.c:180
 #, fuzzy
@@ -10333,7 +10205,7 @@ msgstr "Hversu mörg fyrri skráarnöfn á að sýna á skráarvalmynd."
 
 #: ../app/config/gimprc-blurbs.h:179
 msgid "Show advanced color options in filter tools."
-msgstr ""
+msgstr "Sýna ítarlegri valkosti lita í síuverkfærum."
 
 #: ../app/config/gimprc-blurbs.h:182
 msgid "Sets the text to appear in image window status bars."
@@ -10439,10 +10311,11 @@ msgstr ""
 "myndglugganum."
 
 #: ../app/config/gimprc-blurbs.h:256
-#, fuzzy
 #| msgid "Sets how many processors GIMP should try to use simultaneously."
 msgid "Sets how many threads GIMP should use for operations that support it."
-msgstr "Stillir hve marga örgjörva GIMP ætti að reyna að nota í einu."
+msgstr ""
+"Stillir hve marga örgjörvaþræði GIMP ætti að reyna að nota í einu fyrir "
+"aðgerðir sem styðja það."
 
 #: ../app/config/gimprc-blurbs.h:278
 msgid ""
@@ -10709,7 +10582,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:449
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
-msgstr ""
+msgstr "Setur sjálfgefið myndgerðarmarkmið í glugganum 'Umbreyta í litasnið'."
 
 #: ../app/config/gimprc-blurbs.h:452
 msgid ""
@@ -11067,7 +10940,7 @@ msgstr ""
 #: ../app/core/core-enums.c:300
 msgctxt "matting-engine"
 msgid "Matting Levin"
-msgstr ""
+msgstr "Levin-möttun"
 
 #: ../app/core/core-enums.c:416
 msgctxt "align-reference-type"
@@ -11482,11 +11355,10 @@ msgid "Change indexed palette"
 msgstr "Skipta um litnúmerað litaspjald"
 
 #: ../app/core/core-enums.c:864
-#, fuzzy
 #| msgid "Change color of selected text"
 msgctxt "undo-type"
 msgid "Change color managed state"
-msgstr "Breyta lit valins texta"
+msgstr "Breyta stöðu litstýringar"
 
 #: ../app/core/core-enums.c:870
 msgctxt "undo-type"
@@ -11499,11 +11371,10 @@ msgid "Rename item"
 msgstr "Endurnefna hlut"
 
 #: ../app/core/core-enums.c:875
-#, fuzzy
 #| msgid "not color managed"
 msgctxt "undo-type"
 msgid "Item color tag"
-msgstr "ekki litastýrð"
+msgstr "Litamerki atriðis"
 
 #: ../app/core/core-enums.c:876
 msgctxt "undo-type"
@@ -11651,11 +11522,10 @@ msgid "Keep embedded profile"
 msgstr "Halda ígræddu litasniði"
 
 #: ../app/core/core-enums.c:1052
-#, fuzzy
 #| msgid "Convert the image to a color profile"
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB color profile"
-msgstr "Umbreyta mynd í litasnið"
+msgstr "Umbreyta í RGB forgangs-litasnið"
 
 #: ../app/core/core-enums.c:1089
 msgctxt "dynamics-output-type"
@@ -11810,11 +11680,10 @@ msgid "Updating tag cache"
 msgstr "Uppfæri biðminni fyrir merkingar"
 
 #: ../app/core/gimp-edit.c:90
-#, fuzzy
 #| msgid "Text Layer"
 msgctxt "undo-type"
 msgid "Cut Layer"
-msgstr "Textalag"
+msgstr "Klippa lag"
 
 #: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:323
 msgid "Pasted Layer"
@@ -11986,16 +11855,14 @@ msgid "Brush Spacing"
 msgstr "Millibil pensils"
 
 #: ../app/core/gimpbrushclipboard.c:190
-#, fuzzy
 #| msgid "Clipboard"
 msgid "Clipboard Mask"
-msgstr "Klippispjald"
+msgstr "Klippispjaldshula"
 
 #: ../app/core/gimpbrushclipboard.c:192 ../app/core/gimppatternclipboard.c:169
-#, fuzzy
 #| msgid "Clipboard"
 msgid "Clipboard Image"
-msgstr "Klippispjald"
+msgstr "Mynd á klippispjaldi"
 
 #: ../app/core/gimpbrushgenerated-load.c:75
 #, c-format
@@ -12235,14 +12102,12 @@ msgid "Selection Mask"
 msgstr "Valhula"
 
 #: ../app/core/gimpcontext.c:673
-#, fuzzy
 #| msgctxt "active-color"
 #| msgid "Foreground"
 msgid "Foreground"
-msgstr "Forgrunnslitur"
+msgstr "Forgrunnur"
 
 #: ../app/core/gimpcontext.c:674 ../app/core/gimpgrid.c:94
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Foreground color"
 msgid "Foreground color"
@@ -12253,7 +12118,6 @@ msgid "Background"
 msgstr "Bakgrunnur"
 
 #: ../app/core/gimpcontext.c:681 ../app/core/gimpgrid.c:101
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Background color"
 msgid "Background color"
@@ -12275,7 +12139,6 @@ msgid "Brush"
 msgstr "Pensill"
 
 #: ../app/core/gimpcontext.c:712
-#, fuzzy
 #| msgid "Paint Dynamics"
 msgid "Paint dynamics"
 msgstr "Pensilhreyfingar"
@@ -12302,7 +12165,6 @@ msgid "Palette"
 msgstr "Litaspjald"
 
 #: ../app/core/gimpcontext.c:746 ../app/core/gimpcontext.c:747
-#, fuzzy
 #| msgid "Tool Presets"
 msgid "Tool Preset"
 msgstr "Forstillingar verkfæra"
@@ -13555,10 +13417,9 @@ msgid "Dash offset"
 msgstr "Strik, punktur"
 
 #: ../app/core/gimpstrokeoptions.c:224
-#, fuzzy
 #| msgid "_Emulate brush dynamics"
 msgid "Emulate brush dynamics"
-msgstr "_Herma eftir pensilhreyfingum"
+msgstr "Herma eftir pensilhreyfingum"
 
 #. no undo (or redo) steps available
 #: ../app/core/gimpsymmetry.c:132 ../app/widgets/gimpimagepropview.c:399
@@ -13567,11 +13428,10 @@ msgid "None"
 msgstr "Ekkert"
 
 #: ../app/core/gimpsymmetry.c:145
-#, fuzzy
 #| msgctxt "align-reference-type"
 #| msgid "Active path"
 msgid "Active"
-msgstr "Virkur ferill"
+msgstr "Virkt"
 
 #: ../app/core/gimpsymmetry.c:146
 msgid "Activate symmetry painting"
@@ -13598,10 +13458,9 @@ msgid "Disable brush transform"
 msgstr "Gera ummyndun pensils óvirka"
 
 #: ../app/core/gimpsymmetry-mandala.c:153
-#, fuzzy
 #| msgid "Disable brush transform"
 msgid "Disable brush rotation"
-msgstr "Gera ummyndun pensils óvirka"
+msgstr "Gera snúning pensils óvirkan"
 
 #: ../app/core/gimpsymmetry-mirror.c:123
 msgid "Mirror"
@@ -13904,17 +13763,15 @@ msgstr "_Nafn litrásar:"
 
 #: ../app/dialogs/channel-options-dialog.c:128
 #: ../app/dialogs/layer-options-dialog.c:168
-#, fuzzy
 #| msgid "Lock pixels"
 msgid "Lock _pixels"
-msgstr "Læsa mynddílum"
+msgstr "Læsa m_ynddílum"
 
 #: ../app/dialogs/channel-options-dialog.c:129
 #: ../app/dialogs/layer-options-dialog.c:169
-#, fuzzy
 #| msgid "Lock position and size"
 msgid "Lock position and _size"
-msgstr "Læsa stöðu og stærð"
+msgstr "Læsa _stöðu og stærð"
 
 #: ../app/dialogs/channel-options-dialog.c:171
 msgid "Initialize from _selection"
@@ -13976,16 +13833,14 @@ msgid "Convert Image to Grayscale"
 msgstr "Umbreyta mynd í grátóna"
 
 #: ../app/dialogs/color-profile-dialog.c:200
-#, fuzzy
 #| msgid "_Soft-proofing profile:"
 msgid "Soft-Proof Profile"
-msgstr "Litasnið fyrir _sýndarpróförk:"
+msgstr "Litasnið fyrir sýndarpróförk"
 
 #: ../app/dialogs/color-profile-dialog.c:203
-#, fuzzy
 #| msgid "Select Soft-Proofing Color Profile"
 msgid "Select Soft-Proof Profile"
-msgstr "Velja litasnið fyrir sýndarpróförk"
+msgstr "Veldu litasnið fyrir sýndarpróförk"
 
 #: ../app/dialogs/color-profile-dialog.c:209
 #: ../app/tools/gimpforegroundselecttool.c:308
@@ -14477,14 +14332,12 @@ msgid "Switches"
 msgstr "tommur"
 
 #: ../app/dialogs/item-options-dialog.c:268
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "_Visible"
 msgid "_Visible"
 msgstr "_Sýnilegt"
 
 #: ../app/dialogs/item-options-dialog.c:277
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "_Linked"
 msgid "_Linked"
@@ -14515,11 +14368,10 @@ msgid "Add a Mask to the Layer"
 msgstr "Setja hulu á lagið"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:111
-#, fuzzy
 #| msgctxt "dockable-action"
 #| msgid "_Add Tab"
 msgid "_Add"
-msgstr "Bæt_a við flipa"
+msgstr "Bæt_a við"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:137
 msgid "Initialize Layer Mask to:"
@@ -14538,24 +14390,21 @@ msgid "Layer _name:"
 msgstr "_Heiti lags:"
 
 #: ../app/dialogs/layer-options-dialog.c:203
-#, fuzzy
 #| msgid "Color space:"
 msgid "Blend space:"
-msgstr "Litarýmd:"
+msgstr "Litrýmd blöndunar:"
 
 #: ../app/dialogs/layer-options-dialog.c:213
-#, fuzzy
 #| msgctxt "select-criterion"
 #| msgid "Composite"
 msgid "Composite space:"
-msgstr "Samsett"
+msgstr "Litrýmd samsetningar:"
 
 #: ../app/dialogs/layer-options-dialog.c:225
-#, fuzzy
 #| msgctxt "select-criterion"
 #| msgid "Composite"
 msgid "Composite mode:"
-msgstr "Samsett"
+msgstr "Samsetningarhamur:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:252 ../app/tools/gimpmeasuretool.c:724
@@ -14588,10 +14437,9 @@ msgid "Active Filters"
 msgstr "Virkar síur"
 
 #: ../app/dialogs/layer-options-dialog.c:438
-#, fuzzy
 #| msgid "Lock alpha channel"
 msgid "Lock _alpha"
-msgstr "Læsa alfa-gegnsæislitrás"
+msgstr "Læsa _alfa-gegnsæislitrás"
 
 #: ../app/dialogs/layer-options-dialog.c:450
 msgid "Set name from _text"
@@ -14650,11 +14498,10 @@ msgid "Module Manager"
 msgstr "Einingastjórnun"
 
 #: ../app/dialogs/module-dialog.c:133
-#, fuzzy
 #| msgctxt "brushes-action"
 #| msgid "_Refresh Brushes"
 msgid "_Refresh"
-msgstr "Endu_rlesa pensla"
+msgstr "Endu_rlesa"
 
 #: ../app/dialogs/module-dialog.c:153
 msgid "You will have to restart GIMP for the changes to take effect."
@@ -14821,10 +14668,9 @@ msgid "The selected source contains no colors."
 msgstr "Valið inntak inniheldur enga liti."
 
 #: ../app/dialogs/palette-import-dialog.c:466
-#, fuzzy
 #| msgid "There is no path to move."
 msgid "There is no palette to import."
-msgstr "Það er enginn ferill sem hægt er að færa."
+msgstr "Það er ekkert litaspjald til að flytja inn."
 
 #: ../app/dialogs/preferences-dialog.c:274
 msgid "Reset All Preferences"
@@ -14969,10 +14815,9 @@ msgid "Maximum _new image size:"
 msgstr "Mesta stærð _nýrrar myndar:"
 
 #: ../app/dialogs/preferences-dialog.c:1083
-#, fuzzy
 #| msgid "Number of _processors to use:"
 msgid "Number of _threads to use:"
-msgstr "_Fjöldi örgjörva sem nota á:"
+msgstr "_Fjöldi örgjörvaþráða sem nota skal:"
 
 #: ../app/dialogs/preferences-dialog.c:1088
 msgid ""
@@ -15013,10 +14858,9 @@ msgid "Color Management"
 msgstr "Litastýring"
 
 #: ../app/dialogs/preferences-dialog.c:1144
-#, fuzzy
 #| msgid "Color Management"
 msgid "Reset Color Management"
-msgstr "Litastýring"
+msgstr "Frumstilla litastýringu"
 
 #: ../app/dialogs/preferences-dialog.c:1167
 msgid "Image display _mode:"
@@ -15152,10 +14996,9 @@ msgid "Image Import & Export"
 msgstr "Inn- og útflutningur mynda"
 
 #: ../app/dialogs/preferences-dialog.c:1326
-#, fuzzy
 #| msgid "Image Editor"
 msgid "Image Import"
-msgstr "Myndvinnsluforrit"
+msgstr "Innflutningur mynda"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1332
@@ -15412,18 +15255,16 @@ msgstr "Stillingar verkfæra"
 
 #: ../app/dialogs/preferences-dialog.c:1906
 #: ../app/dialogs/preferences-dialog.c:1907
-#, fuzzy
 #| msgctxt "dockable-action"
 #| msgid "Dialogs Menu"
 msgid "Dialog Defaults"
-msgstr "Valmynd samskiptaglugga"
+msgstr "Sjálfgefin gildi samskiptaglugga"
 
 #: ../app/dialogs/preferences-dialog.c:1916
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgid "Reset Dialog Defaults"
-msgstr "Frumstilla í sjálfgefin gildi"
+msgstr "Frumstilla glugga í sjálfgefin gildi"
 
 #. Color profile import dialog
 #: ../app/dialogs/preferences-dialog.c:1924
@@ -15440,10 +15281,9 @@ msgid "Convert to Color Profile Dialog"
 msgstr "Umbreyta í ICC litasnið"
 
 #: ../app/dialogs/preferences-dialog.c:1938
-#, fuzzy
 #| msgid "_Rendering intent:"
 msgid "Rendering intent:"
-msgstr "Myndge_rðarmarkmið:"
+msgstr "Myndgerðarmarkmið:"
 
 #: ../app/dialogs/preferences-dialog.c:1942
 #, fuzzy
@@ -15485,34 +15325,29 @@ msgid "Indexed Conversion Dialog"
 msgstr "Númeruð litabreyting"
 
 #: ../app/dialogs/preferences-dialog.c:1972
-#, fuzzy
 #| msgid "Colormap"
 msgid "Colormap:"
-msgstr "Litakort"
+msgstr "Litavörpun:"
 
 #: ../app/dialogs/preferences-dialog.c:1975
-#, fuzzy
 #| msgid "_Maximum number of colors:"
 msgid "Maximum number of colors:"
 msgstr "Hámarksfjöldi lita:"
 
 #: ../app/dialogs/preferences-dialog.c:1979
-#, fuzzy
 #| msgid "_Remove unused colors from colormap"
 msgid "Remove unused and duplicate colors from colormap"
-msgstr "_Fjarlægja ónotaða liti úr litavörpun"
+msgstr "Fjarlægja ónotaða liti úr litavörpun"
 
 #: ../app/dialogs/preferences-dialog.c:1985
-#, fuzzy
 #| msgid "Color _dithering:"
 msgid "Color dithering:"
-msgstr "Litpunkta_dreifing:"
+msgstr "Litpunktadreifing:"
 
 #: ../app/dialogs/preferences-dialog.c:1989
-#, fuzzy
 #| msgid "Enable dithering of _transparency"
 msgid "Enable dithering of transparency"
-msgstr "Virkja punktdreifingu í _gegnsæi"
+msgstr "Virkja punktdreifingu í gegnsæi"
 
 #. Canvas Size Dialog
 #: ../app/dialogs/preferences-dialog.c:1996
@@ -17444,11 +17279,10 @@ msgid "RGB (linear)"
 msgstr "RGB (línulegt)"
 
 #: ../app/operations/operations-enums.c:27
-#, fuzzy
 #| msgid "Percentile:"
 msgctxt "layer-color-space"
 msgid "RGB (perceptual)"
-msgstr "Hundraðshluti:"
+msgstr "RGB (skynjanlegt)"
 
 #: ../app/operations/operations-enums.c:28
 msgctxt "layer-color-space"
@@ -17493,7 +17327,7 @@ msgstr "Uppruni"
 #: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
 msgid "Normal (legacy)"
-msgstr ""
+msgstr "Venjulegt (gamalt)"
 
 #: ../app/operations/operations-enums.c:154
 #, fuzzy
@@ -17506,7 +17340,7 @@ msgstr "Uppleysing"
 #: ../app/operations/operations-enums.c:155
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
-msgstr ""
+msgstr "Aftan við (gamalt)"
 
 #: ../app/operations/operations-enums.c:156
 #, fuzzy
@@ -17519,12 +17353,12 @@ msgstr "Margföldun"
 #: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
-msgstr ""
+msgstr "Skjár (gamalt)"
 
 #: ../app/operations/operations-enums.c:158
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
-msgstr ""
+msgstr "Gamalt bilað yfirlag"
 
 #: ../app/operations/operations-enums.c:159
 #, fuzzy
@@ -17567,12 +17401,11 @@ msgid "Lighten only (legacy)"
 msgstr "Einungis lýsa"
 
 #: ../app/operations/operations-enums.c:164
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hue (HSV)"
 msgctxt "layer-mode"
 msgid "Hue (HSV) (legacy)"
-msgstr "Litblær (HSV)"
+msgstr "Litblær (HSV)  (gamalt)"
 
 #: ../app/operations/operations-enums.c:165
 #, fuzzy
@@ -17601,17 +17434,17 @@ msgstr "Litgildi (HSV)"
 #: ../app/operations/operations-enums.c:168
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
-msgstr ""
+msgstr "Deila (gamalt)"
 
 #: ../app/operations/operations-enums.c:169
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
-msgstr ""
+msgstr "Upplita (gamalt)"
 
 #: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
-msgstr ""
+msgstr "Brenna (gamalt)"
 
 #: ../app/operations/operations-enums.c:171
 #, fuzzy
@@ -17662,7 +17495,6 @@ msgid "Overlay"
 msgstr "Yfirprentun"
 
 #: ../app/operations/operations-enums.c:177
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hue (LCH)"
 msgctxt "layer-mode"
@@ -17765,7 +17597,6 @@ msgid "Lighten only"
 msgstr "Einungis lýsa"
 
 #: ../app/operations/operations-enums.c:190
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Hue (HSV)"
 msgctxt "layer-mode"
@@ -17805,7 +17636,6 @@ msgid "Divide"
 msgstr "Deiling"
 
 #: ../app/operations/operations-enums.c:195
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Dodge"
 msgctxt "layer-mode"
@@ -17813,7 +17643,6 @@ msgid "Dodge"
 msgstr "Upplita"
 
 #: ../app/operations/operations-enums.c:196
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Burn"
 msgctxt "layer-mode"
@@ -17891,12 +17720,11 @@ msgid "Exclusion"
 msgstr "Sjónblekking"
 
 #: ../app/operations/operations-enums.c:206
-#, fuzzy
 #| msgctxt "gradient-editor-blending"
 #| msgid "_Linear"
 msgctxt "layer-mode"
 msgid "Linear burn"
-msgstr "_Línulegt"
+msgstr "Línuleg brennsla"
 
 #: ../app/operations/operations-enums.c:207
 msgctxt "layer-mode"
@@ -18130,16 +17958,14 @@ msgid "Fill the original position of the cage with a plain color"
 msgstr "Fylla upprunastöðu sjónarhornsrammans með hreinum lit"
 
 #: ../app/operations/gimpoperationcolorbalance.c:65
-#, fuzzy
 #| msgid "Color Balance Tool: Adjust color distribution"
 msgid "Adjust color distribution"
-msgstr "Litajafnvægisverkfæri: Stilla litadreifingu"
+msgstr "Stilla litadreifingu"
 
 #: ../app/operations/gimpoperationcolorize.c:64
-#, fuzzy
 #| msgid "Colorize the Image"
 msgid "Colorize the image"
-msgstr "Litþrykkja mynd"
+msgstr "Litþrykkja myndina"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
@@ -18156,10 +17982,9 @@ msgid "Choose shade of gray based on"
 msgstr "Veldu gráan tón byggt á"
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
-#, fuzzy
 #| msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
 msgid "Adjust hue, saturation, and lightness"
-msgstr "Litblær-Litmettun: Breytir litblæ, litmettun og ljósleika"
+msgstr "Breyta litblæ, litmettun og ljósleika"
 
 #: ../app/operations/gimpoperationposterize.c:82
 msgid "Reduce to a limited set of colors"
@@ -19357,7 +19182,7 @@ msgstr "Sobel"
 #: ../app/pdb/plug-in-compat-cmds.c:3815
 msgctxt "undo-type"
 msgid "Solid Noise"
-msgstr ""
+msgstr "Gegnheilt suð"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3859
 msgctxt "undo-type"
@@ -22411,14 +22236,13 @@ msgid "High quality preview"
 msgstr "Hágæða forskoðun"
 
 #: ../app/tools/gimpwarpoptions.c:136
-#, fuzzy
 #| msgid "Use an alternate user gimprc file"
 msgid "Use an accurate but slower preview"
-msgstr "Nota aðra gimprc-notandaskrá"
+msgstr "Nota nákvæma en hægvirka forskoðun"
 
 #: ../app/tools/gimpwarpoptions.c:142
 msgid "During motion"
-msgstr ""
+msgstr "Á meðan hreyfingu stendur"
 
 #: ../app/tools/gimpwarpoptions.c:143
 msgid "Apply effect during motion"
@@ -23958,10 +23782,9 @@ msgid "Metadata won't be visible in GIMP older than version 2.10."
 msgstr "Lýsigögn verða ekki sýnileg í GIMP-útgáfum eldri en 2.10."
 
 #: ../app/widgets/gimpsavedialog.c:329
-#, fuzzy
 #| msgid "Save this XCF file with maximum compatibility"
 msgid "Save this XCF file with better but slower compression"
-msgstr "Vista þessa XCF-skrá með hámarks samhæfni"
+msgstr "Vista þessa XCF-skrá með betri en hægari þjöppun"
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
@@ -23991,10 +23814,9 @@ msgid "Save the current settings as named preset"
 msgstr "Vi_sta stillingar inntakstækja við lokun"
 
 #: ../app/widgets/gimpsettingsbox.c:346
-#, fuzzy
 #| msgid "Manage Saved Settings"
 msgid "Manage presets"
-msgstr "Sýsla með vistaðar stillingar"
+msgstr "Sýsla með forstillingar"
 
 #: ../app/widgets/gimpsettingsbox.c:360
 #, fuzzy
@@ -24049,10 +23871,9 @@ msgid "Export the selected presets to a file"
 msgstr "Flytja valdar stillingar út í skrá"
 
 #: ../app/widgets/gimpsettingseditor.c:213
-#, fuzzy
 #| msgid "Delete the selected settings"
 msgid "Delete the selected preset"
-msgstr "Eyða völdum stillingum"
+msgstr "Eyða valinni forstillingu"
 
 #: ../app/widgets/gimpsizebox.c:458
 #, c-format
@@ -24667,8 +24488,8 @@ msgid ""
 "Substituting grayscale map."
 msgstr ""
 "XCF-aðvörun: útgáfa 0 af XCF skráarsniðinu\n"
-"vistaði litaskrá ekki rétt.\n"
-"Skipti yfir í grátónaskrá."
+"vistaði litnúmeraskrá ekki rétt.\n"
+"Skipti yfir í grátónavörpun."
 
 #: ../app/xcf/xcf-read.c:147
 msgid "Invalid UTF-8 string in XCF file"
