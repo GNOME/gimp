@@ -32,7 +32,6 @@
 
 #include "pdb-types.h"
 
-#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgrouplayer.h"
@@ -183,7 +182,7 @@ layer_new_from_visible_invoker (GimpProcedure         *procedure,
                                                                             TRUE),
                                                name,
                                                GIMP_OPACITY_OPAQUE,
-                                               gimp->config->default_new_layer_mode,
+                                               gimp_image_get_default_new_layer_mode (dest_image),
                                                profile);
     }
 

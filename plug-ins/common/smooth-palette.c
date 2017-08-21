@@ -258,7 +258,8 @@ smooth_palette (gint32  drawable_id,
   *layer_id = gimp_layer_new (new_image_id, _("Background"),
                               config.width, config.height,
                               gimp_drawable_type (drawable_id),
-                              100, gimp_get_default_new_layer_mode ());
+                              100,
+                              gimp_image_get_default_new_layer_mode (new_image_id));
 
   gimp_image_insert_layer (new_image_id, *layer_id, -1, 0);
 

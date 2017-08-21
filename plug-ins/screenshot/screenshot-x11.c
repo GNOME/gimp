@@ -465,7 +465,8 @@ add_cursor_image (gint32      image,
   layer = gimp_layer_new (image, _("Mouse Pointer"),
                           cursor->width, cursor->height,
                           GIMP_RGBA_IMAGE,
-                          100.0, gimp_get_default_new_layer_mode ());
+                          100.0,
+                          gimp_image_get_default_new_layer_mode (image));
 
   buffer = gimp_drawable_get_buffer (layer);
 

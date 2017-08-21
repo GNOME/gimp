@@ -1431,7 +1431,8 @@ add_layers (gint32     image_id,
               layer_id = gimp_layer_new (image_id, lyr_a[lidx]->name,
                                          img_a->columns, img_a->rows,
                                          image_type,
-                                         0, gimp_get_default_new_layer_mode ());
+                                         0,
+                                         gimp_image_get_default_new_layer_mode (image_id));
               g_free (lyr_a[lidx]->name);
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
               gimp_drawable_fill (layer_id, GIMP_FILL_TRANSPARENT);
@@ -1784,7 +1785,8 @@ add_merged_image (gint32     image_id,
       layer_id = gimp_layer_new (image_id, _("Background"),
                                  img_a->columns, img_a->rows,
                                  image_type,
-                                 100, gimp_get_default_new_layer_mode ());
+                                 100,
+                                 gimp_image_get_default_new_layer_mode (image_id));
       gimp_image_insert_layer (image_id, layer_id, -1, 0);
       buffer = gimp_drawable_get_buffer (layer_id);
       gegl_buffer_set (buffer,

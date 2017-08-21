@@ -1064,7 +1064,8 @@ load_image (const gchar  *filename,
 
   layer = gimp_layer_new (image, _("Background"), width, height,
                           layer_type,
-                          100, gimp_get_default_new_layer_mode ());
+                          100,
+                          gimp_image_get_default_new_layer_mode (image));
   gimp_image_insert_layer (image, layer, -1, 0);
 
   file_format = gimp_drawable_get_format (layer);

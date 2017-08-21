@@ -1915,7 +1915,8 @@ create_new_image (const gchar        *filename,
   tmp = g_strdup_printf (_("Page %d"), pagenum);
   *layer_ID = gimp_layer_new (image_ID, tmp, width, height,
                               gdtype,
-                              100, gimp_get_default_new_layer_mode ());
+                              100,
+                              gimp_image_get_default_new_layer_mode (image_ID));
   g_free (tmp);
 
   gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);

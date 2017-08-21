@@ -128,6 +128,11 @@ const Babl    * gimp_image_get_layer_format      (GimpImage          *image,
 const Babl    * gimp_image_get_channel_format    (GimpImage          *image);
 const Babl    * gimp_image_get_mask_format       (GimpImage          *image);
 
+GimpLayerMode   gimp_image_get_default_new_layer_mode
+                                                 (GimpImage          *image);
+void            gimp_image_unset_default_new_layer_mode
+                                                 (GimpImage          *image);
+
 gint            gimp_image_get_ID                (GimpImage          *image);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
                                                   gint                id);

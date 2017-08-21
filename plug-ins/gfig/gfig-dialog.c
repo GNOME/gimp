@@ -248,7 +248,8 @@ gfig_dialog (void)
       newlayer = gimp_layer_new (gfig_context->image_id, "GFig",
                                  img_width, img_height,
                                  img_type,
-                                 100.0, gimp_get_default_new_layer_mode ());
+                                 100.0,
+                                 gimp_image_get_default_new_layer_mode (gfig_context->image_id));
       gimp_drawable_fill (newlayer, GIMP_FILL_TRANSPARENT);
       gimp_image_insert_layer (gfig_context->image_id, newlayer, -1, -1);
       gfig_context->drawable_id = newlayer;

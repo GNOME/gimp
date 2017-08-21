@@ -28,8 +28,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
@@ -423,7 +421,7 @@ gimp_edit_paste (GimpImage     *image,
                                           floating_format,
                                           _("Pasted Layer"),
                                           GIMP_OPACITY_OPAQUE,
-                                          image->gimp->config->default_new_layer_mode);
+                                          gimp_image_get_default_new_layer_mode (image));
     }
 
   if (! layer)

@@ -105,9 +105,6 @@ _("This is the distance in pixels where Guide and Grid snapping " \
 #define SNAP_TO_PATH_BLURB \
 "Snap to the active path by default in new image windows."
 
-#define DEFAULT_NEW_LAYER_MODE_BLURB \
-_("The default layer mode for newly created layers and images.")
-
 #define DEFAULT_THRESHOLD_BLURB \
 _("Tools such as fuzzy-select and bucket fill find regions based on a " \
   "seed-fill algorithm.  The seed fill starts at the initially selected " \

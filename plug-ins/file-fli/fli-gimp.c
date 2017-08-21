@@ -565,7 +565,8 @@ load_image (const gchar  *filename,
       layer_ID = gimp_layer_new (image_id, name_buf,
 				 fli_header.width, fli_header.height,
 				 GIMP_INDEXED_IMAGE,
-                                 100, gimp_get_default_new_layer_mode ());
+                                 100,
+                                 gimp_image_get_default_new_layer_mode (image_id));
       g_free (name_buf);
 
       buffer = gimp_drawable_get_buffer (layer_ID);

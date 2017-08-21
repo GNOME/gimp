@@ -58,7 +58,6 @@ enum
   PROP_LANGUAGE,
   PROP_INTERPOLATION_TYPE,
   PROP_DEFAULT_THRESHOLD,
-  PROP_DEFAULT_NEW_LAYER_MODE,
   PROP_PLUG_IN_PATH,
   PROP_MODULE_PATH,
   PROP_INTERPRETER_PATH,
@@ -181,14 +180,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                         DEFAULT_THRESHOLD_BLURB,
                         0, 255, 15,
                         GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DEFAULT_NEW_LAYER_MODE,
-                         "default-new-layer-mode",
-                         "Default new layer mode",
-                         DEFAULT_NEW_LAYER_MODE_BLURB,
-                         GIMP_TYPE_LAYER_MODE,
-                         GIMP_LAYER_MODE_NORMAL_LEGACY,
-                         GIMP_PARAM_STATIC_STRINGS);
 
   path = gimp_config_build_plug_in_path ("plug-ins");
   GIMP_CONFIG_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
@@ -762,9 +753,6 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_DEFAULT_THRESHOLD:
       core_config->default_threshold = g_value_get_int (value);
       break;
-    case PROP_DEFAULT_NEW_LAYER_MODE:
-      core_config->default_new_layer_mode = g_value_get_enum (value);
-      break;
     case PROP_PLUG_IN_PATH:
       g_free (core_config->plug_in_path);
       core_config->plug_in_path = g_value_dup_string (value);
@@ -987,9 +975,6 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_THRESHOLD:
       g_value_set_int (value, core_config->default_threshold);
-      break;
-    case PROP_DEFAULT_NEW_LAYER_MODE:
-      g_value_set_enum (value, core_config->default_new_layer_mode);
       break;
     case PROP_PLUG_IN_PATH:
       g_value_set_string (value, core_config->plug_in_path);

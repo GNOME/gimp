@@ -721,7 +721,8 @@ do_curl_effect (gint32 drawable_id)
                                   true_sel_height,
                                   color_image ?
                                   GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE,
-                                  100, gimp_get_default_new_layer_mode ());
+                                  100,
+                                  gimp_image_get_default_new_layer_mode (image_id));
 
   gimp_image_insert_layer (image_id, curl_layer_id,
                            gimp_item_get_parent (drawable_id),

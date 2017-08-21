@@ -628,7 +628,8 @@ gih_load_one_brush (GInputStream  *input,
   layer_ID = gimp_layer_new (image_ID, name,
                              bh.width, bh.height,
                              image_type,
-                             100, gimp_get_default_new_layer_mode ());
+                             100,
+                             gimp_image_get_default_new_layer_mode (image_ID));
   g_free (name);
 
   if (layer_ID != -1)

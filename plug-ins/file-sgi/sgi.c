@@ -410,7 +410,8 @@ load_image (const gchar  *filename,
 
   layer = gimp_layer_new (image, _("Background"), sgip->xsize, sgip->ysize,
                           layer_type,
-                          100, gimp_get_default_new_layer_mode ());
+                          100,
+                          gimp_image_get_default_new_layer_mode (image));
   gimp_image_insert_layer (image, layer, -1, 0);
 
   /*

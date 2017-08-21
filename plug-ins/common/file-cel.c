@@ -440,11 +440,13 @@ load_image (const gchar  *file,
   if (bpp == 32)
     layer = gimp_layer_new (image, _("Background"), width, height,
                             GIMP_RGBA_IMAGE,
-                            100, gimp_get_default_new_layer_mode ());
+                            100,
+                            gimp_image_get_default_new_layer_mode (image));
   else
     layer = gimp_layer_new (image, _("Background"), width, height,
                             GIMP_INDEXEDA_IMAGE,
-                            100, gimp_get_default_new_layer_mode ());
+                            100,
+                            gimp_image_get_default_new_layer_mode (image));
   gimp_image_insert_layer (image, layer, -1, 0);
   gimp_layer_set_offsets (layer, offx, offy);
 

@@ -1317,6 +1317,32 @@ CODE
     );
 }
 
+sub image_get_default_new_layer_mode {
+    $blurb = 'Get the default mode for newly created layers of this image.';
+    $help  = 'Returns the default mode for newly created layers of this image.';
+
+    &mitch_pdb_misc('2017', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+	{ name => 'mode', type => 'enum GimpLayerMode',
+          default => 'GIMP_LAYER_MODE_NORMAL',
+	  desc => 'The layer mode' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  mode = gimp_image_get_default_new_layer_mode (image);
+}
+CODE
+    );
+}
+
 sub image_get_colormap {
     $blurb = "Returns the image's colormap";
 
@@ -2839,6 +2865,7 @@ CODE
             image_duplicate image_delete
             image_base_type
             image_get_precision
+            image_get_default_new_layer_mode
             image_width image_height
             image_free_shadow
             image_get_layers
@@ -2892,7 +2919,7 @@ CODE
 # image_add_layer_mask and image_remove_layer_mask.
 # If adding or removing functions, make sure the range below is
 # updated correctly!
-%exports = (app => [@procs], lib => [@procs[0..37,40..80]]);
+%exports = (app => [@procs], lib => [@procs[0..38,41..81]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

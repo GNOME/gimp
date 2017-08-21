@@ -25,8 +25,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 
@@ -893,7 +891,7 @@ gimp_selection_float (GimpSelection *selection,
                                            gimp_drawable_get_format_with_alpha (drawable),
                                            _("Floated Layer"),
                                            GIMP_OPACITY_OPAQUE,
-                                           image->gimp->config->default_new_layer_mode,
+                                           gimp_image_get_default_new_layer_mode (image),
                                            profile);
 
   /*  Set the offsets  */

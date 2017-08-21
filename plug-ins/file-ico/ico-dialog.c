@@ -288,7 +288,8 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
 
       tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
                                   gimp_drawable_type (layer),
-                                  100, gimp_get_default_new_layer_mode ());
+                                  100,
+                                  gimp_image_get_default_new_layer_mode (tmp_image));
       gimp_image_insert_layer (tmp_image, tmp_layer, -1, 0);
 
       buffer = gimp_drawable_get_buffer (layer);
@@ -388,7 +389,8 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
 
       tmp_layer = gimp_layer_new (tmp_image, "temporary", w, h,
                                   gimp_drawable_type (layer),
-                                  100, gimp_get_default_new_layer_mode ());
+                                  100,
+                                  gimp_image_get_default_new_layer_mode (tmp_image));
       gimp_image_insert_layer (tmp_image, tmp_layer, -1, 0);
 
       buffer = gimp_drawable_get_buffer (layer);

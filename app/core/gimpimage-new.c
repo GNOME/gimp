@@ -149,7 +149,7 @@ gimp_image_new_from_template (Gimp         *gimp,
                           gimp_image_get_layer_format (image, has_alpha),
                           _("Background"),
                           GIMP_OPACITY_OPAQUE,
-                          image->gimp->config->default_new_layer_mode);
+                          gimp_image_get_default_new_layer_mode (image));
 
   gimp_drawable_fill (GIMP_DRAWABLE (layer),
                       context, gimp_template_get_fill_type (template));
@@ -225,7 +225,7 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   gimp_item_set_visible (GIMP_ITEM (new_layer), TRUE, FALSE);
   gimp_item_set_linked (GIMP_ITEM (new_layer), FALSE, FALSE);
   gimp_layer_set_mode (new_layer,
-                       new_image->gimp->config->default_new_layer_mode,
+                       gimp_image_get_default_new_layer_mode (new_image),
                        FALSE);
   gimp_layer_set_opacity (new_layer, GIMP_OPACITY_OPAQUE, FALSE);
   if (gimp_layer_can_lock_alpha (new_layer))
@@ -324,7 +324,7 @@ gimp_image_new_from_buffer (Gimp       *gimp,
                                                                    has_alpha),
                                       _("Pasted Layer"),
                                       GIMP_OPACITY_OPAQUE,
-                                      image->gimp->config->default_new_layer_mode);
+                                      gimp_image_get_default_new_layer_mode (image));
 
   gimp_image_add_layer (image, layer, NULL, 0, TRUE);
 
@@ -383,7 +383,7 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
                                                                    has_alpha),
                                       layer_name,
                                       GIMP_OPACITY_OPAQUE,
-                                      new_image->gimp->config->default_new_layer_mode);
+                                      gimp_image_get_default_new_layer_mode (new_image));
 
   gimp_image_add_layer (new_image, layer, NULL, 0, TRUE);
 

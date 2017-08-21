@@ -354,7 +354,8 @@ tile (gint32  image_id,
       *new_layer_id = gimp_layer_new (*new_image_id, _("Background"),
                                       dst_width, dst_height,
                                       gimp_drawable_type (drawable_id),
-                                      100, gimp_get_default_new_layer_mode ());
+                                      100,
+                                      gimp_image_get_default_new_layer_mode (*new_image_id));
 
       if (*new_layer_id == -1)
         return;

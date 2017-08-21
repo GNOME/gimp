@@ -49,6 +49,7 @@ struct _GimpImagePrivate
   GimpUnit           resolution_unit;       /*  resolution unit              */
   GimpImageBaseType  base_type;             /*  base gimp_image type         */
   GimpPrecision      precision;             /*  image's precision            */
+  GimpLayerMode      new_layer_mode;        /*  default mode of new layers   */
 
   guchar            *colormap;              /*  colormap (for indexed)       */
   gint               n_colors;              /*  # of colors (for indexed)    */

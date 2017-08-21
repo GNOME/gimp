@@ -332,7 +332,6 @@ EXPORTS
 	gimp_gamma
 	gimp_get_color_configuration
 	gimp_get_default_comment
-	gimp_get_default_new_layer_mode
 	gimp_get_default_unit
 	gimp_get_icon_theme_dir
 	gimp_get_module_load_inhibit
@@ -437,6 +436,7 @@ EXPORTS
 	gimp_image_get_colormap
 	gimp_image_get_component_active
 	gimp_image_get_component_visible
+	gimp_image_get_default_new_layer_mode
 	gimp_image_get_effective_color_profile
 	gimp_image_get_exported_uri
 	gimp_image_get_filename

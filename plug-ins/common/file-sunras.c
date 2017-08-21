@@ -1048,7 +1048,8 @@ create_new_image (const gchar        *filename,
 
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
                               gdtype,
-                              100, gimp_get_default_new_layer_mode ());
+                              100,
+                              gimp_image_get_default_new_layer_mode (image_ID));
   gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
 
   *buffer = gimp_drawable_get_buffer (*layer_ID);

@@ -43,7 +43,6 @@ struct _GimpCoreConfig
   gchar                  *language;
   GimpInterpolationType   interpolation_type;
   gint                    default_threshold;
-  GimpLayerMode           default_new_layer_mode;
   gchar                  *plug_in_path;
   gchar                  *module_path;
   gchar                  *interpreter_path;

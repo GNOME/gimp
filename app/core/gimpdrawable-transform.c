@@ -30,8 +30,6 @@
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-utils.h"
 
@@ -1015,7 +1013,7 @@ gimp_drawable_transform_paste (GimpDrawable     *drawable,
                                          gimp_drawable_get_format_with_alpha (drawable),
                                          _("Transformation"),
                                          GIMP_OPACITY_OPAQUE,
-                                         image->gimp->config->default_new_layer_mode,
+                                         gimp_image_get_default_new_layer_mode (image),
                                          buffer_profile);
 
       gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);

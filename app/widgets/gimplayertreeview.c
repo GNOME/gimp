@@ -31,8 +31,6 @@
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage-undo.h"
@@ -811,7 +809,7 @@ gimp_layer_tree_view_drop_pixbuf (GimpContainerTreeView   *tree_view,
                                 gimp_image_get_layer_format (image, TRUE),
                                 _("Dropped Buffer"),
                                 GIMP_OPACITY_OPAQUE,
-                                image->gimp->config->default_new_layer_mode);
+                                gimp_image_get_default_new_layer_mode (image));
 
   gimp_image_add_layer (image, new_layer, parent, index, TRUE);
 
@@ -853,7 +851,7 @@ gimp_layer_tree_view_item_new (GimpImage *image)
                               gimp_image_get_layer_format (image, TRUE),
                               NULL,
                               GIMP_OPACITY_OPAQUE,
-                              image->gimp->config->default_new_layer_mode);
+                              gimp_image_get_default_new_layer_mode (image));
 
   gimp_image_add_layer (image, new_layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

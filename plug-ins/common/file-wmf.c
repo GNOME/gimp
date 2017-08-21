@@ -998,7 +998,8 @@ load_image (const gchar  *filename,
                           _("Rendered WMF"),
                           width, height,
                           GIMP_RGBA_IMAGE,
-                          100, gimp_get_default_new_layer_mode ());
+                          100,
+                          gimp_image_get_default_new_layer_mode (image));
 
   buffer = gimp_drawable_get_buffer (layer);
 

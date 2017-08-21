@@ -34,6 +34,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "operations/layer-modes/gimp-layer-modes.h"
+
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
@@ -699,6 +701,7 @@ gimp_image_init (GimpImage *image)
   private->resolution_unit     = GIMP_UNIT_INCH;
   private->base_type           = GIMP_RGB;
   private->precision           = GIMP_PRECISION_U8_GAMMA;
+  private->new_layer_mode      = -1;
 
   private->colormap            = NULL;
   private->n_colors            = 0;
@@ -1848,6 +1851,63 @@ gimp_image_get_mask_format (GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return gimp_babl_mask_format (gimp_image_get_precision (image));
+}
+
+GimpLayerMode
+gimp_image_get_default_new_layer_mode (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_LAYER_MODE_NORMAL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->new_layer_mode == -1)
+    {
+      GList *layers = gimp_image_get_layer_list (image);
+
+      if (layers)
+        {
+          GList *list;
+
+          for (list = layers; list; list = g_list_next (list))
+            {
+              GimpLayer     *layer = list->data;
+              GimpLayerMode  mode  = gimp_layer_get_mode (layer);
+
+              if (! gimp_layer_mode_is_legacy (mode))
+                {
+                  /*  any non-legacy layer switches the mode to non-legacy
+                   */
+                  private->new_layer_mode = GIMP_LAYER_MODE_NORMAL;
+                  break;
+                }
+            }
+
+          /*  only if all layers are legacy, the mode is also legacy
+           */
+          if (! list)
+            private->new_layer_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
+
+          g_list_free (layers);
+        }
+      else
+        {
+          /*  empty images are never considered legacy
+           */
+          private->new_layer_mode = GIMP_LAYER_MODE_NORMAL;
+        }
+    }
+
+  return private->new_layer_mode;
+}
+
+void
+gimp_image_unset_default_new_layer_mode (GimpImage *image)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  GIMP_IMAGE_GET_PRIVATE (image)->new_layer_mode = -1;
 }
 
 gint
@@ -4208,6 +4268,8 @@ gimp_image_add_layer (GimpImage *image,
                                        &position))
     return FALSE;
 
+  gimp_image_unset_default_new_layer_mode (image);
+
   /*  If there is a floating selection (and this isn't it!),
    *  make sure the insert position is greater than 0
    */
@@ -4256,6 +4318,8 @@ gimp_image_remove_layer (GimpImage *image,
   g_return_if_fail (gimp_item_get_image (GIMP_ITEM (layer)) == image);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  gimp_image_unset_default_new_layer_mode (image);
 
   if (gimp_drawable_get_floating_sel (GIMP_DRAWABLE (layer)))
     {
