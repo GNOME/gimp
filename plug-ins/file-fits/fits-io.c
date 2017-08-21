@@ -964,9 +964,9 @@ fits_write_header (FitsFile    *ff,
 
   for (k = 0; k < hdulist->naxis; k++)
     {
-      gchar naxisn[10];
+      gchar naxisn[16];
 
-      sprintf (naxisn, "NAXIS%d", k+1);
+      g_snprintf (naxisn, sizeof (naxisn), "NAXIS%d", k+1);
       FITS_WRITE_LONGCARD (ff->fp, naxisn, hdulist->naxisn[k]);
       numcards++;
     }
@@ -1150,9 +1150,9 @@ fits_decode_header (FitsRecordList *hdr,
   /* Find all NAXISx-cards */
   for (k = 1; k <= FITS_MAX_AXIS; k++)
     {
-      gchar naxisn[9];
+      gchar naxisn[16];
 
-      sprintf (naxisn, "NAXIS%-3d", k);
+      g_snprintf (naxisn, sizeof (naxisn), "NAXIS%-3d", k);
       fdat = fits_decode_card (fits_search_card (hdr, naxisn),
                                FITS_DATA_TYPE_FLONG);
       if (fdat == NULL)
@@ -1269,7 +1269,8 @@ fits_decode_header (FitsRecordList *hdr,
   return hdulist;
 
  err_missing:
-  sprintf (errmsg, "fits_decode_header: missing/invalid %s card", key);
+  g_snprintf (errmsg, sizeof (errmsg),
+              "fits_decode_header: missing/invalid %s card", key);
 
  err_return:
   fits_delete_hdulist (hdulist);
@@ -1648,9 +1649,9 @@ fits_decode_card (const gchar  *card,
 
   if (strncmp (card+8, "= ", 2) != 0)
     {
-      sprintf (msg,
-               "fits_decode_card (warning): Missing value indicator "
-               "'= ' for %8.8s", l_card);
+      g_snprintf (msg, sizeof (msg),
+                  "fits_decode_card (warning): Missing value indicator "
+                  "'= ' for %8.8s", l_card);
       fits_set_error (msg);
       ErrCount++;
     }
