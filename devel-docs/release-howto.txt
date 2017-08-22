@@ -104,7 +104,10 @@
          file around.
 
      [ ] Copy the tarball and the .md5 file to its final destination
-         in the download area (/srv/ftp/pub/gimp/v2.x).
+         in the download area (/srv/ftp/pub/gimp/v2.x). Really use
+         "cp" not "mv" or SELinux will make the uploaded file
+         unreadable to the web server unless some obscure status bit
+         is toggled.
 
      [ ] Update the 0.0_LATEST-IS- file in the corresponding directory
          on the download server.
