@@ -47,6 +47,9 @@ Layers and compositing:
     or CIE LAB.
   - Layer blending color space and compositing color space are
     configurable now.
+  - Layers created from the GUI and from plug-ins now default to
+    normal mode (not normal-legacy), unless all the existing layers
+    in the image are also in legacy mode.
   - New layer modes: linear burn, vivid light, linear light, pin light,
     hard mix, exclusion, merge, split, luminance (rgb), pass-through
     (for layer groups only).
