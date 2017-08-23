@@ -3,14 +3,14 @@
 # Copyright (C) 2008, 2009, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.gimp-2-8.is\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-19 15:30+0000\n"
-"PO-Revision-Date: 2015-12-07 13:44+0000\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-08-10 07:10+0000\n"
+"PO-Revision-Date: 2017-08-23 09:00+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -20,37 +20,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=1;\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
 msgstr "Vantar upplýsingar um frávik (exception)"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Villa kom upp við keyrslu %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
 msgstr "_Nánari upplýsingar"
 
-#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
-#: ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
 msgstr "Nei"
 
-#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
 msgstr "Já"
 
-#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu skráaval"
 
-#: ../plug-ins/pygimp/gimpfu.py:644
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu möppuval"
 
-#: ../plug-ins/pygimp/gimpfu.py:733
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ógilt inntak fyrir '%s'"
@@ -219,7 +219,6 @@ msgid "Hue"
 msgstr "Litblær"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
-#| msgid "Green or Saturation"
 msgid "Saturation"
 msgstr "Litmettun"
 
@@ -281,19 +280,19 @@ msgstr "Allt"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Slice / Array"
-msgstr ""
+msgstr "Sneiða / Fylki"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Autoslice (fg->bg)"
-msgstr ""
+msgstr "Sjálfvirk sneiðing (fg->bg)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Partitioned"
-msgstr ""
+msgstr "Upphlutað"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
 msgid "Slice _expression"
-msgstr ""
+msgstr "Segð sn_eiðingar"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
@@ -305,21 +304,20 @@ msgid "_Ascending"
 msgstr "_Hækkandi"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
-#| msgid "Channel to _sort"
 msgid "Secondary Channel to s_ort"
 msgstr "_Aukalitrás til að raða"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
 msgid "_Quantization"
-msgstr ""
+msgstr "_Magn"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
 msgid "_Partitioning channel"
-msgstr ""
+msgstr "Rás sem á að ski_pta upp"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
 msgid "Partition q_uantization"
-msgstr ""
+msgstr "Magn í skipting_u"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
@@ -342,48 +340,48 @@ msgid "Slice"
 msgstr "Sneiða"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Sníður mynd meðfram stoðlínum, býr til myndhluta og HTML töflukóða"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "_Sneiða..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "Slóð fyrir útflutning á HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "Skráarheiti til útflutnings"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "Forskeyti myndskráarheitis"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Image format"
 msgstr "Myndsnið"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "Sérstök myndamappa"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "Mappa til útflutnings mynda"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "Bil milli töfluhluta"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript við yfirsvif (onmouseover) og smell"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "Sleppa hreyfingum á töflufyrirsögnum"
 
@@ -395,29 +393,29 @@ msgstr "Python stjórnskjár"
 msgid "_Browse..."
 msgstr "_Flakka..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pygimp/plug-ins/python-console.py:144
 msgid "Python Procedure Browser"
 msgstr "Python aðgerðavafri"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pygimp/plug-ins/python-console.py:173
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Gat ekki opnað '%s' fyrir ritun: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pygimp/plug-ins/python-console.py:188
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Gat ekki skrifað í '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pygimp/plug-ins/python-console.py:196
 msgid "Save Python-Fu Console Output"
 msgstr "Vista Python-Fu úttak frá skipanalínu"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/pygimp/plug-ins/python-console.py:222
 msgid "Interactive GIMP Python interpreter"
 msgstr "Gagnvirkur GIMP Python túlkari"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pygimp/plug-ins/python-console.py:227
 msgid "_Console"
 msgstr "Stjórns_kjár"
 
