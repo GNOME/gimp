@@ -6,14 +6,14 @@
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
 # Sveinn í Felli <sveinki@nett.is>, 2009, 2015.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-8.is\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
-"keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-25 06:26+0000\n"
-"PO-Revision-Date: 2015-04-29 14:26+0000\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-08-09 15:00+0000\n"
+"PO-Revision-Date: 2017-08-23 09:18+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -271,7 +271,7 @@ msgstr "Afstöðuhorn: svið 0-360"
 
 #. Propagate Mode
 #: ../plug-ins/common/alien-map.c:516 ../plug-ins/common/hot.c:613
-#: ../plug-ins/common/value-propagate.c:1121 ../plug-ins/common/waves.c:279
+#: ../plug-ins/common/value-propagate.c:1125 ../plug-ins/common/waves.c:279
 msgid "Mode"
 msgstr "Hamur"
 
@@ -606,13 +606,13 @@ msgstr "Lóð_rétt"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:442
-#: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:445
+#: ../plug-ins/common/file-cel.c:448 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
-#: ../plug-ins/common/file-png.c:897 ../plug-ins/common/file-pnm.c:585
-#: ../plug-ins/common/file-raw.c:766 ../plug-ins/common/file-sunras.c:979
+#: ../plug-ins/common/file-png.c:898 ../plug-ins/common/file-pnm.c:585
+#: ../plug-ins/common/file-raw.c:780 ../plug-ins/common/file-sunras.c:979
 #: ../plug-ins/common/file-tga.c:1095 ../plug-ins/common/file-tiff-load.c:1011
 #: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
@@ -620,9 +620,8 @@ msgstr "Lóð_rétt"
 #: ../plug-ins/file-fits/fits.c:532 ../plug-ins/file-jpeg/jpeg-load.c:260
 #: ../plug-ins/file-jpeg/jpeg-load.c:824
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
-#: ../plug-ins/file-psd/psd-load.c:1644 ../plug-ins/file-sgi/sgi.c:409
-#: ../plug-ins/gfig/gfig-dialog.c:1321
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/file-psd/psd-load.c:1655 ../plug-ins/file-sgi/sgi.c:409
+#: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -656,7 +655,7 @@ msgstr "Valkvæð Gaussísk afskerping"
 
 #: ../plug-ins/common/blur-gauss-selective.c:211
 #: ../plug-ins/common/blur-gauss.c:448 ../plug-ins/common/cartoon.c:232
-#: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
+#: ../plug-ins/common/edge-dog.c:277 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
 #: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1691
@@ -906,8 +905,8 @@ msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
-"Hliðrunina má stilla með því að draga forskoðunina til með "
-"miðju-músarhnappnum."
+"Hliðrunina má stilla með því að draga forskoðunina til með miðju-"
+"músarhnappnum."
 
 #: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3264
 msgid "_Y offset:"
@@ -1018,8 +1017,8 @@ msgstr "Hlaða inn stillingum litrásablandara"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:349
-#: ../plug-ins/common/file-cel.c:580 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:352
+#: ../plug-ins/common/file-cel.c:583 ../plug-ins/common/file-dicom.c:340
 #: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:357
 #: ../plug-ins/common/file-gih.c:642 ../plug-ins/common/file-jp2-load.c:196
 #: ../plug-ins/common/file-jp2-load.c:205 ../plug-ins/common/file-mng.c:1156
@@ -1027,7 +1026,7 @@ msgstr "Hlaða inn stillingum litrásablandara"
 #: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
 #: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
 #: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
-#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:714
+#: ../plug-ins/common/file-raw.c:257 ../plug-ins/common/file-raw.c:728
 #: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
 #: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
@@ -1035,8 +1034,8 @@ msgstr "Hlaða inn stillingum litrásablandara"
 #: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:206 ../plug-ins/file-faxg3/faxg3.c:229
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:461
-#: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:651
-#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:122
+#: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:672
+#: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:122
 #: ../plug-ins/file-jpeg/jpeg-load.c:894 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
@@ -1057,21 +1056,21 @@ msgstr "Vista stillingar litrásablandara"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-cel.c:776 ../plug-ins/common/file-csource.c:409
 #: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
 #: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:488
 #: ../plug-ins/common/file-pcx.c:713 ../plug-ins/common/file-pdf-save.c:438
-#: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1369
+#: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1370
 #: ../plug-ins/common/file-pnm.c:1012 ../plug-ins/common/file-ps.c:1195
-#: ../plug-ins/common/file-raw.c:609 ../plug-ins/common/file-raw.c:637
+#: ../plug-ins/common/file-raw.c:623 ../plug-ins/common/file-raw.c:651
 #: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1202
 #: ../plug-ins/common/file-tiff-save.c:842 ../plug-ins/common/file-xbm.c:1037
 #: ../plug-ins/common/file-xmc.c:1449 ../plug-ins/common/file-xwd.c:637
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:311 ../plug-ins/file-fits/fits.c:478
-#: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1020
 #: ../plug-ins/file-jpeg/jpeg-save.c:355 ../plug-ins/file-psd/psd-save.c:1653
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1280 ../plug-ins/file-xjt/xjt.c:1719
@@ -1261,7 +1260,7 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:208
 msgid "Multiply gradient (0,1)"
-msgstr ""
+msgstr "Margfalda litstigul (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:209
 msgid "With p and random (0,1)"
@@ -1481,7 +1480,6 @@ msgid "P(ower factor):"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1661
-#, fuzzy
 msgid "Parameter k:"
 msgstr "Færibreyta k:"
 
@@ -1495,7 +1493,7 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1691
 msgid "Plot a Graph of the Settings"
-msgstr ""
+msgstr "Teikna graf yfir núverandi stillingar"
 
 #: ../plug-ins/common/cml-explorer.c:1736
 msgid "Ch. sensitivity:"
@@ -1745,11 +1743,12 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Dragðu og slepptu litum til að endurraða litakortinu. Tölurnar eru upprunaleg "
-"litauðkenni. Hægrismelltu til að fá upp valmynd með röðunarmöguleikum."
+"Dragðu og slepptu litum til að endurraða litakortinu. Tölurnar eru "
+"upprunaleg litauðkenni. Hægrismelltu til að fá upp valmynd með "
+"röðunarmöguleikum."
 
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw.c:1103
+#: ../plug-ins/common/file-raw.c:1117
 msgid "RGB"
 msgstr "RGB"
 
@@ -1884,8 +1883,8 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
-"Þú getur einungis keyrt 'Endursamsetning' ef virka myndin var upphaflega gerð "
-"með aðgerðinni 'Aðskilja'."
+"Þú getur einungis keyrt 'Endursamsetning' ef virka myndin var upphaflega "
+"gerð með aðgerðinni 'Aðskilja'."
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -1956,8 +1955,7 @@ msgstr "Gildi hulu"
 msgid "Stretch brightness values to cover the full range"
 msgstr "Teygja gildi birtustigs yfir allt sviðið"
 
-#: ../plug-ins/common/contrast-normalize.c:91
-#: ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:370
 msgid "_Normalize"
 msgstr "Sa_mræma"
 
@@ -2071,9 +2069,9 @@ msgstr "_Alfa"
 msgid "E_xtend"
 msgstr "Útví_kka"
 
-#: ../plug-ins/common/convolution-matrix.c:74
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:700
-#: ../plug-ins/common/fractal-trace.c:737 ../plug-ins/common/ripple.c:585
+#: ../plug-ins/common/convolution-matrix.c:74 ../plug-ins/common/displace.c:477
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/fractal-trace.c:737
+#: ../plug-ins/common/ripple.c:585
 msgid "_Wrap"
 msgstr "_Flétta"
 
@@ -2087,7 +2085,7 @@ msgstr ""
 
 #: ../plug-ins/common/convolution-matrix.c:206
 msgid "_Convolution Matrix..."
-msgstr ""
+msgstr "_Fléttunarfylki..."
 
 #: ../plug-ins/common/convolution-matrix.c:241
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
@@ -2099,7 +2097,7 @@ msgstr ""
 
 #: ../plug-ins/common/convolution-matrix.c:898
 msgid "Convolution Matrix"
-msgstr ""
+msgstr "Fléttunarfylki"
 
 #: ../plug-ins/common/convolution-matrix.c:937
 msgid "Matrix"
@@ -2110,7 +2108,7 @@ msgid "D_ivisor:"
 msgstr "De_ilir:"
 
 #: ../plug-ins/common/convolution-matrix.c:1001
-#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1124
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw.c:1138
 msgid "O_ffset:"
 msgstr "_Hliðrun:"
 
@@ -2202,7 +2200,7 @@ msgstr "Sveigja mynd með tveimur stýriferlum"
 msgid "_Curve Bend..."
 msgstr "Svei_gja með ferlum..."
 
-#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:178
+#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:179
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Virkar einungis á lögum (en var virkjað á litrás eða hulu)."
 
@@ -2659,7 +2657,7 @@ msgstr "Afmá rendur"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
 #: ../plug-ins/common/file-ps.c:3039 ../plug-ins/common/file-ps.c:3237
-#: ../plug-ins/common/file-raw.c:1137 ../plug-ins/common/smooth-palette.c:437
+#: ../plug-ins/common/file-raw.c:1151 ../plug-ins/common/smooth-palette.c:437
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:401
@@ -2677,15 +2675,15 @@ msgstr ""
 
 #: ../plug-ins/common/diffraction.c:172
 msgid "_Diffraction Patterns..."
-msgstr ""
+msgstr "Ljós_brotsmynstur..."
 
 #: ../plug-ins/common/diffraction.c:335
 msgid "Creating diffraction pattern"
-msgstr ""
+msgstr "Útbý ljósbrotsmynstur"
 
 #: ../plug-ins/common/diffraction.c:439
 msgid "Diffraction Patterns"
-msgstr ""
+msgstr "Ljósbrotsmynstur"
 
 #: ../plug-ins/common/diffraction.c:482
 #: ../plug-ins/map-object/map-object-ui.c:1348
@@ -2797,23 +2795,28 @@ msgstr ""
 msgid "_Difference of Gaussians..."
 msgstr "_Mismunur Gaussískra..."
 
-#: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
+#: ../plug-ins/common/edge-dog.c:193 ../plug-ins/common/iwarp.c:974
+#: ../plug-ins/common/whirl-pinch.c:193
+msgid "Region affected by plug-in is empty"
+msgstr "Svæðið sem viðbótin hefur áhrif á er tómt"
+
+#: ../plug-ins/common/edge-dog.c:253 ../plug-ins/common/edge-dog.c:310
 msgid "DoG Edge Detect"
 msgstr "Leita að brúnum með gaussískum mismun"
 
-#: ../plug-ins/common/edge-dog.c:332
+#: ../plug-ins/common/edge-dog.c:340
 msgid "Smoothing Parameters"
 msgstr "Breytur fyrir mýkingu"
 
-#: ../plug-ins/common/edge-dog.c:346
+#: ../plug-ins/common/edge-dog.c:354
 msgid "_Radius 1:"
 msgstr "_Radíus 1:"
 
-#: ../plug-ins/common/edge-dog.c:350
+#: ../plug-ins/common/edge-dog.c:358
 msgid "R_adius 2:"
 msgstr "R_adíus 2:"
 
-#: ../plug-ins/common/edge-dog.c:373 ../plug-ins/gimpressionist/paper.c:166
+#: ../plug-ins/common/edge-dog.c:381 ../plug-ins/gimpressionist/paper.c:166
 msgid "_Invert"
 msgstr "_Umhverfa"
 
@@ -2971,7 +2974,7 @@ msgstr "Myndrista"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
 #: ../plug-ins/common/file-ps.c:3049 ../plug-ins/common/file-ps.c:3246
-#: ../plug-ins/common/file-raw.c:1150 ../plug-ins/common/film.c:1002
+#: ../plug-ins/common/file-raw.c:1164 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:408
@@ -3004,8 +3007,8 @@ msgstr "KISS CEL"
 msgid "Load KISS Palette"
 msgstr "Opna KISS litaspjald"
 
-#: ../plug-ins/common/file-cel.c:309 ../plug-ins/common/file-cel.c:364
-#: ../plug-ins/common/file-cel.c:384
+#: ../plug-ins/common/file-cel.c:312 ../plug-ins/common/file-cel.c:367
+#: ../plug-ins/common/file-cel.c:387
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr ""
@@ -3014,97 +3017,97 @@ msgstr ""
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:354 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:357 ../plug-ins/common/file-dicom.c:345
 #: ../plug-ins/common/file-gbr.c:375 ../plug-ins/common/file-gif-load.c:362
 #: ../plug-ins/common/file-gih.c:647 ../plug-ins/common/file-jp2-load.c:189
 #: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:350
-#: ../plug-ins/common/file-png.c:769 ../plug-ins/common/file-pnm.c:501
-#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:719
+#: ../plug-ins/common/file-png.c:770 ../plug-ins/common/file-pnm.c:501
+#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:733
 #: ../plug-ins/common/file-sunras.c:489 ../plug-ins/common/file-tga.c:448
 #: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
 #: ../plug-ins/common/file-xbm.c:743 ../plug-ins/common/file-xmc.c:669
 #: ../plug-ins/common/file-xpm.c:353 ../plug-ins/common/file-xwd.c:534
 #: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-faxg3/faxg3.c:213
-#: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:644
+#: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:665
 #: ../plug-ins/file-jpeg/jpeg-load.c:128 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3337
 #, c-format
 msgid "Opening '%s'"
 msgstr "Opna '%s'"
 
-#: ../plug-ins/common/file-cel.c:392
+#: ../plug-ins/common/file-cel.c:395
 #, c-format
 msgid "is not a CEL image file"
 msgstr "er ekki CEL myndskrá"
 
-#: ../plug-ins/common/file-cel.c:406
+#: ../plug-ins/common/file-cel.c:409
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:420
+#: ../plug-ins/common/file-cel.c:423
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:433
+#: ../plug-ins/common/file-cel.c:436
 #, c-format
 msgid "Can't create a new image"
 msgstr "Get ekki búið til nýja mynd"
 
-#: ../plug-ins/common/file-cel.c:471 ../plug-ins/common/file-cel.c:506
-#: ../plug-ins/common/file-cel.c:531
+#: ../plug-ins/common/file-cel.c:474 ../plug-ins/common/file-cel.c:509
+#: ../plug-ins/common/file-cel.c:534
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:548
+#: ../plug-ins/common/file-cel.c:551
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Óstudd bitadýpt (%d)!"
 
-#: ../plug-ins/common/file-cel.c:630 ../plug-ins/common/file-cel.c:642
+#: ../plug-ins/common/file-cel.c:633 ../plug-ins/common/file-cel.c:645
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:651
+#: ../plug-ins/common/file-cel.c:654
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:660
+#: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:669
+#: ../plug-ins/common/file-cel.c:672
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr ""
 
-#: ../plug-ins/common/file-cel.c:684 ../plug-ins/common/file-cel.c:701
-#: ../plug-ins/common/file-cel.c:721
+#: ../plug-ins/common/file-cel.c:687 ../plug-ins/common/file-cel.c:704
+#: ../plug-ins/common/file-cel.c:724
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr ""
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:670
+#: ../plug-ins/common/file-cel.c:781 ../plug-ins/common/file-gbr.c:670
 #: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
-#: ../plug-ins/common/file-png.c:1376 ../plug-ins/common/file-pnm.c:1017
+#: ../plug-ins/common/file-png.c:1377 ../plug-ins/common/file-pnm.c:1017
 #: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
 #: ../plug-ins/common/file-tga.c:1207 ../plug-ins/common/file-tiff-save.c:713
 #: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
 #: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
 #: ../plug-ins/file-bmp/bmp-write.c:322 ../plug-ins/file-fits/fits.c:483
-#: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1014
 #: ../plug-ins/file-jpeg/jpeg-save.c:312 ../plug-ins/file-psd/psd-save.c:1658
 #: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-xjt/xjt.c:1700
 #, c-format
@@ -3115,49 +3118,49 @@ msgstr "Vista '%s'"
 msgid "C source code"
 msgstr "C frumkóði"
 
-#: ../plug-ins/common/file-csource.c:701
+#: ../plug-ins/common/file-csource.c:705
 msgid "C-Source"
 msgstr "C-frumkóði"
 
-#: ../plug-ins/common/file-csource.c:719
+#: ../plug-ins/common/file-csource.c:723
 msgid "_Prefixed name:"
 msgstr ""
 
-#: ../plug-ins/common/file-csource.c:728
+#: ../plug-ins/common/file-csource.c:732
 msgid "Co_mment:"
 msgstr "A_thugasemd:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:735
+#: ../plug-ins/common/file-csource.c:739
 msgid "_Save comment to file"
 msgstr "Vi_sta athugasemd í skrá"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:747
+#: ../plug-ins/common/file-csource.c:751
 msgid "_Use GLib types (guint8*)"
 msgstr "_Nota GLib týpur (guint8*)"
 
-#: ../plug-ins/common/file-csource.c:760
+#: ../plug-ins/common/file-csource.c:764
 msgid "Us_e macros instead of struct"
 msgstr "Not_a fjölva í staðinn fyrir struct"
 
-#: ../plug-ins/common/file-csource.c:773
+#: ../plug-ins/common/file-csource.c:777
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Nota _1 bætis keyrslulínuþjöppun (Run-Length-Encoding)"
 
-#: ../plug-ins/common/file-csource.c:786
+#: ../plug-ins/common/file-csource.c:790
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "_Vista alfa-gegnsæisrás (RGBA/RGB)"
 
 #. RGB-565
 #.
-#: ../plug-ins/common/file-csource.c:798
+#: ../plug-ins/common/file-csource.c:802
 msgid "Save as _RGB565 (16-bit)"
 msgstr "Vista sem _RGB565 (16-bita)"
 
-#: ../plug-ins/common/file-csource.c:821
+#: ../plug-ins/common/file-csource.c:825
 msgid "Op_acity:"
 msgstr "Óg_egnsæi:"
 
@@ -3378,7 +3381,6 @@ msgid "Couldn't load one brush in the pipe, giving up."
 msgstr ""
 
 #: ../plug-ins/common/file-gih.c:859
-#| msgid "_Brush"
 msgid "Brush Pipe"
 msgstr "Pensilpípa"
 
@@ -3609,7 +3611,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1913
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1914
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 
@@ -3642,7 +3644,7 @@ msgid "Save creation time"
 msgstr "Vista sköpunartíma"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1962
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1963
 msgid "PNG"
 msgstr "PNG"
 
@@ -3876,52 +3878,52 @@ msgid ""
 "read only!"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:803
-#: ../plug-ins/common/file-pdf-save.c:920
+#: ../plug-ins/common/file-pdf-save.c:808
+#: ../plug-ins/common/file-pdf-save.c:925
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:807
-#: ../plug-ins/common/file-pdf-save.c:924
+#: ../plug-ins/common/file-pdf-save.c:812
+#: ../plug-ins/common/file-pdf-save.c:929
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:811
-#: ../plug-ins/common/file-pdf-save.c:928
+#: ../plug-ins/common/file-pdf-save.c:816
+#: ../plug-ins/common/file-pdf-save.c:933
 msgid "Apply layer masks before saving"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:814
-#: ../plug-ins/common/file-pdf-save.c:931
+#: ../plug-ins/common/file-pdf-save.c:819
+#: ../plug-ins/common/file-pdf-save.c:936
 msgid "Keeping the masks will not change the output"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:867
+#: ../plug-ins/common/file-pdf-save.c:872
 msgid "Save to:"
 msgstr "Vista í:"
 
-#: ../plug-ins/common/file-pdf-save.c:871
+#: ../plug-ins/common/file-pdf-save.c:876
 msgid "Browse..."
 msgstr "Flakka..."
 
-#: ../plug-ins/common/file-pdf-save.c:872
+#: ../plug-ins/common/file-pdf-save.c:877
 msgid "Multipage PDF export"
 msgstr "Útflutningur margsíðna PDF"
 
-#: ../plug-ins/common/file-pdf-save.c:905
+#: ../plug-ins/common/file-pdf-save.c:910
 msgid "Remove the selected pages"
 msgstr "Fjarlægja valdar síður"
 
-#: ../plug-ins/common/file-pdf-save.c:915
+#: ../plug-ins/common/file-pdf-save.c:920
 msgid "Add this image"
 msgstr "Bæta við þessari mynd"
 
-#: ../plug-ins/common/file-pdf-save.c:1028
+#: ../plug-ins/common/file-pdf-save.c:1033
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 
-#: ../plug-ins/common/file-pdf-save.c:1351
-#: ../plug-ins/print/print-draw-page.c:223
+#: ../plug-ins/common/file-pdf-save.c:1356
+#: ../plug-ins/print/print-draw-page.c:228
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 
@@ -3949,57 +3951,57 @@ msgstr ""
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Villa við lestur á '%s'. Skráin skemmd?"
 
-#: ../plug-ins/common/file-png.c:877
+#: ../plug-ins/common/file-png.c:878
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Óþekktur litaskali í PNG skrá '%s'."
 
-#: ../plug-ins/common/file-png.c:888
+#: ../plug-ins/common/file-png.c:889
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:942
+#: ../plug-ins/common/file-png.c:943
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1244
+#: ../plug-ins/common/file-png.c:1245
 msgid "Apply PNG Offset"
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1248
+#: ../plug-ins/common/file-png.c:1249
 msgid "Ignore PNG offset"
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1249
+#: ../plug-ins/common/file-png.c:1250
 msgid "Apply PNG offset to layer"
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1273
+#: ../plug-ins/common/file-png.c:1274
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1341
+#: ../plug-ins/common/file-png.c:1342
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1351
+#: ../plug-ins/common/file-png.c:1352
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1979
+#: ../plug-ins/common/file-png.c:1980
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Villa við að hlaða inn UI-skrá '%s': %s"
 
-#: ../plug-ins/common/file-png.c:1980
+#: ../plug-ins/common/file-png.c:1981
 msgid "Unknown error"
 msgstr "Óþekkt villa"
 
@@ -4225,8 +4227,7 @@ msgid "_Millimeter"
 msgstr "_Millímetri"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3302
-#: ../plug-ins/map-object/map-object-ui.c:989
+#: ../plug-ins/common/file-ps.c:3302 ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Snúningur"
 
@@ -4281,83 +4282,83 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "RAW myndgögn"
 
-#: ../plug-ins/common/file-raw.c:1059
+#: ../plug-ins/common/file-raw.c:1073
 msgid "Load Image from Raw Data"
 msgstr "Hlaða mynd inn úr RAW-myndgögnum"
 
-#: ../plug-ins/common/file-raw.c:1093
+#: ../plug-ins/common/file-raw.c:1107
 msgid "Image"
 msgstr "Mynd"
 
-#: ../plug-ins/common/file-raw.c:1104
+#: ../plug-ins/common/file-raw.c:1118
 msgid "RGB Alpha"
 msgstr "RGB alfa"
 
-#: ../plug-ins/common/file-raw.c:1105
+#: ../plug-ins/common/file-raw.c:1119
 msgid "RGB565"
 msgstr "RGB565"
 
-#: ../plug-ins/common/file-raw.c:1106
+#: ../plug-ins/common/file-raw.c:1120
 msgid "Planar RGB"
 msgstr "Planar RGB"
 
-#: ../plug-ins/common/file-raw.c:1107
+#: ../plug-ins/common/file-raw.c:1121
 msgid "Indexed"
 msgstr "Skráð"
 
-#: ../plug-ins/common/file-raw.c:1108
+#: ../plug-ins/common/file-raw.c:1122
 msgid "Indexed Alpha"
 msgstr "Litnúmerað alfa"
 
-#: ../plug-ins/common/file-raw.c:1113
+#: ../plug-ins/common/file-raw.c:1127
 msgid "Image _Type:"
 msgstr "_Tegund myndar:"
 
-#: ../plug-ins/common/file-raw.c:1163
+#: ../plug-ins/common/file-raw.c:1177
 msgid "Palette"
 msgstr "Litaspjald"
 
-#: ../plug-ins/common/file-raw.c:1173 ../plug-ins/common/file-raw.c:1258
+#: ../plug-ins/common/file-raw.c:1187 ../plug-ins/common/file-raw.c:1272
 msgid "R, G, B (normal)"
 msgstr "R, G, B (venjulegt)"
 
-#: ../plug-ins/common/file-raw.c:1174 ../plug-ins/common/file-raw.c:1260
+#: ../plug-ins/common/file-raw.c:1188 ../plug-ins/common/file-raw.c:1274
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (BMP stíll)"
 
-#: ../plug-ins/common/file-raw.c:1179
+#: ../plug-ins/common/file-raw.c:1193
 msgid "_Palette Type:"
 msgstr "Tegund _litaspjalds:"
 
-#: ../plug-ins/common/file-raw.c:1190
+#: ../plug-ins/common/file-raw.c:1204
 msgid "Off_set:"
 msgstr "_Hliðrun:"
 
-#: ../plug-ins/common/file-raw.c:1202
+#: ../plug-ins/common/file-raw.c:1216
 msgid "Select Palette File"
 msgstr "Veldu litaspjaldsskrá"
 
-#: ../plug-ins/common/file-raw.c:1208
+#: ../plug-ins/common/file-raw.c:1222
 msgid "Pal_ette File:"
 msgstr "Litas_pjaldsskrá:"
 
-#: ../plug-ins/common/file-raw.c:1236
+#: ../plug-ins/common/file-raw.c:1250
 msgid "Raw Image"
 msgstr "Raw mynd"
 
-#: ../plug-ins/common/file-raw.c:1244
+#: ../plug-ins/common/file-raw.c:1258
 msgid "RGB Save Type"
 msgstr ""
 
-#: ../plug-ins/common/file-raw.c:1248
+#: ../plug-ins/common/file-raw.c:1262
 msgid "Standard (R,G,B)"
 msgstr "Staðlað (R,G,B)"
 
-#: ../plug-ins/common/file-raw.c:1249
+#: ../plug-ins/common/file-raw.c:1263
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "Planar (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/file-raw.c:1254
+#: ../plug-ins/common/file-raw.c:1268
 msgid "Indexed Palette Type"
 msgstr "Tegund litnúmeraðs litaspjalds"
 
@@ -4583,8 +4584,7 @@ msgstr "%s-%d-af-%d-síðum"
 msgid "TIFF Channel"
 msgstr "TIFF litrás"
 
-#: ../plug-ins/common/file-tiff-load.c:1038
-#: ../plug-ins/file-psd/psd-load.c:333
+#: ../plug-ins/common/file-tiff-load.c:1038 ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -5411,7 +5411,6 @@ msgstr "Rúður"
 
 #. attach labels
 #: ../plug-ins/common/grid.c:719
-#| msgid "Horizontal"
 msgid ""
 "Horizontal\n"
 "Lines"
@@ -5420,7 +5419,6 @@ msgstr ""
 "Línur"
 
 #: ../plug-ins/common/grid.c:721
-#| msgid "Vertical"
 msgid ""
 "Vertical\n"
 "Lines"
@@ -5456,11 +5454,11 @@ msgstr ""
 
 #: ../plug-ins/common/guillotine.c:81
 msgid "_Guillotine"
-msgstr ""
+msgstr "Skipta upp (_guillotine)"
 
 #: ../plug-ins/common/guillotine.c:119
 msgid "Guillotine"
-msgstr ""
+msgstr "Skipta upp (guillotine)"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
@@ -5500,11 +5498,11 @@ msgstr ""
 
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
-msgstr ""
+msgstr "S_jónblekking..."
 
 #: ../plug-ins/common/illusion.c:168 ../plug-ins/common/illusion.c:350
 msgid "Illusion"
-msgstr ""
+msgstr "Sjónblekking"
 
 #: ../plug-ins/common/illusion.c:389
 msgid "_Divisions:"
@@ -5538,10 +5536,6 @@ msgstr "Brettirammi %d"
 #: ../plug-ins/common/iwarp.c:815
 msgid "Ping pong"
 msgstr "Ping pong"
-
-#: ../plug-ins/common/iwarp.c:974 ../plug-ins/common/whirl-pinch.c:193
-msgid "Region affected by plug-in is empty"
-msgstr "Svæðið sem viðbótin hefur áhrif á er tómt"
 
 #: ../plug-ins/common/iwarp.c:1030
 msgid "A_nimate"
@@ -5648,7 +5642,7 @@ msgstr "Tennt"
 
 #: ../plug-ins/common/jigsaw.c:2423
 msgid "Number of Tiles"
-msgstr ""
+msgstr "Fjöldi flísa"
 
 #: ../plug-ins/common/jigsaw.c:2438
 msgid "Number of pieces going across"
@@ -5756,87 +5750,87 @@ msgstr ""
 msgid "Converting from '%s' to '%s'"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1248
+#: ../plug-ins/common/lcms.c:1252
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1270
+#: ../plug-ins/common/lcms.c:1274
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1314
+#: ../plug-ins/common/lcms.c:1318
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1345
+#: ../plug-ins/common/lcms.c:1349
 msgid "Convert to RGB working space?"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1350
+#: ../plug-ins/common/lcms.c:1354
 msgid "_Keep"
 msgstr "_Halda"
 
-#: ../plug-ins/common/lcms.c:1355
+#: ../plug-ins/common/lcms.c:1359
 msgid "_Convert"
 msgstr "_Umbreyta"
 
-#: ../plug-ins/common/lcms.c:1383 ../plug-ins/file-jpeg/jpeg-exif.c:436
+#: ../plug-ins/common/lcms.c:1387 ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
 msgstr "_Ekki spyrja mig aftur"
 
-#: ../plug-ins/common/lcms.c:1450
+#: ../plug-ins/common/lcms.c:1454
 msgid "Select destination profile"
 msgstr "Veldu úttakslitasnið"
 
-#: ../plug-ins/common/lcms.c:1477
+#: ../plug-ins/common/lcms.c:1481
 msgid "All files (*.*)"
 msgstr "Allar skrár (*.*)"
 
-#: ../plug-ins/common/lcms.c:1482
+#: ../plug-ins/common/lcms.c:1486
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC litasnið (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1526
+#: ../plug-ins/common/lcms.c:1530
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB vinnurýmd (%s)"
 
-#: ../plug-ins/common/lcms.c:1576
+#: ../plug-ins/common/lcms.c:1580
 msgid "Convert to ICC Color Profile"
 msgstr "Umbreyta í ICC litasnið"
 
-#: ../plug-ins/common/lcms.c:1577
+#: ../plug-ins/common/lcms.c:1581
 msgid "Assign ICC Color Profile"
 msgstr "Úthluta ICC litasniði"
 
-#: ../plug-ins/common/lcms.c:1585
+#: ../plug-ins/common/lcms.c:1589
 msgid "_Assign"
 msgstr "Úthlut_a"
 
-#: ../plug-ins/common/lcms.c:1603
+#: ../plug-ins/common/lcms.c:1607
 msgid "Current Color Profile"
 msgstr "Núgildandi litasnið"
 
-#: ../plug-ins/common/lcms.c:1618
+#: ../plug-ins/common/lcms.c:1622
 msgid "Convert to"
 msgstr "_Umbreyta í"
 
-#: ../plug-ins/common/lcms.c:1618
+#: ../plug-ins/common/lcms.c:1622
 msgid "Assign"
 msgstr "Úthluta"
 
-#: ../plug-ins/common/lcms.c:1642
+#: ../plug-ins/common/lcms.c:1646
 msgid "_Rendering Intent:"
 msgstr "Myndge_rðarmarkmið:"
 
-#: ../plug-ins/common/lcms.c:1658
+#: ../plug-ins/common/lcms.c:1662
 msgid "_Black Point Compensation"
 msgstr "_BPC svartgildisjöfnun"
 
-#: ../plug-ins/common/lcms.c:1700
+#: ../plug-ins/common/lcms.c:1704
 msgid "Destination profile is not for RGB color space."
 msgstr "Úttakslitasnið er ekki fyrir RGB litrýmd."
 
@@ -5852,27 +5846,27 @@ msgstr "Beita _linsu..."
 msgid "Applying lens"
 msgstr "Beiti linsu"
 
-#: ../plug-ins/common/lens-apply.c:394
+#: ../plug-ins/common/lens-apply.c:395
 msgid "Lens Effect"
 msgstr "Linsubrella"
 
-#: ../plug-ins/common/lens-apply.c:429
+#: ../plug-ins/common/lens-apply.c:430
 msgid "_Keep original surroundings"
 msgstr ""
 
-#: ../plug-ins/common/lens-apply.c:444
+#: ../plug-ins/common/lens-apply.c:445
 msgid "_Set surroundings to index 0"
 msgstr ""
 
-#: ../plug-ins/common/lens-apply.c:445
+#: ../plug-ins/common/lens-apply.c:446
 msgid "_Set surroundings to background color"
 msgstr ""
 
-#: ../plug-ins/common/lens-apply.c:460
+#: ../plug-ins/common/lens-apply.c:461
 msgid "_Make surroundings transparent"
 msgstr ""
 
-#: ../plug-ins/common/lens-apply.c:477
+#: ../plug-ins/common/lens-apply.c:478
 msgid "_Lens refraction index:"
 msgstr ""
 
@@ -7945,49 +7939,49 @@ msgstr ""
 msgid "_Dilate"
 msgstr "Þenja"
 
-#: ../plug-ins/common/value-propagate.c:476
-#: ../plug-ins/common/value-propagate.c:1086
+#: ../plug-ins/common/value-propagate.c:480
+#: ../plug-ins/common/value-propagate.c:1090
 msgid "Value Propagate"
 msgstr ""
 
 #. Parameter settings
-#: ../plug-ins/common/value-propagate.c:1153
+#: ../plug-ins/common/value-propagate.c:1157
 msgid "Propagate"
 msgstr ""
 
-#: ../plug-ins/common/value-propagate.c:1166
+#: ../plug-ins/common/value-propagate.c:1170
 msgid "Lower t_hreshold:"
 msgstr "Læ_gri mörk:"
 
-#: ../plug-ins/common/value-propagate.c:1178
+#: ../plug-ins/common/value-propagate.c:1182
 msgid "_Upper threshold:"
 msgstr "_Efri mörk:"
 
-#: ../plug-ins/common/value-propagate.c:1190
+#: ../plug-ins/common/value-propagate.c:1194
 msgid "_Propagating rate:"
 msgstr ""
 
-#: ../plug-ins/common/value-propagate.c:1201
+#: ../plug-ins/common/value-propagate.c:1205
 msgid "To l_eft"
 msgstr "_Efst til vinstri"
 
-#: ../plug-ins/common/value-propagate.c:1204
+#: ../plug-ins/common/value-propagate.c:1208
 msgid "To _right"
 msgstr "Efst til hæg_ri"
 
-#: ../plug-ins/common/value-propagate.c:1207
+#: ../plug-ins/common/value-propagate.c:1211
 msgid "To _top"
 msgstr "Efs_t"
 
-#: ../plug-ins/common/value-propagate.c:1210
+#: ../plug-ins/common/value-propagate.c:1214
 msgid "To _bottom"
 msgstr "_Neðst"
 
-#: ../plug-ins/common/value-propagate.c:1219
+#: ../plug-ins/common/value-propagate.c:1223
 msgid "Propagating _alpha channel"
 msgstr ""
 
-#: ../plug-ins/common/value-propagate.c:1230
+#: ../plug-ins/common/value-propagate.c:1234
 msgid "Propagating value channel"
 msgstr ""
 
@@ -8279,64 +8273,64 @@ msgstr "_Bylgjulengd:"
 msgid "Waving"
 msgstr "Bylgja"
 
-#: ../plug-ins/common/web-browser.c:135
+#: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:138
+#: ../plug-ins/common/web-browser.c:144
 msgid "The specified file was not found."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:141
+#: ../plug-ins/common/web-browser.c:147
 msgid "The specified path was not found."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:144
+#: ../plug-ins/common/web-browser.c:150
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:147
+#: ../plug-ins/common/web-browser.c:153
 msgid "The operating system denied access to the specified file."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:150
+#: ../plug-ins/common/web-browser.c:156
 msgid "The file name association is incomplete or invalid."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:153
+#: ../plug-ins/common/web-browser.c:159
 msgid "DDE transaction busy"
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:156
+#: ../plug-ins/common/web-browser.c:162
 msgid "The DDE transaction failed."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:159
+#: ../plug-ins/common/web-browser.c:165
 msgid "The DDE transaction timed out."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:162
+#: ../plug-ins/common/web-browser.c:168
 msgid "The specified DLL was not found."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:165
+#: ../plug-ins/common/web-browser.c:171
 msgid "There is no application associated with the given file name extension."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:168
+#: ../plug-ins/common/web-browser.c:174
 msgid "There was not enough memory to complete the operation."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:171
+#: ../plug-ins/common/web-browser.c:177
 msgid "A sharing violation occurred."
 msgstr ""
 
-#: ../plug-ins/common/web-browser.c:174
+#: ../plug-ins/common/web-browser.c:180
 msgid "Unknown Microsoft Windows error."
 msgstr "Óþekkt villa í Microsoft Windows."
 
-#: ../plug-ins/common/web-browser.c:177
+#: ../plug-ins/common/web-browser.c:183
 #, c-format
 msgid "Failed to open '%s': %s"
 msgstr "Get ekki opnað '%s': %s"
@@ -8576,8 +8570,8 @@ msgid ""
 "option will cause GIMP to not write color space information to the file."
 msgstr ""
 "Sum forrit geta ekki lesið BMP-myndir sem innihalda upplýsingar um litrýmd. "
-"GIMP skrifar sjálfgefið slíkar upplýsingar. Ef þetta er virkjað mun GIMP ekki "
-"skrifa upplýsingar um litrýmd í skrána."
+"GIMP skrifar sjálfgefið slíkar upplýsingar. Ef þetta er virkjað mun GIMP "
+"ekki skrifa upplýsingar um litrýmd í skrána."
 
 #. Advanced Options
 #: ../plug-ins/file-bmp/bmp-write.c:911 ../plug-ins/file-jpeg/jpeg-save.c:924
@@ -8600,19 +8594,25 @@ msgstr "32 bita"
 msgid "Windows BMP image"
 msgstr "Windows BMP mynd"
 
-#: ../plug-ins/file-compressor/file-compressor.c:166
+#: ../plug-ins/file-compressor/file-compressor.c:167
 msgid "gzip archive"
 msgstr "gzip safnskrá"
 
-#: ../plug-ins/file-compressor/file-compressor.c:185
+#: ../plug-ins/file-compressor/file-compressor.c:186
 msgid "bzip archive"
 msgstr "bzip safnskrá"
 
-#: ../plug-ins/file-compressor/file-compressor.c:392
+#: ../plug-ins/file-compressor/file-compressor.c:393
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Engin vitræn skráarending, vista sem þjappað XFC."
 
-#: ../plug-ins/file-compressor/file-compressor.c:448
+#: ../plug-ins/file-compressor/file-compressor.c:416
+#, c-format
+#| msgid "Compression"
+msgid "Compressing '%s'"
+msgstr "Þjappa '%s'"
+
+#: ../plug-ins/file-compressor/file-compressor.c:453
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Engin vitræn skráarending, reyni að hlaða inn með 'file magic'."
 
@@ -8738,13 +8738,24 @@ msgstr "32 bpp, 8-bit alfa, ekkert litaspjald"
 msgid "Compressed (PNG)"
 msgstr "Þjappað (PNG)"
 
+#: ../plug-ins/file-ico/ico-load.c:221
+#, c-format
+#| msgid "Could not load '%s': %s"
+msgid "Could not read '%lu' bytes"
+msgstr "Gat ekki lesið '%lu' bæti"
+
+#: ../plug-ins/file-ico/ico-load.c:248
+#, c-format
+msgid "Icon #%d has zero width or height"
+msgstr ""
+
 #. read successfully. add to image
-#: ../plug-ins/file-ico/ico-load.c:615
+#: ../plug-ins/file-ico/ico-load.c:636
 #, c-format
 msgid "Icon #%i"
 msgstr "Táknmynd #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:696
+#: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:696
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -8987,23 +8998,23 @@ msgstr "Óstudd eða ógild breidd laghulu: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Óstudd eða ógild stærð laghulu: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1231 ../plug-ins/file-psd/psd-load.c:1620
+#: ../plug-ins/file-psd/psd-load.c:1236 ../plug-ins/file-psd/psd-load.c:1631
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Óstuddur þjöppunarhamur: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1412
+#: ../plug-ins/file-psd/psd-load.c:1423
 msgid ""
 "Warning\n"
 "The layer mask is partly outside the layer boundary. The mask will be "
 "cropped which may result in data loss."
 msgstr ""
 
-#: ../plug-ins/file-psd/psd-load.c:1713
+#: ../plug-ins/file-psd/psd-load.c:1724
 msgid "Extra"
 msgstr "Auka"
 
-#: ../plug-ins/file-psd/psd-load.c:1888
+#: ../plug-ins/file-psd/psd-load.c:1899
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Óstudd eða ógild stærð litrásar"
@@ -9632,7 +9643,6 @@ msgstr "Sínus"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
-#| msgid "None"
 msgctxt "color-function"
 msgid "None"
 msgstr "Ekkert"
@@ -9983,8 +9993,7 @@ msgstr "Sýna stýripunkta"
 msgid "Max undo:"
 msgstr "Hám. afturkallana:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1320
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1320 ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Gegnsætt"
 
@@ -11106,8 +11115,7 @@ msgstr "Slembin sáðtala:"
 msgid "_Second Flares"
 msgstr ""
 
-#: ../plug-ins/help-browser/dialog.c:184
-#: ../plug-ins/help-browser/dialog.c:1133
+#: ../plug-ins/help-browser/dialog.c:184 ../plug-ins/help-browser/dialog.c:1133
 msgid "GIMP Help Browser"
 msgstr "GIMP hjálparvafrinn"
 
@@ -11190,17 +11198,23 @@ msgstr "Hjálparsíðurnar fyrir '%s' eru ekki tiltækar."
 msgid "The GIMP user manual is not available."
 msgstr "GIMP notandahandbókin er ekki tiltæk."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#. TRANSLATORS: do not end the URL with a dot,
+#. * it would be in the link. Because of
+#. * technical limitations, make sure the URL
+#. * ends with a space, a newline or is end of text.
+#. * Cf. bug 762282.
+#.
+#: ../plug-ins/help/gimphelpdomain.c:193
 msgid ""
-"Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"Please install the additional help package or use the online user manual at: "
+"http://docs.gimp.org/"
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/gimphelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr ""
 
-#: ../plug-ins/help/gimphelpdomain.c:215
+#: ../plug-ins/help/gimphelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hjálparauðkenni '%s' óþekkt"
@@ -11421,8 +11435,7 @@ msgstr "Miðja _X:"
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
 #: ../plug-ins/imagemap/imap_circle.c:281 ../plug-ins/imagemap/imap_grid.c:249
-#: ../plug-ins/imagemap/imap_grid.c:255
-#: ../plug-ins/imagemap/imap_polygon.c:505
+#: ../plug-ins/imagemap/imap_grid.c:255 ../plug-ins/imagemap/imap_polygon.c:505
 #: ../plug-ins/imagemap/imap_polygon.c:513
 #: ../plug-ins/imagemap/imap_rectangle.c:392
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -13111,5 +13124,4 @@ msgstr "_Skjámynd..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Engin gögn náðust"
-
 
