@@ -544,7 +544,7 @@ metadata_editor_dialog (gint32        image_id,
                             "gimp-metadata-editor-dialog",
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_PROC,
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                            _("_Cancel"),        GTK_RESPONSE_NO,
                             _("Write Metadata"), GTK_RESPONSE_YES,
                             NULL);
 
@@ -761,7 +761,7 @@ on_date_button_clicked (GtkButton *widget,
     gtk_dialog_new_with_buttons (_("Calendar Date:"),
                                  NULL,
                                  GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                                 GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                                 _("_Cancel"),  GTK_RESPONSE_NO,
                                  _("Set Date"), GTK_RESPONSE_YES,
                                  NULL);
 
@@ -5615,10 +5615,8 @@ import_dialog_metadata (metadata_editor *args)
   file_dialog = gtk_file_chooser_dialog_new ("Import Metadata File",
                                              NULL,
                                              GTK_FILE_CHOOSER_ACTION_OPEN,
-                                             GTK_STOCK_CANCEL,
-                                             GTK_RESPONSE_CANCEL,
-                                             GTK_STOCK_OPEN,
-                                             GTK_RESPONSE_ACCEPT,
+                                             _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                             _("_Import"), GTK_RESPONSE_ACCEPT,
                                              NULL);
 
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (file_dialog),
@@ -5652,10 +5650,8 @@ export_dialog_metadata (metadata_editor *args)
   file_dialog = gtk_file_chooser_dialog_new ("Export Metadata File",
                                              NULL,
                                              GTK_FILE_CHOOSER_ACTION_SAVE,
-                                             GTK_STOCK_CANCEL,
-                                             GTK_RESPONSE_CANCEL,
-                                             GTK_STOCK_SAVE,
-                                             GTK_RESPONSE_ACCEPT,
+                                             _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                             _("_Export"), GTK_RESPONSE_ACCEPT,
                                              NULL);
 
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_dialog),
