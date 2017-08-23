@@ -3,14 +3,14 @@
 # Copyright (C) 2008, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.gimp-2-8.is\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-19 15:41+0000\n"
-"PO-Revision-Date: 2015-12-07 15:16+0000\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
+"POT-Creation-Date: 2017-08-09 15:01+0000\n"
+"PO-Revision-Date: 2017-08-23 09:31+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -134,16 +134,16 @@ msgstr "Script-Fu þjónustustillingar"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Prufuhamur Script-Fu er einungis tiltækur með ógagnvirkri kvaðningu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:200
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu getur ekki keyrt tvær skriftur á sama tíma."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Þú ert þegar að keyra \"%s\" skriftuna."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:226
+#: ../plug-ins/script-fu/script-fu-interface.c:228
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -151,44 +151,44 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:290
+#: ../plug-ins/script-fu/script-fu-interface.c:292
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:337
+#: ../plug-ins/script-fu/script-fu-interface.c:339
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu litaval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:446
+#: ../plug-ins/script-fu/script-fu-interface.c:448
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu skráaval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:451
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu möppuval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:464
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu leturval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:472
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu litaspjaldsval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:481
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu mynsturval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:490
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu litstigulsval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:499
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu pensilval"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:857
+#: ../plug-ins/script-fu/script-fu-interface.c:868
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Villa við að keyra %s:"
@@ -233,7 +233,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/3d-outline.scm:120
 #: ../plug-ins/script-fu/scripts/3d-outline.scm:166
 msgid "3D _Outline..."
-msgstr ""
+msgstr "_3D-útlína..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm:121
 msgid ""
@@ -250,10 +250,9 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/chip-away.scm:155
 #: ../plug-ins/script-fu/scripts/chip-away.scm:202
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:126
-#, fuzzy
 #| msgid "_Patterns"
 msgid "Pattern"
-msgstr "M_ynstur"
+msgstr "Mynstur"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm:129
 #: ../plug-ins/script-fu/scripts/3d-outline.scm:176
@@ -368,7 +367,7 @@ msgstr "Texti"
 #: ../plug-ins/script-fu/scripts/title-header.scm:172
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm:145
 msgid "Font size (pixels)"
-msgstr ""
+msgstr "Leturstærð (dílar)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm:175
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm:157
@@ -409,7 +408,7 @@ msgstr "Letur"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm:225
 msgid "3_D Truchet..."
-msgstr ""
+msgstr "3_D Truchet..."
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm:226
 msgid "Create an image filled with a 3D Truchet pattern"
@@ -418,7 +417,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm:231
 #: ../plug-ins/script-fu/scripts/truchet.scm:171
 msgid "Block size"
-msgstr ""
+msgstr "Stærð blokka"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm:232
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:193
@@ -466,19 +465,19 @@ msgstr "Þykkt"
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm:151
 #: ../plug-ins/script-fu/scripts/truchet.scm:173
 msgid "Background color"
-msgstr ""
+msgstr "Bakgrunnslitur"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm:234
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:140
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:199
 msgid "Start blend"
-msgstr ""
+msgstr "Hefja blöndun"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm:235
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:141
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:200
 msgid "End blend"
-msgstr ""
+msgstr "Hætta blöndun"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm:236
 msgid "Supersample"
@@ -548,7 +547,6 @@ msgid "Border Y size"
 msgstr "Y stærð ramma"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:170
-#| msgid "Solid Color"
 msgid "Border color"
 msgstr "Litur ramma"
 
@@ -559,15 +557,14 @@ msgstr "Mismunur á litagildum"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:118
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:78
 msgid "Arrow"
-msgstr ""
+msgstr "Ör"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:121
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm:35
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm:46
-#, fuzzy
 #| msgid "_Alien Glow"
 msgid "Alien Glow"
-msgstr "_Geimveru-gljái"
+msgstr "Geimveru-gljái"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:124
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm:38
@@ -582,7 +579,7 @@ msgstr "Bakgrunnur"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:175
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:149
 msgid "_Arrow..."
-msgstr ""
+msgstr "Ö_r..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:176
 msgid "Create an arrow graphic with an eerie glow for web pages"
@@ -597,7 +594,7 @@ msgstr "Stærð"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
 msgid "Orientation"
-msgstr ""
+msgstr "Stefna"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
@@ -607,17 +604,17 @@ msgstr "Hægri"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
 msgid "Left"
-msgstr ""
+msgstr "Vinstri"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
 msgid "Up"
-msgstr ""
+msgstr "Upp"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
 msgid "Down"
-msgstr ""
+msgstr "Niður"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:183
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm:94
@@ -645,14 +642,13 @@ msgstr "Fletja mynd"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm:32
 msgid "Bar"
-msgstr ""
+msgstr "Stika"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm:86
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:77
-#, fuzzy
 #| msgid "_Browse..."
 msgid "_Hrule..."
-msgstr "_Flakka..."
+msgstr "_H-strik..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm:87
 msgid "Create an Hrule graphic with an eerie glow for web pages"
@@ -660,21 +656,21 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm:92
 msgid "Bar length"
-msgstr ""
+msgstr "Lengd stiku"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm:93
 msgid "Bar height"
-msgstr ""
+msgstr "Hæð stiku"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm:44
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:25
 msgid "Bullet"
-msgstr ""
+msgstr "Áherslumerki"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm:99
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:84
 msgid "_Bullet..."
-msgstr ""
+msgstr "Á_herslumerki..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm:100
 msgid "Create a bullet graphic with an eerie glow for web pages"
@@ -688,20 +684,18 @@ msgstr "Radíus"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm:81
 msgid "Glow"
-msgstr ""
+msgstr "Bjarmi"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm:84
-#, fuzzy
 #| msgid "_Buttons"
 msgid "Button"
-msgstr "_Hnappar"
+msgstr "Hnappur"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm:150
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm:120
-#, fuzzy
 #| msgid "_Buttons"
 msgid "B_utton..."
-msgstr "_Hnappar"
+msgstr "Hnapp_ur..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm:151
 msgid "Create a button graphic with an eerie glow for web pages"
@@ -720,23 +714,22 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/pupi-button.scm:198
 #: ../plug-ins/script-fu/scripts/speed-text.scm:96
 msgid "Text color"
-msgstr ""
+msgstr "Textalitur"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm:162
 #: ../plug-ins/script-fu/scripts/beveled-button.scm:154
 msgid "Padding"
-msgstr ""
+msgstr "Millibil"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm:163
 msgid "Glow radius"
-msgstr ""
+msgstr "Geislunarradíus"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm:65
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm:105
-#, fuzzy
 #| msgid "_Alien Glow"
 msgid "Alien _Glow..."
-msgstr "_Geimveru-gljái"
+msgstr "_Geimveru-gljái..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm:66
 msgid "Add an eerie glow around the selected region (or alpha)"
@@ -777,7 +770,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm:139
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm:183
 msgid "Fade away"
-msgstr ""
+msgstr "Deyfa út"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm:170
 msgid "Create a logo with psychedelic outlines around the text"
@@ -837,24 +830,24 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm:151
 msgid "Upper-left color"
-msgstr ""
+msgstr "Litur efst til vinstri"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm:152
 msgid "Lower-right color"
-msgstr ""
+msgstr "Litur neðst til hægri"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm:155
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm:104
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm:143
 #: ../plug-ins/script-fu/scripts/pupi-button.scm:204
 msgid "Bevel width"
-msgstr ""
+msgstr "Breidd hornrúnnunar"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm:156
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm:131
 #: ../plug-ins/script-fu/scripts/pupi-button.scm:208
 msgid "Pressed"
-msgstr ""
+msgstr "Pressað"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:150
 msgid "Create a beveled pattern arrow for webpages"
@@ -866,7 +859,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:90
 msgid "Diameter"
-msgstr ""
+msgstr "Þvermál"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:92
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm:117
@@ -880,7 +873,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm:107
 msgid "H_eading..."
-msgstr ""
+msgstr "F_yrirsögn..."
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm:108
 msgid "Create a beveled pattern heading for webpages"
@@ -888,7 +881,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:27
 msgid "Rule"
-msgstr ""
+msgstr "Regla"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:78
 msgid "Create a beveled pattern hrule for webpages"
@@ -911,7 +904,6 @@ msgstr "Breidd"
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:195
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:264
 #: ../plug-ins/script-fu/scripts/swirltile.scm:61
-#| msgid "Right"
 msgid "Height"
 msgstr "Hæð"
 
@@ -959,12 +951,12 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:134
 msgid "Offset (pixels)"
-msgstr ""
+msgstr "Hliðrun (dílar)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:136
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:195
 msgid "Blend mode"
-msgstr ""
+msgstr "Blöndunarhamur"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:136
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:195
@@ -973,20 +965,19 @@ msgstr "FG-BG-RGB"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:137
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:196
-#, fuzzy
 #| msgid "FG-BG-RGB"
 msgid "FG-BG-HSV"
-msgstr "FG-BG-RGB"
+msgstr "FG-BG-HSV"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:138
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:197
 msgid "FG-Transparent"
-msgstr ""
+msgstr "FG-Gegnsætt"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:139
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:198
 msgid "Custom Gradient"
-msgstr ""
+msgstr "Egendefinert gradient"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:143
 #: ../plug-ins/script-fu/scripts/blended-logo.scm:202
@@ -1026,7 +1017,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm:101
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm:96
 msgid "Background Color"
-msgstr ""
+msgstr "Bakgrunnslitur"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm:126
 msgid "Create a logo with text in the style of 'cow spots'"
@@ -1079,7 +1070,7 @@ msgstr "Hraði (dílar/ramma)"
 
 #: ../plug-ins/script-fu/scripts/camo.scm:94
 msgid "_Camouflage..."
-msgstr ""
+msgstr "_Felulitir..."
 
 #: ../plug-ins/script-fu/scripts/camo.scm:95
 msgid "Create an image filled with a camouflage pattern"
@@ -1088,7 +1079,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/camo.scm:100
 #: ../plug-ins/script-fu/scripts/rendermap.scm:86
 msgid "Image size"
-msgstr ""
+msgstr "Stærð myndar"
 
 #: ../plug-ins/script-fu/scripts/camo.scm:101
 #: ../plug-ins/script-fu/scripts/rendermap.scm:87
@@ -1097,15 +1088,15 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/camo.scm:102
 msgid "Color 1"
-msgstr ""
+msgstr "Litur 1"
 
 #: ../plug-ins/script-fu/scripts/camo.scm:103
 msgid "Color 2"
-msgstr ""
+msgstr "Litur 2"
 
 #: ../plug-ins/script-fu/scripts/camo.scm:104
 msgid "Color 3"
-msgstr ""
+msgstr "Litur 3"
 
 #: ../plug-ins/script-fu/scripts/camo.scm:105
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
@@ -1149,7 +1140,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm:171
 msgid "Background Image"
-msgstr ""
+msgstr "Bakgrunnsmynd"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm:174
 msgid "Carve raised text"
@@ -1157,7 +1148,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm:175
 msgid "Padding around text"
-msgstr ""
+msgstr "Fylling í kringum texta"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:182
 msgid "Stencil C_arve..."
@@ -1174,7 +1165,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/chalk.scm:81
 #: ../plug-ins/script-fu/scripts/chalk.scm:122
 msgid "_Chalk..."
-msgstr ""
+msgstr "_Kríta..."
 
 #: ../plug-ins/script-fu/scripts/chalk.scm:82
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
@@ -1186,7 +1177,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chalk.scm:132
 msgid "Chalk color"
-msgstr ""
+msgstr "Litur krítar"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm:140
 #: ../plug-ins/script-fu/scripts/chip-away.scm:186
@@ -1210,12 +1201,12 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/chip-away.scm:150
 #: ../plug-ins/script-fu/scripts/chip-away.scm:197
 msgid "Invert"
-msgstr ""
+msgstr "Umhverfa"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm:151
 #: ../plug-ins/script-fu/scripts/chip-away.scm:198
 msgid "Drop shadow"
-msgstr ""
+msgstr "Undirskuggi"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm:153
 #: ../plug-ins/script-fu/scripts/chip-away.scm:200
@@ -1225,7 +1216,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/chip-away.scm:154
 #: ../plug-ins/script-fu/scripts/chip-away.scm:201
 msgid "Keep background"
-msgstr ""
+msgstr "Halda bakgrunni"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm:187
 msgid "Create a logo resembling a chipped wood carving"
@@ -1304,10 +1295,9 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm:87
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm:120
-#, fuzzy
 #| msgid "_Browse..."
 msgid "C_hrome..."
-msgstr "_Flakka..."
+msgstr "_Króm"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm:88
 msgid "Add a simple chrome effect to the selected region (or alpha)"
@@ -1461,7 +1451,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm:209
 msgid "Crystal..."
-msgstr ""
+msgstr "Kristall..."
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm:210
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
@@ -1469,13 +1459,13 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm:219
 msgid "Background image"
-msgstr ""
+msgstr "Bakgrunnsmynd"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "Difference Clouds..."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
 msgstr ""
 
@@ -1500,7 +1490,6 @@ msgid "Granularity (1 is low)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-#| msgid "Horizontal"
 msgid "Smooth horizontally"
 msgstr "Mýkja lárétt"
 
@@ -1536,7 +1525,6 @@ msgstr "Radíus afskerpingar"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
-#| msgid "Solid Color"
 msgid "Color"
 msgstr "Litur"
 
@@ -1559,7 +1547,6 @@ msgid "Erase every other row or column"
 msgstr "Eyða öðrum hverjum dálki eða röð"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
-#| msgid "Rows"
 msgid "Rows/cols"
 msgstr "Raðir/dálkar"
 
@@ -1572,7 +1559,6 @@ msgid "Columns"
 msgstr "Dálkar"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
-#| msgid "Even"
 msgid "Even/odd"
 msgstr "Jafnar/odda"
 
@@ -1585,7 +1571,6 @@ msgid "Odd"
 msgstr "Odda"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
-#| msgid "Erase"
 msgid "Erase/fill"
 msgstr "Eyða/fylla"
 
@@ -1608,32 +1593,32 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/flatland.scm:66
 #: ../plug-ins/script-fu/scripts/land.scm:79
 msgid "Image width"
-msgstr ""
+msgstr "Myndbreidd"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm:67
 #: ../plug-ins/script-fu/scripts/land.scm:80
 msgid "Image height"
-msgstr ""
+msgstr "Myndhæð"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm:68
 #: ../plug-ins/script-fu/scripts/land.scm:81
 msgid "Random seed"
-msgstr ""
+msgstr "Slembið sáðkorn"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm:69
 #: ../plug-ins/script-fu/scripts/land.scm:82
 msgid "Detail level"
-msgstr ""
+msgstr "Stig smáatriða"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm:70
 #: ../plug-ins/script-fu/scripts/land.scm:85
 msgid "Scale X"
-msgstr ""
+msgstr "X-kvarði"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm:71
 #: ../plug-ins/script-fu/scripts/land.scm:86
 msgid "Scale Y"
-msgstr ""
+msgstr "Y-kvarði"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -1783,7 +1768,6 @@ msgid "_Developer Web Site"
 msgstr "Ve_fsvæði hönnuða"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#| msgid "_User Manual"
 msgid "_User Manual Web Site"
 msgstr "Vefsvæði með _handbók notanda"
 
@@ -1829,10 +1813,9 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/glossy.scm:211
 #: ../plug-ins/script-fu/scripts/glossy.scm:283
-#, fuzzy
 #| msgid "_Patterns"
 msgid "Pattern (text)"
-msgstr "M_ynstur"
+msgstr "Mynstur (texti)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm:212
 #: ../plug-ins/script-fu/scripts/glossy.scm:284
@@ -1984,7 +1967,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm:92
 msgid "Imigre-_26..."
-msgstr ""
+msgstr "Imigre-_26..."
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm:93
 msgid "Create a logo in a two-color, scribbled text style"
@@ -1992,15 +1975,15 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm:100
 msgid "Frame color"
-msgstr ""
+msgstr "Litur ramma"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm:103
 msgid "Frame size"
-msgstr ""
+msgstr "Rammastærð"
 
 #: ../plug-ins/script-fu/scripts/land.scm:73
 msgid "_Land..."
-msgstr ""
+msgstr "_Land..."
 
 #: ../plug-ins/script-fu/scripts/land.scm:74
 msgid "Create an image filled with a topographic map pattern"
@@ -2117,7 +2100,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/neon-logo.scm:244
 #: ../plug-ins/script-fu/scripts/neon-logo.scm:280
 msgid "N_eon..."
-msgstr ""
+msgstr "N_eon..."
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm:245
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
@@ -2126,7 +2109,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/neon-logo.scm:255
 #: ../plug-ins/script-fu/scripts/neon-logo.scm:291
 msgid "Create shadow"
-msgstr ""
+msgstr "Búa til skugga"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm:281
 msgid "Create a logo in the style of a neon sign"
@@ -2147,7 +2130,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/news-text.scm:87
 #: ../plug-ins/script-fu/scripts/speed-text.scm:95
 msgid "Density (%)"
-msgstr ""
+msgstr "Þéttleiki (%)"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
@@ -2242,7 +2225,6 @@ msgid "File name"
 msgstr "Skráarheiti"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
-#| msgid "_Patterns"
 msgid "New _Pattern..."
 msgstr "_Nýtt mynstur..."
 
@@ -2252,7 +2234,6 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#| msgid "_Patterns"
 msgid "Pattern name"
 msgstr "Heiti mynsturs"
 
@@ -2330,11 +2311,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm:202
 msgid "Padding X"
-msgstr ""
+msgstr "Fylling X"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm:203
 msgid "Padding Y"
-msgstr ""
+msgstr "Fylling Y"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm:205
 msgid "Round ratio"
@@ -2358,7 +2339,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm:90
 msgid "Behavior"
-msgstr ""
+msgstr "Hegðun"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm:90
 msgid "Tile"
@@ -2476,7 +2457,6 @@ msgid "Convert a selection to an image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
-#| msgid "_Patterns"
 msgid "To _Pattern..."
 msgstr "Í m_ynstur..."
 
@@ -2541,10 +2521,9 @@ msgid "Rendering Spyro"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
-#, fuzzy
 #| msgid "Spyrograph"
 msgid "_Spyrogimp..."
-msgstr "Spírógraf"
+msgstr "_Spírógimp..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid ""
@@ -2580,7 +2559,6 @@ msgid "Triangle"
 msgstr "Þríhyrningur"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
-#| msgid "Squares"
 msgid "Square"
 msgstr "Ferningur"
 
@@ -2663,10 +2641,9 @@ msgid "Gradient: Loop Triangle"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm:139
-#, fuzzy
 #| msgid "_Browse..."
 msgid "Sta_rscape..."
-msgstr "_Flakka..."
+msgstr "Stjö_rnulandslag..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm:140
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
@@ -2698,14 +2675,13 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm:89
 msgid "Whirl angle"
-msgstr ""
+msgstr "Þyrilhorn"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm:90
 msgid "Number of times to whirl"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/test-sphere.scm:267
-#| msgid "_Browse..."
 msgid "_Sphere..."
 msgstr "_Kúla..."
 
@@ -2724,7 +2700,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm:218
 msgid "Antialias"
-msgstr ""
+msgstr "Afstöllun"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:117
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:159
@@ -2750,12 +2726,12 @@ msgstr "Ferningar"
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:128
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:170
 msgid "Hexagons"
-msgstr ""
+msgstr "Sexhyrningar"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:129
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:171
 msgid "Octagons"
-msgstr ""
+msgstr "Átthyrningar"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:131
 #: ../plug-ins/script-fu/scripts/textured-logo.scm:173
@@ -2789,7 +2765,6 @@ msgid "Blur vertically"
 msgstr "Móða lóðrétt"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:78
-#| msgid "Horizontal"
 msgid "Blur horizontally"
 msgstr "Móða lárétt"
 
@@ -2848,7 +2823,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/truchet.scm:165
 msgid "T_ruchet..."
-msgstr ""
+msgstr "T_ruchet..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm:166
 msgid "Create an image filled with a Truchet pattern"
@@ -2856,7 +2831,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/truchet.scm:174
 msgid "Foreground color"
-msgstr ""
+msgstr "Forgrunnslitur"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
 msgid "Mask size"
