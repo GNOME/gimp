@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-08-23 09:21+0000\n"
-"PO-Revision-Date: 2017-08-23 09:23+0000\n"
+"PO-Revision-Date: 2017-08-23 09:24+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -15223,15 +15223,12 @@ msgid "Could not start the GIMP help browser plug-in."
 msgstr "Gat ekki ræst viðbótina fyrir GIMP hjálparvafrann."
 
 #: ../app/widgets/gimphelp.c:354
-#, fuzzy
 #| msgid ""
 #| "The GIMP help browser plug-in appears to be missing from your "
 #| "installation. You may instead use the web browser for reading the help "
 #| "pages."
 msgid "You may instead use the web browser for reading the help pages."
-msgstr ""
-"Viðbótina fyrir GIMP hjálparvafrann virðist vanta í uppsetninguna hjá þér. "
-"Þú getur í staðinn notað venjulegann netvafra til að lesa hjálparsíðurnar."
+msgstr "Þú getur í staðinn notað netvafrann til að lesa hjálparsíðurnar."
 
 #: ../app/widgets/gimphelp.c:380
 msgid "Use _Web Browser"
