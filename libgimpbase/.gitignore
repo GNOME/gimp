@@ -12,3 +12,5 @@
 /test-cpu-accel
 /*.trs
 /*.log
+/xgen-bec
+/xgen-cec
