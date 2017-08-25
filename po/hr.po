@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: gimp 0\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-08-23 19:05+0000\n"
-"PO-Revision-Date: 2017-08-25 18:04+0200\n"
+"POT-Creation-Date: 2017-08-25 16:05+0000\n"
+"PO-Revision-Date: 2017-08-25 20:38+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -519,97 +519,97 @@ msgstr "%s: %d"
 #: ../app/actions/brush-editor-actions.c:43
 msgctxt "brush-editor-action"
 msgid "Brush Editor Menu"
-msgstr ""
+msgstr "Izbornik uređivača kista"
 
 #: ../app/actions/brush-editor-actions.c:50
 msgctxt "brush-editor-action"
 msgid "Edit Active Brush"
-msgstr ""
+msgstr "Uredi aktivni kist"
 
 #: ../app/actions/brushes-actions.c:43
 msgctxt "brushes-action"
 msgid "Brushes Menu"
-msgstr ""
+msgstr "Izbornik kistova"
 
 #: ../app/actions/brushes-actions.c:47
 msgctxt "brushes-action"
 msgid "_Open Brush as Image"
-msgstr ""
+msgstr "_Otvori kist kao sliku"
 
 #: ../app/actions/brushes-actions.c:48
 msgctxt "brushes-action"
 msgid "Open brush as image"
-msgstr ""
+msgstr "Otvori kist kao sliku"
 
 #: ../app/actions/brushes-actions.c:53
 msgctxt "brushes-action"
 msgid "_New Brush"
-msgstr ""
+msgstr "_Novi kist"
 
 #: ../app/actions/brushes-actions.c:54
 msgctxt "brushes-action"
 msgid "Create a new brush"
-msgstr ""
+msgstr "Stvori novi kist"
 
 #: ../app/actions/brushes-actions.c:59
 msgctxt "brushes-action"
 msgid "D_uplicate Brush"
-msgstr ""
+msgstr "U_dvostruči kist"
 
 #: ../app/actions/brushes-actions.c:60
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
-msgstr ""
+msgstr "Udvostruči ovaj kist"
 
 #: ../app/actions/brushes-actions.c:65
 msgctxt "brushes-action"
 msgid "Copy Brush _Location"
-msgstr ""
+msgstr "Kopiraj lokaciju _kista"
 
 #: ../app/actions/brushes-actions.c:66
 msgctxt "brushes-action"
 msgid "Copy brush file location to clipboard"
-msgstr ""
+msgstr "Kopiraj lokaciju datoteke kista u međuspremnik"
 
 #: ../app/actions/brushes-actions.c:71
 msgctxt "brushes-action"
 msgid "Show in _File Manager"
-msgstr ""
+msgstr "Prikaži u _upravitelju datoteka"
 
 #: ../app/actions/brushes-actions.c:72
 msgctxt "brushes-action"
 msgid "Show brush file location in the file manager"
-msgstr ""
+msgstr "Prikaži lokaciju datoteke kista u upravitelju datoteka"
 
 #: ../app/actions/brushes-actions.c:77
 msgctxt "brushes-action"
 msgid "_Delete Brush"
-msgstr ""
+msgstr "_Obriši kist"
 
 #: ../app/actions/brushes-actions.c:78
 msgctxt "brushes-action"
 msgid "Delete this brush"
-msgstr ""
+msgstr "Obriši ovaj kist"
 
 #: ../app/actions/brushes-actions.c:83
 msgctxt "brushes-action"
 msgid "_Refresh Brushes"
-msgstr ""
+msgstr "_Osvježi kistove"
 
 #: ../app/actions/brushes-actions.c:84
 msgctxt "brushes-action"
 msgid "Refresh brushes"
-msgstr ""
+msgstr "Osvježi kistove"
 
 #: ../app/actions/brushes-actions.c:92
 msgctxt "brushes-action"
 msgid "_Edit Brush..."
-msgstr ""
+msgstr "_Uredi kist..."
 
 #: ../app/actions/brushes-actions.c:93
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr ""
+msgstr "Uredi ovaj kist"
 
 #: ../app/actions/buffers-actions.c:42
 msgctxt "buffers-action"
@@ -619,37 +619,37 @@ msgstr "Izbornik međuspremnika"
 #: ../app/actions/buffers-actions.c:46
 msgctxt "buffers-action"
 msgid "_Paste Buffer"
-msgstr "_Zalijepi međupremnik"
+msgstr "_Zalijepi međuspremnik"
 
 #: ../app/actions/buffers-actions.c:47
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
-msgstr "Zalijepi odabrani međupremnik"
+msgstr "Zalijepi odabrani međuspremnik"
 
 #: ../app/actions/buffers-actions.c:52
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into"
-msgstr "Zalijepi _međupremnik u"
+msgstr "Zalijepi _međuspremnik u"
 
 #: ../app/actions/buffers-actions.c:53
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection"
-msgstr "Zalijepi odabrani međupremnik u odabir"
+msgstr "Zalijepi odabrani međuspremnik u odabir"
 
 #: ../app/actions/buffers-actions.c:58
 msgctxt "buffers-action"
 msgid "Paste Buffer as New _Layer"
-msgstr ""
+msgstr "Zalijepi međuspremnik kao novi _sloj"
 
 #: ../app/actions/buffers-actions.c:59
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer"
-msgstr ""
+msgstr "Zalijepi odabrani međuspremnik kao novu sliku"
 
 #: ../app/actions/buffers-actions.c:64
 msgctxt "buffers-action"
 msgid "Paste Buffer as _New Image"
-msgstr ""
+msgstr "Zalijepi međuspremnik kao _novu sliku"
 
 #: ../app/actions/buffers-actions.c:65
 msgctxt "buffers-action"
@@ -659,7 +659,7 @@ msgstr "Zalijepi odabrani međupremnik kao novu sliku"
 #: ../app/actions/buffers-actions.c:70
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
-msgstr "_Obriši spremnik"
+msgstr "_Obriši međuspremnik"
 
 #: ../app/actions/buffers-actions.c:71
 msgctxt "buffers-action"
@@ -669,63 +669,63 @@ msgstr "Obriši odabrani međuspremnik"
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
 msgid "Channels Menu"
-msgstr ""
+msgstr "Izbornik kanala"
 
 #. abused
 #: ../app/actions/channels-actions.c:49
 msgctxt "channels-action"
 msgid "Color Tag"
-msgstr ""
+msgstr "Boja oznake"
 
 #: ../app/actions/channels-actions.c:53
 msgctxt "channels-action"
 msgid "_Edit Channel Attributes..."
-msgstr ""
+msgstr "_Uredi svojstva kanala..."
 
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
 msgid "Edit the channel's name, color and opacity"
-msgstr ""
+msgstr "Uredi naziv kanala, boju i prozirnost"
 
 #: ../app/actions/channels-actions.c:59
 msgctxt "channels-action"
 msgid "_New Channel..."
-msgstr ""
+msgstr "_Novi kanal..."
 
 #: ../app/actions/channels-actions.c:60
 msgctxt "channels-action"
 msgid "Create a new channel"
-msgstr ""
+msgstr "Stvori novi kanal"
 
 #: ../app/actions/channels-actions.c:65
 msgctxt "channels-action"
 msgid "_New Channel"
-msgstr ""
+msgstr "_Novi kanal"
 
 #: ../app/actions/channels-actions.c:66
 msgctxt "channels-action"
 msgid "Create a new channel with last used values"
-msgstr ""
+msgstr "Stvori novi kanal s posljednjim korištenim vrijednostima"
 
 #: ../app/actions/channels-actions.c:71
 msgctxt "channels-action"
 msgid "D_uplicate Channel"
-msgstr ""
+msgstr "U_dvostruči kanal"
 
 #: ../app/actions/channels-actions.c:73
 msgctxt "channels-action"
 msgid "Create a duplicate of this channel and add it to the image"
-msgstr ""
+msgstr "Stvori duplikat sloja i dodaj ga slici"
 
 #: ../app/actions/channels-actions.c:78
 msgctxt "channels-action"
 msgid "_Delete Channel"
-msgstr ""
+msgstr "_Obriši kanal"
 
 #: ../app/actions/channels-actions.c:79
 msgctxt "channels-action"
 msgid "Delete this channel"
-msgstr ""
+msgstr "Obriši ovaj kanal"
 
 #: ../app/actions/channels-actions.c:84
 msgctxt "channels-action"
@@ -2293,12 +2293,12 @@ msgstr ""
 #: ../app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
 msgid "Tool_box"
-msgstr ""
+msgstr "Alatna _kutija"
 
 #: ../app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
 msgid "Tool _Options"
-msgstr ""
+msgstr "Mogućnosti _alata"
 
 #: ../app/actions/dialogs-actions.c:54
 msgctxt "dialogs-action"
@@ -9228,21 +9228,21 @@ msgstr ""
 #: ../app/actions/view-actions.c:903
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
-msgstr ""
+msgstr "Vr_ati zumiranje (%d%%)"
 
 #: ../app/actions/view-actions.c:911
 msgid "Re_vert Zoom"
-msgstr ""
+msgstr "Vr_ati zumiranje"
 
 #: ../app/actions/view-actions.c:1098
 #, c-format
 msgid "Othe_r (%s)..."
-msgstr ""
+msgstr "Ostal_o (%s)..."
 
 #: ../app/actions/view-actions.c:1107
 #, c-format
 msgid "_Zoom (%s)"
-msgstr "_Povećanje (%s)"
+msgstr "_Zumiranje (%s)"
 
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:1128
@@ -9262,7 +9262,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:1145
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
-msgstr ""
+msgstr "_Zamijeni %si zakreni (%d°)"
 
 #: ../app/actions/view-commands.c:1005
 msgid "Set Canvas Padding Color"
@@ -9275,12 +9275,12 @@ msgstr "Odredite boju za popunjavanje platna"
 #: ../app/actions/window-actions.c:170
 #, c-format
 msgid "Screen %s"
-msgstr ""
+msgstr "Zaslon %s"
 
 #: ../app/actions/window-actions.c:172
 #, c-format
 msgid "Move this window to screen %s"
-msgstr ""
+msgstr "Pomakni ovaj prozor na zaslon %s"
 
 #: ../app/actions/window-commands.c:76 ../app/dialogs/file-save-dialog.c:638
 #: ../app/dialogs/grid-dialog.c:103 ../app/dialogs/image-new-dialog.c:107
@@ -9307,48 +9307,50 @@ msgstr "_Prozori"
 #: ../app/actions/windows-actions.c:100
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
-msgstr ""
+msgstr "_Nedavno zatvoreni dokovi"
 
 #: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
-msgstr ""
+msgstr "_Dokovi dijalozi"
 
 #: ../app/actions/windows-actions.c:105
 msgctxt "windows-action"
 msgid "Next Image"
-msgstr ""
+msgstr "Sljedeća slika"
 
 #: ../app/actions/windows-actions.c:106
 msgctxt "windows-action"
 msgid "Switch to the next image"
-msgstr ""
+msgstr "Prebaci na sljedeću sliku"
 
 #: ../app/actions/windows-actions.c:111
 msgctxt "windows-action"
 msgid "Previous Image"
-msgstr ""
+msgstr "Prijašnja slika"
 
 #: ../app/actions/windows-actions.c:112
 msgctxt "windows-action"
 msgid "Switch to the previous image"
-msgstr ""
+msgstr "Prebaci na prijašnju sliku"
 
 #: ../app/actions/windows-actions.c:117
 msgctxt "windows-action"
 msgid "_Tabs Position"
-msgstr ""
+msgstr "_Položaj kartica"
 
 #: ../app/actions/windows-actions.c:123
 msgctxt "windows-action"
 msgid "Hide Docks"
-msgstr ""
+msgstr "Sakrij dokove"
 
 #: ../app/actions/windows-actions.c:124
 msgctxt "windows-action"
 msgid ""
 "When enabled, docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
+"Kada je omogućeno, dokovi i ostali dijalozi su skriveni, prikazan je samo "
+"prozor slike."
 
 #: ../app/actions/windows-actions.c:130
 msgctxt "windows-action"
@@ -9358,47 +9360,47 @@ msgstr "Način rada u jednom prozoru"
 #: ../app/actions/windows-actions.c:131
 msgctxt "windows-action"
 msgid "When enabled, GIMP is in a single-window mode."
-msgstr ""
+msgstr "Kada je omogućeno, GIMP je u načinu rada jednog prozora."
 
 #: ../app/actions/windows-actions.c:140
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
-msgstr ""
+msgstr "_Vrh"
 
 #: ../app/actions/windows-actions.c:141
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
-msgstr ""
+msgstr "_Položaj kartica na vrhu"
 
 #: ../app/actions/windows-actions.c:145
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
-msgstr ""
+msgstr "_Dno"
 
 #: ../app/actions/windows-actions.c:146
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
-msgstr ""
+msgstr "_Položaj kartica na gnu"
 
 #: ../app/actions/windows-actions.c:150
 msgctxt "windows-tabs-position-action"
 msgid "_Left"
-msgstr ""
+msgstr "_Lijevo"
 
 #: ../app/actions/windows-actions.c:151
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
-msgstr ""
+msgstr "_Položaj kartica lijevo"
 
 #: ../app/actions/windows-actions.c:155
 msgctxt "windows-tabs-position-action"
 msgid "_Right"
-msgstr ""
+msgstr "_Desno"
 
 #: ../app/actions/windows-actions.c:156
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
-msgstr ""
+msgstr "_Položaj kartica desno"
 
 #: ../app/actions/windows-commands.c:183
 msgid ""
