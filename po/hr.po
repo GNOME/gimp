@@ -9,8 +9,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
 "POT-Creation-Date: 2017-08-23 19:05+0000\n"
-"PO-Revision-Date: 2017-08-24 20:30+0200\n"
-"Last-Translator: auto\n"
+"PO-Revision-Date: 2017-08-25 18:04+0200\n"
+"Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
@@ -167,7 +167,7 @@ msgstr "Ne učitavaj fontove"
 
 #: ../app/main.c:200
 msgid "Do not show a splash screen"
-msgstr ""
+msgstr "Ne prikazuj dijalog pokretanja"
 
 #: ../app/main.c:205
 msgid "Do not use shared memory between GIMP and plug-ins"
@@ -195,11 +195,11 @@ msgstr "Skupna naredba za pokretanje (može se koristiti više puta)"
 
 #: ../app/main.c:235
 msgid "The procedure to process batch commands with"
-msgstr ""
+msgstr "Procedura radnje skupnih naredbi s"
 
 #: ../app/main.c:240
 msgid "Send messages to console instead of using a dialog"
-msgstr ""
+msgstr "Pošalji poruke u konzolu umjesto korištenja dijaloga"
 
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:246
@@ -213,35 +213,35 @@ msgstr "Otklanjanje grešaka u slučaju rušenja (never|query|always)"
 
 #: ../app/main.c:257
 msgid "Enable non-fatal debugging signal handlers"
-msgstr ""
+msgstr "Omogući nekobno rukovanje signalima otklanjanja grešaka"
 
 #: ../app/main.c:262
 msgid "Make all warnings fatal"
-msgstr ""
+msgstr "Učini sva upozorenja kobnima"
 
 #: ../app/main.c:267
 msgid "Output a gimprc file with default settings"
-msgstr ""
+msgstr "Ispis gimprc datoteke sa zadanim postavkama"
 
 #: ../app/main.c:283
 msgid "Output a sorted list of deprecated procedures in the PDB"
-msgstr ""
+msgstr "Ispis poredanog popisa zastarjelih procedura u PDB"
 
 #: ../app/main.c:288
 msgid "Show a preferences page with experimental features"
-msgstr ""
+msgstr "Prikaži stranicu osobitosti s eksperimentalnim zanačajkama"
 
 #: ../app/main.c:491
 msgid "[FILE|URI...]"
-msgstr ""
+msgstr "[DATOTEKA|URI...]"
 
 #: ../app/main.c:509
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
-"GIMP nije mogao pokrenuti grafičko korisnikovo sučelje.\n"
-"Provjerite je li ispravno postavljeno vaše grafičko okružje."
+"GIMP nije mogao pokrenuti grafičko korisničko sučelje.\n"
+"Provjerite je li ispravno postavljeno vaše grafičko okruženje."
 
 #: ../app/main.c:528
 msgid "Another GIMP instance is already running."
@@ -249,16 +249,16 @@ msgstr "Drugi primjerak GIMPA je već pokrenut."
 
 #: ../app/main.c:616
 msgid "GIMP output. Type any character to close this window."
-msgstr ""
+msgstr "GIMP izlaz. Utipkajte bilo koji znak za zatvaranje ovog prozora."
 
 #: ../app/main.c:617
 #, c-format
 msgid "(Type any character to close this window)\n"
-msgstr ""
+msgstr "(Utipkajte bilo koji znak za zatvaranje ovog prozora.)\n"
 
 #: ../app/main.c:634
 msgid "GIMP output. You can minimize this window, but don't close it."
-msgstr ""
+msgstr "GIMP izlaz. Možete smanjiti ovaj prozor, ali ga ne zatvarajte."
 
 #: ../app/sanity.c:562
 #, c-format
@@ -267,9 +267,9 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
-"Namješteno kodiranje imena datoteke ne može biti pretvoreno u UTF-8: %s\n"
+"Podešeno kôdiranje naziva datoteke ne može se pretvoriti u UTF-8: %s\n"
 "\n"
-"Molim, provjerite vrijednost varijable okoline G_FILENAME_ENCODING."
+"Provjerite vrijednost varijable okruženja G_FILENAME_ENCODING."
 
 #: ../app/sanity.c:581
 #, c-format
@@ -281,12 +281,18 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
+"Naziv mape koja sadrži GIMP korisničko podešavanje ne može se pretvorit u "
+"UTF-8: %s\n"
+"\n"
+"Vaš datotečni sustav zacjelo sprema datoteke i kôdiranje drugačije od UTF-8 "
+"i niste obavjestili GLib o tome. Postavite varijablu okruženja "
+"G_FILENAME_ENCODING."
 
 #. show versions of libraries used by GIMP
 #: ../app/version.c:63 ../app/version.c:130
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr ""
+msgstr "koristeći %s inačicu %s (kompiliranu nasuprot inačici %s)"
 
 #: ../app/version.c:138
 #, c-format
@@ -320,11 +326,11 @@ msgstr "Mapa boja"
 
 #: ../app/actions/actions.c:125
 msgid "Context"
-msgstr "Kontekst"
+msgstr "Sadržaj"
 
 #: ../app/actions/actions.c:128 ../app/dialogs/dialogs.c:319
 msgid "Pointer Information"
-msgstr ""
+msgstr "Informacije pokazivača"
 
 #: ../app/actions/actions.c:131
 msgid "Debug"
@@ -375,7 +381,7 @@ msgstr "Datoteka"
 
 #: ../app/actions/actions.c:164
 msgid "Filters"
-msgstr "Filteri"
+msgstr "Filtri"
 
 #: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:346
 #: ../app/dialogs/preferences-dialog.c:2877
@@ -436,7 +442,7 @@ msgstr "Uređivač paleta boja"
 #: ../app/actions/actions.c:200 ../app/core/gimp-data-factories.c:337
 #: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:2869
 msgid "Palettes"
-msgstr "Palete"
+msgstr "Palete boja"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:203 ../app/core/gimp-data-factories.c:332
