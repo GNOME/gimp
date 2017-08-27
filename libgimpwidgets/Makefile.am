@@ -317,8 +317,7 @@ gimpwidgetsmarshal.h: $(srcdir)/gimpwidgetsmarshal.list
 	&& rm -f xgen-wmh xgen-wmh~
 
 gimpwidgetsmarshal.c: gimpwidgetsmarshal.h
-	echo "#include \"gimpwidgetsmarshal.h\"" >> xgen-wmc \
-	&& $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --body >> xgen-wmc \
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --header --body >> xgen-wmc \
 	&& cp xgen-wmc $(@F) \
 	&& rm -f xgen-wmc xgen-wmc~
 
