@@ -459,12 +459,11 @@ gimpenums.c: $(srcdir)/gimpenums.h $(srcdir)/gimpenums.c.tail $(GIMP_MKENUMS) Ma
 	&& rm -f xgen-cec
 
 gimpuimarshal.h: $(srcdir)/gimpuimarshal.list
-	$(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --header >> xgen-umh \
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --header >> xgen-umh \
 	&& (cmp -s xgen-umh $(@F) || cp xgen-umh $(@F)) \
 	&& rm -f xgen-umh xgen-umh~
 
 gimpuimarshal.c: gimpuimarshal.h
-	echo "#include \"gimpuimarshal.h\"" >> xgen-umc \
-	&& $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --body >> xgen-umc \
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --header --body >> xgen-umc \
 	&& cp xgen-umc $(@F) \
 	&& rm -f xgen-umc xgen-umc~

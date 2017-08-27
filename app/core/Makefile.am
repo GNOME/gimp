@@ -442,13 +442,12 @@ gen_sources = xgen-gmh xgen-gmc xgen-cec
 CLEANFILES = $(gen_sources)
 
 gimpmarshal.h: $(srcdir)/gimpmarshal.list
-	$(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
 	&& (cmp -s xgen-gmh $(@F) || cp xgen-gmh $(@F)) \
 	&& rm -f xgen-gmh xgen-gmh~
 
 gimpmarshal.c: gimpmarshal.h
-	echo "#include \"gimpmarshal.h\"" >> xgen-gmc \
-	&& $(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
+	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header --body >> xgen-gmc \
 	&& cp xgen-gmc $(@F) \
 	&& rm -f xgen-gmc xgen-gmc~
 
