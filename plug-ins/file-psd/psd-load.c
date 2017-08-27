@@ -1428,12 +1428,17 @@ add_layers (gint32     image_id,
             {
               IFDBG(2) g_debug ("Create blank layer");
               image_type = get_gimp_image_type (img_a->base_type, TRUE);
+              psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
               layer_id = gimp_layer_new (image_id, lyr_a[lidx]->name,
                                          img_a->columns, img_a->rows,
                                          image_type,
-                                         0,
-                                         gimp_image_get_default_new_layer_mode (image_id));
+                                         lyr_a[lidx]->opacity * 100 / 255,
+                                         mode_info.mode);
               g_free (lyr_a[lidx]->name);
+              gimp_layer_set_blend_space (layer_id, mode_info.blend_space);
+              gimp_layer_set_composite_space (layer_id, mode_info.composite_space);
+              gimp_layer_set_composite_mode (layer_id, mode_info.composite_mode);
+              gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
               gimp_drawable_fill (layer_id, GIMP_FILL_TRANSPARENT);
               gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
