@@ -41,7 +41,7 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_BRUSH         "Round Fuzzy"
+#define DEFAULT_BRUSH         "2. Hardness 050"
 #define DEFAULT_DYNAMICS      "Dynamics Off"
 #define DEFAULT_PATTERN       "Pine"
 #define DEFAULT_PALETTE       "Default"
