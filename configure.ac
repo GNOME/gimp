@@ -43,8 +43,8 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.30])
-m4_define([gegl_required_version], [0.3.20])
+m4_define([babl_required_version], [0.1.31])
+m4_define([gegl_required_version], [0.3.21])
 m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
