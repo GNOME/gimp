@@ -558,8 +558,43 @@ CODE
     );
 }
 
-sub drawable_invert {
-    $blurb = 'Invert the contents of the specified drawable.';
+sub drawable_invert_linear {
+    $blurb = 'Invert the contents of the specified drawable in linear light.';
+
+    $help = <<'HELP';
+This procedure inverts the contents of the specified drawable. Each component
+inverted independently. This procedure works on linear RGB or Gray values.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.10';
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The drawable' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      gimp_drawable_apply_operation_by_name (drawable, progress,
+                                             C_("undo-type", "Invert"),
+                                             "gegl:invert-linear",
+                                             NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub drawable_invert_non_linear {
+    $blurb = 'Invert the contents of the specified drawable in perceptual space.';
 
     $help = <<'HELP';
 This procedure inverts the contents of the specified drawable. Each intensity
@@ -811,13 +846,16 @@ CODE
 @procs = qw(drawable_brightness_contrast
             drawable_color_balance
             drawable_colorize_hsl
-            drawable_curves_explicit drawable_curves_spline
+            drawable_curves_explicit
+            drawable_curves_spline
             drawable_desaturate
             drawable_equalize
             drawable_histogram
             drawable_hue_saturation
-            drawable_invert
-            drawable_levels drawable_levels_stretch
+            drawable_invert_linear
+            drawable_invert_non_linear
+            drawable_levels
+            drawable_levels_stretch
             drawable_posterize
             drawable_threshold);
 

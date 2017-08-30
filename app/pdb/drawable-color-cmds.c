@@ -518,12 +518,44 @@ drawable_hue_saturation_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-drawable_invert_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
-                         GError               **error)
+drawable_invert_linear_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          gimp_drawable_apply_operation_by_name (drawable, progress,
+                                                 C_("undo-type", "Invert"),
+                                                 "gegl:invert-linear",
+                                                 NULL);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+drawable_invert_non_linear_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
@@ -1134,14 +1166,37 @@ register_drawable_color_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-invert
+   * gimp-drawable-invert-linear
    */
-  procedure = gimp_procedure_new (drawable_invert_invoker);
+  procedure = gimp_procedure_new (drawable_invert_linear_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-invert");
+                               "gimp-drawable-invert-linear");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-invert",
-                                     "Invert the contents of the specified drawable.",
+                                     "gimp-drawable-invert-linear",
+                                     "Invert the contents of the specified drawable in linear light.",
+                                     "This procedure inverts the contents of the specified drawable. Each component inverted independently. This procedure works on linear RGB or Gray values.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-invert-non-linear
+   */
+  procedure = gimp_procedure_new (drawable_invert_non_linear_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-drawable-invert-non-linear");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-drawable-invert-non-linear",
+                                     "Invert the contents of the specified drawable in perceptual space.",
                                      "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten).",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",

@@ -112,7 +112,7 @@
                             (- theWidth inSize) (- theHeight inSize) TRUE)
           (gimp-drawable-desaturate theLayer DESATURATE-LIGHTNESS)
           (gimp-drawable-brightness-contrast theLayer 0.5 0.5)
-          (gimp-invert theLayer)
+          (gimp-drawable-invert-non-linear theLayer)
           (gimp-layer-resize theLayer
                              theWidth
                              theHeight

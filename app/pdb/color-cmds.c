@@ -1054,12 +1054,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-invert");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-invert",
-                                     "Invert the contents of the specified drawable.",
-                                     "This procedure inverts the contents of the specified drawable. Each intensity channel is inverted independently. The inverted intensity is given as inten' = (255 - inten).",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-invert-non-linear' instead.",
+                                     "Deprecated: Use 'gimp-drawable-invert-non-linear' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-invert-non-linear");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",

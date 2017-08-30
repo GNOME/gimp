@@ -59,6 +59,7 @@ gboolean gimp_desaturate_full     (gint32                drawable_ID,
 GIMP_DEPRECATED_FOR(gimp_drawable_equalize)
 gboolean gimp_equalize            (gint32                drawable_ID,
                                    gboolean              mask_only);
+GIMP_DEPRECATED_FOR(gimp_drawable_invert_non_linear)
 gboolean gimp_invert              (gint32                drawable_ID);
 GIMP_DEPRECATED_FOR(gimp_drawable_curves_spline)
 gboolean gimp_curves_spline       (gint32                drawable_ID,

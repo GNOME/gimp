@@ -294,15 +294,7 @@ CODE
 }
 
 sub invert {
-    $blurb = 'Invert the contents of the specified drawable.';
-
-    $help = <<'HELP';
-This procedure inverts the contents of the specified drawable. Each intensity
-channel is inverted independently. The inverted intensity is given as inten' =
-(255 - inten).
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-invert-non-linear');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',

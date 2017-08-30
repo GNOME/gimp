@@ -289,11 +289,7 @@ gimp_equalize (gint32   drawable_ID,
  * gimp_invert:
  * @drawable_ID: The drawable.
  *
- * Invert the contents of the specified drawable.
- *
- * This procedure inverts the contents of the specified drawable. Each
- * intensity channel is inverted independently. The inverted intensity
- * is given as inten' = (255 - inten).
+ * Deprecated: Use gimp_drawable_invert_non_linear() instead.
  *
  * Returns: TRUE on success.
  **/

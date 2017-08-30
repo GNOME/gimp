@@ -472,10 +472,43 @@ gimp_drawable_hue_saturation (gint32       drawable_ID,
 }
 
 /**
- * gimp_drawable_invert:
+ * gimp_drawable_invert_linear:
  * @drawable_ID: The drawable.
  *
- * Invert the contents of the specified drawable.
+ * Invert the contents of the specified drawable in linear light.
+ *
+ * This procedure inverts the contents of the specified drawable. Each
+ * component inverted independently. This procedure works on linear RGB
+ * or Gray values.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_drawable_invert_linear (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-drawable-invert-linear",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_drawable_invert_non_linear:
+ * @drawable_ID: The drawable.
+ *
+ * Invert the contents of the specified drawable in perceptual space.
  *
  * This procedure inverts the contents of the specified drawable. Each
  * intensity channel is inverted independently. The inverted intensity
@@ -486,13 +519,13 @@ gimp_drawable_hue_saturation (gint32       drawable_ID,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_invert (gint32 drawable_ID)
+gimp_drawable_invert_non_linear (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-invert",
+  return_vals = gimp_run_procedure ("gimp-drawable-invert-non-linear",
                                     &nreturn_vals,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_END);

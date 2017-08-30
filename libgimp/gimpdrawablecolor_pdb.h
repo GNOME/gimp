@@ -73,7 +73,8 @@ gboolean gimp_drawable_hue_saturation      (gint32                drawable_ID,
                                             gdouble               lightness,
                                             gdouble               saturation,
                                             gdouble               overlap);
-gboolean gimp_drawable_invert              (gint32                drawable_ID);
+gboolean gimp_drawable_invert_linear       (gint32                drawable_ID);
+gboolean gimp_drawable_invert_non_linear   (gint32                drawable_ID);
 gboolean gimp_drawable_levels              (gint32                drawable_ID,
                                             GimpHistogramChannel  channel,
                                             gdouble               low_input,

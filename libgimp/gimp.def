@@ -229,7 +229,8 @@ EXPORTS
 	gimp_drawable_height
 	gimp_drawable_histogram
 	gimp_drawable_hue_saturation
-	gimp_drawable_invert
+	gimp_drawable_invert_linear
+	gimp_drawable_invert_non_linear
 	gimp_drawable_is_channel
 	gimp_drawable_is_gray
 	gimp_drawable_is_indexed
