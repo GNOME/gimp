@@ -22,6 +22,7 @@ uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpbase-$(GIMP_API_VERSION).dll.a
 	-rm $(DESTDIR)$(libdir)/gimpbase.def
 else
+libm = -lm
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
@@ -169,6 +170,7 @@ EXTRA_libgimpbase_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpbase_def)
 libgimpbase_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GIO_LIBS)	\
 	$(GEXIV2_LIBS)	\
+	$(libm)		\
 	$(ole32_lib)
 
 install-data-local: install-ms-lib install-libtool-import-lib
