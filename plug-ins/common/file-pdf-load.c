@@ -362,6 +362,7 @@ run (const gchar      *name,
           /* Possibly retrieve last settings */
           gimp_get_data (LOAD_PROC, &loadvals);
 
+          gimp_ui_init (PLUG_IN_BINARY, FALSE);
           doc = open_document (param[1].data.d_string, &error);
 
           if (!doc)
@@ -536,6 +537,7 @@ open_document (const gchar  *filename,
   PopplerDocument *doc;
   GMappedFile     *mapped_file;
   GError          *error = NULL;
+  GtkWidget       *label;
 
   mapped_file = g_mapped_file_new (filename, FALSE, &error);
 
@@ -553,11 +555,55 @@ open_document (const gchar  *filename,
                                         NULL,
                                         &error);
 
+  label = gtk_label_new (_("PDF is password protected, please input the password:"));
+  while (error && strcmp (error->message, "Document is encrypted") == 0)
+    {
+      GtkWidget *vbox;
+      GtkWidget *dialog;
+      GtkWidget *entry;
+      gboolean   run;
+
+      dialog = gimp_dialog_new (_("Encrypted PDF"), PLUG_IN_ROLE,
+                                NULL, 0,
+                                NULL, NULL,
+                                _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                _("_OK"), GTK_RESPONSE_OK,
+                                NULL);
+      gimp_window_set_transient (GTK_WINDOW (dialog));
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                          vbox, TRUE, TRUE, 0);
+      entry = gtk_entry_new ();
+      gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
+      gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+      gtk_container_add (GTK_CONTAINER (vbox), label);
+      gtk_container_add (GTK_CONTAINER (vbox), entry);
+
+      gtk_widget_show_all (dialog);
+
+      run = gimp_dialog_run (GIMP_DIALOG (dialog));
+      if (run == GTK_RESPONSE_OK)
+        {
+          g_clear_error (&error);
+          doc = poppler_document_new_from_data (g_mapped_file_get_contents (mapped_file),
+                                                g_mapped_file_get_length (mapped_file),
+                                                gtk_entry_get_text (GTK_ENTRY (entry)),
+                                                &error);
+        }
+      label = gtk_label_new (_("Wrong password! Please input the right one:"));
+      gtk_widget_destroy (dialog);
+      if (run == GTK_RESPONSE_CANCEL || run == GTK_RESPONSE_DELETE_EVENT)
+        {
+          break;
+        }
+    }
+  gtk_widget_destroy (label);
+
   /* We can't g_mapped_file_unref(mapped_file) as apparently doc has
    * references to data in there. No big deal, this is just a
    * short-lived plug-in.
    */
-
   if (! doc)
     {
       g_set_error (load_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -1079,8 +1125,6 @@ load_dialog (PopplerDocument  *doc,
   gdouble     height;
 
   gboolean    run;
-
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   dialog = gimp_dialog_new (_("Import from PDF"), PLUG_IN_ROLE,
                             NULL, 0,
