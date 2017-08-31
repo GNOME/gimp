@@ -800,7 +800,7 @@ static const GimpLayerModeInfo layer_mode_infos[] =
 
   { GIMP_LAYER_MODE_PASS_THROUGH,
 
-    .op_name              = "gimp:replace",
+    .op_name              = "gimp:pass-through",
     .flags                = GIMP_LAYER_MODE_FLAG_BLEND_SPACE_IMMUTABLE |
                             GIMP_LAYER_MODE_FLAG_COMPOSITE_MODE_IMMUTABLE,
     .context              = GIMP_LAYER_MODE_CONTEXT_GROUP,

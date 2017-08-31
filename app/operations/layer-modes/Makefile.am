@@ -40,6 +40,8 @@ libapplayermodes_generic_a_sources = \
 	gimpoperationmerge.h			\
 	gimpoperationnormal.c			\
 	gimpoperationnormal.h			\
+	gimpoperationpassthrough.c		\
+	gimpoperationpassthrough.h		\
 	gimpoperationreplace.c			\
 	gimpoperationreplace.h			\
 	gimpoperationsplit.c			\

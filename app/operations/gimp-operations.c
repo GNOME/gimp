@@ -92,6 +92,7 @@
 #include "layer-modes/gimpoperationerase.h"
 #include "layer-modes/gimpoperationmerge.h"
 #include "layer-modes/gimpoperationnormal.h"
+#include "layer-modes/gimpoperationpassthrough.h"
 #include "layer-modes/gimpoperationreplace.h"
 #include "layer-modes/gimpoperationsplit.h"
 
@@ -175,6 +176,7 @@ gimp_operations_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_ERASE);
   g_type_class_ref (GIMP_TYPE_OPERATION_MERGE);
   g_type_class_ref (GIMP_TYPE_OPERATION_SPLIT);
+  g_type_class_ref (GIMP_TYPE_OPERATION_PASS_THROUGH);
   g_type_class_ref (GIMP_TYPE_OPERATION_REPLACE);
   g_type_class_ref (GIMP_TYPE_OPERATION_ANTI_ERASE);
 
