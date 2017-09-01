@@ -561,7 +561,7 @@ open_document (const gchar  *filename,
       GtkWidget *vbox;
       GtkWidget *dialog;
       GtkWidget *entry;
-      gboolean   run;
+      gint       run;
 
       dialog = gimp_dialog_new (_("Encrypted PDF"), PLUG_IN_ROLE,
                                 NULL, 0,
