@@ -387,7 +387,7 @@ static gchar *
 sanity_check_lcms (void)
 {
 #define LCMS_REQUIRED_MAJOR 2
-#define LCMS_REQUIRED_MINOR 7
+#define LCMS_REQUIRED_MINOR 8
 
   gint lcms_version = cmsGetEncodedCMMversion ();
 
