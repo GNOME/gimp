@@ -113,6 +113,8 @@ G_DEFINE_TYPE (GimpColorProfile, gimp_color_profile,
 #define parent_class gimp_color_profile_parent_class
 
 
+#define GIMP_COLOR_PROFILE_ERROR gimp_color_profile_error_quark ()
+
 static GQuark
 gimp_color_profile_error_quark (void)
 {
@@ -265,7 +267,7 @@ gimp_color_profile_new_from_file (GFile   *file,
 
       if (error && *error == NULL)
         {
-          g_set_error (error, gimp_color_profile_error_quark (), 0,
+          g_set_error (error, GIMP_COLOR_PROFILE_ERROR, 0,
                        _("'%s' does not appear to be an ICC color profile"),
                        gimp_file_get_utf8_name (file));
         }
@@ -311,7 +313,7 @@ gimp_color_profile_new_from_icc_profile (const guint8  *data,
    }
   else
     {
-      g_set_error_literal (error, gimp_color_profile_error_quark (), 0,
+      g_set_error_literal (error, GIMP_COLOR_PROFILE_ERROR, 0,
                            _("Data does not appear to be an ICC color profile"));
     }
 
@@ -368,7 +370,7 @@ gimp_color_profile_new_from_lcms_profile (gpointer   lcms_profile,
       g_free (data);
     }
 
-  g_set_error_literal (error, gimp_color_profile_error_quark (), 0,
+  g_set_error_literal (error, GIMP_COLOR_PROFILE_ERROR, 0,
                        _("Could not save color profile to memory"));
 
   return NULL;
@@ -1455,6 +1457,47 @@ gimp_color_profile_new_d50_gray_lab_trc (void)
   data = gimp_color_profile_get_icc_profile (profile, &length);
 
   return gimp_color_profile_new_from_icc_profile (data, length, NULL);
+}
+
+/**
+ * gimp_color_profile_get_format:
+ * @profile: a #GimpColorProfile
+ * @format:  a #Babl format
+ * @error:   return location for #GError
+ *
+ * This function takes a #GimpColorProfile and a #Babl format and
+ * returns a new #Babl format with @profile's RGB primaries and TRC,
+ * and @format's pixel layout.
+ *
+ * Return value: the new #Babl format.
+ *
+ * Since: 2.10
+ **/
+const Babl *
+gimp_color_profile_get_format (GimpColorProfile  *profile,
+                               const Babl        *format,
+                               GError           **error)
+{
+  const Babl *space;
+  gchar      *babl_error = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+  g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  space = babl_space_from_icc ((const gchar *) profile->priv->data,
+                               profile->priv->length,
+                               &babl_error);
+
+  if (! space)
+    {
+      g_set_error (error, GIMP_COLOR_PROFILE_ERROR, 0,
+                   "%s: %s",
+                   gimp_color_profile_get_label (profile), babl_error);
+      return NULL;
+    }
+
+  return babl_format_with_space (babl_get_name (format), space);
 }
 
 /**

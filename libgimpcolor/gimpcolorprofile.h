@@ -111,6 +111,9 @@ gboolean           gimp_color_profile_is_cmyk               (GimpColorProfile  *
 
 gboolean           gimp_color_profile_is_linear             (GimpColorProfile  *profile);
 
+const Babl       * gimp_color_profile_get_format            (GimpColorProfile  *profile,
+                                                             const Babl        *format,
+                                                             GError           **error);
 const Babl       * gimp_color_profile_get_lcms_format       (const Babl        *format,
                                                              guint32           *lcms_format);
 
