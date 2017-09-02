@@ -69,9 +69,11 @@ struct _GimpColorTransformPrivate
 {
   GimpColorProfile *src_profile;
   const Babl       *src_format;
+  const Babl       *src_space_format;
 
   GimpColorProfile *dest_profile;
   const Babl       *dest_format;
+  const Babl       *dest_space_format;
 
   cmsHTRANSFORM     transform;
 };
@@ -198,6 +200,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   cmsHPROFILE                dest_lcms;
   cmsUInt32Number            lcms_src_format;
   cmsUInt32Number            lcms_dest_format;
+  GError                    *error = NULL;
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), NULL);
   g_return_val_if_fail (src_format != NULL, NULL);
@@ -211,13 +214,49 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
 
   priv = transform->priv;
 
-  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
-  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
+  priv->src_space_format = gimp_color_profile_get_format (src_profile,
+                                                          src_format,
+                                                          &error);
+  if (! priv->src_space_format)
+    {
+      g_printerr ("%s: error making format: %s\n",
+                  G_STRFUNC, error->message);
+      g_clear_error (&error);
+    }
+
+  priv->dest_space_format = gimp_color_profile_get_format (dest_profile,
+                                                           dest_format,
+                                                           &error);
+  if (! priv->dest_space_format)
+    {
+      g_printerr ("%s: error making format: %s\n",
+                  G_STRFUNC, error->message);
+      g_clear_error (&error);
+    }
+
+  if (! g_getenv ("GIMP_COLOR_TRANSFORM_DISABLE_BABL") &&
+      priv->src_space_format && priv->dest_space_format)
+    {
+      priv->src_format  = src_format;
+      priv->dest_format = dest_format;
+
+      g_printerr ("%s: using babl for '%s' -> '%s'\n",
+                  G_STRFUNC,
+                  gimp_color_profile_get_label (src_profile),
+                  gimp_color_profile_get_label (dest_profile));
+      return transform;
+    }
+
+  priv->src_space_format  = NULL;
+  priv->dest_space_format = NULL;
 
   priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
                                                           &lcms_src_format);
   priv->dest_format = gimp_color_profile_get_lcms_format (dest_format,
                                                           &lcms_dest_format);
+
+  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
+  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
 
   lcms_error_clear ();
 
@@ -387,7 +426,16 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
       dest = dest_pixels;
     }
 
-  cmsDoTransform (priv->transform, src, dest, length);
+  if (priv->transform)
+    {
+      cmsDoTransform (priv->transform, src, dest, length);
+    }
+  else
+    {
+      babl_process (babl_fish (priv->src_space_format,
+                               priv->dest_space_format),
+                    src, dest, length);
+    }
 
   if (src_format != priv->src_format)
     {
@@ -458,8 +506,17 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          cmsDoTransform (priv->transform,
-                          iter->data[0], iter->data[1], iter->length);
+          if (priv->transform)
+            {
+              cmsDoTransform (priv->transform,
+                              iter->data[0], iter->data[1], iter->length);
+            }
+          else
+            {
+              babl_process (babl_fish (priv->src_space_format,
+                                       priv->dest_space_format),
+                            iter->data[0], iter->data[1], iter->length);
+            }
 
           done_pixels += iter->roi[0].width * iter->roi[0].height;
 
@@ -477,8 +534,17 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          cmsDoTransform (priv->transform,
-                          iter->data[0], iter->data[0], iter->length);
+          if (priv->transform)
+            {
+              cmsDoTransform (priv->transform,
+                              iter->data[0], iter->data[0], iter->length);
+            }
+          else
+            {
+              babl_process (babl_fish (priv->src_space_format,
+                                       priv->dest_space_format),
+                            iter->data[0], iter->data[0], iter->length);
+            }
 
           done_pixels += iter->roi[0].width * iter->roi[0].height;
 
