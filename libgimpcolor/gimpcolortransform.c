@@ -224,7 +224,8 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   priv->transform = cmsCreateTransform (src_lcms,  lcms_src_format,
                                         dest_lcms, lcms_dest_format,
                                         rendering_intent,
-                                        flags);
+                                        flags |
+                                        cmsFLAGS_COPY_ALPHA);
 
   if (lcms_last_error)
     {
@@ -307,7 +308,9 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
                                                 proof_lcms,
                                                 proof_intent,
                                                 display_intent,
-                                                flags | cmsFLAGS_SOFTPROOFING);
+                                                flags                 |
+                                                cmsFLAGS_SOFTPROOFING |
+                                                cmsFLAGS_COPY_ALPHA);
 
   if (lcms_last_error)
     {
@@ -384,12 +387,6 @@ gimp_color_transform_process_pixels (GimpColorTransform *transform,
       dest = dest_pixels;
     }
 
-  /* copy the alpha channel */
-  if (src != dest && babl_format_has_alpha (dest_format))
-    babl_process (babl_fish (src_format,
-                             priv->dest_format),
-                  src, dest, length);
-
   cmsDoTransform (priv->transform, src, dest, length);
 
   if (src_format != priv->src_format)
@@ -449,12 +446,6 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
   if (src_buffer != dest_buffer)
     {
-      const Babl *fish = NULL;
-
-      if (babl_format_has_alpha (priv->dest_format))
-        fish = babl_fish (priv->src_format,
-                          priv->dest_format);
-
       iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
                                        priv->src_format,
                                        GEGL_ACCESS_READ,
@@ -467,10 +458,6 @@ gimp_color_transform_process_buffer (GimpColorTransform  *transform,
 
       while (gegl_buffer_iterator_next (iter))
         {
-          /* make sure the alpha channel is copied too, lcms doesn't copy it */
-          if (fish)
-            babl_process (fish, iter->data[0], iter->data[1], iter->length);
-
           cmsDoTransform (priv->transform,
                           iter->data[0], iter->data[1], iter->length);
 
