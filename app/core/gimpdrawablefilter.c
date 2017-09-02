@@ -681,8 +681,8 @@ gimp_drawable_filter_sync_transform (GimpDrawableFilter *filter)
        *  calls below)
        */
       if (has_input)
-        input_format = gimp_color_profile_get_format (input_format,  &dummy);
-      output_format  = gimp_color_profile_get_format (output_format, &dummy);
+        input_format = gimp_color_profile_get_lcms_format (input_format,  &dummy);
+      output_format  = gimp_color_profile_get_lcms_format (output_format, &dummy);
 
       g_printerr ("profile transform drawable format: %s\n",
                   babl_get_name (drawable_format));

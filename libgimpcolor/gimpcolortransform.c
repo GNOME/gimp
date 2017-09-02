@@ -214,10 +214,10 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
   src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
   dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
 
-  priv->src_format  = gimp_color_profile_get_format (src_format,
-                                                     &lcms_src_format);
-  priv->dest_format = gimp_color_profile_get_format (dest_format,
-                                                     &lcms_dest_format);
+  priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
+                                                          &lcms_src_format);
+  priv->dest_format = gimp_color_profile_get_lcms_format (dest_format,
+                                                          &lcms_dest_format);
 
   lcms_error_clear ();
 
@@ -296,10 +296,10 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
   dest_lcms  = gimp_color_profile_get_lcms_profile (dest_profile);
   proof_lcms = gimp_color_profile_get_lcms_profile (proof_profile);
 
-  priv->src_format  = gimp_color_profile_get_format (src_format,
-                                                     &lcms_src_format);
-  priv->dest_format = gimp_color_profile_get_format (dest_format,
-                                                     &lcms_dest_format);
+  priv->src_format  = gimp_color_profile_get_lcms_format (src_format,
+                                                          &lcms_src_format);
+  priv->dest_format = gimp_color_profile_get_lcms_format (dest_format,
+                                                          &lcms_dest_format);
 
   lcms_error_clear ();
 

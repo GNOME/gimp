@@ -1458,7 +1458,7 @@ gimp_color_profile_new_d50_gray_lab_trc (void)
 }
 
 /**
- * gimp_color_profile_get_format:
+ * gimp_color_profile_get_lcms_format:
  * @format:      a #Babl format
  * @lcms_format: return location for an lcms format
  *
@@ -1476,8 +1476,8 @@ gimp_color_profile_new_d50_gray_lab_trc (void)
  * Since: 2.10
  **/
 const Babl *
-gimp_color_profile_get_format (const Babl *format,
-                               guint32    *lcms_format)
+gimp_color_profile_get_lcms_format (const Babl *format,
+                                    guint32    *lcms_format)
 {
   const Babl *output_format = NULL;
   const Babl *type;

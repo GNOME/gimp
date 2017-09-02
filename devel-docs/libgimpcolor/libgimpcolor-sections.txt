@@ -162,7 +162,7 @@ gimp_color_profile_is_rgb
 gimp_color_profile_is_gray
 gimp_color_profile_is_cmyk
 gimp_color_profile_is_linear
-gimp_color_profile_get_format
+gimp_color_profile_get_lcms_format
 <SUBSECTION Standard>
 GIMP_COLOR_PROFILE
 GIMP_COLOR_PROFILE_CLASS
