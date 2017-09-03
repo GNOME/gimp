@@ -80,6 +80,8 @@ struct _GimpMetadataClass
  **/
 
 
+#define GIMP_METADATA_ERROR gimp_metadata_error_quark ()
+
 static GQuark   gimp_metadata_error_quark (void);
 static void     gimp_metadata_add         (GimpMetadata *src,
                                            GimpMetadata *dest);
@@ -564,7 +566,7 @@ gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
 
       if (! name)
         {
-          g_set_error (error, gimp_metadata_error_quark (), 1001,
+          g_set_error (error, GIMP_METADATA_ERROR, 1001,
                        "Element 'tag' does not contain required attribute 'name'.");
           return;
         }
@@ -834,7 +836,7 @@ gimp_metadata_load_from_file (GFile   *file,
 
   if (! path)
     {
-      g_set_error (error, gimp_metadata_error_quark (), 0,
+      g_set_error (error, GIMP_METADATA_ERROR, 0,
                    _("Can load metadata only from local files"));
       return NULL;
     }
@@ -894,7 +896,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
 
   if (! path)
     {
-      g_set_error (error, gimp_metadata_error_quark (), 0,
+      g_set_error (error, GIMP_METADATA_ERROR, 0,
                    _("Can save metadata only to local files"));
       return FALSE;
     }
@@ -970,7 +972,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
 
   if (! gexiv2_metadata_has_exif (GEXIV2_METADATA (exif_metadata)))
     {
-      g_set_error (error, gimp_metadata_error_quark (), 0,
+      g_set_error (error, GIMP_METADATA_ERROR, 0,
                    _("Parsing Exif data failed."));
       g_object_unref (exif_metadata);
       g_byte_array_free (exif_bytes, TRUE);
@@ -1021,7 +1023,7 @@ gimp_metadata_set_from_iptc (GimpMetadata  *metadata,
 
   if (! gexiv2_metadata_has_iptc (GEXIV2_METADATA (iptc_metadata)))
     {
-      g_set_error (error, gimp_metadata_error_quark (), 0,
+      g_set_error (error, GIMP_METADATA_ERROR, 0,
                    _("Parsing IPTC data failed."));
       g_object_unref (iptc_metadata);
       return FALSE;
@@ -1070,7 +1072,7 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
 
   if (! gexiv2_metadata_has_xmp (GEXIV2_METADATA (xmp_metadata)))
     {
-      g_set_error (error, gimp_metadata_error_quark (), 0,
+      g_set_error (error, GIMP_METADATA_ERROR, 0,
                    _("Parsing XMP data failed."));
       g_object_unref (xmp_metadata);
       return FALSE;
