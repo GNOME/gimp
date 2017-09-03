@@ -124,7 +124,7 @@
     (set! mask-fs (car (gimp-edit-paste mask FALSE)))
     (gimp-floating-sel-anchor mask-fs)
     (if (= carve-white FALSE)
-        (gimp-drawable-invert-non-linear mask)
+        (gimp-drawable-invert mask FALSE)
     )
 
     (gimp-context-set-background '(255 255 255))
@@ -145,7 +145,7 @@
     (gimp-edit-fill layer3 FILL-BACKGROUND)
     (gimp-selection-none img)
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-    (gimp-drawable-invert-non-linear layer2)
+    (gimp-drawable-invert layer2 FALSE)
 
     (gimp-image-insert-layer img layer1 0 0)
     (copy-layer-chrome-it img layer1 banding-img banding-layer)

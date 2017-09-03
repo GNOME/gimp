@@ -42,7 +42,7 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
                              0, 0, 0, 0, True, False, 0)
 
     # make the shadow layer black now ...
-    pdb.gimp_drawable_invert_non_linear(shadow)
+    pdb.gimp_drawable_invert(shadow, False)
 
     # translate the drop shadow
     shadow.translate(drop_x, drop_y)

@@ -60,12 +60,12 @@
 ; For example, to invert the colors of all of the PNG files in the
 ; start directory:
 ;
-;    gimp -i -b '(with-files "*.png" (gimp-drawable-invert-non-linear layer) \
+;    gimp -i -b '(with-files "*.png" (gimp-drawable-invert layer FALSE) \
 ;                 (gimp-file-save 1 image layer filename filename ))'
 ;
 ; To do the same thing, but saving them as jpeg instead:
 ;
-;    gimp -i -b '(with-files "*.png" (gimp-drawable-invert-non-linear layer) \
+;    gimp -i -b '(with-files "*.png" (gimp-drawable-invert layer FALSE) \
 ;                 (gimp-file-save 1 image layer \
 ;                  (string-append basename ".jpg") \
 ;                  (string-append basename ".jpg") ))'

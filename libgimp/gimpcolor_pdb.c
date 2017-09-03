@@ -289,7 +289,7 @@ gimp_equalize (gint32   drawable_ID,
  * gimp_invert:
  * @drawable_ID: The drawable.
  *
- * Deprecated: Use gimp_drawable_invert_non_linear() instead.
+ * Deprecated: Use gimp_drawable_invert() instead.
  *
  * Returns: TRUE on success.
  **/

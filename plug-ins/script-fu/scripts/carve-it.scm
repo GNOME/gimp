@@ -95,7 +95,7 @@
     (set! mask-fs (car (gimp-edit-paste mask FALSE)))
     (gimp-floating-sel-anchor mask-fs)
     (if (= carve-white FALSE)
-        (gimp-drawable-invert-non-linear mask))
+        (gimp-drawable-invert mask FALSE))
 
     (set! mask-fat (car (gimp-channel-copy mask)))
     (gimp-image-insert-channel img mask-fat -1 0)

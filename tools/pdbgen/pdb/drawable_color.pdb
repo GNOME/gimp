@@ -558,12 +558,14 @@ CODE
     );
 }
 
-sub drawable_invert_linear {
-    $blurb = 'Invert the contents of the specified drawable in linear light.';
+sub drawable_invert {
+    $blurb = 'Invert the contents of the specified drawable.';
 
     $help = <<'HELP';
-This procedure inverts the contents of the specified drawable. Each component
-inverted independently. This procedure works on linear RGB or Gray values.
+This procedure inverts the contents of the specified drawable. Each
+intensity channel is inverted independently. The inverted intensity is
+given as inten' = (255 - inten). If 'linear' is TRUE, the drawable is
+inverted in linear space.
 HELP
 
     &std_pdb_misc;
@@ -571,7 +573,9 @@ HELP
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
+	  desc => 'The drawable' },
+	{ name => 'linear', type => 'boolean',
+	  desc => 'Whether to invert in linear space' }
     );
 
     %invoke = (
@@ -583,42 +587,8 @@ HELP
     {
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Invert"),
-                                             "gegl:invert-linear",
-                                             NULL);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub drawable_invert_non_linear {
-    $blurb = 'Invert the contents of the specified drawable in perceptual space.';
-
-    $help = <<'HELP';
-This procedure inverts the contents of the specified drawable. Each intensity
-channel is inverted independently. The inverted intensity is given as inten' =
-(255 - inten).
-HELP
-
-    &std_pdb_misc;
-    $since = '2.10';
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    {
-      gimp_drawable_apply_operation_by_name (drawable, progress,
-                                             C_("undo-type", "Invert"),
+                                             linear ?
+                                             "gegl:invert-linear" :
                                              "gegl:invert-gamma",
                                              NULL);
     }
@@ -852,8 +822,7 @@ CODE
             drawable_equalize
             drawable_histogram
             drawable_hue_saturation
-            drawable_invert_linear
-            drawable_invert_non_linear
+            drawable_invert
             drawable_levels
             drawable_levels_stretch
             drawable_posterize

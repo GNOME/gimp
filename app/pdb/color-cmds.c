@@ -1054,12 +1054,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-invert");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-invert",
-                                     "Deprecated: Use 'gimp-drawable-invert-non-linear' instead.",
-                                     "Deprecated: Use 'gimp-drawable-invert-non-linear' instead.",
+                                     "Deprecated: Use 'gimp-drawable-invert' instead.",
+                                     "Deprecated: Use 'gimp-drawable-invert' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-drawable-invert-non-linear");
+                                     "gimp-drawable-invert");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",

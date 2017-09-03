@@ -294,7 +294,7 @@ CODE
 }
 
 sub invert {
-    &std_pdb_deprecated ('gimp-drawable-invert-non-linear');
+    &std_pdb_deprecated ('gimp-drawable-invert');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
