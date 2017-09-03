@@ -149,25 +149,17 @@ gimp_color_profile_finalize (GObject *object)
 {
   GimpColorProfile *profile = GIMP_COLOR_PROFILE (object);
 
-  if (profile->priv->lcms_profile)
-    {
-      cmsCloseProfile (profile->priv->lcms_profile);
-      profile->priv->lcms_profile = NULL;
-    }
+  g_clear_pointer (&profile->priv->lcms_profile, cmsCloseProfile);
 
-  if (profile->priv->data)
-    {
-      g_free (profile->priv->data);
-      profile->priv->data   = NULL;
-      profile->priv->length = 0;
-    }
+  g_clear_pointer (&profile->priv->data, g_free);
+  profile->priv->length = 0;
 
-  g_free (profile->priv->description);
-  g_free (profile->priv->manufacturer);
-  g_free (profile->priv->model);
-  g_free (profile->priv->copyright);
-  g_free (profile->priv->label);
-  g_free (profile->priv->summary);
+  g_clear_pointer (&profile->priv->description,  g_free);
+  g_clear_pointer (&profile->priv->manufacturer, g_free);
+  g_clear_pointer (&profile->priv->model,        g_free);
+  g_clear_pointer (&profile->priv->copyright,    g_free);
+  g_clear_pointer (&profile->priv->label,        g_free);
+  g_clear_pointer (&profile->priv->summary,      g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

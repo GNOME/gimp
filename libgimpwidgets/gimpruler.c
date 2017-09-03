@@ -811,25 +811,12 @@ gimp_ruler_unrealize (GtkWidget *widget)
   GimpRuler        *ruler = GIMP_RULER (widget);
   GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
 
-  if (priv->backing_store)
-    {
-      cairo_surface_destroy (priv->backing_store);
-      priv->backing_store = NULL;
-    }
-
+  g_clear_pointer (&priv->backing_store, cairo_surface_destroy);
   priv->backing_store_valid = FALSE;
 
-  if (priv->layout)
-    {
-      g_object_unref (priv->layout);
-      priv->layout = NULL;
-    }
+  g_clear_object (&priv->layout);
 
-  if (priv->input_window)
-    {
-      gdk_window_destroy (priv->input_window);
-      priv->input_window = NULL;
-    }
+  g_clear_pointer (&priv->input_window, gdk_window_destroy);
 
   GTK_WIDGET_CLASS (gimp_ruler_parent_class)->unrealize (widget);
 }
@@ -924,11 +911,7 @@ gimp_ruler_style_set (GtkWidget *widget,
 
   priv->backing_store_valid = FALSE;
 
-  if (priv->layout)
-    {
-      g_object_unref (priv->layout);
-      priv->layout = NULL;
-    }
+  g_clear_object (&priv->layout);
 }
 
 static gboolean

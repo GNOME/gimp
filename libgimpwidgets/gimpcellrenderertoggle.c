@@ -186,23 +186,10 @@ gimp_cell_renderer_toggle_finalize (GObject *object)
   GimpCellRendererToggle        *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
   GimpCellRendererTogglePrivate *priv   = GET_PRIVATE (object);
 
-  if (priv->icon_name)
-    {
-      g_free (priv->icon_name);
-      priv->icon_name = NULL;
-    }
+  g_clear_pointer (&priv->icon_name,  g_free);
+  g_clear_pointer (&toggle->stock_id, g_free);
 
-  if (toggle->stock_id)
-    {
-      g_free (toggle->stock_id);
-      toggle->stock_id = NULL;
-    }
-
-  if (toggle->pixbuf)
-    {
-      g_object_unref (toggle->pixbuf);
-      toggle->pixbuf = NULL;
-    }
+  g_clear_object (&toggle->pixbuf);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -276,11 +263,7 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
       break;
     }
 
-  if (toggle->pixbuf)
-    {
-      g_object_unref (toggle->pixbuf);
-      toggle->pixbuf = NULL;
-    }
+  g_clear_object (&toggle->pixbuf);
 }
 
 static void
@@ -526,8 +509,7 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
 {
   GimpCellRendererTogglePrivate *priv = GET_PRIVATE (toggle);
 
-  if (toggle->pixbuf)
-    g_object_unref (toggle->pixbuf);
+  g_clear_object (&toggle->pixbuf);
 
   if (priv->icon_name)
     {

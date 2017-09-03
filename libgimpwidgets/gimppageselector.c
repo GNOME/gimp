@@ -341,8 +341,7 @@ gimp_page_selector_finalize (GObject *object)
 {
   GimpPageSelectorPrivate *priv = GIMP_PAGE_SELECTOR_GET_PRIVATE (object);
 
-  if (priv->default_thumbnail)
-    g_object_unref (priv->default_thumbnail);
+  g_clear_object (&priv->default_thumbnail);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -132,11 +132,7 @@ gimp_unit_menu_finalize (GObject *object)
 {
   GimpUnitMenu *menu = GIMP_UNIT_MENU (object);
 
-  if (menu->format)
-    {
-      g_free (menu->format);
-      menu->format = NULL;
-    }
+  g_clear_pointer (&menu->format, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

@@ -104,11 +104,7 @@ gimp_color_profile_view_finalize (GObject *object)
 {
   GimpColorProfileView *view = GIMP_COLOR_PROFILE_VIEW (object);
 
-  if (view->priv->profile)
-    {
-      g_object_unref (view->priv->profile);
-      view->priv->profile = NULL;
-    }
+  g_clear_object (&view->priv->profile);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

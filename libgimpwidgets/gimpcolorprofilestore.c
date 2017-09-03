@@ -171,11 +171,7 @@ gimp_color_profile_store_finalize (GObject *object)
 {
   GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
 
-  if (store->history)
-    {
-      g_free (store->history);
-      store->history = NULL;
-    }
+  g_clear_pointer (&store->history, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

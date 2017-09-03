@@ -201,14 +201,10 @@ gimp_color_scale_finalize (GObject *object)
 {
   GimpColorScale *scale = GIMP_COLOR_SCALE (object);
 
-  if (scale->buf)
-    {
-      g_free (scale->buf);
-      scale->buf       = NULL;
-      scale->width     = 0;
-      scale->height    = 0;
-      scale->rowstride = 0;
-    }
+  g_clear_pointer (&scale->buf, g_free);
+  scale->width     = 0;
+  scale->height    = 0;
+  scale->rowstride = 0;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

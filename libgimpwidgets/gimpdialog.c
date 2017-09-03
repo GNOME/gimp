@@ -218,11 +218,7 @@ gimp_dialog_finalize (GObject *object)
 {
   GimpDialogPrivate *private = GET_PRIVATE (object);
 
-  if (private->help_id)
-    {
-      g_free (private->help_id);
-      private->help_id = NULL;
-    }
+  g_clear_pointer (&private->help_id, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

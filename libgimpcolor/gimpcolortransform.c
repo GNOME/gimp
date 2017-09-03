@@ -148,23 +148,10 @@ gimp_color_transform_finalize (GObject *object)
 {
   GimpColorTransform *transform = GIMP_COLOR_TRANSFORM (object);
 
-  if (transform->priv->src_profile)
-    {
-      g_object_unref (transform->priv->src_profile);
-      transform->priv->src_profile = NULL;
-    }
+  g_clear_object (&transform->priv->src_profile);
+  g_clear_object (&transform->priv->dest_profile);
 
-  if (transform->priv->dest_profile)
-    {
-      g_object_unref (transform->priv->dest_profile);
-      transform->priv->dest_profile = NULL;
-    }
-
-  if (transform->priv->transform)
-    {
-      cmsDeleteTransform (transform->priv->transform);
-      transform->priv->transform = NULL;
-    }
+  g_clear_pointer (&transform->priv->transform, cmsDeleteTransform);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

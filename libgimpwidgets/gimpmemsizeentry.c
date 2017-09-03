@@ -106,11 +106,7 @@ gimp_memsize_entry_finalize (GObject *object)
 {
   GimpMemsizeEntry *entry = (GimpMemsizeEntry *) object;
 
-  if (entry->adjustment)
-    {
-      g_object_unref (entry->adjustment);
-      entry->adjustment = NULL;
-    }
+  g_clear_object (&entry->adjustment);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

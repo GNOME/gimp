@@ -267,11 +267,7 @@ gimp_color_area_finalize (GObject *object)
 {
   GimpColorArea *area = GIMP_COLOR_AREA (object);
 
-  if (area->buf)
-    {
-      g_free (area->buf);
-      area->buf = NULL;
-    }
+  g_clear_pointer (&area->buf, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -959,11 +955,7 @@ gimp_color_area_destroy_transform (GimpColorArea *area)
 {
   GimpColorAreaPrivate *priv = GET_PRIVATE (area);
 
-  if (priv->transform)
-    {
-      g_object_unref (priv->transform);
-      priv->transform = NULL;
-    }
+  g_clear_object (&priv->transform);
 
   gtk_widget_queue_draw (GTK_WIDGET (area));
 }

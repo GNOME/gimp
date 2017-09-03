@@ -185,17 +185,9 @@ gimp_file_entry_dispose (GObject *object)
 {
   GimpFileEntry *entry = GIMP_FILE_ENTRY (object);
 
-  if (entry->file_dialog)
-    {
-      gtk_widget_destroy (entry->file_dialog);
-      entry->file_dialog = NULL;
-    }
+  g_clear_pointer (&entry->file_dialog, gtk_widget_destroy);
 
-  if (entry->title)
-    {
-      g_free (entry->title);
-      entry->title = NULL;
-    }
+  g_clear_pointer (&entry->title, g_free);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }

@@ -175,17 +175,8 @@ gimp_preview_area_finalize (GObject *object)
 {
   GimpPreviewArea *area = GIMP_PREVIEW_AREA (object);
 
-  if (area->buf)
-    {
-      g_free (area->buf);
-      area->buf = NULL;
-    }
-
-  if (area->colormap)
-    {
-      g_free (area->colormap);
-      area->colormap = NULL;
-    }
+  g_clear_pointer (&area->buf,      g_free);
+  g_clear_pointer (&area->colormap, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

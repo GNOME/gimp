@@ -460,23 +460,15 @@ gimp_color_select_finalize (GObject *object)
 {
   GimpColorSelect *select = GIMP_COLOR_SELECT (object);
 
-  if (select->xy_buf)
-    {
-      g_free (select->xy_buf);
-      select->xy_buf       = NULL;
-      select->xy_width     = 0;
-      select->xy_height    = 0;
-      select->xy_rowstride = 0;
-    }
+  g_clear_pointer (&select->xy_buf, g_free);
+  select->xy_width     = 0;
+  select->xy_height    = 0;
+  select->xy_rowstride = 0;
 
-  if (select->z_buf)
-    {
-      g_free (select->z_buf);
-      select->z_buf       = NULL;
-      select->z_width     = 0;
-      select->z_height    = 0;
-      select->z_rowstride = 0;
-    }
+  g_clear_pointer (&select->z_buf, g_free);
+  select->z_width     = 0;
+  select->z_height    = 0;
+  select->z_rowstride = 0;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

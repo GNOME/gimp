@@ -177,11 +177,7 @@ gimp_color_profile_combo_box_finalize (GObject *object)
 
   priv = GIMP_COLOR_PROFILE_COMBO_BOX_GET_PRIVATE (combo);
 
-  if (priv->last_path)
-    {
-      gtk_tree_path_free (priv->last_path);
-      priv->last_path = NULL;
-    }
+  g_clear_pointer (&priv->last_path, gtk_tree_path_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

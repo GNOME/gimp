@@ -154,11 +154,7 @@ gimp_int_combo_box_finalize (GObject *object)
 {
   GimpIntComboBoxPrivate *priv = GIMP_INT_COMBO_BOX_GET_PRIVATE (object);
 
-  if (priv->label)
-    {
-      g_free (priv->label);
-      priv->label = NULL;
-    }
+  g_clear_pointer (&priv->label, g_free);
 
   if (priv->sensitivity_destroy)
     {

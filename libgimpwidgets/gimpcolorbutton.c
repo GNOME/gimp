@@ -406,11 +406,7 @@ gimp_color_button_finalize (GObject *object)
 {
   GimpColorButton *button = GIMP_COLOR_BUTTON (object);
 
-  if (button->title)
-    {
-      g_free (button->title);
-      button->title = NULL;
-    }
+  g_clear_pointer (&button->title, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -421,24 +417,12 @@ gimp_color_button_dispose (GObject *object)
   GimpColorButton        *button = GIMP_COLOR_BUTTON (object);
   GimpColorButtonPrivate *priv   = GET_PRIVATE (button);
 
-  if (button->dialog)
-    {
-      gtk_widget_destroy (button->dialog);
-      button->dialog = NULL;
-      priv->selection = NULL;
-    }
+  g_clear_pointer (&button->dialog, gtk_widget_destroy);
+  priv->selection = NULL;
 
-  if (button->color_area)
-    {
-      gtk_widget_destroy (button->color_area);
-      button->color_area = NULL;
-    }
+  g_clear_pointer (&button->color_area, gtk_widget_destroy);
 
-  if (button->popup_menu)
-    {
-      g_object_unref (button->popup_menu);
-      button->popup_menu = NULL;
-    }
+  g_clear_object (&button->popup_menu);
 
   gimp_color_button_set_color_config (button, NULL);
 
