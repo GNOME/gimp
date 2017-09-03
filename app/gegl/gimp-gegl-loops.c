@@ -36,6 +36,7 @@
 #include "gimp-gegl-loops.h"
 #include "gimp-gegl-loops-sse2.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpprogress.h"
 
 
@@ -801,9 +802,13 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                   G_CALLBACK (gimp_progress_set_value),
                                   progress);
 
+      GIMP_TIMER_START ();
+
       gimp_color_transform_process_buffer (transform,
                                            src_buffer,  src_rect,
                                            dest_buffer, dest_rect);
+
+      GIMP_TIMER_END ("converting buffer");
 
       g_object_unref (transform);
     }
