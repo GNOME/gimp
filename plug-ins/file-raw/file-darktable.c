@@ -410,8 +410,8 @@ load_thumbnail_image (const gchar   *filename,
                                                          "file-darktable-get-size.lua",
                                                          NULL);
   gchar  *lua_script         = g_file_get_path (lua_file);
-  gchar  *lua_script_escaped = g_strescape (lua_script_escaped, "");
-  gchar  *lua_quoted         = g_shell_quote (lua_script);
+  gchar  *lua_script_escaped = g_strescape (lua_script, "");
+  gchar  *lua_quoted         = g_shell_quote (lua_script_escaped);
   gchar  *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
   gchar  *darktable_stdout   = NULL;
 
