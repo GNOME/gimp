@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <gdk/gdk.h>
+
 #ifdef GDK_WINDOWING_QUARTZ
 #include <CoreServices/CoreServices.h>
 #endif
@@ -104,7 +106,7 @@ file_raw_get_executable_path (const gchar *main_executable,
       /* else, app bundle was not found, try path search as last resort. */
     }
 #elif defined (GDK_WINDOWING_WIN32)
-  if (registry_key_base)
+  if (win32_registry_key_base)
     {
       /* Look for the application in the Windows registry. */
       char  *registry_key;
@@ -113,10 +115,9 @@ file_raw_get_executable_path (const gchar *main_executable,
       long   status;
 
       if (suffix)
-        registry_key = g_strconcat (registry_key_base, suffix, ".exe", NULL);
+        registry_key = g_strconcat (win32_registry_key_base, suffix, ".exe", NULL);
       else
-        registry_key = g_strconcat (registry_key_base, ".exe", NULL);
-
+        registry_key = g_strconcat (win32_registry_key_base, ".exe", NULL);
       status = RegGetValue (HKEY_LOCAL_MACHINE, registry_key, "", RRF_RT_ANY,
                             NULL, (PVOID)&path, &buffer_size);
 
