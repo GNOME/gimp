@@ -14,10 +14,41 @@ Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 =================================================
 
 Core:
+
   - The default brush is now "Hardness 050".
 
+Color management:
+
+  - Use babl to convert between profiles if possible.
+
 Plug-ins:
+
   - Password-protected PDF files can now be imported.
+  - Fix finding raw loaders on Windows/macOS.
+
+File formats:
+
+  - PSD:
+
+    - Fix mask position when opening/exporting.
+    - Fix active layer selection during loading.
+    - Fix potential group-layer naming conflict during loading.
+    - Fix missing some attributes loading empty layers.
+    - Improve layer opacity loading/saving.
+
+Translations:
+
+  - Updated: Polish. 
+
+Building:
+
+  - Require LittleCMS >= 2.8.
+  - Initial docker-based build environment for GIMP now available.
+
+Contributors:
+
+Piotr Drąg, Tobias Ellinghaus, Ell, Lionel N, Michael Natterer, Jehan Pages,
+Juan Palacios, Michael Schumacher.
 
 Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 =================================================
