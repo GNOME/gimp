@@ -1180,40 +1180,9 @@ add_layers (gint32     image_id,
                   return -1;
                 }
             }
-          g_free (lyr_a[lidx]->chn_info);
-          g_free (lyr_a[lidx]->name);
         }
       else
         {
-          if (lyr_a[lidx]->group_type != 0)
-            {
-              if (lyr_a[lidx]->group_type == 3)
-                {
-                  /* the </Layer group> marker layers are used to
-                   * assemble the layer structure in a single pass
-                   */
-                  layer_id = gimp_layer_group_new (image_id);
-                }
-              else /* group-type == 1 || group_type == 2 */
-                {
-                  if (parent_group_stack->len)
-                    {
-                      layer_id = g_array_index (parent_group_stack, gint32,
-                                                parent_group_stack->len - 1);
-                      /* since the layers are stored in reverse, the group
-                       * layer start marker actually means we're done with
-                       * that layer group
-                       */
-                      g_array_remove_index (parent_group_stack,
-                                            parent_group_stack->len - 1);
-                    }
-                  else
-                    {
-                      layer_id = -1;
-                    }
-                }
-            }
-
           /* Empty layer */
           if (lyr_a[lidx]->bottom - lyr_a[lidx]->top == 0
               || lyr_a[lidx]->right - lyr_a[lidx]->left == 0)
@@ -1349,7 +1318,6 @@ add_layers (gint32     image_id,
                     }
                 }
             }
-          g_free (lyr_a[lidx]->chn_info);
 
           /* Draw layer */
 
@@ -1393,235 +1361,275 @@ add_layers (gint32     image_id,
               layer_channels++;
             }
 
+          /* Create the layer */
           if (lyr_a[lidx]->group_type != 0)
             {
               if (lyr_a[lidx]->group_type == 3)
                 {
+                  /* the </Layer group> marker layers are used to
+                   * assemble the layer structure in a single pass
+                   */
                   IFDBG(2) g_debug ("Create placeholder group layer");
-                  g_free (lyr_a[lidx]->name);
-                  gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
+                  layer_id = gimp_layer_group_new (image_id);
                   /* add this group layer as the new parent */
                   g_array_append_val (parent_group_stack, layer_id);
                 }
-              else
+              else /* group-type == 1 || group_type == 2 */
                 {
-                  IFDBG(2) g_debug ("End group layer id %d.", layer_id);
-                  if (layer_id != -1)
+                  if (parent_group_stack->len)
                     {
-                      psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
-                      gimp_layer_set_mode (layer_id, mode_info.mode);
-                      gimp_layer_set_blend_space (layer_id, mode_info.blend_space);
-                      gimp_layer_set_composite_space (layer_id, mode_info.composite_space);
-                      gimp_layer_set_composite_mode (layer_id, mode_info.composite_mode);
-                      gimp_layer_set_opacity (layer_id,
-                                              lyr_a[lidx]->opacity * 100 / 255);
-                      gimp_item_set_name (layer_id, lyr_a[lidx]->name);
-                      g_free (lyr_a[lidx]->name);
-                      gimp_item_set_visible (layer_id,
-                                             lyr_a[lidx]->layer_flags.visible);
-                      if (lyr_a[lidx]->id)
-                        gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+                      layer_id = g_array_index (parent_group_stack, gint32,
+                                                parent_group_stack->len - 1);
+                      IFDBG(2) g_debug ("End group layer id %d.", layer_id);
+                      /* since the layers are stored in reverse, the group
+                       * layer start marker actually means we're done with
+                       * that layer group
+                       */
+                      g_array_remove_index (parent_group_stack,
+                                            parent_group_stack->len - 1);
+                    }
+                  else
+                    {
+                      IFDBG(1) g_debug ("WARNING: Unmatched group layer start marker.");
+                      layer_id = -1;
                     }
                 }
-            }
-          else if (empty)
-            {
-              IFDBG(2) g_debug ("Create blank layer");
-              image_type = get_gimp_image_type (img_a->base_type, TRUE);
-              psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
-              layer_id = gimp_layer_new (image_id, lyr_a[lidx]->name,
-                                         img_a->columns, img_a->rows,
-                                         image_type,
-                                         lyr_a[lidx]->opacity * 100 / 255,
-                                         mode_info.mode);
-              g_free (lyr_a[lidx]->name);
-              gimp_layer_set_blend_space (layer_id, mode_info.blend_space);
-              gimp_layer_set_composite_space (layer_id, mode_info.composite_space);
-              gimp_layer_set_composite_mode (layer_id, mode_info.composite_mode);
-              gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
-              gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
-              gimp_drawable_fill (layer_id, GIMP_FILL_TRANSPARENT);
-              gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
-              if (lyr_a[lidx]->id)
-                gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
-              if (lyr_a[lidx]->layer_flags.irrelevant)
-                gimp_item_set_visible (layer_id, FALSE);
             }
           else
             {
-              l_x = lyr_a[lidx]->left;
-              l_y = lyr_a[lidx]->top;
-              l_w = lyr_a[lidx]->right - lyr_a[lidx]->left;
-              l_h = lyr_a[lidx]->bottom - lyr_a[lidx]->top;
-
-              IFDBG(3) g_debug ("Draw layer");
-              image_type = get_gimp_image_type (img_a->base_type, alpha);
-              IFDBG(3) g_debug ("Layer type %d", image_type);
-              layer_size = l_w * l_h;
-              bps = img_a->bps / 8;
-              if (bps == 0)
-                bps++;
-              pixels = g_malloc (layer_size * layer_channels * bps);
-              for (cidx = 0; cidx < layer_channels; ++cidx)
+              if (empty)
                 {
-                  IFDBG(3) g_debug ("Start channel %d", channel_idx[cidx]);
-                  for (i = 0; i < layer_size; ++i)
-                    memcpy (&pixels[((i * layer_channels) + cidx) * bps],
-                            &lyr_chn[channel_idx[cidx]]->data[i * bps], bps);
-                  g_free (lyr_chn[channel_idx[cidx]]->data);
-                }
-
-              psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
-              layer_id = gimp_layer_new (image_id, lyr_a[lidx]->name, l_w, l_h,
-                                         image_type, lyr_a[lidx]->opacity * 100 / 255,
-                                         mode_info.mode);
-              gimp_layer_set_blend_space (layer_id, mode_info.blend_space);
-              gimp_layer_set_composite_space (layer_id, mode_info.composite_space);
-              gimp_layer_set_composite_mode (layer_id, mode_info.composite_mode);
-              IFDBG(3) g_debug ("Layer tattoo: %d", layer_id);
-              g_free (lyr_a[lidx]->name);
-              gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
-              gimp_layer_set_offsets (layer_id, l_x, l_y);
-              gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
-              buffer = gimp_drawable_get_buffer (layer_id);
-              gegl_buffer_set (buffer,
-                               GEGL_RECTANGLE (0, 0,
-                                               gegl_buffer_get_width (buffer),
-                                               gegl_buffer_get_height (buffer)),
-                               0, get_layer_format (img_a, alpha),
-                               pixels, GEGL_AUTO_ROWSTRIDE);
-              gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
-              if (lyr_a[lidx]->id)
-                gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
-              g_object_unref (buffer);
-              g_free (pixels);
-            }
-
-          /* Layer mask */
-          if (user_mask && lyr_a[lidx]->group_type == 0)
-            {
-              if (empty_mask)
-                {
-                  IFDBG(3) g_debug ("Create empty mask");
-                  if (lyr_a[lidx]->layer_mask.def_color == 255)
-                    mask_id = gimp_layer_create_mask (layer_id,
-                                                      GIMP_ADD_MASK_WHITE);
-                  else
-                    mask_id = gimp_layer_create_mask (layer_id,
-                                                      GIMP_ADD_MASK_BLACK);
-                  gimp_layer_add_mask (layer_id, mask_id);
-                  gimp_layer_set_apply_mask (layer_id,
-                    ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
+                  IFDBG(2) g_debug ("Create blank layer");
                 }
               else
                 {
-                  /* Load layer mask data */
-                  if (lyr_a[lidx]->layer_mask.mask_flags.relative_pos)
-                    {
-                      lm_x = lyr_a[lidx]->layer_mask.left;
-                      lm_y = lyr_a[lidx]->layer_mask.top;
-                      lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
-                      lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
-                    }
-                  else
-                    {
-                      lm_x = lyr_a[lidx]->layer_mask.left - l_x;
-                      lm_y = lyr_a[lidx]->layer_mask.top - l_y;
-                      lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
-                      lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
-                    }
-                  IFDBG(3) g_debug ("Mask channel index %d", user_mask_chn);
-                  IFDBG(3) g_debug ("Relative pos %d",
-                                    lyr_a[lidx]->layer_mask.mask_flags.relative_pos);
-                  bps = (img_a->bps + 1) / 8;
-                  layer_size = lm_w * lm_h * bps;
-                  pixels = g_malloc (layer_size);
-                  IFDBG(3) g_debug ("Allocate Pixels %d", layer_size);
-                  /* Crop mask at layer boundary */
-                  IFDBG(3) g_debug ("Original Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
-                  if (lm_x < 0
-                      || lm_y < 0
-                      || lm_w + lm_x > l_w
-                      || lm_h + lm_y > l_h)
-                    {
-                      if (CONVERSION_WARNINGS)
-                        g_message ("Warning\n"
-                                   "The layer mask is partly outside the "
-                                   "layer boundary. The mask will be "
-                                   "cropped which may result in data loss.");
-                      i = 0;
-                      for (rowi = 0; rowi < lm_h; ++rowi)
-                        {
-                          if (rowi + lm_y >= 0 && rowi + lm_y < l_h)
-                            {
-                              for (coli = 0; coli < lm_w; ++coli)
-                                {
-                                  if (coli + lm_x >= 0 && coli + lm_x < l_w)
-                                    {
-                                      memcpy (&pixels[i * bps], &lyr_chn[user_mask_chn]->data[(rowi * lm_w + coli) * bps], bps);
-                                      i++;
-                                    }
-                                }
-                            }
-                        }
-                      if (lm_x < 0)
-                        {
-                          lm_w += lm_x;
-                          lm_x = 0;
-                        }
-                      if (lm_y < 0)
-                        {
-                          lm_h += lm_y;
-                          lm_y = 0;
-                        }
-                      if (lm_w + lm_x > l_w)
-                        lm_w = l_w - lm_x;
-                      if (lm_h + lm_y > l_h)
-                        lm_h = l_h - lm_y;
-                    }
-                  else
-                    {
-                      memcpy (pixels, lyr_chn[user_mask_chn]->data, layer_size);
-                      i = layer_size;
-                    }
-                  g_free (lyr_chn[user_mask_chn]->data);
-                  /* Draw layer mask data, if any */
-                  if (i > 0)
-                    {
-                      IFDBG(3) g_debug ("Layer %d %d %d %d", l_x, l_y, l_w, l_h);
-                      IFDBG(3) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
+                  IFDBG(2) g_debug ("Create normal layer");
+                  l_x = lyr_a[lidx]->left;
+                  l_y = lyr_a[lidx]->top;
+                  l_w = lyr_a[lidx]->right - lyr_a[lidx]->left;
+                  l_h = lyr_a[lidx]->bottom - lyr_a[lidx]->top;
+                }
 
+              image_type = get_gimp_image_type (img_a->base_type, TRUE);
+              IFDBG(3) g_debug ("Layer type %d", image_type);
+
+              layer_id = gimp_layer_new (image_id, lyr_a[lidx]->name,
+                                         l_w, l_h, image_type,
+                                         100, GIMP_LAYER_MODE_NORMAL);
+            }
+
+          if (layer_id != -1)
+            {
+              /* Set the layer properties (skip this for layer group end
+               * markers; we set their properties when processing the start
+               * marker.)
+               */
+              if (lyr_a[lidx]->group_type != 3)
+                {
+                  /* Name */
+                  gimp_item_set_name (layer_id, lyr_a[lidx]->name);
+
+                  /* Mode */
+                  psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
+                  gimp_layer_set_mode (layer_id, mode_info.mode);
+                  gimp_layer_set_blend_space (layer_id, mode_info.blend_space);
+                  gimp_layer_set_composite_space (layer_id, mode_info.composite_space);
+                  gimp_layer_set_composite_mode (layer_id, mode_info.composite_mode);
+
+                  /* Opacity */
+                  gimp_layer_set_opacity (layer_id,
+                                          lyr_a[lidx]->opacity * 100 / 255);
+
+                  /* Flags */
+                  gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
+                  gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
+                  if (lyr_a[lidx]->layer_flags.irrelevant &&
+                      lyr_a[lidx]->group_type == 0)
+                    {
+                      gimp_item_set_visible (layer_id, FALSE);
+                    }
+
+                  /* Position */
+                  if (l_x != 0 || l_y != 0)
+                    gimp_layer_set_offsets (layer_id, l_x, l_y);
+
+                  /* Color tag */
+                  gimp_item_set_color_tag (layer_id,
+                                           psd_to_gimp_layer_color_tag (lyr_a[lidx]->color_tag[0]));
+
+                  /* Tattoo */
+                  if (lyr_a[lidx]->id)
+                    gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+                }
+
+              /* Insert the layer */
+              if (lyr_a[lidx]->group_type == 0 || /* normal layer */
+                  lyr_a[lidx]->group_type == 3    /* group layer end marker */)
+                {
+                  gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
+                }
+
+              /* Set the layer data */
+              if (lyr_a[lidx]->group_type == 0)
+                {
+                  IFDBG(3) g_debug ("Draw layer");
+
+                  if (empty)
+                    {
+                      gimp_drawable_fill (layer_id, GIMP_FILL_TRANSPARENT);
+                    }
+                  else
+                    {
+                      layer_size = l_w * l_h;
+                      bps = img_a->bps / 8;
+                      if (bps == 0)
+                        bps++;
+                      pixels = g_malloc (layer_size * layer_channels * bps);
+                      for (cidx = 0; cidx < layer_channels; ++cidx)
+                        {
+                          IFDBG(3) g_debug ("Start channel %d", channel_idx[cidx]);
+                          for (i = 0; i < layer_size; ++i)
+                            memcpy (&pixels[((i * layer_channels) + cidx) * bps],
+                                    &lyr_chn[channel_idx[cidx]]->data[i * bps], bps);
+                          g_free (lyr_chn[channel_idx[cidx]]->data);
+                        }
+
+                      buffer = gimp_drawable_get_buffer (layer_id);
+                      gegl_buffer_set (buffer,
+                                       GEGL_RECTANGLE (0, 0,
+                                                       gegl_buffer_get_width (buffer),
+                                                       gegl_buffer_get_height (buffer)),
+                                       0, get_layer_format (img_a, alpha),
+                                       pixels, GEGL_AUTO_ROWSTRIDE);
+                      g_object_unref (buffer);
+                      g_free (pixels);
+                    }
+                }
+
+              /* Layer mask */
+              if (user_mask && lyr_a[lidx]->group_type == 0)
+                {
+                  if (empty_mask)
+                    {
+                      IFDBG(3) g_debug ("Create empty mask");
                       if (lyr_a[lidx]->layer_mask.def_color == 255)
                         mask_id = gimp_layer_create_mask (layer_id,
                                                           GIMP_ADD_MASK_WHITE);
                       else
                         mask_id = gimp_layer_create_mask (layer_id,
                                                           GIMP_ADD_MASK_BLACK);
-
-                      IFDBG(3) g_debug ("New layer mask %d", mask_id);
                       gimp_layer_add_mask (layer_id, mask_id);
-                      buffer = gimp_drawable_get_buffer (mask_id);
-                      gegl_buffer_set (buffer,
-                                       GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h),
-                                       0, get_mask_format (img_a),
-                                       pixels, GEGL_AUTO_ROWSTRIDE);
-                      g_object_unref (buffer);
                       gimp_layer_set_apply_mask (layer_id,
-                                                 ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
+                        ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                     }
-                  g_free (pixels);
+                  else
+                    {
+                      /* Load layer mask data */
+                      if (lyr_a[lidx]->layer_mask.mask_flags.relative_pos)
+                        {
+                          lm_x = lyr_a[lidx]->layer_mask.left;
+                          lm_y = lyr_a[lidx]->layer_mask.top;
+                          lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
+                          lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
+                        }
+                      else
+                        {
+                          lm_x = lyr_a[lidx]->layer_mask.left - l_x;
+                          lm_y = lyr_a[lidx]->layer_mask.top - l_y;
+                          lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
+                          lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
+                        }
+                      IFDBG(3) g_debug ("Mask channel index %d", user_mask_chn);
+                      IFDBG(3) g_debug ("Relative pos %d",
+                                        lyr_a[lidx]->layer_mask.mask_flags.relative_pos);
+                      bps = (img_a->bps + 1) / 8;
+                      layer_size = lm_w * lm_h * bps;
+                      pixels = g_malloc (layer_size);
+                      IFDBG(3) g_debug ("Allocate Pixels %d", layer_size);
+                      /* Crop mask at layer boundary */
+                      IFDBG(3) g_debug ("Original Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
+                      if (lm_x < 0
+                          || lm_y < 0
+                          || lm_w + lm_x > l_w
+                          || lm_h + lm_y > l_h)
+                        {
+                          if (CONVERSION_WARNINGS)
+                            g_message ("Warning\n"
+                                       "The layer mask is partly outside the "
+                                       "layer boundary. The mask will be "
+                                       "cropped which may result in data loss.");
+                          i = 0;
+                          for (rowi = 0; rowi < lm_h; ++rowi)
+                            {
+                              if (rowi + lm_y >= 0 && rowi + lm_y < l_h)
+                                {
+                                  for (coli = 0; coli < lm_w; ++coli)
+                                    {
+                                      if (coli + lm_x >= 0 && coli + lm_x < l_w)
+                                        {
+                                          memcpy (&pixels[i * bps], &lyr_chn[user_mask_chn]->data[(rowi * lm_w + coli) * bps], bps);
+                                          i++;
+                                        }
+                                    }
+                                }
+                            }
+                          if (lm_x < 0)
+                            {
+                              lm_w += lm_x;
+                              lm_x = 0;
+                            }
+                          if (lm_y < 0)
+                            {
+                              lm_h += lm_y;
+                              lm_y = 0;
+                            }
+                          if (lm_w + lm_x > l_w)
+                            lm_w = l_w - lm_x;
+                          if (lm_h + lm_y > l_h)
+                            lm_h = l_h - lm_y;
+                        }
+                      else
+                        {
+                          memcpy (pixels, lyr_chn[user_mask_chn]->data, layer_size);
+                          i = layer_size;
+                        }
+                      g_free (lyr_chn[user_mask_chn]->data);
+                      /* Draw layer mask data, if any */
+                      if (i > 0)
+                        {
+                          IFDBG(3) g_debug ("Layer %d %d %d %d", l_x, l_y, l_w, l_h);
+                          IFDBG(3) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
+
+                          if (lyr_a[lidx]->layer_mask.def_color == 255)
+                            mask_id = gimp_layer_create_mask (layer_id,
+                                                              GIMP_ADD_MASK_WHITE);
+                          else
+                            mask_id = gimp_layer_create_mask (layer_id,
+                                                              GIMP_ADD_MASK_BLACK);
+
+                          IFDBG(3) g_debug ("New layer mask %d", mask_id);
+                          gimp_layer_add_mask (layer_id, mask_id);
+                          buffer = gimp_drawable_get_buffer (mask_id);
+                          gegl_buffer_set (buffer,
+                                           GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h),
+                                           0, get_mask_format (img_a),
+                                           pixels, GEGL_AUTO_ROWSTRIDE);
+                          g_object_unref (buffer);
+                          gimp_layer_set_apply_mask (layer_id,
+                                                     ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
+                        }
+                      g_free (pixels);
+                    }
                 }
             }
-
-          /* Set layer color tag */
-          gimp_item_set_color_tag(layer_id,
-                                  psd_to_gimp_layer_color_tag(lyr_a[lidx]->color_tag[0]));
 
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             if (lyr_chn[cidx])
               g_free (lyr_chn[cidx]);
           g_free (lyr_chn);
         }
+      g_free (lyr_a[lidx]->chn_info);
+      g_free (lyr_a[lidx]->name);
       g_free (lyr_a[lidx]);
     }
   g_free (lyr_a);
