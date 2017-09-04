@@ -324,17 +324,19 @@ load_image (const gchar  *filename,
             GimpRunMode   run_mode,
             GError      **error)
 {
-  gint32  image_ID        = -1;
-  GFile  *lua_file        = gimp_data_directory_file ("file-raw",
-                                                      "file-darktable-export-on-exit.lua",
-                                                      NULL);
-  gchar  *lua_script      = g_file_get_path (lua_file);
-  gchar  *lua_quoted      = g_shell_quote (lua_script);
-  gchar  *lua_cmd         = g_strdup_printf ("dofile(%s)", lua_quoted);
-  gchar  *filename_out    = gimp_temp_name ("exr");
-  gchar  *export_filename = g_strdup_printf ("lua/export_on_exit/export_filename=%s", filename_out);
+  gint32  image_ID           = -1;
+  GFile  *lua_file           = gimp_data_directory_file ("file-raw",
+                                                         "file-darktable-export-on-exit.lua",
+                                                         NULL);
+  gchar  *lua_script         = g_file_get_path (lua_file);
+  gchar  *lua_script_escaped = g_strescape (lua_script, "");
+  gchar  *lua_quoted         = g_shell_quote (lua_script_escaped);
+  gchar  *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
+  gchar  *filename_out       = gimp_temp_name ("exr");
+  gchar  *export_filename    = g_strdup_printf ("lua/export_on_exit/export_filename=%s",
+                                                filename_out);
 
-  gchar *darktable_stdout = NULL;
+  gchar *darktable_stdout    = NULL;
 
   /* linear sRGB for now as GIMP uses that internally in many places anyway */
   gboolean  search_path      = FALSE;
@@ -356,6 +358,7 @@ load_image (const gchar  *filename,
 
   g_object_unref (lua_file);
   g_free (lua_script);
+  g_free (lua_script_escaped);
   g_free (lua_quoted);
 
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -400,16 +403,17 @@ load_thumbnail_image (const gchar   *filename,
                       gint          *height,
                       GError       **error)
 {
-  gint32  image_ID         = -1;
-  gchar  *filename_out     = gimp_temp_name ("jpg");
-  gchar  *size             = g_strdup_printf ("%d", thumb_size);
-  GFile  *lua_file         = gimp_data_directory_file ("file-raw",
-                                                       "file-darktable-get-size.lua",
-                                                       NULL);
-  gchar  *lua_script       = g_file_get_path (lua_file);
-  gchar  *lua_quoted       = g_shell_quote (lua_script);
-  gchar  *lua_cmd          = g_strdup_printf ("dofile(%s)", lua_quoted);
-  gchar  *darktable_stdout = NULL;
+  gint32  image_ID           = -1;
+  gchar  *filename_out       = gimp_temp_name ("jpg");
+  gchar  *size               = g_strdup_printf ("%d", thumb_size);
+  GFile  *lua_file           = gimp_data_directory_file ("file-raw",
+                                                         "file-darktable-get-size.lua",
+                                                         NULL);
+  gchar  *lua_script         = g_file_get_path (lua_file);
+  gchar  *lua_script_escaped = g_strescape (lua_script_escaped, "");
+  gchar  *lua_quoted         = g_shell_quote (lua_script);
+  gchar  *lua_cmd            = g_strdup_printf ("dofile(%s)", lua_quoted);
+  gchar  *darktable_stdout   = NULL;
 
   gboolean  search_path      = FALSE;
   gchar    *exec_path        = file_raw_get_executable_path ("darktable", "-cli",
@@ -432,6 +436,7 @@ load_thumbnail_image (const gchar   *filename,
 
   g_object_unref (lua_file);
   g_free (lua_script);
+  g_free (lua_script_escaped);
   g_free (lua_quoted);
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
