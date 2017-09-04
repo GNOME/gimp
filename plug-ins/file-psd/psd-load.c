@@ -767,12 +767,11 @@ read_layer_info (PSDimage  *img_a,
               return NULL;
             }
 
-          IFDBG(2) g_debug ("Layer mask coords %d %d %d %d, Rel pos %d",
+          IFDBG(2) g_debug ("Layer mask coords %d %d %d %d",
                             lyr_a[lidx]->layer_mask.left,
                             lyr_a[lidx]->layer_mask.top,
                             lyr_a[lidx]->layer_mask.right,
-                            lyr_a[lidx]->layer_mask.bottom,
-                            lyr_a[lidx]->layer_mask.mask_flags.relative_pos);
+                            lyr_a[lidx]->layer_mask.bottom);
 
           IFDBG(3) g_debug ("Default mask color, %d, %d",
                             lyr_a[lidx]->layer_mask.def_color,
@@ -1535,23 +1534,11 @@ add_layers (gint32     image_id,
                   else
                     {
                       /* Load layer mask data */
-                      if (lyr_a[lidx]->layer_mask.mask_flags.relative_pos)
-                        {
-                          lm_x = lyr_a[lidx]->layer_mask.left;
-                          lm_y = lyr_a[lidx]->layer_mask.top;
-                          lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
-                          lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
-                        }
-                      else
-                        {
-                          lm_x = lyr_a[lidx]->layer_mask.left - l_x;
-                          lm_y = lyr_a[lidx]->layer_mask.top - l_y;
-                          lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
-                          lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
-                        }
+                      lm_x = lyr_a[lidx]->layer_mask.left - l_x;
+                      lm_y = lyr_a[lidx]->layer_mask.top - l_y;
+                      lm_w = lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left;
+                      lm_h = lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top;
                       IFDBG(3) g_debug ("Mask channel index %d", user_mask_chn);
-                      IFDBG(3) g_debug ("Relative pos %d",
-                                        lyr_a[lidx]->layer_mask.mask_flags.relative_pos);
                       bps = (img_a->bps + 1) / 8;
                       layer_size = lm_w * lm_h * bps;
                       pixels = g_malloc (layer_size);
