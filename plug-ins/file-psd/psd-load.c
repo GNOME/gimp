@@ -1473,6 +1473,12 @@ add_layers (gint32     image_id,
                   gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
                 }
 
+              /* Set the active layer */
+              if (lidx == img_a->layer_state)
+                {
+                  gimp_image_set_active_layer (image_id, layer_id);
+                }
+
               /* Set the layer data */
               if (lyr_a[lidx]->group_type == 0)
                 {
@@ -1661,12 +1667,9 @@ add_merged_image (gint32     image_id,
   gint32                layer_size;
   gint32                layer_id = -1;
   gint32                channel_id = -1;
-  gint32                active_layer;
   gint16                alpha_opacity;
-  gint                 *lyr_lst;
   gint                  cidx;                  /* Channel index */
   gint                  rowi;                  /* Row index */
-  gint                  lyr_count;
   gint                  offset;
   gint                  i;
   gboolean              alpha_visible;
@@ -1925,15 +1928,6 @@ add_merged_image (gint32     image_id,
           g_free (img_a->alpha_display_info);
         }
     }
-
-  /* Set active layer */
-  lyr_lst = gimp_image_get_layers (image_id, &lyr_count);
-  if (img_a->layer_state + 1 > lyr_count ||
-      img_a->layer_state + 1 < 0)
-    img_a->layer_state = 0;
-  active_layer = lyr_lst[lyr_count - img_a->layer_state - 1];
-  gimp_image_set_active_layer (image_id, active_layer);
-  g_free (lyr_lst);
 
   /* FIXME gimp image tattoo state */
 
