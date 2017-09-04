@@ -73,6 +73,8 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
+#include "libgimpmath/gimpmath.h"
+
 #include "psd.h"
 #include "psd-util.h"
 #include "psd-save.h"
@@ -995,7 +997,7 @@ save_layer_and_mask (FILE   *fd,
       IFDBG printf ("\t\tBlend mode: %s\n", blendMode);
       xfwrite (fd, blendMode, 4, "blend mode key");
 
-      layerOpacity = (gimp_layer_get_opacity (PSDImageData.lLayers[i].id) * 255.0) / 100.0;
+      layerOpacity = RINT ((gimp_layer_get_opacity (PSDImageData.lLayers[i].id) * 255.0) / 100.0);
       IFDBG printf ("\t\tOpacity: %u\n", layerOpacity);
       write_gchar (fd, layerOpacity, "Opacity");
 

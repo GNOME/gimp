@@ -1438,7 +1438,7 @@ add_layers (gint32     image_id,
 
                   /* Opacity */
                   gimp_layer_set_opacity (layer_id,
-                                          lyr_a[lidx]->opacity * 100 / 255);
+                                          lyr_a[lidx]->opacity * 100.0 / 255.0);
 
                   /* Flags */
                   gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
