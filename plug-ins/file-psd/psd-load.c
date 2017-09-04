@@ -1420,15 +1420,19 @@ add_layers (gint32     image_id,
 
           if (layer_id != -1)
             {
+              /* Set the layer name.  Note that we do this even for group-end
+               * markers, to avoid having the default group name collide with
+               * subsequent layers; the real group name is set by the group
+               * start marker.
+               */
+              gimp_item_set_name (layer_id, lyr_a[lidx]->name);
+
               /* Set the layer properties (skip this for layer group end
                * markers; we set their properties when processing the start
                * marker.)
                */
               if (lyr_a[lidx]->group_type != 3)
                 {
-                  /* Name */
-                  gimp_item_set_name (layer_id, lyr_a[lidx]->name);
-
                   /* Mode */
                   psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
                   gimp_layer_set_mode (layer_id, mode_info.mode);
