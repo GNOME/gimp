@@ -61,7 +61,6 @@
 #include "gimp-operation-config.h"
 #include "gimpbrightnesscontrastconfig.h"
 #include "gimpcolorbalanceconfig.h"
-#include "gimpcolorizeconfig.h"
 #include "gimpcurvesconfig.h"
 #include "gimphuesaturationconfig.h"
 #include "gimplevelsconfig.h"
@@ -195,14 +194,6 @@ gimp_operations_init (Gimp *gimp)
                    "gimp-color-balance-tool.settings");
   set_settings_folder (GIMP_TYPE_COLOR_BALANCE_CONFIG,
                        "color-balance");
-
-  gimp_operation_config_register (gimp,
-                                  "gimp:colorize",
-                                  GIMP_TYPE_COLORIZE_CONFIG);
-  set_compat_file (GIMP_TYPE_COLORIZE_CONFIG,
-                   "gimp-colorize-tool.settings");
-  set_settings_folder (GIMP_TYPE_COLORIZE_CONFIG,
-                       "colorize");
 
   gimp_operation_config_register (gimp,
                                   "gimp:curves",

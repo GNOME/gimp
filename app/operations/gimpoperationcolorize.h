@@ -39,6 +39,10 @@ typedef struct _GimpOperationColorizeClass GimpOperationColorizeClass;
 struct _GimpOperationColorize
 {
   GimpOperationPointFilter  parent_instance;
+
+  gdouble                   hue;
+  gdouble                   saturation;
+  gdouble                   lightness;
 };
 
 struct _GimpOperationColorizeClass

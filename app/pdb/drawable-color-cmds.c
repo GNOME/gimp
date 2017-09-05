@@ -39,7 +39,6 @@
 #include "core/gimpparamspecs.h"
 #include "operations/gimpbrightnesscontrastconfig.h"
 #include "operations/gimpcolorbalanceconfig.h"
-#include "operations/gimpcolorizeconfig.h"
 #include "operations/gimpcurvesconfig.h"
 #include "operations/gimphuesaturationconfig.h"
 #include "operations/gimplevelsconfig.h"
@@ -176,17 +175,18 @@ drawable_colorize_hsl_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
           ! gimp_drawable_is_gray (drawable))
         {
-          GObject *config = g_object_new (GIMP_TYPE_COLORIZE_CONFIG,
-                                          "hue",        hue        / 360.0,
-                                          "saturation", saturation / 100.0,
-                                          "lightness",  lightness  / 100.0,
-                                          NULL);
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gimp:colorize",
+                                 "hue",        hue        / 360.0,
+                                 "saturation", saturation / 100.0,
+                                 "lightness",  lightness  / 100.0,
+                                 NULL);
 
-          gimp_drawable_apply_operation_by_name (drawable, progress,
-                                                 C_("undo-type", "Colorize"),
-                                                 "gimp:colorize",
-                                                 config);
-          g_object_unref (config);
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Colorize"),
+                                         node);
+          g_object_unref (node);
         }
       else
         success = FALSE;
