@@ -287,10 +287,10 @@ shear_x_mag_changed (GtkAdjustment     *adj,
 
   if (value != tr_tool->trans_info[SHEAR_X])
     {
-      if (tr_tool->trans_info[ORIENTATION] == GIMP_ORIENTATION_UNKNOWN)
-        tr_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_HORIZONTAL;
+      tr_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_HORIZONTAL;
 
       tr_tool->trans_info[SHEAR_X] = value;
+      tr_tool->trans_info[SHEAR_Y] = 0.0;  /* can only shear in one axis */
 
       gimp_transform_tool_push_internal_undo (tr_tool);
 
@@ -306,10 +306,10 @@ shear_y_mag_changed (GtkAdjustment     *adj,
 
   if (value != tr_tool->trans_info[SHEAR_Y])
     {
-      if (tr_tool->trans_info[ORIENTATION] == GIMP_ORIENTATION_UNKNOWN)
-        tr_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_VERTICAL;
+      tr_tool->trans_info[ORIENTATION] = GIMP_ORIENTATION_VERTICAL;
 
       tr_tool->trans_info[SHEAR_Y] = value;
+      tr_tool->trans_info[SHEAR_X] = 0.0;  /* can only shear in one axis */
 
       gimp_transform_tool_push_internal_undo (tr_tool);
 
