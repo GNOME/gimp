@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-04 13:29+0200\n"
-"PO-Revision-Date: 2017-04-04 13:30+0200\n"
+"POT-Creation-Date: 2017-09-05 17:54+0200\n"
+"PO-Revision-Date: 2017-09-05 17:55+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -1241,12 +1241,12 @@ msgstr "Otwiera edytor palet"
 #: ../app/actions/dialogs-actions.c:187
 msgctxt "dialogs-action"
 msgid "Tool presets"
-msgstr "Opcje narzędzia"
+msgstr "Ustawienia narzędzia"
 
 #: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
-msgstr "Otwiera okno opcji narzędzia"
+msgstr "Otwiera okno ustawień narzędzia"
 
 #: ../app/actions/dialogs-actions.c:193
 msgctxt "dialogs-action"
@@ -3913,11 +3913,11 @@ msgstr "_Dalej"
 msgid "Zoom _All"
 msgstr "_Całość"
 
-#: ../app/actions/palette-editor-commands.c:68
+#: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
 msgstr "Modyfikacja koloru z palety"
 
-#: ../app/actions/palette-editor-commands.c:70
+#: ../app/actions/palette-editor-commands.c:71
 msgid "Edit Color Palette Entry"
 msgstr "Modyfikacja koloru elementu palety"
 
@@ -4751,7 +4751,7 @@ msgstr "Przywraca domyślne opcje wszystkich narzędzi"
 
 #: ../app/actions/tool-options-commands.c:186
 msgid "Reset All Tool Options"
-msgstr "Opcje przywracania opcji narzędzia"
+msgstr "Przywrócenie domyślnych opcji wszystkich narzędzi"
 
 #: ../app/actions/tool-options-commands.c:209
 msgid "Do you really want to reset all tool options to default values?"
@@ -9837,11 +9837,11 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1913
 msgid "_Save tool options on exit"
-msgstr "_Zapisywanie ustawień narzędzi przy zakończeniu"
+msgstr "_Zapisywanie opcji narzędzi przy zakończeniu"
 
 #: ../app/dialogs/preferences-dialog.c:1917
 msgid "Save Tool Options _Now"
-msgstr "Zapisz ustawienia _narzędzi"
+msgstr "Zapisz opcje _narzędzi"
 
 #: ../app/dialogs/preferences-dialog.c:1924
 msgid "_Reset Saved Tool Options to Default Values"
@@ -15616,7 +15616,7 @@ msgstr "Deseń kreski:"
 
 #: ../app/widgets/gimpstrokeeditor.c:241
 msgid "Dash _preset:"
-msgstr "_Początkowe ustawienie kreski:"
+msgstr "_Ustawienia kreski:"
 
 #: ../app/widgets/gimptagentry.c:45
 msgid "filter"
@@ -15855,36 +15855,36 @@ msgstr "Ikona:"
 
 #: ../app/widgets/gimptoolpreseteditor.c:159
 msgid "Apply stored FG/BG"
-msgstr "Zastosuj zachowane kolory"
+msgstr "Zastosowanie zachowanych kolorów"
 
 #: ../app/widgets/gimptoolpreseteditor.c:165
 msgid "Apply stored brush"
-msgstr "Zastosuj zachowany pędzel"
+msgstr "Zastosowanie zachowanego pędzla"
 
 #: ../app/widgets/gimptoolpreseteditor.c:171
 msgid "Apply stored dynamics"
-msgstr "Zastosuj zachowaną dynamikę"
+msgstr "Zastosowanie zachowanej dynamiki"
 
 #: ../app/widgets/gimptoolpreseteditor.c:177
 msgid "Apply stored gradient"
-msgstr "Zastosuj zachowany gradient"
+msgstr "Zastosowanie zachowanego gradientu"
 
 #: ../app/widgets/gimptoolpreseteditor.c:183
 msgid "Apply stored pattern"
-msgstr "Zastosuj zachowany deseń"
+msgstr "Zastosowanie zachowanego desenia"
 
 #: ../app/widgets/gimptoolpreseteditor.c:189
 msgid "Apply stored palette"
-msgstr "Zastosuj zachowaną paletę"
+msgstr "Zastosowanie zachowanej palety"
 
 #: ../app/widgets/gimptoolpreseteditor.c:195
 msgid "Apply stored font"
-msgstr "Zastosuj zachowaną czcionkę"
+msgstr "Zastosowanie zachowanej czcionki"
 
 #: ../app/widgets/gimptoolpreseteditor.c:292
 #, c-format
 msgid "%s Preset"
-msgstr "Ustawienia %s"
+msgstr "Ustawienia narzędzia %s"
 
 #: ../app/widgets/gimptranslationstore.c:100
 msgid "System Language"
