@@ -12,6 +12,7 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013.
 #
 # Yolanda Alvarez Perez <yolandaa.alvarez.perez@gmail.com>, 2016.
+# Luis Angel Gonzo <luisangelgonzo@gmail.com>, 2017.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016, 2017.
 #
 msgid ""
@@ -19,8 +20,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-08-10 07:07+0000\n"
-"PO-Revision-Date: 2017-08-11 13:01+0200\n"
+"POT-Creation-Date: 2017-09-05 19:29+0000\n"
+"PO-Revision-Date: 2017-09-07 10:16+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -653,20 +654,14 @@ msgid "Paste the selected buffer into the selection"
 msgstr "Pega el búfer seleccionado en la selección"
 
 #: ../app/actions/buffers-actions.c:58
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as _New"
 msgctxt "buffers-action"
 msgid "Paste Buffer as New _Layer"
-msgstr "Pegar búfer como _nuevo"
+msgstr "Pegar búfer como _nueva capa"
 
 #: ../app/actions/buffers-actions.c:59
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste the selected buffer as a new image"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer"
-msgstr "Pegar el búfer seleccionado como imagen nueva"
+msgstr "Pegar el búfer seleccionado como nueva capa"
 
 #: ../app/actions/buffers-actions.c:64
 msgctxt "buffers-action"
@@ -812,11 +807,9 @@ msgstr "B_loquear posición"
 
 #. abused
 #: ../app/actions/channels-actions.c:140
-#, fuzzy
-#| msgid "None"
 msgctxt "channels-action"
 msgid "None"
-msgstr "Ninguno"
+msgstr "Ninguno/a"
 
 #: ../app/actions/channels-actions.c:141
 msgctxt "channels-action"
@@ -975,7 +968,7 @@ msgstr "Crear un canal nuevo"
 msgid "New Channel Color"
 msgstr "Canal de color nuevo"
 
-#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:276
+#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:278
 #: ../app/display/gimpdisplayshell-dnd.c:670
 #: ../app/widgets/gimpchanneltreeview.c:258
 #: ../app/widgets/gimplayertreeview.c:784
@@ -1169,174 +1162,144 @@ msgid "Exchange foreground and background colors"
 msgstr "Intercambia los colores de frente y fondo"
 
 #: ../app/actions/context-actions.c:97
-#, fuzzy
-#| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground: Set Color From Palette"
-msgstr "Color de frente establecido a:"
+msgstr "Primer plano: establecer el color de la paleta"
 
 #: ../app/actions/context-actions.c:101
-#, fuzzy
-#| msgid "Edit Palette Color"
 msgctxt "context-action"
 msgid "Foreground: Use First Palette Color"
-msgstr "Editar el color de la paleta"
+msgstr "Primer plano: usar primer color de la paleta"
 
 #: ../app/actions/context-actions.c:105
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Foreground Color"
 msgctxt "context-action"
 msgid "Foreground: Use Last Palette Color"
-msgstr "Color del _frente"
+msgstr "Primer plano: usar último color de la paleta"
 
 #: ../app/actions/context-actions.c:109
 msgctxt "context-action"
 msgid "Foreground: Use Previous Palette Color"
-msgstr "Primer plano: usar paleta de color anterior"
+msgstr "Primer plano: usar color anterior de la paleta"
 
 #: ../app/actions/context-actions.c:113
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Foreground Color"
 msgctxt "context-action"
 msgid "Foreground: Use Next Palette Color"
-msgstr "Color del _frente"
+msgstr "Primer plano: usar siguiente color de la paleta"
 
 #: ../app/actions/context-actions.c:117
-#, fuzzy
-#| msgid "Foreground color"
 msgctxt "context-action"
 msgid "Foreground: Skip Back Palette Color"
-msgstr "Color de frente"
+msgstr "Primer plano: omitir anterior color de la paleta"
 
 #: ../app/actions/context-actions.c:121
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Palette Color"
-msgstr "Primer plano: omitir siguiente paleta de color"
+msgstr "Primer plano: omitir siguiente color de la paleta"
 
 #: ../app/actions/context-actions.c:129
-#, fuzzy
-#| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background: Set Color From Palette"
-msgstr "Color de fondo establecido a:"
+msgstr "Fondo: establecer color de la paleta"
 
 #: ../app/actions/context-actions.c:133
-#, fuzzy
-#| msgid "Edit Palette Color"
 msgctxt "context-action"
 msgid "Background: Use First Palette Color"
-msgstr "Editar el color de la paleta"
+msgstr "Fondo: usar primer color de la paleta"
 
 #: ../app/actions/context-actions.c:137
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Background Color"
 msgctxt "context-action"
 msgid "Background: Use Last Palette Color"
-msgstr "Color del _fondo"
+msgstr "Fondo: usar último color de la paleta"
 
 #: ../app/actions/context-actions.c:141
 msgctxt "context-action"
 msgid "Background: Use Previous Palette Color"
-msgstr "Fondo: usar paleta de color anterior"
+msgstr "Fondo: usar color anterior de la paleta"
 
 #: ../app/actions/context-actions.c:145
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Background Color"
 msgctxt "context-action"
 msgid "Background: Use Next Palette Color"
-msgstr "Color del _fondo"
+msgstr "Fondo: usar siguiente color de la paleta"
 
 #: ../app/actions/context-actions.c:149
-#, fuzzy
-#| msgid "Background color"
 msgctxt "context-action"
 msgid "Background: Skip Back Palette Color"
-msgstr "Color de fondo"
+msgstr "Fondo: usar color anterior de la paleta"
 
 #: ../app/actions/context-actions.c:153
 msgctxt "context-action"
 msgid "Background: Skip Forward Palette Color"
-msgstr "Fondo: omitir siguiente paleta de color"
+msgstr "Fondo: omitir siguiente color de la paleta"
 
 #: ../app/actions/context-actions.c:161
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Add Color to Colormap"
 msgctxt "context-action"
 msgid "Foreground: Set Color From Colormap"
-msgstr "Añadir color al mapa de colores"
+msgstr "Primer plano: establecer color del mapa de colores"
 
 #: ../app/actions/context-actions.c:165
 msgctxt "context-action"
 msgid "Foreground: Use First Color From Colormap"
-msgstr "Primer plano: usar primer color del mapa de color"
+msgstr "Primer plano: usar primer color del mapa de colores"
 
 #: ../app/actions/context-actions.c:169
 msgctxt "context-action"
 msgid "Foreground: Use Last Color From Colormap"
-msgstr "Primer plano: usar último color del mapa de color"
+msgstr "Primer plano: usar último color del mapa de colores"
 
 #: ../app/actions/context-actions.c:173
 msgctxt "context-action"
 msgid "Foreground: Use Previous Color From Colormap"
-msgstr "Primer plano: usar color anterior del mapa de color"
+msgstr "Primer plano: usar color anterior del mapa de colores"
 
 #: ../app/actions/context-actions.c:177
 msgctxt "context-action"
 msgid "Foreground: Use Next Color From Colormap"
-msgstr "Primer plano: usar siguiente color del mapa de color"
+msgstr "Primer plano: usar siguiente color del mapa de colores"
 
 #: ../app/actions/context-actions.c:181
 msgctxt "context-action"
 msgid "Foreground: Skip Back Color From Colormap"
-msgstr ""
+msgstr "Primer plano: omitir color anterior del mapa de colores"
 
 #: ../app/actions/context-actions.c:185
 msgctxt "context-action"
 msgid "Foreground: Skip Forward Color From Colormap"
-msgstr ""
+msgstr "Primer plano: omitir siguiente color del mapa de colores"
 
 #: ../app/actions/context-actions.c:193
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Add Color to Colormap"
 msgctxt "context-action"
 msgid "Background: Set Color From Colormap"
-msgstr "Añadir color al mapa de colores"
+msgstr "Fondo: establecer color del mapa de colores"
 
 #: ../app/actions/context-actions.c:197
 msgctxt "context-action"
 msgid "Background: Use First Color From Colormap"
-msgstr "Fondo: usar primer color del mapa de color"
+msgstr "Fondo: usar primer color del mapa de colores"
 
 #: ../app/actions/context-actions.c:201
 msgctxt "context-action"
 msgid "Background: Use Last Color From Colormap"
-msgstr "Fondo: usar último color del mapa de color"
+msgstr "Fondo: usar último color del mapa de colores"
 
 #: ../app/actions/context-actions.c:205
 msgctxt "context-action"
 msgid "Background: Use Previous Color From Colormap"
-msgstr "Fondo: usar color anterior del mapa de color"
+msgstr "Fondo: usar color anterior del mapa de colores"
 
 #: ../app/actions/context-actions.c:209
 msgctxt "context-action"
 msgid "Background: Use Next Color From Colormap"
-msgstr "Fondo: usar siguiente color del mapa de color"
+msgstr "Fondo: usar siguiente color del mapa de colores"
 
 #: ../app/actions/context-actions.c:213
 msgctxt "context-action"
 msgid "Background: Skip Back Color From Colormap"
-msgstr ""
+msgstr "Fondo: omitir color anterior del mapa de colores"
 
 #: ../app/actions/context-actions.c:217
 msgctxt "context-action"
 msgid "Background: Skip Forward Color From Colormap"
-msgstr ""
+msgstr "Fondo: omitir siguiente color del mapa de colores"
 
 #: ../app/actions/context-actions.c:225
 #, fuzzy
@@ -2454,7 +2417,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114
 #: ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1906
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1966
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -6287,7 +6250,6 @@ msgstr ""
 "Añadir una máscara que permita la edición no destructiva de la transparencia"
 
 #: ../app/actions/layers-actions.c:264
-#| msgid "Add Layer Mask"
 msgctxt "layers-action"
 msgid "Add La_yer Mask"
 msgstr "Añadir má_scara de capa"
@@ -11696,7 +11658,7 @@ msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Capa de texto"
 
-#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:323
+#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
 msgstr "Capa pegada"
 
@@ -12531,33 +12493,33 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformar el grupo de capas"
 
-#: ../app/core/gimpimage.c:643 ../app/widgets/gimpsymmetryeditor.c:179
+#: ../app/core/gimpimage.c:645 ../app/widgets/gimpsymmetryeditor.c:179
 msgid "Symmetry"
 msgstr "Simetría"
 
-#: ../app/core/gimpimage.c:2158
+#: ../app/core/gimpimage.c:2218
 msgid " (exported)"
 msgstr " (exportada)"
 
-#: ../app/core/gimpimage.c:2162
+#: ../app/core/gimpimage.c:2222
 msgid " (overwritten)"
 msgstr " (sobreescrita)"
 
-#: ../app/core/gimpimage.c:2171
+#: ../app/core/gimpimage.c:2231
 msgid " (imported)"
 msgstr " (importada)"
 
-#: ../app/core/gimpimage.c:2487
+#: ../app/core/gimpimage.c:2547
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambiar la resolución de la imagen"
 
-#: ../app/core/gimpimage.c:2539
+#: ../app/core/gimpimage.c:2599
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambiar la unidad de medida"
 
-#: ../app/core/gimpimage.c:3419
+#: ../app/core/gimpimage.c:3479
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -12565,47 +12527,47 @@ msgstr ""
 "La validación del parásito «gimp-comment» falló: el comentario contiene "
 "UTF-8 no válido"
 
-#: ../app/core/gimpimage.c:3471
+#: ../app/core/gimpimage.c:3531
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjuntar parásito a la imagen"
 
-#: ../app/core/gimpimage.c:3512
+#: ../app/core/gimpimage.c:3572
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Eliminar el parásito de la imagen"
 
-#: ../app/core/gimpimage.c:4221
+#: ../app/core/gimpimage.c:4283
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Añadir una capa"
 
-#: ../app/core/gimpimage.c:4271 ../app/core/gimpimage.c:4291
+#: ../app/core/gimpimage.c:4335 ../app/core/gimpimage.c:4355
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Eliminar una capa"
 
-#: ../app/core/gimpimage.c:4285
+#: ../app/core/gimpimage.c:4349
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Eliminar la selección flotante"
 
-#: ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4514
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: ../app/core/gimpimage.c:4488 ../app/core/gimpimage.c:4501
+#: ../app/core/gimpimage.c:4552 ../app/core/gimpimage.c:4565
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Eliminar un canal"
 
-#: ../app/core/gimpimage.c:4555
+#: ../app/core/gimpimage.c:4619
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: ../app/core/gimpimage.c:4586
+#: ../app/core/gimpimage.c:4650
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Eliminar una ruta"
@@ -12990,7 +12952,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Anclar una selección flotante"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1001
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1009
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -13066,13 +13028,13 @@ msgstr "La capa no puede ser elevada más alto."
 msgid "Layer cannot be lowered more."
 msgstr "La capa no puede bajarse más."
 
-#: ../app/core/gimplayer.c:708 ../app/core/gimplayer.c:1704
+#: ../app/core/gimplayer.c:716 ../app/core/gimplayer.c:1712
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "máscara %s"
 
-#: ../app/core/gimplayer.c:747
+#: ../app/core/gimplayer.c:755
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -13081,62 +13043,62 @@ msgstr ""
 "Selección flotante\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1610
+#: ../app/core/gimplayer.c:1618
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No se puede añadir una máscara de capa dado que la capa ya posee una."
 
-#: ../app/core/gimplayer.c:1621
+#: ../app/core/gimplayer.c:1629
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No se puede añadir una máscara de capa de dimensiones distintas a la capa "
 "especificada."
 
-#: ../app/core/gimplayer.c:1627
+#: ../app/core/gimplayer.c:1635
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
 
-#: ../app/core/gimplayer.c:1755
+#: ../app/core/gimplayer.c:1763
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Transferir alfa a la máscara"
 
-#: ../app/core/gimplayer.c:1906
+#: ../app/core/gimplayer.c:1914
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Aplicar máscara de capa"
 
-#: ../app/core/gimplayer.c:1907
+#: ../app/core/gimplayer.c:1915
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Eliminar máscara de capa"
 
-#: ../app/core/gimplayer.c:2009
+#: ../app/core/gimplayer.c:2017
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Activar máscara de capa"
 
-#: ../app/core/gimplayer.c:2010
+#: ../app/core/gimplayer.c:2018
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Desactivar máscara de capa"
 
-#: ../app/core/gimplayer.c:2086
+#: ../app/core/gimplayer.c:2094
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Mostrar la máscara de la capa"
 
-#: ../app/core/gimplayer.c:2159
+#: ../app/core/gimplayer.c:2167
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Añadir un canal alfa"
 
-#: ../app/core/gimplayer.c:2191
+#: ../app/core/gimplayer.c:2199
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Eliminar el canal alfa"
 
-#: ../app/core/gimplayer.c:2212
+#: ../app/core/gimplayer.c:2220
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Capa a tamaño de imagen"
@@ -16838,7 +16800,7 @@ msgstr "Pulse y arrastre para mover el tirador"
 msgid "Line: "
 msgstr "Línea: "
 
-#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:655
+#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:658
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s para ángulos restringidos"
@@ -17657,32 +17619,6 @@ msgstr "Amarillo-azul"
 msgid "Preserve Luminosity"
 msgstr "Conservar la luminosidad"
 
-#: ../app/operations/gimpcolorizeconfig.c:85
-#: ../app/operations/gimpcolorizeconfig.c:86
-#: ../app/operations/gimphuesaturationconfig.c:101
-#: ../app/operations/gimphuesaturationconfig.c:102
-msgid "Hue"
-msgstr "Tono"
-
-#: ../app/operations/gimpcolorizeconfig.c:91
-#: ../app/operations/gimpcolorizeconfig.c:92
-#: ../app/operations/gimphuesaturationconfig.c:107
-#: ../app/operations/gimphuesaturationconfig.c:108
-msgid "Saturation"
-msgstr "Saturación"
-
-#: ../app/operations/gimpcolorizeconfig.c:97
-#: ../app/operations/gimpcolorizeconfig.c:98
-#: ../app/operations/gimphuesaturationconfig.c:113
-#: ../app/operations/gimphuesaturationconfig.c:114
-msgid "Lightness"
-msgstr "Luminosidad"
-
-#: ../app/operations/gimpcolorizeconfig.c:107
-#: ../app/operations/gimpcolorizeconfig.c:108
-msgid "Color"
-msgstr "Color"
-
 #: ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:106
 msgid "The affected channel"
@@ -17704,6 +17640,27 @@ msgstr "Error de análisis, no se encontraron 2 enteros"
 #: ../app/operations/gimpcurvesconfig.c:673
 msgid "Writing curves file failed: "
 msgstr "Falló al escribir el archivo de curvas: "
+
+#: ../app/operations/gimphuesaturationconfig.c:101
+#: ../app/operations/gimphuesaturationconfig.c:102
+#: ../app/operations/gimpoperationcolorize.c:92
+#: ../app/operations/gimpoperationcolorize.c:93
+msgid "Hue"
+msgstr "Tono"
+
+#: ../app/operations/gimphuesaturationconfig.c:107
+#: ../app/operations/gimphuesaturationconfig.c:108
+#: ../app/operations/gimpoperationcolorize.c:98
+#: ../app/operations/gimpoperationcolorize.c:99
+msgid "Saturation"
+msgstr "Saturación"
+
+#: ../app/operations/gimphuesaturationconfig.c:113
+#: ../app/operations/gimphuesaturationconfig.c:114
+#: ../app/operations/gimpoperationcolorize.c:104
+#: ../app/operations/gimpoperationcolorize.c:105
+msgid "Lightness"
+msgstr "Luminosidad"
 
 #: ../app/operations/gimphuesaturationconfig.c:119
 #: ../app/operations/gimphuesaturationconfig.c:120
@@ -17770,11 +17727,16 @@ msgstr "Rellenar la posición original de la jaula con un color sencillo"
 msgid "Adjust color distribution"
 msgstr "Herramienta de balance de color: ajustar la distribución del color"
 
-#: ../app/operations/gimpoperationcolorize.c:64
+#: ../app/operations/gimpoperationcolorize.c:85
 #, fuzzy
 #| msgid "Colorize the Image"
 msgid "Colorize the image"
 msgstr "Colorear la imagen"
+
+#: ../app/operations/gimpoperationcolorize.c:114
+#: ../app/operations/gimpoperationcolorize.c:115
+msgid "Color"
+msgstr "Color"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
@@ -17916,11 +17878,11 @@ msgstr "Goma de borrar"
 msgid "Anti erase"
 msgstr "Antiborrado"
 
-#: ../app/paint/gimpheal.c:106 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:115 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Sanear"
 
-#: ../app/paint/gimpheal.c:145
+#: ../app/paint/gimpheal.c:155
 msgid "Healing does not operate on indexed layers."
 msgstr "El saneado no funciona en capas indexadas."
 
@@ -18241,43 +18203,43 @@ msgstr "Fijo"
 msgid "Combine Masks"
 msgstr "Combinar máscaras"
 
-#: ../app/pdb/color-cmds.c:86 ../app/pdb/drawable-color-cmds.c:86
+#: ../app/pdb/color-cmds.c:85 ../app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Brillo-Contraste"
 
-#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:600
+#: ../app/pdb/color-cmds.c:146 ../app/pdb/drawable-color-cmds.c:604
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Niveles"
 
-#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:670
+#: ../app/pdb/color-cmds.c:245 ../app/pdb/drawable-color-cmds.c:674
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Posterizar"
 
-#: ../app/pdb/color-cmds.c:285 ../app/pdb/color-cmds.c:326
+#: ../app/pdb/color-cmds.c:284 ../app/pdb/color-cmds.c:325
 #: ../app/pdb/drawable-color-cmds.c:325
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Desaturar"
 
-#: ../app/pdb/color-cmds.c:388
+#: ../app/pdb/color-cmds.c:387
 msgid "Invert"
 msgstr "Invertir"
 
-#: ../app/pdb/color-cmds.c:435 ../app/pdb/color-cmds.c:483
+#: ../app/pdb/color-cmds.c:434 ../app/pdb/color-cmds.c:482
 #: ../app/pdb/drawable-color-cmds.c:235 ../app/pdb/drawable-color-cmds.c:283
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "Curvas"
 
-#: ../app/pdb/color-cmds.c:537 ../app/pdb/drawable-color-cmds.c:140
+#: ../app/pdb/color-cmds.c:536 ../app/pdb/drawable-color-cmds.c:139
 msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "Balance de color"
 
-#: ../app/pdb/color-cmds.c:583 ../app/pdb/drawable-color-cmds.c:186
+#: ../app/pdb/color-cmds.c:584 ../app/pdb/drawable-color-cmds.c:187
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Colorear"
@@ -18286,7 +18248,7 @@ msgstr "Colorear"
 msgid "Hue-Saturation"
 msgstr "Tono y saturación"
 
-#: ../app/pdb/color-cmds.c:780 ../app/pdb/drawable-color-cmds.c:716
+#: ../app/pdb/color-cmds.c:780 ../app/pdb/drawable-color-cmds.c:720
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Umbral"
@@ -18305,7 +18267,7 @@ msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Tono-saturación"
 
-#: ../app/pdb/drawable-color-cmds.c:540
+#: ../app/pdb/drawable-color-cmds.c:542
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Invertir"
@@ -18736,7 +18698,7 @@ msgstr ""
 "El procedimiento «%s» se ha llamado con un valor «%s» para el argumento "
 "«%s» (#%d, tipo %s). Este valor está fuera de los límites."
 
-#: ../app/pdb/image-cmds.c:2310
+#: ../app/pdb/image-cmds.c:2339
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -20931,7 +20893,7 @@ msgstr "Añadir guías"
 
 #: ../app/tools/gimpmeasuretool.c:526 ../app/tools/gimpmeasuretool.c:679
 #: ../app/tools/gimpmeasuretool.c:735 ../app/tools/gimpmeasuretool.c:763
-#: ../app/tools/gimppainttool.c:664
+#: ../app/tools/gimppainttool.c:696
 msgid "pixels"
 msgstr "píxeles"
 
@@ -21171,7 +21133,7 @@ msgstr "%s para recoger un color"
 msgid "Cannot paint on layer groups."
 msgstr "No se puede pintar sobre un grupo de capas."
 
-#: ../app/tools/gimppainttool.c:716
+#: ../app/tools/gimppainttool.c:745
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s para una línea recta"
@@ -21338,7 +21300,6 @@ msgid "_Rectangle Select"
 msgstr "Selección _rectangular"
 
 #: ../app/tools/gimprectangleselecttool.c:725
-#| msgid "Ellipse Select"
 msgid "Ellipse: "
 msgstr "Elipse: "
 
@@ -22129,17 +22090,17 @@ msgstr "Transformar deformación"
 msgid "Please add some warp strokes first."
 msgstr "Agregue primero algunos trazos de deformación."
 
-#: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1126
+#: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1127
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Renderizando marco %d"
 
-#: ../app/tools/gimpwarptool.c:1105 ../app/tools/gimpwarptool.c:1134
+#: ../app/tools/gimpwarptool.c:1105 ../app/tools/gimpwarptool.c:1135
 #, c-format
 msgid "Frame %d"
 msgstr "Marco %d"
 
-#: ../app/tools/gimpwarptool.c:1143
+#: ../app/tools/gimpwarptool.c:1144
 msgid "Frame"
 msgstr "Marco"
 
