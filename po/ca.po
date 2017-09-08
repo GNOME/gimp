@@ -10444,8 +10444,8 @@ msgstr ""
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"Defineix el propòsit de renderització per al diàleg 'Converteix al perfil de "
-"color'."
+"Defineix el propòsit de renderització per al diàleg «Converteix al perfil de "
+"color»."
 
 #: ../app/config/gimprc-blurbs.h:452
 msgid ""
@@ -10575,25 +10575,25 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:516
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr ""
-"Defineix la màscara estat per defecte per al diàleg 'Afegeix màscara de capa'"
+"Defineix la màscara estat per defecte per al diàleg «Afegeix màscara de capa»"
 
 #: ../app/config/gimprc-blurbs.h:519
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
-"Defineix l'estat per defecte 'inverteix màscara' per al diàleg 'Afegeix "
-"màscara de capa'"
+"Defineix l'estat per defecte 'inverteix màscara' per al diàleg «Afegeix "
+"màscara de capa»."
 
 #: ../app/config/gimprc-blurbs.h:522
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Defineix el tipus de fusió per defecte per al diàleg 'Fusiona capes visibles'"
+"Defineix el tipus de fusió per defecte per al diàleg «Fusiona capes visibles»."
 
 #: ../app/config/gimprc-blurbs.h:525
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Defineix el paràmetre per defecte 'Només grup actiu' per al diàleg 'Fusiona "
-"capes visibles'"
+"Defineix el paràmetre per defecte 'Només grup actiu' per al diàleg «Fusiona "
+"capes visibles»."
 
 #: ../app/config/gimprc-blurbs.h:528
 msgid ""
@@ -10604,11 +10604,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:531
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr "Defineix el nom del canal per defecte per al diàleg 'Canal nou'."
+msgstr "Defineix el nom del canal per defecte per al diàleg «Canal nou»."
 
 #: ../app/config/gimprc-blurbs.h:534
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr "Defineix el color i l'opacitat per defecte per al diàleg 'Canal nou'."
+msgstr "Defineix el color i l'opacitat per defecte per al diàleg «Canal nou»."
 
 #: ../app/config/gimprc-blurbs.h:537
 msgid "Sets the default path name for the 'New Path' dialog."
