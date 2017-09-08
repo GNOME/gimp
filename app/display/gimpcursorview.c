@@ -84,54 +84,58 @@ struct _GimpCursorViewPriv
   GimpDisplayShell *shell;
   GimpImage        *image;
   GimpUnit          unit;
+
+  guint             cursor_idle_id;
+  GimpImage        *cursor_image;
+  GimpUnit          cursor_unit;
+  gdouble           cursor_x;
+  gdouble           cursor_y;
 };
 
 
-static void   gimp_cursor_view_docked_iface_init     (GimpDockedInterface *iface);
+static void       gimp_cursor_view_docked_iface_init     (GimpDockedInterface *iface);
 
-static void   gimp_cursor_view_dispose               (GObject             *object);
-static void   gimp_cursor_view_set_property          (GObject             *object,
-                                                      guint                property_id,
-                                                      const GValue        *value,
-                                                      GParamSpec          *pspec);
-static void   gimp_cursor_view_get_property          (GObject             *object,
-                                                      guint                property_id,
-                                                      GValue              *value,
-                                                      GParamSpec          *pspec);
+static void       gimp_cursor_view_dispose               (GObject             *object);
+static void       gimp_cursor_view_set_property          (GObject             *object,
+                                                          guint                property_id,
+                                                          const GValue        *value,
+                                                          GParamSpec          *pspec);
+static void       gimp_cursor_view_get_property          (GObject             *object,
+                                                          guint                property_id,
+                                                          GValue              *value,
+                                                          GParamSpec          *pspec);
 
-static void   gimp_cursor_view_style_set             (GtkWidget           *widget,
-                                                      GtkStyle            *prev_style);
+static void       gimp_cursor_view_style_set             (GtkWidget           *widget,
+                                                          GtkStyle            *prev_style);
 
-static void   gimp_cursor_view_set_aux_info          (GimpDocked          *docked,
-                                                      GList               *aux_info);
-static GList *gimp_cursor_view_get_aux_info          (GimpDocked          *docked);
+static void       gimp_cursor_view_set_aux_info          (GimpDocked          *docked,
+                                                          GList               *aux_info);
+static GList    * gimp_cursor_view_get_aux_info          (GimpDocked          *docked);
 
-static void   gimp_cursor_view_set_context           (GimpDocked          *docked,
-                                                      GimpContext         *context);
-static void   gimp_cursor_view_image_changed         (GimpCursorView      *view,
-                                                      GimpImage           *image,
-                                                      GimpContext         *context);
-static void   gimp_cursor_view_mask_changed          (GimpCursorView      *view,
-                                                      GimpImage           *image);
-static void   gimp_cursor_view_diplay_changed        (GimpCursorView      *view,
-                                                      GimpDisplay         *display,
-                                                      GimpContext         *context);
-static void   gimp_cursor_view_shell_unit_changed    (GimpCursorView      *view,
-                                                      GParamSpec          *pspec,
-                                                      GimpDisplayShell    *shell);
-static void   gimp_cursor_view_format_as_unit        (GimpUnit             unit,
-                                                      gchar               *output_buf,
-                                                      gint                 output_buf_size,
-                                                      gdouble              pixel_value,
-                                                      gdouble              image_res);
-static void   gimp_cursor_view_set_label_italic      (GtkWidget           *label,
-                                                      gboolean             italic);
-static void   gimp_cursor_view_update_selection_info (GimpCursorView      *view,
-                                                      GimpImage           *image,
-                                                      GimpUnit             unit);
-
-
-
+static void       gimp_cursor_view_set_context           (GimpDocked          *docked,
+                                                          GimpContext         *context);
+static void       gimp_cursor_view_image_changed         (GimpCursorView      *view,
+                                                          GimpImage           *image,
+                                                          GimpContext         *context);
+static void       gimp_cursor_view_mask_changed          (GimpCursorView      *view,
+                                                          GimpImage           *image);
+static void       gimp_cursor_view_diplay_changed        (GimpCursorView      *view,
+                                                          GimpDisplay         *display,
+                                                          GimpContext         *context);
+static void       gimp_cursor_view_shell_unit_changed    (GimpCursorView      *view,
+                                                          GParamSpec          *pspec,
+                                                          GimpDisplayShell    *shell);
+static void       gimp_cursor_view_format_as_unit        (GimpUnit             unit,
+                                                          gchar               *output_buf,
+                                                          gint                 output_buf_size,
+                                                          gdouble              pixel_value,
+                                                          gdouble              image_res);
+static void       gimp_cursor_view_set_label_italic      (GtkWidget           *label,
+                                                          gboolean             italic);
+static void       gimp_cursor_view_update_selection_info (GimpCursorView      *view,
+                                                          GimpImage           *image,
+                                                          GimpUnit             unit);
+static gboolean   gimp_cursor_view_cursor_idle           (GimpCursorView      *view);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCursorView, gimp_cursor_view, GIMP_TYPE_EDITOR,
@@ -177,11 +181,12 @@ gimp_cursor_view_init (GimpCursorView *view)
                                             GIMP_TYPE_CURSOR_VIEW,
                                             GimpCursorViewPriv);
 
-  view->priv->sample_merged = TRUE;
-  view->priv->context       = NULL;
-  view->priv->shell         = NULL;
-  view->priv->image         = NULL;
-  view->priv->unit          = GIMP_UNIT_PIXEL;
+  view->priv->sample_merged  = TRUE;
+  view->priv->context        = NULL;
+  view->priv->shell          = NULL;
+  view->priv->image          = NULL;
+  view->priv->unit           = GIMP_UNIT_PIXEL;
+  view->priv->cursor_idle_id = 0;
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "content-spacing", &content_spacing,
@@ -354,6 +359,14 @@ gimp_cursor_view_dispose (GObject *object)
 
   if (view->priv->context)
     gimp_docked_set_context (GIMP_DOCKED (view), NULL);
+
+  if (view->priv->cursor_idle_id)
+    {
+      g_source_remove (view->priv->cursor_idle_id);
+      view->priv->cursor_idle_id = 0;
+    }
+
+  g_clear_object (&view->priv->cursor_image);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -700,6 +713,100 @@ gimp_cursor_view_update_selection_info (GimpCursorView *view,
     }
 }
 
+static gboolean
+gimp_cursor_view_cursor_idle (GimpCursorView *view)
+{
+
+  if (view->priv->cursor_image)
+    {
+      GimpImage  *image = view->priv->cursor_image;
+      GimpUnit    unit  = view->priv->cursor_unit;
+      gdouble     x     = view->priv->cursor_x;
+      gdouble     y     = view->priv->cursor_y;
+      gboolean    in_image;
+      gchar       buf[32];
+      const Babl *sample_format;
+      guchar      pixel[32];
+      GimpRGB     color;
+      gdouble     xres;
+      gdouble     yres;
+      gint        int_x;
+      gint        int_y;
+
+      if (unit == GIMP_UNIT_PIXEL)
+        unit = gimp_image_get_unit (image);
+
+      gimp_image_get_resolution (image, &xres, &yres);
+
+      in_image = (x >= 0.0 && x < gimp_image_get_width  (image) &&
+                  y >= 0.0 && y < gimp_image_get_height (image));
+
+      g_snprintf (buf, sizeof (buf), "%d", (gint) floor (x));
+      gtk_label_set_text (GTK_LABEL (view->priv->pixel_x_label), buf);
+      gimp_cursor_view_set_label_italic (view->priv->pixel_x_label, ! in_image);
+
+      g_snprintf (buf, sizeof (buf), "%d", (gint) floor (y));
+      gtk_label_set_text (GTK_LABEL (view->priv->pixel_y_label), buf);
+      gimp_cursor_view_set_label_italic (view->priv->pixel_y_label, ! in_image);
+
+      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), x, xres);
+      gtk_label_set_text (GTK_LABEL (view->priv->unit_x_label), buf);
+      gimp_cursor_view_set_label_italic (view->priv->unit_x_label, ! in_image);
+
+      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), y, yres);
+      gtk_label_set_text (GTK_LABEL (view->priv->unit_y_label), buf);
+      gimp_cursor_view_set_label_italic (view->priv->unit_y_label, ! in_image);
+
+      int_x = (gint) floor (x);
+      int_y = (gint) floor (y);
+
+      if (gimp_image_pick_color (image, NULL,
+                                 int_x, int_y,
+                                 view->priv->sample_merged,
+                                 FALSE, 0.0,
+                                 &sample_format, pixel, &color))
+        {
+          gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_1),
+                                      FALSE, sample_format, pixel, &color,
+                                      int_x, int_y);
+          gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_2),
+                                      FALSE, sample_format, pixel, &color,
+                                      int_x, int_y);
+        }
+      else
+        {
+          gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_1));
+          gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_2));
+        }
+
+      /* Show the selection info from the image under the cursor if any */
+      gimp_cursor_view_update_selection_info (view,
+                                              image,
+                                              view->priv->cursor_unit);
+
+      g_clear_object (&view->priv->cursor_image);
+    }
+  else
+    {
+      gtk_label_set_text (GTK_LABEL (view->priv->pixel_x_label), _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->priv->pixel_y_label), _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->priv->unit_x_label),  _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->priv->unit_y_label),  _("n/a"));
+
+      gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_1));
+      gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_2));
+
+      /* Start showing selection info from the active image again */
+      gimp_cursor_view_update_selection_info (view,
+                                              view->priv->image,
+                                              view->priv->unit);
+    }
+
+  view->priv->cursor_idle_id = 0;
+
+  return G_SOURCE_REMOVE;
+}
+
 
 /*  public functions  */
 
@@ -746,68 +853,21 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
                                 gdouble           x,
                                 gdouble           y)
 {
-  GimpUnit      unit = shell_unit;
-  gboolean      in_image;
-  gchar         buf[32];
-  const Babl   *sample_format;
-  guchar        pixel[32];
-  GimpRGB       color;
-  gdouble       xres;
-  gdouble       yres;
-  gint          int_x;
-  gint          int_y;
-
   g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  if (unit == GIMP_UNIT_PIXEL)
-    unit = gimp_image_get_unit (image);
+  g_clear_object (&view->priv->cursor_image);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  view->priv->cursor_image = g_object_ref (image);
+  view->priv->cursor_unit  = shell_unit;
+  view->priv->cursor_x     = x;
+  view->priv->cursor_y     = y;
 
-  in_image = (x >= 0.0 && x < gimp_image_get_width  (image) &&
-              y >= 0.0 && y < gimp_image_get_height (image));
-
-  g_snprintf (buf, sizeof (buf), "%d", (gint) floor (x));
-  gtk_label_set_text (GTK_LABEL (view->priv->pixel_x_label), buf);
-  gimp_cursor_view_set_label_italic (view->priv->pixel_x_label, ! in_image);
-
-  g_snprintf (buf, sizeof (buf), "%d", (gint) floor (y));
-  gtk_label_set_text (GTK_LABEL (view->priv->pixel_y_label), buf);
-  gimp_cursor_view_set_label_italic (view->priv->pixel_y_label, ! in_image);
-
-  gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), x, xres);
-  gtk_label_set_text (GTK_LABEL (view->priv->unit_x_label), buf);
-  gimp_cursor_view_set_label_italic (view->priv->unit_x_label, ! in_image);
-
-  gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), y, yres);
-  gtk_label_set_text (GTK_LABEL (view->priv->unit_y_label), buf);
-  gimp_cursor_view_set_label_italic (view->priv->unit_y_label, ! in_image);
-
-  int_x = (gint) floor (x);
-  int_y = (gint) floor (y);
-
-  if (gimp_image_pick_color (image, NULL,
-                             int_x, int_y,
-                             view->priv->sample_merged,
-                             FALSE, 0.0,
-                             &sample_format, pixel, &color))
+  if (view->priv->cursor_idle_id == 0)
     {
-      gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                                  FALSE, sample_format, pixel, &color,
-                                  int_x, int_y);
-      gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                                  FALSE, sample_format, pixel, &color,
-                                  int_x, int_y);
+      view->priv->cursor_idle_id =
+        g_idle_add ((GSourceFunc) gimp_cursor_view_cursor_idle, view);
     }
-  else
-    {
-      gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_1));
-      gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_2));
-    }
-
-  /* Show the selection info from the image under the cursor if any */
-  gimp_cursor_view_update_selection_info (view, image, shell_unit);
 }
 
 void
@@ -815,16 +875,11 @@ gimp_cursor_view_clear_cursor (GimpCursorView *view)
 {
   g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
 
-  gtk_label_set_text (GTK_LABEL (view->priv->pixel_x_label), _("n/a"));
-  gtk_label_set_text (GTK_LABEL (view->priv->pixel_y_label), _("n/a"));
-  gtk_label_set_text (GTK_LABEL (view->priv->unit_x_label),  _("n/a"));
-  gtk_label_set_text (GTK_LABEL (view->priv->unit_y_label),  _("n/a"));
+  g_clear_object (&view->priv->cursor_image);
 
-  gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_1));
-  gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->priv->color_frame_2));
-
-  /* Start showing selection info from the active image again */
-  gimp_cursor_view_update_selection_info (view,
-                                          view->priv->image,
-                                          view->priv->unit);
+  if (view->priv->cursor_idle_id == 0)
+    {
+      view->priv->cursor_idle_id =
+        g_idle_add ((GSourceFunc) gimp_cursor_view_cursor_idle, view);
+    }
 }
