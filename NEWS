@@ -16,6 +16,8 @@ Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
 Core:
 
   - The default brush is now "Hardness 050".
+  - Verbose version (command line: gimp -v) now displays C compiler
+    information.
 
 Color management:
 
@@ -44,6 +46,7 @@ Building:
 
   - Require LittleCMS >= 2.8.
   - Initial docker-based build environment for GIMP now available.
+  - Warn against use of GCC 7.2 which has a bug breaking GIMP.
 
 Contributors:
 
