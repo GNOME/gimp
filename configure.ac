@@ -530,6 +530,16 @@ if test "x$os_win32" = xyes; then
   fi
 fi
 
+if test "x$GCC" = xyes; then
+  gcc_version=`$CC -v 2>&1|grep 'gcc version'|sed -e 's/.*gcc version \([[0-9.]]\+\)[[^0-9.]].*/\1/'`
+  if test "x$gcc_version" = "x7.2.0" ; then
+    warning_gcc="
+WARNING: GCC 7.2.0 has a serious bug affecting GEGL/GIMP. We advise
+         against using this version of the compiler (previous and
+         further versions are fine).
+         See https://bugzilla.gnome.org/show_bug.cgi?id=787222"
+  fi
+fi
 
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
@@ -2698,7 +2708,7 @@ Optional Modules:
 Tests:
   Use xvfb-run         $have_xvfb_run
   Test appdata         $have_appstream_util
-$have_recommended_xgettext$have_recommended_fontconfig$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking"
+$have_recommended_xgettext$have_recommended_fontconfig$have_recommended_gtk$warning_vector_icons_windows$warning_glib_networking$warning_gcc"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT
