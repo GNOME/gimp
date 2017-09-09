@@ -2090,41 +2090,39 @@ msgid "Font Selection: Switch to Next"
 msgstr "Converteix la selecció flotant en una capa"
 
 #: ../app/actions/context-actions.c:869
-#, fuzzy
-#| msgid "Brush Spacing"
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set"
-msgstr "Espaiat del pinzell"
+msgstr "Espaiat del pinzell (editor): estableix"
 
 #: ../app/actions/context-actions.c:873
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set to Minimum"
-msgstr ""
+msgstr "Espaiat del pinzell (editor): estableix al mínim"
 
 #: ../app/actions/context-actions.c:877
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Set to Maximum"
-msgstr ""
+msgstr "Espaiat del pinzell (editor): estableix al màxim"
 
 #: ../app/actions/context-actions.c:881
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Decrease by 1"
-msgstr ""
+msgstr "Espaiat del pinzell (editor): disminueix un 1"
 
 #: ../app/actions/context-actions.c:885
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Increase by 1"
-msgstr ""
+msgstr "Espaiat del pinzell (editor): incrementa un 1"
 
 #: ../app/actions/context-actions.c:889
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Decrease by 10"
-msgstr ""
+msgstr "Espaiat del pinzell (editor): disminueix un 10"
 
 #: ../app/actions/context-actions.c:893
 msgctxt "context-action"
 msgid "Brush Spacing (Editor): Increase by 10"
-msgstr ""
+msgstr "Espaiat del pinzell (editor): incrementa un 10"
 
 #: ../app/actions/context-actions.c:901
 msgctxt "context-action"
@@ -10592,15 +10590,15 @@ msgstr ""
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Defineix el paràmetre per defecte 'Només grup actiu' per al diàleg «Fusiona "
+"Defineix el paràmetre per defecte «Només grup actiu» per al diàleg «Fusiona "
 "capes visibles»."
 
 #: ../app/config/gimprc-blurbs.h:528
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Defineix el paràmetre per defecte 'Descarta invisible' per al diàleg "
-"'Fusiona capes visibles'"
+"Defineix el paràmetre per defecte «Descarta invisible» per al diàleg "
+"«Fusiona capes visibles»"
 
 #: ../app/config/gimprc-blurbs.h:531
 msgid "Sets the default channel name for the 'New Channel' dialog."
