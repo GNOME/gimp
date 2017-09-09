@@ -63,45 +63,52 @@ file_raw_get_executable_path (const gchar *main_executable,
 #if defined (GDK_WINDOWING_QUARTZ)
   if (mac_bundle_id)
     {
-      OSStatus status;
-      CFURLRef bundle_url = NULL;
+      CFStringRef bundle_id;
 
-      /* For macOS, attempt searching for a darktable app bundle first. */
-      status = LSFindApplicationForInfo (kLSUnknownCreator,
-                                         CFSTR (mac_bundle_id),
-                                         NULL, NULL, &bundle_url);
-
-      if (status >= 0)
+      /* For macOS, attempt searching for an app bundle first. */
+      bundle_id = CFStringCreateWithCString (NULL, mac_bundle_id,
+                                             kCFStringEncodingUTF8);
+      if (bundle_id)
         {
-          CFBundleRef  bundle;
-          CFURLRef     exec_url, absolute_url;
-          CFStringRef  path;
-          gchar       *ret;
-          CFIndex      len;
+          OSStatus status;
+          CFURLRef bundle_url = NULL;
 
-          bundle = CFBundleCreate (kCFAllocatorDefault, bundle_url);
-          CFRelease (bundle_url);
+          status = LSFindApplicationForInfo (kLSUnknownCreator,
+                                             bundle_id, NULL, NULL,
+                                             &bundle_url);
+          if (status >= 0)
+            {
+              CFBundleRef  bundle;
+              CFURLRef     exec_url, absolute_url;
+              CFStringRef  path;
+              gchar       *ret;
+              CFIndex      len;
 
-          exec_url = CFBundleCopyExecutableURL (bundle);
-          absolute_url = CFURLCopyAbsoluteURL (exec_url);
-          path = CFURLCopyFileSystemPath (absolute_url, kCFURLPOSIXPathStyle);
+              bundle = CFBundleCreate (kCFAllocatorDefault, bundle_url);
+              CFRelease (bundle_url);
 
-          /* This gets us the length in UTF16 characters, we multiply by 2
-           * to make sure we have a buffer big enough to fit the UTF8 string.
-           */
-          len = CFStringGetLength (path);
-          ret = g_malloc0 (len * 2 * sizeof (gchar));
-          if (!CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
-                                   kCFStringEncodingUTF8))
-            ret = NULL;
+              exec_url = CFBundleCopyExecutableURL (bundle);
+              absolute_url = CFURLCopyAbsoluteURL (exec_url);
+              path = CFURLCopyFileSystemPath (absolute_url, kCFURLPOSIXPathStyle);
 
-          CFRelease (path);
-          CFRelease (absolute_url);
-          CFRelease (exec_url);
-          CFRelease (bundle);
+              /* This gets us the length in UTF16 characters, we multiply by 2
+               * to make sure we have a buffer big enough to fit the UTF8 string.
+               */
+              len = CFStringGetLength (path);
+              ret = g_malloc0 (len * 2 * sizeof (gchar));
+              if (!CFStringGetCString (path, ret, 2 * len * sizeof (gchar),
+                                       kCFStringEncodingUTF8))
+                ret = NULL;
 
-          if (ret)
-            return ret;
+              CFRelease (path);
+              CFRelease (absolute_url);
+              CFRelease (exec_url);
+              CFRelease (bundle);
+
+              if (ret)
+                return ret;
+            }
+          CFRelease (bundle_id);
         }
       /* else, app bundle was not found, try path search as last resort. */
     }
