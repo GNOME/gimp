@@ -539,7 +539,23 @@ WARNING: GCC 7.2.0 has a serious bug affecting GEGL/GIMP. We advise
          further versions are fine).
          See https://bugzilla.gnome.org/show_bug.cgi?id=787222"
   fi
+  # For GCC, use -v which has more information than --version.
+  CC_VERSION="\\\\t`$CC -v 2>&1 | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'`"
+else
+  # This is the list of common options used by autotools to check
+  # versions for various compilers.
+  CC_VERSION="\\\\t`$CC --version 2>&1 | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'`"
+  if test $? != 0; then
+    CC_VERSION="\\\\t`$CC -v 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
+    if test $? != 0; then
+      CC_VERSION="\\\\t`$CC -V 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
+      if test $? != 0; then
+        CC_VERSION="\\\\t`$CC -qversion 2>&1` | sed -e 's/$/\\\\n\\\\t/g' | tr -d '\n'"
+      fi
+    fi
+  fi
 fi
+AC_SUBST(CC_VERSION)
 
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT

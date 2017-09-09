@@ -142,6 +142,7 @@ gimp_version_show (gboolean be_verbose)
     {
       g_print ("git-describe: %s", GIMP_GIT_VERSION);
       g_print ("\n");
+      g_print ("C compiler:\n%s", CC_VERSION);
 
       g_print ("\n");
       gimp_show_library_versions ();
