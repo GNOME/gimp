@@ -69,27 +69,6 @@ gimp_gegl_init (Gimp *gimp)
   gimp_babl_init ();
 
   gimp_operations_init (gimp);
-
-  if (GEGL_MAJOR_VERSION == 0 &&
-      GEGL_MINOR_VERSION == 3 &&
-      GEGL_MICRO_VERSION <= 21)
-  {
-    /* XXX:
-     *
-     * hot-fix for bug #785521 and duplicates, this code to
-     * be removed after GIMP 2.9.6 is released and GIMP depends
-     * on 0.3.21 or newer again, we do it also for GEGL 0.3.21
-     * since setting it to FALSE when it already is FALSE
-     * is no harm.
-     */
-    GType op_type = g_type_from_name ("GeglOpcopy-buffer_c");
-    if (op_type)
-    {
-      GeglOperationClass *op_class = g_type_class_ref (op_type);
-      if (op_class)
-        op_class->threaded = FALSE;
-    }
-  }
 }
 
 static void
