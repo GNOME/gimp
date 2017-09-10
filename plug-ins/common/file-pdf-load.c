@@ -47,10 +47,10 @@
 /* Structs for the load dialog */
 typedef struct
 {
-  GimpPageSelectorTarget target;
-  gdouble                resolution;
-  gboolean               antialias;
-  gchar                 *PDF_password;
+  GimpPageSelectorTarget  target;
+  gdouble                 resolution;
+  gboolean                antialias;
+  gchar                  *PDF_password;
 } PdfLoadVals;
 
 static PdfLoadVals loadvals =
@@ -87,9 +87,9 @@ static GimpPDBStatusType load_dialog       (PopplerDocument        *doc,
                                             PdfSelectedPages       *pages);
 
 static PopplerDocument * open_document     (const gchar            *filename,
-                                            GError                **error,
-                                            gchar                  *PDF_password,
-                                            GimpRunMode             run_mode);
+                                            const gchar            *PDF_password,
+                                            GimpRunMode             run_mode,
+                                            GError                **error);
 
 static cairo_surface_t * get_thumb_surface (PopplerDocument        *doc,
                                             gint                    page,
@@ -278,12 +278,12 @@ query (void)
     { GIMP_PDB_INT32,     "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
     { GIMP_PDB_STRING,    "filename",     "The name of the file to load"     },
     { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 },
+    { GIMP_PDB_STRING,    "pdf-password", "The password to decrypt the encrypted PDF file"      }
     /* XXX: Nice to have API at some point, but needs work
     { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
     { GIMP_PDB_INT32,     "antialiasing", "Use anti-aliasing" },
     { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
     { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load"                }, */
-    { GIMP_PDB_STRING,    "pdf-password", "The password to decrypt the encrypted PDF file"      }
   };
 
   static const GimpParamDef load_return_vals[] =
@@ -405,7 +405,9 @@ run (const gchar      *name,
               gimp_get_data (LOAD2_PROC, &loadvals);
             }
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          doc = open_document (param[1].data.d_string, &error, loadvals.PDF_password, run_mode);
+          doc = open_document (param[1].data.d_string,
+                               loadvals.PDF_password,
+                               run_mode, &error);
 
           if (!doc)
             {
@@ -415,16 +417,15 @@ run (const gchar      *name,
 
           status = load_dialog (doc, &pages);
           if (status == GIMP_PDB_SUCCESS)
-            // gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
             {
-            if (strcmp (name, LOAD_PROC) == 0)
-              {
-                gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
-              }
-            else if (strcmp (name, LOAD2_PROC) == 0)
-              {
-                gimp_set_data (LOAD2_PROC, &loadvals, sizeof(loadvals));
-              }
+              if (strcmp (name, LOAD_PROC) == 0)
+                {
+                  gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
+                }
+              else if (strcmp (name, LOAD2_PROC) == 0)
+                {
+                  gimp_set_data (LOAD2_PROC, &loadvals, sizeof(loadvals));
+                }
             }
           break;
 
@@ -434,7 +435,17 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          doc = open_document (param[1].data.d_string, &error, loadvals.PDF_password, run_mode);
+          if (strcmp (name, LOAD_PROC) == 0)
+            {
+              doc = open_document (param[1].data.d_string,
+                                   NULL, run_mode, &error);
+            }
+          else if (strcmp (name, LOAD2_PROC) == 0)
+            {
+              doc = open_document (param[1].data.d_string,
+                                   param[3].data.d_string,
+                                   run_mode, &error);
+            }
 
           if (doc)
             {
@@ -503,7 +514,6 @@ run (const gchar      *name,
           cairo_surface_t *surface   = NULL;
 
           /* Possibly retrieve last settings */
-          // gimp_get_data (LOAD_PROC, &loadvals);
           if (strcmp (name, LOAD_PROC) == 0)
             {
               gimp_get_data (LOAD_PROC, &loadvals);
@@ -513,7 +523,9 @@ run (const gchar      *name,
               gimp_get_data (LOAD2_PROC, &loadvals);
             }
 
-          doc = open_document (param[0].data.d_string, &error, loadvals.PDF_password, run_mode);
+          doc = open_document (param[0].data.d_string,
+                               loadvals.PDF_password,
+                               run_mode, &error);
 
           if (doc)
             {
@@ -592,14 +604,13 @@ run (const gchar      *name,
 
 static PopplerDocument*
 open_document (const gchar  *filename,
-               GError      **load_error,
-               gchar        *PDF_password,
-               GimpRunMode   run_mode)
+               const gchar  *PDF_password,
+               GimpRunMode   run_mode,
+               GError      **load_error)
 {
   PopplerDocument *doc;
   GMappedFile     *mapped_file;
   GError          *error = NULL;
-  GtkWidget       *label;
 
   mapped_file = g_mapped_file_new (filename, FALSE, &error);
 
@@ -619,6 +630,8 @@ open_document (const gchar  *filename,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
+      GtkWidget *label;
+
       label = gtk_label_new (_("PDF is password protected, please input the password:"));
       while (error && strcmp (error->message, "Document is encrypted") == 0)
         {
