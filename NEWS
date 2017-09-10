@@ -38,6 +38,10 @@ File formats:
     - Fix missing some attributes loading empty layers.
     - Improve layer opacity loading/saving.
 
+PDB:
+
+  - Add file-pdf-load2 API to load a password-protected PDF.
+
 Translations:
 
   - Updated: Polish. 
