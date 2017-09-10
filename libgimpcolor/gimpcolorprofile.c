@@ -1479,7 +1479,6 @@ gimp_color_profile_get_format (GimpColorProfile  *profile,
 
   space = babl_space_from_icc ((const gchar *) profile->priv->data,
                                profile->priv->length,
-                               BABL_ICC_INTENT_RELATIVE_COLORIMETRIC,
                                &babl_error);
 
   if (! space)
