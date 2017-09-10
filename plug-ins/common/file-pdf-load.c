@@ -265,12 +265,6 @@ query (void)
     { GIMP_PDB_INT32,     "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
     { GIMP_PDB_STRING,    "filename",     "The name of the file to load"     },
     { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 }
-    /* XXX: Nice to have API at some point, but needs work
-    { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
-    { GIMP_PDB_INT32,     "antialiasing", "Use anti-aliasing" },
-    { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
-    { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load"                }
-    */
   };
 
   static const GimpParamDef load2_args[] =
@@ -633,7 +627,9 @@ open_document (const gchar  *filename,
       GtkWidget *label;
 
       label = gtk_label_new (_("PDF is password protected, please input the password:"));
-      while (error && strcmp (error->message, "Document is encrypted") == 0)
+      while (error                          &&
+             error->domain == POPPLER_ERROR &&
+             error->code == POPPLER_ERROR_ENCRYPTED)
         {
           GtkWidget *vbox;
           GtkWidget *dialog;
