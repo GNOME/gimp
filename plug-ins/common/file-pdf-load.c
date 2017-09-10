@@ -36,6 +36,7 @@
 
 
 #define LOAD_PROC       "file-pdf-load"
+#define LOAD2_PROC      "file-pdf-load2"
 #define LOAD_THUMB_PROC "file-pdf-load-thumb"
 #define PLUG_IN_BINARY  "file-pdf-load"
 #define PLUG_IN_ROLE    "gimp-file-pdf-load"
@@ -49,13 +50,15 @@ typedef struct
   GimpPageSelectorTarget target;
   gdouble                resolution;
   gboolean               antialias;
+  gchar                 *PDF_password;
 } PdfLoadVals;
 
 static PdfLoadVals loadvals =
 {
   GIMP_PAGE_SELECTOR_TARGET_LAYERS,
   100.00,  /* 100 dpi   */
-  TRUE
+  TRUE,
+  NULL
 };
 
 typedef struct
@@ -84,7 +87,9 @@ static GimpPDBStatusType load_dialog       (PopplerDocument        *doc,
                                             PdfSelectedPages       *pages);
 
 static PopplerDocument * open_document     (const gchar            *filename,
-                                            GError                **error);
+                                            GError                **error,
+                                            gchar                  *PDF_password,
+                                            GimpRunMode             run_mode);
 
 static cairo_surface_t * get_thumb_surface (PopplerDocument        *doc,
                                             gint                    page,
@@ -268,6 +273,19 @@ query (void)
     */
   };
 
+  static const GimpParamDef load2_args[] =
+  {
+    { GIMP_PDB_INT32,     "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
+    { GIMP_PDB_STRING,    "filename",     "The name of the file to load"     },
+    { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 },
+    /* XXX: Nice to have API at some point, but needs work
+    { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
+    { GIMP_PDB_INT32,     "antialiasing", "Use anti-aliasing" },
+    { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
+    { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load"                }, */
+    { GIMP_PDB_STRING,    "pdf-password", "The password to decrypt the encrypted PDF file"      }
+  };
+
   static const GimpParamDef load_return_vals[] =
   {
     { GIMP_PDB_IMAGE,     "image",        "Output image" }
@@ -304,8 +322,26 @@ query (void)
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
 
-  gimp_register_file_handler_mime (LOAD_PROC, "application/pdf");
-  gimp_register_magic_load_handler (LOAD_PROC,
+  gimp_install_procedure (LOAD2_PROC,
+                          "Load file in PDF format",
+                          "Loads files in Adobe's Portable Document Format. "
+                          "PDF is designed to be easily processed by a variety "
+                          "of different platforms, and is a distant cousin of "
+                          "PostScript.\n"
+                          "This procedure adds an extra parameter to "
+                          "file-pdf-load to open encrypted PDF.",
+                          "Nathan Summers, Lionel N.",
+                          "Nathan Summers, Lionel N.",
+                          "2005, 2017",
+                          N_("Portable Document Format"),
+                          NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (load2_args),
+                          G_N_ELEMENTS (load_return_vals),
+                          load2_args, load_return_vals);
+
+  gimp_register_file_handler_mime (LOAD2_PROC, "application/pdf");
+  gimp_register_magic_load_handler (LOAD2_PROC,
                                     "pdf",
                                     "",
                                     "0, string,%PDF-");
@@ -325,7 +361,7 @@ query (void)
                           G_N_ELEMENTS (thumb_return_vals),
                           thumb_args, thumb_return_vals);
 
-  gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
+  gimp_register_thumbnail_loader (LOAD2_PROC, LOAD_THUMB_PROC);
 }
 
 static void
@@ -335,7 +371,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[6];
+  static GimpParam  values[7];
   GimpRunMode       run_mode;
   GimpPDBStatusType status   = GIMP_PDB_SUCCESS;
   gint32            image_ID = -1;
@@ -352,7 +388,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, LOAD_PROC) == 0)
+  if (strcmp (name, LOAD_PROC) == 0 || strcmp (name, LOAD2_PROC) == 0)
     {
       PdfSelectedPages pages = { 0, NULL };
 
@@ -360,10 +396,16 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           /* Possibly retrieve last settings */
-          gimp_get_data (LOAD_PROC, &loadvals);
-
+          if (strcmp (name, LOAD_PROC) == 0)
+            {
+              gimp_get_data (LOAD_PROC, &loadvals);
+            }
+          else if (strcmp (name, LOAD2_PROC) == 0)
+            {
+              gimp_get_data (LOAD2_PROC, &loadvals);
+            }
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
-          doc = open_document (param[1].data.d_string, &error);
+          doc = open_document (param[1].data.d_string, &error, loadvals.PDF_password, run_mode);
 
           if (!doc)
             {
@@ -373,7 +415,17 @@ run (const gchar      *name,
 
           status = load_dialog (doc, &pages);
           if (status == GIMP_PDB_SUCCESS)
-            gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
+            // gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
+            {
+            if (strcmp (name, LOAD_PROC) == 0)
+              {
+                gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
+              }
+            else if (strcmp (name, LOAD2_PROC) == 0)
+              {
+                gimp_set_data (LOAD2_PROC, &loadvals, sizeof(loadvals));
+              }
+            }
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
@@ -382,7 +434,7 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          doc = open_document (param[1].data.d_string, &error);
+          doc = open_document (param[1].data.d_string, &error, loadvals.PDF_password, run_mode);
 
           if (doc)
             {
@@ -451,9 +503,17 @@ run (const gchar      *name,
           cairo_surface_t *surface   = NULL;
 
           /* Possibly retrieve last settings */
-          gimp_get_data (LOAD_PROC, &loadvals);
+          // gimp_get_data (LOAD_PROC, &loadvals);
+          if (strcmp (name, LOAD_PROC) == 0)
+            {
+              gimp_get_data (LOAD_PROC, &loadvals);
+            }
+          else if (strcmp (name, LOAD2_PROC) == 0)
+            {
+              gimp_get_data (LOAD2_PROC, &loadvals);
+            }
 
-          doc = open_document (param[0].data.d_string, &error);
+          doc = open_document (param[0].data.d_string, &error, loadvals.PDF_password, run_mode);
 
           if (doc)
             {
@@ -532,7 +592,9 @@ run (const gchar      *name,
 
 static PopplerDocument*
 open_document (const gchar  *filename,
-               GError      **load_error)
+               GError      **load_error,
+               gchar        *PDF_password,
+               GimpRunMode   run_mode)
 {
   PopplerDocument *doc;
   GMappedFile     *mapped_file;
@@ -552,53 +614,56 @@ open_document (const gchar  *filename,
 
   doc = poppler_document_new_from_data (g_mapped_file_get_contents (mapped_file),
                                         g_mapped_file_get_length (mapped_file),
-                                        NULL,
+                                        PDF_password,
                                         &error);
 
-  label = gtk_label_new (_("PDF is password protected, please input the password:"));
-  while (error && strcmp (error->message, "Document is encrypted") == 0)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      GtkWidget *vbox;
-      GtkWidget *dialog;
-      GtkWidget *entry;
-      gint       run;
-
-      dialog = gimp_dialog_new (_("Encrypted PDF"), PLUG_IN_ROLE,
-                                NULL, 0,
-                                NULL, NULL,
-                                _("_Cancel"), GTK_RESPONSE_CANCEL,
-                                _("_OK"), GTK_RESPONSE_OK,
-                                NULL);
-      gimp_window_set_transient (GTK_WINDOW (dialog));
-      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                          vbox, TRUE, TRUE, 0);
-      entry = gtk_entry_new ();
-      gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
-      gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
-      gtk_container_add (GTK_CONTAINER (vbox), label);
-      gtk_container_add (GTK_CONTAINER (vbox), entry);
-
-      gtk_widget_show_all (dialog);
-
-      run = gimp_dialog_run (GIMP_DIALOG (dialog));
-      if (run == GTK_RESPONSE_OK)
+      label = gtk_label_new (_("PDF is password protected, please input the password:"));
+      while (error && strcmp (error->message, "Document is encrypted") == 0)
         {
-          g_clear_error (&error);
-          doc = poppler_document_new_from_data (g_mapped_file_get_contents (mapped_file),
-                                                g_mapped_file_get_length (mapped_file),
-                                                gtk_entry_get_text (GTK_ENTRY (entry)),
-                                                &error);
+          GtkWidget *vbox;
+          GtkWidget *dialog;
+          GtkWidget *entry;
+          gint       run;
+
+          dialog = gimp_dialog_new (_("Encrypted PDF"), PLUG_IN_ROLE,
+                                    NULL, 0,
+                                    NULL, NULL,
+                                    _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                    _("_OK"), GTK_RESPONSE_OK,
+                                    NULL);
+          gimp_window_set_transient (GTK_WINDOW (dialog));
+          vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+          gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+          gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                              vbox, TRUE, TRUE, 0);
+          entry = gtk_entry_new ();
+          gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
+          gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+          gtk_container_add (GTK_CONTAINER (vbox), label);
+          gtk_container_add (GTK_CONTAINER (vbox), entry);
+
+          gtk_widget_show_all (dialog);
+
+          run = gimp_dialog_run (GIMP_DIALOG (dialog));
+          if (run == GTK_RESPONSE_OK)
+            {
+              g_clear_error (&error);
+              doc = poppler_document_new_from_data (g_mapped_file_get_contents (mapped_file),
+                                                    g_mapped_file_get_length (mapped_file),
+                                                    gtk_entry_get_text (GTK_ENTRY (entry)),
+                                                    &error);
+            }
+          label = gtk_label_new (_("Wrong password! Please input the right one:"));
+          gtk_widget_destroy (dialog);
+          if (run == GTK_RESPONSE_CANCEL || run == GTK_RESPONSE_DELETE_EVENT)
+            {
+              break;
+            }
         }
-      label = gtk_label_new (_("Wrong password! Please input the right one:"));
-      gtk_widget_destroy (dialog);
-      if (run == GTK_RESPONSE_CANCEL || run == GTK_RESPONSE_DELETE_EVENT)
-        {
-          break;
-        }
+      gtk_widget_destroy (label);
     }
-  gtk_widget_destroy (label);
 
   /* We can't g_mapped_file_unref(mapped_file) as apparently doc has
    * references to data in there. No big deal, this is just a
