@@ -57,7 +57,7 @@ int main (int argc, char **argv)
       return 1;
     }
 
-  id = g_strdup_printf("#%s", argv[2]);
+  id = g_strdup_printf ("#%s", argv[2]);
   if (! rsvg_handle_has_sub (handle, id))
     {
       fprintf (stderr, "Error: the id \"%s\" does not exist.\n", id);
@@ -75,9 +75,9 @@ int main (int argc, char **argv)
                id, dimension.width, dimension.height,
                position_data.x, position_data.y);
     }
-  printf("viewBox=\"%d %d %d %d\"",
-         position_data.x + prev_x, position_data.y + prev_y,
-         dimension.width, dimension.height);
+  printf ("viewBox=\"%d %d %d %d\"",
+          position_data.x + prev_x, position_data.y + prev_y,
+          dimension.width, dimension.height);
 
   g_object_unref (handle);
   g_free (id);
