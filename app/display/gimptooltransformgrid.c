@@ -1981,7 +1981,7 @@ gimp_tool_transform_grid_get_cursor (GimpToolWidget     *widget,
 {
   GimpToolTransformGrid        *grid    = GIMP_TOOL_TRANSFORM_GRID (widget);
   GimpToolTransformGridPrivate *private = grid->private;
-  gdouble                       angle[8];
+  gdouble                       angle[9];
   gint                          i;
   GimpCursorType                map[8];
   GimpVector2                   pos[4], this, that;
