@@ -1466,9 +1466,10 @@ gimp_color_profile_new_d50_gray_lab_trc (void)
  * Since: 2.10
  **/
 const Babl *
-gimp_color_profile_get_format (GimpColorProfile  *profile,
-                               const Babl        *format,
-                               GError           **error)
+gimp_color_profile_get_format (GimpColorProfile          *profile,
+                               const Babl                *format,
+                               GimpColorRenderingIntent   intent,
+                               GError                   **error)
 {
   const Babl  *space;
   const gchar *babl_error = NULL;
@@ -1479,6 +1480,7 @@ gimp_color_profile_get_format (GimpColorProfile  *profile,
 
   space = babl_space_from_icc ((const gchar *) profile->priv->data,
                                profile->priv->length,
+                               intent,
                                &babl_error);
 
   if (! space)

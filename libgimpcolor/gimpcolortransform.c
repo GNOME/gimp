@@ -203,6 +203,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
 
   priv->src_space_format = gimp_color_profile_get_format (src_profile,
                                                           src_format,
+                                                          BABL_ICC_INTENT_RELATIVE_COLORIMETRIC,
                                                           &error);
   if (! priv->src_space_format)
     {
@@ -213,6 +214,7 @@ gimp_color_transform_new (GimpColorProfile         *src_profile,
 
   priv->dest_space_format = gimp_color_profile_get_format (dest_profile,
                                                            dest_format,
+                                                           rendering_intent,
                                                            &error);
   if (! priv->dest_space_format)
     {

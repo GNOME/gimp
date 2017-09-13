@@ -113,6 +113,7 @@ gboolean           gimp_color_profile_is_linear             (GimpColorProfile  *
 
 const Babl       * gimp_color_profile_get_format            (GimpColorProfile  *profile,
                                                              const Babl        *format,
+                                                             GimpColorRenderingIntent intent,
                                                              GError           **error);
 const Babl       * gimp_color_profile_get_lcms_format       (const Babl        *format,
                                                              guint32           *lcms_format);
