@@ -168,7 +168,7 @@ msgstr "Afegeix un canal alfa"
 
 #: ../libgimp/gimpexport.c:434
 msgid "Confirm Save"
-msgstr "Confirmeu que voleu desar"
+msgstr "Confirmeu què voleu desar"
 
 #: ../libgimp/gimpexport.c:440
 msgid "Confirm"
@@ -682,7 +682,7 @@ msgstr "Utilitza una paleta optimitzada per llocs web"
 #: ../libgimpbase/gimpbaseenums.c:451
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
-msgstr "Utilitza una paleta en blanc i negre (de 1 bit)"
+msgstr "Utilitza una paleta en blanc i negre (d'1 bit)"
 
 #: ../libgimpbase/gimpbaseenums.c:452
 msgctxt "convert-palette-type"

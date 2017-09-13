@@ -1069,7 +1069,7 @@ msgstr "Ajusta el mapa de colors"
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
-msgstr "Arrossegueu colors per ajustar el mapa de colors.  Els nombres que es mostren són els índex originals.  Feu clic amb el botó dret per a veure les opcions d'ordenació."
+msgstr "Arrossegueu colors per ajustar el mapa de colors.  Els nombres que es mostren són els índexs originals.  Feu clic amb el botó dret per a veure les opcions d'ordenació."
 
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
@@ -3153,7 +3153,7 @@ msgstr "Pàgines:"
 
 #: ../plug-ins/common/file-ps.c:3528
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr "Pàgines a carregar (p.ex. 1-4 o 1,3,5-7)"
+msgstr "Pàgines a carregar (p. ex. 1-4 o 1,3,5-7)"
 
 #: ../plug-ins/common/file-ps.c:3533 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
@@ -4015,7 +4015,7 @@ msgstr "No es poden exportar imatges amb canals alfa."
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
 msgid "Could not open '%s' for writing: "
-msgstr "No s'ha pogut obrir «%s» per a escriptura"
+msgstr "No s'ha pogut obrir «%s» per a escriptura: "
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
@@ -5630,7 +5630,7 @@ msgstr "Símbol"
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
-msgstr "El símbol de la unitat, si en té (p.ex. «\"» per a les polzades). S'utilitza l'abreviatura de la unitat si no té un símbol."
+msgstr "El símbol de la unitat, si en té (p. ex. «\"» per a les polzades). S'utilitza l'abreviatura de la unitat si no té un símbol."
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "Abbreviation"
@@ -5638,7 +5638,7 @@ msgstr "Abreviatura"
 
 #: ../plug-ins/common/unit-editor.c:107
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "L'abreviatura de la unitat (p.ex. «cm» per centímetres)."
+msgstr "L'abreviatura de la unitat (p. ex. «cm» per centímetres)."
 
 #: ../plug-ins/common/unit-editor.c:109
 msgid "Singular"
@@ -6788,7 +6788,7 @@ msgstr "Canal TIFF"
 #: ../plug-ins/file-tiff/file-tiff-save.c:605
 #, c-format
 msgid "TIFF export cannot handle indexed images with an alpha channel."
-msgstr "L'exportació a FITS no pot gestionar imatges amb canals alfa"
+msgstr "L'exportació a FITS no pot gestionar imatges amb canals alfa."
 
 #: ../plug-ins/file-tiff/file-tiff-save.c:618
 msgid ""
@@ -8059,7 +8059,7 @@ msgstr "Profunditat de l'ombra:"
 #: ../plug-ins/gimpressionist/general.c:261
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "La profunditat de l'ombrejat, p.ex. quina distància s'hauria d'allunyar de l'objecte"
+msgstr "La profunditat de l'ombrejat, p. ex. quina distància s'hauria d'allunyar de l'objecte"
 
 #: ../plug-ins/gimpressionist/general.c:266
 msgid "Shadow blur:"
@@ -8107,7 +8107,7 @@ msgstr "Direccions:"
 
 #: ../plug-ins/gimpressionist/orientation.c:109
 msgid "The number of directions (i.e. brushes) to use"
-msgstr "El nombre de direccions (p.ex. pinzells) que s'utilitzaran"
+msgstr "El nombre de direccions (p. ex. pinzells) que s'utilitzaran"
 
 #: ../plug-ins/gimpressionist/orientation.c:117
 msgid "Start angle:"
@@ -10914,7 +10914,7 @@ msgstr "Si dos extrems són més a prop d'aquest, llavors estan fets per ser igu
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:111
 msgid "Corner Always Threshold:"
-msgstr "Llindar del cantó"
+msgstr "Llindar del cantó:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:115
 msgid ""
@@ -10950,7 +10950,7 @@ msgstr "Llindar d'error:"
 msgid ""
 "Amount of error at which a fitted spline is unacceptable.  If any pixel is "
 "further away than this from the fitted curve, we try again."
-msgstr "Quantitat d'error en que no s'accepta una corba spline encabida. Si qualsevol píxel està més lluny de la corba, intenteu de nou."
+msgstr "Quantitat d'error en què no s'accepta una corba spline encabida. Si qualsevol píxel està més lluny de la corba, intenteu de nou."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:169
 msgid "Filter Alternative Surround:"
@@ -10973,7 +10973,7 @@ msgstr "Si els angles entre els vectors produïts pel filtre envoltant i els pun
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:198
 msgid "Filter Iteration Count:"
-msgstr "Compte de la iteració del filtre"
+msgstr "Compte de la iteració del filtre:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:202
 msgid ""
@@ -11092,7 +11092,7 @@ msgstr "Subdivideix el llindar:"
 msgid ""
 "How many pixels a point can diverge from a straight line and still be "
 "considered a better place to subdivide."
-msgstr "Quantitat de píxels en que un punt pot divergir d'una línia recta i encara ser considerat un lloc millor per a subdividir."
+msgstr "Quantitat de píxels en què un punt pot divergir d'una línia recta i encara ser considerat un lloc millor per a subdividir."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:371
 msgid "Tangent Surround:"
