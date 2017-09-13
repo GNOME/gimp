@@ -18,6 +18,9 @@ Core:
   - The default brush is now "Hardness 050".
   - Verbose version (command line: gimp -v) now displays C compiler
     information.
+  - No undo steps when single-clicking with a selection tool while there
+    was already no selection.
+  - Transform tools don't commit identity transformation anymore.
 
 Color management:
 
