@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-07-18 11:53+0000\n"
-"PO-Revision-Date: 2017-07-20 21:01+0200\n"
+"POT-Creation-Date: 2017-09-09 17:58+0000\n"
+"PO-Revision-Date: 2017-09-13 20:46+0200\n"
 "Last-Translator: Jordi Mas <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -974,7 +974,7 @@ msgstr "Crea un canal nou"
 msgid "New Channel Color"
 msgstr "Color del canal nou"
 
-#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:276
+#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:278
 #: ../app/display/gimpdisplayshell-dnd.c:670
 #: ../app/widgets/gimpchanneltreeview.c:258
 #: ../app/widgets/gimplayertreeview.c:784
@@ -2408,7 +2408,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1906
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1966
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -4659,117 +4659,125 @@ msgid "_Softglow..."
 msgstr "Lluentor _suau..."
 
 #: ../app/actions/filters-actions.c:592
+#, fuzzy
+#| msgctxt "filters-action"
+#| msgid "_Hurl..."
+msgctxt "filters-action"
+msgid "S_piral..."
+msgstr "_Llença..."
+
+#: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
 msgstr "E_stira el contrast..."
 
-#: ../app/actions/filters-actions.c:597
+#: ../app/actions/filters-actions.c:602
 #, fuzzy
 msgctxt "filters-action"
 msgid "_Stress..."
 msgstr "_Corbes de color..."
 
-#: ../app/actions/filters-actions.c:602
+#: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "Super_nova..."
 msgstr "Super_nova..."
 
-#: ../app/actions/filters-actions.c:607
+#: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
 msgstr "_Llindar alfa..."
 
-#: ../app/actions/filters-actions.c:612
+#: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Glass Tile..."
 msgstr "_Mosaic òptic..."
 
-#: ../app/actions/filters-actions.c:617
+#: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "Mosaic de _paper..."
 
-#: ../app/actions/filters-actions.c:622
+#: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
 msgid "_Tile Seamless..."
 msgstr "Mosaic sense jun_tures..."
 
-#: ../app/actions/filters-actions.c:627
+#: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
 msgstr "_Millora la nitidesa..."
 
-#: ../app/actions/filters-actions.c:632
+#: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "_Value Propagate..."
 msgstr "Propagació de _valor..."
 
-#: ../app/actions/filters-actions.c:637
+#: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "Vi_deo Degradation..."
 msgstr "_Degradació de vídeo..."
 
-#: ../app/actions/filters-actions.c:642
+#: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Vignette..."
 msgstr "_Vinyeta..."
 
-#: ../app/actions/filters-actions.c:647
+#: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "_Waterpixels..."
 msgstr "_Píxels aquosos..."
 
-#: ../app/actions/filters-actions.c:652
+#: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Waves..."
 msgstr "_Ones circumcèntriques..."
 
-#: ../app/actions/filters-actions.c:657
+#: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
 msgstr "_Gira i contrau..."
 
-#: ../app/actions/filters-actions.c:662
+#: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
 msgid "W_ind..."
 msgstr "_Vent..."
 
-#: ../app/actions/filters-actions.c:670
+#: ../app/actions/filters-actions.c:675
 msgctxt "filters-action"
 msgid "Re_peat Last"
 msgstr "Re_peteix el darrer"
 
-#: ../app/actions/filters-actions.c:672
+#: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "Rerun the last used filter using the same settings"
 msgstr ""
 "Executa de nou el darrer filtre usat utilitzant la mateixa configuració"
 
-#: ../app/actions/filters-actions.c:677
+#: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
 msgid "R_e-Show Last"
 msgstr "Torna a mostrar el darr_er"
 
-#: ../app/actions/filters-actions.c:678
+#: ../app/actions/filters-actions.c:683
 msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostra de nou el diàleg del darrer filtre utilitzat"
 
-#: ../app/actions/filters-actions.c:995
+#: ../app/actions/filters-actions.c:1001
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Re_peteix «%s»"
 
-#: ../app/actions/filters-actions.c:996
+#: ../app/actions/filters-actions.c:1002
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "To_rna a mostrar «%s»"
 
-#: ../app/actions/filters-actions.c:1034
+#: ../app/actions/filters-actions.c:1040
 msgid "Repeat Last"
 msgstr "Repeteix el darrer"
 
-#: ../app/actions/filters-actions.c:1036
+#: ../app/actions/filters-actions.c:1042
 msgid "Re-Show Last"
 msgstr "Torna a mostrar el darrer"
 
@@ -4999,6 +5007,12 @@ msgstr "Ajusta"
 msgid "_Blending Function for Segment"
 msgstr "_Tipus de degradat per al segment"
 
+#: ../app/actions/gradient-editor-actions.c:779
+#, fuzzy
+#| msgid "_Blending Function for Segment"
+msgid "Coloring _Type for Segment"
+msgstr "_Mapa de colors"
+
 #: ../app/actions/gradient-editor-actions.c:782
 msgid "_Flip Segment"
 msgstr "_Capgira el segment"
@@ -5030,6 +5044,12 @@ msgstr "Redistribueix els tirador_s en el segment"
 #: ../app/actions/gradient-editor-actions.c:799
 msgid "_Blending Function for Selection"
 msgstr "_Tipus de degradat per a la selecció"
+
+#: ../app/actions/gradient-editor-actions.c:801
+#, fuzzy
+#| msgid "Crop Layer to Selection"
+msgid "Coloring _Type for Selection"
+msgstr "_Mapa de colors"
 
 #: ../app/actions/gradient-editor-actions.c:804
 msgid "_Flip Selection"
@@ -6835,11 +6855,11 @@ msgstr "_Redueix"
 msgid "Zoom _All"
 msgstr "_Ajusta"
 
-#: ../app/actions/palette-editor-commands.c:69
+#: ../app/actions/palette-editor-commands.c:70
 msgid "Edit Palette Color"
 msgstr "Edita el color de la paleta"
 
-#: ../app/actions/palette-editor-commands.c:71
+#: ../app/actions/palette-editor-commands.c:72
 msgid "Edit Color Palette Entry"
 msgstr "Edita el color de l'entrada de la paleta"
 
@@ -10066,9 +10086,13 @@ msgstr ""
 "imatges indexades."
 
 #: ../app/config/gimprc-blurbs.h:192
+#, fuzzy
+#| msgid ""
+#| "When promoting imported images to floating point precision, also add "
+#| "minimal noise in order do distribute color values a bit."
 msgid ""
 "When promoting imported images to floating point precision, also add minimal "
-"noise in order do distribute color values a bit."
+"noise in order to distribute color values a bit."
 msgstr ""
 "En convertir imatges importades a precisió de coma flotant, afegeix també un "
 "soroll mínim per a distribuir una mica els valors de color."
@@ -10584,7 +10608,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:522
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Defineix el tipus de fusió per defecte per al diàleg «Fusiona capes visibles»."
+"Defineix el tipus de fusió per defecte per al diàleg «Fusiona capes "
+"visibles»."
 
 #: ../app/config/gimprc-blurbs.h:525
 msgid ""
@@ -11591,7 +11616,7 @@ msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Retalla la capa"
 
-#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:323
+#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
 msgstr "Capa enganxada"
 
@@ -12055,7 +12080,7 @@ msgid "Pattern"
 msgstr "Patró"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:374
+#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:375
 msgid "Gradient"
 msgstr "Degradat"
 
@@ -12159,7 +12184,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable.c:509
+#: ../app/core/gimpdrawable.c:508
 msgctxt "undo-type"
 msgid "Scale"
 msgstr "Ajusta la mida"
@@ -12383,72 +12408,72 @@ msgstr ""
 msgid "Offset unit"
 msgstr "Unitat de desplaçament"
 
-#: ../app/core/gimpgrouplayer.c:222
+#: ../app/core/gimpgrouplayer.c:242
 msgid "Layer Group"
 msgstr "Grup de capes"
 
-#: ../app/core/gimpgrouplayer.c:223
+#: ../app/core/gimpgrouplayer.c:243
 msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Canvia el nom del grup de capes"
 
-#: ../app/core/gimpgrouplayer.c:224
+#: ../app/core/gimpgrouplayer.c:244
 msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Mou el grup de capes"
 
-#: ../app/core/gimpgrouplayer.c:225
+#: ../app/core/gimpgrouplayer.c:245
 msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Ajusta la mida del grup de capes"
 
-#: ../app/core/gimpgrouplayer.c:226
+#: ../app/core/gimpgrouplayer.c:246
 msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Canvia la mida del grup de capes"
 
-#: ../app/core/gimpgrouplayer.c:227
+#: ../app/core/gimpgrouplayer.c:247
 msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Capgira el grup de capes"
 
-#: ../app/core/gimpgrouplayer.c:228
+#: ../app/core/gimpgrouplayer.c:248
 msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "Gira el grup de capes"
 
-#: ../app/core/gimpgrouplayer.c:229
+#: ../app/core/gimpgrouplayer.c:249
 msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transforma el grup de capes"
 
-#: ../app/core/gimpimage.c:643 ../app/widgets/gimpsymmetryeditor.c:179
+#: ../app/core/gimpimage.c:645 ../app/widgets/gimpsymmetryeditor.c:179
 msgid "Symmetry"
 msgstr "Simetria"
 
-#: ../app/core/gimpimage.c:2158
+#: ../app/core/gimpimage.c:2218
 msgid " (exported)"
 msgstr "(exportat)"
 
-#: ../app/core/gimpimage.c:2162
+#: ../app/core/gimpimage.c:2222
 msgid " (overwritten)"
 msgstr "(sobreescrit)"
 
-#: ../app/core/gimpimage.c:2171
+#: ../app/core/gimpimage.c:2231
 msgid " (imported)"
 msgstr "(importat)"
 
-#: ../app/core/gimpimage.c:2486
+#: ../app/core/gimpimage.c:2547
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Canvia la resolució de la imatge"
 
-#: ../app/core/gimpimage.c:2538
+#: ../app/core/gimpimage.c:2599
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Canvia les unitats de la imatge"
 
-#: ../app/core/gimpimage.c:3418
+#: ../app/core/gimpimage.c:3479
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -12456,47 +12481,47 @@ msgstr ""
 "Error en la validació del paràsit 'gimp-comment': el comentari conté "
 "caràcters UTF-8 invàlids"
 
-#: ../app/core/gimpimage.c:3470
+#: ../app/core/gimpimage.c:3531
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjunta un paràsit a la imatge"
 
-#: ../app/core/gimpimage.c:3511
+#: ../app/core/gimpimage.c:3572
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Suprimeix el paràsit de la imatge"
 
-#: ../app/core/gimpimage.c:4220
+#: ../app/core/gimpimage.c:4283
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Afegeix una capa"
 
-#: ../app/core/gimpimage.c:4270 ../app/core/gimpimage.c:4290
+#: ../app/core/gimpimage.c:4335 ../app/core/gimpimage.c:4355
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Suprimeix la capa"
 
-#: ../app/core/gimpimage.c:4284
+#: ../app/core/gimpimage.c:4349
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Suprimeix la selecció flotant"
 
-#: ../app/core/gimpimage.c:4449
+#: ../app/core/gimpimage.c:4514
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Afegeix un canal"
 
-#: ../app/core/gimpimage.c:4487 ../app/core/gimpimage.c:4500
+#: ../app/core/gimpimage.c:4552 ../app/core/gimpimage.c:4565
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Suprimeix el canal"
 
-#: ../app/core/gimpimage.c:4554
+#: ../app/core/gimpimage.c:4619
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Afegeix un camí"
 
-#: ../app/core/gimpimage.c:4585
+#: ../app/core/gimpimage.c:4650
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Suprimeix el camí"
@@ -12716,48 +12741,48 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Transforma els elements"
 
-#: ../app/core/gimpimage-merge.c:134
+#: ../app/core/gimpimage-merge.c:135
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Fusiona les capes visibles"
 
-#: ../app/core/gimpimage-merge.c:197
+#: ../app/core/gimpimage-merge.c:198
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Aplana la imatge"
 
-#: ../app/core/gimpimage-merge.c:219
+#: ../app/core/gimpimage-merge.c:220
 msgid "Cannot flatten an image without any visible layer."
 msgstr "No es pot aplanar la imatge si no hi ha una capa visible."
 
-#: ../app/core/gimpimage-merge.c:262
+#: ../app/core/gimpimage-merge.c:263
 msgid "Cannot merge down to a layer group."
 msgstr "No s'ha pogut fusionar cap avall el grup de capes."
 
-#: ../app/core/gimpimage-merge.c:269
+#: ../app/core/gimpimage-merge.c:270
 msgid "The layer to merge down to is locked."
 msgstr "La capa que es vol fusionar cap avall està bloquejada."
 
-#: ../app/core/gimpimage-merge.c:281
+#: ../app/core/gimpimage-merge.c:282
 msgid "There is no visible layer to merge down to."
 msgstr "No hi ha cap capa visible per fusionar cap avall."
 
-#: ../app/core/gimpimage-merge.c:291
+#: ../app/core/gimpimage-merge.c:292
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Fusiona cap avall"
 
-#: ../app/core/gimpimage-merge.c:319
+#: ../app/core/gimpimage-merge.c:320
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Fusiona el grup de capes"
 
-#: ../app/core/gimpimage-merge.c:372
+#: ../app/core/gimpimage-merge.c:373
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Fusiona els camins visibles"
 
-#: ../app/core/gimpimage-merge.c:408
+#: ../app/core/gimpimage-merge.c:409
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "No hi ha prou camins visibles per a una fusió. Almenys n'hi ha d'haver dos."
@@ -12955,13 +12980,13 @@ msgstr "La capa no es pot apujar més."
 msgid "Layer cannot be lowered more."
 msgstr "La capa no es pot abaixar més."
 
-#: ../app/core/gimplayer.c:722 ../app/core/gimplayer.c:1712
+#: ../app/core/gimplayer.c:716 ../app/core/gimplayer.c:1712
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "Màscara de %s"
 
-#: ../app/core/gimplayer.c:761
+#: ../app/core/gimplayer.c:755
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -13265,7 +13290,7 @@ msgstr "Selecció flotant"
 msgid "Floated Layer"
 msgstr "Capa que flota"
 
-#: ../app/core/gimpsettings.c:154
+#: ../app/core/gimpsettings.c:151
 #, c-format
 msgid "Last used: %s"
 msgstr ""
@@ -14672,10 +14697,8 @@ msgid "Maximum _new image size:"
 msgstr "Mida màxima de les imatges _noves:"
 
 #: ../app/dialogs/preferences-dialog.c:1083
-#, fuzzy
-#| msgid "Number of _processors to use:"
 msgid "Number of _threads to use:"
-msgstr "Nombre de _processadors a utilitzar:"
+msgstr "Nombre de _fils a utilitzar:"
 
 #: ../app/dialogs/preferences-dialog.c:1088
 msgid ""
@@ -15445,7 +15468,7 @@ msgstr "Resolució del monitor"
 
 # Quim: pixels surt a preferencies-graella i hauria de ser en minúscoles
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2327 ../app/display/gimpcursorview.c:210
+#: ../app/dialogs/preferences-dialog.c:2327 ../app/display/gimpcursorview.c:215
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "Píxels"
@@ -16188,32 +16211,24 @@ msgid "Line spacing"
 msgstr "Interlineat"
 
 #: ../app/display/display-enums.c:307
-#, fuzzy
-#| msgid "Aspect ratio"
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Relació d'aspecte"
 
 #: ../app/display/display-enums.c:308
-#, fuzzy
-#| msgid "Width"
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "Amplada"
 
 #: ../app/display/display-enums.c:309
-#, fuzzy
-#| msgid "Height"
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "Alçada"
 
 #: ../app/display/display-enums.c:310
-#, fuzzy
-#| msgid "Size"
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
-msgstr "Dimensions"
+msgstr "Mida"
 
 #: ../app/display/display-enums.c:403
 msgctxt "transform-handle-mode"
@@ -16245,51 +16260,51 @@ msgctxt "vector-mode"
 msgid "Move"
 msgstr "Mou"
 
-#: ../app/display/gimpcursorview.c:220 ../app/display/gimpcursorview.c:226
-#: ../app/display/gimpcursorview.c:245 ../app/display/gimpcursorview.c:251
-#: ../app/display/gimpcursorview.c:270 ../app/display/gimpcursorview.c:276
-#: ../app/display/gimpcursorview.c:292 ../app/display/gimpcursorview.c:299
-#: ../app/display/gimpcursorview.c:693 ../app/display/gimpcursorview.c:695
-#: ../app/display/gimpcursorview.c:697 ../app/display/gimpcursorview.c:699
-#: ../app/display/gimpcursorview.c:818 ../app/display/gimpcursorview.c:819
-#: ../app/display/gimpcursorview.c:820 ../app/display/gimpcursorview.c:821
+#: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:231
+#: ../app/display/gimpcursorview.c:250 ../app/display/gimpcursorview.c:256
+#: ../app/display/gimpcursorview.c:275 ../app/display/gimpcursorview.c:281
+#: ../app/display/gimpcursorview.c:297 ../app/display/gimpcursorview.c:304
+#: ../app/display/gimpcursorview.c:706 ../app/display/gimpcursorview.c:708
+#: ../app/display/gimpcursorview.c:710 ../app/display/gimpcursorview.c:712
+#: ../app/display/gimpcursorview.c:791 ../app/display/gimpcursorview.c:792
+#: ../app/display/gimpcursorview.c:793 ../app/display/gimpcursorview.c:794
 #: ../app/widgets/gimpcolorframe.c:613 ../app/widgets/gimpcolorframe.c:903
 msgid "n/a"
 msgstr "n/a"
 
-#: ../app/display/gimpcursorview.c:223 ../app/display/gimpcursorview.c:248
-#: ../app/display/gimpcursorview.c:273
+#: ../app/display/gimpcursorview.c:228 ../app/display/gimpcursorview.c:253
+#: ../app/display/gimpcursorview.c:278
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:229 ../app/display/gimpcursorview.c:254
-#: ../app/display/gimpcursorview.c:279
+#: ../app/display/gimpcursorview.c:234 ../app/display/gimpcursorview.c:259
+#: ../app/display/gimpcursorview.c:284
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 msgid "Y"
 msgstr "Y"
 
 #. Units
-#: ../app/display/gimpcursorview.c:235
+#: ../app/display/gimpcursorview.c:240
 msgid "Units"
 msgstr "Unitats"
 
 #. Selection Bounding Box
-#: ../app/display/gimpcursorview.c:260
+#: ../app/display/gimpcursorview.c:265
 msgid "Selection Bounding Box"
 msgstr "Selecció capsa contenidora"
 
 #. Width
-#: ../app/display/gimpcursorview.c:296
+#: ../app/display/gimpcursorview.c:301
 msgid "W"
 msgstr "W"
 
 #. Height
-#: ../app/display/gimpcursorview.c:303
+#: ../app/display/gimpcursorview.c:308
 msgid "H"
 msgstr "H"
 
-#: ../app/display/gimpcursorview.c:332
+#: ../app/display/gimpcursorview.c:337
 msgid "_Sample Merged"
 msgstr "Mo_stra fusionada"
 
@@ -16542,16 +16557,12 @@ msgstr "Feu clic i arrossegueu per a moure tots els punts"
 
 #: ../app/display/gimptoolhandlegrid.c:849
 #: ../app/display/gimptooltransformgrid.c:1719
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move"
-msgstr "Feu clic i arrossegueu per moure aquest punt"
+msgstr "Feu clic i arrossegueu per moure"
 
 #: ../app/display/gimptoolhandlegrid.c:852
-#, fuzzy
-#| msgid "Drag to create a line"
 msgid "Click-Drag to rotate and scale"
-msgstr "Arrossegueu per a crear una línia"
+msgstr "Feu clic i arrossegueu per girar i ajustar la mida"
 
 #: ../app/display/gimptoolhandlegrid.c:855
 #, fuzzy
@@ -16561,10 +16572,8 @@ msgstr "Arrossegueu per a crear una línia"
 
 #: ../app/display/gimptoolhandlegrid.c:858
 #: ../app/display/gimptooltransformgrid.c:1707
-#, fuzzy
-#| msgid "Click-Drag to change the shape of the curve"
 msgid "Click-Drag to change perspective"
-msgstr "Feu clic i arrossegueu per a canviar la forma de la corba"
+msgstr "Feu clic i arrossegueu per a perspectiva"
 
 #: ../app/display/gimptoolhandlegrid.c:869
 #, fuzzy
@@ -16585,18 +16594,15 @@ msgid "Click-Drag to remove this handle"
 msgstr "Feu clic i arrossegueu per a moure el tirador"
 
 #: ../app/display/gimptoolline.c:218 ../app/display/gimptoolline.c:347
-#, fuzzy
-#| msgctxt "dash-preset"
-#| msgid "Line"
 msgid "Line: "
 msgstr "Línia: "
 
-#: ../app/display/gimptoolline.c:879 ../app/tools/gimppainttool.c:655
+#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:658
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per a angles restringits"
 
-#: ../app/display/gimptoolline.c:880
+#: ../app/display/gimptoolline.c:882
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s per moure la línia sencera"
@@ -16782,10 +16788,8 @@ msgid "Rectangle: "
 msgstr "Rectangle: "
 
 #: ../app/display/gimptoolrectangle.c:2136
-#, fuzzy
-#| msgid "Position:"
 msgid "Position: "
-msgstr "Càrrec: "
+msgstr "Posició: "
 
 #: ../app/display/gimptooltransformgrid.c:1712
 #: ../app/display/gimptooltransformgrid.c:1717
@@ -17018,329 +17022,334 @@ msgctxt "layer-composite-mode"
 msgid "Source in"
 msgstr "Origen dins"
 
-#: ../app/operations/operations-enums.c:152
+#: ../app/operations/operations-enums.c:153
 msgctxt "layer-mode"
 msgid "Normal (legacy)"
 msgstr "Normal (antic)"
 
-#: ../app/operations/operations-enums.c:153
+#: ../app/operations/operations-enums.c:154
 msgctxt "layer-mode"
 msgid "Dissolve"
 msgstr "Dissol"
 
-#: ../app/operations/operations-enums.c:154
+#: ../app/operations/operations-enums.c:155
 msgctxt "layer-mode"
 msgid "Behind (legacy)"
 msgstr "Darrere (antic)"
 
-#: ../app/operations/operations-enums.c:155
+#: ../app/operations/operations-enums.c:156
 msgctxt "layer-mode"
 msgid "Multiply (legacy)"
 msgstr "Multiplica (antic)"
 
-#: ../app/operations/operations-enums.c:156
+#: ../app/operations/operations-enums.c:157
 msgctxt "layer-mode"
 msgid "Screen (legacy)"
 msgstr "Pantalla (antiga)"
 
-#: ../app/operations/operations-enums.c:157
+#: ../app/operations/operations-enums.c:158
 msgctxt "layer-mode"
 msgid "Old broken Overlay"
 msgstr "Antiga superposició trencada"
 
-#: ../app/operations/operations-enums.c:158
+#: ../app/operations/operations-enums.c:159
 msgctxt "layer-mode"
 msgid "Difference (legacy)"
 msgstr "Diferència (antiga)"
 
-#: ../app/operations/operations-enums.c:159
+#: ../app/operations/operations-enums.c:160
 msgctxt "layer-mode"
 msgid "Addition (legacy)"
 msgstr "Addició (antiga)"
 
-#: ../app/operations/operations-enums.c:160
+#: ../app/operations/operations-enums.c:161
 msgctxt "layer-mode"
 msgid "Subtract (legacy)"
 msgstr "Sostreu (antiga)"
 
-#: ../app/operations/operations-enums.c:161
+#: ../app/operations/operations-enums.c:162
 msgctxt "layer-mode"
 msgid "Darken only (legacy)"
 msgstr "Només enfosqueix (antic)"
 
-#: ../app/operations/operations-enums.c:162
+#: ../app/operations/operations-enums.c:163
 msgctxt "layer-mode"
 msgid "Lighten only (legacy)"
 msgstr "Només aclareix (antic)"
 
-#: ../app/operations/operations-enums.c:163
+#: ../app/operations/operations-enums.c:164
 msgctxt "layer-mode"
 msgid "Hue (HSV) (legacy)"
 msgstr "To (HSV) (antic)"
 
-#: ../app/operations/operations-enums.c:164
+#: ../app/operations/operations-enums.c:165
 msgctxt "layer-mode"
 msgid "Saturation (HSV) (legacy)"
 msgstr "Saturació (HSV) (antiga)"
 
-#: ../app/operations/operations-enums.c:165
+#: ../app/operations/operations-enums.c:166
 msgctxt "layer-mode"
 msgid "Color (HSL) (legacy)"
 msgstr "Color (HSV) (antic)"
 
-#: ../app/operations/operations-enums.c:166
+#: ../app/operations/operations-enums.c:167
 msgctxt "layer-mode"
 msgid "Value (HSV) (legacy)"
 msgstr "Valor (HSV) (antic)"
 
-#: ../app/operations/operations-enums.c:167
+#: ../app/operations/operations-enums.c:168
 msgctxt "layer-mode"
 msgid "Divide (legacy)"
 msgstr "Divisió (antiga)"
 
-#: ../app/operations/operations-enums.c:168
+#: ../app/operations/operations-enums.c:169
 msgctxt "layer-mode"
 msgid "Dodge (legacy)"
 msgstr "Esvaeix (antic)"
 
-#: ../app/operations/operations-enums.c:169
+#: ../app/operations/operations-enums.c:170
 msgctxt "layer-mode"
 msgid "Burn (legacy)"
 msgstr "Crema (antic)"
 
-#: ../app/operations/operations-enums.c:170
+#: ../app/operations/operations-enums.c:171
 msgctxt "layer-mode"
 msgid "Hard light (legacy)"
 msgstr "Llum forta (antiga)"
 
-#: ../app/operations/operations-enums.c:171
+#: ../app/operations/operations-enums.c:172
 msgctxt "layer-mode"
 msgid "Soft light (legacy)"
 msgstr "Llum suau (antiga)"
 
-#: ../app/operations/operations-enums.c:172
+#: ../app/operations/operations-enums.c:173
 msgctxt "layer-mode"
 msgid "Grain extract (legacy)"
 msgstr "Extracció de gra (antiga)"
 
-#: ../app/operations/operations-enums.c:173
+#: ../app/operations/operations-enums.c:174
 msgctxt "layer-mode"
 msgid "Grain merge (legacy)"
 msgstr "Fusiona el gra (antiga)"
 
-#: ../app/operations/operations-enums.c:174
+#: ../app/operations/operations-enums.c:175
 msgctxt "layer-mode"
 msgid "Color erase (legacy)"
 msgstr "Color (HSV) (antic)"
 
-#: ../app/operations/operations-enums.c:175
+#: ../app/operations/operations-enums.c:176
 msgctxt "layer-mode"
 msgid "Overlay"
 msgstr "Superposició"
 
-#: ../app/operations/operations-enums.c:176
+#: ../app/operations/operations-enums.c:177
 msgctxt "layer-mode"
 msgid "Hue (LCH)"
 msgstr "To (LCH)"
 
-#: ../app/operations/operations-enums.c:177
+#: ../app/operations/operations-enums.c:178
 msgctxt "layer-mode"
 msgid "Chroma (LCH)"
 msgstr "Crominància (LCH)"
 
-#: ../app/operations/operations-enums.c:178
+#: ../app/operations/operations-enums.c:179
 msgctxt "layer-mode"
 msgid "Color (LCH)"
 msgstr "Color (LCH)"
 
-#: ../app/operations/operations-enums.c:179
+#: ../app/operations/operations-enums.c:180
 msgctxt "layer-mode"
 msgid "Lightness (LCH)"
 msgstr "Lluminositat (LCH)"
 
-#: ../app/operations/operations-enums.c:180
+#: ../app/operations/operations-enums.c:181
 msgctxt "layer-mode"
 msgid "Normal"
 msgstr "Normal"
 
-#: ../app/operations/operations-enums.c:181
+#: ../app/operations/operations-enums.c:182
 msgctxt "layer-mode"
 msgid "Behind"
 msgstr "Darrere"
 
-#: ../app/operations/operations-enums.c:182
+#: ../app/operations/operations-enums.c:183
 msgctxt "layer-mode"
 msgid "Multiply"
 msgstr "Multiplica"
 
-#: ../app/operations/operations-enums.c:183
+#: ../app/operations/operations-enums.c:184
 msgctxt "layer-mode"
 msgid "Screen"
 msgstr "Pantalla"
 
-#: ../app/operations/operations-enums.c:184
+#: ../app/operations/operations-enums.c:185
 msgctxt "layer-mode"
 msgid "Difference"
 msgstr "Diferència"
 
-#: ../app/operations/operations-enums.c:185
+#: ../app/operations/operations-enums.c:186
 msgctxt "layer-mode"
 msgid "Addition"
 msgstr "Afegeix"
 
-#: ../app/operations/operations-enums.c:186
+#: ../app/operations/operations-enums.c:187
 msgctxt "layer-mode"
 msgid "Subtract"
 msgstr "Sostreu"
 
-#: ../app/operations/operations-enums.c:187
+#: ../app/operations/operations-enums.c:188
 msgctxt "layer-mode"
 msgid "Darken only"
 msgstr "Només enfosqueix"
 
-#: ../app/operations/operations-enums.c:188
+#: ../app/operations/operations-enums.c:189
 msgctxt "layer-mode"
 msgid "Lighten only"
 msgstr "Només aclareix"
 
-#: ../app/operations/operations-enums.c:189
+#: ../app/operations/operations-enums.c:190
 msgctxt "layer-mode"
 msgid "Hue (HSV)"
 msgstr "To (HSV)"
 
-#: ../app/operations/operations-enums.c:190
+#: ../app/operations/operations-enums.c:191
 msgctxt "layer-mode"
 msgid "Saturation (HSV)"
 msgstr "Saturació (HSV)"
 
-#: ../app/operations/operations-enums.c:191
+#: ../app/operations/operations-enums.c:192
 msgctxt "layer-mode"
 msgid "Color (HSL)"
 msgstr "Color (HSL)"
 
-#: ../app/operations/operations-enums.c:192
+#: ../app/operations/operations-enums.c:193
 msgctxt "layer-mode"
 msgid "Value (HSV)"
 msgstr "Valor (HSV)"
 
-#: ../app/operations/operations-enums.c:193
+#: ../app/operations/operations-enums.c:194
 msgctxt "layer-mode"
 msgid "Divide"
 msgstr "Divideix"
 
-#: ../app/operations/operations-enums.c:194
+#: ../app/operations/operations-enums.c:195
 msgctxt "layer-mode"
 msgid "Dodge"
 msgstr "Esvaeix"
 
-#: ../app/operations/operations-enums.c:195
+#: ../app/operations/operations-enums.c:196
 msgctxt "layer-mode"
 msgid "Burn"
 msgstr "Crema"
 
-#: ../app/operations/operations-enums.c:196
+#: ../app/operations/operations-enums.c:197
 msgctxt "layer-mode"
 msgid "Hard light"
 msgstr "Llum forta"
 
-#: ../app/operations/operations-enums.c:197
+#: ../app/operations/operations-enums.c:198
 msgctxt "layer-mode"
 msgid "Soft light"
 msgstr "Llum suau"
 
-#: ../app/operations/operations-enums.c:198
+#: ../app/operations/operations-enums.c:199
 msgctxt "layer-mode"
 msgid "Grain extract"
 msgstr "Extreu el gra"
 
-#: ../app/operations/operations-enums.c:199
+#: ../app/operations/operations-enums.c:200
 msgctxt "layer-mode"
 msgid "Grain merge"
 msgstr "Fusiona el gra"
 
-#: ../app/operations/operations-enums.c:200
+#: ../app/operations/operations-enums.c:201
 msgctxt "layer-mode"
 msgid "Vivid light"
 msgstr "Llum forta"
 
-#: ../app/operations/operations-enums.c:201
+#: ../app/operations/operations-enums.c:202
 msgctxt "layer-mode"
 msgid "Pin light"
 msgstr "Llum focal"
 
-#: ../app/operations/operations-enums.c:202
+#: ../app/operations/operations-enums.c:203
 msgctxt "layer-mode"
 msgid "Linear light"
 msgstr "Llum lineal"
 
-#: ../app/operations/operations-enums.c:203
+#: ../app/operations/operations-enums.c:204
 #, fuzzy
 msgctxt "layer-mode"
 msgid "Hard mix"
 msgstr "Llum forta"
 
-#: ../app/operations/operations-enums.c:204
+#: ../app/operations/operations-enums.c:205
 msgctxt "layer-mode"
 msgid "Exclusion"
 msgstr "Exclusió"
 
-#: ../app/operations/operations-enums.c:205
+#: ../app/operations/operations-enums.c:206
 msgctxt "layer-mode"
 msgid "Linear burn"
 msgstr "Crema lineal"
 
-#: ../app/operations/operations-enums.c:206
+#: ../app/operations/operations-enums.c:207
 msgctxt "layer-mode"
 msgid "Luma/Luminance darken only"
 msgstr ""
 
-#: ../app/operations/operations-enums.c:207
+#: ../app/operations/operations-enums.c:208
 #, fuzzy
 msgctxt "layer-mode"
 msgid "Luma/Luminance lighten only"
 msgstr "Només aclareix"
 
-#: ../app/operations/operations-enums.c:208
+#: ../app/operations/operations-enums.c:209
 msgctxt "layer-mode"
 msgid "Luminance"
 msgstr "Lluminositat"
 
-#: ../app/operations/operations-enums.c:209
+#: ../app/operations/operations-enums.c:210
 msgctxt "layer-mode"
 msgid "Color erase"
 msgstr "Esborra el color"
 
-#: ../app/operations/operations-enums.c:210
+#: ../app/operations/operations-enums.c:211
 msgctxt "layer-mode"
 msgid "Erase"
 msgstr "Esborra"
 
-#: ../app/operations/operations-enums.c:211
+#: ../app/operations/operations-enums.c:212
 msgctxt "layer-mode"
 msgid "Merge"
 msgstr "Barreja"
 
-#: ../app/operations/operations-enums.c:212
+#: ../app/operations/operations-enums.c:213
 msgctxt "layer-mode"
 msgid "Split"
 msgstr "Divideix"
 
-#: ../app/operations/operations-enums.c:213
+#: ../app/operations/operations-enums.c:214
+msgctxt "layer-mode"
+msgid "Pass through"
+msgstr ""
+
+#: ../app/operations/operations-enums.c:215
 msgctxt "layer-mode"
 msgid "Replace"
 msgstr "Reemplaça"
 
-#: ../app/operations/operations-enums.c:214
+#: ../app/operations/operations-enums.c:216
 msgctxt "layer-mode"
 msgid "Anti erase"
 msgstr "Antigoma d'esborrar"
 
-#: ../app/operations/operations-enums.c:242
+#: ../app/operations/operations-enums.c:244
 msgctxt "layer-mode-group"
 msgid "Default"
 msgstr "Predeterminat"
 
-#: ../app/operations/operations-enums.c:243
+#: ../app/operations/operations-enums.c:245
 msgctxt "layer-mode-group"
 msgid "Legacy"
 msgstr "Antic"
@@ -17386,32 +17395,6 @@ msgstr "Groc-blau"
 msgid "Preserve Luminosity"
 msgstr "Conserva la lluminositat"
 
-#: ../app/operations/gimpcolorizeconfig.c:85
-#: ../app/operations/gimpcolorizeconfig.c:86
-#: ../app/operations/gimphuesaturationconfig.c:101
-#: ../app/operations/gimphuesaturationconfig.c:102
-msgid "Hue"
-msgstr "To"
-
-#: ../app/operations/gimpcolorizeconfig.c:91
-#: ../app/operations/gimpcolorizeconfig.c:92
-#: ../app/operations/gimphuesaturationconfig.c:107
-#: ../app/operations/gimphuesaturationconfig.c:108
-msgid "Saturation"
-msgstr "Saturació"
-
-#: ../app/operations/gimpcolorizeconfig.c:97
-#: ../app/operations/gimpcolorizeconfig.c:98
-#: ../app/operations/gimphuesaturationconfig.c:113
-#: ../app/operations/gimphuesaturationconfig.c:114
-msgid "Lightness"
-msgstr "Lluminositat"
-
-#: ../app/operations/gimpcolorizeconfig.c:107
-#: ../app/operations/gimpcolorizeconfig.c:108
-msgid "Color"
-msgstr "Color"
-
 #: ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:106
 msgid "The affected channel"
@@ -17433,6 +17416,27 @@ msgstr "Error d'anàlisi, no s'han trobat 2 enters"
 #: ../app/operations/gimpcurvesconfig.c:673
 msgid "Writing curves file failed: "
 msgstr "L'escriptura del fitxer de corbes ha fallat:"
+
+#: ../app/operations/gimphuesaturationconfig.c:101
+#: ../app/operations/gimphuesaturationconfig.c:102
+#: ../app/operations/gimpoperationcolorize.c:92
+#: ../app/operations/gimpoperationcolorize.c:93
+msgid "Hue"
+msgstr "To"
+
+#: ../app/operations/gimphuesaturationconfig.c:107
+#: ../app/operations/gimphuesaturationconfig.c:108
+#: ../app/operations/gimpoperationcolorize.c:98
+#: ../app/operations/gimpoperationcolorize.c:99
+msgid "Saturation"
+msgstr "Saturació"
+
+#: ../app/operations/gimphuesaturationconfig.c:113
+#: ../app/operations/gimphuesaturationconfig.c:114
+#: ../app/operations/gimpoperationcolorize.c:104
+#: ../app/operations/gimpoperationcolorize.c:105
+msgid "Lightness"
+msgstr "Lluminositat"
 
 #: ../app/operations/gimphuesaturationconfig.c:119
 #: ../app/operations/gimphuesaturationconfig.c:120
@@ -17497,9 +17501,14 @@ msgstr "Omple la posició original de la regió contenidora amb un sol color"
 msgid "Adjust color distribution"
 msgstr "Ajusta la distribució de colors"
 
-#: ../app/operations/gimpoperationcolorize.c:64
+#: ../app/operations/gimpoperationcolorize.c:85
 msgid "Colorize the image"
 msgstr "Acoloreix la imatge"
+
+#: ../app/operations/gimpoperationcolorize.c:114
+#: ../app/operations/gimpoperationcolorize.c:115
+msgid "Color"
+msgstr "Color"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
@@ -17641,11 +17650,11 @@ msgstr "Goma d'esborrar"
 msgid "Anti erase"
 msgstr "Antigoma d'esborrar"
 
-#: ../app/paint/gimpheal.c:106 ../app/tools/gimphealtool.c:53
+#: ../app/paint/gimpheal.c:115 ../app/tools/gimphealtool.c:53
 msgid "Heal"
 msgstr "Cicatritza"
 
-#: ../app/paint/gimpheal.c:145
+#: ../app/paint/gimpheal.c:155
 msgid "Healing does not operate on indexed layers."
 msgstr "La cicatrització no funciona en capes indexades."
 
@@ -17885,14 +17894,38 @@ msgstr "Llapis"
 msgid "Perspective Clone"
 msgstr "Clona en perspectiva"
 
-#: ../app/paint/gimpsmudge.c:85 ../app/tools/gimpsmudgetool.c:54
+#: ../app/paint/gimpsmudge.c:85 ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge"
 msgstr "Taca amb el dit"
 
-#: ../app/paint/gimpsmudgeoptions.c:66
+#: ../app/paint/gimpsmudgeoptions.c:70
 msgctxt "smudge-tool"
 msgid "Rate"
 msgstr "Velocitat"
+
+#: ../app/paint/gimpsmudgeoptions.c:71
+msgid "The strength of smudging"
+msgstr ""
+
+#: ../app/paint/gimpsmudgeoptions.c:77
+#, fuzzy
+#| msgid "Flow"
+msgctxt "smudge-tool"
+msgid "Flow"
+msgstr "Flux"
+
+#: ../app/paint/gimpsmudgeoptions.c:78
+msgid "The amount of brush color to blend"
+msgstr ""
+
+#: ../app/paint/gimpsmudgeoptions.c:84
+msgctxt "smudge-tool"
+msgid "No erasing effect"
+msgstr ""
+
+#: ../app/paint/gimpsmudgeoptions.c:85
+msgid "Never decrease alpha of existing pixels"
+msgstr ""
 
 #: ../app/paint/gimpsourcecore.c:239
 msgid "Set a source image first."
@@ -17943,44 +17976,44 @@ msgstr "Fixat"
 msgid "Combine Masks"
 msgstr "Combina les màscares"
 
-#: ../app/pdb/color-cmds.c:86 ../app/pdb/drawable-color-cmds.c:86
+#: ../app/pdb/color-cmds.c:85 ../app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Brillantor-contrast"
 
-#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:600
+#: ../app/pdb/color-cmds.c:146 ../app/pdb/drawable-color-cmds.c:604
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Nivells"
 
 # Quim: posterize = reduir el num colors
-#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:670
+#: ../app/pdb/color-cmds.c:245 ../app/pdb/drawable-color-cmds.c:674
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Redueix el nombre de colors"
 
-#: ../app/pdb/color-cmds.c:285 ../app/pdb/color-cmds.c:326
+#: ../app/pdb/color-cmds.c:284 ../app/pdb/color-cmds.c:325
 #: ../app/pdb/drawable-color-cmds.c:325
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Dessatura"
 
-#: ../app/pdb/color-cmds.c:388
+#: ../app/pdb/color-cmds.c:387
 msgid "Invert"
 msgstr "Inverteix"
 
-#: ../app/pdb/color-cmds.c:435 ../app/pdb/color-cmds.c:483
+#: ../app/pdb/color-cmds.c:434 ../app/pdb/color-cmds.c:482
 #: ../app/pdb/drawable-color-cmds.c:235 ../app/pdb/drawable-color-cmds.c:283
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "Corbes"
 
-#: ../app/pdb/color-cmds.c:537 ../app/pdb/drawable-color-cmds.c:140
+#: ../app/pdb/color-cmds.c:536 ../app/pdb/drawable-color-cmds.c:139
 msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "Balanç de color"
 
-#: ../app/pdb/color-cmds.c:583 ../app/pdb/drawable-color-cmds.c:186
+#: ../app/pdb/color-cmds.c:584 ../app/pdb/drawable-color-cmds.c:187
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Acoloreix"
@@ -17989,7 +18022,7 @@ msgstr "Acoloreix"
 msgid "Hue-Saturation"
 msgstr "To-Saturació"
 
-#: ../app/pdb/color-cmds.c:780 ../app/pdb/drawable-color-cmds.c:716
+#: ../app/pdb/color-cmds.c:780 ../app/pdb/drawable-color-cmds.c:720
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Llindar"
@@ -18008,7 +18041,7 @@ msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "To-Saturació"
 
-#: ../app/pdb/drawable-color-cmds.c:540
+#: ../app/pdb/drawable-color-cmds.c:542
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Inverteix"
@@ -18439,7 +18472,7 @@ msgstr ""
 "La funció «%s» s'ha cridat amb el valor «%s» per al paràmetre «%s» (núm. %d, "
 "de tipus %s). Aquest valor no és permès."
 
-#: ../app/pdb/image-cmds.c:2310
+#: ../app/pdb/image-cmds.c:2339
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -18858,11 +18891,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Cancel·lada"
 
-#: ../app/plug-in/gimppluginmanager.c:255
+#: ../app/plug-in/gimppluginmanager.c:232
 msgid "Plug-in Interpreters"
 msgstr "Intèrprets de connectors"
 
-#: ../app/plug-in/gimppluginmanager.c:261
+#: ../app/plug-in/gimppluginmanager.c:238
 msgid "Plug-in Environment"
 msgstr "Entorn del connector"
 
@@ -18873,7 +18906,7 @@ msgstr "Entorn del connector"
 msgid "Failed to run plug-in \"%s\""
 msgstr "No s'ha pogut executar el connector «%s»"
 
-#: ../app/plug-in/gimppluginmanager-file-procedure.c:203
+#: ../app/plug-in/gimppluginmanager-file-procedure.c:208
 msgid "Unknown file type"
 msgstr "Tipus de fitxer desconegut"
 
@@ -19114,7 +19147,7 @@ msgstr "_Saturació"
 msgid "R_eset Color"
 msgstr "_Inicialitza el color"
 
-#: ../app/propgui/gimppropgui-spiral.c:211
+#: ../app/propgui/gimppropgui-spiral.c:217
 msgid "Spiral: "
 msgstr ""
 
@@ -19459,7 +19492,7 @@ msgstr "Profunditat màxima"
 msgid "Threshold"
 msgstr "Llindar blanc i negre"
 
-#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:379
+#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:380
 msgid "Edit this gradient"
 msgstr "Edita el degradat actual"
 
@@ -20089,12 +20122,12 @@ msgstr "%s: commuta entre original i filtrat"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: commuta entre horitzontal i vertical"
 
-#: ../app/tools/gimpfiltertool.c:1272 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1274 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importa la configuració de «%s»"
 
-#: ../app/tools/gimpfiltertool.c:1274 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1276 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Exporta la configuració de «%s»"
@@ -20317,8 +20350,8 @@ msgctxt "command"
 msgid "Fuzzy Select"
 msgstr "Selecció de regió contigua"
 
-#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:531
-#: ../app/tools/gimpgegltool.c:532 ../app/tools/gimpoperationtool.c:131
+#: ../app/tools/gimpgegltool.c:78 ../app/tools/gimpgegltool.c:532
+#: ../app/tools/gimpgegltool.c:533 ../app/tools/gimpoperationtool.c:131
 msgid "GEGL Operation"
 msgstr "Operació GEGL"
 
@@ -20330,7 +20363,7 @@ msgstr "Eina GEGL: Utilitza una operació GEGL arbitrària"
 msgid "_GEGL Operation..."
 msgstr "Operació _GEGL..."
 
-#: ../app/tools/gimpgegltool.c:477
+#: ../app/tools/gimpgegltool.c:478
 msgid "Select an operation from the list above"
 msgstr "Seleccioneu una operació de la llista anterior"
 
@@ -20623,7 +20656,7 @@ msgstr "Afegeix guies"
 
 #: ../app/tools/gimpmeasuretool.c:526 ../app/tools/gimpmeasuretool.c:679
 #: ../app/tools/gimpmeasuretool.c:735 ../app/tools/gimpmeasuretool.c:763
-#: ../app/tools/gimppainttool.c:664
+#: ../app/tools/gimppainttool.c:696
 msgid "pixels"
 msgstr "píxels"
 
@@ -20833,11 +20866,11 @@ msgstr "Bloca la mida del pinzell a l'escala"
 msgid "Fade Options"
 msgstr "Opcions de l'esvaïment"
 
-#: ../app/tools/gimppaintoptions-gui.c:369
+#: ../app/tools/gimppaintoptions-gui.c:370
 msgid "Color Options"
 msgstr "Opcions del color"
 
-#: ../app/tools/gimppaintoptions-gui.c:621
+#: ../app/tools/gimppaintoptions-gui.c:622
 msgid "Link to brush default"
 msgstr "Enllaça amb el valor per defecte del pinzell"
 
@@ -20858,7 +20891,7 @@ msgstr "%s per capturar un color"
 msgid "Cannot paint on layer groups."
 msgstr "No es pot pintar en grups de capes."
 
-#: ../app/tools/gimppainttool.c:716
+#: ../app/tools/gimppainttool.c:745
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s per a una línia recta"
@@ -21247,20 +21280,20 @@ msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
 msgstr "Inclina horitzontalment %-3.3g i verticalment %-3.3g"
 
-#: ../app/tools/gimpsmudgetool.c:55
+#: ../app/tools/gimpsmudgetool.c:56
 msgid "Smudge Tool: Smudge selectively using a brush"
 msgstr ""
 "Eina Taca amb el dit: passa el dit damunt de la pintura utilitzant un pinzell"
 
-#: ../app/tools/gimpsmudgetool.c:56
+#: ../app/tools/gimpsmudgetool.c:57
 msgid "_Smudge"
 msgstr "Taca amb el d_it"
 
-#: ../app/tools/gimpsmudgetool.c:75
+#: ../app/tools/gimpsmudgetool.c:76
 msgid "Click to smudge"
 msgstr "Feu clic per a passar el dit"
 
-#: ../app/tools/gimpsmudgetool.c:76
+#: ../app/tools/gimpsmudgetool.c:77
 msgid "Click to smudge the line"
 msgstr "Feu clic per a passar el dit per sobre la línia"
 
@@ -21791,17 +21824,17 @@ msgstr "Transformació deformant"
 msgid "Please add some warp strokes first."
 msgstr "Abans heu d'afegir traços per deformar."
 
-#: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1126
+#: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1127
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Component el marc %d"
 
-#: ../app/tools/gimpwarptool.c:1105 ../app/tools/gimpwarptool.c:1134
+#: ../app/tools/gimpwarptool.c:1105 ../app/tools/gimpwarptool.c:1135
 #, c-format
 msgid "Frame %d"
 msgstr "Marc %d"
 
-#: ../app/tools/gimpwarptool.c:1143
+#: ../app/tools/gimpwarptool.c:1144
 msgid "Frame"
 msgstr "Marc"
 
@@ -23009,7 +23042,7 @@ msgstr "Recompte:"
 msgid "Percentile:"
 msgstr "Percentil:"
 
-#: ../app/widgets/gimphistogrameditor.c:165
+#: ../app/widgets/gimphistogrameditor.c:160
 msgid "Histogram channel"
 msgstr "Escala de l'histograma"
 
