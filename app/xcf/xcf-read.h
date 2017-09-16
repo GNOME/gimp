@@ -45,5 +45,9 @@ guint   xcf_read_component (XcfInfo  *info,
                             guint8   *data,
                             gint      count);
 
+void    xcf_read_from_be   (gint      bpc,
+                            guint8   *data,
+                            gint      count);
+
 
 #endif  /* __XCF_READ_H__ */

@@ -186,6 +186,15 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
     }                                                                  \
   } G_STMT_END
 
+#define xcf_write_component_check_error(info, bpc, data, count) G_STMT_START { \
+  xcf_write_component (info, bpc, data, count, &tmp_error);          \
+  if (tmp_error)                                                     \
+    {                                                                \
+      g_propagate_error (error, tmp_error);                          \
+      return FALSE;                                                  \
+    }                                                                \
+  } G_STMT_END
+
 #define xcf_write_prop_type_check_error(info, prop_type) G_STMT_START { \
   guint32 _prop_int32 = prop_type;                                      \
   xcf_write_int32_check_error (info, &_prop_int32, 1);                  \
@@ -1628,7 +1637,17 @@ xcf_save_tile (XcfInfo        *info,
   gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  xcf_write_int8_check_error (info, tile_data, tile_size);
+  if (info->file_version <= 11)
+    {
+      xcf_write_int8_check_error (info, tile_data, tile_size);
+    }
+  else
+    {
+      gint n_components = babl_format_get_n_components (format);
+
+      xcf_write_component_check_error (info, bpp / n_components, tile_data,
+                                       tile_size / n_components);
+    }
 
   return TRUE;
 }
@@ -1650,6 +1669,14 @@ xcf_save_tile_rle (XcfInfo        *info,
 
   gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  if (info->file_version >= 12)
+    {
+      gint n_components = babl_format_get_n_components (format);
+
+      xcf_write_to_be (bpp / n_components, tile_data,
+                       tile_size / n_components);
+    }
 
   for (i = 0; i < bpp; i++)
     {
@@ -1778,6 +1805,14 @@ xcf_save_tile_zlib (XcfInfo        *info,
 
   gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  if (info->file_version >= 12)
+    {
+      gint n_components = babl_format_get_n_components (format);
+
+      xcf_write_to_be (bpp / n_components, tile_data,
+                       tile_size / n_components);
+    }
 
   /* allocate deflate state */
   strm.zalloc = Z_NULL;

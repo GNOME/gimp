@@ -225,3 +225,44 @@ xcf_read_component (XcfInfo *info,
 
   return 0;
 }
+
+void
+xcf_read_from_be (gint    bpc,
+                  guint8 *data,
+                  gint    count)
+{
+  gint i;
+
+  switch (bpc)
+    {
+    case 8:
+      break;
+
+    case 16:
+      {
+        guint16 *d = (guint16 *) data;
+
+        for (i = 0; i < count; i++)
+          d[i] = g_ntohs (d[i]);
+      }
+      break;
+
+    case 32:
+      {
+        guint32 *d = (guint32 *) data;
+
+        for (i = 0; i < count; i++)
+          d[i] = g_ntohl (d[i]);
+      }
+      break;
+
+    case 64:
+      {
+        guint64 *d = (guint64 *) data;
+
+        for (i = 0; i < count; i++)
+          d[i] = GINT64_FROM_BE (d[i]);
+      }
+      break;
+    }
+}

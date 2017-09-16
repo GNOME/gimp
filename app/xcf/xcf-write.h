@@ -56,5 +56,9 @@ guint   xcf_write_component   (XcfInfo        *info,
                                gint            count,
                                GError        **error);
 
+void    xcf_write_to_be       (gint            bpc,
+                               guint8         *data,
+                               gint            count);
+
 
 #endif  /* __XCF_WRITE_H__ */
