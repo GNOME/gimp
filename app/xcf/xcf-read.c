@@ -33,6 +33,42 @@
 
 
 guint
+xcf_read_int8 (XcfInfo *info,
+               guint8  *data,
+               gint     count)
+{
+  gsize bytes_read;
+
+  g_input_stream_read_all (info->input, data, count,
+                           &bytes_read, NULL, NULL);
+
+  info->cp += bytes_read;
+
+  return bytes_read;
+}
+
+guint
+xcf_read_int16 (XcfInfo *info,
+                guint16 *data,
+                gint     count)
+{
+  guint total = 0;
+
+  if (count > 0)
+    {
+      total += xcf_read_int8 (info, (guint8 *) data, count * 2);
+
+      while (count--)
+        {
+          *data = g_ntohs (*data);
+          data++;
+        }
+    }
+
+  return total;
+}
+
+guint
 xcf_read_int32 (XcfInfo *info,
                 guint32 *data,
                 gint     count)
@@ -46,6 +82,27 @@ xcf_read_int32 (XcfInfo *info,
       while (count--)
         {
           *data = g_ntohl (*data);
+          data++;
+        }
+    }
+
+  return total;
+}
+
+guint
+xcf_read_int64 (XcfInfo *info,
+                guint64 *data,
+                gint     count)
+{
+  guint total = 0;
+
+  if (count > 0)
+    {
+      total += xcf_read_int8 (info, (guint8 *) data, count * 8);
+
+      while (count--)
+        {
+          *data = GINT64_FROM_BE (*data);
           data++;
         }
     }
@@ -99,21 +156,6 @@ xcf_read_float (XcfInfo *info,
 }
 
 guint
-xcf_read_int8 (XcfInfo *info,
-               guint8  *data,
-               gint     count)
-{
-  gsize bytes_read;
-
-  g_input_stream_read_all (info->input, data, count,
-                           &bytes_read, NULL, NULL);
-
-  info->cp += bytes_read;
-
-  return bytes_read;
-}
-
-guint
 xcf_read_string (XcfInfo  *info,
                  gchar   **data,
                  gint      count)
@@ -155,4 +197,31 @@ xcf_read_string (XcfInfo  *info,
     }
 
   return total;
+}
+
+guint
+xcf_read_component (XcfInfo *info,
+                    gint     bpc,
+                    guint8  *data,
+                    gint     count)
+{
+  switch (bpc)
+    {
+    case 8:
+      return xcf_read_int8 (info, data, count);
+
+    case 16:
+      return xcf_read_int16 (info, (guint16 *) data, count);
+
+    case 32:
+      return xcf_read_int32 (info, (guint32 *) data, count);
+
+    case 64:
+      return xcf_read_int64 (info, (guint64 *) data, count);
+
+    default:
+      break;
+    }
+
+  return 0;
 }

@@ -19,21 +19,31 @@
 #define __XCF_READ_H__
 
 
-guint   xcf_read_int32  (XcfInfo  *info,
-                         guint32  *data,
-                         gint      count);
-guint   xcf_read_offset (XcfInfo  *info,
-                         goffset  *data,
-                         gint      count);
-guint   xcf_read_float  (XcfInfo  *info,
-                         gfloat   *data,
-                         gint      count);
-guint   xcf_read_int8   (XcfInfo  *info,
-                         guint8   *data,
-                         gint      count);
-guint   xcf_read_string (XcfInfo  *info,
-                         gchar   **data,
-                         gint      count);
+guint   xcf_read_int8      (XcfInfo  *info,
+                            guint8   *data,
+                            gint      count);
+guint   xcf_read_int16     (XcfInfo  *info,
+                            guint16  *data,
+                            gint      count);
+guint   xcf_read_int32     (XcfInfo  *info,
+                            guint32  *data,
+                            gint      count);
+guint   xcf_read_int64     (XcfInfo  *info,
+                            guint64  *data,
+                            gint      count);
+guint   xcf_read_offset    (XcfInfo  *info,
+                            goffset  *data,
+                            gint      count);
+guint   xcf_read_float     (XcfInfo  *info,
+                            gfloat   *data,
+                            gint      count);
+guint   xcf_read_string    (XcfInfo  *info,
+                            gchar   **data,
+                            gint      count);
+guint   xcf_read_component (XcfInfo  *info,
+                            gint      bpc,
+                            guint8   *data,
+                            gint      count);
 
 
 #endif  /* __XCF_READ_H__ */

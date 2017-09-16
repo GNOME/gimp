@@ -30,6 +30,56 @@
 
 
 guint
+xcf_write_int8 (XcfInfo       *info,
+                const guint8  *data,
+                gint           count,
+                GError       **error)
+{
+  GError *my_error = NULL;
+  gsize   bytes_written;
+
+  if (! g_output_stream_write_all (info->output, data, count,
+                                   &bytes_written, NULL, &my_error))
+    {
+      g_propagate_prefixed_error (error, my_error,
+                                  _("Error writing XCF: "));
+    }
+
+  info->cp += bytes_written;
+
+  return bytes_written;
+}
+
+guint
+xcf_write_int16 (XcfInfo        *info,
+                 const guint16  *data,
+                 gint            count,
+                 GError        **error)
+{
+  GError *tmp_error = NULL;
+  gint    i;
+
+  if (count > 0)
+    {
+      for (i = 0; i < count; i++)
+        {
+          guint16 tmp = g_htons (data[i]);
+
+          xcf_write_int8 (info, (const guint8 *) &tmp, 2, &tmp_error);
+
+          if (tmp_error)
+            {
+              g_propagate_error (error, tmp_error);
+
+              return i * 2;
+            }
+        }
+    }
+
+  return count * 2;
+}
+
+guint
 xcf_write_int32 (XcfInfo        *info,
                  const guint32  *data,
                  gint            count,
@@ -56,6 +106,35 @@ xcf_write_int32 (XcfInfo        *info,
     }
 
   return count * 4;
+}
+
+guint
+xcf_write_int64 (XcfInfo        *info,
+                 const guint64  *data,
+                 gint            count,
+                 GError        **error)
+{
+  GError *tmp_error = NULL;
+  gint    i;
+
+  if (count > 0)
+    {
+      for (i = 0; i < count; i++)
+        {
+          guint64 tmp = GINT64_TO_BE (data[i]);
+
+          xcf_write_int8 (info, (const guint8 *) &tmp, 8, &tmp_error);
+
+          if (tmp_error)
+            {
+              g_propagate_error (error, tmp_error);
+
+              return i * 8;
+            }
+        }
+    }
+
+  return count * 8;
 }
 
 guint
@@ -127,27 +206,6 @@ xcf_write_float (XcfInfo       *info,
 }
 
 guint
-xcf_write_int8 (XcfInfo       *info,
-                const guint8  *data,
-                gint           count,
-                GError       **error)
-{
-  GError *my_error = NULL;
-  gsize   bytes_written;
-
-  if (! g_output_stream_write_all (info->output, data, count,
-                                   &bytes_written, NULL, &my_error))
-    {
-      g_propagate_prefixed_error (error, my_error,
-                                  _("Error writing XCF: "));
-    }
-
-  info->cp += bytes_written;
-
-  return bytes_written;
-}
-
-guint
 xcf_write_string (XcfInfo  *info,
                   gchar   **data,
                   gint      count,
@@ -187,4 +245,34 @@ xcf_write_string (XcfInfo  *info,
     }
 
   return total;
+}
+
+guint
+xcf_write_component (XcfInfo       *info,
+                     gint           bpc,
+                     const guint8  *data,
+                     gint           count,
+                     GError       **error)
+{
+  switch (bpc)
+    {
+    case 8:
+      return xcf_write_int8 (info, data, count, error);
+
+    case 16:
+      return xcf_write_int16 (info, (const guint16 *) data, count, error);
+
+    case 32:
+      return xcf_write_int32 (info, (const guint32 *) data, count, error);
+
+    case 64:
+      return xcf_write_int64 (info, (const guint64 *) data, count, error);
+
+    default:
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Error writing XCF: unsupported BPC when writing pixel: %d"),
+                   bpc);
+    }
+
+  return 0;
 }
