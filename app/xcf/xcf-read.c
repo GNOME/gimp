@@ -207,16 +207,16 @@ xcf_read_component (XcfInfo *info,
 {
   switch (bpc)
     {
-    case 8:
+    case 1:
       return xcf_read_int8 (info, data, count);
 
-    case 16:
+    case 2:
       return xcf_read_int16 (info, (guint16 *) data, count);
 
-    case 32:
+    case 4:
       return xcf_read_int32 (info, (guint32 *) data, count);
 
-    case 64:
+    case 8:
       return xcf_read_int64 (info, (guint64 *) data, count);
 
     default:
@@ -235,10 +235,10 @@ xcf_read_from_be (gint    bpc,
 
   switch (bpc)
     {
-    case 8:
+    case 1:
       break;
 
-    case 16:
+    case 2:
       {
         guint16 *d = (guint16 *) data;
 
@@ -247,7 +247,7 @@ xcf_read_from_be (gint    bpc,
       }
       break;
 
-    case 32:
+    case 4:
       {
         guint32 *d = (guint32 *) data;
 
@@ -256,7 +256,7 @@ xcf_read_from_be (gint    bpc,
       }
       break;
 
-    case 64:
+    case 8:
       {
         guint64 *d = (guint64 *) data;
 

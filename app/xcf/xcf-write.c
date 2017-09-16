@@ -256,16 +256,16 @@ xcf_write_component (XcfInfo       *info,
 {
   switch (bpc)
     {
-    case 8:
+    case 1:
       return xcf_write_int8 (info, data, count, error);
 
-    case 16:
+    case 2:
       return xcf_write_int16 (info, (const guint16 *) data, count, error);
 
-    case 32:
+    case 4:
       return xcf_write_int32 (info, (const guint32 *) data, count, error);
 
-    case 64:
+    case 8:
       return xcf_write_int64 (info, (const guint64 *) data, count, error);
 
     default:
@@ -286,10 +286,10 @@ xcf_write_to_be (gint    bpc,
 
   switch (bpc)
     {
-    case 8:
+    case 1:
       break;
 
-    case 16:
+    case 2:
       {
         guint16 *d = (guint16 *) data;
 
@@ -298,7 +298,7 @@ xcf_write_to_be (gint    bpc,
       }
       break;
 
-    case 32:
+    case 4:
       {
         guint32 *d = (guint32 *) data;
 
@@ -307,7 +307,7 @@ xcf_write_to_be (gint    bpc,
       }
       break;
 
-    case 64:
+    case 8:
       {
         guint64 *d = (guint64 *) data;
 
