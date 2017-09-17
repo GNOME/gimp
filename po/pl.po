@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-05 17:59+0200\n"
-"PO-Revision-Date: 2017-09-05 18:00+0200\n"
+"POT-Creation-Date: 2017-09-17 16:44+0200\n"
+"PO-Revision-Date: 2017-09-17 16:45+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3038,7 +3038,7 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
 #: ../app/tools/gimpforegroundselecttool.c:307 ../app/tools/gimptexttool.c:1579
-#: ../app/tools/gimptransformtool.c:1199 ../app/widgets/gimpactionview.c:669
+#: ../app/tools/gimptransformtool.c:1205 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
@@ -6887,7 +6887,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1198
+#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1204
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "_Przywróć"
@@ -11739,17 +11739,17 @@ msgstr "Nie można wypełniać na obszarze pustego kanału."
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1781
+#: ../app/core/gimpchannel.c:1785
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1832
+#: ../app/core/gimpchannel.c:1836
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1923 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1927 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -11885,7 +11885,7 @@ msgstr "Błąd podczas wczytywania „%s”: "
 msgid "Error loading '%s'"
 msgstr "Błąd podczas wczytywania „%s”"
 
-#: ../app/core/gimpdatafactory.c:917 ../app/xcf/xcf.c:436
+#: ../app/core/gimpdatafactory.c:917 ../app/xcf/xcf.c:437
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Nie można otworzyć „%s” do odczytania: "
@@ -15184,7 +15184,7 @@ msgid "Monitor Resolution"
 msgstr "Rozdzielczość monitora"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2327 ../app/display/gimpcursorview.c:210
+#: ../app/dialogs/preferences-dialog.c:2327 ../app/display/gimpcursorview.c:215
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "piksele"
@@ -15973,51 +15973,51 @@ msgctxt "vector-mode"
 msgid "Move"
 msgstr "Przesunięcie"
 
-#: ../app/display/gimpcursorview.c:220 ../app/display/gimpcursorview.c:226
-#: ../app/display/gimpcursorview.c:245 ../app/display/gimpcursorview.c:251
-#: ../app/display/gimpcursorview.c:270 ../app/display/gimpcursorview.c:276
-#: ../app/display/gimpcursorview.c:292 ../app/display/gimpcursorview.c:299
-#: ../app/display/gimpcursorview.c:693 ../app/display/gimpcursorview.c:695
-#: ../app/display/gimpcursorview.c:697 ../app/display/gimpcursorview.c:699
-#: ../app/display/gimpcursorview.c:818 ../app/display/gimpcursorview.c:819
-#: ../app/display/gimpcursorview.c:820 ../app/display/gimpcursorview.c:821
+#: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:231
+#: ../app/display/gimpcursorview.c:250 ../app/display/gimpcursorview.c:256
+#: ../app/display/gimpcursorview.c:275 ../app/display/gimpcursorview.c:281
+#: ../app/display/gimpcursorview.c:297 ../app/display/gimpcursorview.c:304
+#: ../app/display/gimpcursorview.c:706 ../app/display/gimpcursorview.c:708
+#: ../app/display/gimpcursorview.c:710 ../app/display/gimpcursorview.c:712
+#: ../app/display/gimpcursorview.c:791 ../app/display/gimpcursorview.c:792
+#: ../app/display/gimpcursorview.c:793 ../app/display/gimpcursorview.c:794
 #: ../app/widgets/gimpcolorframe.c:613 ../app/widgets/gimpcolorframe.c:903
 msgid "n/a"
 msgstr "Nie dotyczy"
 
-#: ../app/display/gimpcursorview.c:223 ../app/display/gimpcursorview.c:248
-#: ../app/display/gimpcursorview.c:273
+#: ../app/display/gimpcursorview.c:228 ../app/display/gimpcursorview.c:253
+#: ../app/display/gimpcursorview.c:278
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "X"
 msgstr "Poziomo"
 
-#: ../app/display/gimpcursorview.c:229 ../app/display/gimpcursorview.c:254
-#: ../app/display/gimpcursorview.c:279
+#: ../app/display/gimpcursorview.c:234 ../app/display/gimpcursorview.c:259
+#: ../app/display/gimpcursorview.c:284
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 msgid "Y"
 msgstr "Pionowo"
 
 #. Units
-#: ../app/display/gimpcursorview.c:235
+#: ../app/display/gimpcursorview.c:240
 msgid "Units"
 msgstr "Jednostki"
 
 #. Selection Bounding Box
-#: ../app/display/gimpcursorview.c:260
+#: ../app/display/gimpcursorview.c:265
 msgid "Selection Bounding Box"
 msgstr "Pole ograniczające zaznaczenie"
 
 #. Width
-#: ../app/display/gimpcursorview.c:296
+#: ../app/display/gimpcursorview.c:301
 msgid "W"
 msgstr "Szer."
 
 #. Height
-#: ../app/display/gimpcursorview.c:303
+#: ../app/display/gimpcursorview.c:308
 msgid "H"
 msgstr "Wys."
 
-#: ../app/display/gimpcursorview.c:332
+#: ../app/display/gimpcursorview.c:337
 msgid "_Sample Merged"
 msgstr "Próbkowanie w_szystkich warstw"
 
@@ -16152,7 +16152,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:438 ../app/tools/gimpfiltertool.c:275
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1430 ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimptransformtool.c:1436 ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
@@ -17101,32 +17101,6 @@ msgstr "Żółty-niebieski"
 msgid "Preserve Luminosity"
 msgstr "Zachowanie luminancji"
 
-#: ../app/operations/gimpcolorizeconfig.c:85
-#: ../app/operations/gimpcolorizeconfig.c:86
-#: ../app/operations/gimphuesaturationconfig.c:101
-#: ../app/operations/gimphuesaturationconfig.c:102
-msgid "Hue"
-msgstr "Barwa"
-
-#: ../app/operations/gimpcolorizeconfig.c:91
-#: ../app/operations/gimpcolorizeconfig.c:92
-#: ../app/operations/gimphuesaturationconfig.c:107
-#: ../app/operations/gimphuesaturationconfig.c:108
-msgid "Saturation"
-msgstr "Nasycenie"
-
-#: ../app/operations/gimpcolorizeconfig.c:97
-#: ../app/operations/gimpcolorizeconfig.c:98
-#: ../app/operations/gimphuesaturationconfig.c:113
-#: ../app/operations/gimphuesaturationconfig.c:114
-msgid "Lightness"
-msgstr "Jasność"
-
-#: ../app/operations/gimpcolorizeconfig.c:107
-#: ../app/operations/gimpcolorizeconfig.c:108
-msgid "Color"
-msgstr "Kolor"
-
 #: ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:106
 msgid "The affected channel"
@@ -17148,6 +17122,27 @@ msgstr "Błąd podczas przetwarzania, nie odnaleziono dwóch liczb całkowitych"
 #: ../app/operations/gimpcurvesconfig.c:673
 msgid "Writing curves file failed: "
 msgstr "Zapisanie pliku krzywych się nie powiodło: "
+
+#: ../app/operations/gimphuesaturationconfig.c:101
+#: ../app/operations/gimphuesaturationconfig.c:102
+#: ../app/operations/gimpoperationcolorize.c:92
+#: ../app/operations/gimpoperationcolorize.c:93
+msgid "Hue"
+msgstr "Barwa"
+
+#: ../app/operations/gimphuesaturationconfig.c:107
+#: ../app/operations/gimphuesaturationconfig.c:108
+#: ../app/operations/gimpoperationcolorize.c:98
+#: ../app/operations/gimpoperationcolorize.c:99
+msgid "Saturation"
+msgstr "Nasycenie"
+
+#: ../app/operations/gimphuesaturationconfig.c:113
+#: ../app/operations/gimphuesaturationconfig.c:114
+#: ../app/operations/gimpoperationcolorize.c:104
+#: ../app/operations/gimpoperationcolorize.c:105
+msgid "Lightness"
+msgstr "Jasność"
 
 #: ../app/operations/gimphuesaturationconfig.c:119
 #: ../app/operations/gimphuesaturationconfig.c:120
@@ -17210,9 +17205,14 @@ msgstr "Wypełnienie pierwotnego położenia klatki prostym kolorem"
 msgid "Adjust color distribution"
 msgstr "Modyfikuje kolory"
 
-#: ../app/operations/gimpoperationcolorize.c:64
+#: ../app/operations/gimpoperationcolorize.c:85
 msgid "Colorize the image"
 msgstr "Barwi obraz"
+
+#: ../app/operations/gimpoperationcolorize.c:114
+#: ../app/operations/gimpoperationcolorize.c:115
+msgid "Color"
+msgstr "Kolor"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
@@ -17674,43 +17674,43 @@ msgstr "Stałe"
 msgid "Combine Masks"
 msgstr "Łączy maski"
 
-#: ../app/pdb/color-cmds.c:86 ../app/pdb/drawable-color-cmds.c:86
+#: ../app/pdb/color-cmds.c:85 ../app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Jasność-kontrast"
 
-#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:604
+#: ../app/pdb/color-cmds.c:146 ../app/pdb/drawable-color-cmds.c:604
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Poziomy"
 
-#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:674
+#: ../app/pdb/color-cmds.c:245 ../app/pdb/drawable-color-cmds.c:674
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Redukcja kolorów"
 
-#: ../app/pdb/color-cmds.c:285 ../app/pdb/color-cmds.c:326
+#: ../app/pdb/color-cmds.c:284 ../app/pdb/color-cmds.c:325
 #: ../app/pdb/drawable-color-cmds.c:325
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Desaturacja"
 
-#: ../app/pdb/color-cmds.c:388
+#: ../app/pdb/color-cmds.c:387
 msgid "Invert"
 msgstr "Odwrócenie"
 
-#: ../app/pdb/color-cmds.c:435 ../app/pdb/color-cmds.c:483
+#: ../app/pdb/color-cmds.c:434 ../app/pdb/color-cmds.c:482
 #: ../app/pdb/drawable-color-cmds.c:235 ../app/pdb/drawable-color-cmds.c:283
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "Krzywe"
 
-#: ../app/pdb/color-cmds.c:537 ../app/pdb/drawable-color-cmds.c:140
+#: ../app/pdb/color-cmds.c:536 ../app/pdb/drawable-color-cmds.c:139
 msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "Balans kolorów"
 
-#: ../app/pdb/color-cmds.c:583 ../app/pdb/drawable-color-cmds.c:186
+#: ../app/pdb/color-cmds.c:584 ../app/pdb/drawable-color-cmds.c:187
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Barwienie"
@@ -19204,7 +19204,7 @@ msgstr "Kliknięcie i przeciągnięcie rysuje gradient"
 #: ../app/tools/gimpblendtool.c:258 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1438 ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimptransformtool.c:1444 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
@@ -20384,7 +20384,7 @@ msgstr "_Przesunięcie"
 msgid "There is no path to move."
 msgstr "Brak ścieżki do przeniesienia."
 
-#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1465
+#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1471
 msgid "The active path's position is locked."
 msgstr "Położenie aktywnej ścieżki jest zablokowane."
 
@@ -21284,27 +21284,27 @@ msgstr "Zaznaczenie nie przecina się z warstwą."
 msgid "Transform Step"
 msgstr "Krok przekształcenia"
 
-#: ../app/tools/gimptransformtool.c:1425
+#: ../app/tools/gimptransformtool.c:1431
 msgid "There is no layer to transform."
 msgstr "Brak warstwy do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1432
+#: ../app/tools/gimptransformtool.c:1438
 msgid "The active layer's position and size are locked."
 msgstr "Położenie i wymiary aktywnej warstwy są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:1445
+#: ../app/tools/gimptransformtool.c:1451
 msgid "There is no selection to transform."
 msgstr "Brak zaznaczenia do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1458
+#: ../app/tools/gimptransformtool.c:1464
 msgid "There is no path to transform."
 msgstr "Brak ścieżki do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1463
+#: ../app/tools/gimptransformtool.c:1469
 msgid "The active path's strokes are locked."
 msgstr "Krzywe aktywnej ścieżki są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:1467
+#: ../app/tools/gimptransformtool.c:1473
 msgid "The active path has no strokes."
 msgstr "Aktywna ścieżka nie ma krzywych."
 
@@ -23510,40 +23510,40 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Nieokreślone"
 
-#: ../app/xcf/xcf.c:112 ../app/xcf/xcf.c:183
+#: ../app/xcf/xcf.c:113 ../app/xcf/xcf.c:184
 msgid "GIMP XCF image"
 msgstr "Obraz XCF programu GIMP"
 
-#: ../app/xcf/xcf.c:270 ../app/xcf/xcf.c:357
+#: ../app/xcf/xcf.c:271 ../app/xcf/xcf.c:358
 msgid "Memory Stream"
 msgstr "Strumień pamięci"
 
-#: ../app/xcf/xcf.c:281
+#: ../app/xcf/xcf.c:282
 #, c-format
 msgid "Opening '%s'"
 msgstr "Otwieranie „%s”"
 
-#: ../app/xcf/xcf.c:322
+#: ../app/xcf/xcf.c:323
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Błąd XCF: nieobsługiwana wersja pliku XCF %d"
 
-#: ../app/xcf/xcf.c:380
+#: ../app/xcf/xcf.c:381
 #, c-format
 msgid "Saving '%s'"
 msgstr "Zapisywanie „%s”"
 
-#: ../app/xcf/xcf.c:387
+#: ../app/xcf/xcf.c:388
 #, c-format
 msgid "Closing '%s'"
 msgstr "Zamykanie „%s”"
 
-#: ../app/xcf/xcf.c:394
+#: ../app/xcf/xcf.c:395
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/xcf/xcf.c:488
+#: ../app/xcf/xcf.c:489
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Błąd podczas tworzenia „%s”: "
@@ -23599,7 +23599,7 @@ msgstr ""
 "XCF nie przechowywała poprawnie indeksowanych palet\n"
 "kolorów. Nastąpi zastąpienie palety odcieniami szarości."
 
-#: ../app/xcf/xcf-read.c:147
+#: ../app/xcf/xcf-read.c:189
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Nieprawidłowy ciąg UTF-8 w pliku XCF"
 
@@ -23607,9 +23607,16 @@ msgstr "Nieprawidłowy ciąg UTF-8 w pliku XCF"
 msgid "Could not seek in XCF file: "
 msgstr "Nie można przeglądać pliku XCF: "
 
-#: ../app/xcf/xcf-write.c:142
+#: ../app/xcf/xcf-write.c:45
 msgid "Error writing XCF: "
 msgstr "Błąd podczas zapisywania pliku XCF: "
+
+#: ../app/xcf/xcf-write.c:273
+#, c-format
+msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
+msgstr ""
+"Błąd podczas zapisywania pliku XCF: nieobsługiwane BPC podczas zapisywania "
+"piksela: %d"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
