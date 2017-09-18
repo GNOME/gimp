@@ -876,6 +876,12 @@ gimp_group_layer_convert_type (GimpLayer        *layer,
       gimp_image_undo_push_group_layer_convert (image, NULL, group);
     }
 
+  /*  Force allocation of a same-size projection, in case the group
+   *  layer is empty
+   */
+  private->reallocate_width  = gimp_item_get_width  (GIMP_ITEM (group));
+  private->reallocate_height = gimp_item_get_height (GIMP_ITEM (group));
+
   /*  Need to temporarily set the projectable's format to the new
    *  values so the projection will create its tiles with the right
    *  depth
@@ -897,6 +903,9 @@ gimp_group_layer_convert_type (GimpLayer        *layer,
 
   /*  reset, the actual format is right now  */
   private->convert_format = NULL;
+
+  private->reallocate_width  = 0;
+  private->reallocate_height = 0;
 }
 
 static GeglNode *
