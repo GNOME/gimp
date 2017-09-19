@@ -991,7 +991,8 @@ gimp_transform_tool_commit (GimpTransformTool *tr_tool)
   if (tr_tool->gui)
     gimp_tool_gui_hide (tr_tool->gui);
 
-  if (gimp_matrix3_is_identity (&tr_tool->transform))
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix &&
+      gimp_matrix3_is_identity (&tr_tool->transform))
     {
       /* No need to commit an identity transformation! */
       return;
