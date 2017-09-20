@@ -89,8 +89,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.10/gexiv2-0.10.4.tar.xz",
-                    "sha256": "ad8d31afdc0a1932cc44c4cfcea449497c0d0b445c0ad2f9735707b306e71ca4"
+                    "url": "https://download.gnome.org/sources/gexiv2/0.10/gexiv2-0.10.6.tar.xz",
+                    "sha256": "132788919667254b42c026ab39ab3c3a5be59be8575c05fa4b371ca8aed55825"
                 }
             ]
         },
