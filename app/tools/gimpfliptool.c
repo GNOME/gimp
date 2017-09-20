@@ -56,6 +56,9 @@
 
 static GimpDisplay         * gimp_flip_tool_has_image     (GimpTool           *tool,
                                                            GimpImage          *image);
+static gboolean              gimp_flip_tool_initialize    (GimpTool           *tool,
+                                                           GimpDisplay        *display,
+                                                           GError            **error);
 static void                  gimp_flip_tool_modifier_key  (GimpTool           *tool,
                                                            GdkModifierType     key,
                                                            gboolean            press,
@@ -117,6 +120,7 @@ gimp_flip_tool_class_init (GimpFlipToolClass *klass)
   GimpTransformToolClass *trans_class     = GIMP_TRANSFORM_TOOL_CLASS (klass);
 
   tool_class->has_image      = gimp_flip_tool_has_image;
+  tool_class->initialize     = gimp_flip_tool_initialize;
   tool_class->modifier_key   = gimp_flip_tool_modifier_key;
   tool_class->oper_update    = gimp_flip_tool_oper_update;
   tool_class->cursor_update  = gimp_flip_tool_cursor_update;
@@ -153,6 +157,20 @@ gimp_flip_tool_has_image (GimpTool  *tool,
 {
   /* avoid comitting, and hence flipping, when changing tools */
   return NULL;
+}
+
+static gboolean
+gimp_flip_tool_initialize (GimpTool     *tool,
+                           GimpDisplay  *display,
+                           GError      **error)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+  /* let GimpTransformTool take control over the draw tool while it's active */
+  if (gimp_draw_tool_is_active (draw_tool))
+    gimp_draw_tool_stop (draw_tool);
+
+  return GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error);
 }
 
 static void
