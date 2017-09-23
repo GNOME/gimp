@@ -10,7 +10,7 @@
     "rename-icon": "gimp",
     "finish-args": ["--share=ipc", "--socket=x11", "--filesystem=host", "--filesystem=xdg-config/GIMP", "--share=network", "--socket=system-bus", "--socket=session-bus" ],
     "tags": ["dev"],
-    "desktop-file-name-prefix": "(Dev) ",
+    "desktop-file-name-prefix": "(Nightly) ",
     "build-options" : {
         "cflags": "-O2 -g",
         "cxxflags": "-O2 -g",
@@ -277,7 +277,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/babl"
+                    "url": "git://git.gnome.org/babl",
+                    "branch": "master"
                 }
             ]
         },
@@ -288,7 +289,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/gegl"
+                    "url": "git://git.gnome.org/gegl",
+                    "branch": "master"
                 }
             ]
         },
@@ -309,7 +311,8 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "git://git.gnome.org/gimp"
+                    "url": "git://git.gnome.org/gimp",
+                    "branch": "master"
                 }
             ]
         }
