@@ -74,6 +74,18 @@ Or if you already have a build:
 
 >  "desktop-file-name-prefix": "(Dev) ",
 
+* For a stable release, set top "branch":"stable", and inside the
+  "gimp", "babl" and "gegl" modules, set "branch" to the git tag (ex:
+  "GIMP_2_10"), and "commit" to the git commit hash for this tag.
+
+* For a development release, set top "branch":"dev", and inside the
+  "gimp", "babl" and "gegl" modules, set "branch" to the git tag (ex:
+  "GIMP_2_9_6"), and "commit" to the git commit hash for this tag.
+
+* For a nightly build, set top "branch":"master", and inside the
+  "gimp", "babl" and "gegl" modules, set "branch" to "master", and
+  remove any "commit" line.
+
 * Run flatpak builder with the following commands:
 
 > flatpak-builder --arch=x86_64 gimp-flatpak-build-x86-64 org.gimp.GIMP.json
@@ -100,6 +112,9 @@ Or if you already have a build:
   Note: do not use `flatpak build-export` which is an internal low-level
   command. See https://github.com/flatpak/flatpak/issues/824
 
+  The export commands will output a commit hash. Save it for further
+  verification.
+
 * Test it locally with:
 
 > flatpak --user remote-add --no-gpg-verify gimp /path/to/repo
@@ -109,6 +124,14 @@ Or remotely:
 > flatpak --user remote-add --no-gpg-verify gimp http://example.com/repo
 
 > flatpak --user install gimp org.gimp.GIMP
+
+  Once installed check that the commit hash outputted at export is the
+  same as the one from the local command:
+
+> flatpak list --user -d
+
+  You can also run your flatpaked GIMP:
+
 > flatpak run org.gimp.GIMP
 
   Also an entry "(Dev) GNU Image Manipulation Software" should now be
