@@ -1,6 +1,20 @@
-diff -ru webkitgtk-2.4.11/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp webkitgtk-2.4.11.raw.patched/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp
+diff -ru webkitgtk-2.4.11/Source/WebCore/platform/gtk/GtkClickCounter.cpp webkitgtk-2.4.11-patched/Source/WebCore/platform/gtk/GtkClickCounter.cpp
+--- webkitgtk-2.4.11/Source/WebCore/platform/gtk/GtkClickCounter.cpp	2016-04-10 08:48:37.000000000 +0200
++++ webkitgtk-2.4.11-patched/Source/WebCore/platform/gtk/GtkClickCounter.cpp	2017-09-21 01:59:09.359098267 +0200
+@@ -85,8 +85,8 @@
+     guint32 eventTime = getEventTime(event);
+ 
+     if ((event->type == GDK_2BUTTON_PRESS || event->type == GDK_3BUTTON_PRESS)
+-        || ((abs(buttonEvent->x - m_previousClickPoint.x()) < doubleClickDistance)
+-            && (abs(buttonEvent->y - m_previousClickPoint.y()) < doubleClickDistance)
++        || ((fabs(buttonEvent->x - m_previousClickPoint.x()) < doubleClickDistance)
++            && (fabs(buttonEvent->y - m_previousClickPoint.y()) < doubleClickDistance)
+             && (eventTime - m_previousClickTime < static_cast<guint>(doubleClickTime))
+             && (buttonEvent->button == m_previousClickButton)))
+         m_currentClickCount++;
+diff -ru webkitgtk-2.4.11/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp webkitgtk-2.4.11-patched/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp
 --- webkitgtk-2.4.11/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp	2016-04-10 08:48:37.000000000 +0200
-+++ webkitgtk-2.4.11.raw.patched/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp	2017-01-30 23:43:13.427189343 +0100
++++ webkitgtk-2.4.11-patched/Source/WebCore/platform/gtk/RenderThemeGtk2.cpp	2017-09-21 01:57:56.114814372 +0200
 @@ -40,6 +40,7 @@
  #include "PaintInfo.h"
  #include "PlatformContextCairo.h"
