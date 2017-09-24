@@ -1266,7 +1266,7 @@ load_dialog (PopplerDocument  *doc,
   /* Since selecting none will be equivalent to selecting all, this is
    * only useful as a feedback for the default behavior of selecting all
    * pages. */
-  gimp_page_selector_select_all (selector);
+  gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
 
   g_signal_connect_swapped (selector, "activate",
                             G_CALLBACK (gtk_window_activate_default),
