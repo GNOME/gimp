@@ -269,15 +269,15 @@ query (void)
 
   static const GimpParamDef load2_args[] =
   {
-    { GIMP_PDB_INT32,     "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }"     },
-    { GIMP_PDB_STRING,    "filename",     "The name of the file to load"     },
-    { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 },
-    { GIMP_PDB_STRING,    "pdf-password", "The password to decrypt the encrypted PDF file"      }
+    { GIMP_PDB_INT32,     "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_STRING,    "filename",     "The name of the file to load"                                 },
+    { GIMP_PDB_STRING,    "raw-filename", "The name entered"                                             },
+    { GIMP_PDB_STRING,    "pdf-password", "The password to decrypt the encrypted PDF file"               },
+    { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)"                          },
+    { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load in the expected order"                      },
     /* XXX: Nice to have API at some point, but needs work
     { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
-    { GIMP_PDB_INT32,     "antialiasing", "Use anti-aliasing" },
-    { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
-    { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load"                }, */
+    { GIMP_PDB_INT32,     "antialiasing", "Use anti-aliasing" }, */
   };
 
   static const GimpParamDef load_return_vals[] =
@@ -305,7 +305,10 @@ query (void)
                           "Loads files in Adobe's Portable Document Format. "
                           "PDF is designed to be easily processed by a variety "
                           "of different platforms, and is a distant cousin of "
-                          "PostScript.",
+                          "PostScript.\n"
+                          "If the PDF document has multiple pages, only the first "
+                          "page will be loaded. Call file_pdf_load2() to load "
+                          "several pages as layers.",
                           "Nathan Summers",
                           "Nathan Summers",
                           "2005",
@@ -322,8 +325,9 @@ query (void)
                           "PDF is designed to be easily processed by a variety "
                           "of different platforms, and is a distant cousin of "
                           "PostScript.\n"
-                          "This procedure adds an extra parameter to "
-                          "file-pdf-load to open encrypted PDF.",
+                          "This procedure adds extra parameters to "
+                          "file-pdf-load to open encrypted PDF and to allow "
+                          "multiple page loading.",
                           "Nathan Summers, Lionel N.",
                           "Nathan Summers, Lionel N.",
                           "2005, 2017",
@@ -447,11 +451,59 @@ run (const gchar      *name,
 
               if (test_page)
                 {
-                  pages.n_pages = 1;
-                  pages.pages = g_new (gint, 1);
-                  pages.pages[0] = 0;
+                  if (strcmp (name, LOAD2_PROC) != 0)
+                    {
+                      /* For retrocompatibility, file-pdf-load always
+                       * just loads the first page. */
+                      pages.n_pages = 1;
+                      pages.pages = g_new (gint, 1);
+                      pages.pages[0] = 0;
 
-                  g_object_unref (test_page);
+                      g_object_unref (test_page);
+                    }
+                  else
+                    {
+                      gint i;
+                      gint doc_n_pages;
+
+                      doc_n_pages = poppler_document_get_n_pages (doc);
+                      /* The number of imported pages may be bigger than
+                       * the number of pages from the original document.
+                       * Indeed it is possible to duplicate some pages
+                       * by setting the same number several times in the
+                       * "pages" argument.
+                       * Not ceiling this value is *not* an error.
+                       */
+                      pages.n_pages = param[4].data.d_int32;
+                      if (pages.n_pages <= 0)
+                        {
+                          pages.n_pages = doc_n_pages;
+                          pages.pages = g_new (gint, pages.n_pages);
+                          for (i = 0; i < pages.n_pages; i++)
+                            pages.pages[i] = i;
+                        }
+                      else
+                        {
+                          pages.pages = g_new (gint, pages.n_pages);
+                          for (i = 0; i < pages.n_pages; i++)
+                            {
+                              if (param[5].data.d_int32array[i] >= doc_n_pages)
+                                {
+                                  status = GIMP_PDB_EXECUTION_ERROR;
+                                  g_set_error (&error, 0, 0,
+                                               _("PDF document '%s' has %d pages. Page %d is out of range."),
+                                               param[1].data.d_string, doc_n_pages,
+                                               param[5].data.d_int32array[i]);
+                                  break;
+                                }
+                              else
+                                {
+                                  pages.pages[i] = param[5].data.d_int32array[i];
+                                }
+                            }
+                        }
+                      g_object_unref (test_page);
+                    }
                 }
               else
                 {
