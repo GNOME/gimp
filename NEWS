@@ -43,7 +43,8 @@ File formats:
 
 PDB:
 
-  - Add file-pdf-load2 API to load a password-protected PDF.
+  - Add file-pdf-load2 API to load password-protected and/or multi-page
+    PDF files.
 
 Translations:
 
