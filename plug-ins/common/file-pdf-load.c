@@ -491,9 +491,16 @@ run (const gchar      *name,
                                 {
                                   status = GIMP_PDB_EXECUTION_ERROR;
                                   g_set_error (&error, 0, 0,
-                                               _("PDF document '%s' has %d pages. Page %d is out of range."),
-                                               param[1].data.d_string, doc_n_pages,
-                                               param[5].data.d_int32array[i]);
+                                               /* TRANSLATORS: first argument is file name,
+                                                * second is out-of-range page number, third is
+                                                * number of pages. Specify order as in English if needed.
+                                                */
+                                               ngettext ("PDF document '%1$s' has a single page. Page %2$d is out of range.",
+                                                         "PDF document '%1$s' has %3$d pages. Page %2$d is out of range.",
+                                                         doc_n_pages),
+                                               param[1].data.d_string,
+                                               param[5].data.d_int32array[i],
+                                               doc_n_pages);
                                   break;
                                 }
                               else
