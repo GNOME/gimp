@@ -36,7 +36,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-26 14:53+0200\n"
-"PO-Revision-Date: 2017-09-26 14:53+0200\n"
+"PO-Revision-Date: 2017-09-26 14:59+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -19139,7 +19139,7 @@ msgstr "Distribuisci il bordo sinistro degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:346
 msgid "Distribute horizontal centers of targets"
-msgstr "Distribuisci orizzontalmente i centri degli oggetti"
+msgstr "Distribuisci orizzontalmente il centro degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:350
 msgid "Distribute right edges of targets"
@@ -19155,7 +19155,7 @@ msgstr "Distribuisci il bordo in alto degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:366
 msgid "Distribute vertical centers of targets"
-msgstr "Distribuisci verticalmente i centri degli oggetti"
+msgstr "Distribuisci verticalmente il centro degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:370
 msgid "Distribute bottoms of targets"
