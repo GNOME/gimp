@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-25 15:54+0200\n"
-"PO-Revision-Date: 2017-09-25 15:56+0200\n"
+"POT-Creation-Date: 2017-09-26 13:35+0200\n"
+"PO-Revision-Date: 2017-09-26 13:46+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -3048,8 +3048,8 @@ msgstr "Cancella la cronologia documenti"
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:508 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:386
-#: ../app/widgets/gimphelp.c:725 ../app/widgets/gimpiconpicker.c:488
+#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:392
+#: ../app/widgets/gimphelp.c:741 ../app/widgets/gimpiconpicker.c:488
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
 msgid "_Cancel"
 msgstr "A_nnulla"
@@ -19139,7 +19139,7 @@ msgstr "Distribuisci i bordi sinistri degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:346
 msgid "Distribute horizontal centers of targets"
-msgstr "Distribuisci i centri orizzontali degli oggetti"
+msgstr "Distribuisci orizzontalmente i centri degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:350
 msgid "Distribute right edges of targets"
@@ -19147,23 +19147,23 @@ msgstr "Distribuisci i bordi destri degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:354
 msgid "Distribute targets evenly in the horizontal"
-msgstr "Distribuisci gli obiettivi regolarmente in orizzontale"
+msgstr "Distribuisci gli oggetti uniformemente in orizzontale"
 
 #: ../app/tools/gimpalignoptions.c:362
 msgid "Distribute top edges of targets"
-msgstr "Distribuisci i bordi in cima degli oggetti"
+msgstr "Distribuisci bordi in alto degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:366
 msgid "Distribute vertical centers of targets"
-msgstr "Distribuisci i centri verticali degli oggetti"
+msgstr "Distribuisci verticalmente i centri degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:370
 msgid "Distribute bottoms of targets"
-msgstr "Distribuisci i fondi degli oggetti"
+msgstr "Distribuisci i bordi in basso degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:374
 msgid "Distribute targets evenly in the vertical"
-msgstr "Distribuisci gli obiettivi regolarmente in verticale"
+msgstr "Distribuisci gli oggetti uniformemente in verticale"
 
 #: ../app/tools/gimpaligntool.c:124
 msgid "Alignment Tool: Align or arrange layers and other objects"
@@ -22679,15 +22679,15 @@ msgstr "Cambia il colore di sfondo della griglia"
 msgid "_Background color:"
 msgstr "Colore di _sfondo:"
 
-#: ../app/widgets/gimphelp.c:310
+#: ../app/widgets/gimphelp.c:316
 msgid "Help browser is missing"
 msgstr "Manca il visualizzatore della guida"
 
-#: ../app/widgets/gimphelp.c:311
+#: ../app/widgets/gimphelp.c:317
 msgid "The GIMP help browser is not available."
 msgstr "Il visualizzatore dell'aiuto di GIMP non è disponibile."
 
-#: ../app/widgets/gimphelp.c:312
+#: ../app/widgets/gimphelp.c:318
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -22696,43 +22696,57 @@ msgstr ""
 "comunque possibile usare un visualizzatore di pagine web per leggere le "
 "pagine dell'aiuto."
 
-#: ../app/widgets/gimphelp.c:358
+#: ../app/widgets/gimphelp.c:364
 msgid "Help browser doesn't start"
 msgstr "Visualizzatore dell'aiuto non parte"
 
-#: ../app/widgets/gimphelp.c:359
+#: ../app/widgets/gimphelp.c:365
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Impossibile eseguire il plug-in visualizzatore dell'aiuto di GIMP."
 
-#: ../app/widgets/gimphelp.c:361
+#: ../app/widgets/gimphelp.c:367
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
 "È comunque possibile usare un visualizzatore di pagine web per leggere le "
 "pagine dell'aiuto."
 
-#: ../app/widgets/gimphelp.c:387
+#: ../app/widgets/gimphelp.c:393
 msgid "Use _Web Browser"
 msgstr "Usa un visualizzatore _web"
 
-#: ../app/widgets/gimphelp.c:721
+#: ../app/widgets/gimphelp.c:738
 msgid "GIMP user manual is missing"
 msgstr "Manca il manuale utente di GIMP"
 
-#: ../app/widgets/gimphelp.c:726
-msgid "Read _Online"
-msgstr "Leggi _online"
+#: ../app/widgets/gimphelp.c:754
+msgid "The GIMP user manual is not installed in your language."
+msgstr "Il manuale utente di GIMP non è installato nella tua lingua."
 
-#: ../app/widgets/gimphelp.c:749
-msgid "The GIMP user manual is not installed on your computer."
-msgstr "Il manuale utente di GIMP non è installato sul computer."
+#: ../app/widgets/gimphelp.c:771
+msgid "Read Selected _Language"
+msgstr "Leggi la _lingua selezionata"
 
-#: ../app/widgets/gimphelp.c:752
+#: ../app/widgets/gimphelp.c:779
+msgid "Available manuals"
+msgstr "Manuali disponibili"
+
+#: ../app/widgets/gimphelp.c:821
+msgid ""
+"You may either select a manual in another language or read the online "
+"version."
+msgstr "È possibile selezionare un manuale in un'altra lingua o consultare la versione online."
+
+#: ../app/widgets/gimphelp.c:827
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr ""
 "È possibile installare il pacchetto aggiuntivo contenente l'aiuto o cambiare "
 "le preferenze per consultare la versione online."
+
+#: ../app/widgets/gimphelp.c:832
+msgid "Read _Online"
+msgstr "Leggi _online"
 
 #: ../app/widgets/gimphistogrameditor.c:109
 msgid "Linear"
@@ -23674,7 +23688,9 @@ msgstr "Errore durante la scrittura del file XCF: "
 #: ../app/xcf/xcf-write.c:273
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
-msgstr "Errore durante la scrittura XCF: BPC non supportato durante la scrittura del pixel: %d"
+msgstr ""
+"Errore durante la scrittura XCF: BPC non supportato durante la scrittura del "
+"pixel: %d"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
