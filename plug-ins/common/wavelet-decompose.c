@@ -36,6 +36,8 @@
 typedef struct
 {
   gint scales;
+  gint create_group;
+  gint create_masks;
 } WaveletDecomposeParams;
 
 
@@ -50,13 +52,17 @@ static void      run                      (const gchar      *name,
 
 static void      wavelet_blur             (gint32            drawable_id,
                                            gint              radius);
+
+
 static gboolean  wavelet_decompose_dialog (void);
 
 
 /* create a few globals, set default values */
 static WaveletDecomposeParams wavelet_params =
 {
-  5 /* default scales */
+  5, /* default scales */
+  1, /* create group */
+  0  /* do not add mask by default */
 };
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -76,10 +82,15 @@ query (void)
 {
   static const GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode", "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"   },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"         },
-    { GIMP_PDB_INT32,    "scales",   "Number of scales (1-7)" }
+    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), "
+                                         "RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image (unused)"   },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable"         },
+    { GIMP_PDB_INT32,    "scales",       "Number of scales (1-7)" },
+    { GIMP_PDB_INT32,    "create-group", "Create a layer group to store the "
+                                         "decomposition" },
+    { GIMP_PDB_INT32,    "create-masks", "Add a layer mask to each scales "
+                                         "layers" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -134,13 +145,15 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      if (nparams != 4)
+      if (nparams != 6)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
       else
         {
-          wavelet_params.scales = param[3].data.d_int32;
+          wavelet_params.scales       = param[3].data.d_int32;
+          wavelet_params.create_group = param[4].data.d_int32;
+          wavelet_params.create_masks = param[5].data.d_int32;
         }
       break;
 
@@ -155,57 +168,88 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       gint32 *scale_ids;
-      gint32  original_id;
+      gint32  new_scale_id;
+      gint32  parent_id;
       gint    id;
 
       gimp_progress_init (_("Wavelet-Decompose"));
 
       gimp_image_undo_group_start (image_id);
 
+      if (wavelet_params.create_group)
+        {
+          gint32 group_id = gimp_layer_group_new (image_id);
+          gimp_item_set_name (group_id, _("Decomposition"));
+          gimp_item_set_visible (group_id, FALSE);
+          gimp_image_insert_layer (image_id, group_id,
+                                   gimp_item_get_parent (drawable_id),
+                                   gimp_image_get_item_position (image_id,
+                                                                 drawable_id));
+          parent_id = group_id;
+        }
+      else
+        parent_id = -1;
+
       scale_ids = g_new (gint32, wavelet_params.scales);
-      original_id = gimp_layer_copy (drawable_id);
-      gimp_image_insert_layer (image_id, original_id, -1, 0);
+      new_scale_id = gimp_layer_copy (drawable_id);
+      gimp_image_insert_layer (image_id, new_scale_id, parent_id,
+                               gimp_image_get_item_position (image_id,
+                                                             drawable_id));
 
       for (id = 0 ; id < wavelet_params.scales; ++id)
         {
-          gint32 blur_id;
+          gint32 blur_id, tmp_id;
           gchar  scale_name[20];
 
           gimp_progress_update ((gdouble) id / (gdouble) wavelet_params.scales);
 
-          /* blur */
-          blur_id = gimp_layer_copy (original_id);
-          gimp_image_insert_layer (image_id, blur_id, 0,
-                                   gimp_image_get_item_position (image_id,
-                                                                 original_id));
-          wavelet_blur (blur_id, 1 << id);
+          scale_ids[id] = new_scale_id;
 
-          /* grain extract */
-          gimp_layer_set_mode (blur_id, GIMP_LAYER_MODE_GRAIN_EXTRACT);
-
-          /* new from visible */
           g_snprintf (scale_name, sizeof (scale_name), "Scale %d", id + 1);
-          scale_ids[id] = gimp_layer_new_from_visible (image_id, image_id,
-                                                       scale_name);
+          gimp_item_set_name (new_scale_id, scale_name);
 
-          gimp_image_insert_layer (image_id, scale_ids[id], 0,
+          tmp_id = gimp_layer_copy (new_scale_id);
+          gimp_image_insert_layer (image_id, tmp_id, parent_id,
                                    gimp_image_get_item_position (image_id,
-                                                                 blur_id));
-          gimp_layer_set_mode (scale_ids[id], GIMP_LAYER_MODE_GRAIN_MERGE);
-          gimp_layer_set_mode (blur_id, GIMP_LAYER_MODE_NORMAL);
-          gimp_item_set_visible (scale_ids[id], FALSE);
+                                                                 new_scale_id));
+          wavelet_blur (tmp_id, pow(2.0, id));
 
-          gimp_image_remove_layer (image_id, original_id);
+          blur_id = gimp_layer_copy (tmp_id);
+          gimp_image_insert_layer (image_id, blur_id, parent_id,
+                                   gimp_image_get_item_position (image_id,
+                                                                 tmp_id));
 
-          original_id = blur_id;
+          gimp_layer_set_mode (tmp_id, GIMP_LAYER_MODE_GRAIN_EXTRACT);
+          new_scale_id = gimp_image_merge_down (image_id, tmp_id,
+                                                GIMP_EXPAND_AS_NECESSARY);
+          scale_ids[id] = new_scale_id;
+
+          gimp_item_set_visible (new_scale_id, FALSE);
+
+          new_scale_id = blur_id;
         }
 
-      gimp_item_set_name (original_id, "Residual");
+      gimp_item_set_name (new_scale_id, "residual");
 
-      for (id = 0 ; id < wavelet_params.scales; ++id)
+      for (id = 0; id < wavelet_params.scales; id++)
         {
+          gimp_image_reorder_item (image_id, scale_ids[id], parent_id,
+                               gimp_image_get_item_position (image_id,
+                                                             new_scale_id));
+          gimp_layer_set_mode (scale_ids[id], GIMP_LAYER_MODE_GRAIN_MERGE);
+
+          if (wavelet_params.create_masks)
+            {
+              gint32 mask_id = gimp_layer_create_mask (scale_ids[id],
+                                                       GIMP_ADD_MASK_WHITE);
+              gimp_layer_add_mask (scale_ids[id], mask_id);
+            }
+
           gimp_item_set_visible (scale_ids[id], TRUE);
         }
+
+      if (wavelet_params.create_group)
+        gimp_item_set_visible (parent_id, TRUE);
 
       g_free (scale_ids);
 
@@ -233,23 +277,19 @@ wavelet_blur (gint32 drawable_id,
 
   if (gimp_drawable_mask_intersect (drawable_id, &x, &y, &width, &height))
     {
-      GeglBuffer *buffer;
-      GeglBuffer *shadow_buffer;
+      GeglBuffer *buffer = gimp_drawable_get_buffer (drawable_id);
+      GeglBuffer *shadow = gimp_drawable_get_shadow_buffer (drawable_id);
 
-      buffer        = gimp_drawable_get_buffer (drawable_id);
-      shadow_buffer = gimp_drawable_get_shadow_buffer (drawable_id);
-
-      gegl_render_op (buffer, shadow_buffer,
+      gegl_render_op (buffer, shadow,
                       "gegl:wavelet-blur",
                       "radius", (gdouble) radius,
                       NULL);
 
-      g_object_unref (shadow_buffer); /* flushes the shadow blur */
-      g_object_unref (buffer);
-
-      gimp_drawable_merge_shadow (drawable_id, TRUE);
+      gegl_buffer_flush (shadow);
+      gimp_drawable_merge_shadow (drawable_id, FALSE);
       gimp_drawable_update (drawable_id, x, y, width, height);
-      gimp_displays_flush ();
+      g_object_unref (buffer);
+      g_object_unref (shadow);
     }
 }
 
@@ -259,6 +299,7 @@ wavelet_decompose_dialog (void)
   GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *table;
+  GtkWidget *button;
   GtkObject *adj;
   gboolean   run;
 
@@ -292,6 +333,8 @@ wavelet_decompose_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
+  /* scales */
+
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                               _("Scales:"), SCALE_WIDTH, ENTRY_WIDTH,
                               wavelet_params.scales,
@@ -302,6 +345,30 @@ wavelet_decompose_dialog (void)
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &wavelet_params.scales);
+
+  /* create group layer */
+
+  button = gtk_check_button_new_with_mnemonic (_("Create a layer group to store the decomposition"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                wavelet_params.create_group);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &wavelet_params.create_group);
+
+  /* create layer masks */
+
+  button = gtk_check_button_new_with_mnemonic (_("Add a layer mask to each scales layers"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                wavelet_params.create_masks);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &wavelet_params.create_masks);
 
   gtk_widget_show (dialog);
 
