@@ -35,8 +35,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-26 13:35+0200\n"
-"PO-Revision-Date: 2017-09-26 13:46+0200\n"
+"POT-Creation-Date: 2017-09-26 14:53+0200\n"
+"PO-Revision-Date: 2017-09-26 14:53+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -19135,7 +19135,7 @@ msgstr "Distribuisci"
 
 #: ../app/tools/gimpalignoptions.c:342
 msgid "Distribute left edges of targets"
-msgstr "Distribuisci i bordi sinistri degli oggetti"
+msgstr "Distribuisci il bordo sinistro degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:346
 msgid "Distribute horizontal centers of targets"
@@ -19143,7 +19143,7 @@ msgstr "Distribuisci orizzontalmente i centri degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:350
 msgid "Distribute right edges of targets"
-msgstr "Distribuisci i bordi destri degli oggetti"
+msgstr "Distribuisci il bordo destro degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:354
 msgid "Distribute targets evenly in the horizontal"
@@ -19151,7 +19151,7 @@ msgstr "Distribuisci gli oggetti uniformemente in orizzontale"
 
 #: ../app/tools/gimpalignoptions.c:362
 msgid "Distribute top edges of targets"
-msgstr "Distribuisci bordi in alto degli oggetti"
+msgstr "Distribuisci il bordo in alto degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:366
 msgid "Distribute vertical centers of targets"
@@ -19159,7 +19159,7 @@ msgstr "Distribuisci verticalmente i centri degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:370
 msgid "Distribute bottoms of targets"
-msgstr "Distribuisci i bordi in basso degli oggetti"
+msgstr "Distribuisci il bordo in basso degli oggetti"
 
 #: ../app/tools/gimpalignoptions.c:374
 msgid "Distribute targets evenly in the vertical"
@@ -22734,7 +22734,9 @@ msgstr "Manuali disponibili"
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
-msgstr "È possibile selezionare un manuale in un'altra lingua o consultare la versione online."
+msgstr ""
+"È possibile selezionare un manuale in un'altra lingua o consultare la "
+"versione online."
 
 #: ../app/widgets/gimphelp.c:827
 msgid ""
