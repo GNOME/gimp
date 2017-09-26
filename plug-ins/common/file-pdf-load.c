@@ -43,6 +43,12 @@
 
 #define THUMBNAIL_SIZE  128
 
+#define GIMP_PLUGIN_PDF_LOAD_ERROR gimp_plugin_pdf_load_error_quark ()
+static GQuark
+gimp_plugin_pdf_load_error_quark (void)
+{
+  return g_quark_from_static_string ("gimp-plugin-pdf-load-error-quark");
+}
 
 /* Structs for the load dialog */
 typedef struct
@@ -490,7 +496,7 @@ run (const gchar      *name,
                               if (param[5].data.d_int32array[i] >= doc_n_pages)
                                 {
                                   status = GIMP_PDB_EXECUTION_ERROR;
-                                  g_set_error (&error, 0, 0,
+                                  g_set_error (&error, GIMP_PLUGIN_PDF_LOAD_ERROR, 0,
                                                /* TRANSLATORS: first argument is file name,
                                                 * second is out-of-range page number, third is
                                                 * number of pages. Specify order as in English if needed.
@@ -669,7 +675,7 @@ open_document (const gchar  *filename,
 
   if (! mapped_file)
     {
-      g_set_error (load_error, 0, 0,
+      g_set_error (load_error, GIMP_PLUGIN_PDF_LOAD_ERROR, 0,
                    _("Could not load '%s': %s"),
                    gimp_filename_to_utf8 (filename), error->message);
       g_error_free (error);
