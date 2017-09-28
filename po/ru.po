@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-15 00:30+0300\n"
-"PO-Revision-Date: 2017-08-15 00:56+0300\n"
+"POT-Creation-Date: 2017-09-28 03:45+0300\n"
+"PO-Revision-Date: 2017-09-28 04:24+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -948,7 +948,7 @@ msgstr "Создать канал"
 msgid "New Channel Color"
 msgstr "Цвет нового канала"
 
-#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:276
+#: ../app/actions/channels-commands.c:294 ../app/core/gimpimage-new.c:278
 #: ../app/display/gimpdisplayshell-dnd.c:670
 #: ../app/widgets/gimpchanneltreeview.c:258
 #: ../app/widgets/gimplayertreeview.c:784
@@ -2274,7 +2274,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1906
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1966
 #: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:211
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:778 ../app/widgets/gimpdnd-xds.c:89
@@ -3009,13 +3009,13 @@ msgstr "Забыть открывавшиеся документы"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
 #: ../app/tools/gimpforegroundselecttool.c:307 ../app/tools/gimptexttool.c:1579
-#: ../app/tools/gimptransformtool.c:1199 ../app/widgets/gimpactionview.c:669
+#: ../app/tools/gimptransformtool.c:1206 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:508 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:386
-#: ../app/widgets/gimphelp.c:725 ../app/widgets/gimpiconpicker.c:488
+#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:392
+#: ../app/widgets/gimphelp.c:741 ../app/widgets/gimpiconpicker.c:488
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
 msgid "_Cancel"
 msgstr "О_тмена"
@@ -6863,7 +6863,7 @@ msgstr "Сбросить параметров фильтров"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1198
+#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1205
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "С_бросить"
@@ -11195,7 +11195,7 @@ msgctxt "undo-type"
 msgid "Cut Layer"
 msgstr "Текстовый слой"
 
-#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:323
+#: ../app/core/gimp-edit.c:422 ../app/core/gimpimage-new.c:325
 msgid "Pasted Layer"
 msgstr "Вставленный слой"
 
@@ -11593,17 +11593,17 @@ msgstr "Невозможно обвести пустой канал"
 msgid "Cannot stroke empty channel."
 msgstr "Невозможно обвести пустой канал"
 
-#: ../app/core/gimpchannel.c:1781
+#: ../app/core/gimpchannel.c:1785
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Изменение цвета канала"
 
-#: ../app/core/gimpchannel.c:1832
+#: ../app/core/gimpchannel.c:1836
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Изменение непрозрачности канала"
 
-#: ../app/core/gimpchannel.c:1923 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1927 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Маска выделенной области"
 
@@ -11733,7 +11733,7 @@ msgstr "Ошибка при загрузке '%s': "
 msgid "Error loading '%s'"
 msgstr "Ошибка при загрузке '%s': "
 
-#: ../app/core/gimpdatafactory.c:917 ../app/xcf/xcf.c:436
+#: ../app/core/gimpdatafactory.c:917 ../app/xcf/xcf.c:437
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Не удалось открыть '%s' для чтения: "
@@ -12010,79 +12010,79 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Преобразование группы слоёв"
 
-#: ../app/core/gimpimage.c:643 ../app/widgets/gimpsymmetryeditor.c:179
+#: ../app/core/gimpimage.c:645 ../app/widgets/gimpsymmetryeditor.c:179
 msgid "Symmetry"
 msgstr "Симметрия"
 
-#: ../app/core/gimpimage.c:2158
+#: ../app/core/gimpimage.c:2218
 msgid " (exported)"
 msgstr " (экспортировано)"
 
-#: ../app/core/gimpimage.c:2162
+#: ../app/core/gimpimage.c:2222
 msgid " (overwritten)"
 msgstr " (перезаписано)"
 
-#: ../app/core/gimpimage.c:2171
+#: ../app/core/gimpimage.c:2231
 msgid " (imported)"
 msgstr " (импортировано)"
 
-#: ../app/core/gimpimage.c:2487
+#: ../app/core/gimpimage.c:2547
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Смена разрешения изображения"
 
-#: ../app/core/gimpimage.c:2539
+#: ../app/core/gimpimage.c:2599
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Смена единицы измерения"
 
-#: ../app/core/gimpimage.c:3419
+#: ../app/core/gimpimage.c:3479
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: ../app/core/gimpimage.c:3471
+#: ../app/core/gimpimage.c:3531
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Присоединение паразита к изображению"
 
-#: ../app/core/gimpimage.c:3512
+#: ../app/core/gimpimage.c:3572
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Удаление паразита из изображения"
 
-#: ../app/core/gimpimage.c:4221
+#: ../app/core/gimpimage.c:4283
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Добавление слоя"
 
-#: ../app/core/gimpimage.c:4271 ../app/core/gimpimage.c:4291
+#: ../app/core/gimpimage.c:4335 ../app/core/gimpimage.c:4355
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Удаление слоя"
 
-#: ../app/core/gimpimage.c:4285
+#: ../app/core/gimpimage.c:4349
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Удаление плавающего выделения"
 
-#: ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4514
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Добавление канала"
 
-#: ../app/core/gimpimage.c:4488 ../app/core/gimpimage.c:4501
+#: ../app/core/gimpimage.c:4552 ../app/core/gimpimage.c:4565
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Удаление канала"
 
-#: ../app/core/gimpimage.c:4555
+#: ../app/core/gimpimage.c:4619
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Добавление контура"
 
-#: ../app/core/gimpimage.c:4586
+#: ../app/core/gimpimage.c:4650
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Удаление контура"
@@ -12464,7 +12464,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Прикрепление плавающего выделения"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1001
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1009
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -12541,13 +12541,13 @@ msgstr "Cлой невозможно поднять выше."
 msgid "Layer cannot be lowered more."
 msgstr "Слой невозможно опустить ниже."
 
-#: ../app/core/gimplayer.c:708 ../app/core/gimplayer.c:1704
+#: ../app/core/gimplayer.c:716 ../app/core/gimplayer.c:1712
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
 
-#: ../app/core/gimplayer.c:747
+#: ../app/core/gimplayer.c:755
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -12556,62 +12556,62 @@ msgstr ""
 "Плавающее выделение\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1610
+#: ../app/core/gimplayer.c:1618
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не удалось добавить маску слоя, так как у слоя уже есть маска."
 
-#: ../app/core/gimplayer.c:1621
+#: ../app/core/gimplayer.c:1629
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Невозможно добавить маску слоя, отличающуюся\n"
 " размерами от указанного слоя."
 
-#: ../app/core/gimplayer.c:1627
+#: ../app/core/gimplayer.c:1635
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Добавление маски слоя"
 
-#: ../app/core/gimplayer.c:1755
+#: ../app/core/gimplayer.c:1763
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Создание маски из альфа-канала"
 
-#: ../app/core/gimplayer.c:1906
+#: ../app/core/gimplayer.c:1914
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Применение маски слоя"
 
-#: ../app/core/gimplayer.c:1907
+#: ../app/core/gimplayer.c:1915
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Удаление маски слоя"
 
-#: ../app/core/gimplayer.c:2009
+#: ../app/core/gimplayer.c:2017
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Включить маску слоя"
 
-#: ../app/core/gimplayer.c:2010
+#: ../app/core/gimplayer.c:2018
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Выключить маску слоя"
 
-#: ../app/core/gimplayer.c:2086
+#: ../app/core/gimplayer.c:2094
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Показывание маски слоя"
 
-#: ../app/core/gimplayer.c:2159
+#: ../app/core/gimplayer.c:2167
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Добавление альфа-канала"
 
-#: ../app/core/gimplayer.c:2191
+#: ../app/core/gimplayer.c:2199
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Удаление альфа-канала"
 
-#: ../app/core/gimplayer.c:2212
+#: ../app/core/gimplayer.c:2220
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Слой к размеру изображения"
@@ -15007,7 +15007,7 @@ msgid "Monitor Resolution"
 msgstr "Разрешение монитора"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2327 ../app/display/gimpcursorview.c:210
+#: ../app/dialogs/preferences-dialog.c:2327 ../app/display/gimpcursorview.c:215
 #: ../app/widgets/gimpgrideditor.c:199 ../app/widgets/gimpgrideditor.c:234
 msgid "Pixels"
 msgstr "px"
@@ -15796,51 +15796,51 @@ msgctxt "vector-mode"
 msgid "Move"
 msgstr "Перемещение"
 
-#: ../app/display/gimpcursorview.c:220 ../app/display/gimpcursorview.c:226
-#: ../app/display/gimpcursorview.c:245 ../app/display/gimpcursorview.c:251
-#: ../app/display/gimpcursorview.c:270 ../app/display/gimpcursorview.c:276
-#: ../app/display/gimpcursorview.c:292 ../app/display/gimpcursorview.c:299
-#: ../app/display/gimpcursorview.c:693 ../app/display/gimpcursorview.c:695
-#: ../app/display/gimpcursorview.c:697 ../app/display/gimpcursorview.c:699
-#: ../app/display/gimpcursorview.c:818 ../app/display/gimpcursorview.c:819
-#: ../app/display/gimpcursorview.c:820 ../app/display/gimpcursorview.c:821
+#: ../app/display/gimpcursorview.c:225 ../app/display/gimpcursorview.c:231
+#: ../app/display/gimpcursorview.c:250 ../app/display/gimpcursorview.c:256
+#: ../app/display/gimpcursorview.c:275 ../app/display/gimpcursorview.c:281
+#: ../app/display/gimpcursorview.c:297 ../app/display/gimpcursorview.c:304
+#: ../app/display/gimpcursorview.c:706 ../app/display/gimpcursorview.c:708
+#: ../app/display/gimpcursorview.c:710 ../app/display/gimpcursorview.c:712
+#: ../app/display/gimpcursorview.c:791 ../app/display/gimpcursorview.c:792
+#: ../app/display/gimpcursorview.c:793 ../app/display/gimpcursorview.c:794
 #: ../app/widgets/gimpcolorframe.c:613 ../app/widgets/gimpcolorframe.c:903
 msgid "n/a"
 msgstr "н/д"
 
-#: ../app/display/gimpcursorview.c:223 ../app/display/gimpcursorview.c:248
-#: ../app/display/gimpcursorview.c:273
+#: ../app/display/gimpcursorview.c:228 ../app/display/gimpcursorview.c:253
+#: ../app/display/gimpcursorview.c:278
 #: ../app/widgets/gimpdeviceinfoeditor.c:139
 msgid "X"
 msgstr "X"
 
-#: ../app/display/gimpcursorview.c:229 ../app/display/gimpcursorview.c:254
-#: ../app/display/gimpcursorview.c:279
+#: ../app/display/gimpcursorview.c:234 ../app/display/gimpcursorview.c:259
+#: ../app/display/gimpcursorview.c:284
 #: ../app/widgets/gimpdeviceinfoeditor.c:140
 msgid "Y"
 msgstr "Y"
 
 #. Units
-#: ../app/display/gimpcursorview.c:235
+#: ../app/display/gimpcursorview.c:240
 msgid "Units"
 msgstr "Единицы"
 
 #. Selection Bounding Box
-#: ../app/display/gimpcursorview.c:260
+#: ../app/display/gimpcursorview.c:265
 msgid "Selection Bounding Box"
 msgstr "Площадка (BB) выделения"
 
 #. Width
-#: ../app/display/gimpcursorview.c:296
+#: ../app/display/gimpcursorview.c:301
 msgid "W"
 msgstr "Ш"
 
 #. Height
-#: ../app/display/gimpcursorview.c:303
+#: ../app/display/gimpcursorview.c:308
 msgid "H"
 msgstr "В"
 
-#: ../app/display/gimpcursorview.c:332
+#: ../app/display/gimpcursorview.c:337
 msgid "_Sample Merged"
 msgstr "_Сводить слои"
 
@@ -15975,7 +15975,7 @@ msgstr "Невозможно изменять точки растра групп
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:438 ../app/tools/gimpfiltertool.c:275
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1430 ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimptransformtool.c:1437 ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Точки растра активного слоя заблокированы от изменений"
 
@@ -16142,7 +16142,7 @@ msgstr "Щёлкните и потащите, чтобы переместить 
 msgid "Line: "
 msgstr "Линия: "
 
-#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:655
+#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:658
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для ограничения шага угла"
@@ -16924,32 +16924,6 @@ msgstr "Жёлтый-Синий"
 msgid "Preserve Luminosity"
 msgstr "Сохранить яркость"
 
-#: ../app/operations/gimpcolorizeconfig.c:85
-#: ../app/operations/gimpcolorizeconfig.c:86
-#: ../app/operations/gimphuesaturationconfig.c:101
-#: ../app/operations/gimphuesaturationconfig.c:102
-msgid "Hue"
-msgstr "Тон"
-
-#: ../app/operations/gimpcolorizeconfig.c:91
-#: ../app/operations/gimpcolorizeconfig.c:92
-#: ../app/operations/gimphuesaturationconfig.c:107
-#: ../app/operations/gimphuesaturationconfig.c:108
-msgid "Saturation"
-msgstr "Насыщенность"
-
-#: ../app/operations/gimpcolorizeconfig.c:97
-#: ../app/operations/gimpcolorizeconfig.c:98
-#: ../app/operations/gimphuesaturationconfig.c:113
-#: ../app/operations/gimphuesaturationconfig.c:114
-msgid "Lightness"
-msgstr "Светлота"
-
-#: ../app/operations/gimpcolorizeconfig.c:107
-#: ../app/operations/gimpcolorizeconfig.c:108
-msgid "Color"
-msgstr "Цвет"
-
 #: ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:106
 msgid "The affected channel"
@@ -16971,6 +16945,27 @@ msgstr "Ошибка разбора, не найдены две переменн
 #: ../app/operations/gimpcurvesconfig.c:673
 msgid "Writing curves file failed: "
 msgstr "Не удалось записать файл профиля кривых:"
+
+#: ../app/operations/gimphuesaturationconfig.c:101
+#: ../app/operations/gimphuesaturationconfig.c:102
+#: ../app/operations/gimpoperationcolorize.c:92
+#: ../app/operations/gimpoperationcolorize.c:93
+msgid "Hue"
+msgstr "Тон"
+
+#: ../app/operations/gimphuesaturationconfig.c:107
+#: ../app/operations/gimphuesaturationconfig.c:108
+#: ../app/operations/gimpoperationcolorize.c:98
+#: ../app/operations/gimpoperationcolorize.c:99
+msgid "Saturation"
+msgstr "Насыщенность"
+
+#: ../app/operations/gimphuesaturationconfig.c:113
+#: ../app/operations/gimphuesaturationconfig.c:114
+#: ../app/operations/gimpoperationcolorize.c:104
+#: ../app/operations/gimpoperationcolorize.c:105
+msgid "Lightness"
+msgstr "Светлота"
 
 #: ../app/operations/gimphuesaturationconfig.c:119
 #: ../app/operations/gimphuesaturationconfig.c:120
@@ -17031,9 +17026,14 @@ msgstr "Заливать исходную позицию рамки цветом
 msgid "Adjust color distribution"
 msgstr "Коррекция распределения цвета"
 
-#: ../app/operations/gimpoperationcolorize.c:64
+#: ../app/operations/gimpoperationcolorize.c:85
 msgid "Colorize the image"
 msgstr "Тонирование изображения"
+
+#: ../app/operations/gimpoperationcolorize.c:114
+#: ../app/operations/gimpoperationcolorize.c:115
+msgid "Color"
+msgstr "Цвет"
 
 #: ../app/operations/gimpoperationdesaturate.c:85
 msgid "Turn colors into shades of gray"
@@ -17494,43 +17494,43 @@ msgstr "Фиксированное"
 msgid "Combine Masks"
 msgstr "Объединить маски"
 
-#: ../app/pdb/color-cmds.c:86 ../app/pdb/drawable-color-cmds.c:86
+#: ../app/pdb/color-cmds.c:85 ../app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Яркость-Контраст"
 
-#: ../app/pdb/color-cmds.c:147 ../app/pdb/drawable-color-cmds.c:600
+#: ../app/pdb/color-cmds.c:146 ../app/pdb/drawable-color-cmds.c:604
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "Уровни"
 
-#: ../app/pdb/color-cmds.c:246 ../app/pdb/drawable-color-cmds.c:670
+#: ../app/pdb/color-cmds.c:245 ../app/pdb/drawable-color-cmds.c:674
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "Постеризация"
 
-#: ../app/pdb/color-cmds.c:285 ../app/pdb/color-cmds.c:326
+#: ../app/pdb/color-cmds.c:284 ../app/pdb/color-cmds.c:325
 #: ../app/pdb/drawable-color-cmds.c:325
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "Обесцвечивание"
 
-#: ../app/pdb/color-cmds.c:388
+#: ../app/pdb/color-cmds.c:387
 msgid "Invert"
 msgstr "Инвертировать"
 
-#: ../app/pdb/color-cmds.c:435 ../app/pdb/color-cmds.c:483
+#: ../app/pdb/color-cmds.c:434 ../app/pdb/color-cmds.c:482
 #: ../app/pdb/drawable-color-cmds.c:235 ../app/pdb/drawable-color-cmds.c:283
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "Кривые"
 
-#: ../app/pdb/color-cmds.c:537 ../app/pdb/drawable-color-cmds.c:140
+#: ../app/pdb/color-cmds.c:536 ../app/pdb/drawable-color-cmds.c:139
 msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "Цветовой баланс"
 
-#: ../app/pdb/color-cmds.c:583 ../app/pdb/drawable-color-cmds.c:186
+#: ../app/pdb/color-cmds.c:584 ../app/pdb/drawable-color-cmds.c:187
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Тонирование"
@@ -17539,7 +17539,7 @@ msgstr "Тонирование"
 msgid "Hue-Saturation"
 msgstr "Тон-Насыщенность"
 
-#: ../app/pdb/color-cmds.c:780 ../app/pdb/drawable-color-cmds.c:716
+#: ../app/pdb/color-cmds.c:780 ../app/pdb/drawable-color-cmds.c:720
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Порог"
@@ -17558,7 +17558,7 @@ msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "Тон-Насыщенность"
 
-#: ../app/pdb/drawable-color-cmds.c:540
+#: ../app/pdb/drawable-color-cmds.c:542
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "Инвертирование"
@@ -17987,7 +17987,7 @@ msgstr ""
 "Процедура '%s' вызвана со значением '%s' аргумента '%s' (#%d, тип %s). "
 "Значение выходит из допустимого диапазона."
 
-#: ../app/pdb/image-cmds.c:2310
+#: ../app/pdb/image-cmds.c:2339
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -18144,7 +18144,7 @@ msgstr "Искажения оптики"
 #: ../app/pdb/plug-in-compat-cmds.c:2399
 msgctxt "undo-type"
 msgid "Tile Seamless"
-msgstr ""
+msgstr "Бесшовная мозаика"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2466
 msgctxt "undo-type"
@@ -19017,7 +19017,7 @@ msgstr "Щёлкните или щёлкните и потащите для до
 #: ../app/tools/gimpblendtool.c:258 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1438 ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimptransformtool.c:1445 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Точки растра активного слоя заблокированы от изменений"
 
@@ -19639,27 +19639,27 @@ msgstr "Направление (%s)"
 msgid "Clipping"
 msgstr "Обрезка"
 
-#: ../app/tools/gimpfliptool.c:103
+#: ../app/tools/gimpfliptool.c:106
 msgid "Flip"
 msgstr "Зеркало"
 
-#: ../app/tools/gimpfliptool.c:104
+#: ../app/tools/gimpfliptool.c:107
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 "Зеркало: горизонтальное или вертикальное отражение слоя, выделения или "
 "контура"
 
-#: ../app/tools/gimpfliptool.c:106 ../app/tools/gimpfliptool.c:129
+#: ../app/tools/gimpfliptool.c:109 ../app/tools/gimpfliptool.c:133
 msgid "_Flip"
 msgstr "_Зеркало"
 
-#: ../app/tools/gimpfliptool.c:280
+#: ../app/tools/gimpfliptool.c:298
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Горизонтальное отражение"
 
-#: ../app/tools/gimpfliptool.c:283
+#: ../app/tools/gimpfliptool.c:301
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Вертикальное отражение"
@@ -19667,7 +19667,7 @@ msgstr "Вертикальное отражение"
 #. probably this is not actually reached today, but
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
-#: ../app/tools/gimpfliptool.c:289
+#: ../app/tools/gimpfliptool.c:307
 msgctxt "undo-desc"
 msgid "Flip"
 msgstr "Отражение"
@@ -20118,7 +20118,7 @@ msgstr "Добавить направляющие"
 
 #: ../app/tools/gimpmeasuretool.c:526 ../app/tools/gimpmeasuretool.c:679
 #: ../app/tools/gimpmeasuretool.c:735 ../app/tools/gimpmeasuretool.c:763
-#: ../app/tools/gimppainttool.c:664
+#: ../app/tools/gimppainttool.c:696
 msgid "pixels"
 msgstr "точки растра"
 
@@ -20176,7 +20176,7 @@ msgstr "_Перемещение"
 msgid "There is no path to move."
 msgstr "Нет перемещаемого контура."
 
-#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1465
+#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1472
 msgid "The active path's position is locked."
 msgstr "Активный контур заблокирован от изменений"
 
@@ -20350,7 +20350,7 @@ msgstr "%s, чтобы взять пипеткой цвет"
 msgid "Cannot paint on layer groups."
 msgstr "Невозможно рисовать на группе слоев"
 
-#: ../app/tools/gimppainttool.c:716
+#: ../app/tools/gimppainttool.c:745
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s для рисования прямой линии"
@@ -21070,27 +21070,27 @@ msgstr "Это выделение не пересекается со слоем.
 msgid "Transform Step"
 msgstr "Шаг преобразования"
 
-#: ../app/tools/gimptransformtool.c:1425
+#: ../app/tools/gimptransformtool.c:1432
 msgid "There is no layer to transform."
 msgstr "Нет слоя для преобразования."
 
-#: ../app/tools/gimptransformtool.c:1432
+#: ../app/tools/gimptransformtool.c:1439
 msgid "The active layer's position and size are locked."
 msgstr "Размер и положение активного слоя заблокированы от изменений."
 
-#: ../app/tools/gimptransformtool.c:1445
+#: ../app/tools/gimptransformtool.c:1452
 msgid "There is no selection to transform."
 msgstr "Нет трансформируемого выделения."
 
-#: ../app/tools/gimptransformtool.c:1458
+#: ../app/tools/gimptransformtool.c:1465
 msgid "There is no path to transform."
 msgstr "Нет контура для преобразования."
 
-#: ../app/tools/gimptransformtool.c:1463
+#: ../app/tools/gimptransformtool.c:1470
 msgid "The active path's strokes are locked."
 msgstr "Элементы активного контура заблокированы от изменений"
 
-#: ../app/tools/gimptransformtool.c:1467
+#: ../app/tools/gimptransformtool.c:1474
 msgid "The active path has no strokes."
 msgstr "Активный контур заблокирован от изменений"
 
@@ -21271,17 +21271,17 @@ msgstr "Искажения"
 msgid "Please add some warp strokes first."
 msgstr ""
 
-#: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1126
+#: ../app/tools/gimpwarptool.c:1090 ../app/tools/gimpwarptool.c:1127
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Визуализируется кадр %d"
 
-#: ../app/tools/gimpwarptool.c:1105 ../app/tools/gimpwarptool.c:1134
+#: ../app/tools/gimpwarptool.c:1105 ../app/tools/gimpwarptool.c:1135
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
 
-#: ../app/tools/gimpwarptool.c:1143
+#: ../app/tools/gimpwarptool.c:1144
 msgid "Frame"
 msgstr "Кадр"
 
@@ -22404,15 +22404,15 @@ msgstr "Изменить цвет фона сетки"
 msgid "_Background color:"
 msgstr "Цвет _фона:"
 
-#: ../app/widgets/gimphelp.c:310
+#: ../app/widgets/gimphelp.c:316
 msgid "Help browser is missing"
 msgstr "Программа для просмотра справки отсутствует"
 
-#: ../app/widgets/gimphelp.c:311
+#: ../app/widgets/gimphelp.c:317
 msgid "The GIMP help browser is not available."
 msgstr "Программа для просмотра руководства по GIMP отсутствует."
 
-#: ../app/widgets/gimphelp.c:312
+#: ../app/widgets/gimphelp.c:318
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -22420,43 +22420,58 @@ msgstr ""
 "Встроенный просмотрщик справки GIMP отсутствует. Вы можете использовать "
 "вместо него обычный веб-браузер."
 
-#: ../app/widgets/gimphelp.c:358
+#: ../app/widgets/gimphelp.c:364
 msgid "Help browser doesn't start"
 msgstr "Программа просмотра справки не запускается"
 
-#: ../app/widgets/gimphelp.c:359
+#: ../app/widgets/gimphelp.c:365
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Не удалось запустить программу просмотра справки GIMP"
 
-#: ../app/widgets/gimphelp.c:361
+#: ../app/widgets/gimphelp.c:367
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Вы можете использовать обычный веб-браузер для чтения руководства "
 "пользователя."
 
-#: ../app/widgets/gimphelp.c:387
+#: ../app/widgets/gimphelp.c:393
 msgid "Use _Web Browser"
 msgstr "Использовать _веб-браузер"
 
-#: ../app/widgets/gimphelp.c:721
+#: ../app/widgets/gimphelp.c:738
 msgid "GIMP user manual is missing"
 msgstr "Руководство по GIMP отсутствует"
 
-#: ../app/widgets/gimphelp.c:726
-msgid "Read _Online"
-msgstr "_Прочитать в Сети"
+#: ../app/widgets/gimphelp.c:754
+msgid "The GIMP user manual is not installed in your language."
+msgstr "Руководство пользователя GIMP на вашем языке не установлено."
 
-#: ../app/widgets/gimphelp.c:749
-msgid "The GIMP user manual is not installed on your computer."
-msgstr "Руководство пользователя GIMP не установлено на этом компьютере"
+#: ../app/widgets/gimphelp.c:771
+msgid "Read Selected _Language"
+msgstr "Прочитать на _выбранном языке"
 
-#: ../app/widgets/gimphelp.c:752
+#: ../app/widgets/gimphelp.c:779
+msgid "Available manuals"
+msgstr "Доступные руководства"
+
+#: ../app/widgets/gimphelp.c:821
+msgid ""
+"You may either select a manual in another language or read the online "
+"version."
+msgstr ""
+"Вы можете открыть руководство на другом языке или прочитать онлайн-версию."
+
+#: ../app/widgets/gimphelp.c:827
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr ""
 "Вам стоит либо установить пакет со справкой, либо изменить параметры "
 "программы, чтобы использовать справку из Интернета"
+
+#: ../app/widgets/gimphelp.c:832
+msgid "Read _Online"
+msgstr "_Прочитать в Сети"
 
 #: ../app/widgets/gimphistogrameditor.c:109
 msgid "Linear"
@@ -22884,8 +22899,7 @@ msgstr ""
 #: ../app/widgets/gimptextbuffer.c:1684
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
-msgstr ""
-"Похоже, что файл '%s' оборван: %s"
+msgstr "Похоже, что файл '%s' оборван: %s"
 
 #: ../app/widgets/gimptextbuffer.c:1702
 #, c-format
@@ -23291,40 +23305,40 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Не определено"
 
-#: ../app/xcf/xcf.c:112 ../app/xcf/xcf.c:183
+#: ../app/xcf/xcf.c:113 ../app/xcf/xcf.c:184
 msgid "GIMP XCF image"
 msgstr "Файл GIMP XCF"
 
-#: ../app/xcf/xcf.c:270 ../app/xcf/xcf.c:357
+#: ../app/xcf/xcf.c:271 ../app/xcf/xcf.c:358
 msgid "Memory Stream"
 msgstr ""
 
-#: ../app/xcf/xcf.c:281
+#: ../app/xcf/xcf.c:282
 #, c-format
 msgid "Opening '%s'"
 msgstr "Открывается '%s'"
 
-#: ../app/xcf/xcf.c:322
+#: ../app/xcf/xcf.c:323
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Ошибка XCF: неподдерживаемая версия %d XCF-файла"
 
-#: ../app/xcf/xcf.c:380
+#: ../app/xcf/xcf.c:381
 #, c-format
 msgid "Saving '%s'"
 msgstr "Сохраняется '%s'"
 
-#: ../app/xcf/xcf.c:387
+#: ../app/xcf/xcf.c:388
 #, c-format
 msgid "Closing '%s'"
 msgstr "Закрывается %s"
 
-#: ../app/xcf/xcf.c:394
+#: ../app/xcf/xcf.c:395
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Ошибка при записи '%s': "
 
-#: ../app/xcf/xcf.c:488
+#: ../app/xcf/xcf.c:489
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Ошибка при создании '%s': "
@@ -23372,7 +23386,7 @@ msgstr ""
 "не сохраняет индексированные цветовые карты правильно.\n"
 "Текущая карта будет заменена на карту в градациях серого."
 
-#: ../app/xcf/xcf-read.c:147
+#: ../app/xcf/xcf-read.c:189
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Недопустимая строка UTF-8 в XCF файле."
 
@@ -23380,9 +23394,14 @@ msgstr "Недопустимая строка UTF-8 в XCF файле."
 msgid "Could not seek in XCF file: "
 msgstr "Не удалось открыть XCF файл: %s"
 
-#: ../app/xcf/xcf-write.c:142
+#: ../app/xcf/xcf-write.c:45
 msgid "Error writing XCF: "
 msgstr "Ошибка записи XCF: "
+
+#: ../app/xcf/xcf-write.c:273
+#, c-format
+msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
+msgstr ""
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
