@@ -5612,7 +5612,7 @@ import_dialog_metadata (metadata_editor *args)
   GtkWidget *file_dialog;
   gchar     *filename;
 
-  file_dialog = gtk_file_chooser_dialog_new ("Import Metadata File",
+  file_dialog = gtk_file_chooser_dialog_new (_("Import Metadata File"),
                                              NULL,
                                              GTK_FILE_CHOOSER_ACTION_OPEN,
                                              _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -5647,7 +5647,7 @@ export_dialog_metadata (metadata_editor *args)
   GtkWidget *file_dialog;
   gchar     *filename;
 
-  file_dialog = gtk_file_chooser_dialog_new ("Export Metadata File",
+  file_dialog = gtk_file_chooser_dialog_new (_("Export Metadata File"),
                                              NULL,
                                              GTK_FILE_CHOOSER_ACTION_SAVE,
                                              _("_Cancel"), GTK_RESPONSE_CANCEL,
