@@ -205,7 +205,7 @@ run (const gchar      *name,
 
           scale_ids[id] = new_scale_id;
 
-          g_snprintf (scale_name, sizeof (scale_name), "Scale %d", id + 1);
+          g_snprintf (scale_name, sizeof (scale_name), _("Scale %d"), id + 1);
           gimp_item_set_name (new_scale_id, scale_name);
 
           tmp_id = gimp_layer_copy (new_scale_id);
@@ -229,7 +229,7 @@ run (const gchar      *name,
           new_scale_id = blur_id;
         }
 
-      gimp_item_set_name (new_scale_id, "residual");
+      gimp_item_set_name (new_scale_id, _("Residual"));
 
       for (id = 0; id < wavelet_params.scales; id++)
         {
