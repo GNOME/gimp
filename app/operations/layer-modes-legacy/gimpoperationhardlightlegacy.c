@@ -97,9 +97,9 @@ gimp_operation_hardlight_legacy_process (GeglOperation       *op,
             {
               gfloat comp;
 
-              if (layer[b] > 0.5)
+              if (layer[b] > 128.0 / 255.0)
                 {
-                  comp = (1.0 - in[b]) * (1.0 - (layer[b] - 0.5) * 2.0);
+                  comp = (1.0 - in[b]) * (1.0 - (layer[b] - 128.0 / 255.0) * 2.0);
                   comp = MIN (1 - comp, 1);
                 }
               else
