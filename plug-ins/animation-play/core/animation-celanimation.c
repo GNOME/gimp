@@ -133,7 +133,7 @@ static void      animation_cel_animation_text              (GMarkupParseContext 
 
 /* Signal handling */
 
-static void      on_camera_offsets_changed                 (AnimationCamera        *camera,
+static void      on_camera_changed                         (AnimationCamera        *camera,
                                                             gint                    position,
                                                             gint                    duration,
                                                             AnimationCelAnimation  *animation);
@@ -187,8 +187,8 @@ animation_cel_animation_constructed (GObject *object)
 {
   AnimationCelAnimation *animation = ANIMATION_CEL_ANIMATION (object);
 
-  g_signal_connect (animation->priv->camera, "offsets-changed",
-                    G_CALLBACK (on_camera_offsets_changed),
+  g_signal_connect (animation->priv->camera, "camera-changed",
+                    G_CALLBACK (on_camera_changed),
                     animation);
 }
 
@@ -653,6 +653,7 @@ animation_cel_animation_create_frame (Animation *animation,
   gint                   preview_height;
   gint                   offset_x;
   gint                   offset_y;
+  gdouble                scale;
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
   image_id = animation_get_image_id (animation);
@@ -661,7 +662,7 @@ animation_cel_animation_create_frame (Animation *animation,
   preview_height *= proxy_ratio;
   preview_width  *= proxy_ratio;
   animation_camera_get (cel_animation->priv->camera,
-                        position, &offset_x, &offset_y);
+                        position, &offset_x, &offset_y, &scale);
 
   for (iter = cel_animation->priv->tracks; iter; iter = iter->next)
     {
@@ -694,7 +695,7 @@ animation_cel_animation_create_frame (Animation *animation,
           gimp_drawable_offsets (layer, &layer_offx, &layer_offy);
           intermediate = normal_blend (preview_width, preview_height,
                                        buffer, 1.0, 0, 0,
-                                       source, proxy_ratio,
+                                       source, proxy_ratio * scale,
                                        layer_offx + offset_x,
                                        layer_offy + offset_y);
           g_object_unref (source);
@@ -868,16 +869,33 @@ animation_cel_animation_serialize (Animation   *animation,
 
   for (i = 0; i < priv->duration; i++)
     {
-      if (animation_camera_has_keyframe (priv->camera, i))
+      if (animation_camera_has_offset_keyframe (priv->camera, i) ||
+          animation_camera_has_zoom_keyframe (priv->camera, i))
         {
-          gint offset_x;
-          gint offset_y;
+          gint    offset_x;
+          gint    offset_y;
+          gdouble scale;
 
           animation_camera_get (priv->camera,
-                                i, &offset_x, &offset_y);
-          xml2 = g_markup_printf_escaped ("<keyframe " "position=\"%d\""
-                                          " x=\"%d\" y=\"%d\"/>",
-                                          i, offset_x, offset_y);
+                                i, &offset_x, &offset_y, &scale);
+          if (animation_camera_has_offset_keyframe (priv->camera, i) &&
+              animation_camera_has_zoom_keyframe (priv->camera, i))
+            {
+              xml2 = g_markup_printf_escaped ("<keyframe " "position=\"%d\""
+                                              " x=\"%d\" y=\"%d\" scale=\"%f\"/>",
+                                              i, offset_x, offset_y, scale);
+            }
+          else if (animation_camera_has_offset_keyframe (priv->camera, i))
+            {
+              xml2 = g_markup_printf_escaped ("<keyframe " "position=\"%d\""
+                                              " x=\"%d\" y=\"%d\"/>",
+                                              i, offset_x, offset_y);
+            }
+          else
+            {
+              xml2 = g_markup_printf_escaped ("<keyframe " "position=\"%d\""
+                                              " scale=\"%f\"/>", i, scale);
+            }
           tmp = xml;
           xml = g_strconcat (xml, xml2, NULL);
           g_free (tmp);
@@ -968,8 +986,8 @@ animation_cel_animation_update_paint_view (Animation *animation,
   gchar                 *prev_hash;
   gint                   num_layers;
   gint32                 image_id;
-  gint                   last_layer;
-  gint                   skin = 0;
+  gint                   last_layer = 0;
+  gint                   skin       = 0;
   gint                   i;
 
   cel_animation = ANIMATION_CEL_ANIMATION (animation);
@@ -1289,11 +1307,13 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
         }
       else
         {
-          gboolean has_x    = FALSE;
-          gboolean has_y    = FALSE;
-          gint     position = -1;
-          gint     x;
-          gint     y;
+          gboolean has_x     = FALSE;
+          gboolean has_y     = FALSE;
+          gboolean has_scale = FALSE;
+          gint     position  = -1;
+          gint     x         = 0;
+          gint     y         = 0;
+          gdouble  scale     = 1.0;
 
           while (*names && *values)
             {
@@ -1311,12 +1331,22 @@ animation_cel_animation_start_element (GMarkupParseContext  *context,
                   has_y = TRUE;
                   y = (gint) g_ascii_strtoll (*values, NULL, 10);
                 }
+              else if (strcmp (*names, "scale") == 0 && **values)
+                {
+                  has_scale = TRUE;
+                  scale = g_ascii_strtod (*values, NULL);
+                }
 
               names++;
               values++;
             }
-          if (position >= 0 && has_x && has_y)
-            animation_camera_set_keyframe (priv->camera, position, x, y);
+          if (position >= 0)
+            {
+              if (has_x && has_y)
+                animation_camera_set_offsets (priv->camera, position, x, y);
+              if (has_scale)
+                animation_camera_zoom (priv->camera, position, scale);
+            }
         }
       status->state = KEYFRAME_STATE;
       break;
@@ -1434,10 +1464,10 @@ animation_cel_animation_text (GMarkupParseContext  *context,
 /**** Signal handling ****/
 
 static void
-on_camera_offsets_changed (AnimationCamera       *camera,
-                           gint                   position,
-                           gint                   duration,
-                           AnimationCelAnimation *animation)
+on_camera_changed (AnimationCamera       *camera,
+                   gint                   position,
+                   gint                   duration,
+                   AnimationCelAnimation *animation)
 {
   g_signal_emit_by_name (animation, "frames-changed",
                          position, duration);
@@ -1472,13 +1502,15 @@ animation_cel_animation_get_hash (AnimationCelAnimation *animation,
                                   gint                   position,
                                   gboolean               layers_only)
 {
-  gchar *hash = g_strdup ("");
-  GList *iter;
-  gint   main_offset_x;
-  gint   main_offset_y;
+  gchar   *hash = g_strdup ("");
+  GList   *iter;
+  gint     main_offset_x;
+  gint     main_offset_y;
+  gdouble  scale;
 
   animation_camera_get (animation->priv->camera,
-                        position, &main_offset_x, &main_offset_y);
+                        position, &main_offset_x, &main_offset_y,
+                        &scale);
 
   /* Create the new buffer layer composition. */
   for (iter = animation->priv->tracks; iter; iter = iter->next)
@@ -1504,10 +1536,10 @@ animation_cel_animation_get_hash (AnimationCelAnimation *animation,
                 }
               else
                 {
-                  hash = g_strdup_printf ("%s[%d,%d]%d;",
+                  hash = g_strdup_printf ("%s[%d,%d]%fx%d;",
                                           hash,
                                           main_offset_x, main_offset_y,
-                                          tattoo);
+                                          scale, tattoo);
                 }
               g_free (tmp);
             }

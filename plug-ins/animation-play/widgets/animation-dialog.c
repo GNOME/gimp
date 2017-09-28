@@ -2565,14 +2565,16 @@ da_button_motion (GtkWidget       *widget,
           gint                   position;
           gint                   x_offset;
           gint                   y_offset;
+          gdouble                scale;
 
           animation = ANIMATION_CEL_ANIMATION (priv->animation);
           camera = ANIMATION_CAMERA (animation_cel_animation_get_main_camera (animation));
           position = animation_playback_get_position (priv->playback);
-          animation_camera_get (camera, position, &x_offset, &y_offset);
+          animation_camera_get (camera, position, &x_offset, &y_offset, &scale);
           animation_camera_preview_keyframe (camera, position,
                                              x_offset + (event->x - p->x) / priv->zoom,
-                                             y_offset + (event->y - p->y) / priv->zoom);
+                                             y_offset + (event->y - p->y) / priv->zoom,
+                                             scale);
           p->x = event->x;
           p->y = event->y;
           return TRUE;

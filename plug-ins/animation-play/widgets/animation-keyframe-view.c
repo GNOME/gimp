@@ -37,11 +37,15 @@ struct _AnimationKeyFrameViewPrivate
   gint             position;
 
   GtkWidget       *offset_entry;
-  GtkWidget       *delete_button;
+  GtkWidget       *delete_offset_button;
+
+  GtkWidget       *scale_entry;
+  GtkWidget       *delete_scale_button;
 
   guint            update_source;
   gint             update_x_offset;
   gint             update_y_offset;
+  gdouble          update_scale;
   gint             update_position;
 };
 
@@ -51,13 +55,18 @@ static void     animation_keyframe_view_dispose      (GObject               *obj
 
 
 static gboolean animation_keyframe_update_source     (gpointer               user_data);
+
+static void     on_scale_entry_changed               (GtkSpinButton         *button,
+                                                      AnimationKeyFrameView *view);
 static void     on_offset_entry_changed              (GimpSizeEntry         *entry,
                                                       AnimationKeyFrameView *view);
 static void     on_offsets_changed                   (AnimationCamera       *camera,
                                                       gint                   position,
                                                       gint                   duration,
                                                       AnimationKeyFrameView *view);
-static void     on_delete_clicked                    (GtkButton             *button,
+static void     on_delete_offset_clicked             (GtkButton             *button,
+                                                      AnimationKeyFrameView *view);
+static void     on_delete_scale_clicked              (GtkButton             *button,
                                                       AnimationKeyFrameView *view);
 
 G_DEFINE_TYPE (AnimationKeyFrameView, animation_keyframe_view, GTK_TYPE_NOTEBOOK)
@@ -126,6 +135,7 @@ animation_keyframe_view_show (AnimationKeyFrameView *view,
   gdouble          yres;
   gint             x_offset;
   gint             y_offset;
+  gdouble          scale;
 
   camera = ANIMATION_CAMERA (animation_cel_animation_get_main_camera (animation));
 
@@ -136,10 +146,13 @@ animation_keyframe_view_show (AnimationKeyFrameView *view,
           view->priv->update_position != -1)
         {
           /* We jumped to another position. Apply the ongoing preview. */
-          animation_camera_set_keyframe (view->priv->camera,
-                                         view->priv->update_position,
-                                         view->priv->update_x_offset,
-                                         view->priv->update_y_offset);
+          animation_camera_set_offsets (view->priv->camera,
+                                        view->priv->update_position,
+                                        view->priv->update_x_offset,
+                                        view->priv->update_y_offset);
+          animation_camera_zoom (view->priv->camera,
+                                 view->priv->update_position,
+                                 view->priv->update_scale);
         }
       view->priv->camera   = camera;
       view->priv->position = position;
@@ -163,6 +176,9 @@ animation_keyframe_view_show (AnimationKeyFrameView *view,
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (view->priv->offset_entry),
                                       1, yres, TRUE);
 
+      g_signal_handlers_disconnect_by_func (view->priv->scale_entry,
+                                            G_CALLBACK (on_scale_entry_changed),
+                                            view);
       g_signal_handlers_disconnect_by_func (view->priv->offset_entry,
                                             G_CALLBACK (on_offset_entry_changed),
                                             view);
@@ -170,23 +186,32 @@ animation_keyframe_view_show (AnimationKeyFrameView *view,
                                             G_CALLBACK (on_offsets_changed),
                                             view);
       animation_camera_reset_preview (camera);
-      animation_camera_get (camera, position, &x_offset, &y_offset);
+      animation_camera_get (camera, position, &x_offset, &y_offset, &scale);
       gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
                                  0, (gdouble) x_offset);
       gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
                                  1, (gdouble) y_offset);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (view->priv->scale_entry),
+                                 scale * 100.0);
+      g_signal_connect (view->priv->scale_entry, "value-changed",
+                        G_CALLBACK (on_scale_entry_changed),
+                        view);
       g_signal_connect (view->priv->offset_entry, "value-changed",
                         G_CALLBACK (on_offset_entry_changed),
                         view);
-      g_signal_connect (camera, "offsets-changed",
+      g_signal_connect (camera, "camera-changed",
                         G_CALLBACK (on_offsets_changed),
                         view);
       gtk_widget_show (GTK_WIDGET (view));
 
-      if (animation_camera_has_keyframe (camera, position))
-        gtk_widget_show (view->priv->delete_button);
+      if (animation_camera_has_offset_keyframe (camera, view->priv->position))
+        gtk_widget_show (view->priv->delete_offset_button);
       else
-        gtk_widget_hide (view->priv->delete_button);
+        gtk_widget_hide (view->priv->delete_offset_button);
+      if (animation_camera_has_zoom_keyframe (camera, view->priv->position))
+        gtk_widget_show (view->priv->delete_scale_button);
+      else
+        gtk_widget_hide (view->priv->delete_scale_button);
     }
 }
 
@@ -212,9 +237,10 @@ animation_keyframe_view_constructed (GObject *object)
   AnimationKeyFrameView *view = ANIMATION_KEYFRAME_VIEW (object);
   GtkWidget             *page;
   GtkWidget             *label;
+  GtkWidget             *widget;
 
   page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  label = gtk_image_new_from_icon_name ("camera-video",
+  label = gtk_image_new_from_icon_name ("gimp-tool-move",
                                         GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_notebook_append_page (GTK_NOTEBOOK (view), page,
                             label);
@@ -231,11 +257,33 @@ animation_keyframe_view_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (page), view->priv->offset_entry, FALSE, FALSE, 0);
   gtk_widget_show (view->priv->offset_entry);
 
-  view->priv->delete_button = gtk_button_new_with_label (_("Reset"));
-  g_signal_connect (view->priv->delete_button, "clicked",
-                    G_CALLBACK (on_delete_clicked),
+  view->priv->delete_offset_button = gtk_button_new_with_label (_("Reset Offsets"));
+  g_signal_connect (view->priv->delete_offset_button, "clicked",
+                    G_CALLBACK (on_delete_offset_clicked),
                     view);
-  gtk_box_pack_end (GTK_BOX (page), view->priv->delete_button, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (page), view->priv->delete_offset_button, FALSE, FALSE, 0);
+
+  gtk_widget_show (page);
+
+  page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  label = gtk_image_new_from_icon_name ("gimp-scale",
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_notebook_append_page (GTK_NOTEBOOK (view), page,
+                            label);
+
+  widget = gtk_label_new (_("Zoom: "));
+  gtk_box_pack_start (GTK_BOX (page), widget, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
+
+  view->priv->scale_entry = gtk_spin_button_new_with_range (0.0, 1000.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (page), view->priv->scale_entry, FALSE, FALSE, 0);
+  gtk_widget_show (view->priv->scale_entry);
+
+  view->priv->delete_scale_button = gtk_button_new_with_label (_("Reset Zoom"));
+  g_signal_connect (view->priv->delete_scale_button, "clicked",
+                    G_CALLBACK (on_delete_scale_clicked),
+                    view);
+  gtk_box_pack_end (GTK_BOX (page), view->priv->delete_scale_button, FALSE, FALSE, 0);
 
   gtk_widget_show (page);
 }
@@ -252,17 +300,26 @@ animation_keyframe_update_source (gpointer user_data)
       animation_camera_preview_keyframe (view->priv->camera,
                                          view->priv->update_position,
                                          view->priv->update_x_offset,
-                                         view->priv->update_y_offset);
+                                         view->priv->update_y_offset,
+                                         view->priv->update_scale);
     }
   return G_SOURCE_REMOVE;
 }
 
 static void
-on_offset_entry_changed (GimpSizeEntry         *entry,
+on_scale_entry_changed (GtkSpinButton         *button G_GNUC_UNUSED,
+                        AnimationKeyFrameView *view)
+{
+  on_offset_entry_changed (NULL, view);
+}
+
+static void
+on_offset_entry_changed (GimpSizeEntry         *entry G_GNUC_UNUSED,
                          AnimationKeyFrameView *view)
 {
   gdouble x_offset;
   gdouble y_offset;
+  gdouble scale;
 
   /* If a timeout is pending, remove before recreating in order to
    * postpone the camera update. */
@@ -271,10 +328,13 @@ on_offset_entry_changed (GimpSizeEntry         *entry,
       g_source_remove (view->priv->update_source);
     }
 
+  scale = gtk_spin_button_get_value (GTK_SPIN_BUTTON (view->priv->scale_entry)) / 100.0;
   x_offset = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (view->priv->offset_entry), 0);
   y_offset = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (view->priv->offset_entry), 1);
+
   view->priv->update_x_offset = x_offset;
   view->priv->update_y_offset = y_offset;
+  view->priv->update_scale    = scale;
   view->priv->update_position = view->priv->position;
   view->priv->update_source = g_timeout_add (10, animation_keyframe_update_source, view);
 }
@@ -290,31 +350,48 @@ on_offsets_changed (AnimationCamera       *camera,
     {
       gint x_offset;
       gint y_offset;
+      gdouble scale;
 
       g_signal_handlers_block_by_func (view->priv->offset_entry,
                                        G_CALLBACK (on_offset_entry_changed),
                                        view);
-      animation_camera_get (camera, view->priv->position, &x_offset, &y_offset);
+      animation_camera_get (camera, view->priv->position,
+                            &x_offset, &y_offset, &scale);
       gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
                                  0, (gdouble) x_offset);
       gimp_size_entry_set_value (GIMP_SIZE_ENTRY (view->priv->offset_entry),
                                  1, (gdouble) y_offset);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (view->priv->scale_entry),
+                                 scale * 100.0);
       g_signal_handlers_unblock_by_func (view->priv->offset_entry,
                                          G_CALLBACK (on_offset_entry_changed),
                                          view);
 
-      if (animation_camera_has_keyframe (camera, view->priv->position))
-        gtk_widget_show (view->priv->delete_button);
+      if (animation_camera_has_offset_keyframe (camera, view->priv->position))
+        gtk_widget_show (view->priv->delete_offset_button);
       else
-        gtk_widget_hide (view->priv->delete_button);
+        gtk_widget_hide (view->priv->delete_offset_button);
+      if (animation_camera_has_zoom_keyframe (camera, view->priv->position))
+        gtk_widget_show (view->priv->delete_scale_button);
+      else
+        gtk_widget_hide (view->priv->delete_scale_button);
     }
 }
 
 static void
-on_delete_clicked (GtkButton             *button,
-                   AnimationKeyFrameView *view)
+on_delete_offset_clicked (GtkButton             *button,
+                          AnimationKeyFrameView *view)
 {
-  animation_camera_delete_keyframe  (view->priv->camera,
-                                     view->priv->position);
-  gtk_widget_hide (view->priv->delete_button);
+  animation_camera_delete_offset_keyframe (view->priv->camera,
+                                           view->priv->position);
+  gtk_widget_hide (view->priv->delete_offset_button);
+}
+
+static void
+on_delete_scale_clicked (GtkButton             *button,
+                         AnimationKeyFrameView *view)
+{
+  animation_camera_delete_zoom_keyframe (view->priv->camera,
+                                         view->priv->position);
+  gtk_widget_hide (view->priv->delete_scale_button);
 }

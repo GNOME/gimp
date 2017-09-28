@@ -44,7 +44,7 @@ struct _AnimationCameraClass
   GObjectClass              parent_class;
 
   /* Signals */
-  void         (*offsets_changed)   (AnimationCamera *camera,
+  void         (*camera_changed)    (AnimationCamera *camera,
                                      gint             position,
                                      gint             duration);
   void         (*keyframe_set)      (AnimationCamera *camera,
@@ -53,29 +53,38 @@ struct _AnimationCameraClass
                                      gint             position);
 };
 
-GType             animation_camera_get_type         (void) G_GNUC_CONST;
+GType             animation_camera_get_type               (void) G_GNUC_CONST;
 
-AnimationCamera * animation_camera_new              (Animation       *animation);
+AnimationCamera * animation_camera_new                    (Animation       *animation);
 
-gboolean          animation_camera_has_keyframe     (AnimationCamera *camera,
-                                                     gint             position);
+gboolean          animation_camera_has_offset_keyframe    (AnimationCamera *camera,
+                                                           gint             position);
+gboolean          animation_camera_has_zoom_keyframe      (AnimationCamera *camera,
+                                                           gint             position);
 
-void              animation_camera_set_keyframe     (AnimationCamera *camera,
-                                                     gint             position,
-                                                     gint             x,
-                                                     gint             y);
-void              animation_camera_delete_keyframe  (AnimationCamera *camera,
-                                                     gint             position);
-void              animation_camera_preview_keyframe (AnimationCamera *camera,
-                                                     gint             position,
-                                                     gint             x,
-                                                     gint             y);
-void              animation_camera_apply_preview    (AnimationCamera *camera);
-void              animation_camera_reset_preview    (AnimationCamera *camera);
+void              animation_camera_set_offsets            (AnimationCamera *camera,
+                                                           gint             position,
+                                                           gint             x,
+                                                           gint             y);
+void              animation_camera_zoom                   (AnimationCamera *camera,
+                                                           gint             position,
+                                                           gdouble          scale);
+void              animation_camera_delete_offset_keyframe (AnimationCamera *camera,
+                                                           gint             position);
+void              animation_camera_delete_zoom_keyframe   (AnimationCamera *camera,
+                                                           gint             position);
+void              animation_camera_preview_keyframe       (AnimationCamera *camera,
+                                                           gint             position,
+                                                           gint             x,
+                                                           gint             y,
+                                                           gdouble          scale);
+void              animation_camera_apply_preview          (AnimationCamera *camera);
+void              animation_camera_reset_preview          (AnimationCamera *camera);
 
-void              animation_camera_get              (AnimationCamera *camera,
-                                                     gint             position,
-                                                     gint            *x_offset,
-                                                     gint            *y_offset);
+void              animation_camera_get                    (AnimationCamera *camera,
+                                                           gint             position,
+                                                           gint            *x_offset,
+                                                           gint            *y_offset,
+                                                           gdouble         *scale);
 
 #endif  /*  __ANIMATION_CAMERA_H__  */

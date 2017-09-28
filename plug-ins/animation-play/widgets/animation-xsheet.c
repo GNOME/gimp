@@ -819,7 +819,8 @@ animation_xsheet_add_frames (AnimationXSheet *xsheet,
       xsheet->priv->effect_buttons = g_list_append (xsheet->priv->effect_buttons,
                                                     label);
 
-      if (animation_camera_has_keyframe (camera, i))
+      if (animation_camera_has_offset_keyframe (camera, i) ||
+          animation_camera_has_zoom_keyframe (camera, i))
         {
           GtkWidget *image;
 
@@ -1323,15 +1324,18 @@ on_camera_keyframe_deleted (AnimationCamera *camera,
                             gint             position,
                             AnimationXSheet *xsheet)
 {
-  GtkWidget *button;
-
-  button = g_list_nth_data (xsheet->priv->effect_buttons,
-                            position);
-
-  if (button && gtk_bin_get_child (GTK_BIN (button)))
+  if (! animation_camera_has_offset_keyframe (camera, position) &&
+      ! animation_camera_has_zoom_keyframe (camera, position))
     {
-      gtk_container_remove (GTK_CONTAINER (button),
-                            gtk_bin_get_child (GTK_BIN (button)));
+      GtkWidget *button;
+
+      button = g_list_nth_data (xsheet->priv->effect_buttons,
+                                position);
+      if (button && gtk_bin_get_child (GTK_BIN (button)))
+        {
+          gtk_container_remove (GTK_CONTAINER (button),
+                                gtk_bin_get_child (GTK_BIN (button)));
+        }
     }
 }
 

@@ -150,12 +150,10 @@ normal_blend (gint        width,
   gdouble     offx;
   gdouble     offy;
 
-  g_return_val_if_fail (source_scale_ratio >  0.0 &&
-                        source_scale_ratio <= 1.0 &&
+  g_return_val_if_fail (source_scale_ratio >=  0.0 &&
                         source_buffer             &&
                         (! backdrop_buffer ||
-                         (backdrop_scale_ratio >= 0.1 &&
-                          backdrop_scale_ratio <= 1.0)),
+                         backdrop_scale_ratio >= 0.0),
                         NULL);
 
   /* Panel image. */

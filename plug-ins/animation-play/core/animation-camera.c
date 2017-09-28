@@ -35,7 +35,7 @@ enum
 
 enum
 {
-  OFFSETS_CHANGED,
+  CAMERA_CHANGED,
   KEYFRAME_SET,
   KEYFRAME_DELETED,
   LAST_SIGNAL
@@ -54,10 +54,14 @@ struct _AnimationCameraPrivate
 
   /* Panning and tilting. */
   GList     *offsets;
+  GList     *zoom;
 
   /* Preview */
   Offset    *preview_offset;
   gint       preview_position;
+  gdouble    preview_scale;
+
+  gboolean   block_signals;
 };
 
 static void   animation_camera_finalize             (GObject         *object);
@@ -70,12 +74,13 @@ static void   animation_camera_get_property         (GObject         *object,
                                                      GValue          *value,
                                                      GParamSpec      *pspec);
 
-static void   animation_camera_emit_offsets_changed (AnimationCamera *camera,
+static void   animation_camera_emit_camera_changed  (AnimationCamera *camera,
                                                      gint             position);
 static void   animation_camera_get_real             (AnimationCamera *camera,
                                                      gint             position,
                                                      gint            *x_offset,
-                                                     gint            *y_offset);
+                                                     gint            *y_offset,
+                                                     gdouble         *scale);
 
 G_DEFINE_TYPE (AnimationCamera, animation_camera, G_TYPE_OBJECT)
 
@@ -93,19 +98,20 @@ animation_camera_class_init (AnimationCameraClass *klass)
   object_class->set_property = animation_camera_set_property;
 
   /**
-   * AnimationCamera::offsets-changed:
+   * AnimationCamera::camera-changed:
    * @camera: the #AnimationCamera.
    * @position:
    * @duration:
    *
-   * The ::offsets-changed signal will be emitted when camera offsets
-   * were updated between [@position; @position + @duration[.
+   * The ::camera-changed signal will be emitted when camera offsets,
+   * zoom, or other characteristics were updated between
+   * [@position; @position + @duration[.
    */
-  signals[OFFSETS_CHANGED] =
-    g_signal_new ("offsets-changed",
+  signals[CAMERA_CHANGED] =
+    g_signal_new ("camera-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (AnimationCameraClass, offsets_changed),
+                  G_STRUCT_OFFSET (AnimationCameraClass, camera_changed),
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
@@ -125,7 +131,7 @@ animation_camera_class_init (AnimationCameraClass *klass)
     g_signal_new ("keyframe-set",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (AnimationCameraClass, offsets_changed),
+                  G_STRUCT_OFFSET (AnimationCameraClass, keyframe_set),
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
@@ -144,7 +150,7 @@ animation_camera_class_init (AnimationCameraClass *klass)
     g_signal_new ("keyframe-deleted",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (AnimationCameraClass, offsets_changed),
+                  G_STRUCT_OFFSET (AnimationCameraClass, keyframe_deleted),
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
@@ -190,21 +196,32 @@ animation_camera_new (Animation *animation)
 }
 
 gboolean
-animation_camera_has_keyframe (AnimationCamera *camera,
-                               gint             position)
+animation_camera_has_offset_keyframe (AnimationCamera *camera,
+                                      gint             position)
 {
   g_return_val_if_fail (position >= 0 &&
                         position < animation_get_duration (camera->priv->animation),
                         FALSE);
 
-  return (g_list_nth_data (camera->priv->offsets, position) != NULL);
+  return g_list_nth_data (camera->priv->offsets, position) != NULL;
+}
+
+gboolean
+animation_camera_has_zoom_keyframe (AnimationCamera *camera,
+                                    gint             position)
+{
+  g_return_val_if_fail (position >= 0 &&
+                        position < animation_get_duration (camera->priv->animation),
+                        FALSE);
+
+  return g_list_nth_data (camera->priv->zoom, position) != NULL;
 }
 
 void
-animation_camera_set_keyframe (AnimationCamera *camera,
-                               gint             position,
-                               gint             x,
-                               gint             y)
+animation_camera_set_offsets (AnimationCamera *camera,
+                              gint             position,
+                              gint             x,
+                              gint             y)
 {
   GList  *iter;
   Offset *offset;
@@ -238,28 +255,92 @@ animation_camera_set_keyframe (AnimationCamera *camera,
   offset->x = x;
   offset->y = y;
 
-  g_signal_emit (camera, signals[KEYFRAME_SET], 0, position);
-  animation_camera_emit_offsets_changed (camera, position);
+  if (! camera->priv->block_signals)
+    {
+      g_signal_emit (camera, signals[KEYFRAME_SET], 0, position);
+      animation_camera_emit_camera_changed (camera, position);
+    }
 }
 
 void
-animation_camera_delete_keyframe (AnimationCamera *camera,
-                                  gint             position)
+animation_camera_zoom (AnimationCamera *camera,
+                       gint             position,
+                       gdouble          scale)
 {
-  GList *offset;
+  GList   *iter;
+  gdouble *zoom;
 
   g_return_if_fail (position >= 0 &&
                     position < animation_get_duration (camera->priv->animation));
 
-  offset = g_list_nth (camera->priv->offsets, position);
+  iter = g_list_nth (camera->priv->zoom, position);
 
-  if (offset && offset->data)
+  if (! iter)
     {
-      g_free (offset->data);
-      offset->data = NULL;
+      gint length = g_list_length (camera->priv->zoom);
+      gint i;
+
+      for (i = length; i < position; i++)
+        {
+          camera->priv->zoom = g_list_append (camera->priv->zoom, NULL);
+        }
+      zoom = g_new (gdouble, 1);
+      camera->priv->zoom = g_list_append (camera->priv->zoom, zoom);
+    }
+  else
+    {
+      if (! iter->data)
+        {
+          iter->data = g_new (gdouble, 1);
+        }
+      zoom = iter->data;
+    }
+  *zoom = scale;
+
+  if (! camera->priv->block_signals)
+    {
+      g_signal_emit (camera, signals[KEYFRAME_SET], 0, position);
+      animation_camera_emit_camera_changed (camera, position);
+    }
+}
+
+void
+animation_camera_delete_offset_keyframe (AnimationCamera *camera,
+                                         gint             position)
+{
+  GList *iter;
+
+  g_return_if_fail (position >= 0 &&
+                    position < animation_get_duration (camera->priv->animation));
+
+  iter = g_list_nth (camera->priv->offsets, position);
+  if (iter && iter->data)
+    {
+      g_free (iter->data);
+      iter->data = NULL;
 
       g_signal_emit (camera, signals[KEYFRAME_DELETED], 0, position);
-      animation_camera_emit_offsets_changed (camera, position);
+      animation_camera_emit_camera_changed (camera, position);
+    }
+}
+
+void
+animation_camera_delete_zoom_keyframe (AnimationCamera *camera,
+                                       gint             position)
+{
+  GList *iter;
+
+  g_return_if_fail (position >= 0 &&
+                    position < animation_get_duration (camera->priv->animation));
+
+  iter = g_list_nth (camera->priv->zoom, position);
+  if (iter && iter->data)
+    {
+      g_free (iter->data);
+      iter->data = NULL;
+
+      g_signal_emit (camera, signals[KEYFRAME_DELETED], 0, position);
+      animation_camera_emit_camera_changed (camera, position);
     }
 }
 
@@ -267,7 +348,8 @@ void
 animation_camera_preview_keyframe (AnimationCamera *camera,
                                    gint             position,
                                    gint             x,
-                                   gint             y)
+                                   gint             y,
+                                   gdouble          scale)
 {
   g_return_if_fail (position >= 0 &&
                     position < animation_get_duration (camera->priv->animation));
@@ -277,9 +359,10 @@ animation_camera_preview_keyframe (AnimationCamera *camera,
 
   camera->priv->preview_offset->x = x;
   camera->priv->preview_offset->y = y;
+  camera->priv->preview_scale     = scale;
   camera->priv->preview_position  = position;
 
-  g_signal_emit (camera, signals[OFFSETS_CHANGED], 0,
+  g_signal_emit (camera, signals[CAMERA_CHANGED], 0,
                  position, 1);
 }
 
@@ -288,49 +371,70 @@ animation_camera_apply_preview (AnimationCamera *camera)
 {
   if (camera->priv->preview_offset)
     {
-      gint preview_offset_x;
-      gint preview_offset_y;
-      gint real_offset_x;
-      gint real_offset_y;
-      gint position;
+      gint    preview_offset_x;
+      gint    preview_offset_y;
+      gdouble preview_scale;
+      gint    real_offset_x;
+      gint    real_offset_y;
+      gdouble real_scale;
+      gint    position;
 
       animation_camera_get (camera, camera->priv->preview_position,
-                            &preview_offset_x, &preview_offset_y);
+                            &preview_offset_x, &preview_offset_y,
+                            &preview_scale);
       animation_camera_get_real (camera, camera->priv->preview_position,
-                                 &real_offset_x, &real_offset_y);
+                                 &real_offset_x, &real_offset_y,
+                                 &real_scale);
 
       g_free (camera->priv->preview_offset);
       camera->priv->preview_offset    = NULL;
       position = camera->priv->preview_position;
       camera->priv->preview_position  = -1;
 
+      /* Do not run the changed signal twice and recompute twice the
+       * same frame. Just a little internal trick. */
+      camera->priv->block_signals = TRUE;
       if (preview_offset_x != real_offset_x ||
           preview_offset_y != real_offset_y)
-        animation_camera_set_keyframe (camera, position,
-                                       preview_offset_x,
-                                       preview_offset_y);
+        {
+          animation_camera_set_offsets (camera, position,
+                                        preview_offset_x,
+                                        preview_offset_y);
+        }
+      if (preview_scale != real_scale)
+        {
+          animation_camera_zoom (camera, position, preview_scale);
+        }
+      camera->priv->block_signals = FALSE;
+      g_signal_emit (camera, signals[KEYFRAME_SET], 0, position);
+      animation_camera_emit_camera_changed (camera, position);
     }
 }
 
 void
 animation_camera_reset_preview (AnimationCamera *camera)
 {
-  gboolean offsets_changed = FALSE;
+  gboolean changed = FALSE;
   gint     position_changed;
 
   if (camera->priv->preview_offset)
     {
-      gint preview_offset_x;
-      gint preview_offset_y;
-      gint real_offset_x;
-      gint real_offset_y;
+      gint    preview_offset_x;
+      gint    preview_offset_y;
+      gdouble preview_scale;
+      gint    real_offset_x;
+      gint    real_offset_y;
+      gdouble real_scale;
 
       animation_camera_get (camera, camera->priv->preview_position,
-                            &preview_offset_x, &preview_offset_y);
+                            &preview_offset_x, &preview_offset_y,
+                            &preview_scale);
       animation_camera_get_real (camera, camera->priv->preview_position,
-                                 &real_offset_x, &real_offset_y);
-      offsets_changed = (preview_offset_x != real_offset_x ||
-                         preview_offset_y != real_offset_y);
+                                 &real_offset_x, &real_offset_y,
+                                 &real_scale);
+      changed = (preview_offset_x != real_offset_x ||
+                 preview_offset_y != real_offset_y ||
+                 preview_scale != real_scale);
       position_changed = camera->priv->preview_position;
 
       g_free (camera->priv->preview_offset);
@@ -339,8 +443,8 @@ animation_camera_reset_preview (AnimationCamera *camera)
 
   camera->priv->preview_position  = -1;
 
-  if (offsets_changed)
-    g_signal_emit (camera, signals[OFFSETS_CHANGED], 0,
+  if (changed)
+    g_signal_emit (camera, signals[CAMERA_CHANGED], 0,
                    position_changed, 1);
 }
 
@@ -348,16 +452,20 @@ void
 animation_camera_get (AnimationCamera *camera,
                       gint             position,
                       gint            *x_offset,
-                      gint            *y_offset)
+                      gint            *y_offset,
+                      gdouble         *scale)
 {
   if (camera->priv->preview_position == position)
     {
       *x_offset = camera->priv->preview_offset->x;
       *y_offset = camera->priv->preview_offset->y;
+      *scale    = camera->priv->preview_scale;
     }
   else
     {
-      animation_camera_get_real (camera, position, x_offset, y_offset);
+      animation_camera_get_real (camera, position,
+                                 x_offset, y_offset,
+                                 scale);
     }
 }
 
@@ -367,6 +475,7 @@ static void
 animation_camera_finalize (GObject *object)
 {
   g_list_free_full (ANIMATION_CAMERA (object)->priv->offsets, g_free);
+  g_list_free_full (ANIMATION_CAMERA (object)->priv->zoom, g_free);
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -412,8 +521,8 @@ animation_camera_get_property (GObject      *object,
 }
 
 static void
-animation_camera_emit_offsets_changed (AnimationCamera *camera,
-                                       gint             position)
+animation_camera_emit_camera_changed (AnimationCamera *camera,
+                                      gint             position)
 {
   GList *iter;
   gint   prev_keyframe;
@@ -426,7 +535,11 @@ animation_camera_emit_offsets_changed (AnimationCamera *camera,
       iter = g_list_nth (camera->priv->offsets, i);
       for (; iter && ! iter->data; iter = iter->prev, i--)
         ;
+      iter = g_list_nth (camera->priv->zoom, i);
       prev_keyframe = i + 1;
+      for (; iter && ! iter->data; iter = iter->prev, i--)
+        ;
+      prev_keyframe = MIN (i + 1, prev_keyframe);
     }
   else
     {
@@ -439,15 +552,23 @@ animation_camera_emit_offsets_changed (AnimationCamera *camera,
       for (; iter && ! iter->data; iter = iter->next, i++)
         ;
       if (iter && iter->data)
-        next_keyframe = i - 1;
+        {
+          next_keyframe = i - 1;
+          iter = g_list_nth (camera->priv->zoom, i);
+          for (; iter && ! iter->data; iter = iter->next, i++)
+            ;
+          next_keyframe = MAX (i - 1, next_keyframe);
+        }
       else
-        next_keyframe = animation_get_duration (camera->priv->animation) - 1;
+        {
+          next_keyframe = animation_get_duration (camera->priv->animation) - 1;
+        }
     }
   else
     {
       next_keyframe = animation_get_duration (camera->priv->animation) - 1;
     }
-  g_signal_emit (camera, signals[OFFSETS_CHANGED], 0,
+  g_signal_emit (camera, signals[CAMERA_CHANGED], 0,
                  prev_keyframe, next_keyframe - prev_keyframe + 1);
 }
 
@@ -455,19 +576,21 @@ static void
 animation_camera_get_real (AnimationCamera *camera,
                            gint             position,
                            gint            *x_offset,
-                           gint            *y_offset)
+                           gint            *y_offset,
+                           gdouble         *scale)
 {
-  Offset *keyframe;
+  Offset  *position_keyframe;
+  gdouble *zoom_keyframe;
 
   g_return_if_fail (position >= 0 &&
                     position < animation_get_duration (camera->priv->animation));
 
-  keyframe = g_list_nth_data (camera->priv->offsets, position);
-  if (keyframe)
+  position_keyframe = g_list_nth_data (camera->priv->offsets, position);
+  if (position_keyframe)
     {
       /* There is a keyframe to this exact position. Use its values. */
-      *x_offset = keyframe->x;
-      *y_offset = keyframe->y;
+      *x_offset = position_keyframe->x;
+      *y_offset = position_keyframe->y;
     }
   else
     {
@@ -529,6 +652,70 @@ animation_camera_get_real (AnimationCamera *camera,
           *y_offset = prev_keyframe->y + (position - prev_keyframe_pos) *
                                          (next_keyframe->y - prev_keyframe->y) /
                                          (next_keyframe_pos - prev_keyframe_pos);
+        }
+    }
+
+  zoom_keyframe = g_list_nth_data (camera->priv->zoom, position);
+  if (zoom_keyframe)
+    {
+      /* There is a keyframe to this exact position. Use its values. */
+      *scale = *zoom_keyframe;
+    }
+  else
+    {
+      GList  *iter;
+      gdouble *prev_keyframe = NULL;
+      gdouble *next_keyframe = NULL;
+      gint    prev_keyframe_pos;
+      gint    next_keyframe_pos;
+      gint    i;
+
+      /* This position is not a keyframe. */
+      if (position > 0)
+        {
+          i = MIN (position - 1, g_list_length (camera->priv->zoom) - 1);
+          iter = g_list_nth (camera->priv->zoom, i);
+          for (; iter && ! iter->data; iter = iter->prev, i--)
+            ;
+          if (iter && iter->data)
+            {
+              prev_keyframe_pos = i;
+              prev_keyframe = iter->data;
+            }
+        }
+      if (position < animation_get_duration (camera->priv->animation) - 1)
+        {
+          i = position + 1;
+          iter = g_list_nth (camera->priv->zoom, i);
+          for (; iter && ! iter->data; iter = iter->next, i++)
+            ;
+          if (iter && iter->data)
+            {
+              next_keyframe_pos = i;
+              next_keyframe = iter->data;
+            }
+        }
+
+      if (prev_keyframe == NULL && next_keyframe == NULL)
+        {
+          *scale = 1.0;
+        }
+      else if (prev_keyframe == NULL)
+        {
+          *scale = *next_keyframe;
+        }
+      else if (next_keyframe == NULL)
+        {
+          *scale = *prev_keyframe;
+        }
+      else
+        {
+          /* XXX No curve editing or anything like this yet.
+           * All keyframing is linear in this first version.
+           */
+          *scale = *prev_keyframe + (position - prev_keyframe_pos) *
+                                    (*next_keyframe - *prev_keyframe) /
+                                    (next_keyframe_pos - prev_keyframe_pos);
         }
     }
 }
