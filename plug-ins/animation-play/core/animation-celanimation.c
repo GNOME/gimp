@@ -770,7 +770,13 @@ animation_cel_animation_serialize (Animation   *animation,
 
   priv = ANIMATION_CEL_ANIMATION (animation)->priv;
 
+  g_signal_handlers_block_by_func (priv->camera,
+                                   G_CALLBACK (on_camera_changed),
+                                   animation);
   animation_camera_reset_preview (priv->camera);
+  g_signal_handlers_unblock_by_func (priv->camera,
+                                     G_CALLBACK (on_camera_changed),
+                                     animation);
   animation_get_size (animation, &width, &height);
   xml = g_strdup_printf ("<animation type=\"cels\" framerate=\"%f\" "
                           " duration=\"%d\" onion-skins=\"%d\""

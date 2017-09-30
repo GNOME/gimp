@@ -57,8 +57,8 @@ struct _AnimationCameraPrivate
   GList     *zoom;
 
   /* Preview */
-  Offset    *preview_offset;
   gint       preview_position;
+  Offset    *preview_offset;
   gdouble    preview_scale;
 
   gboolean   block_signals;
@@ -322,6 +322,10 @@ animation_camera_delete_offset_keyframe (AnimationCamera *camera,
       g_signal_emit (camera, signals[KEYFRAME_DELETED], 0, position);
       animation_camera_emit_camera_changed (camera, position);
     }
+  if (camera->priv->preview_position == position)
+    {
+      animation_camera_reset_preview (camera);
+    }
 }
 
 void
@@ -341,6 +345,10 @@ animation_camera_delete_zoom_keyframe (AnimationCamera *camera,
 
       g_signal_emit (camera, signals[KEYFRAME_DELETED], 0, position);
       animation_camera_emit_camera_changed (camera, position);
+    }
+  if (camera->priv->preview_position == position)
+    {
+      animation_camera_reset_preview (camera);
     }
 }
 
@@ -362,6 +370,7 @@ animation_camera_preview_keyframe (AnimationCamera *camera,
   camera->priv->preview_scale     = scale;
   camera->priv->preview_position  = position;
 
+  g_signal_emit (camera, signals[KEYFRAME_SET], 0, position);
   g_signal_emit (camera, signals[CAMERA_CHANGED], 0,
                  position, 1);
 }
@@ -369,7 +378,7 @@ animation_camera_preview_keyframe (AnimationCamera *camera,
 void
 animation_camera_apply_preview (AnimationCamera *camera)
 {
-  if (camera->priv->preview_offset)
+  if (camera->priv->preview_position != -1)
     {
       gint    preview_offset_x;
       gint    preview_offset_y;
@@ -386,7 +395,8 @@ animation_camera_apply_preview (AnimationCamera *camera)
                                  &real_offset_x, &real_offset_y,
                                  &real_scale);
 
-      g_free (camera->priv->preview_offset);
+      if (camera->priv->preview_offset)
+        g_free (camera->priv->preview_offset);
       camera->priv->preview_offset    = NULL;
       position = camera->priv->preview_position;
       camera->priv->preview_position  = -1;
@@ -415,9 +425,9 @@ void
 animation_camera_reset_preview (AnimationCamera *camera)
 {
   gboolean changed = FALSE;
-  gint     position_changed;
+  gint     position_changed = -1;
 
-  if (camera->priv->preview_offset)
+  if (camera->priv->preview_position != -1)
     {
       gint    preview_offset_x;
       gint    preview_offset_y;
@@ -437,15 +447,19 @@ animation_camera_reset_preview (AnimationCamera *camera)
                  preview_scale != real_scale);
       position_changed = camera->priv->preview_position;
 
-      g_free (camera->priv->preview_offset);
-      camera->priv->preview_offset    = NULL;
+      if (camera->priv->preview_offset)
+        g_free (camera->priv->preview_offset);
+      camera->priv->preview_offset = NULL;
     }
 
-  camera->priv->preview_position  = -1;
-
+  camera->priv->preview_position = -1;
   if (changed)
-    g_signal_emit (camera, signals[CAMERA_CHANGED], 0,
-                   position_changed, 1);
+    {
+      g_signal_emit (camera, signals[KEYFRAME_DELETED], 0,
+                     position_changed);
+      g_signal_emit (camera, signals[CAMERA_CHANGED], 0,
+                     position_changed, 1);
+    }
 }
 
 void
