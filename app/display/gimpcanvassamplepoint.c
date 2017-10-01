@@ -254,9 +254,13 @@ gimp_canvas_sample_point_draw (GimpCanvasItem *item,
 static cairo_region_t *
 gimp_canvas_sample_point_get_extents (GimpCanvasItem *item)
 {
-  cairo_rectangle_int_t rectangle;
-  gdouble               x, y;
-  gint                  x1, x2, y1, y2;
+  GimpCanvasSamplePointPrivate *private = GET_PRIVATE (item);
+  GtkWidget                    *canvas  = gimp_canvas_item_get_canvas (item);
+  cairo_rectangle_int_t         rectangle;
+  PangoLayout                  *layout;
+  PangoRectangle                ink;
+  gdouble                       x, y;
+  gint                          x1, x2, y1, y2;
 
   gimp_canvas_sample_point_transform (item, &x, &y);
 
@@ -265,14 +269,18 @@ gimp_canvas_sample_point_get_extents (GimpCanvasItem *item)
   y1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
   y2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
 
+  layout = gimp_canvas_get_layout (GIMP_CANVAS (canvas),
+                                   "%d", private->index);
+
+  pango_layout_get_extents (layout, &ink, NULL);
+
+  x2 = MAX (x2, 2.5 + ink.width);
+  y2 = MAX (y2, 2.5 + ink.height);
+
   rectangle.x      = x1 - 1.5;
   rectangle.y      = y1 - 1.5;
   rectangle.width  = x2 - x1 + 3.0;
   rectangle.height = y2 - y1 + 3.0;
-
-  /* HACK: add 5 so the number gets cleared too */
-  rectangle.width  += 5;
-  rectangle.height += 5;
 
   return cairo_region_create_rectangle (&rectangle);
 }
