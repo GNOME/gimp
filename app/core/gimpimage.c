@@ -2456,9 +2456,13 @@ gimp_image_get_xcf_version (GimpImage    *image,
    * saved through parasites, which is compatible with older versions.
    */
 
-  /* need version 7 for high bit depth images */
+  /* need version 7 for != 8-bit gamma images */
   if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
     version = MAX (7, version);
+
+  /* need version 12 for > 8-bit images for proper endian swapping */
+  if (gimp_image_get_precision (image) > GIMP_PRECISION_U8_GAMMA)
+    version = MAX (12, version);
 
   /* need version 8 for zlib compression */
   if (zlib_compression)
@@ -2499,6 +2503,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 9:
     case 10:
     case 11:
+    case 12:
       if (gimp_version)   *gimp_version   = 210;
       if (version_string) *version_string = "GIMP 2.10";
       break;
