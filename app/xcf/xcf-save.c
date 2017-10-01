@@ -1646,7 +1646,7 @@ xcf_save_tile (XcfInfo        *info,
       gint n_components = babl_format_get_n_components (format);
 
       xcf_write_component_check_error (info, bpp / n_components, tile_data,
-                                       tile_size / n_components);
+                                       tile_size / bpp * n_components);
     }
 
   return TRUE;
