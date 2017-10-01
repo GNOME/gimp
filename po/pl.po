@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-17 16:44+0200\n"
-"PO-Revision-Date: 2017-09-17 16:45+0200\n"
+"POT-Creation-Date: 2017-10-01 14:04+0200\n"
+"PO-Revision-Date: 2017-10-01 14:05+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -3038,13 +3038,13 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/display/gimpdisplayshell-scale-dialog.c:122
 #: ../app/tools/gimpfiltertool.c:321
 #: ../app/tools/gimpforegroundselecttool.c:307 ../app/tools/gimptexttool.c:1579
-#: ../app/tools/gimptransformtool.c:1205 ../app/widgets/gimpactionview.c:669
+#: ../app/tools/gimptransformtool.c:1206 ../app/widgets/gimpactionview.c:669
 #: ../app/widgets/gimpcolordialog.c:110
 #: ../app/widgets/gimpcontrollereditor.c:660
 #: ../app/widgets/gimpcontrollerlist.c:564
 #: ../app/widgets/gimpdeviceeditor.c:508 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:386
-#: ../app/widgets/gimphelp.c:725 ../app/widgets/gimpiconpicker.c:488
+#: ../app/widgets/gimpfiledialog.c:324 ../app/widgets/gimphelp.c:392
+#: ../app/widgets/gimphelp.c:741 ../app/widgets/gimpiconpicker.c:488
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:734
 msgid "_Cancel"
 msgstr "_Anuluj"
@@ -6887,7 +6887,7 @@ msgstr "Przywracanie wszystkich filtrów"
 #: ../app/dialogs/print-size-dialog.c:123 ../app/dialogs/scale-dialog.c:136
 #: ../app/dialogs/stroke-dialog.c:127
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:121
-#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1204
+#: ../app/tools/gimpfiltertool.c:320 ../app/tools/gimptransformtool.c:1205
 #: ../app/widgets/gimpcolordialog.c:109
 msgid "_Reset"
 msgstr "_Przywróć"
@@ -10115,7 +10115,7 @@ msgstr "Włącza bezszwowe narzędzie klonowania."
 
 #: ../app/config/gimprc-blurbs.h:403
 msgid "What to do when the space bar is pressed in the image window."
-msgstr "Określa co zrobić, gdy została wciśnięta spacja w oknie obrazu."
+msgstr "Określa, co zrobić po wciśnięciu spacji w oknie obrazu."
 
 #: ../app/config/gimprc-blurbs.h:406
 msgid ""
@@ -16152,7 +16152,7 @@ msgstr "Nie można zmodyfikować pikseli grup warstw."
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:438 ../app/tools/gimpfiltertool.c:275
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
-#: ../app/tools/gimptransformtool.c:1436 ../app/tools/gimpwarptool.c:629
+#: ../app/tools/gimptransformtool.c:1437 ../app/tools/gimpwarptool.c:629
 msgid "The active layer's pixels are locked."
 msgstr "Aktywne piksele warstwy są zablokowane."
 
@@ -17966,7 +17966,7 @@ msgstr "Próbowano dodać element „%s” (%d) do błędnego obrazu"
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "Element „%s” (%d) nie może zostać zmodyfikowany, ponieważ jego zawartość "
-"została zablokowana"
+"jest zablokowana"
 
 #: ../app/pdb/gimppdb-utils.c:542
 #, c-format
@@ -17974,7 +17974,7 @@ msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
 msgstr ""
 "Element „%s” (%d) nie może zostać zmodyfikowany, ponieważ jego położenie "
-"i rozmiar zostały zablokowane"
+"i rozmiar są zablokowane"
 
 #: ../app/pdb/gimppdb-utils.c:562
 #, c-format
@@ -19204,7 +19204,7 @@ msgstr "Kliknięcie i przeciągnięcie rysuje gradient"
 #: ../app/tools/gimpblendtool.c:258 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1444 ../app/tools/gimpwarptool.c:640
+#: ../app/tools/gimptransformtool.c:1445 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
@@ -19842,25 +19842,25 @@ msgstr "Kierunek  (%s)"
 msgid "Clipping"
 msgstr "Przycinanie"
 
-#: ../app/tools/gimpfliptool.c:103
+#: ../app/tools/gimpfliptool.c:106
 msgid "Flip"
 msgstr "Odbicie"
 
-#: ../app/tools/gimpfliptool.c:104
+#: ../app/tools/gimpfliptool.c:107
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr "Odbicie: odwraca warstwę, zaznaczenie lub ścieżkę, pionowo lub poziomo"
 
-#: ../app/tools/gimpfliptool.c:106 ../app/tools/gimpfliptool.c:129
+#: ../app/tools/gimpfliptool.c:109 ../app/tools/gimpfliptool.c:133
 msgid "_Flip"
 msgstr "Od_bicie"
 
-#: ../app/tools/gimpfliptool.c:280
+#: ../app/tools/gimpfliptool.c:298
 msgctxt "undo-type"
 msgid "Flip horizontally"
 msgstr "Odbicie poziome"
 
-#: ../app/tools/gimpfliptool.c:283
+#: ../app/tools/gimpfliptool.c:301
 msgctxt "undo-type"
 msgid "Flip vertically"
 msgstr "Odbicie pionowe"
@@ -19868,7 +19868,7 @@ msgstr "Odbicie pionowe"
 #. probably this is not actually reached today, but
 #. * could be if someone defined FLIP_DIAGONAL, say...
 #.
-#: ../app/tools/gimpfliptool.c:289
+#: ../app/tools/gimpfliptool.c:307
 msgctxt "undo-desc"
 msgid "Flip"
 msgstr "Odbicie"
@@ -20384,7 +20384,7 @@ msgstr "_Przesunięcie"
 msgid "There is no path to move."
 msgstr "Brak ścieżki do przeniesienia."
 
-#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1471
+#: ../app/tools/gimpmovetool.c:257 ../app/tools/gimptransformtool.c:1472
 msgid "The active path's position is locked."
 msgstr "Położenie aktywnej ścieżki jest zablokowane."
 
@@ -21284,27 +21284,27 @@ msgstr "Zaznaczenie nie przecina się z warstwą."
 msgid "Transform Step"
 msgstr "Krok przekształcenia"
 
-#: ../app/tools/gimptransformtool.c:1431
+#: ../app/tools/gimptransformtool.c:1432
 msgid "There is no layer to transform."
 msgstr "Brak warstwy do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1438
+#: ../app/tools/gimptransformtool.c:1439
 msgid "The active layer's position and size are locked."
 msgstr "Położenie i wymiary aktywnej warstwy są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:1451
+#: ../app/tools/gimptransformtool.c:1452
 msgid "There is no selection to transform."
 msgstr "Brak zaznaczenia do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1464
+#: ../app/tools/gimptransformtool.c:1465
 msgid "There is no path to transform."
 msgstr "Brak ścieżki do przekształcenia."
 
-#: ../app/tools/gimptransformtool.c:1469
+#: ../app/tools/gimptransformtool.c:1470
 msgid "The active path's strokes are locked."
 msgstr "Krzywe aktywnej ścieżki są zablokowane."
 
-#: ../app/tools/gimptransformtool.c:1473
+#: ../app/tools/gimptransformtool.c:1474
 msgid "The active path has no strokes."
 msgstr "Aktywna ścieżka nie ma krzywych."
 
@@ -21743,8 +21743,7 @@ msgstr "_Zmień przypisanie skrótu"
 #: ../app/widgets/gimpactionview.c:686
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr ""
-"Skrót „%s” został już powiązany z działaniem „%s” z grupy o nazwie „%s”."
+msgstr "Skrót „%s” jest już powiązany z działaniem „%s” z grupy o nazwie „%s”."
 
 #: ../app/widgets/gimpactionview.c:690
 #, c-format
@@ -22621,15 +22620,15 @@ msgstr "Zmiana koloru tła siatki"
 msgid "_Background color:"
 msgstr "Kolor _tła:"
 
-#: ../app/widgets/gimphelp.c:310
+#: ../app/widgets/gimphelp.c:316
 msgid "Help browser is missing"
 msgstr "Brak przeglądarki pomocy"
 
-#: ../app/widgets/gimphelp.c:311
+#: ../app/widgets/gimphelp.c:317
 msgid "The GIMP help browser is not available."
 msgstr "Przeglądarka pomocy programu GIMP jest niedostępna."
 
-#: ../app/widgets/gimphelp.c:312
+#: ../app/widgets/gimphelp.c:318
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -22637,43 +22636,57 @@ msgstr ""
 "Nie można odnaleźć wtyczki przeglądarki pomocy programu GIMP. Można użyć "
 "przeglądarki WWW do czytania stron pomocy."
 
-#: ../app/widgets/gimphelp.c:358
+#: ../app/widgets/gimphelp.c:364
 msgid "Help browser doesn't start"
 msgstr "Nie można uruchomić przeglądarki pomocy"
 
-#: ../app/widgets/gimphelp.c:359
+#: ../app/widgets/gimphelp.c:365
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Nie można uruchomić wtyczki przeglądarki pomocy programu GIMP."
 
-#: ../app/widgets/gimphelp.c:361
+#: ../app/widgets/gimphelp.c:367
 msgid "You may instead use the web browser for reading the help pages."
 msgstr "Można użyć przeglądarki WWW do czytania stron pomocy."
 
-#: ../app/widgets/gimphelp.c:387
+#: ../app/widgets/gimphelp.c:393
 msgid "Use _Web Browser"
 msgstr "Użycie przeglądarki _WWW"
 
-#: ../app/widgets/gimphelp.c:721
+#: ../app/widgets/gimphelp.c:738
 msgid "GIMP user manual is missing"
 msgstr "Brak podręcznika użytkownika programu GIMP"
 
-#: ../app/widgets/gimphelp.c:726
-msgid "Read _Online"
-msgstr "Pod_ręcznik w Internecie"
-
-#: ../app/widgets/gimphelp.c:749
-msgid "The GIMP user manual is not installed on your computer."
+#: ../app/widgets/gimphelp.c:754
+msgid "The GIMP user manual is not installed in your language."
 msgstr ""
-"Podręcznik użytkownika programu GIMP nie został zainstalowany na tym "
-"komputerze."
+"Podręcznik użytkownika programu GIMP nie jest zainstalowany w tym języku."
 
-#: ../app/widgets/gimphelp.c:752
+#: ../app/widgets/gimphelp.c:771
+msgid "Read Selected _Language"
+msgstr "_Otwórz w wybranym języku"
+
+#: ../app/widgets/gimphelp.c:779
+msgid "Available manuals"
+msgstr "Dostępne podręczniki"
+
+#: ../app/widgets/gimphelp.c:821
+msgid ""
+"You may either select a manual in another language or read the online "
+"version."
+msgstr ""
+"Można wybrać podręcznik w innym języku lub otworzyć wersję internetową."
+
+#: ../app/widgets/gimphelp.c:827
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
 msgstr ""
 "Można zainstalować dodatkowe pakiety pomocy lub zmienić ustawienia, aby użyć "
 "wersji internetowej."
+
+#: ../app/widgets/gimphelp.c:832
+msgid "Read _Online"
+msgstr "Pod_ręcznik w Internecie"
 
 #: ../app/widgets/gimphistogrameditor.c:109
 msgid "Linear"
@@ -23293,7 +23306,7 @@ msgstr "Instalacja programu GIMP jest niepełna:"
 
 #: ../app/widgets/gimpuimanager.c:762
 msgid "Please make sure the menu XML files are correctly installed."
-msgstr "Proszę upewnić się, że pliki XML menu zostały poprawnie zainstalowane."
+msgstr "Proszę upewnić się, że pliki XML menu są poprawnie zainstalowane."
 
 #: ../app/widgets/gimpuimanager.c:768
 #, c-format

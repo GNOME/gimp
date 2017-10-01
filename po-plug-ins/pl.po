@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-03 15:54+0200\n"
-"PO-Revision-Date: 2017-09-03 15:55+0200\n"
+"POT-Creation-Date: 2017-10-01 14:04+0200\n"
+"PO-Revision-Date: 2017-10-01 14:05+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -51,8 +51,8 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
-#: ../plug-ins/common/file-pdf-load.c:569
-#: ../plug-ins/common/file-pdf-load.c:1133
+#: ../plug-ins/common/file-pdf-load.c:707
+#: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3422
 #: ../plug-ins/common/file-raw-data.c:1553 ../plug-ins/common/file-svg.c:727
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1263
@@ -69,7 +69,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:271
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:312
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
@@ -116,7 +116,7 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
-#: ../plug-ins/common/file-pdf-load.c:570 ../plug-ins/common/file-svg.c:728
+#: ../plug-ins/common/file-pdf-load.c:708 ../plug-ins/common/file-svg.c:728
 #: ../plug-ins/common/file-wmf.c:506 ../plug-ins/common/film.c:1264
 #: ../plug-ins/common/filter-pack.c:1207 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:595
@@ -129,7 +129,7 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
 #: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
 #: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:272 ../plug-ins/flame/flame.c:650
+#: ../plug-ins/common/wavelet-decompose.c:313 ../plug-ins/flame/flame.c:650
 #: ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
@@ -455,7 +455,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:241
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1790 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1792 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -1044,7 +1044,7 @@ msgstr "Zapis parametrów przeglądarki CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
-#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1555
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1559
 #: ../plug-ins/file-tiff/file-tiff-save.c:644 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1898,7 +1898,7 @@ msgstr "Rozkładanie"
 
 #: ../plug-ins/common/decompose.c:492
 msgid "Image not suitable for this decomposition"
-msgstr "Obraz nie jest odpowiedni do tego rozkładania"
+msgstr "Obraz nie jest odpowiedni do tego rozkładu"
 
 #: ../plug-ins/common/decompose.c:818
 msgid "Decompose"
@@ -2191,7 +2191,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:904
+#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:1077 ../plug-ins/common/file-sunras.c:429
@@ -2202,7 +2202,7 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
 #: ../plug-ins/file-psd/psd-load.c:130
-#: ../plug-ins/file-raw/file-darktable.c:361
+#: ../plug-ins/file-raw/file-darktable.c:364
 #: ../plug-ins/file-raw/file-rawtherapee.c:314 ../plug-ins/file-sgi/sgi.c:325
 #: ../plug-ins/file-tiff/file-tiff-load.c:236
 #, c-format
@@ -2288,7 +2288,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1076
-#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1526
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1530
 #: ../plug-ins/file-sgi/sgi.c:579 ../plug-ins/file-tiff/file-tiff-save.c:317
 #, c-format
 msgid "Exporting '%s'"
@@ -3059,73 +3059,88 @@ msgstr "Dolna krawędź jest poza zakresem (musi być < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Zapisanie do pliku „%s” się nie powiodło: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:300
+#: ../plug-ins/common/file-pdf-load.c:321
+#: ../plug-ins/common/file-pdf-load.c:340
 #: ../plug-ins/common/file-pdf-save.c:338
 #: ../plug-ins/common/file-pdf-save.c:355
 msgid "Portable Document Format"
 msgstr "PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:547
-#: ../plug-ins/common/file-pdf-load.c:610
+#. TRANSLATORS: first argument is file name,
+#. * second is out-of-range page number, third is
+#. * number of pages. Specify order as in English if needed.
+#.
+#: ../plug-ins/common/file-pdf-load.c:504
+#, c-format
+msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
+msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
+msgstr[0] ""
+"Dokument PDF „%1$s” ma jedną stronę. %2$d. strona jest spoza zakresu."
+msgstr[1] ""
+"Dokument PDF „%1$s” ma %3$d strony. %2$d. strona jest spoza zakresu."
+msgstr[2] "Dokument PDF „%1$s” ma %3$d stron. %2$d. strona jest spoza zakresu."
+
+#: ../plug-ins/common/file-pdf-load.c:679
+#: ../plug-ins/common/file-pdf-load.c:749
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Nie można wczytać „%s”: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:558
+#: ../plug-ins/common/file-pdf-load.c:694
 msgid "PDF is password protected, please input the password:"
 msgstr "Plik PDF jest chroniony hasłem, proszę je wpisać:"
 
-#: ../plug-ins/common/file-pdf-load.c:566
+#: ../plug-ins/common/file-pdf-load.c:704
 msgid "Encrypted PDF"
 msgstr "Zaszyfrowany plik PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:594
+#: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
 msgstr "Błędne hasło. Proszę wpisać właściwe:"
 
-#: ../plug-ins/common/file-pdf-load.c:938
+#: ../plug-ins/common/file-pdf-load.c:1077
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:940 ../plug-ins/common/file-ps.c:1185
+#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1185
 #, c-format
 msgid "%s-pages"
 msgstr "%s-stron"
 
-#: ../plug-ins/common/file-pdf-load.c:1129
+#: ../plug-ins/common/file-pdf-load.c:1268
 msgid "Import from PDF"
 msgstr "Import z PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1134 ../plug-ins/common/file-ps.c:3423
+#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3423
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
 #: ../plug-ins/metadata/metadata-editor.c:5619
 msgid "_Import"
 msgstr "Za_importuj"
 
-#: ../plug-ins/common/file-pdf-load.c:1167
+#: ../plug-ins/common/file-pdf-load.c:1306
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Błąd podczas uzyskiwania liczby stron z podanego pliku PDF."
 
-#: ../plug-ins/common/file-pdf-load.c:1209
+#: ../plug-ins/common/file-pdf-load.c:1352
 msgid "_Width (pixels):"
 msgstr "_Szerokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1210
+#: ../plug-ins/common/file-pdf-load.c:1353
 msgid "_Height (pixels):"
 msgstr "_Wysokość (piksele):"
 
-#: ../plug-ins/common/file-pdf-load.c:1212
+#: ../plug-ins/common/file-pdf-load.c:1355
 msgid "_Resolution:"
 msgstr "_Rozdzielczość:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1223
+#: ../plug-ins/common/file-pdf-load.c:1366
 msgid "Use _Anti-aliasing"
 msgstr "Użycie _wygładzania"
 
-#: ../plug-ins/common/file-pdf-load.c:1501
-#: ../plug-ins/common/file-pdf-load.c:1502 ../plug-ins/common/file-svg.c:916
+#: ../plug-ins/common/file-pdf-load.c:1644
+#: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
 #: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -6328,22 +6343,45 @@ msgstr "Wyszukiwanie poziomego i pionowego gradientu"
 msgid "Flow step %d"
 msgstr "%d. płynący krok"
 
-#: ../plug-ins/common/wavelet-decompose.c:86
-#: ../plug-ins/common/wavelet-decompose.c:267
+#: ../plug-ins/common/wavelet-decompose.c:97
+#: ../plug-ins/common/wavelet-decompose.c:308
 msgid "Wavelet decompose"
 msgstr "Rozkład falki"
 
-#: ../plug-ins/common/wavelet-decompose.c:91
+#: ../plug-ins/common/wavelet-decompose.c:102
 msgid "_Wavelet-decompose..."
 msgstr "_Rozkład falki…"
 
-#: ../plug-ins/common/wavelet-decompose.c:161
+#: ../plug-ins/common/wavelet-decompose.c:175
 msgid "Wavelet-Decompose"
 msgstr "Rozkład falki"
 
-#: ../plug-ins/common/wavelet-decompose.c:296
+#: ../plug-ins/common/wavelet-decompose.c:182
+msgid "Decomposition"
+msgstr "Rozkład"
+
+#: ../plug-ins/common/wavelet-decompose.c:208
+#, c-format
+msgid "Scale %d"
+msgstr "Waga %d"
+
+#: ../plug-ins/common/wavelet-decompose.c:232
+msgid "Residual"
+msgstr "Pozostałe"
+
+#: ../plug-ins/common/wavelet-decompose.c:339
 msgid "Scales:"
 msgstr "Waga:"
+
+#. create group layer
+#: ../plug-ins/common/wavelet-decompose.c:351
+msgid "Create a layer group to store the decomposition"
+msgstr "Utworzenie grupy warstw do przechowania rozkładu"
+
+#. create layer masks
+#: ../plug-ins/common/wavelet-decompose.c:363
+msgid "Add a layer mask to each scales layers"
+msgstr "Dodanie maski warstwy do każdej warstwy wagi"
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
@@ -6741,7 +6779,7 @@ msgstr "%i. ikona"
 
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:505
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
-#: ../plug-ins/file-raw/file-darktable.c:437
+#: ../plug-ins/file-raw/file-darktable.c:442
 #: ../plug-ins/file-raw/file-rawtherapee.c:429
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -6951,7 +6989,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Nieobsługiwana głębia kolorów: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:387 ../plug-ins/file-psd/psd-load.c:397
-#: ../plug-ins/file-psd/psd-load.c:608 ../plug-ins/file-psd/psd-load.c:831
+#: ../plug-ins/file-psd/psd-load.c:608 ../plug-ins/file-psd/psd-load.c:830
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Plik jest uszkodzony."
@@ -6991,32 +7029,32 @@ msgstr "Nieobsługiwana lub nieprawidłowa szerokość maski warstwy: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary maski warstwy: %d×%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1346 ../plug-ins/file-psd/psd-load.c:1765
+#: ../plug-ins/file-psd/psd-load.c:1314 ../plug-ins/file-psd/psd-load.c:1767
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Nieobsługiwany tryb kompresji: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1861
+#: ../plug-ins/file-psd/psd-load.c:1863
 msgid "Extra"
 msgstr "Dodatkowe"
 
-#: ../plug-ins/file-psd/psd-load.c:2049
+#: ../plug-ins/file-psd/psd-load.c:2042
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Nieobsługiwane lub nieprawidłowe wymiary kanału"
 
-#: ../plug-ins/file-psd/psd-load.c:2118
+#: ../plug-ins/file-psd/psd-load.c:2111
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Dekompresja danych się nie powiodła"
 
-#: ../plug-ins/file-psd/psd-save.c:458
+#: ../plug-ins/file-psd/psd-save.c:460
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Błąd: nie można konwertować podstawowego typu obrazu programu GIMP na tryb "
 "PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1519
+#: ../plug-ins/file-psd/psd-save.c:1523
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7025,7 +7063,7 @@ msgstr ""
 "Nie można wyeksportować „%s”. Format pliku PSD nie obsługuje obrazów "
 "większych niż 30000 pikseli wzdłuż lub wszerz."
 
-#: ../plug-ins/file-psd/psd-save.c:1540
+#: ../plug-ins/file-psd/psd-save.c:1544
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -11633,6 +11671,14 @@ msgstr "Ustaw datę"
 #: ../plug-ins/metadata/metadata-editor.c:1615
 msgid "Unrated"
 msgstr "Bez oceny"
+
+#: ../plug-ins/metadata/metadata-editor.c:5615
+msgid "Import Metadata File"
+msgstr "Import pliku metadanych"
+
+#: ../plug-ins/metadata/metadata-editor.c:5650
+msgid "Export Metadata File"
+msgstr "Eksport pliku metadanych"
 
 #: ../plug-ins/metadata/metadata-editor.c:5654
 msgid "_Export"
