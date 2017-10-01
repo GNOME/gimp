@@ -2204,7 +2204,7 @@ xcf_load_tile_rle (XcfInfo       *info,
       gint n_components = babl_format_get_n_components (format);
 
       xcf_read_from_be (bpp / n_components, tile_data,
-                        tile_size / bpp);
+                        tile_size / bpp * n_components);
     }
 
   gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
@@ -2302,7 +2302,7 @@ xcf_load_tile_zlib (XcfInfo       *info,
       gint n_components = babl_format_get_n_components (format);
 
       xcf_read_from_be (bpp / n_components, tile_data,
-                        tile_size / bpp);
+                        tile_size / bpp * n_components);
     }
 
   gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
