@@ -18,6 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
+
 #include <locale.h>
 #include <string.h>
 
@@ -27,9 +29,17 @@
 
 #include "widgets-types.h"
 
+#include "gimphelp.h"
 #include "gimplanguagestore-parser.h"
 #include "gimptranslationstore.h"
 
+#include "gimp-intl.h"
+
+enum
+{
+  PROP_0,
+  PROP_MANUAL_L18N
+};
 
 struct _GimpTranslationStoreClass
 {
@@ -39,10 +49,20 @@ struct _GimpTranslationStoreClass
 struct _GimpTranslationStore
 {
   GimpLanguageStore  parent_instance;
+
+  gboolean           manual_l18n;
 };
 
 
-static void   gimp_translation_store_constructed (GObject              *object);
+static void   gimp_translation_store_constructed  (GObject           *object);
+static void   gimp_translation_store_set_property (GObject           *object,
+                                                   guint              property_id,
+                                                   const GValue      *value,
+                                                   GParamSpec        *pspec);
+static void   gimp_translation_store_get_property (GObject           *object,
+                                                   guint              property_id,
+                                                   GValue            *value,
+                                                   GParamSpec        *pspec);
 
 
 G_DEFINE_TYPE (GimpTranslationStore, gimp_translation_store,
@@ -54,9 +74,17 @@ G_DEFINE_TYPE (GimpTranslationStore, gimp_translation_store,
 static void
 gimp_translation_store_class_init (GimpTranslationStoreClass *klass)
 {
-  GObjectClass           *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed = gimp_translation_store_constructed;
+  object_class->constructed  = gimp_translation_store_constructed;
+  object_class->set_property = gimp_translation_store_set_property;
+  object_class->get_property = gimp_translation_store_get_property;
+
+  g_object_class_install_property (object_class, PROP_MANUAL_L18N,
+                                   g_param_spec_boolean ("manual-l18n", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -71,19 +99,78 @@ gimp_translation_store_constructed (GObject *object)
   GHashTableIter  lang_iter;
   gpointer        code;
   gpointer        name;
+  GList          *sublist = NULL;
 
   lang_list = gimp_language_store_parser_get_languages (TRUE);
   g_return_if_fail (lang_list != NULL);
 
+  if (GIMP_TRANSLATION_STORE (object)->manual_l18n)
+    sublist = gimp_help_get_installed_languages ();
+
   g_hash_table_iter_init (&lang_iter, lang_list);
 
+  if (sublist)
+    {
+      GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
+                                                   _("Available manuals..."),
+                                                   "");
+    }
   while (g_hash_table_iter_next (&lang_iter, &code, &name))
-    GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                 name, code);
+    {
+      if (! sublist ||
+          g_list_find_custom (sublist, code, (GCompareFunc) g_strcmp0))
+        {
+          GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
+                                                       name, code);
+        }
+    }
+  g_list_free_full (sublist, g_free);
+}
+
+static void
+gimp_translation_store_set_property (GObject      *object,
+                                     guint         property_id,
+                                     const GValue *value,
+                                     GParamSpec   *pspec)
+{
+  GimpTranslationStore *store = GIMP_TRANSLATION_STORE (object);
+
+  switch (property_id)
+    {
+    case PROP_MANUAL_L18N:
+      store->manual_l18n = g_value_get_boolean (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_translation_store_get_property (GObject    *object,
+                                     guint       property_id,
+                                     GValue     *value,
+                                     GParamSpec *pspec)
+{
+  GimpTranslationStore *store = GIMP_TRANSLATION_STORE (object);
+
+  switch (property_id)
+    {
+    case PROP_MANUAL_L18N:
+      g_value_set_boolean (value, store->manual_l18n);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 GtkListStore *
-gimp_translation_store_new (void)
+gimp_translation_store_new (gboolean manual_l18n)
 {
-  return g_object_new (GIMP_TYPE_TRANSLATION_STORE, NULL);
+  return g_object_new (GIMP_TYPE_TRANSLATION_STORE,
+                       "manual-l18n", manual_l18n,
+                       NULL);
 }

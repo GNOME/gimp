@@ -38,7 +38,7 @@ typedef struct _GimpTranslationStoreClass  GimpTranslationStoreClass;
 
 GType          gimp_translation_store_get_type (void) G_GNUC_CONST;
 
-GtkListStore * gimp_translation_store_new      (void);
+GtkListStore * gimp_translation_store_new      (gboolean manual_l18n);
 
 
 #endif  /* __GIMP_TRANSLATION_STORE_H__ */

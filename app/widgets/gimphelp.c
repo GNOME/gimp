@@ -47,6 +47,7 @@
 
 #include "gimphelp.h"
 #include "gimphelp-ids.h"
+#include "gimplanguagecombobox.h"
 #include "gimplanguagestore-parser.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
@@ -101,7 +102,6 @@ static GFile    * gimp_help_get_user_manual_basedir  (void);
 
 static void       gimp_help_query_alt_user_manual    (GimpIdleHelp *idle_help);
 
-static GList    * gimp_help_get_installed_manuals    (Gimp         *gimp);
 static void       gimp_help_language_combo_changed   (GtkComboBox  *combo,
                                                       GimpIdleHelp *idle_help);
 
@@ -227,6 +227,61 @@ gimp_help_user_manual_changed (Gimp *gimp)
     }
 }
 
+GList *
+gimp_help_get_installed_languages (void)
+{
+  GList *manuals = NULL;
+  GFile *basedir;
+
+  /*  if GIMP2_HELP_URI is set, assume that the manual can be found there  */
+  if (g_getenv ("GIMP2_HELP_URI"))
+    basedir = g_file_new_for_uri (g_getenv ("GIMP2_HELP_URI"));
+  else
+    basedir = gimp_help_get_user_manual_basedir ();
+
+  if (g_file_query_file_type (basedir, G_FILE_QUERY_INFO_NONE, NULL) ==
+      G_FILE_TYPE_DIRECTORY)
+    {
+      GFileEnumerator *enumerator;
+
+      enumerator = g_file_enumerate_children (basedir,
+                                              G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                              G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                              G_FILE_QUERY_INFO_NONE,
+                                              NULL, NULL);
+
+      if (enumerator)
+        {
+          GFileInfo *info;
+
+          while ((info = g_file_enumerator_next_file (enumerator,
+                                                      NULL, NULL)))
+            {
+              if (g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
+                {
+                  GFile *locale_dir;
+                  GFile *file;
+
+                  locale_dir = g_file_enumerator_get_child (enumerator, info);
+                  file  = g_file_get_child (locale_dir, "gimp-help.xml");
+                  if (g_file_query_file_type (file, G_FILE_QUERY_INFO_NONE,
+                                              NULL) == G_FILE_TYPE_REGULAR)
+                    {
+                      manuals = g_list_prepend (manuals,
+                                                g_strdup (g_file_info_get_name (info)));
+                    }
+                  g_object_unref (locale_dir);
+                  g_object_unref (file);
+                }
+              g_object_unref (info);
+            }
+          g_object_unref (enumerator);
+        }
+    }
+  g_object_unref (basedir);
+
+  return manuals;
+}
 
 /*  private functions  */
 
@@ -755,64 +810,23 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
                                        "in your language."));
 
   /* Add a list of available manuals instead, if any. */
-  manuals = gimp_help_get_installed_manuals (idle_help->gimp);
+  manuals = gimp_help_get_installed_languages ();
   if (manuals != NULL)
     {
-      GtkWidget       *lang_combo;
-      GtkTreeStore    *store;
-      GtkCellRenderer *cell;
-      GList           *lang;
-      GHashTable      *languages;
-      GtkTreeIter      tree_iter;
+      GtkWidget *lang_combo;
 
-      languages = gimp_language_store_parser_get_languages (FALSE);
       /* Add an additional button. */
       gtk_dialog_add_button (GTK_DIALOG (dialog),
                              _("Read Selected _Language"),
                              GTK_RESPONSE_YES);
       /* And a dropdown list of available manuals. */
-      store = gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-
-      /* First item is for labelling. */
-      gtk_tree_store_insert (store, &tree_iter, NULL, -1);
-      gtk_tree_store_set (store, &tree_iter,
-                          0, _("Available manuals"),
-                          1, "",
-                          -1);
-      for (lang = manuals; lang; lang = lang->next)
-        {
-          const gchar *localized_language;
-          gchar       *label = NULL;
-
-          localized_language = g_hash_table_lookup (languages,
-                                                    lang->data);
-          if (localized_language)
-            {
-              label = g_strdup_printf ("%s [%s]", localized_language,
-                                       (gchar *) lang->data);
-            }
-          gtk_tree_store_insert (store, &tree_iter, NULL, -1);
-          gtk_tree_store_set (store, &tree_iter,
-                              0, label ? label : lang->data,
-                              1, lang->data,
-                              -1);
-          if (label)
-            g_free (label);
-        }
-      lang_combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (store));
-      g_object_unref (store);
-      cell = gtk_cell_renderer_text_new ();
-      gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (lang_combo), cell,
-                                  TRUE);
-      gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (lang_combo), cell,
-                                      "text", 0, NULL);
+      lang_combo = gimp_language_combo_box_new (TRUE);
       gtk_combo_box_set_active (GTK_COMBO_BOX (lang_combo), 0);
       gtk_dialog_set_response_sensitive (idle_help->query_dialog,
                                          GTK_RESPONSE_YES, FALSE);
       g_signal_connect (lang_combo, "changed",
                         G_CALLBACK (gimp_help_language_combo_changed),
                         idle_help);
-
       gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                           lang_combo, TRUE, TRUE, 0);
       gtk_widget_show (lang_combo);
@@ -853,90 +867,17 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
   gtk_widget_show (dialog);
 }
 
-static GList *
-gimp_help_get_installed_manuals (Gimp *gimp)
-{
-  GList *manuals = NULL;
-  GFile *basedir;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-
-  /*  if GIMP2_HELP_URI is set, assume that the manual can be found there  */
-  if (g_getenv ("GIMP2_HELP_URI"))
-    basedir = g_file_new_for_uri (g_getenv ("GIMP2_HELP_URI"));
-  else
-    basedir = gimp_help_get_user_manual_basedir ();
-
-  if (g_file_query_file_type (basedir, G_FILE_QUERY_INFO_NONE, NULL) ==
-      G_FILE_TYPE_DIRECTORY)
-    {
-      GFileEnumerator *enumerator;
-
-      enumerator = g_file_enumerate_children (basedir,
-                                              G_FILE_ATTRIBUTE_STANDARD_NAME ","
-                                              G_FILE_ATTRIBUTE_STANDARD_TYPE,
-                                              G_FILE_QUERY_INFO_NONE,
-                                              NULL, NULL);
-
-      if (enumerator)
-        {
-          GFileInfo *info;
-
-          while ((info = g_file_enumerator_next_file (enumerator,
-                                                      NULL, NULL)))
-            {
-              if (g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
-                {
-                  GFile *locale_dir;
-                  GFile *file;
-
-                  locale_dir = g_file_enumerator_get_child (enumerator, info);
-                  file  = g_file_get_child (locale_dir, "gimp-help.xml");
-                  if (g_file_query_file_type (file, G_FILE_QUERY_INFO_NONE,
-                                              NULL) == G_FILE_TYPE_REGULAR)
-                    {
-                      manuals = g_list_prepend (manuals,
-                                                g_strdup (g_file_info_get_name (info)));
-                    }
-                  g_object_unref (locale_dir);
-                  g_object_unref (file);
-                }
-              g_object_unref (info);
-            }
-          g_object_unref (enumerator);
-        }
-    }
-  g_object_unref (basedir);
-
-  return manuals;
-}
-
 static void
 gimp_help_language_combo_changed (GtkComboBox  *combo,
                                   GimpIdleHelp *idle_help)
 {
-  gchar       *help_locales = NULL;
-  GtkTreeIter  iter;
+  gchar *help_locales = NULL;
+  gchar *code;
 
-  if (gtk_combo_box_get_active_iter (combo, &iter))
+  code = gimp_language_combo_box_get_code (GIMP_LANGUAGE_COMBO_BOX (combo));
+  if (code && g_strcmp0 ("", code) != 0)
     {
-      GtkTreeModel *model;
-      GValue        value = { 0, };
-
-      model = gtk_combo_box_get_model (combo);
-      gtk_tree_model_get_value (model, &iter, 1, &value);
-      if (g_strcmp0 ("", g_value_get_string (&value)) != 0)
-        help_locales = g_strdup_printf ("%s:",
-                                        g_value_get_string (&value));
-      g_value_unset (&value);
-    }
-  g_object_set (idle_help->gimp->config,
-                "help-locales", help_locales? help_locales : "",
-                NULL);
-
-  if (help_locales)
-    {
-      g_free (help_locales);
+      help_locales = g_strdup_printf ("%s:", code);
       gtk_dialog_set_response_sensitive (idle_help->query_dialog,
                                          GTK_RESPONSE_YES, TRUE);
     }
@@ -945,4 +886,11 @@ gimp_help_language_combo_changed (GtkComboBox  *combo,
       gtk_dialog_set_response_sensitive (idle_help->query_dialog,
                                          GTK_RESPONSE_YES, FALSE);
     }
+  g_object_set (idle_help->gimp->config,
+                "help-locales", help_locales? help_locales : "",
+                NULL);
+
+  g_free (code);
+  if (help_locales)
+    g_free (help_locales);
 }

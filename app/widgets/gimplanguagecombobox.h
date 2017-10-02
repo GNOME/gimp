@@ -40,7 +40,7 @@ struct _GimpLanguageComboBoxClass
 
 GType       gimp_language_combo_box_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_language_combo_box_new      (void);
+GtkWidget * gimp_language_combo_box_new      (gboolean manual_l18n);
 
 gchar     * gimp_language_combo_box_get_code (GimpLanguageComboBox *combo);
 gboolean    gimp_language_combo_box_set_code (GimpLanguageComboBox *combo,

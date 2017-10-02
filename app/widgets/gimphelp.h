@@ -46,4 +46,6 @@ gboolean   gimp_help_user_manual_is_installed (Gimp *gimp);
 void       gimp_help_user_manual_changed      (Gimp *gimp);
 
 
+GList    * gimp_help_get_installed_languages  (void);
+
 #endif /* __GIMP_HELP_H__ */

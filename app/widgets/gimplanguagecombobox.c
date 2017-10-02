@@ -65,12 +65,12 @@ gimp_language_combo_box_init (GimpLanguageComboBox *combo)
 }
 
 GtkWidget *
-gimp_language_combo_box_new (void)
+gimp_language_combo_box_new (gboolean manual_l18n)
 {
   GtkWidget    *combo;
   GtkListStore *store;
 
-  store = gimp_translation_store_new ();
+  store = gimp_translation_store_new (manual_l18n);
 
   combo = g_object_new (GIMP_TYPE_LANGUAGE_COMBO_BOX,
                         "model", store,
