@@ -21,6 +21,11 @@ Core:
   - No undo steps when single-clicking with a selection tool while there
     was already no selection.
   - Transform tools don't commit identity transformation anymore.
+  - Manual language can now be selected amongst all installed manuals,
+    which is particularly interesting when no GIMP manuals are available
+    in your GUI language. This will be proposed by default when a manual
+    is not installed for the GUI language (alongside the possibility to
+    read online) and the choice can be edited in preferences.
 
 Color management:
 
