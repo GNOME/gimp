@@ -46,6 +46,14 @@ File formats:
     - Fix missing some attributes loading empty layers.
     - Improve layer opacity loading/saving.
 
+Filters:
+
+  - Update GEGL-based filter Wavelet Decompose:
+    * Add an option to keep the decomposition in a layer group.
+    * Add an option to add layer mask to each scales layers.
+    * Do not use 'new from visible' because it produces unexpected
+      results; replaced by succession of layer copy and merge down.
+
 PDB:
 
   - Add file-pdf-load2 API to load password-protected and/or multi-page
@@ -53,7 +61,8 @@ PDB:
 
 Translations:
 
-  - Updated: Polish. 
+  - Updated: Catalan, Croatian, Galician, German, Greek, Hungarian,
+    Indonesian, Italian, Polish, Russian, Spanish.
 
 Building:
 
