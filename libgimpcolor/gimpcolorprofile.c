@@ -1478,9 +1478,9 @@ gimp_color_profile_get_format (GimpColorProfile          *profile,
   g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  space = babl_space_from_icc ((const gchar *) profile->priv->data,
+  space = babl_icc_make_space ((const gchar *) profile->priv->data,
                                profile->priv->length,
-                               intent,
+                               (BablIccIntent)intent,
                                &babl_error);
 
   if (! space)
