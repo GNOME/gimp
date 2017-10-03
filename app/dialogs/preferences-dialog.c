@@ -1072,12 +1072,12 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *calibrate_button;
   GSList            *group;
   GtkWidget         *editor;
-  gchar             *help_locales = NULL;
   gint               i;
 
   GObject           *object;
   GimpCoreConfig    *core_config;
   GimpDisplayConfig *display_config;
+  GList             *manuals;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
@@ -2297,34 +2297,41 @@ prefs_dialog_new (Gimp       *gimp,
                                         GTK_TABLE (table), 0, size_group);
   gimp_help_set_help_data (button, NULL, NULL);
 
-  g_object_get (config, "help-locales", &help_locales, NULL);
-  if (help_locales && strlen (help_locales))
+  manuals = gimp_help_get_installed_languages ();
+  entry   = NULL;
+  if (manuals != NULL)
     {
-      gchar *sep;
+      gchar *help_locales = NULL;
 
-      sep = strchr (help_locales, ':');
-      if (sep)
-        *sep = '\0';
-    }
+      entry = gimp_language_combo_box_new (TRUE,
+                                           _("User interface language"));
 
-  entry = gimp_language_combo_box_new (TRUE,
-                                       _("User interface language"));
-  if (help_locales)
-    {
-      gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (entry),
-                                        help_locales);
-      g_free (help_locales);
+      g_object_get (config, "help-locales", &help_locales, NULL);
+      if (help_locales && strlen (help_locales))
+        {
+          gchar *sep;
+
+          sep = strchr (help_locales, ':');
+          if (sep)
+            *sep = '\0';
+        }
+      if (help_locales)
+        {
+          gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (entry),
+                                            help_locales);
+          g_free (help_locales);
+        }
+      else
+        {
+          gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (entry),
+                                            "");
+        }
+      g_signal_connect (entry, "changed",
+                        G_CALLBACK (prefs_help_language_change_callback),
+                        gimp);
+      gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 1, 2);
+      gtk_widget_show (entry);
     }
-  else
-    {
-      gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (entry),
-                                        "");
-    }
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (prefs_help_language_change_callback),
-                    gimp);
-  gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 1, 2);
-  gtk_widget_show (entry);
 
   if (gimp_help_user_manual_is_installed (gimp))
     {
@@ -2338,10 +2345,14 @@ prefs_dialog_new (Gimp       *gimp,
                                  _("The user manual is not installed "
                                    "locally."));
     }
-  g_object_set_data (G_OBJECT (hbox), "gimp", gimp);
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (prefs_help_language_change_callback2),
-                    hbox);
+  if (manuals)
+    {
+      g_object_set_data (G_OBJECT (hbox), "gimp", gimp);
+      g_signal_connect (entry, "changed",
+                        G_CALLBACK (prefs_help_language_change_callback2),
+                        hbox);
+      g_list_free_full (manuals, g_free);
+    }
 
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 2, 3);
   gtk_widget_show (hbox);
