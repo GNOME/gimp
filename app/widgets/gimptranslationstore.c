@@ -116,7 +116,8 @@ gimp_translation_store_constructed (GObject *object)
 
   g_hash_table_iter_init (&lang_iter, lang_list);
 
-  if (sublist && GIMP_TRANSLATION_STORE (object)->empty_label)
+  if (GIMP_TRANSLATION_STORE (object)->manual_l18n &&
+      GIMP_TRANSLATION_STORE (object)->empty_label)
     {
       GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
                                                    GIMP_TRANSLATION_STORE (object)->empty_label,
@@ -124,7 +125,7 @@ gimp_translation_store_constructed (GObject *object)
     }
   while (g_hash_table_iter_next (&lang_iter, &code, &name))
     {
-      if (! sublist ||
+      if (! GIMP_TRANSLATION_STORE (object)->manual_l18n ||
           g_list_find_custom (sublist, code, (GCompareFunc) g_strcmp0))
         {
           GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
