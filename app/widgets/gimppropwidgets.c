@@ -1351,7 +1351,7 @@ gimp_prop_language_combo_box_new (GObject     *config,
   if (! param_spec)
     return NULL;
 
-  combo = gimp_language_combo_box_new (FALSE);
+  combo = gimp_language_combo_box_new (FALSE, NULL);
 
   g_object_get (config,
                 property_name, &value,

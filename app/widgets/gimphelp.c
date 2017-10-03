@@ -820,7 +820,8 @@ gimp_help_query_alt_user_manual (GimpIdleHelp *idle_help)
                              _("Read Selected _Language"),
                              GTK_RESPONSE_YES);
       /* And a dropdown list of available manuals. */
-      lang_combo = gimp_language_combo_box_new (TRUE);
+      lang_combo = gimp_language_combo_box_new (TRUE,
+                                                _("Available manuals..."));
       gtk_combo_box_set_active (GTK_COMBO_BOX (lang_combo), 0);
       gtk_dialog_set_response_sensitive (idle_help->query_dialog,
                                          GTK_RESPONSE_YES, FALSE);

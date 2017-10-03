@@ -47,6 +47,7 @@
 #include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpiconsizescale.h"
+#include "widgets/gimplanguagecombobox.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimppluginview.h"
@@ -77,57 +78,61 @@
 
 /*  preferences local functions  */
 
-static GtkWidget * prefs_dialog_new               (Gimp       *gimp,
-                                                   GimpConfig *config);
-static void        prefs_config_notify            (GObject    *config,
-                                                   GParamSpec *param_spec,
-                                                   GObject    *config_copy);
-static void        prefs_config_copy_notify       (GObject    *config_copy,
-                                                   GParamSpec *param_spec,
-                                                   GObject    *config);
-static void        prefs_response                 (GtkWidget  *widget,
-                                                   gint        response_id,
-                                                   GtkWidget  *dialog);
+static GtkWidget * prefs_dialog_new                (Gimp       *gimp,
+                                                    GimpConfig *config);
+static void        prefs_config_notify             (GObject    *config,
+                                                    GParamSpec *param_spec,
+                                                    GObject    *config_copy);
+static void        prefs_config_copy_notify        (GObject    *config_copy,
+                                                    GParamSpec *param_spec,
+                                                    GObject    *config);
+static void        prefs_response                  (GtkWidget  *widget,
+                                                    gint        response_id,
+                                                    GtkWidget  *dialog);
 
-static void        prefs_message                  (GtkMessageType  type,
-                                                   gboolean        destroy,
-                                                   const gchar    *message);
+static void        prefs_message                   (GtkMessageType  type,
+                                                    gboolean        destroy,
+                                                    const gchar    *message);
 
-static void   prefs_color_management_reset        (GtkWidget  *widget,
-                                                   GObject    *config);
-static void   prefs_dialog_defaults_reset         (GtkWidget  *widget,
-                                                   GObject    *config);
+static void   prefs_color_management_reset         (GtkWidget    *widget,
+                                                    GObject      *config);
+static void   prefs_dialog_defaults_reset          (GtkWidget    *widget,
+                                                    GObject      *config);
 
-static void   prefs_import_raw_procedure_callback (GtkWidget  *widget,
-                                                   GObject    *config);
-static void   prefs_resolution_source_callback    (GtkWidget  *widget,
-                                                   GObject    *config);
-static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
-                                                   GtkWidget  *entry);
-static void   prefs_input_devices_dialog          (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_keyboard_shortcuts_dialog     (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_menus_save_callback           (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_menus_clear_callback          (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_menus_remove_callback         (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_session_save_callback         (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_session_clear_callback        (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_devices_save_callback         (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_devices_clear_callback        (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_search_clear_callback         (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_tool_options_save_callback    (GtkWidget  *widget,
-                                                   Gimp       *gimp);
-static void   prefs_tool_options_clear_callback   (GtkWidget  *widget,
-                                                   Gimp       *gimp);
+static void   prefs_import_raw_procedure_callback  (GtkWidget    *widget,
+                                                    GObject      *config);
+static void   prefs_resolution_source_callback     (GtkWidget    *widget,
+                                                    GObject      *config);
+static void   prefs_resolution_calibrate_callback  (GtkWidget    *widget,
+                                                    GtkWidget    *entry);
+static void   prefs_input_devices_dialog           (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_keyboard_shortcuts_dialog      (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_menus_save_callback            (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_menus_clear_callback           (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_menus_remove_callback          (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_session_save_callback          (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_session_clear_callback         (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_devices_save_callback          (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_devices_clear_callback         (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_search_clear_callback          (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_tool_options_save_callback     (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_tool_options_clear_callback    (GtkWidget    *widget,
+                                                    Gimp         *gimp);
+static void   prefs_help_language_change_callback  (GtkComboBox  *combo,
+                                                    Gimp         *gimp);
+static void   prefs_help_language_change_callback2 (GtkComboBox  *combo,
+                                                    GtkContainer *box);
 
 /*  private variables  */
 
@@ -763,6 +768,74 @@ prefs_tool_options_clear_callback (GtkWidget *widget,
 }
 
 static void
+prefs_help_language_change_callback (GtkComboBox *combo,
+                                     Gimp        *gimp)
+{
+  gchar *help_locales = NULL;
+  gchar *code;
+
+  code = gimp_language_combo_box_get_code (GIMP_LANGUAGE_COMBO_BOX (combo));
+  if (code && g_strcmp0 ("", code) != 0)
+    {
+      help_locales = g_strdup_printf ("%s:", code);
+    }
+  g_object_set (gimp->config,
+                "help-locales", help_locales? help_locales : "",
+                NULL);
+  g_free (code);
+  if (help_locales)
+    g_free (help_locales);
+}
+
+static void
+prefs_help_language_change_callback2 (GtkComboBox  *combo,
+                                      GtkContainer *box)
+{
+  Gimp        *gimp;
+  GtkLabel    *label = NULL;
+  GtkImage    *icon  = NULL;
+  GList       *children;
+  GList       *iter;
+  const gchar *text;
+  const gchar *icon_name;
+
+  gimp = g_object_get_data (G_OBJECT (box), "gimp");
+  children = gtk_container_get_children (box);
+  for (iter = children; iter; iter = iter->next)
+    {
+      if (GTK_IS_LABEL (iter->data))
+        {
+          label = iter->data;
+        }
+      else if (GTK_IS_IMAGE (iter->data))
+        {
+          icon = iter->data;
+        }
+    }
+  if (gimp_help_user_manual_is_installed (gimp))
+    {
+      text = _("There's a local installation of the user manual.");
+      icon_name = GIMP_ICON_DIALOG_INFORMATION;
+    }
+  else
+    {
+      text = _("The user manual is not installed locally.");
+      icon_name = GIMP_ICON_DIALOG_WARNING;
+    }
+  if (label)
+    {
+      gtk_label_set_text (label, text);
+    }
+  if (icon)
+    {
+      gtk_image_set_from_icon_name (icon, icon_name,
+                                    GTK_ICON_SIZE_BUTTON);
+    }
+
+  g_list_free (children);
+}
+
+static void
 prefs_format_string_select_callback (GtkTreeSelection *sel,
                                      GtkEntry         *entry)
 {
@@ -999,6 +1072,7 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *calibrate_button;
   GSList            *group;
   GtkWidget         *editor;
+  gchar             *help_locales = NULL;
   gint               i;
 
   GObject           *object;
@@ -2215,13 +2289,42 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Show help _buttons"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2));
   button = prefs_boolean_combo_box_add (object, "user-manual-online",
                                         _("Use the online version"),
                                         _("Use a locally installed copy"),
                                         _("User manual:"),
                                         GTK_TABLE (table), 0, size_group);
   gimp_help_set_help_data (button, NULL, NULL);
+
+  g_object_get (config, "help-locales", &help_locales, NULL);
+  if (help_locales && strlen (help_locales))
+    {
+      gchar *sep;
+
+      sep = strchr (help_locales, ':');
+      if (sep)
+        *sep = '\0';
+    }
+
+  entry = gimp_language_combo_box_new (TRUE,
+                                       _("User interface language"));
+  if (help_locales)
+    {
+      gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (entry),
+                                        help_locales);
+      g_free (help_locales);
+    }
+  else
+    {
+      gimp_language_combo_box_set_code (GIMP_LANGUAGE_COMBO_BOX (entry),
+                                        "");
+    }
+  g_signal_connect (entry, "changed",
+                    G_CALLBACK (prefs_help_language_change_callback),
+                    gimp);
+  gtk_table_attach_defaults (GTK_TABLE (table), entry, 1, 2, 1, 2);
+  gtk_widget_show (entry);
 
   if (gimp_help_user_manual_is_installed (gimp))
     {
@@ -2235,8 +2338,12 @@ prefs_dialog_new (Gimp       *gimp,
                                  _("The user manual is not installed "
                                    "locally."));
     }
+  g_object_set_data (G_OBJECT (hbox), "gimp", gimp);
+  g_signal_connect (entry, "changed",
+                    G_CALLBACK (prefs_help_language_change_callback2),
+                    hbox);
 
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 1, 2);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 2, 3);
   gtk_widget_show (hbox);
 
   /*  Help Browser  */

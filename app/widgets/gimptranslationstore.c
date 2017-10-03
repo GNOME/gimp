@@ -38,7 +38,8 @@
 enum
 {
   PROP_0,
-  PROP_MANUAL_L18N
+  PROP_MANUAL_L18N,
+  PROP_EMPTY_LABEL
 };
 
 struct _GimpTranslationStoreClass
@@ -51,6 +52,7 @@ struct _GimpTranslationStore
   GimpLanguageStore  parent_instance;
 
   gboolean           manual_l18n;
+  gchar             *empty_label;
 };
 
 
@@ -85,6 +87,11 @@ gimp_translation_store_class_init (GimpTranslationStoreClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_EMPTY_LABEL,
+                                   g_param_spec_string ("empty-label", NULL, NULL,
+                                                         NULL,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -109,10 +116,10 @@ gimp_translation_store_constructed (GObject *object)
 
   g_hash_table_iter_init (&lang_iter, lang_list);
 
-  if (sublist)
+  if (sublist && GIMP_TRANSLATION_STORE (object)->empty_label)
     {
       GIMP_LANGUAGE_STORE_GET_CLASS (object)->add (GIMP_LANGUAGE_STORE (object),
-                                                   _("Available manuals..."),
+                                                   GIMP_TRANSLATION_STORE (object)->empty_label,
                                                    "");
     }
   while (g_hash_table_iter_next (&lang_iter, &code, &name))
@@ -140,6 +147,9 @@ gimp_translation_store_set_property (GObject      *object,
     case PROP_MANUAL_L18N:
       store->manual_l18n = g_value_get_boolean (value);
       break;
+    case PROP_EMPTY_LABEL:
+      store->empty_label = g_value_dup_string (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -160,6 +170,9 @@ gimp_translation_store_get_property (GObject    *object,
     case PROP_MANUAL_L18N:
       g_value_set_boolean (value, store->manual_l18n);
       break;
+    case PROP_EMPTY_LABEL:
+      g_value_set_string (value, store->empty_label);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -168,9 +181,11 @@ gimp_translation_store_get_property (GObject    *object,
 }
 
 GtkListStore *
-gimp_translation_store_new (gboolean manual_l18n)
+gimp_translation_store_new (gboolean     manual_l18n,
+                            const gchar *empty_label)
 {
   return g_object_new (GIMP_TYPE_TRANSLATION_STORE,
                        "manual-l18n", manual_l18n,
+                       "empty-label", empty_label,
                        NULL);
 }
