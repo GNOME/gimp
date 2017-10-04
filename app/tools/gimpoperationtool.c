@@ -280,17 +280,16 @@ gimp_operation_tool_dialog (GimpFilterTool *filter_tool)
   GimpOperationTool *op_tool = GIMP_OPERATION_TOOL (filter_tool);
   GtkWidget         *main_vbox;
   GtkWidget         *options_gui;
+  GtkWidget         *options_box;
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
   /*  The options vbox  */
-  op_tool->options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), op_tool->options_box,
+  options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  g_weak_ref_set (&op_tool->options_box_ref, options_box);
+  gtk_box_pack_start (GTK_BOX (main_vbox), options_box,
                       TRUE, TRUE, 0);
-  gtk_widget_show (op_tool->options_box);
-
-  g_object_add_weak_pointer (G_OBJECT (op_tool->options_box),
-                             (gpointer) &op_tool->options_box);
+  gtk_widget_show (options_box);
 
   options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
   if (options_gui)
@@ -565,10 +564,12 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
 {
   GtkSizeGroup *size_group  = NULL;
   GtkWidget    *options_gui;
+  GtkWidget    *options_box;
   GList        *list;
 
   options_gui = g_weak_ref_get (&op_tool->options_gui_ref);
-  g_return_if_fail (options_gui);
+  options_box = g_weak_ref_get (&op_tool->options_box_ref);
+  g_return_if_fail (options_gui && options_box);
 
   for (list = op_tool->aux_inputs; list; list = g_list_next (list))
     {
@@ -583,7 +584,7 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
 
       gtk_size_group_add_widget (size_group, toggle);
 
-      gtk_box_pack_start (GTK_BOX (op_tool->options_box), input->box,
+      gtk_box_pack_start (GTK_BOX (options_box), input->box,
                           FALSE, FALSE, 0);
       gtk_widget_show (input->box);
     }
@@ -591,10 +592,11 @@ gimp_operation_tool_add_gui (GimpOperationTool *op_tool)
   if (size_group)
     g_object_unref (size_group);
 
-  gtk_box_pack_start (GTK_BOX (op_tool->options_box), options_gui,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (options_box), options_gui, TRUE, TRUE, 0);
   gtk_widget_show (options_gui);
+
   g_object_unref (options_gui);
+  g_object_unref (options_box);
 }
 
 
@@ -739,9 +741,15 @@ gimp_operation_tool_set_operation (GimpOperationTool *op_tool,
 
   if (filter_tool->config && tool->display)
     {
+      GtkWidget *options_box;
+
       gimp_operation_tool_create_gui (op_tool);
 
-      if (op_tool->options_box)
-        gimp_operation_tool_add_gui (op_tool);
+      options_box = g_weak_ref_get (&op_tool->options_box_ref);
+      if (options_box)
+        {
+          gimp_operation_tool_add_gui (op_tool);
+          g_object_unref (options_box);
+        }
     }
 }

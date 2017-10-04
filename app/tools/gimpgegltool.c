@@ -393,10 +393,14 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget         *hbox;
   GtkWidget         *combo;
   GtkWidget         *options_gui;
+  GtkWidget         *options_box;
   GList             *opclasses;
   GList             *iter;
 
   GIMP_FILTER_TOOL_CLASS (parent_class)->dialog (filter_tool);
+
+  options_box = g_weak_ref_get (&o_tool->options_box_ref);
+  g_return_if_fail (options_box);
 
   main_vbox = gimp_filter_tool_dialog_get_vbox (filter_tool);
 
@@ -480,8 +484,8 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_misc_set_padding (GTK_MISC (options_gui), 0, 4);
-  gtk_container_add (GTK_CONTAINER (o_tool->options_box),
-                     options_gui);
+  gtk_container_add (GTK_CONTAINER (options_box), options_gui);
+  g_object_unref (options_box);
   g_weak_ref_set (&o_tool->options_gui_ref, options_gui);
   gtk_widget_show (options_gui);
 }
