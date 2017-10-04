@@ -54,12 +54,31 @@ typedef gboolean (* GimpEevlUnitResolverProc) (const gchar      *identifier,
                                                GimpEevlQuantity *result,
                                                gpointer          data);
 
-gboolean gimp_eevl_evaluate (const gchar               *string,
-                             GimpEevlUnitResolverProc   unit_resolver_proc,
-                             GimpEevlQuantity          *result,
-                             gpointer                   data,
-                             const gchar              **error_pos,
-                             GError                   **error);
+
+/**
+ * GimpEevlOptions:
+ * @unit_resolver_proc: Unit resolver callback.
+ * @data:               Data passed to unit resolver.
+ */
+typedef struct
+{
+  GimpEevlUnitResolverProc unit_resolver_proc;
+  gpointer                 data;
+} GimpEevlOptions;
+
+#define GIMP_EEVL_OPTIONS_INIT                                                 \
+  ((const GimpEevlOptions)                                                     \
+  {                                                                            \
+    .unit_resolver_proc = NULL,                                                \
+    .data               = NULL                                                 \
+  })
+
+
+gboolean gimp_eevl_evaluate (const gchar            *string,
+                             const GimpEevlOptions  *options,
+                             GimpEevlQuantity       *result,
+                             const gchar           **error_pos,
+                             GError                **error);
 
 
 G_END_DECLS

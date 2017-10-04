@@ -105,62 +105,58 @@ typedef struct
 
 typedef struct
 {
-  const gchar             *string;
-  GimpEevlUnitResolverProc unit_resolver_proc;
-  gpointer                 data;
+  const gchar     *string;
+  GimpEevlOptions  options;
 
-  GimpEevlToken            current_token;
-  const gchar             *start_of_current_token;
+  GimpEevlToken    current_token;
+  const gchar     *start_of_current_token;
 
-
-  jmp_buf                  catcher;
-  const gchar             *error_message;
+  jmp_buf          catcher;
+  const gchar     *error_message;
 
 } GimpEevl;
 
 
-static void             gimp_eevl_init                     (GimpEevl                 *eva,
-                                                            const gchar              *string,
-                                                            GimpEevlUnitResolverProc  unit_resolver_proc,
-                                                            gpointer                  data);
-static GimpEevlQuantity gimp_eevl_complete                 (GimpEevl                 *eva);
-static GimpEevlQuantity gimp_eevl_expression               (GimpEevl                 *eva);
-static GimpEevlQuantity gimp_eevl_term                     (GimpEevl                 *eva);
-static GimpEevlQuantity gimp_eevl_signed_factor            (GimpEevl                 *eva);
-static GimpEevlQuantity gimp_eevl_factor                   (GimpEevl                 *eva);
-static gboolean         gimp_eevl_accept                   (GimpEevl                 *eva,
-                                                            GimpEevlTokenType         token_type,
-                                                            GimpEevlToken            *consumed_token);
-static void             gimp_eevl_lex                      (GimpEevl                 *eva);
-static void             gimp_eevl_lex_accept_count          (GimpEevl                 *eva,
-                                                            gint                      count,
-                                                            GimpEevlTokenType         token_type);
-static void             gimp_eevl_lex_accept_to             (GimpEevl                 *eva,
-                                                            gchar                    *to,
-                                                            GimpEevlTokenType         token_type);
-static void             gimp_eevl_move_past_whitespace     (GimpEevl                 *eva);
-static gboolean         gimp_eevl_unit_identifier_start    (gunichar                  c);
-static gboolean         gimp_eevl_unit_identifier_continue (gunichar                  c);
-static gint             gimp_eevl_unit_identifier_size     (const gchar              *s,
-                                                            gint                      start);
-static void             gimp_eevl_expect                   (GimpEevl                 *eva,
-                                                            GimpEevlTokenType         token_type,
-                                                            GimpEevlToken            *value);
-static void             gimp_eevl_error                    (GimpEevl                 *eva,
-                                                            gchar                    *msg);
+static void             gimp_eevl_init                     (GimpEevl              *eva,
+                                                            const gchar           *string,
+                                                            const GimpEevlOptions *options);
+static GimpEevlQuantity gimp_eevl_complete                 (GimpEevl              *eva);
+static GimpEevlQuantity gimp_eevl_expression               (GimpEevl              *eva);
+static GimpEevlQuantity gimp_eevl_term                     (GimpEevl              *eva);
+static GimpEevlQuantity gimp_eevl_signed_factor            (GimpEevl              *eva);
+static GimpEevlQuantity gimp_eevl_factor                   (GimpEevl              *eva);
+static gboolean         gimp_eevl_accept                   (GimpEevl              *eva,
+                                                            GimpEevlTokenType      token_type,
+                                                            GimpEevlToken         *consumed_token);
+static void             gimp_eevl_lex                      (GimpEevl              *eva);
+static void             gimp_eevl_lex_accept_count          (GimpEevl              *eva,
+                                                            gint                   count,
+                                                            GimpEevlTokenType      token_type);
+static void             gimp_eevl_lex_accept_to             (GimpEevl              *eva,
+                                                            gchar                 *to,
+                                                            GimpEevlTokenType      token_type);
+static void             gimp_eevl_move_past_whitespace     (GimpEevl              *eva);
+static gboolean         gimp_eevl_unit_identifier_start    (gunichar               c);
+static gboolean         gimp_eevl_unit_identifier_continue (gunichar               c);
+static gint             gimp_eevl_unit_identifier_size     (const gchar           *s,
+                                                            gint                   start);
+static void             gimp_eevl_expect                   (GimpEevl              *eva,
+                                                            GimpEevlTokenType      token_type,
+                                                            GimpEevlToken         *value);
+static void             gimp_eevl_error                    (GimpEevl              *eva,
+                                                            gchar                 *msg);
 
 
 /**
  * gimp_eevl_evaluate:
- * @string:             The NULL-terminated string to be evaluated.
- * @unit_resolver_proc: Unit resolver callback.
- * @result:             Result of evaluation.
- * @data:               Data passed to unit resolver.
- * @error_pos:          Will point to the positon within the string,
- *                      before which the parse / evaluation error
- *                      occurred. Will be set to null of no error occurred.
- * @error_message:      Will point to a static string with a semi-descriptive
- *                      error message if parsing / evaluation failed.
+ * @string:        The NULL-terminated string to be evaluated.
+ * @options:       Evaluations options.
+ * @result:        Result of evaluation.
+ * @error_pos:     Will point to the positon within the string,
+ *                 before which the parse / evaluation error
+ *                 occurred. Will be set to null of no error occurred.
+ * @error_message: Will point to a static string with a semi-descriptive
+ *                 error message if parsing / evaluation failed.
  *
  * Evaluates the given arithmetic expression, along with an optional dimension
  * analysis, and basic unit conversions.
@@ -174,24 +170,23 @@ static void             gimp_eevl_error                    (GimpEevl            
  * order of two means in^2).
  **/
 gboolean
-gimp_eevl_evaluate (const gchar               *string,
-                    GimpEevlUnitResolverProc   unit_resolver_proc,
-                    GimpEevlQuantity          *result,
-                    gpointer                   data,
-                    const gchar              **error_pos,
-                    GError                   **error)
+gimp_eevl_evaluate (const gchar            *string,
+                    const GimpEevlOptions  *options,
+                    GimpEevlQuantity       *result,
+                    const gchar           **error_pos,
+                    GError                **error)
 {
   GimpEevl eva;
 
   g_return_val_if_fail (g_utf8_validate (string, -1, NULL), FALSE);
-  g_return_val_if_fail (unit_resolver_proc != NULL, FALSE);
+  g_return_val_if_fail (options != NULL, FALSE);
+  g_return_val_if_fail (options->unit_resolver_proc != NULL, FALSE);
   g_return_val_if_fail (result != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   gimp_eevl_init (&eva,
                   string,
-                  unit_resolver_proc,
-                  data);
+                  options);
 
   if (!setjmp (eva.catcher))  /* try... */
     {
@@ -214,14 +209,12 @@ gimp_eevl_evaluate (const gchar               *string,
 }
 
 static void
-gimp_eevl_init (GimpEevl                  *eva,
-                const gchar               *string,
-                GimpEevlUnitResolverProc   unit_resolver_proc,
-                gpointer                   data)
+gimp_eevl_init (GimpEevl              *eva,
+                const gchar           *string,
+                const GimpEevlOptions *options)
 {
-  eva->string              = string;
-  eva->unit_resolver_proc  = unit_resolver_proc;
-  eva->data                = data;
+  eva->string  = string;
+  eva->options = *options;
 
   eva->current_token.type  = GIMP_EEVL_TOKEN_END;
 
@@ -246,9 +239,9 @@ gimp_eevl_complete (GimpEevl *eva)
   /* There should be nothing left to parse by now */
   gimp_eevl_expect (eva, GIMP_EEVL_TOKEN_END, 0);
 
-  eva->unit_resolver_proc (NULL,
-                           &default_unit_factor,
-                           eva->data);
+  eva->options.unit_resolver_proc (NULL,
+                                   &default_unit_factor,
+                                   eva->options.data);
 
   /* Entire expression is dimensionless, apply default unit if
    * applicable
@@ -282,9 +275,9 @@ gimp_eevl_expression (GimpEevl *eva)
         {
           GimpEevlQuantity default_unit_factor;
 
-          eva->unit_resolver_proc (NULL,
-                                   &default_unit_factor,
-                                   eva->data);
+          eva->options.unit_resolver_proc (NULL,
+                                           &default_unit_factor,
+                                           eva->options.data);
 
           if (new_term.dimension == 0 &&
               evaluated_terms.dimension == default_unit_factor.dimension)
@@ -393,9 +386,9 @@ gimp_eevl_factor (GimpEevl *eva)
       strncpy (identifier, consumed_token.value.c, consumed_token.value.size);
       identifier[consumed_token.value.size] = '\0';
 
-      if (eva->unit_resolver_proc (identifier,
-                                   &result,
-                                   eva->data))
+      if (eva->options.unit_resolver_proc (identifier,
+                                           &result,
+                                           eva->options.data))
         {
           evaluated_factor.value      /= result.value;
           evaluated_factor.dimension  += result.dimension;
