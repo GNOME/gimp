@@ -59,18 +59,29 @@ typedef gboolean (* GimpEevlUnitResolverProc) (const gchar      *identifier,
  * GimpEevlOptions:
  * @unit_resolver_proc: Unit resolver callback.
  * @data:               Data passed to unit resolver.
+ * @ratio_expressions:  Allow ratio expressions
+ * @ratio_invert:       Invert ratios
+ * @ratio_quantity:     Quantity to multiply ratios by
  */
 typedef struct
 {
   GimpEevlUnitResolverProc unit_resolver_proc;
   gpointer                 data;
+
+  gboolean                 ratio_expressions;
+  gboolean                 ratio_invert;
+  GimpEevlQuantity         ratio_quantity;
 } GimpEevlOptions;
 
 #define GIMP_EEVL_OPTIONS_INIT                                                 \
   ((const GimpEevlOptions)                                                     \
   {                                                                            \
     .unit_resolver_proc = NULL,                                                \
-    .data               = NULL                                                 \
+    .data               = NULL,                                                \
+                                                                               \
+    .ratio_expressions  = FALSE,                                               \
+    .ratio_invert       = FALSE,                                               \
+    .ratio_quantity     = {0.0, 0}                                             \
   })
 
 

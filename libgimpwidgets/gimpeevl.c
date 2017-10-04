@@ -40,7 +40,9 @@
  *   expression    ::= term { ('+' | '-') term }*  |
  *                     <empty string> ;
  *
- *   term          ::= signed factor { ( '*' | '/' ) signed factor }* ;
+ *   term          ::= ratio { ( '*' | '/' ) ratio }* ;
+ *
+ *   ratio         ::= signed factor { ':' signed factor }* ;
  *
  *   signed factor ::= ( '+' | '-' )? factor ;
  *
@@ -123,6 +125,7 @@ static void             gimp_eevl_init                     (GimpEevl            
 static GimpEevlQuantity gimp_eevl_complete                 (GimpEevl              *eva);
 static GimpEevlQuantity gimp_eevl_expression               (GimpEevl              *eva);
 static GimpEevlQuantity gimp_eevl_term                     (GimpEevl              *eva);
+static GimpEevlQuantity gimp_eevl_ratio                    (GimpEevl              *eva);
 static GimpEevlQuantity gimp_eevl_signed_factor            (GimpEevl              *eva);
 static GimpEevlQuantity gimp_eevl_factor                   (GimpEevl              *eva);
 static gboolean         gimp_eevl_accept                   (GimpEevl              *eva,
@@ -307,28 +310,59 @@ static GimpEevlQuantity
 gimp_eevl_term (GimpEevl *eva)
 {
   gboolean         division;
-  GimpEevlQuantity evaluated_signed_factors;
+  GimpEevlQuantity evaluated_ratios;
 
-  evaluated_signed_factors = gimp_eevl_signed_factor (eva);
+  evaluated_ratios = gimp_eevl_ratio (eva);
 
   for (division = FALSE;
        gimp_eevl_accept (eva, '*', NULL) ||
        (division = gimp_eevl_accept (eva, '/', NULL));
        division = FALSE)
     {
-      GimpEevlQuantity new_signed_factor = gimp_eevl_signed_factor (eva);
+      GimpEevlQuantity new_ratio = gimp_eevl_ratio (eva);
 
       if (division)
         {
-          evaluated_signed_factors.value     /= new_signed_factor.value;
-          evaluated_signed_factors.dimension -= new_signed_factor.dimension;
-
+          evaluated_ratios.value     /= new_ratio.value;
+          evaluated_ratios.dimension -= new_ratio.dimension;
         }
       else
         {
-          evaluated_signed_factors.value     *= new_signed_factor.value;
-          evaluated_signed_factors.dimension += new_signed_factor.dimension;
+          evaluated_ratios.value     *= new_ratio.value;
+          evaluated_ratios.dimension += new_ratio.dimension;
         }
+    }
+
+  return evaluated_ratios;
+}
+
+static GimpEevlQuantity
+gimp_eevl_ratio (GimpEevl *eva)
+{
+  GimpEevlQuantity evaluated_signed_factors;
+
+  if (! eva->options.ratio_expressions)
+    return gimp_eevl_signed_factor (eva);
+
+  evaluated_signed_factors = gimp_eevl_signed_factor (eva);
+
+  while (gimp_eevl_accept (eva, ':', NULL))
+    {
+      GimpEevlQuantity new_signed_factor = gimp_eevl_signed_factor (eva);
+
+      if (eva->options.ratio_invert)
+        {
+          GimpEevlQuantity temp;
+
+          temp                     = evaluated_signed_factors;
+          evaluated_signed_factors = new_signed_factor;
+          new_signed_factor        = temp;
+        }
+
+      evaluated_signed_factors.value     *= eva->options.ratio_quantity.value /
+                                            new_signed_factor.value;
+      evaluated_signed_factors.dimension += eva->options.ratio_quantity.dimension -
+                                            new_signed_factor.dimension;
     }
 
   return evaluated_signed_factors;
