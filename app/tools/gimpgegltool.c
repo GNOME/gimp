@@ -392,6 +392,7 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   GtkWidget         *main_vbox;
   GtkWidget         *hbox;
   GtkWidget         *combo;
+  GtkWidget         *options_gui;
   GList             *opclasses;
   GList             *iter;
 
@@ -474,17 +475,15 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_reorder_child (GTK_BOX (main_vbox), tool->description_label, 1);
 
   /*  The options vbox  */
-  o_tool->options_gui =
-    gtk_label_new (_("Select an operation from the list above"));
-  g_object_add_weak_pointer (G_OBJECT (o_tool->options_gui),
-                             (gpointer) &o_tool->options_gui);
-  gimp_label_set_attributes (GTK_LABEL (o_tool->options_gui),
+  options_gui = gtk_label_new (_("Select an operation from the list above"));
+  gimp_label_set_attributes (GTK_LABEL (options_gui),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_misc_set_padding (GTK_MISC (o_tool->options_gui), 0, 4);
+  gtk_misc_set_padding (GTK_MISC (options_gui), 0, 4);
   gtk_container_add (GTK_CONTAINER (o_tool->options_box),
-                     o_tool->options_gui);
-  gtk_widget_show (o_tool->options_gui);
+                     options_gui);
+  g_weak_ref_set (&o_tool->options_gui_ref, options_gui);
+  gtk_widget_show (options_gui);
 }
 
 static void

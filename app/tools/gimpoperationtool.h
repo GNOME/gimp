@@ -44,7 +44,7 @@ struct _GimpOperationTool
 
   /* dialog */
   GtkWidget      *options_box;
-  GtkWidget      *options_gui;
+  GWeakRef        options_gui_ref;
 };
 
 struct _GimpOperationToolClass
