@@ -25,5 +25,7 @@ libappxcf_a_SOURCES = \
 	xcf-save.h	\
 	xcf-seek.c	\
 	xcf-seek.h	\
+	xcf-utils.c	\
+	xcf-utils.h	\
 	xcf-write.c	\
 	xcf-write.h

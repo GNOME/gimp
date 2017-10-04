@@ -70,6 +70,7 @@
 #include "xcf-load.h"
 #include "xcf-read.h"
 #include "xcf-seek.h"
+#include "xcf-utils.h"
 
 #include "gimp-log.h"
 #include "gimp-intl.h"
@@ -2064,8 +2065,11 @@ xcf_load_tile (XcfInfo       *info,
                           tile_size / bpp * n_components);
     }
 
-  gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
-                   GEGL_AUTO_ROWSTRIDE);
+  if (! xcf_data_is_zero (tile_data, tile_size))
+    {
+      gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
+                       GEGL_AUTO_ROWSTRIDE);
+    }
 
   return TRUE;
 }
@@ -2080,6 +2084,7 @@ xcf_load_tile_rle (XcfInfo       *info,
   gint    bpp       = babl_format_get_bytes_per_pixel (format);
   gint    tile_size = bpp * tile_rect->width * tile_rect->height;
   guchar *tile_data = g_alloca (tile_size);
+  guchar  nonzero   = FALSE;
   gsize   bytes_read;
   gint    i;
   guchar *xcfdata;
@@ -2158,6 +2163,7 @@ xcf_load_tile_rle (XcfInfo       *info,
               while (length-- > 0)
                 {
                   *data = *xcfdata++;
+                  nonzero |= *data;
                   data += bpp;
                 }
             }
@@ -2189,6 +2195,7 @@ xcf_load_tile_rle (XcfInfo       *info,
                 }
 
               val = *xcfdata++;
+              nonzero |= val;
 
               for (j = 0; j < length; j++)
                 {
@@ -2199,16 +2206,19 @@ xcf_load_tile_rle (XcfInfo       *info,
         }
     }
 
-  if (info->file_version >= 12)
+  if (nonzero)
     {
-      gint n_components = babl_format_get_n_components (format);
+      if (info->file_version >= 12)
+        {
+          gint n_components = babl_format_get_n_components (format);
 
-      xcf_read_from_be (bpp / n_components, tile_data,
-                        tile_size / bpp * n_components);
+          xcf_read_from_be (bpp / n_components, tile_data,
+                            tile_size / bpp * n_components);
+        }
+
+      gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
+                       GEGL_AUTO_ROWSTRIDE);
     }
-
-  gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
-                   GEGL_AUTO_ROWSTRIDE);
 
   return TRUE;
 
@@ -2297,16 +2307,19 @@ xcf_load_tile_zlib (XcfInfo       *info,
         }
     }
 
-  if (info->file_version >= 12)
+  if (! xcf_data_is_zero (tile_data, tile_size))
     {
-      gint n_components = babl_format_get_n_components (format);
+      if (info->file_version >= 12)
+        {
+          gint n_components = babl_format_get_n_components (format);
 
-      xcf_read_from_be (bpp / n_components, tile_data,
-                        tile_size / bpp * n_components);
+          xcf_read_from_be (bpp / n_components, tile_data,
+                            tile_size / bpp * n_components);
+        }
+
+      gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
+                       GEGL_AUTO_ROWSTRIDE);
     }
-
-  gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
-                   GEGL_AUTO_ROWSTRIDE);
 
   inflateEnd (&strm);
 
