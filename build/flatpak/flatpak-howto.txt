@@ -88,8 +88,8 @@ Or if you already have a build:
 
 * Run flatpak builder with the following commands:
 
-> flatpak-builder --arch=x86_64 gimp-flatpak-build-x86-64 org.gimp.GIMP.json
-> flatpak-builder --arch=i386 gimp-flatpak-build-i386 org.gimp.GIMP.json
+> flatpak-builder --ccache --arch=x86_64 gimp-flatpak-build-x86-64 org.gimp.GIMP.json
+> flatpak-builder --ccache --arch=i386 gimp-flatpak-build-i386 org.gimp.GIMP.json
 
   Note: if you ever want to check the `config.log` of any of the module which
   failed to compile, it is available in a hidden directory of your working path.
