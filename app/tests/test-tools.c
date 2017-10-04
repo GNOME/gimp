@@ -448,7 +448,7 @@ crop_set_width_without_pending_rect (GimpTestFixture *fixture,
   rectangle_options = GIMP_RECTANGLE_OPTIONS (tool_info->tool_options);
 
   /* Find 'Width' or 'Height' GtkTextEntry in tool options */
-  size_entry = gimp_rectangle_options_get_width_entry (rectangle_options);
+  size_entry = gimp_rectangle_options_get_size_entry (rectangle_options);
 
   /* Set arbitrary non-0 value */
   gimp_size_entry_set_value (GIMP_SIZE_ENTRY (size_entry),

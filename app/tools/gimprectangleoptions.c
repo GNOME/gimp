@@ -39,6 +39,9 @@
 #include "gimp-intl.h"
 
 
+#define SB_WIDTH 7
+
+
 enum
 {
   COLUMN_LEFT_NUMBER,
@@ -675,20 +678,20 @@ gimp_rectangle_options_get_property (GObject      *object,
 }
 
 /**
- * gimp_rectangle_options_get_width_entry:
+ * gimp_rectangle_options_get_size_entry:
  * @rectangle_options:
  *
- * Returns: GtkEntry used to enter desired width of rectangle. For
+ * Returns: GtkEntry used to enter desired size of rectangle. For
  *          testing purposes.
  **/
 GtkWidget *
-gimp_rectangle_options_get_width_entry (GimpRectangleOptions *rectangle_options)
+gimp_rectangle_options_get_size_entry (GimpRectangleOptions *rectangle_options)
 {
   GimpRectangleOptionsPrivate *private;
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
 
-  return private->width_entry;
+  return private->size_entry;
 }
 
 /**
@@ -704,14 +707,16 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
 {
   /* Setup sensitivity for Width and Height entries */
 
-  gtk_widget_set_sensitive (private->width_entry,
+  gtk_widget_set_sensitive (gimp_size_entry_get_help_widget (
+                              GIMP_SIZE_ENTRY (private->size_entry), 0),
                             ! (private->fixed_rule_active &&
                                (private->fixed_rule ==
                                 GIMP_RECTANGLE_FIXED_WIDTH ||
                                 private->fixed_rule ==
                                 GIMP_RECTANGLE_FIXED_SIZE)));
 
-  gtk_widget_set_sensitive (private->height_entry,
+  gtk_widget_set_sensitive (gimp_size_entry_get_help_widget (
+                              GIMP_SIZE_ENTRY (private->size_entry), 1),
                             ! (private->fixed_rule_active &&
                                (private->fixed_rule ==
                                 GIMP_RECTANGLE_FIXED_HEIGHT ||
@@ -772,14 +777,19 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
                                                  const gchar  *y_property_name,
                                                  const gchar  *unit_property_name,
                                                  const gchar  *table_label,
-                                                 GtkWidget   **x_entry,
-                                                 GtkWidget   **y_entry)
+                                                 GtkWidget   **entry)
 {
-  GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *menu;
-  GtkWidget *entry;
+  GimpUnit       unit_value;
+  GtkWidget     *frame;
+  GtkWidget     *hbox;
+  GtkWidget     *label;
+  GtkWidget     *menu;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adjustment;
+
+  g_object_get (config,
+                unit_property_name, &unit_value,
+                NULL);
 
   frame = gimp_frame_new (NULL);
 
@@ -801,25 +811,27 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  *x_entry = entry = gimp_prop_size_entry_new (config,
-                                               x_property_name, TRUE,
-                                               unit_property_name, "%a",
-                                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                               300);
-  gtk_table_set_col_spacings (GTK_TABLE (entry), 0);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
+  adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
-  *y_entry = entry = gimp_prop_size_entry_new (config,
-                                               y_property_name, TRUE,
-                                               unit_property_name, "%a",
-                                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                               300);
-  gtk_table_set_col_spacings (GTK_TABLE (entry), 0);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
-  gtk_box_pack_end (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
+  *entry = gimp_size_entry_new (1, unit_value, "%a", TRUE, TRUE, FALSE,
+                                SB_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacings (GTK_TABLE (*entry), 0);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (*entry), FALSE);
+  gtk_box_pack_end (GTK_BOX (hbox), *entry, TRUE, TRUE, 0);
+  gtk_widget_show (*entry);
+
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (*entry),
+                             GTK_SPIN_BUTTON (spinbutton), NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, TRUE, TRUE, 0);
+  gtk_widget_show (spinbutton);
+
+  gimp_prop_coordinates_connect (config,
+                                 x_property_name, y_property_name,
+                                 unit_property_name,
+                                 *entry, NULL, 300, 300);
 
   return frame;
 }
@@ -1011,8 +1023,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                            "x", "y",
                                                            "position-unit",
                                                            _("Position:"),
-                                                           &private->x_entry,
-                                                           &private->y_entry);
+                                                           &private->position_entry);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1021,8 +1032,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                            "width", "height",
                                                            "size-unit",
                                                            _("Size:"),
-                                                           &private->width_entry,
-                                                           &private->height_entry);
+                                                           &private->size_entry);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1095,39 +1105,29 @@ gimp_rectangle_options_connect (GimpRectangleOptions *options,
                                 0, gimp_image_get_height (image));
     }
 
-  if (options_private->x_entry)
+  if (options_private->position_entry)
     {
-      GtkWidget *entry = options_private->x_entry;
+      GtkWidget *entry = options_private->position_entry;
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
                                 0, gimp_image_get_width (image));
-    }
 
-  if (options_private->y_entry)
-    {
-      GtkWidget *entry = options_private->y_entry;
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1, yres, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 1,
                                 0, gimp_image_get_height (image));
     }
 
-  if (options_private->width_entry)
+  if (options_private->size_entry)
     {
-      GtkWidget *entry = options_private->width_entry;
+      GtkWidget *entry = options_private->size_entry;
 
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
       gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
                                 0, gimp_image_get_width (image));
-    }
 
-  if (options_private->height_entry)
-    {
-      GtkWidget *entry = options_private->height_entry;
-
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1, yres, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 1,
                                 0, gimp_image_get_height (image));
     }
 

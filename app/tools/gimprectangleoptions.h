@@ -134,10 +134,8 @@ struct _GimpRectangleOptionsPrivate
   GtkWidget              *size_button_box;
   GtkListStore           *size_history;
 
-  GtkWidget              *x_entry;
-  GtkWidget              *y_entry;
-  GtkWidget              *width_entry;
-  GtkWidget              *height_entry;
+  GtkWidget              *position_entry;
+  GtkWidget              *size_entry;
 };
 
 
@@ -175,7 +173,7 @@ void        gimp_rectangle_options_get_property       (GObject      *object,
 
 /*  testing helper functions  */
 
-GtkWidget * gimp_rectangle_options_get_width_entry    (GimpRectangleOptions *rectangle_options);
+GtkWidget * gimp_rectangle_options_get_size_entry     (GimpRectangleOptions *rectangle_options);
 
 
 #endif  /* __GIMP_RECTANGLE_OPTIONS_H__ */
