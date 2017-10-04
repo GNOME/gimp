@@ -476,6 +476,8 @@ gimp_gegl_tool_dialog (GimpFilterTool *filter_tool)
   /*  The options vbox  */
   o_tool->options_gui =
     gtk_label_new (_("Select an operation from the list above"));
+  g_object_add_weak_pointer (G_OBJECT (o_tool->options_gui),
+                             (gpointer) &o_tool->options_gui);
   gimp_label_set_attributes (GTK_LABEL (o_tool->options_gui),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
