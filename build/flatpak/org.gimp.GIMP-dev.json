@@ -1,6 +1,8 @@
 {
     "id": "org.gimp.GIMP",
     "branch": "dev",
+    "base": "org.gimp.BaseApp",
+    "base-version": "stable",
     "runtime": "org.gnome.Platform",
     "runtime-version": "3.24",
     "sdk": "org.gnome.Sdk",
@@ -8,7 +10,9 @@
     "rename-desktop-file": "gimp.desktop",
     "rename-appdata-file": "gimp.appdata.xml",
     "rename-icon": "gimp",
-    "finish-args": ["--share=ipc", "--socket=x11", "--filesystem=host", "--filesystem=xdg-config/GIMP", "--share=network", "--socket=system-bus", "--socket=session-bus" ],
+    "finish-args": ["--share=ipc", "--socket=x11", "--filesystem=host",
+                    "--filesystem=xdg-config/GIMP", "--share=network",
+                    "--socket=system-bus", "--socket=session-bus" ],
     "tags": ["dev"],
     "desktop-file-name-prefix": "(Dev) ",
     "build-options" : {
@@ -18,259 +22,11 @@
             "V": "1"
         }
     },
-    "cleanup": ["/include", "/lib/pkgconfig", "/share/pkgconfig", "/share/aclocal", "/man", "/share/man", "/share/gtk-doc", "/share/vala", "*.la", "*.a"],
+    "cleanup": ["/include", "/lib/pkgconfig", "/share/pkgconfig",
+                "/share/aclocal", "/man", "/share/man", "/share/gtk-doc",
+                "/share/vala", "*.la", "*.a", "/bin/wmf*", "/bin/libwmf-*",
+                "/bin/pygtk*", "/bin/pygobject*"],
     "modules": [
-        {
-            "name": "python",
-            "modules": [
-                {
-                    "name": "py2cairo",
-                    "rm-configure": true,
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://cairographics.org/releases/py2cairo-1.10.0.tar.bz2",
-                            "sha256": "d30439f06c2ec1a39e27464c6c828b6eface3b22ee17b2de05dc409e429a7431"
-                        },
-                        {
-                            "type": "script",
-                            "commands": [
-                                "libtoolize --force",
-                                "aclocal",
-                                "autoheader",
-                                "automake --force-missing --add-missing --foreign",
-                                "autoconf"
-                            ],
-                            "dest-filename": "autogen.sh"
-                        }
-                    ]
-                },
-                {
-                    "name": "pygobject",
-                    "config-opts": [ "--disable-introspection" ],
-                    "cleanup": [ "/bin", "/share/pygobject/2.0/codegen" ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.6.tar.xz",
-                            "sha256": "fb8a1d4f665130a125011659bd347c7339c944232163dbb9a34fd0686577adb8"
-                        }
-                    ]
-                },
-                {
-                    "name": "pygtk",
-                    "cleanup": [ "/bin", "/lib/pygtk" ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz",
-                            "sha256": "6e3e54fa6e65a69ac60bd58cb2e60a57f3346ac52efe995f3d10b6c38c972fd8"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "gexiv2",
-            "modules": [
-                {
-                    "name": "exiv2",
-                    "cleanup": [ "/bin" ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://www.exiv2.org/exiv2-0.25.tar.gz",
-                            "sha256": "c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4"
-                        }
-                    ]
-                }
-            ],
-            "config-opts": [ "--disable-introspection" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://download.gnome.org/sources/gexiv2/0.10/gexiv2-0.10.6.tar.xz",
-                    "sha256": "132788919667254b42c026ab39ab3c3a5be59be8575c05fa4b371ca8aed55825"
-                }
-            ]
-        },
-        {
-            "name": "openexr",
-            "modules": [
-                {
-                    "name": "ilmbase",
-                    "config-opts": [ "--disable-static" ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.0.tar.gz",
-                            "sha256": "ecf815b60695555c1fbc73679e84c7c9902f4e8faa6e8000d2f905b8b86cedc7"
-                        }
-                    ]
-                }
-            ],
-            "config-opts": [ "--disable-static", "--disable-ilmbasetest" ],
-            "cleanup": [ "/bin", "/share/doc" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://download.savannah.nongnu.org/releases/openexr/openexr-2.2.0.tar.gz",
-                    "sha256": "36a012f6c43213f840ce29a8b182700f6cf6b214bea0d5735594136b44914231"
-                }
-            ]
-        },
-        {
-            "name": "jasper",
-            "cmake": true,
-            "builddir": true,
-            "config-opts": [ "-DCMAKE_INSTALL_LIBDIR=lib" ],
-            "cleanup": [ "/bin", "/share" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://www.ece.uvic.ca/~frodo/jasper/software/jasper-2.0.10.tar.gz",
-                    "sha256": "54d85428e35263642358a11c312d61cbc054170546fae780e11271df5d1502e8"
-                }
-            ]
-        },
-        {
-            "name": "libraw",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/bin", "/share/doc" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://www.libraw.org/data/LibRaw-0.18.0.tar.gz",
-                    "sha256": "d56a0c9a0e6d1b8c8c5585346acf2cfb0554eee0f0948da66f580cd65c8c5c9b"
-                }
-            ]
-        },
-        {
-            "name": "poppler",
-            "modules": [
-                {
-                    "name": "popplerdata",
-                    "no-autogen": true,
-                    "make-install-args": ["prefix=/app"],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://poppler.freedesktop.org/poppler-data-0.4.7.tar.gz",
-                            "sha256": "e752b0d88a7aba54574152143e7bf76436a7ef51977c55d6bd9a48dccde3a7de"
-                        }
-                    ]
-                }
-            ],
-            "config-opts": [ "--disable-libopenjpeg", "--disable-introspection" ],
-            "cleanup": [ "/bin" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-0.51.0.tar.xz",
-                    "sha256": "e997c9ad81a8372f2dd03a02b00692b8cc479c220340c8881edaca540f402c1f"
-                }
-            ]
-        },
-        {
-            "name": "duplicate-dependencies",
-            "modules": [
-                {
-                    "name": "libpng",
-                    "cleanup": [ "/bin", "/share" ],
-                    "sources": [
-                        {
-                            "type": "archive",
-                            "url": "http://download.sourceforge.net/libpng/libpng-1.6.28.tar.xz",
-                            "sha256": "d8d3ec9de6b5db740fefac702c37ffcf96ae46cb17c18c1544635a3852f78f7a"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "aalib",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/bin", "/info", "/man" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://download.sourceforge.net/aa-project/aalib-1.4rc5.tar.gz",
-                    "sha256": "fbddda9230cf6ee2a4f5706b4b11e2190ae45f5eda1f0409dc4f99b35e0a70ee"
-                }
-            ]
-        },
-        {
-            "name": "libmng",
-            "config-opts": [ "--disable-static" ],
-            "cleanup": [ "/share" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://download.sourceforge.net/libmng/libmng-2.0.3.tar.xz",
-                    "sha256": "4a462fdd48d4bc82c1d7a21106c8a18b62f8cc0042454323058e6da0dbb57dd3"
-                }
-            ]
-        },
-        {
-            "name": "libwebp",
-            "config-opts": [ "--disable-static", "--enable-libwebpmux", "--enable-libwebpdemux" ],
-            "cleanup": [ "/share", "/bin" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://downloads.webmproject.org/releases/webp/libwebp-0.6.0.tar.gz",
-                    "sha256": "c928119229d4f8f35e20113ffb61f281eda267634a8dc2285af4b0ee27cf2b40"
-                }
-            ]
-        },
-        {
-            "name": "libwmf",
-            "config-opts": [ "--disable-static", "--disable-dependency-tracking" ],
-            "cleanup": [ "/share/doc", "/bin" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://downloads.sourceforge.net/wvware/libwmf-0.2.8.4.tar.gz",
-                    "sha256": "5b345c69220545d003ad52bfd035d5d6f4f075e65204114a9e875e84895a7cf8"
-                }
-            ]
-        },
-        {
-            "name": "ghostscript",
-            "config-opts": [ "--disable-cups" ],
-            "make-args": [ "so" ],
-            "make-install-args": [ "soinstall" ],
-            "cleanup": [ "/bin", "/share/man", "/share/ghostscript/9.20/doc/", "/share/ghostscript/9.20/examples" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs920/ghostscript-9.20.tar.xz",
-                    "sha256": "3c0f3dc5df6f784850fa4ce7dcc3d6c56ef543af1fbaedd1d9f8d9f8b66de0ab"
-                }
-            ]
-        },
-        {
-            "name": "webkitgtk",
-            "config-opts": [ "--with-gtk=2.0", "--disable-webkit2", "--disable-geolocation", "--disable-video",
-                             "--disable-spellcheck", "--disable-credential-storage", "--disable-web-audio" ],
-            "build-options" : {
-                "env": {
-                    "PYTHON": "/usr/bin/python3"
-                }
-            },
-            "cleanup": [ "/share/doc", "/bin" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://www.webkitgtk.org/releases/webkitgtk-2.4.11.tar.xz",
-                    "sha256": "588aea051bfbacced27fdfe0335a957dca839ebe36aa548df39c7bbafdb65bf7"
-                },
-                {
-                    "type": "patch",
-                    "path": "patches/webkitgtk-2.4.11.patch"
-                }
-            ]
-        },
         {
             "name": "babl",
             "config-opts": [ "--disable-docs" ],
@@ -293,17 +49,6 @@
                     "url": "git://git.gnome.org/gegl",
                     "branch": "GEGL_0_3_20",
                     "commit": "517991898e8ea672d38aa0dd282bb59b84ae253d"
-                }
-            ]
-        },
-        {
-            "name": "libmypaint",
-            "config-opts": [ "--disable-gegl", "--disable-introspection" ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://github.com/mypaint/libmypaint/releases/download/v1.3.0/libmypaint-1.3.0.tar.xz",
-                    "sha256": "6a07d9d57fea60f68d218a953ce91b168975a003db24de6ac01ad69dcc94a671"
                 }
             ]
         },
