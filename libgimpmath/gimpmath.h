@@ -64,7 +64,13 @@ G_BEGIN_DECLS
  * This macro rounds its argument @x to an integer value in floating
  * point format. Use RINT() instead of rint().
  **/
-#ifdef HAVE_RINT
+#if defined (HAVE_RINT) && 0
+/* note:  rint() depends on the current floating-point rounding mode.  when the
+ * rounding mode is FE_TONEAREST, it, in parctice, breaks ties to even.  this
+ * is different from 'floor (x + 0.5)', which breaks ties up.  in other words
+ * 'rint (2.5) == 2.0', while 'floor (2.5 + 0.5) == 3.0'.  this is asking for
+ * trouble, so let's just use the latter.
+ */
 #define RINT(x) rint(x)
 #else
 #define RINT(x) floor ((x) + 0.5)
