@@ -1286,6 +1286,7 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
   if (gsef->gse->number_of_fields == 2)
     {
       GimpSizeEntryField *other_gsef;
+      GimpEevlQuantity    default_unit_factor;
 
       options.ratio_expressions = TRUE;
 
@@ -1302,8 +1303,11 @@ gimp_size_entry_eevl_input_callback (GtkSpinButton *spinner,
           options.ratio_invert = TRUE;
         }
 
-      options.ratio_quantity.value     = other_gsef->value;
-      options.ratio_quantity.dimension = 0;
+      options.unit_resolver_proc (NULL, &default_unit_factor, options.data);
+
+      options.ratio_quantity.value     = other_gsef->value /
+                                         default_unit_factor.value;
+      options.ratio_quantity.dimension = default_unit_factor.dimension;
     }
 
   success = gimp_eevl_evaluate (gtk_entry_get_text (GTK_ENTRY (spinner)),
