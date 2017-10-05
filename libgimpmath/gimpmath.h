@@ -84,7 +84,7 @@ G_BEGIN_DECLS
  *
  * This macro rounds its argument @x to the nearest integer.
  **/
-#define SIGNED_ROUND(x) ((int) ((((x) < 0) ? (x) - 0.5 : (x) + 0.5)))
+#define SIGNED_ROUND(x) ((int) RINT (x))
 
 /**
  * SQR:
