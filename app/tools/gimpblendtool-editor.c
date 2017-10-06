@@ -49,29 +49,33 @@
 
 /*  local function prototypes  */
 
-static gboolean              gimp_blend_tool_editor_line_can_add_slider  (GimpToolLine  *line,
-                                                                          gdouble        value,
-                                                                          GimpBlendTool *blend_tool);
-static gint                  gimp_blend_tool_editor_line_add_slider      (GimpToolLine  *line,
-                                                                          gdouble        value,
-                                                                          GimpBlendTool *blend_tool);
-static void                  gimp_blend_tool_editor_line_remove_slider   (GimpToolLine  *line,
-                                                                          gint           slider,
-                                                                          GimpBlendTool *blend_tool);
+static gboolean              gimp_blend_tool_editor_line_can_add_slider           (GimpToolLine  *line,
+                                                                                   gdouble        value,
+                                                                                   GimpBlendTool *blend_tool);
+static gint                  gimp_blend_tool_editor_line_add_slider               (GimpToolLine  *line,
+                                                                                   gdouble        value,
+                                                                                   GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_line_prepare_to_remove_slider (GimpToolLine  *line,
+                                                                                   gint           slider,
+                                                                                   gboolean       remove,
+                                                                                   GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_line_remove_slider            (GimpToolLine  *line,
+                                                                                   gint           slider,
+                                                                                   GimpBlendTool *blend_tool);
 
-static gboolean              gimp_blend_tool_editor_is_gradient_editable (GimpBlendTool *blend_tool);
+static gboolean              gimp_blend_tool_editor_is_gradient_editable          (GimpBlendTool *blend_tool);
 
-static GimpGradientSegment * gimp_blend_tool_editor_handle_get_segment   (GimpBlendTool *blend_tool,
-                                                                          gint           handle);
+static GimpGradientSegment * gimp_blend_tool_editor_handle_get_segment            (GimpBlendTool *blend_tool,
+                                                                                   gint           handle);
 
-static void                  gimp_blend_tool_editor_block_handlers       (GimpBlendTool *blend_tool);
-static void                  gimp_blend_tool_editor_unblock_handlers     (GimpBlendTool *blend_tool);
-static gboolean              gimp_blend_tool_editor_are_handlers_blocked (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_block_handlers                (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_unblock_handlers              (GimpBlendTool *blend_tool);
+static gboolean              gimp_blend_tool_editor_are_handlers_blocked          (GimpBlendTool *blend_tool);
 
-static void                  gimp_blend_tool_editor_freeze_gradient      (GimpBlendTool *blend_tool);
-static void                  gimp_blend_tool_editor_thaw_gradient        (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_freeze_gradient               (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_thaw_gradient                 (GimpBlendTool *blend_tool);
 
-static void                  gimp_blend_tool_editor_update_sliders       (GimpBlendTool *blend_tool);
+static void                  gimp_blend_tool_editor_update_sliders                (GimpBlendTool *blend_tool);
 
 
 /*  private functions  */
@@ -123,6 +127,40 @@ gimp_blend_tool_editor_line_add_slider (GimpToolLine  *line,
 }
 
 static void
+gimp_blend_tool_editor_line_prepare_to_remove_slider (GimpToolLine  *line,
+                                                      gint           slider,
+                                                      gboolean       remove,
+                                                      GimpBlendTool *blend_tool)
+{
+  if (remove)
+    {
+      GimpGradient        *tentative_gradient;
+      GimpGradientSegment *seg;
+      gint                 i;
+
+      tentative_gradient =
+        GIMP_GRADIENT (gimp_data_duplicate (GIMP_DATA (blend_tool->gradient)));
+
+      seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, slider);
+
+      i = gimp_gradient_segment_range_get_n_segments (blend_tool->gradient,
+                                                      blend_tool->gradient->segments,
+                                                      seg) - 1;
+
+      seg = gimp_gradient_segment_get_nth (tentative_gradient->segments, i);
+
+      gimp_gradient_segment_range_merge (tentative_gradient,
+                                         seg, seg->next, NULL, NULL);
+
+      gimp_blend_tool_set_tentative_gradient (blend_tool, tentative_gradient);
+    }
+  else
+    {
+      gimp_blend_tool_set_tentative_gradient (blend_tool, NULL);
+    }
+}
+
+static void
 gimp_blend_tool_editor_line_remove_slider (GimpToolLine  *line,
                                            gint           slider,
                                            GimpBlendTool *blend_tool)
@@ -137,6 +175,8 @@ gimp_blend_tool_editor_line_remove_slider (GimpToolLine  *line,
                                      seg, seg->next, NULL, NULL);
 
   gimp_blend_tool_editor_thaw_gradient (blend_tool);
+
+  gimp_blend_tool_set_tentative_gradient (blend_tool, NULL);
 }
 
 static gboolean
@@ -403,6 +443,9 @@ gimp_blend_tool_editor_start (GimpBlendTool *blend_tool)
                     blend_tool);
   g_signal_connect (blend_tool->widget, "add-slider",
                     G_CALLBACK (gimp_blend_tool_editor_line_add_slider),
+                    blend_tool);
+  g_signal_connect (blend_tool->widget, "prepare-to-remove-slider",
+                    G_CALLBACK (gimp_blend_tool_editor_line_prepare_to_remove_slider),
                     blend_tool);
   g_signal_connect (blend_tool->widget, "remove-slider",
                     G_CALLBACK (gimp_blend_tool_editor_line_remove_slider),

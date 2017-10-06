@@ -40,6 +40,7 @@ struct _GimpBlendTool
   GimpDrawTool        parent_instance;
 
   GimpGradient       *gradient;
+  GimpGradient       *tentative_gradient;
 
   gdouble             start_x;    /*  starting x coord  */
   gdouble             start_y;    /*  starting y coord  */
@@ -73,10 +74,16 @@ struct _GimpBlendToolClass
 };
 
 
-void    gimp_blend_tool_register (GimpToolRegisterCallback  callback,
-                                  gpointer                  data);
+void    gimp_blend_tool_register               (GimpToolRegisterCallback  callback,
+                                                gpointer                  data);
 
-GType   gimp_blend_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_blend_tool_get_type               (void) G_GNUC_CONST;
+
+
+/*  protected functions  */
+
+void    gimp_blend_tool_set_tentative_gradient (GimpBlendTool            *blend_tool,
+                                                GimpGradient             *gradient);
 
 
 #endif  /*  __GIMP_BLEND_TOOL_H__  */
