@@ -85,6 +85,7 @@ enum
 {
   CAN_ADD_SLIDER,
   ADD_SLIDER,
+  PREPARE_TO_REMOVE_SLIDER,
   REMOVE_SLIDER,
   SELECTION_CHANGED,
   LAST_SIGNAL
@@ -241,6 +242,17 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
                   gimp_marshal_INT__DOUBLE,
                   G_TYPE_INT, 1,
                   G_TYPE_DOUBLE);
+
+  line_signals[PREPARE_TO_REMOVE_SLIDER] =
+    g_signal_new ("prepare-to-remove-slider",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpToolLineClass, prepare_to_remove_slider),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT_BOOLEAN,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_INT,
+                  G_TYPE_BOOLEAN);
 
   line_signals[REMOVE_SLIDER] =
     g_signal_new ("remove-slider",
@@ -670,6 +682,14 @@ gimp_tool_line_button_release (GimpToolWidget        *widget,
             {
               gimp_tool_line_get_slider (line, private->selection)->value =
                 private->saved_slider_value;
+
+              if (private->remove_slider)
+                {
+                  private->remove_slider = FALSE;
+
+                  g_signal_emit (line, line_signals[PREPARE_TO_REMOVE_SLIDER], 0,
+                                 private->selection, FALSE);
+                }
             }
 
           g_object_set (line,
@@ -682,6 +702,8 @@ gimp_tool_line_button_release (GimpToolWidget        *widget,
     }
   else if (grab == GRAB_SELECTION && private->remove_slider)
     {
+      private->remove_slider = FALSE;
+
       g_signal_emit (line, line_signals[REMOVE_SLIDER], 0,
                      private->selection);
     }
@@ -1124,6 +1146,7 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
         GimpControllerSlider *slider;
         gdouble               value;
         gdouble               dist;
+        gboolean              remove_slider;
 
         shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line));
 
@@ -1144,25 +1167,36 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
                       NULL);
 
         /* slider tearing */
-        private->remove_slider = dist > SLIDER_TEAR_DISTANCE;
+        remove_slider = dist > SLIDER_TEAR_DISTANCE;
 
-        /* eek! */
-        {
-          GimpCursorType     cursor;
-          GimpToolCursorType tool_cursor;
-          GimpCursorModifier modifier;
+        if (remove_slider != private->remove_slider)
+          {
+            private->remove_slider = remove_slider;
 
-          cursor      = shell->current_cursor;
-          tool_cursor = shell->tool_cursor;
-          modifier    = GIMP_CURSOR_MODIFIER_NONE;
+            g_signal_emit (line, line_signals[PREPARE_TO_REMOVE_SLIDER], 0,
+                           private->selection, remove_slider);
 
-          gimp_tool_line_get_cursor (GIMP_TOOL_WIDGET (line), NULL, 0,
-                                     &cursor, &tool_cursor, &modifier);
+            /* set the cursor modifier to a minus by talking to the shell
+             * directly -- eek!
+             */
+            {
+              GimpCursorType     cursor;
+              GimpToolCursorType tool_cursor;
+              GimpCursorModifier modifier;
 
-          gimp_display_shell_set_cursor (shell, cursor, tool_cursor, modifier);
-        }
+              cursor      = shell->current_cursor;
+              tool_cursor = shell->tool_cursor;
+              modifier    = GIMP_CURSOR_MODIFIER_NONE;
 
-        gimp_tool_line_update_handles (line);
+              gimp_tool_line_get_cursor (GIMP_TOOL_WIDGET (line), NULL, 0,
+                                         &cursor, &tool_cursor, &modifier);
+
+              gimp_display_shell_set_cursor (shell, cursor, tool_cursor, modifier);
+            }
+
+            gimp_tool_line_update_handles (line);
+            gimp_tool_line_update_circle (line);
+          }
 
         return TRUE;
       }

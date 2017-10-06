@@ -60,13 +60,16 @@ struct _GimpToolLineClass
   GimpToolWidgetClass  parent_class;
 
   /*  signals  */
-  gboolean (* can_add_slider)    (GimpToolLine *line,
-                                  gdouble       value);
-  gint     (* add_slider)        (GimpToolLine *line,
-                                  gdouble       value);
-  void     (* remove_slider)     (GimpToolLine *line,
-                                  gint          slider);
-  void     (* selection_changed) (GimpToolLine *line);
+  gboolean (* can_add_slider)           (GimpToolLine *line,
+                                         gdouble       value);
+  gint     (* add_slider)               (GimpToolLine *line,
+                                         gdouble       value);
+  void     (* prepare_to_remove_slider) (GimpToolLine *line,
+                                         gint          slider,
+                                         gboolean      remove);
+  void     (* remove_slider)            (GimpToolLine *line,
+                                         gint          slider);
+  void     (* selection_changed)        (GimpToolLine *line);
 };
 
 
