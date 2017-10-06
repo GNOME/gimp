@@ -63,6 +63,14 @@
                     "branch": "GIMP_2_9_6",
                     "commit": "5afea2f6d3ce5160362df930883d62fb9e0728c6"
                 }
+            ],
+	    "post-install": [
+                "rm -fr /app/include /app/lib/pkgconfig /app/share/pkgconfig",
+                "rm -fr /app/share/gtk-doc/ /app/share/man/",
+                "rm -fr /app/lib/*.la /app/lib/*.a",
+                "rm -fr /app/share/ghostscript/9.20/doc/",
+                "rm -fr /app/bin/wmf* /app/bin/libwmf-*",
+                "rm -fr /app/bin/pygtk* /app/bin/pygobject* /app/bin/pygobject-codegen-2.0"
             ]
         }
     ]
