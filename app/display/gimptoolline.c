@@ -1283,6 +1283,11 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
 
             gimp_tool_line_update_handles (line);
             gimp_tool_line_update_circle (line);
+            gimp_tool_line_update_status (line,
+                                          constrain ?
+                                            gimp_get_constrain_behavior_mask () :
+                                            0,
+                                          TRUE);
           }
 
         return TRUE;
@@ -1449,23 +1454,112 @@ gimp_tool_line_update_status (GimpToolLine    *line,
 
   if (proximity)
     {
-      gchar *status_help =
-        gimp_suggest_modifiers ("",
-                                (gimp_get_constrain_behavior_mask () |
-                                 GDK_MOD1_MASK) &
+      gint             handle;
+      const gchar     *message                = NULL;
+      const gchar     *toggle_behavior_format = NULL;
+      gchar           *status;
+
+      if (private->grab == GRAB_SELECTION)
+        handle = private->selection;
+      else
+        handle = private->hover;
+
+      if (handle == GIMP_TOOL_LINE_HANDLE_START ||
+          handle == GIMP_TOOL_LINE_HANDLE_END)
+        {
+          message                = _("Click-Drag to move the endpoint");
+          toggle_behavior_format = _("%s for constrained angles");
+        }
+      else if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (handle) ||
+               handle == HOVER_NEW_SLIDER)
+        {
+          if (private->grab == GRAB_SELECTION && private->remove_slider)
+            {
+              message = _("Release to remove the slider");
+            }
+          else
+            {
+              toggle_behavior_format = _("%s for constrained values");
+
+              if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (handle))
+                {
+                  if (gimp_tool_line_get_slider (line, handle)->movable)
+                    {
+                      if (gimp_tool_line_get_slider (line, handle)->removable)
+                        {
+                          if (private->grab == GRAB_SELECTION)
+                            {
+                              message = _("Click-Drag to move the slider; "
+                                          "drag away to remove the slider");
+                            }
+                          else
+                            {
+                              message = _("Click-Drag to move or remove the slider");
+                            }
+                        }
+                      else
+                        {
+                          message = _("Click-Drag to move the slider");
+                        }
+                    }
+                  else
+                    {
+                      toggle_behavior_format = NULL;
+
+                      if (gimp_tool_line_get_slider (line, handle)->removable)
+                        {
+                          if (private->grab == GRAB_SELECTION)
+                            {
+                              message = _("Click-Drag away to remove the slider");
+                            }
+                          else
+                            {
+                              message = _("Click-Drag to remove the slider");
+                            }
+                        }
+                      else
+                        {
+                          message = NULL;
+                        }
+                    }
+                }
+              else
+                {
+                  message = _("Click or Click-Drag to add a new slider");
+                }
+            }
+        }
+      else if (state & GDK_MOD1_MASK)
+        {
+          message = _("Click-Drag to move the line");
+        }
+
+      status =
+        gimp_suggest_modifiers (message ? message : "",
+                                ((toggle_behavior_format ?
+                                   gimp_get_constrain_behavior_mask () : 0) |
+                                 (private->grab == GRAB_NONE ?
+                                   GDK_MOD1_MASK : 0)) &
                                 ~state,
                                 NULL,
-                                _("%s for constrained angles"),
+                                toggle_behavior_format,
                                 _("%s to move the whole line"));
 
-      gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (line),
-                                          private->status_title,
-                                          private->x2 - private->x1,
-                                          ", ",
-                                          private->y2 - private->y1,
-                                          status_help);
+      if (message)
+        {
+          gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (line), status);
+        }
+      else
+        {
+          gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (line),
+                                              private->status_title,
+                                              private->x2 - private->x1,
+                                              ", ",
+                                              private->y2 - private->y1,
+                                              status);
+        }
 
-      g_free (status_help);
+      g_free (status);
     }
   else
     {
