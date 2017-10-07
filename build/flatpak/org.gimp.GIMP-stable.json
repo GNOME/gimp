@@ -12,7 +12,7 @@
     "rename-icon": "gimp",
     "finish-args": ["--share=ipc", "--socket=x11", "--filesystem=host",
                     "--filesystem=xdg-config/GIMP", "--share=network",
-                    "--socket=system-bus", "--socket=session-bus" ],
+                    "--talk-name=org.gtk.vfs --talk-name=org.gtk.vfs.*" ],
     "tags": ["stable"],
     "build-options" : {
         "cflags": "-O2 -g",
