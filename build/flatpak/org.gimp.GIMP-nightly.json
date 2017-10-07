@@ -10,9 +10,10 @@
     "rename-desktop-file": "gimp.desktop",
     "rename-appdata-file": "gimp.appdata.xml",
     "rename-icon": "gimp",
-    "finish-args": ["--share=ipc", "--socket=x11", "--filesystem=host",
-                    "--filesystem=xdg-config/GIMP", "--share=network",
-                    "--talk-name=org.gtk.vfs --talk-name=org.gtk.vfs.*" ],
+    "finish-args": ["--share=ipc", "--socket=x11", "--share=network",
+                    "--filesystem=host", "--filesystem=xdg-config/GIMP",
+                    "--filesystem=xdg-config/gtk-3.0",
+                    "--talk-name=org.gtk.vfs", "--talk-name=org.gtk.vfs.*" ],
     "tags": ["nightly"],
     "desktop-file-name-prefix": "(Nightly) ",
     "build-options" : {
