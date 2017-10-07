@@ -137,6 +137,7 @@
         {
             "name": "jasper",
             "cmake": true,
+            "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [ "-DCMAKE_INSTALL_LIBDIR=lib" ],
             "cleanup": [ "/bin", "/share" ],
