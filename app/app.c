@@ -45,6 +45,7 @@
 
 #include "core/core-types.h"
 
+#include "config/gimplangrc.h"
 #include "config/gimprc.h"
 
 #include "gegl/gimp-gegl.h"
@@ -181,6 +182,8 @@ app_run (const gchar         *full_prog_name,
   GFile              *default_folder = NULL;
   GFile              *gimpdir;
   const gchar        *abort_message;
+  GimpLangRc         *temprc;
+  gchar              *language = NULL;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -201,6 +204,26 @@ app_run (const gchar         *full_prog_name,
 
       filenames = NULL;
     }
+
+  /* Language needs to be determined first, before any GimpContext is
+   * instanciated (which happens when the Gimp object is created)
+   * because its properties need to be properly localized in the
+   * settings language (if different from system language). Otherwise we
+   * end up with pieces of GUI always using the system language (cf. bug
+   * 787457). Therefore we do a first pass on "gimprc" file for the sole
+   * purpose of getting the settings language, so that we can initialize
+   * it before anything else.
+   */
+  temprc = gimp_lang_rc_new (alternate_system_gimprc,
+                             alternate_gimprc,
+                             be_verbose);
+  language = gimp_lang_rc_get_language (temprc);
+  g_object_unref (temprc);
+
+  /*  change the locale if a language if specified  */
+  language_init (language);
+  if (language)
+    g_free (language);
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
@@ -251,9 +274,6 @@ app_run (const gchar         *full_prog_name,
   g_object_unref (gimpdir);
 
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
-
-  /*  change the locale if a language if specified  */
-  language_init (gimp->config->language);
 
   /*  run the late-stage sanity check.  it's important that this check is run
    *  after the call to language_init() (see comment in sanity_check_late().)

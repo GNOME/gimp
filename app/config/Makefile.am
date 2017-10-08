@@ -50,6 +50,8 @@ libappconfig_a_sources = \
 	gimpgeglconfig.h		\
 	gimpguiconfig.c			\
 	gimpguiconfig.h			\
+	gimplangrc.c			\
+	gimplangrc.h			\
 	gimppluginconfig.c		\
 	gimppluginconfig.h		\
 	gimprc.c			\
