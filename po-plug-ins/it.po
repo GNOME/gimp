@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-25 16:06+0200\n"
-"PO-Revision-Date: 2017-09-25 16:08+0200\n"
+"POT-Creation-Date: 2017-10-08 23:23+0200\n"
+"PO-Revision-Date: 2017-10-08 23:23+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -46,8 +46,8 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/destripe.c:444 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/edge-neon.c:700 ../plug-ins/common/emboss.c:453
 #: ../plug-ins/common/file-cel.c:936 ../plug-ins/common/file-gif-save.c:1089
-#: ../plug-ins/common/file-pdf-load.c:694
-#: ../plug-ins/common/file-pdf-load.c:1259
+#: ../plug-ins/common/file-pdf-load.c:707
+#: ../plug-ins/common/file-pdf-load.c:1272
 #: ../plug-ins/common/file-pdf-save.c:1009 ../plug-ins/common/file-ps.c:3422
 #: ../plug-ins/common/file-raw-data.c:1553 ../plug-ins/common/file-svg.c:727
 #: ../plug-ins/common/file-wmf.c:505 ../plug-ins/common/film.c:1263
@@ -64,7 +64,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/sphere-designer.c:2561 ../plug-ins/common/tile.c:438
 #: ../plug-ins/common/tile-small.c:373 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/unsharp-mask.c:842 ../plug-ins/common/van-gogh-lic.c:647
-#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:271
+#: ../plug-ins/common/warp.c:378 ../plug-ins/common/wavelet-decompose.c:312
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:870
 #: ../plug-ins/file-tiff/file-tiff-load.c:147 ../plug-ins/flame/flame.c:473
@@ -111,7 +111,7 @@ msgstr "_Annulla"
 #: ../plug-ins/common/depth-merge.c:656 ../plug-ins/common/despeckle.c:446
 #: ../plug-ins/common/destripe.c:445 ../plug-ins/common/edge-dog.c:307
 #: ../plug-ins/common/edge-neon.c:701 ../plug-ins/common/emboss.c:454
-#: ../plug-ins/common/file-pdf-load.c:695 ../plug-ins/common/file-svg.c:728
+#: ../plug-ins/common/file-pdf-load.c:708 ../plug-ins/common/file-svg.c:728
 #: ../plug-ins/common/file-wmf.c:506 ../plug-ins/common/film.c:1264
 #: ../plug-ins/common/filter-pack.c:1207 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:647 ../plug-ins/common/hot.c:595
@@ -124,7 +124,7 @@ msgstr "_Annulla"
 #: ../plug-ins/common/sphere-designer.c:2562 ../plug-ins/common/tile.c:439
 #: ../plug-ins/common/tile-small.c:374 ../plug-ins/common/unsharp-mask.c:843
 #: ../plug-ins/common/van-gogh-lic.c:648 ../plug-ins/common/warp.c:379
-#: ../plug-ins/common/wavelet-decompose.c:272 ../plug-ins/flame/flame.c:650
+#: ../plug-ins/common/wavelet-decompose.c:313 ../plug-ins/flame/flame.c:650
 #: ../plug-ins/flame/flame.c:972
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1117
@@ -2191,7 +2191,7 @@ msgstr ""
 #: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:298
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:679
 #: ../plug-ins/common/file-jp2-load.c:227 ../plug-ins/common/file-pat.c:336
-#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1030
+#: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-pdf-load.c:1043
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:905
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1092
 #: ../plug-ins/common/file-raw-data.c:1077 ../plug-ins/common/file-sunras.c:429
@@ -3065,79 +3065,86 @@ msgstr "Bordo inferiore fuori dai limiti (deve essere < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-load.c:315
-#: ../plug-ins/common/file-pdf-load.c:334
+#: ../plug-ins/common/file-pdf-load.c:321
+#: ../plug-ins/common/file-pdf-load.c:340
 #: ../plug-ins/common/file-pdf-save.c:338
 #: ../plug-ins/common/file-pdf-save.c:355
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
-#: ../plug-ins/common/file-pdf-load.c:494
+#. TRANSLATORS: first argument is file name,
+#. * second is out-of-range page number, third is
+#. * number of pages. Specify order as in English if needed.
+#.
+#: ../plug-ins/common/file-pdf-load.c:504
 #, c-format
-msgid "PDF document '%s' has %d pages. Page %d is out of range."
-msgstr "Il documento PDF \"%s\" ha %d pagine. La pagina %d è fuori campo."
+msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
+msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
+msgstr[0] ""
+"Il documento PDF \"%1$s\" ha una sola pagina. La pagina %2$d è fuori campo."
+msgstr[1] "Il documento PDF \"%s\" ha %d pagine. La pagina %d è fuori campo."
 
-#: ../plug-ins/common/file-pdf-load.c:666
-#: ../plug-ins/common/file-pdf-load.c:736
+#: ../plug-ins/common/file-pdf-load.c:679
+#: ../plug-ins/common/file-pdf-load.c:749
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Impossibile caricare \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-load.c:681
+#: ../plug-ins/common/file-pdf-load.c:694
 msgid "PDF is password protected, please input the password:"
 msgstr "Il PDF è protetto da password, inserire la password:"
 
-#: ../plug-ins/common/file-pdf-load.c:691
+#: ../plug-ins/common/file-pdf-load.c:704
 msgid "Encrypted PDF"
 msgstr "PDF crittografato"
 
-#: ../plug-ins/common/file-pdf-load.c:719
+#: ../plug-ins/common/file-pdf-load.c:732
 msgid "Wrong password! Please input the right one:"
 msgstr "Password errata! Inserire quella giusta:"
 
-#: ../plug-ins/common/file-pdf-load.c:1064
+#: ../plug-ins/common/file-pdf-load.c:1077
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:1185
+#: ../plug-ins/common/file-pdf-load.c:1079 ../plug-ins/common/file-ps.c:1185
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pagine"
 
-#: ../plug-ins/common/file-pdf-load.c:1255
+#: ../plug-ins/common/file-pdf-load.c:1268
 msgid "Import from PDF"
 msgstr "Importa da PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1260 ../plug-ins/common/file-ps.c:3423
+#: ../plug-ins/common/file-pdf-load.c:1273 ../plug-ins/common/file-ps.c:3423
 #: ../plug-ins/file-tiff/file-tiff-load.c:148
 #: ../plug-ins/metadata/metadata-editor.c:5619
 msgid "_Import"
 msgstr "_Importa"
 
-#: ../plug-ins/common/file-pdf-load.c:1293
+#: ../plug-ins/common/file-pdf-load.c:1306
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Errore nell'ottenere il numero di pagine dal file PDF fornito"
 
-#: ../plug-ins/common/file-pdf-load.c:1339
+#: ../plug-ins/common/file-pdf-load.c:1352
 msgid "_Width (pixels):"
 msgstr "_Larghezza (pixel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1340
+#: ../plug-ins/common/file-pdf-load.c:1353
 msgid "_Height (pixels):"
 msgstr "_Altezza (pixel):"
 
-#: ../plug-ins/common/file-pdf-load.c:1342
+#: ../plug-ins/common/file-pdf-load.c:1355
 msgid "_Resolution:"
 msgstr "_Risoluzione:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1353
+#: ../plug-ins/common/file-pdf-load.c:1366
 msgid "Use _Anti-aliasing"
 msgstr "Usa l'_antialiasing"
 
-#: ../plug-ins/common/file-pdf-load.c:1631
-#: ../plug-ins/common/file-pdf-load.c:1632 ../plug-ins/common/file-svg.c:916
+#: ../plug-ins/common/file-pdf-load.c:1644
+#: ../plug-ins/common/file-pdf-load.c:1645 ../plug-ins/common/file-svg.c:916
 #: ../plug-ins/common/file-wmf.c:700 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -6352,22 +6359,45 @@ msgstr "Ricerca gradienti XY"
 msgid "Flow step %d"
 msgstr "Passo di flusso %d"
 
-#: ../plug-ins/common/wavelet-decompose.c:86
-#: ../plug-ins/common/wavelet-decompose.c:267
+#: ../plug-ins/common/wavelet-decompose.c:97
+#: ../plug-ins/common/wavelet-decompose.c:308
 msgid "Wavelet decompose"
 msgstr "Scomposizione Wavelet"
 
-#: ../plug-ins/common/wavelet-decompose.c:91
+#: ../plug-ins/common/wavelet-decompose.c:102
 msgid "_Wavelet-decompose..."
 msgstr "Scomposizione-_Wavelet..."
 
-#: ../plug-ins/common/wavelet-decompose.c:161
+#: ../plug-ins/common/wavelet-decompose.c:175
 msgid "Wavelet-Decompose"
 msgstr "Scomposizione-Wavelet"
 
-#: ../plug-ins/common/wavelet-decompose.c:296
+#: ../plug-ins/common/wavelet-decompose.c:182
+msgid "Decomposition"
+msgstr "Scomposizione"
+
+#: ../plug-ins/common/wavelet-decompose.c:208
+#, c-format
+msgid "Scale %d"
+msgstr "Scala %d"
+
+#: ../plug-ins/common/wavelet-decompose.c:232
+msgid "Residual"
+msgstr "Residuo"
+
+#: ../plug-ins/common/wavelet-decompose.c:339
 msgid "Scales:"
 msgstr "Scala:"
+
+#. create group layer
+#: ../plug-ins/common/wavelet-decompose.c:351
+msgid "Create a layer group to store the decomposition"
+msgstr "Crea un gruppo di livelli per memorizzare la scomposizione"
+
+#. create layer masks
+#: ../plug-ins/common/wavelet-decompose.c:363
+msgid "Add a layer mask to each scales layers"
+msgstr "Aggiungi una maschera di livello per ogni livello scalato"
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
@@ -11658,6 +11688,14 @@ msgstr "Imposta data"
 msgid "Unrated"
 msgstr "Non classificato"
 
+#: ../plug-ins/metadata/metadata-editor.c:5615
+msgid "Import Metadata File"
+msgstr "Importa file metadati"
+
+#: ../plug-ins/metadata/metadata-editor.c:5650
+msgid "Export Metadata File"
+msgstr "Esporta file metadati"
+
 #: ../plug-ins/metadata/metadata-editor.c:5654
 msgid "_Export"
 msgstr "_Esporta"
@@ -11865,7 +11903,7 @@ msgstr "Visualizza i metadati (EXIF, IPTC, XMP)"
 
 #: ../plug-ins/metadata/metadata-viewer.c:127
 msgid "View Metadata"
-msgstr "Visualizza i metadati"
+msgstr "Visualizza metadati"
 
 #: ../plug-ins/metadata/metadata-viewer.c:220
 #, c-format
