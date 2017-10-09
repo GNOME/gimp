@@ -1077,6 +1077,15 @@ gimp_operation_blend_process (GeglOperation       *operation,
                                                   gimp_gradient_segment_get_last (
                                                     rbd.gradient->segments),
                                                   &rbd.rightmost_color);
+
+      if (rbd.reverse)
+        {
+          GimpRGB temp;
+
+          temp                = rbd.leftmost_color;
+          rbd.leftmost_color  = rbd.rightmost_color;
+          rbd.rightmost_color = temp;
+        }
     }
 
   /* Render the gradient! */
