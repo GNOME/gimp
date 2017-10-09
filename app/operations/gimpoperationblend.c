@@ -75,6 +75,8 @@ typedef struct
   gdouble              dist;
   gdouble              vec[2];
   GimpRepeatMode       repeat;
+  GimpRGB              leftmost_color;
+  GimpRGB              rightmost_color;
   GRand               *seed;
   GeglBuffer          *dist_buffer;
 } RenderBlendData;
@@ -886,10 +888,7 @@ gradient_render_pixel (gdouble   x,
   switch (rbd->repeat)
     {
     case GIMP_REPEAT_TRUNCATE:
-      break;
-
     case GIMP_REPEAT_NONE:
-      factor = CLAMP (factor, 0.0, 1.0);
       break;
 
     case GIMP_REPEAT_SAWTOOTH:
@@ -914,10 +913,13 @@ gradient_render_pixel (gdouble   x,
 
   /* Blend the colors */
 
-  if (factor < 0.0 || factor > 1.0)
+  if (factor < 0.0)
     {
-      color->r = color->g = color->b = 0;
-      color->a = GIMP_OPACITY_TRANSPARENT;
+      *color = rbd->leftmost_color;
+    }
+  else if (factor > 1.0)
+    {
+      *color = rbd->rightmost_color;
     }
   else
     {
@@ -1065,6 +1067,17 @@ gimp_operation_blend_process (GeglOperation       *operation,
   rbd.sy            = self->start_y;
   rbd.gradient_type = self->gradient_type;
   rbd.repeat        = self->gradient_repeat;
+
+  if (rbd.repeat == GIMP_REPEAT_NONE)
+    {
+      gimp_gradient_segment_get_left_flat_color  (rbd.gradient, NULL,
+                                                  rbd.gradient->segments,
+                                                  &rbd.leftmost_color);
+      gimp_gradient_segment_get_right_flat_color (rbd.gradient, NULL,
+                                                  gimp_gradient_segment_get_last (
+                                                    rbd.gradient->segments),
+                                                  &rbd.rightmost_color);
+    }
 
   /* Render the gradient! */
 
