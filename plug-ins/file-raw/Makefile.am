@@ -2,6 +2,8 @@
 
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 
 filerawdatadir = $(gimpdatadir)/file-raw
 
@@ -50,6 +52,8 @@ file_raw_placeholder_SOURCES = \
 file_darktable_LDADD = \
 	$(libgimp)		\
 	$(libgimpbase)		\
+	$(libgimpcolor)		\
+	$(libgimpconfig)	\
 	$(CAIRO_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -59,6 +63,8 @@ file_darktable_LDADD = \
 file_rawtherapee_LDADD = \
 	$(libgimp)		\
 	$(libgimpbase)		\
+	$(libgimpcolor)		\
+	$(libgimpconfig)	\
 	$(CAIRO_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
@@ -68,6 +74,8 @@ file_rawtherapee_LDADD = \
 file_raw_placeholder_LDADD = \
 	$(libgimp)		\
 	$(libgimpbase)		\
+	$(libgimpcolor)		\
+	$(libgimpconfig)	\
 	$(CAIRO_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
