@@ -137,7 +137,8 @@ static PSD_Image_Data PSDImageData;
 /* Declare some local functions.
  */
 
-static const gchar * psd_lmode_layer      (gint32         idLayer);
+static const gchar * psd_lmode_layer      (gint32         idLayer,
+                                           gboolean       section_divider);
 
 static void          reshuffle_cmap_write (guchar        *mapGimp);
 
@@ -202,7 +203,8 @@ static PSD_Layer   * image_get_all_layers (gint32         imageID,
                                            gint          *n_layers);
 
 static const gchar *
-psd_lmode_layer (gint32 idLayer)
+psd_lmode_layer (gint32   idLayer,
+                 gboolean section_divider)
 {
   LayerModeInfo mode_info;
 
@@ -214,7 +216,7 @@ psd_lmode_layer (gint32 idLayer)
   /* pass-through groups use normal mode in their layer record; the
    * pass-through mode is specified in their section divider resource.
    */
-  if (mode_info.mode == GIMP_LAYER_MODE_PASS_THROUGH)
+  if (mode_info.mode == GIMP_LAYER_MODE_PASS_THROUGH && ! section_divider)
     mode_info.mode = GIMP_LAYER_MODE_NORMAL;
 
   return gimp_to_psd_blend_mode (&mode_info);
@@ -993,7 +995,7 @@ save_layer_and_mask (FILE   *fd,
 
       xfwrite (fd, "8BIM", 4, "blend mode signature");
 
-      blendMode = psd_lmode_layer (PSDImageData.lLayers[i].id);
+      blendMode = psd_lmode_layer (PSDImageData.lLayers[i].id, FALSE);
       IFDBG printf ("\t\tBlend mode: %s\n", blendMode);
       xfwrite (fd, blendMode, 4, "blend mode key");
 
@@ -1007,6 +1009,7 @@ save_layer_and_mask (FILE   *fd,
       flags = 0;
       if (gimp_layer_get_lock_alpha (PSDImageData.lLayers[i].id)) flags |= 1;
       if (! gimp_item_get_visible (PSDImageData.lLayers[i].id)) flags |= 2;
+      if (PSDImageData.lLayers[i].type != PSD_LAYER_TYPE_LAYER) flags |= 0x18;
       IFDBG printf ("\t\tFlags: %u\n", flags);
       write_gchar (fd, flags, "Flags");
 
@@ -1047,13 +1050,18 @@ save_layer_and_mask (FILE   *fd,
       write_gint32 (fd, 0, "Layer blending size");
       IFDBG printf ("\t\tLayer blending size: %d\n", 0);
 
-      layerName = gimp_item_get_name (PSDImageData.lLayers[i].id);
+      if (PSDImageData.lLayers[i].type != PSD_LAYER_TYPE_GROUP_END)
+        layerName = gimp_item_get_name (PSDImageData.lLayers[i].id);
+      else
+        layerName = g_strdup ("</Layer group>");
       write_pascalstring (fd, layerName, 4, "layer name");
       IFDBG printf ("\t\tLayer name: %s\n", layerName);
 
       /* Additional layer information blocks */
       /* Unicode layer name */
       write_datablock_luni(fd, layerName, "luni extra data block");
+
+      g_free (layerName);
 
       /* Layer color tag */
       xfwrite (fd, "8BIMlclr", 8, "sheet color signature");
@@ -1068,31 +1076,23 @@ save_layer_and_mask (FILE   *fd,
       /* Group layer section divider */
       if (PSDImageData.lLayers[i].type != PSD_LAYER_TYPE_LAYER)
         {
-          gint32   size;
-          gint32   type;
-          gboolean pass_through;
+          gint32 size;
+          gint32 type;
 
-          size = 4;
+          size = 12;
 
           if (PSDImageData.lLayers[i].type == PSD_LAYER_TYPE_GROUP_START)
             type = 1;
           else
             type = 3;
 
-          /* pass-through groups use normal mode in their layer record; the
-           * pass-through mode is specified in their section divider resource.
-           */
-          pass_through = gimp_layer_get_mode (PSDImageData.lLayers[i].id) ==
-                         GIMP_LAYER_MODE_PASS_THROUGH;
-
-          if (pass_through)
-            size += 8;
+          blendMode = psd_lmode_layer (PSDImageData.lLayers[i].id, TRUE);
 
           xfwrite (fd, "8BIMlsct", 8, "section divider");
           write_gint32 (fd, size, "section divider size");
           write_gint32 (fd, type, "section divider type");
-          if (pass_through)
-            xfwrite (fd, "8BIMpass", 8, "section divider blend mode");
+          xfwrite (fd, "8BIM", 4, "section divider blend mode signature");
+          xfwrite (fd, blendMode, 4, "section divider blend mode key");
         }
 
       /* Write real length for: Extra data */
