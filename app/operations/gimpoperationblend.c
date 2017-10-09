@@ -913,11 +913,11 @@ gradient_render_pixel (gdouble   x,
 
   /* Blend the colors */
 
-  if (factor < 0.0)
+  if (factor <= 0.0)
     {
       *color = rbd->leftmost_color;
     }
-  else if (factor > 1.0)
+  else if (factor >= 1.0)
     {
       *color = rbd->rightmost_color;
     }
