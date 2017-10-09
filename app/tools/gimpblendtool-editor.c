@@ -941,6 +941,8 @@ gimp_blend_tool_editor_delete_stop (GimpBlendTool *blend_tool,
   GimpGradientSegment *seg;
   BlendInfo           *info;
 
+  g_assert (gimp_blend_tool_editor_handle_is_stop (blend_tool, slider));
+
   gimp_blend_tool_editor_start_edit (blend_tool);
   gimp_blend_tool_editor_freeze_gradient (blend_tool);
 
@@ -966,17 +968,21 @@ gimp_blend_tool_editor_midpoint_to_stop (GimpBlendTool *blend_tool,
 {
   const GimpControllerSlider *sliders;
 
+  g_assert (gimp_blend_tool_editor_handle_is_midpoint (blend_tool, slider));
+
   sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (blend_tool->widget),
                                         NULL);
 
   if (sliders[slider].value > sliders[slider].min + EPSILON &&
       sliders[slider].value < sliders[slider].max - EPSILON)
     {
-      gint       stop;
-      BlendInfo *info;
+      const GimpGradientSegment *seg;
+      gint                       stop;
+      BlendInfo                 *info;
 
-      stop = gimp_blend_tool_editor_add_stop (blend_tool,
-                                              sliders[slider].value);
+      seg = gimp_blend_tool_editor_handle_get_segment (blend_tool, slider);
+
+      stop = gimp_blend_tool_editor_add_stop (blend_tool, seg->middle);
 
       info                 = blend_tool->undo_stack->data;
       info->removed_handle = slider;
