@@ -497,7 +497,7 @@ decode_packbits (const gchar *src,
 
   while (unpack_left > 0 && pack_left > 0)
     {
-      n = *src;
+      n = *(const guchar *) src;
       src++;
       pack_left--;
 
