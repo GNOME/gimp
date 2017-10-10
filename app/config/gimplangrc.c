@@ -272,8 +272,6 @@ gimp_lang_rc_new (GFile    *system_gimprc,
  * @lang_rc:  a #GimpLangRc object.
  *
  * This function looks up the language set in `gimprc`.
- * If no language property is found, the list of unknown tokens
- * attached to the @rc object is searched.
  *
  * Return value: a newly allocated string representing the language or
  *               %NULL if the key couldn't be found.
