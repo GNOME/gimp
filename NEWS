@@ -27,6 +27,17 @@ Core:
     is not installed for the GUI language (alongside the possibility to
     read online) and the choice can be edited in preferences.
 
+Tools:
+
+  - Blend tool now features on-canvas gradient editing: adding, shifting,
+    removing color stops, shifting midpoints and converting them to color
+    stops, assignging colors to color stops, changing blending type
+    for midpoints. Additional options: 'Instant mode' (active before you
+    start blending) to support the old workflow where you can't edit color
+    stops before applying the gradient fill, and 'Modify active gradient'
+    which allows changing user-writable gradients directly rather than
+    creating copies of them.
+
 Color management:
 
   - Use babl to convert between profiles if possible.
