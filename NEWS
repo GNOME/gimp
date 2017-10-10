@@ -73,7 +73,7 @@ PDB:
 Translations:
 
   - Updated: Catalan, Croatian, Galician, German, Greek, Hungarian,
-    Indonesian, Italian, Polish, Russian, Spanish.
+    Icelandic, Indonesian, Italian, Polish, Russian, Spanish.
 
 Building:
 
@@ -83,8 +83,11 @@ Building:
 
 Contributors:
 
-Piotr Drąg, Tobias Ellinghaus, Ell, Lionel N, Michael Natterer, Jehan Pagès,
-Juan Palacios, Michael Schumacher.
+Marco Ciampa, Fran Dieguez, Piotr Drąg, Tobias Ellinghaus, Ell,
+Sveinn í Felli, gogo, Luis Angel Gonzo, Øyvind Kolås, Thomas Manni,
+Jordi Mas, Balázs Meskó, Lionel N, Michael Natterer, Jehan Pagès,
+Juan Palacios, Alexandre Prokoudine, Michael Schumacher,
+Dimitris Spingos, Andika Triwidada.
 
 Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
 =================================================
