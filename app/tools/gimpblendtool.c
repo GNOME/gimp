@@ -637,6 +637,8 @@ gimp_blend_tool_halt (GimpBlendTool *blend_tool)
       gimp_image_flush (gimp_display_get_image (tool->display));
     }
 
+  gimp_blend_tool_set_tentative_gradient (blend_tool, NULL);
+
   g_signal_handlers_disconnect_by_func (context,
                                         G_CALLBACK (gimp_blend_tool_fg_bg_changed),
                                         blend_tool);
