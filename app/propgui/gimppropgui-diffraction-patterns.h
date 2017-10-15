@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-diffration-patterns.h
+ * gimppropgui-diffraction-patterns.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROP_GUI_DIFFRATION_PATTERNS_H__
-#define __GIMP_PROP_GUI_DIFFRATION_PATTERNS_H__
+#ifndef __GIMP_PROP_GUI_DIFFRACTION_PATTERNS_H__
+#define __GIMP_PROP_GUI_DIFFRACTION_PATTERNS_H__
 
 
 GtkWidget *
@@ -32,4 +32,4 @@ _gimp_prop_gui_new_diffraction_patterns (GObject                  *config,
                                          gpointer                  creator);
 
 
-#endif /* __GIMP_PROP_GUI_DIFFRATION_PATTERNS_H__ */
+#endif /* __GIMP_PROP_GUI_DIFFRACTION_PATTERNS_H__ */

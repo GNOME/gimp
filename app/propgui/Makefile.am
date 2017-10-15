@@ -27,8 +27,8 @@ libapppropgui_a_SOURCES = \
 	gimppropgui-color-rotate.h		\
 	gimppropgui-convolution-matrix.c	\
 	gimppropgui-convolution-matrix.h	\
-	gimppropgui-diffration-patterns.c	\
-	gimppropgui-diffration-patterns.h	\
+	gimppropgui-diffraction-patterns.c	\
+	gimppropgui-diffraction-patterns.h	\
 	gimppropgui-eval.c			\
 	gimppropgui-eval.h			\
 	gimppropgui-generic.c			\

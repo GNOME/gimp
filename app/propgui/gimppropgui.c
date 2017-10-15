@@ -49,7 +49,7 @@
 #include "gimppropgui-color-balance.h"
 #include "gimppropgui-color-rotate.h"
 #include "gimppropgui-convolution-matrix.h"
-#include "gimppropgui-diffration-patterns.h"
+#include "gimppropgui-diffraction-patterns.h"
 #include "gimppropgui-eval.h"
 #include "gimppropgui-generic.h"
 #include "gimppropgui-hue-saturation.h"

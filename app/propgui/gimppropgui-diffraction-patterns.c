@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-diffration-patterns.c
+ * gimppropgui-diffraction-patterns.c
  * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
  *                          Sven Neumann <sven@gimp.org>
  *
@@ -31,7 +31,7 @@
 #include "core/gimpcontext.h"
 
 #include "gimppropgui.h"
-#include "gimppropgui-diffration-patterns.h"
+#include "gimppropgui-diffraction-patterns.h"
 #include "gimppropgui-generic.h"
 
 #include "gimp-intl.h"

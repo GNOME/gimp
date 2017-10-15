@@ -373,7 +373,7 @@ app/propgui/gimppropgui-channel-mixer.c
 app/propgui/gimppropgui-color-balance.c
 app/propgui/gimppropgui-color-rotate.c
 app/propgui/gimppropgui-convolution-matrix.c
-app/propgui/gimppropgui-diffration-patterns.c
+app/propgui/gimppropgui-diffraction-patterns.c
 app/propgui/gimppropgui-generic.c
 app/propgui/gimppropgui-hue-saturation.c
 app/propgui/gimppropgui-spiral.c
