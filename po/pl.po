@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-08 19:04+0200\n"
-"PO-Revision-Date: 2017-10-08 19:05+0200\n"
+"POT-Creation-Date: 2017-10-15 16:32+0200\n"
+"PO-Revision-Date: 2017-10-15 16:33+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -325,28 +325,28 @@ msgstr "Używa %s w wersji %s (skompilowano z wersją %s)"
 msgid "%s version %s"
 msgstr "%s w wersji %s"
 
-#: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:413
+#: ../app/actions/actions.c:110 ../app/dialogs/dialogs.c:414
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Edytor pędzli"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:113 ../app/core/gimp-data-factories.c:317
-#: ../app/dialogs/dialogs.c:328 ../app/dialogs/preferences-dialog.c:2975
+#: ../app/dialogs/dialogs.c:329 ../app/dialogs/preferences-dialog.c:2975
 msgid "Brushes"
 msgstr "Pędzle"
 
-#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:349
+#: ../app/actions/actions.c:116 ../app/dialogs/dialogs.c:350
 msgid "Buffers"
 msgstr "Bufory"
 
-#: ../app/actions/actions.c:119 ../app/dialogs/dialogs.c:367
+#: ../app/actions/actions.c:119 ../app/dialogs/dialogs.c:368
 #: ../app/widgets/gimppickablepopup.c:249
 msgid "Channels"
 msgstr "Kanały"
 
 #: ../app/actions/actions.c:122 ../app/dialogs/convert-indexed-dialog.c:174
-#: ../app/dialogs/dialogs.c:375
+#: ../app/dialogs/dialogs.c:376
 msgid "Colormap"
 msgstr "Paleta kolorów"
 
@@ -354,7 +354,7 @@ msgstr "Paleta kolorów"
 msgid "Context"
 msgstr "Kontekst"
 
-#: ../app/actions/actions.c:128 ../app/dialogs/dialogs.c:319
+#: ../app/actions/actions.c:128 ../app/dialogs/dialogs.c:320
 msgid "Pointer Information"
 msgstr "Informacje o kursorze"
 
@@ -375,7 +375,7 @@ msgid "Dockable"
 msgstr "Element dokowalny"
 
 #. Document History
-#: ../app/actions/actions.c:143 ../app/dialogs/dialogs.c:355
+#: ../app/actions/actions.c:143 ../app/dialogs/dialogs.c:356
 #: ../app/dialogs/preferences-dialog.c:1196
 msgid "Document History"
 msgstr "Historia dokumentów"
@@ -384,11 +384,11 @@ msgstr "Historia dokumentów"
 msgid "Drawable"
 msgstr "Obszar rysowania"
 
-#: ../app/actions/actions.c:149 ../app/dialogs/dialogs.c:331
+#: ../app/actions/actions.c:149 ../app/dialogs/dialogs.c:332
 msgid "Paint Dynamics"
 msgstr "Dynamika pędzla"
 
-#: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:417
+#: ../app/actions/actions.c:152 ../app/dialogs/dialogs.c:418
 #: ../app/widgets/gimpdynamicseditor.c:97
 msgid "Paint Dynamics Editor"
 msgstr "Edytor dynamiki pędzla"
@@ -397,7 +397,7 @@ msgstr "Edytor dynamiki pędzla"
 msgid "Edit"
 msgstr "Edycja"
 
-#: ../app/actions/actions.c:158 ../app/dialogs/dialogs.c:315
+#: ../app/actions/actions.c:158 ../app/dialogs/dialogs.c:316
 msgid "Error Console"
 msgstr "Konsola błędów"
 
@@ -409,28 +409,28 @@ msgstr "Plik"
 msgid "Filters"
 msgstr "Filtry"
 
-#: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:346
+#: ../app/actions/actions.c:167 ../app/dialogs/dialogs.c:347
 #: ../app/dialogs/preferences-dialog.c:2995
 msgid "Fonts"
 msgstr "Czcionki"
 
-#: ../app/actions/actions.c:170 ../app/dialogs/dialogs.c:421
+#: ../app/actions/actions.c:170 ../app/dialogs/dialogs.c:422
 #: ../app/widgets/gimpgradienteditor.c:271
 msgid "Gradient Editor"
 msgstr "Edytor gradientów"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:173 ../app/core/gimp-data-factories.c:342
-#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:2991
+#: ../app/dialogs/dialogs.c:341 ../app/dialogs/preferences-dialog.c:2991
 msgid "Gradients"
 msgstr "Gradienty"
 
 #: ../app/actions/actions.c:176 ../app/core/gimp-data-factories.c:353
-#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:2999
+#: ../app/dialogs/dialogs.c:353 ../app/dialogs/preferences-dialog.c:2999
 msgid "Tool Presets"
 msgstr "Ustawienia narzędzia"
 
-#: ../app/actions/actions.c:179 ../app/dialogs/dialogs.c:429
+#: ../app/actions/actions.c:179 ../app/dialogs/dialogs.c:430
 #: ../app/widgets/gimptoolpreseteditor.c:94
 msgid "Tool Preset Editor"
 msgstr "Edytor ustawień narzędzia"
@@ -443,36 +443,36 @@ msgstr "Pomoc"
 msgid "Image"
 msgstr "Obraz"
 
-#: ../app/actions/actions.c:188 ../app/dialogs/dialogs.c:325
+#: ../app/actions/actions.c:188 ../app/dialogs/dialogs.c:326
 #: ../app/widgets/gimppickablepopup.c:179
 msgid "Images"
 msgstr "Obrazy"
 
-#: ../app/actions/actions.c:191 ../app/dialogs/dialogs.c:363
+#: ../app/actions/actions.c:191 ../app/dialogs/dialogs.c:364
 #: ../app/dialogs/resize-dialog.c:144 ../app/widgets/gimppickablepopup.c:230
 msgid "Layers"
 msgstr "Warstwy"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:194 ../app/core/gimp-data-factories.c:327
-#: ../app/dialogs/dialogs.c:334 ../app/dialogs/preferences-dialog.c:3003
+#: ../app/dialogs/dialogs.c:335 ../app/dialogs/preferences-dialog.c:3003
 msgid "MyPaint Brushes"
 msgstr "Pędzle programu MyPaint"
 
-#: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:425
+#: ../app/actions/actions.c:197 ../app/dialogs/dialogs.c:426
 #: ../app/widgets/gimppaletteeditor.c:149
 msgid "Palette Editor"
 msgstr "Edytor palety"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:200 ../app/core/gimp-data-factories.c:337
-#: ../app/dialogs/dialogs.c:343 ../app/dialogs/preferences-dialog.c:2987
+#: ../app/dialogs/dialogs.c:344 ../app/dialogs/preferences-dialog.c:2987
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:203 ../app/core/gimp-data-factories.c:332
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2983
+#: ../app/dialogs/dialogs.c:338 ../app/dialogs/preferences-dialog.c:2983
 msgid "Patterns"
 msgstr "Desenie"
 
@@ -486,7 +486,7 @@ msgstr "Wtyczki"
 msgid "Quick Mask"
 msgstr "Szybka maska"
 
-#: ../app/actions/actions.c:212 ../app/dialogs/dialogs.c:395
+#: ../app/actions/actions.c:212 ../app/dialogs/dialogs.c:396
 msgid "Sample Points"
 msgstr "Punkty wzorcowe"
 
@@ -496,7 +496,7 @@ msgstr "Zaznaczenie"
 
 #. initialize the template list
 #: ../app/actions/actions.c:218 ../app/core/gimp.c:795
-#: ../app/dialogs/dialogs.c:358
+#: ../app/dialogs/dialogs.c:359
 msgid "Templates"
 msgstr "Szablony"
 
@@ -508,7 +508,7 @@ msgstr "Narzędzie tekstowe"
 msgid "Text Editor"
 msgstr "Edytor tekstowy"
 
-#: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:307
+#: ../app/actions/actions.c:227 ../app/dialogs/dialogs.c:308
 #: ../app/gui/gui.c:498
 msgid "Tool Options"
 msgstr "Opcje narzędzia"
@@ -517,7 +517,7 @@ msgstr "Opcje narzędzia"
 msgid "Tools"
 msgstr "Narzędzia"
 
-#: ../app/actions/actions.c:233 ../app/dialogs/dialogs.c:371
+#: ../app/actions/actions.c:233 ../app/dialogs/dialogs.c:372
 #: ../app/tools/gimpvectortool.c:163
 msgid "Paths"
 msgstr "Ścieżki"
@@ -2996,8 +2996,8 @@ msgstr "Czyszczenie historii dokumentów"
 #: ../app/actions/documents-commands.c:230 ../app/actions/edit-commands.c:160
 #: ../app/actions/error-console-commands.c:96
 #: ../app/actions/file-commands.c:416
-#: ../app/actions/gradient-editor-commands.c:482
-#: ../app/actions/gradient-editor-commands.c:584
+#: ../app/actions/gradient-editor-commands.c:478
+#: ../app/actions/gradient-editor-commands.c:580
 #: ../app/actions/gradients-commands.c:78 ../app/actions/plug-in-commands.c:180
 #: ../app/actions/templates-commands.c:244
 #: ../app/actions/text-editor-commands.c:64
@@ -3891,7 +3891,7 @@ msgstr "Otwiera obraz jako warstwy"
 msgid "No changes need to be saved"
 msgstr "Brak niezapisanych zmian"
 
-#: ../app/actions/file-commands.c:284 ../app/actions/file-commands.c:752
+#: ../app/actions/file-commands.c:284 ../app/actions/file-commands.c:751
 #: ../app/widgets/gimpsavedialog.c:140
 msgid "Save Image"
 msgstr "Zapis obrazu"
@@ -3933,11 +3933,11 @@ msgstr ""
 "Przywrócenie obrazu do stanu zapisanego w pliku spowoduje utratę wszystkich "
 "dokonanych w nim zmian, wraz z informacjami o historii działań."
 
-#: ../app/actions/file-commands.c:775
+#: ../app/actions/file-commands.c:773
 msgid "(Unnamed Template)"
 msgstr "(Szablon bez nazwy)"
 
-#: ../app/actions/file-commands.c:822
+#: ../app/actions/file-commands.c:820
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -4863,75 +4863,75 @@ msgstr "Całość"
 msgid "Zoom all"
 msgstr "Widok na całość"
 
-#: ../app/actions/gradient-editor-actions.c:777
+#: ../app/actions/gradient-editor-actions.c:779
 msgid "_Blending Function for Segment"
 msgstr "Fu_nkcja gradientu dla segmentu"
 
-#: ../app/actions/gradient-editor-actions.c:779
+#: ../app/actions/gradient-editor-actions.c:781
 msgid "Coloring _Type for Segment"
 msgstr "_Typ kolorowania segmentu"
 
-#: ../app/actions/gradient-editor-actions.c:782
+#: ../app/actions/gradient-editor-actions.c:784
 msgid "_Flip Segment"
 msgstr "O_dbij segment"
 
-#: ../app/actions/gradient-editor-actions.c:784
+#: ../app/actions/gradient-editor-actions.c:786
 msgid "_Replicate Segment..."
 msgstr "P_owiel segment…"
 
-#: ../app/actions/gradient-editor-actions.c:786
+#: ../app/actions/gradient-editor-actions.c:788
 msgid "Split Segment at _Midpoint"
 msgstr "_Podziel segment w punkcie pośrednim"
 
-#: ../app/actions/gradient-editor-actions.c:788
+#: ../app/actions/gradient-editor-actions.c:790
 msgid "Split Segment _Uniformly..."
 msgstr "Podziel _segment równomiernie…"
 
-#: ../app/actions/gradient-editor-actions.c:790
+#: ../app/actions/gradient-editor-actions.c:792
 msgid "_Delete Segment"
 msgstr "_Usuń segment"
 
-#: ../app/actions/gradient-editor-actions.c:792
+#: ../app/actions/gradient-editor-actions.c:794
 msgid "Re-_center Segment's Midpoint"
 msgstr "_Wyśrodkuj punkt pośredni segmentu"
 
-#: ../app/actions/gradient-editor-actions.c:794
+#: ../app/actions/gradient-editor-actions.c:796
 msgid "Re-distribute _Handles in Segment"
 msgstr "Rozłóż ponownie uc_hwyty w segmencie"
 
-#: ../app/actions/gradient-editor-actions.c:799
+#: ../app/actions/gradient-editor-actions.c:801
 msgid "_Blending Function for Selection"
 msgstr "Fu_nkcja gradientu dla zaznaczenia"
 
-#: ../app/actions/gradient-editor-actions.c:801
+#: ../app/actions/gradient-editor-actions.c:803
 msgid "Coloring _Type for Selection"
 msgstr "_Typ kolorowania zaznaczenia"
 
-#: ../app/actions/gradient-editor-actions.c:804
+#: ../app/actions/gradient-editor-actions.c:806
 msgid "_Flip Selection"
 msgstr "O_dbij zaznaczenie"
 
-#: ../app/actions/gradient-editor-actions.c:806
+#: ../app/actions/gradient-editor-actions.c:808
 msgid "_Replicate Selection..."
 msgstr "P_owiel zaznaczenie…"
 
-#: ../app/actions/gradient-editor-actions.c:808
+#: ../app/actions/gradient-editor-actions.c:810
 msgid "Split Segments at _Midpoints"
 msgstr "_Podziel segmenty w punktach pośrednich"
 
-#: ../app/actions/gradient-editor-actions.c:810
+#: ../app/actions/gradient-editor-actions.c:812
 msgid "Split Segments _Uniformly..."
 msgstr "Podziel _segmenty równomiernie…"
 
-#: ../app/actions/gradient-editor-actions.c:812
+#: ../app/actions/gradient-editor-actions.c:814
 msgid "_Delete Selection"
 msgstr "_Usuń zaznaczenie"
 
-#: ../app/actions/gradient-editor-actions.c:814
+#: ../app/actions/gradient-editor-actions.c:816
 msgid "Re-_center Midpoints in Selection"
 msgstr "_Wyśrodkuj punkty pośrednie w zaznaczeniu"
 
-#: ../app/actions/gradient-editor-actions.c:816
+#: ../app/actions/gradient-editor-actions.c:818
 msgid "Re-distribute _Handles in Selection"
 msgstr "Rozłóż ponownie uc_hwyty w zaznaczeniu"
 
@@ -4943,35 +4943,35 @@ msgstr "Kolor lewego punktu końcowego"
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Kolor lewego punktu końcowego segmentu gradientu"
 
-#: ../app/actions/gradient-editor-commands.c:239
+#: ../app/actions/gradient-editor-commands.c:237
 msgid "Right Endpoint Color"
 msgstr "Kolor prawego punktu końcowego"
 
-#: ../app/actions/gradient-editor-commands.c:241
+#: ../app/actions/gradient-editor-commands.c:239
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Kolor prawego punktu końcowego segmentu gradientu"
 
-#: ../app/actions/gradient-editor-commands.c:464
+#: ../app/actions/gradient-editor-commands.c:460
 msgid "Replicate Segment"
 msgstr "Powiel segment"
 
-#: ../app/actions/gradient-editor-commands.c:465
+#: ../app/actions/gradient-editor-commands.c:461
 msgid "Replicate Gradient Segment"
 msgstr "Powielenie segmentu gradientu"
 
-#: ../app/actions/gradient-editor-commands.c:469
+#: ../app/actions/gradient-editor-commands.c:465
 msgid "Replicate Selection"
 msgstr "Powiel zaznaczenie"
 
-#: ../app/actions/gradient-editor-commands.c:470
+#: ../app/actions/gradient-editor-commands.c:466
 msgid "Replicate Gradient Selection"
 msgstr "Powielenie zaznaczenia gradientu"
 
-#: ../app/actions/gradient-editor-commands.c:483
+#: ../app/actions/gradient-editor-commands.c:479
 msgid "_Replicate"
 msgstr "P_owiel"
 
-#: ../app/actions/gradient-editor-commands.c:504
+#: ../app/actions/gradient-editor-commands.c:500
 msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
@@ -4979,7 +4979,7 @@ msgstr ""
 "Proszę określić, ile razy powinien\n"
 "zostać powielony zaznaczony segment."
 
-#: ../app/actions/gradient-editor-commands.c:507
+#: ../app/actions/gradient-editor-commands.c:503
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
@@ -4987,27 +4987,27 @@ msgstr ""
 "Proszę określić, ile razy powinno\n"
 "zostać powielone zaznaczenie."
 
-#: ../app/actions/gradient-editor-commands.c:566
+#: ../app/actions/gradient-editor-commands.c:562
 msgid "Split Segment Uniformly"
 msgstr "Podziel segment równomiernie"
 
-#: ../app/actions/gradient-editor-commands.c:567
+#: ../app/actions/gradient-editor-commands.c:563
 msgid "Split Gradient Segment Uniformly"
 msgstr "Równomierny podział segmentu gradientu"
 
-#: ../app/actions/gradient-editor-commands.c:571
+#: ../app/actions/gradient-editor-commands.c:567
 msgid "Split Segments Uniformly"
 msgstr "Podziel segmenty równomiernie"
 
-#: ../app/actions/gradient-editor-commands.c:572
+#: ../app/actions/gradient-editor-commands.c:568
 msgid "Split Gradient Segments Uniformly"
 msgstr "Równomierny podział segmentów gradientu"
 
-#: ../app/actions/gradient-editor-commands.c:585
+#: ../app/actions/gradient-editor-commands.c:581
 msgid "_Split"
 msgstr "Po_dziel"
 
-#: ../app/actions/gradient-editor-commands.c:607
+#: ../app/actions/gradient-editor-commands.c:603
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
@@ -5015,7 +5015,7 @@ msgstr ""
 "Proszę podać liczbę jednakowych części,\n"
 "na jakie ma zostać podzielony zaznaczony segment."
 
-#: ../app/actions/gradient-editor-commands.c:610
+#: ../app/actions/gradient-editor-commands.c:606
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
@@ -11151,6 +11151,31 @@ msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nie do cofnięcia"
 
+#: ../app/core/core-enums.c:986
+msgctxt "gradient-color"
+msgid "Fixed"
+msgstr "Stały"
+
+#: ../app/core/core-enums.c:987
+msgctxt "gradient-color"
+msgid "FG"
+msgstr "Kolor pierwszoplanowy"
+
+#: ../app/core/core-enums.c:988
+msgctxt "gradient-color"
+msgid "FG (t)"
+msgstr "Kolor pierwszoplanowy (przezroczysty)"
+
+#: ../app/core/core-enums.c:989
+msgctxt "gradient-color"
+msgid "BG"
+msgstr "Kolor tła"
+
+#: ../app/core/core-enums.c:990
+msgctxt "gradient-color"
+msgid "BG (t)"
+msgstr "Kolor tła (przezroczysty)"
+
 #: ../app/core/core-enums.c:1019
 msgctxt "message-severity"
 msgid "Message"
@@ -11343,23 +11368,27 @@ msgstr "Wyczyść"
 msgid "Global Buffer"
 msgstr "Bufor globalny"
 
-#: ../app/core/gimp-gradients.c:63
+#: ../app/core/gimp-gradients.c:64
+msgid "Custom"
+msgstr "Niestandardowe"
+
+#: ../app/core/gimp-gradients.c:74
 msgid "FG to BG (RGB)"
 msgstr "Kolor pierwszoplanowy na kolor tła (RGB)"
 
-#: ../app/core/gimp-gradients.c:71
+#: ../app/core/gimp-gradients.c:82
 msgid "FG to BG (Hardedge)"
 msgstr "Kolor pierwszoplanowy na kolor tła (twarda krawędź)"
 
-#: ../app/core/gimp-gradients.c:88
+#: ../app/core/gimp-gradients.c:99
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "Kolor pierwszoplanowy na kolor tła (HSV lewoskrętnie)"
 
-#: ../app/core/gimp-gradients.c:96
+#: ../app/core/gimp-gradients.c:107
 msgid "FG to BG (HSV clockwise hue)"
 msgstr "Kolor pierwszoplanowy na kolor tła (barwa HSV prawoskrętnie)"
 
-#: ../app/core/gimp-gradients.c:104
+#: ../app/core/gimp-gradients.c:115
 msgid "FG to Transparent"
 msgstr "Kolor pierwszoplanowy na przezroczystość"
 
@@ -11798,7 +11827,7 @@ msgid "Pattern"
 msgstr "Deseń"
 
 #: ../app/core/gimpcontext.c:732 ../app/core/gimpcontext.c:733
-#: ../app/tools/gimpblendoptions.c:225 ../app/tools/gimppaintoptions-gui.c:375
+#: ../app/tools/gimpblendoptions.c:266 ../app/tools/gimppaintoptions-gui.c:375
 msgid "Gradient"
 msgstr "Gradient"
 
@@ -11816,12 +11845,12 @@ msgstr "Ustawienia narzędzia"
 msgid "Font"
 msgstr "Czcionka"
 
-#: ../app/core/gimpdata.c:542 ../app/core/gimpdata.c:550
+#: ../app/core/gimpdata.c:581 ../app/core/gimpdata.c:589
 #, c-format
 msgid "Error saving '%s': "
 msgstr "Błąd podczas zapisywania „%s”: "
 
-#: ../app/core/gimpdata.c:556
+#: ../app/core/gimpdata.c:595
 #, c-format
 msgid "Error saving '%s'"
 msgstr "Błąd podczas zapisywania „%s”"
@@ -11906,7 +11935,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Skalowanie"
 
-#: ../app/core/gimpdrawable-blend.c:123 ../app/tools/gimpblendtool.c:953
+#: ../app/core/gimpdrawable-blend.c:123 ../app/tools/gimpblendtool.c:963
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Gradient"
@@ -12394,7 +12423,7 @@ msgstr "Konwersja obrazu do trybu 64-bitowego (gamma, zmiennoprzecinkowego)"
 #: ../app/core/gimpimage-convert-precision.c:298
 #: ../app/dialogs/convert-indexed-dialog.c:236
 #: ../app/dialogs/convert-precision-dialog.c:221
-#: ../app/tools/gimpblendoptions.c:119
+#: ../app/tools/gimpblendoptions.c:124
 msgid "Dithering"
 msgstr "Dithering"
 
@@ -13632,67 +13661,67 @@ msgstr "Na pewno usunąć „%s” z listy i z dysku?"
 msgid "GIMP Message"
 msgstr "Komunikat programu GIMP"
 
-#: ../app/dialogs/dialogs.c:311
+#: ../app/dialogs/dialogs.c:312
 msgid "Devices"
 msgstr "Urządzenia"
 
-#: ../app/dialogs/dialogs.c:311
+#: ../app/dialogs/dialogs.c:312
 msgid "Device Status"
 msgstr "Stan urządzenia"
 
-#: ../app/dialogs/dialogs.c:315
+#: ../app/dialogs/dialogs.c:316
 msgid "Errors"
 msgstr "Błędy"
 
-#: ../app/dialogs/dialogs.c:319
+#: ../app/dialogs/dialogs.c:320
 msgid "Pointer"
 msgstr "Kursor"
 
-#: ../app/dialogs/dialogs.c:355
+#: ../app/dialogs/dialogs.c:356
 msgid "History"
 msgstr "Historia"
 
-#: ../app/dialogs/dialogs.c:358
+#: ../app/dialogs/dialogs.c:359
 msgid "Image Templates"
 msgstr "Szablony obrazów"
 
-#: ../app/dialogs/dialogs.c:379
+#: ../app/dialogs/dialogs.c:380
 msgid "Histogram"
 msgstr "Histogram"
 
-#: ../app/dialogs/dialogs.c:383
+#: ../app/dialogs/dialogs.c:384
 msgid "Selection"
 msgstr "Zaznaczenie"
 
-#: ../app/dialogs/dialogs.c:383
+#: ../app/dialogs/dialogs.c:384
 msgid "Selection Editor"
 msgstr "Edytor zaznaczenia"
 
-#: ../app/dialogs/dialogs.c:387
+#: ../app/dialogs/dialogs.c:388
 msgid "Symmetry Painting"
 msgstr "Malowanie symetryczne"
 
-#: ../app/dialogs/dialogs.c:391
+#: ../app/dialogs/dialogs.c:392
 msgid "Undo"
 msgstr "Cofnięcie"
 
-#: ../app/dialogs/dialogs.c:391
+#: ../app/dialogs/dialogs.c:392
 msgid "Undo History"
 msgstr "Historia działań"
 
-#: ../app/dialogs/dialogs.c:401
+#: ../app/dialogs/dialogs.c:402
 msgid "Navigation"
 msgstr "Nawigacja"
 
-#: ../app/dialogs/dialogs.c:401
+#: ../app/dialogs/dialogs.c:402
 msgid "Display Navigation"
 msgstr "Nawigacja obrazem"
 
-#: ../app/dialogs/dialogs.c:407
+#: ../app/dialogs/dialogs.c:408
 msgid "FG/BG"
 msgstr "Kolory"
 
-#: ../app/dialogs/dialogs.c:407
+#: ../app/dialogs/dialogs.c:408
 msgid "FG/BG Color"
 msgstr "Kolor pierwszoplanowy/tła"
 
@@ -13885,10 +13914,10 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/image-properties-dialog.c:68
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
-#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpcolorpickertool.c:348
-#: ../app/tools/gimpmeasuretool.c:649 ../app/widgets/gimpcontrollerlist.c:640
-#: ../app/widgets/gimppdbdialog.c:175 ../app/widgets/gimpsettingsbox.c:663
-#: ../app/widgets/gimptexteditor.c:162
+#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1806
+#: ../app/tools/gimpcolorpickertool.c:348 ../app/tools/gimpmeasuretool.c:649
+#: ../app/widgets/gimpcontrollerlist.c:640 ../app/widgets/gimppdbdialog.c:175
+#: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:162
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -14157,7 +14186,7 @@ msgstr "Przesunięcie kanału"
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:129 ../app/dialogs/offset-dialog.c:163
 #: ../app/dialogs/resize-dialog.c:230 ../app/tools/gimpalignoptions.c:100
-#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpblendoptions.c:79
+#: ../app/tools/gimpalignoptions.c:107 ../app/tools/gimpblendoptions.c:84
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Offset"
 msgstr "Przesunięcie"
@@ -15929,52 +15958,52 @@ msgctxt "guides-type"
 msgid "Line spacing"
 msgstr "Odstęp między liniami"
 
-#: ../app/display/display-enums.c:307
+#: ../app/display/display-enums.c:313
 msgctxt "rectangle-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Proporcje"
 
-#: ../app/display/display-enums.c:308
+#: ../app/display/display-enums.c:314
 msgctxt "rectangle-fixed-rule"
 msgid "Width"
 msgstr "Szerokość"
 
-#: ../app/display/display-enums.c:309
+#: ../app/display/display-enums.c:315
 msgctxt "rectangle-fixed-rule"
 msgid "Height"
 msgstr "Wysokość"
 
-#: ../app/display/display-enums.c:310
+#: ../app/display/display-enums.c:316
 msgctxt "rectangle-fixed-rule"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../app/display/display-enums.c:403
+#: ../app/display/display-enums.c:409
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
 msgstr "Dodawanie/przekształcanie"
 
-#: ../app/display/display-enums.c:404
+#: ../app/display/display-enums.c:410
 msgctxt "transform-handle-mode"
 msgid "Move"
 msgstr "Przesuwanie"
 
-#: ../app/display/display-enums.c:405
+#: ../app/display/display-enums.c:411
 msgctxt "transform-handle-mode"
 msgid "Remove"
 msgstr "Usuwanie"
 
-#: ../app/display/display-enums.c:434
+#: ../app/display/display-enums.c:440
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Projektowanie"
 
-#: ../app/display/display-enums.c:435
+#: ../app/display/display-enums.c:441
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Modyfikacja"
 
-#: ../app/display/display-enums.c:436
+#: ../app/display/display-enums.c:442
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Przesunięcie"
@@ -16148,13 +16177,13 @@ msgstr "Upuszczenie nowej warstwy"
 msgid "Drop New Path"
 msgstr "Upuszczenie nowej ścieżki"
 
-#: ../app/display/gimpdisplayshell-dnd.c:360 ../app/tools/gimpblendtool.c:244
+#: ../app/display/gimpdisplayshell-dnd.c:360 ../app/tools/gimpblendtool.c:241
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpcagetool.c:220
 #: ../app/tools/gimpfiltertool.c:268 ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Nie można zmodyfikować pikseli grup warstw."
 
-#: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:251
+#: ../app/display/gimpdisplayshell-dnd.c:368 ../app/tools/gimpblendtool.c:248
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcagetool.c:227
 #: ../app/tools/gimpcroptool.c:438 ../app/tools/gimpfiltertool.c:275
 #: ../app/tools/gimppainttool.c:278 ../app/tools/gimpselectiontool.c:432
@@ -16321,16 +16350,57 @@ msgstr "Kliknięcie i przeciągnięcie przemieści ten uchwyt"
 msgid "Click-Drag to remove this handle"
 msgstr "Kliknięcie i przeciągnięcie usunie ten uchwyt"
 
-#: ../app/display/gimptoolline.c:218 ../app/display/gimptoolline.c:347
+#: ../app/display/gimptoolline.c:334 ../app/display/gimptoolline.c:497
 msgid "Line: "
 msgstr "Linia: "
 
-#: ../app/display/gimptoolline.c:881 ../app/tools/gimppainttool.c:658
+#: ../app/display/gimptoolline.c:1470
+msgid "Click-Drag to move the endpoint"
+msgstr "Kliknięcie i przeciągnięcie przemieści punkt końcowy"
+
+#: ../app/display/gimptoolline.c:1471 ../app/tools/gimppainttool.c:658
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s dla wymuszonych kątów"
 
-#: ../app/display/gimptoolline.c:882
+#: ../app/display/gimptoolline.c:1478
+msgid "Release to remove the slider"
+msgstr "Zwolnienie usunie suwak"
+
+#: ../app/display/gimptoolline.c:1482
+#, c-format
+msgid "%s for constrained values"
+msgstr "%s dla wymuszonych wartości"
+
+#: ../app/display/gimptoolline.c:1492
+msgid "Click-Drag to move the slider; drag away to remove the slider"
+msgstr "Kliknięcie i przeciągnięcie przemieści suwak, odciągnięcie go usunie"
+
+#: ../app/display/gimptoolline.c:1497
+msgid "Click-Drag to move or remove the slider"
+msgstr "Kliknięcie i przeciągnięcie przemieści lub usunie suwak"
+
+#: ../app/display/gimptoolline.c:1502
+msgid "Click-Drag to move the slider"
+msgstr "Kliknięcie i przeciągnięcie przemieści suwak"
+
+#: ../app/display/gimptoolline.c:1513
+msgid "Click-Drag away to remove the slider"
+msgstr "Kliknięcie i odciągnięcie usunie suwak"
+
+#: ../app/display/gimptoolline.c:1517
+msgid "Click-Drag to remove the slider"
+msgstr "Kliknięcie i przeciągnięcie usunie suwak"
+
+#: ../app/display/gimptoolline.c:1528
+msgid "Click or Click-Drag to add a new slider"
+msgstr "Kliknięcie lub kliknięcie i przeciągnięcie doda nowy suwak"
+
+#: ../app/display/gimptoolline.c:1534
+msgid "Click-Drag to move the line"
+msgstr "Kliknięcie i przeciągnięcie przemieści linię"
+
+#: ../app/display/gimptoolline.c:1546
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s przesuwa całą linię"
@@ -17388,8 +17458,8 @@ msgid "Tilt"
 msgstr "Nachylenie"
 
 #. Blob shape widgets
-#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpblendoptions.c:85
-#: ../app/tools/gimpblendoptions.c:236 ../app/tools/gimpinkoptions-gui.c:103
+#: ../app/paint/gimpinkoptions.c:106 ../app/tools/gimpblendoptions.c:90
+#: ../app/tools/gimpblendoptions.c:277 ../app/tools/gimpinkoptions-gui.c:103
 msgid "Shape"
 msgstr "Kształt"
 
@@ -17562,8 +17632,8 @@ msgstr "Odwrócenie"
 msgid "Reverse direction of fading"
 msgstr "Odwrócony kierunek zanikania"
 
-#: ../app/paint/gimppaintoptions.c:327 ../app/tools/gimpblendoptions.c:92
-#: ../app/tools/gimpblendoptions.c:245 ../app/tools/gimppaintoptions-gui.c:357
+#: ../app/paint/gimppaintoptions.c:327 ../app/tools/gimpblendoptions.c:97
+#: ../app/tools/gimpblendoptions.c:286 ../app/tools/gimppaintoptions-gui.c:357
 msgid "Repeat"
 msgstr "Okresowość"
 
@@ -18847,7 +18917,7 @@ msgstr "_Nasycenie"
 msgid "R_eset Color"
 msgstr "P_rzywróć kolor"
 
-#: ../app/propgui/gimppropgui-spiral.c:217
+#: ../app/propgui/gimppropgui-spiral.c:220
 msgid "Spiral: "
 msgstr "Spirala: "
 
@@ -19173,58 +19243,168 @@ msgstr "Kliknięcie wybierze pierwszą ścieżkę"
 msgid "Click to add this path to the list"
 msgstr "Kliknięcie doda tę ścieżkę do listy"
 
-#: ../app/tools/gimpblendoptions.c:100
+#: ../app/tools/gimpblendoptions.c:105
 msgid "Adaptive Supersampling"
 msgstr "Nadpróbkowanie adaptatywne"
 
-#: ../app/tools/gimpblendoptions.c:106
+#: ../app/tools/gimpblendoptions.c:111
 msgid "Max depth"
 msgstr "Maksymalna głębia"
 
-#: ../app/tools/gimpblendoptions.c:112 ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/tools/gimpblendoptions.c:117 ../app/tools/gimpbucketfilloptions.c:142
 #: ../app/tools/gimpregionselectoptions.c:112
 #: ../app/tools/gimpthresholdtool.c:87
 msgid "Threshold"
 msgstr "Progowanie"
 
-#: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:380
+#: ../app/tools/gimpblendoptions.c:131
+msgid "Instant mode"
+msgstr "Tryb natychmiastowy"
+
+#: ../app/tools/gimpblendoptions.c:132
+msgid "Commit gradient instantly"
+msgstr "Od razu zatwierdza gradient"
+
+#: ../app/tools/gimpblendoptions.c:138
+msgid "Modify active gradient"
+msgstr "Modyfikuj aktywny gradient"
+
+#: ../app/tools/gimpblendoptions.c:139
+msgid "Modify the active gradient in-place"
+msgstr "Modyfikuje aktywny gradient na płótnie"
+
+#: ../app/tools/gimpblendoptions.c:271 ../app/tools/gimppaintoptions-gui.c:380
 msgid "Edit this gradient"
 msgstr "Modyfikuje ten gradient"
 
-#: ../app/tools/gimpblendtool.c:162
+#. the instant toggle
+#: ../app/tools/gimpblendoptions.c:326
+#, c-format
+msgid "Instant mode  (%s)"
+msgstr "Tryb natychmiastowy  (%s)"
+
+#: ../app/tools/gimpblendoptions.c:346
+msgid ""
+"The active gradient is non-writable and cannot be edited directly. Uncheck "
+"this option to edit a copy of it."
+msgstr ""
+"Aktywny gradient nie jest zapisywalny i nie może być modyfikowany "
+"bezpośrednio. Odznaczenie tej opcji umożliwi modyfikowanie jego kopii."
+
+#: ../app/tools/gimpblendtool.c:156
 msgid "Blend"
 msgstr "Gradient"
 
-#: ../app/tools/gimpblendtool.c:163
+#: ../app/tools/gimpblendtool.c:157
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "Gradient: wypełnia zaznaczony obszar kolorem z gradientu"
 
-#: ../app/tools/gimpblendtool.c:164
+#: ../app/tools/gimpblendtool.c:158
 msgid "Blen_d"
 msgstr "_Gradient"
 
-#: ../app/tools/gimpblendtool.c:214
+#: ../app/tools/gimpblendtool.c:211
 msgid "Click-Drag to draw a gradient"
 msgstr "Kliknięcie i przeciągnięcie rysuje gradient"
 
-#: ../app/tools/gimpblendtool.c:258 ../app/tools/gimpbucketfilltool.c:151
+#: ../app/tools/gimpblendtool.c:255 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpcagetool.c:234 ../app/tools/gimpfiltertool.c:282
 #: ../app/tools/gimpforegroundselecttool.c:288 ../app/tools/gimppainttool.c:285
 #: ../app/tools/gimptransformtool.c:1445 ../app/tools/gimpwarptool.c:640
 msgid "The active layer is not visible."
 msgstr "Aktywna warstwa jest niewidoczna."
 
-#: ../app/tools/gimpblendtool.c:265
+#: ../app/tools/gimpblendtool.c:262
 msgid "No gradient available for use with this tool."
 msgstr "Brak dostępnych gradientów dla tego narzędzia."
 
-#: ../app/tools/gimpblendtool.c:450 ../app/tools/gimpblendtool.c:462
-msgid "Blend Step"
-msgstr "Krok gradientu"
-
-#: ../app/tools/gimpblendtool.c:603
+#: ../app/tools/gimpblendtool.c:569
 msgid "Blend: "
 msgstr "Gradient: "
+
+#. the position labels
+#: ../app/tools/gimpblendtool-editor.c:1235
+msgid "X:"
+msgstr "Poziomo:"
+
+#: ../app/tools/gimpblendtool-editor.c:1241
+msgid "Y:"
+msgstr "Pionowo:"
+
+#. the color label
+#: ../app/tools/gimpblendtool-editor.c:1294 ../app/tools/gimptextoptions.c:583
+msgid "Color:"
+msgstr "Kolor:"
+
+#: ../app/tools/gimpblendtool-editor.c:1302
+msgid "Change Endpoint Color"
+msgstr "Zmiana koloru punktu końcowego"
+
+#. the position label
+#: ../app/tools/gimpblendtool-editor.c:1340
+#: ../app/tools/gimpblendtool-editor.c:1460
+#: ../app/tools/gimprectangleoptions.c:1025
+msgid "Position:"
+msgstr "Położenie:"
+
+#. the color labels
+#: ../app/tools/gimpblendtool-editor.c:1365
+msgid "Left color:"
+msgstr "Lewy kolor:"
+
+#: ../app/tools/gimpblendtool-editor.c:1371
+msgid "Right color:"
+msgstr "Prawy kolor:"
+
+#: ../app/tools/gimpblendtool-editor.c:1398
+#: ../app/tools/gimpblendtool-editor.c:1407
+msgid "Change Stop Color"
+msgstr "Zmiana koloru przerwy"
+
+#: ../app/tools/gimpblendtool-editor.c:1429
+msgid "Delete stop"
+msgstr "Usuń przerwę"
+
+#. the type label
+#: ../app/tools/gimpblendtool-editor.c:1485
+msgid "Blending:"
+msgstr "Mieszanie:"
+
+#. the color label
+#: ../app/tools/gimpblendtool-editor.c:1507
+msgid "Coloring:"
+msgstr "Kolory:"
+
+#: ../app/tools/gimpblendtool-editor.c:1541
+msgid "New stop at midpoint"
+msgstr "Nowa przerwa w punkcie pośrednim"
+
+#: ../app/tools/gimpblendtool-editor.c:1549
+msgid "Center midpoint"
+msgstr "Wyśrodkowany punkt pośredni"
+
+#: ../app/tools/gimpblendtool-editor.c:1612
+msgid "Start Endpoint"
+msgstr "Pierwszy punkt końcowy"
+
+#: ../app/tools/gimpblendtool-editor.c:1620
+msgid "End Endpoint"
+msgstr "Ostatni punkt końcowy"
+
+#: ../app/tools/gimpblendtool-editor.c:1673
+#, c-format
+msgid "Stop %d"
+msgstr "%d. przerwa"
+
+#: ../app/tools/gimpblendtool-editor.c:1741
+#, c-format
+msgid "Midpoint %d"
+msgstr "%d. punkt pośredni"
+
+#: ../app/tools/gimpblendtool-editor.c:2287
+#: ../app/tools/gimpblendtool-editor.c:2296
+msgid "Blend Step"
+msgstr "Krok gradientu"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:97
 msgid "Brightness-Contrast"
@@ -19794,7 +19974,7 @@ msgstr "Kliknięcie przełączy między pionowym a poziomym widokiem"
 
 #: ../app/tools/gimpfiltertool.c:634
 msgid "Click to move the split guide"
-msgstr "Kliknięcie przesunie prowadnicę podziału"
+msgstr "Kliknięcie przemieści prowadnicę podziału"
 
 #: ../app/tools/gimpfiltertool.c:636
 #, c-format
@@ -20692,10 +20872,6 @@ msgstr "Bieżący"
 msgid "Fixed"
 msgstr "Stałe"
 
-#: ../app/tools/gimprectangleoptions.c:1025
-msgid "Position:"
-msgstr "Położenie:"
-
 #: ../app/tools/gimprectangleoptions.c:1034 ../app/tools/gimptextoptions.c:545
 msgid "Size:"
 msgstr "Rozmiar:"
@@ -20892,15 +21068,15 @@ msgstr "Kliknięcie i przeciągnięcie przetnie z bieżącym zaznaczeniem"
 
 #: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to move the selection mask"
-msgstr "Kliknięcie i przeciągnięcie przesunie zaznaczoną maskę"
+msgstr "Kliknięcie i przeciągnięcie przemieści zaznaczoną maskę"
 
 #: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move the selected pixels"
-msgstr "Kliknięcie i przeciągnięcie przesunie zaznaczone piksele"
+msgstr "Kliknięcie i przeciągnięcie przemieści zaznaczone piksele"
 
 #: ../app/tools/gimpselectiontool.c:308
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "Kliknięcie i przeciągnięcie przesunie kopię zaznaczonych pikseli"
+msgstr "Kliknięcie i przeciągnięcie przemieści kopię zaznaczonych pikseli"
 
 #: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
@@ -21048,10 +21224,6 @@ msgstr "Hinting:"
 #: ../app/tools/gimptextoptions.c:578
 msgid "Text Color"
 msgstr "Kolor tekstu"
-
-#: ../app/tools/gimptextoptions.c:583
-msgid "Color:"
-msgstr "Kolor:"
 
 #: ../app/tools/gimptextoptions.c:589
 msgid "Justify:"
