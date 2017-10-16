@@ -857,6 +857,28 @@ gimp_filter_tool_color_picked (GimpColorTool      *color_tool,
 {
   GimpFilterTool *filter_tool = GIMP_FILTER_TOOL (color_tool);
 
+  if (filter_tool->active_picker)
+    {
+      GimpPickerCallback callback;
+      gpointer           callback_data;
+
+      callback      = g_object_get_data (G_OBJECT (filter_tool->active_picker),
+                                         "picker-callback");
+      callback_data = g_object_get_data (G_OBJECT (filter_tool->active_picker),
+                                         "picker-callback-data");
+
+      if (callback)
+        {
+          callback (callback_data,
+                    filter_tool->pick_identifier,
+                    coords->x,
+                    coords->y,
+                    sample_format, color);
+
+          return;
+        }
+    }
+
   GIMP_FILTER_TOOL_GET_CLASS (filter_tool)->color_picked (filter_tool,
                                                           filter_tool->pick_identifier,
                                                           coords->x,
@@ -1578,11 +1600,13 @@ gimp_filter_tool_color_picker_toggled (GtkWidget      *widget,
 }
 
 GtkWidget *
-gimp_filter_tool_add_color_picker (GimpFilterTool *filter_tool,
-                                   gpointer        identifier,
-                                   const gchar    *icon_name,
-                                   const gchar    *tooltip,
-                                   gboolean        pick_abyss)
+gimp_filter_tool_add_color_picker (GimpFilterTool     *filter_tool,
+                                   gpointer            identifier,
+                                   const gchar        *icon_name,
+                                   const gchar        *tooltip,
+                                   gboolean            pick_abyss,
+                                   GimpPickerCallback  callback,
+                                   gpointer            callback_data)
 {
   GtkWidget *button;
   GtkWidget *image;
@@ -1606,6 +1630,10 @@ gimp_filter_tool_add_color_picker (GimpFilterTool *filter_tool,
                      "picker-identifier", identifier);
   g_object_set_data (G_OBJECT (button),
                      "picker-pick-abyss", GINT_TO_POINTER (pick_abyss));
+  g_object_set_data (G_OBJECT (button),
+                     "picker-callback", callback);
+  g_object_set_data (G_OBJECT (button),
+                     "picker-callback-data", callback_data);
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (gimp_filter_tool_color_picker_toggled),

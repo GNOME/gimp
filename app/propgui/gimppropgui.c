@@ -365,7 +365,8 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
                                        pspec->name,
                                        GIMP_ICON_COLOR_PICKER_GRAY,
                                        _("Pick color from the image"),
-                                       /* pick_abyss = */ FALSE);
+                                       /* pick_abyss = */ FALSE,
+                                       NULL, NULL);
           gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
           gtk_widget_show (button);
         }

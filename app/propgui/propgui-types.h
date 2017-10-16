@@ -75,6 +75,13 @@ typedef struct
 
 /*  function types  */
 
+typedef void (* GimpPickerCallback)               (gpointer                    data,
+                                                   gpointer                    identifier,
+                                                   gdouble                     x,
+                                                   gdouble                     y,
+                                                   const Babl                 *sample_format,
+                                                   const GimpRGB              *color);
+
 typedef void (* GimpControllerLineCallback)       (gpointer                    data,
                                                    GeglRectangle              *area,
                                                    gdouble                     x1,
@@ -95,7 +102,9 @@ typedef GtkWidget * (* GimpCreatePickerFunc)     (gpointer            creator,
                                                   const gchar        *property_name,
                                                   const gchar        *icon_name,
                                                   const gchar        *tooltip,
-                                                  gboolean            pick_abyss);
+                                                  gboolean            pick_abyss,
+                                                  GimpPickerCallback  callback,
+                                                  gpointer            callback_data);
 
 typedef GCallback   (* GimpCreateControllerFunc) (gpointer            creator,
                                                   GimpControllerType  controller_type,
