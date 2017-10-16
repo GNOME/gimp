@@ -48,6 +48,7 @@
 #include "gimppropgui-channel-mixer.h"
 #include "gimppropgui-color-balance.h"
 #include "gimppropgui-color-rotate.h"
+#include "gimppropgui-color-to-alpha.h"
 #include "gimppropgui-convolution-matrix.h"
 #include "gimppropgui-diffraction-patterns.h"
 #include "gimppropgui-eval.h"
@@ -435,6 +436,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_hue_saturation },
   { "GimpGegl-gegl-color-rotate-config",
     _gimp_prop_gui_new_color_rotate },
+  { "GimpGegl-gegl-color-to-alpha-plus-config",
+    _gimp_prop_gui_new_color_to_alpha },
   { "GimpGegl-gegl-convolution-matrix-config",
     _gimp_prop_gui_new_convolution_matrix },
   { "GimpGegl-gegl-channel-mixer-config",

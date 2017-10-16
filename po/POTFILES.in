@@ -372,6 +372,7 @@ app/plug-in/plug-in-rc.c
 app/propgui/gimppropgui-channel-mixer.c
 app/propgui/gimppropgui-color-balance.c
 app/propgui/gimppropgui-color-rotate.c
+app/propgui/gimppropgui-color-to-alpha.c
 app/propgui/gimppropgui-convolution-matrix.c
 app/propgui/gimppropgui-diffraction-patterns.c
 app/propgui/gimppropgui-generic.c
