@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-05 17:54+0200\n"
-"PO-Revision-Date: 2017-09-05 17:55+0200\n"
+"POT-Creation-Date: 2017-10-17 17:49+0200\n"
+"PO-Revision-Date: 2017-10-17 17:50+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -13754,15 +13754,15 @@ msgstr "Kliknięcie i przeciągnięcie przetnie z bieżącym zaznaczeniem"
 
 #: ../app/tools/gimpselectiontool.c:296
 msgid "Click-Drag to move the selection mask"
-msgstr "Kliknięcie i przeciągnięcie przesunie zaznaczoną maskę"
+msgstr "Kliknięcie i przeciągnięcie przemieści zaznaczoną maskę"
 
 #: ../app/tools/gimpselectiontool.c:304
 msgid "Click-Drag to move the selected pixels"
-msgstr "Kliknięcie i przeciągnięcie przesunie zaznaczone piksele"
+msgstr "Kliknięcie i przeciągnięcie przemieści zaznaczone piksele"
 
 #: ../app/tools/gimpselectiontool.c:308
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "Kliknięcie i przeciągnięcie przesunie kopię zaznaczonych pikseli"
+msgstr "Kliknięcie i przeciągnięcie przemieści kopię zaznaczonych pikseli"
 
 #: ../app/tools/gimpselectiontool.c:312
 msgid "Click to anchor the floating selection"
@@ -16177,3 +16177,11 @@ msgstr "Edytor obrazów"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Tworzenie oraz obróbka obrazów i fotografii"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: ../desktop/gimp.desktop.in.in.h:5
+msgid "GIMP;graphic;design;illustration;painting;"
+msgstr ""
+"GIMP;grafika;graficzny;design;dizajn;projektowanie;wzornictwo;ilustracja;"
+"ilustrowanie;rysunek;rysowanie;rysownictwo;malowanie;malarstwo;obrazy;"
+"obrazki;fotografia;zdjęcia;retuszowanie;renderowanie;wtyczki;"
