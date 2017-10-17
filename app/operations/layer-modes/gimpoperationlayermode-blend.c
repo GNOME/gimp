@@ -35,6 +35,9 @@
 #include "gimpoperationlayermode-blend.h"
 
 
+#define EPSILON 1e-6f
+
+
 /*  non-subtractive blending functions.  these functions must set comp[ALPHA]
  *  to the same value as layer[ALPHA].  when in[ALPHA] or layer[ALPHA] are
  *  zero, the value of comp[RED..BLUE] is unconstrained (in particular, it may
@@ -379,7 +382,7 @@ gimp_operation_layer_mode_blend_hsl_color (const gfloat *in,
           src_max  = MAX (src_max, layer[2]);
           src_l    = (src_min + src_max) / 2.0f;
 
-          if (src_l != 0.0f && src_l != 1.0f)
+          if (fabs (src_l) > EPSILON && fabs (1.0 - src_l) > EPSILON)
             {
               gboolean dest_high;
               gboolean src_high;
@@ -437,7 +440,7 @@ gimp_operation_layer_mode_blend_hsv_hue (const gfloat *in,
           src_max   = MAX (src_max, layer[2]);
           src_delta = src_max - src_min;
 
-          if (src_delta != 0.0f)
+          if (src_delta > EPSILON)
             {
               gfloat ratio;
               gfloat offset;
@@ -492,7 +495,7 @@ gimp_operation_layer_mode_blend_hsv_saturation (const gfloat *in,
           dest_max   = MAX (dest_max, in[2]);
           dest_delta = dest_max - dest_min;
 
-          if (dest_delta != 0.0f)
+          if (dest_delta > EPSILON)
             {
               gfloat ratio;
               gfloat offset;
@@ -546,7 +549,7 @@ gimp_operation_layer_mode_blend_hsv_value (const gfloat *in,
           src_v  = MAX (layer[0], layer[1]);
           src_v  = MAX (src_v, layer[2]);
 
-          if (dest_v != 0.0f)
+          if (fabs (dest_v) > EPSILON)
             {
               gfloat ratio = src_v / dest_v;
               gint   c;
@@ -584,7 +587,7 @@ gimp_operation_layer_mode_blend_lch_chroma (const gfloat *in,
           gfloat B1 = in[2];
           gfloat c1 = hypotf (A1, B1);
 
-          if (c1 != 0.0f)
+          if (c1 > EPSILON)
             {
               gfloat A2 = layer[1];
               gfloat B2 = layer[2];
@@ -649,7 +652,7 @@ gimp_operation_layer_mode_blend_lch_hue (const gfloat *in,
           gfloat B2 = layer[2];
           gfloat c2 = hypotf (A2, B2);
 
-          if (c2 > 0.1f)
+          if (c2 > EPSILON)
             {
               gfloat A1 = in[1];
               gfloat B1 = in[2];
@@ -1131,7 +1134,7 @@ gimp_operation_layer_mode_blend_color_erase (const gfloat *in,
               gfloat col   = CLAMP (color[c],   0.0f, 1.0f);
               gfloat bgcol = CLAMP (bgcolor[c], 0.0f, 1.0f);
 
-              if (col != bgcol)
+              if (fabs (col - bgcol) > EPSILON)
                 {
                   gfloat a;
 
@@ -1144,7 +1147,7 @@ gimp_operation_layer_mode_blend_color_erase (const gfloat *in,
                 }
             }
 
-          if (alpha > 0.0f)
+          if (alpha > EPSILON)
             {
               gfloat alpha_inv = 1.0f / alpha;
 
