@@ -261,6 +261,8 @@ gimp_blend_tool_editor_line_prepare_to_remove_slider (GimpToolLine  *line,
                                          seg, seg->next, NULL, NULL);
 
       gimp_blend_tool_set_tentative_gradient (blend_tool, tentative_gradient);
+
+      g_object_unref (tentative_gradient);
     }
   else
     {
