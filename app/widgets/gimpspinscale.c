@@ -563,12 +563,12 @@ gimp_spin_scale_get_target (GtkWidget *widget,
   pango_layout_get_pixel_extents (gtk_entry_get_layout (GTK_ENTRY (widget)),
                                   NULL, &logical);
 
-  if (x > layout_x && x < layout_x + logical.width &&
-      y > layout_y && y < layout_y + logical.height)
+  if (x >= layout_x && x < layout_x + logical.width &&
+      y >= layout_y && y < layout_y + logical.height)
     {
       return TARGET_NUMBER;
     }
-  else if (y > allocation.height / 2)
+  else if (y >= allocation.height / 2)
     {
       return TARGET_LOWER;
     }
