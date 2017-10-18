@@ -43,6 +43,7 @@ enum
 
 typedef enum
 {
+  TARGET_NONE,
   TARGET_NUMBER,
   TARGET_UPPER,
   TARGET_LOWER
@@ -53,24 +54,26 @@ typedef struct _GimpSpinScalePrivate GimpSpinScalePrivate;
 
 struct _GimpSpinScalePrivate
 {
-  gchar       *label;
-  gchar       *label_text;
-  gchar       *label_pattern;
+  gchar           *label;
+  gchar           *label_text;
+  gchar           *label_pattern;
 
-  GtkWindow   *mnemonic_window;
-  guint        mnemonic_keyval;
-  gboolean     mnemonics_visible;
+  GtkWindow       *mnemonic_window;
+  guint            mnemonic_keyval;
+  gboolean         mnemonics_visible;
 
-  gboolean     scale_limits_set;
-  gdouble      scale_lower;
-  gdouble      scale_upper;
-  gdouble      gamma;
+  gboolean         scale_limits_set;
+  gdouble          scale_lower;
+  gdouble          scale_upper;
+  gdouble          gamma;
 
-  PangoLayout *layout;
-  gboolean     changing_value;
-  gboolean     relative_change;
-  gdouble      start_x;
-  gdouble      start_value;
+  PangoLayout     *layout;
+  gboolean         changing_value;
+  gboolean         relative_change;
+  gdouble          start_x;
+  gdouble          start_value;
+  SpinScaleTarget  target;
+  gboolean         hover;
 };
 
 #define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
@@ -353,6 +356,48 @@ gimp_spin_scale_expose (GtkWidget      *widget,
   w = gdk_window_get_width (event->window);
   h = gdk_window_get_height (event->window);
 
+  /* upper/lower halves highlight */
+  if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)) &&
+      gtk_widget_get_sensitive (widget)                               &&
+      (private->target == TARGET_UPPER || private->target == TARGET_LOWER))
+    {
+      gint            window_width;
+      gint            window_height;
+      const GdkColor *color;
+      gdouble         r, g, b, a;
+
+      window_width  = gdk_window_get_width  (event->window);
+      window_height = gdk_window_get_height (event->window);
+
+      color = &style->text[gtk_widget_get_state (widget)];
+
+      switch (private->target)
+        {
+        case TARGET_UPPER:
+          cairo_rectangle (cr, 0, 0, window_width, window_height / 2);
+          break;
+
+        case TARGET_LOWER:
+          cairo_rectangle (cr, 0, window_height / 2, window_width, (window_height + 1) / 2);
+          break;
+
+        default:
+          break;
+        }
+
+      r = (gdouble) color->red   / 0xffff;
+      g = (gdouble) color->green / 0xffff;
+      b = (gdouble) color->blue  / 0xffff;
+      a = 0.12 + 0.04 * MAX (r, MAX (g, b));
+
+      if (private->changing_value)
+        a *= 1.6;
+
+      cairo_set_source_rgba (cr, r, g, b, a);
+
+      cairo_fill (cr);
+    }
+
   cairo_set_line_width (cr, 1.0);
 
   if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
@@ -508,10 +553,10 @@ gimp_spin_scale_get_target (GtkWidget *widget,
                             gdouble    x,
                             gdouble    y)
 {
-  GtkAllocation   allocation;
-  PangoRectangle  logical;
-  gint            layout_x;
-  gint            layout_y;
+  GtkAllocation  allocation;
+  PangoRectangle logical;
+  gint           layout_x;
+  gint           layout_y;
 
   gtk_widget_get_allocation (widget, &allocation);
   gtk_entry_get_layout_offsets (GTK_ENTRY (widget), &layout_x, &layout_y);
@@ -529,6 +574,68 @@ gimp_spin_scale_get_target (GtkWidget *widget,
     }
 
   return TARGET_UPPER;
+}
+
+static void
+gimp_spin_scale_update_target (GtkWidget *widget,
+                               gdouble    x,
+                               gdouble    y)
+{
+  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+  SpinScaleTarget       target;
+
+  target = gimp_spin_scale_get_target (widget, x, y);
+
+  if (target != private->target)
+    {
+      GdkDisplay *display = gtk_widget_get_display (widget);
+      GdkWindow  *window  = gtk_entry_get_text_window (GTK_ENTRY (widget));
+      GdkCursor  *cursor  = NULL;
+
+      private->target = target;
+
+      switch (target)
+        {
+        case TARGET_NUMBER:
+          cursor = gdk_cursor_new_for_display (display, GDK_XTERM);
+          break;
+
+        case TARGET_UPPER:
+          cursor = gdk_cursor_new_for_display (display, GDK_SB_UP_ARROW);
+          break;
+
+        case TARGET_LOWER:
+          cursor = gdk_cursor_new_for_display (display, GDK_SB_H_DOUBLE_ARROW);
+          break;
+
+        default:
+          break;
+        }
+
+      gdk_window_set_cursor (window, cursor);
+
+      gtk_widget_queue_draw (widget);
+
+      if (cursor)
+        gdk_cursor_unref (cursor);
+    }
+}
+
+static void
+gimp_spin_scale_clear_target (GtkWidget *widget)
+{
+  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+
+  if (private->target != TARGET_NONE)
+    {
+      GdkWindow *window = gtk_entry_get_text_window (GTK_ENTRY (widget));
+
+      private->target = TARGET_NONE;
+
+      gdk_window_set_cursor (window, NULL);
+
+      gtk_widget_queue_draw (widget);
+    }
 }
 
 static void
@@ -626,7 +733,11 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
   if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
-      switch (gimp_spin_scale_get_target (widget, event->x, event->y))
+      gimp_spin_scale_update_target (widget, event->x, event->y);
+
+      gtk_widget_queue_draw (widget);
+
+      switch (private->target)
         {
         case TARGET_UPPER:
           private->changing_value = TRUE;
@@ -668,6 +779,13 @@ gimp_spin_scale_button_release (GtkWidget      *widget,
 
       gimp_spin_scale_change_value (widget, event->x);
 
+      if (private->hover)
+        gimp_spin_scale_update_target (widget, event->x, event->y);
+      else
+        gimp_spin_scale_clear_target (widget);
+
+      gtk_widget_queue_draw (widget);
+
       return TRUE;
     }
 
@@ -682,6 +800,9 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
 
   gdk_event_request_motions (event);
 
+  if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
+    private->hover = TRUE;
+
   if (private->changing_value)
     {
       gimp_spin_scale_change_value (widget, event->x);
@@ -693,28 +814,9 @@ gimp_spin_scale_motion_notify (GtkWidget      *widget,
 
   if (! (event->state &
          (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) &&
-      event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
+      private->hover)
     {
-      GdkDisplay *display = gtk_widget_get_display (widget);
-      GdkCursor  *cursor  = NULL;
-
-      switch (gimp_spin_scale_get_target (widget, event->x, event->y))
-        {
-        case TARGET_NUMBER:
-          cursor = gdk_cursor_new_for_display (display, GDK_XTERM);
-          break;
-
-        case TARGET_UPPER:
-          cursor = gdk_cursor_new_for_display (display, GDK_SB_UP_ARROW);
-          break;
-
-        case TARGET_LOWER:
-          cursor = gdk_cursor_new_for_display (display, GDK_SB_H_DOUBLE_ARROW);
-          break;
-        }
-
-      gdk_window_set_cursor (event->window, cursor);
-      gdk_cursor_unref (cursor);
+      gimp_spin_scale_update_target (widget, event->x, event->y);
     }
 
   return FALSE;
@@ -724,7 +826,18 @@ static gboolean
 gimp_spin_scale_leave_notify (GtkWidget        *widget,
                               GdkEventCrossing *event)
 {
-  gdk_window_set_cursor (event->window, NULL);
+  GimpSpinScalePrivate *private = GET_PRIVATE (widget);
+
+  if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
+    {
+      private->hover = FALSE;
+
+      if (! (event->state &
+             (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
+        {
+          gimp_spin_scale_clear_target (widget);
+        }
+    }
 
   return GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
 }
