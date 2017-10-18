@@ -91,10 +91,10 @@ static gboolean              gimp_blend_tool_editor_line_can_add_slider         
 static gint                  gimp_blend_tool_editor_line_add_slider               (GimpToolLine          *line,
                                                                                    gdouble                value,
                                                                                    GimpBlendTool         *blend_tool);
-static void                  gimp_blend_tool_editor_line_prepare_to_remove_slider (GimpToolLine        *line,
-                                                                                   gint                 slider,
-                                                                                   gboolean             remove,
-                                                                                   GimpBlendTool       *blend_tool);
+static void                  gimp_blend_tool_editor_line_prepare_to_remove_slider (GimpToolLine          *line,
+                                                                                   gint                   slider,
+                                                                                   gboolean               remove,
+                                                                                   GimpBlendTool         *blend_tool);
 static void                  gimp_blend_tool_editor_line_remove_slider            (GimpToolLine          *line,
                                                                                    gint                   slider,
                                                                                    GimpBlendTool         *blend_tool);
