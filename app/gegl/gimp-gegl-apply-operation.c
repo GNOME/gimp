@@ -301,11 +301,12 @@ gimp_gegl_apply_dither (GeglBuffer   *src_buffer,
 }
 
 void
-gimp_gegl_apply_flatten (GeglBuffer    *src_buffer,
-                         GimpProgress  *progress,
-                         const gchar   *undo_desc,
-                         GeglBuffer    *dest_buffer,
-                         const GimpRGB *background)
+gimp_gegl_apply_flatten (GeglBuffer          *src_buffer,
+                         GimpProgress        *progress,
+                         const gchar         *undo_desc,
+                         GeglBuffer          *dest_buffer,
+                         const GimpRGB       *background,
+                         GimpLayerColorSpace  composite_space)
 {
   GeglNode *node;
 
@@ -314,7 +315,7 @@ gimp_gegl_apply_flatten (GeglBuffer    *src_buffer,
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
   g_return_if_fail (background != NULL);
 
-  node = gimp_gegl_create_flatten_node (background);
+  node = gimp_gegl_create_flatten_node (background, composite_space);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
                              node, dest_buffer, NULL);

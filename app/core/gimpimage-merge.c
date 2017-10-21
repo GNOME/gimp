@@ -541,7 +541,8 @@ gimp_image_merge_layers (GimpImage     *image,
       gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
                                          &bg, &bg);
 
-      flatten_node = gimp_gegl_create_flatten_node (&bg);
+      flatten_node = gimp_gegl_create_flatten_node (
+        &bg, gimp_layer_get_real_composite_space (bottom_layer));
 
       position = 0;
     }

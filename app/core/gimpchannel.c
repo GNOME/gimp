@@ -596,7 +596,8 @@ gimp_channel_convert (GimpItem  *item,
 
       gimp_gegl_apply_flatten (gimp_drawable_get_buffer (drawable),
                                NULL, NULL,
-                               new_buffer, &background);
+                               new_buffer, &background,
+                               GIMP_LAYER_COLOR_SPACE_RGB_LINEAR);
 
       gimp_drawable_set_buffer_full (drawable, FALSE, NULL,
                                      new_buffer,
