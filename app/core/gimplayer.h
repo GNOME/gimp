@@ -187,18 +187,24 @@ void            gimp_layer_set_blend_space     (GimpLayer            *layer,
                                                 gboolean              push_undo);
 GimpLayerColorSpace
                 gimp_layer_get_blend_space     (GimpLayer            *layer);
+GimpLayerColorSpace
+               gimp_layer_get_real_blend_space (GimpLayer            *layer);
 
 void            gimp_layer_set_composite_space (GimpLayer            *layer,
                                                 GimpLayerColorSpace   composite_space,
                                                 gboolean              push_undo);
 GimpLayerColorSpace
                 gimp_layer_get_composite_space (GimpLayer            *layer);
+GimpLayerColorSpace
+           gimp_layer_get_real_composite_space (GimpLayer            *layer);
 
 void            gimp_layer_set_composite_mode  (GimpLayer            *layer,
                                                 GimpLayerCompositeMode  composite_mode,
                                                 gboolean              push_undo);
 GimpLayerCompositeMode
                 gimp_layer_get_composite_mode  (GimpLayer            *layer);
+GimpLayerCompositeMode
+           gimp_layer_get_real_composite_mode  (GimpLayer            *layer);
 
 gboolean      gimp_layer_get_excludes_backdrop (GimpLayer            *layer);
 
