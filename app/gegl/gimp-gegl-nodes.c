@@ -38,7 +38,7 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
   GeglNode  *input;
   GeglNode  *output;
   GeglNode  *color;
-  GeglNode  *over;
+  GeglNode  *mode;
   GeglColor *c;
 
   g_return_val_if_fail (background != NULL, NULL);
@@ -58,17 +58,20 @@ gimp_gegl_create_flatten_node (const GimpRGB       *background,
                                NULL);
   g_object_unref (c);
 
-  over = gegl_node_new_child (node,
-                              "operation", "gegl:over",
-                              "srgb",      composite_space ==
-                                           GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL,
+  mode = gegl_node_new_child (node,
+                              "operation", "gimp:normal",
                               NULL);
+  gimp_gegl_mode_node_set_mode (mode,
+                                GIMP_LAYER_MODE_NORMAL,
+                                GIMP_LAYER_COLOR_SPACE_AUTO,
+                                composite_space,
+                                GIMP_LAYER_COMPOSITE_AUTO);
 
   gegl_node_connect_to (input,  "output",
-                        over,   "aux");
+                        mode,   "aux");
   gegl_node_connect_to (color,  "output",
-                        over,   "input");
-  gegl_node_connect_to (over,   "output",
+                        mode,   "input");
+  gegl_node_connect_to (mode,   "output",
                         output, "input");
 
   return node;
