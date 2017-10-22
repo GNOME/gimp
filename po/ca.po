@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-10-17 12:48+0000\n"
-"PO-Revision-Date: 2017-10-17 22:19+0200\n"
+"POT-Creation-Date: 2017-10-21 15:46+0000\n"
+"PO-Revision-Date: 2017-10-18 13:10+0200\n"
 "Last-Translator: Jordi Mas <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -11209,8 +11209,6 @@ msgid "Not undoable"
 msgstr "No es pot desfer"
 
 #: ../app/core/core-enums.c:986
-#, fuzzy
-#| msgid "Fixed"
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Fixat"
@@ -11218,22 +11216,22 @@ msgstr "Fixat"
 #: ../app/core/core-enums.c:987
 msgctxt "gradient-color"
 msgid "FG"
-msgstr ""
+msgstr "Primer pla"
 
 #: ../app/core/core-enums.c:988
 msgctxt "gradient-color"
 msgid "FG (t)"
-msgstr ""
+msgstr "Primer pla (t)"
 
 #: ../app/core/core-enums.c:989
 msgctxt "gradient-color"
 msgid "BG"
-msgstr ""
+msgstr "Fons"
 
 #: ../app/core/core-enums.c:990
 msgctxt "gradient-color"
 msgid "BG (t)"
-msgstr ""
+msgstr "Primer pla (t)"
 
 #: ../app/core/core-enums.c:1019
 msgctxt "message-severity"
@@ -11430,9 +11428,6 @@ msgid "Global Buffer"
 msgstr "Memòria global"
 
 #: ../app/core/gimp-gradients.c:64
-#, fuzzy
-#| msgctxt "dash-preset"
-#| msgid "Custom"
 msgid "Custom"
 msgstr "Personalitzat"
 
@@ -11820,25 +11815,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Inunda el canal"
 
-#: ../app/core/gimpchannel.c:844
+#: ../app/core/gimpchannel.c:845
 msgid "Cannot fill empty channel."
 msgstr "No es pot omplir un canal buit."
 
-#: ../app/core/gimpchannel.c:880
+#: ../app/core/gimpchannel.c:881
 msgid "Cannot stroke empty channel."
 msgstr "No es pot pintar un canal buit."
 
-#: ../app/core/gimpchannel.c:1785
+#: ../app/core/gimpchannel.c:1786
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Defineix el color del canal"
 
-#: ../app/core/gimpchannel.c:1836
+#: ../app/core/gimpchannel.c:1837
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Defineix l'opacitat del canal"
 
-#: ../app/core/gimpchannel.c:1927 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1928 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Màscara de selecció"
 
@@ -12711,7 +12706,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Ancora la selecció flotant"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1009
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1008
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -12787,13 +12782,13 @@ msgstr "La capa no es pot apujar més."
 msgid "Layer cannot be lowered more."
 msgstr "La capa no es pot abaixar més."
 
-#: ../app/core/gimplayer.c:716 ../app/core/gimplayer.c:1712
+#: ../app/core/gimplayer.c:715 ../app/core/gimplayer.c:1711
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "Màscara de %s"
 
-#: ../app/core/gimplayer.c:755
+#: ../app/core/gimplayer.c:754
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -12802,22 +12797,22 @@ msgstr ""
 "Selecció flotant\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1618
+#: ../app/core/gimplayer.c:1617
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No es pot afegir una màscara de capa perquè la capa ja en té una."
 
-#: ../app/core/gimplayer.c:1629
+#: ../app/core/gimplayer.c:1628
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No es pot afegir una màscara de capa de mida diferent de la capa "
 "especificada."
 
-#: ../app/core/gimplayer.c:1635
+#: ../app/core/gimplayer.c:1634
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Afegeix una màscara de capa"
 
-#: ../app/core/gimplayer.c:1763
+#: ../app/core/gimplayer.c:1762
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Transfereix l'alfa a la màscara"
@@ -12852,12 +12847,12 @@ msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Afegeix el canal alfa"
 
-#: ../app/core/gimplayer.c:2199
+#: ../app/core/gimplayer.c:2200
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Suprimeix el canal alfa"
 
-#: ../app/core/gimplayer.c:2220
+#: ../app/core/gimplayer.c:2221
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Mida de la imatge igual a la de la capa"
@@ -13965,7 +13960,7 @@ msgstr "Propietats de la imatge"
 #: ../app/dialogs/image-properties-dialog.c:68
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
-#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1806
+#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1808
 #: ../app/tools/gimpcolorpickertool.c:348 ../app/tools/gimpmeasuretool.c:649
 #: ../app/widgets/gimpcontrollerlist.c:640 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:162
@@ -15216,10 +15211,8 @@ msgid "User manual:"
 msgstr "Manual d'usuari:"
 
 #: ../app/dialogs/preferences-dialog.c:2307
-#, fuzzy
-#| msgid "User Interface"
 msgid "User interface language"
-msgstr "Interfície d'usuari"
+msgstr "Llenguatge de la interfície d'usuari"
 
 #. If there is no webkit available, assume we are on a platform
 #. *  that doesn't use the help browser, so don't bother showing
@@ -16407,10 +16400,8 @@ msgid "Line: "
 msgstr "Línia: "
 
 #: ../app/display/gimptoolline.c:1470
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the endpoint"
-msgstr "Feu clic i arrossegueu per moure aquest punt"
+msgstr "Feu clic i arrossegueu per a moure el punt final"
 
 #: ../app/display/gimptoolline.c:1471 ../app/tools/gimppainttool.c:658
 #, c-format
@@ -16418,58 +16409,43 @@ msgid "%s for constrained angles"
 msgstr "%s per a angles restringits"
 
 #: ../app/display/gimptoolline.c:1478
-#, fuzzy
-#| msgid "Click to move the split guide"
 msgid "Release to remove the slider"
-msgstr "Feu clic per a moure la guia de divisió."
+msgstr "Release to remove the slider"
 
 #: ../app/display/gimptoolline.c:1482
-#, fuzzy, c-format
-#| msgid "%s for constrained angles"
+#, c-format
 msgid "%s for constrained values"
-msgstr "%s per a angles restringits"
+msgstr "%s per a valors restringits"
 
 #: ../app/display/gimptoolline.c:1492
-#, fuzzy
-#| msgid "Click-Drag to move the selection mask"
 msgid "Click-Drag to move the slider; drag away to remove the slider"
-msgstr "Feu clic i arrossegueu per a moure la màscara de selecció"
+msgstr ""
+"Feu clic i arrossegueu per a moure el lliscador; arrossegueu per a treure la "
+"selecció"
 
 #: ../app/display/gimptoolline.c:1497
-#, fuzzy
-#| msgid "Click-Drag to remove this handle"
 msgid "Click-Drag to move or remove the slider"
-msgstr "Feu clic i arrossegueu per a eliminar aquesta nansa"
+msgstr "Feu clic i arrossegueu per a eliminar el lliscador"
 
 #: ../app/display/gimptoolline.c:1502
-#, fuzzy
-#| msgid "Click-Drag to move this handle"
 msgid "Click-Drag to move the slider"
-msgstr "Feu clic i arrossegueu per a moure aquesta nansa"
+msgstr "Feu clic i arrossegueu per a moure el lliscador"
 
 #: ../app/display/gimptoolline.c:1513
-#, fuzzy
-#| msgid "Click-Drag to remove this handle"
 msgid "Click-Drag away to remove the slider"
-msgstr "Feu clic i arrossegueu per a eliminar aquesta nansa"
+msgstr "Feu clic i arrossegueu per a eliminar el lliscador"
 
 #: ../app/display/gimptoolline.c:1517
-#, fuzzy
-#| msgid "Click-Drag to remove this handle"
 msgid "Click-Drag to remove the slider"
-msgstr "Feu clic i arrossegueu per a eliminar aquesta nansa"
+msgstr "Feu clic i arrossegueu per a eliminar el lliscador"
 
 #: ../app/display/gimptoolline.c:1528
-#, fuzzy
-#| msgid "Click or Click-Drag to add a point"
 msgid "Click or Click-Drag to add a new slider"
-msgstr "Feu clic o feu clic i arrossegueu per afegir un punt"
+msgstr "Feu clic o feu clic i arrossegueu per a afegir un lliscador"
 
 #: ../app/display/gimptoolline.c:1534
-#, fuzzy
-#| msgid "Click-Drag to move this point"
 msgid "Click-Drag to move the line"
-msgstr "Feu clic i arrossegueu per moure aquest punt"
+msgstr "Feu clic i arrossegueu per a moure la línia"
 
 #: ../app/display/gimptoolline.c:1546
 #, c-format
@@ -18900,14 +18876,12 @@ msgid "Gray Handling"
 msgstr "Gestió del gris"
 
 #: ../app/propgui/gimppropgui-color-to-alpha.c:117
-#, fuzzy
-#| msgid "Replace partial transparency with a color"
 msgid "Pick farthest full-transparency color"
-msgstr "Reemplaça la transparència parcial amb un color"
+msgstr "Tria el color més completament transparent"
 
 #: ../app/propgui/gimppropgui-color-to-alpha.c:139
 msgid "Pick nearest full-opacity color"
-msgstr ""
+msgstr "Tria el color d'opacitat més proper"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:202
 msgid "Rotate matrix 90° counter-clockwise"
@@ -19351,28 +19325,20 @@ msgid "Threshold"
 msgstr "Llindar blanc i negre"
 
 #: ../app/tools/gimpblendoptions.c:131
-#, fuzzy
-#| msgid "Desaturate mode"
 msgid "Instant mode"
-msgstr "Mode de dessaturació"
+msgstr "Mode instant"
 
 #: ../app/tools/gimpblendoptions.c:132
 msgid "Commit gradient instantly"
-msgstr ""
+msgstr "Lliura el degradat a l'instant"
 
 #: ../app/tools/gimpblendoptions.c:138
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "Edit Active Gradient"
 msgid "Modify active gradient"
-msgstr "Edita el degradat actual"
+msgstr "Modifica el degradat actiu"
 
 #: ../app/tools/gimpblendoptions.c:139
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "Edit Active Gradient"
 msgid "Modify the active gradient in-place"
-msgstr "Edita el degradat actual"
+msgstr "Modifica el degradat actiu en el lloc"
 
 #: ../app/tools/gimpblendoptions.c:271 ../app/tools/gimppaintoptions-gui.c:380
 msgid "Edit this gradient"
@@ -19380,16 +19346,17 @@ msgstr "Edita el degradat actual"
 
 #. the instant toggle
 #: ../app/tools/gimpblendoptions.c:326
-#, fuzzy, c-format
-#| msgid "Constrain (%s)"
+#, c-format
 msgid "Instant mode  (%s)"
-msgstr "Restringeix (%s)"
+msgstr "Mode instant (%s)"
 
 #: ../app/tools/gimpblendoptions.c:346
 msgid ""
 "The active gradient is non-writable and cannot be edited directly. Uncheck "
 "this option to edit a copy of it."
 msgstr ""
+"El degradat actiu no es pot escriure ni es pot editar directament. "
+"Desmarqueu aquesta opció per editar-ne una còpia."
 
 #: ../app/tools/gimpblendtool.c:156
 msgid "Blend"
@@ -19423,117 +19390,86 @@ msgid "Blend: "
 msgstr "Barreja: "
 
 #. the position labels
-#: ../app/tools/gimpblendtool-editor.c:1235
-#, fuzzy
-#| msgid "_X:"
+#: ../app/tools/gimpblendtool-editor.c:1237
 msgid "X:"
-msgstr "_X:"
+msgstr "X:"
 
-#: ../app/tools/gimpblendtool-editor.c:1241
-#, fuzzy
-#| msgid "_Y:"
+#: ../app/tools/gimpblendtool-editor.c:1243
 msgid "Y:"
-msgstr "_Y:"
+msgstr "Y:"
 
 #. the color label
-#: ../app/tools/gimpblendtool-editor.c:1294 ../app/tools/gimptextoptions.c:583
+#: ../app/tools/gimpblendtool-editor.c:1296 ../app/tools/gimptextoptions.c:583
 msgid "Color:"
 msgstr "Color:"
 
-#: ../app/tools/gimpblendtool-editor.c:1302
-#, fuzzy
-#| msgid "Left Endpoint Color"
+#: ../app/tools/gimpblendtool-editor.c:1304
 msgid "Change Endpoint Color"
-msgstr "Color de l'extrem esquerre"
+msgstr "Canvia el color del punt final"
 
 #. the position label
-#: ../app/tools/gimpblendtool-editor.c:1340
-#: ../app/tools/gimpblendtool-editor.c:1460
+#: ../app/tools/gimpblendtool-editor.c:1342
+#: ../app/tools/gimpblendtool-editor.c:1462
 #: ../app/tools/gimprectangleoptions.c:1025
 msgid "Position:"
 msgstr "Posició:"
 
 #. the color labels
-#: ../app/tools/gimpblendtool-editor.c:1365
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "Left Color Type"
+#: ../app/tools/gimpblendtool-editor.c:1367
 msgid "Left color:"
-msgstr "Tipus de color esquerre"
+msgstr "Color esquerre:"
 
-#: ../app/tools/gimpblendtool-editor.c:1371
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "Right Color Type"
+#: ../app/tools/gimpblendtool-editor.c:1373
 msgid "Right color:"
-msgstr "Tipus de color dret"
+msgstr "Color dret:"
 
-#: ../app/tools/gimpblendtool-editor.c:1398
-#: ../app/tools/gimpblendtool-editor.c:1407
-#, fuzzy
-#| msgid "Change Foreground Color"
+#: ../app/tools/gimpblendtool-editor.c:1400
+#: ../app/tools/gimpblendtool-editor.c:1409
 msgid "Change Stop Color"
-msgstr "Canvia el color de primer pla"
+msgstr "Canvia el color de la parada"
 
-#: ../app/tools/gimpblendtool-editor.c:1429
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Delete path"
+#: ../app/tools/gimpblendtool-editor.c:1431
 msgid "Delete stop"
-msgstr "Suprimeix el camí"
+msgstr "Suprimeix la parada"
 
 #. the type label
-#: ../app/tools/gimpblendtool-editor.c:1485
-#, fuzzy
-#| msgid "Blending"
+#: ../app/tools/gimpblendtool-editor.c:1487
 msgid "Blending:"
-msgstr "S'està aplicant el degradat"
+msgstr "Degradat:"
 
 #. the color label
-#: ../app/tools/gimpblendtool-editor.c:1507
-#, fuzzy
-#| msgid "Color:"
+#: ../app/tools/gimpblendtool-editor.c:1509
 msgid "Coloring:"
 msgstr "Color:"
 
-#: ../app/tools/gimpblendtool-editor.c:1541
+#: ../app/tools/gimpblendtool-editor.c:1543
 msgid "New stop at midpoint"
-msgstr ""
+msgstr "Nova parada al punt del mig"
 
-#: ../app/tools/gimpblendtool-editor.c:1549
-#, fuzzy
-#| msgid "Center ordinate"
+#: ../app/tools/gimpblendtool-editor.c:1551
 msgid "Center midpoint"
-msgstr "Ordenada centrada"
+msgstr "Centra el punt del mig"
 
-#: ../app/tools/gimpblendtool-editor.c:1612
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Left Endpoint"
+#: ../app/tools/gimpblendtool-editor.c:1614
 msgid "Start Endpoint"
-msgstr "Extrem _esquerre"
+msgstr "Inici de l'extrem"
 
-#: ../app/tools/gimpblendtool-editor.c:1620
-#, fuzzy
-#| msgctxt "gradient-editor-action"
-#| msgid "_Left Endpoint"
+#: ../app/tools/gimpblendtool-editor.c:1622
 msgid "End Endpoint"
-msgstr "Extrem _esquerre"
+msgstr "Final de l'extrem"
 
-#: ../app/tools/gimpblendtool-editor.c:1673
+#: ../app/tools/gimpblendtool-editor.c:1675
 #, c-format
 msgid "Stop %d"
-msgstr ""
+msgstr "Parada %d"
 
-#: ../app/tools/gimpblendtool-editor.c:1741
-#, fuzzy, c-format
-#| msgctxt "unit-singular"
-#| msgid "point"
+#: ../app/tools/gimpblendtool-editor.c:1743
+#, c-format
 msgid "Midpoint %d"
-msgstr "punt"
+msgstr "Punt del mig %d"
 
-#: ../app/tools/gimpblendtool-editor.c:2287
-#: ../app/tools/gimpblendtool-editor.c:2296
+#: ../app/tools/gimpblendtool-editor.c:2289
+#: ../app/tools/gimpblendtool-editor.c:2298
 msgid "Blend Step"
 msgstr "Pas per barrejar"
 
@@ -22990,34 +22926,24 @@ msgid "GIMP user manual is missing"
 msgstr "Falta el manual d'usuari del GIMP"
 
 #: ../app/widgets/gimphelp.c:809
-#, fuzzy
-#| msgid "The GIMP user manual is not installed on your computer."
 msgid "The GIMP user manual is not installed in your language."
-msgstr "El manual d'usuari del GIMP no està instal·lat en el vostre ordinador."
+msgstr ""
+"El manual d'usuari del GIMP no està instal·lat en el vostre llenguatge."
 
 #: ../app/widgets/gimphelp.c:820
-#, fuzzy
-#| msgid "System Language"
 msgid "Read Selected _Language"
-msgstr "Idioma"
+msgstr "Llegeix el llenguatge seleccionat"
 
 #: ../app/widgets/gimphelp.c:824
-#, fuzzy
-#| msgid "Available Filters"
 msgid "Available manuals..."
-msgstr "Filtres disponibles"
+msgstr "Manuals disponibles ..."
 
 #: ../app/widgets/gimphelp.c:836
-#, fuzzy
-#| msgid ""
-#| "You may either install the additional help package or change your "
-#| "preferences to use the online version."
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr ""
-"Podeu instal·lar el paquet addicional d'ajuda o bé canviar les vostres "
-"preferències per a utilitzar la versió en línia."
+"Podeu seleccionar un manual en un altre idioma o llegir la versió en línia."
 
 #: ../app/widgets/gimphelp.c:842
 msgid ""
@@ -23976,6 +23902,8 @@ msgstr "S'ha produït un error en escriure al fitxer XCF:"
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
 msgstr ""
+"S'ha produït un error en escriure el XCF: no s'admet el BPC quan escriviu "
+"píxel: %d"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "round"
