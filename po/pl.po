@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-15 16:32+0200\n"
-"PO-Revision-Date: 2017-10-15 16:33+0200\n"
+"POT-Creation-Date: 2017-10-22 17:53+0200\n"
+"PO-Revision-Date: 2017-10-22 17:54+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -9622,7 +9622,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Błąd podczas przetwarzania „%%s”: wiersz jest dłuższy niż %s znaków."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
-#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:324
+#: ../app/core/gimp-tags.c:144 ../app/gui/themes.c:325
 #: ../app/tools/gimpfiltertool-settings.c:227
 #, c-format
 msgid "Error writing '%s': %s"
@@ -10514,7 +10514,7 @@ msgid "When enabled, uses OpenCL for some operations."
 msgstr "Kiedy jest włączone, używa OpenCL do wykonywania niektórych działań."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:131
-#: ../app/core/gimp-units.c:278 ../app/gui/session.c:292
+#: ../app/core/gimp-units.c:278 ../app/gui/session.c:293
 #: ../app/plug-in/plug-in-rc.c:245
 msgid "fatal parse error"
 msgstr "krytyczny błąd podczas przetwarzania"
@@ -11327,7 +11327,7 @@ msgstr ""
 "Interpreter poleceń wsadowych „%s” jest niedostępny. Wyłączono tryb wsadowy."
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimptooloptions.c:348
-#: ../app/gui/session.c:427 ../app/menus/menus.c:467
+#: ../app/gui/session.c:428 ../app/menus/menus.c:468
 #: ../app/widgets/gimpdevices.c:207
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -11760,25 +11760,25 @@ msgctxt "undo-type"
 msgid "Flood Channel"
 msgstr "Zalanie kanału"
 
-#: ../app/core/gimpchannel.c:844
+#: ../app/core/gimpchannel.c:845
 msgid "Cannot fill empty channel."
 msgstr "Nie można wypełniać na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:880
+#: ../app/core/gimpchannel.c:881
 msgid "Cannot stroke empty channel."
 msgstr "Nie można rysować na obszarze pustego kanału."
 
-#: ../app/core/gimpchannel.c:1785
+#: ../app/core/gimpchannel.c:1786
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Ustawienie koloru kanału"
 
-#: ../app/core/gimpchannel.c:1836
+#: ../app/core/gimpchannel.c:1837
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Ustawienie krycia kanału"
 
-#: ../app/core/gimpchannel.c:1927 ../app/core/gimpselection.c:168
+#: ../app/core/gimpchannel.c:1928 ../app/core/gimpselection.c:168
 msgid "Selection Mask"
 msgstr "Maska zaznaczenia"
 
@@ -12653,7 +12653,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zakotwiczenie oderwanego zaznaczenia"
 
-#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1009
+#: ../app/core/gimplayer-floating-selection.c:175 ../app/core/gimplayer.c:1008
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -12729,13 +12729,13 @@ msgstr "Nie można bardziej podnieść warstwy."
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
-#: ../app/core/gimplayer.c:716 ../app/core/gimplayer.c:1712
+#: ../app/core/gimplayer.c:715 ../app/core/gimplayer.c:1711
 #: ../app/core/gimplayermask.c:257
 #, c-format
 msgid "%s mask"
 msgstr "Maska %s"
 
-#: ../app/core/gimplayer.c:755
+#: ../app/core/gimplayer.c:754
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -12744,20 +12744,20 @@ msgstr ""
 "Oderwane zaznaczenie\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1618
+#: ../app/core/gimplayer.c:1617
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nie można dodać maski warstwy, ponieważ warstwa już ją ma."
 
-#: ../app/core/gimplayer.c:1629
+#: ../app/core/gimplayer.c:1628
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nie można dodać maski warstwy o wymiarach różnych od wymiarów warstwy."
 
-#: ../app/core/gimplayer.c:1635
+#: ../app/core/gimplayer.c:1634
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodanie maski warstwy"
 
-#: ../app/core/gimplayer.c:1763
+#: ../app/core/gimplayer.c:1762
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Przeniesienie kanału alfa na maskę"
@@ -12792,12 +12792,12 @@ msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodanie kanału alfa"
 
-#: ../app/core/gimplayer.c:2199
+#: ../app/core/gimplayer.c:2200
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Usunięcie kanału alfa"
 
-#: ../app/core/gimplayer.c:2220
+#: ../app/core/gimplayer.c:2221
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Dopasowanie wymiarów warstwy do obrazu"
@@ -13252,7 +13252,7 @@ msgstr "Dokładność"
 #. gamma
 #: ../app/core/gimptemplate.c:205 ../app/dialogs/convert-precision-dialog.c:195
 #: ../app/operations/gimplevelsconfig.c:112
-#: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:464
+#: ../app/operations/gimplevelsconfig.c:113 ../app/tools/gimplevelstool.c:465
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -13914,7 +13914,7 @@ msgstr "Właściwości obrazu"
 #: ../app/dialogs/image-properties-dialog.c:68
 #: ../app/dialogs/input-devices-dialog.c:62
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:55
-#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1806
+#: ../app/dialogs/module-dialog.c:134 ../app/tools/gimpblendtool-editor.c:1808
 #: ../app/tools/gimpcolorpickertool.c:348 ../app/tools/gimpmeasuretool.c:649
 #: ../app/widgets/gimpcontrollerlist.c:640 ../app/widgets/gimppdbdialog.c:175
 #: ../app/widgets/gimpsettingsbox.c:663 ../app/widgets/gimptexteditor.c:162
@@ -18821,6 +18821,14 @@ msgstr "Zakres celu"
 msgid "Gray Handling"
 msgstr "Obsługa odcieni szarości"
 
+#: ../app/propgui/gimppropgui-color-to-alpha.c:117
+msgid "Pick farthest full-transparency color"
+msgstr "Wybierz najdalszy w pełni przezroczysty kolor"
+
+#: ../app/propgui/gimppropgui-color-to-alpha.c:139
+msgid "Pick nearest full-opacity color"
+msgstr "Wybierz najbliższy w pełni nieprzezroczysty kolor"
+
 #: ../app/propgui/gimppropgui-convolution-matrix.c:202
 msgid "Rotate matrix 90° counter-clockwise"
 msgstr "Obraca macierz o 90° w lewo"
@@ -18837,19 +18845,19 @@ msgstr "Odbija macierz poziomo"
 msgid "Flip matrix vertically"
 msgstr "Odbija macierz pionowo"
 
-#: ../app/propgui/gimppropgui-diffration-patterns.c:68
+#: ../app/propgui/gimppropgui-diffraction-patterns.c:68
 msgid "Frequencies"
 msgstr "Częstotliwości"
 
-#: ../app/propgui/gimppropgui-diffration-patterns.c:79
+#: ../app/propgui/gimppropgui-diffraction-patterns.c:79
 msgid "Contours"
 msgstr "Kontury"
 
-#: ../app/propgui/gimppropgui-diffration-patterns.c:90
+#: ../app/propgui/gimppropgui-diffraction-patterns.c:90
 msgid "Sharp Edges"
 msgstr "Ostre krawędzie"
 
-#: ../app/propgui/gimppropgui-diffration-patterns.c:101
+#: ../app/propgui/gimppropgui-diffraction-patterns.c:101
 msgid "Other Options"
 msgstr "Inne opcje"
 
@@ -19001,11 +19009,11 @@ msgstr "Wybiera z listy często używanych temperatur kolorów"
 msgid "New Seed"
 msgstr "Nowe ziarno"
 
-#: ../app/propgui/gimppropgui.c:367
+#: ../app/propgui/gimppropgui.c:368
 msgid "Pick color from the image"
 msgstr "Proszę wybrać kolor z obrazu"
 
-#: ../app/propgui/gimppropgui.c:502
+#: ../app/propgui/gimppropgui.c:506
 msgid "This operation has no editable properties"
 msgstr "To działanie nie ma modyfikowalnych właściwości"
 
@@ -19323,86 +19331,86 @@ msgid "Blend: "
 msgstr "Gradient: "
 
 #. the position labels
-#: ../app/tools/gimpblendtool-editor.c:1235
+#: ../app/tools/gimpblendtool-editor.c:1237
 msgid "X:"
 msgstr "Poziomo:"
 
-#: ../app/tools/gimpblendtool-editor.c:1241
+#: ../app/tools/gimpblendtool-editor.c:1243
 msgid "Y:"
 msgstr "Pionowo:"
 
 #. the color label
-#: ../app/tools/gimpblendtool-editor.c:1294 ../app/tools/gimptextoptions.c:583
+#: ../app/tools/gimpblendtool-editor.c:1296 ../app/tools/gimptextoptions.c:583
 msgid "Color:"
 msgstr "Kolor:"
 
-#: ../app/tools/gimpblendtool-editor.c:1302
+#: ../app/tools/gimpblendtool-editor.c:1304
 msgid "Change Endpoint Color"
 msgstr "Zmiana koloru punktu końcowego"
 
 #. the position label
-#: ../app/tools/gimpblendtool-editor.c:1340
-#: ../app/tools/gimpblendtool-editor.c:1460
+#: ../app/tools/gimpblendtool-editor.c:1342
+#: ../app/tools/gimpblendtool-editor.c:1462
 #: ../app/tools/gimprectangleoptions.c:1025
 msgid "Position:"
 msgstr "Położenie:"
 
 #. the color labels
-#: ../app/tools/gimpblendtool-editor.c:1365
+#: ../app/tools/gimpblendtool-editor.c:1367
 msgid "Left color:"
 msgstr "Lewy kolor:"
 
-#: ../app/tools/gimpblendtool-editor.c:1371
+#: ../app/tools/gimpblendtool-editor.c:1373
 msgid "Right color:"
 msgstr "Prawy kolor:"
 
-#: ../app/tools/gimpblendtool-editor.c:1398
-#: ../app/tools/gimpblendtool-editor.c:1407
+#: ../app/tools/gimpblendtool-editor.c:1400
+#: ../app/tools/gimpblendtool-editor.c:1409
 msgid "Change Stop Color"
 msgstr "Zmiana koloru przerwy"
 
-#: ../app/tools/gimpblendtool-editor.c:1429
+#: ../app/tools/gimpblendtool-editor.c:1431
 msgid "Delete stop"
 msgstr "Usuń przerwę"
 
 #. the type label
-#: ../app/tools/gimpblendtool-editor.c:1485
+#: ../app/tools/gimpblendtool-editor.c:1487
 msgid "Blending:"
 msgstr "Mieszanie:"
 
 #. the color label
-#: ../app/tools/gimpblendtool-editor.c:1507
+#: ../app/tools/gimpblendtool-editor.c:1509
 msgid "Coloring:"
 msgstr "Kolory:"
 
-#: ../app/tools/gimpblendtool-editor.c:1541
+#: ../app/tools/gimpblendtool-editor.c:1543
 msgid "New stop at midpoint"
 msgstr "Nowa przerwa w punkcie pośrednim"
 
-#: ../app/tools/gimpblendtool-editor.c:1549
+#: ../app/tools/gimpblendtool-editor.c:1551
 msgid "Center midpoint"
 msgstr "Wyśrodkowany punkt pośredni"
 
-#: ../app/tools/gimpblendtool-editor.c:1612
+#: ../app/tools/gimpblendtool-editor.c:1614
 msgid "Start Endpoint"
 msgstr "Pierwszy punkt końcowy"
 
-#: ../app/tools/gimpblendtool-editor.c:1620
+#: ../app/tools/gimpblendtool-editor.c:1622
 msgid "End Endpoint"
 msgstr "Ostatni punkt końcowy"
 
-#: ../app/tools/gimpblendtool-editor.c:1673
+#: ../app/tools/gimpblendtool-editor.c:1675
 #, c-format
 msgid "Stop %d"
 msgstr "%d. przerwa"
 
-#: ../app/tools/gimpblendtool-editor.c:1741
+#: ../app/tools/gimpblendtool-editor.c:1743
 #, c-format
 msgid "Midpoint %d"
 msgstr "%d. punkt pośredni"
 
-#: ../app/tools/gimpblendtool-editor.c:2287
-#: ../app/tools/gimpblendtool-editor.c:2296
+#: ../app/tools/gimpblendtool-editor.c:2289
+#: ../app/tools/gimpblendtool-editor.c:2298
 msgid "Blend Step"
 msgstr "Krok gradientu"
 
@@ -19819,12 +19827,12 @@ msgstr "%s: dodaje punkty kontrolne do wszystkich kanałów"
 msgid "Adjust Color Curves"
 msgstr "Modyfikacja krzywych kolorów"
 
-#: ../app/tools/gimpcurvestool.c:392 ../app/tools/gimplevelstool.c:334
+#: ../app/tools/gimpcurvestool.c:392 ../app/tools/gimplevelstool.c:335
 #: ../app/tools/gimpthresholdtool.c:194
 msgid "Cha_nnel:"
 msgstr "Ka_nał:"
 
-#: ../app/tools/gimpcurvestool.c:424 ../app/tools/gimplevelstool.c:364
+#: ../app/tools/gimpcurvestool.c:424 ../app/tools/gimplevelstool.c:365
 msgid "R_eset Channel"
 msgstr "_Przywróć kanał"
 
@@ -19832,7 +19840,7 @@ msgstr "_Przywróć kanał"
 msgid "Curve _type:"
 msgstr "_Typ krzywej:"
 
-#: ../app/tools/gimpcurvestool.c:614 ../app/tools/gimplevelstool.c:688
+#: ../app/tools/gimpcurvestool.c:614 ../app/tools/gimplevelstool.c:689
 msgid "Could not read header: "
 msgstr "Nie można odczytać nagłówka: "
 
@@ -19986,12 +19994,12 @@ msgstr "%s: przełącza oryginalną i filtrowaną stronę"
 msgid "%s: switch horizontal and vertical"
 msgstr "%s: przełącza między poziomym a pionowym widokiem"
 
-#: ../app/tools/gimpfiltertool.c:1274 ../app/tools/gimpfiltertool-settings.c:71
+#: ../app/tools/gimpfiltertool.c:1296 ../app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importowanie ustawień „%s”"
 
-#: ../app/tools/gimpfiltertool.c:1276 ../app/tools/gimpfiltertool-settings.c:73
+#: ../app/tools/gimpfiltertool.c:1298 ../app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Eksportowanie ustawień „%s”"
@@ -20427,33 +20435,33 @@ msgid "Pick white point for the selected channel"
 msgstr "Wybór białego punktu dla zaznaczonych kanałów"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:383
+#: ../app/tools/gimplevelstool.c:384
 msgid "Input Levels"
 msgstr "Poziomy wejściowe"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:499
+#: ../app/tools/gimplevelstool.c:500
 msgid "Output Levels"
 msgstr "Poziomy wyjściowe"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:557
+#: ../app/tools/gimplevelstool.c:558
 msgid "All Channels"
 msgstr "Wszystkie kanały"
 
-#: ../app/tools/gimplevelstool.c:569
+#: ../app/tools/gimplevelstool.c:570
 msgid "_Auto Input Levels"
 msgstr "_Automatyczne poziomy wejściowe"
 
-#: ../app/tools/gimplevelstool.c:572
+#: ../app/tools/gimplevelstool.c:573
 msgid "Adjust levels for all channels automatically"
 msgstr "Dopasowuje poziomy automatycznie dla wszystkich kanałów"
 
-#: ../app/tools/gimplevelstool.c:599
+#: ../app/tools/gimplevelstool.c:600
 msgid "Edit these Settings as Curves"
 msgstr "Modyfikacja tych ustawień jako krzywe"
 
-#: ../app/tools/gimplevelstool.c:798
+#: ../app/tools/gimplevelstool.c:799
 msgid "Use _old levels file format"
 msgstr "_Stary format pliku poziomów"
 
