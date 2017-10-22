@@ -420,6 +420,59 @@ CODE
     );
 }
 
+sub item_get_expanded {
+    $blurb = 'Returns whether the item is expanded.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified item is expanded.
+HELP
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'expanded', type => 'boolean',
+	  desc => 'TRUE if the item is expanded, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  expanded = gimp_viewable_get_expanded (GIMP_VIEWABLE (item));
+}
+CODE
+    );
+}
+
+sub item_set_expanded {
+    $blurb = 'Sets the expanded state of the item.';
+
+    $help = <<HELP;
+This procedure expands or collapses the item.
+HELP
+
+    &ell_pdb_misc('2017', '2.10');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+    { name => 'expanded', type => 'boolean',
+	  desc => 'TRUE to expand the item, FALSE to collapse the item' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_viewable_set_expanded (GIMP_VIEWABLE (item), expanded);
+}
+CODE
+    );
+}
+
 sub item_get_name {
     $blurb = "Get the name of the specified item.";
 
@@ -917,6 +970,7 @@ CODE
 	    item_is_group
             item_get_parent
 	    item_get_children
+            item_get_expanded item_set_expanded
             item_get_name item_set_name
             item_get_visible item_set_visible
             item_get_linked item_set_linked

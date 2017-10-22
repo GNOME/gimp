@@ -469,6 +469,72 @@ gimp_item_get_children (gint32  item_ID,
 }
 
 /**
+ * gimp_item_get_expanded:
+ * @item_ID: The item.
+ *
+ * Returns whether the item is expanded.
+ *
+ * This procedure returns TRUE if the specified item is expanded.
+ *
+ * Returns: TRUE if the item is expanded, FALSE otherwise.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_item_get_expanded (gint32 item_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean expanded = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-item-get-expanded",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    expanded = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return expanded;
+}
+
+/**
+ * gimp_item_set_expanded:
+ * @item_ID: The item.
+ * @expanded: TRUE to expand the item, FALSE to collapse the item.
+ *
+ * Sets the expanded state of the item.
+ *
+ * This procedure expands or collapses the item.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_item_set_expanded (gint32   item_ID,
+                        gboolean expanded)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-item-set-expanded",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_INT32, expanded,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_item_get_name:
  * @item_ID: The item.
  *

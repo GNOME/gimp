@@ -46,6 +46,9 @@ gboolean      gimp_item_is_group          (gint32              item_ID);
 gint32        gimp_item_get_parent        (gint32              item_ID);
 gint*         gimp_item_get_children      (gint32              item_ID,
                                            gint               *num_children);
+gboolean      gimp_item_get_expanded      (gint32              item_ID);
+gboolean      gimp_item_set_expanded      (gint32              item_ID,
+                                           gboolean            expanded);
 gchar*        gimp_item_get_name          (gint32              item_ID);
 gboolean      gimp_item_set_name          (gint32              item_ID,
                                            const gchar        *name);

@@ -445,6 +445,59 @@ item_get_children_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+item_get_expanded_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpItem *item;
+  gboolean expanded = FALSE;
+
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      expanded = gimp_viewable_get_expanded (GIMP_VIEWABLE (item));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), expanded);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+item_set_expanded_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpItem *item;
+  gboolean expanded;
+
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  expanded = g_value_get_boolean (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_viewable_set_expanded (GIMP_VIEWABLE (item), expanded);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 item_get_name_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -1317,6 +1370,64 @@ register_item_procs (GimpPDB *pdb)
                                                                 "child ids",
                                                                 "The item's list of children",
                                                                 GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-get-expanded
+   */
+  procedure = gimp_procedure_new (item_get_expanded_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-get-expanded");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-get-expanded",
+                                     "Returns whether the item is expanded.",
+                                     "This procedure returns TRUE if the specified item is expanded.",
+                                     "Ell",
+                                     "Ell",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("expanded",
+                                                         "expanded",
+                                                         "TRUE if the item is expanded, FALSE otherwise",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-set-expanded
+   */
+  procedure = gimp_procedure_new (item_set_expanded_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-set-expanded");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-set-expanded",
+                                     "Sets the expanded state of the item.",
+                                     "This procedure expands or collapses the item.",
+                                     "Ell",
+                                     "Ell",
+                                     "2017",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("expanded",
+                                                     "expanded",
+                                                     "TRUE to expand the item, FALSE to collapse the item",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
