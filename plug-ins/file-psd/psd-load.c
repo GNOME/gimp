@@ -1129,6 +1129,7 @@ add_layers (gint32     image_id,
   gint32                layer_size;
   gint32                layer_id = -1;
   gint32                mask_id = -1;
+  gint32                active_layer_id = -1;
   gint                  lidx;                  /* Layer index */
   gint                  cidx;                  /* Channel index */
   gint                  rowi;                  /* Row index */
@@ -1479,10 +1480,10 @@ add_layers (gint32     image_id,
                   gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
                 }
 
-              /* Set the active layer */
+              /* Remember the active layer ID */
               if (lidx == img_a->layer_state)
                 {
-                  gimp_image_set_active_layer (image_id, layer_id);
+                  active_layer_id = layer_id;
                 }
 
               /* Set the layer data */
@@ -1638,6 +1639,10 @@ add_layers (gint32     image_id,
     }
   g_free (lyr_a);
   g_array_free (parent_group_stack, FALSE);
+
+  /* Set the active layer */
+  if (active_layer_id >= 0)
+    gimp_image_set_active_layer (image_id, active_layer_id);
 
   return 0;
 }
