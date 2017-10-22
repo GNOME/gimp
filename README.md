@@ -1,8 +1,6 @@
-                   ------------------------------
-                   GNU Image Manipulation Program
-                       2.9 Development Branch
-                   ------------------------------
-
+                     
+# GNU Image Manipulation Program <br> 2.9 Development Branch
+   
 This is an unstable development release, an intermediate state on the
 way to the next stable release 2.10. GIMP 2.9 may or may not do what
 you expect. Save your work early and often. If you want a stable
@@ -23,83 +21,71 @@ If you want to hack on GIMP, please read the file HACKING. For
 detailed installation instructions, see the file INSTALL.
 
 
-1. Web Resources
-================
+## Web Resources
+
 
 GIMP's home page is at:
 
-	http://www.gimp.org/
+* http://www.gimp.org/
 
 Please be sure to visit this site for information, documentation,
 tutorials, news, etc.  All things GIMP-ish are available from there.
 
 The automated plug-in registry is located at:
 
-	http://registry.gimp.org/
+* http://registry.gimp.org/
 
 There you can get the latest versions of plug-ins, using a convenient
 forms-based interface.
 
 The latest version of GIMP can be found at:
 
-	http://www.gimp.org/downloads/
+* http://www.gimp.org/downloads/
 
 
-2. Mailing Lists
-================
+## Mailing Lists
 
 We have several mailing lists dedicated to GIMP user and development
 discussion.  There is more info at
 
-	http://www.gimp.org/mail_lists.html
+* http://www.gimp.org/mail_lists.html
 
 Links to several archives of the mailing lists are included in that page.
 
-Gimp-user-list is a mailing list dedicated to user problems, hints and
-tips, discussion of cool effects, etc.  Gimp-developer-list is oriented
-to GIMP core and plug-in developers.  Gimp-gui-list is for discussing
-about GIMP interface to improve user experience. Most people will only
-want to be subscribed to gimp-user-list. If you want to help develop
-GIMP, the gimp-developer mailing list is a good starting point; if you
-want to help with GUI design, the gimp-gui list is where you want to
-subscribe.
+Gimp-user-list is a mailing list dedicated to user problems, hints and tips, discussion of cool effects, etc.  Gimp-developer-list is oriented to GIMP core and plug-in developers. Gimp-gui-list is for discussing about GIMP interface to improve user experience. Most people will only want to be subscribed to gimp-user-list. If you want to help develop GIMP, the gimp-developer mailing list is a good starting point; if you want to help with GUI design, the gimp-gui list is where you want to subscribe.
 
 
-3. IRC
-======
+## IRC
 
-And finally, for the real junkies, there is an IRC channel devoted to
-GIMP. On GIMPNet (a private free software oriented network) there is
-#gimp.  Many of the developers hang out there.  Some of the GIMPNet
-servers are:
+And finally, for the real junkies, there is an IRC channel devoted to GIMP. On GIMPNet (a private free software oriented network) there is #gimp.  Many of the developers hang out there.  Some of the GIMPNet servers are:
 
 	irc.gimp.org:6667
 	irc.us.gimp.org:6667
 	irc.eu.gimp.org:6667
 
 
-4. Customizing
-==============
+## Customizing
+
 
 The look of GIMP's interface can be customized like any other GTK app
-by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
+by editing the `~/.gtkrc-2.0` file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
 http://art.gnome.org/themes/gtk2 . Additionally, GIMP reads the file
-~/.config/GIMP/2.9/gtkrc so you can have settings that only apply to GIMP.
+`~/.config/GIMP/2.9/gtkrc` so you can have settings that only apply to GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
 You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.config/GIMP/2.9/menurc. You can also manually change the keybindings to
-any of your choice by editing ~/.config/GIMP/2.9/menurc.
+to `~/.config/GIMP/2.9/menurc`. You can also manually change the keybindings to
+any of your choice by editing `~/.config/GIMP/2.9/menurc.`
 
 
 Have fun,
 
-  Spencer Kimball
-  Peter Mattis
-  Federico Mena
-  Manish Singh
-  Sven Neumann
-  Michael Natterer
-  Dave Neary
-  Martin Nordholts
+  - Spencer Kimball   
+  - Peter Mattis   
+  - Federico Mena   
+  - Manish Singh   
+  - Sven Neumann   
+  - Michael Nattere  
+  - Dave Neary  
+  - Martin Nordholts
