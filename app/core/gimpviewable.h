@@ -57,6 +57,7 @@ struct _GimpViewableClass
   /*  signals  */
   void            (* invalidate_preview) (GimpViewable  *viewable);
   void            (* size_changed)       (GimpViewable  *viewable);
+  void            (* expanded_changed)   (GimpViewable  *viewable);
 
   /*  virtual functions  */
   gboolean        (* get_size)           (GimpViewable  *viewable,
@@ -107,6 +108,7 @@ GType           gimp_viewable_get_type           (void) G_GNUC_CONST;
 
 void            gimp_viewable_invalidate_preview (GimpViewable  *viewable);
 void            gimp_viewable_size_changed       (GimpViewable  *viewable);
+void            gimp_viewable_expanded_changed   (GimpViewable  *viewable);
 
 void            gimp_viewable_calc_preview_size  (gint           aspect_width,
                                                   gint           aspect_height,

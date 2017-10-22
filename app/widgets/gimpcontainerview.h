@@ -83,6 +83,9 @@ struct _GimpContainerViewInterface
   void     (* rename_item)        (GimpContainerView *view,
                                    GimpViewable      *object,
                                    gpointer           insert_data);
+  void     (* expand_item)        (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gpointer           insert_data);
   void     (* clear_items)        (GimpContainerView *view);
   void     (* set_view_size)      (GimpContainerView *view);
   gint     (* get_selected)       (GimpContainerView  *view,

@@ -54,6 +54,7 @@ enum
 {
   INVALIDATE_PREVIEW,
   SIZE_CHANGED,
+  EXPANDED_CHANGED,
   LAST_SIGNAL
 };
 
@@ -160,6 +161,15 @@ gimp_viewable_class_init (GimpViewableClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  viewable_signals[EXPANDED_CHANGED] =
+    g_signal_new ("expanded-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpViewableClass, expanded_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->finalize         = gimp_viewable_finalize;
   object_class->get_property     = gimp_viewable_get_property;
   object_class->set_property     = gimp_viewable_set_property;
@@ -172,6 +182,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
   klass->size_changed            = NULL;
+  klass->expanded_changed        = NULL;
 
   klass->get_size                = NULL;
   klass->get_preview_size        = gimp_viewable_real_get_preview_size;
@@ -554,6 +565,22 @@ gimp_viewable_size_changed (GimpViewable *viewable)
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   g_signal_emit (viewable, viewable_signals[SIZE_CHANGED], 0);
+}
+
+/**
+ * gimp_viewable_expanded_changed:
+ * @viewable: a viewable object
+ *
+ * This function sends a signal that is handled at a lower level in the
+ * object hierarchy, and provides a mechanism by which objects derived
+ * from #GimpViewable can respond to expanded state changes.
+ **/
+void
+gimp_viewable_expanded_changed (GimpViewable *viewable)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  g_signal_emit (viewable, viewable_signals[EXPANDED_CHANGED], 0);
 }
 
 /**

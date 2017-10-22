@@ -438,9 +438,14 @@ static void
 gimp_group_layer_set_expanded (GimpViewable *viewable,
                                gboolean      expanded)
 {
-  GimpGroupLayer *group = GIMP_GROUP_LAYER (viewable);
+  GimpGroupLayerPrivate *private = GET_PRIVATE (viewable);
 
-  GET_PRIVATE (group)->expanded = expanded;
+  if (private->expanded != expanded)
+    {
+      private->expanded = expanded;
+
+      gimp_viewable_expanded_changed (viewable);
+    }
 }
 
 static gboolean
