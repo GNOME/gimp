@@ -1082,7 +1082,7 @@ save_layer_and_mask (FILE   *fd,
           size = 12;
 
           if (PSDImageData.lLayers[i].type == PSD_LAYER_TYPE_GROUP_START)
-            type = 1;
+            type = gimp_item_get_expanded (PSDImageData.lLayers[i].id) ? 1 : 2;
           else
             type = 3;
 

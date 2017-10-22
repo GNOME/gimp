@@ -1463,6 +1463,13 @@ add_layers (gint32     image_id,
                   /* Tattoo */
                   if (lyr_a[lidx]->id)
                     gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+
+                  /* For layer groups, expand or collapse the group */
+                  if (lyr_a[lidx]->group_type != 0)
+                    {
+                      gimp_item_set_expanded (layer_id,
+                                              lyr_a[lidx]->group_type == 1);
+                    }
                 }
 
               /* Insert the layer */
