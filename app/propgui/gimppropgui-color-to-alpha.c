@@ -37,38 +37,99 @@
 #include "gimp-intl.h"
 
 
+static gdouble
+get_max_color_extent (GObject *config)
+{
+  GimpRGB *color;
+  gdouble  max_extent = 0.0;
+
+  g_object_get (config,
+                "color", &color,
+                NULL);
+
+  max_extent = MAX (max_extent, MAX (color->r, 1.0 - color->r));
+  max_extent = MAX (max_extent, MAX (color->g, 1.0 - color->g));
+  max_extent = MAX (max_extent, MAX (color->b, 1.0 - color->b));
+
+  g_free (color);
+
+  return max_extent;
+}
+
+static gdouble
+compress_threshold (GObject *config,
+                    gdouble  threshold)
+{
+  return MIN (threshold / get_max_color_extent (config), 1.0);
+}
+
+static gdouble
+uncompress_threshold (GObject *config,
+                      gdouble  threshold)
+{
+  return threshold * get_max_color_extent (config);
+}
+
 static void
 threshold_picked (GObject       *config,
                   gpointer       identifier,
                   gdouble        x,
                   gdouble        y,
                   const Babl    *sample_format,
-                  const GimpRGB *color)
+                  const GimpRGB *picked_color)
 {
-  GimpRGB *bg_color;
-  gdouble  radius        = 0.0;
-  gdouble  target_radius = 0.0;
-  gdouble  threshold;
+  GimpRGB  *color;
+  gboolean  compress_threshold_range;
+  gdouble   threshold = 0.0;
 
   g_object_get (config,
-                "color", &bg_color,
+                "color",                    &color,
+                "compress-threshold-range", &compress_threshold_range,
                 NULL);
 
-  radius = MAX (radius, MAX (bg_color->r, 1.0 - bg_color->r));
-  radius = MAX (radius, MAX (bg_color->g, 1.0 - bg_color->g));
-  radius = MAX (radius, MAX (bg_color->b, 1.0 - bg_color->b));
+  threshold = MAX (threshold, fabs (picked_color->r - color->r));
+  threshold = MAX (threshold, fabs (picked_color->g - color->g));
+  threshold = MAX (threshold, fabs (picked_color->b - color->b));
 
-  target_radius = MAX (target_radius, fabs (color->r - bg_color->r));
-  target_radius = MAX (target_radius, fabs (color->g - bg_color->g));
-  target_radius = MAX (target_radius, fabs (color->b - bg_color->b));
-
-  threshold = target_radius / radius;
+  if (compress_threshold_range)
+    threshold = compress_threshold (config, threshold);
 
   g_object_set (config,
                 identifier, threshold,
                 NULL);
 
-  g_free (bg_color);
+  g_free (color);
+}
+
+static void
+compress_threshold_range_clicked (GtkWidget *toggle,
+                                  GObject   *config)
+{
+  gdouble  transparency_threshold;
+  gdouble  opacity_threshold;
+  gboolean compress_threshold_range;
+
+  g_object_get (config,
+                "transparency-threshold",   &transparency_threshold,
+                "opacity-threshold",        &opacity_threshold,
+                "compress-threshold-range", &compress_threshold_range,
+                NULL);
+
+  if (compress_threshold_range)
+    {
+      transparency_threshold = compress_threshold (config, transparency_threshold);
+      opacity_threshold      = compress_threshold (config, opacity_threshold);
+    }
+  else
+    {
+      transparency_threshold = uncompress_threshold (config, transparency_threshold);
+      opacity_threshold      = uncompress_threshold (config, opacity_threshold);
+    }
+
+  g_object_set (config,
+                "transparency-threshold", transparency_threshold,
+                "opacity-threshold",      opacity_threshold,
+                NULL);
 }
 
 GtkWidget *
@@ -85,6 +146,7 @@ _gimp_prop_gui_new_color_to_alpha (GObject                  *config,
   GtkWidget   *button;
   GtkWidget   *hbox;
   GtkWidget   *scale;
+  GtkWidget   *toggle;
   const gchar *label;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
@@ -143,6 +205,15 @@ _gimp_prop_gui_new_color_to_alpha (GObject                  *config,
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
     }
+
+  toggle = gimp_prop_widget_new (config, "compress-threshold-range",
+                                 area, context, NULL, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "clicked",
+                    G_CALLBACK (compress_threshold_range_clicked),
+                    config);
 
   return vbox;
 }
