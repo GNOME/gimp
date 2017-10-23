@@ -442,7 +442,8 @@ gimp_layer_mode_combo_box_update_model (GimpLayerModeComboBox *combo,
 
       if (gimp_layer_mode_get_for_group (combo->priv->layer_mode,
                                          combo->priv->group,
-                                         &new_mode))
+                                         &new_mode) &&
+          (gimp_layer_mode_get_context (new_mode) & combo->priv->context))
         {
           gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), new_mode);
         }
