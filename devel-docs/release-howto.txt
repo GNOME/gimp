@@ -122,10 +122,14 @@
  ( ) Check out or update the 'gimp-web' module, check out its testing
      branch.
 
-     [ ] Change the file content/downloads/index.md to reference the
-         new source release.
+     [ ] Update the file 'GIMP_VERSIONS' adding the version, release
+         date, tarball name and its MD5 hash under "STABLE".
 
      [ ] Create a news items for the release in content/news/
+
+     [ ] Run `make authors.md` in GIMP repository. This will generate
+         the file `authors.md`. Move it to ./content/about/authors.md on
+         the 'gimp-web' module and commit it.
 
      [ ] Commit and push the changes, the web server should then
          update itself soon (it checks for updates every 5 minutes).
