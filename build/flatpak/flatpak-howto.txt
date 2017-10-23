@@ -1,6 +1,22 @@
 GIMP Flatpak HowTo
 ==================
 
+Stable build
+~~~~~~~~~~~~
+
+The stable manifest is maintained at flathub: https://github.com/flathub/org.gimp.GIMP
+
+Development and nightly builds
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Flathub does not host non-stable builds, therefore they are maintained
+separately on the GIMP repository. Nevertheless they should remain as
+close to the stable manifest as possible since they are meant to become
+stable too.
+
+Building and maintaining
+~~~~~~~~~~~~~~~~~~~~~~~~
+
 * Install flatpak and flatpak-builder. There are packages for most
   distributions. Check: http://flatpak.org/getting.html
   Use at least flatpak 0.9.5.
