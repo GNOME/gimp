@@ -21,8 +21,18 @@
             "build-options" : {
                 "env": {
                     "PYTHON": "/usr/bin/python3"
+                },
+                "arch" : {
+                    "aarch64" : {
+                        "cflags": "-DENABLE_YARR_JIT=0 -fno-delete-null-pointer-checks",
+                        "cxxflags": "-DENABLE_YARR_JIT=0 -fno-delete-null-pointer-checks",
+                        "config-opts" : [
+                            "--disable-jit"
+                        ]
+                    }
                 }
             },
+
             "cleanup": [ "/share/doc", "/bin" ],
             "sources": [
                 {
@@ -69,6 +79,10 @@
                             "type": "archive",
                             "url": "http://ftp.gnome.org/pub/GNOME/sources/pygobject/2.28/pygobject-2.28.6.tar.xz",
                             "sha256": "fb8a1d4f665130a125011659bd347c7339c944232163dbb9a34fd0686577adb8"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
                         }
                     ]
                 },
@@ -80,6 +94,10 @@
                             "type": "archive",
                             "url": "http://ftp.gnome.org/pub/GNOME/sources/pygtk/2.24/pygtk-2.24.0.tar.gz",
                             "sha256": "6e3e54fa6e65a69ac60bd58cb2e60a57f3346ac52efe995f3d10b6c38c972fd8"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
                         }
                     ]
                 }
@@ -96,6 +114,10 @@
                             "type": "archive",
                             "url": "http://www.exiv2.org/exiv2-0.25.tar.gz",
                             "sha256": "c80bfc778a15fdb06f71265db2c3d49d8493c382e516cb99b8c9f9cbde36efa4"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} config/" ]
                         }
                     ]
                 }
@@ -120,6 +142,10 @@
                             "type": "archive",
                             "url": "http://download.savannah.nongnu.org/releases/openexr/ilmbase-2.2.0.tar.gz",
                             "sha256": "ecf815b60695555c1fbc73679e84c7c9902f4e8faa6e8000d2f905b8b86cedc7"
+                        },
+                        {
+                            "type": "shell",
+                            "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
                         }
                     ]
                 }
@@ -131,6 +157,10 @@
                     "type": "archive",
                     "url": "http://download.savannah.nongnu.org/releases/openexr/openexr-2.2.0.tar.gz",
                     "sha256": "36a012f6c43213f840ce29a8b182700f6cf6b214bea0d5735594136b44914231"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
                 }
             ]
         },
@@ -212,6 +242,10 @@
                     "type": "archive",
                     "url": "http://download.sourceforge.net/aa-project/aalib-1.4rc5.tar.gz",
                     "sha256": "fbddda9230cf6ee2a4f5706b4b11e2190ae45f5eda1f0409dc4f99b35e0a70ee"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
                 }
             ]
         },
@@ -248,6 +282,10 @@
                     "type": "archive",
                     "url": "http://downloads.sourceforge.net/wvware/libwmf-0.2.8.4.tar.gz",
                     "sha256": "5b345c69220545d003ad52bfd035d5d6f4f075e65204114a9e875e84895a7cf8"
+                },
+                {
+                    "type": "shell",
+                    "commands": [ "cp -p /usr/share/automake-*/config.{sub,guess} ." ]
                 }
             ]
         },
@@ -262,6 +300,18 @@
                     "type": "archive",
                     "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs920/ghostscript-9.20.tar.xz",
                     "sha256": "3c0f3dc5df6f784850fa4ce7dcc3d6c56ef543af1fbaedd1d9f8d9f8b66de0ab"
+                },
+                {
+                    "type": "shell",
+                    "commands": [
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} freetype/builds/unix/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} ijs/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} jpeg/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} libpng/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} lcms2/",
+                                  "cp -p /usr/share/automake-*/config.{sub,guess} tiff/config/",
+                                  "rm -rf libpng/pngread.c"
+                                ]
                 }
             ]
         },
