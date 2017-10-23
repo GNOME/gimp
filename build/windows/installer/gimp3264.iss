@@ -708,6 +708,13 @@ begin
 		TabOrder := 1;
 		Flat := True;
 
+                // the box's height, minus the 2-pixel border, has to be a
+                // multiple of the item height, which has to be even, otherwise
+                // clicking the last visible item may scroll to the next item,
+                // causing it to be toggled.  see bug #786840.
+                MinItemHeight := ScaleY(16) / 2 * 2;
+                Height := (Height - 4) / MinItemHeight * MinItemHeight + 4;
+
 		Associations.AssociationsPage.lblAssocInfo2.Top := Height + Top;
 
 		OnClick := @Associations_OnClick;
