@@ -84,7 +84,7 @@ RemovingOldVersion=Removing previous version of GIMP:
 ;ran uninstaller, but it returned an error, or didn't remove everything
 RemovingOldVersionFailed= El GIMP %1 no es pot instal·lar sobre la versió del GIMP instal·lada actualment, i la desinstal·lació automàtica de la versió antiga ha fallat.%n%nElimineu la versió prèvia del GIMP abans d'instal·lar aquesta versió en %2, o escolliu Instal·lació personalitzada, i seleccioneu una carpeta d'instal·lació diferent.%n%nL'instal·lador es tancarà ara.
 ;couldn't find an uninstaller, or found several uninstallers
-RemovingOldVersionCantUninstall=El GIMP %1 no es pot instal·lar sobre la versió del GIMP instal·lada actualment, i l'instal·lador no pot determinar com eliminar automaticament.%n%nElimineu la versió prèvia del GIMP i qualsevol connector abans d'instal·lar aquesta versió en %2, o escolliu Instal·lació personalitzada, i seleccioneu una carpeta d'instal·lació diferent.%n%nL'instal·lador es tancarà ara.
+RemovingOldVersionCantUninstall=El GIMP %1 no es pot instal·lar sobre la versió del GIMP instal·lada actualment, i l'instal·lador no pot determinar com eliminar automàticament.%n%nElimineu la versió prèvia del GIMP i qualsevol connector abans d'instal·lar aquesta versió en %2, o escolliu Instal·lació personalitzada, i seleccioneu una carpeta d'instal·lació diferent.%n%nL'instal·lador es tancarà ara.
 
 RebootRequiredFirst=La versió prèvia del GIMP s'ha eliminat satisfactòriament, però cal reiniciar Windows abans que l'instal·lador pugui continuar.%n%nDesprés de reiniciar l'ordinador, l'instal·lador continuarà un cop un administrador obri sessió.
 
@@ -94,7 +94,7 @@ ErrorRestartingSetup=S'ha produït un error en reiniciar l'insta·lador. (%1)
 ;displayed while the files are being extracted; note the capitalisation!
 Billboard1=Recordeu: El GIMP és programari lliure.%n%nVisiteu
 ;www.gimp.org (displayed between Billboard1 and Billboard2)
-Billboard2=per actualitzacions gratüites.
+Billboard2=per actualitzacions gratuïtes.
 
 SettingUpAssociations=S'estan configurant les associacions de fitxer...
 SettingUpPyGimp=S'està configurant l'entorn per l'extensió Python del GIMP...
