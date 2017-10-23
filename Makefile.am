@@ -45,6 +45,10 @@ if HAVE_XSLTPROC
 	$(XSLTPROC) -o $(@) $(top_srcdir)/authors.xsl $< || rm -f $(@)
 endif
 
+authors.md: authors.xml authors4gimp-web.xsl
+if HAVE_XSLTPROC
+	$(XSLTPROC) --stringparam today "`date --iso-8601=seconds`" -o $(@) $(top_srcdir)/authors4gimp-web.xsl $< || rm -f $(@)
+endif
 
 EXTRA_DIST = \
 	AUTHORS			\

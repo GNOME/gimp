@@ -12,6 +12,7 @@
 /Makefile
 /Makefile.in
 /aclocal.m4
+/authors.md
 /autom4te.cache
 /compile
 /config.cache
