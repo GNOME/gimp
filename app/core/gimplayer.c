@@ -2189,6 +2189,8 @@ gimp_layer_remove_alpha (GimpLayer   *layer,
                      gimp_drawable_get_format_without_alpha (GIMP_DRAWABLE (layer)));
 
   gimp_context_get_background (context, &background);
+  gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
+                                     &background, &background);
 
   gimp_gegl_apply_flatten (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                            NULL, NULL,
