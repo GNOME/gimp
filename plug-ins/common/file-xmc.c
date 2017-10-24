@@ -857,7 +857,7 @@ load_thumbnail (const gchar *filename,
   fseek (fp, 12, SEEK_SET);
   /* read the number of chunks */
   ntoc = READ32 (fp, error)
-  if (ntoc > (G_MAXINT32 / sizeof (guint32)))
+  if (ntoc > (G_MAXUINT32 / sizeof (guint32)))
     {
       g_set_error (error, 0, 0,
                    "'%s' seems to have an incorrect toc size.",
