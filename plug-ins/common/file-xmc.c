@@ -857,6 +857,13 @@ load_thumbnail (const gchar *filename,
   fseek (fp, 12, SEEK_SET);
   /* read the number of chunks */
   ntoc = READ32 (fp, error)
+  if (ntoc > (G_MAXINT32 / sizeof (guint32)))
+    {
+      g_set_error (error, 0, 0,
+                   "'%s' seems to have an incorrect toc size.",
+                   gimp_filename_to_utf8 (filename));
+      return -1;
+    }
   positions = g_malloc (ntoc * sizeof (guint32));
 
   /* enter list of toc(table of contents) */
