@@ -2,6 +2,7 @@ EXPORTS
 	gimp_add_mask_type_compat_get_type
 	gimp_add_mask_type_get_type
 	gimp_any_to_utf8
+	gimp_base_compat_enum_init
 	gimp_base_init
 	gimp_blend_mode_compat_get_type
 	gimp_blend_mode_get_type
