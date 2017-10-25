@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-09-13 22:15+0000\n"
-"PO-Revision-Date: 2017-09-14 22:16+0200\n"
+"POT-Creation-Date: 2017-10-24 18:56+0000\n"
+"PO-Revision-Date: 2017-10-25 00:41+0200\n"
 "Last-Translator: Albert F. <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1206
@@ -793,6 +793,46 @@ msgstr "Transparència"
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Patró"
+
+#: ../libgimpbase/gimpbaseenums.c:644
+msgctxt "gradient-segment-color"
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:645
+msgctxt "gradient-segment-color"
+msgid "HSV (ccw)"
+msgstr "HSV (antihorari)"
+
+#: ../libgimpbase/gimpbaseenums.c:646
+msgctxt "gradient-segment-color"
+msgid "HSV (cw)"
+msgstr "HSV (horari)"
+
+#: ../libgimpbase/gimpbaseenums.c:678
+msgctxt "gradient-segment-type"
+msgid "Linear"
+msgstr "Lineal"
+
+#: ../libgimpbase/gimpbaseenums.c:679
+msgctxt "gradient-segment-type"
+msgid "Curved"
+msgstr "Corba"
+
+#: ../libgimpbase/gimpbaseenums.c:680
+msgctxt "gradient-segment-type"
+msgid "Sinusoidal"
+msgstr "Sinusoïdal"
+
+#: ../libgimpbase/gimpbaseenums.c:681
+msgctxt "gradient-segment-type"
+msgid "Spherical (inc)"
+msgstr "Esfèric (inc)"
+
+#: ../libgimpbase/gimpbaseenums.c:682
+msgctxt "gradient-segment-type"
+msgid "Spherical (dec)"
+msgstr "Esfèric (dec)"
 
 #: ../libgimpbase/gimpbaseenums.c:720
 msgctxt "gradient-type"
