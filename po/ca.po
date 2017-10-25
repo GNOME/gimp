@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-10-21 15:46+0000\n"
-"PO-Revision-Date: 2017-10-18 13:10+0200\n"
+"POT-Creation-Date: 2017-10-24 23:32+0000\n"
+"PO-Revision-Date: 2017-10-25 01:54+0200\n"
 "Last-Translator: Jordi Mas <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -4248,7 +4248,7 @@ msgstr "Mapa de distància..."
 #: ../app/actions/filters-actions.c:292
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
-msgstr "_Ombra..."
+msgstr "_Ombra caiguda…"
 
 #: ../app/actions/filters-actions.c:297
 msgctxt "filters-action"
@@ -4390,7 +4390,7 @@ msgstr "Difuminació de moviment _lineal..."
 #: ../app/actions/filters-actions.c:432
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr "Difuminació de moviment per _ampliació..."
+msgstr "Difuminació de moviment per ampliació/reducció…"
 
 #: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
@@ -4590,7 +4590,7 @@ msgstr "Mosaic sense jun_tures..."
 #: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Unsharp Mask..."
-msgstr "_Millora la nitidesa..."
+msgstr "_Màscara de desenfoc..."
 
 #: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
@@ -4881,12 +4881,12 @@ msgstr "Redueix"
 
 #: ../app/actions/gradient-editor-actions.c:386
 msgid "Zoom All"
-msgstr "Ajusta"
+msgstr "Ajusta tot"
 
 #: ../app/actions/gradient-editor-actions.c:387
 #: ../app/actions/palette-editor-actions.c:102
 msgid "Zoom all"
-msgstr "Ajusta"
+msgstr "Ajusta tot"
 
 #: ../app/actions/gradient-editor-actions.c:779
 msgid "_Blending Function for Segment"
@@ -6704,7 +6704,7 @@ msgstr "_Redueix"
 
 #: ../app/actions/palette-editor-actions.c:101
 msgid "Zoom _All"
-msgstr "_Ajusta"
+msgstr "_Ajusta tot"
 
 #: ../app/actions/palette-editor-commands.c:70
 msgid "Edit Palette Color"
@@ -8549,7 +8549,7 @@ msgstr "_Visualitza"
 #: ../app/actions/view-actions.c:71
 msgctxt "view-action"
 msgid "_Zoom"
-msgstr "_Ampliació"
+msgstr "_Ampliació/Reducció"
 
 #: ../app/actions/view-actions.c:72
 msgctxt "view-action"
@@ -8609,7 +8609,8 @@ msgstr "Ajusta la imatge a la _finestra"
 #: ../app/actions/view-actions.c:102
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr "Ajusta el factor d'ampliació perquè tota la imatge sigui visible"
+msgstr ""
+"Ajusta el factor d'ampliació/reducció perquè tota la imatge sigui visible"
 
 #: ../app/actions/view-actions.c:107
 msgctxt "view-action"
@@ -8619,27 +8620,28 @@ msgstr "Omp_le a la finestra"
 #: ../app/actions/view-actions.c:108
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
-msgstr "Ajusta l'ampliació perquè s'utilitzi tota la finestra"
+msgstr "Ajusta l'ampliació/reducció perquè s'utilitzi tota la finestra"
 
 #: ../app/actions/view-actions.c:113
 msgctxt "view-action"
 msgid "Zoom to _Selection"
-msgstr "Amplia a la _selecció"
+msgstr "Amplia/redueix a la _selecció"
 
 #: ../app/actions/view-actions.c:114
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
-msgstr "Ajusta l'ampliació de manera que la selecció ompli la finestra"
+msgstr ""
+"Ajusta l'ampliació/reducció de manera que la selecció ompli la finestra"
 
 #: ../app/actions/view-actions.c:119
 msgctxt "view-action"
 msgid "Re_vert Zoom"
-msgstr "Re_stableix l'ampliació"
+msgstr "Re_stableix l'ampliació/reducció"
 
 #: ../app/actions/view-actions.c:120
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
-msgstr "Restaura l'estat d'ampliació anterior"
+msgstr "Restaura l'estat d'ampliació/reducció anterior"
 
 #: ../app/actions/view-actions.c:125
 msgctxt "view-action"
@@ -8914,7 +8916,7 @@ msgstr "Commuta la vista en pantalla completa"
 #: ../app/actions/view-actions.c:315
 msgctxt "view-action"
 msgid "Set zoom factor"
-msgstr "Defineix un factor d'ampliació"
+msgstr "Defineix un factor d'ampliació/reducció"
 
 #: ../app/actions/view-actions.c:320
 msgctxt "view-action"
@@ -9014,7 +9016,7 @@ msgstr "_1:1  (100%)"
 #: ../app/actions/view-actions.c:416 ../app/actions/view-actions.c:422
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
-msgstr "Ampliació 1:1"
+msgstr "Ampliació/Reducció 1:1"
 
 #: ../app/actions/view-actions.c:427
 msgctxt "view-zoom-action"
@@ -9064,7 +9066,7 @@ msgstr "Al_tres..."
 #: ../app/actions/view-actions.c:452
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
-msgstr "Defineix un factor d'ampliació personalitzat"
+msgstr "Defineix un factor d'ampliació/reducció personalitzat"
 
 #: ../app/actions/view-actions.c:460
 msgctxt "view-action"
@@ -9331,11 +9333,11 @@ msgstr "Desplaça una pàgina cap abaix"
 #: ../app/actions/view-actions.c:903
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
-msgstr "Resta_bleix l'ampliació (%d%%)"
+msgstr "Resta_bleix l'ampliació/reducció (%d%%)"
 
 #: ../app/actions/view-actions.c:911
 msgid "Re_vert Zoom"
-msgstr "Re_stableix l'ampliació"
+msgstr "Re_stableix l'ampliació/reducció"
 
 #: ../app/actions/view-actions.c:1098
 #, c-format
@@ -9345,7 +9347,7 @@ msgstr "Alt_res (%s)..."
 #: ../app/actions/view-actions.c:1107
 #, c-format
 msgid "_Zoom (%s)"
-msgstr "_Ampliació (%s)"
+msgstr "_Ampliació/Reducció (%s)"
 
 #. please preserve the trailing space
 #: ../app/actions/view-actions.c:1128
@@ -12847,12 +12849,12 @@ msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Afegeix el canal alfa"
 
-#: ../app/core/gimplayer.c:2200
+#: ../app/core/gimplayer.c:2202
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Suprimeix el canal alfa"
 
-#: ../app/core/gimplayer.c:2221
+#: ../app/core/gimplayer.c:2223
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Mida de la imatge igual a la de la capa"
@@ -15369,11 +15371,11 @@ msgstr "Velocit_at del caminet de formigues:"
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2624
 msgid "Zoom & Resize Behavior"
-msgstr "Opcions d'ampliació i redimensionament"
+msgstr "Opcions d'ampliació/reducció i redimensionament"
 
 #: ../app/dialogs/preferences-dialog.c:2628
 msgid "Resize window on _zoom"
-msgstr "Redimensiona la finestra quan s'_ampliï la imatge"
+msgstr "Redimensiona la finestra quan s'_ampliï/redueixi la imatge"
 
 #: ../app/dialogs/preferences-dialog.c:2631
 msgid "Resize window on image _size change"
@@ -15385,7 +15387,7 @@ msgstr "Mostra la imatge sencera"
 
 #: ../app/dialogs/preferences-dialog.c:2639
 msgid "Initial zoom _ratio:"
-msgstr "_Factor d'ampliació inicial:"
+msgstr "_Factor d'ampliació/reducció inicial:"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2643
@@ -15447,11 +15449,11 @@ msgstr "Format predeterminat"
 
 #: ../app/dialogs/preferences-dialog.c:2724
 msgid "Show zoom percentage"
-msgstr "Mostra el percentatge d'ampliació"
+msgstr "Mostra el percentatge d'ampliació/reducció"
 
 #: ../app/dialogs/preferences-dialog.c:2725
 msgid "Show zoom ratio"
-msgstr "Mostra el factor d'ampliació"
+msgstr "Mostra el factor d'ampliació/reducció"
 
 #: ../app/dialogs/preferences-dialog.c:2726
 msgid "Show image size"
@@ -16124,7 +16126,7 @@ msgstr "Accedeix al menú imatge"
 
 #: ../app/display/gimpdisplayshell.c:667
 msgid "Zoom image when window size changes"
-msgstr "Amplia la imatge quan canvia la mida de la finestra"
+msgstr "Amplia/Redueix la imatge quan canvia la mida de la finestra"
 
 #: ../app/display/gimpdisplayshell.c:696
 msgid "Toggle Quick Mask"
@@ -16302,19 +16304,19 @@ msgstr "graus"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:115
 msgid "Zoom Ratio"
-msgstr "Factor d'ampliació"
+msgstr "Factor d'ampliació/reducció"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:117
 msgid "Select Zoom Ratio"
-msgstr "Selecciona el factor d'ampliació"
+msgstr "Selecciona el factor d'ampliació/reducció"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:162
 msgid "Zoom ratio:"
-msgstr "Factor d'ampliació:"
+msgstr "Factor d'ampliació/reducció:"
 
 #: ../app/display/gimpdisplayshell-scale-dialog.c:189
 msgid "Zoom:"
-msgstr "Ampliació:"
+msgstr "Ampliació/reducció:"
 
 #: ../app/display/gimpdisplayshell-title.c:290
 msgid "(modified)"
@@ -17569,11 +17571,11 @@ msgstr "Mida del pinzell"
 
 #: ../app/paint/gimppaintoptions.c:198
 msgid "Brush Zoom"
-msgstr "Amplia el pinzell"
+msgstr "Amplia/redueix el pinzell"
 
 #: ../app/paint/gimppaintoptions.c:199
 msgid "Link brush size with canvas zoom"
-msgstr "Enllaça la mida del pinzell amb l'ampliació del llenç"
+msgstr "Enllaça la mida del pinzell amb l'ampliació/reducció del llenç"
 
 #: ../app/paint/gimppaintoptions.c:205
 msgid "Aspect Ratio"
@@ -18875,11 +18877,11 @@ msgstr "Rang de destinació"
 msgid "Gray Handling"
 msgstr "Gestió del gris"
 
-#: ../app/propgui/gimppropgui-color-to-alpha.c:117
+#: ../app/propgui/gimppropgui-color-to-alpha.c:179
 msgid "Pick farthest full-transparency color"
 msgstr "Tria el color més completament transparent"
 
-#: ../app/propgui/gimppropgui-color-to-alpha.c:139
+#: ../app/propgui/gimppropgui-color-to-alpha.c:201
 msgid "Pick nearest full-opacity color"
 msgstr "Tria el color d'opacitat més proper"
 
@@ -20542,7 +20544,8 @@ msgstr "Redimensiona la finestra automàticament"
 #: ../app/tools/gimpmagnifyoptions.c:84
 msgid "Resize image window to accommodate new zoom level"
 msgstr ""
-"Redimensiona la finestra d'imatge per a veure bé el nivell d'ampliació nou"
+"Redimensiona la finestra d'imatge per a veure bé el nivell d'ampliació/"
+"reducció nou"
 
 #: ../app/tools/gimpmagnifyoptions.c:91 ../app/tools/gimptransformoptions.c:116
 #: ../app/widgets/gimpdynamicseditor.c:163
@@ -20556,15 +20559,15 @@ msgstr "Direcció de l'ampliació"
 
 #: ../app/tools/gimpmagnifytool.c:93
 msgid "Zoom"
-msgstr "Ampliació"
+msgstr "Ampliació/Reducció"
 
 #: ../app/tools/gimpmagnifytool.c:94
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr "Eina Ampliació: ajusta el nivell d'ampliació"
+msgstr "Eina Lupa: ajusta el nivell d'ampliació/reducció"
 
 #: ../app/tools/gimpmagnifytool.c:95
 msgid "_Zoom"
-msgstr "_Ampliació"
+msgstr "_Ampliació/Reducció"
 
 #: ../app/tools/gimpmeasureoptions.c:69
 msgid "Open a floating dialog to view details about measurements"
@@ -22787,7 +22790,7 @@ msgstr "_Antialiàsing"
 #: ../app/widgets/gimpgradienteditor.c:754
 #, c-format
 msgid "Zoom factor: %d:1"
-msgstr "Factor d'ampliació: %d:1"
+msgstr "Factor d'ampliació/reducció: %d:1"
 
 #: ../app/widgets/gimpgradienteditor.c:757
 #, c-format
