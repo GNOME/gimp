@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2017-10-09 16:35+0000\n"
-"PO-Revision-Date: 2017-10-07 23:31+0200\n"
+"POT-Creation-Date: 2017-10-24 23:32+0000\n"
+"PO-Revision-Date: 2017-10-25 01:39+0200\n"
 "Last-Translator: Konfrare Albert <lakonfrariadelavila@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -366,7 +366,7 @@ msgstr "Reproducció de l'animació:"
 #: ../plug-ins/common/animation-play.c:880
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:656
 msgid "Zoom"
-msgstr "Ampliació"
+msgstr "Ampliació/Reducció"
 
 #. list is given in "fps" - frames per second
 #: ../plug-ins/common/animation-play.c:890
@@ -459,7 +459,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:241
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1792 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1804 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/file-tiff/file-tiff-load.c:924
 #: ../plug-ins/file-webp/file-webp-load.c:149
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
@@ -571,7 +571,7 @@ msgstr "S'està afegint un tauler d'escacs"
 msgid "Checkerboard"
 msgstr "Tauler d'escacs"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1163
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1170
 #: ../plug-ins/gimpressionist/sizemap.c:509
 msgid "_Size:"
 msgstr "_Mida:"
@@ -889,7 +889,7 @@ msgstr "Valor inicial:"
 
 #: ../plug-ins/common/cml-explorer.c:1351
 msgid "Zoom scale:"
-msgstr "Escala de l'ampliació:"
+msgstr "Escala d’ampliació/reducció:"
 
 #: ../plug-ins/common/cml-explorer.c:1360
 msgid "Start offset:"
@@ -1048,7 +1048,7 @@ msgstr "Desa els paràmetres de l'Explorador CML"
 #: ../plug-ins/common/file-pdf-save.c:468 ../plug-ins/common/file-png.c:1561
 #: ../plug-ins/common/file-raw-data.c:975
 #: ../plug-ins/common/file-raw-data.c:1003 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1205 ../plug-ins/common/file-xmc.c:1477
+#: ../plug-ins/common/file-tga.c:1205 ../plug-ins/common/file-xmc.c:1484
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1082
@@ -1564,11 +1564,11 @@ msgstr "Escapça l'espai inútil dels marges i del mig"
 
 #: ../plug-ins/common/crop-zealous.c:74
 msgid "_Zealous Crop"
-msgstr "Escapçat _Zealous"
+msgstr "Tall intel·ligent"
 
 #: ../plug-ins/common/crop-zealous.c:123
 msgid "Zealous cropping"
-msgstr "S'està escapçant en mode Zealous"
+msgstr "S'està escapçant en mode Tall intel·ligent"
 
 #: ../plug-ins/common/crop-zealous.c:255
 msgid "Nothing to crop."
@@ -3096,7 +3096,10 @@ msgstr "Format de Document Portable"
 msgid "PDF document '%1$s' has a single page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
 msgstr[0] ""
+"El document PDF '%1$s' té una sola pàgina. La pàgina %2$d està fora de "
+"l’abast."
 msgstr[1] ""
+"El document PDF '%1$s' té %3$d pàgines. La pàgina %2$d està fora de l’abast."
 
 #: ../plug-ins/common/file-pdf-load.c:679
 #: ../plug-ins/common/file-pdf-load.c:749
@@ -4035,7 +4038,7 @@ msgstr "Comentari:"
 msgid "_Write hot spot values"
 msgstr "Escriu els _valors del punt calent"
 
-#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1075
+#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1082
 msgid "Hot spot _X:"
 msgstr "Punt calent _X:"
 
@@ -4057,7 +4060,7 @@ msgid "_Mask file extension:"
 msgstr "Extensió del fitxer de _màscara:"
 
 #: ../plug-ins/common/file-xmc.c:335 ../plug-ins/common/file-xmc.c:373
-#: ../plug-ins/common/file-xmc.c:1042
+#: ../plug-ins/common/file-xmc.c:1049
 msgid "X11 Mouse Cursor"
 msgstr "Cursor de ratolí X11"
 
@@ -4086,22 +4089,22 @@ msgstr "L'amplada del marc %d de «%s» és massa gran pel cursor X."
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "L'alçada del marc %d de «%s» és massa gran pel cursor X."
 
-#: ../plug-ins/common/file-xmc.c:894
+#: ../plug-ins/common/file-xmc.c:901
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "Manca un bocí de la imatge a «%s». "
 
-#: ../plug-ins/common/file-xmc.c:934
+#: ../plug-ins/common/file-xmc.c:941
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "L'amplada de «%s» és massa gran pel cursor X."
 
-#: ../plug-ins/common/file-xmc.c:942
+#: ../plug-ins/common/file-xmc.c:949
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "L'alçada de «%s» és massa gran pel cursor X."
 
-#: ../plug-ins/common/file-xmc.c:1005
+#: ../plug-ins/common/file-xmc.c:1012
 #, c-format
 msgid "A read error occurred."
 msgstr "S'ha produït un error de lectura."
@@ -4109,27 +4112,27 @@ msgstr "S'ha produït un error de lectura."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1048
+#: ../plug-ins/common/file-xmc.c:1055
 msgid "XMC Options"
 msgstr "Opcions de l'XMC"
 
-#: ../plug-ins/common/file-xmc.c:1083
+#: ../plug-ins/common/file-xmc.c:1090
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Introduïu el valor de la coordenada X del punt calent. L'origen és a la "
 "cantonada de dalt a l'esquerra."
 
-#: ../plug-ins/common/file-xmc.c:1106
+#: ../plug-ins/common/file-xmc.c:1113
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Introduïu el valor de la coordenada Y del punt calent. L'origen és a la "
 "cantonada de dalt a l'esquerra."
 
-#: ../plug-ins/common/file-xmc.c:1115
+#: ../plug-ins/common/file-xmc.c:1122
 msgid "_Auto-Crop all frames."
 msgstr "Esc_apça automàticament tots els marcs."
 
-#: ../plug-ins/common/file-xmc.c:1128
+#: ../plug-ins/common/file-xmc.c:1135
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4142,7 +4145,7 @@ msgstr ""
 "Desmarqueu aquesta opció si penseu editar el cursor exportat amb alguna "
 "altra aplicació."
 
-#: ../plug-ins/common/file-xmc.c:1151
+#: ../plug-ins/common/file-xmc.c:1158
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4161,61 +4164,61 @@ msgstr ""
 "de l'animació i quina seqüència s'utilitza en cada cas basant-se amb el "
 "valor de «gtk-cursor-theme-size»."
 
-#: ../plug-ins/common/file-xmc.c:1168
+#: ../plug-ins/common/file-xmc.c:1175
 msgid "_Use this value only for a frame which size is not specified."
 msgstr "_Utilitza aquest valor només quan no s'especifiqui la mida del marc."
 
-#: ../plug-ins/common/file-xmc.c:1171
+#: ../plug-ins/common/file-xmc.c:1178
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "_Reemplaça la mida de tots els marcs encara que estigui especificada."
 
-#: ../plug-ins/common/file-xmc.c:1187
+#: ../plug-ins/common/file-xmc.c:1194
 msgid "_Delay:"
 msgstr "Retar_d:"
 
-#: ../plug-ins/common/file-xmc.c:1192
+#: ../plug-ins/common/file-xmc.c:1199
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr ""
 "Introduïu el temps en mil·lisegons durant el qual es renderitzarà cada marc."
 
-#: ../plug-ins/common/file-xmc.c:1220
+#: ../plug-ins/common/file-xmc.c:1227
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr ""
 "_Utilitza aquest valor pel fotograma en el qual no s'ha especificat el temps "
 "de retard."
 
-#: ../plug-ins/common/file-xmc.c:1223
+#: ../plug-ins/common/file-xmc.c:1230
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr ""
 "_Substitueix el retard de tots els fotogrames fins i tot si està especificat."
 
-#: ../plug-ins/common/file-xmc.c:1248
+#: ../plug-ins/common/file-xmc.c:1255
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "S'ha eliminat el fragment de la informació del copyright que superava els "
 "65535 caràcters."
 
-#: ../plug-ins/common/file-xmc.c:1258
+#: ../plug-ins/common/file-xmc.c:1265
 msgid "Enter copyright information."
 msgstr "Introduïu la informació del copyright."
 
-#: ../plug-ins/common/file-xmc.c:1260
+#: ../plug-ins/common/file-xmc.c:1267
 msgid "_Copyright:"
 msgstr "_Copyright:"
 
-#: ../plug-ins/common/file-xmc.c:1276
+#: ../plug-ins/common/file-xmc.c:1283
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "S'ha eliminat el fragment de la informació de la llicència que superava els "
 "65535 caràcters."
 
-#: ../plug-ins/common/file-xmc.c:1286
+#: ../plug-ins/common/file-xmc.c:1293
 msgid "Enter license information."
 msgstr "Introduïu la informació de la llicència."
 
-#: ../plug-ins/common/file-xmc.c:1288
+#: ../plug-ins/common/file-xmc.c:1295
 msgid "_License:"
 msgstr "_Llicència:"
 
@@ -4224,15 +4227,15 @@ msgstr "_Llicència:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1295
+#: ../plug-ins/common/file-xmc.c:1302
 msgid "_Other:"
 msgstr "Al_tres:"
 
-#: ../plug-ins/common/file-xmc.c:1330
+#: ../plug-ins/common/file-xmc.c:1337
 msgid "Enter other comment if you want."
 msgstr "Introduïu comentaris addicionals si voleu. "
 
-#: ../plug-ins/common/file-xmc.c:1382
+#: ../plug-ins/common/file-xmc.c:1389
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "El comentari està limitat a %d caràcters."
@@ -4241,29 +4244,29 @@ msgstr "El comentari està limitat a %d caràcters."
 #  init the progress meter
 #  Set up progress display
 #. Begin displaying export progress
-#: ../plug-ins/common/file-xmc.c:1466
+#: ../plug-ins/common/file-xmc.c:1473
 #: ../plug-ins/file-webp/file-webp-save.c:173
 #: ../plug-ins/file-webp/file-webp-save.c:506
 #, c-format
 msgid "Saving '%s'"
 msgstr "S'està desant «%s»"
 
-#: ../plug-ins/common/file-xmc.c:1532
+#: ../plug-ins/common/file-xmc.c:1539
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "El marc «%s» és massa ample. Reduïu-lo en més de %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1541
+#: ../plug-ins/common/file-xmc.c:1548
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "El marc «%s» és massa alt. Reduïu-lo en més de %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1550
+#: ../plug-ins/common/file-xmc.c:1557
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "L'amplada i/o l'alçada del marc «%s» és zero."
 
-#: ../plug-ins/common/file-xmc.c:1589
+#: ../plug-ins/common/file-xmc.c:1596
 #, c-format
 msgid ""
 "Cannot export the cursor because the hot spot is not on frame '%s'.\n"
@@ -4274,7 +4277,7 @@ msgstr ""
 "Intenteu canviar la posició del punt calent, la geometria de la capa o "
 "exporteu la capa sense l'escapçat automàtic."
 
-#: ../plug-ins/common/file-xmc.c:1752
+#: ../plug-ins/common/file-xmc.c:1759
 #, c-format
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
@@ -4285,7 +4288,7 @@ msgstr ""
 "l'alçada o l'amplada en %ipx .\n"
 "Això pot fer que es vegi desordenat en algunes pantalles."
 
-#: ../plug-ins/common/file-xmc.c:1759
+#: ../plug-ins/common/file-xmc.c:1766
 msgid ""
 "Your cursor was successfully exported but it contains one or more frames "
 "whose nominal size is not supported by GNOME settings.\n"
@@ -4298,7 +4301,7 @@ msgstr ""
 "marcs...» al diàleg d'exportació, o el cursor no pot aparèixer en la "
 "configuració del GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1996
+#: ../plug-ins/common/file-xmc.c:2003
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -4308,7 +4311,7 @@ msgstr ""
 "S'ha suprimit la cadena que sobrepassa."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2199
+#: ../plug-ins/common/file-xmc.c:2206
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -6386,20 +6389,17 @@ msgid "Wavelet-Decompose"
 msgstr "Descomposició de l'oneta"
 
 #: ../plug-ins/common/wavelet-decompose.c:182
-#, fuzzy
-#| msgid "Decomposing"
 msgid "Decomposition"
-msgstr "S'està descomponent"
+msgstr "Descomposició"
 
 #: ../plug-ins/common/wavelet-decompose.c:208
-#, fuzzy, c-format
-#| msgid "Scale X:"
+#, c-format
 msgid "Scale %d"
-msgstr "Escala X:"
+msgstr "Escala %d"
 
 #: ../plug-ins/common/wavelet-decompose.c:232
 msgid "Residual"
-msgstr ""
+msgstr "Residual"
 
 #: ../plug-ins/common/wavelet-decompose.c:339
 msgid "Scales:"
@@ -6407,15 +6407,13 @@ msgstr "Escales:"
 
 #. create group layer
 #: ../plug-ins/common/wavelet-decompose.c:351
-#, fuzzy
-#| msgid "Image not suitable for this decomposition"
 msgid "Create a layer group to store the decomposition"
-msgstr "La imatge no és adequada per a aquesta descomposició"
+msgstr "Fes un grup de capes per emmagatzemar la descomposició"
 
 #. create layer masks
 #: ../plug-ins/common/wavelet-decompose.c:363
 msgid "Add a layer mask to each scales layers"
-msgstr ""
+msgstr "Afegeix una màscara de capa a cada capa d'escala"
 
 #: ../plug-ins/common/web-browser.c:141
 msgid "The operating system is out of memory or resources."
@@ -7066,21 +7064,21 @@ msgstr "L'amplada de la capa no és vàlida o no és compatible: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "L'amplada de la capa no és vàlida o no és compatible: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1314 ../plug-ins/file-psd/psd-load.c:1767
+#: ../plug-ins/file-psd/psd-load.c:1315 ../plug-ins/file-psd/psd-load.c:1779
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Mode de compressió no compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1863
+#: ../plug-ins/file-psd/psd-load.c:1875
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2042
+#: ../plug-ins/file-psd/psd-load.c:2054
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "La mida del canal no és vàlida o no és compatible"
 
-#: ../plug-ins/file-psd/psd-load.c:2111
+#: ../plug-ins/file-psd/psd-load.c:2123
 #, c-format
 msgid "Failed to decompress data"
 msgstr "No s'han pogut descomprimir les dades"
@@ -7759,7 +7757,7 @@ msgstr "Càmer_a"
 
 #: ../plug-ins/flame/flame.c:1236
 msgid "_Zoom:"
-msgstr "A_mpliació:"
+msgstr "_Ampliació/Reducció:"
 
 #: ../plug-ins/flame/flame.c:1250
 #: ../plug-ins/gradient-flare/gradient-flare.c:2724
@@ -8654,7 +8652,7 @@ msgstr "Seleccioneu-lo si la imatge resultant hauria de semblar-se a un mosaic"
 
 #: ../plug-ins/gimpressionist/general.c:221
 msgid "Drop shadow"
-msgstr "Ombra"
+msgstr "Ombra caiguda"
 
 #: ../plug-ins/gimpressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
@@ -8674,7 +8672,7 @@ msgstr "Foscor de l'ombra:"
 
 #: ../plug-ins/gimpressionist/general.c:252
 msgid "How much to \"darken\" the drop shadow"
-msgstr "Quantitat de «foscor» de l'ombra"
+msgstr "Quantitat de «foscor» de l’ombra caiguda"
 
 #: ../plug-ins/gimpressionist/general.c:257
 msgid "Shadow depth:"
@@ -8684,8 +8682,8 @@ msgstr "Profunditat de l'ombra:"
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
-"La profunditat de l'ombrejat, p. ex. quina distància s'hauria d'allunyar de "
-"l'objecte"
+"La profunditat de l'ombra caiguda, p. ex. quina distància s'hauria "
+"d'allunyar de l'objecte"
 
 #: ../plug-ins/gimpressionist/general.c:266
 msgid "Shadow blur:"
@@ -8693,7 +8691,7 @@ msgstr "Difumina l'ombra:"
 
 #: ../plug-ins/gimpressionist/general.c:270
 msgid "How much to blur the drop shadow"
-msgstr "Quantitat del difuminat de l'ombra"
+msgstr "Quantitat del difuminat de l'ombra caiguda"
 
 #: ../plug-ins/gimpressionist/general.c:275
 msgid "Deviation threshold:"
@@ -10866,7 +10864,7 @@ msgstr "Redueix"
 
 #: ../plug-ins/imagemap/imap_menu.c:199
 msgid "_Zoom To"
-msgstr "_Amplia a"
+msgstr "_Amplia/redueix a"
 
 #: ../plug-ins/imagemap/imap_menu.c:201
 msgid "_Mapping"
@@ -10906,7 +10904,7 @@ msgstr "_Contingut"
 
 #: ../plug-ins/imagemap/imap_menu.c:217
 msgid "_Zoom"
-msgstr "_Ampliació"
+msgstr "_Ampliació/Reducció"
 
 #: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Area List"
@@ -11713,16 +11711,12 @@ msgid "Unrated"
 msgstr "Sense velocitat"
 
 #: ../plug-ins/metadata/metadata-editor.c:5615
-#, fuzzy
-#| msgid "Import metadata"
 msgid "Import Metadata File"
-msgstr "Importa les metadades"
+msgstr "Importa el fitxer de metadades"
 
 #: ../plug-ins/metadata/metadata-editor.c:5650
-#, fuzzy
-#| msgid "Export metadata"
 msgid "Export Metadata File"
-msgstr "Exporta metadades"
+msgstr "Exporta el fitxer de metadades"
 
 #: ../plug-ins/metadata/metadata-editor.c:5654
 msgid "_Export"
