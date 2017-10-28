@@ -1134,7 +1134,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
-msgstr "El nom del fitxer introduït no és un nom adequat per a un fitxer"
+msgstr "El nom del fitxer introduït no és un nom adequat per a un fitxer."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:237
 msgid ""
@@ -1142,7 +1142,7 @@ msgid ""
 "not appear in filenames."
 msgstr ""
 "Tots els caràcters en el nom són també espais blancs o caràcters que no "
-"poden aparèixer en els noms dels fitxers"
+"poden aparèixer en els noms dels fitxers."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
@@ -1567,7 +1567,7 @@ msgstr "_Esfera..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
-msgstr "Difuminat per a rajoles…"
+msgstr "_Difuminat per a rajoles..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
 msgid "Blur the edges of an image so the result tiles seamlessly"
@@ -1607,7 +1607,7 @@ msgstr "Opacitat de la màscara"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:95
 msgid "_Waves..."
-msgstr "Ones…"
+msgstr "_Ones..."
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:96
 msgid ""
@@ -1631,7 +1631,7 @@ msgstr "Inverteix la direcció"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:389
 msgid "_Weave..."
-msgstr "Teixit…"
+msgstr "_Teixit..."
 
 #: ../plug-ins/script-fu/scripts/weave.scm:390
 msgid ""

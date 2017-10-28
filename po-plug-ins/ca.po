@@ -951,7 +951,7 @@ msgstr "Canal d'origen del fitxer:"
 
 #: ../plug-ins/common/cml-explorer.c:1516
 msgid "_Misc Ops."
-msgstr "_Opcions diverses"
+msgstr "_Opcions diverses."
 
 #: ../plug-ins/common/cml-explorer.c:1575
 msgid "Function type:"
@@ -2387,8 +2387,8 @@ msgstr "Compressió «%s»"
 #: ../plug-ins/common/file-compressor.c:481
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr ""
-"Es desconeix l'extensió del fitxer, s'intentarà llegir el fitxer amb file "
-"magic."
+"Es desconeix l'extensió del fitxer, s'intentarà llegir el fitxer intentant "
+"detectar-ne el tipus."
 
 #: ../plug-ins/common/file-desktop-link.c:83
 msgid "Desktop Link"
@@ -8803,7 +8803,7 @@ msgstr "Adaptable"
 #: ../plug-ins/gimpressionist/orientation.c:184
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
-"La direcció que coincideix amb la imatge original es selecciona la més "
+"La direcció que coincideix amb la imatge original se selecciona la més "
 "propera"
 
 #: ../plug-ins/gimpressionist/orientation.c:191
@@ -9227,7 +9227,7 @@ msgstr "Opcions del GIF animat"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:1
 msgid "_Interlacing (Adam7)"
-msgstr "_Entrallaçat (Adam7)"
+msgstr "_Entrellaçat (Adam7)"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:2
 msgid "Save _background color"
@@ -12171,7 +12171,7 @@ msgstr "No s'ha capturat cap dada"
 
 #: ../plug-ins/screenshot/screenshot-x11.c:95
 msgid "Error selecting the window"
-msgstr "S'ha produït un error quan es seleccionava la finestra"
+msgstr "S'ha produït un error quan se seleccionava la finestra"
 
 #: ../plug-ins/screenshot/screenshot-x11.c:412
 msgid "Importing screenshot"

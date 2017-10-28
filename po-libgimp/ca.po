@@ -1192,7 +1192,7 @@ msgstr "Executa amb els últims valors"
 #: ../libgimpbase/gimpbaseenums.c:1592
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr "Composit"
+msgstr "Composat"
 
 #: ../libgimpbase/gimpbaseenums.c:1593
 msgctxt "select-criterion"
