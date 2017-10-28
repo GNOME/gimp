@@ -1119,6 +1119,9 @@ gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
                               statusbar->temp_context_id,
                               icon_name, format, args,
                               /*  move_to_front =  */ TRUE);
+
+  if (severity >= GIMP_MESSAGE_WARNING)
+    gimp_widget_blink (statusbar->label);
 }
 
 void
