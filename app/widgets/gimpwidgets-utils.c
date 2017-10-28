@@ -1238,13 +1238,78 @@ gimp_pango_layout_set_weight (PangoLayout *layout,
   pango_attr_list_unref (attrs);
 }
 
+static gboolean
+gimp_highlight_widget_expose (GtkWidget      *widget,
+                              GdkEventExpose *event,
+                              gpointer        data)
+{
+  /* this code is a modified version of gtk+'s gtk_drag_highlight_expose(),
+   * changing the highlight color from black to the widget's text color, which
+   * improves its visibility when using a dark theme.
+   */
+
+  gint x, y, width, height;
+
+  if (gtk_widget_is_drawable (widget))
+    {
+      GdkWindow      *window;
+      GtkStyle       *style;
+      const GdkColor *color;
+      cairo_t        *cr;
+
+      window = gtk_widget_get_window (widget);
+      style  = gtk_widget_get_style (widget);
+
+      if (!gtk_widget_get_has_window (widget))
+        {
+          GtkAllocation allocation;
+
+          gtk_widget_get_allocation (widget, &allocation);
+
+          x = allocation.x;
+          y = allocation.y;
+          width = allocation.width;
+          height = allocation.height;
+        }
+      else
+        {
+          x = 0;
+          y = 0;
+          width = gdk_window_get_width (window);
+          height = gdk_window_get_height (window);
+        }
+
+      gtk_paint_shadow (style, window,
+                        GTK_STATE_NORMAL, GTK_SHADOW_OUT,
+                        &event->area, widget, "dnd",
+                        x, y, width, height);
+
+      color = &style->text[GTK_STATE_NORMAL];
+
+      cr = gdk_cairo_create (gtk_widget_get_window (widget));
+      cairo_set_source_rgb (cr,
+                            (gdouble) color->red   / 0xffff,
+                            (gdouble) color->green / 0xffff,
+                            (gdouble) color->blue  / 0xffff);
+      cairo_set_line_width (cr, 1.0);
+      cairo_rectangle (cr,
+                       x + 0.5, y + 0.5,
+                       width - 1, height - 1);
+      cairo_stroke (cr);
+      cairo_destroy (cr);
+    }
+
+  return FALSE;
+}
+
 /**
  * gimp_highlight_widget:
  * @widget:
  * @highlight:
  *
- * Calls gtk_drag_highlight() on @widget if @highlight is %TRUE,
- * calls gtk_drag_unhighlight() otherwise.
+ * Turns highlighting for @widget on or off according to
+ * @highlight, in a similar fashion to gtk_drag_higlight()
+ * and gtk_drag_unhiglight().
  **/
 void
 gimp_highlight_widget (GtkWidget *widget,
@@ -1253,9 +1318,19 @@ gimp_highlight_widget (GtkWidget *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (highlight)
-    gtk_drag_highlight (widget);
+    {
+      g_signal_connect_after (widget, "expose-event",
+                              G_CALLBACK (gimp_highlight_widget_expose),
+                              NULL);
+    }
   else
-    gtk_drag_unhighlight (widget);
+    {
+      g_signal_handlers_disconnect_by_func (widget,
+                                            gimp_highlight_widget_expose,
+                                            NULL);
+    }
+
+  gtk_widget_queue_draw (widget);
 }
 
 /**
