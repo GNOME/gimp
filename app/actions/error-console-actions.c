@@ -24,6 +24,10 @@
 
 #include "actions-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
+
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimphelp-ids.h"
@@ -50,7 +54,11 @@ static const GimpActionEntry error_console_actions[] =
     NC_("error-console-action", "Select _All"), "",
     NC_("error-console-action", "Select all error messages"),
     G_CALLBACK (error_console_select_all_cmd_callback),
-    GIMP_HELP_ERRORS_SELECT_ALL }
+    GIMP_HELP_ERRORS_SELECT_ALL },
+
+  { "error-console-highlight", NULL,
+    NC_("error-console-action", "_Highlight"), NULL, NULL, NULL,
+    GIMP_HELP_ERRORS_HIGHLIGHT }
 };
 
 static const GimpEnumActionEntry error_console_save_actions[] =
@@ -68,6 +76,30 @@ static const GimpEnumActionEntry error_console_save_actions[] =
     GIMP_HELP_ERRORS_SAVE }
 };
 
+static const GimpToggleActionEntry error_console_highlight_actions[] =
+{
+  { "error-console-highlight-error", NULL,
+    NC_("error-console-action", "_Errors"), NULL,
+    NC_("error-console-action", "Highlight error console on errors"),
+    G_CALLBACK (error_console_highlight_error_cmd_callback),
+    FALSE,
+    GIMP_HELP_ERRORS_HIGHLIGHT },
+
+  { "error-console-highlight-warning", NULL,
+    NC_("error-console-action", "_Warnings"), NULL,
+    NC_("error-console-action", "Highlight error console on warnings"),
+    G_CALLBACK (error_console_highlight_warning_cmd_callback),
+    FALSE,
+    GIMP_HELP_ERRORS_HIGHLIGHT },
+
+  { "error-console-highlight-info", NULL,
+    NC_("error-console-action", "_Messages"), NULL,
+    NC_("error-console-action", "Highlight error console on messages"),
+    G_CALLBACK (error_console_highlight_info_cmd_callback),
+    FALSE,
+    GIMP_HELP_ERRORS_HIGHLIGHT }
+};
+
 
 void
 error_console_actions_setup (GimpActionGroup *group)
@@ -80,6 +112,10 @@ error_console_actions_setup (GimpActionGroup *group)
                                       error_console_save_actions,
                                       G_N_ELEMENTS (error_console_save_actions),
                                       G_CALLBACK (error_console_save_cmd_callback));
+
+  gimp_action_group_add_toggle_actions (group, "error-console-action",
+                                        error_console_highlight_actions,
+                                        G_N_ELEMENTS (error_console_highlight_actions));
 }
 
 void
@@ -87,11 +123,14 @@ error_console_actions_update (GimpActionGroup *group,
                               gpointer         data)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  GimpGuiConfig    *config  = GIMP_GUI_CONFIG (console->gimp->config);
   gboolean          selection;
 
   selection = gtk_text_buffer_get_selection_bounds (console->text_buffer,
                                                     NULL, NULL);
 
+#define SET_ACTIVE(action,condition)                                           \
+        gimp_action_group_set_action_active (group, action, (condition) != 0)
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
@@ -99,6 +138,20 @@ error_console_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("error-console-select-all",     TRUE);
   SET_SENSITIVE ("error-console-save-all",       TRUE);
   SET_SENSITIVE ("error-console-save-selection", selection);
+  SET_SENSITIVE ("error-console-highlight",      TRUE);
 
+  SET_SENSITIVE ("error-console-highlight-error", TRUE);
+  SET_ACTIVE ("error-console-highlight-error",
+              config->error_console_highlight[GIMP_MESSAGE_ERROR]);
+
+  SET_SENSITIVE ("error-console-highlight-warning", TRUE);
+  SET_ACTIVE ("error-console-highlight-warning",
+              config->error_console_highlight[GIMP_MESSAGE_WARNING]);
+
+  SET_SENSITIVE ("error-console-highlight-info", TRUE);
+  SET_ACTIVE ("error-console-highlight-info",
+              config->error_console_highlight[GIMP_MESSAGE_INFO]);
+
+#undef SET_ACTIVE
 #undef SET_SENSITIVE
 }

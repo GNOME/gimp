@@ -96,6 +96,9 @@ enum
   PROP_SINGLE_WINDOW_MODE,
   PROP_TABS_POSITION,
   PROP_LAST_TIP_SHOWN,
+  PROP_ERROR_CONSOLE_HIGHLIGHT_ERROR,
+  PROP_ERROR_CONSOLE_HIGHLIGHT_WARNING,
+  PROP_ERROR_CONSOLE_HIGHLIGHT_INFO,
 
   /* ignored, only for backward compatibility: */
   PROP_CURSOR_FORMAT,
@@ -459,6 +462,30 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT |
                                                      GIMP_PARAM_STATIC_STRINGS));
+  g_object_class_install_property (object_class, PROP_ERROR_CONSOLE_HIGHLIGHT_ERROR,
+                                   g_param_spec_boolean ("error-console-highlight-error",
+                                                         NULL,
+                                                         ERROR_CONSOLE_HIGHLIGHT_ERROR_BLURB,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_STATIC_STRINGS));
+  g_object_class_install_property (object_class, PROP_ERROR_CONSOLE_HIGHLIGHT_WARNING,
+                                   g_param_spec_boolean ("error-console-highlight-warning",
+                                                         NULL,
+                                                         ERROR_CONSOLE_HIGHLIGHT_WARNING_BLURB,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_STATIC_STRINGS));
+  g_object_class_install_property (object_class, PROP_ERROR_CONSOLE_HIGHLIGHT_INFO,
+                                   g_param_spec_boolean ("error-console-highlight-info",
+                                                         NULL,
+                                                         ERROR_CONSOLE_HIGHLIGHT_INFO_BLURB,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_PARAM_STATIC_STRINGS));
 
   /*  only for backward compatibility:  */
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
@@ -712,6 +739,15 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_LAST_TIP_SHOWN:
       gui_config->last_tip_shown = g_value_get_int (value);
       break;
+    case PROP_ERROR_CONSOLE_HIGHLIGHT_ERROR:
+      gui_config->error_console_highlight[GIMP_MESSAGE_ERROR] = g_value_get_boolean (value);
+      break;
+    case PROP_ERROR_CONSOLE_HIGHLIGHT_WARNING:
+      gui_config->error_console_highlight[GIMP_MESSAGE_WARNING] = g_value_get_boolean (value);
+      break;
+    case PROP_ERROR_CONSOLE_HIGHLIGHT_INFO:
+      gui_config->error_console_highlight[GIMP_MESSAGE_INFO] = g_value_get_boolean (value);
+      break;
 
     case PROP_CURSOR_FORMAT:
     case PROP_INFO_WINDOW_PER_DISPLAY:
@@ -868,6 +904,15 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_LAST_TIP_SHOWN:
       g_value_set_int (value, gui_config->last_tip_shown);
+      break;
+    case PROP_ERROR_CONSOLE_HIGHLIGHT_ERROR:
+      g_value_set_boolean (value, gui_config->error_console_highlight[GIMP_MESSAGE_ERROR]);
+      break;
+    case PROP_ERROR_CONSOLE_HIGHLIGHT_WARNING:
+      g_value_set_boolean (value, gui_config->error_console_highlight[GIMP_MESSAGE_WARNING]);
+      break;
+    case PROP_ERROR_CONSOLE_HIGHLIGHT_INFO:
+      g_value_set_boolean (value, gui_config->error_console_highlight[GIMP_MESSAGE_INFO]);
       break;
 
     case PROP_CURSOR_FORMAT:

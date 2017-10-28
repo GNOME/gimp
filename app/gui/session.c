@@ -52,7 +52,10 @@ enum
   HIDE_DOCKS,
   SINGLE_WINDOW_MODE,
   TABS_POSITION,
-  LAST_TIP_SHOWN
+  LAST_TIP_SHOWN,
+  ERROR_CONSOLE_HIGHLIGHT_ERROR,
+  ERROR_CONSOLE_HIGHLIGHT_WARNING,
+  ERROR_CONSOLE_HIGHLIGHT_INFO
 };
 
 
@@ -110,6 +113,12 @@ session_init (Gimp *gimp)
                               GINT_TO_POINTER (TABS_POSITION));
   g_scanner_scope_add_symbol (scanner, 0,  "last-tip-shown",
                               GINT_TO_POINTER (LAST_TIP_SHOWN));
+  g_scanner_scope_add_symbol (scanner, 0,  "error-console-highlight-error",
+                              GINT_TO_POINTER (ERROR_CONSOLE_HIGHLIGHT_ERROR));
+  g_scanner_scope_add_symbol (scanner, 0,  "error-console-highlight-warning",
+                              GINT_TO_POINTER (ERROR_CONSOLE_HIGHLIGHT_WARNING));
+  g_scanner_scope_add_symbol (scanner, 0,  "error-console-highlight-info",
+                              GINT_TO_POINTER (ERROR_CONSOLE_HIGHLIGHT_INFO));
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -272,6 +281,45 @@ session_init (Gimp *gimp)
                             "last-tip-shown", last_tip_shown,
                             NULL);
             }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (ERROR_CONSOLE_HIGHLIGHT_ERROR))
+            {
+              gboolean error_console_highlight_error;
+
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_boolean (scanner, &error_console_highlight_error))
+                break;
+
+              g_object_set (gimp->config,
+                            "error-console-highlight-error", error_console_highlight_error,
+                            NULL);
+            }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (ERROR_CONSOLE_HIGHLIGHT_WARNING))
+            {
+              gboolean error_console_highlight_warning;
+
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_boolean (scanner, &error_console_highlight_warning))
+                break;
+
+              g_object_set (gimp->config,
+                            "error-console-highlight-warning", error_console_highlight_warning,
+                            NULL);
+            }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (ERROR_CONSOLE_HIGHLIGHT_INFO))
+            {
+              gboolean error_console_highlight_info;
+
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_boolean (scanner, &error_console_highlight_info))
+                break;
+
+              g_object_set (gimp->config,
+                            "error-console-highlight-info", error_console_highlight_info,
+                            NULL);
+            }
           token = G_TOKEN_RIGHT_PAREN;
           break;
 
@@ -393,6 +441,24 @@ session_save (Gimp     *gimp,
   gimp_config_writer_open (writer, "last-tip-shown");
   gimp_config_writer_printf (writer, "%d",
                              GIMP_GUI_CONFIG (gimp->config)->last_tip_shown);
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_open (writer, "error-console-highlight-error");
+  gimp_config_writer_identifier (writer,
+                                 GIMP_GUI_CONFIG (gimp->config)->error_console_highlight[GIMP_MESSAGE_ERROR] ?
+                                 "yes" : "no");
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_open (writer, "error-console-highlight-warning");
+  gimp_config_writer_identifier (writer,
+                                 GIMP_GUI_CONFIG (gimp->config)->error_console_highlight[GIMP_MESSAGE_WARNING] ?
+                                 "yes" : "no");
+  gimp_config_writer_close (writer);
+
+  gimp_config_writer_open (writer, "error-console-highlight-info");
+  gimp_config_writer_identifier (writer,
+                                 GIMP_GUI_CONFIG (gimp->config)->error_console_highlight[GIMP_MESSAGE_INFO] ?
+                                 "yes" : "no");
   gimp_config_writer_close (writer);
 
   if (! gimp_config_writer_finish (writer, "end of sessionrc", &error))

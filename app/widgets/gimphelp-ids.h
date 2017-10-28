@@ -591,6 +591,7 @@
 #define GIMP_HELP_TOOL_OPTIONS_RESET              "gimp-tool-options-reset"
 
 #define GIMP_HELP_ERRORS_DIALOG                   "gimp-errors-dialog"
+#define GIMP_HELP_ERRORS_HIGHLIGHT                "gimp-errors-highlight"
 #define GIMP_HELP_ERRORS_CLEAR                    "gimp-errors-clear"
 #define GIMP_HELP_ERRORS_SAVE                     "gimp-errors-save"
 #define GIMP_HELP_ERRORS_SELECT_ALL               "gimp-errors-select-all"

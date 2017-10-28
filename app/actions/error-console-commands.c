@@ -131,6 +131,48 @@ error_console_save_cmd_callback (GtkAction *action,
   gtk_window_present (GTK_WINDOW (console->file_dialog));
 }
 
+void
+error_console_highlight_error_cmd_callback (GtkAction *action,
+                                            gpointer   data)
+{
+  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  gboolean          active;
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  g_object_set (console->gimp->config,
+                "error-console-highlight-error", active,
+                NULL);
+}
+
+void
+error_console_highlight_warning_cmd_callback (GtkAction *action,
+                                              gpointer   data)
+{
+  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  gboolean          active;
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  g_object_set (console->gimp->config,
+                "error-console-highlight-warning", active,
+                NULL);
+}
+
+void
+error_console_highlight_info_cmd_callback (GtkAction *action,
+                                           gpointer   data)
+{
+  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  gboolean          active;
+
+  active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
+
+  g_object_set (console->gimp->config,
+                "error-console-highlight-info", active,
+                NULL);
+}
+
 
 /*  private functions  */
 

@@ -8,5 +8,11 @@
     <separator />
     <menuitem action="error-console-save-all" />
     <menuitem action="error-console-save-selection" />
+    <separator />
+    <menu action="error-console-highlight">
+      <menuitem action="error-console-highlight-error" />
+      <menuitem action="error-console-highlight-warning" />
+      <menuitem action="error-console-highlight-info" />
+    </menu>
   </popup>
 </ui>
