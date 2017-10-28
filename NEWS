@@ -26,6 +26,8 @@ Core:
     in your GUI language. This will be proposed by default when a manual
     is not installed for the GUI language (alongside the possibility to
     read online) and the choice can be edited in preferences.
+  - The statusbar now blinks on warnings and errors.
+  - Highlight upper/lower halves of spinscales while hovering.
 
 Tools:
 
@@ -56,6 +58,8 @@ File formats:
     - Fix potential group-layer naming conflict during loading.
     - Fix missing some attributes loading empty layers.
     - Improve layer opacity loading/saving.
+    - Fix active layer selection upon loading.
+    - Load and save layer group expanded state.
 
 Filters:
 
@@ -80,6 +84,7 @@ Building:
   - Require LittleCMS >= 2.8.
   - Initial docker-based build environment for GIMP now available.
   - Warn against use of GCC 7.2 which has a bug breaking GIMP.
+  - An official flatpak stable package is now available on flathub.
 
 Contributors:
 
