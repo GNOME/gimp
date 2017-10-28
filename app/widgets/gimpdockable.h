@@ -106,8 +106,5 @@ void            gimp_dockable_set_drag_handler     (GimpDockable   *dockable,
 
 void            gimp_dockable_detach               (GimpDockable   *dockable);
 
-void            gimp_dockable_blink                (GimpDockable   *dockable);
-void            gimp_dockable_blink_cancel         (GimpDockable   *dockable);
-
 
 #endif /* __GIMP_DOCKABLE_H__ */

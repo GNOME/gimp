@@ -1615,3 +1615,84 @@ gimp_color_profile_store_add_defaults (GimpColorProfileStore  *store,
 
   return TRUE;
 }
+
+typedef struct
+{
+  gint timeout_id;
+  gint counter;
+} WidgetBlink;
+
+static WidgetBlink *
+widget_blink_new (void)
+{
+  WidgetBlink *blink;
+
+  blink = g_slice_new (WidgetBlink);
+
+  blink->timeout_id = 0;
+  blink->counter    = 0;
+
+  return blink;
+}
+
+static void
+widget_blink_free (WidgetBlink *blink)
+{
+  if (blink->timeout_id)
+    {
+      g_source_remove (blink->timeout_id);
+      blink->timeout_id = 0;
+    }
+
+  g_slice_free (WidgetBlink, blink);
+}
+
+static gboolean
+gimp_widget_blink_timeout (GtkWidget *widget)
+{
+  WidgetBlink *blink;
+
+  blink = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink");
+
+  gimp_highlight_widget (widget, blink->counter % 2 == 1);
+  blink->counter++;
+
+  if (blink->counter == 3)
+    {
+      blink->timeout_id = 0;
+
+      g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+
+      return G_SOURCE_REMOVE;
+    }
+
+  return G_SOURCE_CONTINUE;
+}
+
+void
+gimp_widget_blink (GtkWidget *widget)
+{
+  WidgetBlink *blink;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  blink = widget_blink_new ();
+
+  g_object_set_data_full (G_OBJECT (widget), "gimp-widget-blink", blink,
+                          (GDestroyNotify) widget_blink_free);
+
+  blink->timeout_id = g_timeout_add (150,
+                                     (GSourceFunc) gimp_widget_blink_timeout,
+                                     widget);
+
+  gimp_highlight_widget (widget, TRUE);
+}
+
+void gimp_widget_blink_cancel (GtkWidget *widget)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_highlight_widget (widget, FALSE);
+
+  g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+}

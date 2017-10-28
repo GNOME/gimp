@@ -41,6 +41,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockcontainer.h"
 #include "widgets/gimppaletteeditor.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpcanvasitem.h"
@@ -567,7 +568,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
             /* don't blink like mad when updating */
             if (pick_state != GIMP_COLOR_PICK_STATE_START)
-              gimp_dockable_blink_cancel (GIMP_DOCKABLE (dockable));
+              gimp_widget_blink_cancel (dockable);
 
             palette_editor = gtk_bin_get_child (GTK_BIN (dockable));
 

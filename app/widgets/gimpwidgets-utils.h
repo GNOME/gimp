@@ -95,6 +95,8 @@ void              gimp_pango_layout_set_weight     (PangoLayout          *layout
                                                     PangoWeight           weight);
 void              gimp_highlight_widget            (GtkWidget            *widget,
                                                     gboolean              highlight);
+void              gimp_widget_blink                (GtkWidget             *widget);
+void              gimp_widget_blink_cancel         (GtkWidget             *widget);
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,
                                                     GdkScreen            *screen,
                                                     gint                  monitor,

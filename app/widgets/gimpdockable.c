@@ -69,9 +69,6 @@ struct _GimpDockablePrivate
 
   GimpContext  *context;
 
-  guint         blink_timeout_id;
-  gint          blink_counter;
-
   GimpPanedBox *drag_handler;
 
   /*  drag icon hotspot  */
@@ -126,7 +123,6 @@ static void       gimp_dockable_set_aux_info      (GimpSessionManaged
 static GimpTabStyle
                   gimp_dockable_convert_tab_style (GimpDockable   *dockable,
                                                    GimpTabStyle    tab_style);
-static gboolean   gimp_dockable_blink_timeout     (GimpDockable   *dockable);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDockable, gimp_dockable, GTK_TYPE_BIN,
@@ -203,8 +199,6 @@ static void
 gimp_dockable_dispose (GObject *object)
 {
   GimpDockable *dockable = GIMP_DOCKABLE (object);
-
-  gimp_dockable_blink_cancel (dockable);
 
   if (dockable->p->context)
     gimp_dockable_set_context (dockable, NULL);
@@ -884,36 +878,6 @@ gimp_dockable_detach (GimpDockable *dockable)
   gtk_widget_show (dock);
 }
 
-void
-gimp_dockable_blink (GimpDockable *dockable)
-{
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  if (dockable->p->blink_timeout_id)
-    g_source_remove (dockable->p->blink_timeout_id);
-
-  dockable->p->blink_timeout_id =
-    g_timeout_add (150, (GSourceFunc) gimp_dockable_blink_timeout, dockable);
-
-  gimp_highlight_widget (GTK_WIDGET (dockable), TRUE);
-}
-
-void
-gimp_dockable_blink_cancel (GimpDockable *dockable)
-{
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
-  if (dockable->p->blink_timeout_id)
-    {
-      g_source_remove (dockable->p->blink_timeout_id);
-
-      dockable->p->blink_timeout_id = 0;
-      dockable->p->blink_counter    = 0;
-
-      gimp_highlight_widget (GTK_WIDGET (dockable), FALSE);
-    }
-}
-
 
 /*  private functions  */
 
@@ -962,22 +926,4 @@ gimp_dockable_convert_tab_style (GimpDockable   *dockable,
     tab_style = gimp_preview_tab_style_to_icon (tab_style);
 
   return tab_style;
-}
-
-static gboolean
-gimp_dockable_blink_timeout (GimpDockable *dockable)
-{
-  gimp_highlight_widget (GTK_WIDGET (dockable),
-                         dockable->p->blink_counter % 2 == 1);
-  dockable->p->blink_counter++;
-
-  if (dockable->p->blink_counter == 3)
-    {
-      dockable->p->blink_timeout_id = 0;
-      dockable->p->blink_counter    = 0;
-
-      return FALSE;
-    }
-
-  return TRUE;
 }

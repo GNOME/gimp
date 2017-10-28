@@ -653,7 +653,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
             {
               gtk_notebook_set_current_page (notebook, num);
 
-              gimp_dockable_blink (dockable);
+              gimp_widget_blink (dialog);
             }
         }
 
