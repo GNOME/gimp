@@ -167,10 +167,12 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gint32 *scale_ids;
-      gint32  new_scale_id;
-      gint32  parent_id;
-      gint    id;
+      gint32        *scale_ids;
+      gint32         new_scale_id;
+      gint32         parent_id;
+      GimpLayerMode  grain_extract_mode = GIMP_LAYER_MODE_GRAIN_EXTRACT;
+      GimpLayerMode  grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE;
+      gint           id;
 
       gimp_progress_init (_("Wavelet-Decompose"));
 
@@ -196,6 +198,42 @@ run (const gchar      *name,
                                gimp_image_get_item_position (image_id,
                                                              drawable_id));
 
+      /* the exact result of the grain-extract and grain-merge modes depends on
+       * the choice of (gamma-corrected) midpoint intensity value.  for the
+       * non-legacy modes, the midpoint value is 0.5, which isn't representable
+       * exactly using integer precision.  for the legacy modes, the midpoint
+       * value is 128/255 (i.e., 0x80), which is representable exactly using
+       * (gamma-corrected) integer precision.  we therefore use the legacy
+       * modes when the input image precision is integer, and only use the
+       * (preferable) non-legacy modes when the input image precision is
+       * floating point.
+       *
+       * this avoids imperfect reconstruction of the image when using integer
+       * precision.  see bug #786844.
+       */
+      switch (gimp_image_get_precision (image_id))
+        {
+        case GIMP_PRECISION_U8_LINEAR:
+        case GIMP_PRECISION_U8_GAMMA:
+        case GIMP_PRECISION_U16_LINEAR:
+        case GIMP_PRECISION_U16_GAMMA:
+        case GIMP_PRECISION_U32_LINEAR:
+        case GIMP_PRECISION_U32_GAMMA:
+          grain_extract_mode = GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY;
+          grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY;
+          break;
+
+        case GIMP_PRECISION_HALF_LINEAR:
+        case GIMP_PRECISION_HALF_GAMMA:
+        case GIMP_PRECISION_FLOAT_LINEAR:
+        case GIMP_PRECISION_FLOAT_GAMMA:
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+        case GIMP_PRECISION_DOUBLE_GAMMA:
+          grain_extract_mode = GIMP_LAYER_MODE_GRAIN_EXTRACT;
+          grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE;
+          break;
+        }
+
       for (id = 0 ; id < wavelet_params.scales; ++id)
         {
           gint32 blur_id, tmp_id;
@@ -219,7 +257,7 @@ run (const gchar      *name,
                                    gimp_image_get_item_position (image_id,
                                                                  tmp_id));
 
-          gimp_layer_set_mode (tmp_id, GIMP_LAYER_MODE_GRAIN_EXTRACT);
+          gimp_layer_set_mode (tmp_id, grain_extract_mode);
           new_scale_id = gimp_image_merge_down (image_id, tmp_id,
                                                 GIMP_EXPAND_AS_NECESSARY);
           scale_ids[id] = new_scale_id;
@@ -236,7 +274,7 @@ run (const gchar      *name,
           gimp_image_reorder_item (image_id, scale_ids[id], parent_id,
                                gimp_image_get_item_position (image_id,
                                                              new_scale_id));
-          gimp_layer_set_mode (scale_ids[id], GIMP_LAYER_MODE_GRAIN_MERGE);
+          gimp_layer_set_mode (scale_ids[id], grain_merge_mode);
 
           if (wavelet_params.create_masks)
             {
