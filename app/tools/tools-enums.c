@@ -105,6 +105,37 @@ gimp_tool_action_get_type (void)
 }
 
 GType
+gimp_tool_active_modifiers_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_TOOL_ACTIVE_MODIFIERS_OFF, "GIMP_TOOL_ACTIVE_MODIFIERS_OFF", "off" },
+    { GIMP_TOOL_ACTIVE_MODIFIERS_SAME, "GIMP_TOOL_ACTIVE_MODIFIERS_SAME", "same" },
+    { GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE, "GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE", "separate" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_TOOL_ACTIVE_MODIFIERS_OFF, "GIMP_TOOL_ACTIVE_MODIFIERS_OFF", NULL },
+    { GIMP_TOOL_ACTIVE_MODIFIERS_SAME, "GIMP_TOOL_ACTIVE_MODIFIERS_SAME", NULL },
+    { GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE, "GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpToolActiveModifiers", values);
+      gimp_type_set_translation_context (type, "tool-active-modifiers");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_matting_draw_mode_get_type (void)
 {
   static const GEnumValue values[] =

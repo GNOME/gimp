@@ -60,6 +60,18 @@ typedef enum
 } GimpToolAction;
 
 
+#define GIMP_TYPE_TOOL_ACTIVE_MODIFIERS (gimp_tool_active_modifiers_get_type ())
+
+GType gimp_tool_active_modifiers_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TOOL_ACTIVE_MODIFIERS_OFF,
+  GIMP_TOOL_ACTIVE_MODIFIERS_SAME,
+  GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE,
+} GimpToolActiveModifiers;
+
+
 #define GIMP_TYPE_MATTING_DRAW_MODE (gimp_matting_draw_mode_get_type ())
 
 GType gimp_matting_draw_mode_get_type (void) G_GNUC_CONST;

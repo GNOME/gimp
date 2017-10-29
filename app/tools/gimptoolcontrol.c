@@ -69,6 +69,8 @@ gimp_tool_control_init (GimpToolControl *control)
   control->wants_triple_click     = FALSE;
   control->wants_all_key_events   = FALSE;
 
+  control->active_modifiers       = GIMP_TOOL_ACTIVE_MODIFIERS_OFF;
+
   control->cursor                 = GIMP_CURSOR_MOUSE;
   control->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
   control->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
@@ -345,6 +347,24 @@ gimp_tool_control_get_wants_all_key_events (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
   return control->wants_all_key_events;
+}
+
+void
+gimp_tool_control_set_active_modifiers (GimpToolControl         *control,
+                                        GimpToolActiveModifiers  active_modifiers)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->active_modifiers = active_modifiers;
+}
+
+GimpToolActiveModifiers
+gimp_tool_control_get_active_modifiers (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control),
+                        GIMP_TOOL_ACTIVE_MODIFIERS_OFF);
+
+  return control->active_modifiers;
 }
 
 void
