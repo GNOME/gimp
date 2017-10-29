@@ -70,8 +70,6 @@ const gchar   * gimp_flags_value_get_desc      (GFlagsClass  *flags_class,
                                                 GFlagsValue  *flags_value);
 const gchar   * gimp_flags_value_get_help      (GFlagsClass  *flags_class,
                                                 GFlagsValue  *flags_value);
-void            gimp_base_compat_enum_init     (void);
-
 
 
 G_END_DECLS

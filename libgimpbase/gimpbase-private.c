@@ -27,7 +27,6 @@
 
 #include "gimpbase-private.h"
 #include "gimpcompatenums.h"
-#include "gimputils.h"
 
 
 GimpUnitVtable _gimp_unit_vtable = { NULL, };
@@ -45,13 +44,13 @@ gimp_base_init (GimpUnitVtable *vtable)
 
   _gimp_unit_vtable = *vtable;
 
-  gimp_base_compat_enum_init ();
+  gimp_base_compat_enums_init ();
 
   gimp_base_initialized = TRUE;
 }
 
 void
-gimp_base_compat_enum_init (void)
+gimp_base_compat_enums_init (void)
 {
   static gboolean gimp_base_compat_initialized = FALSE;
   GQuark          quark;

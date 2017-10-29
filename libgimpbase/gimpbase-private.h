@@ -61,7 +61,8 @@ extern GimpUnitVtable _gimp_unit_vtable;
 
 G_BEGIN_DECLS
 
-void  gimp_base_init (GimpUnitVtable *vtable);
+void   gimp_base_init              (GimpUnitVtable *vtable);
+void   gimp_base_compat_enums_init (void);
 
 G_END_DECLS
 
