@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimp-contexts.h"
+#include "core/gimp-internal-data.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
@@ -326,6 +327,12 @@ gimp_tools_restore (Gimp *gimp)
       g_clear_error (&error);
     }
 
+  if (! gimp_internal_data_load (gimp, &error))
+    {
+      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING, error->message);
+      g_clear_error (&error);
+    }
+
   /*  make sure there is always a tool active, so broken config files
    *  can't leave us with no initial tool
    */
@@ -407,6 +414,13 @@ gimp_tools_save (Gimp     *gimp,
           g_clear_error (&error);
         }
 
+        if (! gimp_internal_data_save (gimp, &error))
+          {
+            gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
+                                  error->message);
+            g_clear_error (&error);
+          }
+
       gimp_tool_options_create_folder ();
 
       for (list = gimp_get_tool_info_iter (gimp);
@@ -452,6 +466,9 @@ gimp_tools_clear (Gimp    *gimp,
 
   if (success)
     success = gimp_contexts_clear (gimp, error);
+
+  if (success)
+    success = gimp_internal_data_clear (gimp, error);
 
   if (success)
     tool_options_deleted = TRUE;

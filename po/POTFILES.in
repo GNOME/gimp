@@ -106,6 +106,7 @@ app/core/gimp-data-factories.c
 app/core/gimp-edit.c
 app/core/gimp-gradients.c
 app/core/gimp-gui.c
+app/core/gimp-internal-data.c
 app/core/gimp-modules.c
 app/core/gimp-palettes.c
 app/core/gimp-tags.c
