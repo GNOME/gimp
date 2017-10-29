@@ -10,10 +10,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=Internationalisation\n"
-"POT-Creation-Date: 2016-09-15 07:19+0000\n"
-"PO-Revision-Date: 2016-09-19 11:52+0200\n"
+"POT-Creation-Date: 2017-10-25 00:18+0000\n"
+"PO-Revision-Date: 2017-10-29 11:08+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -440,7 +440,7 @@ msgid "Text Editor"
 msgstr "Textredigerare"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:441
+#: ../app/dialogs/preferences-dialog.c:1898 ../app/gui/gui.c:464
 msgid "Tool Options"
 msgstr "Verktygsalternativ"
 
@@ -3898,11 +3898,11 @@ msgstr "Zooma _ut"
 msgid "Zoom _All"
 msgstr "_Zooma allt"
 
-#: ../app/actions/palette-editor-commands.c:68
+#: ../app/actions/palette-editor-commands.c:69
 msgid "Edit Palette Color"
 msgstr "Redigera palettfärg"
 
-#: ../app/actions/palette-editor-commands.c:70
+#: ../app/actions/palette-editor-commands.c:71
 msgid "Edit Color Palette Entry"
 msgstr "Redigera färgpalettpost"
 
@@ -8970,7 +8970,7 @@ msgstr ""
 "Är du säker att du vill ta bort \"%s\" från listan och ta bort den från "
 "disken?"
 
-#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:162
+#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:174
 #: ../app/gui/gui-message.c:149
 msgid "GIMP Message"
 msgstr "GIMP-meddelande"
@@ -10636,23 +10636,23 @@ msgstr "N"
 msgid "_Sample Merged"
 msgstr "Sa_mpla sammanfogade"
 
-#: ../app/display/gimpdisplayshell.c:508
+#: ../app/display/gimpdisplayshell.c:519
 msgid "Access the image menu"
 msgstr "Kom åt bildmenyn"
 
-#: ../app/display/gimpdisplayshell.c:622
+#: ../app/display/gimpdisplayshell.c:633
 msgid "Zoom image when window size changes"
 msgstr "Zooma bild när fönsterstorlek ändras"
 
-#: ../app/display/gimpdisplayshell.c:651
+#: ../app/display/gimpdisplayshell.c:662
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:685
 msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
-#: ../app/display/gimpdisplayshell.c:746 ../app/display/gimpdisplayshell.c:1331
+#: ../app/display/gimpdisplayshell.c:757 ../app/display/gimpdisplayshell.c:1342
 #: ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Släpp bildfiler här för att öppna dem"
@@ -10907,12 +10907,12 @@ msgstr "Fyll burens ursprungliga läge med en vanlig färg"
 #. * but xgettext extracts it anyway mistakenly into GIMP po files.
 #. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:207
+#: ../app/gui/gui.c:219
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. initialize the document history
-#: ../app/gui/gui.c:438
+#: ../app/gui/gui.c:461
 msgid "Documents"
 msgstr "Dokument"
 
@@ -11727,7 +11727,7 @@ msgstr ""
 "Vissa textegenskaper kan vara felaktiga. Om du inte vill redigera textlagret "
 "behöver du inte oroa dig för detta."
 
-#: ../app/text/gimptextlayout.c:577
+#: ../app/text/gimptextlayout.c:578
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -11928,7 +11928,7 @@ msgstr "Toning fungerar inte på indexerade lager."
 msgid "No gradient available for use with this tool."
 msgstr "Ingen gradient tillgänglig för detta verktyg."
 
-#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
+#: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:625
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s för begränsade vinklar"
@@ -13192,7 +13192,7 @@ msgstr "Klicka och dra för att flytta alla punkter"
 
 #: ../app/tools/gimpmeasuretool.c:939 ../app/tools/gimpmeasuretool.c:1084
 #: ../app/tools/gimpmeasuretool.c:1140 ../app/tools/gimpmeasuretool.c:1168
-#: ../app/tools/gimppainttool.c:633
+#: ../app/tools/gimppainttool.c:634
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -13363,7 +13363,7 @@ msgstr "%s för att välja en färg"
 msgid "Cannot paint on layer groups."
 msgstr "Kan inte måla på lagergrupper."
 
-#: ../app/tools/gimppainttool.c:679
+#: ../app/tools/gimppainttool.c:680
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s för en rak linje"
@@ -16086,6 +16086,11 @@ msgstr "Bildredigerare"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Skapa bilder och redigera fotografier"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: ../desktop/gimp.desktop.in.in.h:5
+msgid "GIMP;graphic;design;illustration;painting;"
+msgstr "GIMP;grafik;design;illustrera;målning;rita;"
 
 #~ msgid "Move Layer"
 #~ msgstr "Flytta lager"
